@@ -13,13 +13,11 @@ git switch -c feature/简短功能名
 ## 提交前检查
 
 ```bash
-python -m unittest discover -s 99_System_OpenClaw/tests
-python 99_System_OpenClaw/scripts/06_check_outline_contract.py . --skip-obsidian-sync
-python 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py
-python 99_System_OpenClaw/scripts/40_check_repository_safety.py
+bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh
+bash 99_System_OpenClaw/scripts/42_run_local_ci.sh
 ```
 
-修改作品审核能力时，还要完成 `.github/PULL_REQUEST_TEMPLATE/review-capability-change.md` 中的单一事实源检查。
+首次克隆或 `requirements-dev.txt` 变化后运行环境安装脚本；每次提交前必须运行本机 CI。修改作品审核能力时，还要完成 `.github/PULL_REQUEST_TEMPLATE/review-capability-change.md` 中的单一事实源检查。
 
 ## 数据安全
 
@@ -30,4 +28,4 @@ python 99_System_OpenClaw/scripts/40_check_repository_safety.py
 
 ## Pull Request
 
-PR 说明至少写清：问题、实现、验证命令和仍未覆盖的本机集成。代码评审通过且 GitHub Actions 通过后再合并。
+PR 说明至少写清：问题、实现、本机 CI 结果和仍未覆盖的本机集成。仓库不使用 GitHub Actions；代码评审通过且本机 CI 通过后再合并。

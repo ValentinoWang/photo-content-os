@@ -28,6 +28,9 @@ PROHIBITED_PARTS = {
     "_openclaw",
     "restructure_audit",
 }
+PROHIBITED_MACHINE_NAMES = {
+    ".ds_store",
+}
 PROHIBITED_NAMES = {
     ".env",
     "id_dsa",
@@ -100,6 +103,8 @@ def path_violations(root: Path, relative: Path) -> list[str]:
         violations.append("generated or machine-specific path")
 
     name_lower = relative.name.lower()
+    if name_lower in PROHIBITED_MACHINE_NAMES:
+        violations.append("machine-generated metadata")
     if name_lower in PROHIBITED_NAMES or name_lower.startswith(".env."):
         violations.append("credential filename")
     if relative.suffix.lower() in PROHIBITED_SUFFIXES:

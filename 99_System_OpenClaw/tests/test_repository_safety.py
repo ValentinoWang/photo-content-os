@@ -43,6 +43,15 @@ class RepositorySafetyTest(unittest.TestCase):
 
             self.assertIn("media or private-key extension", repository_safety.path_violations(root, relative))
 
+    def test_rejects_machine_generated_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            relative = Path(".github/.DS_Store")
+            (root / relative).parent.mkdir(parents=True)
+            (root / relative).write_bytes(b"machine metadata")
+
+            self.assertIn("machine-generated metadata", repository_safety.path_violations(root, relative))
+
     def test_rejects_oversized_file(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

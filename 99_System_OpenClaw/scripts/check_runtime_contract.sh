@@ -4,15 +4,21 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RUNNER_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 OTIO_KDENLIVE_PYTHON="$RUNNER_ROOT/.venv-content-os/bin/python"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+
+if ! "$PYTHON_BIN" -c 'import sys' >/dev/null 2>&1; then
+  echo "Python runtime is unavailable or invalid: $PYTHON_BIN" >&2
+  exit 1
+fi
 
 echo "== Python version =="
-python3 --version
+"$PYTHON_BIN" --version
 
 echo "== Compile scripts =="
-python3 -m compileall "$SCRIPT_DIR"
+"$PYTHON_BIN" -m compileall "$SCRIPT_DIR"
 
 echo "== Check required Python packages =="
-python3 - <<'PY'
+"$PYTHON_BIN" - <<'PY'
 from importlib import metadata
 
 required = {

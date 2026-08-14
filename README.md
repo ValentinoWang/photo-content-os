@@ -9,12 +9,12 @@ Photo Content OS 是一套面向照片和视频项目的本地整理、分析、
 ```bash
 git clone https://github.com/ValentinoWang/photo-content-os.git
 cd photo-content-os
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements-dev.txt
-python 99_System_OpenClaw/scripts/39_create_demo_project.py
+bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh
+bash 99_System_OpenClaw/scripts/42_run_local_ci.sh
+99_System_OpenClaw/.venv-content-os/bin/python 99_System_OpenClaw/scripts/39_create_demo_project.py
 ```
+
+如果系统的 `python3` 低于 3.11，请先安装新版 Python，再把安装命令写成 `PYTHON_BIN=python3.13 bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh`（版本号按本机实际命令调整）。
 
 成功后，命令会输出 demo 项目和素材清单的绝对路径。默认试用目录是 `demo_workspace/`，其中会生成三张合成示例图片，并完成：
 
@@ -28,13 +28,13 @@ python 99_System_OpenClaw/scripts/39_create_demo_project.py
 ## 开发验证
 
 ```bash
-python -m unittest discover -s 99_System_OpenClaw/tests
-python 99_System_OpenClaw/scripts/06_check_outline_contract.py . --skip-obsidian-sync
-python 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py
-python 99_System_OpenClaw/scripts/40_check_repository_safety.py
+bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh
+bash 99_System_OpenClaw/scripts/42_run_local_ci.sh
 ```
 
-本机生产环境还有 Obsidian 文档同步、固定 OTIO/Kdenlive 运行时和真实媒体工具门禁。这些检查依赖仓库所有者的本机环境，不属于首次试用的前置条件；相关环境存在时，测试会自动覆盖对应集成。
+安装脚本会创建仓库内固定的开发运行时并安装锁定版本的依赖。本机 CI 会执行运行时契约、全部单元测试、文档大纲契约、作品审核能力注册表、安全边界、命令入口和合成 demo。检测到本机 Obsidian 自媒体库时还会执行完整文档同步门禁；同学电脑没有该库时，只跳过这一项本机集成并明确打印原因。
+
+仓库已关闭 GitHub Actions，以本机 CI 结果作为 Pull Request 的合并门禁。
 
 ## 仓库边界
 
