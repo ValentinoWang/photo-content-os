@@ -1,0 +1,4 @@
+OpenTimelineIO==0.18.1
+Pillow==12.1.1
+PyYAML==6.0.3
+pyJianYingDraft==0.2.6

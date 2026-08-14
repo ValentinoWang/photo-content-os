@@ -1,0 +1,88 @@
+{
+  "spec_version": "content_os_doc_sync_v0.2",
+  "description": "本地执行文档与 Obsidian Content OS v0.2 协议页的一致性门禁。当前正式路线是标准剪辑交接或明确选择的可编辑时间线；旧剪映导入资料只作历史证据。",
+  "defaults": {
+    "fail_if_source_newer_than_target": true,
+    "mtime_grace_seconds": 5
+  },
+  "pairs": [
+    {
+      "name": "local_execution_to_obsidian_collaboration_v2",
+      "source_paths": [
+        "$LOCAL_ROOT/99_System_OpenClaw/docs/00_本地素材与剪映HyperFrames流转总纲.md",
+        "$LOCAL_ROOT/99_System_OpenClaw/docs/05_剪映与HyperFrames.md",
+        "$LOCAL_ROOT/99_System_OpenClaw/scripts/README.md",
+        "$LOCAL_ROOT/99_System_OpenClaw/AGENTS.md"
+      ],
+      "target_paths": [
+        {
+          "path": "$OBSIDIAN_ROOT/06_技术栈与自动化/腾讯云OpenClaw与MAC_OpenClaw本地素材协同流转规范.md",
+          "markers": [
+            "Obsidian 项目总览 =",
+            "_OpenClawQueue = Mac 本机执行层",
+            "iCloud 云盘 = 文档同步与按需中转",
+            "协作界面必须使用运营中文",
+            "提交修改"
+          ]
+        }
+      ],
+      "common_markers": [
+        "标准剪辑交接",
+        "自动生成可编辑时间线",
+        "每个项目版本只选择一种",
+        "真实剪映草稿",
+        "Media Bot",
+        "不自动换另一种"
+      ]
+    },
+    {
+      "name": "local_execution_to_obsidian_editing_handoff_v2",
+      "source_paths": [
+        "$LOCAL_ROOT/99_System_OpenClaw/docs/00_本地素材与剪映HyperFrames流转总纲.md",
+        "$LOCAL_ROOT/99_System_OpenClaw/docs/05_剪映与HyperFrames.md",
+        "$LOCAL_ROOT/99_System_OpenClaw/scripts/README.md",
+        "$LOCAL_ROOT/99_System_OpenClaw/AGENTS.md"
+      ],
+      "target_paths": [
+        {
+          "path": "$OBSIDIAN_ROOT/00_入口与总览/剪辑交接与可编辑时间线.md",
+          "markers": [
+            "manifest.json",
+            "timeline.otio",
+            "剪到一半修改脚本怎么办",
+            "Jianying_Roughcut_Draft_Pipeline"
+          ]
+        }
+      ],
+      "common_markers": [
+        "标准剪辑交接",
+        "自动生成可编辑时间线",
+        "每个项目版本只选择一种",
+        "真实剪映草稿",
+        "不自动换另一种"
+      ]
+    },
+    {
+      "name": "historical_jianying_evidence_is_not_production",
+      "source_paths": [
+        "$LOCAL_ROOT/99_System_OpenClaw/docs/05_剪映与HyperFrames.md",
+        "$LOCAL_ROOT/99_System_OpenClaw/AGENTS.md"
+      ],
+      "target_paths": [
+        {
+          "path": "$OBSIDIAN_ROOT/00_入口与总览/Jianying_Roughcut_Draft_Pipeline.md",
+          "markers": [
+            "status: historical_evidence",
+            "superseded_by: 剪辑交接与可编辑时间线",
+            "不是 Content OS v0.2 的正式生产路线"
+          ]
+        }
+      ],
+      "common_markers": [
+        "历史证据",
+        "真实剪映草稿",
+        "06b"
+      ]
+    }
+  ]
+}

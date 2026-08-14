@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Content OS Jianying Draft Plan",
+  "type": "object",
+  "required": [
+    "spec_version",
+    "doc_type",
+    "project_id",
+    "draft_name",
+    "target",
+    "source_edl",
+    "tracks",
+    "constraints"
+  ],
+  "properties": {
+    "spec_version": { "const": "content_os_v0.1" },
+    "doc_type": { "const": "jianying_draft_plan" },
+    "project_id": { "type": "string", "minLength": 1 },
+    "idea_id": { "type": "string" },
+    "draft_name": { "type": "string", "minLength": 1 },
+    "target": {
+      "type": "object",
+      "required": ["width", "height", "fps", "duration_sec", "platform"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "fps": { "type": "integer", "minimum": 1 },
+        "duration_sec": { "type": "number", "exclusiveMinimum": 0 },
+        "platform": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "source_edl": { "type": "string", "minLength": 1 },
+    "tracks": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["track_id", "type", "clips"],
+        "properties": {
+          "track_id": { "type": "string", "minLength": 1 },
+          "type": { "enum": ["video", "text", "audio"] },
+          "clips": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["timeline_start_sec", "duration_sec"],
+              "properties": {
+                "slot": { "type": "integer" },
+                "timeline_start_sec": { "type": "number", "minimum": 0 },
+                "duration_sec": { "type": "number", "exclusiveMinimum": 0 },
+                "source_file": { "type": "string" },
+                "source_start_sec": { "type": "number", "minimum": 0 },
+                "source_duration_sec": { "type": "number", "exclusiveMinimum": 0 },
+                "purpose": { "type": "string" },
+                "text": { "type": "string" },
+                "style": { "type": "object" },
+                "volume": { "type": "number" }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "bgm": {
+      "type": "object",
+      "properties": {
+        "source_file": { "type": "string" },
+        "timeline_start_sec": { "type": "number", "minimum": 0 },
+        "volume": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["no_auto_export", "human_must_open_check"],
+      "properties": {
+        "no_auto_export": { "const": true },
+        "human_must_open_check": { "const": true },
+        "strict_mode": { "const": true }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

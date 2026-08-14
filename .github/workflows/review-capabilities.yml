@@ -1,0 +1,43 @@
+name: Review capability registry
+
+on:
+  pull_request:
+    paths:
+      - "99_System_OpenClaw/review_capabilities.registry.json"
+      - "99_System_OpenClaw/scripts/36_validate_review_capability_registry.py"
+      - "99_System_OpenClaw/scripts/19_review_output_video.py"
+      - "99_System_OpenClaw/scripts/mac_openclaw_runner.py"
+      - "99_System_OpenClaw/tests/test_review_capability_registry.py"
+      - "99_System_OpenClaw/tests/test_output_video_review.py"
+      - "99_System_OpenClaw/tests/test_mac_openclaw_runner.py"
+      - "99_System_OpenClaw/docs/08_usage_guides_使用指南/**"
+      - ".github/workflows/review-capabilities.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "99_System_OpenClaw/review_capabilities.registry.json"
+      - "99_System_OpenClaw/scripts/36_validate_review_capability_registry.py"
+      - "99_System_OpenClaw/scripts/19_review_output_video.py"
+      - "99_System_OpenClaw/scripts/mac_openclaw_runner.py"
+      - "99_System_OpenClaw/tests/test_review_capability_registry.py"
+      - "99_System_OpenClaw/tests/test_output_video_review.py"
+      - "99_System_OpenClaw/tests/test_mac_openclaw_runner.py"
+      - "99_System_OpenClaw/docs/08_usage_guides_使用指南/**"
+
+jobs:
+  validate-review-capabilities:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test dependencies
+        run: python3 -m pip install PyYAML
+      - name: Validate registry
+        run: python3 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py
+      - name: Run registry and runner contract tests
+        run: |
+          python3 -m unittest 99_System_OpenClaw/tests/test_review_capability_registry.py
+          python3 -m unittest 99_System_OpenClaw/tests/test_mac_openclaw_runner.py

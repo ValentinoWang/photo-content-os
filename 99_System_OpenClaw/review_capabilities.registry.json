@@ -1,0 +1,440 @@
+{
+  "schema_version": "review_capabilities.registry.v1",
+  "updated_on": "2026-06-28",
+  "canonical_management": {
+    "system": "github",
+    "registry_path": "99_System_OpenClaw/review_capabilities.registry.json",
+    "default_branch": "main",
+    "governance_doc": "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.08_GitHub单一事实源_作品审核能力管理.md",
+    "algorithm_doc": "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.09_视频评分判断算法收敛路线图.md",
+    "current_convergence_scope": "video_scoring_judgement_algorithm",
+    "change_gate": "python3 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py",
+    "rule": "本版本优先收敛视频评分、判断、排序算法本身；远端服务器纳入调用边界，但不另建算法事实源。"
+  },
+  "capabilities": [
+    {
+      "capability_id": "local_output_review",
+      "display_name": "本地成片技术与策略复核",
+      "status": "active",
+      "canonical_owner": "mac_openclaw",
+      "execution_surfaces": [
+        "mac_local",
+        "cloud_task_to_mac_runner"
+      ],
+      "implementation_files": [
+        "99_System_OpenClaw/scripts/19_review_output_video.py"
+      ],
+      "contract_files": [
+        "99_System_OpenClaw/scripts/mac_openclaw_runner.py",
+        "99_System_OpenClaw/tests/test_output_video_review.py",
+        "99_System_OpenClaw/tests/test_mac_openclaw_runner.py",
+        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.05_需要进入剪映或成片复核_导入包与验收.md"
+      ],
+      "execution_contract": {
+        "runner_task_types": [
+          "local_output_review"
+        ],
+        "runner_actions": [
+          "review_output_video"
+        ],
+        "input_keys": [
+          "output_video_path",
+          "compare_video_paths",
+          "local_project_path",
+          "local_project_hint",
+          "project_brief_path",
+          "script_path",
+          "publish_pack_path"
+        ],
+        "output_artifacts": [
+          "_output_review.md",
+          "metrics.json",
+          "output_review_result.yaml",
+          "contact_sheet.jpg",
+          "scene_change_sheet.jpg"
+        ],
+        "schemas": [
+          "output_review.v1",
+          "output_review_result.v1"
+        ]
+      },
+      "algorithm_contract": {
+        "algorithm_role": "scoring_core",
+        "algorithm_version": "video_scoring_judgement.v3",
+        "strategy_weights_version": "creative_strategy_weights.v3",
+        "strategy_weights": {
+          "rhythm": 0.35,
+          "platform_format": 0.1,
+          "opening_hook": 0.23,
+          "composition": 0.2,
+          "topic_strategy": 0.12
+        },
+        "judgement_outputs": [
+          "risk_flags",
+          "technical_status",
+          "preferred_version",
+          "recommendation",
+          "strategy_preferred_version",
+          "strategy_preferred_score"
+        ],
+        "scoring_dimensions": [
+          "technical_gate",
+          "platform_format",
+          "composition",
+          "opening_hook",
+          "rhythm_from_bgm_review",
+          "topic_strategy",
+          "brief_fit"
+        ],
+        "decision_functions": [
+          "risk_flags_for",
+          "technical_status_for",
+          "creative_review_for_version",
+          "version_rank",
+          "map_recommendation"
+        ],
+        "iteration_notes": [
+          "V1: 字段、schema、版本倾向和人工边界收敛。",
+          "V2: VLM 语义融合和节奏同步评分纳入统一 registry。",
+          "V3: 策略评分权重调优，降低 platform_format 到 0.10，提高 opening_hook 到 0.23、composition 到 0.20。"
+        ],
+        "human_boundary": "算法只给 pass/warning/fail、版本倾向和返修建议；Final 与发布仍由 human_editor 确认。"
+      },
+      "github_policy": {
+        "canonical_repository_scope": "99_System_OpenClaw",
+        "required_pr_checks": [
+          "validate_review_capability_registry",
+          "test_output_video_review",
+          "test_mac_openclaw_runner"
+        ],
+        "remote_server_rule": "远端服务器只能提交 local_output_review 任务、读取 Mac 回写结果，不得另写视频探测、抽帧、评分或发布判断实现。"
+      },
+      "dedupe_guard": "如果要新增成片质检维度，优先改 19_review_output_video.py 的现有 schema；不得在远端新增第二套 output_review 评分器。"
+    },
+    {
+      "capability_id": "rhythm_sync_review",
+      "display_name": "成片音画节奏同步与版本排序",
+      "status": "active",
+      "canonical_owner": "mac_openclaw",
+      "execution_surfaces": [
+        "mac_local"
+      ],
+      "implementation_files": [
+        "99_System_OpenClaw/scripts/19_review_output_video.py"
+      ],
+      "contract_files": [
+        "99_System_OpenClaw/tests/test_output_video_review.py",
+        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.07_成片节奏同步算法评估与版本排序落地.md"
+      ],
+      "execution_contract": {
+        "cli_flags": [
+          "--rhythm-sync",
+          "--profile"
+        ],
+        "profiles": [
+          "general_bgm_edit",
+          "single_person_stage_walk",
+          "pov_running",
+          "split_screen_comparison",
+          "sports_highlight",
+          "talking_head"
+        ],
+        "output_artifacts": [
+          "rhythm_sync/rhythm_sync_metrics.json",
+          "rhythm_sync/rhythm_sync_result.yaml",
+          "rhythm_sync/rhythm_sync_report.md",
+          "rhythm_sync/<version>/audio_events.json",
+          "rhythm_sync/<version>/visual_events.json",
+          "rhythm_sync/<version>/matches.json",
+          "rhythm_sync/<version>/review_frames/"
+        ],
+        "schemas": [
+          "rhythm_sync_review.v1"
+        ]
+      },
+      "algorithm_contract": {
+        "algorithm_role": "scoring_core",
+        "judgement_outputs": [
+          "rhythm_preferred_version",
+          "final_score",
+          "profile_weighted_scores",
+          "edit_suggestions",
+          "edit_path"
+        ],
+        "scoring_dimensions": [
+          "audio_events",
+          "visual_events",
+          "event_alignment",
+          "profile_weighted_score",
+          "fixability",
+          "phase_consistency"
+        ],
+        "decision_functions": [
+          "detect_audio_events",
+          "detect_visual_events",
+          "align_audio_visual_events",
+          "score_rhythm_sync",
+          "compare_rhythm_sync_versions"
+        ],
+        "human_boundary": "算法输出可修复时间点和版本排序，不自动改剪映时间线。"
+      },
+      "github_policy": {
+        "canonical_repository_scope": "99_System_OpenClaw",
+        "required_pr_checks": [
+          "validate_review_capability_registry",
+          "test_output_video_review"
+        ],
+        "remote_server_rule": "远端可读取 rhythm_sync_result.yaml 做版本选择建议，但不得复制一套节奏同步算法。"
+      },
+      "dedupe_guard": "新增音频事件、画面事件、profile 权重或 edit_suggestions 时，只能扩展本能力，不另建 rhythm analyzer 分叉。"
+    },
+    {
+      "capability_id": "vlm_semantic_output_review",
+      "display_name": "Codex VLM 成片语义观感复核",
+      "status": "active",
+      "canonical_owner": "mac_openclaw",
+      "execution_surfaces": [
+        "mac_local",
+        "codex_vlm"
+      ],
+      "implementation_files": [
+        "99_System_OpenClaw/scripts/19_review_output_video.py"
+      ],
+      "contract_files": [
+        "99_System_OpenClaw/tests/test_output_video_review.py",
+        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.05_需要进入剪映或成片复核_导入包与验收.md"
+      ],
+      "execution_contract": {
+        "cli_flags": [
+          "--run-vlm-review"
+        ],
+        "input_artifacts": [
+          "contact_sheet.jpg",
+          "project brief/script/publish pack"
+        ],
+        "output_artifacts": [
+          "metrics.json:creative_review.semantic_vlm_review",
+          "_output_review.md:VLM 审阅段落"
+        ],
+        "schemas": [
+          "local_output_vlm_semantic_review.v1"
+        ]
+      },
+      "algorithm_contract": {
+        "algorithm_role": "semantic_judgement_fusion",
+        "judgement_outputs": [
+          "vlm_preferred_version",
+          "overall_score",
+          "person_state_score",
+          "composition_aesthetic_score",
+          "opening_hook_score",
+          "topic_expression_score",
+          "platform_publish_fit_score"
+        ],
+        "scoring_dimensions": [
+          "person_state",
+          "composition_aesthetic",
+          "opening_hook",
+          "topic_expression",
+          "platform_publish_fit"
+        ],
+        "decision_functions": [
+          "run_vlm_semantic_review",
+          "apply_vlm_semantic_review"
+        ],
+        "fusion_rule": "creative_score_after_vlm = rule_score * 0.55 + vlm_overall_score * 0.45",
+        "human_boundary": "VLM 只读取 contact sheet；它补足语义观感，不替代完整逐帧观看和发布确认。"
+      },
+      "github_policy": {
+        "canonical_repository_scope": "99_System_OpenClaw",
+        "required_pr_checks": [
+          "validate_review_capability_registry",
+          "test_output_video_review"
+        ],
+        "remote_server_rule": "远端不得把截图语义审阅改写为另一个不可追溯的主观评分口径；只允许消费 Mac 侧已落盘的 VLM 结果。"
+      },
+      "dedupe_guard": "所有 VLM 观感字段必须继续写入 output_review metrics/result，不单独生成第二份成片语义结论。"
+    },
+    {
+      "capability_id": "remote_review_orchestration",
+      "display_name": "远端到 Mac 的作品审核任务编排",
+      "status": "active",
+      "canonical_owner": "cloud_openclaw",
+      "execution_surfaces": [
+        "remote_server",
+        "obsidian_queue",
+        "mac_runner"
+      ],
+      "implementation_files": [
+        "99_System_OpenClaw/scripts/mac_openclaw_runner.py",
+        "99_System_OpenClaw/scripts/32_process_openclaw_queue.py",
+        "99_System_OpenClaw/scripts/33_enqueue_openclaw_queue_job.py",
+        "99_System_OpenClaw/scripts/validate_content_os_task.py"
+      ],
+      "contract_files": [
+        "99_System_OpenClaw/tests/test_mac_openclaw_runner.py",
+        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.03_已有项目包和本地素材_绑定任务队列.md",
+        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.05_需要进入剪映或成片复核_导入包与验收.md"
+      ],
+      "execution_contract": {
+        "orchestrates_task_types": [
+          "local_output_review"
+        ],
+        "queue_paths": [
+          "98_Agent任务队列/01_cloud_to_mac_ready/task_*.yaml",
+          "98_Agent任务队列/02_mac_to_cloud_results/result_*.yaml",
+          "_OpenClawQueue/cloud_to_mac/*.json",
+          "_OpenClawQueue/mac_to_cloud/*.result.json"
+        ],
+        "allowed_actions": [
+          "review_output_video"
+        ],
+        "forbidden_actions": [
+          "execute_remote_video_scoring",
+          "write_mac_private_media_paths_without_task",
+          "publish_video"
+        ]
+      },
+      "algorithm_contract": {
+        "algorithm_role": "orchestrator_only",
+        "judgement_outputs": [
+          "none"
+        ],
+        "scoring_dimensions": [],
+        "decision_functions": [
+          "validate_required_actions",
+          "run_output_review",
+          "output_review_result"
+        ],
+        "human_boundary": "远端只编排任务和消费结果；视频评分、判断、排序算法不在远端实现。"
+      },
+      "github_policy": {
+        "canonical_repository_scope": "99_System_OpenClaw",
+        "required_pr_checks": [
+          "validate_review_capability_registry",
+          "test_mac_openclaw_runner"
+        ],
+        "remote_server_rule": "远端维护任务协议和状态推进；涉及视频探测、抽帧、音画同步、VLM 观感的实现必须回到 Mac 侧能力。"
+      },
+      "dedupe_guard": "远端新增审核需求时，应先扩展 task schema / allowed_actions / registry，再由 Mac 侧实现或回写；不得绕过 registry 自建审核服务。"
+    },
+    {
+      "capability_id": "remote_work_acceptance_review",
+      "display_name": "远端作品验收与发布策略评价",
+      "status": "active",
+      "canonical_owner": "cloud_openclaw",
+      "execution_surfaces": [
+        "remote_server"
+      ],
+      "implementation_files": [],
+      "external_implementation_refs": [
+        "/home/ubuntu/selfmedia-tools/openclaw-tag-router/openclaw_app/router/work_acceptance.py",
+        "/home/ubuntu/selfmedia-tools/tools/data_review/workflow.py"
+      ],
+      "contract_files": [
+        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.10_远端作品验收与数据复盘评价边界.md",
+        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.09_视频评分判断算法收敛路线图.md"
+      ],
+      "execution_contract": {
+        "remote_capabilities": [
+          "【作品验收】",
+          "【数据复盘】"
+        ],
+        "schemas": [
+          "remote_work_acceptance_review.v1",
+          "remote_data_review.v1"
+        ],
+        "input_sources": [
+          "作品文本/成稿说明",
+          "创作要求",
+          "最近对话上下文",
+          "Mac 回写 metrics/result/report 摘要",
+          "发布后数据截图"
+        ],
+        "output_artifacts": [
+          "status",
+          "verdict",
+          "summary",
+          "items[]",
+          "release_advice",
+          "next_actions",
+          "performance_level",
+          "content_guidance",
+          "publishing_guidance"
+        ],
+        "forbidden_actions": [
+          "ffprobe_video_scoring",
+          "frame_sampling_video_scoring",
+          "rhythm_sync_reimplementation",
+          "override_mac_technical_status",
+          "publish_without_human_confirmation"
+        ]
+      },
+      "algorithm_contract": {
+        "algorithm_role": "remote_strategy_evaluation",
+        "judgement_outputs": [
+          "requirement_judgment",
+          "evidence_gap",
+          "release_advice",
+          "next_actions",
+          "performance_level",
+          "content_guidance",
+          "publishing_guidance"
+        ],
+        "scoring_dimensions": [
+          "requirement_match",
+          "evidence_sufficiency",
+          "platform_strategy_fit",
+          "publishing_risk",
+          "post_publish_metric_interpretation"
+        ],
+        "decision_functions": [
+          "work_acceptance.py",
+          "tools/data_review/workflow.py"
+        ],
+        "human_boundary": "远端可以做作品要求对照、发布策略建议和数据复盘，但不能替代 Mac 侧视频文件评分，也不能替代人工 Final/发布判断。"
+      },
+      "github_policy": {
+        "canonical_repository_scope": "remote selfmedia-tools, mirrored by this registry",
+        "required_pr_checks": [
+          "validate_review_capability_registry",
+          "remote_work_acceptance_tests"
+        ],
+        "remote_server_rule": "远端评价层保留文本、要求、策略、复盘能力；视频像素/音频/节奏评分只消费 Mac 回写证据，不重新实现。"
+      },
+      "dedupe_guard": "不能把远端作品验收删除成纯编排；它是策略评价层，但输入必须来自显式作品文本、创作要求、上下文、Mac 结果或发布数据。"
+    }
+  ],
+  "dedupe_rules": [
+    {
+      "rule_id": "single_video_probe_implementation",
+      "canonical_capability_id": "local_output_review",
+      "forbidden_duplicate_scope": [
+        "ffprobe metadata scoring",
+        "contact sheet generation",
+        "scene-change sheet generation",
+        "black/white/border/compression risk scoring"
+      ]
+    },
+    {
+      "rule_id": "single_rhythm_sync_implementation",
+      "canonical_capability_id": "rhythm_sync_review",
+      "forbidden_duplicate_scope": [
+        "audio event detection",
+        "visual event detection",
+        "event alignment",
+        "profile weighted rhythm scoring",
+        "rhythm edit suggestions"
+      ]
+    },
+    {
+      "rule_id": "single_remote_boundary",
+      "canonical_capability_id": "remote_review_orchestration",
+      "forbidden_duplicate_scope": [
+        "remote direct media inspection",
+        "remote final publish decision",
+        "remote rewrite of Mac output_review_result.yaml"
+      ]
+    }
+  ]
+}

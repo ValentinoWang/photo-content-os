@@ -1,0 +1,83 @@
+# macOS and editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Python runtimes and caches
+.venv/
+.venv-*/
+venv/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# The repository contains the automation system, not personal media workspaces.
+/00_START_HERE_今天看这里.md
+/00_Inbox_Mac_Intake/
+/01_Project_Workspace/
+/02_Asset_Library/
+/03_Jianying_Active_Drafts/
+/04_Delivery_External/
+/05_Archive_Cold_Storage/
+/90_SSOT_E2E/
+/_OpenClawQueue/
+/demo_workspace/
+
+# Local production runtimes and historical machine audits
+/99_System_OpenClaw/.venv-content-os/
+/99_System_OpenClaw/restructure_audit/
+
+# Generated project evidence, caches, and editing outputs
+**/_ai_analysis/
+**/_openclaw/
+**/App_WorkCache/
+
+# Media must never be committed. Keep fixtures synthetic and generate them at test time.
+*.[3][gG][pP]
+*.[aA][aA][cC]
+*.[aA][iI][fF][fF]
+*.[aA][rR][wW]
+*.[aA][vV][iI]
+*.[bB][mM][pP]
+*.[cC][rR][2]
+*.[cC][rR][3]
+*.[dD][nN][gG]
+*.[fF][lL][aA][cC]
+*.[gG][iI][fF]
+*.[hH][eE][iI][cC]
+*.[hH][eE][iI][fF]
+*.[iI][nN][sS][vV]
+*.[jJ][pP][eE][gG]
+*.[jJ][pP][gG]
+*.[lL][rR][fF]
+*.[mM][2][tT][sS]
+*.[mM][4][aA]
+*.[mM][4][vV]
+*.[mM][kK][vV]
+*.[mM][oO][vV]
+*.[mM][pP][3]
+*.[mM][pP][4]
+*.[mM][pP][eE][gG]
+*.[mM][pP][gG]
+*.[mM][tT][sS]
+*.[nN][eE][fF]
+*.[oO][gG][gG]
+*.[oO][rR][fF]
+*.[oO][sS][vV]
+*.[pP][nN][gG]
+*.[rR][aA][fF]
+*.[rR][wW][2]
+*.[tT][iI][fF]
+*.[tT][iI][fF][fF]
+*.[wW][aA][vV]
+*.[wW][eE][bB][pP]
