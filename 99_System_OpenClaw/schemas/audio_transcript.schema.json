@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://photo-content-os.local/schemas/audio_transcript.schema.json",
+  "title": "Photo Content OS Audio Transcript",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "media_id", "audio_ref", "provider", "model", "language", "status", "segments", "text"],
+  "properties": {
+    "schema_version": {"const": "audio_transcript_v1"},
+    "media_id": {"type": "string", "minLength": 1},
+    "audio_ref": {"type": "string", "minLength": 1},
+    "provider": {"type": "string", "minLength": 1},
+    "model": {"type": "string", "minLength": 1},
+    "language": {"type": ["string", "null"]},
+    "status": {"enum": ["ok", "pending", "empty"]},
+    "text": {"type": "string"},
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["start_sec", "end_sec", "speaker", "text", "confidence"],
+        "properties": {
+          "start_sec": {"type": "number", "minimum": 0},
+          "end_sec": {"type": "number", "minimum": 0},
+          "speaker": {"type": ["string", "null"]},
+          "text": {"type": "string"},
+          "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+        }
+      }
+    }
+  }
+}

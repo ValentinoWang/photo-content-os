@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://photo-content-os.local/schemas/edit_decision_list.schema.json",
+  "title": "Photo Content OS Edit Decision List",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "doc_type",
+    "source_script_used",
+    "generation_model",
+    "generation_reasoning",
+    "clips",
+    "missing_materials"
+  ],
+  "properties": {
+    "schema_version": {"const": "edit_decision_list_v1"},
+    "doc_type": {"const": "edit_decision_list"},
+    "source_script_used": {"const": true},
+    "generation_model": {"type": "string", "minLength": 1},
+    "generation_reasoning": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string"},
+    "project_revision": {"type": ["integer", "string"]},
+    "missing_materials": {"type": "array"},
+    "clips": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "slot",
+          "time_range",
+          "source_start_sec",
+          "purpose",
+          "visual_need",
+          "caption",
+          "candidate_files",
+          "edit_note"
+        ],
+        "properties": {
+          "slot": {"type": "integer", "minimum": 1},
+          "time_range": {
+            "type": "string",
+            "pattern": "^\\d+(?:\\.\\d{3})-\\d+(?:\\.\\d{3})$"
+          },
+          "source_start_sec": {"type": "number", "minimum": 0, "multipleOf": 0.001},
+          "source_file": {"type": "string", "minLength": 1},
+          "candidate_files": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1},
+            "uniqueItems": true
+          },
+          "purpose": {"type": "string", "minLength": 1},
+          "visual_need": {"type": "string", "minLength": 1},
+          "caption": {"type": "string", "minLength": 1},
+          "edit_note": {"type": "string", "minLength": 1},
+          "evidence_refs": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "uniqueItems": true
+          }
+        },
+        "anyOf": [
+          {"required": ["source_file"]},
+          {"properties": {"candidate_files": {"minItems": 1}}}
+        ]
+      }
+    }
+  }
+}

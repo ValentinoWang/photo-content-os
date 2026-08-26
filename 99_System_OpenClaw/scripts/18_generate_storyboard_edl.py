@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate storyboard and EDL with gpt-5.5/xhigh."""
+"""Generate storyboard and canonical EDL from project evidence."""
 
 from __future__ import annotations
 
@@ -10,34 +10,30 @@ from typing import Any
 
 import yaml
 
+from edl_contract import EDLContractError, normalise_edl, write_edl
 from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT, generate_text
 from media_common import eligible_item, load_manifest, project_path
 
-
 MAX_ITEMS = 140
-MAX_SUMMARY_CHARS = 700
+MAX_SUMMARY_CHARS = 900
+MAX_TRANSCRIPT_CHARS = 1600
 
+SYSTEM_PROMPT = """你是 Photo Content OS 的短视频分镜与剪辑方案编排代理。
 
-SYSTEM_PROMPT = """你是 Mac OpenClaw 的短视频分镜与 EDL 编排代理。
-
-你必须先做宏观创作判断：识别这个项目真正要表达的内容类型、核心冲突、情绪曲线、平台观看动机和素材证据边界，然后再生成分镜和 EDL。不要套用任何固定项目模板，不要把旧项目表达、旧字幕、旧节奏结构或脚本内置规则自动搬到新项目；只有输入证据支持时才能使用。
+先判断项目真正要表达的内容类型、核心冲突、情绪曲线、平台观看动机和素材证据边界，再生成分镜与 EDL。不要套用固定模板，不要把旧项目表达、字幕、节奏或脚本规则搬到新项目。
 
 硬约束：
-1. 04_script.md 是强输入，默认按脚本叙事生成可剪执行方案；只有素材清单完全没有相关证据时，才把段落标成缺失或替代。
-2. 不允许编造素材、成绩、地点、人物关系、BGM 或镜头。
-3. EDL 的 candidate_files 只能来自输入 manifest 或 03_material_match_report。
-4. 如果素材不足，必须在 missing_materials 写清楚，不要硬凑。
-5. 输出必须是严格 JSON，不能有 Markdown 代码围栏或额外解释。
-6. JSON 顶层必须有 storyboard_markdown 和 edl_json 两个字段。
-7. storyboard_markdown 必须是完整 Markdown 文档，含 YAML frontmatter，doc_type=storyboard，writer_agent=mac_openclaw。
-8. edl_json 必须是对象，doc_type=edit_decision_list，clips 必须是非空数组。
-9. 每个 clips 条目必须包含 slot、time_range、purpose、visual_need、caption、candidate_files、edit_note。
-10. generation_model 必须写入 storyboard frontmatter 和 edl_json。generation_reasoning 也必须写入。
-11. edl_json 必须包含 source_script_used=true。
-12. RawVault / 360相机原始组 / reframe_needed 素材是第一视角或全景视角存在的强证据，不能因为还需要重构就判定为第一视角缺失。
-13. 如果 EDL 使用 RawVault / 360 原始素材，candidate_files 可以写原始 .OSV/.LRF 路径，但 edit_note 必须明确“先转码/重构视角/导出可剪片段后再剪”。
-14. 禁止把结果描述为脚本自动判定、机械分组或临时版本生成。
-15. 不要输出任何固定叙事模板；先按输入项目建立独立表达策略。"""
+1. 04_script.md 是强输入；只有真实素材证据不足时才把内容写入 missing_materials，不能硬凑。
+2. 不允许编造素材、成绩、地点、人物关系、BGM、对白或镜头。
+3. clips 中的 source_file/candidate_files 只能来自输入 manifest；不可执行的缺失素材不能进入 clips。
+4. 输出必须是严格 JSON，顶层只有 storyboard_markdown 和 edl_json，不得使用 Markdown 代码围栏。
+5. storyboard_markdown 必须含 YAML frontmatter：doc_type=storyboard、writer_agent=mac_openclaw、generation_model、generation_reasoning。
+6. edl_json 必须满足 edit_decision_list_v1：doc_type=edit_decision_list、source_script_used=true、clips 非空。
+7. 每个 clip 必须有唯一正整数 slot、字符串 time_range（如 0.000-4.000）、source_start_sec、purpose、visual_need、caption、candidate_files、edit_note。
+8. time_range 按时间升序且不能重叠；秒数精确到毫秒。
+9. RawVault / 360 原始素材只证明视角存在，不能直接作为可剪片段；如使用必须先在 missing_materials 中要求转码/重构。
+10. 视觉与声音结论必须能回指输入 keyframes 或 transcript_segments；证据不足时标记人工复核。
+11. 禁止把结果描述为脚本机械判定或临时版本生成。"""
 
 
 def read_text(path: Path) -> str:
@@ -72,15 +68,11 @@ def is_raw360_reference(item: dict[str, Any]) -> bool:
 
 
 def raw360_reference_summary(item: dict[str, Any]) -> str:
-    duration = item.get("duration_sec")
-    width = item.get("width")
-    height = item.get("height")
-    rel = item.get("relative_path")
     return (
-        "这是项目里的 360/全景相机原始素材证据，位于 RawVault 或标记为 reframe_needed。"
-        "它不能直接等同于已导出的剪映片段，但它证明第一视角/全景视角素材存在。"
-        f"路径：{rel}；时长：{duration} 秒；分辨率：{width}x{height}。"
-        "EDL 可把它列为候选素材，并在 edit_note 中要求先转码、重构视角或导出可剪片段。"
+        "这是 360/全景相机原始素材证据，不能直接等同于可剪片段。"
+        f"路径：{item.get('relative_path')}；时长：{item.get('duration_sec')} 秒；"
+        f"分辨率：{item.get('width')}x{item.get('height')}。"
+        "如需使用，必须先转码并重构视角。"
     )
 
 
@@ -96,6 +88,43 @@ def summary_text(project: Path, item: dict[str, Any]) -> str:
     if is_raw360_reference(item):
         return raw360_reference_summary(item)
     return ""
+
+
+def transcript_segments(project: Path, item: dict[str, Any]) -> list[dict[str, Any]]:
+    raw = item.get("transcript_path")
+    if not isinstance(raw, str) or not raw.strip():
+        return []
+    path = Path(raw).expanduser()
+    resolved = path.resolve() if path.is_absolute() else (project / path).resolve()
+    try:
+        resolved.relative_to(project.resolve())
+    except ValueError:
+        return []
+    try:
+        data = json.loads(resolved.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    result: list[dict[str, Any]] = []
+    for index, segment in enumerate(data.get("segments") or []):
+        if not isinstance(segment, dict):
+            continue
+        result.append(
+            {
+                "evidence_ref": f"transcript:{item.get('media_id')}:{index}",
+                "start_sec": segment.get("start_sec"),
+                "end_sec": segment.get("end_sec"),
+                "speaker": segment.get("speaker"),
+                "text": str(segment.get("text") or "")[:MAX_TRANSCRIPT_CHARS],
+            }
+        )
+    return result[:60]
+
+
+def keyframe_evidence(item: dict[str, Any]) -> list[dict[str, str]]:
+    return [
+        {"evidence_ref": f"image:{item.get('media_id')}:{index}", "path": str(path)}
+        for index, path in enumerate((item.get("keyframes") or [])[:12])
+    ]
 
 
 def context_items(project: Path, manifest: dict[str, Any]) -> list[dict[str, Any]]:
@@ -119,7 +148,8 @@ def context_items(project: Path, manifest: dict[str, Any]) -> list[dict[str, Any
                 "width": item.get("width"),
                 "height": item.get("height"),
                 "raw_decision_tokens": item.get("raw_decision_tokens") or [],
-                "keyframes": (item.get("keyframes") or [])[:6],
+                "keyframes": keyframe_evidence(item),
+                "transcript_segments": transcript_segments(project, item),
                 "summary": summary_text(project, item),
             }
         )
@@ -145,6 +175,7 @@ def build_user_prompt(
     payload = {
         "project_dir": str(project),
         "project_id": meta.get("project_id") or project.name,
+        "project_revision": meta.get("project_revision") or 1,
         "idea_id": meta.get("idea_id") or "",
         "brief_path": str(brief_path),
         "script_path": str(script_path) if script_path else "",
@@ -153,12 +184,19 @@ def build_user_prompt(
         "edl_output_path": str(edl_path),
         "generation_model": model,
         "generation_reasoning": reasoning,
+        "edl_contract": {
+            "schema_version": "edit_decision_list_v1",
+            "time_range_example": "0.000-4.000",
+            "slot": "unique positive integer",
+            "source_start_sec": "non-negative seconds with millisecond precision",
+            "missing_material_policy": "write unresolved needs to missing_materials, never executable clips",
+        },
         "brief_markdown": brief_text,
         "script_markdown": script_text,
         "material_match_report_markdown": report_text,
         "eligible_items": context_items(project, manifest),
     }
-    return "请根据以下 JSON 上下文生成 storyboard_markdown 和 edl_json：\n\n" + json.dumps(payload, ensure_ascii=False, indent=2)
+    return "请根据以下 JSON 证据生成 storyboard_markdown 和 edl_json：\n\n" + json.dumps(payload, ensure_ascii=False, indent=2)
 
 
 def parse_llm_json(text: str) -> dict[str, Any]:
@@ -184,27 +222,15 @@ def validate_outputs(data: dict[str, Any], *, model: str, reasoning: str) -> tup
         raise RuntimeError("storyboard_markdown frontmatter doc_type must be storyboard")
     if meta.get("writer_agent") != "mac_openclaw":
         raise RuntimeError("storyboard_markdown writer_agent must be mac_openclaw")
-    if edl.get("doc_type") != "edit_decision_list":
-        raise RuntimeError("edl_json.doc_type must be edit_decision_list")
-    if edl.get("source_script_used") is not True:
-        raise RuntimeError("edl_json.source_script_used must be true")
-    if edl.get("generation_model") != model:
-        raise RuntimeError(f"edl_json.generation_model must be {model}")
-    if edl.get("generation_reasoning") != reasoning:
-        raise RuntimeError(f"edl_json.generation_reasoning must be {reasoning}")
-    clips = edl.get("clips")
-    if not isinstance(clips, list) or not clips:
-        raise RuntimeError("edl_json.clips must be a non-empty list")
-    required = {"slot", "time_range", "purpose", "visual_need", "caption", "candidate_files", "edit_note"}
-    for index, clip in enumerate(clips, start=1):
-        if not isinstance(clip, dict):
-            raise RuntimeError(f"edl_json.clips[{index}] must be an object")
-        missing = sorted(required - set(clip))
-        if missing:
-            raise RuntimeError(f"edl_json.clips[{index}] missing fields: {', '.join(missing)}")
-        if not isinstance(clip.get("candidate_files"), list):
-            raise RuntimeError(f"edl_json.clips[{index}].candidate_files must be a list")
-    return storyboard, edl
+    if meta.get("generation_model") != model:
+        raise RuntimeError(f"storyboard generation_model must be {model}")
+    if meta.get("generation_reasoning") != reasoning:
+        raise RuntimeError(f"storyboard generation_reasoning must be {reasoning}")
+    try:
+        canonical_edl = normalise_edl(edl, generation_model=model, generation_reasoning=reasoning)
+    except EDLContractError as exc:
+        raise RuntimeError(f"EDL contract rejected model output: {exc}") from exc
+    return storyboard, canonical_edl
 
 
 def generate(
@@ -235,11 +261,8 @@ def generate(
     raw = generate_text(system_prompt=SYSTEM_PROMPT, user_prompt=user_prompt, model=model, reasoning_effort=reasoning)
     storyboard, edl = validate_outputs(parse_llm_json(raw), model=model, reasoning=reasoning)
     storyboard_path.parent.mkdir(parents=True, exist_ok=True)
-    edl_path.parent.mkdir(parents=True, exist_ok=True)
     storyboard_path.write_text(storyboard.rstrip() + "\n", encoding="utf-8")
-    with edl_path.open("w", encoding="utf-8") as handle:
-        json.dump(edl, handle, ensure_ascii=False, indent=2)
-        handle.write("\n")
+    write_edl(edl_path, edl)
 
 
 def main() -> int:

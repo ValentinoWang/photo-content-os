@@ -59,7 +59,15 @@ def now_iso() -> str:
 
 
 def run_text(cmd: list[str]) -> str:
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=False)
+    result = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
     if result.returncode != 0:
         return ""
     return result.stdout.strip()
@@ -161,8 +169,9 @@ def load_manifest(project: Path) -> dict[str, Any]:
 def save_manifest(project: Path, data: dict[str, Any]) -> None:
     path = manifest_path(project)
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(path)
 
 
 def eligible_item(item: dict[str, Any], include_derived: bool = False) -> bool:

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Photo Content OS Studio</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="app" class="app-shell" aria-live="polite">
+    <aside class="sidebar">
+      <header class="brand">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <div><strong>Photo Content OS</strong><small>Local Studio</small></div>
+      </header>
+      <button id="create-project" class="primary full">＋ 新建项目</button>
+      <nav id="project-list" class="project-list" aria-label="项目列表"></nav>
+      <footer class="sidebar-foot">
+        <span class="privacy-dot"></span>
+        <div><strong>素材留在本机</strong><small>网页不读取原始媒体字节</small></div>
+      </footer>
+    </aside>
+
+    <main class="workspace">
+      <header class="workspace-header">
+        <div>
+          <p id="project-kicker" class="kicker">本地创作工作台</p>
+          <h1 id="project-title">选择或创建一个项目</h1>
+          <p id="project-meta" class="muted">Brief、脚本、素材、剪辑方案与交付统一版本化。</p>
+        </div>
+        <div class="header-actions">
+          <span id="save-state" class="save-state">已同步到本机</span>
+          <button id="edit-project" class="ghost" disabled>编辑项目</button>
+        </div>
+      </header>
+
+      <nav id="tabs" class="tabs" aria-label="项目工作区">
+        <button data-tab="overview" class="active">概览</button>
+        <button data-tab="references">研究与参考</button>
+        <button data-tab="brief">Brief</button>
+        <button data-tab="materials">本地素材</button>
+        <button data-tab="script">脚本</button>
+        <button data-tab="storyboard">剪辑方案</button>
+        <button data-tab="delivery">交付</button>
+        <button data-tab="publishing">发布与复盘</button>
+      </nav>
+
+      <section id="content" class="content empty-state">
+        <div class="empty-illustration">⌁</div>
+        <h2>从一个 CreativeProject 开始</h2>
+        <p>先定义要做什么，再连接本地照片和视频。素材路径与媒体字节不会出现在网页投影中。</p>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="project-dialog">
+    <form id="project-form" method="dialog" class="dialog-form">
+      <header><div><p class="kicker">CreativeProject</p><h2>新建内容项目</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header>
+      <label>项目名称<input name="title" required maxlength="120" placeholder="例如：重回校园的一天"></label>
+      <div class="two-col">
+        <label>目标平台<select name="platform"><option>小红书</option><option>抖音</option><option>视频号</option><option>B 站</option><option>未指定</option></select></label>
+        <label>账号<input name="account" maxlength="80" placeholder="可稍后填写"></label>
+      </div>
+      <label>本地素材目录（可选）<input name="localWorkspace" placeholder="只保存在本机，不会显示到网页"></label>
+      <footer><button value="cancel" class="ghost">取消</button><button id="submit-project" value="default" class="primary">创建项目</button></footer>
+    </form>
+  </dialog>
+
+  <dialog id="edit-dialog">
+    <form id="edit-form" method="dialog" class="dialog-form">
+      <header><div><p class="kicker">项目信息</p><h2>编辑项目</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header>
+      <label>项目名称<input name="title" required maxlength="120"></label>
+      <div class="two-col">
+        <label>目标平台<input name="platform" maxlength="80"></label>
+        <label>账号<input name="account" maxlength="80"></label>
+      </div>
+      <label>阶段<select name="status"><option value="planning">策划中</option><option value="producing">制作中</option><option value="editing">精剪中</option><option value="ready">待发布</option><option value="published">已发布</option></select></label>
+      <footer><button value="cancel" class="ghost">取消</button><button value="default" class="primary">保存</button></footer>
+    </form>
+  </dialog>
+
+  <dialog id="ai-dialog">
+    <form id="ai-form" method="dialog" class="dialog-form">
+      <header><div><p class="kicker">只修改选中区块</p><h2>AI 区块修改</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header>
+      <p id="ai-selection" class="notice"></p>
+      <label>修改要求<textarea name="instruction" rows="5" required placeholder="例如：保留事实不变，把开头压缩到 80 字以内，并加强冲突感。"></textarea></label>
+      <footer><button value="cancel" class="ghost">取消</button><button value="default" class="primary">生成并保存</button></footer>
+    </form>
+  </dialog>
+
+  <dialog id="diff-dialog" class="wide-dialog">
+    <form method="dialog" class="dialog-form">
+      <header><div><p class="kicker">版本差异</p><h2 id="diff-title">Diff</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header>
+      <pre id="diff-output" class="diff-output"></pre>
+      <footer><button value="cancel" class="primary">关闭</button></footer>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
