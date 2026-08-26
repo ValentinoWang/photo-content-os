@@ -8,15 +8,19 @@ RUNTIME_PYTHON="$RUNTIME_DIR/bin/python"
 REQUIREMENTS_FILE="$REPOSITORY_ROOT/requirements-dev.txt"
 BOOTSTRAP_PYTHON="${PYTHON_BIN:-python3}"
 
+if [[ "${OS:-}" == "Windows_NT" ]]; then
+  echo "检测到 Windows。请运行 PowerShell 入口：" >&2
+  echo "  powershell -ExecutionPolicy Bypass -File 99_System_OpenClaw/scripts/41_setup_dev_environment.ps1" >&2
+  exit 2
+fi
+
 check_supported_python() {
   "$1" - <<'PY'
 import sys
-
 minimum = (3, 11)
 if sys.version_info < minimum:
     raise SystemExit(
-        f"Python {minimum[0]}.{minimum[1]} or newer is required; "
-        f"found {sys.version.split()[0]}"
+        f"Python {minimum[0]}.{minimum[1]} or newer is required; found {sys.version.split()[0]}"
     )
 PY
 }
@@ -44,7 +48,6 @@ fi
 "$RUNTIME_PYTHON" - "$RUNTIME_DIR" <<'PY'
 from pathlib import Path
 import sys
-
 expected = Path(sys.argv[1]).resolve()
 actual = Path(sys.prefix).resolve()
 if actual != expected:
@@ -62,5 +65,6 @@ echo "== Install pinned development dependencies =="
 
 echo "== Verify fixed development runtime =="
 PYTHON_BIN="$RUNTIME_PYTHON" bash "$SCRIPT_DIR/check_runtime_contract.sh"
+"$RUNTIME_PYTHON" "$SCRIPT_DIR/43_content_os_doctor.py" --allow-offline
 
 echo "Development environment is ready: $RUNTIME_DIR"

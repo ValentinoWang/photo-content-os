@@ -1,127 +1,178 @@
 #!/usr/bin/env python3
-"""Extract uniformly sampled video frames for AI visual analysis."""
+"""Extract evidence keyframes under a deterministic analysis-tier budget."""
 
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import shutil
 import subprocess
 from pathlib import Path
+from typing import Any
 
+from analysis_tiering import evenly_spaced_indexes
 from media_common import eligible_item, load_manifest, project_path, relative_posix, safe_slug, save_manifest
 
 
-def timestamp_label(seconds: float) -> str:
-    millis = int(round(seconds * 1000))
-    total_seconds, ms = divmod(millis, 1000)
-    minutes, sec = divmod(total_seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    if hours:
-        return f"{hours:02d}-{minutes:02d}-{sec:02d}-{ms:03d}"
-    return f"{minutes:02d}-{sec:02d}-{ms:03d}"
+class KeyframeError(RuntimeError):
+    pass
 
 
-def is_dense_video(item: dict[str, object]) -> bool:
-    text = f"{item.get('filename', '')} {item.get('relative_path', '')}"
-    return any(token in text for token in ("比赛", "校运会", "高燃", "起跑", "冲线", "运动", "赛事", "操场"))
+def _load_plan(path: Path | None) -> dict[str, dict[str, Any]]:
+    if path is None or not path.exists():
+        return {}
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise KeyframeError(f"analysis plan is invalid JSON: {path}") from exc
+    plans = value.get("plans") if isinstance(value, dict) else None
+    if not isinstance(plans, list):
+        raise KeyframeError("analysis plan must contain a plans array")
+    result: dict[str, dict[str, Any]] = {}
+    for item in plans:
+        if isinstance(item, dict) and item.get("media_id"):
+            result[str(item["media_id"])] = item
+    return result
 
 
-def sample_times(duration: float, dense: bool, max_frames: int) -> list[float]:
-    if duration <= 0:
-        return [0.5]
-    interval = 1.0 if dense else 2.0
-    wanted = max(1, math.ceil(duration / interval))
-    count = min(max_frames, wanted)
+def _timestamp_candidates(duration: float, count: int) -> list[float]:
+    if count <= 0 or duration <= 0:
+        return []
+    # Avoid exact first/last frames, which are frequently black or incomplete.
+    start = min(0.35, max(0.0, duration * 0.05))
+    end = max(start, duration - min(0.35, duration * 0.05))
     if count == 1:
-        return [min(max(duration * 0.5, 0.2), max(duration - 0.1, 0.0))]
-    start = min(0.4, duration * 0.15)
-    end = max(duration - min(0.4, duration * 0.15), start)
-    step = (end - start) / (count - 1)
-    return [round(start + i * step, 3) for i in range(count)]
+        return [round((start + end) / 2, 3)]
+    return [round(start + index * (end - start) / (count - 1), 3) for index in range(count)]
 
 
-def extract_one(video_path: Path, output_dir: Path, duration: float, dense: bool, max_frames: int) -> list[Path]:
-    output_dir.mkdir(parents=True, exist_ok=True)
-    for old in output_dir.glob("frame_*.jpg"):
-        old.unlink()
-
-    frames: list[Path] = []
-    for index, seconds in enumerate(sample_times(duration, dense, max_frames), start=1):
-        output = output_dir / f"frame_{index:04d}_{timestamp_label(seconds)}.jpg"
-        cmd = [
-            "ffmpeg",
-            "-y",
-            "-ss",
-            f"{seconds:.3f}",
-            "-i",
-            str(video_path),
-            "-frames:v",
-            "1",
-            "-q:v",
-            "3",
-            "-vf",
-            "scale='min(1280,iw)':-2",
-            str(output),
-        ]
-        result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-        if result.returncode == 0 and output.exists() and output.stat().st_size > 0:
-            frames.append(output)
-    return frames
-
-
-def prune_stale_keyframe_dirs(keyframe_root: Path, expected_names: set[str]) -> int:
-    removed = 0
-    for child in keyframe_root.iterdir():
-        if child.is_dir() and child.name not in expected_names:
-            shutil.rmtree(child)
-            removed += 1
-    return removed
+def _run_ffmpeg(source: Path, output: Path, timestamp: float, *, max_edge: int) -> bool:
+    command = [
+        "ffmpeg",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-y",
+        "-ss",
+        f"{timestamp:.3f}",
+        "-i",
+        str(source),
+        "-frames:v",
+        "1",
+        "-vf",
+        f"scale='min({max_edge},iw)':-2",
+        "-q:v",
+        "3",
+        str(output),
+    ]
+    completed = subprocess.run(
+        command,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    return completed.returncode == 0 and output.is_file() and output.stat().st_size > 0
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="按时长均匀抽取视频关键帧")
-    parser.add_argument("project_dir", help="项目文件夹路径")
-    parser.add_argument("--max-frames", type=int, default=40, help="单个视频最多抽取帧数")
-    parser.add_argument("--include-derived", action="store_true", help="同时分析 80/91 等派生目录中的媒体")
+def extract_for_item(
+    project: Path,
+    item: dict[str, Any],
+    *,
+    output_root: Path,
+    image_budget: int,
+    max_edge: int,
+) -> list[str]:
+    if item.get("media_type") != "video" or image_budget <= 0:
+        return []
+    source = (project / str(item.get("relative_path") or "")).resolve()
+    try:
+        source.relative_to(project.resolve())
+    except ValueError as exc:
+        raise KeyframeError("media path escapes project root") from exc
+    if not source.is_file():
+        raise KeyframeError(f"media file does not exist: {source}")
+    duration = float(item.get("duration_sec") or 0)
+    if not math.isfinite(duration) or duration <= 0:
+        return []
+    media_id = str(item.get("media_id") or item.get("id") or safe_slug(source.stem))
+    item_dir = output_root / f"{media_id}_{safe_slug(source.stem)}"
+    item_dir.mkdir(parents=True, exist_ok=True)
+    outputs: list[str] = []
+    for index, timestamp in enumerate(_timestamp_candidates(duration, image_budget), start=1):
+        output = item_dir / f"frame_{index:03d}_{timestamp:.3f}s.jpg"
+        if output.is_file() and output.stat().st_size > 0:
+            outputs.append(relative_posix(output, project))
+            continue
+        if _run_ffmpeg(source, output, timestamp, max_edge=max_edge):
+            outputs.append(relative_posix(output, project))
+    return outputs
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("project_dir")
+    parser.add_argument("--include-derived", action="store_true")
+    parser.add_argument("--analysis-plan", type=Path)
+    parser.add_argument("--max-frames", type=int, default=8, help="无分析计划时的单视频预算")
+    parser.add_argument("--max-edge", type=int, default=1280)
+    parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
-
-    if not shutil.which("ffmpeg"):
-        raise RuntimeError("ffmpeg not found. Run 99_System_OpenClaw/scripts/00_install_deps.sh or install ffmpeg.")
+    if not 0 <= args.max_frames <= 40:
+        parser.error("--max-frames must be between 0 and 40")
+    if not 320 <= args.max_edge <= 4096:
+        parser.error("--max-edge must be between 320 and 4096")
+    if shutil.which("ffmpeg") is None:
+        raise KeyframeError("ffmpeg not found")
 
     project = project_path(args.project_dir)
+    plan_path = args.analysis_plan.expanduser().resolve() if args.analysis_plan else project / "_ai_analysis" / "analysis_plan.json"
+    plan_by_id = _load_plan(plan_path if plan_path.exists() else None)
     manifest = load_manifest(project)
-    keyframe_root = project / "_ai_analysis" / "keyframes"
-    keyframe_root.mkdir(parents=True, exist_ok=True)
-
-    videos = [
-        item
-        for item in manifest["items"]
-        if item.get("media_type") == "video" and eligible_item(item, include_derived=args.include_derived)
-    ]
-    expected_dirs = {f"{item['media_id']}_{safe_slug(Path(str(item['relative_path'])).stem)}" for item in videos}
-    pruned = prune_stale_keyframe_dirs(keyframe_root, expected_dirs)
-    if pruned:
-        print(f"已清理陈旧关键帧目录：{pruned} 个")
-
-    for item in videos:
-        rel = item["relative_path"]
-        video_path = project / rel
-        if not video_path.exists():
-            raise FileNotFoundError(f"manifest item no longer exists: {video_path}")
-        duration = float(item.get("duration_sec") or 0)
-        dense = is_dense_video(item)
-        out_dir = keyframe_root / f"{item['media_id']}_{safe_slug(Path(rel).stem)}"
-        frames = extract_one(video_path, out_dir, duration, dense, args.max_frames)
-        item["keyframe_dir"] = relative_posix(out_dir, project)
-        item["keyframe_count"] = len(frames)
-        item["keyframes"] = [relative_posix(frame, project) for frame in frames]
-        item["keyframe_strategy"] = "dense_1s" if dense else "normal_2s"
-        print(f"{rel}: {len(frames)} frames")
-
+    output_root = project / "_ai_analysis" / "keyframes"
+    output_root.mkdir(parents=True, exist_ok=True)
+    extracted = 0
+    skipped = 0
+    for item in manifest.get("items", []):
+        if not isinstance(item, dict) or not eligible_item(item, include_derived=args.include_derived):
+            continue
+        media_id = str(item.get("media_id") or item.get("id") or "")
+        plan = plan_by_id.get(media_id, {})
+        tier = str(plan.get("tier") or "preview")
+        image_budget = int(plan.get("image_budget", args.max_frames))
+        item["analysis_tier"] = tier
+        item["analysis_cache_key"] = plan.get("cache_key")
+        item["image_evidence_budget"] = image_budget
+        if item.get("media_type") != "video":
+            item["keyframe_status"] = "not_required_for_image"
+            continue
+        if tier == "metadata" or image_budget <= 0:
+            item["keyframe_status"] = "skipped_metadata_tier"
+            item["keyframes"] = []
+            skipped += 1
+            continue
+        if item.get("keyframes") and not args.overwrite:
+            item["keyframe_status"] = "cached"
+            skipped += 1
+            continue
+        frames = extract_for_item(
+            project,
+            item,
+            output_root=output_root,
+            image_budget=image_budget,
+            max_edge=args.max_edge,
+        )
+        item["keyframes"] = frames
+        item["keyframe_status"] = "ok" if frames else "pending_manual"
+        extracted += len(frames)
+    manifest["analysis_plan_path"] = relative_posix(plan_path, project) if plan_path.exists() else None
     save_manifest(project, manifest)
-    print(f"关键帧抽取完成：{keyframe_root}")
+    print(f"关键帧提取完成：{output_root}；新增/确认 {extracted} 帧，跳过 {skipped} 个素材")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

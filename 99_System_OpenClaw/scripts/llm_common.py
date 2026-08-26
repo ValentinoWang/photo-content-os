@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
-"""Shared LLM helpers for Mac-local creative generation scripts."""
+"""Shared LLM helpers for local creative generation scripts.
+
+Both providers accept image evidence.  Codex receives file paths through its
+CLI; the OpenAI Responses API receives data URLs.  Subprocess text I/O is
+always UTF-8 so Chinese prompts behave identically on Windows and POSIX.
+"""
 
 from __future__ import annotations
 
+import base64
+import mimetypes
 import os
 import shutil
 import subprocess
@@ -10,11 +17,12 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-
 DEFAULT_CREATIVE_MODEL = "gpt-5.5"
 DEFAULT_REASONING_EFFORT = "xhigh"
 DEFAULT_CREATIVE_PROVIDER = "codex_cli"
 DEFAULT_CODEX_TIMEOUT_SEC = 1800
+MAX_IMAGE_BYTES = 20 * 1024 * 1024
+SUPPORTED_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
 
 
 class LLMError(Exception):
@@ -47,8 +55,8 @@ def codex_model_name(model: str) -> str:
 def codex_prompt(system_prompt: str, user_prompt: str) -> str:
     return "\n\n".join(
         [
-            "你是 Mac OpenClaw 的本地创作代理。必须严格遵守 system 指令和用户输入合同。",
-            "不要解释你的执行过程，不要输出额外寒暄，只输出任务要求的正文。",
+            "你是 Photo Content OS 的本地创作代理。必须严格遵守 system 指令和用户输入合同。",
+            "不要解释执行过程，不要输出额外寒暄，只输出任务要求的正文。",
             "## System Prompt",
             system_prompt.strip(),
             "## User Context",
@@ -88,10 +96,35 @@ def response_text(response: Any) -> str:
     return text
 
 
+def validated_image_paths(image_paths: list[Path] | None) -> list[Path]:
+    result: list[Path] = []
+    seen: set[Path] = set()
+    for raw in image_paths or []:
+        resolved = raw.expanduser().resolve()
+        if resolved in seen:
+            continue
+        if not resolved.is_file():
+            raise LLMError(f"image path does not exist: {resolved}")
+        if resolved.suffix.lower() not in SUPPORTED_IMAGE_SUFFIXES:
+            raise LLMError(f"unsupported image format: {resolved.suffix or '<none>'}: {resolved}")
+        if resolved.stat().st_size > MAX_IMAGE_BYTES:
+            raise LLMError(f"image exceeds {MAX_IMAGE_BYTES // 1024 // 1024} MiB limit: {resolved}")
+        result.append(resolved)
+        seen.add(resolved)
+    return result
+
+
+def image_data_url(path: Path) -> str:
+    mime = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:{mime};base64,{encoded}"
+
+
 def generate_text_with_openai_api(
     *,
     system_prompt: str,
     user_prompt: str,
+    image_paths: list[Path] | None = None,
     model: str | None = None,
     reasoning_effort: str | None = None,
 ) -> str:
@@ -103,6 +136,10 @@ def generate_text_with_openai_api(
 
     resolved_model = configured_model(model)
     resolved_reasoning = configured_reasoning(reasoning_effort)
+    user_content: list[dict[str, str]] = [{"type": "input_text", "text": user_prompt}]
+    for image_path in validated_image_paths(image_paths):
+        user_content.append({"type": "input_image", "image_url": image_data_url(image_path)})
+
     client = OpenAI()
     response = client.responses.create(
         model=resolved_model,
@@ -114,7 +151,7 @@ def generate_text_with_openai_api(
             },
             {
                 "role": "user",
-                "content": [{"type": "input_text", "text": user_prompt}],
+                "content": user_content,
             },
         ],
     )
@@ -136,7 +173,10 @@ def generate_text_with_codex_cli(
 
     resolved_model = codex_model_name(configured_model(model))
     resolved_reasoning = configured_reasoning(reasoning_effort)
-    timeout = int(os.getenv("OPENCLAW_CODEX_TIMEOUT_SEC", str(DEFAULT_CODEX_TIMEOUT_SEC)))
+    try:
+        timeout = int(os.getenv("OPENCLAW_CODEX_TIMEOUT_SEC", str(DEFAULT_CODEX_TIMEOUT_SEC)))
+    except ValueError as exc:
+        raise LLMError("OPENCLAW_CODEX_TIMEOUT_SEC must be an integer") from exc
     prompt = codex_prompt(system_prompt, user_prompt)
 
     with tempfile.NamedTemporaryFile("w+", encoding="utf-8", suffix=".codex-output.txt", delete=False) as handle:
@@ -160,17 +200,16 @@ def generate_text_with_codex_cli(
         "-o",
         str(output_path),
     ]
-    for image_path in image_paths or []:
-        resolved = image_path.expanduser().resolve()
-        if not resolved.exists():
-            raise LLMError(f"image path does not exist: {resolved}")
-        args.extend(["--image", str(resolved)])
+    for image_path in validated_image_paths(image_paths):
+        args.extend(["--image", str(image_path)])
     args.append("-")
     try:
         completed = subprocess.run(
             args,
             input=prompt,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             capture_output=True,
             timeout=timeout,
             check=False,
@@ -211,11 +250,10 @@ def generate_text(
             reasoning_effort=reasoning_effort,
         )
     if resolved_provider in {"openai", "openai_api", "openai-api"}:
-        if image_paths:
-            raise LLMError("image_paths are currently supported through codex_cli provider only")
         return generate_text_with_openai_api(
             system_prompt=system_prompt,
             user_prompt=user_prompt,
+            image_paths=image_paths,
             model=model,
             reasoning_effort=reasoning_effort,
         )

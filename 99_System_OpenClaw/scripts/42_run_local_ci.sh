@@ -8,10 +8,12 @@ DEFAULT_OBSIDIAN_ROOT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documen
 OBSIDIAN_ROOT="${OBSIDIAN_ROOT:-$DEFAULT_OBSIDIAN_ROOT}"
 TEMP_ROOT="${TMPDIR:-/tmp}"
 TEMP_ROOT="${TEMP_ROOT%/}"
-if [[ -z "$TEMP_ROOT" ]]; then
-  TEMP_ROOT="/"
-fi
+[[ -n "$TEMP_ROOT" ]] || TEMP_ROOT="/"
 
+if [[ "${OS:-}" == "Windows_NT" ]]; then
+  echo "检测到 Windows。请运行 42_run_local_ci.ps1。" >&2
+  exit 2
+fi
 if [[ ! -x "$PYTHON_BIN" ]]; then
   echo "Fixed development runtime is missing: $PYTHON_BIN" >&2
   echo "Run: bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh" >&2
@@ -27,11 +29,13 @@ cleanup() {
   fi
 }
 trap cleanup EXIT
-
 cd "$REPOSITORY_ROOT"
 
 echo "== Runtime contract =="
-PYTHON_BIN="$PYTHON_BIN" bash "$SCRIPT_DIR/check_runtime_contract.sh"
+"$PYTHON_BIN" "$SCRIPT_DIR/check_runtime_contract.py"
+
+echo "== Doctor (offline-tolerant) =="
+"$PYTHON_BIN" "$SCRIPT_DIR/43_content_os_doctor.py" --allow-offline
 
 echo "== Unit tests =="
 "$PYTHON_BIN" -m unittest discover -s 99_System_OpenClaw/tests
@@ -51,15 +55,12 @@ echo "== Review capability registry =="
 echo "== Repository safety boundary =="
 "$PYTHON_BIN" "$SCRIPT_DIR/40_check_repository_safety.py"
 
-echo "== Task validator entry point =="
-"$PYTHON_BIN" "$SCRIPT_DIR/validate_content_os_task.py" --help >/dev/null
-
-echo "== Jianying validator entry point =="
-"$PYTHON_BIN" "$SCRIPT_DIR/25_validate_jianying_draft.py" --help >/dev/null
+echo "== Public entry points =="
+for entry in validate_content_os_task.py 25_validate_jianying_draft.py 03_transcribe_audio.py 20_render_preview.py 43_content_os_doctor.py 44_launch_desktop.py openclaw_media_agent.py; do
+  "$PYTHON_BIN" "$SCRIPT_DIR/$entry" --help >/dev/null
+done
 
 echo "== Synthetic trial =="
-"$PYTHON_BIN" "$SCRIPT_DIR/39_create_demo_project.py" \
-  --workspace-root "$DEMO_WORKSPACE" \
-  --project-name local_ci_demo
+"$PYTHON_BIN" "$SCRIPT_DIR/39_create_demo_project.py" --workspace-root "$DEMO_WORKSPACE" --project-name local_ci_demo
 
 echo "Local CI passed."

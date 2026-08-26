@@ -1,0 +1,28 @@
+{
+  "schema_version": "photo_content_os_openclaw_bridge_v1",
+  "upstream_repository": "ValentinoWang/openclaw-media",
+  "upstream_commit": "f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf",
+  "upstream_contract_id": "openclaw_media_product_v1",
+  "upstream_contract_version": 1,
+  "catalog_digest": "sha256:931dba97f9d9ed3fa1a03da4e15783f5d449ead7a56ff0919f3e0087efbf6967",
+  "api_base": "/openclaw/media/api",
+  "supported_device_platforms": ["macos"],
+  "job_states": ["queued", "leased", "acknowledged", "running", "succeeded", "blocked", "failed", "expired", "cancelled"],
+  "pipelines": {
+    "prepare": "media.project.prepare.v1",
+    "organize": "media.material.organize.v1",
+    "match": "media.material.match.v1",
+    "handoff": "media.edit.handoff.v1",
+    "timeline": "media.edit.timeline.v1",
+    "revise": "media.edit.revise.v1",
+    "output-review": "media.output.review.v1",
+    "rhythm-review": "media.rhythm.review.v1",
+    "semantic-review": "media.semantic.review.v1"
+  },
+  "privacy": {
+    "absolute_paths": "remove",
+    "credentials": "remove",
+    "raw_media_bytes": "local_only",
+    "artifact_modes": ["content", "descriptor_only", "forbidden"]
+  }
+}
