@@ -16,6 +16,7 @@ from media_common import eligible_item, load_manifest, project_path
 
 MAX_ITEMS = 180
 MAX_SUMMARY_CHARS = 1000
+MAX_TRANSCRIPT_CHARS = 1600
 
 
 SYSTEM_PROMPT = """你是 Mac OpenClaw 的本地素材执行代理，负责把本机真实素材证据转成短视频项目的素材适配报告。
@@ -35,7 +36,8 @@ SYSTEM_PROMPT = """你是 Mac OpenClaw 的本地素材执行代理，负责把�
 10. 04_script.md 是创作强输入；如果素材清单中存在可支撑脚本核心叙事的原始素材，不能因为它还需要重构就判定为缺失。
 11. RawVault / 360相机原始组 / reframe_needed 素材必须作为“存在但需重构”的强证据处理：可以支撑第一视角或全景视角叙事，但要明确写出需要先转码、重构视角或导出可剪片段。
 12. 禁止把结果描述为脚本自动判定、机械分组或临时版本生成。
-13. 不要输出额外解释，不要用 Markdown 代码围栏包裹全文。"""
+13. 素材带 transcript_segments 时，判断口播/对白/现场声是否可用必须引用这些转写证据（写明 evidence_ref 或转写原句）；没有转写证据就不得断言这条素材里说了什么，只能标记“声音内容待人工确认”。
+14. 不要输出额外解释，不要用 Markdown 代码围栏包裹全文。"""
 
 
 def read_text(path: Path) -> str:
@@ -96,6 +98,36 @@ def raw360_reference_summary(item: dict[str, Any]) -> str:
     )
 
 
+def transcript_segments(project: Path, item: dict[str, Any]) -> list[dict[str, Any]]:
+    raw = item.get("transcript_path")
+    if not isinstance(raw, str) or not raw.strip():
+        return []
+    path = Path(raw).expanduser()
+    resolved = path.resolve() if path.is_absolute() else (project / path).resolve()
+    try:
+        resolved.relative_to(project.resolve())
+    except ValueError:
+        return []
+    try:
+        data = json.loads(resolved.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    result: list[dict[str, Any]] = []
+    for index, segment in enumerate(data.get("segments") or []):
+        if not isinstance(segment, dict):
+            continue
+        result.append(
+            {
+                "evidence_ref": f"transcript:{item.get('media_id')}:{index}",
+                "start_sec": segment.get("start_sec"),
+                "end_sec": segment.get("end_sec"),
+                "speaker": segment.get("speaker"),
+                "text": str(segment.get("text") or "")[:MAX_TRANSCRIPT_CHARS],
+            }
+        )
+    return result[:60]
+
+
 def context_items(project: Path, manifest: dict[str, Any]) -> list[dict[str, Any]]:
     items = [
         item
@@ -121,6 +153,7 @@ def context_items(project: Path, manifest: dict[str, Any]) -> list[dict[str, Any
                 "raw_decision_tokens": item.get("raw_decision_tokens") or [],
                 "decision_notes": item.get("decision_notes") or [],
                 "keyframes": (item.get("keyframes") or [])[:8],
+                "transcript_segments": transcript_segments(project, item),
                 "summary": summary_text(project, item),
             }
         )

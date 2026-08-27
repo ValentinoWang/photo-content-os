@@ -9,10 +9,42 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "validate_state_transition.py"
-RULES = Path("/Users/vsiyo/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/state_transition_rules.yaml")
+VAULT_RULES = Path("/Users/vsiyo/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/state_transition_rules.yaml")
+
+# 本机 vault 缺失时（CI 容器、他人机器）合成与 vault 合同同构的最小规则，
+# 只覆盖本文件断言的两条迁移；vault 存在时仍然直接校验真实规则文件。
+FALLBACK_RULES_TEXT = """\
+project_statuses:
+  - planned
+  - edit_ready
+  - final_ready
+  - published
+transitions:
+  planned_to_edit_ready:
+    from: planned
+    to: edit_ready
+    allowed_actor: cloud_openclaw
+    required_evidence:
+      - result_identity_valid
+      - selected_editor_backend_result_valid
+  final_ready_to_published:
+    from: final_ready
+    to: published
+    allowed_actor: human
+    required_evidence:
+      - human_published_confirmation
+"""
 
 
 class StateTransitionV2Tests(unittest.TestCase):
+    def rules_path(self, root: Path) -> Path:
+        if VAULT_RULES.exists():
+            return VAULT_RULES
+        path = root / "state_transition_rules.yaml"
+        if not path.exists():
+            path.write_text(FALLBACK_RULES_TEXT, encoding="utf-8")
+        return path
+
     def run_validator(
         self,
         project: Path,
@@ -24,7 +56,7 @@ class StateTransitionV2Tests(unittest.TestCase):
     ) -> subprocess.CompletedProcess[str]:
         command = [
             sys.executable, str(SCRIPT), "--vault-root", str(project.parent),
-            "--project-index", str(project / "00_项目总览.md"), "--rules", str(RULES),
+            "--project-index", str(project / "00_项目总览.md"), "--rules", str(self.rules_path(project.parent)),
             "--from", from_status, "--to", to_status, "--actor", actor, *extra,
         ]
         completed = subprocess.run(command, text=True, capture_output=True, check=False)
