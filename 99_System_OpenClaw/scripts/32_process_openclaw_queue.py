@@ -316,7 +316,7 @@ Obsidian 项目ID：
 
 下面三项只写“文件本身看不出来、但你知道”的信息。它们不是最终分类结论，也不是让你提前筛片；只是防止后续 AI / OpenClaw 误判素材用途。
 
-- “这批素材可能服务的内容”：这批素材可能用于哪些短视频、图文或项目，例如“400米第一视角”“校运会回访 vlog”“路上奔赴混剪”。
+- “这批素材可能服务的内容”：这批素材可能用于哪些短视频、图文或项目，例如“活动第一视角”“人物回访 vlog”“路途混剪”。
 - “必须保留 / 特别注意”：不能误删、不能拆散、不能当普通素材处理的内容，例如 Live Photo 同名组、360 原始组、设备调试画面、某个必须保留的人物片段。
 - “不确定的地方”：你自己也拿不准、需要 AI 或人工复核的点，例如归属项目、是否值得修复、地点/人物是否确认。
 
@@ -718,8 +718,6 @@ def process_pending(config: QueueConfig) -> list[dict[str, Any]]:
 
 
 def legacy_queue_packages(config: QueueConfig) -> list[Path]:
-    if config.queue_root.parent != DEFAULT_OBSIDIAN_ROOT.resolve():
-        return []
     legacy = config.queue_root.parent / "98_Agent任务队列" / "01_cloud_to_mac_ready"
     if not legacy.exists():
         return []

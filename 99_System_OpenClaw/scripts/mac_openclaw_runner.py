@@ -18,6 +18,7 @@ from typing import Any
 
 import yaml
 
+from runtime_paths import runtime_python
 from validate_content_os_task import (
     ValidationError,
     load_yaml as load_validator_yaml,
@@ -39,7 +40,7 @@ REQUIRED_CREATIVE_MODEL = "gpt-5.6-terra"
 REQUIRED_CREATIVE_REASONING = "xhigh"
 REQUIRED_CREATIVE_PROVIDER = "codex_cli"
 CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
-OTIO_KDENLIVE_PYTHON = SYSTEM_ROOT / ".venv-content-os" / "bin" / "python"
+OTIO_KDENLIVE_PYTHON = runtime_python(WORKSPACE_ROOT)
 
 REQUIRED_ACTIONS = {
     "local_material_match": [

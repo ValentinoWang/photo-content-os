@@ -276,7 +276,18 @@ def concat_preview(package_dir: Path, preview_dir: Path, clips: list[Path]) -> P
     return preview
 
 
-def write_readme(path: Path, pack_dir: Path, clips_dir: Path, captions_dir: Path, audio_dir: Path, preview_dir: Path) -> None:
+def write_readme(
+    path: Path,
+    pack_dir: Path,
+    clips_dir: Path,
+    captions_dir: Path,
+    audio_dir: Path,
+    preview_dir: Path,
+    *,
+    width: int,
+    height: int,
+    fps: int,
+) -> None:
     text = f"""# 剪映原生导入包
 
 这个包不写剪映私有草稿 JSON，只使用剪映自己的原生导入和拖入时间线动作。
@@ -306,7 +317,7 @@ def write_readme(path: Path, pack_dir: Path, clips_dir: Path, captions_dir: Path
 - `04_preview/preview_roughcut.mp4` 只用于预览，不用于最终精剪。
 - `01_clips/` 中每段都是独立可编辑片段。
 - `02_captions/README_字幕导入.md` 是单独的字幕操作说明。
-- 所有片段均按 H.264 / yuv420p / 1080x1920 / 30fps 生成。
+- 所有片段均按 H.264 / yuv420p / {width}x{height} / {fps}fps 生成。
 - Mac OpenClaw 不自动插入 BGM。
 """
     path.write_text(text, encoding="utf-8")
@@ -428,7 +439,17 @@ def create_package(plan_path: Path, output_root: Path, result_output: Path | Non
     }
     write_json(edit_manifest, manifest)
     readme = pack_dir / "README_导入剪映.md"
-    write_readme(readme, pack_dir, clips_dir, captions_dir, audio_dir, preview_dir)
+    write_readme(
+        readme,
+        pack_dir,
+        clips_dir,
+        captions_dir,
+        audio_dir,
+        preview_dir,
+        width=width,
+        height=height,
+        fps=fps,
+    )
 
     result = {
         "spec_version": "content_os_v0.1",

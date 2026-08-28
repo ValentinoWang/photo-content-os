@@ -31,6 +31,25 @@ def make_config(root: Path) -> object:
 
 
 class OpenClawQueueTest(unittest.TestCase):
+    def test_legacy_queue_warning_checks_a_nondefault_vault(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            vault = Path(tmp) / "nondefault-vault"
+            config = make_config(vault)
+            package = vault / "98_Agent任务队列/01_cloud_to_mac_ready/run_20260828_001"
+            package.mkdir(parents=True)
+            (package / "manifest.json").write_text("{}", encoding="utf-8")
+
+            self.assertEqual(openclaw_queue.legacy_queue_packages(config), [package])
+
+    def test_batch_shell_uses_domain_neutral_human_examples(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            batch = Path(tmp) / "20260828_demo"
+            text = openclaw_queue.batch_note_text({}, batch)
+
+            self.assertIn("活动第一视角", text)
+            self.assertNotIn("400米", text)
+            self.assertNotIn("校运会", text)
+
     def test_bind_creation_run_to_local_batch(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

@@ -39,6 +39,27 @@ SYSTEM_PROMPT = """你是 Mac OpenClaw 的本地素材执行代理，负责把�
 13. 素材带 transcript_segments 时，判断口播/对白/现场声是否可用必须引用这些转写证据（写明 evidence_ref 或转写原句）；没有转写证据就不得断言这条素材里说了什么，只能标记“声音内容待人工确认”。
 14. 不要输出额外解释，不要用 Markdown 代码围栏包裹全文。"""
 
+REQUIRED_REPORT_FRONTMATTER = (
+    "spec_version",
+    "doc_type",
+    "project_id",
+    "idea_id",
+    "writer_agent",
+    "owner_agent",
+    "next_owner",
+    "status",
+    "source_brief",
+    "strict_contract",
+    "generation_model",
+    "generation_reasoning",
+)
+REQUIRED_REPORT_VALUES = {
+    "doc_type": "material_match_report",
+    "writer_agent": "mac_openclaw",
+    "owner_agent": "mac_openclaw",
+    "status": "materials_matched",
+}
+
 
 def read_text(path: Path) -> str:
     if not path.exists():
@@ -193,13 +214,19 @@ def build_user_prompt(
 def validate_report(text: str, output_path: Path) -> None:
     if not text.strip():
         raise RuntimeError("LLM material match report is empty")
-    meta = parse_frontmatter(text)
-    if meta.get("doc_type") != "material_match_report":
-        raise RuntimeError("LLM material match report frontmatter doc_type must be material_match_report")
-    if meta.get("writer_agent") != "mac_openclaw":
-        raise RuntimeError("LLM material match report writer_agent must be mac_openclaw")
-    if "```" in text[:20]:
+    if text.lstrip().startswith("```"):
         raise RuntimeError("LLM material match report must not be wrapped in a code fence")
+    meta = parse_frontmatter(text)
+    missing = [
+        key
+        for key in REQUIRED_REPORT_FRONTMATTER
+        if meta.get(key) is None or (isinstance(meta.get(key), str) and not meta[key].strip())
+    ]
+    if missing:
+        raise RuntimeError("LLM material match report frontmatter missing: " + ", ".join(missing))
+    for key, expected in REQUIRED_REPORT_VALUES.items():
+        if meta.get(key) != expected:
+            raise RuntimeError(f"LLM material match report frontmatter {key} must be {expected}")
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
 

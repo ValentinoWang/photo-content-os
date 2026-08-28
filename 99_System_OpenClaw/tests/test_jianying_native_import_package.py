@@ -51,7 +51,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
                 "project_id": "test_project",
                 "idea_id": "idea_test",
                 "draft_name": "jy_roughcut_unit_native",
-                "target": {"width": 1080, "height": 1920, "fps": 30, "duration_sec": 4, "platform": "douyin"},
+                "target": {"width": 720, "height": 1280, "fps": 24, "duration_sec": 4, "platform": "douyin"},
                 "source_edl": "06_edit_decision_list.json",
                 "tracks": [
                     {
@@ -122,6 +122,9 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             self.assertTrue((package_dir / "04_preview" / "preview_roughcut.mp4").exists())
             self.assertTrue((package_dir / "edit_manifest.json").exists())
             self.assertTrue((package_dir / "README_导入剪映.md").exists())
+            readme = (package_dir / "README_导入剪映.md").read_text(encoding="utf-8")
+            self.assertIn("720x1280 / 24fps", readme)
+            self.assertNotIn("1080x1920 / 30fps", readme)
             self.assertEqual(result["caption_count"], 2)
             self.assertIn("文本 -> 本地字幕", result["contents"]["caption_import_method"])
 
