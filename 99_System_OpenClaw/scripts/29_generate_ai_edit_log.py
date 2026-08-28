@@ -11,7 +11,7 @@ from typing import Any
 
 import yaml
 
-from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT, generate_text
+from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT, generate_text, load_creator_context
 
 
 MAX_TEXT_CHARS = 14000
@@ -37,7 +37,8 @@ SYSTEM_PROMPT = """你是 Mac OpenClaw 的 AI 跟剪日志代理。
 8. doc_type 必须是 edit_log；writer_agent 必须是 mac_openclaw。
 9. evidence_level 只能是 content_plan_only、output_video_reviewed、jianying_draft_parsed、human_confirmed 中的一个。当前没有成片/草稿解析/人确认时用 content_plan_only。
 10. 正文必须包含这些一级标题：AI 跟剪摘要、已确认人工修改、AI 建议修改、AI 推断修改、需要人确认、下一版建议、记录规则。
-11. 不要输出 Markdown 代码围栏，不要解释生成过程，不要输出额外寒暄。"""
+11. creator_context 只包含项目明确提供的账号、人设、口吻、平台、受众和题材边界；它只能约束建议的表达方式，不能证明素材或剪辑事实。未提供的字段不得猜测。
+12. 不要输出 Markdown 代码围栏，不要解释生成过程，不要输出额外寒暄。"""
 
 
 def read_text(path: Path, *, limit: int = MAX_TEXT_CHARS) -> str:
@@ -110,6 +111,7 @@ def collect_context(
 ) -> dict[str, Any]:
     index_text = read_text(project_file(project_package, "00_项目总览.md"))
     index_meta = parse_frontmatter(index_text)
+    creator_context = load_creator_context(project_package, brief_text=index_text)
     script_text = read_text(project_file(project_package, "04_script.md"))
     if not script_text:
         raise EditLogError(f"required source missing or empty: {project_file(project_package, '04_script.md')}")
@@ -124,6 +126,7 @@ def collect_context(
         "idea_id": index_meta.get("idea_id") or "",
         "generation_model": model,
         "generation_reasoning": reasoning,
+        "creator_context": creator_context,
         "existing_edit_log_markdown": read_text(output, limit=10000),
         "project_index_markdown": index_text,
         "material_match_report_markdown": read_text(project_file(project_package, "03_material_match_report.md"), limit=10000),

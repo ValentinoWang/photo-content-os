@@ -14,7 +14,9 @@ from llm_common import (
     DEFAULT_REASONING_EFFORT,
     MAX_PROMPT_SUMMARY_CHARS,
     bounded_prompt_text,
+    creator_context_block,
     generate_text,
+    load_creator_context,
     parse_json_response,
     parse_markdown_frontmatter,
     render_markdown_frontmatter,
@@ -30,7 +32,7 @@ SYSTEM_PROMPT = """你是 Photo Content OS 的短视频分镜与剪辑方案编�
 先判断项目真正要表达的内容类型、核心冲突、情绪曲线、平台观看动机和素材证据边界，再生成分镜与 EDL。不要套用固定模板，不要把旧项目表达、字幕、节奏或脚本规则搬到新项目。
 
 硬约束：
-1. 04_script.md 是强输入；只有真实素材证据不足时才把内容写入 missing_materials，不能硬凑。
+1. 04_script.md 和明确提供的 creator_context 是强输入；creator_context 只约束账号口吻、平台与题材边界，不能覆盖素材事实。没有提供的人设、平台或受众不得猜测。只有真实素材证据不足时才把内容写入 missing_materials，不能硬凑。
 2. 不允许编造素材、成绩、地点、人物关系、BGM、对白或镜头。
 3. clips 中的 source_file/candidate_files 只能来自输入 manifest；不可执行的缺失素材不能进入 clips。
 4. 输出必须是严格 JSON，顶层只有 storyboard_markdown 和 edl_json；优先输出裸 JSON，单个 ```json 围栏也会被解析器规范化。
@@ -179,6 +181,7 @@ def build_user_prompt(
     report_text = read_text(report_path)
     meta = parse_frontmatter(brief_text)
     manifest = load_manifest(project)
+    creator_context = load_creator_context(project, brief_text=brief_text)
     payload = {
         "project_dir": str(project),
         "project_id": meta.get("project_id") or project.name,
@@ -191,6 +194,7 @@ def build_user_prompt(
         "edl_output_path": str(edl_path),
         "generation_model": model,
         "generation_reasoning": reasoning,
+        "creator_context": creator_context,
         "edl_contract": {
             "schema_version": "edit_decision_list_v1",
             "time_range_example": "0.000-4.000",
@@ -203,7 +207,13 @@ def build_user_prompt(
         "material_match_report_markdown": report_text,
         "eligible_items": context_items(project, manifest),
     }
-    return "请根据以下 JSON 证据生成 storyboard_markdown 和 edl_json：\n\n" + json.dumps(payload, ensure_ascii=False, indent=2)
+    return (
+        "请根据以下 JSON 证据生成 storyboard_markdown 和 edl_json。账号上下文只能用于口吻、平台与题材边界；"
+        "没有提供的字段必须标记人工确认，不得猜测：\n\n"
+        + creator_context_block(project, brief_text=brief_text)
+        + "\n\n"
+        + json.dumps(payload, ensure_ascii=False, indent=2)
+    )
 
 
 def parse_llm_json(text: str) -> dict[str, Any]:
