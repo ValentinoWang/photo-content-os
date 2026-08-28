@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import shlex
 import subprocess
 import sys
@@ -372,6 +371,22 @@ def optional_input_file_list(config: RunnerConfig, task: dict[str, Any], key: st
         path = Path(value).expanduser()
         paths.append(path.resolve() if path.is_absolute() else (config.vault_root / path).resolve())
     return paths
+
+
+def output_review_bgm_review_dir(config: RunnerConfig, task: dict[str, Any]) -> Path | None:
+    """Resolve an optional BGM review directory without accepting a stale path."""
+
+    inputs = task.get("inputs")
+    if not isinstance(inputs, dict) or "bgm_review_dir" not in inputs:
+        return None
+    value = inputs.get("bgm_review_dir")
+    if not isinstance(value, str) or not value.strip():
+        raise RunnerError("inputs.bgm_review_dir must be a non-empty directory path when provided")
+    path = Path(value).expanduser()
+    resolved = path.resolve() if path.is_absolute() else (config.vault_root / path).resolve()
+    if not resolved.is_dir():
+        raise RunnerError(f"inputs.bgm_review_dir is unavailable: {resolved}")
+    return resolved
 
 
 def project_package_dir(config: RunnerConfig, task: dict[str, Any]) -> Path:
@@ -810,6 +825,7 @@ def output_review_result(
         "current_brief_fit": summary.get("current_brief_fit", "unknown"),
         "brief_fit_method": summary.get("brief_fit_method", "metadata_only"),
         "brief_fit_confidence": summary.get("brief_fit_confidence", "low"),
+        "review_capability_status": summary.get("review_capability_status") or {},
         "recommendation": summary.get("recommendation", "small_fix"),
         "publish_as_final": bool(summary.get("publish_as_final")),
         "human_decision_required": bool(summary.get("human_decision_required", True)),
@@ -1261,6 +1277,7 @@ def run_output_review(
     brief = optional_input_file_path(config, task, "project_brief_path")
     script = optional_input_file_path(config, task, "script_path") or (project_package_dir(config, task) / "04_script.md")
     publish_pack = optional_input_file_path(config, task, "publish_pack_path") or (project_package_dir(config, task) / "09_publish_pack.md")
+    bgm_review_dir = output_review_bgm_review_dir(config, task)
     generation_dir = project_dir / "_ai_analysis" / "output_review" / str(task["task_id"])
     metrics = generation_dir / "metrics.json"
     local_result = generation_dir / "output_review_result.yaml"
@@ -1290,9 +1307,11 @@ def run_output_review(
             str(project_dir),
         ]
         args.extend(["--project-root", str(project_dir)])
+        if bgm_review_dir is not None:
+            args.extend(["--bgm-review-dir", str(bgm_review_dir)])
         args.append("--rhythm-sync")
-        if task.get("run_vlm_review") is True or os.getenv("OPENCLAW_RUN_VLM_REVIEW") == "1":
-            args.append("--run-vlm-review")
+        args.append("--run-vlm-review")
+        args.append("--require-production-capabilities")
         for index, compare in enumerate(compare_videos, start=1):
             args.extend(["--compare-video", f"compare_{index}={compare}"])
         if brief and brief.exists():

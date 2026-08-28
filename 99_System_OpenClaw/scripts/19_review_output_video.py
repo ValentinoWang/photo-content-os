@@ -122,6 +122,7 @@ RECOMMENDATION_LABELS = {
 }
 STATUS_LABELS = {
     "success": "已完成自动检查",
+    "partial": "部分完成（能力缺失）",
     "blocked": "检查受阻",
     "pass": "通过",
     "warning": "有提醒",
@@ -1706,6 +1707,8 @@ def platform_format_score(probe: dict[str, Any], context: ProjectContext, tags: 
     height = int(probe.get("height") or 0)
     if not width or not height:
         return {"score": None, "format": "unknown", "notes": ["缺少分辨率，无法判断平台画幅。"]}
+    if not context.target_platforms:
+        return {"score": None, "format": "unknown", "notes": ["项目未提供目标平台，无法判断平台画幅。"]}
     ratio = width / height
     is_vertical = height > width
     is_squareish = 0.85 <= ratio <= 1.15
@@ -1882,9 +1885,9 @@ def creative_review_for_version(
         if isinstance(value, (int, float)):
             weighted_score += float(value) * weight
             total_weight += weight
-    score = round(weighted_score / total_weight, 1) if total_weight else None
     missing = [key for key, _ in weighted if dimensions[key].get("score") is None]
     coverage_ratio = total_weight / sum(weight for _, weight in weighted)
+    score = round(weighted_score / total_weight, 1) if not missing and total_weight else None
     needs_semantic = dimensions["person_state"]["status"] != "automated"
     confidence = "low" if missing or needs_semantic else "medium"
     return {
@@ -1895,13 +1898,14 @@ def creative_review_for_version(
         "weights": dict(CREATIVE_STRATEGY_WEIGHTS),
         "narrative_tags": tags,
         "dimensions": dimensions,
+        "status": "complete" if not missing else "partial",
         "human_review_required": True,
         "available_weight_ratio": round(coverage_ratio, 3),
         "missing_dimensions": missing,
         "coverage_note": (
-            "策略分基于全部维度。"
+            "策略分基于全部规则维度。"
             if not missing
-            else f"策略分仅基于 {coverage_ratio:.0%} 可用权重，缺少：{'、'.join(humanize_dimension(key) for key in missing)}。"
+            else f"策略分未出具：仅有 {coverage_ratio:.0%} 权重可用，缺少：{'、'.join(humanize_dimension(key) for key in missing)}。"
         ),
         "semantic_gap": "人物状态、真实构图美感、选题表达仍需关键帧/LLM 或人工复核。",
     }
@@ -2082,7 +2086,24 @@ def numeric_score(value: Any) -> float | None:
 
 
 def apply_vlm_semantic_review(versions: list[dict[str, Any]], vlm_review: dict[str, Any] | None) -> None:
-    if not vlm_review or vlm_review.get("status") != "success":
+    if not vlm_review:
+        return
+    review_status = str(vlm_review.get("status") or "unavailable")
+    if review_status != "success":
+        reason = str(vlm_review.get("reason") or "VLM 语义审阅未返回可用结果。")
+        for version in versions:
+            creative = version.get("creative_review", {})
+            if not isinstance(creative, dict):
+                continue
+            if isinstance(creative.get("score"), (int, float)):
+                creative["rule_score"] = creative["score"]
+            creative["score"] = None
+            creative["confidence"] = "low"
+            creative["status"] = "partial"
+            missing_capabilities = creative.setdefault("missing_capabilities", [])
+            if "vlm_semantic_review" not in missing_capabilities:
+                missing_capabilities.append("vlm_semantic_review")
+            creative["coverage_note"] = f"策略分未出具：VLM 语义审阅不可用（{reason}）。"
         return
     by_name = {
         item.get("version_name"): item
@@ -2093,6 +2114,11 @@ def apply_vlm_semantic_review(versions: list[dict[str, Any]], vlm_review: dict[s
         creative = version.get("creative_review", {})
         semantic = by_name.get(version.get("version_name"))
         if not semantic:
+            if isinstance(creative, dict):
+                creative["score"] = None
+                creative["confidence"] = "low"
+                creative["status"] = "partial"
+                creative["coverage_note"] = "策略分未出具：VLM 语义审阅没有返回该版本。"
             continue
         semantic_score = numeric_score(semantic.get("overall_score"))
         creative["vlm_semantic_review"] = semantic
@@ -2100,6 +2126,11 @@ def apply_vlm_semantic_review(versions: list[dict[str, Any]], vlm_review: dict[s
         if semantic_score is not None and isinstance(creative.get("score"), (int, float)):
             creative["score"] = round(float(creative["score"]) * 0.55 + semantic_score * 0.45, 1)
             creative["confidence"] = "medium" if vlm_review.get("confidence") in {"medium", "high"} else "low"
+        else:
+            creative["score"] = None
+            creative["confidence"] = "low"
+            creative["status"] = "partial"
+            creative["coverage_note"] = "策略分未出具：规则维度或 VLM 总分不完整。"
         dimensions = creative.setdefault("dimensions", {})
         person_score = numeric_score(semantic.get("person_state_score"))
         if person_score is not None:
@@ -2733,6 +2764,7 @@ def review_output_video(
     rhythm_profile: str = "general_bgm_edit",
     rhythm_output_root: Path | None = None,
     run_vlm_review: bool = False,
+    require_production_capabilities: bool = False,
     vlm_output_root: Path | None = None,
     vlm_model: str | None = None,
     vlm_reasoning_effort: str | None = None,
@@ -2809,17 +2841,50 @@ def review_output_video(
         if creative_candidates
         else preferred
     )
+    partial_reasons: list[str] = []
+    if require_production_capabilities:
+        partial_reasons = [
+            f"{version['version_name']}：{version.get('creative_review', {}).get('coverage_note', '策略审阅能力不完整。')}"
+            for version in versions
+            if version.get("creative_review", {}).get("status") != "complete"
+        ]
+        if run_vlm_review and vlm_report and vlm_report.get("status") != "success":
+            partial_reasons.append(f"VLM 语义审阅：{vlm_report.get('reason') or vlm_report.get('status')}")
+    task_status = "success" if not partial_reasons else "partial"
     rec = map_recommendation(
-        task_status="success",
+        task_status=task_status,
         technical_status=preferred["technical_status"],
         current_brief_fit=content["current_brief_fit"],
         human_decision_required=content["human_decision_required"],
     )
     risk_flags = sorted(set(flag for version in versions for flag in version.get("risk_flags", [])))
-    reason = "技术检查已完成；内容匹配、标题封面和最终版本仍需人工确认。"
+    reason = (
+        "技术检查已完成；内容匹配、标题封面和最终版本仍需人工确认。"
+        if task_status == "success"
+        else "自动检查部分完成；未出具策略分，补齐以下能力后重新审阅：" + "；".join(partial_reasons)
+    )
+    rhythm_available = all(
+        version.get("creative_review", {}).get("dimensions", {}).get("rhythm", {}).get("score") is not None
+        for version in versions
+    )
+    capability_status = {
+        "project_context": {
+            "status": "available" if context.target_platforms else "partial",
+            "reason": "" if context.target_platforms else "项目未提供可识别的目标平台。",
+        },
+        "bgm_review": {
+            "status": "available" if rhythm_available else "partial",
+            "reason": "" if rhythm_available else "缺少可用的 BGM/卡点审阅数据。",
+        },
+        "rhythm_sync": {"status": "success" if rhythm_sync else "not_requested", "reason": ""},
+        "vlm_semantic_review": {
+            "status": vlm_report.get("status") if vlm_report else "not_requested",
+            "reason": vlm_report.get("reason", "") if vlm_report else "",
+        },
+    }
     result = {
         "schema_version": RESULT_SCHEMA_VERSION,
-        "task_status": "success",
+        "task_status": task_status,
         "technical_status": preferred["technical_status"],
         "preferred_version": preferred["version_name"],
         "current_brief_fit": content["current_brief_fit"],
@@ -2831,6 +2896,8 @@ def review_output_video(
         "reason": reason,
         "next_owner": "human_editor",
         "risk_flags": risk_flags,
+        "review_capability_status": capability_status,
+        "partial_reasons": partial_reasons,
         "metrics_path": artifact_relative(metrics_output, artifact_base),
         "report_path": artifact_relative(report_output, artifact_base),
         "strategy_preferred_version": creative_preferred["version_name"],
@@ -2872,9 +2939,10 @@ def review_output_video(
             "rhythm_sync": rhythm_sync,
             "rhythm_profile": rhythm_profile,
             "vlm_review": run_vlm_review,
+            "require_production_capabilities": require_production_capabilities,
             "vlm_output_root": str(vlm_root) if run_vlm_review else "",
         },
-        "execution": {**dependency_status, "task_status": "success", "errors": [], "warnings": dependency_status["warnings"]},
+        "execution": {**dependency_status, "task_status": task_status, "errors": [], "warnings": dependency_status["warnings"] + partial_reasons},
         "review_method": {
             "technical_probe": "ffprobe",
             "frame_sampling": "ffmpeg_uniform_sampling",
@@ -2932,6 +3000,7 @@ def review_output_video(
             },
             "vlm_semantic_review": vlm_report,
             "semantic_vlm_review": vlm_report,
+            "capability_status": capability_status,
         },
         "rhythm_sync": rhythm_report,
         "risk_flags": risk_flags,
@@ -2986,6 +3055,7 @@ def main() -> int:
     parser.add_argument("--profile", default="general_bgm_edit", help="Rhythm-sync profile, e.g. split_screen_comparison")
     parser.add_argument("--rhythm-output-root", type=Path, help="Optional rhythm-sync artifact root; defaults to output-root/rhythm_sync")
     parser.add_argument("--run-vlm-review", action="store_true", help="Use Codex VLM on contact sheets for semantic output review")
+    parser.add_argument("--require-production-capabilities", action="store_true", help="Mark the result partial when production review capabilities are unavailable")
     parser.add_argument("--vlm-output-root", type=Path, help="Optional VLM semantic review artifact root")
     parser.add_argument("--vlm-model", help="Optional model override for VLM semantic review")
     parser.add_argument("--vlm-reasoning-effort", help="Optional reasoning effort override for VLM semantic review")
@@ -3015,6 +3085,7 @@ def main() -> int:
             rhythm_profile=args.profile,
             rhythm_output_root=args.rhythm_output_root.expanduser().resolve() if args.rhythm_output_root else None,
             run_vlm_review=args.run_vlm_review,
+            require_production_capabilities=args.require_production_capabilities,
             vlm_output_root=args.vlm_output_root.expanduser().resolve() if args.vlm_output_root else None,
             vlm_model=args.vlm_model,
             vlm_reasoning_effort=args.vlm_reasoning_effort,
