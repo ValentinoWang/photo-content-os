@@ -10,6 +10,8 @@ executable on its own.
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import re
 import sys
 from pathlib import Path
@@ -46,10 +48,19 @@ OPTIONAL_LOCAL_BINDING_PATHS = {
     "inbox_batch_path": "directory",
     "local_project_path": "directory",
 }
+VOLATILE_TASK_FIELDS = frozenset({"created_at", "updated_at", "generated_at", "request_fingerprint"})
 
 
 class ValidationError(Exception):
     """Raised when a task violates the Content OS task contract."""
+
+
+def request_fingerprint(task: dict[str, Any]) -> str:
+    """Hash the immutable task payload used to reconcile a blocked retry."""
+
+    stable = {key: value for key, value in task.items() if key not in VOLATILE_TASK_FIELDS}
+    encoded = json.dumps(stable, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -380,9 +391,12 @@ def write_blocked_result(path: Path, task: dict[str, Any], reason: str) -> None:
         "blocked_reason": "invalid_task_contract",
         "detail": reason,
         "project_id": task.get("project_id"),
+        "idea_id": task.get("idea_id"),
         "project_revision": task.get("project_revision"),
         "change_request_id": task.get("change_request_id") or None,
         "editor_backend": task.get("editor_backend"),
+        "idempotency_key": str(task.get("idempotency_key") or task.get("task_id") or ""),
+        "request_fingerprint": request_fingerprint(task),
     }
     tenant_id = task.get("tenant_id")
     if isinstance(tenant_id, str) and tenant_id.strip():

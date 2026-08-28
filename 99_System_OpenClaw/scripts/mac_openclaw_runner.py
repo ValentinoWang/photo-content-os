@@ -8,7 +8,6 @@ fixed local scripts. It never executes commands from a task file.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shlex
 import subprocess
@@ -19,10 +18,12 @@ from typing import Any
 
 import yaml
 
+from llm_common import DEFAULT_CREATIVE_PROVIDER, REQUIRED_CREATIVE_MODEL, REQUIRED_CREATIVE_REASONING
 from runtime_paths import obsidian_root, runtime_python
 from validate_content_os_task import (
     ValidationError,
     load_yaml as load_validator_yaml,
+    request_fingerprint,
     validate_task,
     write_blocked_result,
 )
@@ -36,9 +37,7 @@ DEFAULT_VAULT_ROOT = obsidian_root()
 TASK_INBOX = Path("98_Agent任务队列/01_cloud_to_mac_ready")
 RESULT_OUTBOX = Path("98_Agent任务队列/02_mac_to_cloud_results")
 CAPABILITIES = Path("00_入口与总览/mac_runner_capabilities.yaml")
-REQUIRED_CREATIVE_MODEL = "gpt-5.6-terra"
-REQUIRED_CREATIVE_REASONING = "xhigh"
-REQUIRED_CREATIVE_PROVIDER = "codex_cli"
+REQUIRED_CREATIVE_PROVIDER = DEFAULT_CREATIVE_PROVIDER
 CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
 OTIO_KDENLIVE_PYTHON = runtime_python(WORKSPACE_ROOT)
 
@@ -72,21 +71,6 @@ REQUIRED_ACTIONS = {
 
 class RunnerError(Exception):
     """Raised when the runner cannot safely execute a task."""
-
-
-VOLATILE_TASK_FIELDS = frozenset({"created_at", "updated_at", "generated_at", "request_fingerprint"})
-
-
-def request_fingerprint(task: dict[str, Any]) -> str:
-    """Hash the immutable task payload used to make retries idempotent."""
-
-    stable = {
-        key: value
-        for key, value in task.items()
-        if key not in VOLATILE_TASK_FIELDS
-    }
-    encoded = json.dumps(stable, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
 
 def task_identity(task: dict[str, Any]) -> dict[str, Any]:
@@ -687,7 +671,20 @@ def run_local_material_match(
                 raise RunnerError(f"--skip-analyze requires existing media manifest: {manifest}")
             tools_used["analyze_project"] = "skipped_existing_media_manifest"
         else:
-            run_command(["bash", script_path("run_analyze_project.sh"), str(project_dir), "--audio", "--transcript-provider", task.get("transcript_provider", "openai_api")])
+            run_command(
+                [
+                    "bash",
+                    script_path("run_analyze_project.sh"),
+                    str(project_dir),
+                    "--audio",
+                    "--transcript-provider",
+                    task.get("transcript_provider", "openai_api"),
+                    "--model",
+                    REQUIRED_CREATIVE_MODEL,
+                    "--reasoning",
+                    REQUIRED_CREATIVE_REASONING,
+                ]
+            )
             tools_used["analyze_project"] = script_path("run_analyze_project.sh")
 
         run_command(
