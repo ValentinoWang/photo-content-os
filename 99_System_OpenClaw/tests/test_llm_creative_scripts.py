@@ -29,6 +29,13 @@ class LLMCreativeScriptsTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertNotIn(token, combined)
 
+    def test_material_match_prompt_puts_execution_before_macro_rationale(self) -> None:
+        text = (ROOT / "scripts" / "17_match_materials_to_brief.py").read_text(encoding="utf-8")
+        order = "是否建议进入剪辑、推荐镜头组、缺失素材、风险、素材覆盖度、宏观创作判断"
+
+        self.assertIn(order, text)
+        self.assertIn("宏观论证只能放在后面", text)
+
 
 if __name__ == "__main__":
     unittest.main()
