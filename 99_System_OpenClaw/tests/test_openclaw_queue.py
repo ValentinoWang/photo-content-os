@@ -31,6 +31,22 @@ def make_config(root: Path) -> object:
 
 
 class OpenClawQueueTest(unittest.TestCase):
+    def test_cloud_markdown_is_verified_and_recorded(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package = root / "package"
+            package.mkdir()
+            markdown = package / "draft.md"
+            markdown.write_text("# 云端初稿\n", encoding="utf-8")
+            task = {
+                "markdown_file": "draft.md",
+                "markdown_sha256": openclaw_queue.sha256_file(markdown),
+                "source_cloud_markdown": "cloud://draft",
+            }
+            info = openclaw_queue.markdown_info(task, package)
+            self.assertEqual(info["markdown_sha256"], task["markdown_sha256"])
+            self.assertEqual(info["source_cloud_markdown"], "cloud://draft")
+
     def test_legacy_queue_warning_checks_a_nondefault_vault(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             vault = Path(tmp) / "nondefault-vault"

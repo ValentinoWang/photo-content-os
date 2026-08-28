@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shlex
 import subprocess
 import sys
@@ -70,7 +71,7 @@ def main() -> int:
     parser.add_argument("project_dir")
     parser.add_argument("--tier", choices=("metadata", "preview", "deep"), default="preview")
     parser.add_argument("--audio", action="store_true", help="提取音频并运行转写步骤")
-    parser.add_argument("--transcript-provider", choices=("pending", "sidecar", "openai_api"), default="pending")
+    parser.add_argument("--transcript-provider", choices=("pending", "sidecar", "openai_api"), default=os.getenv("OPENCLAW_TRANSCRIPTION_PROVIDER", "openai_api"))
     parser.add_argument("--transcript-model", default="gpt-4o-mini-transcribe")
     parser.add_argument("--model", default=DEFAULT_CREATIVE_MODEL)
     parser.add_argument("--reasoning", default=DEFAULT_REASONING_EFFORT)

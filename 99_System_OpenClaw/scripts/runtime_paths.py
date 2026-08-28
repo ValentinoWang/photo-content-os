@@ -9,6 +9,19 @@ from pathlib import Path
 
 MINIMUM_PYTHON = (3, 11)
 RUNTIME_NAME = ".venv-content-os"
+DEFAULT_OBSIDIAN_RELATIVE = Path("Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体")
+
+
+def obsidian_root(value: Path | None = None) -> Path:
+    """Resolve the vault from explicit config, environment, or host default."""
+    if value is not None:
+        return value.expanduser()
+    configured = os.environ.get("OBSIDIAN_ROOT", "").strip()
+    if configured:
+        return Path(configured).expanduser()
+    if sys.platform == "darwin":
+        return Path.home() / DEFAULT_OBSIDIAN_RELATIVE
+    return Path.home() / "Obsidian" / "自媒体"
 
 
 def repository_root(anchor: Path | None = None) -> Path:

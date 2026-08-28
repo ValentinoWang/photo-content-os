@@ -20,11 +20,14 @@ class JianyingProbePathTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             home = Path(temp_dir)
             candidate = home / "AppData/Local/JianyingPro/User Data/Projects"
+            capcut = home / "AppData/Local/CapCut/User Data/Projects"
             candidate.mkdir(parents=True)
+            capcut.mkdir(parents=True)
 
-            self.assertEqual(MODULE.find_jianying_roots(platform="win32", home=home), [str(candidate)])
+            self.assertEqual(MODULE.find_jianying_roots(platform="win32", home=home), [str(candidate), str(capcut)])
             candidates = MODULE.jianying_root_candidates(platform="win32", home=home)
             self.assertIn(candidate, candidates)
+            self.assertIn(capcut, candidates)
 
 
 if __name__ == "__main__":

@@ -78,21 +78,21 @@ def ffmpeg_filter(width: int, height: int, fps: int) -> str:
     )
 
 
-def raw360_lrf_filter(width: int, height: int, fps: int) -> str:
-    # LRF proxies are side-by-side fisheye previews. The right lens carries the
-    # forward/track-facing perspective for this project, so crop it and fill the
-    # vertical frame as a rough editable proxy.
+def raw360_lrf_filter(width: int, height: int, fps: int, *, lens: str = "right") -> str:
+    if lens not in {"left", "right"}:
+        raise ContractError("raw360 lens must be left or right")
+    offset = "0" if lens == "left" else "iw/2"
     return (
-        "crop=iw/2:ih:iw/2:0,"
+        f"crop=iw/2:ih:{offset}:0,"
         f"scale=-2:{height}:in_range=auto:out_range=tv,"
         f"crop={width}:{height}:(iw-{width})/2:0,"
         f"setsar=1,fps={fps},format=yuv420p"
     )
 
 
-def filter_for_source(source: Path, width: int, height: int, fps: int) -> str:
+def filter_for_source(source: Path, width: int, height: int, fps: int, *, raw360_lens: str = "right") -> str:
     if source.suffix.lower() == ".lrf" or "360原始组" in source.name:
-        return raw360_lrf_filter(width, height, fps)
+        return raw360_lrf_filter(width, height, fps, lens=raw360_lens)
     return ffmpeg_filter(width, height, fps)
 
 
@@ -127,11 +127,11 @@ def heic_proxy(source: Path, output: Path) -> Path:
     return proxy
 
 
-def render_clip(source: Path, output: Path, clip: dict[str, Any], width: int, height: int, fps: int) -> None:
+def render_clip(source: Path, output: Path, clip: dict[str, Any], width: int, height: int, fps: int, *, raw360_lens: str = "right") -> None:
     duration = sec(clip["duration_sec"])
     source_start = sec(clip.get("source_start_sec", 0.0))
     source = heic_proxy(source, output)
-    filt = filter_for_source(source, width, height, fps)
+    filt = filter_for_source(source, width, height, fps, raw360_lens=raw360_lens)
     output.parent.mkdir(parents=True, exist_ok=True)
     suffix = source.suffix.lower()
 
@@ -351,6 +351,9 @@ def create_package(plan_path: Path, output_root: Path, result_output: Path | Non
     width = int(target.get("width", 1080))
     height = int(target.get("height", 1920))
     fps = int(target.get("fps", 30))
+    raw360_lens = str(target.get("raw360_lens") or "right")
+    if raw360_lens not in {"left", "right"}:
+        raise ContractError("plan.target.raw360_lens must be left or right")
 
     pack_name = str(plan.get("draft_name") or "").strip()
     pack_name = pack_name.replace("jy_roughcut", "jy_import_pack").replace("jy_native_import", "jy_import_pack")
@@ -381,7 +384,7 @@ def create_package(plan_path: Path, output_root: Path, result_output: Path | Non
                 f"{source}"
             )
         output = clips_dir / safe_clip_name(index, clip)
-        render_clip(source, output, clip, width, height, fps)
+        render_clip(source, output, clip, width, height, fps, raw360_lens=raw360_lens)
         start = sec(clip.get("timeline_start_sec", 0.0))
         duration = sec(clip["duration_sec"])
         rendered_clips.append(output)

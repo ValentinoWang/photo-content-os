@@ -12,7 +12,9 @@ import yaml
 from media_common import MEDIA_EXTS, now_iso
 
 
-DEFAULT_OBSIDIAN_ROOT = Path("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体").expanduser()
+from runtime_paths import obsidian_root
+
+DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
 WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT

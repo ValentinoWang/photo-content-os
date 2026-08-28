@@ -11,6 +11,7 @@ import unittest
 from pathlib import Path
 
 import yaml
+from runtime_paths import obsidian_root
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +25,9 @@ SPEC.loader.exec_module(enqueue_queue)
 
 
 class EnqueueOpenClawQueueJobTest(unittest.TestCase):
+    def test_default_vault_uses_shared_portable_resolver(self) -> None:
+        self.assertEqual(enqueue_queue.DEFAULT_VAULT_ROOT, obsidian_root())
+
     def test_enqueue_from_content_os_task_and_link(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

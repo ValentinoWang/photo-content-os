@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import shutil
 import subprocess
+import json
 from pathlib import Path
 
 from media_common import eligible_item, load_manifest, project_path, relative_posix, safe_slug, save_manifest
@@ -18,11 +19,16 @@ def main() -> None:
     args = parser.parse_args()
 
     if not shutil.which("ffmpeg"):
-        raise RuntimeError("ffmpeg not found. Run 99_System_OpenClaw/scripts/00_install_deps.sh or install ffmpeg.")
+        raise RuntimeError("ffmpeg not found. Install ffmpeg, then run 99_System_OpenClaw/scripts/41_setup_dev_environment.sh.")
 
     include_derived = args.include_derived_marker == "--include-derived"
     project = project_path(args.project_dir)
     manifest = load_manifest(project)
+    plan_path = project / "_ai_analysis" / "analysis_plan.json"
+    budgets = {}
+    if plan_path.is_file():
+        data = json.loads(plan_path.read_text(encoding="utf-8"))
+        budgets = {str(row.get("media_id")): float(row.get("audio_seconds_budget") or 0) for row in data.get("plans", []) if isinstance(row, dict)}
     audio_root = project / "_ai_analysis" / "audio"
     audio_root.mkdir(parents=True, exist_ok=True)
 
@@ -41,6 +47,14 @@ def main() -> None:
             "-y",
             "-i",
             str(video_path),
+        ]
+        budget = budgets.get(str(item.get("media_id")))
+        if budget is not None and budget <= 0:
+            item["audio_extract_status"] = "skipped_audio_budget"
+            continue
+        if budget is not None:
+            cmd.extend(["-t", f"{budget:.3f}"])
+        cmd.extend([
             "-vn",
             "-ac",
             "1",
@@ -49,7 +63,7 @@ def main() -> None:
             "-c:a",
             "pcm_s16le",
             str(out_file),
-        ]
+        ])
         result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
         if result.returncode != 0 or not out_file.exists():
             raise RuntimeError(f"failed to extract audio: {video_path}")

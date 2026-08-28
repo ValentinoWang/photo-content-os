@@ -1527,9 +1527,10 @@ def evaluate_brief_fit(brief: Path | None, script: Path | None, publish_pack: Pa
 
 
 def normalize_platforms(text: str) -> list[str]:
+    aliases = {"抖音": "抖音", "小红书": "小红书", "视频号": "视频号", "B站": "B站", "B 站": "B站", "bilibili": "B站", "快手": "快手", "朋友圈": "朋友圈", "YouTube": "YouTube", "youtube": "YouTube"}
     platforms: list[str] = []
-    for name in ["抖音", "小红书", "视频号", "B站", "朋友圈"]:
-        if name in text and name not in platforms:
+    for source, name in aliases.items():
+        if source in text and name not in platforms:
             platforms.append(name)
     return platforms
 
@@ -1546,8 +1547,10 @@ def load_project_context(project_root: Path | None) -> ProjectContext:
     notes: list[str] = []
     for raw_line in text.splitlines():
         line = raw_line.strip()
-        if line.startswith("发布平台"):
+        if "发布平台" in line:
             platforms = normalize_platforms(line)
+            if not platforms:
+                notes.append(f"未识别发布平台“{line.split('：', 1)[-1].strip()}”，请人工确认平台适配。")
         elif line.startswith("剪辑目标"):
             goal = line.split("：", 1)[-1].strip() if "：" in line else line
     if not platforms:
@@ -1614,7 +1617,7 @@ def platform_format_score(probe: dict[str, Any], context: ProjectContext, tags: 
     is_squareish = 0.85 <= ratio <= 1.15
     score = 70
     notes: list[str] = []
-    if {"抖音", "小红书"} & set(context.target_platforms):
+    if {"抖音", "小红书", "快手", "视频号", "朋友圈", "YouTube"} & set(context.target_platforms):
         if is_vertical:
             score = 90 if 0.55 <= ratio <= 0.8 else 82
             notes.append("目标平台包含抖音/小红书，竖屏画幅更适合直接发布。")
@@ -1623,7 +1626,7 @@ def platform_format_score(probe: dict[str, Any], context: ProjectContext, tags: 
             notes.append("目标平台包含抖音/小红书，近方形可用但需确认版式。")
         else:
             score = 55
-            notes.append("目标平台包含抖音/小红书，横屏发布前需要确认是否做竖屏包装或上下分屏。")
+            notes.append(f"目标平台包含{'、'.join(context.target_platforms)}，横屏发布前需要确认是否做竖屏包装或上下分屏。")
     if "horizontal_cut" in tags:
         notes.append("文件名标注横屏版本，平台分数仅代表直发适配，不否定横屏用途。")
     if "split_screen" in tags:
@@ -1730,7 +1733,8 @@ def topic_strategy_score(version_name: str, context: ProjectContext, tags: list[
     if "single_subject" in tags or "split_screen" in tags or "comparison" in tags:
         score += 15
         notes.append("文件名体现明确版本策略。")
-    if context.project_goal and any(token in version_name for token in ["毕业", "蓝袍黄领", "第一视角", "翻拍"]):
+    goal_tokens = [token for token in re.findall(r"[\w\u4e00-\u9fff]{2,}", context.project_goal) if token not in {"视频", "内容", "项目"}]
+    if goal_tokens and any(token in version_name for token in goal_tokens):
         score += 10
         notes.append("文件名与项目目标存在字面匹配。")
     if not notes:

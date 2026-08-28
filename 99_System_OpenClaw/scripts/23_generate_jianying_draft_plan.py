@@ -121,6 +121,7 @@ def generate_plan(
     video_clips, text_clips = video_track_from_edl(edl, local_project_path, allow_raw360_proxy=allow_raw360_proxy)
     end_time = max(float(clip["timeline_start_sec"]) + float(clip["duration_sec"]) for clip in video_clips)
     name = draft_name or f"jy_roughcut_{now_compact()}"
+    target_input = edl.get("target") if isinstance(edl.get("target"), dict) else {}
     plan = {
         "spec_version": "content_os_v0.1",
         "doc_type": "jianying_draft_plan",
@@ -128,11 +129,11 @@ def generate_plan(
         "idea_id": edl.get("idea_id", ""),
         "draft_name": name,
         "target": {
-            "width": 1080,
-            "height": 1920,
-            "fps": 30,
+            "width": int(target_input.get("width") or 1080),
+            "height": int(target_input.get("height") or 1920),
+            "fps": int(target_input.get("fps") or 30),
             "duration_sec": round(end_time, 3),
-            "platform": "douyin",
+            "platform": str(target_input.get("platform") or edl.get("platform") or "unspecified"),
         },
         "source_edl": str(edl_path),
         "local_project_path": str(local_project_path),

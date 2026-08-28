@@ -9,7 +9,9 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_OBSIDIAN_ROOT = Path("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体").expanduser()
+from runtime_paths import obsidian_root
+
+DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 
 
 def default_local_root() -> Path:

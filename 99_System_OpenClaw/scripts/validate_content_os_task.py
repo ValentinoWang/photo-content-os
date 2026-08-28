@@ -10,6 +10,7 @@ executable on its own.
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -334,6 +335,8 @@ def validate_task(task: dict[str, Any], capabilities: dict[str, Any], vault_root
     if require_text(task, "spec_version") != SPEC_VERSION:
         raise ValidationError("task.spec_version must be content_os_v0.2")
     task_id = require_text(task, "task_id")
+    if not re.fullmatch(r"task_\d{8}_\d{3}", task_id):
+        raise ValidationError("task_id 格式不正确")
     task_type = require_text(task, "task_type")
     if task_type not in SUPPORTED_TASK_TYPES:
         raise ValidationError(f"unsupported task_type: {task_type}")

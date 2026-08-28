@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shlex
 import subprocess
 import sys
@@ -18,7 +19,7 @@ from typing import Any
 
 import yaml
 
-from runtime_paths import runtime_python
+from runtime_paths import obsidian_root, runtime_python
 from validate_content_os_task import (
     ValidationError,
     load_yaml as load_validator_yaml,
@@ -30,12 +31,11 @@ from validate_content_os_task import (
 SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
 WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
-DEFAULT_VAULT_ROOT = Path("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体").expanduser()
+DEFAULT_VAULT_ROOT = obsidian_root()
 
 TASK_INBOX = Path("98_Agent任务队列/01_cloud_to_mac_ready")
 RESULT_OUTBOX = Path("98_Agent任务队列/02_mac_to_cloud_results")
 CAPABILITIES = Path("00_入口与总览/mac_runner_capabilities.yaml")
-TOOL_CONTRACT = Path("00_入口与总览/tool_contract.yaml")
 REQUIRED_CREATIVE_MODEL = "gpt-5.6-terra"
 REQUIRED_CREATIVE_REASONING = "xhigh"
 REQUIRED_CREATIVE_PROVIDER = "codex_cli"
@@ -119,10 +119,6 @@ class RunnerConfig:
     @property
     def capabilities_path(self) -> Path:
         return self.vault_root / CAPABILITIES
-
-    @property
-    def tool_contract_path(self) -> Path:
-        return self.vault_root / TOOL_CONTRACT
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -406,7 +402,15 @@ def validate_content_os_link(config: RunnerConfig, task: dict[str, Any], project
 
 
 def find_project_by_id(config: RunnerConfig, project_id: str) -> Path:
-    roots = [config.workspace_root / "01_Project_Workspace", config.workspace_root]
+    index_path = config.workspace_root / "01_Project_Workspace" / ".content_os_project_index.json"
+    try:
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+        indexed = Path(str(index.get(project_id, ""))).expanduser()
+        if indexed.is_dir() and indexed.resolve().parent == (config.workspace_root / "01_Project_Workspace").resolve():
+            return indexed.resolve()
+    except (OSError, ValueError, AttributeError):
+        pass
+    roots = [config.workspace_root / "01_Project_Workspace"]
     matches: list[Path] = []
     for root in roots:
         if not root.exists() or not root.is_dir():
@@ -420,6 +424,15 @@ def find_project_by_id(config: RunnerConfig, project_id: str) -> Path:
     if len(unique) > 1:
         names = ", ".join(str(path) for path in unique)
         raise RunnerError(f"local project directory is ambiguous for {project_id}: {names}")
+    try:
+        index_path.parent.mkdir(parents=True, exist_ok=True)
+        index = json.loads(index_path.read_text(encoding="utf-8")) if index_path.exists() else {}
+        if not isinstance(index, dict):
+            index = {}
+        index[project_id] = str(unique[0])
+        index_path.write_text(json.dumps(index, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    except OSError:
+        pass
     return unique[0]
 
 
@@ -535,10 +548,13 @@ App_WorkCache/
     path.write_text(text, encoding="utf-8")
 
 
-def run_runtime_check(skip: bool) -> None:
+def run_runtime_check(skip: bool, task_type: str) -> None:
     if skip:
         return
-    run_command(["bash", script_path("check_runtime_contract.sh")])
+    command = ["env", f"PYTHON_BIN={OTIO_KDENLIVE_PYTHON}", "bash", script_path("check_runtime_contract.sh")]
+    if task_type not in {"generate_otio_kdenlive_timeline"}:
+        command.append("--skip-package-pins")
+    run_command(command)
 
 
 def local_material_match_result(
@@ -629,7 +645,7 @@ def run_local_material_match(
                 raise RunnerError(f"--skip-analyze requires existing media manifest: {manifest}")
             tools_used["analyze_project"] = "skipped_existing_media_manifest"
         else:
-            run_command(["bash", script_path("run_analyze_project.sh"), str(project_dir)])
+            run_command(["bash", script_path("run_analyze_project.sh"), str(project_dir), "--audio", "--transcript-provider", task.get("transcript_provider", "openai_api")])
             tools_used["analyze_project"] = script_path("run_analyze_project.sh")
 
         run_command(
@@ -691,11 +707,16 @@ def ai_edit_log_result(
     edit_log = expected_output(config, task, "07_edit_log.md")
     require_nonempty(edit_log)
     text = edit_log.read_text(encoding="utf-8")
-    if "doc_type: edit_log" not in text:
+    try:
+        end = text.find("\n---", 4)
+        frontmatter = yaml.safe_load(text[4:end]) if text.startswith("---\n") and end > 0 else {}
+    except yaml.YAMLError as exc:
+        raise RunnerError("07_edit_log.md frontmatter is invalid YAML") from exc
+    if not isinstance(frontmatter, dict) or frontmatter.get("doc_type") != "edit_log":
         raise RunnerError("07_edit_log.md must declare doc_type: edit_log")
-    if f"generation_model: {REQUIRED_CREATIVE_MODEL}" not in text:
+    if frontmatter.get("generation_model") != REQUIRED_CREATIVE_MODEL:
         raise RunnerError(f"07_edit_log.md must declare generation_model: {REQUIRED_CREATIVE_MODEL}")
-    if "generation_reasoning: xhigh" not in text:
+    if frontmatter.get("generation_reasoning") != REQUIRED_CREATIVE_REASONING:
         raise RunnerError("07_edit_log.md must declare generation_reasoning: xhigh")
 
     result = {
@@ -1184,6 +1205,12 @@ def run_ai_edit_log(
             "--prompt-output",
             str(prompt_output),
         ]
+        human_notes = optional_input_file_path(config, task, "human_notes_path")
+        video = optional_input_file_path(config, task, "output_video_path")
+        if human_notes and human_notes.exists():
+            args.extend(["--human-notes", str(human_notes)])
+        if video and video.exists():
+            args.extend(["--video", str(video)])
         if allow_replace_generated:
             args.append("--allow-overwrite")
         run_command(args)
@@ -1235,6 +1262,10 @@ def run_output_review(
             "--artifact-base",
             str(project_dir),
         ]
+        args.extend(["--project-root", str(project_dir)])
+        args.append("--rhythm-sync")
+        if task.get("run_vlm_review") is True or os.getenv("OPENCLAW_RUN_VLM_REVIEW") == "1":
+            args.append("--run-vlm-review")
         for index, compare in enumerate(compare_videos, start=1):
             args.extend(["--compare-video", f"compare_{index}={compare}"])
         if brief and brief.exists():
@@ -1263,9 +1294,16 @@ def run_task(
     task_path = resolve_task_ref(config, task_ref)
     task, result_path, _canonical_actions = validate_or_block(config, task_path)
     if result_path.exists() and not allow_replace_result:
-        raise RunnerError(f"result already exists; use --allow-replace-result to overwrite: {result_path}")
+        try:
+            previous = load_validator_yaml(result_path)
+        except ValidationError:
+            previous = {}
+        if previous.get("status") == "blocked":
+            result_path.unlink()
+        else:
+            raise RunnerError(f"result already exists; use --allow-replace-result to overwrite: {result_path}")
     if execute:
-        run_runtime_check(skip_runtime_check)
+        run_runtime_check(skip_runtime_check, str(task.get("task_type") or ""))
 
     task_type = str(task["task_type"])
     try:
