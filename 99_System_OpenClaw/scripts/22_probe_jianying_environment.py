@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -18,9 +19,20 @@ def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=False)
 
 
-def find_jianying_roots() -> list[str]:
+def jianying_root_candidates(*, platform: str | None = None, home: Path | None = None) -> list[Path]:
+    user_home = (home or Path.home()).expanduser()
+    platform_name = (platform or sys.platform).lower()
+    if platform_name.startswith("win") or os.name == "nt" and platform is None:
+        return [
+            user_home / "AppData" / "Local" / "JianyingPro" / "User Data" / "Projects",
+            user_home / "AppData" / "Local" / "CapCut" / "User Data" / "Projects",
+        ]
+    return [user_home / "Movies" / "JianyingPro", user_home / "Movies" / "CapCut"]
+
+
+def find_jianying_roots(*, platform: str | None = None, home: Path | None = None) -> list[str]:
     roots = []
-    for candidate in [Path.home() / "Movies" / "JianyingPro", Path.home() / "Movies" / "CapCut"]:
+    for candidate in jianying_root_candidates(platform=platform, home=home):
         if candidate.exists():
             roots.append(str(candidate))
     return roots

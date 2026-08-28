@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import mac_openclaw_runner as runner  # noqa: E402
+from runtime_paths import runtime_python  # noqa: E402
 import validate_content_os_task as task_validator  # noqa: E402
 
 
@@ -49,6 +50,9 @@ def capabilities() -> dict:
 
 
 class ContentOsV2RunnerContractTest(unittest.TestCase):
+    def test_runner_uses_shared_runtime_path_helper(self) -> None:
+        self.assertEqual(runner.OTIO_KDENLIVE_PYTHON, runtime_python(ROOT.parent))
+
     def setUp(self) -> None:
         self.temp_dir = tempfile.TemporaryDirectory()
         self.root = Path(self.temp_dir.name)
