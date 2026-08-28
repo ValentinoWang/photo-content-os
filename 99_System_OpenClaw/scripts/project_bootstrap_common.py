@@ -39,10 +39,7 @@ PROJECT_FIELD_LABELS = {
     "has_formal_project": "是否已有正式项目目录",
 }
 
-TITLE_REPLACEMENTS = {
-    "清华大学深圳国际研究生院": "清华SIGS",
-    "深圳国际研究生院": "SIGS",
-}
+TITLE_REPLACEMENTS = {}
 
 
 class ProjectBootstrapError(Exception):

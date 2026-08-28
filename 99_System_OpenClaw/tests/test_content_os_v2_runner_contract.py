@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import yaml
 
@@ -52,6 +53,14 @@ def capabilities() -> dict:
 class ContentOsV2RunnerContractTest(unittest.TestCase):
     def test_runner_uses_shared_runtime_path_helper(self) -> None:
         self.assertEqual(runner.OTIO_KDENLIVE_PYTHON, runtime_python(ROOT.parent))
+
+    def test_runtime_check_passes_fixed_runtime_to_shell_gate(self) -> None:
+        with patch.object(runner, "run_command") as run_command:
+            runner.run_runtime_check(False, "local_material_match")
+
+        command = run_command.call_args.args[0]
+        self.assertEqual(command[:3], ["env", f"PYTHON_BIN={runner.OTIO_KDENLIVE_PYTHON}", "bash"])
+        self.assertIn("--skip-package-pins", command)
 
     def setUp(self) -> None:
         self.temp_dir = tempfile.TemporaryDirectory()

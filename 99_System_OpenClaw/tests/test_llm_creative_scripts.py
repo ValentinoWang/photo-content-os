@@ -36,6 +36,12 @@ class LLMCreativeScriptsTest(unittest.TestCase):
         self.assertIn(order, text)
         self.assertIn("宏观论证只能放在后面", text)
 
+    def test_production_analysis_prompt_has_no_sports_specific_prefill(self) -> None:
+        text = (ROOT / "scripts" / "04_generate_ai_prompt.py").read_text(encoding="utf-8")
+        for token in ("第一视角全景跑400米", "400米比赛记录", "运动员兼拍摄者"):
+            with self.subTest(token=token):
+                self.assertNotIn(token, text)
+
 
 if __name__ == "__main__":
     unittest.main()

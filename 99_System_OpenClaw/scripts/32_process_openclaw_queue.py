@@ -26,7 +26,9 @@ from project_bootstrap_common import ensure_formal_project_for_batch
 SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
 WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
-DEFAULT_OBSIDIAN_ROOT = Path("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体").expanduser()
+from runtime_paths import obsidian_root
+
+DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 
 QUEUE_DIR_NAME = "_OpenClawQueue"
 CLOUD_TO_MAC_DIR = "cloud_to_mac"
@@ -629,7 +631,7 @@ def process_task(task_path: Path, config: QueueConfig) -> dict[str, Any]:
         creation_run_id = validate_creation_run_id(task.get("creation_run_id"))
         result_path = result_path_for(config, creation_run_id)
         outputs, warnings = requested_outputs(task)
-        cloud_markdown: dict[str, Any] = {}
+        cloud_markdown = markdown_info(task, task_path)
         batch_dir, provision_warnings = ensure_local_batch_shell(task, config, creation_run_id)
         warnings.extend(provision_warnings)
         local_project = ensure_formal_project_for_batch(batch_dir, task=task, workspace_root=config.workspace_root)

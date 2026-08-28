@@ -23,6 +23,51 @@ def run_cmd(args: list[str]) -> subprocess.CompletedProcess[str]:
 
 
 class JianyingNativeImportPackageTest(unittest.TestCase):
+    def test_standalone_readme_uses_manifest_target_spec(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            pack_dir = base / "pack"
+            manifest = pack_dir / "edit_manifest.json"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(
+                json.dumps({"target": {"width": 720, "height": 1280, "fps": 24}}),
+                encoding="utf-8",
+            )
+            result_path = base / "result.yaml"
+            result_path.write_text(
+                yaml.safe_dump(
+                    {
+                        "doc_type": "native_import_pack_result",
+                        "pack_dir": str(pack_dir),
+                        "contents": {
+                            "clips_dir": str(pack_dir / "01_clips"),
+                            "captions_srt": str(pack_dir / "02_captions/captions.srt"),
+                            "bgm_optional": "",
+                            "preview_video": str(pack_dir / "04_preview/preview.mp4"),
+                            "edit_manifest": str(manifest),
+                        },
+                    },
+                    allow_unicode=True,
+                    sort_keys=False,
+                ),
+                encoding="utf-8",
+            )
+            output = base / "README_导入剪映.md"
+            run_cmd(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts" / "28_generate_jianying_import_readme.py"),
+                    "--result",
+                    str(result_path),
+                    "--output",
+                    str(output),
+                ]
+            )
+
+            text = output.read_text(encoding="utf-8")
+            self.assertIn("720x1280 / 24fps", text)
+            self.assertNotIn("1080x1920 / 30fps", text)
+
     def test_plan_to_native_import_pack(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)

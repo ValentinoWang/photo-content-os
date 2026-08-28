@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -59,6 +60,14 @@ REQUIRED_REPORT_VALUES = {
     "owner_agent": "mac_openclaw",
     "status": "materials_matched",
 }
+REQUIRED_REPORT_SECTIONS = (
+    "是否建议进入剪辑",
+    "推荐镜头组",
+    "缺失素材",
+    "风险",
+    "素材覆盖度",
+    "宏观创作判断",
+)
 
 
 def read_text(path: Path) -> str:
@@ -227,6 +236,17 @@ def validate_report(text: str, output_path: Path) -> None:
     for key, expected in REQUIRED_REPORT_VALUES.items():
         if meta.get(key) != expected:
             raise RuntimeError(f"LLM material match report frontmatter {key} must be {expected}")
+    section_positions: dict[str, int] = {}
+    for match in re.finditer(r"(?m)^#{1,6}\s+(.+?)\s*$", text):
+        title = match.group(1).strip()
+        if title in REQUIRED_REPORT_SECTIONS and title not in section_positions:
+            section_positions[title] = match.start()
+    missing_sections = [title for title in REQUIRED_REPORT_SECTIONS if title not in section_positions]
+    if missing_sections:
+        raise RuntimeError("LLM material match report sections missing: " + ", ".join(missing_sections))
+    ordered_positions = [section_positions[title] for title in REQUIRED_REPORT_SECTIONS]
+    if ordered_positions != sorted(ordered_positions):
+        raise RuntimeError("LLM material match report sections must keep execution handoff before macro rationale")
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
 

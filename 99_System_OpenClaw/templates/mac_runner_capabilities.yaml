@@ -1,0 +1,20 @@
+# Copy to 00_入口与总览/mac_runner_capabilities.yaml for a new vault.
+editor_backends:
+  supported:
+    handoff_pack:
+      implemented: true
+    otio_kdenlive:
+      implemented: true
+supported_actions:
+  analyze_project: {implemented: true}
+  match_materials_to_brief: {implemented: true}
+  generate_storyboard_edl: {implemented: true}
+  write_local_assets: {implemented: true}
+  generate_edit_handoff_pack: {implemented: true}
+  validate_edit_handoff_pack: {implemented: true}
+  generate_otio_timeline: {implemented: true}
+  create_kdenlive_timeline: {implemented: true}
+  validate_kdenlive_timeline: {implemented: true}
+  apply_confirmed_revision: {implemented: true}
+  review_output_video: {implemented: true}
+  generate_ai_edit_log: {implemented: true}

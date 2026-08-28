@@ -1,18 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if ! command -v brew >/dev/null 2>&1; then
-  echo "未找到 Homebrew。请先安装 Homebrew，或手动安装 ffmpeg / ffprobe。"
+if command -v brew >/dev/null 2>&1; then
+  brew list ffmpeg >/dev/null 2>&1 || brew install ffmpeg
+  brew list exiftool >/dev/null 2>&1 || brew install exiftool
+else
+  echo "请安装 ffmpeg 和 exiftool，并确保它们在 PATH 中。" >&2
   exit 1
 fi
-
-brew list ffmpeg >/dev/null 2>&1 || brew install ffmpeg
-brew list exiftool >/dev/null 2>&1 || brew install exiftool
-
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install pillow tqdm
-
-echo "依赖安装完成。后续可运行：source .venv/bin/activate"
-
+echo "系统依赖检查完成。Python 环境请运行 41_setup_dev_environment.sh。"

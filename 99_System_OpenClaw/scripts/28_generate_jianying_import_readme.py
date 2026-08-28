@@ -4,9 +4,29 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 from jianying_roughcut_common import ContractError, load_yaml
+
+
+def target_video_spec(edit_manifest: Path) -> tuple[int, int, int]:
+    try:
+        manifest = json.loads(edit_manifest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ContractError(f"cannot read native import pack manifest: {edit_manifest}") from exc
+    target = manifest.get("target") if isinstance(manifest, dict) else None
+    if not isinstance(target, dict):
+        raise ContractError("native import pack manifest.target must be an object")
+    try:
+        width = int(target["width"])
+        height = int(target["height"])
+        fps = int(target["fps"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ContractError("native import pack manifest.target must define integer width, height, and fps") from exc
+    if min(width, height, fps) <= 0:
+        raise ContractError("native import pack manifest.target values must be positive")
+    return width, height, fps
 
 
 def write_readme(result_path: Path, output: Path | None) -> Path:
@@ -23,6 +43,7 @@ def write_readme(result_path: Path, output: Path | None) -> Path:
     bgm_optional = str(contents.get("bgm_optional") or "")
     preview_video = Path(str(contents.get("preview_video", ""))).expanduser()
     edit_manifest = Path(str(contents.get("edit_manifest", ""))).expanduser()
+    width, height, fps = target_video_spec(edit_manifest)
 
     readme = output.expanduser() if output else pack_dir / "README_导入剪映.md"
     readme.parent.mkdir(parents=True, exist_ok=True)
@@ -45,6 +66,7 @@ def write_readme(result_path: Path, output: Path | None) -> Path:
 | 可选 BGM | `{bgm_optional or '未提供，建议在剪映/平台曲库中人工选择'}` |
 | 预览 | `{preview_video}` |
 | 清单 | `{edit_manifest}` |
+| 目标规格 | `H.264 / yuv420p / {width}x{height} / {fps}fps` |
 
 ## 操作
 

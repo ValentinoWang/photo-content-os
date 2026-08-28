@@ -19,12 +19,13 @@ from typing import Any
 import yaml
 
 from media_common import now_iso, safe_slug
+from runtime_paths import obsidian_root
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
 WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
-DEFAULT_VAULT_ROOT = Path("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体").expanduser()
+DEFAULT_VAULT_ROOT = obsidian_root()
 TASK_INBOX = Path("98_Agent任务队列/01_cloud_to_mac_ready")
 RESULT_OUTBOX = Path("98_Agent任务队列/02_mac_to_cloud_results")
 QUEUE_DIR_NAME = "_OpenClawQueue"
@@ -174,8 +175,6 @@ def default_requested_outputs(task: dict[str, Any]) -> list[str]:
     task_type = str(task.get("task_type", "")).strip()
     if task_type == "local_material_match":
         return ["素材匹配", "Storyboard", "EDL", "local_assets"]
-    if task_type == "create_jianying_native_import_pack":
-        return ["剪映导入包", "字幕", "预览", "导入说明"]
     if task_type == "local_output_review":
         return ["成片质检", "metrics", "问题清单"]
     return ["写入批次/_openclaw/link.json", "写入批次/_openclaw/status.json", "回写 _OpenClawQueue/mac_to_cloud/*.result.json"]
