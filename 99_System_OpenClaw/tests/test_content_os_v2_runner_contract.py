@@ -105,7 +105,13 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
             "idea_id": "idea_001",
             "owner": "mac_openclaw",
             "status": "ready",
-            "inputs": {},
+            "inputs": {
+                "change_summary": {
+                    "requested_location": "片尾",
+                    "requested_change": "缩短停顿",
+                    "reason": "人工确认节奏需要更紧凑",
+                }
+            },
             "expected_outputs": [f"08_内容项目/{PROJECT_ID}/output/result.md"],
             "allowed_actions": ["apply_confirmed_revision"],
         }
@@ -122,6 +128,10 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
     def test_blocks_stale_revision_before_mac_can_write(self) -> None:
         with self.assertRaisesRegex(task_validator.ValidationError, "stale project_revision"):
             task_validator.validate_task(self.task(project_revision=2), self.capabilities, self.vault)
+
+    def test_blocks_revision_without_structured_change_summary(self) -> None:
+        with self.assertRaisesRegex(task_validator.ValidationError, "inputs.change_summary"):
+            task_validator.validate_task(self.task(inputs={}), self.capabilities, self.vault)
 
     def test_blocks_change_request_owned_by_cloud(self) -> None:
         self.write_change_request(assigned_owner="cloud_openclaw")
@@ -145,12 +155,17 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
             task_validator.validate_task(self.task(fallback_editor_backend="otio_kdenlive"), self.capabilities, self.vault)
 
     def test_result_identity_and_revision_invalidation_are_not_optional(self) -> None:
-        task = self.task(inputs={"invalidated_artifacts": ["06_edit_decision_list.json"]})
+        tenant_id = "11111111-1111-4111-8111-111111111111"
+        task = self.task(
+            inputs={"invalidated_artifacts": ["06_edit_decision_list.json"]},
+            tenant_id=tenant_id,
+        )
 
         self.assertEqual(
             runner.task_identity(task),
             {
                 "spec_version": "content_os_v0.2",
+                "doc_type": "mac_result",
                 "task_id": "task_20260710_001",
                 "task_type": "revise_local_edit_artifacts",
                 "completed_by": "mac_openclaw",
@@ -158,6 +173,7 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
                 "project_revision": 3,
                 "change_request_id": CHANGE_ID,
                 "editor_backend": "handoff_pack",
+                "tenant_id": tenant_id,
             },
         )
         self.assertEqual(
@@ -168,6 +184,28 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
                 "preserved_for_comparison": True,
             },
         )
+
+    def test_revision_basis_is_written_with_confirmed_identity(self) -> None:
+        local_project = self.root / "local-project-revision"
+        local_project.mkdir()
+        task = self.task(inputs={
+            "local_project_path": str(local_project),
+            "change_summary": {
+                "requested_location": "开场",
+                "requested_change": "替换成已确认镜头",
+                "reason": "避免与当前脚本不一致",
+            },
+        })
+
+        path = runner.write_confirmed_revision_basis(
+            runner.RunnerConfig(vault_root=self.vault, workspace_root=self.root), task
+        )
+
+        self.assertEqual(path, local_project / "90_Draft_Project/revision_basis/3" / f"{CHANGE_ID}.json")
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(payload["doc_type"], "confirmed_revision_basis")
+        self.assertEqual(payload["change_request_id"], CHANGE_ID)
+        self.assertEqual(payload["change_summary"]["requested_change"], "替换成已确认镜头")
 
     def test_backend_result_identity_mismatch_is_blocked(self) -> None:
         result = self.root / "backend-result.json"

@@ -40,6 +40,11 @@ LOCAL_EDITOR_OUTPUT_TASK_TYPES = {
     "generate_otio_kdenlive_timeline",
     "revise_local_edit_artifacts",
 }
+OPTIONAL_LOCAL_BINDING_PATHS = {
+    "batch_note_path": "file",
+    "inbox_batch_path": "directory",
+    "local_project_path": "directory",
+}
 
 
 class ValidationError(Exception):
@@ -156,7 +161,22 @@ def validate_inputs(task: dict[str, Any], vault_root: Path) -> None:
                 elif not (vault_root / vault_relative_path(item, vault_root)).exists():
                     raise ValidationError(f"inputs.compare_video_paths entry does not exist under vault root: {item}")
             continue
-        if not key.endswith("_path") or key == "local_project_path":
+        if key in OPTIONAL_LOCAL_BINDING_PATHS:
+            if value is None or value == "":
+                continue
+            if not isinstance(value, str) or not value.strip():
+                raise ValidationError(f"inputs.{key} must be text when provided")
+            path = Path(value).expanduser()
+            resolved = path if path.is_absolute() else vault_root / vault_relative_path(value, vault_root)
+            expected_kind = OPTIONAL_LOCAL_BINDING_PATHS[key]
+            if not resolved.exists() or (
+                expected_kind == "file" and not resolved.is_file()
+            ) or (
+                expected_kind == "directory" and not resolved.is_dir()
+            ):
+                raise ValidationError(f"inputs.{key} does not resolve to an existing {expected_kind}: {resolved}")
+            continue
+        if not key.endswith("_path"):
             continue
         if not isinstance(value, str) or not value.strip():
             raise ValidationError(f"inputs.{key} must be text")
@@ -169,17 +189,6 @@ def validate_inputs(task: dict[str, Any], vault_root: Path) -> None:
         path = vault_relative_path(value, vault_root)
         if not (vault_root / path).exists():
             raise ValidationError(f"inputs.{key} does not exist under vault root: {value}")
-
-    local_project_path = inputs.get("local_project_path")
-    if local_project_path is not None:
-        if not isinstance(local_project_path, str) or not local_project_path.strip():
-            raise ValidationError("inputs.local_project_path must be text")
-        path = Path(local_project_path).expanduser()
-        if not path.is_absolute():
-            raise ValidationError("inputs.local_project_path must be an absolute Mac path")
-        if not path.exists() or not path.is_dir():
-            raise ValidationError(f"inputs.local_project_path does not exist: {path}")
-
 
 def is_revision_scoped_local_editor_output(task: dict[str, Any], output: str) -> bool:
     """Accept only the fixed local editor-output notation used by v0.2 tasks."""
@@ -291,6 +300,13 @@ def validate_change_request(task: dict[str, Any], vault_root: Path) -> str | Non
         raise ValidationError("change request.target_revision does not match task.project_revision")
     if require_positive_int(request, "base_revision") >= require_positive_int(request, "target_revision"):
         raise ValidationError("change request.target_revision must be greater than base_revision")
+    if require_text(task, "task_type") in REVISION_TASK_TYPES:
+        summary = (task.get("inputs") or {}).get("change_summary")
+        if not isinstance(summary, dict):
+            raise ValidationError("revise_local_edit_artifacts requires inputs.change_summary")
+        for key in ("requested_location", "requested_change", "reason"):
+            if not isinstance(summary.get(key), str) or not summary[key].strip():
+                raise ValidationError(f"inputs.change_summary.{key} must be text")
     return change_request_id
 
 
@@ -304,6 +320,14 @@ def validate_project_package_inputs(task: dict[str, Any], vault_root: Path) -> N
     script = project_dir / "04_script.md"
     if not script.exists() or script.stat().st_size == 0:
         raise ValidationError(f"local_material_match requires project package script: 08_内容项目/{project_id}/04_script.md")
+
+
+def validate_tenant_scope(task: dict[str, Any]) -> None:
+    value = task.get("tenant_id")
+    if value is None:
+        return
+    if not isinstance(value, str) or not value.strip() or len(value.strip()) > 160:
+        raise ValidationError("tenant_id must be non-empty text when provided")
 
 
 def validate_task(task: dict[str, Any], capabilities: dict[str, Any], vault_root: Path) -> dict[str, Any]:
@@ -327,6 +351,7 @@ def validate_task(task: dict[str, Any], capabilities: dict[str, Any], vault_root
     validate_inputs(task, vault_root)
     validate_expected_outputs(task, vault_root)
     validate_project_package_inputs(task, vault_root)
+    validate_tenant_scope(task)
 
     return {
         "status": "valid",
@@ -344,6 +369,7 @@ def validate_task(task: dict[str, Any], capabilities: dict[str, Any], vault_root
 def write_blocked_result(path: Path, task: dict[str, Any], reason: str) -> None:
     result = {
         "spec_version": SPEC_VERSION,
+        "doc_type": "mac_result",
         "task_id": task.get("task_id", "unknown_task"),
         "task_type": task.get("task_type", "unknown_task_type"),
         "completed_by": "mac_openclaw",
@@ -355,6 +381,9 @@ def write_blocked_result(path: Path, task: dict[str, Any], reason: str) -> None:
         "change_request_id": task.get("change_request_id") or None,
         "editor_backend": task.get("editor_backend"),
     }
+    tenant_id = task.get("tenant_id")
+    if isinstance(tenant_id, str) and tenant_id.strip():
+        result["tenant_id"] = tenant_id.strip()
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
         yaml.safe_dump(result, handle, allow_unicode=True, sort_keys=False)

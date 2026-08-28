@@ -9,6 +9,7 @@ media is reported as a blocking error to the caller.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import shutil
 import subprocess
@@ -55,6 +56,48 @@ def read_json(path: Path) -> dict[str, Any]:
 def write_json(path: Path, data: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def revision_basis_descriptor(
+    path: Path,
+    *,
+    project_id: str,
+    project_revision: int,
+) -> dict[str, str]:
+    """Return a hash-bound, identity-checked confirmed revision request."""
+
+    resolved = path.expanduser().resolve()
+    basis = read_json(resolved)
+    if basis.get("spec_version") != "content_os_v0.2" or basis.get("doc_type") != "confirmed_revision_basis":
+        raise ContractError("revision basis is not a confirmed Content OS v0.2 revision")
+    if (
+        basis.get("project_id") != project_id
+        or basis.get("project_revision") != project_revision
+        or basis.get("editor_backend") != "otio_kdenlive"
+    ):
+        raise ContractError("revision basis does not match project_id, project_revision, or editor_backend")
+    change_request_id = basis.get("change_request_id")
+    if not isinstance(change_request_id, str) or not change_request_id.strip():
+        raise ContractError("revision basis requires a non-empty change_request_id")
+    summary = basis.get("change_summary")
+    if not isinstance(summary, dict) or any(
+        not isinstance(summary.get(key), str) or not summary[key].strip()
+        for key in ("requested_location", "requested_change", "reason")
+    ):
+        raise ContractError("revision basis requires a structured change_summary")
+    return {
+        "path": str(resolved),
+        "sha256": sha256_file(resolved),
+        "change_request_id": change_request_id.strip(),
+    }
 
 
 def write_result(path: Path | None, data: dict[str, Any]) -> None:
@@ -156,7 +199,14 @@ def plain_metadata(value: Any) -> dict[str, Any]:
         return {}
 
 
-def make_otio_timeline(otio: Any, project_id: str, project_revision: int, edl: dict[str, Any], clips: list[TimelineClip]) -> Any:
+def make_otio_timeline(
+    otio: Any,
+    project_id: str,
+    project_revision: int,
+    edl: dict[str, Any],
+    clips: list[TimelineClip],
+    revision_basis: dict[str, str] | None,
+) -> Any:
     track = otio.schema.Track(name="主画面", kind=otio.schema.TrackKind.Video)
     cursor = 0.0
     for clip in clips:
@@ -211,11 +261,19 @@ def make_otio_timeline(otio: Any, project_id: str, project_revision: int, edl: d
         "source_edl": str(edl.get("project_id") or project_id),
         "fps": FPS,
     }
+    if revision_basis is not None:
+        timeline.metadata["content_os"]["revision_basis"] = revision_basis
     return timeline
 
 
-def timeline_manifest(project_id: str, project_revision: int, clips: list[TimelineClip], otio_path: Path) -> dict[str, Any]:
-    return {
+def timeline_manifest(
+    project_id: str,
+    project_revision: int,
+    clips: list[TimelineClip],
+    otio_path: Path,
+    revision_basis: dict[str, str] | None,
+) -> dict[str, Any]:
+    manifest = {
         "doc_type": "otio_kdenlive_handoff_manifest",
         "spec_version": "content_os_v0.2",
         "project_id": project_id,
@@ -235,6 +293,9 @@ def timeline_manifest(project_id: str, project_revision: int, clips: list[Timeli
             for clip in clips
         ],
     }
+    if revision_basis is not None:
+        manifest["revision_basis"] = revision_basis
+    return manifest
 
 
 def write_handoff_readme(path: Path, manifest: dict[str, Any]) -> None:
@@ -266,12 +327,17 @@ def generate_otio(args: argparse.Namespace) -> int:
     if not storyboard.is_file() or not storyboard.read_text(encoding="utf-8").strip():
         raise ContractError("Storyboard is missing or empty")
     edl, clips = load_edl(args.edl.resolve(), project_id, args.project_revision)
+    revision_basis = (
+        revision_basis_descriptor(args.revision_basis, project_id=project_id, project_revision=args.project_revision)
+        if args.revision_basis is not None
+        else None
+    )
     output_root = args.output_root.resolve() / str(args.project_revision)
     output_root.mkdir(parents=True, exist_ok=True)
     otio_path = output_root / "timeline.otio"
-    timeline = make_otio_timeline(otio, project_id, args.project_revision, edl, clips)
+    timeline = make_otio_timeline(otio, project_id, args.project_revision, edl, clips, revision_basis)
     otio.adapters.write_to_file(timeline, str(otio_path))
-    manifest = timeline_manifest(project_id, args.project_revision, clips, otio_path)
+    manifest = timeline_manifest(project_id, args.project_revision, clips, otio_path, revision_basis)
     manifest_path = output_root / "manifest.json"
     write_json(manifest_path, manifest)
     write_handoff_readme(output_root / "剪辑交接说明.md", manifest)
@@ -344,7 +410,7 @@ def generate_kdenlive(args: argparse.Namespace) -> int:
         raise ContractError("project_revision must be a positive integer")
     otio_path = args.otio.resolve()
     timeline = otio.adapters.read_from_file(str(otio_path))
-    metadata = plain_metadata(timeline.metadata).get("content_os", {})
+    metadata = plain_metadata(plain_metadata(timeline.metadata).get("content_os"))
     if metadata.get("project_id") != args.project_id:
         raise ContractError("OTIO project_id does not match requested project_id")
     if metadata.get("project_revision") != args.project_revision:
@@ -376,6 +442,22 @@ def validate(args: argparse.Namespace) -> int:
     metadata = plain_metadata(timeline.metadata).get("content_os", {})
     if metadata.get("project_id") != args.project_id or metadata.get("project_revision") != args.project_revision:
         raise ContractError("OTIO identity does not match project_id/project_revision")
+    metadata_basis = metadata.get("revision_basis")
+    if metadata_basis is not None:
+        basis_metadata = plain_metadata(metadata_basis)
+        if not basis_metadata:
+            raise ContractError("OTIO revision basis metadata must be an object")
+        path_value = basis_metadata.get("path")
+        if not isinstance(path_value, str) or not path_value.strip():
+            raise ContractError("OTIO revision basis metadata has no path")
+        actual_basis = revision_basis_descriptor(
+            Path(path_value), project_id=args.project_id, project_revision=args.project_revision
+        )
+        if basis_metadata != actual_basis:
+            raise ContractError("OTIO revision basis has changed since timeline generation")
+        manifest = read_json(args.otio.resolve().with_name("manifest.json"))
+        if manifest.get("revision_basis") != actual_basis:
+            raise ContractError("OTIO manifest does not match the confirmed revision basis")
     try:
         root = ET.parse(args.kdenlive.resolve()).getroot()
     except (OSError, ET.ParseError) as exc:
@@ -422,6 +504,7 @@ def parser() -> argparse.ArgumentParser:
     generate.add_argument("--edl", type=Path, required=True)
     generate.add_argument("--storyboard", type=Path, required=True)
     generate.add_argument("--output-root", type=Path, required=True)
+    generate.add_argument("--revision-basis", type=Path)
     generate.add_argument("--result-output", type=Path)
     generate.set_defaults(func=generate_otio)
     kdenlive = commands.add_parser("generate-kdenlive")

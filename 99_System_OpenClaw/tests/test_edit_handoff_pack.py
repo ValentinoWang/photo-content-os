@@ -177,6 +177,45 @@ class EditHandoffPackTest(unittest.TestCase):
             self.assertEqual(json.loads(result_path.read_text(encoding="utf-8"))["error_code"], "raw360_reframe_required")
             self.assertFalse((output_root / "4").exists())
 
+    def test_revision_basis_is_hash_bound_to_the_handoff_manifest(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            edl, storyboard, materials, output_root = make_inputs(base)
+            basis = base / "confirmed_revision.json"
+            basis.write_text(
+                json.dumps(
+                    {
+                        "spec_version": "content_os_v0.2",
+                        "doc_type": "confirmed_revision_basis",
+                        "project_id": "project_handoff_test",
+                        "project_revision": 7,
+                        "change_request_id": "change_20260828_001",
+                        "editor_backend": "handoff_pack",
+                        "change_summary": {
+                            "requested_location": "第二段",
+                            "requested_change": "保留停顿",
+                            "reason": "人工确认",
+                        },
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            generated = run_backend(
+                "generate", "--project-revision", "7", "--edl", str(edl), "--storyboard", str(storyboard),
+                "--materials", str(materials), "--output-root", str(output_root), "--revision-basis", str(basis),
+            )
+            manifest_path = Path(str(generated["manifest"]))
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            descriptor = next(item for item in manifest["inputs"] if item["role"] == "confirmed_revision_basis")
+            self.assertEqual(descriptor["change_request_id"], "change_20260828_001")
+            validation = run_backend("validate", "--manifest", str(manifest_path))
+            self.assertEqual(validation["revision_basis"], descriptor)
+
+            basis.write_text(basis.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+            blocked = run_backend("validate", "--manifest", str(manifest_path), expected_returncode=2)
+            self.assertEqual(blocked["error_code"], "revision_basis_checksum")
+
     def test_rejects_gapped_timeline_and_tampered_artifact(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)

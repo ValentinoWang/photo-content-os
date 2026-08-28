@@ -100,6 +100,45 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             )
             self.assertIn("raw 360", completed.stderr)
 
+    def test_revision_basis_is_written_to_otio_and_manifest(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            edl = root / "edl.json"
+            storyboard = root / "storyboard.md"
+            basis = root / "revision.json"
+            write_edl(edl)
+            storyboard.write_text("# 分镜\n", encoding="utf-8")
+            basis.write_text(json.dumps({
+                "spec_version": "content_os_v0.2",
+                "doc_type": "confirmed_revision_basis",
+                "project_id": "demo_中文",
+                "project_revision": 4,
+                "change_request_id": "change_20260828_002",
+                "editor_backend": "otio_kdenlive",
+                "change_summary": {
+                    "requested_location": "结尾",
+                    "requested_change": "调整字幕",
+                    "reason": "人工确认",
+                },
+            }, ensure_ascii=False), encoding="utf-8")
+            output = root / "edit_handoff"
+            revision_dir = output / "4"
+            self.run_script(
+                "generate-otio", "--project-id", "demo_中文", "--project-revision", "4",
+                "--edl", str(edl), "--storyboard", str(storyboard), "--output-root", str(output),
+                "--revision-basis", str(basis),
+            )
+            self.run_script(
+                "generate-kdenlive", "--project-id", "demo_中文", "--project-revision", "4",
+                "--otio", str(revision_dir / "timeline.otio"), "--output-root", str(output),
+            )
+            self.run_script(
+                "validate", "--project-id", "demo_中文", "--project-revision", "4",
+                "--otio", str(revision_dir / "timeline.otio"), "--kdenlive", str(revision_dir / "timeline.kdenlive"),
+            )
+            manifest = json.loads((revision_dir / "manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["revision_basis"]["change_request_id"], "change_20260828_002")
+
     def test_blocks_overlapping_edl(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

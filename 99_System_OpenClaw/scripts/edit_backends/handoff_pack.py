@@ -379,6 +379,42 @@ def input_descriptor(role: str, path: Path) -> dict[str, str]:
     return {"role": role, "path": str(path), "sha256": sha256_file(path)}
 
 
+def revision_basis_descriptor(
+    path: Path,
+    *,
+    project_id: str,
+    revision: int,
+    editor_backend: str,
+) -> dict[str, str]:
+    """Read a confirmed revision request before binding it to an immutable pack."""
+
+    basis_path = path.expanduser().resolve()
+    basis = read_json_object(basis_path, label="已确认修改依据")
+    if basis.get("spec_version") != SPEC_VERSION or basis.get("doc_type") != "confirmed_revision_basis":
+        raise HandoffError("revision_basis_contract", "修改依据不是 Content OS v0.2 的已确认修改")
+    if (
+        basis.get("project_id") != project_id
+        or basis.get("project_revision") != revision
+        or basis.get("editor_backend") != editor_backend
+    ):
+        raise HandoffError("revision_basis_identity", "修改依据与当前项目、版本或剪辑方式不一致")
+    change_request_id = basis.get("change_request_id")
+    if not isinstance(change_request_id, str) or not change_request_id.strip():
+        raise HandoffError("revision_basis_change_request", "修改依据缺少已确认的修改单编号")
+    summary = basis.get("change_summary")
+    if not isinstance(summary, dict) or any(
+        not isinstance(summary.get(key), str) or not summary[key].strip()
+        for key in ("requested_location", "requested_change", "reason")
+    ):
+        raise HandoffError("revision_basis_summary", "修改依据缺少结构化的修改说明")
+    return {
+        "role": "confirmed_revision_basis",
+        "path": str(basis_path),
+        "sha256": sha256_file(basis_path),
+        "change_request_id": change_request_id.strip(),
+    }
+
+
 def write_clips_csv(path: Path, timeline: list[dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=CSV_FIELDS)
@@ -473,6 +509,7 @@ def build_manifest(
     edl_path: Path,
     storyboard_path: Path,
     materials_path: Path | None,
+    revision_basis_path: Path | None,
     timeline: list[dict[str, Any]],
     skipped_raw_sources: list[str],
 ) -> dict[str, Any]:
@@ -497,6 +534,15 @@ def build_manifest(
             inputs.append(input_descriptor("materials", materials_path))
         else:
             inputs.append({"role": "materials_root", "path": str(materials_path), "sha256": "directory"})
+    if revision_basis_path is not None:
+        inputs.append(
+            revision_basis_descriptor(
+                revision_basis_path,
+                project_id=project_id,
+                revision=revision,
+                editor_backend=BACKEND,
+            )
+        )
     return {
         "spec_version": SPEC_VERSION,
         "doc_type": MANIFEST_TYPE,
@@ -545,6 +591,7 @@ def generate(
     storyboard_path: Path,
     output_root: Path,
     materials_path: Path | None,
+    revision_basis_path: Path | None,
 ) -> dict[str, Any]:
     edl_path = edl_path.expanduser().resolve()
     storyboard_path = storyboard_path.expanduser().resolve()
@@ -582,6 +629,7 @@ def generate(
             edl_path=edl_path,
             storyboard_path=storyboard_path,
             materials_path=resolved_materials_path,
+            revision_basis_path=revision_basis_path,
             timeline=timeline,
             skipped_raw_sources=skipped_raw_sources,
         )
@@ -648,6 +696,30 @@ def require_artifact(package_dir: Path, relative: Any, *, label: str) -> Path:
     return path
 
 
+def validate_manifest_revision_basis(manifest: dict[str, Any], *, project_id: str, revision: int) -> dict[str, str] | None:
+    inputs = manifest.get("inputs")
+    if not isinstance(inputs, list):
+        raise HandoffError("manifest_contract", "manifest 缺少 inputs")
+    candidates = [entry for entry in inputs if isinstance(entry, dict) and entry.get("role") == "confirmed_revision_basis"]
+    if not candidates:
+        return None
+    if len(candidates) != 1:
+        raise HandoffError("revision_basis_contract", "manifest 只能绑定一份已确认修改依据")
+    descriptor = candidates[0]
+    path_value = descriptor.get("path")
+    if not isinstance(path_value, str) or not path_value.strip():
+        raise HandoffError("revision_basis_contract", "manifest 的修改依据路径无效")
+    actual = revision_basis_descriptor(
+        Path(path_value),
+        project_id=project_id,
+        revision=revision,
+        editor_backend=BACKEND,
+    )
+    if descriptor != actual:
+        raise HandoffError("revision_basis_checksum", "已确认修改依据已变更，不能继续使用该交接包")
+    return actual
+
+
 def validate(manifest_path: Path) -> dict[str, Any]:
     manifest_path = manifest_path.expanduser().resolve()
     manifest = read_json_object(manifest_path, label="manifest")
@@ -662,6 +734,7 @@ def validate(manifest_path: Path) -> dict[str, Any]:
         raise HandoffError("manifest_identity", "manifest 缺少有效项目编号或项目版本")
     if package_dir.name != str(revision):
         raise HandoffError("manifest_revision_path", "manifest 所在目录必须与项目版本一致")
+    revision_basis = validate_manifest_revision_basis(manifest, project_id=project_id, revision=revision)
 
     artifacts = manifest.get("artifacts")
     checksums = manifest.get("artifact_checksums")
@@ -725,7 +798,7 @@ def validate(manifest_path: Path) -> dict[str, Any]:
 
     if manifest.get("raw360_direct_use") != "blocked":
         raise HandoffError("raw360_policy", "manifest 必须明确禁止直接使用 360 原始材料")
-    return {
+    result = {
         "spec_version": SPEC_VERSION,
         "doc_type": VALIDATION_TYPE,
         "status": "passed",
@@ -738,6 +811,9 @@ def validate(manifest_path: Path) -> dict[str, Any]:
         "preview_kind": preview["kind"],
         "raw360_direct_use": "blocked",
     }
+    if revision_basis is not None:
+        result["revision_basis"] = revision_basis
+    return result
 
 
 def emit(payload: dict[str, Any], output_path: Path | None) -> None:
@@ -756,6 +832,7 @@ def parser() -> argparse.ArgumentParser:
     generate_parser.add_argument("--storyboard", required=True, type=Path)
     generate_parser.add_argument("--output-root", required=True, type=Path)
     generate_parser.add_argument("--materials", type=Path)
+    generate_parser.add_argument("--revision-basis", type=Path)
     generate_parser.add_argument("--result-output", type=Path)
     validate_parser = commands.add_parser("validate", help="校验剪辑交接包内容、时长、字幕和材料")
     validate_parser.add_argument("--manifest", required=True, type=Path)
@@ -774,6 +851,7 @@ def main() -> int:
                 storyboard_path=args.storyboard,
                 output_root=args.output_root,
                 materials_path=args.materials,
+                revision_basis_path=args.revision_basis,
             )
         else:
             payload = validate(args.manifest)

@@ -81,8 +81,9 @@ def task_identity(task: dict[str, Any]) -> dict[str, Any]:
     backend and thereby becoming impossible to reconcile safely.
     """
 
-    return {
+    identity = {
         "spec_version": CONTENT_OS_SPEC_VERSION,
+        "doc_type": "mac_result",
         "task_id": task["task_id"],
         "task_type": task["task_type"],
         "completed_by": "mac_openclaw",
@@ -91,6 +92,10 @@ def task_identity(task: dict[str, Any]) -> dict[str, Any]:
         "change_request_id": task.get("change_request_id") or None,
         "editor_backend": task["editor_backend"],
     }
+    tenant_id = task.get("tenant_id")
+    if isinstance(tenant_id, str) and tenant_id.strip():
+        identity["tenant_id"] = tenant_id.strip()
+    return identity
 
 
 def script_path(name: str) -> str:
@@ -195,6 +200,7 @@ def otio_kdenlive_python() -> str:
 def write_execution_blocked_result(path: Path, task: dict[str, Any], reason: str) -> None:
     result = {
         "spec_version": CONTENT_OS_SPEC_VERSION,
+        "doc_type": "mac_result",
         "task_id": task.get("task_id", "unknown_task"),
         "task_type": task.get("task_type", "unknown_task_type"),
         "completed_by": "mac_openclaw",
@@ -211,6 +217,9 @@ def write_execution_blocked_result(path: Path, task: dict[str, Any], reason: str
         "generation_reasoning_required": REQUIRED_CREATIVE_REASONING if task.get("task_type") == "local_material_match" else None,
         "fallback_used": False,
     }
+    tenant_id = task.get("tenant_id")
+    if isinstance(tenant_id, str) and tenant_id.strip():
+        result["tenant_id"] = tenant_id.strip()
     write_yaml(path, result)
 
 
@@ -800,6 +809,53 @@ def backend_output_root(config: RunnerConfig, task: dict[str, Any]) -> Path:
     return local_project_path(config, task) / "90_Draft_Project" / "edit_handoff"
 
 
+def write_confirmed_revision_basis(config: RunnerConfig, task: dict[str, Any]) -> Path | None:
+    """Persist a confirmed request so its selected backend can verify the basis."""
+
+    if task.get("task_type") != "revise_local_edit_artifacts":
+        return None
+    change_request_id = str(task.get("change_request_id") or "").strip()
+    if not change_request_id:
+        raise RunnerError("revision task requires change_request_id")
+    inputs = task.get("inputs")
+    summary = inputs.get("change_summary") if isinstance(inputs, dict) else None
+    if not isinstance(summary, dict):
+        raise RunnerError("revision task requires inputs.change_summary")
+    required = ("requested_location", "requested_change", "reason")
+    if any(not isinstance(summary.get(key), str) or not summary[key].strip() for key in required):
+        raise RunnerError("revision change_summary is incomplete")
+    references = summary.get("references", [])
+    if not isinstance(references, list) or any(not isinstance(item, str) for item in references):
+        raise RunnerError("revision change_summary.references must be a text list")
+    basis = {
+        "spec_version": CONTENT_OS_SPEC_VERSION,
+        "doc_type": "confirmed_revision_basis",
+        "project_id": task["project_id"],
+        "project_revision": task["project_revision"],
+        "change_request_id": change_request_id,
+        "editor_backend": task["editor_backend"],
+        "change_summary": {
+            "requested_location": summary["requested_location"].strip(),
+            "requested_change": summary["requested_change"].strip(),
+            "reason": summary["reason"].strip(),
+            "urgency": str(summary.get("urgency") or "").strip(),
+            "references": [item.strip() for item in references if item.strip()],
+        },
+    }
+    path = (
+        local_project_path(config, task)
+        / "90_Draft_Project"
+        / "revision_basis"
+        / str(task["project_revision"])
+        / f"{change_request_id}.json"
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(".json.tmp")
+    temporary.write_text(json.dumps(basis, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    temporary.replace(path)
+    return path
+
+
 def require_json_identity(path: Path, task: dict[str, Any], expected_doc_type: str) -> dict[str, Any]:
     require_json(path)
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -852,6 +908,18 @@ def write_handoff_pack_result(
         raise RunnerError("handoff manifest editor_backend must be handoff_pack")
     for path in (clips_csv, captions, handoff_note, preview_note):
         require_nonempty(path)
+    revision_basis = manifest_data.get("inputs") if task.get("task_type") == "revise_local_edit_artifacts" else None
+    if revision_basis is not None:
+        revision_basis = next(
+            (
+                item
+                for item in revision_basis
+                if isinstance(item, dict) and item.get("role") == "confirmed_revision_basis"
+            ),
+            None,
+        )
+        if not isinstance(revision_basis, dict):
+            raise RunnerError("revision handoff manifest must reference its confirmed revision basis")
     result = {
         **task_identity(task),
         "status": "done",
@@ -862,6 +930,7 @@ def write_handoff_pack_result(
             "handoff_captions": str(captions),
             "handoff_readme": str(handoff_note),
             "handoff_preview_note": str(preview_note),
+            **({"revision_basis": str(revision_basis["path"])} if revision_basis is not None else {}),
         },
         "backend_result": manifest_data,
         "backend_validation": validation_data,
@@ -881,6 +950,7 @@ def run_edit_handoff_pack(
     task: dict[str, Any],
     result_path: Path,
     execute: bool,
+    revision_basis: Path | None = None,
 ) -> None:
     edl, storyboard = backend_source_files(config, task)
     output_root = backend_output_root(config, task)
@@ -910,6 +980,8 @@ def run_edit_handoff_pack(
         ]
         if materials:
             command.extend(["--materials", str(materials)])
+        if revision_basis is not None:
+            command.extend(["--revision-basis", str(revision_basis)])
         run_command(command)
         tools_used["generate_edit_handoff_pack"] = script_path("edit_backends/handoff_pack.py")
         run_command(
@@ -941,10 +1013,14 @@ def write_otio_kdenlive_result(
     kdenlive = pack_dir / "timeline.kdenlive"
     handoff_note = pack_dir / "剪辑交接说明.md"
     validation = require_json_identity(validation_path, task, "otio_kdenlive_validation")
+    manifest = require_json_identity(pack_dir / "manifest.json", task, "otio_kdenlive_handoff_manifest")
     if validation.get("status") != "passed":
         raise RunnerError(f"OTIO/Kdenlive backend validation did not pass: {validation_path}")
     for path in (otio, kdenlive, handoff_note):
         require_nonempty(path)
+    revision_basis = manifest.get("revision_basis") if task.get("task_type") == "revise_local_edit_artifacts" else None
+    if task.get("task_type") == "revise_local_edit_artifacts" and not isinstance(revision_basis, dict):
+        raise RunnerError("revision OTIO manifest must reference its confirmed revision basis")
     result = {
         **task_identity(task),
         "status": "done",
@@ -954,7 +1030,9 @@ def write_otio_kdenlive_result(
             "kdenlive_timeline": str(kdenlive),
             "timeline_validation": str(validation_path),
             "handoff_readme": str(handoff_note),
+            **({"revision_basis": str(revision_basis["path"])} if isinstance(revision_basis, dict) else {}),
         },
+        "backend_result": manifest,
         "backend_validation": validation,
         "tools_used": tools_used,
         "fallback_used": False,
@@ -972,6 +1050,7 @@ def run_otio_kdenlive_timeline(
     task: dict[str, Any],
     result_path: Path,
     execute: bool,
+    revision_basis: Path | None = None,
 ) -> None:
     edl, storyboard = backend_source_files(config, task)
     output_root = backend_output_root(config, task)
@@ -1004,6 +1083,7 @@ def run_otio_kdenlive_timeline(
                 "--result-output",
                 str(otio_result),
             ]
+            + (["--revision-basis", str(revision_basis)] if revision_basis is not None else [])
         )
         tools_used["generate_otio_timeline"] = script
         run_command(
@@ -1056,13 +1136,16 @@ def run_revision_task(
     """Regenerate only the already-selected backend for a confirmed change."""
 
     backend = str(task["editor_backend"])
+    if backend not in {"handoff_pack", "otio_kdenlive"}:
+        raise RunnerError(f"unsupported editor_backend with no fallback: {backend}")
+    revision_basis = write_confirmed_revision_basis(config, task)
     if backend == "handoff_pack":
-        run_edit_handoff_pack(config, task, result_path, execute)
+        run_edit_handoff_pack(config, task, result_path, execute, revision_basis)
         return
     if backend == "otio_kdenlive":
-        run_otio_kdenlive_timeline(config, task, result_path, execute)
+        run_otio_kdenlive_timeline(config, task, result_path, execute, revision_basis)
         return
-    raise RunnerError(f"unsupported editor_backend with no fallback: {backend}")
+    raise AssertionError(f"validated editor backend was not dispatched: {backend}")
 
 
 def run_ai_edit_log(

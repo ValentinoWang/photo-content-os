@@ -19,45 +19,20 @@ from jianying_roughcut_common import (
 )
 
 
-def raw360_source_start(selected: dict[str, Any], clip: dict[str, Any], timeline_start: float, required_duration: float) -> float:
-    path = Path(str(selected.get("path", "")))
-    if not is_raw360_media(path):
-        return 0.0
-    source_duration = float(selected.get("duration") or 0.0)
-    if source_duration <= required_duration:
-        return 0.0
+def source_start_from_edl(selected: dict[str, Any], clip: dict[str, Any], required_duration: float) -> float:
+    """Use only an EDL-declared source offset; never infer one from an event."""
 
-    name = path.name
-    if "赛前候场" in name:
-        return 0.0
-
-    # The raw 360 full-recording starts before the race and runs through the
-    # finish/aftermath. Map the roughcut story arc onto usable source windows.
-    slot = int(clip.get("slot") or 0)
-    slot_map = {
-        4: 20.0,
-        6: 60.0,
-        7: 80.0,
-        8: 100.0,
-        9: 118.0,
-        11: 145.0,
-        12: 35.0,
-    }
-    if slot in slot_map:
-        start = slot_map[slot]
-    elif timeline_start < 15:
-        start = 20.0
-    elif timeline_start < 27:
-        start = 60.0
-    elif timeline_start < 34:
-        start = 80.0
-    elif timeline_start < 42:
-        start = 100.0
-    elif timeline_start < 53:
-        start = 118.0
-    else:
-        start = 145.0
-    return max(0.0, min(start, source_duration - required_duration))
+    raw_start = clip.get("source_start_sec", 0.0)
+    try:
+        source_start = float(raw_start)
+    except (TypeError, ValueError) as exc:
+        raise ContractError(f"EDL source_start_sec must be a non-negative number: {raw_start!r}") from exc
+    if source_start < 0:
+        raise ContractError("EDL source_start_sec must be non-negative")
+    source_duration = float(selected.get("source_duration_sec") or selected.get("duration") or 0.0)
+    if source_duration > 0 and source_start + required_duration > source_duration + 0.001:
+        raise ContractError("EDL source_start_sec and clip duration exceed the selected source media")
+    return source_start
 
 
 def video_track_from_edl(
@@ -83,7 +58,7 @@ def video_track_from_edl(
             duration,
             allow_raw360_proxy=allow_raw360_proxy,
         )
-        source_start = raw360_source_start(selected, clip, start, duration)
+        source_start = source_start_from_edl(selected, clip, duration)
         video_clip = {
             "slot": int(clip.get("slot") or index),
             "timeline_start_sec": start,
