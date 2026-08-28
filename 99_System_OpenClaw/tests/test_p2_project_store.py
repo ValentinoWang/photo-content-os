@@ -63,6 +63,48 @@ class ProjectStoreTests(unittest.TestCase):
         with self.assertRaisesRegex(ProjectStoreError, "revision_conflict"):
             self.store.update_project(rolled["id"], {"title": "冲突"}, expected_revision=1)
 
+    def test_record_publishing_is_versioned_and_only_accepts_public_metadata(self):
+        recorded = self.store.record_publishing(
+            self.project["id"],
+            {
+                "publishedAt": "2026-08-28T09:30:00Z",
+                "links": ["https://example.com/post/1"],
+                "metrics": {"views": 1200, "likes": 80, "saves": 12},
+                "reviewConclusion": "开头直接给结果，完播更稳定。",
+                "nextConstraint": "下次前两句先给可验证的结论。",
+            },
+            expected_revision=self.project["revision"],
+        )
+        publishing = recorded["publishing"]
+        self.assertEqual(publishing["state"], "published")
+        self.assertEqual(publishing["metrics"], {"views": 1200, "likes": 80, "saves": 12})
+        self.assertEqual(recorded["audit"][-1]["action"], "publishing_recorded")
+        self.assertNotIn("review_conclusion", recorded["audit"][-1]["detail"])
+        with self.assertRaisesRegex(ProjectStoreError, "revision_conflict"):
+            self.store.record_publishing(
+                self.project["id"],
+                {"reviewConclusion": "过期写入"},
+                expected_revision=self.project["revision"],
+            )
+        with self.assertRaisesRegex(ProjectStoreError, "publishing_field_invalid"):
+            self.store.record_publishing(
+                recorded["id"],
+                {"metrics": {"views": 1}, "local_workspace": "/private/media"},
+                expected_revision=recorded["revision"],
+            )
+        with self.assertRaisesRegex(ProjectStoreError, "publishing_review_private"):
+            self.store.record_publishing(
+                recorded["id"],
+                {"reviewConclusion": "素材在 /Users/example/private.mp4"},
+                expected_revision=recorded["revision"],
+            )
+        with self.assertRaisesRegex(ProjectStoreError, "publishing_link_invalid"):
+            self.store.record_publishing(
+                recorded["id"],
+                {"links": ["https://"]},
+                expected_revision=recorded["revision"],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

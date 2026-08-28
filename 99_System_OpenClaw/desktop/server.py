@@ -241,6 +241,14 @@ class StudioApplication:
                                     instruction=str(body.get("instruction") or ""),
                                     selected_blocks=selected,
                                     surrounding_blocks=blocks,
+                                    project_context={
+                                        "title": str(current.get("title") or ""),
+                                        "platform": str(current.get("platform") or ""),
+                                        "account": str(current.get("account") or ""),
+                                        "review_conclusion": str((current.get("publishing") or {}).get("review_conclusion") or ""),
+                                        "next_constraint": str((current.get("publishing") or {}).get("next_constraint") or ""),
+                                    },
+                                    account_review_context=app.store.account_review_context(project_id),
                                     generate_text=generate_text,
                                     model=body.get("model"),
                                     reasoning=body.get("reasoning"),
@@ -258,6 +266,14 @@ class StudioApplication:
                             )
                         else:
                             raise ProjectStoreError("route_not_found", "操作不存在")
+                        self._json(HTTPStatus.OK, {"ok": True, "project": project})
+                        return
+                    if method == "POST" and len(segments) == 4 and segments[:2] == ["api", "projects"] and segments[3] == "publishing":
+                        project = app.store.record_publishing(
+                            segments[2],
+                            body.get("publishing") if isinstance(body.get("publishing"), dict) else {},
+                            expected_revision=expected_revision,
+                        )
                         self._json(HTTPStatus.OK, {"ok": True, "project": project})
                         return
                     if method == "POST" and len(segments) == 4 and segments[:2] == ["api", "projects"] and segments[3] == "references":

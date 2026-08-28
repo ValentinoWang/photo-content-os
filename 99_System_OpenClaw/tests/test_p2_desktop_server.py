@@ -92,6 +92,69 @@ class DesktopServerTests(unittest.TestCase):
         self.assertEqual(blocks["brief-goal"], "只改这一块")
         self.assertEqual(blocks["brief-audience"], "")
 
+    def test_publishing_write_is_csrf_protected_and_versioned(self):
+        _, bootstrap = self.request("/api/bootstrap")
+        _, created = self.request(
+            "/api/projects", method="POST", csrf=bootstrap["csrfToken"],
+            body={"title": "发布记录", "account": "账号 A"},
+        )
+        project = created["project"]
+        body = {
+            "expectedRevision": project["revision"],
+            "publishing": {
+                "publishedAt": "2026-08-28T09:30:00Z",
+                "links": ["https://example.com/post/1"],
+                "metrics": {"views": 100, "likes": 8},
+                "reviewConclusion": "结论前置更有效。",
+                "nextConstraint": "开头不要先铺垫。",
+            },
+        }
+        status, saved = self.request(f"/api/projects/{project['id']}/publishing", method="POST", body=body)
+        self.assertEqual(status, 403)
+        self.assertEqual(saved["error"]["code"], "csrf_invalid")
+        status, saved = self.request(
+            f"/api/projects/{project['id']}/publishing", method="POST", csrf=bootstrap["csrfToken"], body=body,
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(saved["project"]["publishing"]["metrics"], {"views": 100, "likes": 8})
+        status, stale = self.request(
+            f"/api/projects/{project['id']}/publishing", method="POST", csrf=bootstrap["csrfToken"], body=body,
+        )
+        self.assertEqual(status, 409)
+        self.assertEqual(stale["error"]["code"], "revision_conflict")
+
+    def test_ai_patch_reads_only_same_account_review_history(self):
+        _, bootstrap = self.request("/api/bootstrap")
+        csrf = bootstrap["csrfToken"]
+
+        def create(title, account):
+            _, payload = self.request("/api/projects", method="POST", csrf=csrf, body={"title": title, "account": account, "platform": "小红书"})
+            return payload["project"]
+
+        same_account = create("同账号已发布", "账号 A")
+        other_account = create("其他账号已发布", "账号 B")
+        target = create("当前创作", "账号 A")
+        for project, conclusion in ((same_account, "同账号结论"), (other_account, "其他账号结论")):
+            status, _ = self.request(
+                f"/api/projects/{project['id']}/publishing", method="POST", csrf=csrf,
+                body={"expectedRevision": project["revision"], "publishing": {"reviewConclusion": conclusion, "nextConstraint": "下一次约束"}},
+            )
+            self.assertEqual(status, 200)
+
+        response_text = json.dumps({"replacements": {"brief-goal": "只改这一块"}}, ensure_ascii=False)
+        with patch("llm_common.generate_text", return_value=response_text) as generate_text:
+            status, _ = self.request(
+                f"/api/projects/{target['id']}/documents/brief/ai-patch", method="POST", csrf=csrf,
+                body={"instruction": "只修改目标", "selectedBlockIds": ["brief-goal"], "expectedRevision": target["revision"]},
+            )
+        self.assertEqual(status, 200)
+        prompt = json.loads(generate_text.call_args.kwargs["user_prompt"])
+        context = prompt["read_only_context"]
+        self.assertEqual(context["current_project"]["title"], "当前创作")
+        self.assertEqual(context["current_project"]["account"], "账号 A")
+        self.assertIn("同账号结论", json.dumps(context["same_account_review_conclusions"], ensure_ascii=False))
+        self.assertNotIn("其他账号结论", json.dumps(prompt, ensure_ascii=False))
+
 
 if __name__ == "__main__":
     unittest.main()

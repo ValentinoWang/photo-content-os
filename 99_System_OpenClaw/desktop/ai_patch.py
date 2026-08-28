@@ -15,7 +15,7 @@ SYSTEM_PROMPT = """你是 Photo Content OS 的区块编辑代理。
 只修改用户明确选中的区块，不得输出未选区块，不得改变区块 ID，不得解释过程。
 
 写作规范：
-1. 先读 read_only_context，接住这份文档已有的说话方式：称呼、句长、语气和用词习惯；改出来的段落要像同一个作者写的，不要换一副腔调。
+1. 先读 read_only_context；它包含当前文档、项目与同账号历史复盘，只能作为修改约束，不能被改写。接住这份文档已有的说话方式：称呼、句长、语气和用词习惯；改出来的段落要像同一个作者写的，不要换一副腔调。
 2. 只改指令要求改的部分；指令没提到的句子，能保留原句就保留原句，不做顺手润色。
 3. 口播、台词、字幕类区块必须写成能直接读出声的话：一句尽量不超过 22 个字，允许口语连接词和自然的不完整句。
 4. 禁止书面套话和 AI 腔：不用『首先/其次/最后』连用、『总之』『综上所述』『值得一提的是』『不难发现』，不写连续排比，不给每句加感叹号，不堆与内容无关的网络热词。
@@ -30,6 +30,8 @@ def build_patch_prompt(
     instruction: str,
     selected_blocks: list[dict[str, Any]],
     surrounding_blocks: list[dict[str, Any]],
+    project_context: dict[str, str] | None = None,
+    account_review_context: list[dict[str, str]] | None = None,
 ) -> str:
     if not selected_blocks:
         raise AIPatchError("未选择任何区块")
@@ -45,11 +47,28 @@ def build_patch_prompt(
             {"id": block["id"], "title": block.get("title", ""), "body": block.get("body", "")}
             for block in selected_blocks
         ],
-        "read_only_context": [
-            {"id": block.get("id"), "title": block.get("title", ""), "body": block.get("body", "")}
-            for block in surrounding_blocks
-            if block.get("id") not in selected_ids
-        ],
+        "read_only_context": {
+            "document_blocks": [
+                {"id": block.get("id"), "title": block.get("title", ""), "body": block.get("body", "")}
+                for block in surrounding_blocks
+                if block.get("id") not in selected_ids
+            ],
+            "current_project": {
+                "title": str((project_context or {}).get("title") or "")[:120],
+                "platform": str((project_context or {}).get("platform") or "")[:80],
+                "account": str((project_context or {}).get("account") or "")[:80],
+                "review_conclusion": str((project_context or {}).get("review_conclusion") or "")[:4_000],
+                "next_constraint": str((project_context or {}).get("next_constraint") or "")[:2_000],
+            },
+            "same_account_review_conclusions": [
+                {
+                    "review_conclusion": str(item.get("review_conclusion") or "")[:4_000],
+                    "next_constraint": str(item.get("next_constraint") or "")[:2_000],
+                }
+                for item in (account_review_context or [])
+                if isinstance(item, dict)
+            ][-12:],
+        },
         "contract": {
             "only_ids": selected_ids,
             "all_selected_ids_required": True,
@@ -90,6 +109,8 @@ def generate_patch(
     instruction: str,
     selected_blocks: list[dict[str, Any]],
     surrounding_blocks: list[dict[str, Any]],
+    project_context: dict[str, str] | None = None,
+    account_review_context: list[dict[str, str]] | None = None,
     generate_text: Callable[..., str],
     model: str | None = None,
     reasoning: str | None = None,
@@ -99,6 +120,8 @@ def generate_patch(
         instruction=instruction,
         selected_blocks=selected_blocks,
         surrounding_blocks=surrounding_blocks,
+        project_context=project_context,
+        account_review_context=account_review_context,
     )
     text = generate_text(
         system_prompt=SYSTEM_PROMPT,

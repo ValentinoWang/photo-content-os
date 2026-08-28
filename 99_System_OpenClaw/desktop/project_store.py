@@ -2,7 +2,7 @@
 """Versioned local CreativeProject store with block locks and safe projections."""
 from __future__ import annotations
 
-import copy, difflib, hashlib, json, os, re, secrets
+import copy, difflib, hashlib, json, os, re, secrets, urllib.parse
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,6 +14,9 @@ DOCUMENT_NAMES = ("brief", "script", "storyboard", "edl")
 DOCUMENT_LABELS = {"brief": "创作 Brief", "script": "脚本", "storyboard": "分镜", "edl": "剪辑方案"}
 DOWNSTREAM = {"brief": ("script", "storyboard", "edl", "delivery"), "script": ("storyboard", "edl", "delivery"), "storyboard": ("edl", "delivery"), "edl": ("delivery",)}
 SAFE_ID = re.compile(r"^[a-z0-9][a-z0-9_-]{7,63}$")
+PUBLISHING_METRICS = ("views", "likes", "comments", "shares", "saves", "follows")
+MAX_PUBLIC_LINKS = 8
+LOCAL_ABSOLUTE_PATH = re.compile(r"(?:^|\s)(?:/(?:Users|home|private|var|Volumes)/|[A-Za-z]:[\\/])")
 DEFAULTS = {
     "brief": (("brief-goal", "创作目标"), ("brief-audience", "目标受众"), ("brief-angle", "核心角度"), ("brief-constraints", "平台与边界")),
     "script": (("script-hook", "开头钩子"), ("script-body", "主体推进"), ("script-ending", "结尾与行动")),
@@ -152,3 +155,96 @@ class ProjectStore:
         if not title or not url or not url.startswith(("https://", "http://")): raise ProjectStoreError("reference_invalid", "参考素材需要标题和有效链接")
         data = self._load(); project = self._find(data, project_id); self._revision(project, expected_revision); project["references"].append({"id": "reference-" + secrets.token_hex(8), "asset_role": "reference", "title": title[:160], "url": url[:2000], "platform": str(platform or "未指定")[:40], "note": str(note or "")[:2000], "created_at": _now()})
         self._touch(project, "user", "reference_added", {"title": title[:160]}); self._save(data); return _public(project)
+
+    @staticmethod
+    def _publishing_payload(value: dict[str, Any]) -> dict[str, Any]:
+        allowed = {"publishedAt", "links", "metrics", "reviewConclusion", "nextConstraint"}
+        unknown = set(value) - allowed
+        if unknown:
+            raise ProjectStoreError("publishing_field_invalid", "发布记录包含不可编辑字段")
+
+        published_at = str(value.get("publishedAt") or "").strip()
+        if published_at:
+            try:
+                parsed_at = datetime.fromisoformat(published_at.replace("Z", "+00:00"))
+            except ValueError as exc:
+                raise ProjectStoreError("published_at_invalid", "发布时间格式无效") from exc
+            if parsed_at.tzinfo is None:
+                raise ProjectStoreError("published_at_invalid", "发布时间必须包含时区")
+            published_at = parsed_at.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+        raw_links = value.get("links", [])
+        if not isinstance(raw_links, list) or len(raw_links) > MAX_PUBLIC_LINKS:
+            raise ProjectStoreError("publishing_links_invalid", "公开链接数量无效")
+        links: list[str] = []
+        for raw_link in raw_links:
+            link = str(raw_link or "").strip()
+            parsed_link = urllib.parse.urlsplit(link)
+            if parsed_link.scheme not in {"https", "http"} or not parsed_link.hostname or parsed_link.username or parsed_link.password or len(link) > 2_000:
+                raise ProjectStoreError("publishing_link_invalid", "发布链接必须是有效公开链接")
+            if link not in links:
+                links.append(link)
+
+        raw_metrics = value.get("metrics", {})
+        if not isinstance(raw_metrics, dict) or set(raw_metrics) - set(PUBLISHING_METRICS):
+            raise ProjectStoreError("publishing_metrics_invalid", "指标字段无效")
+        metrics: dict[str, int] = {}
+        for name, raw_metric in raw_metrics.items():
+            if isinstance(raw_metric, bool):
+                raise ProjectStoreError("publishing_metric_invalid", "指标必须是非负整数")
+            try:
+                metric = int(raw_metric)
+            except (TypeError, ValueError) as exc:
+                raise ProjectStoreError("publishing_metric_invalid", "指标必须是非负整数") from exc
+            if metric < 0 or metric > 2_000_000_000:
+                raise ProjectStoreError("publishing_metric_invalid", "指标超出允许范围")
+            metrics[name] = metric
+
+        review_conclusion = str(value.get("reviewConclusion") or "").strip()
+        next_constraint = str(value.get("nextConstraint") or "").strip()
+        if len(review_conclusion) > 4_000 or len(next_constraint) > 2_000:
+            raise ProjectStoreError("publishing_review_too_long", "复盘内容超出长度限制")
+        if LOCAL_ABSOLUTE_PATH.search(review_conclusion) or LOCAL_ABSOLUTE_PATH.search(next_constraint):
+            raise ProjectStoreError("publishing_review_private", "复盘内容不能包含本地绝对路径")
+        if not (published_at or links or metrics or review_conclusion or next_constraint):
+            raise ProjectStoreError("publishing_empty", "请至少填写一项发布或复盘信息")
+        return {
+            "state": "published" if (published_at or links) else "reviewed",
+            "published_at": published_at or None,
+            "links": links,
+            "metrics": metrics,
+            "review_conclusion": review_conclusion,
+            "next_constraint": next_constraint,
+            "reviewed_at": _now(),
+        }
+
+    def record_publishing(self, project_id: str, value: dict[str, Any], *, expected_revision: int | None = None, actor: str = "user") -> dict[str, Any]:
+        if not isinstance(value, dict):
+            raise ProjectStoreError("publishing_invalid", "发布记录必须是对象")
+        publishing = self._publishing_payload(value)
+        data = self._load(); project = self._find(data, project_id); self._revision(project, expected_revision)
+        project["publishing"] = publishing
+        audit_detail = {
+            "has_published_at": bool(publishing["published_at"]),
+            "link_count": len(publishing["links"]),
+            "metric_fields": sorted(publishing["metrics"]),
+            "has_review_conclusion": bool(publishing["review_conclusion"]),
+            "has_next_constraint": bool(publishing["next_constraint"]),
+        }
+        self._touch(project, actor, "publishing_recorded", audit_detail); self._save(data); return _public(project)
+
+    def account_review_context(self, project_id: str) -> list[dict[str, str]]:
+        data = self._load(); current = self._find(data, project_id)
+        account = str(current.get("account") or "").strip()
+        if not account:
+            return []
+        context: list[dict[str, str]] = []
+        for project in sorted(data["projects"], key=lambda item: str(item.get("updated_at") or ""), reverse=True):
+            if project.get("id") == current["id"] or str(project.get("account") or "").strip() != account:
+                continue
+            publishing = project.get("publishing") or {}
+            conclusion = str(publishing.get("review_conclusion") or "").strip()
+            constraint = str(publishing.get("next_constraint") or "").strip()
+            if conclusion or constraint:
+                context.append({"review_conclusion": conclusion, "next_constraint": constraint})
+        return context[:12]
