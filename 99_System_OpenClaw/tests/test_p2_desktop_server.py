@@ -14,6 +14,7 @@ SYSTEM = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SYSTEM))
 
 from desktop.server import serve  # noqa: E402
+from llm_common import LLMError  # noqa: E402
 
 
 class DesktopServerTests(unittest.TestCase):
@@ -91,6 +92,74 @@ class DesktopServerTests(unittest.TestCase):
         blocks = {block["id"]: block["body"] for block in payload["project"]["documents"]["brief"]["blocks"]}
         self.assertEqual(blocks["brief-goal"], "只改这一块")
         self.assertEqual(blocks["brief-audience"], "")
+
+    def test_ai_patch_uses_explicit_project_platform_account_and_persona(self):
+        _, bootstrap = self.request("/api/bootstrap")
+        workspace = Path(self.temp.name) / "project"
+        workspace.mkdir()
+        (workspace / "readme.md").write_text("账号人设：只讲真实拍摄过程\n", encoding="utf-8")
+        _, created = self.request(
+            "/api/projects",
+            method="POST",
+            csrf=bootstrap["csrfToken"],
+            body={
+                "title": "真实项目",
+                "platform": "B站",
+                "account": "摄影账号",
+                "localWorkspace": str(workspace),
+            },
+        )
+        project = created["project"]
+        response_text = json.dumps({"replacements": {"brief-goal": "只改这一块"}}, ensure_ascii=False)
+        with patch("llm_common.generate_text", return_value=response_text) as generate_text:
+            status, _ = self.request(
+                f"/api/projects/{project['id']}/documents/brief/ai-patch",
+                method="POST",
+                csrf=bootstrap["csrfToken"],
+                body={
+                    "instruction": "只修改目标",
+                    "selectedBlockIds": ["brief-goal"],
+                    "expectedRevision": project["revision"],
+                },
+            )
+        self.assertEqual(status, 200)
+        prompt = json.loads(generate_text.call_args.kwargs["user_prompt"])
+        context = prompt["read_only_context"]["current_project"]
+        self.assertEqual(context["platform"], "B站")
+        self.assertEqual(context["account"], "摄影账号")
+        self.assertEqual(context["persona"], "只讲真实拍摄过程")
+        self.assertNotIn(str(workspace), json.dumps(prompt, ensure_ascii=False))
+        self.assertIn("平台、账号和人设", generate_text.call_args.kwargs["system_prompt"])
+
+    def test_ai_patch_llm_error_is_stable_chinese_json_without_raw_detail(self):
+        _, bootstrap = self.request("/api/bootstrap")
+        _, created = self.request(
+            "/api/projects",
+            method="POST",
+            csrf=bootstrap["csrfToken"],
+            body={"title": "生成失败", "platform": "小红书"},
+        )
+        project = created["project"]
+        raw_error = "codex backend model-x failed at /private/secret/project"
+        with patch("llm_common.generate_text", side_effect=LLMError(raw_error)):
+            status, payload = self.request(
+                f"/api/projects/{project['id']}/documents/brief/ai-patch",
+                method="POST",
+                csrf=bootstrap["csrfToken"],
+                body={
+                    "instruction": "只修改目标",
+                    "selectedBlockIds": ["brief-goal"],
+                    "expectedRevision": project["revision"],
+                },
+            )
+        self.assertEqual(status, 400)
+        self.assertEqual(
+            payload,
+            {"ok": False, "error": {"code": "ai_generate_failed", "message": "本机 AI 生成失败，请检查配置后重试。"}},
+        )
+        serialised = json.dumps(payload, ensure_ascii=False).lower()
+        for leaked in ("codex", "backend", "model-x", "/private/secret", raw_error.lower()):
+            self.assertNotIn(leaked, serialised)
 
     def test_publishing_write_is_csrf_protected_and_versioned(self):
         _, bootstrap = self.request("/api/bootstrap")

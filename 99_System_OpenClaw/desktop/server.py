@@ -23,6 +23,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from desktop.ai_patch import AIPatchError, generate_patch  # type: ignore  # noqa: E402
 from desktop.project_store import DOCUMENT_NAMES, ProjectStore, ProjectStoreError  # type: ignore  # noqa: E402
+from llm_common import LLMError, load_creator_context  # type: ignore  # noqa: E402
 
 STATIC_ROOT = SCRIPT_DIR / "static"
 MAX_BODY_BYTES = 2 * 1024 * 1024
@@ -233,6 +234,18 @@ class StudioApplication:
                             selected = [block for block in blocks if block["id"] in selected_ids]
                             if len(selected) != len(selected_ids):
                                 raise ProjectStoreError("selection_invalid", "选中区块不存在")
+                            persona = ""
+                            try:
+                                workspace = app.store.local_workspace_path(project_id)
+                            except ProjectStoreError as exc:
+                                if exc.code not in {"workspace_not_connected", "workspace_not_found"}:
+                                    raise
+                            else:
+                                brief_text = "\n".join(
+                                    str(block.get("body") or "")
+                                    for block in current["documents"]["brief"]["blocks"]
+                                )
+                                persona = str(load_creator_context(workspace, brief_text=brief_text).get("persona") or "")
                             try:
                                 from llm_common import generate_text
 
@@ -245,6 +258,7 @@ class StudioApplication:
                                         "title": str(current.get("title") or ""),
                                         "platform": str(current.get("platform") or ""),
                                         "account": str(current.get("account") or ""),
+                                        "persona": persona,
                                         "review_conclusion": str((current.get("publishing") or {}).get("review_conclusion") or ""),
                                         "next_constraint": str((current.get("publishing") or {}).get("next_constraint") or ""),
                                     },
@@ -253,7 +267,10 @@ class StudioApplication:
                                     model=body.get("model"),
                                     reasoning=body.get("reasoning"),
                                 )
-                            except (AIPatchError, ImportError) as exc:
+                            except (LLMError, ImportError) as exc:
+                                sys.stderr.write("studio: ai patch generation failed\n")
+                                raise ProjectStoreError("ai_generate_failed", "本机 AI 生成失败，请检查配置后重试。") from exc
+                            except AIPatchError as exc:
                                 raise ProjectStoreError("ai_patch_failed", str(exc)) from exc
                             project = app.store.patch_document(
                                 project_id,
