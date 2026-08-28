@@ -18,7 +18,15 @@
 绑定到 Content OS 项目包时执行：
 
 ```bash
-cd /Users/vsiyo/Desktop/照片筛选
-python3 99_System_OpenClaw/scripts/31_link_batch_to_content_project.py \
-  "00_Inbox_Mac_Intake/YYYYMMDD_事件名_待整理"
+if [ -z "${LOCAL_MEDIA_ROOT:-}" ] || \
+  [ ! -f "$LOCAL_MEDIA_ROOT/99_System_OpenClaw/scripts/31_link_batch_to_content_project.py" ] || \
+  [ -z "${OBSIDIAN_ROOT:-}" ] || [ ! -d "$OBSIDIAN_ROOT" ]; then
+  printf '%s\n' "Set LOCAL_MEDIA_ROOT and OBSIDIAN_ROOT to valid local roots before linking this batch." >&2
+  exit 1
+fi
+
+python3 "$LOCAL_MEDIA_ROOT/99_System_OpenClaw/scripts/31_link_batch_to_content_project.py" \
+  "$LOCAL_MEDIA_ROOT/00_Inbox_Mac_Intake/YYYYMMDD_事件名_待整理" \
+  --workspace-root "$LOCAL_MEDIA_ROOT" \
+  --obsidian-root "$OBSIDIAN_ROOT"
 ```

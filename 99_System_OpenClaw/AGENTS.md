@@ -8,8 +8,8 @@ Codex may edit:
 - `99_System_OpenClaw/tests/`
 - `99_System_OpenClaw/schemas/`
 - automation documentation
-- Content OS protocol documents under `/Users/vsiyo/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/`
-- Content OS automation protocol documents under `/Users/vsiyo/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/06_技术栈与自动化/`
+- Content OS protocol documents under `$OBSIDIAN_ROOT/00_入口与总览/`
+- Content OS automation protocol documents under `$OBSIDIAN_ROOT/06_技术栈与自动化/`
 
 Codex must not edit:
 
@@ -20,9 +20,21 @@ Codex must not edit:
 
 ## Required checks
 
-Run these from `/Users/vsiyo/Desktop/照片筛选` before handing off an automation or protocol change:
+`LOCAL_MEDIA_ROOT` is the explicitly configured media repository root. It must
+contain `99_System_OpenClaw/`; commands must stop when it is unset or invalid.
+`OBSIDIAN_ROOT` is the explicitly configured Content OS vault root. It has no
+personal-path default and must be set before any vault read or write.
+
+Run these from `$LOCAL_MEDIA_ROOT` before handing off an automation or protocol
+change:
 
 ```bash
+if [ -z "${LOCAL_MEDIA_ROOT:-}" ] || [ ! -d "$LOCAL_MEDIA_ROOT/99_System_OpenClaw" ]; then
+  printf '%s\n' "Set LOCAL_MEDIA_ROOT to the media repository root." >&2
+  exit 1
+fi
+cd -- "$LOCAL_MEDIA_ROOT" || exit 1
+
 bash 99_System_OpenClaw/scripts/check_runtime_contract.sh
 python3 99_System_OpenClaw/scripts/30_check_obsidian_doc_sync.py
 python3 99_System_OpenClaw/scripts/06_check_outline_contract.py .
@@ -39,7 +51,7 @@ not replace that environment with the system Python ad hoc.
 The local execution rules and Obsidian protocol pages are kept aligned by:
 
 ```text
-/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/doc_sync_contract.json
+$LOCAL_MEDIA_ROOT/99_System_OpenClaw/doc_sync_contract.json
 ```
 
 After changing a covered local execution document, script README, or matching
