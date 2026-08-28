@@ -302,8 +302,22 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
         capabilities_path = self.vault / "00_入口与总览" / "mac_runner_capabilities.yaml"
         capabilities_path.parent.mkdir(parents=True)
         capabilities_path.write_text(yaml.safe_dump(self.capabilities, allow_unicode=True, sort_keys=False), encoding="utf-8")
-        regular_python = Path("/opt/homebrew/bin/python3")
-        self.assertTrue(regular_python.is_file())
+        # 找一个本机存在、且没有装 opentimelineio 的“普通 python”，证明 runner 会切到固定 venv。
+        # macOS 上优先 Homebrew（保持原行为），其他机器回退到系统 python。
+        regular_python = next(
+            (
+                path
+                for path in (
+                    Path("/opt/homebrew/bin/python3"),
+                    Path("/usr/bin/python3"),
+                    Path("/usr/local/bin/python3"),
+                )
+                if path.is_file()
+            ),
+            None,
+        )
+        if regular_python is None:
+            self.skipTest("no non-venv python3 is available on this machine")
         self.assertTrue(runner.OTIO_KDENLIVE_PYTHON.is_file())
         self.assertNotEqual(regular_python, runner.OTIO_KDENLIVE_PYTHON)
         regular_probe = subprocess.run(

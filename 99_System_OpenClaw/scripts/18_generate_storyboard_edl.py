@@ -32,8 +32,10 @@ SYSTEM_PROMPT = """你是 Photo Content OS 的短视频分镜与剪辑方案编�
 7. 每个 clip 必须有唯一正整数 slot、字符串 time_range（如 0.000-4.000）、source_start_sec、purpose、visual_need、caption、candidate_files、edit_note。
 8. time_range 按时间升序且不能重叠；秒数精确到毫秒。
 9. RawVault / 360 原始素材只证明视角存在，不能直接作为可剪片段；如使用必须先在 missing_materials 中要求转码/重构。
-10. 视觉与声音结论必须能回指输入 keyframes 或 transcript_segments；证据不足时标记人工复核。
-11. 禁止把结果描述为脚本机械判定或临时版本生成。"""
+10. 你拿到的 keyframes 只有 evidence_ref 和帧路径，没有画面本身；视觉结论只能来自各素材 summary 里的分析文字，并回指对应 keyframes 的 evidence_ref。声音结论必须回指 transcript_segments。summary 和转写都支撑不了的视觉/声音断言，一律标记人工复核，不得凭路径名或文件名脑补画面内容。
+11. 禁止把结果描述为脚本机械判定或临时版本生成。
+12. caption 是最终上屏文字，不是镜头说明：一条不超过 14 个字，用观众能读出声的口语，补充画面没说出来的信息（情绪、代价、悬念），不复述画面里已经看得见的内容；整支视频的 caption 要有同一个说话的人的口气。不需要上屏文字的 clip，caption 留空字符串，不硬凑。
+13. storyboard_markdown 面向拍摄和剪辑的人：先给能直接执行的镜头信息，任何选择理由或论证说明只放在文档末尾的备注段，不得放在分镜表之前。"""
 
 
 def read_text(path: Path) -> str:
