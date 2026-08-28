@@ -10,14 +10,14 @@ import re
 import shutil
 import subprocess
 import wave
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import yaml
 
-from llm_common import LLMError, generate_text
+from llm_common import LLMError, creator_context_block, load_creator_context, public_llm_error, generate_text
 
 SCHEMA_VERSION = "output_review.v1"
 RESULT_SCHEMA_VERSION = "output_review_result.v1"
@@ -111,6 +111,75 @@ class ProjectContext:
     target_platforms: list[str]
     project_goal: str
     notes: list[str]
+    creator_context: dict[str, Any] = field(default_factory=dict)
+
+
+RECOMMENDATION_LABELS = {
+    "publish": "建议发布（仍需人工确认）",
+    "small_fix": "小幅修改后再确认",
+    "recut": "需要重新剪辑",
+    "reject": "暂不发布",
+}
+STATUS_LABELS = {
+    "success": "已完成自动检查",
+    "blocked": "检查受阻",
+    "pass": "通过",
+    "warning": "有提醒",
+    "fail": "未通过",
+    "unknown": "待人工确认",
+}
+CONFIDENCE_LABELS = {"high": "高", "medium": "中", "low": "低"}
+VLM_STATUS_LABELS = {"success": "已完成", "failed": "失败", "unavailable": "不可用", "not_requested": "未启用"}
+TAG_LABELS = {
+    "trend_remake": "翻拍版本",
+    "split_screen": "分屏版本",
+    "comparison": "对照版本",
+    "single_subject": "单主体",
+    "extended_cut": "加长版本",
+    "horizontal_cut": "横屏版本",
+    "outdoor_context": "户外场景",
+    "stage_walk": "舞台移动",
+    "first_person": "第一视角",
+}
+DIMENSION_LABELS = {
+    "rhythm": "节奏",
+    "platform_format": "平台画幅",
+    "opening_hook": "开头钩子",
+    "composition": "构图技术",
+    "topic_strategy": "选题表达",
+}
+RISK_FLAG_LABELS = {
+    "resolution_below_1080_short_side": "短边低于 1080，需确认清晰度",
+    "mostly_black_frames": "检测到较多黑场",
+    "audio_missing": "未检测到音频",
+}
+
+
+def humanize_risk_flag(flag: str) -> str:
+    return RISK_FLAG_LABELS.get(flag, "存在技术风险，需查看指标附录")
+
+
+def humanize_brief_fit(value: str) -> str:
+    return {"high": "匹配度较高", "medium": "匹配度中等", "unknown": "尚未完成语义匹配", "low": "匹配度较低"}.get(value, "待人工确认")
+
+
+def humanize_tag(tag: str) -> str:
+    return TAG_LABELS.get(tag, "项目版本标签")
+
+
+def humanize_rhythm_profile(value: str) -> str:
+    return {
+        "general_bgm_edit": "常规音乐剪辑",
+        "single_person_stage_walk": "单主体移动",
+        "pov_running": "第一视角移动",
+        "split_screen_comparison": "分屏对照",
+        "sports_highlight": "动作高光",
+        "talking_head": "口播人物",
+    }.get(value, "已配置的节奏模板" if value else "未启用")
+
+
+def humanize_dimension(value: str) -> str:
+    return DIMENSION_LABELS.get(value, "待确认维度")
 
 
 def now_iso() -> str:
@@ -1527,10 +1596,32 @@ def evaluate_brief_fit(brief: Path | None, script: Path | None, publish_pack: Pa
 
 
 def normalize_platforms(text: str) -> list[str]:
-    aliases = {"抖音": "抖音", "小红书": "小红书", "视频号": "视频号", "B站": "B站", "B 站": "B站", "bilibili": "B站", "快手": "快手", "朋友圈": "朋友圈", "YouTube": "YouTube", "youtube": "YouTube"}
+    aliases = {
+        "抖音": "抖音",
+        "小红书": "小红书",
+        "视频号": "视频号",
+        "B站": "B站",
+        "B 站": "B站",
+        "bilibili": "B站",
+        "快手": "快手",
+        "朋友圈": "朋友圈",
+        "YouTube": "YouTube",
+        "youtube": "YouTube",
+    }
+    label_match = re.search(r"(?:发布平台|目标平台|platform)\s*[:：]\s*(.*)$", text, flags=re.IGNORECASE)
+    if label_match:
+        text = label_match.group(1)
+        if not text.strip():
+            return []
+    elif re.search(r"(?:发布平台|目标平台)\s*$", text):
+        return []
     platforms: list[str] = []
-    for source, name in aliases.items():
-        if source in text and name not in platforms:
+    for raw in re.split(r"[,，、/|;；]+", text):
+        token = raw.strip().strip("`*_- ")
+        if not token or token in {"发布平台", "目标平台", "platform"}:
+            continue
+        name = aliases.get(token) or aliases.get(token.lower()) or token
+        if name not in platforms:
             platforms.append(name)
     return platforms
 
@@ -1542,22 +1633,27 @@ def load_project_context(project_root: Path | None) -> ProjectContext:
     if not readme.exists():
         return ProjectContext(project_root=project_root, target_platforms=[], project_goal="", notes=[f"未找到项目 readme：{readme}"])
     text = readme.read_text(encoding="utf-8")
-    platforms: list[str] = []
-    goal = ""
+    profile = load_creator_context(project_root, brief_text=text)
+    platforms: list[str] = normalize_platforms(profile.get("platforms", ""))
+    goal = profile.get("project_goal", "")
     notes: list[str] = []
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if "发布平台" in line:
-            platforms = normalize_platforms(line)
-            if not platforms:
-                notes.append(f"未识别发布平台“{line.split('：', 1)[-1].strip()}”，请人工确认平台适配。")
-        elif line.startswith("剪辑目标"):
-            goal = line.split("：", 1)[-1].strip() if "：" in line else line
+            line_platforms = normalize_platforms(line)
+            for platform in line_platforms:
+                if platform not in platforms:
+                    platforms.append(platform)
+            known = {"抖音", "小红书", "视频号", "B站", "快手", "朋友圈", "YouTube"}
+            if not line_platforms or set(line_platforms) - known:
+                notes.append("未识别发布平台，请人工确认平台适配。")
+        elif "剪辑目标" in line and not goal:
+            goal = line.split("：", 1)[-1].strip() if "：" in line else line.split(":", 1)[-1].strip()
     if not platforms:
         notes.append("项目 readme 未写明发布平台。")
     if not goal:
         notes.append("项目 readme 未写明剪辑目标。")
-    return ProjectContext(project_root=project_root, target_platforms=platforms, project_goal=goal, notes=notes)
+    return ProjectContext(project_root=project_root, target_platforms=platforms, project_goal=goal, notes=notes, creator_context=profile)
 
 
 def load_bgm_review(video_path: Path, bgm_review_dir: Path | None) -> dict[str, Any] | None:
@@ -1595,8 +1691,6 @@ def infer_narrative_tags(name: str) -> list[str]:
         ("加长", "extended_cut"),
         ("横屏", "horizontal_cut"),
         ("户外", "outdoor_context"),
-        ("签到墙", "checkin_wall"),
-        ("会场", "ceremony_hall"),
         ("舞台", "stage_walk"),
         ("第一视角", "first_person"),
     ]
@@ -1617,16 +1711,22 @@ def platform_format_score(probe: dict[str, Any], context: ProjectContext, tags: 
     is_squareish = 0.85 <= ratio <= 1.15
     score = 70
     notes: list[str] = []
-    if {"抖音", "小红书", "快手", "视频号", "朋友圈", "YouTube"} & set(context.target_platforms):
+    short_video_platforms = {"抖音", "小红书", "快手", "视频号", "朋友圈"}
+    if short_video_platforms & set(context.target_platforms):
         if is_vertical:
             score = 90 if 0.55 <= ratio <= 0.8 else 82
-            notes.append("目标平台包含抖音/小红书，竖屏画幅更适合直接发布。")
+            matched = "、".join(platform for platform in context.target_platforms if platform in short_video_platforms)
+            notes.append(f"目标平台包含{matched}，竖屏画幅更适合直接发布。")
         elif is_squareish:
             score = 74
-            notes.append("目标平台包含抖音/小红书，近方形可用但需确认版式。")
+            matched = "、".join(platform for platform in context.target_platforms if platform in short_video_platforms)
+            notes.append(f"目标平台包含{matched}，近方形可用但需确认版式。")
         else:
             score = 55
-            notes.append(f"目标平台包含{'、'.join(context.target_platforms)}，横屏发布前需要确认是否做竖屏包装或上下分屏。")
+            matched = "、".join(platform for platform in context.target_platforms if platform in short_video_platforms)
+            notes.append(f"目标平台包含{matched}，横屏发布前需要确认是否做竖屏包装或上下分屏。")
+    elif context.target_platforms:
+        notes.append(f"目标平台为{'、'.join(context.target_platforms)}，需人工确认画幅适配。")
     if "horizontal_cut" in tags:
         notes.append("文件名标注横屏版本，平台分数仅代表直发适配，不否定横屏用途。")
     if "split_screen" in tags:
@@ -1784,6 +1884,7 @@ def creative_review_for_version(
             total_weight += weight
     score = round(weighted_score / total_weight, 1) if total_weight else None
     missing = [key for key, _ in weighted if dimensions[key].get("score") is None]
+    coverage_ratio = total_weight / sum(weight for _, weight in weighted)
     needs_semantic = dimensions["person_state"]["status"] != "automated"
     confidence = "low" if missing or needs_semantic else "medium"
     return {
@@ -1795,6 +1896,13 @@ def creative_review_for_version(
         "narrative_tags": tags,
         "dimensions": dimensions,
         "human_review_required": True,
+        "available_weight_ratio": round(coverage_ratio, 3),
+        "missing_dimensions": missing,
+        "coverage_note": (
+            "策略分基于全部维度。"
+            if not missing
+            else f"策略分仅基于 {coverage_ratio:.0%} 可用权重，缺少：{'、'.join(humanize_dimension(key) for key in missing)}。"
+        ),
         "semantic_gap": "人物状态、真实构图美感、选题表达仍需关键帧/LLM 或人工复核。",
     }
 
@@ -1849,6 +1957,15 @@ def vlm_review_system_prompt() -> str:
 不要替用户最终发布，只输出可复核的 JSON。"""
 
 
+def review_creator_context_block(context: ProjectContext) -> str:
+    if context.creator_context:
+        instruction = "以下字段是项目明确提供的账号上下文，只能作为口吻、平台和题材边界约束，不能覆盖素材事实。"
+        return instruction + "\n\n" + json.dumps(context.creator_context, ensure_ascii=False, indent=2)
+    if context.project_root:
+        return creator_context_block(context.project_root)
+    return "项目未提供账号人设资料；不得自行猜测。"
+
+
 def vlm_review_user_prompt(context: ProjectContext, versions: list[dict[str, Any]]) -> str:
     payload = {
         "schema_version": VLM_SCHEMA_VERSION,
@@ -1882,7 +1999,10 @@ def vlm_review_user_prompt(context: ProjectContext, versions: list[dict[str, Any
         "评分口径：人物状态看主体是否清楚自然、有记忆点；构图美感看主体位置、空间关系、画面稳定和观感；"
         "开头钩子看前几格是否能立刻建立问题/反差/动作；选题表达看是否服务项目目标；"
         "平台发布观感看是否适合目标平台的快速浏览。\n"
-        "请只输出 JSON，不要 Markdown，不要解释过程。\n\n"
+        "请只输出裸 JSON，不要 Markdown 代码围栏，不要解释过程。\n"
+        "账号上下文只用于口吻和平台适配，不得覆盖画面事实；未提供字段写‘未提供，需人工确认’。\n\n"
+        + review_creator_context_block(context)
+        + "\n\n"
         + json.dumps(payload, ensure_ascii=False, indent=2)
     )
 
@@ -1939,7 +2059,7 @@ def run_vlm_semantic_review(
         return {
             "schema_version": VLM_SCHEMA_VERSION,
             "status": "failed",
-            "reason": str(exc),
+            "reason": public_llm_error(exc),
             "prompt_path": str(prompt_path),
             "versions": [],
         }
@@ -2170,8 +2290,8 @@ def write_markdown_report(path: Path, metrics: dict[str, Any], result: dict[str,
             width=version["probe"].get("width"),
             height=version["probe"].get("height"),
             fps=version["probe"].get("fps"),
-            status=version["technical_status"],
-            flags=", ".join(version["risk_flags"]) or "无",
+            status=STATUS_LABELS.get(version["technical_status"], "待人工确认"),
+            flags=", ".join(humanize_risk_flag(flag) for flag in version["risk_flags"]) or "无",
         )
         for version in versions
     )
@@ -2181,13 +2301,15 @@ def write_markdown_report(path: Path, metrics: dict[str, Any], result: dict[str,
             score=version.get("creative_review", {}).get("score"),
             rule_score=version.get("creative_review", {}).get("score_before_vlm", version.get("creative_review", {}).get("score")),
             vlm_score=version.get("creative_review", {}).get("vlm_semantic_review", {}).get("overall_score", ""),
-            confidence=version.get("creative_review", {}).get("confidence"),
+            confidence=CONFIDENCE_LABELS.get(version.get("creative_review", {}).get("confidence"), "待确认"),
             rhythm=version.get("creative_review", {}).get("dimensions", {}).get("rhythm", {}).get("score"),
             platform=version.get("creative_review", {}).get("dimensions", {}).get("platform_format", {}).get("score"),
             hook=version.get("creative_review", {}).get("dimensions", {}).get("opening_hook", {}).get("score"),
             composition=version.get("creative_review", {}).get("dimensions", {}).get("composition", {}).get("score"),
             topic=version.get("creative_review", {}).get("dimensions", {}).get("topic_strategy", {}).get("score"),
-            tags=", ".join(version.get("creative_review", {}).get("narrative_tags", [])) or "无",
+            tags=", ".join(
+                humanize_tag(tag) for tag in version.get("creative_review", {}).get("narrative_tags", [])
+            ) or "无",
         )
         for version in versions
     )
@@ -2215,9 +2337,20 @@ def write_markdown_report(path: Path, metrics: dict[str, Any], result: dict[str,
     )
     if not rhythm_rows:
         rhythm_rows = "|  | 未启用 |  |  |  |  |  |  |  |  |  |  |  |  |"
+    preferred_strategy = preferred_creative.get("version_name", "")
+    strategy_review = preferred_creative.get("creative_review", {})
+    missing_dimensions = strategy_review.get("missing_dimensions", [])
+    coverage_note = strategy_review.get("coverage_note", "策略分需结合人工确认。")
+    recommendation_label = RECOMMENDATION_LABELS.get(result.get("recommendation"), "待人工确认")
+    technical_label = STATUS_LABELS.get(result.get("technical_status"), "待人工确认")
+    task_label = STATUS_LABELS.get(result.get("task_status"), "待人工确认")
+    brief_fit_label = humanize_brief_fit(result.get("current_brief_fit", ""))
+    risk_labels = ", ".join(humanize_risk_flag(flag) for flag in result.get("risk_flags", [])) or "未发现已登记的技术风险"
+    confidence_label = CONFIDENCE_LABELS.get(preferred_creative.get("confidence"), "待人工确认")
+    vlm_status_label = VLM_STATUS_LABELS.get(vlm_review.get("status", "not_requested"), "待人工确认")
     artifact_lines = "\n".join(
-        f"- {version['version_name']} contact sheet: `{version['artifacts'].get('contact_sheet', '')}`\n"
-        f"- {version['version_name']} scene sheet: `{version['artifacts'].get('scene_change_sheet', '')}`"
+        f"- {version['version_name']} 画面采样图：`{version['artifacts'].get('contact_sheet', '')}`\n"
+        f"- {version['version_name']} 场景变化采样图：`{version['artifacts'].get('scene_change_sheet', '')}`"
         for version in versions
     )
     text = f"""---
@@ -2235,77 +2368,81 @@ reviewed_at: {metrics["task"]["created_at"]}
 
 # 成片质检：{metrics["task"]["project_id"]}
 
+## 发布判断
+
+- 发布建议：**{recommendation_label}**
+- 技术检查：{technical_label}；任务状态：{task_label}
+- 推荐版本：`{result["preferred_version"]}`
+- 策略参考版本：`{preferred_strategy}`（分数 {preferred_creative.get("score", "待定")}）
+- 内容匹配：{brief_fit_label}
+- 需要人工确认：{("是" if result["human_decision_required"] else "否")}
+- 重要提醒：{result["reason"]}
+- 技术风险：{risk_labels}
+
 ## 质检对象
 
 | 版本 | 文件 | 时长 | 分辨率 | 帧率 | 技术状态 | 风险 |
 |---|---|---:|---|---:|---|---|
 {rows}
 
-判断来源：`ffprobe` / `ffmpeg` / sampled frames。
+自动检查依据：视频属性、采样画面和音频统计。
 
 ## 技术检查
 
-- task_status: `{result["task_status"]}`
-- technical_status: `{result["technical_status"]}`
-- risk_flags: `{", ".join(result["risk_flags"]) or "none"}`
-- preferred_version: `{result["preferred_version"]}`
+- 任务状态：{task_label}
+- 技术状态：{technical_label}
+- 技术风险：{risk_labels}
+- 推荐版本：`{result["preferred_version"]}`
 
-判断来源：`ffprobe`、`volumedetect`、`ebur128`、`silencedetect`、Python image statistics。
+自动检查依据：视频属性、响度/静音统计和采样画面。
 
 ## 画面结构检查
 
 {artifact_lines}
 
-判断来源：`ffmpeg_uniform_sampling` / `ffmpeg_scene_select`。限制：v1 不做完整 OCR 时间轴。
+自动检查依据：均匀采样和场景变化采样。限制：未做完整 OCR 时间轴。
 
 ## 音频检查
 
 优先版本 `{result["preferred_version"]}` 的音频指标见 `metrics.json`。BGM BPM / 能量只作为结构提示，不直接判断情绪。
 
-判断来源：`ffmpeg_ebur128_volumedetect` / lightweight RMS energy。
+自动检查依据：音频响度和能量统计。
 
 ## 作品策略审阅
 
-| 版本 | 策略分 | 规则分 | VLM分 | 置信度 | 节奏 | 平台画幅 | 开头钩子 | 构图技术 | 选题命名 | 识别标签 |
+| 版本 | 策略分 | 规则分 | VLM分 | 置信度 | 节奏 | 平台画幅 | 开头钩子 | 构图技术 | 选题表达 | 识别标签 |
 |---|---:|---:|---:|---|---:|---:|---:|---:|---:|---|
 {strategy_rows}
 
-- strategy_preferred_version: `{preferred_creative.get("version_name", "")}`
-- strategy_preferred_score: `{preferred_creative.get("score", "")}`
-- strategy_confidence: `{preferred_creative.get("confidence", "")}`
-- vlm_review_status: `{vlm_review.get("status", "not_requested")}`
-- vlm_preferred_version: `{vlm_review.get("preferred_version", "")}`
-- strategy_limit: VLM 基于 contact sheet 判断，仍不是逐帧观看完整视频；最终发布由人确认。
+- 策略参考版本：`{preferred_strategy}`
+- 策略分：`{preferred_creative.get("score", "")}`；置信度：{confidence_label}
+- 策略覆盖：{coverage_note}
+- VLM 语义审阅：{vlm_status_label}
+- VLM 参考版本：`{vlm_review.get("preferred_version", "")}`
+- 局限：语义审阅基于采样画面，最终发布由人确认。
 
-判断来源：`bgm-review` JSON、文件名版本策略、项目 readme 平台目标、ffprobe/Pillow 技术指标、可选 Codex VLM contact sheet 审阅。限制：VLM 不替代完整播放和人工发布判断。
+自动检查依据：BGM/卡点资料（如有）、项目平台目标、视频属性和采样画面。{("缺少维度：" + "、".join(humanize_dimension(key) for key in missing_dimensions) if missing_dimensions else "")}
 
 ## 节奏同步复核
 
-- rhythm_sync_enabled: `{str(result.get("rhythm_sync_enabled", False)).lower()}`
-- rhythm_profile: `{result.get("rhythm_profile", "")}`
-- rhythm_preferred_version: `{result.get("rhythm_preferred_version", "")}`
-- rhythm_report: `{result.get("rhythm_report_path", "")}`
+- 是否启用节奏同步：{("是" if result.get("rhythm_sync_enabled") else "否")}
+- 节奏同步版本：{humanize_rhythm_profile(result.get("rhythm_profile", ""))}
+- 节奏参考版本：`{result.get("rhythm_preferred_version", "") or "未启用"}`
+- 节奏报告：`{result.get("rhythm_report_path", "") or "未生成"}`
 
-| 排名 | 版本 | final_score | structural | action_node | step_sync | pose_sync | cut_sync | motion_sync | text_sync | phase | intro | fixability_score | fixability |
+| 排名 | 版本 | 最终分 | 结构匹配 | 动作节点 | 步点同步 | 姿态同步 | 切点同步 | 动作同步 | 字幕同步 | 阶段一致 | 开头效果 | 可修复分 | 可修复性 |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
 {rhythm_rows}
 
-判断来源：`rms_energy_onset_grid_v1`、`ffmpeg_scene_select`、`frame_difference`、一对一 signed-delta 匹配。限制：V1 步点是 ROI/帧差代理，最终发布仍需人工确认封面、标题和人物状态。
+自动检查依据：音频能量、场景变化和画面事件的一对一时间对齐。限制：节奏事件是代理指标，最终发布仍需人工确认封面、标题和人物状态。
 
 ## 与 Brief / Script 匹配度
 
-- current_brief_fit: `{result["current_brief_fit"]}`
-- brief_fit_method: `{result["brief_fit_method"]}`
-- brief_fit_confidence: `{result["brief_fit_confidence"]}`
+- Brief / Script 匹配度：{brief_fit_label}
+- 匹配方式：已读取可用文字资料，未做完整 OCR、ASR 和视觉语义审片
+- 匹配置信度：{CONFIDENCE_LABELS.get(result["brief_fit_confidence"], "待人工确认")}
 
-判断来源：{metrics["content_metrics"]["brief_fit_method"]}。限制：未做完整 ASR/OCR/视觉语义审片，内容判断需人工确认。
-
-## 发布判断
-
-- recommendation: `{result["recommendation"]}`
-- publish_as_final: `{str(result["publish_as_final"]).lower()}`
-- human_decision_required: `{str(result["human_decision_required"]).lower()}`
-- reason: {result["reason"]}
+限制：未做完整 OCR、ASR 和视觉语义审片，内容判断需人工确认。
 
 ## 机器指标附录
 
@@ -2617,7 +2754,7 @@ def review_output_video(
             "recommendation": "reject",
             "publish_as_final": False,
             "human_decision_required": True,
-            "reason": "Output review dependencies are missing: " + ", ".join(dependency_status["errors"]),
+            "reason": "自动检查所需的本机依赖未就绪，请先补齐运行环境后重试。",
             "next_owner": "human_editor",
             "risk_flags": dependency_status["errors"],
             "metrics_path": artifact_relative(metrics_output, artifact_base),
@@ -2679,7 +2816,7 @@ def review_output_video(
         human_decision_required=content["human_decision_required"],
     )
     risk_flags = sorted(set(flag for version in versions for flag in version.get("risk_flags", [])))
-    reason = "Technical review completed. Human confirmation is required for content fit and final selection."
+    reason = "技术检查已完成；内容匹配、标题封面和最终版本仍需人工确认。"
     result = {
         "schema_version": RESULT_SCHEMA_VERSION,
         "task_status": "success",
@@ -2771,6 +2908,7 @@ def review_output_video(
                 "target_platforms": context.target_platforms,
                 "project_goal": context.project_goal,
                 "notes": context.notes,
+                "creator_context": context.creator_context,
             },
             "preferred_by_strategy": {
                 "version_name": creative_preferred["version_name"],
@@ -2793,6 +2931,7 @@ def review_output_video(
                 "vlm_semantic_review": "codex_vlm_contact_sheet" if run_vlm_review else "not_requested",
             },
             "vlm_semantic_review": vlm_report,
+            "semantic_vlm_review": vlm_report,
         },
         "rhythm_sync": rhythm_report,
         "risk_flags": risk_flags,
@@ -2881,8 +3020,8 @@ def main() -> int:
             vlm_reasoning_effort=args.vlm_reasoning_effort,
             vlm_provider=args.vlm_provider,
         )
-    except OutputReviewError as exc:
-        raise SystemExit(f"error: {exc}") from exc
+    except (OutputReviewError, LLMError) as exc:
+        raise SystemExit(f"错误：{public_llm_error(exc) if isinstance(exc, LLMError) else '成片质检失败，请检查输入后重试。'}") from exc
     print(f"task_status={result['task_status']}")
     print(f"technical_status={result['technical_status']}")
     print(f"recommendation={result['recommendation']}")

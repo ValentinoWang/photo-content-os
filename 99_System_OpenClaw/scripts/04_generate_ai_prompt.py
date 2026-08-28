@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from llm_common import creator_context_block
 from media_common import eligible_item, load_manifest, project_path, safe_slug
 
 VISUAL_SIMILARITY_THRESHOLD = 8
@@ -31,7 +32,7 @@ CARD_SCHEMA = """# 作品内容概述
 
 PROMPT_TEMPLATE = """# 作品内容分析任务
 
-你是一个自媒体内容策划和剪辑助理。请根据素材信息和随附关键帧，为该素材生成可沉淀到素材库的内容概述。
+你是一个自媒体内容策划和剪辑助理。请根据素材信息和关键帧索引，为该素材生成可沉淀到素材库的内容概述。关键帧是否实际作为图片附件传入，由调用脚本在运行时明确声明；路径文字本身不代表已经看过图片。
 
 ## 素材信息
 
@@ -58,6 +59,10 @@ PROMPT_TEMPLATE = """# 作品内容分析任务
 
 {user_intent_notes}
 
+## 账号上下文
+
+{creator_context}
+
 ## 关键帧文件
 
 {keyframes}
@@ -76,7 +81,7 @@ PROMPT_TEMPLATE = """# 作品内容分析任务
 10. 不要判断是否进入 iCloud 照片精选库，也不要替用户选择高光照片。
 11. 判断是否需要 Wink 修复、增强、防抖、降噪、调色、裁切、慢放或截帧做封面。
 12. 推荐命名要遵守素材库规则：文件夹说明项目和场景，文件名只写画面事实和处理状态；叙事意图写进 summary / 资产卡片，不强行塞进文件名。
-13. 不要让某一个作品风格锁死 L3 源文件名；`第一视角旅行记录`、`现场活动纪实`、`全景相机幕后感` 等写进“适配作品风格”，只有风格化衍生物或 91 输出成片才把风格写进文件名。
+13. 不要让某一个作品风格锁死 L3 源文件名；将当前项目明确提供的风格候选写进“适配作品风格”，只有风格化衍生物或 91 输出成片才把风格写进文件名。
 14. 不要把短边达到 720p 或以上的素材称为低清；如果只是开头/结尾不可用，应写“待截取”，如果画面抖动，应写“待防抖”。
 
 ## 输出格式
@@ -88,30 +93,34 @@ PROMPT_TEMPLATE = """# 作品内容分析任务
 
 PROJECT_PROMPT = """# 项目总览分析任务
 
-你是一个自媒体内容策划和剪辑助理。请根据项目的 media_manifest.json、各素材 prompt、关键帧和后续素材概述，生成项目总览。
+你是一个自媒体内容策划和剪辑助理。调用方只会提供下方的项目资料和明确标注的 summary 节选；没有传入的 manifest 原文、图片画面、转写或单素材 prompt 不得假定已经看过。超出已提供证据的判断必须标注人工复核。
 
 ## 用户/创作者意图笔记
 
 {user_intent_notes}
+
+## 账号上下文
+
+{creator_context}
 
 ## 请输出
 
 - 项目一句话主题
 - 叙事结构建议
 - 隐含叙事线索：设备负担、创作幕后、准备成本、人物分心、真实尴尬、反差或失败感等
-- 可发展的作品风格方向：例如第一视角旅行记录、现场活动纪实、全景相机幕后感、人物状态短片
+- 可发展的作品风格方向：仅根据当前项目证据提出，不要套用历史项目示例
 - 最值得剪的 5-10 个素材
 - 适合做开头钩子的素材
 - 适合做封面的素材
 - 合照发放或剪辑取用时需要人工复核的素材
 - 需要 Wink 修复 / 防抖 / 调色的素材
-- 建议的抖音 / 小红书标题方向
+- 建议的目标平台标题方向
 - 项目标签
 """
 
 L3_STRUCTURE_PROMPT_HEADER = """# 项目 L3 内容结构判读任务
 
-你是素材库结构规划助理。请根据整个项目的 media_manifest.json、关键帧、素材 prompt 和项目总览，为项目生成 L3 内容目录结构和迁移计划。
+你是素材库结构规划助理。请根据调用方实际提供的项目清单、关键帧索引、素材 prompt 和项目总览，为项目生成 L3 内容目录结构和迁移计划。未提供的画面、manifest 原文或转写不得假定已经看过。
 
 ## 核心规则
 
@@ -122,12 +131,13 @@ L3_STRUCTURE_PROMPT_HEADER = """# 项目 L3 内容结构判读任务
 5. `00_RawVault_不可直用` 可以按原始关联组或待重构类型建立子目录，但 OSV/LRF/INSV、HEIC/MOV/XMP 等关联组必须同组移动，不拆语义。
 6. 输出结构计划时，只移动项目内已有素材，不覆盖已有文件，不删除素材。
 7. 先检查“视觉相似候选组”。同一主体、同一机位、同一场景、同一动作链条的短片段，默认归入同一个 L3 内容目录；只有画面证据能证明功能不同，才允许拆开。
-8. `同框 / 互动 / 交流 / 关系` 这类人物关系词必须有明确画面证据；如果只是单人主体，优先写 `站位`、`候场`、`示意`、`看台远景`、`号码布xx` 等可观察描述。
-9. L3 目录不是只按物理场景切分，也要允许按叙事功能切分，例如 `创作幕后与设备准备`、`第一视角设备调试`、`人物呈现与候场状态`。如果一批素材的核心价值是拍摄设备带来的负担或幕后感，不要简单归为普通候场。
+8. `同框 / 互动 / 交流 / 关系` 这类人物关系词必须有明确画面证据；如果只是单人主体，优先写可观察的站位、动作或场景描述。
+9. L3 目录不是只按物理场景切分，也要允许按当前项目的叙事功能切分。如果一批素材的核心价值是拍摄设备带来的负担或幕后感，不要简单归为普通场景。
 
-## 请输出 JSON
+## 请输出裸 JSON
 
-```json
+以下仅为结构示意；不要使用 Markdown 代码围栏包裹输出。
+
 {
   "plan_version": 1,
   "source": "LLM全局分析",
@@ -140,8 +150,6 @@ L3_STRUCTURE_PROMPT_HEADER = """# 项目 L3 内容结构判读任务
     {"from": "旧相对路径/文件名.mov", "to": "新相对路径/文件名.mov", "reason": "为什么放到这里"}
   ]
 }
-```
-
 """
 
 
@@ -287,6 +295,7 @@ def l3_structure_prompt(
     similarity_groups: list[list[dict[str, object]]],
     similarity_pairs: list[dict[str, object]],
     user_intent_notes: str,
+    creator_context: str = "",
 ) -> str:
     items = [
         item
@@ -296,7 +305,8 @@ def l3_structure_prompt(
     body = "\n".join(l3_structure_item_block(item) for item in items)
     similarity_section = visual_similarity_markdown(similarity_groups, similarity_pairs)
     intent_section = f"## 用户/创作者意图笔记\n\n{user_intent_notes}\n\n"
-    return f"{L3_STRUCTURE_PROMPT_HEADER}- 项目绝对路径：{project}\n- 素材数量：{len(items)}\n\n{intent_section}{similarity_section}\n## 项目素材清单\n\n{body}"
+    context_section = f"## 账号上下文\n\n{creator_context or '项目未提供账号人设资料；不得自行猜测。'}\n\n"
+    return f"{L3_STRUCTURE_PROMPT_HEADER}- 项目绝对路径：{project}\n- 素材数量：{len(items)}\n\n{intent_section}{context_section}{similarity_section}\n## 项目素材清单\n\n{body}"
 
 
 def keyframe_block(item: dict[str, object]) -> str:
@@ -319,13 +329,15 @@ def prune_stale_prompts(prompt_dir: Path, expected: set[Path]) -> int:
     return removed
 
 
-def render_template(text: str, project: Path) -> str:
+def render_template(text: str, project: Path, creator_context: str = "") -> str:
     manifest_path = project / "_ai_analysis" / "media_manifest.json"
-    return (
+    rendered = (
         text.replace("{{PROJECT_DIR}}", str(project))
         .replace("{{MANIFEST_PATH}}", str(manifest_path))
         .replace("{{ANALYSIS_DIR}}", str(project / "_ai_analysis"))
     )
+    context = creator_context or creator_context_block(project)
+    return f"## 当前账号上下文\n\n{context}\n\n{rendered}"
 
 
 def load_user_intent_notes(project: Path) -> str:
@@ -336,7 +348,7 @@ def load_user_intent_notes(project: Path) -> str:
     return text or f"`{USER_INTENT_NOTES}` 为空。"
 
 
-def write_workflow_prompts(project: Path, prompt_dir: Path) -> int:
+def write_workflow_prompts(project: Path, prompt_dir: Path, creator_context: str = "") -> int:
     template_dir = Path(__file__).resolve().parent / "prompt_templates"
     output_dir = prompt_dir / "workflows"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -350,7 +362,7 @@ def write_workflow_prompts(project: Path, prompt_dir: Path) -> int:
             old.unlink()
     for template in templates:
         output = output_dir / template.name
-        output.write_text(render_template(template.read_text(encoding="utf-8"), project), encoding="utf-8")
+        output.write_text(render_template(template.read_text(encoding="utf-8"), project, creator_context), encoding="utf-8")
     return len(templates)
 
 
@@ -365,6 +377,7 @@ def main() -> None:
     prompt_dir = project / "_ai_analysis" / "prompts"
     prompt_dir.mkdir(parents=True, exist_ok=True)
     user_intent_notes = load_user_intent_notes(project)
+    creator_context = creator_context_block(project)
 
     expected_prompts = {
         item_prompt_path(prompt_dir, item)
@@ -402,6 +415,7 @@ def main() -> None:
             keyframe_count=item.get("keyframe_count", 0),
             keyframe_dir=item.get("keyframe_dir", "无"),
             user_intent_notes=user_intent_notes,
+            creator_context=creator_context,
             keyframes=keyframe_block(item),
             card_schema=CARD_SCHEMA,
         )
@@ -420,14 +434,14 @@ def main() -> None:
     )
 
     (prompt_dir / "project_overview_prompt.md").write_text(
-        PROJECT_PROMPT.format(user_intent_notes=user_intent_notes),
+        PROJECT_PROMPT.format(user_intent_notes=user_intent_notes, creator_context=creator_context),
         encoding="utf-8",
     )
     (prompt_dir / "project_l3_structure_prompt.md").write_text(
-        l3_structure_prompt(project, manifest, args.include_derived, similarity_groups, similarity_pairs, user_intent_notes),
+        l3_structure_prompt(project, manifest, args.include_derived, similarity_groups, similarity_pairs, user_intent_notes, creator_context),
         encoding="utf-8",
     )
-    workflow_count = write_workflow_prompts(project, prompt_dir)
+    workflow_count = write_workflow_prompts(project, prompt_dir, creator_context)
     print(f"Prompt 已生成：{prompt_dir}，共 {count} 个素材 prompt，workflow prompts {workflow_count} 个，清理陈旧 prompt {pruned} 个")
 
 

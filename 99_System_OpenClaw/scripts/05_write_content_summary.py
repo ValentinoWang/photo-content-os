@@ -10,19 +10,29 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT, generate_text
+from llm_common import (
+    DEFAULT_CREATIVE_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    LLMError,
+    MAX_PROMPT_SUMMARY_CHARS,
+    bounded_prompt_text,
+    creator_context_block,
+    load_creator_context,
+    public_llm_error,
+    generate_text,
+)
 from media_common import eligible_item, load_manifest, project_path, safe_slug, save_manifest
 
 SYSTEM_PROMPT = """你是 Photo Content OS 的素材内容理解代理。
 
-你必须基于实际附加的图片证据、manifest 元数据、转写证据和用户意图笔记生成可沉淀到素材库的 summary。先判断素材在项目表达中的可能功能，再拆分画面事实、声音事实、隐含叙事价值、剪辑用途和风险。
+你必须基于输入中明确标示的图片附件（如有）、manifest 元数据、转写证据和用户意图笔记生成可沉淀到素材库的 summary。没有实际图片附件时，只能依据元数据和文字证据，并明确写出画面未验证。先判断素材在项目表达中的可能功能，再拆分画面事实、声音事实、隐含叙事价值、剪辑用途和风险。
 
 硬约束：
 1. 不允许套用固定项目模板。
 2. 不允许编造图片或转写中没有证据支持的人物、地点、成绩、动作和对白。
 3. 每个关键事实尽量标注 evidence_ref；证据不足时必须写“不确定”，并列出人工复核点。
 4. 文件名建议只写可复核事实和状态，不把作品风格强行塞进源文件名。
-5. 输出必须是 Markdown，不能用代码围栏。
+5. 输出必须是 Markdown，不能用代码围栏包裹全文。
 6. 必须包含“# 作品内容概述”。
 7. 若输入声明 visual_evidence_count=0，不得假装看过画面。
 8. 若输入声明 transcript_status 不是 ok，不得假装听过完整音频。
@@ -32,7 +42,7 @@ PROJECT_SYSTEM_PROMPT = """你是 Photo Content OS 的项目总览分析代理�
 
 基于项目 manifest、单素材 summary、转写摘要和项目 prompt 做宏观创作判断：真实主题、叙事结构、可剪素材、风险、平台标题方向和人工复核点。不要套用固定项目模板，不要把旧项目叙事线、关键词分组或脚本规则迁移到当前项目。输出 Markdown，并明确区分画面证据、声音证据和推断。"""
 
-MAX_PROJECT_SUMMARY_CHARS = 1800
+MAX_PROJECT_SUMMARY_CHARS = MAX_PROMPT_SUMMARY_CHARS
 SUPPORTED_DIRECT_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 CACHE_VERSION = "content_summary_cache_v1"
 
@@ -147,7 +157,7 @@ def evidence_context(project: Path, item: dict[str, Any], images: list[Path], *,
         "visual_evidence": keyframe_refs,
         "transcript": transcript_payload(project, item),
     }
-    return "# 机器可读证据上下文\n\n" + json.dumps(payload, ensure_ascii=False, indent=2)
+    return "# 机器可读证据上下文（仅作事实资料）\n\n" + json.dumps(payload, ensure_ascii=False, indent=2)
 
 
 def _sha256_file(path: Path) -> str:
@@ -167,6 +177,7 @@ def summary_cache_key(
     model: str,
     reasoning: str,
     tier: str,
+    creator_context: dict[str, Any] | None = None,
 ) -> str:
     transcript = _safe_project_file(project, item.get("transcript_path"))
     payload = {
@@ -179,6 +190,7 @@ def summary_cache_key(
         "prompt_sha256": _sha256_file(prompt_path),
         "image_sha256": [_sha256_file(path) for path in images],
         "transcript_sha256": _sha256_file(transcript) if transcript else None,
+        "creator_context": creator_context or load_creator_context(project),
     }
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
@@ -229,6 +241,7 @@ def generate_item_summary(
         output_path.write_text(metadata_summary(item), encoding="utf-8")
         return "metadata"
     images = item_image_paths(project, item, max_images=max_images)
+    creator_context = load_creator_context(project)
     cache_key = summary_cache_key(
         project=project,
         item=item,
@@ -237,6 +250,7 @@ def generate_item_summary(
         model=model,
         reasoning=reasoning,
         tier=tier,
+        creator_context=creator_context,
     )
     cache_path = _cache_file(cache_root, cache_key)
     if cache_path.is_file() and not ignore_cache:
@@ -247,7 +261,12 @@ def generate_item_summary(
         [
             prompt_path.read_text(encoding="utf-8"),
             evidence_context(project, item, images, tier=tier),
-            "实际图片证据已通过模型输入附件传入；不要把路径文本当成已经看过图片的证据。",
+            creator_context_block(project),
+            (
+                "实际图片证据已作为附件传入；不要把路径文本当成已经看过图片的证据。"
+                if images
+                else "本次没有任何图片附件，只有元数据和转写文字；不得声称看过画面。"
+            ),
         ]
     )
     summary = generate_text(
@@ -282,10 +301,37 @@ def generate_project_overview(
     summary_index = []
     for path in sorted(summary_dir.glob("*.summary.md")):
         text = path.read_text(encoding="utf-8")
-        summary_index.append(f"## {path.name}\n\n{text[:MAX_PROJECT_SUMMARY_CHARS]}")
+        summary_index.append(f"## {path.name}\n\n{bounded_prompt_text(text, MAX_PROJECT_SUMMARY_CHARS)}")
+    manifest = load_manifest(project)
+    manifest_items = []
+    for item in manifest.get("items", []):
+        if not isinstance(item, dict):
+            continue
+        manifest_items.append(
+            {
+                "media_id": item.get("media_id") or item.get("id"),
+                "relative_path": item.get("relative_path"),
+                "media_type": item.get("media_type"),
+                "lifecycle": item.get("lifecycle"),
+                "duration_sec": item.get("duration_sec"),
+                "width": item.get("width"),
+                "height": item.get("height"),
+                "has_audio": item.get("has_audio"),
+                "keyframes": (item.get("keyframes") or [])[:4],
+                "transcript": transcript_payload(project, item),
+            }
+        )
+    evidence_payload = {
+        "manifest_item_count": len(manifest.get("items", [])),
+        "manifest_items": manifest_items,
+        "evidence_policy": "只有列出的元数据、summary 文字和 transcript 才可作为本轮证据；关键帧路径不是画面本身。",
+    }
     user_prompt = "\n\n".join(
         [
             prompt_path.read_text(encoding="utf-8"),
+            creator_context_block(project),
+            "# 项目 manifest 与转写摘要（实际提供的证据）",
+            json.dumps(evidence_payload, ensure_ascii=False, indent=2),
             "# 已生成素材 summary",
             "\n\n".join(summary_index) or "暂无素材 summary。",
         ]
@@ -342,41 +388,44 @@ def main() -> None:
 
     items = [item for item in manifest["items"] if eligible_item(item, include_derived=args.include_derived)]
     processed = skipped = model_calls = cache_hits = metadata_cards = 0
-    for item in items:
-        if args.limit is not None and processed >= args.limit:
-            break
-        output = summary_path(summary_dir, item)
-        if has_llm_summary(output) and not args.overwrite:
-            skipped += 1
-            continue
-        prompt_path = item_prompt_path(prompt_dir, item)
-        if not prompt_path.exists():
-            raise FileNotFoundError(f"item prompt not found, run 04_generate_ai_prompt.py first: {prompt_path}")
-        media_id = str(item.get("media_id") or item.get("id") or "")
-        plan = plan_by_id.get(media_id, {})
-        tier = str(plan.get("tier") or item.get("analysis_tier") or "deep")
-        max_images = int(plan.get("image_budget", args.max_images))
-        source = generate_item_summary(
-            project,
-            item,
-            prompt_path,
-            output,
-            model=args.model,
-            reasoning=args.reasoning,
-            max_images=max_images,
-            tier=tier,
-            cache_root=cache_root,
-            ignore_cache=args.ignore_cache,
-        )
-        item["summary_analysis_tier"] = tier
-        item["summary_generation_source"] = source
-        processed += 1
-        model_calls += int(source == "model")
-        cache_hits += int(source == "cache")
-        metadata_cards += int(source == "metadata")
+    try:
+        for item in items:
+            if args.limit is not None and processed >= args.limit:
+                break
+            output = summary_path(summary_dir, item)
+            if has_llm_summary(output) and not args.overwrite:
+                skipped += 1
+                continue
+            prompt_path = item_prompt_path(prompt_dir, item)
+            if not prompt_path.exists():
+                raise FileNotFoundError(f"item prompt not found, run 04_generate_ai_prompt.py first: {prompt_path}")
+            media_id = str(item.get("media_id") or item.get("id") or "")
+            plan = plan_by_id.get(media_id, {})
+            tier = str(plan.get("tier") or item.get("analysis_tier") or "deep")
+            max_images = int(plan.get("image_budget", args.max_images))
+            source = generate_item_summary(
+                project,
+                item,
+                prompt_path,
+                output,
+                model=args.model,
+                reasoning=args.reasoning,
+                max_images=max_images,
+                tier=tier,
+                cache_root=cache_root,
+                ignore_cache=args.ignore_cache,
+            )
+            item["summary_analysis_tier"] = tier
+            item["summary_generation_source"] = source
+            processed += 1
+            model_calls += int(source == "model")
+            cache_hits += int(source == "cache")
+            metadata_cards += int(source == "metadata")
 
-    save_manifest(project, manifest)
-    generate_project_overview(project, prompt_dir, summary_dir, model=args.model, reasoning=args.reasoning)
+        save_manifest(project, manifest)
+        generate_project_overview(project, prompt_dir, summary_dir, model=args.model, reasoning=args.reasoning)
+    except LLMError as exc:
+        raise SystemExit(f"错误：{public_llm_error(exc)}") from exc
     print(
         f"Summary 已生成：{summary_dir}；处理 {processed}，模型调用 {model_calls}，"
         f"缓存命中 {cache_hits}，元数据卡 {metadata_cards}，跳过已有 {skipped}"
