@@ -174,6 +174,7 @@ def resolve_media_candidate(
                 "path": str(candidate_path),
                 "duration": duration,
                 "source_duration_sec": required_duration,
+                "media_duration_sec": duration,
                 "is_raw360": is_raw360_media(candidate_path),
             }
 

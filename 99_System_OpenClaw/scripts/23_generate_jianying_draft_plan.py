@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import math
 from pathlib import Path
 from typing import Any
 
@@ -22,14 +23,28 @@ from jianying_roughcut_common import (
 def source_start_from_edl(selected: dict[str, Any], clip: dict[str, Any], required_duration: float) -> float:
     """Use only an EDL-declared source offset; never infer one from an event."""
 
-    raw_start = clip.get("source_start_sec", 0.0)
+    raw_start = clip.get("source_start_sec")
+    if raw_start is None:
+        if selected.get("is_raw360") or is_raw360_media(Path(str(selected.get("path") or ""))):
+            raise ContractError("raw360 clips require an explicit EDL source_start_sec; no project-specific default is allowed")
+        raw_start = 0.0
     try:
         source_start = float(raw_start)
     except (TypeError, ValueError) as exc:
         raise ContractError(f"EDL source_start_sec must be a non-negative number: {raw_start!r}") from exc
-    if source_start < 0:
-        raise ContractError("EDL source_start_sec must be non-negative")
-    source_duration = float(selected.get("source_duration_sec") or selected.get("duration") or 0.0)
+    if not math.isfinite(source_start) or source_start < 0:
+        raise ContractError("EDL source_start_sec must be a finite non-negative number")
+    try:
+        source_duration = float(
+            selected.get("media_duration_sec")
+            or selected.get("duration")
+            or selected.get("source_duration_sec")
+            or 0.0
+        )
+    except (TypeError, ValueError) as exc:
+        raise ContractError("selected source media duration is invalid") from exc
+    if not math.isfinite(source_duration) or source_duration < 0:
+        raise ContractError("selected source media duration is invalid")
     if source_duration > 0 and source_start + required_duration > source_duration + 0.001:
         raise ContractError("EDL source_start_sec and clip duration exceed the selected source media")
     return source_start
@@ -113,9 +128,9 @@ def generate_plan(
     raw_local_project_path = str(edl.get("local_project_path") or "").strip()
     if raw_local_project_path:
         local_project_path = Path(raw_local_project_path).expanduser()
+        if not local_project_path.is_dir():
+            raise ContractError(f"EDL local_project_path must point to an existing project directory: {local_project_path}")
     else:
-        local_project_path = Path()
-    if not raw_local_project_path or not local_project_path.exists():
         local_project_path = local_project_path_from_assets(local_assets_path)
 
     video_clips, text_clips = video_track_from_edl(edl, local_project_path, allow_raw360_proxy=allow_raw360_proxy)

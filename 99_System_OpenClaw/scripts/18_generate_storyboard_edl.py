@@ -8,14 +8,21 @@ import json
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 from edl_contract import EDLContractError, normalise_edl, write_edl
-from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT, generate_text
+from llm_common import (
+    DEFAULT_CREATIVE_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    MAX_PROMPT_SUMMARY_CHARS,
+    bounded_prompt_text,
+    generate_text,
+    parse_json_response,
+    parse_markdown_frontmatter,
+    render_markdown_frontmatter,
+)
 from media_common import eligible_item, load_manifest, project_path
 
 MAX_ITEMS = 140
-MAX_SUMMARY_CHARS = 900
+MAX_SUMMARY_CHARS = MAX_PROMPT_SUMMARY_CHARS
 MAX_TRANSCRIPT_CHARS = 1600
 
 SYSTEM_PROMPT = """你是 Photo Content OS 的短视频分镜与剪辑方案编排代理。
@@ -26,8 +33,8 @@ SYSTEM_PROMPT = """你是 Photo Content OS 的短视频分镜与剪辑方案编�
 1. 04_script.md 是强输入；只有真实素材证据不足时才把内容写入 missing_materials，不能硬凑。
 2. 不允许编造素材、成绩、地点、人物关系、BGM、对白或镜头。
 3. clips 中的 source_file/candidate_files 只能来自输入 manifest；不可执行的缺失素材不能进入 clips。
-4. 输出必须是严格 JSON，顶层只有 storyboard_markdown 和 edl_json，不得使用 Markdown 代码围栏。
-5. storyboard_markdown 必须含 YAML frontmatter：doc_type=storyboard、writer_agent=mac_openclaw、generation_model、generation_reasoning。
+4. 输出必须是严格 JSON，顶层只有 storyboard_markdown 和 edl_json；优先输出裸 JSON，单个 ```json 围栏也会被解析器规范化。
+5. storyboard_markdown 必须含 YAML frontmatter：doc_type=storyboard、writer_agent=mac_openclaw；generation_model、generation_reasoning 和 spec_version 由脚本写入，不要把它们当作内容事实。
 6. edl_json 必须满足 edit_decision_list_v1：doc_type=edit_decision_list、source_script_used=true、clips 非空。
 7. 每个 clip 必须有唯一正整数 slot、字符串 time_range（如 0.000-4.000）、source_start_sec、purpose、visual_need、caption、candidate_files、edit_note。
 8. time_range 按时间升序且不能重叠；秒数精确到毫秒。
@@ -45,13 +52,11 @@ def read_text(path: Path) -> str:
 
 
 def parse_frontmatter(text: str) -> dict[str, Any]:
-    if not text.startswith("---\n"):
+    try:
+        metadata, _ = parse_markdown_frontmatter(text)
+    except ValueError:
         return {}
-    end = text.find("\n---", 4)
-    if end == -1:
-        return {}
-    data = yaml.safe_load(text[4:end])
-    return data if isinstance(data, dict) else {}
+    return metadata
 
 
 def nearby_script_path(brief_path: Path) -> Path:
@@ -86,7 +91,7 @@ def summary_text(project: Path, item: dict[str, Any]) -> str:
     candidates.extend(summaries.glob(f"*_{stem}.summary.md"))
     for path in candidates:
         if path.exists():
-            return path.read_text(encoding="utf-8")[:MAX_SUMMARY_CHARS]
+            return bounded_prompt_text(path.read_text(encoding="utf-8"), MAX_SUMMARY_CHARS)
     if is_raw360_reference(item):
         return raw360_reference_summary(item)
     return ""
@@ -116,7 +121,7 @@ def transcript_segments(project: Path, item: dict[str, Any]) -> list[dict[str, A
                 "start_sec": segment.get("start_sec"),
                 "end_sec": segment.get("end_sec"),
                 "speaker": segment.get("speaker"),
-                "text": str(segment.get("text") or "")[:MAX_TRANSCRIPT_CHARS],
+                "text": bounded_prompt_text(str(segment.get("text") or ""), MAX_TRANSCRIPT_CHARS),
             }
         )
     return result[:60]
@@ -202,13 +207,44 @@ def build_user_prompt(
 
 
 def parse_llm_json(text: str) -> dict[str, Any]:
-    stripped = text.strip()
-    if stripped.startswith("```"):
-        raise RuntimeError("LLM storyboard response must be raw JSON, not a code fence")
-    data = json.loads(stripped)
+    try:
+        data = parse_json_response(text)
+    except (ValueError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"LLM storyboard response is not valid JSON: {exc}") from exc
     if not isinstance(data, dict):
         raise RuntimeError("LLM storyboard response JSON root must be an object")
     return data
+
+
+def canonicalize_storyboard(storyboard: str, *, model: str, reasoning: str) -> str:
+    """Validate content metadata and stamp invocation-owned generation metadata."""
+    try:
+        metadata, body = parse_markdown_frontmatter(storyboard)
+    except ValueError as exc:
+        raise RuntimeError(f"storyboard_markdown frontmatter invalid: {exc}") from exc
+    if metadata.get("doc_type") != "storyboard":
+        raise RuntimeError("storyboard_markdown frontmatter doc_type must be storyboard")
+    if metadata.get("writer_agent") != "mac_openclaw":
+        raise RuntimeError("storyboard_markdown writer_agent must be mac_openclaw")
+    declared_model = metadata.get("generation_model")
+    if declared_model is not None and (
+        not isinstance(declared_model, str) or declared_model.strip() != model
+    ):
+        raise RuntimeError(f"storyboard generation_model must be {model}")
+    declared_reasoning = metadata.get("generation_reasoning")
+    if declared_reasoning is not None and (
+        not isinstance(declared_reasoning, str) or declared_reasoning.strip() != reasoning
+    ):
+        raise RuntimeError(f"storyboard generation_reasoning must be {reasoning}")
+    canonical = dict(metadata)
+    canonical.update(
+        {
+            "spec_version": "content_os_v0.1",
+            "generation_model": model,
+            "generation_reasoning": reasoning,
+        }
+    )
+    return render_markdown_frontmatter(canonical, body)
 
 
 def validate_outputs(data: dict[str, Any], *, model: str, reasoning: str) -> tuple[str, dict[str, Any]]:
@@ -219,15 +255,7 @@ def validate_outputs(data: dict[str, Any], *, model: str, reasoning: str) -> tup
     if not isinstance(edl, dict):
         raise RuntimeError("edl_json must be an object")
 
-    meta = parse_frontmatter(storyboard)
-    if meta.get("doc_type") != "storyboard":
-        raise RuntimeError("storyboard_markdown frontmatter doc_type must be storyboard")
-    if meta.get("writer_agent") != "mac_openclaw":
-        raise RuntimeError("storyboard_markdown writer_agent must be mac_openclaw")
-    if meta.get("generation_model") != model:
-        raise RuntimeError(f"storyboard generation_model must be {model}")
-    if meta.get("generation_reasoning") != reasoning:
-        raise RuntimeError(f"storyboard generation_reasoning must be {reasoning}")
+    storyboard = canonicalize_storyboard(storyboard, model=model, reasoning=reasoning)
     try:
         canonical_edl = normalise_edl(edl, generation_model=model, generation_reasoning=reasoning)
     except EDLContractError as exc:

@@ -18,6 +18,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 REQUIRED_CREATIVE_MODEL = "gpt-5.6-terra"
 REQUIRED_CREATIVE_REASONING = "xhigh"
 DEFAULT_CREATIVE_MODEL = REQUIRED_CREATIVE_MODEL
@@ -53,7 +55,54 @@ def bounded_prompt_text(text: str, max_chars: int = MAX_PROMPT_SUMMARY_CHARS, *,
         return text
     if max_chars <= len(marker):
         return marker[:max_chars]
-    return text[: max_chars - len(marker)].rstrip() + "\n" + marker
+    prefix_budget = max_chars - len(marker) - 1
+    return text[:prefix_budget].rstrip() + "\n" + marker
+
+
+def parse_markdown_frontmatter(text: str) -> tuple[dict[str, Any], str]:
+    """Parse a Markdown YAML frontmatter block and return metadata plus body."""
+    lines = text.splitlines(keepends=True)
+    if not lines or lines[0].rstrip("\r\n") != "---":
+        raise ValueError("markdown must start with YAML frontmatter")
+    closing_index = next(
+        (index for index, line in enumerate(lines[1:], start=1) if line.rstrip("\r\n").strip() == "---"),
+        None,
+    )
+    if closing_index is None:
+        raise ValueError("YAML frontmatter is not closed")
+    try:
+        metadata = yaml.safe_load("".join(lines[1:closing_index]))
+    except yaml.YAMLError as exc:
+        raise ValueError("YAML frontmatter is invalid") from exc
+    if not isinstance(metadata, dict):
+        raise ValueError("YAML frontmatter must be a mapping")
+    return metadata, "".join(lines[closing_index + 1 :])
+
+
+def render_markdown_frontmatter(metadata: dict[str, Any], body: str) -> str:
+    """Render one canonical frontmatter fence without altering the Markdown body."""
+    frontmatter = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).rstrip()
+    clean_body = body.lstrip("\r\n")
+    return f"---\n{frontmatter}\n---\n\n{clean_body}"
+
+
+def parse_json_response(text: str) -> Any:
+    """Parse raw JSON or one optional outer JSON Markdown code fence."""
+    stripped = text.strip()
+    if not stripped:
+        raise ValueError("JSON response is empty")
+    if stripped.startswith("```"):
+        lines = stripped.splitlines()
+        if len(lines) < 3 or lines[-1].strip() != "```":
+            raise ValueError("JSON code fence must be a single closed outer fence")
+        language = lines[0][3:].strip().lower()
+        if language not in {"", "json"}:
+            raise ValueError("JSON code fence language must be json")
+        inner = "\n".join(lines[1:-1]).strip()
+        if not inner or "```" in inner:
+            raise ValueError("JSON code fence contains no single JSON payload")
+        stripped = inner
+    return json.loads(stripped)
 
 
 def _label_value(line: str, labels: tuple[str, ...]) -> str | None:
