@@ -45,10 +45,65 @@ LINK_SPEC_VERSION = "openclaw_queue_link_v0.1"
 STATUS_SPEC_VERSION = "openclaw_queue_status_v0.1"
 
 RUN_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{2,127}$")
+SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$", re.IGNORECASE)
+VOLATILE_TASK_FIELDS = frozenset({"created_at", "updated_at", "generated_at", "request_fingerprint"})
 
 
 class QueueError(Exception):
     """Raised when a queue task cannot be safely processed."""
+
+
+def request_fingerprint(task: dict[str, Any]) -> str:
+    """Return a stable digest for retry-safe queue processing."""
+
+    stable = {
+        key: value
+        for key, value in task.items()
+        if key not in VOLATILE_TASK_FIELDS
+    }
+    encoded = json.dumps(stable, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return "sha256:" + hashlib.sha256(encoded).hexdigest()
+
+
+def idempotency_key(task: dict[str, Any], creation_run_id: str) -> str:
+    source = task.get("source_agent_task") if isinstance(task.get("source_agent_task"), dict) else {}
+    value = (
+        task.get("idempotency_key")
+        or source.get("idempotency_key")
+        or task.get("creation_run_id")
+        or creation_run_id
+    )
+    if not isinstance(value, str) or not value.strip():
+        raise QueueError("idempotency_key must be non-empty text")
+    return value.strip()
+
+
+def result_idempotency_key(task: dict[str, Any], creation_run_id: str) -> str:
+    """Keep malformed tasks diagnosable while still writing a blocked result."""
+
+    try:
+        return idempotency_key(task, creation_run_id)
+    except QueueError:
+        return creation_run_id
+
+
+def source_identity(task: dict[str, Any]) -> dict[str, Any]:
+    source = task.get("source_agent_task") if isinstance(task.get("source_agent_task"), dict) else {}
+    identity: dict[str, Any] = {}
+    for key in (
+        "task_id",
+        "task_type",
+        "project_id",
+        "idea_id",
+        "project_revision",
+        "change_request_id",
+        "editor_backend",
+        "tenant_id",
+    ):
+        value = source.get(key) if key in source else task.get(key)
+        if value is not None and value != "":
+            identity[key] = value
+    return identity
 
 
 @dataclass(frozen=True)
@@ -401,7 +456,13 @@ def count_media_files(batch_dir: Path) -> int:
 
 def task_files(config: QueueConfig) -> list[Path]:
     ensure_queue_dirs(config)
-    return sorted(path for path in config.cloud_to_mac.glob("*.json") if path.is_file())
+    candidates: list[Path] = []
+    for path in config.cloud_to_mac.iterdir():
+        if path.is_file() and path.suffix.lower() == ".json":
+            candidates.append(path)
+        elif path.is_dir() and (path / "manifest.json").is_file():
+            candidates.append(path)
+    return sorted(candidates, key=lambda path: path.name)
 
 
 def result_path_for(config: QueueConfig, creation_run_id: str) -> Path:
@@ -449,9 +510,12 @@ def markdown_info(task: dict[str, Any], task_path: Path) -> dict[str, Any]:
 
     actual_sha = sha256_file(markdown_path)
     expected_sha = optional_text(task, "markdown_sha256")
+    if expected_sha and not SHA256_PATTERN.fullmatch(expected_sha):
+        raise QueueError("markdown_sha256 must be a 64-character hexadecimal digest")
     if expected_sha and expected_sha.lower() != actual_sha:
         raise QueueError(f"markdown_sha256 mismatch for {markdown_file}")
     return {
+        **source_identity(task),
         "markdown_file": markdown_file,
         "markdown_sha256": actual_sha,
         "markdown_sha256_expected": expected_sha,
@@ -483,6 +547,7 @@ def build_link(
 ) -> dict[str, Any]:
     batch_note = batch_dir / BATCH_NOTE_NAME
     return {
+        **source_identity(task),
         "spec_version": LINK_SPEC_VERSION,
         "doc_type": "openclaw_local_batch_link",
         "created_at": now_iso(),
@@ -551,13 +616,26 @@ def success_result(
     local_project: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     batch_note = batch_dir / BATCH_NOTE_NAME
+    identity = source_identity(task)
     return {
         "spec_version": RESULT_SPEC_VERSION,
+        "content_os_spec_version": "content_os_v0.2",
+        "doc_type": "mac_result",
+        "task_id": identity.get("task_id", ""),
         "task_type": task_type,
+        "source_task_type": identity.get("task_type", ""),
+        "project_id": identity.get("project_id"),
+        "idea_id": identity.get("idea_id"),
+        "project_revision": identity.get("project_revision"),
+        "change_request_id": identity.get("change_request_id"),
+        "editor_backend": identity.get("editor_backend"),
+        "tenant_id": identity.get("tenant_id"),
         "creation_run_id": creation_run_id,
         "completed_by": "mac_openclaw",
         "status": "linked",
         "generated_at": now_iso(),
+        "idempotency_key": result_idempotency_key(task, creation_run_id),
+        "request_fingerprint": request_fingerprint(task),
         "feishu_doc_link": optional_text(task, "feishu_doc_link"),
         "batch_id": optional_text(task, "batch_id") or batch_dir.name,
         "topic": optional_text(task, "topic"),
@@ -597,15 +675,28 @@ def blocked_result(
     moved_task_path: Path | None,
     status_path: Path | None,
 ) -> dict[str, Any]:
+    identity = source_identity(task)
     return {
         "spec_version": RESULT_SPEC_VERSION,
+        "content_os_spec_version": "content_os_v0.2",
+        "doc_type": "mac_result",
+        "task_id": identity.get("task_id", ""),
         "task_type": task.get("task_type", "unknown"),
+        "source_task_type": identity.get("task_type", ""),
+        "project_id": identity.get("project_id"),
+        "idea_id": identity.get("idea_id"),
+        "project_revision": identity.get("project_revision"),
+        "change_request_id": identity.get("change_request_id"),
+        "editor_backend": identity.get("editor_backend"),
+        "tenant_id": identity.get("tenant_id"),
         "creation_run_id": creation_run_id,
         "completed_by": "mac_openclaw",
         "status": "blocked",
         "blocked_reason": "queue_contract_failed",
         "detail": reason,
         "generated_at": now_iso(),
+        "idempotency_key": result_idempotency_key(task, creation_run_id),
+        "request_fingerprint": request_fingerprint(task),
         "source_task_path": str(task_path),
         "failed_task_path": str(moved_task_path) if moved_task_path else "",
         "local_status_path": str(status_path) if status_path else "",
@@ -629,7 +720,38 @@ def process_task(task_path: Path, config: QueueConfig) -> dict[str, Any]:
         task = load_json(task_path)
         task_type = validate_task_type(task)
         creation_run_id = validate_creation_run_id(task.get("creation_run_id"))
+        # Validate the retry key before moving the task or creating local
+        # evidence, so malformed identity input produces a clean blocked result.
+        idempotency_key(task, creation_run_id)
         result_path = result_path_for(config, creation_run_id)
+        fingerprint = request_fingerprint(task)
+        if result_path.exists():
+            existing = read_json_quiet(result_path)
+            if isinstance(existing, dict) and existing.get("request_fingerprint") == fingerprint:
+                moved_task_path = move_task_file(task_path, config.processed) if task_path.exists() else None
+                replay = dict(existing)
+                replay["idempotent_replay"] = True
+                replay["replayed_at"] = now_iso()
+                replay["replayed_task_path"] = str(moved_task_path) if moved_task_path else ""
+                return replay
+            conflict_path = config.mac_to_cloud / (
+                f"{safe_slug(creation_run_id, 128)}.conflict-"
+                f"{fingerprint.removeprefix('sha256:')[:16]}.result.json"
+            )
+            moved_task_path = move_task_file(task_path, config.failed) if task_path.exists() else None
+            conflict = blocked_result(
+                task=task,
+                task_path=task_path,
+                creation_run_id=creation_run_id,
+                reason="idempotency conflict: an existing result has a different request fingerprint",
+                result_path=conflict_path,
+                moved_task_path=moved_task_path,
+                status_path=None,
+            )
+            conflict["blocked_reason"] = "idempotency_conflict"
+            conflict["existing_result_path"] = str(result_path)
+            atomic_write_json(conflict_path, conflict)
+            return conflict
         outputs, warnings = requested_outputs(task)
         cloud_markdown = markdown_info(task, task_path)
         batch_dir, provision_warnings = ensure_local_batch_shell(task, config, creation_run_id)

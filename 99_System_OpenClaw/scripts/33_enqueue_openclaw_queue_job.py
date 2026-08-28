@@ -9,6 +9,7 @@ file from an upper-layer YAML task without copying media.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -29,10 +30,59 @@ DEFAULT_VAULT_ROOT = obsidian_root()
 TASK_INBOX = Path("98_Agent任务队列/01_cloud_to_mac_ready")
 RESULT_OUTBOX = Path("98_Agent任务队列/02_mac_to_cloud_results")
 QUEUE_DIR_NAME = "_OpenClawQueue"
+CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
+VOLATILE_TASK_FIELDS = frozenset({"created_at", "updated_at", "generated_at", "request_fingerprint"})
 
 
 class EnqueueError(Exception):
     """Raised when the upper-layer task cannot produce a local queue job."""
+
+
+def request_fingerprint(payload: dict[str, Any]) -> str:
+    """Return the retry identity for a queue payload.
+
+    Timestamps and a previously materialized fingerprint are excluded so a
+    re-enqueued copy has the same identity while a changed payload cannot
+    overwrite the original result.
+    """
+
+    stable = {
+        key: value
+        for key, value in payload.items()
+        if key not in VOLATILE_TASK_FIELDS
+    }
+    encoded = json.dumps(stable, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return "sha256:" + hashlib.sha256(encoded).hexdigest()
+
+
+def source_identity(task: dict[str, Any]) -> dict[str, Any]:
+    """Copy the upper-layer identity needed to reconcile a Mac result."""
+
+    inputs = task_inputs(task)
+    source: dict[str, Any] = {}
+    for key in (
+        "task_id",
+        "task_type",
+        "project_id",
+        "idea_id",
+        "project_revision",
+        "change_request_id",
+        "editor_backend",
+        "tenant_id",
+    ):
+        value = task.get(key)
+        if value is None:
+            value = inputs.get(key)
+        if value is not None and value != "":
+            source[key] = value
+    return source
+
+
+def idempotency_key(task: dict[str, Any], run_id: str) -> str:
+    value = task.get("idempotency_key") or task.get("creation_run_id") or run_id or task.get("task_id")
+    if not isinstance(value, str) or not value.strip():
+        raise EnqueueError("idempotency_key must be non-empty text")
+    return value.strip()
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -227,6 +277,9 @@ def build_queue_task(task: dict[str, Any], task_path: Path, vault_root: Path) ->
             batch_path = local_batch_path(task, vault_root)
             if batch_path:
                 queue_task["local_batch_path"] = batch_path
+        for key in ("project_revision", "editor_backend", "change_request_id", "tenant_id"):
+            if key not in queue_task and task.get(key) not in (None, ""):
+                queue_task[key] = task[key]
         constraints = queue_task.get("constraints")
         if not isinstance(constraints, dict):
             constraints = {}
@@ -243,12 +296,12 @@ def build_queue_task(task: dict[str, Any], task_path: Path, vault_root: Path) ->
         queue_task["schema_version"] = str(queue_task.get("schema_version") or "openclaw_mac_queue_task_v1")
         queue_task["created_at"] = str(queue_task.get("created_at") or now_iso())
         queue_task["source_agent_task"] = {
-            "task_id": task.get("task_id", ""),
-            "task_type": task.get("task_type", ""),
-            "project_id": task.get("project_id", ""),
-            "idea_id": task.get("idea_id", ""),
+            **source_identity(task),
             "vault_task_path": str(task_path),
         }
+        queue_task["idempotency_key"] = idempotency_key(task, str(queue_task["creation_run_id"]))
+        queue_task["source_agent_task"]["idempotency_key"] = queue_task["idempotency_key"]
+        queue_task["request_fingerprint"] = request_fingerprint(queue_task)
         return queue_task
 
     batch_path = local_batch_path(task, vault_root)
@@ -266,10 +319,7 @@ def build_queue_task(task: dict[str, Any], task_path: Path, vault_root: Path) ->
         "feishu_doc_link": feishu_doc_link(task),
         "batch_id": task_batch_id,
         "source_agent_task": {
-            "task_id": task.get("task_id", ""),
-            "task_type": task.get("task_type", ""),
-            "project_id": task.get("project_id", ""),
-            "idea_id": task.get("idea_id", ""),
+            **source_identity(task),
             "vault_task_path": str(task_path),
         },
         "platform": task.get("platform", ""),
@@ -289,6 +339,12 @@ def build_queue_task(task: dict[str, Any], task_path: Path, vault_root: Path) ->
             "path": batch_path,
             "required": True,
         }
+    for key in ("project_revision", "editor_backend", "change_request_id", "tenant_id"):
+        if task.get(key) not in (None, ""):
+            queue_task[key] = task[key]
+    queue_task["idempotency_key"] = idempotency_key(task, str(queue_task["creation_run_id"]))
+    queue_task["source_agent_task"]["idempotency_key"] = queue_task["idempotency_key"]
+    queue_task["request_fingerprint"] = request_fingerprint(queue_task)
     return queue_task
 
 
@@ -363,15 +419,28 @@ def process_ready_tasks(
     return outcomes
 
 
-def load_queue_result(queue_root: Path, run_id: str) -> dict[str, Any]:
-    path = queue_root / "mac_to_cloud" / f"{safe_slug(run_id, 128)}.result.json"
-    if not path.exists():
-        raise EnqueueError(f"queue result was not written: {path}")
-    with path.open("r", encoding="utf-8") as handle:
-        data = json.load(handle)
-    if not isinstance(data, dict):
-        raise EnqueueError(f"queue result root must be an object: {path}")
-    return data
+def load_queue_result(
+    queue_root: Path,
+    run_id: str,
+    *,
+    expected_fingerprint: str = "",
+) -> tuple[dict[str, Any], Path]:
+    result_root = queue_root / "mac_to_cloud"
+    base_path = result_root / f"{safe_slug(run_id, 128)}.result.json"
+    candidates = [base_path, *sorted(result_root.glob(f"{safe_slug(run_id, 128)}.conflict-*.result.json"))]
+    for path in candidates:
+        if not path.exists():
+            continue
+        try:
+            with path.open("r", encoding="utf-8") as handle:
+                data = json.load(handle)
+        except (OSError, json.JSONDecodeError) as exc:
+            raise EnqueueError(f"queue result cannot be read: {path}") from exc
+        if not isinstance(data, dict):
+            raise EnqueueError(f"queue result root must be an object: {path}")
+        if not expected_fingerprint or data.get("request_fingerprint") == expected_fingerprint:
+            return data, path
+    raise EnqueueError(f"queue result was not written for the requested payload: {base_path}")
 
 
 def write_dispatch_result(
@@ -382,20 +451,53 @@ def write_dispatch_result(
     queue_task_path: Path,
     run_id: str,
 ) -> Path:
-    queue_result = load_queue_result(queue_root, run_id)
-    queue_result_path = queue_root / "mac_to_cloud" / f"{safe_slug(run_id, 128)}.result.json"
+    queue_task = build_queue_task(task, task_path, vault_root)
+    expected_queue_fingerprint = request_fingerprint(queue_task)
+    queue_result, queue_result_path = load_queue_result(
+        queue_root, run_id, expected_fingerprint=expected_queue_fingerprint
+    )
     result_path = task_result_path(task_path, task, vault_root)
+    identity = source_identity(task)
     status = str(queue_result.get("status") or "blocked")
+    fingerprint = str(queue_result.get("request_fingerprint") or "").strip()
+    if not fingerprint:
+        fingerprint = request_fingerprint(
+            {key: value for key, value in queue_result.items() if key not in {"generated_at", "updated_at"}}
+        )
+    idem_key = str(queue_result.get("idempotency_key") or idempotency_key(task, run_id))
+    if result_path.exists():
+        try:
+            existing = load_yaml(result_path)
+        except EnqueueError:
+            existing = {}
+        if existing.get("request_fingerprint") == fingerprint:
+            return result_path
+        result_path = result_path.with_name(
+            f"{result_path.stem}.conflict-{fingerprint.removeprefix('sha256:')[:16]}{result_path.suffix}"
+        )
+        if result_path.exists():
+            raise EnqueueError(
+                f"dispatch conflict result already exists with a different request fingerprint: {result_path}"
+            )
     dispatch_result = {
-        "spec_version": "content_os_v0.1",
-        "task_id": task.get("task_id", ""),
-        "task_type": task.get("task_type", "openclaw_queue_dispatch"),
+        "spec_version": CONTENT_OS_SPEC_VERSION,
+        "doc_type": "mac_result",
+        "task_id": identity.get("task_id", ""),
+        "task_type": identity.get("task_type", "openclaw_queue_dispatch"),
+        "project_id": identity.get("project_id"),
+        "idea_id": identity.get("idea_id"),
+        "project_revision": identity.get("project_revision"),
+        "change_request_id": identity.get("change_request_id") or None,
+        "editor_backend": identity.get("editor_backend"),
+        "tenant_id": identity.get("tenant_id"),
         "completed_by": "mac_openclaw",
         "status": "done" if status == "linked" else "blocked",
         "blocked_reason": queue_result.get("blocked_reason", "") if status != "linked" else "",
         "detail": queue_result.get("detail", ""),
         "creation_run_id": run_id,
-        "feishu_doc_link": task.get("feishu_doc_link", ""),
+        "idempotency_key": idem_key,
+        "request_fingerprint": fingerprint,
+        "feishu_doc_link": feishu_doc_link(task),
         "outputs": {
             "openclaw_queue_source_task": queue_result.get("source_task_path", str(queue_task_path)),
             "openclaw_queue_failed_task": queue_result.get("failed_task_path", ""),
@@ -404,6 +506,7 @@ def write_dispatch_result(
         },
         "local_outputs": queue_result.get("local_outputs", {}),
         "queue_status": status,
+        "queue_task_type": queue_result.get("task_type", "bind_creation_run_to_local_batch"),
         "queue_result_summary": {
             "media_file_count": queue_result.get("media_file_count"),
             "requested_outputs": queue_result.get("requested_outputs", []),

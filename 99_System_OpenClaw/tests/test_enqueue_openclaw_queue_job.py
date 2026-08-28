@@ -84,6 +84,57 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             self.assertEqual(data["local_batch"]["path"], str(batch))
             self.assertTrue(data["constraints"]["old_queue_is_task_layer"])
             self.assertTrue(data["constraints"]["openclaw_queue_is_execution_layer"])
+            self.assertEqual(data["idempotency_key"], "task_20260627_material_match")
+            self.assertRegex(data["request_fingerprint"], r"^sha256:[0-9a-f]{64}$")
+
+    def test_queue_payload_propagates_revision_backend_change_and_tenant(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            vault = root / "vault"
+            workspace = root / "workspace"
+            queue = workspace / "_OpenClawQueue"
+            task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
+            task_dir.mkdir(parents=True)
+            task_path = task_dir / "task_20260627_identity.yaml"
+            task_path.write_text(
+                yaml.safe_dump(
+                    {
+                        "task_id": "task_20260627_001",
+                        "task_type": "local_material_match",
+                        "project_id": "project_demo",
+                        "idea_id": "idea_demo",
+                        "project_revision": 4,
+                        "editor_backend": "handoff_pack",
+                        "change_request_id": "change_demo",
+                        "tenant_id": "tenant_demo",
+                        "idempotency_key": "idem_demo",
+                        "inputs": {"batch_id": "20260627_identity"},
+                    },
+                    allow_unicode=True,
+                    sort_keys=False,
+                ),
+                encoding="utf-8",
+            )
+
+            output = enqueue_queue.enqueue_task(
+                str(task_path),
+                vault_root=vault,
+                workspace_root=workspace,
+                queue_root=queue,
+                allow_replace=False,
+                process=False,
+            )
+            data = json.loads(output.read_text(encoding="utf-8"))
+            for key, expected in {
+                "project_revision": 4,
+                "editor_backend": "handoff_pack",
+                "change_request_id": "change_demo",
+                "tenant_id": "tenant_demo",
+                "idempotency_key": "idem_demo",
+            }.items():
+                self.assertEqual(data[key], expected)
+                self.assertEqual(data["source_agent_task"][key], expected)
+            self.assertRegex(data["request_fingerprint"], r"^sha256:[0-9a-f]{64}$")
 
     def test_missing_local_batch_reference_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -241,6 +292,83 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
                 )
             )
             self.assertEqual(result["status"], "done")
+            self.assertEqual(result["spec_version"], "content_os_v0.2")
+            self.assertEqual(result["doc_type"], "mac_result")
+            self.assertEqual(result["task_id"], "task_20260627_dispatch")
+            self.assertRegex(result["request_fingerprint"], r"^sha256:[0-9a-f]{64}$")
+
+    def test_dispatch_result_replays_or_isolates_conflicts_by_request_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            vault = root / "vault"
+            workspace = root / "workspace"
+            queue = workspace / "_OpenClawQueue"
+            task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
+            task_dir.mkdir(parents=True)
+            task_path = task_dir / "task_20260627_dispatch.yaml"
+            task = {
+                "task_id": "task_20260627_dispatch",
+                "task_type": "openclaw_queue_dispatch",
+                "project_id": "project_demo",
+                "idea_id": "idea_demo",
+                "project_revision": 4,
+                "editor_backend": "handoff_pack",
+                "creation_run_id": "run_20260627_dispatch",
+                "inputs": {"batch_id": "20260627_dispatch"},
+            }
+            task_path.write_text(yaml.safe_dump(task, allow_unicode=True, sort_keys=False), encoding="utf-8")
+
+            queue_task = enqueue_queue.build_queue_task(task, task_path, vault)
+            queue_result_path = queue / "mac_to_cloud/run_20260627_dispatch.result.json"
+            queue_result_path.parent.mkdir(parents=True)
+            queue_result = {
+                "status": "linked",
+                "task_type": "bind_creation_run_to_local_batch",
+                "request_fingerprint": enqueue_queue.request_fingerprint(queue_task),
+                "idempotency_key": queue_task["idempotency_key"],
+            }
+            queue_result_path.write_text(json.dumps(queue_result), encoding="utf-8")
+
+            first = enqueue_queue.write_dispatch_result(
+                task, task_path, vault, queue, queue / "cloud_to_mac/task.json", "run_20260627_dispatch"
+            )
+            persisted = first.read_text(encoding="utf-8")
+            self.assertEqual(
+                enqueue_queue.write_dispatch_result(
+                    task, task_path, vault, queue, queue / "cloud_to_mac/task.json", "run_20260627_dispatch"
+                ),
+                first,
+            )
+            self.assertEqual(first.read_text(encoding="utf-8"), persisted)
+
+            changed = {**task, "topic": "修改后的云端任务"}
+            changed_queue_task = enqueue_queue.build_queue_task(changed, task_path, vault)
+            changed_fingerprint = enqueue_queue.request_fingerprint(changed_queue_task)
+            conflict = queue_result_path.with_name(
+                f"run_20260627_dispatch.conflict-{changed_fingerprint.removeprefix('sha256:')[:16]}.result.json"
+            )
+            conflict.write_text(
+                json.dumps(
+                    {
+                        **queue_result,
+                        "status": "blocked",
+                        "blocked_reason": "idempotency_conflict",
+                        "request_fingerprint": changed_fingerprint,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            conflict_result = enqueue_queue.write_dispatch_result(
+                changed, task_path, vault, queue, queue / "cloud_to_mac/task.json", "run_20260627_dispatch"
+            )
+            self.assertNotEqual(conflict_result, first)
+            self.assertIn(".conflict-", conflict_result.name)
+            self.assertEqual(first.read_text(encoding="utf-8"), persisted)
+            dispatched = yaml.safe_load(conflict_result.read_text(encoding="utf-8"))
+            self.assertEqual(dispatched["status"], "blocked")
+            self.assertEqual(dispatched["blocked_reason"], "idempotency_conflict")
+            self.assertEqual(dispatched["request_fingerprint"], changed_fingerprint)
 
 
 if __name__ == "__main__":

@@ -186,6 +186,8 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
                 "project_revision": 3,
                 "change_request_id": CHANGE_ID,
                 "editor_backend": "handoff_pack",
+                "idempotency_key": "task_20260710_001",
+                "request_fingerprint": runner.request_fingerprint(task),
                 "tenant_id": tenant_id,
             },
         )

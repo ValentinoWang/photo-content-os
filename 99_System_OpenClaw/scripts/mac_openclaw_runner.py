@@ -8,6 +8,7 @@ fixed local scripts. It never executes commands from a task file.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shlex
@@ -74,6 +75,21 @@ class RunnerError(Exception):
     """Raised when the runner cannot safely execute a task."""
 
 
+VOLATILE_TASK_FIELDS = frozenset({"created_at", "updated_at", "generated_at", "request_fingerprint"})
+
+
+def request_fingerprint(task: dict[str, Any]) -> str:
+    """Hash the immutable task payload used to make retries idempotent."""
+
+    stable = {
+        key: value
+        for key, value in task.items()
+        if key not in VOLATILE_TASK_FIELDS
+    }
+    encoded = json.dumps(stable, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return "sha256:" + hashlib.sha256(encoded).hexdigest()
+
+
 def task_identity(task: dict[str, Any]) -> dict[str, Any]:
     """Return the immutable identity that every Mac result must echo.
 
@@ -92,6 +108,8 @@ def task_identity(task: dict[str, Any]) -> dict[str, Any]:
         "project_revision": task["project_revision"],
         "change_request_id": task.get("change_request_id") or None,
         "editor_backend": task["editor_backend"],
+        "idempotency_key": str(task.get("idempotency_key") or task["task_id"]),
+        "request_fingerprint": request_fingerprint(task),
     }
     tenant_id = task.get("tenant_id")
     if isinstance(tenant_id, str) and tenant_id.strip():
@@ -213,6 +231,8 @@ def write_execution_blocked_result(path: Path, task: dict[str, Any], reason: str
         "generation_model_required": REQUIRED_CREATIVE_MODEL if task.get("task_type") == "local_material_match" else None,
         "generation_reasoning_required": REQUIRED_CREATIVE_REASONING if task.get("task_type") == "local_material_match" else None,
         "fallback_used": False,
+        "idempotency_key": str(task.get("idempotency_key") or task.get("task_id") or ""),
+        "request_fingerprint": request_fingerprint(task) if isinstance(task, dict) else "",
     }
     tenant_id = task.get("tenant_id")
     if isinstance(tenant_id, str) and tenant_id.strip():
@@ -287,6 +307,13 @@ def validate_or_block(config: RunnerConfig, task_path: Path) -> tuple[dict[str, 
         validate_required_actions(task, canonical_actions)
     except (ValidationError, RunnerError) as exc:
         write_blocked_result(result_path, task, str(exc))
+        try:
+            blocked = load_validator_yaml(result_path)
+            blocked["idempotency_key"] = str(task.get("idempotency_key") or task.get("task_id") or "")
+            blocked["request_fingerprint"] = request_fingerprint(task)
+            write_yaml(result_path, blocked)
+        except (ValidationError, OSError):
+            pass
         raise RunnerError(f"task blocked, result written to {result_path}: {exc}") from exc
     return task, result_path, canonical_actions
 
@@ -1298,7 +1325,11 @@ def run_task(
             previous = load_validator_yaml(result_path)
         except ValidationError:
             previous = {}
-        if previous.get("status") == "blocked":
+        same_request = previous.get("request_fingerprint") == request_fingerprint(task)
+        if previous.get("status") == "done" and same_request:
+            print(f"result={result_path} (idempotent replay)")
+            return result_path
+        if previous.get("status") == "blocked" and (same_request or not previous.get("request_fingerprint")):
             result_path.unlink()
         else:
             raise RunnerError(f"result already exists; use --allow-replace-result to overwrite: {result_path}")

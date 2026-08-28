@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from dataclasses import dataclass
 from importlib import metadata, resources
@@ -51,7 +52,39 @@ def load_snapshot() -> dict[str, Any]:
     data = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ProductContractError("snapshot_invalid")
+    validate_snapshot(data)
     return data
+
+
+def validate_snapshot(data: dict[str, Any]) -> None:
+    """Validate the local upstream pin without pretending it is live HEAD."""
+
+    if data.get("schema_version") != "photo_content_os_openclaw_bridge_v1":
+        raise ProductContractError("snapshot_invalid", "unsupported schema_version")
+    if data.get("upstream_repository") != "ValentinoWang/openclaw-media":
+        raise ProductContractError("snapshot_invalid", "unexpected upstream repository")
+    if not re.fullmatch(r"[0-9a-f]{40}", str(data.get("upstream_commit", "")), re.IGNORECASE):
+        raise ProductContractError("snapshot_invalid", "upstream_commit must be a git SHA")
+    if not re.fullmatch(r"sha256:[0-9a-f]{64}", str(data.get("catalog_digest", "")), re.IGNORECASE):
+        raise ProductContractError("snapshot_invalid", "catalog_digest must be sha256")
+    if data.get("upstream_contract_id") != "openclaw_media_product_v1":
+        raise ProductContractError("snapshot_invalid", "unexpected upstream contract id")
+    if not isinstance(data.get("upstream_contract_version"), int) or data["upstream_contract_version"] < 1:
+        raise ProductContractError("snapshot_invalid", "upstream_contract_version must be positive")
+    pipelines = data.get("pipelines")
+    if not isinstance(pipelines, dict) or len(pipelines) != 9:
+        raise ProductContractError("snapshot_invalid", "snapshot must pin exactly nine pipeline aliases")
+    if any(
+        not isinstance(alias, str)
+        or not alias.strip()
+        or not isinstance(pipeline, str)
+        or not pipeline.startswith("media.")
+        for alias, pipeline in pipelines.items()
+    ):
+        raise ProductContractError("snapshot_invalid", "pipeline aliases must map to media pipeline ids")
+    platforms = data.get("supported_device_platforms")
+    if not isinstance(platforms, list) or "macos" not in platforms:
+        raise ProductContractError("snapshot_invalid", "macos must be a supported device platform")
 
 
 def safe_workspace_ref(value: str) -> str:

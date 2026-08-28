@@ -31,6 +31,29 @@ def make_config(root: Path) -> object:
 
 
 class OpenClawQueueTest(unittest.TestCase):
+    def _queue_task(self, path: Path, batch: Path, *, topic: str = "第一视角体验") -> None:
+        write_json(
+            path,
+            {
+                "task_type": "bind_creation_run_to_local_batch",
+                "creation_run_id": "run_20260627_idempotent",
+                "idempotency_key": "task_20260627_001",
+                "project_revision": 3,
+                "editor_backend": "handoff_pack",
+                "topic": topic,
+                "local_batch_path": str(batch),
+                "source_agent_task": {
+                    "task_id": "task_20260627_001",
+                    "task_type": "local_material_match",
+                    "project_id": "project_demo",
+                    "idea_id": "idea_demo",
+                    "project_revision": 3,
+                    "editor_backend": "handoff_pack",
+                    "tenant_id": "tenant_demo",
+                },
+            },
+        )
+
     def test_cloud_markdown_is_verified_and_recorded(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -103,6 +126,105 @@ class OpenClawQueueTest(unittest.TestCase):
             self.assertEqual(status["status"], "linked")
             self.assertEqual(result["media_file_count"], 1)
             self.assertNotIn("clip.mp4", json.dumps(result, ensure_ascii=False))
+
+    def test_result_identity_and_same_payload_replay_are_stable(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            config = make_config(root)
+            batch = root / "00_Inbox_Mac_Intake/20260627_idempotent"
+            batch.mkdir(parents=True)
+            (batch / "00_批次说明.md").write_text("# 批次\n", encoding="utf-8")
+            first = config.cloud_to_mac / "first.json"
+            self._queue_task(first, batch)
+
+            first_result = openclaw_queue.process_pending(config)[0]
+            result_path = config.mac_to_cloud / "run_20260627_idempotent.result.json"
+            persisted = json.loads(result_path.read_text(encoding="utf-8"))
+            self.assertEqual(first_result["status"], "linked")
+            self.assertEqual(persisted["doc_type"], "mac_result")
+            self.assertEqual(persisted["content_os_spec_version"], "content_os_v0.2")
+            self.assertEqual(persisted["task_id"], "task_20260627_001")
+            self.assertEqual(persisted["project_revision"], 3)
+            self.assertEqual(persisted["editor_backend"], "handoff_pack")
+            self.assertTrue(persisted["request_fingerprint"].startswith("sha256:"))
+
+            replay_task = config.cloud_to_mac / "retry.json"
+            self._queue_task(replay_task, batch)
+            replay = openclaw_queue.process_pending(config)[0]
+            self.assertTrue(replay["idempotent_replay"])
+            self.assertEqual(
+                json.loads(result_path.read_text(encoding="utf-8"))["generated_at"],
+                persisted["generated_at"],
+            )
+
+    def test_different_payload_same_run_is_blocked_without_overwriting_result(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            config = make_config(root)
+            batch = root / "00_Inbox_Mac_Intake/20260627_conflict"
+            batch.mkdir(parents=True)
+            (batch / "00_批次说明.md").write_text("# 批次\n", encoding="utf-8")
+            self._queue_task(config.cloud_to_mac / "first.json", batch)
+            openclaw_queue.process_pending(config)
+            result_path = config.mac_to_cloud / "run_20260627_idempotent.result.json"
+            original = json.loads(result_path.read_text(encoding="utf-8"))
+
+            self._queue_task(config.cloud_to_mac / "changed.json", batch, topic="改过的主题")
+            conflict = openclaw_queue.process_pending(config)[0]
+            self.assertEqual(conflict["status"], "blocked")
+            self.assertEqual(conflict["blocked_reason"], "idempotency_conflict")
+            self.assertEqual(json.loads(result_path.read_text(encoding="utf-8")), original)
+
+    def test_invalid_markdown_digest_writes_blocked_mac_result(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            config = make_config(root)
+            package = config.cloud_to_mac / "package"
+            package.mkdir(parents=True)
+            (package / "draft.md").write_text("# draft\n", encoding="utf-8")
+            write_json(
+                package / "manifest.json",
+                {
+                    "task_type": "bind_creation_run_to_local_batch",
+                    "creation_run_id": "run_20260627_sha",
+                    "markdown_file": "draft.md",
+                    "markdown_sha256": "0" * 64,
+                },
+            )
+
+            result = openclaw_queue.process_pending(config)[0]
+            self.assertEqual(result["status"], "blocked")
+            self.assertEqual(result["doc_type"], "mac_result")
+            self.assertEqual(result["blocked_reason"], "queue_contract_failed")
+            self.assertIn("markdown_sha256 mismatch", result["detail"])
+
+    def test_markdown_package_is_processed_and_path_is_rebound_after_move(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            config = make_config(root)
+            batch = root / "00_Inbox_Mac_Intake/20260627_markdown"
+            batch.mkdir(parents=True)
+            package = config.cloud_to_mac / "package"
+            package.mkdir(parents=True)
+            markdown = package / "draft.md"
+            markdown.write_text("# 云端初稿\n", encoding="utf-8")
+            write_json(
+                package / "manifest.json",
+                {
+                    "task_type": "bind_creation_run_to_local_batch",
+                    "creation_run_id": "run_20260627_markdown",
+                    "local_batch_path": str(batch),
+                    "markdown_file": "draft.md",
+                    "markdown_sha256": openclaw_queue.sha256_file(markdown),
+                },
+            )
+
+            result = openclaw_queue.process_pending(config)[0]
+            moved = config.processed / "package"
+            self.assertEqual(result["status"], "linked")
+            self.assertEqual(result["cloud_markdown"]["local_markdown_path"], str(moved / "draft.md"))
+            link = json.loads((batch / "_openclaw/link.json").read_text(encoding="utf-8"))
+            self.assertEqual(link["cloud_markdown"]["markdown_sha256"], result["cloud_markdown"]["markdown_sha256"])
 
     def test_rejects_batch_outside_inbox(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
