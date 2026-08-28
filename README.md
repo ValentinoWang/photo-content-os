@@ -111,9 +111,9 @@ python 99_System_OpenClaw/scripts/run_analyze_project.py \
 99_System_OpenClaw/schemas/audio_transcript.schema.json
 ```
 
-## P1：与 OpenClaw Media 的关系
+## P1：与 OpenClaw Media 的可选关系
 
-Photo Content OS **不复制** OpenClaw Media 的配对、租约、确认、运行、结果回传和归档状态机。
+Photo Content OS 的核心分析、Studio 和本机 CI 可独立安装运行，不依赖 `openclaw-media` 包。只有主动使用云端配对或任务桥接时，才需要另行安装兼容版本的 `openclaw-media`；Photo Content OS **不复制**它的配对、租约、确认、运行、结果回传和归档状态机。
 
 ```text
 OpenClaw Media Web / Control Plane

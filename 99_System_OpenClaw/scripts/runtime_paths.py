@@ -22,7 +22,7 @@ def repository_root(anchor: Path | None = None) -> Path:
 
 
 def runtime_dir(repo_root: Path | None = None) -> Path:
-    root = (repo_root or repository_root()).resolve()
+    root = repo_root.expanduser() if repo_root is not None else repository_root()
     return root / "99_System_OpenClaw" / RUNTIME_NAME
 
 

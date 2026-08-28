@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import json
 import sys
 import unittest
@@ -7,12 +8,38 @@ from pathlib import Path
 from unittest.mock import patch
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(SCRIPTS))
 
 import openclaw_product_contract as contract  # noqa: E402
 
 
 class OpenClawBridgeTests(unittest.TestCase):
+    def test_core_has_no_mandatory_openclaw_media_dependency(self):
+        requirements = (REPOSITORY_ROOT / "requirements-dev.txt").read_text(encoding="utf-8").lower()
+        self.assertNotIn("openclaw-media", requirements)
+
+        direct_imports: list[str] = []
+        for path in (REPOSITORY_ROOT / "99_System_OpenClaw").rglob("*.py"):
+            tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    names = [alias.name for alias in node.names]
+                elif isinstance(node, ast.ImportFrom):
+                    names = [node.module or ""]
+                else:
+                    continue
+                if any(name == "openclaw_media" or name.startswith("openclaw_media.") for name in names):
+                    direct_imports.append(str(path.relative_to(REPOSITORY_ROOT)))
+        self.assertEqual(direct_imports, [])
+
+    def test_missing_optional_package_is_reported_without_breaking_core(self):
+        with patch.object(contract, "_installed_catalog", return_value=(None, None)):
+            result = contract.compatibility()
+        self.assertFalse(result.available)
+        self.assertFalse(result.compatible)
+        self.assertEqual(result.reason, "openclaw_media_not_installed")
+
     def test_snapshot_is_latest_reviewed_commit(self):
         snapshot = contract.load_snapshot()
         self.assertEqual(snapshot["upstream_commit"], "f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf")

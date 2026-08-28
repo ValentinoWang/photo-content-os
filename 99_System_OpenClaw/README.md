@@ -36,9 +36,9 @@ python 99_System_OpenClaw/scripts/run_analyze_project.py \
 
 Windows 使用同名 PowerShell 入口；本地核心能力支持 Windows，但云端设备配对仍服从上游 OpenClaw Media 的正式平台合同。
 
-## 与 OpenClaw Media 的边界
+## 与 OpenClaw Media 的可选边界
 
-`photo-content-os` 只实现白名单本地能力和兼容校验，不复制 OpenClaw Media 的配对、租约、任务状态机、归档和 readback。冻结兼容快照见：
+`photo-content-os` 的核心本地能力不依赖 `openclaw-media` 包。可选桥接只在用户主动调用时校验已安装的上游包；本仓库不复制 OpenClaw Media 的配对、租约、任务状态机、归档和 readback。冻结兼容快照见：
 
 ```text
 schemas/openclaw_media_contract_snapshot.json
