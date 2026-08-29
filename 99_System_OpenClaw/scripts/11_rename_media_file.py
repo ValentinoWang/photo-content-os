@@ -5,14 +5,25 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import re
-import shutil
 import subprocess
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-from media_common import ANALYSIS_DIR, MEDIA_EXTS, VIDEO_EXTS, ffprobe_json, media_id, now_iso, project_path, relative_posix
+from media_common import (
+    ANALYSIS_DIR,
+    MEDIA_EXTS,
+    RENAME_PREVIEW_SAMPLING,
+    VIDEO_EXTS,
+    build_frame_contact_sheet,
+    extract_still_frame_preview,
+    extract_video_keyframes,
+    ffprobe_json,
+    media_id,
+    now_iso,
+    project_path,
+    relative_posix,
+)
 
 
 LIVE_EXTS = {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}
@@ -104,34 +115,12 @@ def representative_media(group: list[Path]) -> Path:
     return group[0]
 
 
-def timestamp_label(seconds: float) -> str:
-    millis = int(round(seconds * 1000))
-    total_seconds, ms = divmod(millis, 1000)
-    minutes, sec = divmod(total_seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    if hours:
-        return f"{hours:02d}-{minutes:02d}-{sec:02d}-{ms:03d}"
-    return f"{minutes:02d}-{sec:02d}-{ms:03d}"
-
-
 def video_duration(path: Path) -> float:
     info = ffprobe_json(path)
     duration = info.get("format", {}).get("duration")
     if not duration:
         return 0.0
     return float(duration)
-
-
-def sample_times(duration: float, max_frames: int = 5) -> list[float]:
-    if duration <= 0:
-        return [0.5]
-    count = min(max_frames, max(1, math.ceil(duration / 3)))
-    if count == 1:
-        return [min(max(duration * 0.5, 0.2), max(duration - 0.1, 0.0))]
-    start = min(0.5, duration * 0.15)
-    end = max(duration - min(0.5, duration * 0.15), start)
-    step = (end - start) / (count - 1)
-    return [round(start + i * step, 3) for i in range(count)]
 
 
 def analysis_output_dir(project: Path, source: Path) -> Path:
@@ -145,100 +134,19 @@ def analysis_output_dir(project: Path, source: Path) -> Path:
     return output
 
 
-def extract_video_frames(project: Path, source: Path) -> list[Path]:
-    if not shutil.which("ffmpeg"):
-        return []
-    output_dir = analysis_output_dir(project, source)
-    duration = video_duration(source)
-    frames: list[Path] = []
-    for index, seconds in enumerate(sample_times(duration), start=1):
-        output = output_dir / f"frame_{index:04d}_{timestamp_label(seconds)}.jpg"
-        cmd = [
-            "ffmpeg",
-            "-y",
-            "-ss",
-            f"{seconds:.3f}",
-            "-i",
-            str(source),
-            "-frames:v",
-            "1",
-            "-q:v",
-            "3",
-            "-vf",
-            "scale='min(640,iw)':-2",
-            str(output),
-        ]
-        result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-        if result.returncode == 0 and output.exists() and output.stat().st_size > 0:
-            frames.append(output)
-    return frames
-
-
-def extract_image_preview(project: Path, source: Path) -> list[Path]:
-    output_dir = analysis_output_dir(project, source)
-    output = output_dir / "frame_0001_image.jpg"
-    if shutil.which("sips"):
-        result = subprocess.run(
-            ["sips", "-s", "format", "jpeg", str(source), "--out", str(output)],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            check=False,
-        )
-        if result.returncode == 0 and output.exists() and output.stat().st_size > 0:
-            return [output]
-
-    try:
-        from PIL import Image
-    except ImportError:
-        return []
-    try:
-        image = Image.open(source).convert("RGB")
-        image.thumbnail((960, 960))
-        image.save(output, quality=90)
-    except Exception:
-        return []
-    if output.exists() and output.stat().st_size > 0:
-        return [output]
-    return []
-
-
 def extract_content_frames(project: Path, source: Path) -> list[Path]:
     if source.suffix.lower() in VIDEO_EXTS:
-        return extract_video_frames(project, source)
+        output_dir = analysis_output_dir(project, source)
+        return extract_video_keyframes(source, output_dir, video_duration(source), RENAME_PREVIEW_SAMPLING)
     if source.suffix.lower() in IMAGE_EXTS_FOR_PREVIEW:
-        return extract_image_preview(project, source)
+        output_dir = analysis_output_dir(project, source)
+        return extract_still_frame_preview(source, output_dir)
     return []
 
 
 def contact_sheet(project: Path, source: Path, frames: list[Path]) -> Path | None:
-    if not frames:
-        return None
-    try:
-        from PIL import Image, ImageDraw
-    except ImportError:
-        return None
-
-    images = []
-    for frame in frames:
-        image = Image.open(frame).convert("RGB")
-        image.thumbnail((320, 180))
-        canvas = Image.new("RGB", (320, 180), "white")
-        canvas.paste(image, ((320 - image.width) // 2, (180 - image.height) // 2))
-        images.append((frame.name, canvas))
-
-    cols = 2
-    rows = math.ceil(len(images) / cols)
-    output = Image.new("RGB", (cols * 320, rows * 220), "white")
-    draw = ImageDraw.Draw(output)
-    for index, (name, image) in enumerate(images):
-        x = (index % cols) * 320
-        y = (index // cols) * 220
-        draw.text((x + 8, y + 4), name, fill=(0, 0, 0))
-        output.paste(image, (x, y + 20))
-
     path = project / ANALYSIS_DIR / "rename_keyframes" / media_id(relative_posix(source, project)) / "contact_sheet.jpg"
-    output.save(path, quality=90)
-    return path
+    return build_frame_contact_sheet(frames, path)
 
 
 def is_generic_or_status_name(stem: str) -> bool:

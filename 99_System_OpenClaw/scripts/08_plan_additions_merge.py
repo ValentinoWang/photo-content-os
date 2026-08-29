@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import re
 import shutil
 import subprocess
@@ -16,8 +15,12 @@ from media_common import (
     IMAGE_EXTS,
     MEDIA_EXTS,
     METADATA_EXTS,
+    RENAME_PREVIEW_SAMPLING,
     VIDEO_EXTS,
+    build_frame_contact_sheet,
     ensure_project_additions_dir,
+    extract_still_frame_preview,
+    extract_video_keyframes,
     ffprobe_json,
     is_hidden_or_analysis,
     media_id,
@@ -119,134 +122,25 @@ def video_info(path: Path) -> dict[str, object]:
     }
 
 
-def timestamp_label(seconds: float) -> str:
-    millis = int(round(seconds * 1000))
-    total_seconds, ms = divmod(millis, 1000)
-    minutes, sec = divmod(total_seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    if hours:
-        return f"{hours:02d}-{minutes:02d}-{sec:02d}-{ms:03d}"
-    return f"{minutes:02d}-{sec:02d}-{ms:03d}"
-
-
-def sample_times(duration: float, max_frames: int = 5) -> list[float]:
-    if duration <= 0:
-        return [0.5]
-    count = min(max_frames, max(1, math.ceil(duration / 3)))
-    if count == 1:
-        return [min(max(duration * 0.5, 0.2), max(duration - 0.1, 0.0))]
-    start = min(0.5, duration * 0.15)
-    end = max(duration - min(0.5, duration * 0.15), start)
-    step = (end - start) / (count - 1)
-    return [round(start + i * step, 3) for i in range(count)]
-
-
-def extract_addition_keyframes(path: Path, additions_dir: Path, record: dict[str, object]) -> list[Path]:
-    if not shutil.which("ffmpeg"):
-        return []
+def addition_keyframes_dir(additions_dir: Path, record: dict[str, object]) -> Path:
     output_dir = additions_dir / ANALYSIS_DIR / "addition_keyframes" / str(record["media_id"])
     output_dir.mkdir(parents=True, exist_ok=True)
     for old in output_dir.glob("frame_*.jpg"):
         old.unlink()
-
-    duration = float(record.get("duration_sec") or 0)
-    frames: list[Path] = []
-    for index, seconds in enumerate(sample_times(duration), start=1):
-        output = output_dir / f"frame_{index:04d}_{timestamp_label(seconds)}.jpg"
-        cmd = [
-            "ffmpeg",
-            "-y",
-            "-ss",
-            f"{seconds:.3f}",
-            "-i",
-            str(path),
-            "-frames:v",
-            "1",
-            "-q:v",
-            "3",
-            "-vf",
-            "scale='min(640,iw)':-2",
-            str(output),
-        ]
-        result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-        if result.returncode == 0 and output.exists() and output.stat().st_size > 0:
-            frames.append(output)
-    return frames
-
-
-def extract_addition_still_frame(path: Path, additions_dir: Path, record: dict[str, object]) -> list[Path]:
-    output_dir = additions_dir / ANALYSIS_DIR / "addition_keyframes" / str(record["media_id"])
-    output_dir.mkdir(parents=True, exist_ok=True)
-    for old in output_dir.glob("frame_*.jpg"):
-        old.unlink()
-
-    output = output_dir / "frame_0001_image.jpg"
-    if shutil.which("sips"):
-        result = subprocess.run(
-            ["sips", "-s", "format", "jpeg", str(path), "--out", str(output)],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            check=False,
-        )
-        if result.returncode == 0 and output.exists() and output.stat().st_size > 0:
-            return [output]
-
-    try:
-        from PIL import Image
-    except ImportError:
-        return []
-
-    try:
-        image = Image.open(path).convert("RGB")
-        image.thumbnail((960, 960))
-        image.save(output, quality=90)
-    except Exception:
-        return []
-    if output.exists() and output.stat().st_size > 0:
-        return [output]
-    return []
-
-
-def contact_sheet(frames: list[Path], additions_dir: Path, record: dict[str, object]) -> Path | None:
-    if not frames:
-        return None
-    try:
-        from PIL import Image, ImageDraw
-    except ImportError:
-        return None
-
-    images = []
-    for frame in frames:
-        image = Image.open(frame).convert("RGB")
-        image.thumbnail((320, 180))
-        canvas = Image.new("RGB", (320, 180), "white")
-        canvas.paste(image, ((320 - image.width) // 2, (180 - image.height) // 2))
-        images.append((frame.name, canvas))
-
-    cols = 2
-    rows = math.ceil(len(images) / cols)
-    output = Image.new("RGB", (cols * 320, rows * 220), "white")
-    draw = ImageDraw.Draw(output)
-    for index, (name, image) in enumerate(images):
-        x = (index % cols) * 320
-        y = (index // cols) * 220
-        draw.text((x + 8, y + 4), name, fill=(0, 0, 0))
-        output.paste(image, (x, y + 20))
-
-    path = additions_dir / ANALYSIS_DIR / "addition_keyframes" / str(record["media_id"]) / "contact_sheet.jpg"
-    output.save(path, quality=90)
-    return path
+    return output_dir
 
 
 def visual_media_classification(path: Path, additions_dir: Path, record: dict[str, object]) -> dict[str, object]:
     if record.get("media_type") not in {"video", "image"}:
         return {"visual_key": None, "visual_reason": None, "frames": [], "contact_sheet": None, "flags": []}
 
+    output_dir = addition_keyframes_dir(additions_dir, record)
     if record.get("media_type") == "video":
-        frames = extract_addition_keyframes(path, additions_dir, record)
+        duration = float(record.get("duration_sec") or 0)
+        frames = extract_video_keyframes(path, output_dir, duration, RENAME_PREVIEW_SAMPLING)
     else:
-        frames = extract_addition_still_frame(path, additions_dir, record)
-    sheet = contact_sheet(frames, additions_dir, record)
+        frames = extract_still_frame_preview(path, output_dir)
+    sheet = build_frame_contact_sheet(frames, output_dir / "contact_sheet.jpg")
     return {
         "visual_key": None,
         "visual_reason": "已生成关键帧/预览图和联系表；场景语义需由 LLM 结合项目 prompt 判读",

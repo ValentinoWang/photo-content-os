@@ -5,8 +5,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import re
+import shutil
 import subprocess
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -278,3 +281,179 @@ def eligible_item(item: dict[str, Any], include_derived: bool = False) -> bool:
     if include_derived:
         return item.get("media_type") in {"video", "image"}
     return bool(item.get("analysis_eligible")) and item.get("media_type") in {"video", "image"}
+
+
+# --- Keyframe sampling / preview generation, shared by 08_plan_additions_merge.py,
+# --- 11_rename_media_file.py and 19_review_output_video.py.
+#
+# 02_extract_keyframes.py's own sampling variant (_timestamp_candidates) is
+# deliberately NOT folded in here: it is its own independent sampling
+# strategy within that one module, not a duplicate of this one.
+
+
+def timestamp_label(seconds: float) -> str:
+    millis = int(round(seconds * 1000))
+    total_seconds, ms = divmod(millis, 1000)
+    minutes, sec = divmod(total_seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    if hours:
+        return f"{hours:02d}-{minutes:02d}-{sec:02d}-{ms:03d}"
+    return f"{minutes:02d}-{sec:02d}-{ms:03d}"
+
+
+@dataclass(frozen=True)
+class SamplingPreset:
+    """Numeric knobs for sample_times(). Each caller's preset is independent --
+    do not fold RENAME_PREVIEW_SAMPLING and OUTPUT_REVIEW_SAMPLING into one
+    shared value; they intentionally disagree (frame budget, the duration<=0
+    fallback timestamp, the seconds-per-sampled-frame step, and how close to
+    the clip's edges the first/last sample may land)."""
+
+    max_frames: int
+    zero_duration_fallback: float
+    step_seconds: float
+    edge_margin_seconds: float
+    edge_margin_ratio: float
+    single_frame_floor: float | None
+
+
+# 08_plan_additions_merge.py and 11_rename_media_file.py: sparse preview frames
+# (up to 5, one per ~3s), used only to help a human/LLM recognize the clip.
+RENAME_PREVIEW_SAMPLING = SamplingPreset(
+    max_frames=5,
+    zero_duration_fallback=0.5,
+    step_seconds=3.0,
+    edge_margin_seconds=0.5,
+    edge_margin_ratio=0.15,
+    single_frame_floor=0.2,
+)
+
+# 19_review_output_video.py: dense uniform frames (up to 48, one per 0.75s) for
+# frame-level output review; duration<=0 falls back to 0.0, not 0.5.
+OUTPUT_REVIEW_SAMPLING = SamplingPreset(
+    max_frames=48,
+    zero_duration_fallback=0.0,
+    step_seconds=0.75,
+    edge_margin_seconds=0.25,
+    edge_margin_ratio=0.1,
+    single_frame_floor=None,
+)
+
+
+def sample_times(duration: float, preset: SamplingPreset) -> list[float]:
+    if duration <= 0:
+        return [preset.zero_duration_fallback]
+    count = min(preset.max_frames, max(1, math.ceil(duration / preset.step_seconds)))
+    if count == 1:
+        candidate = duration * 0.5
+        if preset.single_frame_floor is not None:
+            candidate = max(candidate, preset.single_frame_floor)
+        return [min(candidate, max(duration - 0.1, 0.0))]
+    start = min(preset.edge_margin_seconds, duration * preset.edge_margin_ratio)
+    end = max(duration - min(preset.edge_margin_seconds, duration * preset.edge_margin_ratio), start)
+    step = (end - start) / (count - 1)
+    return [round(start + step * index, 3) for index in range(count)]
+
+
+def extract_video_keyframes(
+    source: Path,
+    output_dir: Path,
+    duration: float,
+    preset: SamplingPreset,
+    *,
+    scale_width: int = 640,
+) -> list[Path]:
+    """ffmpeg-sample `source` at preset's timestamps into an already-prepared output_dir.
+
+    The caller owns output_dir: creating it and clearing any stale frames from
+    a prior run are the caller's responsibility (08 and 11 clear differently --
+    11 also proactively clears a stale contact_sheet.jpg -- so that stays out
+    of this shared function rather than being silently unified).
+    """
+    if not shutil.which("ffmpeg"):
+        return []
+    frames: list[Path] = []
+    for index, seconds in enumerate(sample_times(duration, preset), start=1):
+        output = output_dir / f"frame_{index:04d}_{timestamp_label(seconds)}.jpg"
+        cmd = [
+            "ffmpeg",
+            "-y",
+            "-ss",
+            f"{seconds:.3f}",
+            "-i",
+            str(source),
+            "-frames:v",
+            "1",
+            "-q:v",
+            "3",
+            "-vf",
+            f"scale='min({scale_width},iw)':-2",
+            str(output),
+        ]
+        result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+        if result.returncode == 0 and output.exists() and output.stat().st_size > 0:
+            frames.append(output)
+    return frames
+
+
+def extract_still_frame_preview(source: Path, output_dir: Path) -> list[Path]:
+    """sips (macOS) or Pillow fallback: a single still-image preview into output_dir."""
+    output = output_dir / "frame_0001_image.jpg"
+    if shutil.which("sips"):
+        result = subprocess.run(
+            ["sips", "-s", "format", "jpeg", str(source), "--out", str(output)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        if result.returncode == 0 and output.exists() and output.stat().st_size > 0:
+            return [output]
+
+    try:
+        from PIL import Image
+    except ImportError:
+        return []
+    try:
+        image = Image.open(source).convert("RGB")
+        image.thumbnail((960, 960))
+        image.save(output, quality=90)
+    except Exception:
+        return []
+    if output.exists() and output.stat().st_size > 0:
+        return [output]
+    return []
+
+
+def build_frame_contact_sheet(frames: list[Path], output_path: Path) -> Path | None:
+    """2-column, 320x180-thumbnail contact sheet (08/11's shared layout).
+
+    Does not create output_path's parent directory -- both callers already
+    guarantee it exists by the time frames were extracted into it.
+    """
+    if not frames:
+        return None
+    try:
+        from PIL import Image, ImageDraw
+    except ImportError:
+        return None
+
+    images = []
+    for frame in frames:
+        image = Image.open(frame).convert("RGB")
+        image.thumbnail((320, 180))
+        canvas = Image.new("RGB", (320, 180), "white")
+        canvas.paste(image, ((320 - image.width) // 2, (180 - image.height) // 2))
+        images.append((frame.name, canvas))
+
+    cols = 2
+    rows = math.ceil(len(images) / cols)
+    output = Image.new("RGB", (cols * 320, rows * 220), "white")
+    draw = ImageDraw.Draw(output)
+    for index, (name, image) in enumerate(images):
+        x = (index % cols) * 320
+        y = (index // cols) * 220
+        draw.text((x + 8, y + 4), name, fill=(0, 0, 0))
+        output.paste(image, (x, y + 20))
+
+    output.save(output_path, quality=90)
+    return output_path

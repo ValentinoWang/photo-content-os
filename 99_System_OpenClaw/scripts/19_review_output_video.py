@@ -18,6 +18,8 @@ from typing import Any
 import yaml
 
 from llm_common import LLMError, creator_context_block, load_creator_context, public_llm_error, generate_text
+from media_common import OUTPUT_REVIEW_SAMPLING, timestamp_label
+from media_common import sample_times as _shared_sample_times
 
 SCHEMA_VERSION = "output_review.v1"
 RESULT_SCHEMA_VERSION = "output_review_result.v1"
@@ -288,26 +290,8 @@ def run_ffprobe(path: Path) -> dict[str, Any]:
     }
 
 
-def timestamp_label(seconds: float) -> str:
-    millis = int(round(seconds * 1000))
-    total_seconds, ms = divmod(millis, 1000)
-    minutes, sec = divmod(total_seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    if hours:
-        return f"{hours:02d}-{minutes:02d}-{sec:02d}-{ms:03d}"
-    return f"{minutes:02d}-{sec:02d}-{ms:03d}"
-
-
-def sample_times(duration: float, max_frames: int = 48) -> list[float]:
-    if duration <= 0:
-        return [0.0]
-    count = min(max_frames, max(1, math.ceil(duration / 0.75)))
-    if count == 1:
-        return [min(duration * 0.5, max(duration - 0.1, 0.0))]
-    start = min(0.25, duration * 0.1)
-    end = max(duration - min(0.25, duration * 0.1), start)
-    step = (end - start) / (count - 1)
-    return [round(start + step * index, 3) for index in range(count)]
+def sample_times(duration: float) -> list[float]:
+    return _shared_sample_times(duration, OUTPUT_REVIEW_SAMPLING)
 
 
 def extract_uniform_frames(video_path: Path, output_dir: Path, duration: float) -> list[Path]:
