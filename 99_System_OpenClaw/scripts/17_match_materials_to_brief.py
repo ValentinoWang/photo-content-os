@@ -22,7 +22,7 @@ from llm_common import (
     public_llm_error,
     generate_text,
 )
-from media_common import eligible_item, load_manifest, project_path
+from media_common import eligible_item, is_raw360_item, load_manifest, project_path
 
 
 MAX_ITEMS = 180
@@ -105,24 +105,13 @@ def summary_text(project: Path, item: dict[str, Any]) -> str:
     for path in candidates:
         if path.exists():
             return bounded_prompt_text(path.read_text(encoding="utf-8"), MAX_SUMMARY_CHARS)
-    if is_raw360_reference(item):
+    if is_raw360_item(item):
         return raw360_reference_summary(item)
     return ""
 
 
 def nearby_script_path(brief_path: Path) -> Path:
     return brief_path.with_name("04_script.md")
-
-
-def is_raw360_reference(item: dict[str, Any]) -> bool:
-    relative_path = str(item.get("relative_path") or "")
-    source_type = str(item.get("source_type") or "")
-    raw_tokens = item.get("raw_decision_tokens") or []
-    return (
-        source_type == "360相机原始组"
-        or "00_RawVault_不可直用" in relative_path
-        or "reframe_needed" in raw_tokens
-    )
 
 
 def raw360_reference_summary(item: dict[str, Any]) -> str:
@@ -172,7 +161,7 @@ def context_items(project: Path, manifest: dict[str, Any]) -> list[dict[str, Any
     items = [
         item
         for item in manifest.get("items", [])
-        if isinstance(item, dict) and (eligible_item(item) or is_raw360_reference(item))
+        if isinstance(item, dict) and (eligible_item(item) or is_raw360_item(item))
     ]
     output: list[dict[str, Any]] = []
     for item in items[:MAX_ITEMS]:

@@ -33,6 +33,7 @@ if str(_SCRIPTS_DIR) not in sys.path:
 from edl_contract import EDLContractError  # noqa: E402
 from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
+from media_common import is_raw360_path  # noqa: E402
 
 
 SPEC_VERSION = "content_os_v0.2"
@@ -40,7 +41,6 @@ BACKEND = "handoff_pack"
 MANIFEST_TYPE = "edit_handoff_manifest"
 RESULT_TYPE = "edit_handoff_result"
 VALIDATION_TYPE = "edit_handoff_validation"
-RAW360_EXTENSIONS = {".osv", ".lrf"}
 TIMING_TOLERANCE = 0.000_001
 CSV_FIELDS = [
     "timeline_order",
@@ -101,13 +101,8 @@ def read_json_object(path: Path, *, label: str) -> dict[str, Any]:
 
 
 def is_raw360(path: Path) -> bool:
-    text = path.as_posix().casefold()
-    return (
-        path.suffix.casefold() in RAW360_EXTENSIONS
-        or "00_rawvault_不可直用" in text
-        or "360原始组" in text
-        or "raw360" in text
-    )
+    """Delegates to the shared media_common.is_raw360_path (see L-02 dedup)."""
+    return is_raw360_path(path)
 
 
 def parse_seconds(value: Any, *, field: str) -> float:

@@ -153,6 +153,71 @@ def source_type(filename: str, relative_path: str, live_status: str | None = Non
     return "普通素材"
 
 
+# Raw 360/panoramic-camera source material cannot be used as an executable
+# edit clip until it has been reframed/reconstructed (see
+# 99_System_OpenClaw/docs/03_项目目录与素材处理.md and
+# 11_rename_media_file.py:RAW_ASSOCIATED_EXTS). ".insv" is included alongside
+# ".osv"/".lrf" because 11_rename_media_file.py already groups it with them
+# as one raw-associated set, and the project docs consistently describe
+# OSV/LRF/INSV as one "must not be split, must be reconstructed before use"
+# group.
+RAW360_SUFFIXES = {".osv", ".lrf", ".insv"}
+
+# Path substrings that name the RawVault/raw-360 convention used across the
+# vault structure. Matched as whole, specific tokens (never split into looser
+# fragments like a bare "rawvault" or "不可直用") to avoid false positives
+# from unrelated paths that happen to contain part of the phrase.
+RAW360_PATH_TOKENS = (
+    "00_rawvault_不可直用",
+    "360原始组",
+    "raw360",
+)
+
+RAW360_SOURCE_TYPES = {"360相机原始组"}
+
+
+def is_raw360_path(path_or_text: Path | str) -> bool:
+    """Return True when a path/string denotes raw 360-camera material.
+
+    Matches by exact suffix -- never by treating an extension as a substring
+    that could appear anywhere in a path (a directory whose name happens to
+    contain ".osv" must not be misjudged as raw 360 media) -- plus a
+    case-folded substring match against a small, specific set of path
+    tokens naming the RawVault/raw-360 convention.
+    """
+    text = path_or_text.as_posix() if isinstance(path_or_text, Path) else str(path_or_text)
+    suffix = Path(text).suffix.lower()
+    if suffix in RAW360_SUFFIXES:
+        return True
+    folded = text.casefold()
+    return any(token in folded for token in RAW360_PATH_TOKENS)
+
+
+def is_raw360_item(item: dict[str, Any]) -> bool:
+    """Return True when a media-manifest item denotes raw 360 material.
+
+    Any of the following is sufficient:
+    - an already-computed `is_raw360` field (an upstream stage may have
+      decided this once already; trust it rather than recomputing);
+    - `source_type` is the 360-camera raw source type;
+    - `raw_decision_tokens` explicitly contains "reframe_needed". This is
+      read only from that structured field, never matched as a free
+      substring against a path/filename -- a clip whose name happens to
+      contain the words "reframe needed" is not proof the material is raw
+      360, and matching it as a path substring would misjudge such files;
+    - the item's relative_path matches `is_raw360_path`.
+    """
+    if item.get("is_raw360"):
+        return True
+    if str(item.get("source_type") or "") in RAW360_SOURCE_TYPES:
+        return True
+    raw_tokens = item.get("raw_decision_tokens") or []
+    if "reframe_needed" in raw_tokens:
+        return True
+    relative_path = str(item.get("relative_path") or "")
+    return bool(relative_path) and is_raw360_path(relative_path)
+
+
 def load_manifest(project: Path) -> dict[str, Any]:
     path = manifest_path(project)
     if not path.exists():

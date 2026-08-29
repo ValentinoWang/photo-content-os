@@ -13,6 +13,7 @@ import yaml
 
 from edl_contract import EDLContractError
 from edl_contract import parse_time_range as _canonical_parse_time_range
+from media_common import is_raw360_path
 
 RAW360_EXTS = {".osv", ".lrf"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"} | RAW360_EXTS
@@ -135,8 +136,8 @@ def ffprobe_duration_sec(path: Path) -> float:
 
 
 def is_raw360_media(path: Path) -> bool:
-    text = path.as_posix()
-    return path.suffix.lower() in RAW360_EXTS or "360原始组" in text or "00_RawVault_不可直用" in text
+    """Delegates to the shared media_common.is_raw360_path (see L-02 dedup)."""
+    return is_raw360_path(path)
 
 
 def raw360_proxy_path(path: Path) -> Path:

@@ -26,13 +26,13 @@ if str(_SCRIPTS_DIR) not in sys.path:
 
 from edl_contract import EDLContractError  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
+from media_common import is_raw360_path  # noqa: E402
 
 
 class ContractError(ValueError):
     """Input or output violates the Content OS editing-handoff contract."""
 
 
-RAW360_TOKENS = ("rawvault", "不可直用", "360原始", "reframe_needed", ".osv", ".lrf")
 FPS = 30
 
 
@@ -127,8 +127,20 @@ def parse_time_range(value: str) -> tuple[float, float]:
 
 
 def is_raw360(value: str) -> bool:
-    lowered = value.lower()
-    return any(token in lowered for token in RAW360_TOKENS)
+    """Delegates to the shared media_common.is_raw360_path (see L-02 dedup).
+
+    This backend only ever has a candidate path string here (no full
+    manifest item), so it calls is_raw360_path rather than is_raw360_item.
+    Note this is a deliberate narrowing versus the previous implementation:
+    the old RAW360_TOKENS matched ".osv"/".lrf" and "不可直用"/"360原始" as
+    bare substrings anywhere in the string, which could misjudge an
+    unrelated file whose name or directory happened to contain those
+    characters. is_raw360_path matches extensions by exact suffix and path
+    tokens as whole, specific phrases instead. Since this is the one backend
+    that hard-fails the whole timeline generation on a raw-360 match (see
+    load_edl below), reducing false positives here is the safer default.
+    """
+    return is_raw360_path(value)
 
 
 def candidate_resource(candidate: str) -> str:

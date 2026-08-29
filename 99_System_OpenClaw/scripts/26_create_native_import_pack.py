@@ -18,10 +18,9 @@ from typing import Any
 
 from edl_contract import EDLContractError
 from edl_contract import parse_seconds as canonical_parse_seconds
-from jianying_roughcut_common import ContractError, ensure_dir, load_json, write_json, write_yaml
+from jianying_roughcut_common import ContractError, ensure_dir, is_raw360_media, load_json, write_json, write_yaml
 
 
-RAW360_EXTS = {".osv", ".lrf"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif"}
 
@@ -109,11 +108,6 @@ def filter_for_source(source: Path, width: int, height: int, fps: int, *, raw360
     if source.suffix.lower() == ".lrf" or "360原始组" in source.name:
         return raw360_lrf_filter(width, height, fps, lens=raw360_lens)
     return ffmpeg_filter(width, height, fps)
-
-
-def is_forbidden_raw360_source(source: Path) -> bool:
-    text = source.as_posix()
-    return source.suffix.lower() in RAW360_EXTS or "360原始组" in text or "00_RawVault_不可直用" in text
 
 
 def run_ffmpeg(args: list[str]) -> None:
@@ -392,7 +386,7 @@ def create_package(plan_path: Path, output_root: Path, result_output: Path | Non
         source = Path(str(clip.get("source_file", ""))).expanduser()
         if not source.exists() or not source.is_file():
             raise ContractError(f"source media does not exist: {source}")
-        if is_forbidden_raw360_source(source):
+        if is_raw360_media(source):
             raise ContractError(
                 "native import pack cannot render RawVault/OSV/LRF 360 source directly. "
                 "Export a reframed editable MP4 first and use that MP4 in the draft plan: "
