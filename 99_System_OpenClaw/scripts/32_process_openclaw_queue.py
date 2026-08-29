@@ -19,8 +19,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from media_common import MEDIA_EXTS, now_iso, safe_slug
-from project_bootstrap_common import ensure_formal_project_for_batch
+from media_common import now_iso, safe_slug
+from project_bootstrap_common import BATCH_NOTE_NAME, LOCAL_LINK_DIR, count_media_files, ensure_formal_project_for_batch
 from queue_identity import VOLATILE_TASK_FIELDS, request_fingerprint
 
 
@@ -36,8 +36,6 @@ CLOUD_TO_MAC_DIR = "cloud_to_mac"
 MAC_TO_CLOUD_DIR = "mac_to_cloud"
 PROCESSED_DIR = "processed"
 FAILED_DIR = "failed"
-BATCH_NOTE_NAME = "00_批次说明.md"
-LOCAL_LINK_DIR = "_openclaw"
 
 TASK_BIND_BATCH = "bind_creation_run_to_local_batch"
 SUPPORTED_TASK_TYPES = {TASK_BIND_BATCH}
@@ -427,19 +425,6 @@ def ensure_local_batch_shell(task: dict[str, Any], config: QueueConfig, creation
     elif insert_cloud_prefill_if_missing(batch_note, task, batch):
         warnings.append("inserted_cloud_prefill_into_batch_note")
     return batch, warnings
-
-
-def count_media_files(batch_dir: Path) -> int:
-    count = 0
-    for path in batch_dir.rglob("*"):
-        if not path.is_file():
-            continue
-        rel_parts = path.relative_to(batch_dir).parts
-        if any(part.startswith(".") or part in {"_ai_analysis", LOCAL_LINK_DIR} for part in rel_parts):
-            continue
-        if path.suffix.lower() in MEDIA_EXTS:
-            count += 1
-    return count
 
 
 def task_files(config: QueueConfig) -> list[Path]:

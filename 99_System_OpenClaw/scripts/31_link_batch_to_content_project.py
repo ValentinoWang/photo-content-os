@@ -9,7 +9,11 @@ from typing import Any
 
 import yaml
 
-from media_common import MEDIA_EXTS, now_iso
+from media_common import now_iso
+from project_bootstrap_common import BATCH_NOTE_NAME as BATCH_NOTE
+from project_bootstrap_common import count_media_files
+from project_bootstrap_common import normalize_label
+from project_bootstrap_common import parse_batch_note as _shared_parse_batch_note
 
 
 from runtime_paths import obsidian_root
@@ -18,7 +22,6 @@ DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
 WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
-BATCH_NOTE = "00_批次说明.md"
 LINK_RELATIVE_PATH = Path("_ai_analysis/content_os_link.yaml")
 
 FIELD_TO_KEY = {
@@ -54,61 +57,8 @@ def workspace_root() -> Path:
     return WORKSPACE_ROOT.resolve()
 
 
-def normalize_label(label: str) -> str:
-    return " ".join(label.strip().strip("-").strip().split())
-
-
-def split_field(line: str) -> tuple[str, str] | None:
-    stripped = line.strip()
-    if not stripped or stripped.startswith("#") or stripped.startswith(">"):
-        return None
-    if stripped.startswith("-"):
-        stripped = stripped[1:].strip()
-    for separator in ("：", ":"):
-        if separator in stripped:
-            label, value = stripped.split(separator, 1)
-            label = normalize_label(label)
-            if label in FIELD_TO_KEY:
-                return label, value.strip()
-    return None
-
-
-def looks_like_field(line: str) -> bool:
-    stripped = line.strip()
-    if stripped.startswith("-"):
-        stripped = stripped[1:].strip()
-    return ("：" in stripped or ":" in stripped) and not stripped.startswith(("http://", "https://"))
-
-
-def append_value(existing: str, line: str) -> str:
-    text = line.strip()
-    if text in {"", "-"}:
-        return existing
-    if text.startswith("-"):
-        text = text[1:].strip()
-    if not text:
-        return existing
-    return f"{existing}\n{text}".strip() if existing else text
-
-
 def parse_batch_note(path: Path) -> dict[str, str]:
-    text = path.read_text(encoding="utf-8")
-    fields = {key: "" for key in FIELD_TO_KEY.values()}
-    current_key = ""
-    for line in text.splitlines():
-        parsed = split_field(line)
-        if parsed:
-            label, value = parsed
-            key = FIELD_TO_KEY[label]
-            fields[key] = value
-            current_key = key
-            continue
-        if line.strip().startswith("#") or looks_like_field(line):
-            current_key = ""
-            continue
-        if current_key:
-            fields[current_key] = append_value(fields[current_key], line)
-    return fields
+    return _shared_parse_batch_note(path, FIELD_TO_KEY)
 
 
 def resolve_obsidian_path(raw: str, obsidian_root: Path) -> Path | None:
@@ -150,19 +100,6 @@ def path_info(path: Path | None, *, required: bool = False, declared: str = "") 
         "exists": bool(path and path.exists() and path.is_file() and path.stat().st_size > 0),
         "required": required,
     }
-
-
-def count_media_files(batch_dir: Path) -> int:
-    count = 0
-    for path in batch_dir.rglob("*"):
-        if not path.is_file():
-            continue
-        rel_parts = path.relative_to(batch_dir).parts
-        if any(part.startswith(".") or part == "_ai_analysis" for part in rel_parts):
-            continue
-        if path.suffix.lower() in MEDIA_EXTS:
-            count += 1
-    return count
 
 
 def build_link(batch_dir: Path, obsidian_root: Path, root: Path) -> dict[str, Any]:

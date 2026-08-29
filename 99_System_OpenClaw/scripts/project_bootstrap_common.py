@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from media_common import now_iso, safe_slug
+from media_common import MEDIA_EXTS, now_iso, safe_slug
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -60,7 +60,7 @@ def normalize_label(label: str) -> str:
     return " ".join(label.strip().strip("-").strip().split())
 
 
-def split_note_field(line: str) -> tuple[str, str] | None:
+def split_note_field(line: str, field_map: dict[str, str]) -> tuple[str, str] | None:
     stripped = line.strip()
     if not stripped or stripped.startswith("#") or stripped.startswith(">"):
         return None
@@ -70,9 +70,56 @@ def split_note_field(line: str) -> tuple[str, str] | None:
         if separator in stripped:
             label, value = stripped.split(separator, 1)
             label = normalize_label(label)
-            if label in FIELD_ALIASES:
+            if label in field_map:
                 return label, value.strip()
     return None
+
+
+def looks_like_field(line: str) -> bool:
+    stripped = line.strip()
+    if stripped.startswith("-"):
+        stripped = stripped[1:].strip()
+    return ("：" in stripped or ":" in stripped) and not stripped.startswith(("http://", "https://"))
+
+
+def append_value(existing: str, line: str) -> str:
+    text = line.strip()
+    if text in {"", "-"}:
+        return existing
+    if text.startswith("-"):
+        text = text[1:].strip()
+    if not text:
+        return existing
+    return f"{existing}\n{text}".strip() if existing else text
+
+
+def parse_batch_note(path: Path, field_map: dict[str, str]) -> dict[str, str]:
+    """Parse a 00_批次说明.md into {field_map[label]: value}, with continuation-line support.
+
+    Moved verbatim from 31_link_batch_to_content_project.py's own
+    parse_batch_note. field_map is a parameter (not a module constant) so
+    31's FIELD_TO_KEY and this module's own FIELD_ALIASES can each drive
+    this same parsing logic without merging the two alias tables -- they
+    intentionally stay separate (31 tracks extra Obsidian-linkage fields
+    this module doesn't need).
+    """
+    text = path.read_text(encoding="utf-8")
+    fields = {key: "" for key in field_map.values()}
+    current_key = ""
+    for line in text.splitlines():
+        parsed = split_note_field(line, field_map)
+        if parsed:
+            label, value = parsed
+            key = field_map[label]
+            fields[key] = value
+            current_key = key
+            continue
+        if line.strip().startswith("#") or looks_like_field(line):
+            current_key = ""
+            continue
+        if current_key:
+            fields[current_key] = append_value(fields[current_key], line)
+    return fields
 
 
 def read_batch_note_fields(note_path: Path) -> dict[str, str]:
@@ -80,12 +127,33 @@ def read_batch_note_fields(note_path: Path) -> dict[str, str]:
     if not note_path.exists() or not note_path.is_file():
         return fields
     for line in note_path.read_text(encoding="utf-8").splitlines():
-        parsed = split_note_field(line)
+        parsed = split_note_field(line, FIELD_ALIASES)
         if not parsed:
             continue
         label, value = parsed
         fields[FIELD_ALIASES[label]] = value
     return fields
+
+
+def count_media_files(batch_dir: Path) -> int:
+    """Count media files under batch_dir, excluding hidden dirs, _ai_analysis and LOCAL_LINK_DIR.
+
+    This is 32_process_openclaw_queue.py's version (the superset): it also
+    excludes LOCAL_LINK_DIR, which 31_link_batch_to_content_project.py's
+    prior, independent copy did not. 31 switching to this shared version is
+    a deliberate bug fix -- files openclaw itself writes under _openclaw
+    should never have been counted as source media -- not a regression.
+    """
+    count = 0
+    for path in batch_dir.rglob("*"):
+        if not path.is_file():
+            continue
+        rel_parts = path.relative_to(batch_dir).parts
+        if any(part.startswith(".") or part in {"_ai_analysis", LOCAL_LINK_DIR} for part in rel_parts):
+            continue
+        if path.suffix.lower() in MEDIA_EXTS:
+            count += 1
+    return count
 
 
 def is_empty_value(value: str) -> bool:
@@ -200,7 +268,7 @@ def replace_or_append_note_field(note_path: Path, label: str, value: str) -> boo
     lines = note_path.read_text(encoding="utf-8").splitlines()
     changed = False
     for index, line in enumerate(lines):
-        parsed = split_note_field(line)
+        parsed = split_note_field(line, FIELD_ALIASES)
         if parsed and parsed[0] == label:
             replacement = f"{label}：{value}"
             if line != replacement:
