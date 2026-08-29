@@ -4,13 +4,15 @@
 from __future__ import annotations
 
 import json
-import re
 import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+from edl_contract import EDLContractError
+from edl_contract import parse_time_range as _canonical_parse_time_range
 
 RAW360_EXTS = {".osv", ".lrf"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"} | RAW360_EXTS
@@ -56,14 +58,22 @@ def write_yaml(path: Path, data: dict[str, Any]) -> None:
 
 
 def parse_time_range(value: str) -> tuple[float, float]:
-    match = re.fullmatch(r"\s*(\d+(?:\.\d+)?)\s*s?\s*-\s*(\d+(?:\.\d+)?)\s*s?\s*", value, flags=re.IGNORECASE)
-    if not match:
-        raise ContractError(f"invalid time_range, expected start-end seconds: {value}")
-    start = float(match.group(1))
-    end = float(match.group(2))
-    if end <= start:
-        raise ContractError(f"time_range end must be greater than start: {value}")
-    return start, end
+    """Parse the canonical "start-end" seconds string.
+
+    Delegates to edl_contract.parse_time_range so the Jianying roughcut route
+    shares the exact same validation (including millisecond-precision
+    enforcement) as the rest of the EDL pipeline. This is a deliberate
+    tightening versus the previous unrounded, precision-unchecked parsing:
+    every EDL this route consumes is produced by edl_contract.write_edl
+    (via 18_generate_storyboard_edl.py normalise_edl -> canonical_time_range)
+    before it ever reaches this script, so it is already millisecond-precise
+    and this closes a validation gap instead of risking a regression on
+    historical draft plans.
+    """
+    try:
+        return _canonical_parse_time_range(value, path="time_range")
+    except EDLContractError as exc:
+        raise ContractError(f"invalid time_range, expected start-end seconds: {value}: {exc}") from exc
 
 
 def markdown_first_code_block(text: str, title: str) -> str | None:

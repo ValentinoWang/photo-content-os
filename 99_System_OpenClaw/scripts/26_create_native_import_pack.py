@@ -16,6 +16,8 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from edl_contract import EDLContractError
+from edl_contract import parse_seconds as canonical_parse_seconds
 from jianying_roughcut_common import ContractError, ensure_dir, load_json, write_json, write_yaml
 
 
@@ -35,10 +37,23 @@ def track_by_id(plan: dict[str, Any], track_id: str) -> dict[str, Any]:
 
 
 def sec(value: Any) -> float:
-    number = float(value)
-    if number < 0:
-        raise ContractError(f"time value cannot be negative: {value}")
-    return number
+    """Validate a non-negative, finite seconds value.
+
+    Reuses edl_contract.parse_seconds for the float/finite/non-negative
+    validation shared with the rest of the EDL pipeline. Unlike a timeline
+    position authored by a human or an AI (which edl_contract requires to be
+    millisecond-precise), the values that pass through this helper include
+    raw ffprobe-measured source media durations, which are never
+    millisecond-aligned by construction. So a value that only fails the
+    millisecond-precision check is rounded to milliseconds and revalidated
+    instead of being rejected outright.
+    """
+    try:
+        return canonical_parse_seconds(value, path="time_value")
+    except EDLContractError as exc:
+        if exc.code == "timing_precision":
+            return canonical_parse_seconds(round(float(value), 3), path="time_value")
+        raise ContractError(f"invalid time value: {value!r}: {exc}") from exc
 
 
 def srt_time(value: float) -> str:

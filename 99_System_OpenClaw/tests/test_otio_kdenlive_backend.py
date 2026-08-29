@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -10,9 +11,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "edit_backends" / "otio_kdenlive.py"
 OTIO_KDENLIVE_PYTHON = ROOT / ".venv-content-os" / "bin" / "python"
+SCRIPTS = ROOT / "scripts"
+sys.path.insert(0, str(SCRIPTS))
+
+from edl_contract import normalise_edl  # noqa: E402
+from edl_contract import write_edl as write_canonical_edl  # noqa: E402
 
 
 def write_edl(path: Path, *, raw360: bool = False, overlap: bool = False) -> None:
+    # Uses the canonical "start-end" seconds format (no trailing "s") that the
+    # real edl_contract producer (edl_contract.canonical_time_range) emits.
     candidate_one = "素材/第一段.mp4"
     if raw360:
         candidate_one = "00_RawVault_不可直用/第一视角.OSV"
@@ -22,14 +30,14 @@ def write_edl(path: Path, *, raw360: bool = False, overlap: bool = False) -> Non
         "clips": [
             {
                 "slot": "01",
-                "time_range": "0.0-2.0s",
+                "time_range": "0.000-2.000",
                 "caption": "第一句",
                 "candidate_files": [candidate_one],
                 "edit_note": "开场",
             },
             {
                 "slot": "02",
-                "time_range": "1.5-4.0s" if overlap else "2.0-4.0s",
+                "time_range": "1.500-4.000" if overlap else "2.000-4.000",
                 "caption": "第二句",
                 "candidate_files": ["素材/不存在但可重链.mp4"],
                 "edit_note": "结尾",
@@ -138,6 +146,61 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             )
             manifest = json.loads((revision_dir / "manifest.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["revision_basis"]["change_request_id"], "change_20260828_002")
+
+    def test_accepts_edl_produced_by_the_canonical_edl_contract_writer(self) -> None:
+        """Regression test for the parse_time_range format mismatch (L-11).
+
+        edl_contract.canonical_time_range/write_edl is the authoritative EDL
+        producer used by the real pipeline (18_generate_storyboard_edl.py).
+        It never appends a trailing "s" (e.g. "0.000-4.000"). The otio_kdenlive
+        backend used to require that trailing "s" and would reject any EDL
+        coming straight out of the canonical producer. This test feeds a real
+        edl_contract.write_edl() output straight into the otio backend's
+        generate-otio load path and asserts it is accepted without error.
+        """
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            raw_edl = {
+                "doc_type": "edit_decision_list",
+                "project_id": "demo_canonical",
+                "source_script_used": True,
+                "generation_model": "gpt-test",
+                "generation_reasoning": "high",
+                "clips": [
+                    {
+                        "slot": 1,
+                        "time_range": {"timeline_in": 0, "timeline_out": 2},
+                        "purpose": "开场",
+                        "visual_need": "人物入镜",
+                        "caption": "第一句",
+                        "candidate_files": ["素材/第一段.mp4"],
+                        "edit_note": "开场",
+                    },
+                    {
+                        "slot": 2,
+                        "time_range": {"timeline_in": 2, "timeline_out": 4},
+                        "purpose": "结尾",
+                        "visual_need": "细节镜头",
+                        "caption": "第二句",
+                        "candidate_files": ["素材/不存在但可重链.mp4"],
+                        "edit_note": "结尾",
+                    },
+                ],
+            }
+            canonical_edl = normalise_edl(raw_edl)
+            # normalise_edl always renders time_range without a trailing "s".
+            self.assertEqual(canonical_edl["clips"][0]["time_range"], "0.000-2.000")
+            edl = root / "edl.json"
+            write_canonical_edl(edl, canonical_edl)
+
+            storyboard = root / "storyboard.md"
+            storyboard.write_text("# 分镜\n", encoding="utf-8")
+            output = root / "edit_handoff"
+            self.run_script(
+                "generate-otio", "--project-id", "demo_canonical", "--project-revision", "1",
+                "--edl", str(edl), "--storyboard", str(storyboard), "--output-root", str(output),
+            )
+            self.assertTrue((output / "1" / "timeline.otio").is_file())
 
     def test_blocks_overlapping_edl(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

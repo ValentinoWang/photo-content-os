@@ -20,6 +20,13 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
+_SCRIPTS_DIR = Path(__file__).resolve().parent.parent
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+
+from edl_contract import EDLContractError  # noqa: E402
+from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
+
 
 class ContractError(ValueError):
     """Input or output violates the Content OS editing-handoff contract."""
@@ -107,16 +114,16 @@ def write_result(path: Path | None, data: dict[str, Any]) -> None:
 
 
 def parse_time_range(value: str) -> tuple[float, float]:
-    if not value.endswith("s") or "-" not in value:
-        raise ContractError(f"invalid clip time_range: {value!r}")
-    start_text, end_text = value[:-1].split("-", 1)
+    """Parse the canonical "start-end" seconds string produced by edl_contract.
+
+    Delegates to the shared edl_contract implementation so this backend
+    accepts the same format the canonical EDL producers actually emit
+    (e.g. "0.000-2.000"), instead of requiring a bespoke trailing "s".
+    """
     try:
-        start, end = float(start_text), float(end_text)
-    except ValueError as exc:
-        raise ContractError(f"invalid clip time_range: {value!r}") from exc
-    if start < 0 or end <= start:
-        raise ContractError(f"clip time_range must have 0 <= start < end: {value!r}")
-    return start, end
+        return _canonical_parse_time_range(value, path="time_range")
+    except EDLContractError as exc:
+        raise ContractError(f"invalid clip time_range: {value!r}: {exc}") from exc
 
 
 def is_raw360(value: str) -> bool:

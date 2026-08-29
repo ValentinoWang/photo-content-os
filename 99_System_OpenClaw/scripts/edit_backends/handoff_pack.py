@@ -26,6 +26,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+_SCRIPTS_DIR = Path(__file__).resolve().parent.parent
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+
+from edl_contract import EDLContractError  # noqa: E402
+from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
+from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
+
 
 SPEC_VERSION = "content_os_v0.2"
 BACKEND = "handoff_pack"
@@ -103,15 +111,18 @@ def is_raw360(path: Path) -> bool:
 
 
 def parse_seconds(value: Any, *, field: str) -> float:
+    """Validate a seconds value using the shared edl_contract.parse_seconds.
+
+    Delegates to the canonical implementation so timing validation (including
+    millisecond-precision enforcement) stays identical across every backend;
+    edl_contract's error codes ("invalid_timing" / "timing_precision") are
+    reused as-is so downstream consumers of HandoffError.code (the Mac to
+    cloud blocked-result payload) keep seeing the same stable codes.
+    """
     try:
-        seconds = float(value)
-    except (TypeError, ValueError) as exc:
-        raise HandoffError("invalid_timing", f"{field}必须是非负秒数：{value!r}") from exc
-    if seconds < 0:
-        raise HandoffError("invalid_timing", f"{field}不能小于 0：{value!r}")
-    if abs(seconds * 1000 - round(seconds * 1000)) > TIMING_TOLERANCE:
-        raise HandoffError("timing_precision", f"{field}必须精确到毫秒，当前为：{value!r}")
-    return round(seconds, 3)
+        return _canonical_parse_seconds(value, path=field)
+    except EDLContractError as exc:
+        raise HandoffError(exc.code, f"{field}: {exc.message}") from exc
 
 
 def parse_project_revision(value: Any) -> int:
@@ -128,20 +139,10 @@ def parse_project_revision(value: Any) -> int:
 
 
 def parse_time_range(value: Any) -> tuple[float, float]:
-    if not isinstance(value, str):
-        raise HandoffError("invalid_timing", "time_range 必须是“起点-终点”的秒数文本")
-    match = re.fullmatch(
-        r"\s*(\d+(?:\.\d+)?)\s*s?\s*-\s*(\d+(?:\.\d+)?)\s*s?\s*",
-        value,
-        flags=re.IGNORECASE,
-    )
-    if not match:
-        raise HandoffError("invalid_timing", f"time_range 格式错误，应为“起点-终点”秒数：{value!r}")
-    start = parse_seconds(match.group(1), field="time_range 起点")
-    end = parse_seconds(match.group(2), field="time_range 终点")
-    if end <= start:
-        raise HandoffError("invalid_timing", f"time_range 终点必须大于起点：{value!r}")
-    return start, end
+    try:
+        return _canonical_parse_time_range(value, path="time_range")
+    except EDLContractError as exc:
+        raise HandoffError(exc.code, str(exc)) from exc
 
 
 def srt_timestamp(seconds: float) -> str:
