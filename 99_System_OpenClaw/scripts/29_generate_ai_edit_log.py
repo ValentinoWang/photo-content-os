@@ -9,9 +9,13 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-import yaml
-
-from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT, generate_text, load_creator_context
+from llm_common import (
+    DEFAULT_CREATIVE_MODEL,
+    DEFAULT_REASONING_EFFORT,
+    generate_text,
+    load_creator_context,
+    parse_markdown_frontmatter_or_empty,
+)
 
 
 MAX_TEXT_CHARS = 14000
@@ -62,13 +66,7 @@ def load_json_text(path: Path, *, limit: int = MAX_JSON_CHARS) -> str:
 
 
 def parse_frontmatter(text: str) -> dict[str, Any]:
-    if not text.startswith("---\n"):
-        return {}
-    end = text.find("\n---", 4)
-    if end == -1:
-        return {}
-    data = yaml.safe_load(text[4:end])
-    return data if isinstance(data, dict) else {}
+    return parse_markdown_frontmatter_or_empty(text)
 
 
 def ffprobe_summary(path: Path) -> dict[str, Any]:

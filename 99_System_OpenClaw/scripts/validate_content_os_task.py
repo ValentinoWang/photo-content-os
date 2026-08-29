@@ -19,6 +19,8 @@ from typing import Any
 
 import yaml
 
+from llm_common import load_markdown_frontmatter as _load_markdown_frontmatter
+
 
 SPEC_VERSION = "content_os_v0.2"
 PROJECT_OVERVIEW = "00_项目总览.md"
@@ -74,21 +76,7 @@ def load_yaml(path: Path) -> dict[str, Any]:
 
 
 def load_markdown_frontmatter(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        raise ValidationError(f"project overview does not exist: {path}")
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---\n"):
-        raise ValidationError(f"project overview must start with YAML frontmatter: {path}")
-    end = text.find("\n---", len("---\n"))
-    if end < 0:
-        raise ValidationError(f"project overview frontmatter is not closed: {path}")
-    try:
-        data = yaml.safe_load(text[len("---\n") : end])
-    except yaml.YAMLError as exc:
-        raise ValidationError(f"project overview frontmatter is invalid YAML: {path}") from exc
-    if not isinstance(data, dict):
-        raise ValidationError(f"project overview frontmatter must be a mapping: {path}")
-    return data
+    return _load_markdown_frontmatter(path, error=ValidationError)
 
 
 def require_text(data: dict[str, Any], key: str) -> str:

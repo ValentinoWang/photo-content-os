@@ -54,6 +54,53 @@ evidence_level: content_plan_only
 """
         edit_log.validate_markdown(text, project_id="project_test", model="gpt-5.5", reasoning="xhigh")
 
+    def test_validate_markdown_rejects_malformed_closing_fence(self) -> None:
+        """Regression test for the L-03 frontmatter-parsing bug fix.
+
+        Before the fix, 29_generate_ai_edit_log.py's own parse_frontmatter
+        located the closing fence with `text.find("\n---", 4)`, a byte
+        substring search that matches ANY line starting with "---" rather
+        than a line that IS exactly "---". A malformed closing fence such as
+        "---foo" was therefore silently accepted as if it correctly closed
+        the frontmatter, and -- since every required field already appears
+        before it -- validate_markdown used to pass this malformed document.
+
+        After the fix, "---foo" is no longer treated as a closing fence, this
+        document has no usable frontmatter, and validate_markdown must reject
+        it instead of silently accepting the malformed markdown.
+        """
+        text = """---
+spec_version: content_os_v0.1
+doc_type: edit_log
+project_id: project_test
+idea_id: idea_test
+status: edit_log_ai_draft
+writer_agent: mac_openclaw
+owner_agent: human
+next_owner: human
+generation_model: gpt-5.5
+generation_reasoning: xhigh
+evidence_level: content_plan_only
+---foo
+
+# AI 跟剪摘要
+
+# 已确认人工修改
+
+# AI 建议修改
+
+# AI 推断修改
+
+# 需要人确认
+
+# 下一版建议
+
+# 记录规则
+"""
+        self.assertEqual(edit_log.parse_frontmatter(text), {})
+        with self.assertRaisesRegex(edit_log.EditLogError, "frontmatter spec_version must be"):
+            edit_log.validate_markdown(text, project_id="project_test", model="gpt-5.5", reasoning="xhigh")
+
     def test_collect_context_requires_script_and_edl(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp) / "project_test"

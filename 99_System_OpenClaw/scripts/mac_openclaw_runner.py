@@ -18,7 +18,12 @@ from typing import Any
 
 import yaml
 
-from llm_common import DEFAULT_CREATIVE_PROVIDER, REQUIRED_CREATIVE_MODEL, REQUIRED_CREATIVE_REASONING
+from llm_common import (
+    DEFAULT_CREATIVE_PROVIDER,
+    REQUIRED_CREATIVE_MODEL,
+    REQUIRED_CREATIVE_REASONING,
+    load_markdown_frontmatter,
+)
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS
 from runtime_paths import obsidian_root, runtime_python
 from validate_content_os_task import (
@@ -745,12 +750,8 @@ def ai_edit_log_result(
     edit_log = expected_output(config, task, "07_edit_log.md")
     require_nonempty(edit_log)
     text = edit_log.read_text(encoding="utf-8")
-    try:
-        end = text.find("\n---", 4)
-        frontmatter = yaml.safe_load(text[4:end]) if text.startswith("---\n") and end > 0 else {}
-    except yaml.YAMLError as exc:
-        raise RunnerError("07_edit_log.md frontmatter is invalid YAML") from exc
-    if not isinstance(frontmatter, dict) or frontmatter.get("doc_type") != "edit_log":
+    frontmatter = load_markdown_frontmatter(edit_log, error=RunnerError)
+    if frontmatter.get("doc_type") != "edit_log":
         raise RunnerError("07_edit_log.md must declare doc_type: edit_log")
     if frontmatter.get("generation_model") != REQUIRED_CREATIVE_MODEL:
         raise RunnerError(f"07_edit_log.md must declare generation_model: {REQUIRED_CREATIVE_MODEL}")

@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import yaml
+from llm_common import parse_markdown_frontmatter, render_markdown_frontmatter
 
 
 V2_STATUSES = {"captured", "planned", "edit_ready", "editing", "final_ready", "published"}
@@ -68,19 +68,10 @@ class ProjectMigration:
 
 def split_frontmatter(path: Path) -> tuple[dict[str, Any], str]:
     text = path.read_text(encoding="utf-8")
-    if not text.startswith("---\n"):
-        raise MigrationError(f"项目总览缺少 YAML 头部：{path}")
-    closing = text.find("\n---", 4)
-    if closing < 0:
-        raise MigrationError(f"项目总览 YAML 头部没有结束：{path}")
-    data = yaml.safe_load(text[4:closing])
-    if not isinstance(data, dict):
-        raise MigrationError(f"项目总览 YAML 头部必须是对象：{path}")
-    return data, text[closing + 4 :].lstrip("\n")
-
-
-def render_frontmatter(frontmatter: dict[str, Any], body: str) -> str:
-    return "---\n" + yaml.safe_dump(frontmatter, allow_unicode=True, sort_keys=False).strip() + "\n---\n\n" + body.lstrip("\n")
+    try:
+        return parse_markdown_frontmatter(text)
+    except ValueError as exc:
+        raise MigrationError(f"项目总览 YAML 头部无效：{path}（{exc}）") from exc
 
 
 def next_status(old_status: str) -> str:
@@ -135,7 +126,7 @@ def migrate_project(path: Path, *, apply: bool, today: str) -> ProjectMigration:
         body += migration_note(old_status, str(new_frontmatter["status"]), today)
         changed = True
     if apply and changed:
-        path.write_text(render_frontmatter(new_frontmatter, body), encoding="utf-8")
+        path.write_text(render_markdown_frontmatter(new_frontmatter, body), encoding="utf-8")
     return ProjectMigration(path, project_id, old_status, str(new_frontmatter["status"]), changed)
 
 

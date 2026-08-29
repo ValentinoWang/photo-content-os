@@ -19,6 +19,7 @@ from llm_common import (
     load_creator_context,
     parse_json_response,
     parse_markdown_frontmatter,
+    parse_markdown_frontmatter_or_empty,
     render_markdown_frontmatter,
 )
 from media_common import eligible_item, is_raw360_item, load_manifest, project_path
@@ -54,11 +55,7 @@ def read_text(path: Path) -> str:
 
 
 def parse_frontmatter(text: str) -> dict[str, Any]:
-    try:
-        metadata, _ = parse_markdown_frontmatter(text)
-    except ValueError:
-        return {}
-    return metadata
+    return parse_markdown_frontmatter_or_empty(text)
 
 
 def nearby_script_path(brief_path: Path) -> Path:

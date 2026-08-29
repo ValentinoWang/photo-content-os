@@ -11,6 +11,8 @@ from typing import Any
 
 import yaml
 
+from llm_common import load_markdown_frontmatter
+
 
 class TransitionError(Exception):
     """Raised when a state transition violates the state machine contract."""
@@ -27,18 +29,7 @@ def load_yaml(path: Path) -> dict[str, Any]:
 
 
 def parse_frontmatter(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        raise TransitionError(f"project index does not exist: {path}")
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---\n"):
-        raise TransitionError(f"project index has no YAML frontmatter: {path}")
-    end = text.find("\n---", 4)
-    if end == -1:
-        raise TransitionError(f"project index frontmatter is not closed: {path}")
-    data = yaml.safe_load(text[4:end])
-    if not isinstance(data, dict):
-        raise TransitionError(f"project index frontmatter must be a mapping: {path}")
-    return data
+    return load_markdown_frontmatter(path, error=TransitionError)
 
 
 def non_empty(path: Path) -> bool:

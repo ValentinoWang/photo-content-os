@@ -79,6 +79,35 @@ def parse_markdown_frontmatter(text: str) -> tuple[dict[str, Any], str]:
     return metadata, "".join(lines[closing_index + 1 :])
 
 
+def parse_markdown_frontmatter_or_empty(text: str) -> dict[str, Any]:
+    """Parse Markdown YAML frontmatter, returning {} when it is missing or malformed.
+
+    Thin wrapper around the strict parse_markdown_frontmatter() for call sites that
+    treat "no usable frontmatter" as an empty-metadata fact rather than a hard error.
+    """
+    try:
+        metadata, _ = parse_markdown_frontmatter(text)
+    except ValueError:
+        return {}
+    return metadata
+
+
+def load_markdown_frontmatter(path: Path, *, error: type[Exception]) -> dict[str, Any]:
+    """Read `path` and parse its YAML frontmatter, raising `error` on any failure.
+
+    Thin wrapper around the strict parse_markdown_frontmatter() for call sites that
+    need file I/O plus a caller-specific exception type instead of a bare ValueError.
+    """
+    if not path.exists():
+        raise error(f"file does not exist: {path}")
+    text = path.read_text(encoding="utf-8")
+    try:
+        metadata, _ = parse_markdown_frontmatter(text)
+    except ValueError as exc:
+        raise error(f"{path}: {exc}") from exc
+    return metadata
+
+
 def render_markdown_frontmatter(metadata: dict[str, Any], body: str) -> str:
     """Render one canonical frontmatter fence without altering the Markdown body."""
     frontmatter = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).rstrip()

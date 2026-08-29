@@ -9,8 +9,6 @@ import re
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 from llm_common import (
     DEFAULT_CREATIVE_MODEL,
     DEFAULT_REASONING_EFFORT,
@@ -19,6 +17,7 @@ from llm_common import (
     bounded_prompt_text,
     creator_context_block,
     load_creator_context,
+    parse_markdown_frontmatter_or_empty,
     public_llm_error,
     generate_text,
 )
@@ -87,13 +86,7 @@ def read_text(path: Path) -> str:
 
 
 def parse_frontmatter(text: str) -> dict[str, Any]:
-    if not text.startswith("---\n"):
-        return {}
-    end = text.find("\n---", 4)
-    if end == -1:
-        return {}
-    data = yaml.safe_load(text[4:end])
-    return data if isinstance(data, dict) else {}
+    return parse_markdown_frontmatter_or_empty(text)
 
 
 def summary_text(project: Path, item: dict[str, Any]) -> str:
