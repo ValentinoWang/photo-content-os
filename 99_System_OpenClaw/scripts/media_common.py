@@ -191,6 +191,117 @@ def source_type(filename: str, relative_path: str, live_status: str | None = Non
     return "普通素材"
 
 
+# --- Media scan helpers shared by 01_scan_media_manifest.py and
+# --- 08_plan_additions_merge.py.
+
+# HEIC/JPEG (still) + MOV (motion) + XMP (metadata) sharing the same
+# directory and stem are treated as one Live Photo group.
+LIVE_GROUP_EXTS = {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}
+
+
+def discover_live_groups(paths: list[Path], project: Path) -> dict[tuple[str, str], dict[str, bool]]:
+    groups: dict[tuple[str, str], dict[str, bool]] = {}
+    for path in paths:
+        ext = path.suffix.lower()
+        if ext not in LIVE_GROUP_EXTS:
+            continue
+        key = (relative_posix(path.parent, project), path.stem)
+        group = groups.setdefault(key, {"still": False, "motion": False, "xmp": False})
+        if ext in {".heic", ".heif", ".jpg", ".jpeg"}:
+            group["still"] = True
+        elif ext == ".mov":
+            group["motion"] = True
+        elif ext == ".xmp":
+            group["xmp"] = True
+    return groups
+
+
+def live_status_for(
+    path: Path,
+    project: Path,
+    groups: dict[tuple[str, str], dict[str, bool]],
+) -> tuple[str | None, str | None, str | None]:
+    """Return (status, role, group_id) for a Live Photo group member, or (None, None, None).
+
+    group_id is 08_plan_additions_merge.py's addition (a stable id for the
+    still/motion/xmp trio, used to name merged Live Photo output files
+    consistently). 01_scan_media_manifest.py's caller ignores it -- writing
+    live_group_id into the manifest is a separate behavior change the audit
+    flagged as needing its own decision, not something to add as a side
+    effect of this consolidation.
+    """
+    ext = path.suffix.lower()
+    if ext not in LIVE_GROUP_EXTS:
+        return None, None, None
+    key = (relative_posix(path.parent, project), path.stem)
+    group = groups.get(key)
+    if not group or not (group["still"] and group["motion"]):
+        return None, None, None
+    status = "complete_heic_mov_xmp" if group["xmp"] else "heic_mov_missing_xmp"
+    group_id = media_id("/".join(key))
+    if ext in {".heic", ".heif", ".jpg", ".jpeg"}:
+        return status, "still", group_id
+    if ext == ".mov":
+        return status, "motion", group_id
+    return status, "metadata", group_id
+
+
+def media_dimensions_for_image(path: Path) -> tuple[int | None, int | None]:
+    if not shutil.which("sips"):
+        return None, None
+    result = subprocess.run(
+        ["sips", "-g", "pixelWidth", "-g", "pixelHeight", str(path)],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return None, None
+    width = None
+    height = None
+    for line in result.stdout.splitlines():
+        line = line.strip()
+        if line.startswith("pixelWidth:"):
+            width = int(line.split(":", 1)[1].strip())
+        elif line.startswith("pixelHeight:"):
+            height = int(line.split(":", 1)[1].strip())
+    return width, height
+
+
+def video_info(path: Path) -> dict[str, object]:
+    """ffprobe-derived video facts, including avg_frame_rate.
+
+    01_scan_media_manifest.py originally carried this field; 08's own copy
+    did not. Both now get it -- 08's addition-plan JSON gaining
+    avg_frame_rate is a verified-safe additive field, not a behavior removal.
+    """
+    info = ffprobe_json(path)
+    format_info = info.get("format", {})
+    streams = info.get("streams", [])
+    video_stream = next((s for s in streams if s.get("codec_type") == "video"), {})
+    has_audio = any(s.get("codec_type") == "audio" for s in streams)
+    tags = format_info.get("tags") or {}
+    location_raw = tags.get("com.apple.quicktime.location.ISO6709")
+    latitude, longitude, altitude = parse_iso6709(location_raw)
+    duration_raw = format_info.get("duration")
+    duration = round(float(duration_raw), 3) if duration_raw else None
+    return {
+        "duration_sec": duration,
+        "width": video_stream.get("width"),
+        "height": video_stream.get("height"),
+        "video_codec": video_stream.get("codec_name"),
+        "avg_frame_rate": video_stream.get("avg_frame_rate"),
+        "has_audio": has_audio,
+        "created_at": tags.get("creation_time"),
+        "location_raw": location_raw,
+        "gps_latitude": latitude,
+        "gps_longitude": longitude,
+        "gps_altitude": altitude,
+        "gps_horizontal_accuracy": tags.get("com.apple.quicktime.location.accuracy.horizontal"),
+    }
+
+
 # Raw 360/panoramic-camera source material cannot be used as an executable
 # edit clip until it has been reframed/reconstructed (see
 # 99_System_OpenClaw/docs/03_项目目录与素材处理.md and

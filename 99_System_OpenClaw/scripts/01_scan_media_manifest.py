@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import shutil
 from pathlib import Path
 
 from media_common import (
@@ -12,75 +11,19 @@ from media_common import (
     MEDIA_EXTS,
     METADATA_EXTS,
     VIDEO_EXTS,
-    ffprobe_json,
+    discover_live_groups,
     is_hidden_or_analysis,
     lifecycle_for,
+    live_status_for,
+    media_dimensions_for_image,
     media_id,
     now_iso,
-    parse_iso6709,
     project_path,
     relative_posix,
     save_manifest,
     source_type,
+    video_info,
 )
-
-
-def discover_live_groups(paths: list[Path], project: Path) -> dict[tuple[str, str], dict[str, bool]]:
-    groups: dict[tuple[str, str], dict[str, bool]] = {}
-    for path in paths:
-        ext = path.suffix.lower()
-        if ext not in {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}:
-            continue
-        key = (relative_posix(path.parent, project), path.stem)
-        group = groups.setdefault(key, {"still": False, "motion": False, "xmp": False})
-        if ext in {".heic", ".heif", ".jpg", ".jpeg"}:
-            group["still"] = True
-        elif ext == ".mov":
-            group["motion"] = True
-        elif ext == ".xmp":
-            group["xmp"] = True
-    return groups
-
-
-def live_status_for(path: Path, project: Path, groups: dict[tuple[str, str], dict[str, bool]]) -> tuple[str | None, str | None]:
-    ext = path.suffix.lower()
-    if ext not in {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}:
-        return None, None
-    key = (relative_posix(path.parent, project), path.stem)
-    group = groups.get(key)
-    if not group or not (group["still"] and group["motion"]):
-        return None, None
-    status = "complete_heic_mov_xmp" if group["xmp"] else "heic_mov_missing_xmp"
-    if ext in {".heic", ".heif", ".jpg", ".jpeg"}:
-        return status, "still"
-    if ext == ".mov":
-        return status, "motion"
-    return status, "metadata"
-
-
-def media_dimensions_for_image(path: Path) -> tuple[int | None, int | None]:
-    if not shutil.which("sips"):
-        return None, None
-    import subprocess
-
-    result = subprocess.run(
-        ["sips", "-g", "pixelWidth", "-g", "pixelHeight", str(path)],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
-        text=True,
-        check=False,
-    )
-    if result.returncode != 0:
-        return None, None
-    width = None
-    height = None
-    for line in result.stdout.splitlines():
-        line = line.strip()
-        if line.startswith("pixelWidth:"):
-            width = int(line.split(":", 1)[1].strip())
-        elif line.startswith("pixelHeight:"):
-            height = int(line.split(":", 1)[1].strip())
-    return width, height
 
 
 RAW_REASON_TOKENS = {
@@ -189,33 +132,6 @@ def assess_decision(item: dict[str, object]) -> None:
     item["decision_notes"] = decision_notes
 
 
-def video_info(path: Path) -> dict[str, object]:
-    info = ffprobe_json(path)
-    format_info = info.get("format", {})
-    streams = info.get("streams", [])
-    video_stream = next((s for s in streams if s.get("codec_type") == "video"), {})
-    has_audio = any(s.get("codec_type") == "audio" for s in streams)
-    tags = format_info.get("tags") or {}
-    location_raw = tags.get("com.apple.quicktime.location.ISO6709")
-    latitude, longitude, altitude = parse_iso6709(location_raw)
-    duration_raw = format_info.get("duration")
-    duration = round(float(duration_raw), 3) if duration_raw else None
-    return {
-        "duration_sec": duration,
-        "width": video_stream.get("width"),
-        "height": video_stream.get("height"),
-        "video_codec": video_stream.get("codec_name"),
-        "avg_frame_rate": video_stream.get("avg_frame_rate"),
-        "has_audio": has_audio,
-        "created_at": tags.get("creation_time"),
-        "location_raw": location_raw,
-        "gps_latitude": latitude,
-        "gps_longitude": longitude,
-        "gps_altitude": altitude,
-        "gps_horizontal_accuracy": tags.get("com.apple.quicktime.location.accuracy.horizontal"),
-    }
-
-
 def scan_project(project_dir: str) -> dict[str, object]:
     project = project_path(project_dir)
     candidates = [
@@ -230,7 +146,7 @@ def scan_project(project_dir: str) -> dict[str, object]:
         ext = path.suffix.lower()
         rel = relative_posix(path, project)
         lifecycle = lifecycle_for(path, project)
-        live_status, live_role = live_status_for(path, project, live_groups)
+        live_status, live_role, _live_group_id = live_status_for(path, project, live_groups)
         stat = path.stat()
 
         if ext in VIDEO_EXTS:

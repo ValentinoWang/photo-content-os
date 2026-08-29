@@ -6,8 +6,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import shutil
-import subprocess
 from pathlib import Path
 
 from media_common import (
@@ -18,108 +16,25 @@ from media_common import (
     RENAME_PREVIEW_SAMPLING,
     VIDEO_EXTS,
     build_frame_contact_sheet,
+    discover_live_groups,
     ensure_project_additions_dir,
     extract_still_frame_preview,
     extract_video_keyframes,
-    ffprobe_json,
     is_hidden_or_analysis,
+    live_status_for,
+    media_dimensions_for_image,
     media_id,
     now_iso,
-    parse_iso6709,
     project_path,
     relative_posix,
     safe_slug,
     source_type,
+    video_info,
 )
 
 
 RAW_TOKENS = ("原始", "录屏", "模糊待选", "待修复", "待防抖", "待降噪", "待转码", "待重构", "半组", "待确认")
 GENERIC_NAME_RE = re.compile(r"^(IMG|VID|DJI|GX|GP|PXL|MVIMG|DSC|ScreenRecording)[_\-\s]?[A-Za-z0-9].*", re.IGNORECASE)
-
-
-def media_dimensions_for_image(path: Path) -> tuple[int | None, int | None]:
-    if not shutil.which("sips"):
-        return None, None
-    result = subprocess.run(
-        ["sips", "-g", "pixelWidth", "-g", "pixelHeight", str(path)],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
-        text=True,
-        check=False,
-    )
-    if result.returncode != 0:
-        return None, None
-    width = None
-    height = None
-    for line in result.stdout.splitlines():
-        line = line.strip()
-        if line.startswith("pixelWidth:"):
-            width = int(line.split(":", 1)[1].strip())
-        elif line.startswith("pixelHeight:"):
-            height = int(line.split(":", 1)[1].strip())
-    return width, height
-
-
-def discover_live_groups(paths: list[Path], additions_dir: Path) -> dict[tuple[str, str], dict[str, bool]]:
-    groups: dict[tuple[str, str], dict[str, bool]] = {}
-    for path in paths:
-        ext = path.suffix.lower()
-        if ext not in {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}:
-            continue
-        key = (relative_posix(path.parent, additions_dir), path.stem)
-        group = groups.setdefault(key, {"still": False, "motion": False, "xmp": False})
-        if ext in {".heic", ".heif", ".jpg", ".jpeg"}:
-            group["still"] = True
-        elif ext == ".mov":
-            group["motion"] = True
-        elif ext == ".xmp":
-            group["xmp"] = True
-    return groups
-
-
-def live_status_for(
-    path: Path,
-    additions_dir: Path,
-    groups: dict[tuple[str, str], dict[str, bool]],
-) -> tuple[str | None, str | None, str | None]:
-    ext = path.suffix.lower()
-    if ext not in {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}:
-        return None, None, None
-    key = (relative_posix(path.parent, additions_dir), path.stem)
-    group = groups.get(key)
-    if not group or not (group["still"] and group["motion"]):
-        return None, None, None
-    status = "complete_heic_mov_xmp" if group["xmp"] else "heic_mov_missing_xmp"
-    group_id = media_id("/".join(key))
-    if ext in {".heic", ".heif", ".jpg", ".jpeg"}:
-        return status, "still", group_id
-    if ext == ".mov":
-        return status, "motion", group_id
-    return status, "metadata", group_id
-
-
-def video_info(path: Path) -> dict[str, object]:
-    info = ffprobe_json(path)
-    format_info = info.get("format", {})
-    streams = info.get("streams", [])
-    video_stream = next((s for s in streams if s.get("codec_type") == "video"), {})
-    tags = format_info.get("tags") or {}
-    location_raw = tags.get("com.apple.quicktime.location.ISO6709")
-    latitude, longitude, altitude = parse_iso6709(location_raw)
-    duration_raw = format_info.get("duration")
-    return {
-        "duration_sec": round(float(duration_raw), 3) if duration_raw else None,
-        "width": video_stream.get("width"),
-        "height": video_stream.get("height"),
-        "video_codec": video_stream.get("codec_name"),
-        "has_audio": any(s.get("codec_type") == "audio" for s in streams),
-        "created_at": tags.get("creation_time"),
-        "location_raw": location_raw,
-        "gps_latitude": latitude,
-        "gps_longitude": longitude,
-        "gps_altitude": altitude,
-        "gps_horizontal_accuracy": tags.get("com.apple.quicktime.location.accuracy.horizontal"),
-    }
 
 
 def addition_keyframes_dir(additions_dir: Path, record: dict[str, object]) -> Path:
