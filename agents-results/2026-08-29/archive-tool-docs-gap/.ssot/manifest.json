@@ -1,0 +1,13 @@
+{
+  "ssot_schema_version": 1,
+  "artifact_class": "ssot-development",
+  "plan_version": 1,
+  "dag_version": 1,
+  "node_contract_version": 1,
+  "generated_main": "../ssot-development-paths.md",
+  "generated_views": [{"view_id": "main", "source": "view-sources/00-main.md", "source_sha256": "f4193ca42eed71edc68199426078138a7c96d4d511b6e2615cffb3691ecc33a1", "output": "../ssot-development-paths.md"}],
+  "nodes_dir": "nodes",
+  "edges_dir": "edges",
+  "assumptions_dir": "assumptions",
+  "conflicts_dir": "conflicts"
+}

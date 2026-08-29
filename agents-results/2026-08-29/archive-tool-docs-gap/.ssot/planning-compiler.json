@@ -1,0 +1,24 @@
+{
+  "planning_compiler_schema_version": 1,
+  "classification": {"applicability": "ssot", "ssot_depth": "L1", "artifact_policy": "create-ssot", "selection_authority": "user", "rationale": "一个本地模块、一个交付切片和一个主协调者；需要跨文档、脚本和测试保持持久节点状态，但没有生产迁移或外部系统写入。"},
+  "macro_phases": [{"id": "P1", "title": "归档能力差距闭环", "release_ids": ["R1"]}],
+  "release_slices": [{"id": "R1", "macro_phase_id": "P1", "title": "本地归档准入与证据清单", "user_value": "可判断项目是否具备归档条件，并生成可核对的清单和索引卡", "independent_acceptance": "归档工具测试和本地运行均通过", "independent_failure": "准入失败保持阻断且不写入或删除媒体", "acceptance_node_id": "N6", "release_candidate_artifact_id": "archive-tool-r1", "independent_proof_artifact_id": "archive-tool-r1-proof", "acceptance_command": "99_System_OpenClaw/.venv-content-os/bin/python -m unittest 99_System_OpenClaw.tests.test_archive_project", "future_phase_required_for_success": false, "node_ids": ["N1", "N2", "N3", "N4", "N5", "N6"]}],
+  "waves": [{"id": "W1", "release_id": "R1", "node_ids": ["N1", "N2"]}, {"id": "W2", "release_id": "R1", "node_ids": ["N3", "N4", "N5"]}, {"id": "W3", "release_id": "R1", "node_ids": ["N6"]}],
+  "nodes": [
+    {"id": "N1", "goal": "盘点既有归档规则、模板和实现缺口", "dependencies": [], "acceptance": "审计证据写入主视图", "owner": "主协调者"},
+    {"id": "N2", "goal": "实现无破坏性的归档准入、清单和索引生成工具", "dependencies": [], "acceptance": "脚本可运行并输出阻断项、文件 SHA-256 和索引卡", "owner": "主协调者"},
+    {"id": "N3", "kind": "validation", "goal": "增加归档工具回归测试并纳入本地验证", "dependencies": ["N1", "N2"], "acceptance": "归档测试通过且保护测试未修改", "owner": "主协调者"},
+    {"id": "N4", "kind": "validation", "goal": "按归档清单校验目标副本并输出回执", "dependencies": ["N2"], "acceptance": "完整目标通过，缺失或哈希漂移阻断", "owner": "主协调者"},
+    {"id": "N5", "kind": "validation", "goal": "从目标副本恢复到新目录并重新校验", "dependencies": ["N2"], "acceptance": "恢复目录不覆盖既有目录且清单校验通过", "owner": "主协调者"},
+    {"id": "N6", "kind": "validation", "goal": "生成不删除文件的 Mac 瘦身计划", "dependencies": ["N2", "N3", "N4", "N5"], "acceptance": "证据不完整时阻断，完整时仍要求人工确认", "owner": "主协调者"}
+  ],
+  "external_systems": [],
+  "acceptance_layers": ["static-test", "local-runtime"],
+  "release_boundary_compiler": {"boundary_required": false, "decision_authority": "用户请求", "rationale": "本次只有一个可独立验收的本地交付切片。"},
+  "artifacts": {"ssot_bundle": true, "generated_views": ["main"], "resource_matrix": false, "runner_registry": false, "evidence_identity_registry": false, "worker_ledger": false},
+  "complexity_budget": {"authority": "用户请求", "rationale": "L1 保留一个本地发布切片和六个必要节点。", "limits": {"total_nodes": 6, "implementation_nodes_per_release": 2, "codex_worker_nodes": 0, "generated_views": 1}},
+  "goal_size_detector": {"implementation_or_migration_nodes": 1, "external_systems": 0, "release_slices": 1, "production_migrations": 0, "acceptance_layers": 2, "split_required": false, "split_strategy": "none"},
+  "scheduling_model": "static-wave",
+  "scheduling_hints": ["N1 与 N2 读写范围不重叠时可并行；N3 等待 N2 接口稳定。"],
+  "artifacts_inventory": {"total_nodes": 6, "implementation_nodes": 1, "worker_nodes": 0, "generated_views": 1}
+}

@@ -77,6 +77,10 @@ python3 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py
 
 这些脚本不替代 `99_System_OpenClaw/docs/00_本地素材与剪映HyperFrames流转总纲.md` 和本地 SOP 子文档，只服务这套规则。如果执行总纲或子文档修改了目录、命名、Live Photo、iCloud 照片或阿里云盘规则，脚本说明和契约检查也必须同步更新。
 
+## 归档候选清单
+
+`45_archive_project.py` 是本地、无破坏性的归档准入和清单生成工具。它检查 Final、同步清单和 `待增加/`，并在显式 `--write` 时生成带 SHA-256 的 `archive_manifest.json` 与归档索引卡；不会上传、删除或修改真实剪映草稿。外部镜像回读、恢复演练和 Mac 瘦身仍需独立证据。
+
 ## 目录唯一事实来源
 
 正式项目目录必须位于：
