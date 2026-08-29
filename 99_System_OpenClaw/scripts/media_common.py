@@ -116,6 +116,41 @@ def media_id(relative_path: str) -> str:
     return hashlib.sha1(relative_path.encode("utf-8")).hexdigest()[:12]
 
 
+# Directory-wide glob patterns shared by writers (04/05) and prune helpers.
+PROMPT_GLOB = "*_prompt.md"
+SUMMARY_GLOB = "*.summary.md"
+
+
+def item_prompt_path(prompt_dir: Path, item: dict[str, Any]) -> Path:
+    """Canonical per-item prompt file path, as written by 04_generate_ai_prompt.py."""
+    return prompt_dir / f"{item['media_id']}_{safe_slug(Path(str(item['relative_path'])).stem)}_prompt.md"
+
+
+def item_summary_path(summary_dir: Path, item: dict[str, Any]) -> Path:
+    """Canonical per-item summary file path, as written by 05_write_content_summary.py."""
+    return summary_dir / f"{item['media_id']}_{safe_slug(Path(str(item['relative_path'])).stem)}.summary.md"
+
+
+def find_item_summary(summaries_dir: Path, item: dict[str, Any]) -> Path | None:
+    """Locate an existing summary file for `item`, tolerating filename drift.
+
+    Tries the media_id-prefixed glob first (the stable identity every writer
+    uses); falls back to a slug-based glob on the relative_path stem. The
+    fallback MUST use safe_slug(stem), matching what item_summary_path()
+    above actually writes -- matching on the raw, un-slugged stem instead
+    means a stem containing spaces, CJK punctuation, or other characters
+    safe_slug() rewrites can never be found by this fallback.
+    """
+    media_id_value = str(item.get("media_id") or item.get("id") or "")
+    stem = Path(str(item.get("relative_path", ""))).stem
+    candidates = list(summaries_dir.glob(f"{media_id_value}_*.summary.md")) if media_id_value else []
+    candidates.extend(summaries_dir.glob(f"*_{safe_slug(stem)}.summary.md"))
+    for path in candidates:
+        if path.exists():
+            return path
+    return None
+
+
 def relative_posix(path: Path, project: Path) -> str:
     return path.relative_to(project).as_posix()
 

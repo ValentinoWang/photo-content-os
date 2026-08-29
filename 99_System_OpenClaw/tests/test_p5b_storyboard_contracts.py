@@ -123,6 +123,45 @@ class StoryboardContractTests(unittest.TestCase):
             self.assertEqual(value, expected)
             self.assertNotIn("[已截断]", value)
 
+    def test_summary_fallback_glob_matches_safe_slugged_stem(self) -> None:
+        """Regression test for the L-19 silent-miss bug.
+
+        05_write_content_summary.py always names summary files
+        `{media_id}_{safe_slug(stem)}.summary.md` (see item_summary_path in
+        media_common.py). When a manifest item is missing media_id --
+        genuinely possible, and exactly the case this bug hid -- summary_text
+        must fall back to a stem-based glob to find that same file.
+
+        Before the fix, that fallback globbed on the RAW stem
+        (`*_{stem}.summary.md`), not safe_slug(stem). For a stem containing
+        spaces or CJK punctuation (illegal/unglobbable-as-written in the
+        actual filename on disk, which was slugified when written), the raw
+        stem never matches, so the fallback silently returns no summary --
+        indistinguishable from "no summary was ever written". After the fix,
+        the fallback globs on safe_slug(stem), matching what the writer
+        actually produced.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            summaries = project / "_ai_analysis" / "summaries"
+            summaries.mkdir(parents=True)
+            stem = "a b c，测试"
+            from media_common import safe_slug
+
+            expected = "画面事实：人物进入画面。\n证据边界：仅支持这一结论。"
+            (summaries / f"m1_{safe_slug(stem)}.summary.md").write_text(expected, encoding="utf-8")
+
+            # media_id absent on the manifest item: the first (media_id-based)
+            # glob can't run, so this exercises the stem-based fallback alone.
+            item = {"relative_path": f"{stem}.mp4"}
+
+            # Prove the raw-stem glob genuinely cannot match the on-disk
+            # filename -- this is exactly what the pre-fix implementation did.
+            self.assertEqual(list(summaries.glob(f"*_{stem}.summary.md")), [])
+
+            value = storyboard.summary_text(project, item)
+            self.assertEqual(value, expected)
+
     def test_storyboard_script_has_no_historical_slot_mapping(self) -> None:
         source = (SCRIPTS / "23_generate_jianying_draft_plan.py").read_text(encoding="utf-8")
         self.assertNotIn("slot_map", source)

@@ -7,7 +7,7 @@ import argparse
 from pathlib import Path
 
 from llm_common import creator_context_block
-from media_common import eligible_item, load_manifest, project_path, safe_slug
+from media_common import PROMPT_GLOB, eligible_item, item_prompt_path, load_manifest, project_path
 
 VISUAL_SIMILARITY_THRESHOLD = 8
 USER_INTENT_NOTES = "_ai_analysis/user_intent_notes.md"
@@ -316,13 +316,9 @@ def keyframe_block(item: dict[str, object]) -> str:
     return "\n".join(f"- {frame}" for frame in frames)
 
 
-def item_prompt_path(prompt_dir: Path, item: dict[str, object]) -> Path:
-    return prompt_dir / f"{item['media_id']}_{safe_slug(Path(str(item['relative_path'])).stem)}_prompt.md"
-
-
 def prune_stale_prompts(prompt_dir: Path, expected: set[Path]) -> int:
     removed = 0
-    for path in prompt_dir.glob("*_prompt.md"):
+    for path in prompt_dir.glob(PROMPT_GLOB):
         if path not in expected and path.is_file():
             path.unlink()
             removed += 1

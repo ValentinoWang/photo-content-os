@@ -21,7 +21,15 @@ from llm_common import (
     public_llm_error,
     generate_text,
 )
-from media_common import eligible_item, load_manifest, project_path, safe_slug, save_manifest
+from media_common import (
+    SUMMARY_GLOB,
+    eligible_item,
+    item_prompt_path,
+    item_summary_path,
+    load_manifest,
+    project_path,
+    save_manifest,
+)
 
 SYSTEM_PROMPT = """你是 Photo Content OS 的素材内容理解代理。
 
@@ -45,14 +53,6 @@ PROJECT_SYSTEM_PROMPT = """你是 Photo Content OS 的项目总览分析代理�
 MAX_PROJECT_SUMMARY_CHARS = MAX_PROMPT_SUMMARY_CHARS
 SUPPORTED_DIRECT_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 CACHE_VERSION = "content_summary_cache_v1"
-
-
-def item_prompt_path(prompt_dir: Path, item: dict[str, object]) -> Path:
-    return prompt_dir / f"{item['media_id']}_{safe_slug(Path(str(item['relative_path'])).stem)}_prompt.md"
-
-
-def summary_path(summary_dir: Path, item: dict[str, object]) -> Path:
-    return summary_dir / f"{item['media_id']}_{safe_slug(Path(str(item['relative_path'])).stem)}.summary.md"
 
 
 def has_llm_summary(path: Path) -> bool:
@@ -299,7 +299,7 @@ def generate_project_overview(
     if not prompt_path.exists():
         raise FileNotFoundError(f"project overview prompt not found: {prompt_path}")
     summary_index = []
-    for path in sorted(summary_dir.glob("*.summary.md")):
+    for path in sorted(summary_dir.glob(SUMMARY_GLOB)):
         text = path.read_text(encoding="utf-8")
         summary_index.append(f"## {path.name}\n\n{bounded_prompt_text(text, MAX_PROJECT_SUMMARY_CHARS)}")
     manifest = load_manifest(project)
@@ -392,7 +392,7 @@ def main() -> None:
         for item in items:
             if args.limit is not None and processed >= args.limit:
                 break
-            output = summary_path(summary_dir, item)
+            output = item_summary_path(summary_dir, item)
             if has_llm_summary(output) and not args.overwrite:
                 skipped += 1
                 continue

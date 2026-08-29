@@ -22,7 +22,7 @@ from llm_common import (
     parse_markdown_frontmatter_or_empty,
     render_markdown_frontmatter,
 )
-from media_common import eligible_item, is_raw360_item, load_manifest, project_path
+from media_common import eligible_item, find_item_summary, is_raw360_item, load_manifest, project_path
 
 MAX_ITEMS = 140
 MAX_SUMMARY_CHARS = MAX_PROMPT_SUMMARY_CHARS
@@ -72,14 +72,10 @@ def raw360_reference_summary(item: dict[str, Any]) -> str:
 
 
 def summary_text(project: Path, item: dict[str, Any]) -> str:
-    media_id = str(item.get("media_id") or item.get("id") or "")
-    stem = Path(str(item.get("relative_path", ""))).stem
     summaries = project / "_ai_analysis" / "summaries"
-    candidates = list(summaries.glob(f"{media_id}_*.summary.md")) if media_id else []
-    candidates.extend(summaries.glob(f"*_{stem}.summary.md"))
-    for path in candidates:
-        if path.exists():
-            return bounded_prompt_text(path.read_text(encoding="utf-8"), MAX_SUMMARY_CHARS)
+    path = find_item_summary(summaries, item)
+    if path is not None:
+        return bounded_prompt_text(path.read_text(encoding="utf-8"), MAX_SUMMARY_CHARS)
     if is_raw360_item(item):
         return raw360_reference_summary(item)
     return ""
