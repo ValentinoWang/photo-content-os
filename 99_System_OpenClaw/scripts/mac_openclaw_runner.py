@@ -24,6 +24,7 @@ from llm_common import (
     REQUIRED_CREATIVE_REASONING,
     load_markdown_frontmatter,
 )
+from media_common import write_yaml_atomic
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS
 from runtime_paths import obsidian_root, runtime_python
 from validate_content_os_task import (
@@ -137,9 +138,7 @@ def load_yaml(path: Path) -> dict[str, Any]:
 
 
 def write_yaml(path: Path, data: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as handle:
-        yaml.safe_dump(data, handle, allow_unicode=True, sort_keys=False)
+    write_yaml_atomic(path, data)
 
 
 def vault_abs(config: RunnerConfig, value: str) -> Path:

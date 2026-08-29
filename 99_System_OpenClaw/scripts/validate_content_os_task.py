@@ -20,6 +20,7 @@ from typing import Any
 import yaml
 
 from llm_common import load_markdown_frontmatter as _load_markdown_frontmatter
+from media_common import write_yaml_atomic
 
 
 SPEC_VERSION = "content_os_v0.2"
@@ -389,9 +390,7 @@ def write_blocked_result(path: Path, task: dict[str, Any], reason: str) -> None:
     tenant_id = task.get("tenant_id")
     if isinstance(tenant_id, str) and tenant_id.strip():
         result["tenant_id"] = tenant_id.strip()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as handle:
-        yaml.safe_dump(result, handle, allow_unicode=True, sort_keys=False)
+    write_yaml_atomic(path, result)
 
 
 def main() -> int:

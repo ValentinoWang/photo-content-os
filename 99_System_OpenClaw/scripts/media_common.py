@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import re
 import shutil
 import subprocess
@@ -13,6 +14,8 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+import yaml
 
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv", ".insv", ".osv", ".lrf"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".tif", ".tiff", ".webp"}
@@ -378,6 +381,70 @@ def load_manifest(project: Path) -> dict[str, Any]:
     if not isinstance(data, dict) or "items" not in data:
         raise ValueError(f"invalid manifest format: {path}")
     return data
+
+
+# --- Atomic on-disk writers.
+#
+# This is a first, deliberately narrow pass (L-12): only the two call sites
+# named by the audit (validate_content_os_task.write_blocked_result,
+# mac_openclaw_runner.write_yaml) are migrated to these helpers in this
+# round. The cluster's other ~12 non-atomic write points (31's write_link,
+# several in 19_review_output_video.py, jianying_roughcut_common.py,
+# otio_kdenlive.py, run_analyze_project.py, etc.) are NOT touched here --
+# each has its own behavior nuances that need individually checking before
+# switching them over. sort_keys is deliberately a per-call parameter, not
+# unified to one default: forcing every writer to the same sort_keys value
+# would change the byte-for-byte diff of every produced artifact at once,
+# which is explicitly out of scope for this pass.
+
+
+def _atomic_temp_path(path: Path, *, hidden_temp: bool) -> Path:
+    if hidden_temp:
+        return path.with_name(f".{path.name}.tmp")
+    return path.with_suffix(f"{path.suffix}.tmp")
+
+
+def write_json_atomic(
+    path: Path,
+    data: Any,
+    *,
+    sort_keys: bool = False,
+    hidden_temp: bool = False,
+    trailing_newline: bool = True,
+) -> None:
+    """Write JSON atomically: mkdir + temp file + os.replace.
+
+    Skeleton taken from edit_backends/handoff_pack.py's write_json(). That
+    function always passes sort_keys=True; this shared version defaults to
+    False (most JSON writers in this codebase do not sort keys) and leaves
+    it to each caller to pass what its own current output already does.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = _atomic_temp_path(path, hidden_temp=hidden_temp)
+    with temporary.open("w", encoding="utf-8") as handle:
+        json.dump(data, handle, ensure_ascii=False, indent=2, sort_keys=sort_keys)
+        if trailing_newline:
+            handle.write("\n")
+    os.replace(temporary, path)
+
+
+def write_yaml_atomic(
+    path: Path,
+    data: Any,
+    *,
+    sort_keys: bool = False,
+    hidden_temp: bool = False,
+) -> None:
+    """Write YAML atomically, same mkdir + temp file + os.replace skeleton as write_json_atomic.
+
+    Added alongside write_json_atomic because this round's two named
+    migration targets are both YAML writers, not JSON.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = _atomic_temp_path(path, hidden_temp=hidden_temp)
+    with temporary.open("w", encoding="utf-8") as handle:
+        yaml.safe_dump(data, handle, allow_unicode=True, sort_keys=sort_keys)
+    os.replace(temporary, path)
 
 
 def save_manifest(project: Path, data: dict[str, Any]) -> None:
