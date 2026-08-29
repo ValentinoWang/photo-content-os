@@ -13,7 +13,6 @@ from llm_common import (
     DEFAULT_CREATIVE_MODEL,
     DEFAULT_REASONING_EFFORT,
     MAX_PROMPT_SUMMARY_CHARS,
-    bounded_prompt_text,
     creator_context_block,
     generate_text,
     load_creator_context,
@@ -22,7 +21,14 @@ from llm_common import (
     parse_markdown_frontmatter_or_empty,
     render_markdown_frontmatter,
 )
-from media_common import eligible_item, find_item_summary, is_raw360_item, load_manifest, project_path
+from llm_evidence_context import (
+    keyframe_evidence,
+    nearby_script_path,
+    read_text,
+    summary_text as _shared_summary_text,
+    transcript_segments as _shared_transcript_segments,
+)
+from media_common import eligible_item, is_raw360_item, load_manifest, project_path
 
 MAX_ITEMS = 140
 MAX_SUMMARY_CHARS = MAX_PROMPT_SUMMARY_CHARS
@@ -48,74 +54,16 @@ SYSTEM_PROMPT = """你是 Photo Content OS 的短视频分镜与剪辑方案编�
 13. storyboard_markdown 面向拍摄和剪辑的人：先给能直接执行的镜头信息，任何选择理由或论证说明只放在文档末尾的备注段，不得放在分镜表之前。"""
 
 
-def read_text(path: Path) -> str:
-    if not path.exists():
-        raise FileNotFoundError(f"file does not exist: {path}")
-    return path.read_text(encoding="utf-8")
-
-
 def parse_frontmatter(text: str) -> dict[str, Any]:
     return parse_markdown_frontmatter_or_empty(text)
 
 
-def nearby_script_path(brief_path: Path) -> Path:
-    return brief_path.with_name("04_script.md")
-
-
-def raw360_reference_summary(item: dict[str, Any]) -> str:
-    return (
-        "这是 360/全景相机原始素材证据，不能直接等同于可剪片段。"
-        f"路径：{item.get('relative_path')}；时长：{item.get('duration_sec')} 秒；"
-        f"分辨率：{item.get('width')}x{item.get('height')}。"
-        "如需使用，必须先转码并重构视角。"
-    )
-
-
 def summary_text(project: Path, item: dict[str, Any]) -> str:
-    summaries = project / "_ai_analysis" / "summaries"
-    path = find_item_summary(summaries, item)
-    if path is not None:
-        return bounded_prompt_text(path.read_text(encoding="utf-8"), MAX_SUMMARY_CHARS)
-    if is_raw360_item(item):
-        return raw360_reference_summary(item)
-    return ""
+    return _shared_summary_text(project, item, max_chars=MAX_SUMMARY_CHARS)
 
 
 def transcript_segments(project: Path, item: dict[str, Any]) -> list[dict[str, Any]]:
-    raw = item.get("transcript_path")
-    if not isinstance(raw, str) or not raw.strip():
-        return []
-    path = Path(raw).expanduser()
-    resolved = path.resolve() if path.is_absolute() else (project / path).resolve()
-    try:
-        resolved.relative_to(project.resolve())
-    except ValueError:
-        return []
-    try:
-        data = json.loads(resolved.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return []
-    result: list[dict[str, Any]] = []
-    for index, segment in enumerate(data.get("segments") or []):
-        if not isinstance(segment, dict):
-            continue
-        result.append(
-            {
-                "evidence_ref": f"transcript:{item.get('media_id')}:{index}",
-                "start_sec": segment.get("start_sec"),
-                "end_sec": segment.get("end_sec"),
-                "speaker": segment.get("speaker"),
-                "text": bounded_prompt_text(str(segment.get("text") or ""), MAX_TRANSCRIPT_CHARS),
-            }
-        )
-    return result[:60]
-
-
-def keyframe_evidence(item: dict[str, Any]) -> list[dict[str, str]]:
-    return [
-        {"evidence_ref": f"image:{item.get('media_id')}:{index}", "path": str(path)}
-        for index, path in enumerate((item.get("keyframes") or [])[:12])
-    ]
+    return _shared_transcript_segments(project, item, max_segments=60, max_chars=MAX_TRANSCRIPT_CHARS)
 
 
 def context_items(project: Path, manifest: dict[str, Any]) -> list[dict[str, Any]]:

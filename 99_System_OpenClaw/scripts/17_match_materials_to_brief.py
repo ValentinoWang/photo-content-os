@@ -21,7 +21,13 @@ from llm_common import (
     public_llm_error,
     generate_text,
 )
-from media_common import eligible_item, find_item_summary, is_raw360_item, load_manifest, project_path
+from llm_evidence_context import (
+    nearby_script_path,
+    read_text,
+    summary_text as _shared_summary_text,
+    transcript_segments as _shared_transcript_segments,
+)
+from media_common import eligible_item, is_raw360_item, load_manifest, project_path
 
 
 MAX_ITEMS = 180
@@ -79,71 +85,16 @@ REQUIRED_REPORT_SECTIONS = (
 )
 
 
-def read_text(path: Path) -> str:
-    if not path.exists():
-        raise FileNotFoundError(f"file does not exist: {path}")
-    return path.read_text(encoding="utf-8")
-
-
 def parse_frontmatter(text: str) -> dict[str, Any]:
     return parse_markdown_frontmatter_or_empty(text)
 
 
 def summary_text(project: Path, item: dict[str, Any]) -> str:
-    summaries = project / "_ai_analysis" / "summaries"
-    path = find_item_summary(summaries, item)
-    if path is not None:
-        return bounded_prompt_text(path.read_text(encoding="utf-8"), MAX_SUMMARY_CHARS)
-    if is_raw360_item(item):
-        return raw360_reference_summary(item)
-    return ""
-
-
-def nearby_script_path(brief_path: Path) -> Path:
-    return brief_path.with_name("04_script.md")
-
-
-def raw360_reference_summary(item: dict[str, Any]) -> str:
-    duration = item.get("duration_sec")
-    width = item.get("width")
-    height = item.get("height")
-    rel = item.get("relative_path")
-    return (
-        "这是项目里的 360/全景相机原始素材证据，位于 RawVault 或标记为 reframe_needed。"
-        "它不应被当作已经可直接剪辑的成片素材，但应被当作第一视角/全景视角存在的强证据。"
-        f"路径：{rel}；时长：{duration} 秒；分辨率：{width}x{height}。"
-        "使用方式：先转码、重构视角、裁切或导出为可剪片段，再进入剪映/粗剪；报告中不得再把第一视角素材简单判为缺失。"
-    )
+    return _shared_summary_text(project, item, max_chars=MAX_SUMMARY_CHARS)
 
 
 def transcript_segments(project: Path, item: dict[str, Any]) -> list[dict[str, Any]]:
-    raw = item.get("transcript_path")
-    if not isinstance(raw, str) or not raw.strip():
-        return []
-    path = Path(raw).expanduser()
-    resolved = path.resolve() if path.is_absolute() else (project / path).resolve()
-    try:
-        resolved.relative_to(project.resolve())
-    except ValueError:
-        return []
-    try:
-        data = json.loads(resolved.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return []
-    result: list[dict[str, Any]] = []
-    for index, segment in enumerate(data.get("segments") or []):
-        if not isinstance(segment, dict):
-            continue
-        result.append(
-            {
-                "evidence_ref": f"transcript:{item.get('media_id')}:{index}",
-                "start_sec": segment.get("start_sec"),
-                "end_sec": segment.get("end_sec"),
-                "speaker": segment.get("speaker"),
-                "text": str(segment.get("text") or "")[:MAX_TRANSCRIPT_CHARS],
-            }
-        )
-    return result[:60]
+    return _shared_transcript_segments(project, item, max_segments=60, max_chars=MAX_TRANSCRIPT_CHARS)
 
 
 def context_items(project: Path, manifest: dict[str, Any]) -> list[dict[str, Any]]:
