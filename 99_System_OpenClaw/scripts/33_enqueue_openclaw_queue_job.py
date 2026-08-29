@@ -9,7 +9,6 @@ file from an upper-layer YAML task without copying media.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import subprocess
 import sys
@@ -20,6 +19,7 @@ from typing import Any
 import yaml
 
 from media_common import now_iso, safe_slug
+from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS, request_fingerprint
 from runtime_paths import obsidian_root
 
 
@@ -27,32 +27,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
 WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
 DEFAULT_VAULT_ROOT = obsidian_root()
-TASK_INBOX = Path("98_Agent任务队列/01_cloud_to_mac_ready")
-RESULT_OUTBOX = Path("98_Agent任务队列/02_mac_to_cloud_results")
 QUEUE_DIR_NAME = "_OpenClawQueue"
 CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
-VOLATILE_TASK_FIELDS = frozenset({"created_at", "updated_at", "generated_at", "request_fingerprint"})
 
 
 class EnqueueError(Exception):
     """Raised when the upper-layer task cannot produce a local queue job."""
-
-
-def request_fingerprint(payload: dict[str, Any]) -> str:
-    """Return the retry identity for a queue payload.
-
-    Timestamps and a previously materialized fingerprint are excluded so a
-    re-enqueued copy has the same identity while a changed payload cannot
-    overwrite the original result.
-    """
-
-    stable = {
-        key: value
-        for key, value in payload.items()
-        if key not in VOLATILE_TASK_FIELDS
-    }
-    encoded = json.dumps(stable, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
 
 def source_identity(task: dict[str, Any]) -> dict[str, Any]:

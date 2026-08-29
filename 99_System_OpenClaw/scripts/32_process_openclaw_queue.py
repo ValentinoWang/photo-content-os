@@ -21,6 +21,7 @@ from typing import Any
 
 from media_common import MEDIA_EXTS, now_iso, safe_slug
 from project_bootstrap_common import ensure_formal_project_for_batch
+from queue_identity import VOLATILE_TASK_FIELDS, request_fingerprint
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -46,23 +47,10 @@ STATUS_SPEC_VERSION = "openclaw_queue_status_v0.1"
 
 RUN_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{2,127}$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$", re.IGNORECASE)
-VOLATILE_TASK_FIELDS = frozenset({"created_at", "updated_at", "generated_at", "request_fingerprint"})
 
 
 class QueueError(Exception):
     """Raised when a queue task cannot be safely processed."""
-
-
-def request_fingerprint(task: dict[str, Any]) -> str:
-    """Return a stable digest for retry-safe queue processing."""
-
-    stable = {
-        key: value
-        for key, value in task.items()
-        if key not in VOLATILE_TASK_FIELDS
-    }
-    encoded = json.dumps(stable, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
 
 def idempotency_key(task: dict[str, Any], creation_run_id: str) -> str:

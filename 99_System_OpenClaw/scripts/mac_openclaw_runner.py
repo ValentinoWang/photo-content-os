@@ -19,6 +19,7 @@ from typing import Any
 import yaml
 
 from llm_common import DEFAULT_CREATIVE_PROVIDER, REQUIRED_CREATIVE_MODEL, REQUIRED_CREATIVE_REASONING
+from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS
 from runtime_paths import obsidian_root, runtime_python
 from validate_content_os_task import (
     ValidationError,
@@ -34,8 +35,6 @@ SYSTEM_ROOT = SCRIPT_DIR.parent
 WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
 DEFAULT_VAULT_ROOT = obsidian_root()
 
-TASK_INBOX = Path("98_Agent任务队列/01_cloud_to_mac_ready")
-RESULT_OUTBOX = Path("98_Agent任务队列/02_mac_to_cloud_results")
 CAPABILITIES = Path("00_入口与总览/mac_runner_capabilities.yaml")
 REQUIRED_CREATIVE_PROVIDER = DEFAULT_CREATIVE_PROVIDER
 CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
