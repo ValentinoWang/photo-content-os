@@ -103,6 +103,22 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
 
 
+def utc_now_z() -> str:
+    """UTC timestamp with a literal 'Z' suffix (TF-09's second family).
+
+    Deliberately NOT interchangeable with now_iso() above: this one is
+    whole-second UTC ending in 'Z' (e.g. `...T00:00:00Z`), while now_iso()
+    is seconds-precision with the machine's *local* offset (e.g.
+    `...+08:00`). Baseline: edit_backends/handoff_pack.py's utc_now(),
+    byte-identical to desktop/project_store.py's _now() before this
+    consolidation. Those two producers write persisted audit-trail records
+    (an edit handoff manifest, a versioned project store) where the UTC/Z
+    form is the deliberate on-disk format -- do not rewrite either call site
+    to now_iso() and do not rewrite this one to local-offset form.
+    """
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
 def run_text(cmd: list[str]) -> str:
     result = subprocess.run(
         cmd,

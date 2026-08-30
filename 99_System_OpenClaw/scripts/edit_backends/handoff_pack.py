@@ -21,7 +21,6 @@ import re
 import shutil
 import sys
 import tempfile
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -34,6 +33,7 @@ from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
 from media_common import file_sha256 as sha256_file  # noqa: E402
 from media_common import is_raw360_path  # noqa: E402
+from media_common import utc_now_z as utc_now  # noqa: E402
 
 
 SPEC_VERSION = "content_os_v0.2"
@@ -65,10 +65,6 @@ class HandoffError(Exception):
         super().__init__(message)
         self.code = code
         self.message = message
-
-
-def utc_now() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:

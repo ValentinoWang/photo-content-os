@@ -11,14 +11,13 @@ import shutil
 import subprocess
 import wave
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import yaml
 
 from llm_common import LLMError, creator_context_block, load_creator_context, parse_json_response, public_llm_error, generate_text
-from media_common import OUTPUT_REVIEW_SAMPLING, timestamp_label
+from media_common import OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_label
 from media_common import sample_times as _shared_sample_times
 
 SCHEMA_VERSION = "output_review.v1"
@@ -183,10 +182,6 @@ def humanize_rhythm_profile(value: str) -> str:
 
 def humanize_dimension(value: str) -> str:
     return DIMENSION_LABELS.get(value, "待确认维度")
-
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
 
 
 def run_process(args: list[str], *, check: bool = False) -> subprocess.CompletedProcess[str]:
