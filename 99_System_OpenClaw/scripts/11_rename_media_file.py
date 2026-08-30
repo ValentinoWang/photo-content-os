@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import subprocess
 from dataclasses import dataclass, replace
 from pathlib import Path
 
@@ -25,6 +24,7 @@ from media_common import (
     project_path,
     relative_posix,
 )
+from project_bootstrap_common import run_project_analysis as run_analysis
 
 
 LIVE_EXTS = {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}
@@ -324,16 +324,6 @@ def write_rename_plan(project: Path, source: Path, group: list[Path], decision: 
     }
     plan_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return plan_path
-
-
-def run_analysis(project: Path) -> None:
-    script_dir = Path(__file__).resolve().parent
-    runner = script_dir / "run_analyze_project.sh"
-    if not runner.exists():
-        raise FileNotFoundError(f"analysis runner not found: {runner}")
-    result = subprocess.run([str(runner), str(project)], check=False)
-    if result.returncode != 0:
-        raise RuntimeError(f"analysis runner failed: {runner}")
 
 
 def print_plan(project: Path, decision: ContentDecision, operations: list[tuple[Path, Path]], group_mode: bool, plan_path: Path) -> None:

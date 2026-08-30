@@ -6,10 +6,10 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
-import subprocess
 from pathlib import Path
 
 from media_common import ANALYSIS_DIR, ensure_project_additions_dir, now_iso, path_inside as inside, project_path
+from project_bootstrap_common import run_project_analysis as run_analysis
 
 
 PLAN_NAME = "additions_merge_plan.json"
@@ -60,16 +60,6 @@ def append_merge_log(target_project: Path, moved: list[dict[str, object]]) -> No
             )
         )
     log_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-
-def run_analysis(target_project: Path) -> None:
-    script_dir = Path(__file__).resolve().parent
-    runner = script_dir / "run_analyze_project.sh"
-    if not runner.exists():
-        raise FileNotFoundError(f"analysis runner not found: {runner}")
-    result = subprocess.run([str(runner), str(target_project)], check=False)
-    if result.returncode != 0:
-        raise RuntimeError(f"analysis runner failed: {runner}")
 
 
 def apply_plan(

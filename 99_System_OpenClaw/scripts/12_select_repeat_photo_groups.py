@@ -7,7 +7,6 @@ import argparse
 import json
 import math
 import shutil
-import subprocess
 from pathlib import Path
 
 from media_common import (
@@ -20,6 +19,7 @@ from media_common import (
     project_path,
     relative_posix,
 )
+from project_bootstrap_common import run_project_analysis as run_analysis
 
 
 SUPPORTED_IMAGE_EXTS = IMAGE_EXTS - {".heic", ".heif"}
@@ -264,13 +264,6 @@ def clear_additions(additions: Path) -> None:
             shutil.rmtree(child)
         else:
             child.unlink()
-
-
-def run_analysis(project: Path) -> None:
-    runner = Path(__file__).resolve().parent / "run_analyze_project.sh"
-    result = subprocess.run([str(runner), str(project)], check=False)
-    if result.returncode != 0:
-        raise RuntimeError(f"analysis runner failed: {runner}")
 
 
 def main() -> None:

@@ -6,6 +6,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import re
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -404,3 +405,27 @@ def ensure_formal_project_for_batch(
         "updated_batch_note_fields": changed_fields,
         "warnings": warnings,
     }
+
+
+def run_project_analysis(project: Path) -> None:
+    """Invoke run_analyze_project.sh against `project` (L-21).
+
+    Baseline: 09_apply_additions_merge.py's run_analysis, byte-identical to
+    11_rename_media_file.py's own copy. 12_select_repeat_photo_groups.py's
+    version lacked the runner.exists() pre-check; it gets that check now,
+    a deliberate improvement (a missing runner script previously surfaced
+    there as a bare subprocess FileNotFoundError with no context, now it
+    raises the same clear "analysis runner not found" message the other two
+    callers already gave). The .sh entry point (not run_analyze_project.py)
+    is kept deliberately: switching entry points would need separately
+    verifying CLI-argument parity and whether the .sh wrapper does anything
+    the .py doesn't (e.g. activating the fixed dev venv) -- out of scope for
+    a duplication cleanup.
+    """
+    script_dir = Path(__file__).resolve().parent
+    runner = script_dir / "run_analyze_project.sh"
+    if not runner.exists():
+        raise FileNotFoundError(f"analysis runner not found: {runner}")
+    result = subprocess.run([str(runner), str(project)], check=False)
+    if result.returncode != 0:
+        raise RuntimeError(f"analysis runner failed: {runner}")
