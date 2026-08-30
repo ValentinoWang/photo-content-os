@@ -1,16 +1,14 @@
-import importlib.util
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
+from _support import load_script
+
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "17_match_materials_to_brief.py"
 sys.path.insert(0, str(SCRIPT.parent))
-SPEC = importlib.util.spec_from_file_location("match_materials_to_brief", SCRIPT)
-assert SPEC and SPEC.loader
-MODULE = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(MODULE)
+MODULE = load_script("17_match_materials_to_brief.py", "match_materials_to_brief")
 
 
 def _report(*, sections: tuple[str, ...] | None = None, **overrides: object) -> str:

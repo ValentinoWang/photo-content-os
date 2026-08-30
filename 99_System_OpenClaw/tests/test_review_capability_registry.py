@@ -4,21 +4,16 @@
 from __future__ import annotations
 
 import copy
-import importlib.util
 import json
-import sys
 import unittest
 from pathlib import Path
 
+from _support import load_script
+
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT_PATH = ROOT / "scripts" / "36_validate_review_capability_registry.py"
 REGISTRY_PATH = ROOT / "review_capabilities.registry.json"
-SPEC = importlib.util.spec_from_file_location("review_capability_validator", SCRIPT_PATH)
-assert SPEC and SPEC.loader
-validator = importlib.util.module_from_spec(SPEC)
-sys.modules["review_capability_validator"] = validator
-SPEC.loader.exec_module(validator)
+validator = load_script("36_validate_review_capability_registry.py", "review_capability_validator", register=True)
 
 
 def load_registry() -> dict:

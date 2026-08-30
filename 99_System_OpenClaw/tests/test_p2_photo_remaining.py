@@ -1,9 +1,10 @@
-import importlib.util
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+
+from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,12 +13,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 
 def load(name: str):
-    spec = importlib.util.spec_from_file_location(name, SCRIPTS / f"{name}.py")
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader
-    sys.modules[name] = module
-    spec.loader.exec_module(module)
-    return module
+    return load_script(name, register=True)
 
 
 review = load("19_review_output_video")

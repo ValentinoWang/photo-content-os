@@ -12,14 +12,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import importlib.util
+from _support import load_script
 
 
-SCRIPT_PATH = ROOT / "scripts" / "29_generate_ai_edit_log.py"
-SPEC = importlib.util.spec_from_file_location("generate_ai_edit_log", SCRIPT_PATH)
-assert SPEC and SPEC.loader
-edit_log = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(edit_log)
+edit_log = load_script("29_generate_ai_edit_log.py", "generate_ai_edit_log")
 
 
 class AIEditLogTest(unittest.TestCase):

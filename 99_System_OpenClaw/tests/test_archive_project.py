@@ -1,17 +1,15 @@
-import importlib.util
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
+from _support import load_script
+
 
 SCRIPT_PATH = Path(__file__).parents[1] / "scripts" / "45_archive_project.py"
 sys.path.insert(0, str(SCRIPT_PATH.parent))
-SPEC = importlib.util.spec_from_file_location("archive_project", SCRIPT_PATH)
-archive_project = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-SPEC.loader.exec_module(archive_project)
+archive_project = load_script("45_archive_project.py", "archive_project")
 
 
 class ArchiveProjectTests(unittest.TestCase):

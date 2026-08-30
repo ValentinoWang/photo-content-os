@@ -3,12 +3,13 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+
+from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,17 +17,8 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 
-def load_script(filename: str, module_name: str):
-    spec = importlib.util.spec_from_file_location(module_name, SCRIPTS / filename)
-    assert spec and spec.loader
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[module_name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-storyboard = load_script("18_generate_storyboard_edl.py", "wave6_storyboard")
-edit_log = load_script("29_generate_ai_edit_log.py", "wave6_edit_log")
+storyboard = load_script("18_generate_storyboard_edl.py", "wave6_storyboard", register=True)
+edit_log = load_script("29_generate_ai_edit_log.py", "wave6_edit_log", register=True)
 
 
 class LocalPromptCreatorContextTests(unittest.TestCase):

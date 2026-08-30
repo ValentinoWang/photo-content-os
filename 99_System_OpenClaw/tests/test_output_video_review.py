@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
 import shutil
 import subprocess
@@ -13,15 +12,12 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+from _support import load_script
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-SCRIPT_PATH = ROOT / "scripts" / "19_review_output_video.py"
-SPEC = importlib.util.spec_from_file_location("output_review", SCRIPT_PATH)
-assert SPEC and SPEC.loader
-output_review = importlib.util.module_from_spec(SPEC)
-sys.modules["output_review"] = output_review
-SPEC.loader.exec_module(output_review)
+output_review = load_script("19_review_output_video.py", "output_review", register=True)
 
 
 def run_ffmpeg(args: list[str]) -> None:

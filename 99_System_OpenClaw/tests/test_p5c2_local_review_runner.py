@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-import importlib.util
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+
+from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,16 +18,7 @@ sys.path.insert(0, str(SCRIPTS))
 import mac_openclaw_runner as runner  # noqa: E402
 
 
-def load_output_review():
-    spec = importlib.util.spec_from_file_location("p5c2_output_review", SCRIPTS / "19_review_output_video.py")
-    assert spec and spec.loader
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-output_review = load_output_review()
+output_review = load_script("19_review_output_video.py", "p5c2_output_review", register=True)
 
 
 class P5C2LocalReviewRunnerTests(unittest.TestCase):

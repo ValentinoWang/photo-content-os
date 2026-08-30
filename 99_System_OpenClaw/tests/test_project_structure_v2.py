@@ -1,18 +1,16 @@
 from __future__ import annotations
 
-import importlib.util
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
+from _support import load_script
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-SPEC = importlib.util.spec_from_file_location("project_structure", ROOT / "scripts" / "13_ensure_project_structure.py")
-assert SPEC and SPEC.loader
-MODULE = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(MODULE)
+MODULE = load_script("13_ensure_project_structure.py", "project_structure")
 
 
 class ProjectStructureV2Tests(unittest.TestCase):

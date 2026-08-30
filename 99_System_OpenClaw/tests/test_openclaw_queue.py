@@ -3,22 +3,19 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
+from _support import load_script
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
-SPEC = importlib.util.spec_from_file_location("openclaw_queue", SCRIPT_DIR / "32_process_openclaw_queue.py")
-openclaw_queue = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-sys.modules[SPEC.name] = openclaw_queue
-SPEC.loader.exec_module(openclaw_queue)
+openclaw_queue = load_script("32_process_openclaw_queue.py", "openclaw_queue", register=True)
 
 
 def write_json(path: Path, data: dict[str, object]) -> None:

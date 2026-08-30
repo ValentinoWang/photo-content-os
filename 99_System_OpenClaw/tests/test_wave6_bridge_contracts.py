@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
 import subprocess
 import sys
@@ -10,6 +9,8 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+
+from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,18 +23,7 @@ import validate_content_os_task as validator  # noqa: E402
 from llm_common import REQUIRED_CREATIVE_MODEL, REQUIRED_CREATIVE_REASONING  # noqa: E402
 
 
-def load_refresh_module():
-    spec = importlib.util.spec_from_file_location(
-        "wave6_snapshot_refresh", SCRIPTS / "refresh_openclaw_media_contract_snapshot.py"
-    )
-    assert spec and spec.loader
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-refresh = load_refresh_module()
+refresh = load_script("refresh_openclaw_media_contract_snapshot.py", "wave6_snapshot_refresh", register=True)
 
 
 class Wave6BridgeContractTests(unittest.TestCase):

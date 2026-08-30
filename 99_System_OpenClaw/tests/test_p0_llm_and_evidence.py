@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 import os
 import sys
@@ -9,18 +8,12 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from _support import load_script
+
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 import llm_common  # noqa: E402
-
-
-def load_script(name: str, module_name: str):
-    spec = importlib.util.spec_from_file_location(module_name, SCRIPTS / name)
-    module = importlib.util.module_from_spec(spec)
-    assert spec and spec.loader
-    spec.loader.exec_module(module)
-    return module
 
 
 summary_module = load_script("05_write_content_summary.py", "content_summary_under_test")

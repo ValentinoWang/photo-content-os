@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 import sys
 import tempfile
@@ -8,23 +7,16 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from _support import load_script
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 
-def load_script(filename: str, module_name: str):
-    spec = importlib.util.spec_from_file_location(module_name, SCRIPTS / filename)
-    assert spec and spec.loader
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[module_name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-storyboard = load_script("18_generate_storyboard_edl.py", "p5b_storyboard")
-jianying = load_script("23_generate_jianying_draft_plan.py", "p5b_jianying")
+storyboard = load_script("18_generate_storyboard_edl.py", "p5b_storyboard", register=True)
+jianying = load_script("23_generate_jianying_draft_plan.py", "p5b_jianying", register=True)
 import jianying_roughcut_common as roughcut_common  # noqa: E402
 
 

@@ -1,17 +1,15 @@
 from __future__ import annotations
 
-import importlib.util
 import sys
 import unittest
 from pathlib import Path
 
+from _support import load_script
+
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-spec = importlib.util.spec_from_file_location("storyboard_under_test", SCRIPTS / "18_generate_storyboard_edl.py")
-module = importlib.util.module_from_spec(spec)
-assert spec and spec.loader
-spec.loader.exec_module(module)
+module = load_script("18_generate_storyboard_edl.py", "storyboard_under_test")
 
 
 class StoryboardContractTests(unittest.TestCase):

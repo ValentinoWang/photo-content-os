@@ -10,13 +10,9 @@ sys.path.insert(0, str(SCRIPTS))
 
 from analysis_tiering import TierBudget, analysis_cache_key, cache_hit, evenly_spaced_indexes, plan_manifest, write_cache  # noqa: E402
 from edl_contract import normalise_edl  # noqa: E402
-from importlib.util import module_from_spec, spec_from_file_location
+from _support import load_script  # noqa: E402
 
-spec = spec_from_file_location("preview_under_test", SCRIPTS / "20_render_preview.py")
-preview = module_from_spec(spec)
-assert spec and spec.loader
-sys.modules[spec.name] = preview
-spec.loader.exec_module(preview)
+preview = load_script("20_render_preview.py", "preview_under_test", register=True)
 
 
 class TieringPreviewTests(unittest.TestCase):

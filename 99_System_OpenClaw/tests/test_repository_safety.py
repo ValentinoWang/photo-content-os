@@ -1,18 +1,15 @@
 from __future__ import annotations
 
-import importlib.util
 import tempfile
 import unittest
 from pathlib import Path
 
+from _support import load_script
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "40_check_repository_safety.py"
-SPEC = importlib.util.spec_from_file_location("repository_safety", SCRIPT)
-if SPEC is None or SPEC.loader is None:
-    raise RuntimeError(f"cannot load repository safety module: {SCRIPT}")
-repository_safety = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(repository_safety)
+repository_safety = load_script(SCRIPT.name, "repository_safety")
 
 
 class RepositorySafetyTest(unittest.TestCase):

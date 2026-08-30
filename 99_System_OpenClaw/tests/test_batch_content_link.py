@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import importlib.util
 import sys
 import tempfile
 import unittest
@@ -11,14 +10,13 @@ from pathlib import Path
 
 import yaml
 
+from _support import load_script
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
-SPEC = importlib.util.spec_from_file_location("batch_link", SCRIPT_DIR / "31_link_batch_to_content_project.py")
-batch_link = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-SPEC.loader.exec_module(batch_link)
+batch_link = load_script("31_link_batch_to_content_project.py", "batch_link")
 
 
 def write_batch_note(batch: Path, project_id: str) -> None:

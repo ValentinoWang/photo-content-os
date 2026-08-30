@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-import importlib.util
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+
+from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,19 +16,10 @@ sys.path.insert(0, str(SCRIPTS))
 import llm_common
 
 
-def load_script(filename: str, module_name: str):
-    spec = importlib.util.spec_from_file_location(module_name, SCRIPTS / filename)
-    assert spec and spec.loader
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[module_name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-content_summary = load_script("05_write_content_summary.py", "p5_content_summary")
-prompt_generator = load_script("04_generate_ai_prompt.py", "p5_prompt_generator")
-material_match = load_script("17_match_materials_to_brief.py", "p5_material_match")
-output_review = load_script("19_review_output_video.py", "p5_output_review")
+content_summary = load_script("05_write_content_summary.py", "p5_content_summary", register=True)
+prompt_generator = load_script("04_generate_ai_prompt.py", "p5_prompt_generator", register=True)
+material_match = load_script("17_match_materials_to_brief.py", "p5_material_match", register=True)
+output_review = load_script("19_review_output_video.py", "p5_output_review", register=True)
 
 
 class P5LocalPromptRegressionTests(unittest.TestCase):

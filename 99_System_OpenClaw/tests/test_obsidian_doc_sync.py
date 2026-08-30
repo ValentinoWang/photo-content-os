@@ -1,18 +1,15 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 import os
 import tempfile
 import unittest
 from pathlib import Path
 
+from _support import load_script
 
-SCRIPT_PATH = Path(__file__).resolve().parents[1] / "scripts" / "30_check_obsidian_doc_sync.py"
-SPEC = importlib.util.spec_from_file_location("check_obsidian_doc_sync", SCRIPT_PATH)
-assert SPEC is not None and SPEC.loader is not None
-check_obsidian_doc_sync = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(check_obsidian_doc_sync)
+
+check_obsidian_doc_sync = load_script("30_check_obsidian_doc_sync.py", "check_obsidian_doc_sync")
 
 
 class ObsidianDocSyncTest(unittest.TestCase):

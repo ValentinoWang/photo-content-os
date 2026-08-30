@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 import shutil
 import subprocess
@@ -14,6 +13,8 @@ SCRIPTS = SYSTEM / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 from edl_contract import normalise_edl  # noqa: E402
+
+from _support import load_script  # noqa: E402
 
 
 def create_video(path: Path, duration: float = 1.2) -> None:
@@ -67,11 +68,7 @@ class MediaIntegrationTests(unittest.TestCase):
                 self.assertTrue((project / ref).is_file())
 
     def test_preview_execute_creates_local_mp4(self):
-        spec = importlib.util.spec_from_file_location("preview_execution_under_test", SCRIPTS / "20_render_preview.py")
-        module = importlib.util.module_from_spec(spec)
-        assert spec and spec.loader
-        sys.modules[spec.name] = module
-        spec.loader.exec_module(module)
+        module = load_script("20_render_preview.py", "preview_execution_under_test", register=True)
         with tempfile.TemporaryDirectory() as directory:
             project = Path(directory)
             media = project / "01_Media"
