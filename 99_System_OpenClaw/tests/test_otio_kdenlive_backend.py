@@ -47,6 +47,44 @@ def write_edl(path: Path, *, raw360: bool = False, overlap: bool = False) -> Non
     path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
 
 
+def write_layered_edl(path: Path) -> None:
+    """Two primary clips with a picture-in-picture overlay across the seam."""
+    data = {
+        "doc_type": "edit_decision_list",
+        "project_id": "demo_中文",
+        "clips": [
+            {
+                "slot": "01",
+                "time_range": "0.000-2.000",
+                "caption": "第一句",
+                "candidate_files": ["素材/第一段.mp4"],
+                "edit_note": "开场",
+                "role": "a_roll",
+                "layer": "primary",
+            },
+            {
+                "slot": "02",
+                "time_range": "2.000-4.000",
+                "caption": "第二句",
+                "candidate_files": ["素材/第二段.mp4"],
+                "edit_note": "结尾",
+                "role": "a_roll",
+                "layer": "primary",
+            },
+            {
+                "slot": "03",
+                "time_range": "1.500-3.000",
+                "caption": "小窗补充",
+                "candidate_files": ["素材/小窗.mp4"],
+                "edit_note": "画中画盖住跳切",
+                "role": "b_roll",
+                "layer": "overlay",
+            },
+        ],
+    }
+    path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+
 class OtioKdenliveBackendTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -215,6 +253,80 @@ class OtioKdenliveBackendTests(unittest.TestCase):
                 expected=2,
             )
             self.assertIn("overlaps", completed.stderr)
+
+    def test_layered_edl_becomes_a_multi_track_timeline(self) -> None:
+        """An overlay clip must composite on its own track, not flatten inline."""
+        import xml.etree.ElementTree as ET
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            edl = root / "edl.json"
+            storyboard = root / "storyboard.md"
+            storyboard.write_text("# 分镜\n", encoding="utf-8")
+            write_layered_edl(edl)
+            output = root / "edit_handoff"
+            revision_dir = output / "1"
+            self.run_script(
+                "generate-otio", "--project-id", "demo_中文", "--project-revision", "1",
+                "--edl", str(edl), "--storyboard", str(storyboard), "--output-root", str(output),
+                "--result-output", str(root / "otio_result.json"),
+            )
+            manifest = json.loads((revision_dir / "manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["layers"], ["primary", "overlay"])
+            self.assertEqual(
+                [clip["layer"] for clip in manifest["clips"]],
+                ["primary", "primary", "overlay"],
+            )
+
+            timeline = json.loads((revision_dir / "timeline.otio").read_text(encoding="utf-8"))
+            self.assertEqual(len(timeline["tracks"]["children"]), 2)
+            self.assertEqual(
+                [track["name"] for track in timeline["tracks"]["children"]],
+                ["主画面", "叠加"],
+            )
+
+            self.run_script(
+                "generate-kdenlive", "--project-id", "demo_中文", "--project-revision", "1",
+                "--otio", str(revision_dir / "timeline.otio"), "--output-root", str(output),
+                "--result-output", str(root / "kdenlive_result.json"),
+            )
+            mlt = ET.parse(revision_dir / "timeline.kdenlive").getroot()
+            self.assertEqual(len(mlt.findall("./playlist")), 2)
+            self.assertEqual(len(mlt.findall("./tractor/track")), 2)
+            # Without a blend the top track would hide the cut underneath it.
+            transitions = mlt.findall("./tractor/transition")
+            self.assertEqual(len(transitions), 1)
+            self.assertEqual(transitions[0].attrib["mlt_service"], "frei0r.cairoblend")
+            self.assertEqual(transitions[0].attrib["b_track"], "1")
+
+            validation = root / "validation.json"
+            self.run_script(
+                "validate", "--project-id", "demo_中文", "--project-revision", "1",
+                "--otio", str(revision_dir / "timeline.otio"),
+                "--kdenlive", str(revision_dir / "timeline.kdenlive"),
+                "--result-output", str(validation),
+            )
+            result = json.loads(validation.read_text(encoding="utf-8"))
+            self.assertEqual(result["clip_count"], 3)
+            self.assertEqual(result["track_count"], 2)
+
+    def test_rejects_unknown_layer(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            edl = root / "edl.json"
+            storyboard = root / "storyboard.md"
+            storyboard.write_text("# 分镜\n", encoding="utf-8")
+            write_layered_edl(edl)
+            payload = json.loads(edl.read_text(encoding="utf-8"))
+            payload["clips"][2]["layer"] = "foreground"
+            edl.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+            completed = self.run_script(
+                "generate-otio", "--project-id", "demo_中文", "--project-revision", "1",
+                "--edl", str(edl), "--storyboard", str(storyboard),
+                "--output-root", str(root / "edit_handoff"),
+                expected=2,
+            )
+            self.assertIn("unknown layer", completed.stderr)
 
 
 if __name__ == "__main__":

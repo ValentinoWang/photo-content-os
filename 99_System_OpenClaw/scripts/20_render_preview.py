@@ -12,7 +12,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-from edl_contract import load_and_normalise, parse_time_range
+from edl_contract import load_and_normalise, parse_time_range, require_flat_timeline
 from media_common import safe_project_file
 
 
@@ -56,6 +56,9 @@ def build_plan(
     fps: int = 30,
     require_sources: bool = True,
 ) -> dict[str, Any]:
+    # The preview concatenates clips end to end, so a layered EDL would render
+    # overlays inline as extra shots instead of composited on top of the cut.
+    require_flat_timeline(edl, backend="本地预览粗剪")
     clips: list[PreviewClip] = []
     inputs: list[str] = []
     filter_parts: list[str] = []

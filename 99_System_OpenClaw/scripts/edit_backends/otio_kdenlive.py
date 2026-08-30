@@ -36,6 +36,21 @@ class ContractError(ValueError):
 
 FPS = 30
 
+# Composition stack, bottom first.  A background bed sits under the main cut and
+# overlays composite on top of it, so this order is also the MLT track order.
+LAYER_STACK = ("background", "primary", "overlay")
+DEFAULT_LAYER = "primary"
+
+# Only the primary track carries the "one thing at a time" rule; overlay and
+# background clips are expected to run underneath or on top of it.
+EXCLUSIVE_LAYERS = frozenset({"primary"})
+
+LAYER_TRACK_NAMES = {
+    "background": "背景",
+    "primary": "主画面",
+    "overlay": "叠加",
+}
+
 
 @dataclass(frozen=True)
 class TimelineClip:
@@ -45,6 +60,8 @@ class TimelineClip:
     caption: str
     candidate: str
     note: str
+    layer: str = DEFAULT_LAYER
+    role: str = ""
 
     @property
     def duration(self) -> float:
@@ -152,13 +169,22 @@ def load_edl(edl_path: Path, project_id: str, project_revision: int) -> tuple[di
         raise ContractError("EDL clips must be a non-empty list")
 
     clips: list[TimelineClip] = []
-    previous_end = 0.0
+    # Overlap is judged per composition layer.  A v1 EDL has no `layer` on any
+    # clip, so everything lands on "primary" and this stays the pre-v2 check.
+    previous_end_by_layer: dict[str, float] = {}
     for index, raw in enumerate(raw_clips, start=1):
         if not isinstance(raw, dict):
             raise ContractError(f"EDL clip #{index} must be an object")
         start, end = parse_time_range(str(raw.get("time_range") or ""))
-        if start < previous_end:
-            raise ContractError(f"EDL clip #{index} overlaps the preceding clip")
+        layer = str(raw.get("layer") or DEFAULT_LAYER)
+        if layer not in LAYER_STACK:
+            raise ContractError(
+                f"EDL clip #{index} has unknown layer {layer!r}; expected one of {', '.join(LAYER_STACK)}"
+            )
+        if layer in EXCLUSIVE_LAYERS and start < previous_end_by_layer.get(layer, 0.0):
+            raise ContractError(
+                f"EDL clip #{index} overlaps the preceding clip on the {layer} layer"
+            )
         candidates = raw.get("candidate_files")
         if not isinstance(candidates, list) or not candidates or not isinstance(candidates[0], str):
             raise ContractError(f"EDL clip #{index} needs a first candidate_files entry")
@@ -177,10 +203,25 @@ def load_edl(edl_path: Path, project_id: str, project_revision: int) -> tuple[di
                 caption=str(raw.get("caption") or "").strip(),
                 candidate=candidate,
                 note=str(raw.get("edit_note") or "").strip(),
+                layer=layer,
+                role=str(raw.get("role") or "").strip(),
             )
         )
-        previous_end = end
+        previous_end_by_layer[layer] = end
     return edl, clips
+
+
+def clips_by_layer(clips: list[TimelineClip]) -> list[tuple[str, list[TimelineClip]]]:
+    """Group clips into composition order, bottom track first.
+
+    Empty layers are dropped so a v1 EDL still produces exactly one track.
+    """
+    grouped: list[tuple[str, list[TimelineClip]]] = []
+    for layer in LAYER_STACK:
+        members = [clip for clip in clips if clip.layer == layer]
+        if members:
+            grouped.append((layer, sorted(members, key=lambda item: item.start)))
+    return grouped
 
 
 def require_otio() -> Any:
@@ -205,15 +246,22 @@ def plain_metadata(value: Any) -> dict[str, Any]:
         return {}
 
 
-def make_otio_timeline(
+def make_otio_track(
     otio: Any,
     project_id: str,
     project_revision: int,
-    edl: dict[str, Any],
+    layer: str,
     clips: list[TimelineClip],
-    revision_basis: dict[str, str] | None,
 ) -> Any:
-    track = otio.schema.Track(name="主画面", kind=otio.schema.TrackKind.Video)
+    """Build one video track for a single composition layer.
+
+    Clips within a layer are laid end to end with explicit gaps, exactly as the
+    single-track backend always did; layers only differ in stacking order.
+    """
+    track = otio.schema.Track(
+        name=LAYER_TRACK_NAMES.get(layer, layer), kind=otio.schema.TrackKind.Video
+    )
+    track.metadata["content_os"] = {"layer": layer}
     cursor = 0.0
     for clip in clips:
         if clip.start > cursor:
@@ -244,6 +292,8 @@ def make_otio_timeline(
             "candidate_file": clip.candidate,
             "edit_note": clip.note,
             "media_exists_at_generation": Path(clip.candidate).expanduser().exists(),
+            "layer": clip.layer,
+            **({"role": clip.role} if clip.role else {}),
         }
         track.append(segment)
         if clip.caption:
@@ -256,9 +306,23 @@ def make_otio_timeline(
                 color=otio.schema.Marker.Color.YELLOW,
             ))
         cursor = clip.end
+    return track
 
+
+def make_otio_timeline(
+    otio: Any,
+    project_id: str,
+    project_revision: int,
+    edl: dict[str, Any],
+    clips: list[TimelineClip],
+    revision_basis: dict[str, str] | None,
+) -> Any:
+    grouped = clips_by_layer(clips)
     timeline = otio.schema.Timeline(name=f"{project_id}_r{project_revision}")
-    timeline.tracks.append(track)
+    for layer, members in grouped:
+        timeline.tracks.append(
+            make_otio_track(otio, project_id, project_revision, layer, members)
+        )
     timeline.metadata["content_os"] = {
         "spec_version": "content_os_v0.2",
         "project_id": project_id,
@@ -266,6 +330,7 @@ def make_otio_timeline(
         "editor_backend": "otio_kdenlive",
         "source_edl": str(edl.get("project_id") or project_id),
         "fps": FPS,
+        "layers": [layer for layer, _ in grouped],
     }
     if revision_basis is not None:
         timeline.metadata["content_os"]["revision_basis"] = revision_basis
@@ -295,9 +360,12 @@ def timeline_manifest(
                 "candidate_file": clip.candidate,
                 "needs_relink": not Path(clip.candidate).expanduser().exists(),
                 "caption": clip.caption,
+                "layer": clip.layer,
+                **({"role": clip.role} if clip.role else {}),
             }
             for clip in clips
         ],
+        "layers": [layer for layer, _ in clips_by_layer(clips)],
     }
     if revision_basis is not None:
         manifest["revision_basis"] = revision_basis
@@ -381,30 +449,62 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
     ET.SubElement(root, "profile", {"description": "HD Vertical 1080p 30 fps", "width": "1080", "height": "1920", "frame_rate_num": "30", "frame_rate_den": "1", "progressive": "1", "sample_aspect_num": "1", "sample_aspect_den": "1", "display_aspect_num": "9", "display_aspect_den": "16"})
     ET.SubElement(root, "property", {"name": "kdenlive:docproperties.projectid"}).text = project_id
     ET.SubElement(root, "property", {"name": "content_os.project_revision"}).text = str(project_revision)
-    playlist = ET.SubElement(root, "playlist", {"id": "playlist0"})
-    count = 0
     tracks = list(otio_data.tracks)
     if not tracks:
         raise ContractError("OTIO timeline has no tracks")
-    for item in tracks[0]:
-        if item.__class__.__name__ == "Gap":
-            ET.SubElement(playlist, "blank", {"length": str(item.source_range.duration.to_frames())})
-            continue
-        if item.__class__.__name__ != "Clip":
-            continue
-        reference = item.media_reference
-        target = str(getattr(reference, "target_url", ""))
-        metadata = plain_metadata(item.metadata).get("content_os", {})
-        candidate = str(metadata.get("candidate_file") or target)
-        producer_id = f"producer{count}"
-        producer = ET.SubElement(root, "producer", {"id": producer_id, "in": "0", "out": str(max(0, int(item.source_range.duration.to_frames()) - 1))})
-        ET.SubElement(producer, "property", {"name": "resource"}).text = safe_xml_resource(candidate)
-        ET.SubElement(producer, "property", {"name": "kdenlive:clipname"}).text = item.name
-        ET.SubElement(producer, "property", {"name": "content_os:needs_relink"}).text = "1" if not Path(candidate).expanduser().exists() else "0"
-        ET.SubElement(playlist, "entry", {"producer": producer_id, "in": "0", "out": str(max(0, int(item.source_range.duration.to_frames()) - 1))})
-        count += 1
+
+    # One MLT playlist per OTIO track, in the timeline's own order.  OTIO stacks
+    # tracks bottom-first and so does MLT, so the order carries straight over.
+    count = 0
+    playlist_ids: list[str] = []
+    for track_index, track in enumerate(tracks):
+        playlist_id = f"playlist{track_index}"
+        playlist_ids.append(playlist_id)
+        playlist = ET.SubElement(root, "playlist", {"id": playlist_id})
+        track_metadata = plain_metadata(track.metadata).get("content_os", {})
+        layer = str(track_metadata.get("layer") or "")
+        if layer:
+            ET.SubElement(
+                playlist, "property", {"name": "content_os:layer"}
+            ).text = layer
+        ET.SubElement(
+            playlist, "property", {"name": "kdenlive:track_name"}
+        ).text = str(track.name or layer or playlist_id)
+        for item in track:
+            if item.__class__.__name__ == "Gap":
+                ET.SubElement(playlist, "blank", {"length": str(item.source_range.duration.to_frames())})
+                continue
+            if item.__class__.__name__ != "Clip":
+                continue
+            reference = item.media_reference
+            target = str(getattr(reference, "target_url", ""))
+            metadata = plain_metadata(item.metadata).get("content_os", {})
+            candidate = str(metadata.get("candidate_file") or target)
+            producer_id = f"producer{count}"
+            producer = ET.SubElement(root, "producer", {"id": producer_id, "in": "0", "out": str(max(0, int(item.source_range.duration.to_frames()) - 1))})
+            ET.SubElement(producer, "property", {"name": "resource"}).text = safe_xml_resource(candidate)
+            ET.SubElement(producer, "property", {"name": "kdenlive:clipname"}).text = item.name
+            ET.SubElement(producer, "property", {"name": "content_os:needs_relink"}).text = "1" if not Path(candidate).expanduser().exists() else "0"
+            ET.SubElement(playlist, "entry", {"producer": producer_id, "in": "0", "out": str(max(0, int(item.source_range.duration.to_frames()) - 1))})
+            count += 1
+
     tractor = ET.SubElement(root, "tractor", {"id": "tractor0"})
-    ET.SubElement(tractor, "track", {"producer": "playlist0"})
+    for playlist_id in playlist_ids:
+        ET.SubElement(tractor, "track", {"producer": playlist_id})
+    # Without an explicit compositing transition MLT simply shows the topmost
+    # track opaque, which would hide everything beneath an overlay.  Blend each
+    # track above the bottom one onto the accumulated result instead.
+    for track_index in range(1, len(playlist_ids)):
+        ET.SubElement(
+            tractor,
+            "transition",
+            {
+                "id": f"transition{track_index - 1}",
+                "a_track": "0",
+                "b_track": str(track_index),
+                "mlt_service": "frei0r.cairoblend",
+            },
+        )
     ET.SubElement(tractor, "property", {"name": "kdenlive:docproperties.documentversion"}).text = "1"
     path.write_text(ET.tostring(root, encoding="unicode") + "\n", encoding="utf-8")
     return count
@@ -474,10 +574,30 @@ def validate(args: argparse.Namespace) -> int:
     xml_revision = next((element.text for element in root.findall("property") if element.attrib.get("name") == "content_os.project_revision"), None)
     if xml_project_id != args.project_id or xml_revision != str(args.project_revision):
         raise ContractError("Kdenlive project identity does not match project_id/project_revision")
-    entries = root.findall("./playlist[@id='playlist0']/entry")
-    otio_clips = [item for item in list(timeline.tracks[0]) if item.__class__.__name__ == "Clip"]
-    if len(entries) != len(otio_clips) or not entries:
-        raise ContractError("Kdenlive playlist clip count does not match OTIO")
+    # Compare every track, not just the first: an overlay track that silently
+    # failed to serialise would otherwise validate clean.
+    otio_tracks = list(timeline.tracks)
+    if not otio_tracks:
+        raise ContractError("OTIO timeline has no tracks")
+    xml_playlists = root.findall("./playlist")
+    if len(xml_playlists) != len(otio_tracks):
+        raise ContractError(
+            f"Kdenlive track count does not match OTIO: {len(xml_playlists)} playlists vs {len(otio_tracks)} tracks"
+        )
+    total_entries = 0
+    for track_index, track in enumerate(otio_tracks):
+        entries = root.findall(f"./playlist[@id='playlist{track_index}']/entry")
+        otio_clips = [item for item in list(track) if item.__class__.__name__ == "Clip"]
+        if len(entries) != len(otio_clips):
+            raise ContractError(
+                f"Kdenlive playlist{track_index} clip count does not match OTIO track {track_index}"
+            )
+        total_entries += len(entries)
+    if not total_entries:
+        raise ContractError("Kdenlive project has no clips")
+    tractor_tracks = root.findall("./tractor/track")
+    if len(tractor_tracks) != len(otio_tracks):
+        raise ContractError("Kdenlive tractor does not reference every playlist")
     kdenlive = kdenlive_executable()
     version = "not_installed"
     if kdenlive:
@@ -493,7 +613,8 @@ def validate(args: argparse.Namespace) -> int:
         "editor_backend": "otio_kdenlive",
         "otio_reopened": True,
         "kdenlive_project_reopened": True,
-        "clip_count": len(entries),
+        "clip_count": total_entries,
+        "track_count": len(otio_tracks),
         "kdenlive_available": bool(kdenlive),
         "kdenlive_version": version,
     }

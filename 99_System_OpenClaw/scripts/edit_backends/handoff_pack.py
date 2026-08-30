@@ -45,6 +45,8 @@ TIMING_TOLERANCE = 0.000_001
 CSV_FIELDS = [
     "timeline_order",
     "slot",
+    "layer",
+    "role",
     "timeline_start_sec",
     "timeline_end_sec",
     "duration_sec",
@@ -56,6 +58,16 @@ CSV_FIELDS = [
     "edit_note",
     "caption",
 ]
+
+# Composition stack, bottom first.  Rows are grouped in this order so a reader
+# walks the base cut before the things layered on top of it.
+LAYER_STACK = ("background", "primary", "overlay")
+DEFAULT_LAYER = "primary"
+
+# The pack promises one continuous base cut a human can play straight through.
+# That promise belongs to the primary layer only: overlays sit on top of it by
+# definition and would otherwise read as gaps and overlaps.
+CONTIGUOUS_LAYER = "primary"
 
 
 class HandoffError(Exception):
@@ -320,12 +332,20 @@ def normalise_timeline(
             materials_root=materials_root,
         )
         raw_sources.extend(skipped_raw)
+        layer = str(raw_clip.get("layer") or DEFAULT_LAYER).strip()
+        if layer not in LAYER_STACK:
+            raise HandoffError(
+                "layer_invalid",
+                f"EDL 第 {index} 个片段的 layer 无效：{layer!r}；只接受 {'、'.join(LAYER_STACK)}",
+            )
         source_start = parse_seconds(raw_clip.get("source_start_sec", 0), field=f"clips[{index}].source_start_sec")
         source_end = round(source_start + duration, 3)
         timeline.append(
             {
                 "timeline_order": index,
                 "slot": slot,
+                "layer": layer,
+                "role": str(raw_clip.get("role", "")).strip(),
                 "timeline_start_sec": start,
                 "timeline_end_sec": end,
                 "duration_sec": duration,
@@ -339,22 +359,64 @@ def normalise_timeline(
             }
         )
 
-    input_slots = [int(clip["slot"]) for clip in timeline]
-    timeline.sort(key=lambda item: (float(item["timeline_start_sec"]), int(item["slot"])))
-    if input_slots != [int(clip["slot"]) for clip in timeline]:
-        raise HandoffError("edl_order_mismatch", "EDL 的 clips 顺序必须与时间线顺序一致，不能由交接包静默重排")
+    # Ordering is checked within each layer: the EDL must already list a layer's
+    # clips in the order they play, and the pack must not silently reorder them.
+    for layer in LAYER_STACK:
+        members = [clip for clip in timeline if clip["layer"] == layer]
+        input_slots = [int(clip["slot"]) for clip in members]
+        sorted_slots = [
+            int(clip["slot"])
+            for clip in sorted(
+                members,
+                key=lambda item: (float(item["timeline_start_sec"]), int(item["slot"])),
+            )
+        ]
+        if input_slots != sorted_slots:
+            raise HandoffError(
+                "edl_order_mismatch",
+                f"EDL 中 {layer} 层的 clips 顺序必须与时间线顺序一致，不能由交接包静默重排",
+            )
+
+    timeline.sort(
+        key=lambda item: (
+            LAYER_STACK.index(item["layer"]),
+            float(item["timeline_start_sec"]),
+            int(item["slot"]),
+        )
+    )
     for expected_order, clip in enumerate(timeline, start=1):
         clip["timeline_order"] = expected_order
-        if expected_order == 1:
-            if abs(float(clip["timeline_start_sec"])) > TIMING_TOLERANCE:
-                raise HandoffError("timeline_not_zero", "剪辑交接包的第一段必须从 0 秒开始")
-            continue
-        previous = timeline[expected_order - 2]
+
+    # The base cut must still be one gapless run starting at zero.  Overlay and
+    # background clips are layered on top of it, so they are excluded here --
+    # a v1 EDL puts every clip on the primary layer and sees the original rule.
+    base = [clip for clip in timeline if clip["layer"] == CONTIGUOUS_LAYER]
+    if not base:
+        raise HandoffError(
+            "timeline_base_missing",
+            f"交接包需要至少一段 {CONTIGUOUS_LAYER} 层素材作为主轴",
+        )
+    if abs(float(base[0]["timeline_start_sec"])) > TIMING_TOLERANCE:
+        raise HandoffError("timeline_not_zero", "剪辑交接包的第一段必须从 0 秒开始")
+    for previous, clip in zip(base, base[1:]):
         if abs(float(clip["timeline_start_sec"]) - float(previous["timeline_end_sec"])) > TIMING_TOLERANCE:
             raise HandoffError(
                 "timeline_gap_or_overlap",
                 f"EDL 时间线必须连续且无重叠：第 {previous['slot']} 段结束于 {previous['timeline_end_sec']}，"
                 f"第 {clip['slot']} 段开始于 {clip['timeline_start_sec']}",
+            )
+
+    # Layered clips must land inside the base cut; anything past its end would
+    # silently extend the delivery beyond what the base run promises.
+    base_end = float(base[-1]["timeline_end_sec"])
+    for clip in timeline:
+        if clip["layer"] == CONTIGUOUS_LAYER:
+            continue
+        if float(clip["timeline_end_sec"]) > base_end + TIMING_TOLERANCE:
+            raise HandoffError(
+                "layer_outside_base",
+                f"第 {clip['slot']} 段（{clip['layer']} 层）结束于 {clip['timeline_end_sec']}，"
+                f"超出主轴的 {base_end}",
             )
     return timeline, sorted(set(raw_sources))
 
@@ -760,18 +822,23 @@ def validate(manifest_path: Path) -> dict[str, Any]:
             raise HandoffError("clips_csv_columns", "clips.csv 缺少必需列") from exc
         if abs((end - start) - duration) > TIMING_TOLERANCE or duration <= 0:
             raise HandoffError("timeline_duration", f"clips.csv 第 {index} 行的时长不一致")
-        if previous_end is None:
-            if abs(start) > TIMING_TOLERANCE:
-                raise HandoffError("timeline_not_zero", "clips.csv 第一段必须从 0 秒开始")
-        elif abs(start - previous_end) > TIMING_TOLERANCE:
-            raise HandoffError("timeline_gap_or_overlap", "clips.csv 时间线必须连续且无重叠")
-        previous_end = end
+        # Continuity is a promise about the base cut only; layered rows sit on
+        # top of it and are skipped here (a v1 pack is all primary rows).
+        if row["layer"] == CONTIGUOUS_LAYER:
+            if previous_end is None:
+                if abs(start) > TIMING_TOLERANCE:
+                    raise HandoffError("timeline_not_zero", "clips.csv 第一段必须从 0 秒开始")
+            elif abs(start - previous_end) > TIMING_TOLERANCE:
+                raise HandoffError(
+                    "timeline_gap_or_overlap", "clips.csv 主轴时间线必须连续且无重叠"
+                )
+            previous_end = end
         if is_raw360(Path(row["source_file"])):
             raise HandoffError("raw360_reframe_required", "交接包不得直接使用 360 原始材料")
         source = Path(row["source_file"])
         if not source.is_file():
             raise HandoffError("source_missing", f"交接包引用的材料不存在：{source}")
-        for key in ("slot", "timeline_start_sec", "timeline_end_sec", "duration_sec", "source_file", "caption"):
+        for key in ("slot", "layer", "role", "timeline_start_sec", "timeline_end_sec", "duration_sec", "source_file", "caption"):
             if str(clip.get(key, "")) != row[key]:
                 raise HandoffError("manifest_csv_mismatch", f"manifest 与 clips.csv 在第 {index} 段的 {key} 不一致")
         srt_index, srt_start, srt_end, srt_caption = srt_entry
@@ -779,6 +846,12 @@ def validate(manifest_path: Path) -> dict[str, Any]:
             raise HandoffError("srt_timing_mismatch", f"captions.srt 第 {index} 段时间与 clips.csv 不一致")
         if srt_caption != row["caption"]:
             raise HandoffError("srt_caption_mismatch", f"captions.srt 第 {index} 段文字与 clips.csv 不一致")
+
+    if previous_end is None:
+        raise HandoffError(
+            "timeline_base_missing",
+            f"clips.csv 必须包含至少一段 {CONTIGUOUS_LAYER} 层素材作为主轴",
+        )
 
     if manifest.get("raw360_direct_use") != "blocked":
         raise HandoffError("raw360_policy", "manifest 必须明确禁止直接使用 360 原始材料")

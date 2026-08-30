@@ -86,6 +86,27 @@ def make_inputs(base: Path, *, raw_second_source: bool = False, gap: bool = Fals
     return edl_path, storyboard, materials, output_root
 
 
+def add_overlay_clip(edl_path: Path, project: Path, *, end: float = 3.0) -> None:
+    """Layer a picture-in-picture insert over the seam of the base cut."""
+    overlay_source = project / "media" / "pip.mp4"
+    overlay_source.write_bytes(b"fixture-media-pip")
+    payload = json.loads(edl_path.read_text(encoding="utf-8"))
+    payload["clips"].append(
+        {
+            "slot": 30,
+            "time_range": f"1.500-{end:.3f}",
+            "purpose": "盖跳切",
+            "visual_need": "小窗补充",
+            "edit_note": "画中画",
+            "caption": "小窗字幕",
+            "candidate_files": ["media/pip.mp4"],
+            "role": "b_roll",
+            "layer": "overlay",
+        }
+    )
+    edl_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+
 class EditHandoffPackTest(unittest.TestCase):
     def test_generate_and_validate_immutable_handoff_pack(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -274,6 +295,72 @@ class EditHandoffPackTest(unittest.TestCase):
                 handle.write("\n")
             blocked = run_backend("validate", "--manifest", str(package / "manifest.json"), expected_returncode=2)
             self.assertEqual(blocked["error_code"], "artifact_checksum_mismatch")
+
+    def test_overlay_clip_does_not_break_the_continuous_base_cut(self) -> None:
+        """An overlay overlaps the base cut by design; only the base must be gapless."""
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            edl, storyboard, materials, output_root = make_inputs(base)
+            project = base / "project"
+            add_overlay_clip(edl, project)
+            materials.write_text(
+                json.dumps(
+                    {
+                        "local_project_path": str(project),
+                        "files": [
+                            str(project / "media" / "intro.mp4"),
+                            str(project / "media" / "middle.mp4"),
+                            str(project / "media" / "pip.mp4"),
+                        ],
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            generated = run_backend(
+                "generate", "--project-revision", "1",
+                "--edl", str(edl), "--storyboard", str(storyboard),
+                "--materials", str(materials), "--output-root", str(output_root),
+            )
+            self.assertEqual(generated["status"], "done")
+            package_dir = (output_root / "1").resolve()
+            with (package_dir / "clips.csv").open(encoding="utf-8", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+            # Rows are grouped bottom-of-stack first, so the base cut reads
+            # straight through before the layered insert.
+            self.assertEqual([row["layer"] for row in rows], ["primary", "primary", "overlay"])
+            self.assertEqual([row["slot"] for row in rows], ["10", "20", "30"])
+            self.assertEqual(rows[2]["role"], "b_roll")
+
+            run_backend("validate", "--manifest", str(package_dir / "manifest.json"))
+
+    def test_rejects_overlay_running_past_the_base_cut(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            edl, storyboard, materials, output_root = make_inputs(base)
+            project = base / "project"
+            add_overlay_clip(edl, project, end=5.0)
+            materials.write_text(
+                json.dumps(
+                    {
+                        "local_project_path": str(project),
+                        "files": [
+                            str(project / "media" / "intro.mp4"),
+                            str(project / "media" / "middle.mp4"),
+                            str(project / "media" / "pip.mp4"),
+                        ],
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            blocked = run_backend(
+                "generate", "--project-revision", "1",
+                "--edl", str(edl), "--storyboard", str(storyboard),
+                "--materials", str(materials), "--output-root", str(output_root),
+                expected_returncode=2,
+            )
+            self.assertEqual(blocked["error_code"], "layer_outside_base")
 
 
 if __name__ == "__main__":

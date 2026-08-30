@@ -8,6 +8,7 @@ import math
 from pathlib import Path
 from typing import Any
 
+from edl_contract import EDLContractError, require_flat_timeline
 from jianying_roughcut_common import (
     ContractError,
     is_raw360_media,
@@ -61,6 +62,12 @@ def video_track_from_edl(
     clips = edl.get("clips")
     if not isinstance(clips, list) or not clips:
         raise ContractError("EDL must contain non-empty clips list")
+    # The Jianying draft plan lays every clip onto one video track, so a layered
+    # EDL must be refused rather than silently flattened into the wrong cut.
+    try:
+        require_flat_timeline(edl, backend="剪映草稿")
+    except EDLContractError as exc:
+        raise ContractError(str(exc)) from exc
 
     for index, clip in enumerate(clips, start=1):
         if not isinstance(clip, dict):
