@@ -9,7 +9,16 @@ import subprocess
 import json
 from pathlib import Path
 
-from media_common import eligible_item, load_manifest, project_path, relative_posix, safe_slug, save_manifest
+from media_common import (
+    analysis_plan_path,
+    audio_dir,
+    eligible_item,
+    load_manifest,
+    project_path,
+    relative_posix,
+    safe_slug,
+    save_manifest,
+)
 
 
 def main() -> None:
@@ -24,12 +33,12 @@ def main() -> None:
     include_derived = args.include_derived_marker == "--include-derived"
     project = project_path(args.project_dir)
     manifest = load_manifest(project)
-    plan_path = project / "_ai_analysis" / "analysis_plan.json"
+    plan_path = analysis_plan_path(project)
     budgets = {}
     if plan_path.is_file():
         data = json.loads(plan_path.read_text(encoding="utf-8"))
         budgets = {str(row.get("media_id")): float(row.get("audio_seconds_budget") or 0) for row in data.get("plans", []) if isinstance(row, dict)}
-    audio_root = project / "_ai_analysis" / "audio"
+    audio_root = audio_dir(project)
     audio_root.mkdir(parents=True, exist_ok=True)
 
     for item in manifest["items"]:

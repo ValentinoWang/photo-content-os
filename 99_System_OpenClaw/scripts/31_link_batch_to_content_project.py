@@ -9,7 +9,7 @@ from typing import Any
 
 import yaml
 
-from media_common import now_iso
+from media_common import ANALYSIS_DIR, now_iso
 from project_bootstrap_common import BATCH_NOTE_NAME as BATCH_NOTE
 from project_bootstrap_common import count_media_files
 from project_bootstrap_common import normalize_label
@@ -22,7 +22,7 @@ from runtime_paths import workspace_root as _shared_workspace_root
 DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 SCRIPT_DIR = Path(__file__).resolve().parent
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
-LINK_RELATIVE_PATH = Path("_ai_analysis/content_os_link.yaml")
+LINK_RELATIVE_PATH = Path(ANALYSIS_DIR) / "content_os_link.yaml"
 
 FIELD_TO_KEY = {
     "Obsidian 项目ID": "obsidian_project_id",

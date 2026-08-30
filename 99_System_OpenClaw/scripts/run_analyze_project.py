@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT
-from media_common import project_path
+from media_common import analysis_dir, analysis_plan_path, manifest_path as _manifest_path, project_path
 from runtime_paths import repository_root as _repository_root
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -90,9 +90,9 @@ def main() -> int:
     run([sys.executable, script("01_scan_media_manifest.py"), str(project)])
     run([sys.executable, script("07_validate_media_decisions.py"), str(project)])
 
-    analysis_root = project / "_ai_analysis"
-    plan_path = analysis_root / "analysis_plan.json"
-    manifest_path = analysis_root / "media_manifest.json"
+    analysis_root = analysis_dir(project)
+    plan_path = analysis_plan_path(project)
+    manifest_path = _manifest_path(project)
     run(
         [
             sys.executable,

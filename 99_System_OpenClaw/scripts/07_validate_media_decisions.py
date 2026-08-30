@@ -7,7 +7,7 @@ import argparse
 from collections import Counter
 from pathlib import Path
 
-from media_common import load_manifest, now_iso, project_path
+from media_common import analysis_dir, load_manifest, now_iso, project_path
 
 
 SEVERITY_ORDER = {"ERROR": 0, "WARNING": 1, "INFO": 2}
@@ -39,7 +39,7 @@ def collect_issues(manifest: dict[str, object]) -> list[tuple[dict[str, object],
 
 
 def write_report(project: Path, issues: list[tuple[dict[str, object], dict[str, str]]]) -> Path:
-    report = project / "_ai_analysis" / "media_decision_warnings.md"
+    report = analysis_dir(project) / "media_decision_warnings.md"
     report.parent.mkdir(parents=True, exist_ok=True)
 
     counts = Counter(issue.get("severity", "INFO") for _, issue in issues)

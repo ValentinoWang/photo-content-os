@@ -8,6 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from media_common import ANALYSIS_DIR
 from runtime_paths import repository_root as _repository_root
 
 MAX_TRACKED_FILE_BYTES = 5 * 1024 * 1024
@@ -25,7 +26,7 @@ PROHIBITED_TOP_LEVELS = {
 PROHIBITED_PARTS = {
     ".venv-content-os",
     "App_WorkCache",
-    "_ai_analysis",
+    ANALYSIS_DIR,
     "_openclaw",
     "restructure_audit",
 }

@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from media_common import MEDIA_EXTS, now_iso, path_inside as inside, safe_slug
+from media_common import ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, safe_slug
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -149,7 +149,7 @@ def count_media_files(batch_dir: Path) -> int:
         if not path.is_file():
             continue
         rel_parts = path.relative_to(batch_dir).parts
-        if any(part.startswith(".") or part in {"_ai_analysis", LOCAL_LINK_DIR} for part in rel_parts):
+        if any(part.startswith(".") or part in {ANALYSIS_DIR, LOCAL_LINK_DIR} for part in rel_parts):
             continue
         if path.suffix.lower() in MEDIA_EXTS:
             count += 1

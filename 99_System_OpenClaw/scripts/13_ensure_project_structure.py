@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from media_common import MEDIA_EXTS, now_iso, path_inside as inside, project_path, relative_posix
+from media_common import ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, project_path, relative_posix
 
 
 PROJECT_DIRS = [
@@ -65,7 +65,7 @@ PROTECTED_TOP_LEVEL_DIRS = {
     "91_Output",
     "92_Aliyun_SyncReady",
     "93_GroupPhoto_Distribution_合照发放",
-    "_ai_analysis",
+    ANALYSIS_DIR,
     "待增加",
 }
 

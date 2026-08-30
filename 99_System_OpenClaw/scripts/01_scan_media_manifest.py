@@ -15,6 +15,7 @@ from media_common import (
     is_hidden_or_analysis,
     lifecycle_for,
     live_status_for,
+    manifest_path,
     media_dimensions_for_image,
     media_id,
     now_iso,
@@ -213,7 +214,7 @@ def main() -> None:
     project = Path(manifest["project_dir"])
     total = len(manifest["items"])
     eligible = sum(1 for item in manifest["items"] if item.get("analysis_eligible"))
-    print(f"扫描完成：{project / '_ai_analysis' / 'media_manifest.json'}")
+    print(f"扫描完成：{manifest_path(project)}")
     print(f"共发现媒体/元数据：{total} 个；默认进入 AI 分析：{eligible} 个")
 
 

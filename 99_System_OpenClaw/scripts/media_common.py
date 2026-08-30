@@ -56,8 +56,47 @@ def ensure_project_additions_dir(additions: Path, project: Path) -> Path:
     return additions
 
 
+ANALYSIS_PLAN_NAME = "analysis_plan.json"
+
+
+def analysis_dir(project: Path) -> Path:
+    """The `_ai_analysis/` root every per-project AI-analysis output lives
+    under (L-18). One-off files that don't warrant their own named helper
+    (e.g. project_overview.md) should join directly onto this rather than
+    repeating the ANALYSIS_DIR literal."""
+    return project / ANALYSIS_DIR
+
+
 def manifest_path(project: Path) -> Path:
-    return project / ANALYSIS_DIR / MANIFEST_NAME
+    return analysis_dir(project) / MANIFEST_NAME
+
+
+def analysis_plan_path(project: Path) -> Path:
+    return analysis_dir(project) / ANALYSIS_PLAN_NAME
+
+
+def prompts_dir(project: Path) -> Path:
+    return analysis_dir(project) / "prompts"
+
+
+def summaries_dir(project: Path) -> Path:
+    return analysis_dir(project) / "summaries"
+
+
+def keyframes_dir(project: Path) -> Path:
+    return analysis_dir(project) / "keyframes"
+
+
+def transcripts_dir(project: Path) -> Path:
+    return analysis_dir(project) / "transcripts"
+
+
+def audio_dir(project: Path) -> Path:
+    return analysis_dir(project) / "audio"
+
+
+def cache_dir(project: Path, kind: str) -> Path:
+    return analysis_dir(project) / "cache" / kind
 
 
 def now_iso() -> str:

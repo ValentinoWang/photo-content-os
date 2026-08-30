@@ -24,7 +24,7 @@ from llm_common import (
     REQUIRED_CREATIVE_REASONING,
     load_markdown_frontmatter,
 )
-from media_common import read_yaml_mapping, write_yaml_atomic
+from media_common import analysis_dir, manifest_path as _manifest_path, read_yaml_mapping, write_yaml_atomic
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS
 from runtime_paths import obsidian_root, runtime_python, workspace_root as _shared_workspace_root
 from validate_content_os_task import (
@@ -616,7 +616,7 @@ def local_material_match_result(
         "local_outputs": {
             "local_project_path": str(project_dir),
             "content_os_link": str(content_os_link) if content_os_link else "",
-            "media_manifest": str(project_dir / "_ai_analysis" / "media_manifest.json"),
+            "media_manifest": str(_manifest_path(project_dir)),
         },
         "source_script": vault_rel(config, source_script),
         "source_script_used": True,
@@ -662,7 +662,7 @@ def run_local_material_match(
 
     if execute:
         if skip_analyze:
-            manifest = project_dir / "_ai_analysis" / "media_manifest.json"
+            manifest = _manifest_path(project_dir)
             if not manifest.exists() or manifest.stat().st_size == 0:
                 raise RunnerError(f"--skip-analyze requires existing media manifest: {manifest}")
             tools_used["analyze_project"] = "skipped_existing_media_manifest"
@@ -1267,7 +1267,7 @@ def run_output_review(
     script = optional_input_file_path(config, task, "script_path") or (project_package_dir(config, task) / "04_script.md")
     publish_pack = optional_input_file_path(config, task, "publish_pack_path") or (project_package_dir(config, task) / "09_publish_pack.md")
     bgm_review_dir = output_review_bgm_review_dir(config, task)
-    generation_dir = project_dir / "_ai_analysis" / "output_review" / str(task["task_id"])
+    generation_dir = analysis_dir(project_dir) / "output_review" / str(task["task_id"])
     metrics = generation_dir / "metrics.json"
     local_result = generation_dir / "output_review_result.yaml"
     tools_used: dict[str, str] = {}

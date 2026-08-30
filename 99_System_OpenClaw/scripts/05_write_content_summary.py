@@ -23,14 +23,19 @@ from llm_common import (
 )
 from media_common import (
     SUMMARY_GLOB,
+    analysis_dir,
+    analysis_plan_path,
+    cache_dir,
     eligible_item,
     file_sha256 as _sha256_file,
     item_prompt_path,
     item_summary_path,
     load_manifest,
     project_path,
+    prompts_dir,
     safe_project_file as _safe_project_file,
     save_manifest,
+    summaries_dir,
 )
 
 SYSTEM_PROMPT = """你是 Photo Content OS 的素材内容理解代理。
@@ -326,7 +331,7 @@ def generate_project_overview(
     )
     if "待 AI 分析" in overview:
         raise RuntimeError("LLM project overview still contains placeholder text")
-    (project / "_ai_analysis" / "project_overview.md").write_text(overview.rstrip() + "\n", encoding="utf-8")
+    (analysis_dir(project) / "project_overview.md").write_text(overview.rstrip() + "\n", encoding="utf-8")
 
 
 def _load_analysis_plan(path: Path | None) -> dict[str, dict[str, Any]]:
@@ -361,12 +366,12 @@ def main() -> None:
 
     project = project_path(args.project_dir)
     manifest = load_manifest(project)
-    prompt_dir = project / "_ai_analysis" / "prompts"
-    summary_dir = project / "_ai_analysis" / "summaries"
+    prompt_dir = prompts_dir(project)
+    summary_dir = summaries_dir(project)
     summary_dir.mkdir(parents=True, exist_ok=True)
-    plan_path = args.analysis_plan.expanduser().resolve() if args.analysis_plan else project / "_ai_analysis" / "analysis_plan.json"
+    plan_path = args.analysis_plan.expanduser().resolve() if args.analysis_plan else analysis_plan_path(project)
     plan_by_id = _load_analysis_plan(plan_path if plan_path.is_file() else None)
-    cache_root = args.cache_root.expanduser().resolve() if args.cache_root else project / "_ai_analysis" / "cache" / "summaries"
+    cache_root = args.cache_root.expanduser().resolve() if args.cache_root else cache_dir(project, "summaries")
 
     items = [item for item in manifest["items"] if eligible_item(item, include_derived=args.include_derived)]
     processed = skipped = model_calls = cache_hits = metadata_cards = 0

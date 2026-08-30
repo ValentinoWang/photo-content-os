@@ -31,7 +31,7 @@ from pathlib import Path
 from typing import Any
 
 from llm_common import MAX_PROMPT_SUMMARY_CHARS, bounded_prompt_text
-from media_common import find_item_summary, is_raw360_item, safe_project_file
+from media_common import find_item_summary, is_raw360_item, safe_project_file, summaries_dir
 
 
 def read_text(path: Path) -> str:
@@ -67,7 +67,7 @@ def raw360_reference_summary(item: dict[str, Any]) -> str:
 
 def summary_text(project: Path, item: dict[str, Any], *, max_chars: int = MAX_PROMPT_SUMMARY_CHARS) -> str:
     """Return the cached content summary for `item`, or a RawVault/360 fallback."""
-    summaries = project / "_ai_analysis" / "summaries"
+    summaries = summaries_dir(project)
     path = find_item_summary(summaries, item)
     if path is not None:
         return bounded_prompt_text(path.read_text(encoding="utf-8"), max_chars)

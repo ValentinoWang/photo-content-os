@@ -7,10 +7,20 @@ import argparse
 from pathlib import Path
 
 from llm_common import creator_context_block
-from media_common import PROMPT_GLOB, eligible_item, item_prompt_path, load_manifest, project_path
+from media_common import (
+    ANALYSIS_DIR,
+    PROMPT_GLOB,
+    analysis_dir,
+    eligible_item,
+    item_prompt_path,
+    load_manifest,
+    manifest_path as manifest_json_path,
+    project_path,
+    prompts_dir,
+)
 
 VISUAL_SIMILARITY_THRESHOLD = 8
-USER_INTENT_NOTES = "_ai_analysis/user_intent_notes.md"
+USER_INTENT_NOTES = f"{ANALYSIS_DIR}/user_intent_notes.md"
 
 CARD_SCHEMA = """# 作品内容概述
 
@@ -326,11 +336,10 @@ def prune_stale_prompts(prompt_dir: Path, expected: set[Path]) -> int:
 
 
 def render_template(text: str, project: Path, creator_context: str = "") -> str:
-    manifest_path = project / "_ai_analysis" / "media_manifest.json"
     rendered = (
         text.replace("{{PROJECT_DIR}}", str(project))
-        .replace("{{MANIFEST_PATH}}", str(manifest_path))
-        .replace("{{ANALYSIS_DIR}}", str(project / "_ai_analysis"))
+        .replace("{{MANIFEST_PATH}}", str(manifest_json_path(project)))
+        .replace("{{ANALYSIS_DIR}}", str(analysis_dir(project)))
     )
     context = creator_context or creator_context_block(project)
     return f"## 当前账号上下文\n\n{context}\n\n{rendered}"
@@ -370,7 +379,7 @@ def main() -> None:
 
     project = project_path(args.project_dir)
     manifest = load_manifest(project)
-    prompt_dir = project / "_ai_analysis" / "prompts"
+    prompt_dir = prompts_dir(project)
     prompt_dir.mkdir(parents=True, exist_ok=True)
     user_intent_notes = load_user_intent_notes(project)
     creator_context = creator_context_block(project)
@@ -424,7 +433,7 @@ def main() -> None:
         if eligible_item(item, include_derived=args.include_derived) or item.get("lifecycle") == "raw_or_pending"
     ]
     similarity_groups, similarity_pairs = visual_similarity_groups(project, l3_items)
-    (project / "_ai_analysis" / "visual_similarity_groups.md").write_text(
+    (analysis_dir(project) / "visual_similarity_groups.md").write_text(
         visual_similarity_markdown(similarity_groups, similarity_pairs),
         encoding="utf-8",
     )

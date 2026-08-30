@@ -12,7 +12,16 @@ from pathlib import Path
 from typing import Any
 
 from analysis_tiering import evenly_spaced_indexes
-from media_common import eligible_item, load_manifest, project_path, relative_posix, safe_slug, save_manifest
+from media_common import (
+    analysis_plan_path,
+    eligible_item,
+    keyframes_dir,
+    load_manifest,
+    project_path,
+    relative_posix,
+    safe_slug,
+    save_manifest,
+)
 
 
 class KeyframeError(RuntimeError):
@@ -129,10 +138,10 @@ def main() -> int:
         raise KeyframeError("ffmpeg not found")
 
     project = project_path(args.project_dir)
-    plan_path = args.analysis_plan.expanduser().resolve() if args.analysis_plan else project / "_ai_analysis" / "analysis_plan.json"
+    plan_path = args.analysis_plan.expanduser().resolve() if args.analysis_plan else analysis_plan_path(project)
     plan_by_id = _load_plan(plan_path if plan_path.exists() else None)
     manifest = load_manifest(project)
-    output_root = project / "_ai_analysis" / "keyframes"
+    output_root = keyframes_dir(project)
     output_root.mkdir(parents=True, exist_ok=True)
     extracted = 0
     skipped = 0

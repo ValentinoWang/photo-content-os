@@ -17,7 +17,7 @@ import tempfile
 from pathlib import Path
 from typing import Any, Protocol
 
-from media_common import load_manifest, project_path, safe_project_file as _safe_audio_path, save_manifest
+from media_common import load_manifest, project_path, safe_project_file as _safe_audio_path, save_manifest, transcripts_dir
 
 SCHEMA_VERSION = "audio_transcript_v1"
 DEFAULT_OPENAI_MODEL = "gpt-4o-mini-transcribe"
@@ -216,7 +216,7 @@ def process_project(
     allow_pending: bool,
 ) -> dict[str, int]:
     manifest = load_manifest(project)
-    output_dir = project / "_ai_analysis" / "transcripts"
+    output_dir = transcripts_dir(project)
     output_dir.mkdir(parents=True, exist_ok=True)
     generated = skipped = pending = failed = 0
     for item in manifest.get("items", []):

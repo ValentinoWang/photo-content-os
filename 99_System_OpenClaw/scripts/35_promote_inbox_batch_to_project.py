@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from media_common import MEDIA_EXTS, now_iso, relative_posix, safe_slug
+from media_common import ANALYSIS_DIR, MEDIA_EXTS, now_iso, relative_posix, safe_slug
 from project_bootstrap_common import ensure_formal_project_for_batch
 from runtime_paths import workspace_root as _shared_workspace_root
 
@@ -20,9 +20,8 @@ WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 BATCH_NOTE_NAME = "00_批次说明.md"
 LOCAL_LINK_DIR = "_openclaw"
 PROJECT_LINK_NAME = "project.json"
-ANALYSIS_DIR = "_ai_analysis"
 PROJECT_INBOX_DIR = "00_Inbox_待分类"
-PROMOTED_ANALYSIS_ROOT = "_ai_analysis/promoted_inbox_batches"
+PROMOTED_ANALYSIS_ROOT = f"{ANALYSIS_DIR}/promoted_inbox_batches"
 PROMOTED_LINK_ROOT = "_openclaw/promoted_inbox_batches"
 NON_MEDIA_DIR = "_随批次非素材"
 

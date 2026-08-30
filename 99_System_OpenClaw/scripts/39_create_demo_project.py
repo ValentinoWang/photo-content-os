@@ -11,6 +11,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from media_common import manifest_path as _manifest_path
 from runtime_paths import repository_root as _repository_root
 
 SAMPLE_PNG = base64.b64decode(
@@ -48,7 +49,7 @@ def create_demo(workspace_root: Path, project_name: str) -> dict[str, object]:
     run_script(scripts_dir / "13_ensure_project_structure.py", project)
     run_script(scripts_dir / "01_scan_media_manifest.py", project)
 
-    manifest_path = project / "_ai_analysis" / "media_manifest.json"
+    manifest_path = _manifest_path(project)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     items = manifest.get("items")
     if not isinstance(items, list) or len(items) != len(SAMPLE_NAMES):

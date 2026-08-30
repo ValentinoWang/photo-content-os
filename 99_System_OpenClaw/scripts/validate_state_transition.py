@@ -12,7 +12,7 @@ from typing import Any
 import yaml
 
 from llm_common import load_markdown_frontmatter
-from media_common import read_yaml_mapping
+from media_common import keyframes_dir, manifest_path, read_yaml_mapping
 
 
 class TransitionError(Exception):
@@ -94,12 +94,12 @@ def check_named_evidence(
         return
 
     if evidence == "media_manifest_exists":
-        path = local_project_path / "_ai_analysis" / "media_manifest.json"
+        path = manifest_path(local_project_path)
         parse_json_file(path)
         return
 
     if evidence == "keyframes_generated":
-        path = local_project_path / "_ai_analysis" / "keyframes"
+        path = keyframes_dir(local_project_path)
         if not path.exists() or not any(path.rglob("*")):
             raise TransitionError(f"keyframes are missing: {path}")
         return

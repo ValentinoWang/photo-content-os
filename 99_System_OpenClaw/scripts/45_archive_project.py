@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from media_common import file_sha256 as sha256_file, now_iso, project_path, safe_slug
+from media_common import ANALYSIS_DIR, file_sha256 as sha256_file, now_iso, project_path, safe_slug
 
 
 EXCLUDED_TOP_LEVELS = {"App_WorkCache", "待增加", "80_To_iCloudPhotos_精选入库", "05_Archive_Cold_Storage", "02_Asset_Library"}
@@ -34,7 +34,7 @@ def build_manifest(project: Path, gate: dict[str, Any]) -> dict[str, Any]:
         if not path.is_file() or any(part.startswith(".") for part in path.relative_to(project).parts):
             continue
         rel = path.relative_to(project)
-        if rel.parts[0] in EXCLUDED_TOP_LEVELS or rel.parts[0] == "_ai_analysis":
+        if rel.parts[0] in EXCLUDED_TOP_LEVELS or rel.parts[0] == ANALYSIS_DIR:
             continue
         files.append({"path": rel.as_posix(), "size": path.stat().st_size, "sha256": sha256_file(path)})
     return {"schema_version": 1, "tool": "45_archive_project", "generated_at": now_iso(), "project": project.name, "readiness": gate, "files": files}
