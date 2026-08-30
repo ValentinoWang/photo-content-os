@@ -350,6 +350,32 @@ def clip_layer(clip: dict[str, Any]) -> str:
     return str(clip.get("layer") or DEFAULT_CLIP_LAYER)
 
 
+def layers_used(edl: dict[str, Any]) -> list[str]:
+    """Distinct composition layers present in an EDL, in stack order.
+
+    A v1 document always returns ["primary"].
+    """
+    present = {clip_layer(clip) for clip in edl.get("clips") or [] if isinstance(clip, dict)}
+    return [layer for layer in CLIP_LAYERS if layer in present]
+
+
+def require_flat_timeline(edl: dict[str, Any], *, backend: str) -> None:
+    """Guard for backends that can only render one video track.
+
+    Flattening a layered cut onto a single track silently produces the wrong
+    video -- an overlay would be concatenated inline instead of composited on
+    top -- so single-track backends must refuse the document instead.
+    """
+    extra = [layer for layer in layers_used(edl) if layer != DEFAULT_CLIP_LAYER]
+    if extra:
+        _fail(
+            "layered_timeline_unsupported",
+            f"{backend} 只支持单轨时间线，无法渲染 {'、'.join(extra)} 层；"
+            f"请改用支持多轨的后端（otio_kdenlive），或先把叠加层压成主轴素材",
+            "clips",
+        )
+
+
 V2_CLIP_FIELDS = (
     "role",
     "layer",
