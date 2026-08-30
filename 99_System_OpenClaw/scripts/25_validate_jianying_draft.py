@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from jianying_roughcut_common import ContractError, load_json, load_yaml, write_yaml
+from jianying_roughcut_common import ContractError, count_plan_clips, load_json, load_yaml, write_yaml
 
 
 def json_parseable(path: Path) -> bool:
@@ -17,13 +17,6 @@ def json_parseable(path: Path) -> bool:
     except json.JSONDecodeError:
         return False
     return True
-
-
-def count_plan_clips(plan: dict[str, Any], track_id: str) -> int:
-    for track in plan.get("tracks", []):
-        if isinstance(track, dict) and track.get("track_id") == track_id:
-            return len(track.get("clips") or [])
-    raise ContractError(f"track not found in plan: {track_id}")
 
 
 def count_draft_segments(tracks: list[Any], *, track_type: str, track_name: str | None = None) -> int:

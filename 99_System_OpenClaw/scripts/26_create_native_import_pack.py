@@ -18,21 +18,11 @@ from typing import Any
 
 from edl_contract import EDLContractError
 from edl_contract import parse_seconds as canonical_parse_seconds
-from jianying_roughcut_common import ContractError, ensure_dir, is_raw360_media, load_json, write_json, write_yaml
+from jianying_roughcut_common import ContractError, ensure_dir, is_raw360_media, load_json, track_by_id, write_json, write_yaml
 
 
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif"}
-
-
-def track_by_id(plan: dict[str, Any], track_id: str) -> dict[str, Any]:
-    tracks = plan.get("tracks")
-    if not isinstance(tracks, list):
-        raise ContractError("plan.tracks must be a list")
-    for track in tracks:
-        if isinstance(track, dict) and track.get("track_id") == track_id:
-            return track
-    raise ContractError(f"track not found in plan: {track_id}")
 
 
 def sec(value: Any) -> float:

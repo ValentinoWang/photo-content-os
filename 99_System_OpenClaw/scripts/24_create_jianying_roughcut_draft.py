@@ -15,19 +15,9 @@ import pyJianYingDraft as jy
 
 from edl_contract import EDLContractError
 from edl_contract import parse_seconds as canonical_parse_seconds
-from jianying_roughcut_common import ContractError, ensure_dir, load_json, write_yaml
+from jianying_roughcut_common import ContractError, ensure_dir, load_json, track_by_id, write_yaml
 
 SEC = 1_000_000
-
-
-def track_by_id(plan: dict[str, Any], track_id: str) -> dict[str, Any]:
-    tracks = plan.get("tracks")
-    if not isinstance(tracks, list):
-        raise ContractError("plan.tracks must be a list")
-    for track in tracks:
-        if isinstance(track, dict) and track.get("track_id") == track_id:
-            return track
-    raise ContractError(f"track not found in plan: {track_id}")
 
 
 def seconds(value: Any) -> int:

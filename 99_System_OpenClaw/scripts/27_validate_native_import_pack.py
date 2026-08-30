@@ -9,29 +9,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-from jianying_roughcut_common import ContractError, load_json, load_yaml, write_yaml
-
-
-def ffprobe_duration(path: Path) -> float:
-    result = subprocess.run(
-        [
-            "ffprobe",
-            "-v",
-            "error",
-            "-show_entries",
-            "format=duration",
-            "-of",
-            "default=noprint_wrappers=1:nokey=1",
-            str(path),
-        ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        check=False,
-    )
-    if result.returncode != 0:
-        raise ContractError(f"ffprobe failed for {path}: {result.stderr.strip()}")
-    return float(result.stdout.strip())
+from jianying_roughcut_common import ContractError, count_plan_clips, ffprobe_duration_sec, load_json, load_yaml, write_yaml
 
 
 def ffprobe_video_stream(path: Path) -> dict[str, Any]:
@@ -81,13 +59,6 @@ def validate_video_spec(path: Path, spec: dict[str, Any], width: int, height: in
         raise ContractError(f"clip resolution mismatch: {path} got={spec['width']}x{spec['height']} expected={width}x{height}")
     if abs(float(spec["fps"]) - float(fps)) > 0.02:
         raise ContractError(f"clip fps mismatch: {path} got={spec['fps']} expected={fps}")
-
-
-def count_plan_clips(plan: dict[str, Any], track_id: str) -> int:
-    for track in plan.get("tracks", []):
-        if isinstance(track, dict) and track.get("track_id") == track_id:
-            return len(track.get("clips") or [])
-    raise ContractError(f"track not found in plan: {track_id}")
 
 
 def count_srt_captions(path: Path) -> int:
@@ -140,14 +111,15 @@ def validate(plan_path: Path, result_path: Path, validation_output: Path | None)
 
     clip_durations = []
     for clip in clips:
-        duration = ffprobe_duration(clip)
-        if duration <= 0:
-            raise ContractError(f"clip duration must be positive: {clip}")
+        # L-16: ffprobe_duration_sec already guarantees duration > 0 (raises
+        # ContractError itself otherwise), so the former separate `duration
+        # <= 0` re-check here is now redundant and dropped.
+        duration = ffprobe_duration_sec(clip)
         spec = ffprobe_video_stream(clip)
         validate_video_spec(clip, spec, width, height, fps)
         clip_durations.append({"clip": str(clip), "duration_sec": round(duration, 3), **spec})
 
-    preview_duration = ffprobe_duration(preview)
+    preview_duration = ffprobe_duration_sec(preview)
     preview_spec = ffprobe_video_stream(preview)
     validate_video_spec(preview, preview_spec, width, height, fps)
     validation = {

@@ -46,6 +46,29 @@ def write_yaml(path: Path, data: dict[str, Any]) -> None:
         yaml.safe_dump(data, handle, allow_unicode=True, sort_keys=False)
 
 
+def track_by_id(plan: dict[str, Any], track_id: str) -> dict[str, Any]:
+    """Look up one track by id (L-16). Baseline: 24_create_jianying_roughcut_draft.py's
+    version, which is byte-identical to 26_create_native_import_pack.py's -- the only
+    difference from 25/27's inline track lookup (folded into count_plan_clips below) is
+    the explicit plan.tracks-must-be-a-list check."""
+    tracks = plan.get("tracks")
+    if not isinstance(tracks, list):
+        raise ContractError("plan.tracks must be a list")
+    for track in tracks:
+        if isinstance(track, dict) and track.get("track_id") == track_id:
+            return track
+    raise ContractError(f"track not found in plan: {track_id}")
+
+
+def count_plan_clips(plan: dict[str, Any], track_id: str) -> int:
+    """One-line wrapper around track_by_id (L-16): 25/27's near-identical
+    count_plan_clips did its own track lookup instead of sharing track_by_id's;
+    both raised the identical "track not found in plan" message on a miss, so
+    this wrapper is a zero-behavior-change consolidation, not two separate
+    implementations of the same lookup."""
+    return len(track_by_id(plan, track_id).get("clips") or [])
+
+
 def parse_time_range(value: str) -> tuple[float, float]:
     """Parse the canonical "start-end" seconds string.
 
