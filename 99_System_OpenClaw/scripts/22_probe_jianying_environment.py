@@ -6,13 +6,13 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
-import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
 from jianying_roughcut_common import ContractError, ensure_dir, now_compact, write_json
+from runtime_paths import is_windows
 
 
 def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
@@ -21,8 +21,7 @@ def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
 
 def jianying_root_candidates(*, platform: str | None = None, home: Path | None = None) -> list[Path]:
     user_home = (home or Path.home()).expanduser()
-    platform_name = (platform or sys.platform).lower()
-    if platform_name.startswith("win") or os.name == "nt" and platform is None:
+    if is_windows(platform):
         return [
             user_home / "AppData" / "Local" / "JianyingPro" / "User Data" / "Projects",
             user_home / "AppData" / "Local" / "CapCut" / "User Data" / "Projects",

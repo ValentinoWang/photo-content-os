@@ -10,10 +10,22 @@ SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 import runtime_paths  # noqa: E402
-from runtime_paths import obsidian_root, platform_contract_name, runtime_dir, runtime_pip, runtime_python, supported_python  # noqa: E402
+from runtime_paths import is_windows, obsidian_root, platform_contract_name, runtime_dir, runtime_pip, runtime_python, supported_python  # noqa: E402
 
 
 class RuntimePathTests(unittest.TestCase):
+    def test_is_windows_branches(self):
+        """Pin is_windows()'s four branches directly (pe-10) -- previously
+        this predicate was only exercised indirectly through runtime_python."""
+        self.assertTrue(is_windows("win32"))
+        self.assertFalse(is_windows("darwin"))
+        self.assertFalse(is_windows("linux"))
+        with patch.object(runtime_paths.os, "name", "nt"):
+            self.assertTrue(is_windows(None))
+            self.assertFalse(is_windows("darwin"))  # explicit non-win platform wins over os.name
+        with patch.object(runtime_paths.os, "name", "posix"):
+            self.assertFalse(is_windows(None))
+
     def test_platform_runtime_paths(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

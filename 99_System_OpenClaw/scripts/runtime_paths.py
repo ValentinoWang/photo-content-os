@@ -62,18 +62,32 @@ def runtime_dir(repo_root: Path | None = None) -> Path:
     return root / "99_System_OpenClaw" / RUNTIME_NAME
 
 
+def is_windows(platform: str | None = None) -> bool:
+    """True when `platform` (or the running host, if omitted) is Windows.
+
+    `platform`, when given, is matched by its "win" prefix (accepts values
+    like "win32"/"windows"). When omitted, also falls back to `os.name ==
+    "nt"` so this still resolves correctly on a host whose `sys.platform`
+    string doesn't start with "win" (pe-10). Baseline: runtime_python's and
+    runtime_pip's identical two-line check, also duplicated verbatim in
+    22_probe_jianying_environment.jianying_root_candidates. Deliberately NOT
+    consulted by platform_contract_name() below, which is a pure mapper over
+    the platform string only -- see its own docstring.
+    """
+    name = (platform or sys.platform).lower()
+    return name.startswith("win") or (os.name == "nt" and platform is None)
+
+
 def runtime_python(repo_root: Path | None = None, *, platform: str | None = None) -> Path:
     runtime = runtime_dir(repo_root)
-    platform_name = (platform or sys.platform).lower()
-    if platform_name.startswith("win") or os.name == "nt" and platform is None:
+    if is_windows(platform):
         return runtime / "Scripts" / "python.exe"
     return runtime / "bin" / "python"
 
 
 def runtime_pip(repo_root: Path | None = None, *, platform: str | None = None) -> Path:
     runtime = runtime_dir(repo_root)
-    platform_name = (platform or sys.platform).lower()
-    if platform_name.startswith("win") or os.name == "nt" and platform is None:
+    if is_windows(platform):
         return runtime / "Scripts" / "pip.exe"
     return runtime / "bin" / "pip"
 
@@ -84,6 +98,15 @@ def supported_python(version: tuple[int, ...] | None = None) -> bool:
 
 
 def platform_contract_name(platform: str | None = None) -> str:
+    """Map a platform string to its contract name (used to name contract artifacts).
+
+    Deliberately a pure function of `platform`/`sys.platform` only -- unlike
+    is_windows() above, it does NOT fall back to `os.name == "nt"`. Folding
+    that fallback in here would change what this returns for `platform=None`
+    on a Windows host in exactly the edge case the pure string check avoids,
+    which openclaw_product_contract.py relies on to name contract artifacts.
+    Not a "fourth spelling" of is_windows() -- keep it independent (pe-10).
+    """
     name = (platform or sys.platform).lower()
     if name.startswith("darwin"):
         return "macos"
