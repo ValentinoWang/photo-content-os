@@ -29,6 +29,7 @@ from media_common import (
     item_summary_path,
     load_manifest,
     project_path,
+    safe_project_file as _safe_project_file,
     save_manifest,
 )
 
@@ -61,18 +62,6 @@ def has_llm_summary(path: Path) -> bool:
         return False
     text = path.read_text(encoding="utf-8")
     return "# 作品内容概述" in text and "待 AI 分析" not in text
-
-
-def _safe_project_file(project: Path, raw: object) -> Path | None:
-    if not isinstance(raw, str) or not raw.strip():
-        return None
-    candidate = Path(raw).expanduser()
-    resolved = candidate.resolve() if candidate.is_absolute() else (project / candidate).resolve()
-    try:
-        resolved.relative_to(project.resolve())
-    except ValueError:
-        return None
-    return resolved if resolved.is_file() else None
 
 
 def _evenly_limit(paths: list[Path], limit: int) -> list[Path]:

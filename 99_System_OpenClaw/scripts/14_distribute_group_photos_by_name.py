@@ -10,7 +10,7 @@ import re
 import shutil
 from pathlib import Path
 
-from media_common import media_id, now_iso, project_path, relative_posix, safe_slug
+from media_common import media_id, now_iso, path_inside as inside, project_path, relative_posix, safe_slug
 
 
 DISTRIBUTION_DIR = "93_GroupPhoto_Distribution_合照发放"
@@ -24,14 +24,6 @@ README_TEMPLATE = """# 合照发放
 - 执行 `python3 99_System_OpenClaw/scripts/14_distribute_group_photos_by_name.py "项目目录"` 后，会把照片复制到 `按姓名/姓名/`。
 - 姓名为空或写 `待确认` 的照片会复制到 `待确认姓名/`。
 """
-
-
-def inside(child: Path, parent: Path) -> bool:
-    try:
-        child.resolve().relative_to(parent.resolve())
-        return True
-    except ValueError:
-        return False
 
 
 def parse_names(value: str) -> list[str]:

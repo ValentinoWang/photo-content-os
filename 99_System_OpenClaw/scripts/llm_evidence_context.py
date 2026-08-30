@@ -31,7 +31,7 @@ from pathlib import Path
 from typing import Any
 
 from llm_common import MAX_PROMPT_SUMMARY_CHARS, bounded_prompt_text
-from media_common import find_item_summary, is_raw360_item
+from media_common import find_item_summary, is_raw360_item, safe_project_file
 
 
 def read_text(path: Path) -> str:
@@ -98,14 +98,8 @@ def transcript_segments(
     but are free to diverge -- do not fold these into a single hardcoded
     value a future caller can't override.
     """
-    raw = item.get("transcript_path")
-    if not isinstance(raw, str) or not raw.strip():
-        return []
-    path = Path(raw).expanduser()
-    resolved = path.resolve() if path.is_absolute() else (project / path).resolve()
-    try:
-        resolved.relative_to(project.resolve())
-    except ValueError:
+    resolved = safe_project_file(project, item.get("transcript_path"))
+    if resolved is None:
         return []
     try:
         data = json.loads(resolved.read_text(encoding="utf-8"))

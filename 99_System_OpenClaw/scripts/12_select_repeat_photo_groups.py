@@ -16,6 +16,7 @@ from media_common import (
     ensure_project_additions_dir,
     is_hidden_or_analysis,
     now_iso,
+    path_inside as inside,
     project_path,
     relative_posix,
 )
@@ -23,12 +24,6 @@ from media_common import (
 
 SUPPORTED_IMAGE_EXTS = IMAGE_EXTS - {".heic", ".heif"}
 PLAN_NAME = "repeat_photo_selection_plan.json"
-def inside(child: Path, parent: Path) -> bool:
-    try:
-        child.resolve().relative_to(parent.resolve())
-        return True
-    except ValueError:
-        return False
 
 
 def resolve_additions(project: Path, value: str | None) -> Path:

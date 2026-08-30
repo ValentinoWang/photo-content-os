@@ -47,14 +47,6 @@ class PromoteError(Exception):
     """Raised when an Inbox batch cannot be promoted safely."""
 
 
-def inside(child: Path, parent: Path) -> bool:
-    try:
-        child.resolve().relative_to(parent.resolve())
-        return True
-    except ValueError:
-        return False
-
-
 def workspace_inbox_root(workspace_root: Path) -> Path:
     return workspace_root / "00_Inbox_Mac_Intake"
 

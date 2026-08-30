@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from media_common import MEDIA_EXTS, now_iso, project_path, relative_posix
+from media_common import MEDIA_EXTS, now_iso, path_inside as inside, project_path, relative_posix
 
 
 PROJECT_DIRS = [
@@ -76,14 +76,6 @@ def workcache_root_for_project(project: Path) -> Path:
 
 def is_inbox_batch_path(project: Path) -> bool:
     return any(parent.name == "00_Inbox_Mac_Intake" for parent in [project, *project.parents])
-
-
-def inside(child: Path, parent: Path) -> bool:
-    try:
-        child.resolve().relative_to(parent.resolve())
-        return True
-    except ValueError:
-        return False
 
 
 def ensure_structure(project: Path) -> tuple[list[Path], list[Path], list[Path], Path]:

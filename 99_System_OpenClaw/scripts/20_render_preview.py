@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from edl_contract import load_and_normalise, parse_time_range
+from media_common import safe_project_file
 
 
 class PreviewError(RuntimeError):
@@ -30,12 +31,16 @@ class PreviewClip:
 
 
 def _safe_source(project: Path, raw: str, *, require_exists: bool) -> Path:
-    path = Path(raw).expanduser()
-    resolved = path.resolve() if path.is_absolute() else (project / path).resolve()
-    try:
-        resolved.relative_to(project.resolve())
-    except ValueError as exc:
-        raise PreviewError(f"source escapes project root: {raw}") from exc
+    """L-07: shares media_common.safe_project_file's resolution/escape-guard core.
+
+    Kept as a local wrapper (not a direct call) because this script's failure
+    mode is a raised PreviewError, and require_exists (allowing a plan to
+    reference an output path that does not exist yet) is unique to this
+    caller -- see L-07's divergence notes.
+    """
+    resolved = safe_project_file(project, raw, must_be_file=False)
+    if resolved is None:
+        raise PreviewError(f"source escapes project root: {raw}")
     if require_exists and not resolved.is_file():
         raise PreviewError(f"source file does not exist: {raw}")
     return resolved

@@ -17,7 +17,7 @@ import tempfile
 from pathlib import Path
 from typing import Any, Protocol
 
-from media_common import load_manifest, project_path, save_manifest
+from media_common import load_manifest, project_path, safe_project_file as _safe_audio_path, save_manifest
 
 SCHEMA_VERSION = "audio_transcript_v1"
 DEFAULT_OPENAI_MODEL = "gpt-4o-mini-transcribe"
@@ -204,18 +204,6 @@ def build_provider(name: str, *, model: str, sidecar_dir: Path | None) -> Provid
     if value in {"pending", "none", "disabled"}:
         return PendingProvider()
     raise TranscriptionError(f"unsupported transcription provider: {name}")
-
-
-def _safe_audio_path(project: Path, raw: object) -> Path | None:
-    if not isinstance(raw, str) or not raw.strip():
-        return None
-    path = Path(raw).expanduser()
-    resolved = path.resolve() if path.is_absolute() else (project / path).resolve()
-    try:
-        resolved.relative_to(project.resolve())
-    except ValueError:
-        return None
-    return resolved if resolved.is_file() else None
 
 
 def process_project(

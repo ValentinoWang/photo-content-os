@@ -21,6 +21,7 @@ from media_common import (
     ffprobe_json,
     media_id,
     now_iso,
+    path_inside as inside,
     project_path,
     relative_posix,
 )
@@ -43,14 +44,6 @@ class ContentDecision:
     frames: list[Path]
     contact_sheet: Path | None
     flags: list[str]
-
-
-def inside(child: Path, parent: Path) -> bool:
-    try:
-        child.resolve().relative_to(parent.resolve())
-        return True
-    except ValueError:
-        return False
 
 
 def resolve_source(project: Path, source_value: str) -> Path:

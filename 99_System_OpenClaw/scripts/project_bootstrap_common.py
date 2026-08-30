@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from media_common import MEDIA_EXTS, now_iso, safe_slug
+from media_common import MEDIA_EXTS, now_iso, path_inside as inside, safe_slug
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -204,14 +204,6 @@ def optional_task_text(task: dict[str, Any] | None, key: str) -> str:
 
 def project_workspace_root(workspace_root: Path) -> Path:
     return workspace_root / "01_Project_Workspace"
-
-
-def inside(child: Path, parent: Path) -> bool:
-    try:
-        child.resolve().relative_to(parent.resolve())
-        return True
-    except ValueError:
-        return False
 
 
 def resolve_existing_project(raw: str, workspace_root: Path) -> Path | None:

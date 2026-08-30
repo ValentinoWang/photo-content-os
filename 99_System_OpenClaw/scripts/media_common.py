@@ -143,6 +143,58 @@ def stable_json_hash(value: Any) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+# --- Path-safety guards against directory escape (L-07: a project-relative
+# --- path resolver; L-08: a plain containment check). These are two
+# --- distinct shapes of the same "is this path actually inside that
+# --- directory" question -- resolver returns the resolved Path (or None),
+# --- containment returns a bool for a caller that already has two resolved
+# --- (or resolve-worthy) Paths in hand -- so they are kept as two functions
+# --- rather than one trying to serve both call shapes.
+
+
+def path_inside(child: Path, parent: Path) -> bool:
+    """True when `child` resolves to a location inside (or equal to) `parent`.
+
+    Baseline: project_bootstrap_common.py's inside(), byte-identical across
+    7 call sites before this consolidation. Deliberately NOT the right fit
+    for edit_backends/handoff_pack.py's path_is_within(), which skips
+    resolve() on purpose (see that function's docstring) -- that one stays
+    separate.
+    """
+    try:
+        child.resolve().relative_to(parent.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def safe_project_file(project: Path, raw: object, *, must_be_file: bool = True) -> Path | None:
+    """Resolve `raw` (absolute or project-relative) to a Path inside `project`.
+
+    Returns None for a non-string/blank `raw`, a path that resolves outside
+    `project` (directory-escape guard), or -- when must_be_file=True, the
+    default -- a resolved path that is not an existing file.
+
+    Baseline: 05_write_content_summary.py's _safe_project_file (identical to
+    03_transcribe_audio.py's _safe_audio_path). Callers needing a different
+    failure mode than "return None" -- e.g. raising a domain-specific error,
+    or explicitly tolerating a not-yet-existing output path -- should call
+    this with must_be_file=False and apply their own existence/escape
+    handling on top, rather than reimplementing the resolution logic.
+    """
+    if not isinstance(raw, str) or not raw.strip():
+        return None
+    candidate = Path(raw).expanduser()
+    resolved = candidate.resolve() if candidate.is_absolute() else (project / candidate).resolve()
+    try:
+        resolved.relative_to(project.resolve())
+    except ValueError:
+        return None
+    if must_be_file:
+        return resolved if resolved.is_file() else None
+    return resolved
+
+
 # Directory-wide glob patterns shared by writers (04/05) and prune helpers.
 PROMPT_GLOB = "*_prompt.md"
 SUMMARY_GLOB = "*.summary.md"

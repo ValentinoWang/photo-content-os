@@ -9,7 +9,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from media_common import ANALYSIS_DIR, ensure_project_additions_dir, now_iso, project_path
+from media_common import ANALYSIS_DIR, ensure_project_additions_dir, now_iso, path_inside as inside, project_path
 
 
 PLAN_NAME = "additions_merge_plan.json"
@@ -24,14 +24,6 @@ def load_plan(additions_dir: Path, plan_path: str | None) -> dict[str, object]:
     if not isinstance(plan, dict) or "items" not in plan:
         raise ValueError(f"invalid merge plan: {path}")
     return plan
-
-
-def inside(child: Path, parent: Path) -> bool:
-    try:
-        child.resolve().relative_to(parent.resolve())
-        return True
-    except ValueError:
-        return False
 
 
 def selected_items(plan: dict[str, object], apply_all_pending: bool) -> list[dict[str, object]]:
