@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import json
 import os
 import re
@@ -33,6 +32,7 @@ if str(_SCRIPTS_DIR) not in sys.path:
 from edl_contract import EDLContractError  # noqa: E402
 from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
+from media_common import file_sha256 as sha256_file  # noqa: E402
 from media_common import is_raw360_path  # noqa: E402
 
 
@@ -69,14 +69,6 @@ class HandoffError(Exception):
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:

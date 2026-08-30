@@ -4,25 +4,16 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shutil
 from pathlib import Path
 from typing import Any
 
-from media_common import now_iso, project_path, safe_slug
+from media_common import file_sha256 as sha256_file, now_iso, project_path, safe_slug
 
 
 EXCLUDED_TOP_LEVELS = {"App_WorkCache", "待增加", "80_To_iCloudPhotos_精选入库", "05_Archive_Cold_Storage", "02_Asset_Library"}
 REQUIRED_DIRS = {"90_Draft_Project", "91_Output", "92_Aliyun_SyncReady"}
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def readiness(project: Path) -> dict[str, Any]:

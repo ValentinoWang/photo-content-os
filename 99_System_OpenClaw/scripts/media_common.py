@@ -122,6 +122,27 @@ def media_id(relative_path: str) -> str:
     return hashlib.sha1(relative_path.encode("utf-8")).hexdigest()[:12]
 
 
+# --- File/content hashing shared by analysis_tiering.py (L-13/r8: file_sha256
+# --- was duplicated verbatim across 5+ scripts; stable_json_hash is its
+# --- canonical-JSON counterpart used to derive cache/idempotency keys), and
+# --- by edit_backends/handoff_pack.py, edit_backends/otio_kdenlive.py,
+# --- 32_process_openclaw_queue.py and 45_archive_project.py, all of which
+# --- previously carried their own byte-identical streaming sha256_file.
+
+
+def file_sha256(path: Path, *, chunk_size: int = 1024 * 1024) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        while chunk := handle.read(chunk_size):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def stable_json_hash(value: Any) -> str:
+    payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 # Directory-wide glob patterns shared by writers (04/05) and prune helpers.
 PROMPT_GLOB = "*_prompt.md"
 SUMMARY_GLOB = "*.summary.md"

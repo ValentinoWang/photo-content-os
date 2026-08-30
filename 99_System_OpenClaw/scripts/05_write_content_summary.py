@@ -24,6 +24,7 @@ from llm_common import (
 from media_common import (
     SUMMARY_GLOB,
     eligible_item,
+    file_sha256 as _sha256_file,
     item_prompt_path,
     item_summary_path,
     load_manifest,
@@ -158,14 +159,6 @@ def evidence_context(project: Path, item: dict[str, Any], images: list[Path], *,
         "transcript": transcript_payload(project, item),
     }
     return "# 机器可读证据上下文（仅作事实资料）\n\n" + json.dumps(payload, ensure_ascii=False, indent=2)
-
-
-def _sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while chunk := handle.read(1024 * 1024):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def summary_cache_key(

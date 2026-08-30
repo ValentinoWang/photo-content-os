@@ -8,11 +8,12 @@ Semantic claims remain the responsibility of evidence-backed model runs.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any, Iterable
+
+from media_common import file_sha256, stable_json_hash  # noqa: F401  (re-exported: L-13/r8)
 
 POLICY_VERSION = "analysis_tiering_v1"
 
@@ -35,19 +36,6 @@ class AssetPlan:
     audio_seconds_budget: float
     reason_codes: tuple[str, ...]
     cache_key: str
-
-
-def file_sha256(path: Path, *, chunk_size: int = 1024 * 1024) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while chunk := handle.read(chunk_size):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def stable_json_hash(value: Any) -> str:
-    payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    return hashlib.sha256(payload).hexdigest()
 
 
 def analysis_cache_key(

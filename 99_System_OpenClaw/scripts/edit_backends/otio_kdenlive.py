@@ -9,7 +9,6 @@ media is reported as a blocking error to the caller.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shutil
 import subprocess
@@ -26,6 +25,7 @@ if str(_SCRIPTS_DIR) not in sys.path:
 
 from edl_contract import EDLContractError  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
+from media_common import file_sha256 as sha256_file  # noqa: E402
 from media_common import is_raw360_path  # noqa: E402
 
 
@@ -63,14 +63,6 @@ def read_json(path: Path) -> dict[str, Any]:
 def write_json(path: Path, data: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def revision_basis_descriptor(

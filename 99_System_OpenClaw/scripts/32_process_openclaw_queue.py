@@ -8,7 +8,6 @@ media into synced folders or include raw media filenames in cloud results.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import re
@@ -19,7 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from media_common import now_iso, safe_slug
+from media_common import file_sha256 as sha256_file, now_iso, safe_slug
 from project_bootstrap_common import BATCH_NOTE_NAME, LOCAL_LINK_DIR, count_media_files, ensure_formal_project_for_batch
 from queue_identity import VOLATILE_TASK_FIELDS, request_fingerprint
 
@@ -457,14 +456,6 @@ def move_task_file(task_path: Path, dest_dir: Path) -> Path:
         destination = dest_dir / f"{task_path.stem}_{safe_slug(now_iso(), 32)}{task_path.suffix}"
     shutil.move(str(task_path), str(destination))
     return destination
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def markdown_info(task: dict[str, Any], task_path: Path) -> dict[str, Any]:
