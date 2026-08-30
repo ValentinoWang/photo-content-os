@@ -13,7 +13,7 @@ import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import yaml
 
@@ -453,6 +453,77 @@ def load_manifest(project: Path) -> dict[str, Any]:
         return {"project_dir": str(project), "generated_at": None, "items": data}
     if not isinstance(data, dict) or "items" not in data:
         raise ValueError(f"invalid manifest format: {path}")
+    return data
+
+
+# --- Config-file readers (L-20/SV-06): "check exists, parse, check root is a
+# --- mapping/object" boilerplate that was previously written out 5 times for
+# --- YAML and 3 more times for JSON, differing only in which domain
+# --- exception type each caller raises (and, for one YAML and one JSON
+# --- caller, the noun used in the message). `error` takes that exception
+# --- type's constructor (or any Callable[[str], Exception]) so each caller
+# --- keeps its own exception class; `label`/`root_label` reproduce the two
+# --- callers whose message wording differs from the rest.
+#
+# edit_backends/handoff_pack.py's read_json_object is deliberately NOT
+# folded in here: it raises HandoffError(code, message) with three distinct
+# machine-readable codes (input_missing/invalid_json/invalid_json_root) per
+# failure mode, which the single Callable[[str], Exception] `error` shape
+# below cannot reproduce without collapsing those codes to one -- a real
+# behavior loss, not a style difference. It keeps its own implementation.
+
+
+def read_yaml_mapping(
+    path: Path,
+    *,
+    error: Callable[[str], Exception],
+    label: str = "YAML file",
+    root_label: str = "mapping",
+) -> dict[str, Any]:
+    """Read `path` as YAML and require its root to be a mapping.
+
+    Baseline: 33_enqueue_openclaw_queue_job.py's load_yaml -- the only one
+    of 5 near-identical copies that also rejected a directory path (not
+    just a missing one) before this consolidation. Catching yaml.YAMLError
+    here (none of the 5 originals did) is a deliberate behavior improvement,
+    not an equivalence-preserving refactor: malformed YAML now raises the
+    caller's own domain exception instead of a raw pyyaml exception escaping
+    past it.
+    """
+    if not path.exists() or not path.is_file():
+        raise error(f"{label} does not exist: {path}")
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            data = yaml.safe_load(handle)
+    except (OSError, yaml.YAMLError) as exc:
+        raise error(f"{label} is not valid YAML: {path}: {exc}") from exc
+    if not isinstance(data, dict):
+        raise error(f"{label} root must be a {root_label}: {path}")
+    return data
+
+
+def read_json_object(
+    path: Path,
+    *,
+    error: Callable[[str], Exception],
+    label: str = "JSON file",
+) -> dict[str, Any]:
+    """Read `path` as JSON and require its root to be an object.
+
+    Catches both OSError and json.JSONDecodeError (edit_backends/
+    otio_kdenlive.py's read_json was the only one of the 3 folded-in copies
+    that caught OSError; jianying_roughcut_common.py's load_json and
+    32_process_openclaw_queue.py's load_json did not, so a missing/
+    unreadable file previously escaped as a raw OSError instead of the
+    caller's own domain exception for those two -- the same deliberate
+    improvement as read_yaml_mapping's YAMLError handling above).
+    """
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise error(f"cannot read {label}: {path}: {exc}") from exc
+    if not isinstance(data, dict):
+        raise error(f"{label} root must be an object: {path}")
     return data
 
 

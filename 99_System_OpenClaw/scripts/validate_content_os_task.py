@@ -20,7 +20,7 @@ from typing import Any
 import yaml
 
 from llm_common import load_markdown_frontmatter as _load_markdown_frontmatter
-from media_common import write_yaml_atomic
+from media_common import read_yaml_mapping, write_yaml_atomic
 
 
 SPEC_VERSION = "content_os_v0.2"
@@ -67,13 +67,7 @@ def request_fingerprint(task: dict[str, Any]) -> str:
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        raise ValidationError(f"YAML file does not exist: {path}")
-    with path.open("r", encoding="utf-8") as handle:
-        data = yaml.safe_load(handle)
-    if not isinstance(data, dict):
-        raise ValidationError(f"YAML root must be a mapping: {path}")
-    return data
+    return read_yaml_mapping(path, error=ValidationError)
 
 
 def load_markdown_frontmatter(path: Path) -> dict[str, Any]:

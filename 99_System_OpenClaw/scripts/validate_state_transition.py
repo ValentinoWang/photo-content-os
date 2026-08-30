@@ -12,6 +12,7 @@ from typing import Any
 import yaml
 
 from llm_common import load_markdown_frontmatter
+from media_common import read_yaml_mapping
 
 
 class TransitionError(Exception):
@@ -19,13 +20,7 @@ class TransitionError(Exception):
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        raise TransitionError(f"YAML file does not exist: {path}")
-    with path.open("r", encoding="utf-8") as handle:
-        data = yaml.safe_load(handle)
-    if not isinstance(data, dict):
-        raise TransitionError(f"YAML root must be a mapping: {path}")
-    return data
+    return read_yaml_mapping(path, error=TransitionError)
 
 
 def parse_frontmatter(path: Path) -> dict[str, Any]:

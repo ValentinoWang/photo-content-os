@@ -24,7 +24,7 @@ from llm_common import (
     REQUIRED_CREATIVE_REASONING,
     load_markdown_frontmatter,
 )
-from media_common import write_yaml_atomic
+from media_common import read_yaml_mapping, write_yaml_atomic
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS
 from runtime_paths import obsidian_root, runtime_python, workspace_root as _shared_workspace_root
 from validate_content_os_task import (
@@ -127,13 +127,7 @@ class RunnerConfig:
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        raise RunnerError(f"YAML file does not exist: {path}")
-    with path.open("r", encoding="utf-8") as handle:
-        data = yaml.safe_load(handle)
-    if not isinstance(data, dict):
-        raise RunnerError(f"YAML root must be a mapping: {path}")
-    return data
+    return read_yaml_mapping(path, error=RunnerError)
 
 
 def write_yaml(path: Path, data: dict[str, Any]) -> None:

@@ -13,7 +13,7 @@ import yaml
 
 from edl_contract import EDLContractError
 from edl_contract import parse_time_range as _canonical_parse_time_range
-from media_common import is_raw360_path
+from media_common import is_raw360_path, read_json_object, read_yaml_mapping
 
 RAW360_EXTS = {".osv", ".lrf"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"} | RAW360_EXTS
@@ -26,13 +26,7 @@ class ContractError(Exception):
 
 
 def load_json(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        raise ContractError(f"JSON file does not exist: {path}")
-    with path.open("r", encoding="utf-8") as handle:
-        data = json.load(handle)
-    if not isinstance(data, dict):
-        raise ContractError(f"JSON root must be an object: {path}")
-    return data
+    return read_json_object(path, error=ContractError)
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:
@@ -43,13 +37,7 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        raise ContractError(f"YAML file does not exist: {path}")
-    with path.open("r", encoding="utf-8") as handle:
-        data = yaml.safe_load(handle)
-    if not isinstance(data, dict):
-        raise ContractError(f"YAML root must be an object: {path}")
-    return data
+    return read_yaml_mapping(path, error=ContractError, root_label="object")
 
 
 def write_yaml(path: Path, data: dict[str, Any]) -> None:

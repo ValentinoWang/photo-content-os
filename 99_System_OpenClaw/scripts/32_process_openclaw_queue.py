@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from media_common import file_sha256 as sha256_file, now_iso, safe_slug
+from media_common import file_sha256 as sha256_file, now_iso, read_json_object, safe_slug
 from project_bootstrap_common import BATCH_NOTE_NAME, LOCAL_LINK_DIR, count_media_files, ensure_formal_project_for_batch
 from queue_identity import VOLATILE_TASK_FIELDS, request_fingerprint
 
@@ -135,14 +135,7 @@ def task_manifest_path(path: Path) -> Path:
 
 
 def load_json(path: Path) -> dict[str, Any]:
-    json_path = task_manifest_path(path)
-    try:
-        data = json.loads(json_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        raise QueueError(f"invalid JSON: {json_path}: {exc}") from exc
-    if not isinstance(data, dict):
-        raise QueueError(f"task JSON root must be an object: {json_path}")
-    return data
+    return read_json_object(task_manifest_path(path), error=QueueError, label="task JSON")
 
 
 def validate_creation_run_id(value: Any) -> str:

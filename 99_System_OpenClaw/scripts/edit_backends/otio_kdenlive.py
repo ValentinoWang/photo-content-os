@@ -27,6 +27,7 @@ from edl_contract import EDLContractError  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
 from media_common import file_sha256 as sha256_file  # noqa: E402
 from media_common import is_raw360_path  # noqa: E402
+from media_common import read_json_object  # noqa: E402
 
 
 class ContractError(ValueError):
@@ -51,13 +52,7 @@ class TimelineClip:
 
 
 def read_json(path: Path) -> dict[str, Any]:
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise ContractError(f"cannot read JSON: {path}: {exc}") from exc
-    if not isinstance(data, dict):
-        raise ContractError(f"JSON root must be an object: {path}")
-    return data
+    return read_json_object(path, error=ContractError)
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:

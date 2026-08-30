@@ -18,7 +18,7 @@ from typing import Any
 
 import yaml
 
-from media_common import now_iso, safe_slug
+from media_common import now_iso, read_yaml_mapping, safe_slug
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS, request_fingerprint
 from runtime_paths import obsidian_root, workspace_root as _shared_workspace_root
 
@@ -65,13 +65,7 @@ def idempotency_key(task: dict[str, Any], run_id: str) -> str:
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
-    if not path.exists() or not path.is_file():
-        raise EnqueueError(f"task YAML does not exist: {path}")
-    with path.open("r", encoding="utf-8") as handle:
-        data = yaml.safe_load(handle)
-    if not isinstance(data, dict):
-        raise EnqueueError(f"task YAML root must be a mapping: {path}")
-    return data
+    return read_yaml_mapping(path, error=EnqueueError, label="task YAML")
 
 
 def atomic_write_json(path: Path, data: dict[str, Any]) -> None:
