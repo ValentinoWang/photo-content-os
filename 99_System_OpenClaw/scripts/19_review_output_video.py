@@ -17,7 +17,7 @@ from typing import Any
 
 import yaml
 
-from llm_common import LLMError, creator_context_block, load_creator_context, public_llm_error, generate_text
+from llm_common import LLMError, creator_context_block, load_creator_context, parse_json_response, public_llm_error, generate_text
 from media_common import OUTPUT_REVIEW_SAMPLING, timestamp_label
 from media_common import sample_times as _shared_sample_times
 
@@ -1895,24 +1895,6 @@ def creative_review_for_version(
     }
 
 
-def extract_json_object(text: str) -> dict[str, Any]:
-    cleaned = text.strip()
-    if cleaned.startswith("```"):
-        cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned)
-        cleaned = re.sub(r"\s*```$", "", cleaned)
-    try:
-        value = json.loads(cleaned)
-    except json.JSONDecodeError:
-        start = cleaned.find("{")
-        end = cleaned.rfind("}")
-        if start < 0 or end <= start:
-            raise
-        value = json.loads(cleaned[start : end + 1])
-    if not isinstance(value, dict):
-        raise ValueError("VLM response must be a JSON object")
-    return value
-
-
 def compact_version_context(versions: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for index, version in enumerate(versions, start=1):
@@ -2042,7 +2024,7 @@ def run_vlm_semantic_review(
         )
         raw_path = output_dir / "vlm_semantic_raw.md"
         raw_path.write_text(text + "\n", encoding="utf-8")
-        data = extract_json_object(text)
+        data = parse_json_response(text, salvage=True, require=dict)
     except (LLMError, json.JSONDecodeError, ValueError) as exc:
         return {
             "schema_version": VLM_SCHEMA_VERSION,

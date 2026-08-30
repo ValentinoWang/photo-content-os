@@ -12,6 +12,7 @@ import base64
 import json
 import mimetypes
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -115,23 +116,65 @@ def render_markdown_frontmatter(metadata: dict[str, Any], body: str) -> str:
     return f"---\n{frontmatter}\n---\n\n{clean_body}"
 
 
-def parse_json_response(text: str) -> Any:
-    """Parse raw JSON or one optional outer JSON Markdown code fence."""
-    stripped = text.strip()
-    if not stripped:
-        raise ValueError("JSON response is empty")
-    if stripped.startswith("```"):
-        lines = stripped.splitlines()
-        if len(lines) < 3 or lines[-1].strip() != "```":
-            raise ValueError("JSON code fence must be a single closed outer fence")
-        language = lines[0][3:].strip().lower()
-        if language not in {"", "json"}:
-            raise ValueError("JSON code fence language must be json")
-        inner = "\n".join(lines[1:-1]).strip()
-        if not inner or "```" in inner:
-            raise ValueError("JSON code fence contains no single JSON payload")
-        stripped = inner
-    return json.loads(stripped)
+def parse_json_response(text: str, *, salvage: bool = False, require: type | None = None) -> Any:
+    """Parse raw JSON or one optional outer JSON Markdown code fence.
+
+    Default (salvage=False) is the original strict contract, unchanged:
+    a fence must be a single closed outer ```/```json fence with nothing
+    but one JSON payload inside it, or parsing raises ValueError. This is
+    a deliberately maintained contract (see tests/test_p5b_storyboard_contracts.py)
+    -- do not loosen it for existing strict callers.
+
+    salvage=True (absorbed from 19_review_output_video.py's former
+    extract_json_object, TC-09) takes an entirely separate, more lenient
+    path instead of falling through the strict one: it strips a leading/
+    trailing ``` or ```json fence with a regex (tolerating unclosed fences
+    and explanatory text the model left outside the fence), and if the
+    result still isn't valid JSON, salvages the outermost {...} span. This
+    must not reuse the strict branch first -- the strict branch rejects
+    "fence plus surrounding prose" outright, so salvage would never get a
+    chance to run.
+
+    require=dict enforces the response parses to a JSON object, raising
+    ValueError with 19's original wording otherwise; this check is a
+    caller-level concern (18_generate_storyboard_edl.py's parse_llm_json
+    already does its own dict check on the default path), not baked into
+    the default contract.
+    """
+    if salvage:
+        cleaned = text.strip()
+        if cleaned.startswith("```"):
+            cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned)
+            cleaned = re.sub(r"\s*```$", "", cleaned)
+        try:
+            value = json.loads(cleaned)
+        except json.JSONDecodeError:
+            start = cleaned.find("{")
+            end = cleaned.rfind("}")
+            if start < 0 or end <= start:
+                raise
+            value = json.loads(cleaned[start : end + 1])
+    else:
+        stripped = text.strip()
+        if not stripped:
+            raise ValueError("JSON response is empty")
+        if stripped.startswith("```"):
+            lines = stripped.splitlines()
+            if len(lines) < 3 or lines[-1].strip() != "```":
+                raise ValueError("JSON code fence must be a single closed outer fence")
+            language = lines[0][3:].strip().lower()
+            if language not in {"", "json"}:
+                raise ValueError("JSON code fence language must be json")
+            inner = "\n".join(lines[1:-1]).strip()
+            if not inner or "```" in inner:
+                raise ValueError("JSON code fence contains no single JSON payload")
+            stripped = inner
+        value = json.loads(stripped)
+    if require is not None and not isinstance(value, require):
+        if require is dict:
+            raise ValueError("VLM response must be a JSON object")
+        raise ValueError(f"JSON response must be a {require.__name__}")
+    return value
 
 
 def _label_value(line: str, labels: tuple[str, ...]) -> str | None:
