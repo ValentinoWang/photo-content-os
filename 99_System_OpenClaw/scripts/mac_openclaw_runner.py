@@ -26,7 +26,7 @@ from llm_common import (
 )
 from media_common import write_yaml_atomic
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS
-from runtime_paths import obsidian_root, runtime_python
+from runtime_paths import obsidian_root, runtime_python, workspace_root as _shared_workspace_root
 from validate_content_os_task import (
     ValidationError,
     load_yaml as load_validator_yaml,
@@ -37,8 +37,7 @@ from validate_content_os_task import (
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-SYSTEM_ROOT = SCRIPT_DIR.parent
-WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
+WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 DEFAULT_VAULT_ROOT = obsidian_root()
 
 CAPABILITIES = Path("00_入口与总览/mac_runner_capabilities.yaml")

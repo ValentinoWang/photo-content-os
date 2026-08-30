@@ -11,11 +11,11 @@ from typing import Any
 
 from media_common import MEDIA_EXTS, now_iso, relative_posix, safe_slug
 from project_bootstrap_common import ensure_formal_project_for_batch
+from runtime_paths import workspace_root as _shared_workspace_root
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-SYSTEM_ROOT = SCRIPT_DIR.parent
-WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
+WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 
 BATCH_NOTE_NAME = "00_批次说明.md"
 LOCAL_LINK_DIR = "_openclaw"

@@ -11,6 +11,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from runtime_paths import repository_root as _repository_root
 
 SAMPLE_PNG = base64.b64decode(
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
@@ -23,7 +24,10 @@ SAMPLE_NAMES = (
 
 
 def repository_root() -> Path:
-    return Path(__file__).resolve().parents[2]
+    """L-15: delegates to the marker-based runtime_paths.repository_root,
+    anchored at this file, instead of this script's former hardcoded
+    parents[2]."""
+    return _repository_root(Path(__file__))
 
 
 def run_script(script: Path, project: Path) -> None:

@@ -24,10 +24,9 @@ from queue_identity import VOLATILE_TASK_FIELDS, request_fingerprint
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-SYSTEM_ROOT = SCRIPT_DIR.parent
-WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
-from runtime_paths import obsidian_root
+from runtime_paths import obsidian_root, workspace_root as _shared_workspace_root
 
+WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 
 QUEUE_DIR_NAME = "_OpenClawQueue"

@@ -17,11 +17,11 @@ from project_bootstrap_common import parse_batch_note as _shared_parse_batch_not
 
 
 from runtime_paths import obsidian_root
+from runtime_paths import workspace_root as _shared_workspace_root
 
 DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 SCRIPT_DIR = Path(__file__).resolve().parent
-SYSTEM_ROOT = SCRIPT_DIR.parent
-WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
+WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 LINK_RELATIVE_PATH = Path("_ai_analysis/content_os_link.yaml")
 
 FIELD_TO_KEY = {

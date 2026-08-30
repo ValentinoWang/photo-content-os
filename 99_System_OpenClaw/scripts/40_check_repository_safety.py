@@ -8,6 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from runtime_paths import repository_root as _repository_root
 
 MAX_TRACKED_FILE_BYTES = 5 * 1024 * 1024
 PROHIBITED_TOP_LEVELS = {
@@ -82,7 +83,13 @@ PROHIBITED_SUFFIXES = {
 
 
 def repository_root() -> Path:
-    return Path(__file__).resolve().parents[2]
+    """L-15: delegates to the marker-based runtime_paths.repository_root,
+    anchored at this file, instead of this script's former hardcoded
+    parents[2]. This CI safety gate now fails loudly (RuntimeError) rather
+    than silently checking the wrong directory if it is ever run from
+    outside a real checkout -- a strictly safer failure mode for a
+    repository-safety check."""
+    return _repository_root(Path(__file__))
 
 
 def tracked_paths(root: Path) -> list[Path]:

@@ -20,12 +20,11 @@ import yaml
 
 from media_common import now_iso, safe_slug
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS, request_fingerprint
-from runtime_paths import obsidian_root
+from runtime_paths import obsidian_root, workspace_root as _shared_workspace_root
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-SYSTEM_ROOT = SCRIPT_DIR.parent
-WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
+WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 DEFAULT_VAULT_ROOT = obsidian_root()
 QUEUE_DIR_NAME = "_OpenClawQueue"
 CONTENT_OS_SPEC_VERSION = "content_os_v0.2"

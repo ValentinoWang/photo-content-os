@@ -8,11 +8,11 @@ import json
 from pathlib import Path
 
 from project_bootstrap_common import ensure_formal_project_for_batch
+from runtime_paths import workspace_root as _shared_workspace_root
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-SYSTEM_ROOT = SCRIPT_DIR.parent
-WORKSPACE_ROOT = SYSTEM_ROOT.parent if SYSTEM_ROOT.name == "99_System_OpenClaw" else SYSTEM_ROOT
+WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 
 
 def main() -> int:

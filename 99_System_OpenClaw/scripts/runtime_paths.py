@@ -34,6 +34,29 @@ def repository_root(anchor: Path | None = None) -> Path:
     raise RuntimeError(f"cannot locate repository root from {path}")
 
 
+def workspace_root(anchor: Path | None = None) -> Path:
+    """Best-effort workspace root for scripts that must tolerate running from
+    a copy that lacks requirements-dev.txt (pe-09/L-15).
+
+    Prefers repository_root()'s marker-verified result. When that raises
+    (no ancestor has both a 99_System_OpenClaw/ directory and
+    requirements-dev.txt), falls back to exactly what several scripts used
+    to compute inline before this consolidation: SCRIPT_DIR.parent, then one
+    more level up if THAT directory happens to be named "99_System_OpenClaw"
+    -- a name-only check, unlike repository_root()'s marker check, kept
+    unchanged here so this fallback still produces the same directory those
+    scripts used to compute for a tree missing requirements-dev.txt.
+    """
+    try:
+        return repository_root(anchor)
+    except RuntimeError:
+        script_dir = (anchor or Path(__file__)).expanduser().resolve()
+        if script_dir.is_file():
+            script_dir = script_dir.parent
+        system_root = script_dir.parent
+        return system_root.parent if system_root.name == "99_System_OpenClaw" else system_root
+
+
 def runtime_dir(repo_root: Path | None = None) -> Path:
     root = repo_root.expanduser() if repo_root is not None else repository_root()
     return root / "99_System_OpenClaw" / RUNTIME_NAME

@@ -13,10 +13,11 @@ from pathlib import Path
 
 from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT
 from media_common import project_path
+from runtime_paths import repository_root as _repository_root
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
-REPOSITORY_ROOT = SYSTEM_ROOT.parent
+REPOSITORY_ROOT = _repository_root(Path(__file__))
 PROMPT_VERSION = "content_summary_evidence_v1"
 
 

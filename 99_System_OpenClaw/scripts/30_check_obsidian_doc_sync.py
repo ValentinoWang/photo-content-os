@@ -10,12 +10,18 @@ from typing import Any
 
 
 from runtime_paths import obsidian_root
+from runtime_paths import repository_root as _repository_root
 
 DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 
 
 def default_local_root() -> Path:
-    return Path(__file__).resolve().parents[2]
+    """L-15: delegates to the marker-based runtime_paths.repository_root,
+    anchored at this file, instead of this script's former hardcoded
+    parents[2]. Only used as this script's --local-root argparse default;
+    every actual caller (06_check_outline_contract.py) passes --local-root
+    explicitly, so this only affects standalone direct invocation."""
+    return _repository_root(Path(__file__))
 
 
 def default_contract_path(local_root: Path) -> Path:
