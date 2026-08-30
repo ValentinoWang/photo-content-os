@@ -644,6 +644,18 @@ def eligible_item(item: dict[str, Any], include_derived: bool = False) -> bool:
     return bool(item.get("analysis_eligible")) and item.get("media_type") in {"video", "image"}
 
 
+def missing_markers(text: str, markers: list[str]) -> list[str]:
+    """Which of `markers` are absent from `text` (L-22).
+
+    Shared by 06_check_outline_contract.py and 30_check_obsidian_doc_sync.py,
+    the two doc-contract checkers -- byte-identical before this
+    consolidation. 30's read_text (an IsADirectoryError-checking variant with
+    no second caller) stays where it is; this is only the two-line
+    comparison, not a new "doc validation module".
+    """
+    return [marker for marker in markers if marker not in text]
+
+
 # --- Keyframe sampling / preview generation, shared by 08_plan_additions_merge.py,
 # --- 11_rename_media_file.py and 19_review_output_video.py.
 #

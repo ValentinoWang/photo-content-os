@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-
+from media_common import missing_markers
 from runtime_paths import obsidian_root
 from runtime_paths import repository_root as _repository_root
 
@@ -39,10 +39,6 @@ def read_text(path: Path) -> str:
     if not path.is_file():
         raise IsADirectoryError(f"expected doc file but found directory: {path}")
     return path.read_text(encoding="utf-8")
-
-
-def missing_markers(text: str, markers: list[str]) -> list[str]:
-    return [marker for marker in markers if marker not in text]
 
 
 def normalize_targets(raw_targets: list[Any]) -> list[dict[str, Any]]:

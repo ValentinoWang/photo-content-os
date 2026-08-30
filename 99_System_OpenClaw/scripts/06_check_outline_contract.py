@@ -8,6 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from media_common import missing_markers
+
 
 REQUIRED_SCRIPTS = [
     "01_scan_media_manifest.py",
@@ -117,10 +119,6 @@ README_MARKERS = [
     "30_check_obsidian_doc_sync.py",
     "run_analyze_project.sh",
 ]
-
-
-def missing_markers(text: str, markers: list[str]) -> list[str]:
-    return [marker for marker in markers if marker not in text]
 
 
 def read_child_docs(root: Path) -> str:
