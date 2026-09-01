@@ -4,7 +4,7 @@
   "stage": "E",
   "work_kind": "implementation",
   "domain_lane": "media-delete-flow",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -23,8 +23,23 @@
   "acceptance": "系统只在当前操作系统可用的回收站实现中移动用户明确选择并再次确认的候选；每项保留原路径、候选证据、操作人、时间、移动后回读和恢复结果，禁止自动或永久删除。当前系统无可验证回收站或部分失败时不得降级为删除，必须保留原文件或进入待处理状态。",
   "owner": "媒体工具维护者",
   "node_role": "leaf",
-  "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_actor": "external-codex-worker",
+  "execution_contract_ref": "execution/E2-media-trash-flow.task.md",
+  "execution_guard_ref": "execution/execution-guard.json#EG-W14",
+  "worker": {
+    "execution_identity": "external-codex-exec:E2:lw-luna",
+    "runtime": "local-macos; injected system-trash backend and temporary files only; no real user media",
+    "return_path": "execution/artifacts/E2/returns/E2-primary.json",
+    "resource_locks": [
+      "write:99_System_OpenClaw/scripts/media_trash_flow.py",
+      "write:99_System_OpenClaw/tests/test_media_trash_flow.py"
+    ]
+  },
+  "escalation": {
+    "reasons": [
+      "multi-executor"
+    ]
+  },
   "side_effect_class": "reversible",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-E2-user-confirmed-trash-flow"]

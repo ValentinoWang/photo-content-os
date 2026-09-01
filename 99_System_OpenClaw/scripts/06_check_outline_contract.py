@@ -8,7 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from media_common import missing_markers
+from document_contract_common import missing_markers
 
 
 REQUIRED_SCRIPTS = [

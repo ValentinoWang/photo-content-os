@@ -1,0 +1,42 @@
+{
+  "wave_id": "W14-W15-2026-09-02T000000Z",
+  "launch_barrier": "all supervisor PIDs registered before the first wait",
+  "project_root": "/Users/vsiyo/Desktop/照片筛选",
+  "primary_wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh",
+  "l3_wrapper": "/Users/vsiyo/.codex/workers/run-l3.sh",
+  "workers": [
+    {
+      "node_id": "E2",
+      "supervisor_pid": 30228,
+      "task": "execution/E2-media-trash-flow.task.md",
+      "validation": "execution/E2-media-trash-flow.validation.sh",
+      "log": "execution/artifacts/E2-supervisor.log",
+      "return": "execution/artifacts/E2/returns/E2-primary.json"
+    },
+    {
+      "node_id": "E3",
+      "supervisor_pid": 30229,
+      "task": "execution/E3-archive-location-config.task.md",
+      "validation": "execution/E3-archive-location-config.validation.sh",
+      "log": "execution/artifacts/E3-supervisor.log",
+      "return": "execution/artifacts/E3/returns/E3-primary.json"
+    },
+    {
+      "node_id": "E5",
+      "supervisor_pid": 30230,
+      "task": "execution/E5-local-session-consumer.task.md",
+      "validation": "execution/E5-local-session-consumer.validation.sh",
+      "log": "execution/artifacts/E5-supervisor.log",
+      "return": "execution/artifacts/E5/returns/E5-primary.json"
+    },
+    {
+      "node_id": "E6",
+      "supervisor_pid": 30231,
+      "task": "execution/E6-chatcut-local-mcp.task.md",
+      "validation": "execution/E6-chatcut-local-mcp.validation.sh",
+      "log": "execution/artifacts/E6-supervisor.log",
+      "return": "execution/artifacts/E6/returns/E6-primary.json"
+    }
+  ],
+  "cleanup_policy": "After acceptance and GitHub main tip readback, delete only temporary prompts and completed process handles. Preserve logs, structured returns, ledgers, and Codex transcripts."
+}

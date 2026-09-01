@@ -12,11 +12,12 @@ from media_common import (
     METADATA_EXTS,
     VIDEO_EXTS,
     discover_live_groups,
+    file_sha256,
+    image_info_for_image,
     is_hidden_or_analysis,
     lifecycle_for,
     live_status_for,
     manifest_path,
-    media_dimensions_for_image,
     media_id,
     now_iso,
     project_path,
@@ -148,7 +149,10 @@ def scan_project(project_dir: str) -> dict[str, object]:
         rel = relative_posix(path, project)
         lifecycle = lifecycle_for(path, project)
         live_status, live_role, _live_group_id = live_status_for(path, project, live_groups)
-        stat = path.stat()
+        try:
+            stat = path.stat()
+        except OSError:
+            stat = None
 
         if ext in VIDEO_EXTS:
             media_type = "video"
@@ -166,7 +170,7 @@ def scan_project(project_dir: str) -> dict[str, object]:
             "relative_path": rel,
             "absolute_path": str(path),
             "extension": ext,
-            "size_mb": round(stat.st_size / 1024 / 1024, 3),
+            "size_mb": round(stat.st_size / 1024 / 1024, 3) if stat else None,
             "media_type": media_type,
             "lifecycle": lifecycle,
             "analysis_eligible": lifecycle == "primary" and media_type in {"video", "image"},
@@ -182,14 +186,38 @@ def scan_project(project_dir: str) -> dict[str, object]:
             "gps_longitude": None,
             "gps_altitude": None,
             "gps_horizontal_accuracy": None,
+            "sha256": None,
+            "image_readable": None,
+            "image_health": "not_applicable",
+            "image_health_reason": None,
+            "exif_location": None,
         }
 
         if media_type == "video":
             item.update(video_info(path))
         elif media_type == "image":
-            width, height = media_dimensions_for_image(path)
-            item["width"] = width
-            item["height"] = height
+            try:
+                item["sha256"] = file_sha256(path)
+            except OSError:
+                item["image_readable"] = False
+                item["image_health"] = "unreadable"
+                item["image_health_reason"] = "read_error"
+                item["exif_location"] = {
+                    "state": "unknown",
+                    "latitude": None,
+                    "longitude": None,
+                    "altitude": None,
+                    "horizontal_accuracy": None,
+                }
+            else:
+                image_info = image_info_for_image(path)
+                item.update(image_info)
+            if isinstance(item.get("exif_location"), dict):
+                location = item["exif_location"]
+                item["gps_latitude"] = location["latitude"]
+                item["gps_longitude"] = location["longitude"]
+                item["gps_altitude"] = location["altitude"]
+                item["gps_horizontal_accuracy"] = location["horizontal_accuracy"]
 
         assess_decision(item)
         items.append(item)

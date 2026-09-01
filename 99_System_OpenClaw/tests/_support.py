@@ -17,6 +17,11 @@ from types import ModuleType
 
 SCRIPTS = Path(__file__).resolve().parent.parent / "scripts"
 
+# Scripts are loaded by file path below, so sibling imports need the same
+# module-search root that direct script execution receives from Python.
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
 
 def load_script(
     filename_or_name: str,

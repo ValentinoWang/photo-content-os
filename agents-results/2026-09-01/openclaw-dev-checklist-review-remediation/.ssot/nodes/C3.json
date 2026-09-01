@@ -4,7 +4,7 @@
   "stage": "C",
   "work_kind": "validation",
   "domain_lane": "edl-boundary",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -24,7 +24,7 @@
   "owner": "桌面服务维护者",
   "node_role": "leaf",
   "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_contract_ref": "coordinator-acceptance:2026-09-02:test_ssot_edl_bridge.py:editable-text-boundary",
   "side_effect_class": "none",
   "candidate_identity_policy": "none",
   "deliverable_ids": ["DL-C3-edl-boundary"]

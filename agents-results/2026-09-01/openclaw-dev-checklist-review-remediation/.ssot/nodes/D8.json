@@ -4,7 +4,7 @@
   "stage": "D",
   "work_kind": "release-decision",
   "domain_lane": "r4-release",
-  "execution_state": "BLOCKED",
+  "execution_state": "READY",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -21,7 +21,7 @@
   "owner": "产品负责人",
   "node_role": "release-decision",
   "execution_actor": "human",
-  "execution_contract_ref": "not-applicable",
+  "execution_contract_ref": "release-preparation:2026-09-02:awaiting-main-candidate-push",
   "side_effect_class": "none",
   "candidate_identity_policy": "freezes",
   "deliverable_ids": ["DL-D8-r4-release-decision"]

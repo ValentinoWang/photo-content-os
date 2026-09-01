@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import errno
 import json
 import math
 import os
@@ -378,15 +379,22 @@ def live_status_for(
 
 
 def media_dimensions_for_image(path: Path) -> tuple[int | None, int | None]:
+    return _sips_dimensions(path)
+
+
+def _sips_dimensions(path: Path) -> tuple[int | None, int | None]:
     if not shutil.which("sips"):
         return None, None
-    result = subprocess.run(
-        ["sips", "-g", "pixelWidth", "-g", "pixelHeight", str(path)],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
-        text=True,
-        check=False,
-    )
+    try:
+        result = subprocess.run(
+            ["sips", "-g", "pixelWidth", "-g", "pixelHeight", str(path)],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        return None, None
     if result.returncode != 0:
         return None, None
     width = None
@@ -394,10 +402,170 @@ def media_dimensions_for_image(path: Path) -> tuple[int | None, int | None]:
     for line in result.stdout.splitlines():
         line = line.strip()
         if line.startswith("pixelWidth:"):
-            width = int(line.split(":", 1)[1].strip())
+            try:
+                width = int(line.split(":", 1)[1].strip())
+            except ValueError:
+                return None, None
         elif line.startswith("pixelHeight:"):
-            height = int(line.split(":", 1)[1].strip())
+            try:
+                height = int(line.split(":", 1)[1].strip())
+            except ValueError:
+                return None, None
+    if not width or not height or width < 1 or height < 1:
+        return None, None
     return width, height
+
+
+def _unknown_exif_location() -> dict[str, Any]:
+    return {
+        "state": "unknown",
+        "latitude": None,
+        "longitude": None,
+        "altitude": None,
+        "horizontal_accuracy": None,
+    }
+
+
+def _finite_float(value: Any) -> float | None:
+    try:
+        if isinstance(value, (bytes, bytearray)):
+            value = value.decode("ascii")
+        if isinstance(value, (tuple, list)) and len(value) == 2:
+            numerator, denominator = value
+            value = float(numerator) / float(denominator)
+        result = float(value)
+    except (ArithmeticError, TypeError, ValueError, UnicodeError):
+        return None
+    return result if math.isfinite(result) else None
+
+
+def _gps_ref(value: Any) -> str | None:
+    if isinstance(value, (bytes, bytearray)):
+        try:
+            value = value.decode("ascii")
+        except UnicodeError:
+            return None
+    if not isinstance(value, str):
+        return None
+    return value.strip().upper()
+
+
+def _gps_coordinate(value: Any, reference: Any, limit: float) -> float | None:
+    if not isinstance(value, (tuple, list)) or len(value) != 3:
+        return None
+    degrees = _finite_float(value[0])
+    minutes = _finite_float(value[1])
+    seconds = _finite_float(value[2])
+    direction = _gps_ref(reference)
+    if degrees is None or minutes is None or seconds is None or direction is None:
+        return None
+    if degrees < 0 or minutes < 0 or seconds < 0 or minutes >= 60 or seconds >= 60:
+        return None
+    if direction not in {"N", "S", "E", "W"}:
+        return None
+    coordinate = degrees + minutes / 60 + seconds / 3600
+    if coordinate > limit:
+        return None
+    if direction in {"S", "W"}:
+        coordinate = -coordinate
+    return coordinate
+
+
+def _exif_location(image: Any) -> dict[str, Any]:
+    try:
+        exif = image.getexif()
+        gps = exif.get_ifd(34853)
+    except (AttributeError, KeyError, OSError, TypeError, ValueError):
+        return _unknown_exif_location()
+    if not isinstance(gps, dict) or not gps:
+        return _unknown_exif_location()
+
+    latitude = _gps_coordinate(gps.get(2), gps.get(1), 90)
+    longitude = _gps_coordinate(gps.get(4), gps.get(3), 180)
+    if latitude is None or longitude is None:
+        return _unknown_exif_location()
+
+    altitude = _finite_float(gps.get(6))
+    altitude_reference = gps.get(5)
+    if altitude is not None:
+        if altitude_reference in (1, "1", b"\x01"):
+            altitude = -abs(altitude)
+        elif altitude_reference not in (0, "0", b"\x00", None):
+            altitude = None
+
+    horizontal_accuracy = _finite_float(gps.get(31))
+    if horizontal_accuracy is not None and horizontal_accuracy < 0:
+        horizontal_accuracy = None
+    return {
+        "state": "present",
+        "latitude": latitude,
+        "longitude": longitude,
+        "altitude": altitude,
+        "horizontal_accuracy": horizontal_accuracy,
+    }
+
+
+def _image_probe_result(
+    health: str,
+    reason: str | None,
+    *,
+    width: int | None = None,
+    height: int | None = None,
+    exif_location: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return {
+        "width": width,
+        "height": height,
+        "image_readable": health == "healthy",
+        "image_health": health,
+        "image_health_reason": reason,
+        "exif_location": exif_location or _unknown_exif_location(),
+    }
+
+
+def image_info_for_image(path: Path) -> dict[str, Any]:
+    """Probe a still image without allowing a bad file to abort the scan.
+
+    Pillow verifies supported formats and reads only GPS EXIF fields. `sips`
+    remains a fallback for valid macOS formats such as HEIC that Pillow cannot
+    decode; that fallback deliberately reports location as unknown.
+    """
+    try:
+        from PIL import Image, UnidentifiedImageError
+    except ImportError:
+        width, height = _sips_dimensions(path)
+        if width is not None and height is not None:
+            return _image_probe_result("healthy", "sips_probe", width=width, height=height)
+        return _image_probe_result("probe_unavailable", "probe_unavailable")
+
+    try:
+        with Image.open(path) as image:
+            width, height = image.size
+            if not isinstance(width, int) or not isinstance(height, int) or width < 1 or height < 1:
+                raise ValueError("image dimensions are invalid")
+            image.verify()
+        with Image.open(path) as image:
+            exif_location = _exif_location(image)
+        return _image_probe_result(
+            "healthy",
+            None,
+            width=width,
+            height=height,
+            exif_location=exif_location,
+        )
+    except (PermissionError, FileNotFoundError):
+        return _image_probe_result("unreadable", "read_error")
+    except UnidentifiedImageError:
+        width, height = _sips_dimensions(path)
+        if width is not None and height is not None:
+            return _image_probe_result("healthy", "sips_probe", width=width, height=height)
+        return _image_probe_result("malformed", "malformed_image")
+    except OSError as exc:
+        if getattr(exc, "errno", None) in {errno.EACCES, errno.EPERM, errno.EIO, errno.ENOENT}:
+            return _image_probe_result("unreadable", "read_error")
+        return _image_probe_result("malformed", "malformed_image")
+    except Exception:
+        return _image_probe_result("malformed", "image_probe_error")
 
 
 def video_info(path: Path) -> dict[str, object]:

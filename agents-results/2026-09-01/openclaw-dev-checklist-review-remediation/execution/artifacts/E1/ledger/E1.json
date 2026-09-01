@@ -1,0 +1,132 @@
+{
+  "artifact_dir": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1",
+  "attempts": [
+    {
+      "attempt_executor": "lw-luna",
+      "attempt_role": "primary",
+      "attempt_wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh",
+      "classification": {
+        "attempt_executor": "lw-luna",
+        "attempt_role": "primary",
+        "attempt_wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh",
+        "decision": "complete",
+        "effective_failure_class": "none",
+        "effective_failure_origin": "none",
+        "primary_executor": "lw-luna",
+        "primary_wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh",
+        "reason": "worker return and acceptance command completed"
+      },
+      "classifier_exit_code": 0,
+      "codex_session_identifier": "unavailable-from-wrapper-transport",
+      "command": [
+        "/Users/vsiyo/.codex/workers/run-lw-luna.sh",
+        "$(< /Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/prompts/E1-primary.txt)"
+      ],
+      "ended_at": "2026-09-01T20:11:18.009115+00:00",
+      "exit_code": 0,
+      "frozen_input_drift": [],
+      "log_path": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/logs/E1-primary.log",
+      "pid": 22738,
+      "primary_executor": "lw-luna",
+      "primary_wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh",
+      "prior_attempt_index": null,
+      "project_root": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009",
+      "prompt_cleanup_state": "deleted",
+      "prompt_path": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/prompts/E1-primary.txt",
+      "prompt_sha256": "3b3aa811e70a086f3e982b912bf1e77903b0500bdc4e5d8d1165c6e56ce7d04c",
+      "started_at": "2026-09-01T20:03:24.913943+00:00",
+      "structured_return": {
+        "acceptance_self_check": "pass",
+        "changed_files": [
+          "99_System_OpenClaw/desktop/model_provider_config.py",
+          "99_System_OpenClaw/tests/test_model_provider_config.py"
+        ],
+        "command_results": [
+          {
+            "command": "python3 -m unittest 99_System_OpenClaw/tests/test_model_provider_config.py -v",
+            "exit_code": 0,
+            "result": "pass; 7 tests"
+          },
+          {
+            "command": "python3 -m py_compile 99_System_OpenClaw/desktop/model_provider_config.py 99_System_OpenClaw/tests/test_model_provider_config.py",
+            "exit_code": 0,
+            "result": "pass"
+          },
+          {
+            "command": "git diff --check -- 99_System_OpenClaw/desktop/model_provider_config.py 99_System_OpenClaw/tests/test_model_provider_config.py",
+            "exit_code": 0,
+            "result": "pass"
+          },
+          {
+            "command": "bash agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E1-model-provider-config.validation.sh",
+            "exit_code": 0,
+            "result": "pass; 7 tests"
+          }
+        ],
+        "decision_refs": [
+          "decision.scope.audit-remediation@1",
+          "decision.creative-model.providers@1"
+        ],
+        "failure_class": "none",
+        "failure_origin": "none",
+        "invalidation_keys": [
+          "creative-model.provider-config"
+        ],
+        "proposed_state": "IMPLEMENTED",
+        "read_scope": [
+          "99_System_OpenClaw/desktop/project_store.py",
+          "99_System_OpenClaw/desktop/server.py",
+          "99_System_OpenClaw/AGENTS.md",
+          "agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E1-model-provider-config.validation.sh"
+        ],
+        "risk": "Capability probing is intentionally unavailable by default and requires an injected probe for live provider checks; no raw secret value is accepted or persisted.",
+        "shared_resource_impact": "The module is standalone and does not modify shared routes, server.py, frontend files, SSOT files, or other tests; pre-existing dirty worktree changes were preserved.",
+        "task_id": "E1",
+        "unverified_items": [
+          "Real provider network requests were not made by contract.",
+          "Desktop server, frontend, deployment, and production/device behavior were not changed or verified by this bounded lane."
+        ],
+        "version": "plan-4; dependency-graph-3; interface-freeze-4; node-contract-1",
+        "write_scope": [
+          "99_System_OpenClaw/desktop/model_provider_config.py",
+          "99_System_OpenClaw/tests/test_model_provider_config.py",
+          "agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/returns/E1-primary.json"
+        ]
+      },
+      "structured_return_path": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/returns/E1-primary.json",
+      "structured_return_state": "loaded",
+      "task_sha256": "9e2fffc1459bf37cbdd494c9aaa63bb954b8d25cdd801b6b5fd1b04f167de038",
+      "timed_out": false,
+      "validation_command_sha256": "6863f456d2d8532cd783bbee096cd1173b3a8bad5628f06ea7d2a25939ca8921",
+      "validation_ended_at": "2026-09-01T20:11:18.160075+00:00",
+      "validation_exit_code": 0,
+      "validation_log_path": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/logs/E1-primary.validation.log",
+      "validation_pid": 26632,
+      "validation_started_at": "2026-09-01T20:11:18.009364+00:00",
+      "validation_timed_out": false,
+      "wrapper_path": "/Users/vsiyo/.codex/workers/run-lw-luna.sh"
+    }
+  ],
+  "automatic_executor_switch": false,
+  "automatic_l4_fallback": false,
+  "ended_at": "2026-09-01T20:11:18.194845+00:00",
+  "final_decision": "complete",
+  "l3_escalation_limit": 1,
+  "l3_wrapper": "/Users/vsiyo/.codex/workers/run-l3.sh",
+  "ledger_path": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/ledger/E1.json",
+  "primary_executor": "lw-luna",
+  "primary_retry_limit": 1,
+  "primary_role": "primary",
+  "primary_wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh",
+  "project_root": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009",
+  "schema_version": 2,
+  "spawn_agent_fallback": false,
+  "started_at": "2026-09-01T20:03:24.913191+00:00",
+  "task_file": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E1-model-provider-config.task.md",
+  "task_id": "E1",
+  "task_sha256": "9e2fffc1459bf37cbdd494c9aaa63bb954b8d25cdd801b6b5fd1b04f167de038",
+  "terminal_state": "IMPLEMENTED",
+  "validation_command_file": "/Users/vsiyo/Desktop/\u7167\u7247\u7b5b\u9009/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E1-model-provider-config.validation.sh",
+  "validation_command_sha256": "6863f456d2d8532cd783bbee096cd1173b3a8bad5628f06ea7d2a25939ca8921",
+  "validation_execution_mode": "prelaunch-bytes-via-stdin"
+}

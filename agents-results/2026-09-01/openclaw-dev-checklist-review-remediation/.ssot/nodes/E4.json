@@ -4,7 +4,7 @@
   "stage": "E",
   "work_kind": "implementation",
   "domain_lane": "upstream-identity",
-  "execution_state": "READY",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -23,8 +23,18 @@
   "acceptance": "仅在用户主动发起上游配对时查询账号；不存在时通过上游同一身份系统幂等创建，并回读同一用户标识、权限和撤销状态；本地不得新增用户密码库或第二套账号事实源。配对不支持或失败不得阻塞本地功能。",
   "owner": "上游身份维护者",
   "node_role": "leaf",
-  "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_actor": "external-codex-worker",
+  "execution_contract_ref": "execution/E4-upstream-identity-contract.task.md",
+  "execution_guard_ref": "execution/execution-guard.json#EG-W12",
+  "worker": {
+    "execution_identity": "external-codex-exec:E4:lw-luna",
+    "runtime": "local-macos; injected fake upstream client; no network",
+    "return_path": "execution/artifacts/E4/returns/E4-primary.json",
+    "resource_locks": ["write:99_System_OpenClaw/scripts/upstream_identity.py", "write:99_System_OpenClaw/tests/test_upstream_identity.py"]
+  },
+  "escalation": {
+    "reasons": ["multi-executor"]
+  },
   "side_effect_class": "reversible",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-E4-upstream-account-contract"]

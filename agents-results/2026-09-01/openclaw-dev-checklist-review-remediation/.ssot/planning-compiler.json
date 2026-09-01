@@ -41,7 +41,7 @@
       "acceptance_node_id": "B4",
       "release_candidate_artifact_id": "candidate:R2-media-integrity-v1",
       "independent_proof_artifact_id": "proof:R2-manifest-regression-v1",
-      "acceptance_command": "99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_p2_photo_remaining.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_project_structure_v2.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_promote_inbox_batch_to_project.py'",
+      "acceptance_command": "99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_media_manifest_contract.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_media_delete_recommendations.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_p2_photo_remaining.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_project_structure_v2.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_promote_inbox_batch_to_project.py'",
       "future_phase_required_for_success": false,
       "development_baseline": "git:4737e45525c2cb9359bfb02952d7b690b6799761",
       "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761",
@@ -58,7 +58,7 @@
       "acceptance_node_id": "C4",
       "release_candidate_artifact_id": "candidate:R3-edl-bridge-v1",
       "independent_proof_artifact_id": "proof:R3-edl-contract-v1",
-      "acceptance_command": "99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_p0_edl_contract.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_p2_desktop_server.py'",
+      "acceptance_command": "99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_p0_edl_contract.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_p2_desktop_server.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_ssot_edl_bridge.py'",
       "future_phase_required_for_success": false,
       "development_baseline": "git:4737e45525c2cb9359bfb02952d7b690b6799761",
       "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761",
@@ -75,7 +75,7 @@
       "acceptance_node_id": "D8",
       "release_candidate_artifact_id": "candidate:R4-policy-integration-v3",
       "independent_proof_artifact_id": "proof:R4-integration-gate-v3",
-      "acceptance_command": "D7 在 E1-E6 实现落盘后冻结存在且可执行的针对性测试命令；命令缺失时 D8 保持阻塞",
+      "acceptance_command": "99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_ssot_policy_integration.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_model_provider_config.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_media_trash_flow.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_archive_location_config.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_upstream_identity.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_upstream_session.py' && 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_chatcut_mcp.py'",
       "future_phase_required_for_success": false,
       "development_baseline": "git:4737e45525c2cb9359bfb02952d7b690b6799761",
       "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761",
@@ -98,7 +98,7 @@
     {"id": "W12", "release_id": "R4", "node_ids": ["E1", "E4"]},
     {"id": "W13", "release_id": "R4", "node_ids": ["E5"]},
     {"id": "W14", "release_id": "R4", "node_ids": ["E2", "E3"]},
-    {"id": "W15", "release_id": "R4", "node_ids": ["E6"]},
+    {"id": "W15", "release_id": "R4", "node_ids": ["E5", "E6"]},
     {"id": "W16", "release_id": "R4", "node_ids": ["D7"]},
     {"id": "W17", "release_id": "R4", "node_ids": ["D8"]}
   ],
@@ -109,7 +109,7 @@
     {"id": "A3", "kind": "implementation", "goal": "补齐清单 HTML 文档头并校准原型与代码声明", "dependencies": ["A1"], "acceptance": "页面含标准文档头、语言、字符集和视口声明，且没有把不存在的接口写成现状。", "owner": "文档维护者"},
     {"id": "A4", "kind": "validation", "goal": "汇编 R1 的静态验收和可回读候选", "dependencies": ["A2", "A3"], "acceptance": "R1 的静态核对通过；失败只阻断清单发布，不修改媒体或服务。", "owner": "主协调者"},
     {"id": "B1", "kind": "implementation", "goal": "定义照片元数据、内容校验和健康状态的媒体清单契约", "dependencies": ["A1"], "acceptance": "契约明确照片 EXIF、内容 SHA-256、可读性和未知状态的字段及来源。", "owner": "媒体工具维护者"},
-    {"id": "B2", "kind": "implementation", "goal": "实现生产删除建议及用户选择接口", "dependencies": ["B1", "D2"], "acceptance": "系统只生成带证据的删除候选并允许用户选择；本节点不移动或永久删除文件，缺少证据时强制阻断。", "owner": "媒体工具维护者"},
+    {"id": "B2", "kind": "implementation", "goal": "实现生产删除建议及用户选择接口", "dependencies": ["B1", "D2"], "acceptance": "系统只生成带证据的删除候选并允许用户选择；本节点不移动或永久删除文件，缺少证据时强制阻断。", "owner": "媒体工具维护者", "escalation": {"reasons": ["multi-executor"]}, "worker": {"execution_identity": "external-codex-exec:B2:lw-luna", "runtime": "local-macos; isolated in-memory test fixtures; no external side effects", "return_path": "execution/artifacts/B2/returns/B2-primary.json", "resource_locks": ["write:99_System_OpenClaw/scripts/media_delete_recommendations.py", "write:99_System_OpenClaw/tests/test_media_delete_recommendations.py"]}},
     {"id": "B3", "kind": "validation", "goal": "补充媒体清单字段和回归行为测试", "dependencies": ["A1"], "acceptance": "测试覆盖照片 EXIF 缺失、内容变化、损坏文件和候选删除的负例。", "owner": "测试维护者"},
     {"id": "B5", "kind": "validation", "goal": "为会移动并清空 Inbox 批次的提升脚本建立临时夹具回归门禁", "dependencies": ["A1"], "acceptance": "测试只在临时目录运行，覆盖范围拒绝、移动、来源批次清空、迁移记录和项目日志。", "owner": "测试维护者"},
     {"id": "B4", "kind": "validation", "goal": "汇编 R2 的媒体完整性验收", "dependencies": ["B2", "B3", "B5"], "acceptance": "R2 只在契约、实现、媒体回归和 Inbox 提升临时夹具测试共同通过后接受，且原始文件保持未修改。", "owner": "主协调者"},
@@ -123,12 +123,12 @@
     {"id": "D4", "kind": "decision", "goal": "冻结 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成边界", "dependencies": [], "acceptance": "ChatCut 仅作为可选第三方集成，使用 ChatCut Desktop 桌面本地模型上下文协议（MCP），展示前实时探测，不加入内建编辑后端集合，不成为第二权威，不调用未公开接口。", "owner": "产品负责人"},
     {"id": "D5", "kind": "decision", "goal": "决定生命周期与物理位置的联合配置方式", "dependencies": [], "acceptance": "生命周期和物理位置同时配置，用户可选择位置，每个位置独立记录清单、内容校验值和回读状态。", "owner": "产品负责人"},
     {"id": "D6", "kind": "decision", "goal": "决定可选上游配对的身份来源与无账号时的创建位置", "dependencies": [], "acceptance": "主动配对时复用或创建上游账号；未登录、未配对或系统不支持时 Studio 保持完整本地功能，不建立本地第二账号源。", "owner": "产品负责人"},
-    {"id": "E1", "kind": "implementation", "goal": "实现用户可配置的创意模型提供方", "dependencies": ["D3"], "acceptance": "多提供方端点、模型、受控密钥引用、能力探测和失败状态均可测试。", "owner": "桌面服务维护者"},
-    {"id": "E2", "kind": "implementation", "goal": "实现删除候选选择、确认、废纸篓移动与恢复", "dependencies": ["B4", "D2"], "acceptance": "只移动用户明确确认的候选，保留原路径、移动后回读、恢复和审计，禁止永久删除。", "owner": "媒体工具维护者"},
-    {"id": "E3", "kind": "implementation", "goal": "实现生命周期与用户所选物理位置的联合配置", "dependencies": ["B4", "D5"], "acceptance": "生命周期和每个物理位置独立保存并回读，不以状态替代副本证据。", "owner": "归档工具维护者"},
-    {"id": "E4", "kind": "implementation", "goal": "实现上游统一身份查询与同系统账号创建合同", "dependencies": ["D6"], "acceptance": "复用或幂等创建上游账号并回读同一身份，不建立本地密码库。", "owner": "上游身份维护者"},
-    {"id": "E5", "kind": "implementation", "goal": "实现本地应用对可选上游会话的受控消费", "dependencies": ["E4"], "acceptance": "登录、刷新、过期、登出和撤销按上游权威运行；未配对或不支持配对时 Studio 保持完整本地功能，只禁用上游专属能力。", "owner": "桌面服务维护者"},
-    {"id": "E6", "kind": "implementation", "goal": "实现 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成", "dependencies": ["C4", "D4"], "acceptance": "展示前实时探测，只有探测成功且用户明确连接后才显示可用；不加入 OpenClaw 内建编辑后端集合，不改变结构化剪辑方案的唯一权威，不调用未公开接口。", "owner": "桌面服务维护者"},
+    {"id": "E1", "kind": "implementation", "goal": "实现用户可配置的创意模型提供方", "dependencies": ["D3"], "acceptance": "多提供方端点、模型、受控密钥引用、能力探测和失败状态均可测试。", "owner": "桌面服务维护者", "escalation": {"reasons": ["multi-executor"]}, "worker": {"execution_identity": "external-codex-exec:E1:lw-luna", "runtime": "local-macos; isolated temporary configuration fixtures; no network", "return_path": "execution/artifacts/E1/returns/E1-primary.json", "resource_locks": ["write:99_System_OpenClaw/desktop/model_provider_config.py", "write:99_System_OpenClaw/tests/test_model_provider_config.py"]}},
+    {"id": "E2", "kind": "implementation", "goal": "实现删除候选选择、确认、废纸篓移动与恢复", "dependencies": ["B4", "D2"], "acceptance": "只移动用户明确确认的候选，保留原路径、移动后回读、恢复和审计，禁止永久删除。", "owner": "媒体工具维护者", "escalation": {"reasons": ["multi-executor"]}, "worker": {"execution_identity": "external-codex-exec:E2:lw-luna", "runtime": "local-macos; injected system-trash backend and temporary files only; no real user media", "return_path": "execution/artifacts/E2/returns/E2-primary.json", "resource_locks": ["write:99_System_OpenClaw/scripts/media_trash_flow.py", "write:99_System_OpenClaw/tests/test_media_trash_flow.py"]}},
+    {"id": "E3", "kind": "implementation", "goal": "实现生命周期与用户所选物理位置的联合配置", "dependencies": ["B4", "D5"], "acceptance": "生命周期和每个物理位置独立保存并回读，不以状态替代副本证据。", "owner": "归档工具维护者", "escalation": {"reasons": ["multi-executor"]}, "worker": {"execution_identity": "external-codex-exec:E3:lw-luna", "runtime": "local-macos; temporary configuration and location-readback fixtures only; no cloud or disk copy", "return_path": "execution/artifacts/E3/returns/E3-primary.json", "resource_locks": ["write:99_System_OpenClaw/desktop/archive_location_config.py", "write:99_System_OpenClaw/tests/test_archive_location_config.py"]}},
+    {"id": "E4", "kind": "implementation", "goal": "实现上游统一身份查询与同系统账号创建合同", "dependencies": ["D6"], "acceptance": "复用或幂等创建上游账号并回读同一身份，不建立本地密码库。", "owner": "上游身份维护者", "escalation": {"reasons": ["multi-executor"]}, "worker": {"execution_identity": "external-codex-exec:E4:lw-luna", "runtime": "local-macos; injected fake upstream client; no network", "return_path": "execution/artifacts/E4/returns/E4-primary.json", "resource_locks": ["write:99_System_OpenClaw/scripts/upstream_identity.py", "write:99_System_OpenClaw/tests/test_upstream_identity.py"]}},
+    {"id": "E5", "kind": "implementation", "goal": "实现本地应用对可选上游会话的受控消费", "dependencies": ["E4"], "acceptance": "登录、刷新、过期、登出和撤销按上游权威运行；未配对或不支持配对时 Studio 保持完整本地功能，只禁用上游专属能力。", "owner": "桌面服务维护者", "escalation": {"reasons": ["multi-executor"]}, "worker": {"execution_identity": "external-codex-exec:E5:lw-luna", "runtime": "local-macos; in-memory session and injected refresh fixtures only; no upstream request", "return_path": "execution/artifacts/E5/returns/E5-primary.json", "resource_locks": ["write:99_System_OpenClaw/desktop/upstream_session.py", "write:99_System_OpenClaw/tests/test_upstream_session.py"]}},
+    {"id": "E6", "kind": "implementation", "goal": "实现 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成", "dependencies": ["C4", "D4"], "acceptance": "展示前实时探测，只有探测成功且用户明确连接后才显示可用；不加入 OpenClaw 内建编辑后端集合，不改变结构化剪辑方案的唯一权威，不调用未公开接口。", "owner": "桌面服务维护者", "escalation": {"reasons": ["multi-executor"]}, "worker": {"execution_identity": "external-codex-exec:E6:lw-luna", "runtime": "local-macos; injected local command runner; no HTTP, no ChatCut account or media access", "return_path": "execution/artifacts/E6/returns/E6-primary.json", "resource_locks": ["write:99_System_OpenClaw/desktop/chatcut_mcp.py", "write:99_System_OpenClaw/tests/test_chatcut_mcp.py"]}},
     {"id": "D7", "kind": "convergence", "goal": "汇编前三个切片与六条产品实现线的整合候选", "dependencies": ["A4", "B4", "C4", "E1", "E2", "E3", "E4", "E5", "E6"], "acceptance": "整合候选只引用已接受的决定和实现，不引入第二套权威或未声明接口。", "owner": "主协调者"},
     {"id": "D8", "kind": "release", "goal": "对具备真实实现与验收证据的 R4 候选作最终发布决定", "dependencies": ["D7"], "acceptance": "候选身份、E1-E6 测试、远端回读、回退路径和清理台账均已记录；否则保持未发布。", "owner": "产品负责人", "escalation": {"reasons": ["production-release"], "immutable_release_identity": "candidate:R4-policy-integration-v3", "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761", "recovery_contract": "未满足验收时保持未发布；若已切换则回退到 promotion baseline，并记录远端 tip 回读。"}}
   ],
@@ -142,18 +142,18 @@
   "artifacts": {
     "ssot_bundle": true,
     "generated_views": ["main"],
-    "resource_matrix": false,
-    "runner_registry": false,
+    "resource_matrix": true,
+    "runner_registry": true,
     "evidence_identity_registry": false,
-    "worker_ledger": false
+    "worker_ledger": true
   },
   "complexity_budget": {
     "authority": "用户的 SSOT 请求与 L2 比例治理合同",
-    "rationale": "保留四个真实发布切片、二十八个必要节点和一个主视图；补入会移动来源批次的 Inbox 提升临时夹具门禁，验证动作合并进节点验收，不注册外部 worker。",
+    "rationale": "保留四个真实发布切片、二十八个必要节点和一个主视图；B2、E1、E2-E6 的受控工作包写入范围与运行资源互不重叠，因此登记七个外部执行进程，验证动作仍合并进节点验收。",
     "limits": {
       "total_nodes": 28,
       "implementation_nodes_per_release": 6,
-      "codex_worker_nodes": 0,
+      "codex_worker_nodes": 7,
       "generated_views": 1
     }
   },
@@ -168,14 +168,14 @@
   },
   "scheduling_model": "event-driven",
   "scheduling_hints": [
-    "B1、B3、C1、E1、E4 当前均已满足决定和事实依赖；B5 已实施但须由 B4 汇编，A2 与 A3 已实施并等待 A4 验收。事件驱动分析决定就绪前沿，静态波次仅作阅读提示。",
+    "A2、A3、B1-B5、C1-C4 与 E1-E6 已由主协调者接受；七个受控外部执行线的日志、返回和清理台账保留在 execution/artifacts。事件驱动分析决定就绪前沿，静态波次仅作阅读提示。",
     "D1-D6 均已接受并只解锁直接消费者；D4 已冻结 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成。",
-    "E2 与 E3 在 B4 接受后可并行；E5 只等待 E4；E6 仅等待 C4，不制造阶段级总闸门。"
+    "E2 与 E3 已在 B4 接受后并行执行；E5 在 E4 接受后执行；E6 在 C4 接受后执行。D8 只等待 main 候选推送、远端回读和清理记录。"
   ],
   "artifacts_inventory": {
     "total_nodes": 28,
     "implementation_nodes": 11,
-    "worker_nodes": 0,
+    "worker_nodes": 7,
     "generated_views": 1
   }
 }

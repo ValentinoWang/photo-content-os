@@ -1,0 +1,492 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://photo-content-os.local/schemas/media_manifest.schema.json",
+  "title": "Photo Content OS media manifest",
+  "description": "Deterministic scan output. Image health and EXIF location are fail-closed facts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project_dir",
+    "generated_at",
+    "manifest_version",
+    "notes",
+    "items"
+  ],
+  "properties": {
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "manifest_version": {
+      "const": 2
+    },
+    "notes": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/media_item"
+      }
+    }
+  },
+  "$defs": {
+    "nullable_number": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "exif_location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "latitude",
+        "longitude",
+        "altitude",
+        "horizontal_accuracy"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "present",
+            "unknown"
+          ]
+        },
+        "latitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -180,
+          "maximum": 180
+        },
+        "altitude": {
+          "$ref": "#/$defs/nullable_number"
+        },
+        "horizontal_accuracy": {
+          "$ref": "#/$defs/nullable_number",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "latitude": {
+                "type": "null"
+              },
+              "longitude": {
+                "type": "null"
+              },
+              "altitude": {
+                "type": "null"
+              },
+              "horizontal_accuracy": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "present"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180
+              }
+            }
+          }
+        }
+      ]
+    },
+    "decision_issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "severity",
+        "code",
+        "message",
+        "action"
+      ],
+      "properties": {
+        "severity": {
+          "enum": [
+            "ERROR",
+            "WARN",
+            "INFO"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        }
+      }
+    },
+    "media_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "media_id",
+        "filename",
+        "stem",
+        "relative_path",
+        "absolute_path",
+        "extension",
+        "size_mb",
+        "media_type",
+        "lifecycle",
+        "analysis_eligible",
+        "source_type",
+        "live_photo_status",
+        "live_photo_role",
+        "duration_sec",
+        "width",
+        "height",
+        "has_audio",
+        "location_raw",
+        "gps_latitude",
+        "gps_longitude",
+        "gps_altitude",
+        "gps_horizontal_accuracy",
+        "sha256",
+        "image_readable",
+        "image_health",
+        "image_health_reason",
+        "exif_location",
+        "quality_flags",
+        "raw_decision_tokens",
+        "decision_issues",
+        "decision_notes"
+      ],
+      "properties": {
+        "media_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{12}$"
+        },
+        "filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stem": {
+          "type": "string"
+        },
+        "relative_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "absolute_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extension": {
+          "type": "string",
+          "pattern": "^\\.[a-z0-9]+$"
+        },
+        "size_mb": {
+          "$ref": "#/$defs/nullable_number",
+          "minimum": 0
+        },
+        "media_type": {
+          "enum": [
+            "image",
+            "video",
+            "metadata"
+          ]
+        },
+        "lifecycle": {
+          "type": "string",
+          "minLength": 1
+        },
+        "analysis_eligible": {
+          "type": "boolean"
+        },
+        "source_type": {
+          "type": "string"
+        },
+        "live_photo_status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "live_photo_role": {
+          "enum": [
+            "still",
+            "motion",
+            "metadata",
+            null
+          ]
+        },
+        "duration_sec": {
+          "$ref": "#/$defs/nullable_number",
+          "minimum": 0
+        },
+        "width": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "height": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "has_audio": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "location_raw": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gps_latitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -90,
+          "maximum": 90
+        },
+        "gps_longitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -180,
+          "maximum": 180
+        },
+        "gps_altitude": {
+          "$ref": "#/$defs/nullable_number"
+        },
+        "gps_horizontal_accuracy": {
+          "$ref": "#/$defs/nullable_number"
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "image_readable": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "image_health": {
+          "enum": [
+            "healthy",
+            "malformed",
+            "unreadable",
+            "probe_unavailable",
+            "not_applicable"
+          ]
+        },
+        "image_health_reason": {
+          "enum": [
+            "malformed_image",
+            "read_error",
+            "probe_unavailable",
+            "sips_probe",
+            "image_probe_error",
+            null
+          ]
+        },
+        "exif_location": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/exif_location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quality_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "raw_decision_tokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "decision_issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/decision_issue"
+          }
+        },
+        "decision_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "video_codec": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "avg_frame_rate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "created_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "media_type": {
+                "const": "image"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "sha256",
+              "image_readable",
+              "image_health",
+              "image_health_reason",
+              "exif_location"
+            ],
+            "properties": {
+              "image_readable": {
+                "type": "boolean"
+              },
+              "image_health": {
+                "enum": [
+                  "healthy",
+                  "malformed",
+                  "unreadable",
+                  "probe_unavailable"
+                ]
+              },
+              "exif_location": {
+                "$ref": "#/$defs/exif_location"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "media_type": {
+                "enum": [
+                  "video",
+                  "metadata"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sha256": {
+                "type": "null"
+              },
+              "image_readable": {
+                "type": "null"
+              },
+              "image_health": {
+                "const": "not_applicable"
+              },
+              "image_health_reason": {
+                "type": "null"
+              },
+              "exif_location": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "image_health": {
+                "const": "healthy"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "image_readable": {
+                "const": true
+              },
+              "image_health_reason": {
+                "enum": [
+                  "sips_probe",
+                  null
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

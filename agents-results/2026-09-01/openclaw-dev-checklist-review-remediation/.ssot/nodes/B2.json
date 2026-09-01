@@ -4,7 +4,7 @@
   "stage": "B",
   "work_kind": "implementation",
   "domain_lane": "media-retention",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -23,8 +23,18 @@
   "acceptance": "系统只生成带证据的删除候选并允许用户选择；本节点不移动或永久删除文件，缺少证据时强制阻断。",
   "owner": "媒体工具维护者",
   "node_role": "leaf",
-  "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_actor": "external-codex-worker",
+  "execution_contract_ref": "execution/B2-delete-recommendation.task.md",
+  "execution_guard_ref": "execution/execution-guard.json#EG-W5",
+  "worker": {
+    "execution_identity": "external-codex-exec:B2:lw-luna",
+    "runtime": "local-macos; isolated in-memory test fixtures; no external side effects",
+    "return_path": "execution/artifacts/B2/returns/B2-primary.json",
+    "resource_locks": ["write:99_System_OpenClaw/scripts/media_delete_recommendations.py", "write:99_System_OpenClaw/tests/test_media_delete_recommendations.py"]
+  },
+  "escalation": {
+    "reasons": ["multi-executor"]
+  },
   "side_effect_class": "reversible",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-B2-delete-recommendation"]

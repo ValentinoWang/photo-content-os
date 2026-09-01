@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "plan_version": 5,
+  "launch_barrier": "同一波次的全部监督器 PID 必须在首次 wait 前登记",
+  "workers": [
+    {"node_id": "B2", "primary_executor": "lw-luna", "wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh", "task": "execution/B2-delete-recommendation.task.md", "validation": "execution/B2-delete-recommendation.validation.sh", "artifact_directory": "execution/artifacts/B2"},
+    {"node_id": "E1", "primary_executor": "lw-luna", "wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh", "task": "execution/E1-model-provider-config.task.md", "validation": "execution/E1-model-provider-config.validation.sh", "artifact_directory": "execution/artifacts/E1"},
+    {"node_id": "E4", "primary_executor": "lw-luna", "wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh", "task": "execution/E4-upstream-identity-contract.task.md", "validation": "execution/E4-upstream-identity-contract.validation.sh", "artifact_directory": "execution/artifacts/E4"},
+    {"node_id": "E2", "primary_executor": "lw-luna", "wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh", "task": "execution/E2-media-trash-flow.task.md", "validation": "execution/E2-media-trash-flow.validation.sh", "artifact_directory": "execution/artifacts/E2"},
+    {"node_id": "E3", "primary_executor": "lw-luna", "wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh", "task": "execution/E3-archive-location-config.task.md", "validation": "execution/E3-archive-location-config.validation.sh", "artifact_directory": "execution/artifacts/E3"},
+    {"node_id": "E5", "primary_executor": "lw-luna", "wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh", "task": "execution/E5-local-session-consumer.task.md", "validation": "execution/E5-local-session-consumer.validation.sh", "artifact_directory": "execution/artifacts/E5"},
+    {"node_id": "E6", "primary_executor": "lw-luna", "wrapper": "/Users/vsiyo/.codex/workers/run-lw-luna.sh", "task": "execution/E6-chatcut-local-mcp.task.md", "validation": "execution/E6-chatcut-local-mcp.validation.sh", "artifact_directory": "execution/artifacts/E6"}
+  ]
+}

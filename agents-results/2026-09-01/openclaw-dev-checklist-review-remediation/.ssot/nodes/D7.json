@@ -4,7 +4,7 @@
   "stage": "D",
   "work_kind": "convergence",
   "domain_lane": "integration",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -29,7 +29,7 @@
   "owner": "主协调者",
   "node_role": "convergence",
   "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_contract_ref": "coordinator-acceptance:2026-09-02:R4-full-suite-and-mobile-ui",
   "side_effect_class": "none",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-D7-integration-plan"]

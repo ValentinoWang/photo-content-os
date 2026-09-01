@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -83,6 +84,23 @@ class ObsidianDocSyncTest(unittest.TestCase):
         errors = self.run_sync_check()
 
         self.assertTrue(any("source doc is newer than Obsidian target" in error for error in errors))
+
+    def test_document_contract_commands_run_with_system_python_without_media_dependencies(self) -> None:
+        root = Path(__file__).resolve().parents[2]
+        env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
+        for script, extra_args in (
+            ("30_check_obsidian_doc_sync.py", []),
+            ("06_check_outline_contract.py", ["."]),
+        ):
+            result = subprocess.run(
+                ["python3", str(root / "99_System_OpenClaw" / "scripts" / script), *extra_args],
+                cwd=root,
+                env=env,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,96 @@
+{
+  "task_id": "E3",
+  "attempt_role": "primary",
+  "executor": "lw-luna",
+  "version": 5,
+  "dependency_graph_version": 3,
+  "interface_freeze_version": 4,
+  "node_contract_version": 1,
+  "decision_refs": [
+    "decision.scope.audit-remediation@1",
+    "decision.archive.lifecycle-location@1"
+  ],
+  "invalidation_key": "archive.lifecycle-location-config",
+  "task_source_sha256": "7008baded01c1c5baa20a6724721e21ecc31f5a470bb27d0ef656a66fe27251b",
+  "validation_command": "bash agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E3-archive-location-config.validation.sh",
+  "validation_command_sha256": "c6a70b7c377803f8ff9778b904d04810d8861292a04f064e99c33470ac88058b",
+  "actual_read_scope": [
+    "99_System_OpenClaw/scripts/media_common.py",
+    "99_System_OpenClaw/scripts/media_delete_recommendations.py",
+    "99_System_OpenClaw/desktop/project_store.py",
+    "99_System_OpenClaw/AGENTS.md",
+    "agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E3-archive-location-config.validation.sh",
+    "local Codex memory archive implementation summary"
+  ],
+  "actual_write_scope": [
+    "99_System_OpenClaw/desktop/archive_location_config.py",
+    "99_System_OpenClaw/tests/test_archive_location_config.py",
+    "agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E3/returns/E3-primary.json"
+  ],
+  "transient_artifacts_created_and_removed": [
+    "99_System_OpenClaw/desktop/__pycache__/archive_location_config.cpython-313.pyc",
+    "99_System_OpenClaw/tests/__pycache__/test_archive_location_config.cpython-313.pyc"
+  ],
+  "changed_files": [
+    {
+      "path": "99_System_OpenClaw/desktop/archive_location_config.py",
+      "sha256": "6a813faaeb9f2c8a4d37b8a90483d83401938e54b2220426cc16144df88d4a91"
+    },
+    {
+      "path": "99_System_OpenClaw/tests/test_archive_location_config.py",
+      "sha256": "aa9cbddfea75d2b9f32e3ea1752aec21126a57344e03a17154c6391998847033"
+    }
+  ],
+  "command_results": [
+    {
+      "command": "bash agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E3-archive-location-config.validation.sh",
+      "phase": "red baseline",
+      "exit_code": 5,
+      "result": "NO TESTS RAN before the target test existed"
+    },
+    {
+      "command": "99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p test_archive_location_config.py -v",
+      "phase": "focused test",
+      "exit_code": 0,
+      "result": "7 tests passed"
+    },
+    {
+      "command": "99_System_OpenClaw/.venv-content-os/bin/python -m py_compile 99_System_OpenClaw/desktop/archive_location_config.py 99_System_OpenClaw/tests/test_archive_location_config.py",
+      "phase": "syntax check",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "git diff --check -- 99_System_OpenClaw/desktop/archive_location_config.py 99_System_OpenClaw/tests/test_archive_location_config.py",
+      "phase": "whitespace check",
+      "exit_code": 0,
+      "result": "passed"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 bash agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E3-archive-location-config.validation.sh",
+      "phase": "frozen acceptance command",
+      "exit_code": 0,
+      "result": "7 tests passed"
+    }
+  ],
+  "acceptance_coverage": [
+    "explicit lifecycle enum is stored separately from physical locations",
+    "controlled location ids and references reject absolute paths, URLs, and traversal",
+    "each location has an immutable relative-path and 64-character SHA-256 manifest",
+    "location readback state is independently updated only through an injected reader",
+    "unknown fields, duplicate locations, malformed records, and invalid hashes are rejected",
+    "JSON persistence uses a same-directory atomic replacement and retains readback results"
+  ],
+  "unverified_items": [
+    "No real media, archive project, cloud drive, removable device, network, or external copy was accessed.",
+    "No production, device, cloud, or recovery readback evidence was produced.",
+    "No frontend, shared desktop service, schema, SSOT, or full-project CI integration was run."
+  ],
+  "shared_resource_impact": "None. Existing dirty files outside the E3 write scope were preserved and untouched.",
+  "risk": "The verified state is fixture evidence from an injected reader only; lifecycle changes never infer that an external copy exists.",
+  "release_acceptance": "not_claimed",
+  "proposed_state": "VERIFIED",
+  "acceptance_self_check": "pass",
+  "failure_class": "none",
+  "failure_origin": "none"
+}

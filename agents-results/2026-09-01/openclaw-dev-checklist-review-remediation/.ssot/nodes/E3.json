@@ -4,7 +4,7 @@
   "stage": "E",
   "work_kind": "implementation",
   "domain_lane": "archive-config",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -23,8 +23,23 @@
   "acceptance": "用户可同时选择生命周期和一个或多个物理位置；每个位置独立记录文件清单、内容校验值、观察时间与回读状态，生命周期变化不得被当作外部副本已存在的证据。",
   "owner": "归档工具维护者",
   "node_role": "leaf",
-  "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_actor": "external-codex-worker",
+  "execution_contract_ref": "execution/E3-archive-location-config.task.md",
+  "execution_guard_ref": "execution/execution-guard.json#EG-W15",
+  "worker": {
+    "execution_identity": "external-codex-exec:E3:lw-luna",
+    "runtime": "local-macos; temporary configuration and location-readback fixtures only; no cloud or disk copy",
+    "return_path": "execution/artifacts/E3/returns/E3-primary.json",
+    "resource_locks": [
+      "write:99_System_OpenClaw/desktop/archive_location_config.py",
+      "write:99_System_OpenClaw/tests/test_archive_location_config.py"
+    ]
+  },
+  "escalation": {
+    "reasons": [
+      "multi-executor"
+    ]
+  },
   "side_effect_class": "reversible",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-E3-archive-lifecycle-location-config"]

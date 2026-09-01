@@ -4,7 +4,7 @@
   "stage": "E",
   "work_kind": "implementation",
   "domain_lane": "chatcut-integration",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -23,8 +23,23 @@
   "acceptance": "仅实现 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成：展示前实时探测，只有探测成功且用户明确连接后才显示可用；不加入 OpenClaw 内建编辑后端集合，不改变 06_edit_decision_list.json 的唯一权威，不调用未公开接口。",
   "owner": "桌面服务维护者",
   "node_role": "leaf",
-  "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_actor": "external-codex-worker",
+  "execution_contract_ref": "execution/E6-chatcut-local-mcp.task.md",
+  "execution_guard_ref": "execution/execution-guard.json#EG-W17",
+  "worker": {
+    "execution_identity": "external-codex-exec:E6:lw-luna",
+    "runtime": "local-macos; injected local command runner; no HTTP, no ChatCut account or media access",
+    "return_path": "execution/artifacts/E6/returns/E6-primary.json",
+    "resource_locks": [
+      "write:99_System_OpenClaw/desktop/chatcut_mcp.py",
+      "write:99_System_OpenClaw/tests/test_chatcut_mcp.py"
+    ]
+  },
+  "escalation": {
+    "reasons": [
+      "multi-executor"
+    ]
+  },
   "side_effect_class": "reversible",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-E6-chatcut-optional-integration"]

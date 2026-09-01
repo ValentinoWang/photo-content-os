@@ -1,0 +1,58 @@
+{
+  "task_id": "E1",
+  "version": "plan-4; dependency-graph-3; interface-freeze-4; node-contract-1",
+  "decision_refs": [
+    "decision.scope.audit-remediation@1",
+    "decision.creative-model.providers@1"
+  ],
+  "invalidation_keys": [
+    "creative-model.provider-config"
+  ],
+  "read_scope": [
+    "99_System_OpenClaw/desktop/project_store.py",
+    "99_System_OpenClaw/desktop/server.py",
+    "99_System_OpenClaw/AGENTS.md",
+    "agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E1-model-provider-config.validation.sh"
+  ],
+  "write_scope": [
+    "99_System_OpenClaw/desktop/model_provider_config.py",
+    "99_System_OpenClaw/tests/test_model_provider_config.py",
+    "agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/returns/E1-primary.json"
+  ],
+  "changed_files": [
+    "99_System_OpenClaw/desktop/model_provider_config.py",
+    "99_System_OpenClaw/tests/test_model_provider_config.py"
+  ],
+  "command_results": [
+    {
+      "command": "python3 -m unittest 99_System_OpenClaw/tests/test_model_provider_config.py -v",
+      "exit_code": 0,
+      "result": "pass; 7 tests"
+    },
+    {
+      "command": "python3 -m py_compile 99_System_OpenClaw/desktop/model_provider_config.py 99_System_OpenClaw/tests/test_model_provider_config.py",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "command": "git diff --check -- 99_System_OpenClaw/desktop/model_provider_config.py 99_System_OpenClaw/tests/test_model_provider_config.py",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "command": "bash agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/execution/E1-model-provider-config.validation.sh",
+      "exit_code": 0,
+      "result": "pass; 7 tests"
+    }
+  ],
+  "unverified_items": [
+    "Real provider network requests were not made by contract.",
+    "Desktop server, frontend, deployment, and production/device behavior were not changed or verified by this bounded lane."
+  ],
+  "proposed_state": "IMPLEMENTED",
+  "acceptance_self_check": "pass",
+  "failure_class": "none",
+  "failure_origin": "none",
+  "shared_resource_impact": "The module is standalone and does not modify shared routes, server.py, frontend files, SSOT files, or other tests; pre-existing dirty worktree changes were preserved.",
+  "risk": "Capability probing is intentionally unavailable by default and requires an injected probe for live provider checks; no raw secret value is accepted or persisted."
+}

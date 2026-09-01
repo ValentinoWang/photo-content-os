@@ -4,7 +4,7 @@
   "stage": "A",
   "work_kind": "validation",
   "domain_lane": "r1-acceptance",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -21,7 +21,7 @@
   "owner": "主协调者",
   "node_role": "acceptance-gate",
   "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_contract_ref": "coordinator-acceptance:2026-09-02:test_checklist_remediation_static.py",
   "side_effect_class": "none",
   "candidate_identity_policy": "freezes",
   "deliverable_ids": ["DL-A4-r1-acceptance"]

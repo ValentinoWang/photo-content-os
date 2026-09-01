@@ -4,7 +4,7 @@
   "stage": "E",
   "work_kind": "implementation",
   "domain_lane": "local-session",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -23,8 +23,23 @@
   "acceptance": "本地应用只保存受控令牌引用或短期会话，正确处理登录、刷新、过期、登出和撤销；用户与权限始终由上游身份回读，不建立本地身份权威。未登录、未配对、配对不可用或 Windows/Linux 不支持上游配对时，Studio 仍保持完整本地功能，只禁用上游专属能力。",
   "owner": "桌面服务维护者",
   "node_role": "leaf",
-  "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_actor": "external-codex-worker",
+  "execution_contract_ref": "execution/E5-local-session-consumer.task.md",
+  "execution_guard_ref": "execution/execution-guard.json#EG-W16",
+  "worker": {
+    "execution_identity": "external-codex-exec:E5:lw-luna",
+    "runtime": "local-macos; in-memory session and injected refresh fixtures only; no upstream request",
+    "return_path": "execution/artifacts/E5/returns/E5-primary.json",
+    "resource_locks": [
+      "write:99_System_OpenClaw/desktop/upstream_session.py",
+      "write:99_System_OpenClaw/tests/test_upstream_session.py"
+    ]
+  },
+  "escalation": {
+    "reasons": [
+      "multi-executor"
+    ]
+  },
   "side_effect_class": "reversible",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-E5-local-session-consumer"]

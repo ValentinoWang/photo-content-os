@@ -1,0 +1,43 @@
+{
+  "evidence_id": "D7-final-local-verification-2026-09-02",
+  "node_id": "D7",
+  "source_baseline": "61f1c851b80defca928c38665c69a61a463a9081",
+  "scope": "R4 integration candidate preflight after the global settings-page reachability repair",
+  "automated_checks": [
+    {
+      "command": "LOCAL_MEDIA_ROOT=/Users/vsiyo/Desktop/照片筛选 99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests",
+      "result": "passed",
+      "tests": 304
+    },
+    {
+      "command": "99_System_OpenClaw/.venv-content-os/bin/python -m unittest 99_System_OpenClaw.tests.test_checklist_remediation_static 99_System_OpenClaw.tests.test_ssot_policy_integration",
+      "result": "passed",
+      "tests": 6
+    },
+    {
+      "command": "node --check 99_System_OpenClaw/desktop/static/app.js",
+      "result": "passed"
+    },
+    {
+      "command": "LOCAL_MEDIA_ROOT=/Users/vsiyo/Desktop/照片筛选 bash 99_System_OpenClaw/scripts/check_runtime_contract.sh",
+      "result": "passed"
+    }
+  ],
+  "interactive_observation": {
+    "url": "http://127.0.0.1:43123/",
+    "viewport": "390x844",
+    "scenario": "No project exists; activate Settings.",
+    "result": "passed",
+    "observations": [
+      "Settings remains reachable without a selected project.",
+      "Model, archive lifecycle/location, optional upstream pairing, and optional ChatCut controls are visible.",
+      "The document root has clientWidth=390 and scrollWidth=390.",
+      "No browser console warning or error was observed.",
+      "Project-specific delete recommendation and restore controls are not rendered without a selected project."
+    ]
+  },
+  "limitations": [
+    "No model provider, upstream account, ChatCut Desktop endpoint, cloud storage, removable disk, or production deployment was contacted.",
+    "This record is local runtime evidence only."
+  ]
+}

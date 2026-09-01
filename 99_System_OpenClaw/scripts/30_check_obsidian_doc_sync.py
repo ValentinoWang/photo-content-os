@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from media_common import missing_markers
+from document_contract_common import missing_markers
 from runtime_paths import obsidian_root
 from runtime_paths import repository_root as _repository_root
 

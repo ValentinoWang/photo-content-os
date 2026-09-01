@@ -4,7 +4,7 @@
   "stage": "B",
   "work_kind": "contract-compile",
   "domain_lane": "media-integrity",
-  "execution_state": "READY",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -21,7 +21,7 @@
   "owner": "媒体工具维护者",
   "node_role": "leaf",
   "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_contract_ref": "coordinator-reacceptance:2026-09-02:test_media_manifest_contract.py",
   "side_effect_class": "none",
   "candidate_identity_policy": "none",
   "deliverable_ids": ["DL-B1-media-manifest-contract"]

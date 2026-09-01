@@ -4,7 +4,7 @@ APPLICABILITY_DECISION: ssot
 GOVERNANCE_REASON: 用户明确要求持久 SSOT，且整改跨越清单、桌面服务、媒体清单、结构化剪辑方案、模型配置、统一身份、归档位置与可选第三方剪辑接入。
 SSOT_DEPTH: L2
 TARGET_EVIDENCE_LEVEL: local-runtime
-PLAN_VERSION: 4
+PLAN_VERSION: 5
 DAG_VERSION: 3
 INTERFACE_FREEZE_VERSION: 4
 NODE_CONTRACT_VERSION: 1
@@ -23,9 +23,9 @@ SSOT_MACHINE_SOURCE: .ssot/manifest.json
 
 审核结论不变：原开发清单不能直接作为完整开发权威。用户已在 2026-09-02 接受六项产品决定，消除了结构化剪辑方案、删除行为、创意模型、剪辑服务接入、归档位置和身份来源的不确定性。第四项决定已正式冻结为剪辑服务桌面应用（ChatCut Desktop）的桌面本地模型上下文协议（MCP）可选集成。
 
-本次结构修订补入三类缺口：清单与原型的可执行静态门禁、会移动收件箱（Inbox）批次的临时夹具回归门禁，以及可选上游配对不影响现有工作台（Studio）本地功能的身份合同。它们把“决定已接受”“代码已实施”和“发布已验收”分开，避免 D7 在没有完整证据时直接宣称整合完成。
+本次结构修订补入三类缺口：清单与原型的可执行静态门禁、会移动收件箱（Inbox）批次的临时夹具回归门禁，以及可选上游配对不影响现有工作台（Studio）本地功能的身份合同。它们把“决定已接受”“代码已实施”和“发布已验收”分开，避免 D7 在没有完整证据时直接宣称整合完成。当前清单、媒体、结构化剪辑和整合实施节点均已接受；D8 只等待主分支候选推送、远端回读和清理记录。
 
-本 SSOT 继续采用第二级发布治理（L2 Release SSOT）。四个发布切片可以独立验收和保持未发布；本次修改审核清单、原型和受控测试，不修改媒体、桌面运行数据或外部系统，也不注册外部 Codex 执行进程。
+本 SSOT 继续采用第二级发布治理（L2 Release SSOT）。四个发布切片可以独立验收和保持未发布；本次修改审核清单、原型和受控测试，不修改媒体、桌面运行数据或外部系统。七条可写实现线均以受控外部 Codex 进程执行，且只使用临时夹具；日志、结构化返回、提示词清理记录和进程台账保留在执行证据目录（`execution/artifacts/`）。
 
 明确排除：不把本地源码或单元测试写成生产完成；不自动或永久删除文件；不把生命周期状态当作物理副本证据；不建立本地第二套账号事实源；不在能力探测前把剪辑服务（ChatCut）显示为在线；不把 Obsidian 快照作为运行权威。
 
@@ -90,6 +90,7 @@ SSOT_MACHINE_SOURCE: .ssot/manifest.json
 | 2 | L2 编排修订 | 接受 D1、D2、D3、D5、D6，新增 E1-E6，并以官方资料重写 D4 接入事实 | plan=2, dag=2, interface=2 | B2、B4、C1、C4、D1-D8、E1-E6 | 旧 R4 汇合描述失效；尚无业务验收证据可撤销 | 仅后续新实现节点 | 用户/产品负责人 | 2026-09-02 |
 | 3 | L3 方案修订 | 用户正式接受 D4，冻结 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成 | plan=3, dag=2, interface=3 | D4、E6、D7、D8 | 未组装的 R4 v2 候选身份被 v3 取代；无已接受业务证据失效 | none | 用户/产品负责人 | 2026-09-02 |
 | 4 | L3 方案修订 | 修复冻结命令、补入 Inbox 提升夹具门禁，并将上游身份改为不影响本地功能的可选配对 | plan=4, dag=3, interface=4 | A1-A4、B4-B5、D2、D6、E2、E4、E5 | R1/R2 旧验收命令和 D6 旧会话语义失效；无已接受业务证据失效 | A4、B4、D7、D8 | 主协调者，依据 README 本地优先合同 | 2026-09-02 |
+| 5 | L2 实施收敛 | 接受 R1-R3、E1-E6 与 D7；将 R3/R4 替换为实际存在的发现式测试命令 | plan=5, dag=3, interface=4 | A2-A4、B1-B5、C1-C4、E1-E6、D7-D8 | R3/R4 的占位验收命令失效；未声明任何外部或生产验收 | D8 | 用户的完成请求与主协调者 | 2026-09-02 |
 
 ### 权威注册表
 
@@ -199,10 +200,9 @@ flowchart LR
   classDef out  fill:#E3F1E8,stroke:#146B3A,color:#146B3A
   classDef blk  fill:#FAE5E3,stroke:#B3261E,color:#B3261E
   class A1 inp
-  class A2,A3,B1,B3,C1,E1,E4 work
+  class A2,A3,B1,B2,B3,B4,B5,C1,C2,C3,C4,E1,E2,E3,E4,E5,E6,D7 out
   class AA,D1,D2,D3,D4,D5,D6 dec
-  class D8 out
-  class A4,B2,B4,C2,C3,C4,E2,E3,E5,E6,D7 blk
+  class D8 work
 ```
 
 ### 状态台账
@@ -211,32 +211,32 @@ flowchart LR
 |---|---|---|---|---|---|---|---|
 | AA | A | ACCEPTED | 固定审核范围和权威边界 | 主协调者 | none | 用户请求与机器记录 | A1 |
 | A1 | A | ACCEPTED | 冻结代码和统计事实 | 主协调者 | none | `source-notes.md`、文件、行号和复查命令 | A2,A3,B1,B3,B5 |
-| A2 | A | IMPLEMENTED | 纠正清单事实、分类和过期转写文案 | 文档维护者 | 等待 A4 验收 | 清单修订与静态门禁通过 | A4 |
-| A3 | A | IMPLEMENTED | 补齐 HTML 页面合同并校准原型 | 文档维护者 | 等待 A4 验收 | 原型修订与静态门禁通过 | A4 |
-| A4 | A | BLOCKED | 验收 R1 | 主协调者 | 等待 A2、A3 接受 | 待生成 R1 回执 | D7 |
-| B1 | B | READY | 定义媒体清单完整性合同 | 媒体工具维护者 | none | 待生成字段合同 | B2 |
-| B2 | B | BLOCKED | 实现生产删除建议与用户选择 | 媒体工具维护者 | 等待 B1 接受 | D2 已接受；待生成候选测试 | B4 |
-| B3 | B | READY | 补充媒体清单回归测试 | 测试维护者 | none | 待生成测试结果 | B4 |
-| B5 | B | IMPLEMENTED | 为 Inbox 提升脚本建立临时夹具门禁 | 测试维护者 | 等待 B4 验收 | 临时目录测试通过 | B4 |
-| B4 | B | BLOCKED | 验收 R2 | 主协调者 | 等待 B2、B3、B5 接受 | 待生成 R2 回执 | D7,E2,E3 |
-| C1 | C | READY | 实现结构化剪辑方案桥接 | 桌面服务维护者 | none | D1 已接受；待生成接口候选 | C2 |
-| C2 | C | BLOCKED | 验证桥接错误路径 | 测试维护者 | 等待 C1 接受 | 待生成测试结果 | C3 |
-| C3 | C | BLOCKED | 核对文本编辑回退边界 | 桌面服务维护者 | 等待 C2 接受 | 待生成边界记录 | C4 |
-| C4 | C | BLOCKED | 验收 R3 | 主协调者 | 等待 C3 接受 | 待生成 R3 回执 | D7,E6 |
+| A2 | A | ACCEPTED | 纠正清单事实、分类和过期转写文案 | 文档维护者 | none | 清单修订与静态门禁通过 | A4 |
+| A3 | A | ACCEPTED | 补齐 HTML 页面合同并校准原型 | 文档维护者 | none | 原型修订与静态门禁通过 | A4 |
+| A4 | A | ACCEPTED | 验收 R1 | 主协调者 | none | `test_checklist_remediation_static.py` 3 项通过 | D7 |
+| B1 | B | ACCEPTED | 定义媒体清单完整性合同 | 媒体工具维护者 | none | `test_media_manifest_contract.py` 5 项通过 | B2 |
+| B2 | B | ACCEPTED | 实现生产删除建议与用户选择 | 媒体工具维护者 | none | `test_media_delete_recommendations.py` 7 项通过 | B4 |
+| B3 | B | ACCEPTED | 补充媒体清单回归测试 | 测试维护者 | none | 媒体清单合同负例通过 | B4 |
+| B5 | B | ACCEPTED | 为 Inbox 提升脚本建立临时夹具门禁 | 测试维护者 | none | `test_promote_inbox_batch_to_project.py` 2 项通过 | B4 |
+| B4 | B | ACCEPTED | 验收 R2 | 主协调者 | none | R2 五个发现式测试模块共 19 项通过 | D7,E2,E3 |
+| C1 | C | ACCEPTED | 实现结构化剪辑方案桥接 | 桌面服务维护者 | none | `test_ssot_edl_bridge.py` 2 项通过 | C2 |
+| C2 | C | ACCEPTED | 验证桥接错误路径 | 测试维护者 | none | 缺失、损坏、版本与来源负例通过 | C3 |
+| C3 | C | ACCEPTED | 核对文本编辑回退边界 | 桌面服务维护者 | none | 结构化读取与既有文本编辑边界通过 | C4 |
+| C4 | C | ACCEPTED | 验收 R3 | 主协调者 | none | R3 三个发现式测试模块共 28 项通过 | D7,E6 |
 | D1 | D | ACCEPTED | 决定结构化剪辑方案权威 | 产品负责人 | none | 2026-09-02 决定 v1 | C1 |
 | D2 | D | ACCEPTED | 决定删除行为 | 产品负责人 | none | 2026-09-02 决定 v1 | B2,E2 |
 | D3 | D | ACCEPTED | 决定创意模型提供方 | 产品负责人 | none | 2026-09-02 决定 v1 | E1 |
 | D4 | D | ACCEPTED | 冻结 ChatCut Desktop 桌面本地 MCP 可选接入 | 产品负责人 | none | 2026-09-02 决定 v1 与官方证据 | E6 |
 | D5 | D | ACCEPTED | 决定生命周期与物理位置 | 产品负责人 | none | 2026-09-02 决定 v1 | E3 |
 | D6 | D | ACCEPTED | 决定上游身份来源 | 产品负责人 | none | 2026-09-02 决定 v1 | E4 |
-| E1 | E | READY | 实现创意模型提供方配置 | 桌面服务维护者 | none | D3 已接受 | D7 |
-| E2 | E | BLOCKED | 实现废纸篓移动与恢复 | 媒体工具维护者 | 等待 B4 接受 | D2 已接受 | D7 |
-| E3 | E | BLOCKED | 实现生命周期与位置配置 | 归档工具维护者 | 等待 B4 接受 | D5 已接受 | D7 |
-| E4 | E | READY | 实现上游账号合同 | 上游身份维护者 | none | D6 已接受 | E5,D7 |
-| E5 | E | BLOCKED | 实现本地会话消费 | 桌面服务维护者 | 等待 E4 接受 | 待生成会话测试 | D7 |
-| E6 | E | BLOCKED | 实现 ChatCut Desktop 桌面本地 MCP 可选集成 | 桌面服务维护者 | 等待 C4 接受 | D4 已接受；待生成实时探测与连接测试 | D7 |
-| D7 | D | BLOCKED | 汇编 R4 整合候选 | 主协调者 | 等待 A4、B4、C4、E1-E6 | 待生成整合候选 | D8 |
-| D8 | D | BLOCKED | 作 R4 最终发布决定 | 产品负责人 | 等待 D7 接受 | 待生成发布回执 | none |
+| E1 | E | ACCEPTED | 实现创意模型提供方配置 | 桌面服务维护者 | none | `test_model_provider_config.py` 7 项通过 | D7 |
+| E2 | E | ACCEPTED | 实现废纸篓移动与恢复 | 媒体工具维护者 | none | `test_media_trash_flow.py` 10 项通过，均为临时夹具 | D7 |
+| E3 | E | ACCEPTED | 实现生命周期与位置配置 | 归档工具维护者 | none | `test_archive_location_config.py` 7 项通过，均为临时夹具 | D7 |
+| E4 | E | ACCEPTED | 实现上游账号合同 | 上游身份维护者 | none | `test_upstream_identity.py` 9 项通过 | E5,D7 |
+| E5 | E | ACCEPTED | 实现本地会话消费 | 桌面服务维护者 | none | `test_upstream_session.py` 8 项通过 | D7 |
+| E6 | E | ACCEPTED | 实现 ChatCut Desktop 桌面本地 MCP 可选集成 | 桌面服务维护者 | none | `test_chatcut_mcp.py` 10 项通过，未发起 HTTP 请求 | D7 |
+| D7 | D | ACCEPTED | 汇编 R4 整合候选 | 主协调者 | none | 全量 `unittest discover` 304 项、R4 针对性 6 项与 Studio 无项目设置页窄屏验收通过 | D8 |
+| D8 | D | READY | 作 R4 最终发布决定 | 产品负责人 | 等待 main 候选推送、远端回读和清理台账 | 候选内容已冻结，尚无远端提交身份 | none |
 
 ### 语义节点注册表
 
@@ -244,32 +244,32 @@ flowchart LR
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | AA | decision.scope.audit-remediation | decision-acceptance | scope | ACCEPTED | ACCEPTED | 1 | FORMAL | none | none | none | scope.audit-remediation | isolated-record | 用户请求与主协调者 |
 | A1 | fact.audit.checklist-baseline | fact-discovery | fact-baseline | ACCEPTED | NOT_APPLICABLE | none | FORMAL | AA | none | none | facts.checklist-baseline | evidence-only | 主协调者 |
-| A2 | contract.checklist.fact-correction | contract-compile | checklist-facts | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | contract.checklist.fact-correction | authoritative-contract | 文档维护者与主协调者 |
-| A3 | implementation.checklist.html-contract | implementation | checklist-ui | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | html.checklist.contract | implementation | 文档维护者与主协调者 |
-| A4 | acceptance.r1.checklist | validation | r1-acceptance | BLOCKED | NOT_APPLICABLE | none | FORMAL | A2,A3 | none | decision.scope.audit-remediation@1 | release.r1.acceptance | shared-generated | 主协调者 |
-| B1 | contract.media-manifest.integrity | contract-compile | media-integrity | READY | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | contract.media-manifest.integrity | authoritative-contract | 媒体工具维护者与主协调者 |
-| B2 | contract.media-delete.recommendation | implementation | media-retention | BLOCKED | NOT_APPLICABLE | none | FORMAL | B1,D2 | none | decision.scope.audit-remediation@1,decision.delete.behavior@1 | policy.media-delete.behavior | implementation | 媒体工具维护者与产品负责人 |
-| B3 | validation.media-manifest.regression | validation | media-tests | READY | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | tests.media-manifest.regression | evidence-only | 测试维护者与主协调者 |
-| B5 | validation.inbox-promotion.destructive-move | validation | inbox-promotion-safety | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | tests.inbox-promotion.destructive-move | evidence-only | 媒体工具维护者与主协调者 |
-| B4 | acceptance.r2.media-integrity | validation | r2-acceptance | BLOCKED | NOT_APPLICABLE | none | FORMAL | B2,B3,B5 | none | decision.scope.audit-remediation@1,decision.delete.behavior@1 | release.r2.acceptance | shared-generated | 主协调者 |
-| C1 | implementation.edl.structured-bridge | implementation | edl-bridge | READY | NOT_APPLICABLE | none | FORMAL | D1 | none | decision.scope.audit-remediation@1,decision.edl.authority@1 | bridge.edl.structured | implementation | 桌面服务维护者与产品负责人 |
-| C2 | validation.edl.bridge | validation | edl-tests | BLOCKED | NOT_APPLICABLE | none | FORMAL | C1 | none | decision.scope.audit-remediation@1,decision.edl.authority@1 | tests.edl.bridge | evidence-only | 测试维护者与桌面服务维护者 |
-| C3 | validation.edl.contract | validation | edl-boundary | BLOCKED | NOT_APPLICABLE | none | FORMAL | C2 | none | decision.scope.audit-remediation@1,decision.edl.authority@1 | contract.edl.validation | evidence-only | 桌面服务维护者与主协调者 |
-| C4 | acceptance.r3.edl-bridge | validation | r3-acceptance | BLOCKED | NOT_APPLICABLE | none | FORMAL | C3 | none | decision.scope.audit-remediation@1,decision.edl.authority@1 | release.r3.acceptance | shared-generated | 主协调者 |
+| A2 | contract.checklist.fact-correction | contract-compile | checklist-facts | ACCEPTED | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | contract.checklist.fact-correction | authoritative-contract | 文档维护者与主协调者 |
+| A3 | implementation.checklist.html-contract | implementation | checklist-ui | ACCEPTED | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | html.checklist.contract | implementation | 文档维护者与主协调者 |
+| A4 | acceptance.r1.checklist | validation | r1-acceptance | ACCEPTED | NOT_APPLICABLE | none | FORMAL | A2,A3 | none | decision.scope.audit-remediation@1 | release.r1.acceptance | shared-generated | 主协调者 |
+| B1 | contract.media-manifest.integrity | contract-compile | media-integrity | ACCEPTED | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | contract.media-manifest.integrity | authoritative-contract | 媒体工具维护者与主协调者 |
+| B2 | contract.media-delete.recommendation | implementation | media-retention | ACCEPTED | NOT_APPLICABLE | none | FORMAL | B1,D2 | none | decision.scope.audit-remediation@1,decision.delete.behavior@1 | policy.media-delete.behavior | implementation | 媒体工具维护者与产品负责人 |
+| B3 | validation.media-manifest.regression | validation | media-tests | ACCEPTED | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | tests.media-manifest.regression | evidence-only | 测试维护者与主协调者 |
+| B5 | validation.inbox-promotion.destructive-move | validation | inbox-promotion-safety | ACCEPTED | NOT_APPLICABLE | none | FORMAL | A1 | none | decision.scope.audit-remediation@1 | tests.inbox-promotion.destructive-move | evidence-only | 媒体工具维护者与主协调者 |
+| B4 | acceptance.r2.media-integrity | validation | r2-acceptance | ACCEPTED | NOT_APPLICABLE | none | FORMAL | B2,B3,B5 | none | decision.scope.audit-remediation@1,decision.delete.behavior@1 | release.r2.acceptance | shared-generated | 主协调者 |
+| C1 | implementation.edl.structured-bridge | implementation | edl-bridge | ACCEPTED | NOT_APPLICABLE | none | FORMAL | D1 | none | decision.scope.audit-remediation@1,decision.edl.authority@1 | bridge.edl.structured | implementation | 桌面服务维护者与产品负责人 |
+| C2 | validation.edl.bridge | validation | edl-tests | ACCEPTED | NOT_APPLICABLE | none | FORMAL | C1 | none | decision.scope.audit-remediation@1,decision.edl.authority@1 | tests.edl.bridge | evidence-only | 测试维护者与桌面服务维护者 |
+| C3 | validation.edl.contract | validation | edl-boundary | ACCEPTED | NOT_APPLICABLE | none | FORMAL | C2 | none | decision.scope.audit-remediation@1,decision.edl.authority@1 | contract.edl.validation | evidence-only | 桌面服务维护者与主协调者 |
+| C4 | acceptance.r3.edl-bridge | validation | r3-acceptance | ACCEPTED | NOT_APPLICABLE | none | FORMAL | C3 | none | decision.scope.audit-remediation@1,decision.edl.authority@1 | release.r3.acceptance | shared-generated | 主协调者 |
 | D1 | decision.edl.authority | decision-acceptance | edl-authority | ACCEPTED | ACCEPTED | 1 | FORMAL | none | none | none | decision.edl.authority | isolated-record | 产品负责人 |
 | D2 | decision.delete.behavior | decision-acceptance | delete-policy | ACCEPTED | ACCEPTED | 1 | FORMAL | none | none | none | decision.delete.behavior | isolated-record | 产品负责人 |
 | D3 | decision.creative-model.providers | decision-acceptance | creative-model-policy | ACCEPTED | ACCEPTED | 1 | FORMAL | none | none | none | decision.creative-model.providers | isolated-record | 产品负责人 |
 | D4 | decision.chatcut.integration | decision-acceptance | editor-integration | ACCEPTED | ACCEPTED | 1 | FORMAL | none | none | none | decision.chatcut.integration | isolated-record | 产品负责人 |
 | D5 | decision.archive.lifecycle-location | decision-acceptance | archive-policy | ACCEPTED | ACCEPTED | 1 | FORMAL | none | none | none | decision.archive.lifecycle-location | isolated-record | 产品负责人 |
 | D6 | decision.login.identity | decision-acceptance | identity-policy | ACCEPTED | ACCEPTED | 1 | FORMAL | none | none | none | decision.login.identity | isolated-record | 产品负责人 |
-| E1 | implementation.creative-model.provider-config | implementation | creative-model-config | READY | NOT_APPLICABLE | none | FORMAL | D3 | none | decision.scope.audit-remediation@1,decision.creative-model.providers@1 | creative-model.provider-config | implementation | 桌面服务维护者与产品负责人 |
-| E2 | implementation.media-delete.trash-flow | implementation | media-delete-flow | BLOCKED | NOT_APPLICABLE | none | FORMAL | B4,D2 | none | decision.scope.audit-remediation@1,decision.delete.behavior@1 | media-delete.trash-flow | implementation | 媒体工具维护者与产品负责人 |
-| E3 | implementation.archive.lifecycle-location-config | implementation | archive-config | BLOCKED | NOT_APPLICABLE | none | FORMAL | B4,D5 | none | decision.scope.audit-remediation@1,decision.archive.lifecycle-location@1 | archive.lifecycle-location-config | implementation | 归档工具维护者与产品负责人 |
-| E4 | implementation.identity.upstream-account-contract | implementation | upstream-identity | READY | NOT_APPLICABLE | none | FORMAL | D6 | none | decision.scope.audit-remediation@1,decision.login.identity@1 | identity.upstream-account-contract | authoritative-contract | 上游身份维护者与产品负责人 |
-| E5 | implementation.identity.local-session-consumer | implementation | local-session | BLOCKED | NOT_APPLICABLE | none | FORMAL | E4 | none | decision.scope.audit-remediation@1,decision.login.identity@1 | identity.local-session-consumer | implementation | 桌面服务维护者与上游身份维护者 |
-| E6 | implementation.chatcut.optional-integration | implementation | chatcut-integration | BLOCKED | NOT_APPLICABLE | none | FORMAL | C4,D4 | none | decision.scope.audit-remediation@1,decision.chatcut.integration@1 | chatcut.optional-integration | implementation | 桌面服务维护者与产品负责人 |
-| D7 | convergence.policy.ui-integration | convergence | integration | BLOCKED | NOT_APPLICABLE | none | FORMAL | A4,B4,C4,E1,E2,E3,E4,E5,E6 | none | decision.scope.audit-remediation@1,decision.edl.authority@1,decision.delete.behavior@1,decision.creative-model.providers@1,decision.chatcut.integration@1,decision.archive.lifecycle-location@1,decision.login.identity@1 | integration.policy-ui | shared-generated | 主协调者 |
-| D8 | release.r4.policy-integration | release-decision | r4-release | BLOCKED | NOT_APPLICABLE | none | FORMAL | D7 | none | decision.scope.audit-remediation@1 | release.r4.acceptance | shared-generated | 产品负责人 |
+| E1 | implementation.creative-model.provider-config | implementation | creative-model-config | ACCEPTED | NOT_APPLICABLE | none | FORMAL | D3 | none | decision.scope.audit-remediation@1,decision.creative-model.providers@1 | creative-model.provider-config | implementation | 桌面服务维护者与产品负责人 |
+| E2 | implementation.media-delete.trash-flow | implementation | media-delete-flow | ACCEPTED | NOT_APPLICABLE | none | FORMAL | B4,D2 | none | decision.scope.audit-remediation@1,decision.delete.behavior@1 | media-delete.trash-flow | implementation | 媒体工具维护者与产品负责人 |
+| E3 | implementation.archive.lifecycle-location-config | implementation | archive-config | ACCEPTED | NOT_APPLICABLE | none | FORMAL | B4,D5 | none | decision.scope.audit-remediation@1,decision.archive.lifecycle-location@1 | archive.lifecycle-location-config | implementation | 归档工具维护者与产品负责人 |
+| E4 | implementation.identity.upstream-account-contract | implementation | upstream-identity | ACCEPTED | NOT_APPLICABLE | none | FORMAL | D6 | none | decision.scope.audit-remediation@1,decision.login.identity@1 | identity.upstream-account-contract | authoritative-contract | 上游身份维护者与产品负责人 |
+| E5 | implementation.identity.local-session-consumer | implementation | local-session | ACCEPTED | NOT_APPLICABLE | none | FORMAL | E4 | none | decision.scope.audit-remediation@1,decision.login.identity@1 | identity.local-session-consumer | implementation | 桌面服务维护者与上游身份维护者 |
+| E6 | implementation.chatcut.optional-integration | implementation | chatcut-integration | ACCEPTED | NOT_APPLICABLE | none | FORMAL | C4,D4 | none | decision.scope.audit-remediation@1,decision.chatcut.integration@1 | chatcut.optional-integration | implementation | 桌面服务维护者与产品负责人 |
+| D7 | convergence.policy.ui-integration | convergence | integration | ACCEPTED | NOT_APPLICABLE | none | FORMAL | A4,B4,C4,E1,E2,E3,E4,E5,E6 | none | decision.scope.audit-remediation@1,decision.edl.authority@1,decision.delete.behavior@1,decision.creative-model.providers@1,decision.chatcut.integration@1,decision.archive.lifecycle-location@1,decision.login.identity@1 | integration.policy-ui | shared-generated | 主协调者 |
+| D8 | release.r4.policy-integration | release-decision | r4-release | READY | NOT_APPLICABLE | none | FORMAL | D7 | none | decision.scope.audit-remediation@1 | release.r4.acceptance | shared-generated | 产品负责人 |
 
 ### 依赖边表
 
@@ -316,15 +316,9 @@ flowchart LR
 
 | Frontier | Task ID | Eligibility | Unsatisfied hard dependencies | Active assumptions | Resource decision |
 |---|---|---|---|---|---|
-| F2 | A2 | formal-ready | none | none | 与 A3 共享 HTML；补丁可独立准备，最终串行汇编 |
-| F2 | A3 | formal-ready | none | none | 与 A2 共享 HTML；补丁可独立准备，最终串行汇编 |
-| F2 | B1 | formal-ready | none | none | 媒体字段合同，不触碰原始媒体 |
-| F2 | B3 | formal-ready | none | none | 测试范围可独立准备 |
-| F2 | C1 | formal-ready | none | none | D1 已接受；桌面桥接独立写入 |
-| F2 | E1 | formal-ready | none | none | D3 已接受；模型配置独立写入 |
-| F2 | E4 | formal-ready | none | none | D6 已接受；上游身份合同独立写入 |
+| F3 | D8 | formal-ready | none | none | 单一发布汇合：等待候选提交、GitHub `main` 回读和清理台账 |
 
-D4 已由用户/产品负责人接受且不占 Codex 执行进程；由于 C4 未接受，E6 仍保持阻塞。七条就绪线是机器计算的逻辑并行宽度；本 SSOT 尚未为它们注册外部执行进程。
+此前的就绪前沿已经收敛：B2、E1、E2、E3、E4、E5、E6 七个独立实现节点由受控外部 Codex 进程完成，日志、结构化返回、提示词清理状态和进程台账均保留在 `execution/artifacts/`。A2、A3、B1、B3、B5、C1-C4 由主协调者按其原有验收合同汇编。D8 不再启动实现进程，也不把本地测试误写为外部系统或生产完成。
 
 ### 叶交付物清单
 
@@ -366,12 +360,12 @@ D4 已由用户/产品负责人接受且不占 Codex 执行进程；由于 C4 �
 
 | Parallel batch | Leaf deliverables | Independent deliverables | Conflict-grouped deliverables | Logical lane target | Available worker slots | Wave count |
 |---|---:|---:|---:|---:|---:|---:|
-| F2 当前就绪前沿 | 7 | 5 | 2 | 7 | 0 | 1 |
-| B4 接受后的删除与归档前沿 | 2 | 2 | 0 | 2 | 0 | 1 |
-| C4 接受后的 ChatCut 前沿 | 1 | 1 | 0 | 1 | 0 | 1 |
-| 全计划 | 28 | 26 | 2 | 28 | 0 | 17 |
+| F2 已执行前沿 | 7 | 7 | 0 | 7 | 4 | 2 |
+| W14-W15 实际并行执行 | 4 | 4 | 0 | 4 | 4 | 1 |
+| F3 当前发布前沿 | 1 | 1 | 0 | 1 | 1 | 1 |
+| 全计划 | 28 | 26 | 2 | 28 | 4 | 17 |
 
-“可用执行槽位”为零表示本 SSOT 没有注册独立 Codex 进程；事件驱动依赖图才是调度权威，下面的波次只帮助阅读，不是并行进程证明。若后续显式注册执行进程，工作节点不合并，只按当时可用槽位重新计算实际波数。
+事件驱动依赖图仍是调度权威。七个实现节点保留独立所有权；其中 W14-W15 的 E2、E3、E5、E6 以四个不同监督器进程并行启动，启动屏障记录在 `execution/artifacts/wave-e2-e3-e5-e6-launch.json`。当前只剩 D8 的串行发布汇合。
 
 ### 阅读用波次（非调度权威）
 
@@ -385,12 +379,12 @@ D4 已由用户/产品负责人接受且不占 Codex 执行进程；由于 C4 �
 | W6 | R2 | B4 | R2 薄验收 |
 | W7-W10 | R3 | C1,C2,C3,C4 | 每步消费前一步的已接受结果 |
 | W11 | R4 | D1,D2,D3,D4,D5,D6 | 六项决定均已接受 |
-| W12 | R4 | E1,E4 | 当前可并行的模型配置与上游身份合同 |
-| W13 | R4 | E5 | 等待 E4 |
-| W14 | R4 | E2,E3 | B4 接受后可并行 |
-| W15 | R4 | E6 | D4 已接受；等待 C4 |
-| W16 | R4 | D7 | 单一共享汇编 |
-| W17 | R4 | D8 | 单一人工发布决定 |
+| W12 | R4 | E1,E4 | 已完成的模型配置与上游身份合同 |
+| W13 | R4 | E5 | 已完成的本地会话消费 |
+| W14 | R4 | E2,E3 | 已完成并行的废纸篓和位置配置 |
+| W15 | R4 | E6 | 已完成的 ChatCut 可选集成 |
+| W16 | R4 | D7 | 已完成的单一共享汇编 |
+| W17 | R4 | D8 | 当前唯一的发布决定 |
 
 ### 复杂度预算
 
@@ -398,16 +392,18 @@ D4 已由用户/产品负责人接受且不占 Codex 执行进程；由于 C4 �
 |---|---|---|---|
 | 总节点数 | 28 | 28 | none |
 | 每个发布切片的实现节点上限 | 6 | 6 | none |
-| Codex 执行节点 | 0 | 0 | none |
+| Codex 执行节点 | 7 | 7 | none |
 | 生成视图 | 1 | 1 | none |
 
 ### 验收命令和证据边界
 
-R1 的可执行静态门禁是 `99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_checklist_remediation_static.py'`，它直接核对页面文档头、整改链接、过期转写文案和原型中的 ChatCut 可选边界。R2 必须依次运行 `test_p2_photo_remaining.py`、`test_project_structure_v2.py` 和 `test_promote_inbox_batch_to_project.py` 的发现式命令；它们在项目虚拟环境中分别覆盖同级导入合同、媒体回归与临时提升夹具。R3 必须在同一虚拟环境中以发现式命令运行 `test_p0_edl_contract.py` 和 `test_p2_desktop_server.py`。
+R1 的可执行静态门禁是 `99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests -p 'test_checklist_remediation_static.py'`，它直接核对页面文档头、整改链接、过期转写文案、原型中的 ChatCut 可选边界和 Studio 的设置/用户确认删除入口。R2 的冻结发现式命令覆盖 `test_media_manifest_contract.py`、`test_media_delete_recommendations.py`、`test_p2_photo_remaining.py`、`test_project_structure_v2.py` 与 `test_promote_inbox_batch_to_project.py`。R3 的冻结发现式命令覆盖 `test_p0_edl_contract.py`、`test_p2_desktop_server.py` 与 `test_ssot_edl_bridge.py`。
 
 不得使用 `python3 -m unittest 99_System_OpenClaw.tests...` 冻结发布命令：测试目录中的同级 `_support` 导入只在发现式运行时满足。任何未来新增测试都必须采用项目虚拟环境与 `unittest discover -s 99_System_OpenClaw/tests -p '<模块名>.py'` 的形式，防止测试模块的导入契约再次漂移。
 
-R4 不得预先虚构不存在的测试模块。D7 必须在 E1-E6 的真实实现落盘后冻结存在且可执行的针对性命令，至少覆盖模型提供方配置、废纸篓选择与恢复、生命周期与物理位置隔离、上游账号与会话生命周期、ChatCut Desktop 桌面本地 MCP 实时能力探测、显式连接和禁止未公开接口。任一命令不存在或失败时，D8 保持阻塞。
+R4 已冻结并通过下列实际存在的发现式模块：`test_ssot_policy_integration.py`、`test_model_provider_config.py`、`test_media_trash_flow.py`、`test_archive_location_config.py`、`test_upstream_identity.py`、`test_upstream_session.py` 与 `test_chatcut_mcp.py`。它们覆盖模型提供方配置、废纸篓选择/恢复、生命周期与物理位置隔离、上游账号与会话生命周期、ChatCut Desktop 桌面本地模型上下文协议（MCP）能力探测、显式连接和未公开接口禁用。任一命令在候选复跑中失败时，D8 必须重新阻塞。
+
+在首个候选提交前，以项目虚拟环境重新运行全量 `unittest discover -s 99_System_OpenClaw/tests`，结果为 304 项通过；最新的 R1 静态与 R4 整合模块复跑为 6 项通过。无项目状态下，Studio 的设置页在 `390x844` 视口中显示模型、归档、上游身份和 ChatCut 控件，根文档无横向溢出、无控制台警告或错误，且项目级删除候选/恢复入口不渲染。完整的命令、基线和观察记录在 `execution/artifacts/D7/ledger/D7-final-local-verification.json`；这仍只证明本地运行，不替代外部系统回读。
 
 本 SSOT 当前最高只证明源码事实和规划结构；目标证据级别是本地运行。单元测试通过仍不等于模型提供方、ChatCut、上游账号、云盘、移动硬盘、生产发布或物理设备完成。涉及这些声明时，验收节点必须绑定源码身份、运行环境、账号或设备身份以及真实回读结果。
 
@@ -424,8 +420,8 @@ R4 不得预先虚构不存在的测试模块。D7 必须在 E1-E6 的真实实�
 | 本次 SSOT 修订 | 工作区 | 清单、原型和受控测试 | 修复审核事实和门禁；不触碰业务运行数据 | yes | 差异只属于清单、原型、测试与本 bundle；用户已有 `.codex-work/` 不触碰 |
 | 决定文件 | SSOT | D1-D6 的旧未决记录 | 删除 `openproblem.md`，决定只保留在机器节点和生成主视图 | no | 决定状态、版本和归档声明校验 |
 | ChatCut 调查 | 证据 | 官方网页调查记录 | 保留为 source-local 证据，不复制到 Obsidian | yes | `chatcut-official-evidence.md` |
-| 执行进程 | 运行环境 | 外部 Codex 进程、临时提示、进程编号 | 未创建 | no | 规划编译记录中执行节点为 0 |
-| 候选发布 | Git | 候选工作区与未合入提交 | 当前未创建；后续必须先推送并回读远端，再清理 | conditional | D8 发布回执 |
+| 执行进程 | 运行环境 | 七个外部 Codex 进程、临时提示、进程编号 | 提示词已删除且进程已结束；保留日志、结构化返回和台账 | no | `execution/worker-registry.json` 与各 `artifacts/*/ledger/*.json` |
+| 候选发布 | Git | 当前工作树中的候选提交 | 先提交、推送并回读 `origin/main`，再登记 D8 和清理 | no | D8 发布回执 |
 | Obsidian | 审计副本 | 声明的主文档 | 只作已校验快照 | yes | 快照清单和哈希 |
 
 当前禁止把兼容回退、Studio 文本、本地生命周期状态、ChatCut 或本地账号表当作第二权威。R2 的删除建议不移动文件；只有 E2 在用户明确选择和再次确认后才能移入当前操作系统的回收站。上游配对失败、未登录或 Windows/Linux 不支持配对都不得降级 Studio 的本地功能。R4 未满足 E1-E6、候选、远端回读和清理条件时，状态最多为部分完成，不能宣称发布完成。

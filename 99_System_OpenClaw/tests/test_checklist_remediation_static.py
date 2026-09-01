@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[2]
 ARTIFACT_DIR = ROOT / "agents-results" / "2026-09-01" / "openclaw-media-ui-prototype-and-checklist"
 CHECKLIST = ARTIFACT_DIR / "openclaw-dev-checklist.html"
 PROTOTYPE = ARTIFACT_DIR / "openclaw-media-ui-prototype.html"
+STUDIO_INDEX = ROOT / "99_System_OpenClaw" / "desktop" / "static" / "index.html"
+STUDIO_APP = ROOT / "99_System_OpenClaw" / "desktop" / "static" / "app.js"
 
 
 class ChecklistRemediationStaticTests(unittest.TestCase):
@@ -31,6 +33,24 @@ class ChecklistRemediationStaticTests(unittest.TestCase):
         self.assertIn("探测成功并主动连接后显示", content)
         self.assertNotIn("送入 ChatCut", content)
         self.assertNotIn('<span class="flow-name">时间线</span><span class="flow-by">ChatCut</span>', content)
+
+    def test_studio_keeps_policy_settings_and_user_confirmed_delete_entrypoints(self) -> None:
+        index = STUDIO_INDEX.read_text(encoding="utf-8")
+        app = STUDIO_APP.read_text(encoding="utf-8")
+
+        self.assertIn('<button data-tab="settings">设置</button>', index)
+        self.assertIn("if(state.tab==='settings')return settings()", app)
+        self.assertIn('<h2>设置</h2>', app)
+        self.assertIn("删除候选", app)
+        self.assertIn("secondConfirmation", app)
+        self.assertIn("确认移入系统回收站", app)
+        self.assertIn("恢复回执", app)
+        self.assertIn("/media-delete/recommendations", app)
+        self.assertIn("/media-delete/confirm", app)
+        self.assertIn("/media-delete/restore", app)
+        self.assertIn("if(state.tab==='settings')return settings();if(!state.project)", app)
+        self.assertIn("projectPolicyPanels=p?", app)
+        self.assertIn("if(!p)return;$('#delete-recommendation-form')", app)
 
 
 if __name__ == "__main__":

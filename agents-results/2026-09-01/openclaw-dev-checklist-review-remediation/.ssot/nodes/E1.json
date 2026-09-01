@@ -4,7 +4,7 @@
   "stage": "E",
   "work_kind": "implementation",
   "domain_lane": "creative-model-config",
-  "execution_state": "READY",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -23,8 +23,18 @@
   "acceptance": "用户可配置 Codex/OpenAI、Claude/Anthropic、DeepSeek 等提供方的端点、模型和受控密钥引用；能力探测、错误状态和提供方切换可测试，密钥不得写入仓库或明文项目数据。",
   "owner": "桌面服务维护者",
   "node_role": "leaf",
-  "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_actor": "external-codex-worker",
+  "execution_contract_ref": "execution/E1-model-provider-config.task.md",
+  "execution_guard_ref": "execution/execution-guard.json#EG-W12",
+  "worker": {
+    "execution_identity": "external-codex-exec:E1:lw-luna",
+    "runtime": "local-macos; isolated temporary configuration fixtures; no network",
+    "return_path": "execution/artifacts/E1/returns/E1-primary.json",
+    "resource_locks": ["write:99_System_OpenClaw/desktop/model_provider_config.py", "write:99_System_OpenClaw/tests/test_model_provider_config.py"]
+  },
+  "escalation": {
+    "reasons": ["multi-executor"]
+  },
   "side_effect_class": "reversible",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-E1-creative-model-provider-config"]

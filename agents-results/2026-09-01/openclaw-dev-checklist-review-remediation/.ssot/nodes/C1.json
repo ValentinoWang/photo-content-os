@@ -4,7 +4,7 @@
   "stage": "C",
   "work_kind": "implementation",
   "domain_lane": "edl-bridge",
-  "execution_state": "READY",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -24,7 +24,7 @@
   "owner": "桌面服务维护者",
   "node_role": "leaf",
   "execution_actor": "orchestrator",
-  "execution_contract_ref": "not-applicable",
+  "execution_contract_ref": "coordinator-reacceptance:2026-09-02:test_ssot_edl_bridge.py",
   "side_effect_class": "reversible",
   "candidate_identity_policy": "consumes",
   "deliverable_ids": ["DL-C1-edl-bridge"]

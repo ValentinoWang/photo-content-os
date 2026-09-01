@@ -4,7 +4,7 @@
   "stage": "A",
   "work_kind": "contract-compile",
   "domain_lane": "checklist-facts",
-  "execution_state": "IMPLEMENTED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",

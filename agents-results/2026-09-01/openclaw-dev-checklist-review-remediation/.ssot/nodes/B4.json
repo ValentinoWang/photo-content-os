@@ -4,7 +4,7 @@
   "stage": "B",
   "work_kind": "validation",
   "domain_lane": "r2-acceptance",
-  "execution_state": "BLOCKED",
+  "execution_state": "ACCEPTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
