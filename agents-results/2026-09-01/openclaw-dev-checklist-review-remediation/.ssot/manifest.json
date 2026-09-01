@@ -1,9 +1,9 @@
 {
   "ssot_schema_version": 1,
   "artifact_class": "ssot-development",
-  "plan_version": 3,
-  "dag_version": 2,
-  "interface_freeze_version": 3,
+  "plan_version": 4,
+  "dag_version": 3,
+  "interface_freeze_version": 4,
   "node_contract_version": 1,
   "machine_validation_profile": "release",
   "generated_main": "../ssot-development-paths.md",
@@ -11,7 +11,7 @@
     {
       "view_id": "main",
       "source": "view-sources/00-main.md",
-      "source_sha256": "c3dfbe8d06b3d0fa494b8bdd4d84e32367c2aae370d3fc032a8daf97db674e2f",
+      "source_sha256": "7e7f255b5a4c1e2d52e57f291528a749ffa7c26d66ba48f41e71382b1e05e2b3",
       "output": "../ssot-development-paths.md"
     }
   ],

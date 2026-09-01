@@ -4,7 +4,7 @@
   "stage": "A",
   "work_kind": "implementation",
   "domain_lane": "checklist-ui",
-  "execution_state": "READY",
+  "execution_state": "IMPLEMENTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -16,13 +16,13 @@
   "write_authority": "implementation",
   "acceptance_authority": "文档维护者与主协调者",
   "unlocks": ["A4"],
-  "goal": "补齐清单 HTML 文档头并校准原型与代码声明",
-  "acceptance": "页面含标准文档头、语言、字符集和视口声明，且没有把不存在的接口写成现状。",
+  "goal": "补齐清单 HTML 文档头，并校准清单和原型的可选集成声明",
+  "acceptance": "清单含标准文档头、语言、字符集、视口和 SSOT 链接；原型不把 ChatCut 画成主流程或内建后端，默认隐藏可选连接，且没有把不存在的接口写成现状。",
   "owner": "文档维护者",
   "node_role": "leaf",
   "execution_actor": "orchestrator",
   "execution_contract_ref": "not-applicable",
   "side_effect_class": "none",
   "candidate_identity_policy": "none",
-  "deliverable_ids": ["DL-A3-html-contract"]
+  "deliverable_ids": ["DL-A3-html-contract", "DL-A3-prototype-chatcut-boundary"]
 }

@@ -285,7 +285,7 @@ tr:last-child td{border-bottom:none}
               <div class="flow-row"><span class="fdot"></span><span class="flow-name">取证分析</span><span class="flow-by">本机引擎</span></div>
               <div class="flow-row" data-by="ext"><span class="fdot"></span><span class="flow-name">脚本分镜</span><span class="flow-by">Codex</span></div>
               <div class="flow-row"><span class="fdot"></span><span class="flow-name">剪辑决策</span><span class="flow-by">本机引擎</span></div>
-              <div class="flow-row" data-by="ext"><span class="fdot"></span><span class="flow-name">时间线</span><span class="flow-by">ChatCut</span></div>
+              <div class="flow-row"><span class="fdot"></span><span class="flow-name">剪辑交接</span><span class="flow-by">本机交接包</span></div>
               <div class="flow-row" data-by="you"><span class="fdot"></span><span class="flow-name">人工精剪</span><span class="flow-by">你</span></div>
             </div>
           </div>
@@ -871,7 +871,7 @@ tr:last-child td{border-bottom:none}
             <div><h2>四非文科女 Vibe Coding Day 3</h2><div class="sub">小红书 · 1080×1920 · 目标 58 秒 · 第 3 版</div></div>
             <div style="display:flex;gap:9px">
               <button class="btn">在访达中显示</button>
-              <button class="btn btn--pri">送入 ChatCut</button>
+              <button class="btn btn--pri">生成剪辑交接包</button>
             </div>
           </div>
 
@@ -881,7 +881,7 @@ tr:last-child td{border-bottom:none}
               <div><div class="prog" style="margin-bottom:9px"><i class="on"></i></div><div style="font-size:12.5px;font-weight:600">取证分析</div><div class="mo" style="font-size:10px;color:var(--ink-4);margin-top:4px">本机引擎</div></div>
               <div><div class="prog" style="margin-bottom:9px"><i class="on"></i></div><div style="font-size:12.5px;font-weight:600">脚本分镜</div><div class="mo" style="font-size:10px;color:var(--ink-4);margin-top:4px">Codex</div></div>
               <div><div class="prog" style="margin-bottom:9px"><i class="on"></i></div><div style="font-size:12.5px;font-weight:600;color:var(--ac)">剪辑决策</div><div class="mo" style="font-size:10px;color:var(--ink-4);margin-top:4px">本机引擎</div></div>
-              <div><div class="prog" style="margin-bottom:9px"><i></i></div><div style="font-size:12.5px;font-weight:600;color:#6E7E80">时间线</div><div class="mo" style="font-size:10px;color:var(--ink-5);margin-top:4px">ChatCut</div></div>
+              <div><div class="prog" style="margin-bottom:9px"><i></i></div><div style="font-size:12.5px;font-weight:600;color:#6E7E80">剪辑交接</div><div class="mo" style="font-size:10px;color:var(--ink-5);margin-top:4px">本机交接包</div></div>
               <div><div class="prog" style="margin-bottom:9px"><i></i></div><div style="font-size:12.5px;font-weight:600;color:#6E7E80">人工精剪</div><div class="mo" style="font-size:10px;color:var(--ink-5);margin-top:4px">你</div></div>
             </div>
           </div>
@@ -967,7 +967,7 @@ tr:last-child td{border-bottom:none}
               <p class="eyebrow-s">交接去向</p>
               <div class="list">
                 <div style="padding:10px 13px;display:flex;align-items:center;justify-content:space-between">
-                  <span style="font-size:12.5px;font-weight:500">ChatCut 时间线</span><span class="chip chip--ai">推荐</span>
+                  <span style="font-size:12.5px;font-weight:500">本机剪辑交接包</span><span class="chip chip--ai">推荐</span>
                 </div>
                 <div style="padding:10px 13px;display:flex;align-items:center;justify-content:space-between">
                   <span style="font-size:12.5px;color:var(--ink-2)">Kdenlive 工程</span><span class="hint" style="color:var(--ink-3)">可回传中台</span>
@@ -1099,8 +1099,8 @@ tr:last-child td{border-bottom:none}
                   <div class="setrow-l"><div class="setrow-t">这台设备</div><div class="setrow-h">中台只能给它派任务，不能反向连进来。</div></div>
                   <div class="setrow-c"><div class="inp">王的 MacBook Pro</div><button class="btn" style="padding:6px 12px">解除配对</button></div>
                 </div>
-                <div class="setrow">
-                  <div class="setrow-l"><div class="setrow-t">ChatCut</div><div class="setrow-h">口播剪辑与字幕。第三方应用，单独登录。</div></div>
+                <div class="setrow" data-chatcut-optional hidden>
+                  <div class="setrow-l"><div class="setrow-t">ChatCut Desktop 可选连接</div><div class="setrow-h">仅在桌面本地模型上下文协议（MCP）探测成功并主动连接后显示；不属于内建剪辑后端。</div></div>
                   <div class="setrow-c"><span style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ok)"><span class="dot" style="background:var(--ok)"></span>已连接</span></div>
                 </div>
                 <div class="setrow">

@@ -4,7 +4,7 @@
   "stage": "A",
   "work_kind": "contract-compile",
   "domain_lane": "checklist-facts",
-  "execution_state": "READY",
+  "execution_state": "IMPLEMENTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -16,13 +16,13 @@
   "write_authority": "authoritative-contract",
   "acceptance_authority": "文档维护者与主协调者",
   "unlocks": ["A4"],
-  "goal": "纠正清单中的元数据、统计和状态分类事实",
-  "acceptance": "照片 GPS、测试文件数、状态标签和路径分类与当前代码核对一致。",
+  "goal": "纠正清单中的元数据、统计、状态分类和过期转写文案",
+  "acceptance": "照片 GPS、测试文件数、状态标签、路径分类和转写提供方表述与当前代码核对一致；清单可链接到本 SSOT。",
   "owner": "文档维护者",
   "node_role": "leaf",
   "execution_actor": "orchestrator",
   "execution_contract_ref": "not-applicable",
   "side_effect_class": "none",
   "candidate_identity_policy": "none",
-  "deliverable_ids": ["DL-A2-fact-correction"]
+  "deliverable_ids": ["DL-A2-fact-correction", "DL-A2-stale-transcription-copy"]
 }

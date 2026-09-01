@@ -1,0 +1,1 @@
+{"edge_id":"E-B5-B4","from":"B5","to":"B4","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["tests.inbox-promotion.destructive-move"],"transferred_input":"临时夹具提升测试结果","gate_evidence":"B5 测试回执"}

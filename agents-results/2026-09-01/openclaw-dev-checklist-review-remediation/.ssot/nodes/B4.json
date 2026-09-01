@@ -8,7 +8,7 @@
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
-  "hard_dependencies": ["B2", "B3"],
+  "hard_dependencies": ["B2", "B3", "B5"],
   "soft_dependencies": [],
   "assumption_ids": [],
   "decision_refs": [
@@ -20,7 +20,7 @@
   "acceptance_authority": "主协调者",
   "unlocks": ["D7", "E2", "E3"],
   "goal": "汇编 R2 的媒体完整性验收",
-  "acceptance": "R2 只在契约、实现和回归测试共同通过后接受，且原始文件保持未修改。",
+  "acceptance": "R2 只在契约、实现、媒体回归和 Inbox 提升临时夹具测试共同通过后接受，且原始文件保持未修改。",
   "owner": "主协调者",
   "node_role": "acceptance-gate",
   "execution_actor": "orchestrator",

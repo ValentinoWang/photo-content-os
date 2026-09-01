@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OpenClaw 落地清单</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Asap:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
@@ -124,6 +129,7 @@ h1{font-size:31px;font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:0
     <p class="eyebrow">photo-content-os · 前端落地清单</p>
     <h1>把 OpenClaw Media 原型接到真引擎上</h1>
     <p class="lede">这份清单把可点击原型上的每一块承诺，对照 <code>photo-content-os</code> 仓库里真实存在的能力，逐条给出判定：能直接接的、要补后端的、必须先拍板的、以及原型本身写错了要改的。每条都标了真实文件路径，不引用文档里的示例路径。</p>
+    <p class="lede"><strong>待 SSOT 整改：</strong>本页是审核输入，当前整改范围、证据和验收命令以 <a href="../openclaw-dev-checklist-review-remediation/ssot-development-paths.md">开发清单审核整改 SSOT</a> 为准。</p>
     <div class="src">
       <span><b>引擎</b> ValentinoWang/photo-content-os @ <span class="mo">4da5213</span></span>
       <span><b>现有前端</b> <span class="mo">99_System_OpenClaw/desktop/</span>（约 1000 行）</span>
@@ -194,14 +200,13 @@ h1{font-size:31px;font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:0
 
     <article class="item" data-status="build">
       <label class="item-head"><input type="checkbox" data-k="d3">
-        <span class="item-title">转写：阿里云在线为默认，FunASR 本地兜底</span>
+        <span class="item-title">转写提供方：现有合同与默认行为待重新决定</span>
         <span class="badge badge--build">需补后端</span></label>
       <div class="item-body">
         <div class="row"><span class="row-k">原型承诺</span><span class="row-v">设置里转写方式默认显示「本机 FunASR」，项目屏的证据来源写着「逐字转写 · 本机 FunASR」。</span></div>
         <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>03_transcribe_audio.py</code> 的 <code>build_provider()</code> 恰好三种：<code>sidecar</code>（读旁挂 srt/json/txt）、<code>openai_api</code>（要 <code>OPENAI_API_KEY</code>）、<code>pending</code>（只写占位、不假装听过）。<strong>没有本地 Whisper，也没有 FunASR</strong>，而且默认兜底就是 <code>pending</code>——开箱即用状态下转写是空的。</span></div>
-        <div class="row row--rule"><span class="row-k">拍板结果</span><span class="row-v">默认以阿里云线上模型 API 为主；Codex 订阅额度经核实覆盖不了音频转写（见下）；实在不行配 FunASR——结论是 FunASR 作为本地兜底方案保留。</span></div>
-        <div class="row"><span class="row-k">Codex 额度</span><span class="row-v"><strong>为什么不行：</strong>Codex 登录用的 ChatGPT 订阅额度只覆盖 Codex 代理本身的文本/代码模型调用，订阅侧没有音频转写端点，Codex 用的模型也不接受音频输入。OpenAI 家的转写（whisper-1 / gpt-4o-mini-transcribe）走的是 API 平台按量计费，需要单独的 <code>OPENAI_API_KEY</code>——那条路仓库已经实现好了（<code>openai_api</code> provider）。Codex 额度能帮你「指挥」流程，但听音频的活它的模型干不了。</span></div>
-        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">① 在 <code>03_transcribe_audio.py</code> 的 <code>build_provider()</code> 插槽里新增 <code>dashscope</code> provider 并设为默认：读 <code>DASHSCOPE_API_KEY</code>，调阿里云录音文件转写（Paraformer 系），输出对齐 <code>schemas/audio_transcript.schema.json</code>。② 新增 <code>funasr</code> 本地 provider 作兜底（Paraformer-zh + fsmn-vad + ct-punc，全离线、带字级时间戳）。③ 现有 <code>sidecar</code> / <code>openai_api</code> / <code>pending</code> 保留不动。④ 设置页默认显示「阿里云在线转写」，并如实提示在线转写会把音频发给阿里云——原型已同步改好。</span></div>
+        <div class="row row--rule"><span class="row-k">当前结论</span><span class="row-v">仓库当前只实现 <code>sidecar</code>、<code>openai_api</code> 和 <code>pending</code>；默认行为和新增提供方尚未形成可验收决定，不能把原型中的阿里云或 FunASR 写成既定交付。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">先单独冻结转写提供方、数据发送边界、费用和失败时的占位行为；再按已接受合同扩展 <code>build_provider()</code>，并用音频夹具验证输出符合 <code>schemas/audio_transcript.schema.json</code>。</span></div>
       </div>
     </article>
   </section>
@@ -252,7 +257,7 @@ h1{font-size:31px;font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:0
         <span class="badge badge--build">需补后端</span></label>
       <div class="item-body">
         <div class="row"><span class="row-k">后端现状</span><span class="row-v">部分有：本机引擎状态可从 <code>analysis_tiering</code> 的进度推；Codex 可用性在 doctor 的 <code>creative_provider</code> 项里；数据中台连接状态在 <code>openclaw_media_agent.py status</code>。<strong>ChatCut 在这个仓库里完全不存在</strong>——没有任何代码引用它。</span></div>
-        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新增一个聚合状态接口把前三个拼起来。ChatCut 那一格要么删掉，要么先确定它到底怎么接入（目前正式导出后端只有 <code>handoff_pack</code> 和 <code>otio_kdenlive</code> 两个）。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新增本机能力的聚合状态接口。ChatCut 只能作为可选的 ChatCut Desktop 桌面本地模型上下文协议（MCP）连接：实时探测成功且用户主动连接后才显示，不属于内建导出后端。</span></div>
       </div>
     </article>
 

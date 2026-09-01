@@ -15,14 +15,14 @@
   "invalidation_keys": ["facts.checklist-baseline"],
   "write_authority": "evidence-only",
   "acceptance_authority": "主协调者",
-  "unlocks": ["A2", "A3", "B1", "B3"],
+  "unlocks": ["A2", "A3", "B1", "B3", "B5"],
   "goal": "冻结清单、原型、桌面后端和测试统计的事实基线",
-  "acceptance": "每条关键发现都有当前文件和行号证据，已区分事实、证据缺口和人工决定。",
+  "acceptance": "`source-notes.md` 为每条关键发现给出当前文件、行号、源码身份和复查命令，并区分事实、证据缺口和人工决定。",
   "owner": "主协调者",
   "node_role": "leaf",
   "execution_actor": "orchestrator",
   "execution_contract_ref": "not-applicable",
   "side_effect_class": "none",
   "candidate_identity_policy": "none",
-  "deliverable_ids": ["DL-A1-audit-baseline"]
+  "deliverable_ids": ["DL-A1-audit-baseline", "DL-A1-source-notes"]
 }

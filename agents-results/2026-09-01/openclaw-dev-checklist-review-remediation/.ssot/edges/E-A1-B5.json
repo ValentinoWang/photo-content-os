@@ -1,0 +1,1 @@
+{"edge_id":"E-A1-B5","from":"A1","to":"B5","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["facts.checklist-baseline"],"transferred_input":"Inbox 提升脚本的破坏性移动事实","gate_evidence":"A1 当前源码证据"}

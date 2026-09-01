@@ -16,8 +16,8 @@
   "write_authority": "isolated-record",
   "acceptance_authority": "产品负责人",
   "unlocks": ["B2", "E2"],
-  "goal": "决定删除功能仅生成建议还是移入 macOS 废纸篓",
-  "acceptance": "生产环境生成删除建议；用户逐项或批量选择并确认后才移入 macOS 废纸篓，禁止自动或永久删除，并保留原路径、回读、恢复和审计。",
+  "goal": "决定删除功能仅生成建议还是移入当前系统的回收站",
+  "acceptance": "生产环境生成删除建议；用户逐项或批量选择并确认后才移入当前操作系统的回收站，禁止自动或永久删除，并保留原路径、回读、恢复和审计。",
   "owner": "产品负责人",
   "node_role": "leaf",
   "execution_actor": "human",
@@ -25,7 +25,7 @@
   "side_effect_class": "none",
   "candidate_identity_policy": "none",
   "decision_record": {
-    "accepted_value": "USER_CONFIRMED_MOVE_TO_TRASH",
+    "accepted_value": "USER_CONFIRMED_MOVE_TO_SYSTEM_TRASH",
     "accepted_by": "用户/产品负责人",
     "accepted_at": "2026-09-02",
     "source": "用户在当前任务中的明确回复"
