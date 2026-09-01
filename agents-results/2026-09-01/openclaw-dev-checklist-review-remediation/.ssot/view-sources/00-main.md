@@ -23,7 +23,7 @@ SSOT_MACHINE_SOURCE: .ssot/manifest.json
 
 审核结论不变：原开发清单不能直接作为完整开发权威。用户已在 2026-09-02 接受六项产品决定，消除了结构化剪辑方案、删除行为、创意模型、剪辑服务接入、归档位置和身份来源的不确定性。第四项决定已正式冻结为剪辑服务桌面应用（ChatCut Desktop）的桌面本地模型上下文协议（MCP）可选集成。
 
-本次结构修订补入三类缺口：清单与原型的可执行静态门禁、会移动收件箱（Inbox）批次的临时夹具回归门禁，以及可选上游配对不影响现有工作台（Studio）本地功能的身份合同。它们把“决定已接受”“代码已实施”和“发布已验收”分开，避免 D7 在没有完整证据时直接宣称整合完成。当前清单、媒体、结构化剪辑和整合实施节点均已接受；D8 只等待主分支候选推送、远端回读和清理记录。
+本次结构修订补入三类缺口：清单与原型的可执行静态门禁、会移动收件箱（Inbox）批次的临时夹具回归门禁，以及可选上游配对不影响现有工作台（Studio）本地功能的身份合同。它们把“决定已接受”“代码已实施”和“发布已验收”分开，避免 D7 在没有完整证据时直接宣称整合完成。当前 28 个节点均已接受；D8 已记录主分支候选推送、远端回读、回退点与清理台账。
 
 本 SSOT 继续采用第二级发布治理（L2 Release SSOT）。四个发布切片可以独立验收和保持未发布；本次修改审核清单、原型和受控测试，不修改媒体、桌面运行数据或外部系统。七条可写实现线均以受控外部 Codex 进程执行，且只使用临时夹具；日志、结构化返回、提示词清理记录和进程台账保留在执行证据目录（`execution/artifacts/`）。
 
@@ -76,7 +76,7 @@ SSOT_MACHINE_SOURCE: .ssot/manifest.json
 | P1 | R1 清单事实纠偏与页面合同 | 清单判断能回到当前代码证据，移动页面可读 | 事实、统计、状态和文档头静态核对通过 | 只保持清单未验收，不影响媒体或服务 | `4737e45525c2cb9359bfb02952d7b690b6799761` | `origin/main@4737e45525c2cb9359bfb02952d7b690b6799761` | `candidate:R1-checklist-contract-v1` |
 | P2 | R2 照片元数据、内容校验和删除建议 | 用户可复核文件事实和删除候选，原文件保持不动 | 字段合同、候选实现与负例测试共同通过 | 证据不足即阻断，原始媒体和归档状态不变 | `4737e45525c2cb9359bfb02952d7b690b6799761` | `origin/main@4737e45525c2cb9359bfb02952d7b690b6799761` | `candidate:R2-media-integrity-v1` |
 | P3 | R3 结构化剪辑方案桥接 | Studio 可读取经过校验的结构化剪辑方案 | 来源、字段、错误路径和文本回退可验证 | 保持现有文本编辑，不改变项目数据 | `4737e45525c2cb9359bfb02952d7b690b6799761` | `origin/main@4737e45525c2cb9359bfb02952d7b690b6799761` | `candidate:R3-edl-bridge-v1` |
-| P4 | R4 模型、删除、身份、归档与可选剪辑整合 | 用户能配置模型、选择删除、指定位置并复用上游账号 | 六项决定、E1-E6 实现与测试、候选身份、远端回读和回退齐全 | 整合保持未发布，R1-R3 不被撤销 | `4737e45525c2cb9359bfb02952d7b690b6799761` | `origin/main@4737e45525c2cb9359bfb02952d7b690b6799761` | `candidate:R4-policy-integration-v3` |
+| P4 | R4 模型、删除、身份、归档与可选剪辑整合 | 用户能配置模型、选择删除、指定位置并复用上游账号 | 六项决定、E1-E6 实现与测试、候选身份、远端回读和回退齐全 | 保持本地证据边界，R1-R3 不被撤销 | `4737e45525c2cb9359bfb02952d7b690b6799761` | `origin/main@7dd8e4cf4b4e5e9b6626d201c878cb06def8dc53` | `candidate:R4-policy-integration-v3@7dd8e4cf4b4e5e9b6626d201c878cb06def8dc53` |
 
 当前有七条逻辑开发线：A2、A3、B1、B3、C1、E1、E4。A2 与 A3 共享同一超文本页面文件，最终落盘必须由单一汇编者串行完成；其余五条没有已知写入冲突。这里的并行宽度是开发拓扑，不代表已经启动七个外部进程。
 
@@ -91,6 +91,7 @@ SSOT_MACHINE_SOURCE: .ssot/manifest.json
 | 3 | L3 方案修订 | 用户正式接受 D4，冻结 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成 | plan=3, dag=2, interface=3 | D4、E6、D7、D8 | 未组装的 R4 v2 候选身份被 v3 取代；无已接受业务证据失效 | none | 用户/产品负责人 | 2026-09-02 |
 | 4 | L3 方案修订 | 修复冻结命令、补入 Inbox 提升夹具门禁，并将上游身份改为不影响本地功能的可选配对 | plan=4, dag=3, interface=4 | A1-A4、B4-B5、D2、D6、E2、E4、E5 | R1/R2 旧验收命令和 D6 旧会话语义失效；无已接受业务证据失效 | A4、B4、D7、D8 | 主协调者，依据 README 本地优先合同 | 2026-09-02 |
 | 5 | L2 实施收敛 | 接受 R1-R3、E1-E6 与 D7；将 R3/R4 替换为实际存在的发现式测试命令 | plan=5, dag=3, interface=4 | A2-A4、B1-B5、C1-C4、E1-E6、D7-D8 | R3/R4 的占位验收命令失效；未声明任何外部或生产验收 | D8 | 用户的完成请求与主协调者 | 2026-09-02 |
+| 6 | L2 发布收敛 | 候选 `7dd8e4cf` 已推送并经 GitHub 主分支回读；登记回退点、运行环境和分支清理结果 | plan=5, dag=3, interface=4 | D8 | none | none | 用户的完成请求与主协调者 | 2026-09-02 |
 
 ### 权威注册表
 
@@ -236,7 +237,7 @@ flowchart LR
 | E5 | E | ACCEPTED | 实现本地会话消费 | 桌面服务维护者 | none | `test_upstream_session.py` 8 项通过 | D7 |
 | E6 | E | ACCEPTED | 实现 ChatCut Desktop 桌面本地 MCP 可选集成 | 桌面服务维护者 | none | `test_chatcut_mcp.py` 10 项通过，未发起 HTTP 请求 | D7 |
 | D7 | D | ACCEPTED | 汇编 R4 整合候选 | 主协调者 | none | 全量 `unittest discover` 304 项、R4 针对性 6 项与 Studio 无项目设置页窄屏验收通过 | D8 |
-| D8 | D | READY | 作 R4 最终发布决定 | 产品负责人 | 等待 main 候选推送、远端回读和清理台账 | 候选内容已冻结，尚无远端提交身份 | none |
+| D8 | D | ACCEPTED | 作 R4 最终发布决定 | 产品负责人 | none | `7dd8e4cf` 已推送且 `origin/main` 回读一致；回退点 `61f1c85`，分支和运行环境已清理 | none |
 
 ### 语义节点注册表
 
@@ -269,7 +270,7 @@ flowchart LR
 | E5 | implementation.identity.local-session-consumer | implementation | local-session | ACCEPTED | NOT_APPLICABLE | none | FORMAL | E4 | none | decision.scope.audit-remediation@1,decision.login.identity@1 | identity.local-session-consumer | implementation | 桌面服务维护者与上游身份维护者 |
 | E6 | implementation.chatcut.optional-integration | implementation | chatcut-integration | ACCEPTED | NOT_APPLICABLE | none | FORMAL | C4,D4 | none | decision.scope.audit-remediation@1,decision.chatcut.integration@1 | chatcut.optional-integration | implementation | 桌面服务维护者与产品负责人 |
 | D7 | convergence.policy.ui-integration | convergence | integration | ACCEPTED | NOT_APPLICABLE | none | FORMAL | A4,B4,C4,E1,E2,E3,E4,E5,E6 | none | decision.scope.audit-remediation@1,decision.edl.authority@1,decision.delete.behavior@1,decision.creative-model.providers@1,decision.chatcut.integration@1,decision.archive.lifecycle-location@1,decision.login.identity@1 | integration.policy-ui | shared-generated | 主协调者 |
-| D8 | release.r4.policy-integration | release-decision | r4-release | READY | NOT_APPLICABLE | none | FORMAL | D7 | none | decision.scope.audit-remediation@1 | release.r4.acceptance | shared-generated | 产品负责人 |
+| D8 | release.r4.policy-integration | release-decision | r4-release | ACCEPTED | NOT_APPLICABLE | none | FORMAL | D7 | none | decision.scope.audit-remediation@1 | release.r4.acceptance | shared-generated | 产品负责人 |
 
 ### 依赖边表
 
@@ -362,10 +363,10 @@ flowchart LR
 |---|---:|---:|---:|---:|---:|---:|
 | F2 已执行前沿 | 7 | 7 | 0 | 7 | 4 | 2 |
 | W14-W15 实际并行执行 | 4 | 4 | 0 | 4 | 4 | 1 |
-| F3 当前发布前沿 | 1 | 1 | 0 | 1 | 1 | 1 |
-| 全计划 | 28 | 26 | 2 | 28 | 4 | 17 |
+| F3 发布收敛 | 1 | 1 | 0 | 1 | 1 | 1 |
+| 全计划 | 28 | 28 | 0 | 28 | 4 | 17 |
 
-事件驱动依赖图仍是调度权威。七个实现节点保留独立所有权；其中 W14-W15 的 E2、E3、E5、E6 以四个不同监督器进程并行启动，启动屏障记录在 `execution/artifacts/wave-e2-e3-e5-e6-launch.json`。当前只剩 D8 的串行发布汇合。
+事件驱动依赖图仍是调度权威。七个实现节点保留独立所有权；其中 W14-W15 的 E2、E3、E5、E6 以四个不同监督器进程并行启动，启动屏障记录在 `execution/artifacts/wave-e2-e3-e5-e6-launch.json`。D8 已完成串行发布汇合，当前没有待执行节点。
 
 ### 阅读用波次（非调度权威）
 
@@ -384,7 +385,7 @@ flowchart LR
 | W14 | R4 | E2,E3 | 已完成并行的废纸篓和位置配置 |
 | W15 | R4 | E6 | 已完成的 ChatCut 可选集成 |
 | W16 | R4 | D7 | 已完成的单一共享汇编 |
-| W17 | R4 | D8 | 当前唯一的发布决定 |
+| W17 | R4 | D8 | 已接受的唯一发布决定 |
 
 ### 复杂度预算
 
@@ -421,7 +422,9 @@ R4 已冻结并通过下列实际存在的发现式模块：`test_ssot_policy_in
 | 决定文件 | SSOT | D1-D6 的旧未决记录 | 删除 `openproblem.md`，决定只保留在机器节点和生成主视图 | no | 决定状态、版本和归档声明校验 |
 | ChatCut 调查 | 证据 | 官方网页调查记录 | 保留为 source-local 证据，不复制到 Obsidian | yes | `chatcut-official-evidence.md` |
 | 执行进程 | 运行环境 | 七个外部 Codex 进程、临时提示、进程编号 | 提示词已删除且进程已结束；保留日志、结构化返回和台账 | no | `execution/worker-registry.json` 与各 `artifacts/*/ledger/*.json` |
-| 候选发布 | Git | 当前工作树中的候选提交 | 先提交、推送并回读 `origin/main`，再登记 D8 和清理 | no | D8 发布回执 |
-| Obsidian | 审计副本 | 声明的主文档 | 只作已校验快照 | yes | 快照清单和哈希 |
+| 候选发布 | Git | `7dd8e4cf` 候选提交 | 已推送并回读 `origin/main`；回退点为 `61f1c85` | no | `execution/artifacts/D8/ledger/D8-release-decision.json` |
+| 本地分支 | Git | 任务前遗留或临时分支 | 本地、远端和 worktree 重新读取后均只有 `main`；无可删除分支 | no | D8 发布回执 |
+| Studio 验收运行时 | 临时环境 | 127.0.0.1 验收服务、浏览器页和临时状态 | 服务和浏览器页已关闭；临时状态移入系统废纸篓 | no | D8 发布回执 |
+| Obsidian | 审计副本 | 声明的主文档 | 已完成定向快照、哈希校验和全局归档审计；不作为运行权威 | yes | 快照清单和哈希 |
 
-当前禁止把兼容回退、Studio 文本、本地生命周期状态、ChatCut 或本地账号表当作第二权威。R2 的删除建议不移动文件；只有 E2 在用户明确选择和再次确认后才能移入当前操作系统的回收站。上游配对失败、未登录或 Windows/Linux 不支持配对都不得降级 Studio 的本地功能。R4 未满足 E1-E6、候选、远端回读和清理条件时，状态最多为部分完成，不能宣称发布完成。
+当前禁止把兼容回退、Studio 文本、本地生命周期状态、ChatCut 或本地账号表当作第二权威。R2 的删除建议不移动文件；只有 E2 在用户明确选择和再次确认后才能移入当前操作系统的回收站。上游配对失败、未登录或 Windows/Linux 不支持配对都不得降级 Studio 的本地功能。R4 已满足 E1-E6、本地候选、远端回读和清理条件；该结论只覆盖源码与本地运行，不宣称模型提供方、ChatCut、上游账号、云盘、移动硬盘、生产或物理设备已验收。

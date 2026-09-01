@@ -1,0 +1,47 @@
+{
+  "evidence_id": "D8-release-decision-2026-09-02",
+  "node_id": "D8",
+  "decision": "accepted",
+  "release_scope": "OpenClaw checklist remediation source and local-runtime evidence",
+  "candidate": {
+    "commit": "7dd8e4cf4b4e5e9b6626d201c878cb06def8dc53",
+    "remote_ref": "origin/main",
+    "remote_readback": "7dd8e4cf4b4e5e9b6626d201c878cb06def8dc53",
+    "rollback_point": "61f1c851b80defca928c38665c69a61a463a9081"
+  },
+  "release_gates": [
+    "304 repository tests passed through the project virtual environment.",
+    "R1 static and R4 integration modules passed with 6 tests.",
+    "Runtime contract, document synchronization, outline contract, repository safety, SSOT program, complexity, rendering, structure, Chinese readability, and parallelism analysis passed.",
+    "No-project Settings page passed the 390x844 local browser inspection without root horizontal overflow or console warnings/errors."
+  ],
+  "branch_cleanup": {
+    "local_branches": ["main"],
+    "remote_heads": ["main"],
+    "worktrees": ["main"],
+    "result": "No non-main branch existed locally or remotely, so no branch deletion was required."
+  },
+  "runtime_cleanup": {
+    "studio_validation_server": "stopped",
+    "studio_validation_browser_tab": "closed",
+    "temporary_state": "moved to /Users/vsiyo/.Trash/openclaw-ssot-ui.klRHye"
+  },
+  "ssot_snapshot": {
+    "destination": "/Users/vsiyo/Library/Mobile Documents/iCloud~md~obsidian/Documents/日记/开发/每日开发/SSOT合集/2026-09-01/photo-content-os/openclaw-dev-checklist-review-remediation",
+    "managed_file_count": 1,
+    "check": "passed",
+    "global_archive_audit": {
+      "status": "passed",
+      "bundle_count": 40,
+      "problem_document_count": 23
+    }
+  },
+  "retained_local_evidence": {
+    "raw_worker_transcripts": "kept locally under execution/artifacts/*/logs and excluded from Git by .git/info/exclude",
+    "versioned_evidence": "task packets, validation commands, supervisor receipts, structured returns, ledgers, process guard, worker registry, and launch barrier"
+  },
+  "limitations": [
+    "The acceptance does not claim a successful connection to model providers, ChatCut Desktop, upstream identity, cloud storage, removable disks, production, or physical devices.",
+    "The historical Harness unified-validation provenance failure remains documented and is not represented as a passing gate."
+  ]
+}
