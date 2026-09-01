@@ -1,0 +1,31 @@
+{
+  "node_id": "C3",
+  "semantic_key": "validation.edl.contract",
+  "stage": "C",
+  "work_kind": "validation",
+  "domain_lane": "edl-boundary",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["C2"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.edl.authority", "version": 1}
+  ],
+  "invalidation_keys": ["contract.edl.validation"],
+  "write_authority": "evidence-only",
+  "acceptance_authority": "桌面服务维护者与主协调者",
+  "unlocks": ["C4"],
+  "goal": "核对结构化剪辑方案与现有 Studio 文本编辑边界",
+  "acceptance": "确认桥接失败时旧编辑流程仍可用，且没有重复权威。",
+  "owner": "桌面服务维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "none",
+  "deliverable_ids": ["DL-C3-edl-boundary"]
+}

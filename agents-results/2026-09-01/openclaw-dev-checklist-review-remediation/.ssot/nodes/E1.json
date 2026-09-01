@@ -1,0 +1,31 @@
+{
+  "node_id": "E1",
+  "semantic_key": "implementation.creative-model.provider-config",
+  "stage": "E",
+  "work_kind": "implementation",
+  "domain_lane": "creative-model-config",
+  "execution_state": "READY",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["D3"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.creative-model.providers", "version": 1}
+  ],
+  "invalidation_keys": ["creative-model.provider-config"],
+  "write_authority": "implementation",
+  "acceptance_authority": "桌面服务维护者与产品负责人",
+  "unlocks": ["D7"],
+  "goal": "实现用户可配置的创意模型提供方",
+  "acceptance": "用户可配置 Codex/OpenAI、Claude/Anthropic、DeepSeek 等提供方的端点、模型和受控密钥引用；能力探测、错误状态和提供方切换可测试，密钥不得写入仓库或明文项目数据。",
+  "owner": "桌面服务维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": ["DL-E1-creative-model-provider-config"]
+}

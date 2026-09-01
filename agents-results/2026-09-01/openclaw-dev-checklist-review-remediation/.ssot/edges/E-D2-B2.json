@@ -1,0 +1,1 @@
+{"edge_id":"E-D2-B2","from":"D2","to":"B2","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["decision.delete.behavior"],"transferred_input":"已接受的删除行为决定","gate_evidence":"D2 产品决定记录"}

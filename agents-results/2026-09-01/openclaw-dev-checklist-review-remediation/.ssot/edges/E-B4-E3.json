@@ -1,0 +1,1 @@
+{"edge_id":"E-B4-E3","from":"B4","to":"E3","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["release.r2.acceptance"],"transferred_input":"可按位置核对的媒体清单与内容校验","gate_evidence":"B4 媒体完整性验收回执"}

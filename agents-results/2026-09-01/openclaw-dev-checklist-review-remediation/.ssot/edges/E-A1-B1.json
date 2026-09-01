@@ -1,0 +1,1 @@
+{"edge_id":"E-A1-B1","from":"A1","to":"B1","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["facts.checklist-baseline"],"transferred_input":"媒体字段事实基线","gate_evidence":"A1 对扫描脚本的核对"}

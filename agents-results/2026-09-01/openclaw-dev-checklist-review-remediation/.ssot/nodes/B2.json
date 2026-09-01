@@ -1,0 +1,31 @@
+{
+  "node_id": "B2",
+  "semantic_key": "contract.media-delete.recommendation",
+  "stage": "B",
+  "work_kind": "implementation",
+  "domain_lane": "media-retention",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["B1", "D2"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.delete.behavior", "version": 1}
+  ],
+  "invalidation_keys": ["policy.media-delete.behavior"],
+  "write_authority": "implementation",
+  "acceptance_authority": "媒体工具维护者与产品负责人",
+  "unlocks": ["B4"],
+  "goal": "实现生产删除建议及用户选择接口",
+  "acceptance": "系统只生成带证据的删除候选并允许用户选择；本节点不移动或永久删除文件，缺少证据时强制阻断。",
+  "owner": "媒体工具维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": ["DL-B2-delete-recommendation"]
+}

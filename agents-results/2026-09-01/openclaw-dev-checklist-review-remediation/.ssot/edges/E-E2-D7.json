@@ -1,0 +1,1 @@
+{"edge_id":"E-E2-D7","from":"E2","to":"D7","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["media-delete.trash-flow"],"transferred_input":"用户确认的废纸篓移动与恢复流程","gate_evidence":"E2 选择、回读和恢复测试"}

@@ -1,0 +1,1 @@
+{"edge_id":"E-C1-C2","from":"C1","to":"C2","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["bridge.edl.structured"],"transferred_input":"桌面桥接候选","gate_evidence":"C1 接口契约"}

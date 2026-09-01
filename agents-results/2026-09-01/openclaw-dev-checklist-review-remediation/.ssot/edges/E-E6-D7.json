@@ -1,0 +1,1 @@
+{"edge_id":"E-E6-D7","from":"E6","to":"D7","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["chatcut.optional-integration"],"transferred_input":"按 D4 落实的 ChatCut 可选集成边界","gate_evidence":"E6 能力探测或承诺移除测试"}

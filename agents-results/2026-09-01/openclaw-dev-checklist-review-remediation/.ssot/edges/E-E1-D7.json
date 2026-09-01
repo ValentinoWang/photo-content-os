@@ -1,0 +1,1 @@
+{"edge_id":"E-E1-D7","from":"E1","to":"D7","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["creative-model.provider-config"],"transferred_input":"创意模型多提供方配置实现","gate_evidence":"E1 针对性测试回执"}

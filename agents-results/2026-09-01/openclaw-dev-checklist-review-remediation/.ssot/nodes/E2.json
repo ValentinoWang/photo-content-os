@@ -1,0 +1,31 @@
+{
+  "node_id": "E2",
+  "semantic_key": "implementation.media-delete.trash-flow",
+  "stage": "E",
+  "work_kind": "implementation",
+  "domain_lane": "media-delete-flow",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["B4", "D2"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.delete.behavior", "version": 1}
+  ],
+  "invalidation_keys": ["media-delete.trash-flow"],
+  "write_authority": "implementation",
+  "acceptance_authority": "媒体工具维护者与产品负责人",
+  "unlocks": ["D7"],
+  "goal": "实现删除候选选择、确认、废纸篓移动与恢复",
+  "acceptance": "系统只移动用户明确选择并再次确认的候选到 macOS 废纸篓；每项保留原路径、候选证据、操作人、时间、移动后回读和恢复结果，禁止自动或永久删除，部分失败可补偿并进入待处理状态。",
+  "owner": "媒体工具维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": ["DL-E2-user-confirmed-trash-flow"]
+}

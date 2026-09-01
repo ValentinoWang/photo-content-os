@@ -1,0 +1,1 @@
+{"edge_id":"E-A1-B3","from":"A1","to":"B3","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["facts.checklist-baseline"],"transferred_input":"已冻结的负例与统计基线","gate_evidence":"A1 测试盘点"}

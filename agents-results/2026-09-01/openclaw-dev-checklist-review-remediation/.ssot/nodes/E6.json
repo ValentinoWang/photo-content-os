@@ -1,0 +1,31 @@
+{
+  "node_id": "E6",
+  "semantic_key": "implementation.chatcut.optional-integration",
+  "stage": "E",
+  "work_kind": "implementation",
+  "domain_lane": "chatcut-integration",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["C4", "D4"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.chatcut.integration", "version": 1}
+  ],
+  "invalidation_keys": ["chatcut.optional-integration"],
+  "write_authority": "implementation",
+  "acceptance_authority": "桌面服务维护者与产品负责人",
+  "unlocks": ["D7"],
+  "goal": "实现 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成",
+  "acceptance": "仅实现 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成：展示前实时探测，只有探测成功且用户明确连接后才显示可用；不加入 OpenClaw 内建编辑后端集合，不改变 06_edit_decision_list.json 的唯一权威，不调用未公开接口。",
+  "owner": "桌面服务维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": ["DL-E6-chatcut-optional-integration"]
+}

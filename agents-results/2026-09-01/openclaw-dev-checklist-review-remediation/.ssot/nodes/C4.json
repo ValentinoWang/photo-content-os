@@ -1,0 +1,31 @@
+{
+  "node_id": "C4",
+  "semantic_key": "acceptance.r3.edl-bridge",
+  "stage": "C",
+  "work_kind": "validation",
+  "domain_lane": "r3-acceptance",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["C3"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.edl.authority", "version": 1}
+  ],
+  "invalidation_keys": ["release.r3.acceptance"],
+  "write_authority": "shared-generated",
+  "acceptance_authority": "主协调者",
+  "unlocks": ["D7", "E6"],
+  "goal": "汇编 R3 的结构化方案桥接验收",
+  "acceptance": "R3 的接口、错误路径和回退边界通过本地静态与运行核对。",
+  "owner": "主协调者",
+  "node_role": "acceptance-gate",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "freezes",
+  "deliverable_ids": ["DL-C4-r3-acceptance"]
+}

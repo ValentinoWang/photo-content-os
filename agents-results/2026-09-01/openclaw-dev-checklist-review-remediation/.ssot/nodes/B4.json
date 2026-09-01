@@ -1,0 +1,31 @@
+{
+  "node_id": "B4",
+  "semantic_key": "acceptance.r2.media-integrity",
+  "stage": "B",
+  "work_kind": "validation",
+  "domain_lane": "r2-acceptance",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["B2", "B3"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.delete.behavior", "version": 1}
+  ],
+  "invalidation_keys": ["release.r2.acceptance"],
+  "write_authority": "shared-generated",
+  "acceptance_authority": "主协调者",
+  "unlocks": ["D7", "E2", "E3"],
+  "goal": "汇编 R2 的媒体完整性验收",
+  "acceptance": "R2 只在契约、实现和回归测试共同通过后接受，且原始文件保持未修改。",
+  "owner": "主协调者",
+  "node_role": "acceptance-gate",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "freezes",
+  "deliverable_ids": ["DL-B4-r2-acceptance"]
+}

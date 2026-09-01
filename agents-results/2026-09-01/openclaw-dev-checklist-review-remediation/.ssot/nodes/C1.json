@@ -1,0 +1,31 @@
+{
+  "node_id": "C1",
+  "semantic_key": "implementation.edl.structured-bridge",
+  "stage": "C",
+  "work_kind": "implementation",
+  "domain_lane": "edl-bridge",
+  "execution_state": "READY",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["D1"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.edl.authority", "version": 1}
+  ],
+  "invalidation_keys": ["bridge.edl.structured"],
+  "write_authority": "implementation",
+  "acceptance_authority": "桌面服务维护者与产品负责人",
+  "unlocks": ["C2"],
+  "goal": "从唯一权威的结构化剪辑方案读取并桥接桌面接口",
+  "acceptance": "桌面接口返回结构化字段、来源和校验结果，不能从文本区块臆造缺失字段。",
+  "owner": "桌面服务维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": ["DL-C1-edl-bridge"]
+}

@@ -1,0 +1,31 @@
+{
+  "node_id": "E3",
+  "semantic_key": "implementation.archive.lifecycle-location-config",
+  "stage": "E",
+  "work_kind": "implementation",
+  "domain_lane": "archive-config",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["B4", "D5"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.archive.lifecycle-location", "version": 1}
+  ],
+  "invalidation_keys": ["archive.lifecycle-location-config"],
+  "write_authority": "implementation",
+  "acceptance_authority": "归档工具维护者与产品负责人",
+  "unlocks": ["D7"],
+  "goal": "实现生命周期与用户所选物理位置的联合配置",
+  "acceptance": "用户可同时选择生命周期和一个或多个物理位置；每个位置独立记录文件清单、内容校验值、观察时间与回读状态，生命周期变化不得被当作外部副本已存在的证据。",
+  "owner": "归档工具维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": ["DL-E3-archive-lifecycle-location-config"]
+}

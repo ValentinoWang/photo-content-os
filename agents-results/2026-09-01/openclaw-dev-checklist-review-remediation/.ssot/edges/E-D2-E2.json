@@ -1,0 +1,1 @@
+{"edge_id":"E-D2-E2","from":"D2","to":"E2","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["decision.delete.behavior"],"transferred_input":"用户确认后移入 macOS 废纸篓的决定","gate_evidence":"D2 已接受决定记录"}

@@ -1,0 +1,1 @@
+{"edge_id":"E-A2-A4","from":"A2","to":"A4","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["contract.checklist.fact-correction"],"transferred_input":"事实纠偏候选","gate_evidence":"A2 静态核对结果"}

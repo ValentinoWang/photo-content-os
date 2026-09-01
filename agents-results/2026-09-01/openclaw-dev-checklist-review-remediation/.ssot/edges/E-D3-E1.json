@@ -1,0 +1,1 @@
+{"edge_id":"E-D3-E1","from":"D3","to":"E1","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["decision.creative-model.providers"],"transferred_input":"用户可配置的创意模型提供方决定","gate_evidence":"D3 已接受决定记录"}

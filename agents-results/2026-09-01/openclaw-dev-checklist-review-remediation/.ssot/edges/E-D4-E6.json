@@ -1,0 +1,1 @@
+{"edge_id":"E-D4-E6","from":"D4","to":"E6","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["decision.chatcut.integration"],"transferred_input":"ChatCut 保留或移除的正式决定","gate_evidence":"D4 产品决定记录"}

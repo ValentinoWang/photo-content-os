@@ -1,0 +1,1 @@
+{"edge_id":"E-C4-E6","from":"C4","to":"E6","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["release.r3.acceptance"],"transferred_input":"已验收的结构化剪辑方案桥接","gate_evidence":"C4 R3 验收回执"}

@@ -1,0 +1,1 @@
+{"edge_id":"E-D7-D8","from":"D7","to":"D8","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["integration.policy-ui"],"transferred_input":"整合候选与决定版本","gate_evidence":"D7 汇编回执"}

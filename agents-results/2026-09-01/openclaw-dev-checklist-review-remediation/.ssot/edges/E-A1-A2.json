@@ -1,0 +1,1 @@
+{"edge_id":"E-A1-A2","from":"A1","to":"A2","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["facts.checklist-baseline"],"transferred_input":"审核事实基线","gate_evidence":"A1 文件与行号证据"}

@@ -1,0 +1,1 @@
+{"edge_id":"E-B1-B2","from":"B1","to":"B2","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["contract.media-manifest.integrity"],"transferred_input":"媒体清单契约","gate_evidence":"B1 字段与来源定义"}

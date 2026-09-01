@@ -1,0 +1,22 @@
+{
+  "ssot_schema_version": 1,
+  "artifact_class": "ssot-development",
+  "plan_version": 3,
+  "dag_version": 2,
+  "interface_freeze_version": 3,
+  "node_contract_version": 1,
+  "machine_validation_profile": "release",
+  "generated_main": "../ssot-development-paths.md",
+  "generated_views": [
+    {
+      "view_id": "main",
+      "source": "view-sources/00-main.md",
+      "source_sha256": "c3dfbe8d06b3d0fa494b8bdd4d84e32367c2aae370d3fc032a8daf97db674e2f",
+      "output": "../ssot-development-paths.md"
+    }
+  ],
+  "nodes_dir": "nodes",
+  "edges_dir": "edges",
+  "assumptions_dir": "assumptions",
+  "conflicts_dir": "conflicts"
+}

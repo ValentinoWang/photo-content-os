@@ -1,0 +1,1 @@
+{"edge_id":"E-E5-D7","from":"E5","to":"D7","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["identity.local-session-consumer"],"transferred_input":"本地上游会话消费实现","gate_evidence":"E5 登录、刷新、登出和撤销测试"}

@@ -1,0 +1,1 @@
+{"edge_id":"E-E4-E5","from":"E4","to":"E5","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["identity.upstream-account-contract"],"transferred_input":"已验收的上游账号与会话合同","gate_evidence":"E4 合同测试和上游身份回读"}

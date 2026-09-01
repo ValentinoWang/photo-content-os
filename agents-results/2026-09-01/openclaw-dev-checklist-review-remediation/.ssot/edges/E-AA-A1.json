@@ -1,0 +1,1 @@
+{"edge_id":"E-AA-A1","from":"AA","to":"A1","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["scope.audit-remediation"],"transferred_input":"已接受的范围与权威记录","gate_evidence":"AA 决定记录"}

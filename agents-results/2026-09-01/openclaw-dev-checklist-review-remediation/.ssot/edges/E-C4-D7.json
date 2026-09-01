@@ -1,0 +1,1 @@
+{"edge_id":"E-C4-D7","from":"C4","to":"D7","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["release.r3.acceptance"],"transferred_input":"R3 验收候选","gate_evidence":"C4 发布切片回执"}

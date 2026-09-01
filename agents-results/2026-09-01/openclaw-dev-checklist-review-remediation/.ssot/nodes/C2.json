@@ -1,0 +1,31 @@
+{
+  "node_id": "C2",
+  "semantic_key": "validation.edl.bridge",
+  "stage": "C",
+  "work_kind": "validation",
+  "domain_lane": "edl-tests",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["C1"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.edl.authority", "version": 1}
+  ],
+  "invalidation_keys": ["tests.edl.bridge"],
+  "write_authority": "evidence-only",
+  "acceptance_authority": "测试维护者与桌面服务维护者",
+  "unlocks": ["C3"],
+  "goal": "为结构化剪辑方案桥接补充接口和错误路径测试",
+  "acceptance": "有效、缺字段、版本不符和来源漂移均有可判断的测试结果。",
+  "owner": "测试维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "none",
+  "deliverable_ids": ["DL-C2-edl-bridge-tests"]
+}

@@ -1,0 +1,1 @@
+{"edge_id":"E-E3-D7","from":"E3","to":"D7","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["archive.lifecycle-location-config"],"transferred_input":"生命周期与物理位置配置实现","gate_evidence":"E3 位置清单和状态隔离测试"}

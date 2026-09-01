@@ -1,0 +1,1 @@
+{"edge_id":"E-C2-C3","from":"C2","to":"C3","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["tests.edl.bridge"],"transferred_input":"桥接错误路径测试结果","gate_evidence":"C2 测试回执"}

@@ -1,0 +1,1 @@
+{"edge_id":"E-D5-E3","from":"D5","to":"E3","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["decision.archive.lifecycle-location"],"transferred_input":"生命周期与用户所选物理位置的决定","gate_evidence":"D5 已接受决定记录"}

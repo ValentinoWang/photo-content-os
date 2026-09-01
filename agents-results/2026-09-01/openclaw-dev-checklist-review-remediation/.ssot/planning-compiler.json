@@ -1,0 +1,180 @@
+{
+  "planning_compiler_schema_version": 1,
+  "classification": {
+    "applicability": "ssot",
+    "ssot_depth": "L2",
+    "artifact_policy": "create-ssot",
+    "selection_authority": "user",
+    "rationale": "用户明确要求形成可持续推进的 SSOT；整改跨越清单、桌面后端、媒体清单、结构化剪辑方案、用户可配置模型、统一身份、归档位置和可选第三方剪辑接入，因此需要多个可独立验收的发布切片。"
+  },
+  "macro_phases": [
+    {"id": "P1", "title": "清单事实与页面契约纠偏", "release_ids": ["R1"]},
+    {"id": "P2", "title": "媒体资料完整性与删除建议", "release_ids": ["R2"]},
+    {"id": "P3", "title": "结构化剪辑方案桥接", "release_ids": ["R3"]},
+    {"id": "P4", "title": "已接受产品决定的实现与可选剪辑整合", "release_ids": ["R4"]}
+  ],
+  "release_slices": [
+    {
+      "id": "R1",
+      "macro_phase_id": "P1",
+      "title": "清单事实纠偏与 HTML 页面契约",
+      "user_value": "读者看到的每项判断都能回到当前代码证据，页面在标准浏览器和移动视口中保持可读。",
+      "independent_acceptance": "清单中的事实、统计、状态分类和页面文档头通过静态核对，且没有把未实现能力写成已完成。",
+      "independent_failure": "只保留原始清单作为未验收资料，不影响媒体文件、桌面服务或外部系统。",
+      "acceptance_node_id": "A4",
+      "release_candidate_artifact_id": "candidate:R1-checklist-contract-v1",
+      "independent_proof_artifact_id": "proof:R1-static-audit-v1",
+      "acceptance_command": "python3 -m unittest 99_System_OpenClaw.tests.test_p2_frontend_contract 99_System_OpenClaw.tests.test_p2_desktop_server",
+      "future_phase_required_for_success": false,
+      "development_baseline": "git:4737e45525c2cb9359bfb02952d7b690b6799761",
+      "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761",
+      "release_candidate": "candidate:R1-checklist-contract-v1",
+      "node_ids": ["AA", "A1", "A2", "A3", "A4"]
+    },
+    {
+      "id": "R2",
+      "macro_phase_id": "P2",
+      "title": "照片元数据、内容校验和删除建议契约",
+      "user_value": "系统能够区分来源事实、文件健康和删除建议，用户可在不触碰原文件的情况下复核结果。",
+      "independent_acceptance": "媒体清单包含有界的照片元数据、内容校验值和可读性状态；删除建议只生成候选，不执行删除。",
+      "independent_failure": "清单生成失败或证据不足时保持阻断，原始媒体和既有归档状态不变。",
+      "acceptance_node_id": "B4",
+      "release_candidate_artifact_id": "candidate:R2-media-integrity-v1",
+      "independent_proof_artifact_id": "proof:R2-manifest-regression-v1",
+      "acceptance_command": "python3 -m unittest 99_System_OpenClaw.tests.test_p2_photo_remaining 99_System_OpenClaw.tests.test_project_structure_v2",
+      "future_phase_required_for_success": false,
+      "development_baseline": "git:4737e45525c2cb9359bfb02952d7b690b6799761",
+      "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761",
+      "release_candidate": "candidate:R2-media-integrity-v1",
+      "node_ids": ["B1", "B2", "B3", "B4"]
+    },
+    {
+      "id": "R3",
+      "macro_phase_id": "P3",
+      "title": "结构化剪辑方案读取与桌面接口桥接",
+      "user_value": "素材整理和项目界面可以读取经过校验的结构化剪辑方案，而不会把文本区块误当成完整的时间线数据。",
+      "independent_acceptance": "结构化剪辑方案的来源、字段和校验失败路径明确，并由桌面接口返回可验证的数据；旧文本编辑能力仍可回退。",
+      "independent_failure": "桥接未通过时维持现有 Studio 文本编辑器，不改变已有项目数据。",
+      "acceptance_node_id": "C4",
+      "release_candidate_artifact_id": "candidate:R3-edl-bridge-v1",
+      "independent_proof_artifact_id": "proof:R3-edl-contract-v1",
+      "acceptance_command": "python3 -m unittest 99_System_OpenClaw.tests.test_p0_edl_contract 99_System_OpenClaw.tests.test_p2_desktop_server",
+      "future_phase_required_for_success": false,
+      "development_baseline": "git:4737e45525c2cb9359bfb02952d7b690b6799761",
+      "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761",
+      "release_candidate": "candidate:R3-edl-bridge-v1",
+      "node_ids": ["C1", "C2", "C3", "C4"]
+    },
+    {
+      "id": "R4",
+      "macro_phase_id": "P4",
+      "title": "创意模型、删除、身份、归档和可选剪辑整合",
+      "user_value": "用户可以配置创意模型、选择删除候选、指定归档位置并复用上游账号；ChatCut 通过 Desktop 桌面本地模型上下文协议（MCP）在实时能力探测后成为可选集成。",
+      "independent_acceptance": "六项决定均有正式版本，E1-E6 的实现与针对性测试全部接受，发布闸门能证明候选身份、远端回读和回退路径。",
+      "independent_failure": "整合候选保持未发布，R1-R3 已验收的切片继续独立可用。",
+      "acceptance_node_id": "D8",
+      "release_candidate_artifact_id": "candidate:R4-policy-integration-v3",
+      "independent_proof_artifact_id": "proof:R4-integration-gate-v3",
+      "acceptance_command": "D7 在 E1-E6 实现落盘后冻结存在且可执行的针对性测试命令；命令缺失时 D8 保持阻塞",
+      "future_phase_required_for_success": false,
+      "development_baseline": "git:4737e45525c2cb9359bfb02952d7b690b6799761",
+      "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761",
+      "release_candidate": "candidate:R4-policy-integration-v3",
+      "node_ids": ["D1", "D2", "D3", "D4", "D5", "D6", "E1", "E2", "E3", "E4", "E5", "E6", "D7", "D8"]
+    }
+  ],
+  "waves": [
+    {"id": "W1", "release_id": "R1", "node_ids": ["AA", "A1"]},
+    {"id": "W2", "release_id": "R1", "node_ids": ["A2", "A3"]},
+    {"id": "W3", "release_id": "R1", "node_ids": ["A4"]},
+    {"id": "W4", "release_id": "R2", "node_ids": ["B1", "B3"]},
+    {"id": "W5", "release_id": "R2", "node_ids": ["B2"]},
+    {"id": "W6", "release_id": "R2", "node_ids": ["B4"]},
+    {"id": "W7", "release_id": "R3", "node_ids": ["C1"]},
+    {"id": "W8", "release_id": "R3", "node_ids": ["C2"]},
+    {"id": "W9", "release_id": "R3", "node_ids": ["C3"]},
+    {"id": "W10", "release_id": "R3", "node_ids": ["C4"]},
+    {"id": "W11", "release_id": "R4", "node_ids": ["D1", "D2", "D3", "D4", "D5", "D6"]},
+    {"id": "W12", "release_id": "R4", "node_ids": ["E1", "E4"]},
+    {"id": "W13", "release_id": "R4", "node_ids": ["E5"]},
+    {"id": "W14", "release_id": "R4", "node_ids": ["E2", "E3"]},
+    {"id": "W15", "release_id": "R4", "node_ids": ["E6"]},
+    {"id": "W16", "release_id": "R4", "node_ids": ["D7"]},
+    {"id": "W17", "release_id": "R4", "node_ids": ["D8"]}
+  ],
+  "nodes": [
+    {"id": "AA", "kind": "decision", "goal": "确认审核整改的范围、权威来源和不越界原则", "dependencies": [], "acceptance": "范围决定记录已写入机器源，明确不把本地证据升级为外部或生产完成。", "owner": "主协调者"},
+    {"id": "A1", "kind": "validation", "goal": "冻结清单、原型、桌面后端和测试统计的事实基线", "dependencies": ["AA"], "acceptance": "每条关键发现都有当前文件和行号证据，已区分事实、证据缺口和人工决定。", "owner": "主协调者"},
+    {"id": "A2", "kind": "implementation", "goal": "纠正清单中的元数据、统计和状态分类事实", "dependencies": ["A1"], "acceptance": "照片 GPS、测试文件数、状态标签和路径分类与当前代码核对一致。", "owner": "文档维护者"},
+    {"id": "A3", "kind": "implementation", "goal": "补齐清单 HTML 文档头并校准原型与代码声明", "dependencies": ["A1"], "acceptance": "页面含标准文档头、语言、字符集和视口声明，且没有把不存在的接口写成现状。", "owner": "文档维护者"},
+    {"id": "A4", "kind": "validation", "goal": "汇编 R1 的静态验收和可回读候选", "dependencies": ["A2", "A3"], "acceptance": "R1 的静态核对通过；失败只阻断清单发布，不修改媒体或服务。", "owner": "主协调者"},
+    {"id": "B1", "kind": "implementation", "goal": "定义照片元数据、内容校验和健康状态的媒体清单契约", "dependencies": ["A1"], "acceptance": "契约明确照片 EXIF、内容 SHA-256、可读性和未知状态的字段及来源。", "owner": "媒体工具维护者"},
+    {"id": "B2", "kind": "implementation", "goal": "实现生产删除建议及用户选择接口", "dependencies": ["B1", "D2"], "acceptance": "系统只生成带证据的删除候选并允许用户选择；本节点不移动或永久删除文件，缺少证据时强制阻断。", "owner": "媒体工具维护者"},
+    {"id": "B3", "kind": "validation", "goal": "补充媒体清单字段和回归行为测试", "dependencies": ["A1"], "acceptance": "测试覆盖照片 EXIF 缺失、内容变化、损坏文件和候选删除的负例。", "owner": "测试维护者"},
+    {"id": "B4", "kind": "validation", "goal": "汇编 R2 的媒体完整性验收", "dependencies": ["B2", "B3"], "acceptance": "R2 只在契约、实现和回归测试共同通过后接受，且原始文件保持未修改。", "owner": "主协调者"},
+    {"id": "C1", "kind": "implementation", "goal": "从唯一权威的结构化剪辑方案读取并桥接桌面接口", "dependencies": ["D1"], "acceptance": "桌面接口返回结构化字段、来源和校验结果，不能从文本区块臆造缺失字段。", "owner": "桌面服务维护者"},
+    {"id": "C2", "kind": "validation", "goal": "为结构化剪辑方案桥接补充接口和错误路径测试", "dependencies": ["C1"], "acceptance": "有效、缺字段、版本不符和来源漂移均有可判断的测试结果。", "owner": "测试维护者"},
+    {"id": "C3", "kind": "validation", "goal": "核对结构化剪辑方案与现有 Studio 文本编辑边界", "dependencies": ["C2"], "acceptance": "确认桥接失败时旧编辑流程仍可用，且没有重复权威。", "owner": "桌面服务维护者"},
+    {"id": "C4", "kind": "validation", "goal": "汇编 R3 的结构化方案桥接验收", "dependencies": ["C3"], "acceptance": "R3 的接口、错误路径和回退边界通过本地静态与运行核对。", "owner": "主协调者"},
+    {"id": "D1", "kind": "decision", "goal": "决定结构化剪辑方案的唯一权威来源", "dependencies": [], "acceptance": "结构化 06_edit_decision_list.json 是机器执行唯一权威；Studio 文本只保存创作说明和只读摘要。", "owner": "产品负责人"},
+    {"id": "D2", "kind": "decision", "goal": "决定删除建议与用户确认后的文件移动边界", "dependencies": [], "acceptance": "生产生成建议，用户选择确认后移入 macOS 废纸篓；禁止自动或永久删除，并保留恢复和审计。", "owner": "产品负责人"},
+    {"id": "D3", "kind": "decision", "goal": "决定创意模型提供方和用户配置边界", "dependencies": [], "acceptance": "创意模型由用户配置，支持 Codex/OpenAI、Claude/Anthropic、DeepSeek 等提供方，密钥由用户管理。", "owner": "产品负责人"},
+    {"id": "D4", "kind": "decision", "goal": "冻结 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成边界", "dependencies": [], "acceptance": "ChatCut 仅作为可选第三方集成，使用 ChatCut Desktop 桌面本地模型上下文协议（MCP），展示前实时探测，不加入内建编辑后端集合，不成为第二权威，不调用未公开接口。", "owner": "产品负责人"},
+    {"id": "D5", "kind": "decision", "goal": "决定生命周期与物理位置的联合配置方式", "dependencies": [], "acceptance": "生命周期和物理位置同时配置，用户可选择位置，每个位置独立记录清单、内容校验值和回读状态。", "owner": "产品负责人"},
+    {"id": "D6", "kind": "decision", "goal": "决定登录身份来源与无账号时的创建位置", "dependencies": [], "acceptance": "优先复用上游中台账号；不存在时在上游同一身份系统创建，不建立本地第二账号源。", "owner": "产品负责人"},
+    {"id": "E1", "kind": "implementation", "goal": "实现用户可配置的创意模型提供方", "dependencies": ["D3"], "acceptance": "多提供方端点、模型、受控密钥引用、能力探测和失败状态均可测试。", "owner": "桌面服务维护者"},
+    {"id": "E2", "kind": "implementation", "goal": "实现删除候选选择、确认、废纸篓移动与恢复", "dependencies": ["B4", "D2"], "acceptance": "只移动用户明确确认的候选，保留原路径、移动后回读、恢复和审计，禁止永久删除。", "owner": "媒体工具维护者"},
+    {"id": "E3", "kind": "implementation", "goal": "实现生命周期与用户所选物理位置的联合配置", "dependencies": ["B4", "D5"], "acceptance": "生命周期和每个物理位置独立保存并回读，不以状态替代副本证据。", "owner": "归档工具维护者"},
+    {"id": "E4", "kind": "implementation", "goal": "实现上游统一身份查询与同系统账号创建合同", "dependencies": ["D6"], "acceptance": "复用或幂等创建上游账号并回读同一身份，不建立本地密码库。", "owner": "上游身份维护者"},
+    {"id": "E5", "kind": "implementation", "goal": "实现本地应用对上游会话的受控消费", "dependencies": ["E4"], "acceptance": "登录、刷新、过期、登出、撤销和离线只读均按上游权威运行。", "owner": "桌面服务维护者"},
+    {"id": "E6", "kind": "implementation", "goal": "实现 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成", "dependencies": ["C4", "D4"], "acceptance": "展示前实时探测，只有探测成功且用户明确连接后才显示可用；不加入 OpenClaw 内建编辑后端集合，不改变结构化剪辑方案的唯一权威，不调用未公开接口。", "owner": "桌面服务维护者"},
+    {"id": "D7", "kind": "convergence", "goal": "汇编前三个切片与六条产品实现线的整合候选", "dependencies": ["A4", "B4", "C4", "E1", "E2", "E3", "E4", "E5", "E6"], "acceptance": "整合候选只引用已接受的决定和实现，不引入第二套权威或未声明接口。", "owner": "主协调者"},
+    {"id": "D8", "kind": "release", "goal": "对具备真实实现与验收证据的 R4 候选作最终发布决定", "dependencies": ["D7"], "acceptance": "候选身份、E1-E6 测试、远端回读、回退路径和清理台账均已记录；否则保持未发布。", "owner": "产品负责人", "escalation": {"reasons": ["production-release"], "immutable_release_identity": "candidate:R4-policy-integration-v3", "promotion_baseline": "origin/main:4737e45525c2cb9359bfb02952d7b690b6799761", "recovery_contract": "未满足验收时保持未发布；若已切换则回退到 promotion baseline，并记录远端 tip 回读。"}}
+  ],
+  "external_systems": ["本地代码仓库", "桌面本地服务", "媒体文件系统与 macOS 废纸篓", "用户配置的创意模型接口", "上游统一身份系统", "ChatCut Desktop 本地 MCP", "云盘与移动存储位置"],
+  "acceptance_layers": ["source", "static-test", "local-runtime"],
+  "release_boundary_compiler": {
+    "boundary_required": true,
+    "decision_authority": "用户与主协调者",
+    "rationale": "事实纠偏、媒体完整性、结构化方案桥接和政策整合有不同的用户价值、失败半径和验收证据，可以独立停留在未发布状态。"
+  },
+  "artifacts": {
+    "ssot_bundle": true,
+    "generated_views": ["main"],
+    "resource_matrix": false,
+    "runner_registry": false,
+    "evidence_identity_registry": false,
+    "worker_ledger": false
+  },
+  "complexity_budget": {
+    "authority": "用户的 SSOT 请求与 L2 比例治理合同",
+    "rationale": "保留四个真实发布切片、二十七个必要节点和一个主视图；新增六个可独立开发和验收的产品实现叶节点，验证动作合并进节点验收，不注册外部 worker。",
+    "limits": {
+      "total_nodes": 27,
+      "implementation_nodes_per_release": 6,
+      "codex_worker_nodes": 0,
+      "generated_views": 1
+    }
+  },
+  "goal_size_detector": {
+    "implementation_or_migration_nodes": 11,
+    "external_systems": 7,
+    "release_slices": 4,
+    "production_migrations": 0,
+    "acceptance_layers": 3,
+    "split_required": false,
+    "split_strategy": "release"
+  },
+  "scheduling_model": "static-wave",
+  "scheduling_hints": [
+    "A2、A3、B1、B3、C1、E1、E4 当前均已满足决定和事实依赖，可形成七条逻辑开发线；A2 与 A3 的同文件写入由单一汇编者串行落盘。",
+    "D1-D6 均已接受并只解锁直接消费者；D4 已冻结 ChatCut Desktop 桌面本地模型上下文协议（MCP）可选集成。",
+    "E2 与 E3 在 B4 接受后可并行；E5 只等待 E4；E6 仅等待 C4，不制造阶段级总闸门。"
+  ],
+  "artifacts_inventory": {
+    "total_nodes": 27,
+    "implementation_nodes": 11,
+    "worker_nodes": 0,
+    "generated_views": 1
+  }
+}

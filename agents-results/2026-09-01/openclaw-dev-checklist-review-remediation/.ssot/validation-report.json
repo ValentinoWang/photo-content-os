@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-01T18:25:35.227040+00:00",
+  "generator": {
+    "repository": "ValentinoWang/Harness_Engineering",
+    "commit": "a8d9266e99045cf0da407c00ba3d96b1491ac47d",
+    "dirty": true,
+    "dirty_files": [
+      ".agents/skills/design-reference-context",
+      ".agents/skills/runtime-visual-verification",
+      ".agents/skills/visual-collaboration-contract",
+      ".agents/skills/visual-direction-exploration",
+      "agents-results/2026-09-01/manual-acceptance-log-v0-1/.ssot/manifest.json",
+      "agents-results/2026-09-01/manual-acceptance-log-v0-1/.ssot/view-sources/00-main.md",
+      "agents-results/2026-09-01/manual-acceptance-log-v0-1/ssot-development-paths.md"
+    ],
+    "dirty_diff_sha256": "1d08f8375d8fe087a49c96b8bf83f49584e0c84a897a2151cf0a3ffe74f5dd70",
+    "skill_path": "Core/skills/report-to-ssot-development-paths",
+    "skill_realpath": "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/report-to-ssot-development-paths",
+    "skill_sha256": "1e7c129ec9cb19ee5d925ee0a1c8b78da53cb18bb0e7ab8c16734c417c852e4a",
+    "checker_bundle_sha256": "97d4f3e8038163f6549772098bbde562072914699b596aaac9bcdbc7c5a0da48"
+  },
+  "runtime": {
+    "project_root": "/Users/vsiyo/Desktop/照片筛选",
+    "project_commit": "4737e45525c2cb9359bfb02952d7b690b6799761",
+    "project_dirty": true,
+    "project_dirty_diff_sha256": "b34b6799378f46eda2666c8e6c6246c3c7d2bfae82c4a13693455d02b7634bd9",
+    "harness_lock_sha256": null
+  },
+  "bundle": {
+    "path": "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation",
+    "sha256": "5dbd885704b3258adb4fbfa2ea9c1480eba6fa95cf25aa6b4e52f0446afe5fb8",
+    "content_sha256": "5dbd885704b3258adb4fbfa2ea9c1480eba6fa95cf25aa6b4e52f0446afe5fb8",
+    "manifest_sha256": "52ced3ff06e0a3b8963f9fd720a986f8e36b6de19cc2d8d71771d102f1a4cfac",
+    "manifest_identity_sha256": "52ced3ff06e0a3b8963f9fd720a986f8e36b6de19cc2d8d71771d102f1a4cfac"
+  },
+  "checks": [
+    {
+      "id": "runtime-skill-provenance",
+      "command": [
+        "/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/.venv-content-os/bin/python",
+        "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/tools/harnessctl.py",
+        "doctor",
+        "--project",
+        "/Users/vsiyo/Desktop/照片筛选",
+        "--check-runtime-skills"
+      ],
+      "exit_code": 2,
+      "result": "failed",
+      "output": "error: missing yaml: /Users/vsiyo/Desktop/照片筛选/.harness/manifest.yaml\n"
+    },
+    {
+      "id": "complexity",
+      "command": [
+        "/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/.venv-content-os/bin/python",
+        "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/report-to-ssot-development-paths/scripts/validate_ssot_complexity.py",
+        "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/planning-compiler.json"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "output": "SSOT complexity check passed: /Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/planning-compiler.json (depth=L2, releases=4, nodes=27, workers=0)\n"
+    },
+    {
+      "id": "render",
+      "command": [
+        "/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/.venv-content-os/bin/python",
+        "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/report-to-ssot-development-paths/scripts/render_ssot_views.py",
+        "--check",
+        "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/manifest.json"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "output": "SSOT views verified: 1 manifest(s)\n"
+    },
+    {
+      "id": "machine-program",
+      "command": [
+        "/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/.venv-content-os/bin/python",
+        "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/report-to-ssot-development-paths/scripts/check_ssot_program.py",
+        "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/manifest.json"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "output": "SSOT program check passed: /Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/manifest.json (nodes=27, formal_ready=7, conditional_ready=0)\n"
+    },
+    {
+      "id": "parallelism-analysis",
+      "command": [
+        "/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/.venv-content-os/bin/python",
+        "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/report-to-ssot-development-paths/scripts/analyze_ssot_parallelism.py",
+        "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/manifest.json"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "output": "{\n  \"actor_pools\": {},\n  \"critical_path_edges\": 7,\n  \"current_ready_nodes\": [\n    \"A2\",\n    \"A3\",\n    \"B1\",\n    \"B3\",\n    \"C1\",\n    \"E1\",\n    \"E4\"\n  ],\n  \"current_ready_width\": 7,\n  \"frontier_transitions\": [\n    {\n      \"accepted_node\": \"AA\",\n      \"unlocks\": [\n        \"A1\"\n      ],\n      \"waits_for\": []\n    },\n    {\n      \"accepted_node\": \"A1\",\n      \"unlocks\": [\n        \"A2\",\n        \"A3\",\n        \"B1\",\n        \"B3\"\n      ],\n      \"waits_for\": [\n        \"AA\"\n      ]\n    },\n    {\n      \"accepted_node\": \"A2\",\n      \"unlocks\": [\n        \"A4\"\n      ],\n      \"waits_for\": [\n        \"A1\"\n      ]\n    },\n    {\n      \"accepted_node\": \"A3\",\n      \"unlocks\": [\n        \"A4\"\n      ],\n      \"waits_for\": [\n        \"A1\"\n      ]\n    },\n    {\n      \"accepted_node\": \"A4\",\n      \"unlocks\": [\n        \"D7\"\n      ],\n      \"waits_for\": [\n        \"A2\",\n        \"A3\"\n      ]\n    },\n    {\n      \"accepted_node\": \"B1\",\n      \"unlocks\": [\n        \"B2\"\n      ],\n      \"waits_for\": [\n        \"A1\"\n      ]\n    },\n    {\n      \"accepted_node\": \"B3\",\n      \"unlocks\": [\n        \"B4\"\n      ],\n      \"waits_for\": [\n        \"A1\"\n      ]\n    },\n    {\n      \"accepted_node\": \"D1\",\n      \"unlocks\": [\n        \"C1\"\n      ],\n      \"waits_for\": []\n    },\n    {\n      \"accepted_node\": \"C1\",\n      \"unlocks\": [\n        \"C2\"\n      ],\n      \"waits_for\": [\n        \"D1\"\n      ]\n    },\n    {\n      \"accepted_node\": \"C2\",\n      \"unlocks\": [\n        \"C3\"\n      ],\n      \"waits_for\": [\n        \"C1\"\n      ]\n    },\n    {\n      \"accepted_node\": \"C3\",\n      \"unlocks\": [\n        \"C4\"\n      ],\n      \"waits_for\": [\n        \"C2\"\n      ]\n    },\n    {\n      \"accepted_node\": \"C4\",\n      \"unlocks\": [\n        \"D7\",\n        \"E6\"\n      ],\n      \"waits_for\": [\n        \"C3\"\n      ]\n    },\n    {\n      \"accepted_node\": \"D2\",\n      \"unlocks\": [\n        \"B2\",\n        \"E2\"\n      ],\n      \"waits_for\": []\n    },\n    {\n      \"accepted_node\": \"B2\",\n      \"unlocks\": [\n        \"B4\"\n      ],\n      \"waits_for\": [\n        \"B1\",\n        \"D2\"\n      ]\n    },\n    {\n      \"accepted_node\": \"B4\",\n      \"unlocks\": [\n        \"D7\",\n        \"E2\",\n        \"E3\"\n      ],\n      \"waits_for\": [\n        \"B2\",\n        \"B3\"\n      ]\n    },\n    {\n      \"accepted_node\": \"D3\",\n      \"unlocks\": [\n        \"E1\"\n      ],\n      \"waits_for\": []\n    },\n    {\n      \"accepted_node\": \"D4\",\n      \"unlocks\": [\n        \"E6\"\n      ],\n      \"waits_for\": []\n    },\n    {\n      \"accepted_node\": \"D5\",\n      \"unlocks\": [\n        \"E3\"\n      ],\n      \"waits_for\": []\n    },\n    {\n      \"accepted_node\": \"D6\",\n      \"unlocks\": [\n        \"E4\"\n      ],\n      \"waits_for\": []\n    },\n    {\n      \"accepted_node\": \"E1\",\n      \"unlocks\": [\n        \"D7\"\n      ],\n      \"waits_for\": [\n        \"D3\"\n      ]\n    },\n    {\n      \"accepted_node\": \"E2\",\n      \"unlocks\": [\n        \"D7\"\n      ],\n      \"waits_for\": [\n        \"B4\",\n        \"D2\"\n      ]\n    },\n    {\n      \"accepted_node\": \"E3\",\n      \"unlocks\": [\n        \"D7\"\n      ],\n      \"waits_for\": [\n        \"B4\",\n        \"D5\"\n      ]\n    },\n    {\n      \"accepted_node\": \"E4\",\n      \"unlocks\": [\n        \"D7\",\n        \"E5\"\n      ],\n      \"waits_for\": [\n        \"D6\"\n      ]\n    },\n    {\n      \"accepted_node\": \"E5\",\n      \"unlocks\": [\n        \"D7\"\n      ],\n      \"waits_for\": [\n        \"E4\"\n      ]\n    },\n    {\n      \"accepted_node\": \"E6\",\n      \"unlocks\": [\n        \"D7\"\n      ],\n      \"waits_for\": [\n        \"C4\",\n        \"D4\"\n      ]\n    },\n    {\n      \"accepted_node\": \"D7\",\n      \"unlocks\": [\n        \"D8\"\n      ],\n      \"waits_for\": [\n        \"A4\",\n        \"B4\",\n        \"C4\",\n        \"E1\",\n        \"E2\",\n        \"E3\",\n        \"E4\",\n        \"E5\",\n        \"E6\"\n      ]\n    }\n  ],\n  \"manifest\": \"/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/manifest.json\",\n  \"maximum_antichain_width\": 10,\n  \"resource_verified_width\": null,\n  \"scheduling_model\": \"event-driven\",\n  \"static_waves_are_authority\": false\n}\n"
+    },
+    {
+      "id": "structure",
+      "command": [
+        "/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/.venv-content-os/bin/python",
+        "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/report-to-ssot-development-paths/scripts/check_ssot_structure.py",
+        "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/ssot-development-paths.md"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "output": "SSOT structure check passed.\n"
+    },
+    {
+      "id": "chinese-readability",
+      "command": [
+        "/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/.venv-content-os/bin/python",
+        "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/report-to-ssot-development-paths/scripts/check_chinese_readability.py",
+        "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/ssot-development-paths.md"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "output": "中文可读性检查通过。\n"
+    },
+    {
+      "id": "archive-check",
+      "command": [
+        "/Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/.venv-content-os/bin/python",
+        "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/ssot-obsidian-snapshot/scripts/snapshot_ssot.py",
+        "--source",
+        "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation",
+        "--project-root",
+        "/Users/vsiyo/Desktop/照片筛选",
+        "--check"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "output": "{\n  \"status\": \"verified\",\n  \"source\": \"/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation\",\n  \"destination\": \"/Users/vsiyo/Library/Mobile Documents/iCloud~md~obsidian/Documents/日记/开发/每日开发/SSOT合集/2026-09-01/photo-content-os/openclaw-dev-checklist-review-remediation\",\n  \"project_name\": \"photo-content-os\",\n  \"ssot_name\": \"openclaw-dev-checklist-review-remediation\",\n  \"snapshot_date\": \"2026-09-01\",\n  \"main_document\": \"ssot-development-paths.md\",\n  \"file_count\": 1,\n  \"contains_openproblem\": false\n}\n"
+    }
+  ],
+  "parallelism": {
+    "actor_pools": {},
+    "critical_path_edges": 7,
+    "current_ready_nodes": [
+      "A2",
+      "A3",
+      "B1",
+      "B3",
+      "C1",
+      "E1",
+      "E4"
+    ],
+    "current_ready_width": 7,
+    "frontier_transitions": [
+      {
+        "accepted_node": "AA",
+        "unlocks": [
+          "A1"
+        ],
+        "waits_for": []
+      },
+      {
+        "accepted_node": "A1",
+        "unlocks": [
+          "A2",
+          "A3",
+          "B1",
+          "B3"
+        ],
+        "waits_for": [
+          "AA"
+        ]
+      },
+      {
+        "accepted_node": "A2",
+        "unlocks": [
+          "A4"
+        ],
+        "waits_for": [
+          "A1"
+        ]
+      },
+      {
+        "accepted_node": "A3",
+        "unlocks": [
+          "A4"
+        ],
+        "waits_for": [
+          "A1"
+        ]
+      },
+      {
+        "accepted_node": "A4",
+        "unlocks": [
+          "D7"
+        ],
+        "waits_for": [
+          "A2",
+          "A3"
+        ]
+      },
+      {
+        "accepted_node": "B1",
+        "unlocks": [
+          "B2"
+        ],
+        "waits_for": [
+          "A1"
+        ]
+      },
+      {
+        "accepted_node": "B3",
+        "unlocks": [
+          "B4"
+        ],
+        "waits_for": [
+          "A1"
+        ]
+      },
+      {
+        "accepted_node": "D1",
+        "unlocks": [
+          "C1"
+        ],
+        "waits_for": []
+      },
+      {
+        "accepted_node": "C1",
+        "unlocks": [
+          "C2"
+        ],
+        "waits_for": [
+          "D1"
+        ]
+      },
+      {
+        "accepted_node": "C2",
+        "unlocks": [
+          "C3"
+        ],
+        "waits_for": [
+          "C1"
+        ]
+      },
+      {
+        "accepted_node": "C3",
+        "unlocks": [
+          "C4"
+        ],
+        "waits_for": [
+          "C2"
+        ]
+      },
+      {
+        "accepted_node": "C4",
+        "unlocks": [
+          "D7",
+          "E6"
+        ],
+        "waits_for": [
+          "C3"
+        ]
+      },
+      {
+        "accepted_node": "D2",
+        "unlocks": [
+          "B2",
+          "E2"
+        ],
+        "waits_for": []
+      },
+      {
+        "accepted_node": "B2",
+        "unlocks": [
+          "B4"
+        ],
+        "waits_for": [
+          "B1",
+          "D2"
+        ]
+      },
+      {
+        "accepted_node": "B4",
+        "unlocks": [
+          "D7",
+          "E2",
+          "E3"
+        ],
+        "waits_for": [
+          "B2",
+          "B3"
+        ]
+      },
+      {
+        "accepted_node": "D3",
+        "unlocks": [
+          "E1"
+        ],
+        "waits_for": []
+      },
+      {
+        "accepted_node": "D4",
+        "unlocks": [
+          "E6"
+        ],
+        "waits_for": []
+      },
+      {
+        "accepted_node": "D5",
+        "unlocks": [
+          "E3"
+        ],
+        "waits_for": []
+      },
+      {
+        "accepted_node": "D6",
+        "unlocks": [
+          "E4"
+        ],
+        "waits_for": []
+      },
+      {
+        "accepted_node": "E1",
+        "unlocks": [
+          "D7"
+        ],
+        "waits_for": [
+          "D3"
+        ]
+      },
+      {
+        "accepted_node": "E2",
+        "unlocks": [
+          "D7"
+        ],
+        "waits_for": [
+          "B4",
+          "D2"
+        ]
+      },
+      {
+        "accepted_node": "E3",
+        "unlocks": [
+          "D7"
+        ],
+        "waits_for": [
+          "B4",
+          "D5"
+        ]
+      },
+      {
+        "accepted_node": "E4",
+        "unlocks": [
+          "D7",
+          "E5"
+        ],
+        "waits_for": [
+          "D6"
+        ]
+      },
+      {
+        "accepted_node": "E5",
+        "unlocks": [
+          "D7"
+        ],
+        "waits_for": [
+          "E4"
+        ]
+      },
+      {
+        "accepted_node": "E6",
+        "unlocks": [
+          "D7"
+        ],
+        "waits_for": [
+          "C4",
+          "D4"
+        ]
+      },
+      {
+        "accepted_node": "D7",
+        "unlocks": [
+          "D8"
+        ],
+        "waits_for": [
+          "A4",
+          "B4",
+          "C4",
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6"
+        ]
+      }
+    ],
+    "manifest": "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/manifest.json",
+    "maximum_antichain_width": 10,
+    "resource_verified_width": null,
+    "scheduling_model": "event-driven",
+    "static_waves_are_authority": false
+  },
+  "result": "fail"
+}

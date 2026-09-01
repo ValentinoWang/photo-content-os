@@ -1,0 +1,31 @@
+{
+  "node_id": "E4",
+  "semantic_key": "implementation.identity.upstream-account-contract",
+  "stage": "E",
+  "work_kind": "implementation",
+  "domain_lane": "upstream-identity",
+  "execution_state": "READY",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": ["D6"],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {"semantic_key": "decision.scope.audit-remediation", "version": 1},
+    {"semantic_key": "decision.login.identity", "version": 1}
+  ],
+  "invalidation_keys": ["identity.upstream-account-contract"],
+  "write_authority": "authoritative-contract",
+  "acceptance_authority": "上游身份维护者与产品负责人",
+  "unlocks": ["E5", "D7"],
+  "goal": "实现上游统一身份查询与同系统账号创建合同",
+  "acceptance": "先按上游身份查询账号；不存在时通过上游同一身份系统幂等创建，并回读同一用户标识、权限和撤销状态；本地不得新增用户密码库或第二套账号事实源。",
+  "owner": "上游身份维护者",
+  "node_role": "leaf",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "not-applicable",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": ["DL-E4-upstream-account-contract"]
+}

@@ -1,0 +1,1 @@
+{"edge_id":"E-A3-A4","from":"A3","to":"A4","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["html.checklist.contract"],"transferred_input":"页面契约候选","gate_evidence":"A3 HTML 静态核对"}

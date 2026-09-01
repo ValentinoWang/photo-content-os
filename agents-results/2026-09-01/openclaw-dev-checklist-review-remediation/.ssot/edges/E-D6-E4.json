@@ -1,0 +1,1 @@
+{"edge_id":"E-D6-E4","from":"D6","to":"E4","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["decision.login.identity"],"transferred_input":"复用上游身份并在同系统创建账号的决定","gate_evidence":"D6 已接受决定记录"}

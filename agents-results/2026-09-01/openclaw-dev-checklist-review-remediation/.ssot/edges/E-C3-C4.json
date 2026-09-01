@@ -1,0 +1,1 @@
+{"edge_id":"E-C3-C4","from":"C3","to":"C4","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["contract.edl.validation"],"transferred_input":"边界核对结果","gate_evidence":"C3 回退边界记录"}

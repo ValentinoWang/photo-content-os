@@ -1,0 +1,1 @@
+{"edge_id":"E-D1-C1","from":"D1","to":"C1","dependency_type":"hard","dependency_scope":"specific-output","required_state":"ACCEPTED","assumption_ids":[],"invalidation_keys":["decision.edl.authority"],"transferred_input":"结构化方案权威决定","gate_evidence":"D1 产品决定记录"}
