@@ -1,0 +1,1946 @@
+<title>OpenClaw Media 可点击原型</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Asap:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#0D1314; --panel:#111819; --panel-2:#131C1D; --raise:#161F20;
+  --rule:#1C2627; --rule-2:#253133;
+  --ink:#E4EBEB; --ink-2:#B0BEBF; --ink-3:#7D8C8E; --ink-4:#5F7477; --ink-5:#46585A;
+  --ac:#4FB3BD; --ac-2:#2E5F65; --ac-bg:#10292C; --ac-soft:#8FC7CD;
+  --ok:#7FBB92; --ok-bg:#16261B;
+  --warn:#D9A94B; --warn-bg:#1A1410; --warn-line:#6B5528;
+  --f-ui:"Archivo","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-tx:"Asap","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-mo:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:#070C0D;color:var(--ink);font-family:var(--f-ui);font-size:14px}
+button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:pointer;text-align:left}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:4px}
+.num{font-variant-numeric:tabular-nums}
+.mo{font-family:var(--f-mo)}
+
+/* ─ 原型外壳（不属于产品本身） ─ */
+.proto{max-width:1320px;margin:0 auto;padding:26px 22px 60px}
+.proto-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:18px}
+.proto-title{display:flex;flex-direction:column;gap:6px}
+.proto-title .eyebrow{font-family:var(--f-mo);font-size:10.5px;letter-spacing:.16em;color:var(--ac)}
+.proto-title h1{font-size:23px;font-weight:700;letter-spacing:-.02em;margin:0}
+.proto-title p{margin:0;font-family:var(--f-tx);font-size:13px;color:var(--ink-3)}
+.surf-tabs{display:flex;gap:2px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;padding:2px}
+.surf-tabs button{padding:8px 15px;border-radius:6px;font-size:12.5px;color:var(--ink-3);white-space:nowrap}
+.surf-tabs button[aria-selected="true"]{background:var(--raise);color:var(--ink);font-weight:600}
+
+.stage{border:1px solid var(--rule-2);border-radius:11px;overflow:hidden;background:var(--bg);box-shadow:0 30px 70px -34px rgba(0,0,0,.95)}
+.stage-bar{height:31px;background:#0A1112;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:7px;padding:0 14px}
+.stage-bar i{width:9px;height:9px;border-radius:50%;background:#222E30;display:block}
+.stage-bar span{margin-left:8px;font-family:var(--f-mo);font-size:10.5px;color:var(--ink-4)}
+.scroll-x{overflow-x:auto}
+
+/* ─ 应用外壳 ─ */
+.app{width:1240px;height:790px;display:flex;background:var(--bg)}
+.side{width:196px;flex-shrink:0;background:#101718;border-right:1px solid var(--rule);display:flex;flex-direction:column;padding:20px 12px 14px}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px 22px}
+.brand b{font-size:13.5px;font-weight:600}
+.nav{display:flex;flex-direction:column;gap:2px;flex-grow:1}
+.nav button{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:6px;font-size:13px;color:var(--ink-3)}
+.nav button:hover{background:#141D1E;color:var(--ink-2)}
+.nav button[aria-current="page"]{background:var(--ac-bg);color:var(--ink);font-weight:600}
+.nav button[aria-current="page"] svg{stroke:var(--ac)}
+.nav .badge{margin-left:auto;font-family:var(--f-mo);font-size:10px;background:var(--rule-2);color:var(--ink-2);border-radius:9px;padding:1px 6px;font-weight:500}
+.side-foot{padding:14px 10px 0;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:7px}
+.side-foot div{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink-4)}
+
+.main{flex-grow:1;min-width:0;display:flex;flex-direction:column}
+.topbar{height:58px;flex-shrink:0;border-bottom:1px solid var(--rule);padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.topbar h2{font-size:15.5px;font-weight:600;letter-spacing:-.01em;margin:0}
+.topbar .sub{font-size:11.5px;color:var(--ink-4);margin-top:2px}
+.body{flex-grow:1;min-height:0;display:flex}
+.col{flex-grow:1;min-width:0;overflow-y:auto;padding:20px 22px}
+.rail{width:312px;flex-shrink:0;border-left:1px solid var(--rule);overflow-y:auto;padding:20px 20px}
+
+/* ─ 通用件 ─ */
+.eyebrow-s{font-size:11.5px;font-weight:600;letter-spacing:.09em;color:var(--ink-3);margin:0 0 11px}
+.btn{border:1px solid var(--rule-2);border-radius:6px;padding:8px 14px;font-size:12.5px;color:var(--ink-2);display:inline-flex;align-items:center;gap:7px;justify-content:center}
+.btn:hover{border-color:var(--ac-2);color:var(--ink)}
+.btn--pri{background:var(--ac);color:#08191B;border-color:var(--ac);font-weight:600}
+.btn--pri:hover{background:#63C3CC;color:#08191B}
+.btn--full{width:100%}
+.chip{font-family:var(--f-mo);font-size:10px;padding:3px 7px;border-radius:4px;background:#1A2425;color:var(--ink-3);white-space:nowrap}
+.chip--ac{background:#14383D;color:var(--ac-soft)}
+.chip--ai{background:transparent;border:1px solid var(--ac-2);color:var(--ac-soft);padding:2px 6px}
+.chip--ok{background:var(--ok-bg);color:var(--ok)}
+.chip--warn{background:#2A2018;color:var(--warn)}
+.dot{width:6px;height:6px;border-radius:50%;display:block;flex-shrink:0}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:8px}
+.list{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.list > *{background:var(--panel)}
+.kv{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:12px}
+.kv span:first-child{color:var(--ink-3)}
+.kv span:last-child{color:var(--ink-2)}
+.note{font-family:var(--f-tx);font-size:11.5px;line-height:1.65;color:var(--ink-2)}
+
+/* 分析档位 */
+.tier{display:inline-flex;align-items:center;gap:3px}
+.tier i{width:4px;height:11px;border-radius:1px;background:var(--rule-2);display:block}
+.tier[data-tier="1"] i:nth-child(1),
+.tier[data-tier="2"] i:nth-child(-n+2),
+.tier[data-tier="3"] i{background:var(--ac)}
+
+/* 素材行 */
+.asset{display:flex;align-items:center;gap:13px;padding:10px 14px;width:100%}
+.asset:hover{background:var(--panel-2)}
+.asset[aria-selected="true"]{background:var(--raise);box-shadow:inset 2px 0 0 var(--ac)}
+.thumb{width:44px;height:30px;border-radius:4px;flex-shrink:0;background:#1B2627;border:1px solid var(--rule-2);display:flex;align-items:center;justify-content:center}
+.asset-name{font-size:12.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.asset-sub{font-family:var(--f-mo);font-size:10.5px;color:var(--ink-4);margin-top:3px}
+
+/* 目录树 */
+.tree{display:flex;flex-direction:column;gap:1px}
+.tree button{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:5px;font-size:12.5px;color:var(--ink-3)}
+.tree button:hover{background:#141D1E}
+.tree button[aria-current="true"]{background:#16201F;color:var(--ink);font-weight:600}
+.tree .n{margin-left:auto;font-family:var(--f-mo);font-size:10.5px;color:var(--ink-4)}
+
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{border:1px solid var(--rule-2);border-radius:20px;padding:5px 12px;font-size:11.5px;color:var(--ink-3)}
+.filters button[aria-pressed="true"]{border-color:var(--ac-2);background:var(--ac-bg);color:var(--ac-soft)}
+
+.banner{border-radius:8px;padding:13px 15px;display:flex;gap:11px}
+.banner--warn{background:var(--warn-bg);border:1px solid var(--warn-line)}
+.banner--info{background:#10191A;border:1px solid var(--rule)}
+.banner b{font-size:12.5px;font-weight:600;display:block;margin-bottom:4px}
+.banner--warn b{color:var(--warn)}
+
+/* 进度分段 */
+.prog{display:flex;gap:5px}
+.prog i{height:3px;flex-grow:1;border-radius:2px;background:var(--rule-2);display:block}
+.prog i.on{background:var(--ac)}
+.prog i.done{background:var(--ac-2)}
+.prog i.wait{background:var(--warn)}
+.prog i.fin{background:#35544A}
+
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{font-family:var(--f-mo);font-size:10px;letter-spacing:.06em;color:var(--ink-4);font-weight:400;text-align:left;padding:9px 12px;background:#0F1617;border-bottom:1px solid var(--rule)}
+td{padding:11px 12px;border-bottom:1px solid #1A2324;color:var(--ink-2)}
+tr:last-child td{border-bottom:none}
+
+.hint{font-family:var(--f-tx);font-size:11.5px;color:var(--ink-4);line-height:1.6}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:11.5px;color:var(--ink-4)}
+.legend b{color:var(--ink-2);font-weight:500}
+
+/* 侧栏次级入口 */
+.side-sec{display:flex;flex-direction:column;gap:1px;margin-bottom:12px}
+.side-sec button{display:flex;align-items:center;gap:9px;padding:6px 10px;border-radius:5px;font-size:11.5px;color:var(--ink-4)}
+.side-sec button:hover{background:#141D1E;color:var(--ink-3)}
+.side-sec button[aria-current="page"]{color:var(--ink-2);background:#141D1E}
+
+/* 登录 */
+.login{width:940px;min-height:648px;display:flex;background:var(--bg)}
+.login-brand{width:398px;flex-shrink:0;position:relative;overflow:hidden;background:#090F10;
+  border-right:1px solid var(--rule);padding:36px 34px 30px;display:flex;flex-direction:column;gap:30px}
+.login-brand::before{content:"";position:absolute;left:-34%;right:-20%;top:-26%;height:66%;pointer-events:none;
+  background:radial-gradient(58% 58% at 32% 24%,rgba(79,179,189,.17),rgba(79,179,189,0) 72%)}
+.login-brand>*{position:relative}
+.login-form{flex-grow:1;min-width:0;padding:36px 40px;display:flex;align-items:center;justify-content:center;overflow-y:auto}
+.login-card{width:100%;max-width:352px;background:var(--panel);border:1px solid var(--rule-2);border-radius:12px;
+  padding:26px 26px 22px;box-shadow:0 20px 44px -30px rgba(0,0,0,.95)}
+.login-h{font-size:30px;font-weight:700;line-height:1.26;letter-spacing:-.03em;text-wrap:balance;margin:0}
+.login-eyebrow{font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--ac);margin:0 0 13px}
+.flow{position:relative;display:flex;flex-direction:column}
+.flow::before{content:"";position:absolute;left:4px;top:15px;bottom:15px;width:1px;background:var(--rule-2)}
+.flow-row{display:grid;grid-template-columns:9px minmax(0,1fr) auto;align-items:center;gap:0 12px;padding:9px 0}
+.fdot{width:7px;height:7px;border-radius:50%;background:var(--ink-5);justify-self:center;position:relative}
+.flow-row[data-by="ext"] .fdot{background:var(--ac)}
+.flow-row[data-by="you"] .fdot{background:var(--ok)}
+.flow-name{font-size:12.5px;color:var(--ink-2)}
+.flow-by{font-size:10.5px;color:var(--ink-4);white-space:nowrap}
+.flow-row[data-by="ext"] .flow-by{font-family:var(--f-mo);font-size:10px}
+.flow-row[data-by="ext"] .flow-by{color:var(--ac-soft)}
+.flow-row[data-by="you"] .flow-by{color:var(--ok)}
+.sso{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sso .btn{padding:10px 8px;gap:7px;font-size:12px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.field label{font-size:12px;color:var(--ink-3)}
+.field input{background:var(--panel);border:1px solid var(--rule-2);border-radius:7px;padding:11px 13px;font:inherit;font-size:13px;color:var(--ink)}
+.field input::placeholder{color:var(--ink-5)}
+.field input:focus{outline:none;border-color:var(--ac)}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--ink-5);font-size:11.5px}
+.divider::before,.divider::after{content:"";flex-grow:1;height:1px;background:var(--rule)}
+.agent-card{border:1px solid transparent;border-radius:9px;padding:15px 16px;display:flex;gap:13px;align-items:flex-start;width:100%;text-align:left}
+.agent-card:hover{background:#141D1E}
+.agent-card[aria-pressed="true"]{border-color:var(--ac);background:var(--ac-bg)}
+.agent-card[aria-pressed="true"]:hover{background:var(--ac-bg)}
+.agent-mark{width:34px;height:34px;border-radius:8px;background:#182223;border:1px solid var(--rule-2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.agent-card[aria-pressed="true"] .agent-mark{border-color:var(--ac-2);background:#14383D}
+.tick{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--rule-2);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.agent-card[aria-pressed="true"] .tick{border-color:var(--ac);background:var(--ac)}
+.tick svg{opacity:0}
+.agent-card[aria-pressed="true"] .tick svg{opacity:1}
+.del-row{background:var(--panel)}
+.del-row:hover{background:#151312}
+.del-row[aria-pressed="true"]{background:#1A1410}
+.del-row .tick{width:16px;height:16px;border:1.5px solid var(--rule-2)}
+.del-row[aria-pressed="true"] .tick{border-color:var(--warn);background:var(--warn)}
+.del-row .tick svg{opacity:0}
+.del-row[aria-pressed="true"] .tick svg{opacity:1}
+.ptn{display:block;width:44px;height:29px;border-radius:3px;flex-shrink:0;position:relative;overflow:hidden;
+  border:1px solid var(--rule-2);
+  background:
+    radial-gradient(115% 85% at 30% 24%, rgba(143,199,205,.30) 0%, rgba(143,199,205,0) 58%),
+    radial-gradient(95% 75% at 76% 82%, rgba(79,179,189,.15) 0%, rgba(79,179,189,0) 62%),
+    linear-gradient(155deg,#243638 0%,#182426 55%,#0F1819 100%)}
+.ptn--dark{background:
+    radial-gradient(115% 85% at 42% 34%, rgba(125,140,142,.19) 0%, rgba(125,140,142,0) 62%),
+    linear-gradient(155deg,#1D2426 0%,#141A1B 60%,#0D1213 100%)}
+.ptn--film{width:100%;height:98px;border-radius:0;border:none;border-bottom:1px solid var(--rule)}
+.ptn--b{background:
+    radial-gradient(110% 80% at 68% 30%, rgba(143,199,205,.26) 0%, rgba(143,199,205,0) 58%),
+    radial-gradient(90% 70% at 22% 78%, rgba(217,169,75,.10) 0%, rgba(217,169,75,0) 62%),
+    linear-gradient(200deg,#223234 0%,#16211F 58%,#101718 100%)}
+.ptn--c{background:
+    radial-gradient(120% 90% at 50% 18%, rgba(143,199,205,.20) 0%, rgba(143,199,205,0) 62%),
+    linear-gradient(175deg,#1E2C31 0%,#151F23 60%,#0E1517 100%)}
+.ptn--d{background:
+    radial-gradient(100% 80% at 26% 70%, rgba(127,187,146,.14) 0%, rgba(127,187,146,0) 60%),
+    radial-gradient(110% 85% at 74% 26%, rgba(143,199,205,.22) 0%, rgba(143,199,205,0) 58%),
+    linear-gradient(140deg,#21302F 0%,#16201F 58%,#0E1414 100%)}
+.split2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:1180px){.split2{grid-template-columns:minmax(0,1fr)}}
+.cmd{font-family:var(--f-mo);font-size:11px;background:#0A1112;border-radius:6px;padding:9px 11px;color:var(--ac-soft);margin-top:11px;overflow-x:auto;white-space:nowrap}
+.tech-details{margin-top:8px}
+.tech-details summary{cursor:pointer;font-size:11.5px;color:var(--ink-3);list-style:none}
+.tech-details summary::-webkit-details-marker{display:none}
+.tech-details summary::before{content:"▸ ";color:var(--ink-4)}
+.tech-details[open] summary::before{content:"▾ "}
+
+/* 设置 */
+.set-nav{width:168px;flex-shrink:0;border-right:1px solid var(--rule);padding:16px 10px;overflow-y:auto}
+.set-nav button{display:block;width:100%;padding:8px 10px;border-radius:5px;font-size:12.5px;color:var(--ink-3);margin-bottom:1px}
+.set-nav button:hover{background:#141D1E;color:var(--ink-2)}
+.set-nav button[aria-current="true"]{background:#16201F;color:var(--ink);font-weight:600}
+.set-nav hr{border:none;border-top:1px solid var(--rule);margin:10px 6px}
+.set-sec{max-width:640px}
+.set-sec h3{font-size:15px;font-weight:600;margin:0 0 5px;letter-spacing:-.01em}
+.set-sec > p{margin:0 0 20px;font-family:var(--f-tx);font-size:12.5px;line-height:1.65;color:var(--ink-3)}
+.setrow{display:flex;gap:20px;align-items:flex-start;padding:15px 0;border-top:1px solid var(--rule)}
+.setrow:last-child{border-bottom:1px solid var(--rule)}
+.setrow-l{flex-grow:1;min-width:0}
+.setrow-t{font-size:12.5px;font-weight:500;margin-bottom:4px}
+.setrow-h{font-family:var(--f-tx);font-size:11.5px;line-height:1.6;color:var(--ink-4)}
+.setrow-c{width:250px;flex-shrink:0;display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+.inp{width:100%;background:var(--panel);border:1px solid var(--rule-2);border-radius:6px;padding:8px 11px;font:inherit;font-size:12px;color:var(--ink-2);font-family:var(--f-mo);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sel{width:100%;background:var(--panel);border:1px solid var(--rule-2);border-radius:6px;padding:8px 11px;font-size:12.5px;color:var(--ink);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.step{display:flex;align-items:center;gap:1px;background:var(--rule-2);border-radius:6px;overflow:hidden}
+.step button{background:var(--panel);padding:7px 12px;font-size:14px;color:var(--ink-3);line-height:1}
+.step button:hover{background:var(--raise);color:var(--ink)}
+.step span{background:var(--panel);padding:7px 16px;font-family:var(--f-mo);font-size:12.5px;min-width:52px;text-align:center}
+.sw{width:38px;height:22px;border-radius:11px;background:var(--rule-2);position:relative;flex-shrink:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--ink-3);transition:none}
+.sw[aria-checked="true"]{background:var(--ac)}
+.sw[aria-checked="true"]::after{left:19px;background:#08191B}
+
+@media(max-width:780px){.proto{padding:18px 14px 48px}}
+</style>
+
+<div class="proto">
+
+  <div class="proto-head">
+    <div class="proto-title">
+      <span class="eyebrow">可点击原型</span>
+      <h1>OpenClaw Media</h1>
+      <p>侧栏和素材行都能点。整理台与素材库是这一版的重点：素材全丢进来，AI 分事件、配实况、挑连拍。</p>
+    </div>
+    <div class="surf-tabs" role="tablist">
+      <button role="tab" aria-selected="false" data-surface="login">登录</button>
+      <button role="tab" aria-selected="false" data-surface="setup">安装向导</button>
+      <button role="tab" aria-selected="true" data-surface="app">本地应用</button>
+      <button role="tab" aria-selected="false" data-surface="cloud">网页中台</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ 登录 ═══════════ -->
+  <div class="stage" data-surface-panel="login" hidden>
+    <div class="stage-bar"><i></i><i></i><i></i><span>OpenClaw Media</span></div>
+    <div class="scroll-x">
+      <div class="login">
+
+        <!-- 品牌侧 -->
+        <div class="login-brand">
+          <div class="brand" style="padding:0">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="1" y="1" width="24" height="24" rx="7" stroke="#2E5F65" stroke-width="1.5"></rect><rect x="6.5" y="7" width="13" height="2.6" rx="1.3" fill="#2E5F65"></rect><rect x="6.5" y="11.7" width="13" height="2.6" rx="1.3" fill="#4FB3BD"></rect><rect x="6.5" y="16.4" width="8" height="2.6" rx="1.3" fill="#7D8C8E"></rect></svg>
+            <b style="font-size:14px">OpenClaw Media</b>
+          </div>
+
+          <div>
+            <p class="login-eyebrow">本机跑分析 · 中台存记忆</p>
+            <h2 class="login-h">把一堆素材<br>变成能发的成片</h2>
+            <p class="note" style="margin:14px 0 0;max-width:31ch">导进来的是几十个乱七八糟的文件，出去的是一条排好的时间线。</p>
+          </div>
+
+          <div>
+            <p class="eyebrow-s" style="margin:0 0 4px">一条流水线，六段分工</p>
+            <div class="flow">
+              <div class="flow-row"><span class="fdot"></span><span class="flow-name">素材归档</span><span class="flow-by">本机引擎</span></div>
+              <div class="flow-row"><span class="fdot"></span><span class="flow-name">取证分析</span><span class="flow-by">本机引擎</span></div>
+              <div class="flow-row" data-by="ext"><span class="fdot"></span><span class="flow-name">脚本分镜</span><span class="flow-by">Codex</span></div>
+              <div class="flow-row"><span class="fdot"></span><span class="flow-name">剪辑决策</span><span class="flow-by">本机引擎</span></div>
+              <div class="flow-row" data-by="ext"><span class="fdot"></span><span class="flow-name">时间线</span><span class="flow-by">ChatCut</span></div>
+              <div class="flow-row" data-by="you"><span class="fdot"></span><span class="flow-name">人工精剪</span><span class="flow-by">你</span></div>
+            </div>
+          </div>
+
+          <div style="margin-top:auto;display:flex;gap:9px;align-items:flex-start;padding-top:20px;border-top:1px solid var(--rule)">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#7FBB92" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><rect x="3" y="7.2" width="10" height="6.4" rx="1.5"></rect><path d="M5.4 7.2V5.1a2.6 2.6 0 0 1 5.2 0v2.1"></path></svg>
+            <span class="hint" style="color:var(--ink-3)">照片和视频原件不会离开这台电脑。中台只收到时长、尺寸、哈希和文字摘要。</span>
+          </div>
+        </div>
+
+        <!-- 表单侧 -->
+        <div class="login-form">
+          <div class="login-card">
+
+          <!-- 第一步：账号 -->
+          <div data-login-step="account">
+            <div style="font-size:16px;font-weight:600;letter-spacing:-.01em;margin-bottom:5px">登录</div>
+            <p class="hint" style="margin:0 0 20px">只用来同步项目、任务和账号记忆。素材本身不会上传。</p>
+
+            <div class="field">
+              <label for="loginEmail">邮箱</label>
+              <input id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email">
+            </div>
+
+            <button class="btn btn--pri btn--full" data-login-next style="padding:11px">继续</button>
+
+            <div class="divider">或</div>
+
+            <div class="sso">
+              <button class="btn">
+                <svg width="13" height="13" viewBox="0 0 384 512" fill="currentColor" style="flex-shrink:0"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
+                Apple
+              </button>
+              <button class="btn">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex-shrink:0">
+                  <path d="M6.2 2.2c2.7 0 4.9 1.7 4.9 3.9 0 .3 0 .5-.1.8-.3 0-.5-.1-.8-.1-2.5 0-4.5 1.6-4.5 3.6 0 .3 0 .6.1.9-.4 0-.7-.1-1-.2l-1.9.9.6-1.5C2.3 9.7 1.4 8.5 1.4 6.1c0-2.2 2.1-3.9 4.8-3.9Z" fill="currentColor" opacity=".55"></path>
+                  <path d="M10.2 7.6c2.4 0 4.4 1.5 4.4 3.4 0 1-.6 2-1.6 2.7l.5 1.3-1.6-.8c-.5.2-1.1.2-1.7.2-2.4 0-4.4-1.5-4.4-3.4s2-3.4 4.4-3.4Z" fill="currentColor"></path>
+                </svg>
+                微信
+              </button>
+            </div>
+
+            <p class="hint" style="margin:20px 0 0;text-align:center">还没有账号？<span style="color:var(--ac)">创建一个</span></p>
+          </div>
+
+          <!-- 第二步：AI 助手 -->
+          <div data-login-step="agent" hidden>
+            <button data-login-back style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);margin-bottom:18px">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 12.4 5.2 8l4.4-4.4"></path></svg>
+              返回
+            </button>
+
+            <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:7px">连接你的 AI 助手</div>
+            <p class="note" style="margin:0 0 20px">读脚本、排镜头、指挥剪辑器这些活由它来干。我们不重复收费，用你已经订阅的那个就行。</p>
+
+            <div style="display:flex;flex-direction:column;gap:10px">
+
+              <button class="agent-card" data-agent="codex" aria-pressed="true">
+                <span class="agent-mark">
+                  <svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 4.6 2.4 8l3.2 3.4M10.4 4.6 13.6 8l-3.2 3.4"></path></svg>
+                </span>
+                <span style="flex-grow:1;min-width:0">
+                  <span style="display:block;font-size:13.5px;font-weight:600;margin-bottom:3px">Codex</span>
+                  <span class="hint">ChatGPT 订阅内可用，桌面版或命令行都行</span>
+                </span>
+                <span class="tick"><svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="#08191B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg></span>
+              </button>
+
+              <button class="agent-card" data-agent="claude" aria-pressed="false">
+                <span class="agent-mark">
+                  <svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.6 3.4 13.4M8 2.6l4.6 10.8M5.3 9.6h5.4"></path></svg>
+                </span>
+                <span style="flex-grow:1;min-width:0">
+                  <span style="display:block;font-size:13.5px;font-weight:600;margin-bottom:3px">Claude Code</span>
+                  <span class="hint">Claude 订阅内可用，需要 2.x 版本</span>
+                </span>
+                <span class="tick"><svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="#08191B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg></span>
+              </button>
+
+            </div>
+
+            <p class="hint" style="margin:8px 0 0">会打开 Codex 的授权页，确认一下就行。两个都装了也没关系，之后能随时换。</p>
+            <details class="tech-details">
+              <summary>查看技术细节</summary>
+              <div class="cmd" id="agentCmd">codex mcp login chatcut</div>
+            </details>
+
+            <div style="display:flex;gap:10px;margin-top:22px">
+              <button class="btn" style="flex:1;padding:11px">跳过，稍后再连</button>
+              <button class="btn btn--pri" style="flex:1;padding:11px">连接并继续</button>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 本地应用 ═══════════ -->
+  <div class="stage" data-surface-panel="app">
+    <div class="stage-bar"><i></i><i></i><i></i><span>OpenClaw Media</span></div>
+    <div class="scroll-x">
+    <div class="app">
+
+      <!-- 侧栏 -->
+      <div class="side">
+        <div class="brand">
+          <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+            <rect x="1" y="1" width="24" height="24" rx="7" stroke="#2E5F65" stroke-width="1.5"></rect>
+            <rect x="6.5" y="7" width="13" height="2.6" rx="1.3" fill="#2E5F65"></rect>
+            <rect x="6.5" y="11.7" width="13" height="2.6" rx="1.3" fill="#4FB3BD"></rect>
+            <rect x="6.5" y="16.4" width="8" height="2.6" rx="1.3" fill="#7D8C8E"></rect>
+          </svg>
+          <b>OpenClaw Media</b>
+        </div>
+        <div class="nav">
+          <button data-screen="home" aria-current="page">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.4 7.2 8 2.6l5.6 4.6v6a1.2 1.2 0 0 1-1.2 1.2H3.6a1.2 1.2 0 0 1-1.2-1.2z"></path></svg>
+            工作台
+          </button>
+          <button data-screen="inbox">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.4h3l.9 1.8h4.2l.9-1.8h3M2.6 9.4l1.7-5.2a1.2 1.2 0 0 1 1.14-.8h5.12a1.2 1.2 0 0 1 1.14.8l1.7 5.2v2.4a1.2 1.2 0 0 1-1.2 1.2H3.8a1.2 1.2 0 0 1-1.2-1.2z"></path></svg>
+            整理台 <span class="badge num">3</span>
+          </button>
+          <button data-screen="library">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="12" height="10" rx="1.6"></rect><path d="M2 6.4h12M6 3v10"></path></svg>
+            素材库
+          </button>
+          <button data-screen="project">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3.4" width="12" height="9.2" rx="1.5"></rect><path d="M2 7h12M5.6 7v5.6"></path></svg>
+            项目
+          </button>
+        </div>
+        <div class="side-sec">
+          <button data-screen="settings">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="2.2"></circle><path d="M8 1.8v1.8M8 12.4v1.8M14.2 8h-1.8M3.6 8H1.8M12.4 3.6l-1.3 1.3M4.9 11.1l-1.3 1.3M12.4 12.4l-1.3-1.3M4.9 4.9 3.6 3.6"></path></svg>
+            设置
+          </button>
+        </div>
+        <div class="side-foot">
+          <div>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#7FBB92" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.2" width="10" height="6.4" rx="1.5"></rect><path d="M5.4 7.2V5.1a2.6 2.6 0 0 1 5.2 0v2.1"></path></svg>
+            原件留在本机
+          </div>
+          <div><span class="dot" style="background:#7FBB92"></span>本机已配对</div>
+        </div>
+      </div>
+
+      <!-- 主区 -->
+      <div class="main">
+
+        <!-- ── 工作台 ── -->
+        <div data-screen-panel="home" style="display:flex;flex-direction:column;flex-grow:1;min-height:0">
+          <div class="topbar">
+            <div><h2>工作台</h2><div class="sub mo">~/OpenClawMedia</div></div>
+            <div style="display:flex;gap:9px">
+              <button class="btn">导入素材</button>
+              <button class="btn btn--pri">新建项目</button>
+            </div>
+          </div>
+          <div class="body">
+            <div class="col">
+              <p class="eyebrow-s">四个引擎</p>
+              <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-bottom:24px">
+                <div style="background:var(--panel);padding:14px 16px">
+                  <div style="font-size:12px;color:var(--ink-3);margin-bottom:7px">数据中台</div>
+                  <div style="font-size:13.5px;font-weight:600">已连接</div>
+                  <div class="mo" style="font-size:10.5px;color:var(--ink-3);margin-top:3px">2 个任务执行中</div>
+                </div>
+                <div style="background:var(--panel);padding:14px 16px">
+                  <div style="font-size:12px;color:var(--ink-3);margin-bottom:7px">Codex</div>
+                  <div style="font-size:13.5px;font-weight:600">就绪</div>
+                  <div class="mo" style="font-size:10.5px;color:var(--ink-3);margin-top:3px">桌面版</div>
+                </div>
+                <div style="background:var(--panel);padding:14px 16px">
+                  <div style="font-size:12px;color:var(--ink-3);margin-bottom:7px">ChatCut</div>
+                  <div style="font-size:13.5px;font-weight:600">已打开</div>
+                  <div class="mo" style="font-size:10.5px;color:var(--ink-3);margin-top:3px">本地通道</div>
+                </div>
+                <div style="background:var(--panel);padding:14px 16px">
+                  <div style="font-size:12px;color:var(--ink-3);margin-bottom:7px">本机引擎</div>
+                  <div style="font-size:13.5px;font-weight:600;color:var(--warn)">分析中</div>
+                  <div class="mo" style="font-size:10.5px;color:var(--ink-3);margin-top:3px">12 / 34 个素材</div>
+                </div>
+              </div>
+
+              <p class="eyebrow-s">最近项目</p>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <button class="card" data-goto="project" style="padding:15px 17px;display:flex;flex-direction:column;gap:11px;width:100%">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;width:100%">
+                    <div>
+                      <div style="font-size:14px;font-weight:600">四非文科女 Vibe Coding Day 3</div>
+                      <div style="font-size:11.5px;color:var(--ink-3);margin-top:4px">小红书 · 竖屏 · <span class="num">34 个素材</span> · <span class="num">第 3 版</span></div>
+                    </div>
+                    <span class="chip chip--ac">生成剪辑决策中</span>
+                  </div>
+                  <div class="prog" style="width:100%"><i class="on"></i><i class="on"></i><i class="on"></i><i class="done"></i><i></i><i></i></div>
+                </button>
+
+                <div class="card" style="padding:15px 17px;display:flex;flex-direction:column;gap:11px">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+                    <div>
+                      <div style="font-size:14px;font-weight:600;color:#D6DEDE">AI 科普 Day 2 · 什么是模型上下文协议</div>
+                      <div style="font-size:11.5px;color:var(--ink-3);margin-top:4px">小红书 · 竖屏 · <span class="num">18 个素材</span> · <span class="num">第 5 版</span></div>
+                    </div>
+                    <span class="chip chip--warn">等你精剪</span>
+                  </div>
+                  <div class="prog"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="wait"></i><i></i></div>
+                </div>
+
+                <div class="card" style="padding:15px 17px;display:flex;flex-direction:column;gap:11px">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+                    <div>
+                      <div style="font-size:14px;font-weight:600;color:#D6DEDE">深圳 PLOG · 城中村的周末</div>
+                      <div style="font-size:11.5px;color:var(--ink-3);margin-top:4px">小红书 · 图文 · <span class="num">62 个素材</span> · <span class="num">第 2 版</span></div>
+                    </div>
+                    <span class="chip chip--ok">已发布</span>
+                  </div>
+                  <div class="prog"><i class="fin"></i><i class="fin"></i><i class="fin"></i><i class="fin"></i><i class="fin"></i><i class="fin"></i></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rail">
+              <p class="eyebrow-s">整理台</p>
+              <button class="card" data-goto="inbox" style="width:100%;border-style:dashed;border-color:var(--ac-2);padding:18px;display:flex;flex-direction:column;align-items:center;gap:5px;margin-bottom:22px">
+                <span class="num" style="font-size:18px;font-weight:700;color:var(--ink)">8</span>
+                <span style="font-size:11.5px;color:var(--ink-3)">个新素材，AI 已整理成 3 批等你确认</span>
+              </button>
+
+              <p class="eyebrow-s">素材库</p>
+              <div class="card" style="padding:13px 14px;display:flex;flex-direction:column;gap:11px;margin-bottom:22px">
+                <div class="kv"><span>视频</span><span class="mo num">412</span></div>
+                <div class="kv"><span>照片</span><span class="mo num">1,240</span></div>
+                <div class="kv"><span>音频</span><span class="mo num">36</span></div>
+                <div class="kv"><span>占用空间</span><span class="mo">412 GB</span></div>
+                <div style="height:4px;border-radius:2px;background:var(--rule);overflow:hidden"><div style="height:4px;width:62%;background:var(--ac-2)"></div></div>
+              </div>
+
+              <p class="eyebrow-s">本周</p>
+              <div class="card" style="padding:13px 14px;display:flex;flex-direction:column;gap:11px">
+                <div class="kv"><span>完成任务</span><span class="mo num">23</span></div>
+                <div class="kv"><span>发布内容</span><span class="mo num">4</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 素材库 ── -->
+        <div data-screen-panel="library" hidden style="display:flex;flex-direction:column;flex-grow:1;min-height:0">
+          <div class="topbar">
+            <div><h2>素材库</h2><div class="sub" id="libSub">跨项目复用的资产卡片，只登记不搬运源文件</div></div>
+            <div style="display:flex;gap:9px">
+              <button class="btn">重新分析…</button>
+              <button class="btn">登记新资产…</button>
+            </div>
+          </div>
+          <div class="body">
+
+            <div style="width:198px;flex-shrink:0;border-right:1px solid var(--rule);padding:16px 12px;overflow-y:auto">
+              <p class="eyebrow-s" style="padding:0 8px">复用资产</p>
+              <div class="tree" style="margin-bottom:16px">
+                <button data-lib="reuse" data-cat="all" aria-current="true">全部卡片 <span class="n num">86</span></button>
+                <button data-lib="reuse" data-cat="memorial">纪念资产 <span class="n num">12</span></button>
+                <button data-lib="reuse" data-cat="phone">手机常用 <span class="n num">24</span></button>
+                <button data-lib="reuse" data-cat="brand">片头片尾 <span class="n num">8</span></button>
+              </div>
+
+              <p class="eyebrow-s" style="padding:0 8px">按主题集合</p>
+              <div class="tree" style="margin-bottom:16px">
+                <button data-lib="projects" data-cat="lz">重回兰州大学 <span class="n num">3</span></button>
+                <button data-lib="projects" data-cat="vibe">Vibe Coding <span class="n num">5</span></button>
+                <button data-lib="projects" data-cat="sz">深圳城市记录 <span class="n num">2</span></button>
+              </div>
+
+              <p class="eyebrow-s" style="padding:0 8px">已归档</p>
+              <div class="tree">
+                <button data-lib="archive" data-cat="all">归档索引卡 <span class="n num">14</span></button>
+              </div>
+
+              <div class="hint" style="margin-top:16px;padding:0 8px">发布稳定后源素材会冷归档到硬盘或云盘，本机只留索引卡和精选副本。</div>
+            </div>
+
+            <div class="col" style="padding:16px 18px">
+
+              <!-- 复用资产视图 -->
+              <div data-lib-view="reuse">
+                <div class="banner banner--info" style="margin-bottom:14px">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 7.4v4M8 4.8h.01"></path></svg>
+                  <span class="note">资产库只登记<strong style="color:var(--ink);font-weight:500">卡片</strong>，源文件仍留在原项目里。同一条素材的多重价值靠标签和用途复用，不靠到处复制文件。</span>
+                </div>
+
+                <p class="eyebrow-s">按标签筛选</p>
+                <div class="filters" style="margin-bottom:16px">
+                  <button aria-pressed="true">全部</button>
+                  <button>母校</button><button>夜景</button><button>空镜</button>
+                  <button>市井</button><button>品牌</button><button>环境音</button>
+                  <button>人生节点</button><button>可公开</button>
+                </div>
+
+                <div id="cardList"></div>
+              </div>
+
+              <!-- 项目素材视图 -->
+              <div data-lib-view="projects" hidden>
+                <div class="banner banner--info" style="margin-bottom:14px">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 7.4v4M8 4.8h.01"></path></svg>
+                  <span class="note"><strong style="color:var(--ink);font-weight:500">重回兰州大学内容创作</strong> · 主题集合 · 3 个项目 · 源文件是事实原件，留在各自项目目录里</span>
+                </div>
+                <div id="projList"></div>
+              </div>
+
+              <!-- 归档视图 -->
+              <div data-lib-view="archive" hidden>
+                <div class="banner banner--info" style="margin-bottom:14px">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 7.4v4M8 4.8h.01"></path></svg>
+                  <span class="note">冷归档之后源素材不在本机，但检索关键词、精选副本入口和恢复方式都还在。要用的时候按卡片指引取回。</span>
+                </div>
+                <div id="archList"></div>
+              </div>
+
+            </div>
+
+            <div class="rail" id="assetDetail"></div>
+          </div>
+        </div>
+
+        <!-- ── 整理台 ── -->
+        <div data-screen-panel="inbox" hidden style="display:flex;flex-direction:column;flex-grow:1;min-height:0">
+          <div class="topbar">
+            <div><h2>整理台</h2><div class="sub">素材从这里进来，AI 整理好再入库</div></div>
+            <button class="btn">选择文件夹导入</button>
+          </div>
+          <div class="body">
+            <div class="col">
+
+              <div style="border:1px dashed var(--rule-2);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;margin-bottom:20px">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M8 10.2V3M4.9 6 8 3l3.1 3M2.8 10.6v1.6a1.3 1.3 0 0 0 1.3 1.3h7.8a1.3 1.3 0 0 0 1.3-1.3v-1.6"></path></svg>
+                <div style="min-width:0">
+                  <div style="font-size:12.5px;font-weight:600;margin-bottom:2px">把素材全部丢进来</div>
+                  <div class="hint">手机、相机、无人机、屏录、全景，混在一起也没关系。AI 会按拍摄时间和地点分成一个个事件，配好实况照片、认出重复连拍，整理成批等你确认。</div>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+                <p class="eyebrow-s" style="margin:0">AI 已整理成 3 批</p>
+                <span class="hint">确认之前不移动也不改名，随时能撤回</span>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:10px">
+
+                <button class="card batch" data-batch="a" aria-selected="true" style="width:100%;padding:15px 17px;border-color:var(--ac-2);background:var(--raise)">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;width:100%">
+                    <div>
+                      <div style="font-size:13.5px;font-weight:600">8 月 29 日 · 深夜工位</div>
+                      <div style="font-size:11.5px;color:var(--ink-3);margin-top:4px"><span class="num">9 个文件</span> · <span class="num">22:14 – 02:40</span> · <span class="num">5.1 GB</span></div>
+                    </div>
+                    <span class="chip chip--ai">建议新建项目</span>
+                  </div>
+                  <div style="display:flex;gap:5px;margin-top:11px;flex-wrap:wrap">
+                    <span class="chip">iPhone ×6</span><span class="chip">屏幕录制 ×2</span><span class="chip">相机 ×1</span><span class="chip chip--ok">实况已配对 3 对</span>
+                  </div>
+                </button>
+
+                <button class="card batch" data-batch="b" style="width:100%;padding:15px 17px">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;width:100%">
+                    <div>
+                      <div style="font-size:13.5px;font-weight:600;color:#D6DEDE">8 月 27 日 · 园区骑行</div>
+                      <div style="font-size:11.5px;color:var(--ink-3);margin-top:4px"><span class="num">4 个文件</span> · <span class="num">16:05 – 17:40</span> · <span class="num">18.9 GB</span></div>
+                    </div>
+                    <span class="chip chip--warn">含全景，需先转码</span>
+                  </div>
+                  <div style="display:flex;gap:5px;margin-top:11px;flex-wrap:wrap">
+                    <span class="chip">Insta360 ×1</span><span class="chip">iPhone ×3</span>
+                  </div>
+                </button>
+
+                <button class="card batch" data-batch="c" style="width:100%;padding:15px 17px">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;width:100%">
+                    <div>
+                      <div style="font-size:13.5px;font-weight:600;color:#D6DEDE">8 月 26 日 · 相机卡备份</div>
+                      <div style="font-size:11.5px;color:var(--ink-3);margin-top:4px"><span class="num">36 个文件</span> · <span class="num">10:12 – 19:48</span> · <span class="num">21.4 GB</span></div>
+                    </div>
+                    <span class="chip">归入素材库</span>
+                  </div>
+                  <div style="display:flex;gap:5px;margin-top:11px;flex-wrap:wrap">
+                    <span class="chip">Sony 相机 ×36</span><span class="chip chip--ok">发现 4 组连拍</span>
+                  </div>
+                </button>
+
+
+              <div style="border-top:1px solid var(--rule);margin-top:24px;padding-top:20px">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:5px">
+                  <p class="eyebrow-s" style="margin:0">这一批的落点 · 8 月 29 日 深夜工位</p>
+                  <span class="hint"><span class="num">9</span> 个文件 · 进项目 <span class="num">4</span> · 归档 <span class="num">2</span> · 推荐删除 <span class="num" data-del-sum>3</span></span>
+                </div>
+                <p class="hint" style="margin:0 0 18px">一个文件都不会凭空消失：归档的还在硬盘上，删除的要你点头。</p>
+
+                <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px">
+                  <span class="dot" style="background:var(--ac)"></span>
+                  <span style="font-size:12.5px;font-weight:600">进项目 · <span class="num">4</span> 个</span>
+                  <span class="hint">新建《深夜工位》</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-bottom:24px">
+                  <div class="card" style="padding:0;overflow:hidden">
+                    <span class="ptn ptn--film"></span>
+                    <div style="padding:9px 10px">
+                      <div class="mo" style="font-size:10.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">IMG_4461.MOV</div>
+                      <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+                        <span class="chip">口播</span>
+                        <span class="mo hint num">1:52</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card" style="padding:0;overflow:hidden">
+                    <span class="ptn ptn--film ptn--b"></span>
+                    <div style="padding:9px 10px">
+                      <div class="mo" style="font-size:10.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">IMG_4463.MOV</div>
+                      <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+                        <span class="chip">口播</span>
+                        <span class="mo hint num">2:34</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card" style="padding:0;overflow:hidden">
+                    <span class="ptn ptn--film ptn--c"></span>
+                    <div style="padding:9px 10px">
+                      <div class="mo" style="font-size:10.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">SCR_2214.mov</div>
+                      <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+                        <span class="chip ">屏幕录制</span>
+                        <span class="mo hint num">2:06</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card" style="padding:0;overflow:hidden">
+                    <span class="ptn ptn--film ptn--d"></span>
+                    <div style="padding:9px 10px">
+                      <div class="mo" style="font-size:10.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">SCR_2231.mov</div>
+                      <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+                        <span class="chip ">屏幕录制</span>
+                        <span class="mo hint num">1:12</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="split2">
+
+                  <div>
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+                      <span class="dot" style="background:var(--ink-3)"></span>
+                      <span style="font-size:12.5px;font-weight:600">归档保留 · <span class="num">2</span> 个</span>
+                    </div>
+                    <p class="hint" style="margin:0 0 10px">留着但降级，不进检索也不进项目。下面写清了各自该去哪。</p>
+                    <div class="list">
+                    <div style="padding:11px 13px;display:flex;gap:11px;align-items:flex-start">
+                      <span class="ptn"></span>
+                      <span style="flex-grow:1;min-width:0">
+                        <span class="mo" style="display:block;font-size:11px;color:var(--ink-2);margin-bottom:5px">IMG_4468.MOV</span>
+                        <span style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
+                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M3 8h9M8.6 4.6 12 8l-3.4 3.4"></path></svg>
+                          <span class="mo" style="font-size:10.5px;color:var(--ac-soft)" title="项目/Raw_待处理/">仍留在项目待处理区</span>
+                        </span>
+                        <span class="hint" style="display:block;color:var(--ink-3)">同机位重复拍摄，已选出更稳的一条。放这里是因为它还可能当备用镜头。</span>
+                      </span>
+                    </div>
+                    <div style="padding:11px 13px;display:flex;gap:11px;align-items:flex-start">
+                      <span class="ptn"></span>
+                      <span style="flex-grow:1;min-width:0">
+                        <span class="mo" style="display:block;font-size:11px;color:var(--ink-2);margin-bottom:5px">IMG_4470.MOV</span>
+                        <span style="display:flex;align-items:center;gap:5px;margin-bottom:5px">
+                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M3 8h9M8.6 4.6 12 8l-3.4 3.4"></path></svg>
+                          <span class="mo" style="font-size:10.5px;color:var(--ac-soft)" title="00_RawVault_不可直用/连拍原始组_保留/">连拍原片保险箱（不进检索）</span>
+                        </span>
+                        <span class="hint" style="display:block;color:var(--ink-3)">连拍组里没被选中的一张。整组一起留着，将来想换主图还能挑。</span>
+                      </span>
+                    </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px">
+                      <span class="dot" style="background:var(--warn)"></span>
+                      <span style="font-size:12.5px;font-weight:600;color:var(--warn)" data-del-head>推荐删除 · <span class="num">3</span> 个</span>
+                      <button id="delAll" style="margin-left:auto;font-size:11.5px;color:var(--ac)">全选</button>
+                    </div>
+                    <p class="hint" style="margin:0 0 10px" id="delHelp">缩略图是实际画面，看清楚再决定。</p>
+                    <div class="list" style="margin-bottom:11px">
+                    <button class="del-row" data-del="d1" aria-pressed="false" style="width:100%;padding:11px 13px;display:flex;gap:11px;align-items:flex-start;text-align:left">
+                      <span class="tick" style="margin-top:10px;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="#08191B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg></span>
+                      <span class="ptn ptn--dark"></span>
+                      <span style="flex-grow:1;min-width:0">
+                        <span class="mo" style="display:block;font-size:11px;color:var(--ink-2);margin-bottom:5px">IMG_4471.MOV</span>
+                        <span class="chip chip--warn" style="margin-bottom:5px;display:inline-block">时长 0.4 秒</span>
+                        <span class="hint" style="display:block;color:var(--ink-3)">按下就松手的误触，无音轨、画面全糊。</span>
+                      </span>
+                    </button>
+                    <button class="del-row" data-del="d2" aria-pressed="false" style="width:100%;padding:11px 13px;display:flex;gap:11px;align-items:flex-start;text-align:left">
+                      <span class="tick" style="margin-top:10px;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="#08191B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg></span>
+                      <span class="ptn ptn--dark"></span>
+                      <span style="flex-grow:1;min-width:0">
+                        <span class="mo" style="display:block;font-size:11px;color:var(--ink-2);margin-bottom:5px">VID_0032.LRF</span>
+                        <span class="chip chip--warn" style="margin-bottom:5px;display:inline-block">相机低清代理</span>
+                        <span class="hint" style="display:block;color:var(--ink-3)">同名高清原件 VID_0032.MP4 已在库里，这份只是取景小样。</span>
+                      </span>
+                    </button>
+                    <button class="del-row" data-del="d3" aria-pressed="false" style="width:100%;padding:11px 13px;display:flex;gap:11px;align-items:flex-start;text-align:left">
+                      <span class="tick" style="margin-top:10px;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="#08191B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg></span>
+                      <span class="ptn ptn--dark"></span>
+                      <span style="flex-grow:1;min-width:0">
+                        <span class="mo" style="display:block;font-size:11px;color:var(--ink-2);margin-bottom:5px">IMG_4402.MOV</span>
+                        <span class="chip chip--warn" style="margin-bottom:5px;display:inline-block">哈希完全重复</span>
+                        <span class="hint" style="display:block;color:var(--ink-3)">和 IMG_4399.MOV 字节完全一致，导入时重复了一次。</span>
+                      </span>
+                    </button>
+                    </div>
+                    <div id="delCtl" style="display:flex;align-items:center;gap:10px">
+                      <span id="delCount" class="hint" style="flex-grow:1;min-width:0">已选 0 个</span>
+                      <button class="btn" id="delBtn" disabled style="padding:7px 13px;opacity:.45;flex-shrink:0">删除所选</button>
+                    </div>
+                    <div id="delDone" hidden class="banner" style="margin-top:11px;background:#101F1B;border:1px solid #2A5348">
+                      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#7FBB92" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg>
+                      <span class="note">已把 <strong class="num" data-del-done-n style="color:var(--ink);font-weight:600">0</strong> 个文件移入废纸篓，原文件仍在磁盘上，30 天内可从废纸篓拖回来。</span>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="banner banner--info" style="margin-top:18px">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 7.4v4M8 4.8h.01"></path></svg>
+                  <span class="note">推荐删除只按<strong style="color:var(--ink);font-weight:500">机器能验证的理由</strong>：时长过短、文件损坏、哈希完全重复、相机低清代理。拍得好不好、人像美不美，AI 不判断，也不会替你按下删除。</span>
+                </div>
+              </div>
+
+              </div>
+            </div>
+
+            <div class="rail">
+              <p class="eyebrow-s">这一批</p>
+              <div class="card" style="padding:15px 16px;margin-bottom:16px">
+                <div style="font-size:13px;font-weight:600;margin-bottom:10px">8 月 29 日 · 深夜工位</div>
+                <div class="kv"><span>总时长</span><span class="mo num">9 分 04 秒</span></div>
+              </div>
+
+              <p class="eyebrow-s">AI 给的落点</p>
+              <div class="list" style="margin-bottom:8px">
+                <div style="padding:11px 14px;display:flex;align-items:center;gap:11px">
+                  <span class="dot" style="background:var(--ac)"></span>
+                  <div style="flex-grow:1;min-width:0">
+                    <div style="font-size:12.5px;font-weight:500">进项目</div>
+                    <div class="hint">新建《深夜工位》</div>
+                  </div>
+                  <span class="mo num" style="font-size:13px;font-weight:600">4</span>
+                </div>
+                <div style="padding:11px 14px;display:flex;align-items:center;gap:11px">
+                  <span class="dot" style="background:var(--ink-3)"></span>
+                  <div style="flex-grow:1;min-width:0">
+                    <div style="font-size:12.5px;font-weight:500">归档保留</div>
+                    <div class="hint">降级留存，不进检索</div>
+                  </div>
+                  <span class="mo num" style="font-size:13px;font-weight:600">2</span>
+                </div>
+                <div style="padding:11px 14px;display:flex;align-items:center;gap:11px;background:#151312">
+                  <span class="dot" style="background:var(--warn)"></span>
+                  <div style="flex-grow:1;min-width:0">
+                    <div style="font-size:12.5px;font-weight:500;color:var(--warn)">推荐删除</div>
+                    <div class="hint" data-del-rail-sub>需你逐条确认</div>
+                  </div>
+                  <span class="mo num" style="font-size:13px;font-weight:600;color:var(--warn)" data-del-rail>3</span>
+                </div>
+              </div>
+
+              <button class="btn btn--pri btn--full">确认落点</button>
+              <p class="hint" style="margin:10px 0 0;text-align:center">入库后会自动让 AI 粗看一遍</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 项目 ── -->
+        <div data-screen-panel="project" hidden style="display:flex;flex-direction:column;flex-grow:1;min-height:0">
+          <div class="topbar">
+            <div><h2>四非文科女 Vibe Coding Day 3</h2><div class="sub">小红书 · 1080×1920 · 目标 58 秒 · 第 3 版</div></div>
+            <div style="display:flex;gap:9px">
+              <button class="btn">在访达中显示</button>
+              <button class="btn btn--pri">送入 ChatCut</button>
+            </div>
+          </div>
+
+          <div style="padding:18px 22px 20px;border-bottom:1px solid var(--rule)">
+            <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px">
+              <div><div class="prog" style="margin-bottom:9px"><i class="on"></i></div><div style="font-size:12.5px;font-weight:600">素材归档</div><div class="mo" style="font-size:10px;color:var(--ink-4);margin-top:4px">本机引擎</div></div>
+              <div><div class="prog" style="margin-bottom:9px"><i class="on"></i></div><div style="font-size:12.5px;font-weight:600">取证分析</div><div class="mo" style="font-size:10px;color:var(--ink-4);margin-top:4px">本机引擎</div></div>
+              <div><div class="prog" style="margin-bottom:9px"><i class="on"></i></div><div style="font-size:12.5px;font-weight:600">脚本分镜</div><div class="mo" style="font-size:10px;color:var(--ink-4);margin-top:4px">Codex</div></div>
+              <div><div class="prog" style="margin-bottom:9px"><i class="on"></i></div><div style="font-size:12.5px;font-weight:600;color:var(--ac)">剪辑决策</div><div class="mo" style="font-size:10px;color:var(--ink-4);margin-top:4px">本机引擎</div></div>
+              <div><div class="prog" style="margin-bottom:9px"><i></i></div><div style="font-size:12.5px;font-weight:600;color:#6E7E80">时间线</div><div class="mo" style="font-size:10px;color:var(--ink-5);margin-top:4px">ChatCut</div></div>
+              <div><div class="prog" style="margin-bottom:9px"><i></i></div><div style="font-size:12.5px;font-weight:600;color:#6E7E80">人工精剪</div><div class="mo" style="font-size:10px;color:var(--ink-5);margin-top:4px">你</div></div>
+            </div>
+          </div>
+
+          <div class="body">
+            <div class="col">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:13px">
+                <p class="eyebrow-s" style="margin:0">剪辑决策</p>
+                <span style="font-size:11.5px;color:var(--ink-3)" class="num">9 段 · 缺 1 个空镜</span>
+              </div>
+
+              <div class="card" style="padding:15px 17px;margin-bottom:16px">
+                <div style="display:flex;align-items:center;gap:13px;margin-bottom:11px">
+                  <div style="width:64px;flex-shrink:0"><div style="font-size:11.5px;color:var(--ink-2)">叠加层</div></div>
+                  <div style="flex-grow:1;height:32px;position:relative;background:var(--bg);border-radius:5px">
+                    <div style="position:absolute;left:24%;width:17%;top:5px;bottom:5px;background:#1E4A50;border:1px solid var(--ac-2);border-radius:4px;display:flex;align-items:center;padding:0 8px">
+                      <span style="font-size:10.5px;color:var(--ac-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">屏录小窗</span>
+                    </div>
+                    <div style="position:absolute;left:62%;width:12%;top:5px;bottom:5px;background:#1E4A50;border:1px solid var(--ac-2);border-radius:4px;display:flex;align-items:center;padding:0 8px">
+                      <span style="font-size:10.5px;color:var(--ac-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">动画要点</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:13px">
+                  <div style="width:64px;flex-shrink:0"><div style="font-size:11.5px;color:var(--ink)">主画面</div></div>
+                  <div style="flex-grow:1;height:32px;display:flex;gap:2px;background:var(--bg);border-radius:5px;padding:4px">
+                    <div style="width:21%;background:#24383A;border-radius:3px;display:flex;align-items:center;padding:0 8px"><span style="font-size:10.5px;color:#C3D0D1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">开场口播</span></div>
+                    <div style="width:16%;background:#24383A;border-radius:3px;display:flex;align-items:center;padding:0 8px"><span style="font-size:10.5px;color:#C3D0D1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">工位空镜</span></div>
+                    <div style="width:27%;background:#24383A;border-radius:3px;display:flex;align-items:center;padding:0 8px"><span style="font-size:10.5px;color:#C3D0D1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">讲协议是什么</span></div>
+                    <div style="width:18%;background:#24383A;border-radius:3px;display:flex;align-items:center;padding:0 8px"><span style="font-size:10.5px;color:#C3D0D1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">报错瞬间</span></div>
+                    <div style="flex-grow:1;background:#2A2018;border:1px dashed var(--warn-line);border-radius:3px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;color:var(--warn)">缺</span></div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:13px;margin-top:9px">
+                  <div style="width:64px;flex-shrink:0"></div>
+                  <div class="mo" style="flex-grow:1;display:flex;justify-content:space-between;font-size:9.5px;color:var(--ink-5)">
+                    <span>0 秒</span><span>15</span><span>30</span><span>45</span><span>58</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="list">
+                <div style="padding:11px 15px;display:flex;align-items:center;gap:13px">
+                  <span class="mo" style="font-size:11px;color:var(--ink-4);width:18px;flex-shrink:0">01</span>
+                  <span class="mo" style="font-size:11px;color:#8FA1A3;width:86px;flex-shrink:0">0.000–12.400</span>
+                  <span style="font-size:12.5px;flex-grow:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">今天第三天，我还是没跑通</span>
+                  <span class="chip">主口播</span><span class="chip">主画面</span>
+                </div>
+                <div style="padding:11px 15px;display:flex;align-items:center;gap:13px">
+                  <span class="mo" style="font-size:11px;color:var(--ink-4);width:18px;flex-shrink:0">02</span>
+                  <span class="mo" style="font-size:11px;color:#8FA1A3;width:86px;flex-shrink:0">12.400–21.900</span>
+                  <span style="font-size:12.5px;flex-grow:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">凌晨两点的工位还亮着</span>
+                  <span class="chip">空镜</span><span class="chip">主画面</span>
+                </div>
+                <div style="padding:11px 15px;display:flex;align-items:center;gap:13px;background:var(--panel-2)">
+                  <span class="mo" style="font-size:11px;color:var(--ink-4);width:18px;flex-shrink:0">03</span>
+                  <span class="mo" style="font-size:11px;color:#8FA1A3;width:86px;flex-shrink:0">14.200–24.100</span>
+                  <span style="font-size:12.5px;flex-grow:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">屏录小窗 · 盖住跳切</span>
+                  <span class="chip">空镜</span><span class="chip">叠加层</span>
+                </div>
+                <div style="padding:11px 15px;display:flex;align-items:center;gap:13px">
+                  <span class="mo" style="font-size:11px;color:var(--ink-4);width:18px;flex-shrink:0">04</span>
+                  <span class="mo" style="font-size:11px;color:#8FA1A3;width:86px;flex-shrink:0">21.900–37.600</span>
+                  <span style="font-size:12.5px;flex-grow:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">所以这个协议到底是什么</span>
+                  <span class="chip">主口播</span><span class="chip">主画面</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rail">
+              <p class="eyebrow-s">待补素材</p>
+              <div class="banner banner--warn" style="margin-bottom:20px">
+                <div><b>收尾空镜缺一条</b><span class="note">脚本要求「关灯离开工位」，素材库里没有匹配画面。已记进缺口清单，不会拿别的镜头顶替。</span></div>
+              </div>
+
+              <p class="eyebrow-s">证据来源</p>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+                <div class="kv"><span>逐字转写</span><span style="color:var(--ok)">阿里云在线转写</span></div>
+                <div class="kv"><span>关键帧取证</span><span class="mo num">148 帧</span></div>
+                <div class="kv"><span>有据可依</span><span class="mo num">8 / 9 段</span></div>
+              </div>
+
+              <p class="eyebrow-s">交接去向</p>
+              <div class="list">
+                <div style="padding:10px 13px;display:flex;align-items:center;justify-content:space-between">
+                  <span style="font-size:12.5px;font-weight:500">ChatCut 时间线</span><span class="chip chip--ai">推荐</span>
+                </div>
+                <div style="padding:10px 13px;display:flex;align-items:center;justify-content:space-between">
+                  <span style="font-size:12.5px;color:var(--ink-2)">Kdenlive 工程</span><span class="hint" style="color:var(--ink-3)">可回传中台</span>
+                </div>
+                <div style="padding:10px 13px;display:flex;align-items:center;justify-content:space-between">
+                  <span style="font-size:12.5px;color:var(--ink-3)">剪映草稿</span><span class="hint" style="color:var(--ink-3)">已停止维护</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 设置（含诊断） ── -->
+        <div data-screen-panel="settings" hidden style="display:flex;flex-direction:column;flex-grow:1;min-height:0">
+          <div class="topbar">
+            <div><h2>设置</h2><div class="sub">改动即时生效，重的操作会先问你</div></div>
+          </div>
+          <div class="body">
+
+            <div class="set-nav">
+              <button data-set="paths" aria-current="true">存放位置</button>
+              <button data-set="agent">AI 助手</button>
+              <button data-set="asr">转写</button>
+              <button data-set="budget">分析预算</button>
+              <button data-set="account">账号与设备</button>
+              <hr>
+              <button data-set="doctor">诊断</button>
+            </div>
+
+            <div class="col">
+
+              <!-- 存放位置 -->
+              <div class="set-sec" data-set-pane="paths">
+                <h3>存放位置</h3>
+                <p>素材原件和项目产物都放在本机。改路径不会搬运已有文件，只改之后的写入位置。</p>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">素材与项目根目录</div><div class="setrow-h">素材库、整理台、项目和导出都在这个目录下。</div></div>
+                  <div class="setrow-c"><div class="inp">~/OpenClawMedia</div><button class="btn" style="padding:6px 12px">更改</button></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">笔记库</div><div class="setrow-h">脚本、分镜和复盘会同步到这里。留空则只存在项目目录里。</div></div>
+                  <div class="setrow-c"><div class="inp">~/Documents/自媒体</div><button class="btn" style="padding:6px 12px">更改</button></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">导入后删除原文件</div><div class="setrow-h">默认保留。开启后归档完成会把相机里的副本删掉。</div></div>
+                  <div class="setrow-c"><div class="sw" role="switch" aria-checked="false"></div></div>
+                </div>
+              </div>
+
+              <!-- AI 助手 -->
+              <div class="set-sec" data-set-pane="agent" hidden>
+                <h3>AI 助手</h3>
+                <p>负责读脚本、排镜头、写剪辑决策。用你已经订阅的那个，我们不重复收费。</p>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">接入方式</div><div class="setrow-h">走本机命令行最省事，也可以直接填 API 密钥。</div></div>
+                  <div class="setrow-c"><div class="sel">Codex 命令行<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.4 8 10.4l4-4"></path></svg></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">模型</div><div class="setrow-h">写脚本和剪辑决策用的模型。换模型会影响产出风格。</div></div>
+                  <div class="setrow-c"><div class="sel">gpt-5.6-terra<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.4 8 10.4l4-4"></path></svg></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">思考强度</div><div class="setrow-h">调高更稳但更慢更贵。剪辑决策建议保持最高。</div></div>
+                  <div class="setrow-c"><div class="sel">最高<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.4 8 10.4l4-4"></path></svg></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">命令行位置</div><div class="setrow-h">留空则用系统 PATH 里找到的第一个。</div></div>
+                  <div class="setrow-c"><div class="inp">codex</div></div>
+                </div>
+              </div>
+
+              <!-- 转写 -->
+              <div class="set-sec" data-set-pane="asr" hidden>
+                <h3>转写</h3>
+                <p>口播剪辑靠逐字时间戳。听不懂的素材宁可标成待确认，也不会瞎猜内容。</p>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">转写方式</div><div class="setrow-h">默认在线转写，音频会发给阿里云的转写服务。要完全离线可换成本机 FunASR。其余可选：OpenAI 接口、沿用旁挂字幕、暂不转写。</div></div>
+                  <div class="setrow-c"><div class="sel">阿里云在线转写<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.4 8 10.4l4-4"></path></svg></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">主要语言</div><div class="setrow-h">影响断句和标点恢复。混说中英文也选中文。</div></div>
+                  <div class="setrow-c"><div class="sel">中文<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="#7D8C8E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.4 8 10.4l4-4"></path></svg></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">检测停顿与口癖</div><div class="setrow-h">额外跑一遍人声活动检测，给"去停顿"提供依据。</div></div>
+                  <div class="setrow-c"><div class="sw" role="switch" aria-checked="true"></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">归档后自动转写</div><div class="setrow-h">关掉的话，需要时再手动触发。</div></div>
+                  <div class="setrow-c"><div class="sw" role="switch" aria-checked="true"></div></div>
+                </div>
+              </div>
+
+              <!-- 分析预算 -->
+              <div class="set-sec" data-set-pane="budget" hidden>
+                <h3>分析预算</h3>
+                <p>让 AI 看画面是要花钱的，所以默认只对少量素材细看。这几个数直接决定一次分析的开销。</p>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">粗看时每条取几帧</div><div class="setrow-h">均匀抽帧，够判断"这条大概是什么"。</div></div>
+                  <div class="setrow-c"><div class="step"><button>−</button><span class="num">3</span><button>+</button></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">细看时每条取几帧</div><div class="setrow-h">留给已经选中、准备剪进片子的素材。</div></div>
+                  <div class="setrow-c"><div class="step"><button>−</button><span class="num">12</span><button>+</button></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">一次最多粗看几条</div><div class="setrow-h">一批素材最多粗看这么多条，其余只读文件信息。</div></div>
+                  <div class="setrow-c"><div class="step"><button>−</button><span class="num">100</span><button>+</button></div></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">一次最多细看几条</div><div class="setrow-h">排在名额外的素材，要重新跑一次分析才会轮到。</div></div>
+                  <div class="setrow-c"><div class="step"><button>−</button><span class="num">24</span><button>+</button></div></div>
+                </div>
+                <div class="banner banner--info" style="margin-top:18px">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="6.2"></circle><path d="M8 7.4v4M8 4.8h.01"></path></svg>
+                  <span class="note">关键帧会发给你配置的模型服务商。这跟"原件不上传中台"是两条独立的边界。</span>
+                </div>
+              </div>
+
+              <!-- 账号与设备 -->
+              <div class="set-sec" data-set-pane="account" hidden>
+                <h3>账号与设备</h3>
+                <p>密码和密钥都存在系统钥匙串里，配置文件只记引用，不记明文。</p>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">OpenClaw Media</div><div class="setrow-h">同步项目、任务和账号记忆。</div></div>
+                  <div class="setrow-c"><span style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ok)"><span class="dot" style="background:var(--ok)"></span>已登录</span><button class="btn" style="padding:6px 12px">退出</button></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">这台设备</div><div class="setrow-h">中台只能给它派任务，不能反向连进来。</div></div>
+                  <div class="setrow-c"><div class="inp">王的 MacBook Pro</div><button class="btn" style="padding:6px 12px">解除配对</button></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">ChatCut</div><div class="setrow-h">口播剪辑与字幕。第三方应用，单独登录。</div></div>
+                  <div class="setrow-c"><span style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ok)"><span class="dot" style="background:var(--ok)"></span>已连接</span></div>
+                </div>
+                <div class="setrow">
+                  <div class="setrow-l"><div class="setrow-t">允许上传素材到中台</div><div class="setrow-h">默认锁死。打开之后原件才可能离开本机——除非你确实需要，别开。</div></div>
+                  <div class="setrow-c"><div class="sw" role="switch" aria-checked="false"></div></div>
+                </div>
+              </div>
+
+              <!-- 诊断 -->
+              <div class="set-sec" data-set-pane="doctor" hidden>
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:5px">
+                  <h3 style="margin:0">诊断</h3>
+                  <div style="display:flex;gap:8px;flex-shrink:0">
+                    <button class="btn" style="padding:6px 12px">重新检测</button>
+                    <button class="btn" style="padding:6px 12px">复制报告</button>
+                  </div>
+                </div>
+                <p>装不上、跑不动的时候先看这里。出问题时把报告复制给我们就行。</p>
+
+                <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:11px">
+                  <span class="num" style="font-size:19px;font-weight:700;color:var(--ok)">6</span>
+                  <span class="num" style="font-size:12.5px;color:var(--ink-3)">/ 6 项通过</span>
+                </div>
+
+                <p class="eyebrow-s">必需</p>
+                <div class="list" style="margin-bottom:18px">
+                  <div style="padding:10px 15px;display:flex;align-items:center;gap:12px"><span class="dot" style="background:var(--ok)"></span><span style="font-size:12.5px;flex-grow:1">Python 运行时</span><span class="mo" style="font-size:11px;color:#8FA1A3">3.12.8 · 最低 3.11</span></div>
+                  <div style="padding:10px 15px;display:flex;align-items:center;gap:12px"><span class="dot" style="background:var(--ok)"></span><span style="font-size:12.5px;flex-grow:1">工作目录可写</span><span class="mo" style="font-size:11px;color:#8FA1A3">已验证</span></div>
+                  <div style="padding:10px 15px;display:flex;align-items:center;gap:12px"><span class="dot" style="background:var(--ok)"></span><span style="font-size:12.5px;flex-grow:1">ffmpeg</span><span class="mo" style="font-size:11px;color:#8FA1A3">关键帧、音频与预览</span></div>
+                  <div style="padding:10px 15px;display:flex;align-items:center;gap:12px"><span class="dot" style="background:var(--ok)"></span><span style="font-size:12.5px;flex-grow:1">ffprobe</span><span class="mo" style="font-size:11px;color:#8FA1A3">读媒体元数据</span></div>
+                </div>
+
+                <p class="eyebrow-s">可选</p>
+                <div class="list" style="margin-bottom:18px">
+                  <div style="padding:10px 15px;display:flex;align-items:center;gap:12px"><span class="dot" style="background:var(--ok)"></span><span style="font-size:12.5px;flex-grow:1">Codex 命令行</span><span class="mo" style="font-size:11px;color:#8FA1A3">已找到</span></div>
+                  <div style="padding:10px 15px;display:flex;align-items:center;gap:12px"><span class="dot" style="background:var(--ok)"></span><span style="font-size:12.5px;flex-grow:1">云端配对</span><span class="mo" style="font-size:11px;color:#8FA1A3">本机为 macOS，可用</span></div>
+                </div>
+
+                <p class="eyebrow-s">环境信息</p>
+                <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:8px">
+                  <div class="kv"><span>系统</span><span class="mo">macOS</span></div>
+                  <div class="kv"><span>创作接入</span><span class="mo">Codex 命令行</span></div>
+                </div>
+                <p class="hint" style="margin:0 0 18px">其余构建信息在"复制报告"里，排障时发给我们就行。</p>
+
+                <div class="banner banner--warn">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#D9A94B" stroke-width="1.6" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><path d="M8 4.4v4.2M8 11.4h.01"></path><circle cx="8" cy="8" r="6.2"></circle></svg>
+                  <div><b>剪映交接已停止维护</b><span class="note">剪映草稿这条路线已标记为历史能力，新项目不再生成或修改剪映草稿。这一项不在必需检查里——带口播的项目走 ChatCut 不受影响，确需交接到剪映请手动导出。</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 安装向导 ═══════════ -->
+  <div class="stage" data-surface-panel="setup" hidden>
+    <div class="stage-bar"><i></i><i></i><i></i><span>首次启动</span></div>
+    <div class="scroll-x">
+      <div style="width:900px;height:600px;display:flex;background:var(--bg)">
+        <div style="width:238px;flex-shrink:0;background:#101718;border-right:1px solid var(--rule);padding:26px 22px;display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="brand" style="padding:0 0 24px"><svg width="22" height="22" viewBox="0 0 26 26" fill="none"><rect x="1" y="1" width="24" height="24" rx="7" stroke="#2E5F65" stroke-width="1.5"></rect><rect x="6.5" y="7" width="13" height="2.6" rx="1.3" fill="#2E5F65"></rect><rect x="6.5" y="11.7" width="13" height="2.6" rx="1.3" fill="#4FB3BD"></rect><rect x="6.5" y="16.4" width="8" height="2.6" rx="1.3" fill="#7D8C8E"></rect></svg><b>OpenClaw Media</b></div>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <div style="display:flex;align-items:center;gap:11px;padding:9px 0"><span style="width:18px;height:18px;border-radius:50%;background:#1E4A50;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg></span><span style="font-size:12.5px;color:var(--ink-3)">存放位置</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:9px 0"><span style="width:18px;height:18px;border-radius:50%;background:#1E4A50;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg></span><span style="font-size:12.5px;color:var(--ink-3)">运行环境</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:9px 0"><span style="width:18px;height:18px;border-radius:50%;background:#1E4A50;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#4FB3BD" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg></span><span style="font-size:12.5px;color:var(--ink-3)">剪辑器</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:9px 0"><span style="width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ac);display:flex;align-items:center;justify-content:center"><span class="dot" style="background:var(--ac)"></span></span><span style="font-size:12.5px;font-weight:600">账号与设备</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding:9px 0"><span style="width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule-2)"></span><span style="font-size:12.5px;color:var(--ink-4)">完成</span></div>
+            </div>
+          </div>
+          <div class="hint" style="color:var(--ink-3)">装完之后你只会看到一个应用。运行环境和内部通道都在里面，不用管。</div>
+        </div>
+
+        <div style="flex-grow:1;display:flex;flex-direction:column">
+          <div style="flex-grow:1;padding:38px 38px 0;display:flex;flex-direction:column;gap:24px">
+            <div>
+              <div style="font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px">连接你的账号</div>
+              <div class="note" style="font-size:13px;max-width:44ch">这三个服务各自独立收费和登录。我们不代管你的密码，只记录连接状态。</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="card" style="padding:15px 17px;display:flex;align-items:center;gap:14px">
+                <div style="flex-grow:1"><div style="font-size:13px;font-weight:600">OpenClaw Media</div><div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">项目、任务与账号记忆</div></div>
+                <span style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ok)"><span class="dot" style="background:var(--ok)"></span>已登录</span>
+              </div>
+              <div class="card" style="padding:15px 17px;display:flex;align-items:center;gap:14px">
+                <div style="flex-grow:1"><div style="font-size:13px;font-weight:600">AI 助手 · Codex</div><div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">读脚本、排镜头、指挥剪辑器 · 也可换成 Claude Code</div></div>
+                <span style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ok)"><span class="dot" style="background:var(--ok)"></span>已授权</span>
+              </div>
+              <div class="card" style="padding:15px 17px;display:flex;align-items:center;gap:14px">
+                <div style="flex-grow:1"><div style="font-size:13px;font-weight:600">ChatCut</div><div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">口播剪辑与字幕 · 第三方应用</div></div>
+                <button class="btn" style="border-color:var(--ac);color:var(--ac);font-weight:600">打开并登录</button>
+              </div>
+            </div>
+            <div class="banner banner--info">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#7FBB92" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><rect x="3" y="7.2" width="10" height="6.4" rx="1.5"></rect><path d="M5.4 7.2V5.1a2.6 2.6 0 0 1 5.2 0v2.1"></path></svg>
+              <div class="note">这台电脑会登记为一台设备。<strong style="color:var(--ink);font-weight:500">照片和视频原件不会离开本机</strong>——云端中台只收到时长、尺寸、哈希和文字摘要。在线转写的音频只发给你选定的转写服务，可在设置里换成全离线的本机转写。</div>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--rule);padding:15px 38px;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:12.5px;color:var(--ink-3)">上一步</span>
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="font-size:12.5px;color:var(--ink-3)">稍后连接 ChatCut</span>
+              <button class="btn btn--pri" style="padding:9px 22px">继续</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 网页中台 ═══════════ -->
+  <div class="stage" data-surface-panel="cloud" hidden>
+    <div class="stage-bar"><i></i><i></i><i></i><span>创作中台 — 设备与任务</span></div>
+    <div class="scroll-x">
+      <div style="width:1240px;height:720px;display:flex;flex-direction:column;background:var(--bg)">
+        <div style="height:56px;border-bottom:1px solid var(--rule);padding:0 26px;display:flex;align-items:stretch;justify-content:space-between">
+          <div style="display:flex;align-items:stretch;gap:28px">
+            <div class="brand" style="padding:0"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="1" y="1" width="24" height="24" rx="7" stroke="#2E5F65" stroke-width="1.5"></rect><rect x="6.5" y="7" width="13" height="2.6" rx="1.3" fill="#2E5F65"></rect><rect x="6.5" y="11.7" width="13" height="2.6" rx="1.3" fill="#4FB3BD"></rect><rect x="6.5" y="16.4" width="8" height="2.6" rx="1.3" fill="#7D8C8E"></rect></svg><b>创作中台</b></div>
+            <div style="display:flex;align-items:stretch;gap:22px">
+              <div style="display:flex;align-items:center;border-bottom:2px solid transparent"><span style="font-size:12.5px;color:var(--ink-3)">项目</span></div>
+              <div style="display:flex;align-items:center;border-bottom:2px solid var(--ac)"><span style="font-size:12.5px;font-weight:600">设备与任务</span></div>
+              <div style="display:flex;align-items:center;border-bottom:2px solid transparent"><span style="font-size:12.5px;color:var(--ink-3)">复盘</span></div>
+              <div style="display:flex;align-items:center;border-bottom:2px solid transparent"><span style="font-size:12.5px;color:var(--ink-3)">账号记忆</span></div>
+            </div>
+          </div>
+          <div style="width:28px;height:28px;align-self:center;border-radius:50%;background:#1E4A50;display:flex;align-items:center;justify-content:center"><span style="font-size:11.5px;font-weight:600;color:var(--ac-soft)">王</span></div>
+        </div>
+
+        <div style="flex-grow:1;display:flex;min-height:0">
+          <div class="col" style="padding:22px 26px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+              <p class="eyebrow-s" style="margin:0">任务</p>
+              <span style="font-size:11.5px;color:var(--ink-3)">全部由本机主动拉取执行，中台不会反向连接你的电脑</span>
+            </div>
+            <div class="list" style="margin-bottom:24px">
+              <div style="padding:8px 16px;display:flex;align-items:center;gap:14px;background:var(--panel-2)">
+                <span style="width:8px;flex-shrink:0"></span>
+                <span style="font-size:11px;color:var(--ink-3);flex-grow:1;min-width:0">任务</span>
+                <span style="font-size:11px;color:var(--ink-3);width:52px;flex-shrink:0">状态</span>
+                <span style="font-size:11px;color:var(--ink-3);width:64px;flex-shrink:0;text-align:right">耗时</span>
+              </div>
+              <div style="padding:11px 16px;display:flex;align-items:center;gap:14px">
+                <span class="dot" style="background:var(--ac);flex-shrink:0"></span>
+                <span style="flex-grow:1;min-width:0">
+                  <span style="font-size:12.5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Vibe Coding Day 3 · 素材匹配</span>
+                  <span class="mo" style="font-size:10px;color:var(--ink-5)">media.material.match.v1</span>
+                </span>
+                <span style="font-size:11.5px;color:var(--ac);width:52px;flex-shrink:0">执行中</span>
+                <span class="mo num" style="font-size:11px;color:var(--ink-4);width:64px;flex-shrink:0;text-align:right;white-space:nowrap">2 分 14 秒</span>
+              </div>
+              <div style="padding:11px 16px;display:flex;align-items:center;gap:14px">
+                <span class="dot" style="background:var(--ok);flex-shrink:0"></span>
+                <span style="flex-grow:1;min-width:0">
+                  <span style="font-size:12.5px;color:var(--ink-2);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Vibe Coding Day 3 · 取证分析</span>
+                  <span class="mo" style="font-size:10px;color:var(--ink-5)">media.project.prepare.v1</span>
+                </span>
+                <span style="font-size:11.5px;color:var(--ok);width:52px;flex-shrink:0">已完成</span>
+                <span class="mo num" style="font-size:11px;color:var(--ink-4);width:64px;flex-shrink:0;text-align:right;white-space:nowrap">8 分 02 秒</span>
+              </div>
+              <div style="padding:11px 16px;display:flex;align-items:center;gap:14px">
+                <span class="dot" style="background:var(--warn);flex-shrink:0"></span>
+                <span style="flex-grow:1;min-width:0">
+                  <span style="font-size:12.5px;color:var(--ink-2);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">AI 科普 Day 2 · 生成时间线</span>
+                  <span class="mo" style="font-size:10px;color:var(--ink-5)">media.edit.timeline.v1</span>
+                </span>
+                <span style="font-size:11.5px;color:var(--warn);width:52px;flex-shrink:0">已阻塞</span>
+                <span class="mo" style="font-size:11px;color:var(--ink-4);width:64px;flex-shrink:0;text-align:right">—</span>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+              <p class="eyebrow-s" style="margin:0">素材 · 中台能看到的全部内容</p>
+              <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ok)">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#7FBB92" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.2" width="10" height="6.4" rx="1.5"></rect><path d="M5.4 7.2V5.1a2.6 2.6 0 0 1 5.2 0v2.1"></path></svg>
+                没有文件名、没有路径、没有画面
+              </span>
+            </div>
+            <div style="border:1px solid var(--rule);border-radius:8px;overflow:hidden">
+              <table>
+                <thead><tr><th style="width:104px">素材编号</th><th style="width:92px">尺寸</th><th style="width:86px">时长</th><th>内容摘要</th></tr></thead>
+                <tbody>
+                  <tr><td class="mo" style="color:var(--ink-2)">asset_001</td><td class="mo">1080×1920</td><td class="mo num" style="white-space:nowrap">18.7 秒</td><td style="font-family:var(--f-tx)">室内正面口播，人物居中，有环境音</td></tr>
+                  <tr><td class="mo" style="color:var(--ink-2)">asset_002</td><td class="mo">1080×1920</td><td class="mo num" style="white-space:nowrap">6.2 秒</td><td style="font-family:var(--f-tx)">夜间工位空镜，屏幕反光，无人声</td></tr>
+                  <tr><td class="mo" style="color:var(--ink-2)">asset_003</td><td class="mo">2560×1440</td><td class="mo num" style="white-space:nowrap">31.4 秒</td><td style="font-family:var(--f-tx)">屏幕录制，终端报错回滚，可作小窗</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="rail">
+            <p class="eyebrow-s">设备</p>
+            <div class="card" style="border-color:var(--ac-2);background:var(--panel-2);padding:15px 16px;margin-bottom:20px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <span style="font-size:13px;font-weight:600">王的 MacBook Pro</span>
+                <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ok)"><span class="dot" style="background:var(--ok)"></span>在线</span>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px">
+                <span class="chip">媒体扫描</span><span class="chip">视频分析</span><span class="chip">逐字转写</span>
+                <span class="chip">素材匹配</span><span class="chip">剪辑决策</span><span class="chip">多轨时间线</span>
+                <span class="chip">ChatCut</span>
+              </div>
+              <div class="kv" style="padding-top:11px;border-top:1px solid #1F2C2D"><span>存放位置</span><span class="mo">OpenClawMedia</span></div>
+            </div>
+
+            <button class="btn btn--pri btn--full" style="margin-bottom:9px">在电脑上继续编辑</button>
+            <p class="hint" style="text-align:center;margin:0 0 20px">会唤起本机应用并打开这个项目</p>
+
+            <p class="eyebrow-s">本周</p>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="kv"><span>完成任务</span><span class="mo num">23</span></div>
+              <div class="kv"><span>发布内容</span><span class="mo num">4</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ── 数据：复用资产卡片 / 项目素材 / 归档索引卡 ── */
+  function el(tag, cls, txt){
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt != null) n.textContent = txt;
+    return n;
+  }
+  function chips(parent, list, cls){
+    list.forEach(function(t){ parent.appendChild(el("span", cls || "chip", t)); });
+  }
+  function kvRow(k, v, mono){
+    var r = el("div","kv");
+    r.appendChild(el("span", null, k));
+    r.appendChild(el("span", mono ? "mo" : null, v));
+    return r;
+  }
+  function tierBar(t){
+    var w = el("span","tier");
+    w.setAttribute("data-tier", String(t));
+    for (var i=0;i<3;i++) w.appendChild(el("i"));
+    return w;
+  }
+
+  /* 内部分类码 -> 人话标签（左侧分类树已有的说法，这里复用同一套词） */
+  var CAT_LABEL = {
+    "Memorial_人生节点": "纪念资产 · 人生节点",
+    "Reusable_通用素材": "通用素材（可复用）",
+    "音频_环境声": "环境音效素材"
+  };
+
+  /* 源文件当前在哪 —— 长期复用的关键状态 */
+  var WHERE = {
+    local:   ["在本机", "ok"],
+    cloud:   ["阿里云盘镜像", ""],
+    cold:    ["移动硬盘冷归档", "warn"]
+  };
+
+  var CARDS = [
+    { id:"c1", kind:"card", title:"兰大红墙团队合影",
+      cat:"Memorial_人生节点", project:"20260514_兰州大学_奔赴与校运会",
+      src:"03_赛后交流与合照/红墙团队领奖合影_G01_补充01_未修.jpg",
+      tags:["母校","红墙","合影","人生节点","校园"],
+      uses:["年度回顾开场","校友向内容","毕业季选题"],
+      cuts:["整张可用；裁 4:5 竖版时保留右侧空墙"],
+      pub:"可公开", icloud:"已入 80/03_Memorial_纪念资产", where:"cold", reuse:4 },
+
+    { id:"c2", kind:"card", title:"深夜工位空镜",
+      cat:"Reusable_通用素材", project:"2026-0829-vibe-coding-day3",
+      src:"01_Media/工位空镜_夜.mov",
+      tags:["夜景","工位","屏幕反光","空镜","加班"],
+      uses:["口播切入","加班主题转场","系列片头垫画面"],
+      cuts:["0.0–3.2 秒最稳；3.2 秒后有手入画"],
+      pub:"可公开", icloud:"未登记", where:"local", reuse:6 },
+
+    { id:"c3", kind:"card", title:"片尾品牌卡",
+      cat:"Reusable_通用素材", project:"品牌资产_2026",
+      src:"Brand/片尾_品牌卡.mov",
+      tags:["片尾","品牌","订阅引导"],
+      uses:["所有视频统一结尾"],
+      cuts:["整段 3 秒，不要裁"],
+      pub:"可公开", icloud:"已入 80/04_Reusable_To_iPhone", where:"local", reuse:11 },
+
+    { id:"c4", kind:"card", title:"城中村黄昏街景",
+      cat:"Reusable_通用素材", project:"20260712_深圳_城中村的周末",
+      src:"02_街拍/城中村_黄昏_长镜.mov",
+      tags:["城中村","市井","黄昏","街拍","深圳"],
+      uses:["城市系列 B-roll","PLOG 转场","生活质感垫画面"],
+      cuts:["12–19 秒有行人经过，节奏最好"],
+      pub:"待确认", icloud:"未登记", where:"cloud", reuse:2,
+      warn:"画面里有可辨认路人正脸，公开前需确认。" },
+
+    { id:"c5", kind:"card", title:"咖啡馆环境底噪",
+      cat:"音频_环境声", project:"20260714_咖啡馆访谈",
+      src:"04_Audio/咖啡馆_环境音_4分12秒.wav",
+      tags:["环境音","咖啡馆","人声底噪","室内"],
+      uses:["访谈类垫音","口播降突兀","转场过渡"],
+      cuts:["任意 10 秒可循环；避开 2:05 的杯碟声"],
+      pub:"可公开", icloud:"未登记", where:"cold", reuse:3 }
+  ];
+
+  var PROJECTS = [
+    { id:"p1", kind:"project", name:"20260514_兰州大学_奔赴与校运会", state:"cold_archived",
+      meta:"L3 项目 · 已发布 · 源素材已冷归档", counts:"482 个文件 · 已登记 6 张资产卡片" },
+    { id:"p2", kind:"project", name:"20260518_兰州_校友座谈", state:"cooling",
+      meta:"L3 项目 · 已发布 14 天 · 准备归档", counts:"126 个文件 · 已登记 2 张资产卡片" },
+    { id:"p3", kind:"project", name:"20260521_兰州_离校前最后一天", state:"active",
+      meta:"L3 项目 · 剪辑中", counts:"238 个文件 · 尚未登记资产卡片" }
+  ];
+
+  var ARCHIVES = [
+    { id:"r1", kind:"archive", name:"20260514_兰州大学_奔赴与校运会", state:"cold_archived",
+      published:"2026-05-20 · 小红书",
+      keys:{ "人物":"本人、田径队队友", "地点":"兰州大学榆中校区、红墙", "事件":"校运会、领奖、红墙合影",
+             "主题":"重回母校、青春回望", "可复用场景":"年度回顾、校友向、毕业季", "重要画面":"红墙合影、终点冲线" },
+      keep:"只保留本索引卡 / 80 精选已入 iCloud 照片 / 必要 Final 副本",
+      restore:"移动硬盘 A · /Archive/2026/20260514_兰州大学/",
+      icloud:"精选相册「2026 兰大」· Final 高光相册" },
+
+    { id:"r2", kind:"archive", name:"20260712_深圳_城中村的周末", state:"cooling",
+      published:"2026-07-20 · 小红书图文",
+      keys:{ "人物":"无出镜", "地点":"深圳白石洲、城中村巷道", "事件":"周末街拍",
+             "主题":"城市观察、市井生活", "可复用场景":"城市系列、生活质感 B-roll", "重要画面":"黄昏巷口、招牌灯光" },
+      keep:"源素材仍在本机，等待镜像到阿里云盘后转冷归档",
+      restore:"尚未冷归档",
+      icloud:"精选相册「深圳城市记录」" }
+  ];
+
+  var detailEl = document.getElementById("assetDetail");
+  var cardListEl = document.getElementById("cardList");
+  var projListEl = document.getElementById("projList");
+  var archListEl = document.getElementById("archList");
+  var libSubEl = document.getElementById("libSub");
+
+  function findAny(id){
+    var all = CARDS.concat(PROJECTS).concat(ARCHIVES), found = null;
+    all.forEach(function(x){ if (x.id === id) found = x; });
+    return found;
+  }
+
+  var STATE_LABEL = {
+    active:        ["进行中", "ac"],
+    cooling:       ["冷却中，待归档", ""],
+    cold_archived: ["已冷归档", "warn"],
+    restored:      ["已取回", "ok"]
+  };
+
+  /* ── 复用资产卡片行 ── */
+  CARDS.forEach(function(c){
+    var b = el("button","asset");
+    b.setAttribute("data-asset", c.id);
+    b.setAttribute("aria-selected","false");
+    b.style.alignItems = "flex-start";
+
+    var th = el("div","thumb");
+    th.style.marginTop = "2px";
+    th.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#8FC7CD" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.6h8a1 1 0 0 1 1 1v9.8l-5-2.6-5 2.6V3.6a1 1 0 0 1 1-1z"></path></svg>';
+    b.appendChild(th);
+
+    var mid = el("div");
+    mid.style.cssText = "flex-grow:1;min-width:0";
+    var line1 = el("div");
+    line1.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:5px";
+    var nm = el("span","asset-name", c.title);
+    line1.appendChild(nm);
+    if (c.pub === "待确认") line1.appendChild(el("span","chip chip--warn","公开待确认"));
+    mid.appendChild(line1);
+
+    var tagWrap = el("div");
+    tagWrap.style.cssText = "display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px";
+    chips(tagWrap, c.tags.slice(0,5), "chip");
+    mid.appendChild(tagWrap);
+
+    var sub = el("div","asset-sub", "用途：" + c.uses.slice(0,2).join(" · "));
+    mid.appendChild(sub);
+    b.appendChild(mid);
+
+    var right = el("div");
+    right.style.cssText = "display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;width:112px";
+    var w = WHERE[c.where];
+    right.appendChild(el("span","chip" + (w[1] ? " chip--"+w[1] : ""), w[0]));
+    var ru = el("span","mo","复用 " + c.reuse + " 次");
+    ru.style.cssText = "font-size:10.5px;color:var(--ink-4)";
+    right.appendChild(ru);
+    b.appendChild(right);
+
+    cardListEl.appendChild(b);
+  });
+
+  /* ── 项目行 ── */
+  PROJECTS.forEach(function(p){
+    var b = el("button","asset");
+    b.setAttribute("data-asset", p.id);
+    b.setAttribute("aria-selected","false");
+
+    var th = el("div","thumb");
+    th.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#46585A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 4.6a1.2 1.2 0 0 1 1.2-1.2h2.5l1.2 1.6h5.5a1.2 1.2 0 0 1 1.2 1.2v5.6a1.2 1.2 0 0 1-1.2 1.2H3.4a1.2 1.2 0 0 1-1.2-1.2z"></path></svg>';
+    b.appendChild(th);
+
+    var mid = el("div");
+    mid.style.cssText = "flex-grow:1;min-width:0";
+    mid.appendChild(el("div","asset-name", p.name));
+    mid.appendChild(el("div","asset-sub", p.counts));
+    b.appendChild(mid);
+
+    var st = STATE_LABEL[p.state];
+    b.appendChild(el("span","chip" + (st[1] ? " chip--"+st[1] : ""), st[0]));
+    projListEl.appendChild(b);
+  });
+
+  /* ── 归档索引卡行 ── */
+  ARCHIVES.forEach(function(a){
+    var b = el("button","asset");
+    b.setAttribute("data-asset", a.id);
+    b.setAttribute("aria-selected","false");
+    b.style.alignItems = "flex-start";
+
+    var th = el("div","thumb");
+    th.style.marginTop = "2px";
+    th.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#46585A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="3" width="11.6" height="3.2" rx="1"></rect><path d="M3.4 6.2v6a1 1 0 0 0 1 1h7.2a1 1 0 0 0 1-1v-6M6.4 9h3.2"></path></svg>';
+    b.appendChild(th);
+
+    var mid = el("div");
+    mid.style.cssText = "flex-grow:1;min-width:0";
+    mid.appendChild(el("div","asset-name", a.name));
+    var kw = el("div");
+    kw.style.cssText = "display:flex;flex-wrap:wrap;gap:4px;margin-top:5px";
+    chips(kw, [a.keys["地点"].split("、")[0], a.keys["主题"].split("、")[0], a.keys["可复用场景"].split("、")[0]]);
+    mid.appendChild(kw);
+    b.appendChild(mid);
+
+    var st = STATE_LABEL[a.state];
+    b.appendChild(el("span","chip" + (st[1] ? " chip--"+st[1] : ""), st[0]));
+    archListEl.appendChild(b);
+  });
+
+  /* ── 详情：资产卡片 ── */
+  function renderCard(c){
+    detailEl.innerHTML = "";
+    detailEl.appendChild(el("p","eyebrow-s","资产卡片"));
+
+    var head = el("div","card");
+    head.style.cssText = "padding:15px 16px;margin-bottom:16px";
+    var t = el("div", null, c.title);
+    t.style.cssText = "font-size:13.5px;font-weight:600;margin-bottom:4px";
+    head.appendChild(t);
+    var cat = el("div","mo", CAT_LABEL[c.cat] || c.cat);
+    cat.style.cssText = "font-size:10.5px;color:var(--ink-4);margin-bottom:13px";
+    head.appendChild(cat);
+    var meta = el("div");
+    meta.style.cssText = "display:flex;flex-direction:column;gap:9px;padding-top:12px;border-top:1px solid #1F2C2D";
+    meta.appendChild(kvRow("公开状态", c.pub));
+    meta.appendChild(kvRow("复用次数", c.reuse + " 次", true));
+    var w = WHERE[c.where];
+    var wr = el("div","kv");
+    wr.appendChild(el("span", null, "源文件现在"));
+    wr.appendChild(el("span","chip" + (w[1] ? " chip--"+w[1] : ""), w[0]));
+    meta.appendChild(wr);
+    head.appendChild(meta);
+    detailEl.appendChild(head);
+
+    if (c.warn){
+      var bn = el("div","banner banner--warn");
+      bn.style.marginBottom = "16px";
+      var bd = el("div");
+      bd.appendChild(el("b", null, "公开前需要确认"));
+      bd.appendChild(el("span","note", c.warn));
+      bn.appendChild(bd);
+      detailEl.appendChild(bn);
+    }
+
+    detailEl.appendChild(el("p","eyebrow-s","复用标签"));
+    var tw = el("div");
+    tw.style.cssText = "display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px";
+    chips(tw, c.tags, "chip");
+    var add = el("button","chip","+ 加标签");
+    add.style.cssText += ";border:1px dashed var(--rule-2);background:none;color:var(--ink-4)";
+    tw.appendChild(add);
+    detailEl.appendChild(tw);
+    var th2 = el("p","hint","标签是跨项目找回这条素材的唯一方式。");
+    th2.style.cssText = "margin:0 0 18px";
+    detailEl.appendChild(th2);
+
+    detailEl.appendChild(el("p","eyebrow-s","适合用途"));
+    var ul = el("ul");
+    ul.style.cssText = "margin:0 0 18px;padding-left:17px;font-family:var(--f-tx);font-size:12px;line-height:1.75;color:var(--ink-2)";
+    c.uses.forEach(function(u){ ul.appendChild(el("li", null, u)); });
+    detailEl.appendChild(ul);
+
+    detailEl.appendChild(el("p","eyebrow-s","建议截取"));
+    var cu = el("p","note", c.cuts.join("；"));
+    cu.style.cssText = "margin:0 0 18px";
+    detailEl.appendChild(cu);
+
+    detailEl.appendChild(el("p","eyebrow-s","来源"));
+    var srcBox = el("div");
+    srcBox.style.cssText = "display:flex;flex-direction:column;gap:9px;margin-bottom:8px";
+    srcBox.appendChild(kvRow("原始项目", c.project));
+    srcBox.appendChild(kvRow("iCloud 精选", c.icloud));
+    detailEl.appendChild(srcBox);
+    var det = document.createElement("details");
+    det.className = "tech-details";
+    det.style.marginBottom = "18px";
+    det.appendChild(el("summary", null, "显示原始文件路径"));
+    var sp = el("div","mo", c.src);
+    sp.style.cssText = "font-size:10.5px;color:var(--ink-4);word-break:break-all;line-height:1.7;margin-top:6px";
+    det.appendChild(sp);
+    detailEl.appendChild(det);
+
+    var act = el("div");
+    act.style.cssText = "display:flex;flex-direction:column;gap:8px";
+    if (c.where === "cold"){
+      act.appendChild(el("button","btn btn--pri btn--full","按卡片指引取回源文件"));
+    } else {
+      act.appendChild(el("button","btn btn--pri btn--full","选择项目并加入"));
+    }
+    act.appendChild(el("button","btn btn--full","编辑卡片"));
+    detailEl.appendChild(act);
+  }
+
+  /* ── 详情：项目 ── */
+  function renderProject(p){
+    detailEl.innerHTML = "";
+    detailEl.appendChild(el("p","eyebrow-s","项目"));
+    var head = el("div","card");
+    head.style.cssText = "padding:15px 16px;margin-bottom:16px";
+    var t = el("div", null, p.name);
+    t.style.cssText = "font-size:13px;font-weight:600;margin-bottom:4px;word-break:break-all";
+    head.appendChild(t);
+    var m = el("div","hint", p.meta);
+    m.style.marginBottom = "12px";
+    head.appendChild(m);
+    var st = STATE_LABEL[p.state];
+    var sr = el("div","kv");
+    sr.style.cssText = "padding-top:12px;border-top:1px solid #1F2C2D";
+    sr.appendChild(el("span", null, "归档状态"));
+    sr.appendChild(el("span","chip" + (st[1] ? " chip--"+st[1] : ""), st[0]));
+    head.appendChild(sr);
+    detailEl.appendChild(head);
+
+    detailEl.appendChild(el("p","eyebrow-s","素材构成"));
+    var box = el("div");
+    box.style.cssText = "display:flex;flex-direction:column;gap:9px;margin-bottom:18px";
+    box.appendChild(kvRow("项目源文件", p.counts.split(" · ")[0], true));
+    box.appendChild(kvRow("资产卡片", p.counts.split(" · ")[1] || "未登记"));
+    detailEl.appendChild(box);
+
+    var note = el("p","note","项目源文件是事实原件，只住在这个项目目录里。要跨项目复用，就在这里挑出来登记成资产卡片。");
+    note.style.cssText = "margin:0 0 18px";
+    detailEl.appendChild(note);
+
+    var act = el("div");
+    act.style.cssText = "display:flex;flex-direction:column;gap:8px";
+    act.appendChild(el("button","btn btn--pri btn--full","登记为复用资产"));
+    act.appendChild(el("button","btn btn--full","在访达中显示"));
+    detailEl.appendChild(act);
+  }
+
+  /* ── 详情：归档索引卡 ── */
+  function renderArchive(a){
+    detailEl.innerHTML = "";
+    detailEl.appendChild(el("p","eyebrow-s","归档索引卡"));
+
+    var head = el("div","card");
+    head.style.cssText = "padding:15px 16px;margin-bottom:16px";
+    var t = el("div", null, a.name);
+    t.style.cssText = "font-size:13px;font-weight:600;margin-bottom:10px;word-break:break-all";
+    head.appendChild(t);
+    var meta = el("div");
+    meta.style.cssText = "display:flex;flex-direction:column;gap:9px";
+    meta.appendChild(kvRow("发布", a.published));
+    var st = STATE_LABEL[a.state];
+    var sr = el("div","kv");
+    sr.appendChild(el("span", null, "归档状态"));
+    sr.appendChild(el("span","chip" + (st[1] ? " chip--"+st[1] : ""), st[0]));
+    meta.appendChild(sr);
+    head.appendChild(meta);
+    detailEl.appendChild(head);
+
+    detailEl.appendChild(el("p","eyebrow-s","检索关键词"));
+    var kbox = el("div");
+    kbox.style.cssText = "display:flex;flex-direction:column;gap:11px;margin-bottom:18px";
+    Object.keys(a.keys).forEach(function(k){
+      var row = el("div");
+      var lab = el("div", null, k);
+      lab.style.cssText = "font-size:11px;color:var(--ink-4);margin-bottom:4px";
+      var val = el("div","note", a.keys[k]);
+      val.style.margin = "0";
+      row.appendChild(lab); row.appendChild(val);
+      kbox.appendChild(row);
+    });
+    detailEl.appendChild(kbox);
+
+    detailEl.appendChild(el("p","eyebrow-s","本机当前保留"));
+    var kp = el("p","note", a.keep);
+    kp.style.cssText = "margin:0 0 18px";
+    detailEl.appendChild(kp);
+
+    detailEl.appendChild(el("p","eyebrow-s","源素材恢复方式"));
+    var rs = el("div","mo", a.restore);
+    rs.style.cssText = "font-size:11px;color:var(--ink-2);word-break:break-all;line-height:1.7;margin-bottom:14px";
+    detailEl.appendChild(rs);
+
+    detailEl.appendChild(el("p","eyebrow-s","iCloud 入口"));
+    var ic = el("p","note", a.icloud);
+    ic.style.cssText = "margin:0 0 18px";
+    detailEl.appendChild(ic);
+
+    var act = el("div");
+    act.style.cssText = "display:flex;flex-direction:column;gap:8px";
+    act.appendChild(el("button","btn btn--pri btn--full","标记为已取回"));
+    act.appendChild(el("button","btn btn--full","打开 iCloud 相册"));
+    detailEl.appendChild(act);
+  }
+
+  function selectAsset(id){
+    var x = findAny(id);
+    if (!x) return;
+    Array.prototype.forEach.call(document.querySelectorAll("#cardList .asset, #projList .asset, #archList .asset"), function(b){
+      b.setAttribute("aria-selected", b.getAttribute("data-asset") === id ? "true" : "false");
+    });
+    if (x.kind === "card") renderCard(x);
+    else if (x.kind === "project") renderProject(x);
+    else renderArchive(x);
+  }
+
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("#cardList [data-asset], #projList [data-asset], #archList [data-asset]");
+    if (b) selectAsset(b.getAttribute("data-asset"));
+  });
+  selectAsset("c1");
+
+  /* ── 素材库三视图切换 ── */
+  var LIB_SUB = {
+    reuse:    "跨项目复用的资产卡片，只登记不搬运源文件",
+    projects: "按主题集合看项目源文件，源文件是事实原件",
+    archive:  "已发布项目的轻量检索卡，源素材可能已冷归档"
+  };
+  var LIB_FIRST = { reuse:"c1", projects:"p1", archive:"r1" };
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-lib]"), function(t){
+    t.addEventListener("click", function(){
+      var view = t.getAttribute("data-lib");
+      Array.prototype.forEach.call(document.querySelectorAll("[data-lib]"), function(o){
+        if (o === t) o.setAttribute("aria-current","true");
+        else o.removeAttribute("aria-current");
+      });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-lib-view]"), function(v){
+        v.hidden = v.getAttribute("data-lib-view") !== view;
+      });
+      if (libSubEl) libSubEl.textContent = LIB_SUB[view] || "";
+      selectAsset(LIB_FIRST[view]);
+    });
+  });
+
+  /* ── 推荐删除：勾选 · 全选 · 一键删除 ── */
+  var delRows  = document.querySelectorAll("[data-del]");
+  var delAllEl = document.getElementById("delAll");
+  var delCntEl = document.getElementById("delCount");
+  var delBtnEl = document.getElementById("delBtn");
+
+  function delChosen(){
+    return Array.prototype.filter.call(delRows, function(r){
+      return r.getAttribute("aria-pressed") === "true";
+    });
+  }
+  function refreshDelState(){
+    var n = delChosen().length;
+    if (delCntEl) delCntEl.textContent = n ? "已选 " + n + " 个 · 移入废纸篓，30 天内可恢复" : "已选 0 个";
+    if (delBtnEl){
+      delBtnEl.disabled = n === 0;
+      delBtnEl.style.opacity = n === 0 ? ".45" : "1";
+      delBtnEl.textContent = n ? "删除所选 " + n + " 个" : "删除所选";
+    }
+    if (delAllEl) delAllEl.textContent = (n && n === delRows.length) ? "取消全选" : "全选";
+  }
+
+  Array.prototype.forEach.call(delRows, function(row){
+    row.addEventListener("click", function(){
+      row.setAttribute("aria-pressed", row.getAttribute("aria-pressed") === "true" ? "false" : "true");
+      refreshDelState();
+    });
+  });
+
+  if (delAllEl) delAllEl.addEventListener("click", function(){
+    var turnOn = delChosen().length !== delRows.length;
+    Array.prototype.forEach.call(delRows, function(r){
+      r.setAttribute("aria-pressed", turnOn ? "true" : "false");
+    });
+    refreshDelState();
+  });
+
+  if (delBtnEl) delBtnEl.addEventListener("click", function(){
+    var chosen = delChosen();
+    if (!chosen.length) return;
+    chosen.forEach(function(r){ r.hidden = true; });
+    delRows = document.querySelectorAll("[data-del]:not([hidden])");
+    var done = document.getElementById("delDone");
+    if (done){
+      done.hidden = false;
+      var n = done.querySelector("[data-del-done-n]");
+      n.textContent = (parseInt(n.textContent, 10) || 0) + chosen.length;
+    }
+    syncDelCounts(delRows.length);
+    refreshDelState();
+  });
+
+  function syncDelCounts(left){
+    var head = document.querySelector("[data-del-head]");
+    var help = document.getElementById("delHelp");
+    var ctl  = document.getElementById("delCtl");
+    var sum  = document.querySelector("[data-del-sum]");
+    var rail = document.querySelector("[data-del-rail]");
+    var rsub = document.querySelector("[data-del-rail-sub]");
+    if (sum)  sum.textContent  = left;
+    if (rail) rail.textContent = left;
+    if (head) head.innerHTML = left
+      ? '推荐删除 · <span class="num">' + left + '</span> 个'
+      : "推荐删除 · 已处理";
+    if (rsub) rsub.textContent = left ? "需你逐条确认" : "已全部处理";
+    if (help) help.hidden = left === 0;
+    if (ctl)  ctl.hidden  = left === 0;
+    if (delAllEl) delAllEl.hidden = left === 0;
+  }
+
+  refreshDelState();
+
+  /* ── 整理台批次选择 ── */
+  Array.prototype.forEach.call(document.querySelectorAll(".batch"), function(b){
+    b.addEventListener("click", function(){
+      Array.prototype.forEach.call(document.querySelectorAll(".batch"), function(o){
+        o.setAttribute("aria-selected","false");
+        o.style.borderColor = "";
+        o.style.background = "";
+      });
+      b.setAttribute("aria-selected","true");
+      b.style.borderColor = "var(--ac-2)";
+      b.style.background = "var(--raise)";
+    });
+  });
+
+  /* ── 应用内导航 ── */
+  function showScreen(name){
+    Array.prototype.forEach.call(document.querySelectorAll("[data-screen-panel]"), function(p){
+      p.hidden = p.getAttribute("data-screen-panel") !== name;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-screen]"), function(b){
+      if (b.getAttribute("data-screen") === name) b.setAttribute("aria-current","page");
+      else b.removeAttribute("aria-current");
+    });
+  }
+  document.addEventListener("click", function(e){
+    var nav = e.target.closest("[data-screen]");
+    if (nav){ showScreen(nav.getAttribute("data-screen")); return; }
+    var go = e.target.closest("[data-goto]");
+    if (go) showScreen(go.getAttribute("data-goto"));
+  });
+
+  /* ── 设置：左侧分区切换 ── */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-set]"), function(t){
+    t.addEventListener("click", function(){
+      var name = t.getAttribute("data-set");
+      Array.prototype.forEach.call(document.querySelectorAll("[data-set]"), function(o){
+        if (o === t) o.setAttribute("aria-current","true");
+        else o.removeAttribute("aria-current");
+      });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-set-pane]"), function(p){
+        p.hidden = p.getAttribute("data-set-pane") !== name;
+      });
+    });
+  });
+
+  /* ── 设置：开关与步进器 ── */
+  document.addEventListener("click", function(e){
+    var sw = e.target.closest('[role="switch"]');
+    if (sw){
+      sw.setAttribute("aria-checked", sw.getAttribute("aria-checked") === "true" ? "false" : "true");
+      return;
+    }
+    var stepBtn = e.target.closest(".step button");
+    if (stepBtn){
+      var val = stepBtn.parentNode.querySelector("span");
+      var n = parseInt(val.textContent, 10);
+      if (!isNaN(n)){
+        n += (stepBtn.textContent.trim() === "+" ? 1 : -1);
+        if (n < 1) n = 1;
+        val.textContent = String(n);
+      }
+    }
+  });
+
+  /* ── 登录：两步之间切换 ── */
+  function loginStep(name){
+    Array.prototype.forEach.call(document.querySelectorAll("[data-login-step]"), function(p){
+      p.hidden = p.getAttribute("data-login-step") !== name;
+    });
+  }
+  var nextBtn = document.querySelector("[data-login-next]");
+  if (nextBtn) nextBtn.addEventListener("click", function(){ loginStep("agent"); });
+  var backBtn = document.querySelector("[data-login-back]");
+  if (backBtn) backBtn.addEventListener("click", function(){ loginStep("account"); });
+
+  /* ── 登录：选 AI 助手 ── */
+  var AGENT_CMD = {
+    codex:  "codex mcp login chatcut",
+    claude: "claude mcp login plugin:chatcut:chatcut"
+  };
+  var cmdEl = document.getElementById("agentCmd");
+  Array.prototype.forEach.call(document.querySelectorAll("[data-agent]"), function(c){
+    c.addEventListener("click", function(){
+      Array.prototype.forEach.call(document.querySelectorAll("[data-agent]"), function(o){
+        var on = o === c;
+        o.setAttribute("aria-pressed", on ? "true" : "false");
+        var mk = o.querySelector(".agent-mark svg");
+        if (mk) mk.setAttribute("stroke", on ? "#4FB3BD" : "#7D8C8E");
+      });
+      if (cmdEl) cmdEl.textContent = AGENT_CMD[c.getAttribute("data-agent")] || "";
+    });
+  });
+
+  /* ── 四个界面之间切换 ── */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-surface]"), function(t){
+    t.addEventListener("click", function(){
+      var name = t.getAttribute("data-surface");
+      Array.prototype.forEach.call(document.querySelectorAll("[data-surface]"), function(o){
+        o.setAttribute("aria-selected", o === t ? "true" : "false");
+      });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-surface-panel]"), function(p){
+        p.hidden = p.getAttribute("data-surface-panel") !== name;
+      });
+    });
+  });
+})();
+</script>

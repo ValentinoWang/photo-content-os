@@ -1,0 +1,803 @@
+<title>OpenClaw 落地清单</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Asap:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#0D1314; --panel:#111819; --panel-2:#141D1E; --raise:#161F20;
+  --rule:#1C2627; --rule-2:#253133;
+  --ink:#E4EBEB; --ink-2:#B0BEBF; --ink-3:#7D8C8E; --ink-4:#5F7477; --ink-5:#46585A;
+  --ac:#4FB3BD; --ac-2:#2E5F65; --ac-bg:#10292C; --ac-soft:#8FC7CD;
+  --ok:#7FBB92; --ok-bg:#16261B; --ok-line:#2A5348;
+  --warn:#D9A94B; --warn-bg:#1F1810; --warn-line:#5C4A22;
+  --crit:#D9836C; --crit-bg:#20120F; --crit-line:#5E3229;
+  --f-ui:"Archivo","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-tx:"Asap","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-mo:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:14px;line-height:1.5}
+.num{font-variant-numeric:tabular-nums}
+.mo{font-family:var(--f-mo)}
+code{font-family:var(--f-mo);font-size:.88em;background:#0A1112;border-radius:3px;padding:1px 5px;color:var(--ac-soft);word-break:break-all}
+button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:4px}
+a{color:var(--ac-soft)}
+
+.wrap{max-width:1080px;margin:0 auto;padding:34px 24px 80px}
+
+/* ── 页头 ── */
+.head{border-bottom:1px solid var(--rule);padding-bottom:24px;margin-bottom:6px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--ac);margin:0 0 11px}
+h1{font-size:31px;font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:0 0 12px;text-wrap:balance}
+.lede{font-family:var(--f-tx);font-size:14px;line-height:1.75;color:var(--ink-2);margin:0;max-width:70ch}
+.src{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:11.5px;color:var(--ink-4)}
+.src b{color:var(--ink-3);font-weight:500}
+
+/* ── 结论块 ── */
+.verdict{background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;padding:20px 22px;margin:26px 0 30px}
+.verdict h2{font-size:15px;font-weight:600;margin:0 0 12px;letter-spacing:-.01em}
+.verdict p{font-family:var(--f-tx);font-size:13px;line-height:1.8;color:var(--ink-2);margin:0 0 10px;max-width:74ch}
+.verdict p:last-child{margin-bottom:0}
+.verdict strong{color:var(--ink);font-weight:600}
+
+/* ── 统计条 ── */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);
+  border:1px solid var(--rule);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.stat{background:var(--panel);padding:13px 15px}
+.stat-n{font-size:21px;font-weight:700;line-height:1.1}
+.stat-l{font-size:11.5px;color:var(--ink-3);margin-top:5px}
+.stat--ready .stat-n{color:var(--ok)}
+.stat--build .stat-n{color:var(--warn)}
+.stat--decide .stat-n{color:var(--crit)}
+.stat--fix .stat-n{color:var(--ac)}
+
+/* ── 工具条 ── */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--rule);
+  padding:12px 0 13px;margin-bottom:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{border:1px solid var(--rule-2);border-radius:20px;padding:5px 13px;font-size:11.5px;color:var(--ink-3)}
+.filters button:hover{border-color:var(--ac-2);color:var(--ink-2)}
+.filters button[aria-pressed="true"]{border-color:var(--ac);background:var(--ac-bg);color:var(--ac-soft);font-weight:500}
+.prog-wrap{margin-left:auto;display:flex;align-items:center;gap:11px;flex-shrink:0}
+.prog{width:132px;height:5px;border-radius:3px;background:var(--rule-2);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--ac);transition:width .2s}
+@media (prefers-reduced-motion:reduce){.prog i{transition:none}}
+.prog-t{font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+.reset{font-size:11.5px;color:var(--ink-4);text-decoration:underline;text-underline-offset:3px}
+.reset:hover{color:var(--ink-2)}
+
+/* ── 分区 ── */
+.sec{margin-bottom:34px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:5px;padding-bottom:9px;border-bottom:1px solid var(--rule)}
+.sec-n{font-family:var(--f-mo);font-size:11px;color:var(--ink-4);flex-shrink:0}
+.sec-head h2{font-size:17px;font-weight:600;letter-spacing:-.015em;margin:0;flex-grow:1}
+.sec-c{font-size:11.5px;color:var(--ink-4);flex-shrink:0}
+.sec-sub{font-family:var(--f-tx);font-size:12.5px;line-height:1.75;color:var(--ink-3);margin:9px 0 15px;max-width:74ch}
+
+/* ── 条目 ── */
+.item{border:1px solid var(--rule);border-radius:9px;background:var(--panel);margin-bottom:9px;overflow:hidden}
+.item:hover{border-color:var(--rule-2)}
+.item-head{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;cursor:pointer}
+.item-head input{appearance:none;width:16px;height:16px;border:1.5px solid var(--rule-2);border-radius:4px;
+  flex-shrink:0;margin:2px 0 0;cursor:pointer;position:relative;background:var(--bg)}
+.item-head input:checked{background:var(--ac);border-color:var(--ac)}
+.item-head input:checked::after{content:"";position:absolute;left:4.5px;top:1px;width:4px;height:9px;
+  border:solid #08191B;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.item-title{flex-grow:1;min-width:0;font-size:13.5px;font-weight:500;line-height:1.5}
+.item.done .item-title{color:var(--ink-4);text-decoration:line-through;text-decoration-color:var(--ink-5)}
+.badge{flex-shrink:0;font-size:10.5px;font-weight:500;padding:3px 9px;border-radius:4px;white-space:nowrap;margin-top:1px}
+.badge--ready{background:var(--ok-bg);color:var(--ok)}
+.badge--build{background:var(--warn-bg);color:var(--warn)}
+.badge--decide{background:var(--crit-bg);color:var(--crit)}
+.badge--fix{background:var(--ac-bg);color:var(--ac-soft)}
+.item-body{padding:0 15px 14px 43px;display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:62px minmax(0,1fr);gap:12px;align-items:baseline}
+.row-k{font-size:11px;color:var(--ink-4);white-space:nowrap}
+.row-v{font-family:var(--f-tx);font-size:12.5px;line-height:1.7;color:var(--ink-2);min-width:0}
+.row--do .row-k{color:var(--ac)}
+.row--rule .row-k{color:var(--ok)}
+.row--rule .row-v{color:var(--ink);font-weight:500}
+.row--do .row-v{color:var(--ink)}
+
+.note{border-left:2px solid var(--warn-line);background:var(--warn-bg);border-radius:0 6px 6px 0;
+  padding:11px 14px;margin:14px 0 0;font-family:var(--f-tx);font-size:12.5px;line-height:1.75;color:var(--ink-2)}
+.note b{color:var(--warn);font-weight:600;display:block;margin-bottom:4px;font-family:var(--f-ui);font-size:12px}
+
+.empty{padding:30px 0;text-align:center;font-size:12.5px;color:var(--ink-4)}
+
+.foot{border-top:1px solid var(--rule);margin-top:40px;padding-top:20px;
+  font-family:var(--f-tx);font-size:12px;line-height:1.8;color:var(--ink-4);max-width:74ch}
+
+@media(max-width:760px){
+  .wrap{padding:26px 16px 60px}
+  h1{font-size:25px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .item-body{padding-left:15px}
+  .row{grid-template-columns:minmax(0,1fr);gap:2px}
+  .prog-wrap{margin-left:0;width:100%}
+}
+</style>
+
+<div class="wrap">
+
+  <header class="head">
+    <p class="eyebrow">photo-content-os · 前端落地清单</p>
+    <h1>把 OpenClaw Media 原型接到真引擎上</h1>
+    <p class="lede">这份清单把可点击原型上的每一块承诺，对照 <code>photo-content-os</code> 仓库里真实存在的能力，逐条给出判定：能直接接的、要补后端的、必须先拍板的、以及原型本身写错了要改的。每条都标了真实文件路径，不引用文档里的示例路径。</p>
+    <div class="src">
+      <span><b>引擎</b> ValentinoWang/photo-content-os @ <span class="mo">4da5213</span></span>
+      <span><b>现有前端</b> <span class="mo">99_System_OpenClaw/desktop/</span>（约 1000 行）</span>
+      <span><b>原型</b> OpenClaw Media 可点击原型（9 屏）</span>
+    </div>
+  </header>
+
+  <section class="verdict">
+    <h2>先说清楚一件事：现有前端和原型不是同一个东西的两个版本</h2>
+    <p>仓库里已经有一个前端，叫 <strong>Photo Content OS Studio</strong>（<span class="mo">desktop/</span>）。它是一个<strong>文档版本化编辑器</strong>：8 个标签页把 Brief、脚本、分镜、EDL 全部当作「有稳定 ID 的文本区块」来编辑，核心能力是选中区块改、锁定区块、版本 diff、非破坏性回滚、下游 stale 标记。</p>
+    <p>原型是另一种东西：一个<strong>素材管理 + 时间线工作台</strong>。工作台、整理台、素材库这三屏在 Studio 里<strong>完全没有对应物</strong>；而 Studio 的研究与参考、Brief、脚本、交付、发布与复盘这五块，原型<strong>一块都没画</strong>。</p>
+    <p>所以这不是「把旧界面换个皮」，而是两套 IA 的合并。清单最后一节专门列了「不要丢的东西」——那些 Studio 已经做好、原型却没覆盖的能力，换界面时最容易被顺手删掉。</p>
+    <p>另一条边界来自仓库 README 自己的话：<strong>当前稳定交付边界是「经过机器校验的剪辑方案和交接包」</strong>，预览粗剪和可编辑时间线是可选本地能力。原型上任何暗示「自动出成片」的表达都越过了这条线。</p>
+  </section>
+
+  <div class="stats">
+    <div class="stat stat--ready"><div class="stat-n num" id="n-ready">0</div><div class="stat-l">可直接接</div></div>
+    <div class="stat stat--build"><div class="stat-n num" id="n-build">0</div><div class="stat-l">需补后端</div></div>
+    <div class="stat stat--decide"><div class="stat-n num" id="n-decide">0</div><div class="stat-l">需先拍板</div></div>
+    <div class="stat stat--fix"><div class="stat-n num" id="n-fix">0</div><div class="stat-l">原型要改</div></div>
+  </div>
+
+  <div class="bar">
+    <div class="filters" role="group" aria-label="按判定筛选">
+      <button data-f="all" aria-pressed="true">全部</button>
+      <button data-f="build" aria-pressed="false">需补后端</button>
+      <button data-f="ready" aria-pressed="false">可直接接</button>
+      <button data-f="fix" aria-pressed="false">原型要改</button>
+      <button data-f="undone" aria-pressed="false">未完成</button>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog"><i id="prog-bar"></i></div>
+      <span class="prog-t"><span id="prog-t">0 / 0</span></span>
+      <button class="reset" id="reset">清空勾选</button>
+    </div>
+  </div>
+
+  <div id="list">
+
+  <!-- ═══════ 0 先拍板 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">00</span><h2>已拍板的三件事</h2><span class="sec-c" data-count></span></div>
+    <p class="sec-sub">2026-09-01 拍板。原来的三个待决项都有了结论，判定从「需先拍板」转为「需补后端」，下面每条第一行是拍板结果。</p>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="d1">
+        <span class="item-title">整理台的「AI 自动分事件、分批」</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">原型承诺</span><span class="row-v">「AI 会按拍摄时间和地点分成一个个事件，配好实况照片、认出重复连拍，整理成批等你确认」，并展示了 3 个已分好的批次。</span></div>
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">这个能力<strong>完全不存在</strong>。全量搜索 <code>scripts/</code> 没有任何聚类 / 时间分组 / 事件切分逻辑。批次边界 100% 靠人手动建目录 <code>00_Inbox_Mac_Intake/{batch_id}/</code> 再手填 <code>00_批次说明.md</code>。EXIF 的 GPS 经纬度<strong>已经在 manifest 里采集了</strong>（<code>gps_latitude</code> / <code>gps_longitude</code> / <code>location_raw</code>，见 <code>01_scan_media_manifest.py</code>），但没有任何代码消费它做分组。</span></div>
+        <div class="row row--rule"><span class="row-k">拍板结果</span><span class="row-v">做，不做任何降级。整理台保留「AI 自动分事件、分批」的完整承诺。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新写一个分批器模块：读 <code>media_manifest.json</code> 的拍摄时间与 GPS（字段已采集），按时间间隔 + 地理距离阈值切事件，输出带 JSON Schema 的批次计划（建议 <code>schemas/inbox_batch_plan.schema.json</code>）。批次计划先给用户确认，确认后才交给 <code>34</code> / <code>35</code> 建项目和迁移——所以第 08 节 t1（给 <code>35</code> 补测试）必须排在它之前。这是整份清单里工作量最大的单块新增。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="d2">
+        <span class="item-title">素材库的结构化索引层</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">原型承诺</span><span class="row-v">素材库有「按标签筛选」的一排标签、86 张卡片计数、按分类树浏览、详情栏显示复用标签和适合用途。</span></div>
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">资产卡片是 <strong>Markdown 文件</strong>（<code>15_register_reusable_asset.py</code> 的 <code>build_card()</code>，模板 <code>templates/02_Asset_资产卡片_TEMPLATE.asset.md</code>），复用索引是<strong>一行一条的 Markdown 列表</strong>（<code>02_Asset_Library/Reusable_通用素材索引.md</code>）。标签和用途字段确实有（<code>--tags</code> / <code>--uses</code>），但<strong>没有 JSON 索引、没有 schema、没有反查、零测试</strong>。UI 要筛选就得拿正则从 Markdown 里捞。</span></div>
+        <div class="row row--rule"><span class="row-k">拍板结果</span><span class="row-v">增加。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新增 <code>02_Asset_Library/index.json</code> 结构化索引 + <code>schemas/asset_library_index.schema.json</code>，由 <code>15_register_reusable_asset.py</code> 写卡片时同步 upsert（Markdown 卡片继续保留，人读卡片、机器读索引）。给素材库屏提供只读查询接口，连带补 <code>12</code> / <code>14</code> / <code>15</code> 的测试（第 08 节 t2）。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="d3">
+        <span class="item-title">转写：阿里云在线为默认，FunASR 本地兜底</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">原型承诺</span><span class="row-v">设置里转写方式默认显示「本机 FunASR」，项目屏的证据来源写着「逐字转写 · 本机 FunASR」。</span></div>
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>03_transcribe_audio.py</code> 的 <code>build_provider()</code> 恰好三种：<code>sidecar</code>（读旁挂 srt/json/txt）、<code>openai_api</code>（要 <code>OPENAI_API_KEY</code>）、<code>pending</code>（只写占位、不假装听过）。<strong>没有本地 Whisper，也没有 FunASR</strong>，而且默认兜底就是 <code>pending</code>——开箱即用状态下转写是空的。</span></div>
+        <div class="row row--rule"><span class="row-k">拍板结果</span><span class="row-v">默认以阿里云线上模型 API 为主；Codex 订阅额度经核实覆盖不了音频转写（见下）；实在不行配 FunASR——结论是 FunASR 作为本地兜底方案保留。</span></div>
+        <div class="row"><span class="row-k">Codex 额度</span><span class="row-v"><strong>为什么不行：</strong>Codex 登录用的 ChatGPT 订阅额度只覆盖 Codex 代理本身的文本/代码模型调用，订阅侧没有音频转写端点，Codex 用的模型也不接受音频输入。OpenAI 家的转写（whisper-1 / gpt-4o-mini-transcribe）走的是 API 平台按量计费，需要单独的 <code>OPENAI_API_KEY</code>——那条路仓库已经实现好了（<code>openai_api</code> provider）。Codex 额度能帮你「指挥」流程，但听音频的活它的模型干不了。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">① 在 <code>03_transcribe_audio.py</code> 的 <code>build_provider()</code> 插槽里新增 <code>dashscope</code> provider 并设为默认：读 <code>DASHSCOPE_API_KEY</code>，调阿里云录音文件转写（Paraformer 系），输出对齐 <code>schemas/audio_transcript.schema.json</code>。② 新增 <code>funasr</code> 本地 provider 作兜底（Paraformer-zh + fsmn-vad + ct-punc，全离线、带字级时间戳）。③ 现有 <code>sidecar</code> / <code>openai_api</code> / <code>pending</code> 保留不动。④ 设置页默认显示「阿里云在线转写」，并如实提示在线转写会把音频发给阿里云——原型已同步改好。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 1 登录/安装 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">01</span><h2>登录与安装向导</h2><span class="sec-c" data-count></span></div>
+    <p class="sec-sub">这两屏在现有 Studio 里完全没有——Studio 只监听 loopback，本来就没有登录概念。</p>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="a1">
+        <span class="item-title">账号登录（邮箱 / Apple / 微信）</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">Studio 完全没有账号体系。<code>server.py</code> 的安全模型是「只听 127.0.0.1 + 同源 Origin + <code>X-Content-OS-CSRF</code>」，靠的是本机边界不是身份。云端账号属于上游 <code>openclaw-media</code> 仓库，不在这个仓库里。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">先确认登录到底登的是谁——是 openclaw-media 中台账号，还是本地应用自己的账号。如果是前者，这屏的后端在另一个仓库，本仓库只需存一个 token 引用。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="a2">
+        <span class="item-title">安装向导的四步（存放位置 / 运行环境 / 剪辑器 / 账号与设备）</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">四步对应的检查全都已经有 CLI 实现：环境装配 <code>41_setup_dev_environment.sh/.ps1</code>，环境体检 <code>43_content_os_doctor.py</code>，存放位置就是 <code>--state-dir</code>（默认 <code>~/.photo-content-os/studio/</code>），设备配对判据在 doctor 的 <code>openclaw_cloud_pairing</code> 项里。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">把这些 CLI 包成 HTTP 接口给向导调用即可，不需要新逻辑。注意 <code>44_launch_desktop.py</code> 目前是纯命令行启动，向导本身得先有人能打开。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 2 工作台 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">02</span><h2>工作台</h2><span class="sec-c" data-count></span></div>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="h1">
+        <span class="item-title">最近项目列表 + 六段流水线进度</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>GET /api/bootstrap</code> 已经返回 projects 全量，<code>GET /api/projects/:id</code> 返回单项目。项目里已有 <code>documents.{brief,script,storyboard,edl}</code> 各自的 <code>version</code> / <code>stale</code>，以及 <code>delivery.state</code>——这正好就是六段进度条要的数据。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="h2">
+        <span class="item-title">「四个引擎」状态卡（数据中台 / Codex / ChatCut / 本机引擎）</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">部分有：本机引擎状态可从 <code>analysis_tiering</code> 的进度推；Codex 可用性在 doctor 的 <code>creative_provider</code> 项里；数据中台连接状态在 <code>openclaw_media_agent.py status</code>。<strong>ChatCut 在这个仓库里完全不存在</strong>——没有任何代码引用它。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新增一个聚合状态接口把前三个拼起来。ChatCut 那一格要么删掉，要么先确定它到底怎么接入（目前正式导出后端只有 <code>handoff_pack</code> 和 <code>otio_kdenlive</code> 两个）。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="h3">
+        <span class="item-title">素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB）</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">单个项目的 manifest 有逐条媒体信息，但<strong>没有跨项目的聚合统计</strong>。资产库是 Markdown，数不出这些数。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="h4">
+        <span class="item-title">本周统计（完成任务 23 / 发布内容 4）</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">发布数可从各项目的 <code>publishing.state</code> 数出来（<code>project_store.record_publishing()</code> 已经在存）。完成任务数要从队列结果里数，<code>98_Agent任务队列/02_mac_to_cloud_results</code> 有记录但没有按周聚合。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 3 整理台 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">03</span><h2>整理台</h2><span class="sec-c" data-count></span></div>
+    <p class="sec-sub">全新的一屏，Studio 里没有任何对应物。也是整份清单里后端缺口最大的一屏。</p>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="i1">
+        <span class="item-title">拖入素材 → 自动成批</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">见第 00 节：分批能力不存在。现有的 <code>34_ensure_project_from_inbox_batch.py</code> 只是「拿一个已经存在的批次目录去建项目壳」，不负责把散素材分成批。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="i2">
+        <span class="item-title">批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1）</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>01_scan_media_manifest.py</code> 的 <code>scan_project()</code> 已经把设备、编码、时长、尺寸全部写进 <code>_ai_analysis/media_manifest.json</code>（<code>manifest_version: 2</code>）。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">读 manifest 分组计数即可，不用新后端。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="i3">
+        <span class="item-title">连拍识别（「发现 4 组连拍」）与实况配对</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">连拍分组<strong>有</strong>：<code>12_select_repeat_photo_groups.py</code> 的 <code>create_plan()</code> 能出计划、还能生成 contact sheet。但它<strong>零测试、零 schema</strong>，而且是独立 CLI，不接批次流程。Live Photo 的成组改名逻辑在 <code>11_rename_media_file.py</code> 里有，同样零测试。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">把 <code>12</code> 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="i4">
+        <span class="item-title">三分落点：进项目 / 归档保留 / 推荐删除</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">没有任何「落点建议」逻辑。<code>07_validate_media_decisions.py</code> 名字像但其实校验的是<strong>文件命名</strong>，读 manifest 的 <code>decision_issues</code> 出一份 <code>media_decision_warnings.md</code>，跟三分落点无关。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="i5">
+        <span class="item-title">「删除走系统废纸篓，30 天内可恢复」这句要核实</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">仓库<strong>整体设计上不删除任何东西</strong>。<code>45_archive_project.py</code> 的 <code>prune_plan()</code> 硬编码返回 <code>"safe": False</code>，删除候选只返回一句「需人工确认」。没有任何代码调用系统废纸篓 API。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">要么真接一个移入废纸篓的实现（macOS 上是 <code>NSFileManager</code> / <code>trash</code> 命令），要么把这句话改成如实的说法。现在这句是空头承诺。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 4 素材库 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">04</span><h2>素材库</h2><span class="sec-c" data-count></span></div>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="l1">
+        <span class="item-title">复用资产卡片列表 + 分类树</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>15_register_reusable_asset.py</code> 能写卡片和索引，字段（分类 / 公开状态 / 复用标签 / 适合用途 / 建议截取 / iCloud 精选副本）跟原型详情栏几乎一一对应。但全是 Markdown，没有读取接口。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="l2">
+        <span class="item-title">按标签筛选</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">标签存在于 Markdown 卡片的 <code>## 复用标签</code> 段和索引行里，但无法查询。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="l3">
+        <span class="item-title">「源文件现在在哪」状态（在本机 / 云盘镜像 / 移动硬盘冷归档）</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">归档状态机在 <code>45_archive_project.py</code> 的 <code>index_card()</code> 里。<strong>但要注意</strong>：模板 <code>templates/06_Project_Archive_Index_TEMPLATE.archive.md</code> 声明了 4 个状态（active/cooling/cold_archived/restored），代码<strong>实际只写得出 2 个</strong>（cold_archived、cooling）——<code>active</code> 和 <code>restored</code> 在 Python 里没有任何写入点。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">前端只按实际会出现的 2 个状态设计，或者先补齐代码里缺的两个写入点。别照着模板做 4 态 UI。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="l4">
+        <span class="item-title">归档索引卡（检索关键词、精选副本入口、恢复方式）</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>45</code> 的 <code>build_manifest()</code> / <code>index_card()</code> / <code>restore_from_manifest()</code> 都在，有 6 个测试（<code>tests/test_archive_project.py</code>）。准入 4 项检查（目录齐全 / Final 非空 / 同步清单无未勾选 / 待增加为空）逻辑清晰。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">包 HTTP 接口。这是素材库里唯一后端完备的部分。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="l5">
+        <span class="item-title">详情栏主按钮「选择项目并加入」要落到真实动作</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">「把一条复用资产加入某个项目」这个动作在仓库里没有对应脚本。缺位的 <strong>16 号脚本</strong>正好卡在 <code>15_register_reusable_asset</code>（资产库）和 <code>17_match_materials_to_brief</code>（剪辑链路）之间——按序列语义，这个位置本该放的就是「资产库 → 剪辑决策」的衔接能力，从未实现。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 5 项目 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">05</span><h2>项目</h2><span class="sec-c" data-count></span></div>
+    <p class="sec-sub">这一屏后端最扎实——EDL 链路是整个仓库测试最密的部分（<code>tests/test_p0_edl_contract.py</code> 19 个测试）。</p>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="p1">
+        <span class="item-title">剪辑决策条目列表（时间码 / 台词 / 角色标签）</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>edl_contract.py</code>（504 行）+ <code>schemas/edit_decision_list.schema.json</code> 完备。v1 必填字段 <code>slot</code> / <code>time_range</code> / <code>source_start_sec</code> / <code>purpose</code> / <code>visual_need</code> / <code>caption</code> / <code>candidate_files</code> / <code>edit_note</code> 全部就位，原型列表要显示的东西都有。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">纯前端。EDL 已经通过 <code>GET /api/projects/:id</code> 返回了。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="p2">
+        <span class="item-title">双轨时间线（主画面 + 叠加层）</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">v2 的 <code>role</code>（a_roll/b_roll/overlay/title）和 <code>layer</code>（primary/overlay/background）已经落地，<code>clip_layer()</code> / <code>layers_used()</code> 可直接查询。重叠规则也定好了：只有 <code>EXCLUSIVE_LAYERS = {"primary"}</code> 强制不重叠，叠加层允许重叠——这正是画双轨所需要的语义。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="p3">
+        <span class="item-title">现有 Studio 把 EDL 当纯文本区块编辑——换界面时这块要重做</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>app.js</code> 的 <code>render()</code> 把 <code>edl</code> 交给和 Brief/脚本完全相同的 <code>documentView()</code> 处理，也就是说现在 EDL 是<strong>一堆可编辑的 textarea</strong>。原型画的是结构化时间线。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">明确取舍：结构化时间线编辑之后，还要不要保留「按区块改 EDL 文本 + AI 只改选中区块」这条路？这是 Studio 的核心卖点之一，换成时间线就没了。建议两者并存（时间线主视图 + 文本视图兜底）。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="p4">
+        <span class="item-title">「待补素材」缺口清单</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">EDL 文档级必填字段就有 <code>missing_materials</code>，而且 README 明确写了「没有真实来源的缺失镜头只能进入 <code>missing_materials</code>」——原型里「不会拿别的镜头顶替」这句话跟后端契约完全一致。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">纯前端。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="p5">
+        <span class="item-title">交接去向：ChatCut 时间线 / Kdenlive 工程 / 剪映草稿</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">正式后端只有两个（<code>SUPPORTED_EDITOR_BACKENDS = {"handoff_pack", "otio_kdenlive"}</code>）。<code>otio_kdenlive</code> 是真多轨；<code>handoff_pack</code> 多轨感知但交付的是文件包（manifest + clips.csv + captions.srt + 交接说明），<strong>不渲染视频</strong>。ChatCut 不在其中。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">原型这一栏改成如实列出两个可用后端。ChatCut 要留就得先定接入方式。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="p6">
+        <span class="item-title">剪映：原型说「草稿加密写不进去」——这个理由在仓库里查无实据</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">全量搜索 <code>22</code>–<code>28</code> 七个剪映脚本和 <code>docs/05</code>，<strong>零处提到加密</strong>。真实情况是<strong>策略性废弃</strong>：<code>docs/05_剪映与HyperFrames.md</code> 写着「系统不再为新项目生成或修改剪映草稿」，<code>scripts/README.md</code> 写着「新任务不生成或修改生产用剪映草稿」，<code>doc_sync_contract.json</code> 还有一条专门门禁 <code>historical_jianying_evidence_is_not_production</code> 强制把它标成历史证据。这 7 个脚本都不在 <code>mac_runner_capabilities.yaml</code> 里，runner 从不调用。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">把诊断页和交接去向里「加密」的说法改掉，如实写成「这条路线已停止维护」。技术上做不到和策略上不做，是两件事，别混。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 6 设置与诊断 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">06</span><h2>设置与诊断</h2><span class="sec-c" data-count></span></div>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="s1">
+        <span class="item-title">分析预算四个数字</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>analysis_tiering.py</code> 的 <code>TierBudget</code> 默认值和原型显示的完全一致：粗看每条 3 帧、细看每条 12 帧、最多粗看 100 条、最多细看 24 条（另有 <code>max_audio_minutes = 120.0</code>）。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">补一个读写配置的接口。注意 <code>analysis_tiering</code> 的输出<strong>没有 JSON Schema</strong>，只有 dataclass 和 <code>POLICY_VERSION</code>。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="s2">
+        <span class="item-title">存放位置（素材根目录 / 笔记库）</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">已有 <code>POST /api/projects/:id/workspace</code>（<code>store.connect_workspace()</code>），而且已经做了隐私投影——只回 <code>label</code> 和 <code>path_digest</code>，绝对路径不出本机。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">现有接口是项目级的，设置页要的是全局级，得加一个。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="s3">
+        <span class="item-title">诊断页六项检查</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>43_content_os_doctor.py</code> 的 <code>collect_checks()</code>：必需 4 项（<code>python_version</code> ≥3.11、<code>repository_write</code>、<code>ffmpeg</code>、<code>ffprobe</code>）+ 可选项。<strong>可选项数量会变</strong>：默认 provider 是 <code>codex_cli</code> 时共 6 项；设成 <code>openai_api</code> 时变成 7 项（多出 <code>openai_key</code> 和 <code>openai_package</code>）。输出 <code>content_os_doctor_v1</code>，exit code 0/2。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">包接口。前端别把「6 项」写死。另外这个脚本<strong>零测试覆盖</strong>，接之前建议先补。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="s4">
+        <span class="item-title">云端配对在非 macOS 上永远是红的</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">doctor 的 <code>openclaw_cloud_pairing</code> 判据是 <code>platform_contract_name() in {"macos"}</code>。上游合同 <code>supported_device_platforms: ["macos"]</code>，Windows / Linux 上这项<strong>必然失败</strong>，README 也明说了会 fail-closed。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">Windows 用户看到一项永远红的检查会以为装坏了。诊断页需要区分「这台机器不支持」和「配置错了」两种状态，文案要说清楚本地流水线不受影响。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="s5">
+        <span class="item-title">AI 助手设置（接入方式 / 模型 / 思考强度）</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">provider 选择通过环境变量 <code>OPENCLAW_CREATIVE_PROVIDER</code>（<code>codex_cli</code> / <code>openai_api</code>），<code>llm_common.py</code> 里有调用封装。但<strong>没有持久化的配置文件</strong>，也没有配置读写接口。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新增一层配置存储 + 接口。目前所有设置都靠环境变量，做不出设置页。另外：「默认以阿里云线上模型 API 为主」如果不止转写、也适用于文案生成和关键帧视觉分析，需要给 creative provider 新增 <code>dashscope</code> 选项（现在只有 <code>codex_cli</code> / <code>openai_api</code> 两种）——这一点建议下次一并确认。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 7 网页中台 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">07</span><h2>网页中台</h2><span class="sec-c" data-count></span></div>
+    <p class="sec-sub">这一屏的后端不在本仓库，在上游 <code>ValentinoWang/openclaw-media</code>。本仓库只有一层薄桥。</p>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="c1">
+        <span class="item-title">任务列表上的 <span class="mo">media.xxx.v1</span> 标识符是对的</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">全部 9 个（<code>media.project.prepare.v1</code>、<code>media.material.match.v1</code>、<code>media.edit.timeline.v1</code> 等）确实存在，但只存在于 <code>schemas/openclaw_media_contract_snapshot.json</code> 的 <code>pipelines</code> 映射里——它们是<strong>上游云端的 pipeline ID 快照</strong>，本地脚本不按它们分派。原型把它们放在「网页中台」这一屏是<strong>放对了位置</strong>。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="c2">
+        <span class="item-title">任务状态机（执行中 / 已完成 / 已阻塞）</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">同一份快照里固化了完整状态机：<code>queued / leased / acknowledged / running / succeeded / blocked / failed / expired / cancelled</code>，共 9 态。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">前端目前只画了 3 态，补齐映射即可。注意 <code>expired</code> 和 <code>cancelled</code> 也要有对应显示。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="c3">
+        <span class="item-title">冻结基线要写进界面还是文档</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">后端现状</span><span class="row-v">README 冻结了明确基线：<code>openclaw-media</code> @ <code>f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf</code>，合同 <code>openclaw_media_product_v1</code>，catalog digest <code>sha256:931dba97…</code>。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 8 技术债 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">08</span><h2>接界面之前该还的债</h2><span class="sec-c" data-count></span></div>
+    <p class="sec-sub">这些不是原型引入的新需求，是现有代码的窟窿。UI 一接上去，这些窟窿就会变成线上问题。</p>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="t1">
+        <span class="item-title">给 <span class="mo">35_promote_inbox_batch_to_project.py</span> 补测试</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v">这个脚本做的是<strong>移动文件</strong>（不是复制），却<strong>零测试覆盖</strong>。整个仓库里风险最高的一处。整理台的「确认落点」一旦接上它，就是让用户一键触发一个没测过的破坏性操作。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">接 UI 之前先补测试。这条建议优先级高于任何界面工作。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="t2">
+        <span class="item-title">给素材库三件套补测试（<span class="mo">12</span> / <span class="mo">14</span> / <span class="mo">15</span>）</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v">连拍筛选、合照分发、资产登记三个脚本全部零测试、零 schema。素材库这一屏完全建立在它们之上。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">和第 00 节的索引层一起做，定契约的同时补测试。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="t3">
+        <span class="item-title">给 <span class="mo">43_content_os_doctor.py</span> 和 <span class="mo">01_scan_media_manifest.py</span> 补测试</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v">两个都是 UI 会高频调用的入口，都零测试。<code>01</code> 是所有分析的数据源头，它错了后面全错。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">补基础用例。<code>01</code> 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="t4">
+        <span class="item-title">给 <span class="mo">analysis_tiering</span> 的输出定 JSON Schema</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v">有 <code>POLICY_VERSION = "analysis_tiering_v1"</code> 和 dataclass，但没有 schema 文件。仓库其它关键契约（EDL、转写）都有 schema，这里是个缺口。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">补 <code>schemas/analysis_tiering.schema.json</code>，纳入现有的契约校验流程。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="ready">
+      <label class="item-head"><input type="checkbox" data-k="t5">
+        <span class="item-title">确认现有 Studio 的安全模型能不能撑住新界面</span>
+        <span class="badge badge--ready">可直接接</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v"><code>server.py</code> 的写请求三重校验（loopback Host + 同源 Origin + <code>X-Content-OS-CSRF</code>）+ 每次写都要 <code>expectedRevision</code> 乐观锁，模型是清楚的。静态响应带 CSP、<code>X-Frame-Options: DENY</code>、<code>nosniff</code>。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新增的每一个写接口都要沿用同一套（尤其是乐观锁）。这套东西已经对了，别在扩界面时绕过它。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="build">
+      <label class="item-head"><input type="checkbox" data-k="t6">
+        <span class="item-title">决定 <span class="mo">22</span>–<span class="mo">28</span> 七个剪映脚本的去留</span>
+        <span class="badge badge--build">需补后端</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v">约 1600 行代码 + 3 个测试文件，全部不在能力清单里、runner 从不调用，但 <code>25 --help</code> 还留在 <code>42_run_local_ci.sh</code> 的冒烟列表里。处于「代码在、测试在、策略上不用」的僵持状态。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">要么正式移进历史归档目录，要么在 README 明确标注「保留但不维护」。现在的状态会让人以为它可用。</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════ 9 不要丢 ═══════ -->
+  <section class="sec" data-sec>
+    <div class="sec-head"><span class="sec-n">09</span><h2>换界面时不要丢的东西</h2><span class="sec-c" data-count></span></div>
+    <p class="sec-sub">下面这些 Studio 已经做好了，但原型一块都没画。它们不是可有可无的边角料，是这个产品跟通用剪辑工具的区别所在。</p>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="k1">
+        <span class="item-title">区块锁定 + AI 只改选中区块</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v"><code>ai_patch.py</code> 定义了严格合同：替换集合必须与选中集合<strong>完全一致</strong>，locked block 不能被保存或被 AI 改。这是防止 AI 悄悄改动你没让它改的地方——一个很硬的产品承诺。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="k2">
+        <span class="item-title">版本 diff 与非破坏性回滚</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v"><code>GET /documents/:name/diff?from=&to=</code> 和 <code>POST /documents/:name/rollback</code> 都在，回滚是<strong>创建新版本</strong>而不是删历史。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">原型里没有版本概念。至少要在项目屏留一个入口。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="k3">
+        <span class="item-title">下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新）</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v">依赖关系已经实现，概览页会数出「待重算下游」的数量。这是保证证据链一致性的机制。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="k4">
+        <span class="item-title">研究与参考（reference ≠ 自有素材）</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v">独立的 <code>references</code> 数据结构 + <code>POST /api/projects/:id/references</code>，每条标了 <code>asset_role=reference</code>，界面上明确写着「公开样本不会被误当成你本地拥有的可剪素材」。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="k5">
+        <span class="item-title">发布与复盘（指标 + 复盘结论 + 下次约束）</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v"><code>record_publishing()</code> 存 6 项指标（播放/点赞/评论/转发/收藏/关注）+ <code>review_conclusion</code> + <code>next_constraint</code>，而且下一次 AI 修改<strong>只参考同账号已记录的结论</strong>——这是让工具越用越准的闭环。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">原型里完全没有。这块丢了，产品就退化成一次性工具。</span></div>
+      </div>
+    </article>
+
+    <article class="item" data-status="fix">
+      <label class="item-head"><input type="checkbox" data-k="k6">
+        <span class="item-title">Brief 和脚本两个文档阶段</span>
+        <span class="badge badge--fix">原型要改</span></label>
+      <div class="item-body">
+        <div class="row"><span class="row-k">现状</span><span class="row-v">Studio 有独立的 Brief 和脚本标签页，都是版本化区块文档。README 的能力链条里，「对照 Brief / Script 匹配素材」是素材匹配的前提输入。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">原型直接从素材跳到剪辑决策，中间少了 Brief 和脚本。要么补进去，要么想清楚这两步在新 IA 里搬到哪。</span></div>
+      </div>
+    </article>
+  </section>
+
+  </div>
+
+  <p class="empty" id="empty" hidden>这个筛选下没有条目。</p>
+
+  <div class="note">
+    <b>关于这份清单的准确性</b>
+    每一条的「后端现状」都来自对 <span class="mo">photo-content-os @ 4da5213</span> 的实际代码核查，不是从文档转述。有三处我原先的判断被代码推翻了，已经在对应条目里更正：剪映不是被加密挡住（是策略废弃）、<span class="mo">media.xxx.v1</span> 不是本地任务类型（是上游云端 pipeline ID）、诊断项数不固定是 6（取决于 provider 配置）。缺 <span class="mo">16</span> 和 <span class="mo">21</span> 号脚本这两处的用途推断我标了「推测」，没有直接证据。
+  </div>
+
+  <p class="foot">
+    勾选状态保存在你自己的浏览器里，不会同步给任何人，也不会随页面更新丢失。<br>
+    引擎快照：<span class="mo">ValentinoWang/photo-content-os @ 4da5213</span>（45 个测试文件 / 约 246 个测试 / 2 个 CI workflow）。
+  </p>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "openclaw-dev-checklist-v1";
+  var list = document.getElementById("list");
+  var boxes = Array.prototype.slice.call(list.querySelectorAll("input[type=checkbox]"));
+  var items = Array.prototype.slice.call(list.querySelectorAll(".item"));
+  var secs  = Array.prototype.slice.call(list.querySelectorAll("[data-sec]"));
+
+  function read(){
+    try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }
+    catch (e) { return {}; }
+  }
+  function write(state){
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  /* ── 统计 ── */
+  var counts = {ready:0, build:0, decide:0, fix:0};
+  items.forEach(function(it){
+    var s = it.getAttribute("data-status");
+    if (counts[s] !== undefined) counts[s]++;
+  });
+  Object.keys(counts).forEach(function(k){
+    var el = document.getElementById("n-" + k);
+    if (el) el.textContent = counts[k];
+  });
+
+  /* ── 每节计数 ── */
+  secs.forEach(function(sec){
+    var n = sec.querySelectorAll(".item").length;
+    var el = sec.querySelector("[data-count]");
+    if (el) el.textContent = n + " 条";
+  });
+
+  /* ── 进度 ── */
+  function refresh(){
+    var done = boxes.filter(function(b){ return b.checked; }).length;
+    var total = boxes.length;
+    var bar = document.getElementById("prog-bar");
+    var txt = document.getElementById("prog-t");
+    if (bar) bar.style.width = total ? (done / total * 100) + "%" : "0";
+    if (txt) txt.textContent = done + " / " + total;
+    items.forEach(function(it){
+      var b = it.querySelector("input[type=checkbox]");
+      if (b) it.classList.toggle("done", b.checked);
+    });
+  }
+
+  /* ── 恢复状态 ── */
+  var saved = read();
+  boxes.forEach(function(b){
+    var k = b.getAttribute("data-k");
+    if (k && saved[k]) b.checked = true;
+    b.addEventListener("change", function(){
+      var s = read();
+      if (b.checked) s[k] = 1; else delete s[k];
+      write(s);
+      refresh();
+      applyFilter();
+    });
+  });
+  refresh();
+
+  /* ── 筛选 ── */
+  var mode = "all";
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll("[data-f]"));
+  function applyFilter(){
+    var shown = 0;
+    items.forEach(function(it){
+      var s = it.getAttribute("data-status");
+      var b = it.querySelector("input[type=checkbox]");
+      var ok;
+      if (mode === "all") ok = true;
+      else if (mode === "undone") ok = !(b && b.checked);
+      else ok = (s === mode);
+      it.hidden = !ok;
+      if (ok) shown++;
+    });
+    secs.forEach(function(sec){
+      var any = Array.prototype.slice.call(sec.querySelectorAll(".item"))
+        .some(function(it){ return !it.hidden; });
+      sec.hidden = !any;
+    });
+    var empty = document.getElementById("empty");
+    if (empty) empty.hidden = shown !== 0;
+  }
+  filterBtns.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      mode = btn.getAttribute("data-f");
+      filterBtns.forEach(function(o){
+        o.setAttribute("aria-pressed", String(o === btn));
+      });
+      applyFilter();
+    });
+  });
+  applyFilter();
+
+  /* ── 清空 ── */
+  var reset = document.getElementById("reset");
+  if (reset) reset.addEventListener("click", function(){
+    boxes.forEach(function(b){ b.checked = false; });
+    write({});
+    refresh();
+    applyFilter();
+  });
+})();
+</script>
