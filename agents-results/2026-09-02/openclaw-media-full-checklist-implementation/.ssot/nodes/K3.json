@@ -3,7 +3,7 @@
   "semantic_key": "requirement.checklist.k3",
   "stage": "R7",
   "work_kind": "implementation",
-  "domain_lane": "studio",
+  "domain_lane": "project",
   "execution_state": "READY",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
@@ -41,10 +41,10 @@
     "DL-K3"
   ],
   "source_requirement_refs": [
-    "SRC-K3"
+    "SRC-CHECKLIST-K3"
   ],
   "surface_refs": [
-    "SURF-STUDIO"
+    "SURF-PROJECT"
   ],
   "required_evidence_profile": {
     "source_identity": "locked",
@@ -56,7 +56,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新）：原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

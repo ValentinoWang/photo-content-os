@@ -42,7 +42,7 @@
     "DL-C3"
   ],
   "source_requirement_refs": [
-    "SRC-C3"
+    "SRC-CHECKLIST-C3"
   ],
   "surface_refs": [
     "SURF-CLOUD"
@@ -57,7 +57,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "冻结基线要写进界面还是文档：上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

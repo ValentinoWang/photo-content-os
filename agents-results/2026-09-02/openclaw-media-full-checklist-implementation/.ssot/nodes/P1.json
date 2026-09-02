@@ -42,7 +42,7 @@
     "DL-P1"
   ],
   "source_requirement_refs": [
-    "SRC-P1"
+    "SRC-CHECKLIST-P1"
   ],
   "surface_refs": [
     "SURF-PROJECT"
@@ -57,7 +57,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "剪辑决策条目列表（时间码 / 台词 / 角色标签）：纯前端。EDL 已经通过 GET /api/projects/:id 返回了。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

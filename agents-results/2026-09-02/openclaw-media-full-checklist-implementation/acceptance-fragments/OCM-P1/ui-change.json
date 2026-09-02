@@ -1,11 +1,16 @@
 {
   "schema_version": 1,
   "user_visible": true,
+  "source_authority_mode": "strict",
+  "source_requirements_ref": {
+    "path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/.ssot/source-requirements.json",
+    "canonical_digest": "b0ac893140e4dc3b3457ecd88fbeeecee364f8add669cbd4b86561f65110bcb0"
+  },
   "task_id": "OCM-P1",
   "reference_prototypes": [
     {
       "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
-      "sha256": "12333526096c18d2dc0e4a0f4b49d804d0f3cf5683117730ce415e3665686978",
+      "sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8",
       "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:cc44bc4065310264b7bf398680fc6cb0750fd163",
       "authority_by_dimension": {
         "information_architecture": "normative",
@@ -18,19 +23,19 @@
     }
   ],
   "capture_matrix": {
-    "ref": ".ssot/visual-fidelity-contract.json",
+    "ref": ".ssot/source-requirements.json",
     "surface_refs": [
       "SURF-PROJECT"
     ]
   },
-  "interaction_matrix_ref": ".ssot/interaction-matrix.json",
+  "interaction_matrix_ref": ".ssot/source-requirements.json",
   "visual_evidence_types": [
     "dom",
     "computed-style",
     "screenshot",
     "interaction-trace"
   ],
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "source_requirement_refs": [
     "SRC-P1"
   ],

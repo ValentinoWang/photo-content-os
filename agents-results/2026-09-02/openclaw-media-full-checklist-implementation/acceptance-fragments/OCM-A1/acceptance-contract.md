@@ -6,7 +6,7 @@
 - Test baseline: PLANNED
 - Acceptance owner: 产品负责人与对应领域验收负责人
 - Approval evidence: 尚未批准
-- Request source: agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html sha256:88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf
+- Request source: agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
 - SSOT node: A1
 - SSOT path: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/ssot-development-paths.md
 - Readiness mode: FORMAL
@@ -14,12 +14,12 @@
 - Assumption IDs: none
 - Invalidation keys: checklist.a1
 - AC budget: 2
-- Baseline identity: main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35; checklist-sha256:88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf
+- Baseline identity: main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35; checklist-sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
 - Product Context refs: SRC-A1, source-notes.md
 - Role Context refs: 本地内容创作者，以及可选配对的上游中台用户
-- Resolved Surface Contract refs: .ssot/surface-inventory.json#SURF-LOGIN
-- Screen Contract ref: .ssot/interaction-matrix.json#SURF-LOGIN
-- Visual Contract refs: .ssot/visual-fidelity-contract.json
+- Resolved Surface Contract refs: .ssot/source-requirements.json#SURF-LOGIN
+- Screen Contract ref: .ssot/source-requirements.json#SURF-LOGIN
+- Visual Contract refs: .ssot/source-requirements.json
 - UI Change declaration: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-A1/ui-change.json
 - Human acceptance workspace: none
 
@@ -69,10 +69,10 @@ Then 系统完成“使用上游中台身份完成邮箱、Apple 或微信登录
 
 ## Acceptance criteria
 
-| ID | Class | Source requirement refs | Requirement | Verification layer | Mode | Blocking |
-| --- | --- | --- | --- | --- | --- | --- |
-| AC-01 | behavior | SRC-A1 | 使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。；从真实入口完成正常业务闭环，回读结果与可见状态一致 | E2E and local runtime | Automatic | Yes |
-| AC-02 | behavior | SRC-A1 | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Integration, E2E and negative paths | Automatic | Yes |
+| ID | Class | Lane | Source requirement refs | Requirement | Mode | Blocking |
+| --- | --- | --- | --- | --- | --- |
+| AC-01 | behavior | machine/e2e | SRC-CHECKLIST-A1 | 使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。；从真实入口完成正常业务闭环，回读结果与可见状态一致 | Automatic | Yes |
+| AC-02 | behavior | machine/local-runtime | SRC-CHECKLIST-A1 | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Automatic | Yes |
 
 ## Human acceptance
 
@@ -101,4 +101,4 @@ Then 系统完成“使用上游中台身份完成邮箱、Apple 或微信登录
 
 ## Risks and open decisions
 
-合同保持 DRAFT，至到行为被产品负责人批准且受保护的自动验收基线被锁定。
+合同保持 DRAFT，直到行为被产品负责人批准且受保护的自动验收基线被锁定。

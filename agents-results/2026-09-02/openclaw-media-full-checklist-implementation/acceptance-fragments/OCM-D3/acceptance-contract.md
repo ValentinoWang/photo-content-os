@@ -6,7 +6,7 @@
 - Test baseline: PLANNED
 - Acceptance owner: 产品负责人与对应领域验收负责人
 - Approval evidence: 尚未批准
-- Request source: agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html sha256:88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf
+- Request source: agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
 - SSOT node: D3
 - SSOT path: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/ssot-development-paths.md
 - Readiness mode: FORMAL
@@ -14,18 +14,18 @@
 - Assumption IDs: none
 - Invalidation keys: checklist.d3
 - AC budget: 2
-- Baseline identity: main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35; checklist-sha256:88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf
+- Baseline identity: main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35; checklist-sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
 - Product Context refs: SRC-D3, source-notes.md
 - Role Context refs: 本地内容创作者，以及可选配对的上游中台用户
-- Resolved Surface Contract refs: .ssot/surface-inventory.json#SURF-SETTINGS
-- Screen Contract ref: .ssot/interaction-matrix.json#SURF-SETTINGS
-- Visual Contract refs: .ssot/visual-fidelity-contract.json
+- Resolved Surface Contract refs: .ssot/source-requirements.json#SURF-SETTINGS
+- Screen Contract ref: .ssot/source-requirements.json#SURF-SETTINGS
+- Visual Contract refs: .ssot/source-requirements.json
 - UI Change declaration: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-D3/ui-change.json
 - Human acceptance workspace: none
 
 ## User and scenario
 
-本地内容创作者从受支持的真实入口使用“转写提供方：现有合同与默认行为待重新决定”，必要时主动配对上游账号或本地第三方工具。
+本地内容创作者从受支持的真实入口使用“转写提供方：阿里云默认与 FunASR 本机兜底”，必要时主动配对上游账号或本地第三方工具。
 
 ## Problem
 
@@ -33,7 +33,7 @@
 
 ## Expected outcome
 
-在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。
+按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。
 
 ## Non-goals
 
@@ -43,8 +43,8 @@
 
 ```gherkin
 Given 用户从真实入口进入对应界面，且所需本地资料与能力状态已就绪
-When 用户查看或执行“转写提供方：现有合同与默认行为待重新决定”
-Then 系统完成“在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。”，并显示真实进度、回执和下一步
+When 用户查看或执行“转写提供方：阿里云默认与 FunASR 本机兜底”
+Then 系统完成“按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。”，并显示真实进度、回执和下一步
 ```
 
 ## Exception paths
@@ -69,10 +69,10 @@ Then 系统完成“在转写提供方、默认策略、音频发送边界、费
 
 ## Acceptance criteria
 
-| ID | Class | Source requirement refs | Requirement | Verification layer | Mode | Blocking |
-| --- | --- | --- | --- | --- | --- | --- |
-| AC-01 | behavior | SRC-D3 | 在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。；从真实入口完成正常业务闭环，回读结果与可见状态一致 | E2E and local runtime | Automatic | Yes |
-| AC-02 | behavior | SRC-D3 | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Integration, E2E and negative paths | Automatic | Yes |
+| ID | Class | Lane | Source requirement refs | Requirement | Mode | Blocking |
+| --- | --- | --- | --- | --- | --- |
+| AC-01 | behavior | machine/e2e | SRC-CHECKLIST-D3 | 按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。；从真实入口完成正常业务闭环，回读结果与可见状态一致 | Automatic | Yes |
+| AC-02 | behavior | machine/local-runtime | SRC-CHECKLIST-D3 | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Automatic | Yes |
 
 ## Human acceptance
 
@@ -101,4 +101,4 @@ Then 系统完成“在转写提供方、默认策略、音频发送边界、费
 
 ## Risks and open decisions
 
-合同保持 DRAFT，至到行为被产品负责人批准且受保护的自动验收基线被锁定。转写提供方决定仍是本条目的硬阻塞。
+合同保持 DRAFT，直到行为被产品负责人批准且受保护的自动验收基线被锁定。转写提供方已按 DashScope 默认、本机 FunASR 失败兜底、音频发送前明示的决定版本 1 接受；剩余风险是实现与验收证据，不是待决定产品策略。

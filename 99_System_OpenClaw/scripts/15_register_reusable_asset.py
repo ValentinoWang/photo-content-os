@@ -4,9 +4,19 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 
-from media_common import media_id, project_path, relative_posix, safe_slug
+from asset_library_index import (
+    INDEX_NAME as STRUCTURED_INDEX_NAME,
+    get_asset,
+    load_index,
+    normalize_values,
+    save_index,
+    stable_asset_id,
+    upsert_asset,
+)
+from media_common import file_sha256, path_inside, project_path, relative_posix, safe_slug
 
 
 DEFAULT_INDEX_NAME = "Reusable_通用素材索引.md"
@@ -106,9 +116,11 @@ def build_card(
 """
 
 
-def upsert_index(index_path: Path, title: str, card_rel: str, tags: list[str], uses: list[str]) -> None:
+def updated_markdown_index(index_path: Path, title: str, card_rel: str, tags: list[str], uses: list[str]) -> str:
     line = f"- [{title}]({card_rel})：{'; '.join(tags[:6]) or '未标注'}；用途：{'; '.join(uses[:4]) or '待补充'}"
     if index_path.exists():
+        if not index_path.is_file():
+            raise RuntimeError(f"Markdown index path is not a file: {index_path}")
         lines = index_path.read_text(encoding="utf-8").splitlines()
     else:
         lines = [
@@ -119,38 +131,87 @@ def upsert_index(index_path: Path, title: str, card_rel: str, tags: list[str], u
             "## 素材",
             "",
         ]
-    prefix = f"- [{title}]("
-    updated = False
-    for index, old_line in enumerate(lines):
-        if old_line.startswith(prefix):
-            lines[index] = line
-            updated = True
-            break
-    if not updated:
+    link_marker = f"]({card_rel})"
+    matches = [index for index, old_line in enumerate(lines) if link_marker in old_line]
+    if len(matches) > 1:
+        raise RuntimeError(f"Markdown index contains duplicate card links: {card_rel}")
+    if matches:
+        lines[matches[0]] = line
+    else:
         if lines and lines[-1].strip():
             lines.append("")
         lines.append(line)
-    index_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    return "\n".join(lines).rstrip() + "\n"
 
 
-def register_asset(args: argparse.Namespace) -> tuple[Path, Path]:
+def write_text_if_changed(path: Path, content: str) -> bool:
+    if path.exists():
+        if not path.is_file():
+            raise RuntimeError(f"output path is not a file: {path}")
+        if path.read_text(encoding="utf-8") == content:
+            return False
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.write_text(content, encoding="utf-8")
+    os.replace(temporary, path)
+    return True
+
+
+def upsert_index(index_path: Path, title: str, card_rel: str, tags: list[str], uses: list[str]) -> None:
+    write_text_if_changed(index_path, updated_markdown_index(index_path, title, card_rel, tags, uses))
+
+
+def register_asset(args: argparse.Namespace, *, apply: bool = False) -> tuple[Path, Path]:
     project = project_path(args.project_dir)
     media = resolve_media(project, args.media_path)
     library_root = find_library_root(project, args.library_root)
-    category = args.category.strip() or "Reusable_通用素材"
+    category = (args.category or "").strip() or "Reusable_通用素材"
     title = args.title.strip() if args.title else media.stem
-    tags = split_values(args.tags)
-    uses = split_values(args.uses)
-    cuts = split_values(args.cuts)
+    tags = normalize_values(split_values(args.tags))
+    uses = normalize_values(split_values(args.uses))
+    cuts = normalize_values(split_values(args.cuts))
     public_status = args.public_status.strip() if args.public_status else "待确认"
     notes = args.notes.strip() if args.notes else ""
-    icloud_copy = args.icloud_copy.strip() if args.icloud_copy else ""
+    icloud_copy = args.icloud_copy.strip() if args.icloud_copy else None
 
-    category_dir = library_root / safe_slug(category)
-    category_dir.mkdir(parents=True, exist_ok=True)
-    asset_key = media_id(f"{project.name}/{relative_posix(media, project)}")
-    card_path = category_dir / f"{asset_key}_{safe_slug(title)}.asset.md"
+    source_relative_path = relative_posix(media, project)
+    asset_key = stable_asset_id(project.name, source_relative_path)
+    structured_index_path = library_root / STRUCTURED_INDEX_NAME
+    structured_index = load_index(structured_index_path)
+    existing_asset = get_asset(structured_index, asset_key)
+
+    if existing_asset is None:
+        card_rel = f"{safe_slug(category)}/{asset_key}_{safe_slug(title)}.asset.md"
+    else:
+        card_rel = existing_asset["card_path"]
+    card_path = (library_root / card_rel).resolve()
+    if not path_inside(card_path, library_root):
+        raise RuntimeError(f"asset card path escapes library root: {card_path}")
     index_path = library_root / DEFAULT_INDEX_NAME
+
+    before = media.stat()
+    source_sha256 = file_sha256(media)
+    after = media.stat()
+    if (before.st_size, before.st_mtime_ns) != (after.st_size, after.st_mtime_ns):
+        raise RuntimeError(f"media file changed while hashing: {media}")
+
+    asset = {
+        "asset_id": asset_key,
+        "title": title,
+        "category": category,
+        "card_path": card_rel,
+        "source_project": project.name,
+        "source_relative_path": source_relative_path,
+        "source_sha256": source_sha256,
+        "source_size": after.st_size,
+        "public_status": public_status,
+        "tags": tags,
+        "uses": uses,
+        "cuts": cuts,
+        "icloud_copy": icloud_copy,
+        "notes": notes,
+    }
+    updated_index, structured_changed = upsert_asset(structured_index, asset)
 
     card = build_card(
         title=title,
@@ -162,11 +223,15 @@ def register_asset(args: argparse.Namespace) -> tuple[Path, Path]:
         uses=uses,
         cuts=cuts,
         public_status=public_status,
-        icloud_copy=icloud_copy,
+        icloud_copy=icloud_copy or "",
         notes=notes,
     )
-    card_path.write_text(card, encoding="utf-8")
-    upsert_index(index_path, title, relative_posix(card_path, library_root), tags, uses)
+    markdown_index = updated_markdown_index(index_path, title, card_rel, tags, uses)
+    if apply:
+        write_text_if_changed(card_path, card)
+        write_text_if_changed(index_path, markdown_index)
+        if structured_changed:
+            save_index(structured_index_path, updated_index)
     return index_path, card_path
 
 
@@ -183,11 +248,16 @@ def main() -> None:
     parser.add_argument("--public-status", help="公开状态，例如 可公开 / 待确认 / 私密")
     parser.add_argument("--icloud-copy", help="已进入 80_To_iCloudPhotos_精选入库 的副本路径")
     parser.add_argument("--notes", help="补充备注")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--apply", action="store_true", help="写入结构化索引、Markdown 索引和资产卡片")
+    mode.add_argument("--dry-run", action="store_true", help="只校验并显示计划（默认）")
     args = parser.parse_args()
 
-    index_path, card_path = register_asset(args)
-    print(f"通用素材索引已更新：{index_path}")
-    print(f"资产卡片已写入：{card_path}")
+    index_path, card_path = register_asset(args, apply=args.apply)
+    action = "已更新" if args.apply else "计划更新"
+    print(f"结构化素材索引{action}：{index_path.parent / STRUCTURED_INDEX_NAME}")
+    print(f"通用素材索引{action}：{index_path}")
+    print(f"资产卡片{action}：{card_path}")
 
 
 if __name__ == "__main__":

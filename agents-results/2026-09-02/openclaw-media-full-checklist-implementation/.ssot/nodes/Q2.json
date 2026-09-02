@@ -40,11 +40,11 @@
     "DL-Q2"
   ],
   "source_requirement_refs": [
-    "SRC-I1",
-    "SRC-I2",
-    "SRC-I3",
-    "SRC-I4",
-    "SRC-I5"
+    "SRC-CHECKLIST-I1",
+    "SRC-CHECKLIST-I2",
+    "SRC-CHECKLIST-I3",
+    "SRC-CHECKLIST-I4",
+    "SRC-CHECKLIST-I5"
   ],
   "surface_refs": [
     "SURF-ORGANIZER"
@@ -59,7 +59,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "汇编 R2 的独立候选、证据和接受结果",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "独立验收负责人"

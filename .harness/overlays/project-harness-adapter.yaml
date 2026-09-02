@@ -1,0 +1,17 @@
+project:
+  name: photo-content-os
+  profile: core
+design:
+  token_sources: []
+  theme_sources: []
+  page_shell_sources: []
+  component_sources: []
+quality:
+  static_guards: []
+  formatting: []
+qa:
+  screenshot: []
+  integration: []
+  evidence_root: agents-results
+skills:
+  enabled: []

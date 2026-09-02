@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -382,6 +383,20 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
         )
         self.assertNotEqual(regular_probe.returncode, 0)
 
+        fake_bin = self.root / "fake-kdenlive-bin"
+        fake_bin.mkdir()
+        fake_kdenlive = fake_bin / "kdenlive"
+        fake_kdenlive.write_text(
+            "#!/bin/sh\n"
+            "if [ \"${1:-}\" = \"--version\" ]; then echo 'kdenlive 25.04.3-test'; exit 0; fi\n"
+            "exec /bin/sleep 60\n",
+            encoding="utf-8",
+        )
+        fake_kdenlive.chmod(0o755)
+        subprocess_env = os.environ.copy()
+        subprocess_env["PATH"] = f"{fake_bin}:{subprocess_env.get('PATH', '')}"
+        subprocess_env.pop("CONTENT_OS_KDENLIVE_EXECUTABLE", None)
+
         completed = subprocess.run(
             [
                 str(regular_python),
@@ -399,6 +414,7 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             check=False,
+            env=subprocess_env,
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
         result_path = self.vault / "98_Agent任务队列" / "02_mac_to_cloud_results" / "result_20260710_002_otio.yaml"

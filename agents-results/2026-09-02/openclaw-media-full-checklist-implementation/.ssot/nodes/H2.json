@@ -53,7 +53,7 @@
     "DL-H2"
   ],
   "source_requirement_refs": [
-    "SRC-H2"
+    "SRC-CHECKLIST-H2"
   ],
   "surface_refs": [
     "SURF-DASHBOARD"
@@ -68,7 +68,7 @@
     "persistent_runtime": "active",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

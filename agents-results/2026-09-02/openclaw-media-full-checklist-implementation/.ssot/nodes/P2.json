@@ -43,7 +43,7 @@
     "DL-P2"
   ],
   "source_requirement_refs": [
-    "SRC-P2"
+    "SRC-CHECKLIST-P2"
   ],
   "surface_refs": [
     "SURF-PROJECT"
@@ -58,7 +58,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "双轨时间线（主画面 + 叠加层）：纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

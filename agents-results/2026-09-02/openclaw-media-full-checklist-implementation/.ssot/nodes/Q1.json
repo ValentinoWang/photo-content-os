@@ -52,18 +52,18 @@
     "DL-Q1"
   ],
   "source_requirement_refs": [
-    "SRC-D1",
-    "SRC-D2",
-    "SRC-D3",
-    "SRC-T1",
-    "SRC-T3",
-    "SRC-T5"
+    "SRC-CHECKLIST-D1",
+    "SRC-CHECKLIST-D2",
+    "SRC-CHECKLIST-D3",
+    "SRC-CHECKLIST-T1",
+    "SRC-CHECKLIST-T3",
+    "SRC-CHECKLIST-T5"
   ],
   "surface_refs": [
     "SURF-LIBRARY",
     "SURF-ORGANIZER",
-    "SURF-SETTINGS",
-    "SURF-STUDIO"
+    "SURF-PROJECT",
+    "SURF-SETTINGS"
   ],
   "required_evidence_profile": {
     "source_identity": "locked",
@@ -75,7 +75,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "汇编 R1 的独立候选、证据和接受结果",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "独立验收负责人"

@@ -674,7 +674,7 @@ def run_local_material_match(
                     str(project_dir),
                     "--audio",
                     "--transcript-provider",
-                    task.get("transcript_provider", "openai_api"),
+                    task.get("transcript_provider", "dashscope"),
                     "--model",
                     REQUIRED_CREATIVE_MODEL,
                     "--reasoning",

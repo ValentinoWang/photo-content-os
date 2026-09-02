@@ -38,7 +38,7 @@
     "DL-T1"
   ],
   "source_requirement_refs": [
-    "SRC-T1"
+    "SRC-CHECKLIST-T1"
   ],
   "surface_refs": [
     "SURF-ORGANIZER"
@@ -53,7 +53,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "none"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "给 35_promote_inbox_batch_to_project.py 补测试：接 UI 之前先补测试。这条建议优先级高于任何界面工作。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

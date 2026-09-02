@@ -41,7 +41,7 @@
     "DL-L2"
   ],
   "source_requirement_refs": [
-    "SRC-L2"
+    "SRC-CHECKLIST-L2"
   ],
   "surface_refs": [
     "SURF-LIBRARY"
@@ -56,7 +56,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "按标签筛选：同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

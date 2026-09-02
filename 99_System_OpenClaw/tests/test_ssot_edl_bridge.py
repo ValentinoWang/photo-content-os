@@ -58,6 +58,7 @@ class StructuredEDLBridgeTests(unittest.TestCase):
     @staticmethod
     def valid_source() -> dict:
         return {
+            "schema_version": "edit_decision_list_v1",
             "doc_type": "edit_decision_list",
             "source_script_used": True,
             "generation_model": "fixture-model",
@@ -74,6 +75,7 @@ class StructuredEDLBridgeTests(unittest.TestCase):
                     "edit_note": "hard cut",
                 }
             ],
+            "missing_materials": [],
         }
 
     def test_valid_bridge_is_authoritative_and_keeps_studio_text_editable(self):
@@ -112,6 +114,50 @@ class StructuredEDLBridgeTests(unittest.TestCase):
         self.assertEqual(bridge["content"]["schema_version"], "edit_decision_list_v1")
         self.assertEqual(bridge["content"]["clips"][0]["time_range"], "0.000-2.000")
         self.assertNotIn("Studio editable text", json.dumps(bridge, ensure_ascii=False))
+
+    def test_required_schema_fields_fail_closed_before_normalisation(self):
+        workspace = Path(self.temp.name) / "workspace-required"
+        workspace.mkdir()
+        source_path = workspace / "06_edit_decision_list.json"
+        project, _ = self.create_project(workspace)
+        route = f"/api/projects/{project['id']}/edl-bridge"
+
+        for field in (
+            "schema_version",
+            "doc_type",
+            "source_script_used",
+            "generation_model",
+            "generation_reasoning",
+            "clips",
+            "missing_materials",
+        ):
+            with self.subTest(scope="document", field=field):
+                payload = self.valid_source()
+                del payload[field]
+                source_path.write_text(json.dumps(payload), encoding="utf-8")
+                status, response = self.request(route)
+                self.assertEqual(status, 422)
+                self.assertEqual(response["bridge"]["validation"]["code"], f"{field}_missing")
+                self.assertIsNone(response["bridge"]["content"])
+
+        for field in (
+            "slot",
+            "time_range",
+            "source_start_sec",
+            "purpose",
+            "visual_need",
+            "caption",
+            "candidate_files",
+            "edit_note",
+        ):
+            with self.subTest(scope="clip", field=field):
+                payload = self.valid_source()
+                del payload["clips"][0][field]
+                source_path.write_text(json.dumps(payload), encoding="utf-8")
+                status, response = self.request(route)
+                self.assertEqual(status, 422)
+                self.assertEqual(response["bridge"]["validation"]["code"], f"clip_{field}_missing")
+                self.assertIsNone(response["bridge"]["content"])
 
     def test_missing_malformed_schema_and_identity_fail_without_guessing(self):
         workspace = Path(self.temp.name) / "workspace"

@@ -2,7 +2,10 @@
 """Create timestamped transcript evidence for extracted project audio.
 
 Providers:
-- ``sidecar``: deterministic/offline; reads an adjacent .srt/.json/.txt file.
+- ``dashscope``: DashScope-compatible online transcription; the configured
+  endpoint receives the selected audio file.
+- ``funasr``: local FunASR fallback when its optional runtime is installed.
+- ``sidecar``: deterministic; reads an adjacent .srt/.json/.txt file.
 - ``openai_api``: uses the OpenAI Transcription API and requests SRT output.
 - ``pending``: records an explicit pending state without pretending audio was read.
 """
@@ -14,6 +17,9 @@ import json
 import os
 import re
 import tempfile
+import urllib.error
+import urllib.request
+import uuid
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -21,6 +27,9 @@ from media_common import load_manifest, project_path, safe_project_file as _safe
 
 SCHEMA_VERSION = "audio_transcript_v1"
 DEFAULT_OPENAI_MODEL = "gpt-4o-mini-transcribe"
+DEFAULT_DASHSCOPE_MODEL = "paraformer-v2"
+DEFAULT_DASHSCOPE_ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/audio/transcriptions"
+DEFAULT_FUNASR_MODEL = "paraformer-zh"
 
 
 class TranscriptionError(RuntimeError):
@@ -32,6 +41,10 @@ class Provider(Protocol):
     model: str
 
     def transcribe(self, audio_path: Path, *, language: str | None = None) -> dict[str, Any]: ...
+
+
+class ProviderResult(dict[str, Any]):
+    """Provider output that preserves the provider that actually produced it."""
 
 
 def seconds_from_srt(value: str) -> float:
@@ -187,6 +200,116 @@ class OpenAIProvider:
         return {"language": language, "segments": parse_srt(text)}
 
 
+class DashscopeProvider:
+    """DashScope's OpenAI-compatible audio endpoint without an SDK dependency."""
+
+    name = "dashscope"
+
+    def __init__(self, model: str) -> None:
+        self.model = model or DEFAULT_DASHSCOPE_MODEL
+        self.api_key = os.getenv("DASHSCOPE_API_KEY")
+        self.endpoint = os.getenv("DASHSCOPE_TRANSCRIPTION_ENDPOINT", DEFAULT_DASHSCOPE_ENDPOINT)
+        if not self.api_key:
+            raise TranscriptionError("DASHSCOPE_API_KEY is required for dashscope transcription")
+
+    @staticmethod
+    def _multipart(audio_path: Path, *, model: str, language: str | None) -> tuple[bytes, str]:
+        boundary = f"----OpenClawMedia{uuid.uuid4().hex}"
+        fields = [("model", model), ("response_format", "verbose_json")]
+        if language:
+            fields.append(("language", language))
+        chunks: list[bytes] = []
+        for name, value in fields:
+            chunks.extend((f"--{boundary}\\r\\n".encode(), f'Content-Disposition: form-data; name="{name}"\\r\\n\\r\\n'.encode(), value.encode(), b"\\r\\n"))
+        chunks.extend((f"--{boundary}\\r\\n".encode(), f'Content-Disposition: form-data; name="file"; filename="{audio_path.name}"\\r\\n'.encode(), b"Content-Type: application/octet-stream\\r\\n\\r\\n", audio_path.read_bytes(), b"\\r\\n", f"--{boundary}--\\r\\n".encode()))
+        return b"".join(chunks), boundary
+
+    def transcribe(self, audio_path: Path, *, language: str | None = None) -> dict[str, Any]:
+        body, boundary = self._multipart(audio_path, model=self.model, language=language)
+        request = urllib.request.Request(
+            self.endpoint,
+            data=body,
+            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": f"multipart/form-data; boundary={boundary}"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=120) as response:  # noqa: S310 - configured provider endpoint
+                payload = json.loads(response.read().decode("utf-8"))
+        except (urllib.error.URLError, OSError, json.JSONDecodeError) as exc:
+            raise TranscriptionError("DashScope transcription request failed") from exc
+        if not isinstance(payload, dict):
+            raise TranscriptionError("DashScope response must be a JSON object")
+        used_sentence_info = not payload.get("segments") and isinstance(payload.get("sentence_info"), list)
+        raw_segments = payload.get("segments") or payload.get("sentence_info") or []
+        segments: list[dict[str, Any]] = []
+        if isinstance(raw_segments, list):
+            for item in raw_segments:
+                if not isinstance(item, dict):
+                    continue
+                start = item.get("start") if item.get("start") is not None else item.get("start_sec", 0)
+                end = item.get("end") if item.get("end") is not None else item.get("end_sec", start)
+                # DashScope sentence_info uses milliseconds even for a segment
+                # shorter than one second. Compatible `segments` use seconds.
+                if used_sentence_info:
+                    start, end = float(start) / 1000, float(end) / 1000
+                segments.append({"start_sec": start, "end_sec": end, "speaker": item.get("speaker"), "text": item.get("text") or item.get("sentence") or "", "confidence": item.get("confidence")})
+        if not segments and isinstance(payload.get("text"), str):
+            segments = [{"start_sec": 0, "end_sec": 0, "speaker": None, "text": payload["text"], "confidence": None}]
+        return ProviderResult(language=payload.get("language") or language, segments=segments, provider=self.name, model=self.model)
+
+
+class FunASRProvider:
+    name = "funasr"
+
+    def __init__(self, model: str) -> None:
+        self.model = model or DEFAULT_FUNASR_MODEL
+        try:
+            from funasr import AutoModel
+        except Exception as exc:  # pragma: no cover - optional local runtime
+            raise TranscriptionError("funasr Python package is required for funasr transcription") from exc
+        self.client = AutoModel(model=self.model, disable_update=True)
+
+    def transcribe(self, audio_path: Path, *, language: str | None = None) -> dict[str, Any]:
+        result = self.client.generate(input=str(audio_path), batch_size_s=300)
+        first = result[0] if isinstance(result, list) and result else {}
+        if not isinstance(first, dict):
+            raise TranscriptionError("FunASR returned an invalid response")
+        text = str(first.get("text") or "").strip()
+        timestamps = first.get("timestamp")
+        end = 0.0
+        if isinstance(timestamps, list) and timestamps:
+            last = timestamps[-1]
+            if isinstance(last, (list, tuple)) and len(last) > 1:
+                end = float(last[1]) / 1000
+        return ProviderResult(
+            language=language,
+            segments=[{"start_sec": 0, "end_sec": end, "speaker": None, "text": text, "confidence": None}] if text else [],
+            provider=self.name,
+            model=self.model,
+        )
+
+
+class DashscopeWithFunASRFallback:
+    """Use the accepted online default, then make the local fallback explicit."""
+
+    name = "dashscope"
+
+    def __init__(self, model: str) -> None:
+        self.model = model or DEFAULT_DASHSCOPE_MODEL
+
+    def transcribe(self, audio_path: Path, *, language: str | None = None) -> dict[str, Any]:
+        try:
+            return DashscopeProvider(self.model).transcribe(audio_path, language=language)
+        except TranscriptionError:
+            try:
+                fallback = FunASRProvider(DEFAULT_FUNASR_MODEL)
+                return fallback.transcribe(audio_path, language=language)
+            except TranscriptionError as fallback_error:
+                raise TranscriptionError(
+                    "DashScope transcription failed and the local FunASR fallback is unavailable"
+                ) from fallback_error
+
+
 class PendingProvider:
     name = "pending"
     model = "none"
@@ -201,6 +324,10 @@ def build_provider(name: str, *, model: str, sidecar_dir: Path | None) -> Provid
         return SidecarProvider(sidecar_dir)
     if value in {"openai", "openai_api", "openai-api"}:
         return OpenAIProvider(model)
+    if value in {"dashscope", "dashscope_api", "dashscope-api"}:
+        return DashscopeWithFunASRFallback(model or DEFAULT_DASHSCOPE_MODEL)
+    if value in {"funasr", "local_funasr", "local-funasr"}:
+        return FunASRProvider(model or DEFAULT_FUNASR_MODEL)
     if value in {"pending", "none", "disabled"}:
         return PendingProvider()
     raise TranscriptionError(f"unsupported transcription provider: {name}")
@@ -241,23 +368,25 @@ def process_project(
             continue
         try:
             result = provider.transcribe(audio, language=language)
+            actual_provider = str(result.get("provider") or provider.name)
+            actual_model = str(result.get("model") or provider.model)
             document = transcript_document(
                 media_id=media_id,
                 audio_ref=audio.relative_to(project).as_posix(),
-                provider=provider.name,
-                model=provider.model,
+                provider=actual_provider,
+                model=actual_model,
                 language=result.get("language") or language,
                 segments=result.get("segments") or [],
             )
-            if not document["segments"] and provider.name != "pending":
+            if not document["segments"] and actual_provider != "pending":
                 raise TranscriptionError("provider returned no transcript segments")
             temporary = output.with_suffix(".json.tmp")
             temporary.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             temporary.replace(output)
             item["transcript_path"] = output.relative_to(project).as_posix()
-            item["transcript_status"] = "pending" if provider.name == "pending" else "ok"
+            item["transcript_status"] = "pending" if actual_provider == "pending" else "ok"
             generated += 1
-            pending += int(provider.name == "pending")
+            pending += int(actual_provider == "pending")
         except Exception as exc:
             failed += 1
             item["transcript_status"] = "pending_manual"
@@ -272,8 +401,8 @@ def process_project(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("project_dir")
-    parser.add_argument("--provider", default=os.getenv("OPENCLAW_TRANSCRIPTION_PROVIDER", "pending"))
-    parser.add_argument("--model", default=os.getenv("OPENCLAW_TRANSCRIPTION_MODEL", DEFAULT_OPENAI_MODEL))
+    parser.add_argument("--provider", default=os.getenv("OPENCLAW_TRANSCRIPTION_PROVIDER", "dashscope"))
+    parser.add_argument("--model", default=os.getenv("OPENCLAW_TRANSCRIPTION_MODEL", DEFAULT_DASHSCOPE_MODEL))
     parser.add_argument("--language")
     parser.add_argument("--sidecar-dir", type=Path)
     parser.add_argument("--overwrite", action="store_true")

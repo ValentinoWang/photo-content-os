@@ -3,7 +3,7 @@
   "semantic_key": "requirement.checklist.t5",
   "stage": "R1",
   "work_kind": "implementation",
-  "domain_lane": "studio",
+  "domain_lane": "project",
   "execution_state": "READY",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
@@ -48,10 +48,10 @@
     "DL-T5"
   ],
   "source_requirement_refs": [
-    "SRC-T5"
+    "SRC-CHECKLIST-T5"
   ],
   "surface_refs": [
-    "SURF-STUDIO"
+    "SURF-PROJECT"
   ],
   "required_evidence_profile": {
     "source_identity": "locked",
@@ -63,7 +63,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "none"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "所有新增写接口沿用 loopback、同源、CSRF 和明确 revision 域的乐观并发控制，跨端口 Origin 必须拒绝。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import importlib.util
 import mimetypes
 import os
 import secrets
@@ -51,11 +52,37 @@ from upstream_identity import (  # type: ignore  # noqa: E402
     UpstreamIdentityContractError,
     pair_upstream_identity,
 )
+from asset_library_index import (  # type: ignore  # noqa: E402
+    INDEX_NAME as ASSET_LIBRARY_INDEX_NAME,
+    AssetIndexError,
+    get_asset,
+    load_index,
+    query_assets,
+)
 
 STATIC_ROOT = SCRIPT_DIR / "static"
 MAX_BODY_BYTES = 2 * 1024 * 1024
 SETTINGS_DIRNAME = "settings"
+ASSET_LIBRARY_DIRNAME = "asset-library"
 TRASH_RECEIPT_SCHEMA_VERSION = "studio_trash_receipts_v1"
+INBOX_MANIFEST_RELATIVE_PATH = Path("_ai_analysis") / "media_manifest.json"
+
+
+def _inbox_batch_planner() -> object:
+    """Load the numbered CLI script as a library without executing its CLI."""
+
+    module_name = "content_os_inbox_batch_planner"
+    existing = sys.modules.get(module_name)
+    if existing is not None:
+        return existing
+    source = SCRIPTS_DIR / "46_plan_inbox_batches.py"
+    spec = importlib.util.spec_from_file_location(module_name, source)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("inbox batch planner is unavailable")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 def _json_bytes(value: Any) -> bytes:
@@ -137,6 +164,7 @@ class StudioApplication:
         upstream_reader: CollectionCallable[[str], Mapping[str, object]] | None = None,
         chatcut_mcp: ChatCutMcp | None = None,
         trash_backend_factory: CollectionCallable[[str, Path], object] | None = None,
+        asset_index_path: Path | None = None,
     ) -> None:
         self.store = store
         self.csrf_token = csrf_token or secrets.token_urlsafe(32)
@@ -150,6 +178,7 @@ class StudioApplication:
         self.upstream_reader = upstream_reader
         self.chatcut_mcp = chatcut_mcp or ChatCutMcp()
         self.trash_backend_factory = trash_backend_factory or self._default_trash_backend
+        self.asset_index_path = asset_index_path or self.store.state_dir / ASSET_LIBRARY_DIRNAME / ASSET_LIBRARY_INDEX_NAME
 
     @staticmethod
     def _default_trash_backend(platform_name: str, registry_path: Path) -> object:
@@ -169,6 +198,46 @@ class StudioApplication:
             "archive": self._archive_config().to_dict(),
             "upstream": _public_upstream_snapshot(self.upstream_session.snapshot()),
             "chatcut": self.chatcut_mcp.state,
+        }
+
+    def load_asset_index(self) -> dict[str, Any]:
+        try:
+            return load_index(self.asset_index_path)
+        except AssetIndexError as exc:
+            # Index diagnostics may include the configured filesystem location.
+            raise ProjectStoreError("asset_library_unavailable", "素材库索引不可用") from exc
+
+    def inbox_batch_plan(self, project_id: str) -> dict[str, Any]:
+        """Build a preview from a connected project's current manifest only."""
+
+        workspace = self.store.local_workspace_path(project_id)
+        manifest_path = (workspace / INBOX_MANIFEST_RELATIVE_PATH).resolve()
+        try:
+            manifest_path.relative_to(workspace.resolve())
+        except ValueError as exc:
+            raise ProjectStoreError("inbox_manifest_invalid", "媒体清单位置无效") from exc
+        if not manifest_path.is_file():
+            raise ProjectStoreError("inbox_manifest_missing", "项目尚未生成可用于分批的媒体清单")
+        try:
+            planner = _inbox_batch_planner()
+            manifest, digest = planner.read_manifest(manifest_path)
+            return planner.plan_batches(manifest, manifest_sha256=digest)
+        except Exception as exc:
+            # The browser must receive a stable, path-free error even if a
+            # malformed local manifest contains implementation detail.
+            if exc.__class__.__name__ == "BatchPlanError":
+                raise ProjectStoreError("inbox_manifest_invalid", "媒体清单无法用于生成分批计划") from exc
+            raise
+
+    @staticmethod
+    def asset_library_statistics(index: Mapping[str, Any]) -> dict[str, Any]:
+        return {
+            "schema_version": index["schema_version"],
+            "revision": index["revision"],
+            "asset_count": index["asset_count"],
+            "categories": index["categories"],
+            "tags": index["tags"],
+            "uses": index["uses"],
         }
 
     def _receipt_path(self, project_id: str) -> Path:
@@ -317,6 +386,39 @@ class StudioApplication:
                     if parsed.path == "/api/projects":
                         self._json(HTTPStatus.OK, {"ok": True, "projects": app.store.list_projects()})
                         return
+                    if parsed.path == "/api/assets":
+                        query = urllib.parse.parse_qs(parsed.query)
+                        categories = query.get("category", [])
+                        if len(categories) > 1:
+                            raise ProjectStoreError("asset_query_invalid", "素材库筛选条件无效")
+                        category = categories[0] if categories else None
+                        tags = [*query.get("tags", []), *query.get("tag", [])]
+                        try:
+                            assets = query_assets(app.load_asset_index(), category=category, tags=tags)
+                        except AssetIndexError as exc:
+                            raise ProjectStoreError("asset_query_invalid", "素材库筛选条件无效") from exc
+                        self._json(
+                            HTTPStatus.OK,
+                            {
+                                "ok": True,
+                                "assets": assets,
+                                "query": {"category": category, "tags": tags},
+                            },
+                        )
+                        return
+                    if parsed.path == "/api/assets/statistics":
+                        self._json(
+                            HTTPStatus.OK,
+                            {"ok": True, "statistics": app.asset_library_statistics(app.load_asset_index())},
+                        )
+                        return
+                    if len(segments) == 3 and segments[:2] == ["api", "assets"]:
+                        asset = get_asset(app.load_asset_index(), segments[2])
+                        if asset is None:
+                            self._json(HTTPStatus.NOT_FOUND, _error("asset_not_found", "素材不存在"))
+                            return
+                        self._json(HTTPStatus.OK, {"ok": True, "asset": asset})
+                        return
                     if len(segments) == 3 and segments[:2] == ["api", "projects"]:
                         self._json(HTTPStatus.OK, {"ok": True, "project": app.store.get_project(segments[2])})
                         return
@@ -450,6 +552,14 @@ class StudioApplication:
                         return
                     if method == "POST" and segments == ["api", "settings", "chatcut", "confirm"]:
                         self._json(HTTPStatus.OK, {"ok": True, "chatcut": app.chatcut_mcp.confirm_connection()})
+                        return
+                    if (
+                        method == "POST"
+                        and len(segments) == 4
+                        and segments[:2] == ["api", "projects"]
+                        and segments[3] == "inbox-plan"
+                    ):
+                        self._json(HTTPStatus.OK, {"ok": True, "plan": app.inbox_batch_plan(segments[2])})
                         return
                     if (
                         method == "POST"
@@ -699,6 +809,7 @@ def serve(
     upstream_reader: CollectionCallable[[str], Mapping[str, object]] | None = None,
     chatcut_mcp: ChatCutMcp | None = None,
     trash_backend_factory: CollectionCallable[[str, Path], object] | None = None,
+    asset_index_path: Path | None = None,
 ) -> ThreadingHTTPServer:
     if host not in {"127.0.0.1", "localhost", "::1"}:
         raise ValueError("Photo Content OS Studio only supports loopback hosts")
@@ -712,6 +823,7 @@ def serve(
         upstream_reader=upstream_reader,
         chatcut_mcp=chatcut_mcp,
         trash_backend_factory=trash_backend_factory,
+        asset_index_path=asset_index_path,
     )
     server = ThreadingHTTPServer((host, port), application.handler())
     actual_host, actual_port = server.server_address[:2]

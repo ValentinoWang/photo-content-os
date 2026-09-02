@@ -2,7 +2,7 @@ param(
     [Parameter(Mandatory = $true, Position = 0)][string]$ProjectDir,
     [ValidateSet("metadata", "preview", "deep")][string]$Tier = "preview",
     [switch]$Audio,
-    [ValidateSet("pending", "sidecar", "openai_api")][string]$TranscriptProvider = "pending",
+    [ValidateSet("pending", "sidecar", "openai_api", "dashscope", "funasr")][string]$TranscriptProvider = "dashscope",
     [switch]$SkipLlm,
     [switch]$Overwrite
 )

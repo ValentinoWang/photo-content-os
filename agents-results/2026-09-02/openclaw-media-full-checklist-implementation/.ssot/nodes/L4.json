@@ -41,7 +41,7 @@
     "DL-L4"
   ],
   "source_requirement_refs": [
-    "SRC-L4"
+    "SRC-CHECKLIST-L4"
   ],
   "surface_refs": [
     "SURF-LIBRARY"
@@ -56,7 +56,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "归档索引卡（检索关键词、精选副本入口、恢复方式）：包 HTTP 接口。这是素材库里唯一后端完备的部分。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

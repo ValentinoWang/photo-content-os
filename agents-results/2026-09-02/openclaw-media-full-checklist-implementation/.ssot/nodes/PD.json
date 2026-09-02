@@ -94,8 +94,7 @@
     "SURF-ORGANIZER",
     "SURF-PROJECT",
     "SURF-SETTINGS",
-    "SURF-SETUP",
-    "SURF-STUDIO"
+    "SURF-SETUP"
   ],
   "required_evidence_profile": {
     "source_identity": "locked",
@@ -107,7 +106,7 @@
     "persistent_runtime": "active",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "完整覆盖 HTML 的 45 项要求，不以降级或删除条目换取完成。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "产品负责人"

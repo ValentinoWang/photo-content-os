@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
@@ -31,6 +33,7 @@ def write_edl(path: Path, *, raw360: bool = False, overlap: bool = False) -> Non
             {
                 "slot": "01",
                 "time_range": "0.000-2.000",
+                "source_start_sec": 12.5,
                 "caption": "第一句",
                 "candidate_files": [candidate_one],
                 "edit_note": "开场",
@@ -38,6 +41,7 @@ def write_edl(path: Path, *, raw360: bool = False, overlap: bool = False) -> Non
             {
                 "slot": "02",
                 "time_range": "1.500-4.000" if overlap else "2.000-4.000",
+                "source_start_sec": 0,
                 "caption": "第二句",
                 "candidate_files": ["素材/不存在但可重链.mp4"],
                 "edit_note": "结尾",
@@ -48,7 +52,7 @@ def write_edl(path: Path, *, raw360: bool = False, overlap: bool = False) -> Non
 
 
 def write_layered_edl(path: Path) -> None:
-    """Two primary clips with a picture-in-picture overlay across the seam."""
+    """Two primary clips and two overlapping picture-in-picture overlays."""
     data = {
         "doc_type": "edit_decision_list",
         "project_id": "demo_中文",
@@ -56,6 +60,7 @@ def write_layered_edl(path: Path) -> None:
             {
                 "slot": "01",
                 "time_range": "0.000-2.000",
+                "source_start_sec": 0,
                 "caption": "第一句",
                 "candidate_files": ["素材/第一段.mp4"],
                 "edit_note": "开场",
@@ -65,6 +70,7 @@ def write_layered_edl(path: Path) -> None:
             {
                 "slot": "02",
                 "time_range": "2.000-4.000",
+                "source_start_sec": 2,
                 "caption": "第二句",
                 "candidate_files": ["素材/第二段.mp4"],
                 "edit_note": "结尾",
@@ -74,10 +80,21 @@ def write_layered_edl(path: Path) -> None:
             {
                 "slot": "03",
                 "time_range": "1.500-3.000",
+                "source_start_sec": 4.25,
                 "caption": "小窗补充",
                 "candidate_files": ["素材/小窗.mp4"],
                 "edit_note": "画中画盖住跳切",
                 "role": "b_roll",
+                "layer": "overlay",
+            },
+            {
+                "slot": "04",
+                "time_range": "2.000-2.500",
+                "source_start_sec": 7.5,
+                "caption": "第二层小窗",
+                "candidate_files": ["素材/第二小窗.mp4"],
+                "edit_note": "与第一小窗同时显示",
+                "role": "overlay",
                 "layer": "overlay",
             },
         ],
@@ -90,9 +107,40 @@ class OtioKdenliveBackendTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         if not OTIO_KDENLIVE_PYTHON.is_file() or not OTIO_KDENLIVE_PYTHON.stat().st_mode & 0o111:
             raise RuntimeError("missing fixed OTIO/Kdenlive test runtime")
+        cls.kdenlive_temp = tempfile.TemporaryDirectory()
+        fake_bin = Path(cls.kdenlive_temp.name)
+        executable = fake_bin / "kdenlive"
+        executable.write_text(
+            "#!/bin/sh\n"
+            "if [ \"${1:-}\" = \"--version\" ]; then\n"
+            "  printf '%s\\n' 'kdenlive 25.04.3-test'\n"
+            "  exit 0\n"
+            "fi\n"
+            "exec /bin/sleep 60\n",
+            encoding="utf-8",
+        )
+        executable.chmod(0o755)
+        cls.kdenlive_env = os.environ.copy()
+        cls.kdenlive_env["PATH"] = f"{fake_bin}:{cls.kdenlive_env.get('PATH', '')}"
+        cls.kdenlive_env.pop("CONTENT_OS_KDENLIVE_EXECUTABLE", None)
 
-    def run_script(self, *args: str, expected: int = 0) -> subprocess.CompletedProcess[str]:
-        completed = subprocess.run([str(OTIO_KDENLIVE_PYTHON), str(SCRIPT), *args], text=True, capture_output=True, check=False)
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.kdenlive_temp.cleanup()
+
+    def run_script(
+        self,
+        *args: str,
+        expected: int = 0,
+        env: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
+        completed = subprocess.run(
+            [str(OTIO_KDENLIVE_PYTHON), str(SCRIPT), *args],
+            text=True,
+            capture_output=True,
+            check=False,
+            env=env or self.kdenlive_env,
+        )
         self.assertEqual(completed.returncode, expected, completed.stderr)
         return completed
 
@@ -115,6 +163,7 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             manifest = json.loads((revision_dir / "manifest.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["project_revision"], 3)
             self.assertEqual(manifest["clips"][0]["candidate_file"], "素材/第一段.mp4")
+            self.assertEqual(manifest["clips"][0]["source_start_sec"], 12.5)
             self.assertTrue(all(clip["needs_relink"] for clip in manifest["clips"]))
             self.run_script(
                 "generate-kdenlive", "--project-id", "demo_中文", "--project-revision", "3",
@@ -130,7 +179,80 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             result = json.loads(validation.read_text(encoding="utf-8"))
             self.assertTrue(result["otio_reopened"])
             self.assertTrue(result["kdenlive_project_reopened"])
+            self.assertEqual(result["kdenlive_reopen_probe"], "application_process")
             self.assertEqual(result["clip_count"], 2)
+
+            import opentimelineio as otio
+
+            timeline = otio.adapters.read_from_file(str(revision_dir / "timeline.otio"))
+            first_clip = next(item for item in timeline.tracks[0] if isinstance(item, otio.schema.Clip))
+            self.assertEqual(first_clip.source_range.start_time.to_frames(), 375)
+            mlt = ET.parse(revision_dir / "timeline.kdenlive").getroot()
+            first_entry = mlt.find("./playlist[@id='playlist0']/entry")
+            self.assertIsNotNone(first_entry)
+            self.assertEqual(first_entry.attrib["in"], "375")
+            self.assertEqual(first_entry.attrib["out"], "434")
+
+    def test_validation_fails_closed_without_a_working_kdenlive_reopen(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            edl = root / "edl.json"
+            storyboard = root / "storyboard.md"
+            storyboard.write_text("# 分镜\n", encoding="utf-8")
+            write_edl(edl)
+            output = root / "edit_handoff"
+            revision_dir = output / "1"
+            self.run_script(
+                "generate-otio", "--project-id", "demo_中文", "--project-revision", "1",
+                "--edl", str(edl), "--storyboard", str(storyboard), "--output-root", str(output),
+            )
+            self.run_script(
+                "generate-kdenlive", "--project-id", "demo_中文", "--project-revision", "1",
+                "--otio", str(revision_dir / "timeline.otio"), "--output-root", str(output),
+            )
+            validate_args = (
+                "validate", "--project-id", "demo_中文", "--project-revision", "1",
+                "--otio", str(revision_dir / "timeline.otio"),
+                "--kdenlive", str(revision_dir / "timeline.kdenlive"),
+            )
+
+            mlt = ET.parse(revision_dir / "timeline.kdenlive")
+            first_entry = mlt.getroot().find("./playlist[@id='playlist0']/entry")
+            self.assertIsNotNone(first_entry)
+            first_entry.attrib["in"] = "0"
+            mlt.write(revision_dir / "timeline.kdenlive", encoding="unicode")
+            changed_trim = self.run_script(*validate_args, expected=2)
+            self.assertIn("source trim does not match OTIO", changed_trim.stderr)
+            self.run_script(
+                "generate-kdenlive", "--project-id", "demo_中文", "--project-revision", "1",
+                "--otio", str(revision_dir / "timeline.otio"), "--output-root", str(output),
+            )
+
+            missing_env = self.kdenlive_env.copy()
+            missing_env["CONTENT_OS_KDENLIVE_EXECUTABLE"] = str(root / "missing-kdenlive")
+            missing = self.run_script(*validate_args, expected=2, env=missing_env)
+            self.assertIn("Kdenlive executable is unavailable", missing.stderr)
+
+            broken_version = root / "broken-version-kdenlive"
+            broken_version.write_text("#!/bin/sh\nexit 9\n", encoding="utf-8")
+            broken_version.chmod(0o755)
+            version_env = self.kdenlive_env.copy()
+            version_env["CONTENT_OS_KDENLIVE_EXECUTABLE"] = str(broken_version)
+            version = self.run_script(*validate_args, expected=2, env=version_env)
+            self.assertIn("Kdenlive version probe failed", version.stderr)
+
+            rejects_project = root / "rejects-project-kdenlive"
+            rejects_project.write_text(
+                "#!/bin/sh\n"
+                "if [ \"${1:-}\" = \"--version\" ]; then echo 'kdenlive test'; exit 0; fi\n"
+                "exit 7\n",
+                encoding="utf-8",
+            )
+            rejects_project.chmod(0o755)
+            reject_env = self.kdenlive_env.copy()
+            reject_env["CONTENT_OS_KDENLIVE_EXECUTABLE"] = str(rejects_project)
+            rejected = self.run_script(*validate_args, expected=2, env=reject_env)
+            self.assertIn("Kdenlive project reopen probe failed", rejected.stderr)
 
     def test_blocks_raw360_source_without_fallback(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -256,8 +378,6 @@ class OtioKdenliveBackendTests(unittest.TestCase):
 
     def test_layered_edl_becomes_a_multi_track_timeline(self) -> None:
         """An overlay clip must composite on its own track, not flatten inline."""
-        import xml.etree.ElementTree as ET
-
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             edl = root / "edl.json"
@@ -275,15 +395,26 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             self.assertEqual(manifest["layers"], ["primary", "overlay"])
             self.assertEqual(
                 [clip["layer"] for clip in manifest["clips"]],
-                ["primary", "primary", "overlay"],
+                ["primary", "primary", "overlay", "overlay"],
             )
 
-            timeline = json.loads((revision_dir / "timeline.otio").read_text(encoding="utf-8"))
-            self.assertEqual(len(timeline["tracks"]["children"]), 2)
+            timeline_json = json.loads((revision_dir / "timeline.otio").read_text(encoding="utf-8"))
+            self.assertEqual(len(timeline_json["tracks"]["children"]), 3)
             self.assertEqual(
-                [track["name"] for track in timeline["tracks"]["children"]],
-                ["主画面", "叠加"],
+                [track["name"] for track in timeline_json["tracks"]["children"]],
+                ["主画面", "叠加", "叠加 2"],
             )
+
+            import opentimelineio as otio
+
+            timeline = otio.adapters.read_from_file(str(revision_dir / "timeline.otio"))
+            overlay_starts = [
+                next(item for item in track if isinstance(item, otio.schema.Clip))
+                .range_in_parent()
+                .start_time.to_seconds()
+                for track in list(timeline.tracks)[1:]
+            ]
+            self.assertEqual(overlay_starts, [1.5, 2.0])
 
             self.run_script(
                 "generate-kdenlive", "--project-id", "demo_中文", "--project-revision", "1",
@@ -291,13 +422,18 @@ class OtioKdenliveBackendTests(unittest.TestCase):
                 "--result-output", str(root / "kdenlive_result.json"),
             )
             mlt = ET.parse(revision_dir / "timeline.kdenlive").getroot()
-            self.assertEqual(len(mlt.findall("./playlist")), 2)
-            self.assertEqual(len(mlt.findall("./tractor/track")), 2)
+            self.assertEqual(len(mlt.findall("./playlist")), 3)
+            self.assertEqual(len(mlt.findall("./tractor/track")), 3)
+            self.assertEqual(
+                [playlist.find("./property[@name='kdenlive:track_name']").text for playlist in mlt.findall("./playlist")],
+                ["主画面", "叠加", "叠加 2"],
+            )
             # Without a blend the top track would hide the cut underneath it.
             transitions = mlt.findall("./tractor/transition")
-            self.assertEqual(len(transitions), 1)
+            self.assertEqual(len(transitions), 2)
             self.assertEqual(transitions[0].attrib["mlt_service"], "frei0r.cairoblend")
             self.assertEqual(transitions[0].attrib["b_track"], "1")
+            self.assertEqual(transitions[1].attrib["b_track"], "2")
 
             validation = root / "validation.json"
             self.run_script(
@@ -307,8 +443,8 @@ class OtioKdenliveBackendTests(unittest.TestCase):
                 "--result-output", str(validation),
             )
             result = json.loads(validation.read_text(encoding="utf-8"))
-            self.assertEqual(result["clip_count"], 3)
-            self.assertEqual(result["track_count"], 2)
+            self.assertEqual(result["clip_count"], 4)
+            self.assertEqual(result["track_count"], 3)
 
     def test_rejects_unknown_layer(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

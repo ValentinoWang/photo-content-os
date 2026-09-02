@@ -44,7 +44,7 @@
     "DL-P3"
   ],
   "source_requirement_refs": [
-    "SRC-P3"
+    "SRC-CHECKLIST-P3"
   ],
   "surface_refs": [
     "SURF-PROJECT"
@@ -59,7 +59,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "结构化时间线为主视图，同时保留文本说明与受约束的选区修改，不形成第二份机器执行权威。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

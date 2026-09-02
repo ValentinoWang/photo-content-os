@@ -64,11 +64,41 @@ class DesktopServerTests(unittest.TestCase):
         self.assertNotIn(str(workspace.resolve()), serialised)
         self.assertTrue(payload["project"]["local_workspace"]["connected"])
 
+    def test_inbox_plan_reads_only_a_connected_projects_manifest(self):
+        status, bootstrap = self.request("/api/bootstrap")
+        self.assertEqual(status, 200)
+        workspace = Path(self.temp.name) / "project-media"
+        manifest_path = workspace / "_ai_analysis" / "media_manifest.json"
+        manifest_path.parent.mkdir(parents=True)
+        manifest_path.write_text(json.dumps({
+            "manifest_version": 1,
+            "items": [
+                {"media_id": "clip-a", "captured_at": "2026-09-02T09:00:00+00:00", "gps_latitude": 22.5, "gps_longitude": 113.9},
+                {"media_id": "clip-b", "captured_at": "2026-09-02T09:04:00+00:00", "gps_latitude": 22.5, "gps_longitude": 113.9},
+            ],
+        }, ensure_ascii=False), encoding="utf-8")
+        _, created = self.request(
+            "/api/projects", method="POST", csrf=bootstrap["csrfToken"],
+            body={"title": "分批计划", "localWorkspace": str(workspace)},
+        )
+        project_id = created["project"]["id"]
+        status, payload = self.request(
+            f"/api/projects/{project_id}/inbox-plan", method="POST", csrf=bootstrap["csrfToken"], body={},
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(payload["plan"]["confirmation_status"], "pending")
+        self.assertEqual(payload["plan"]["migration_status"], "not_requested")
+        self.assertEqual(payload["plan"]["batches"][0]["media_ids"], ["clip-a", "clip-b"])
+        self.assertNotIn(str(workspace.resolve()), json.dumps(payload, ensure_ascii=False))
+
     def test_static_frontend_is_served(self):
         with urllib.request.urlopen(self.base + "/") as response:
             html = response.read().decode("utf-8")
+        with urllib.request.urlopen(self.base + "/app.js") as response:
+            app = response.read().decode("utf-8")
         self.assertIn("Photo Content OS Studio", html)
-        self.assertIn("发布与复盘", html)
+        self.assertIn('data-screen="project"', html)
+        self.assertIn("发布与复盘", app)
 
     def test_ai_patch_changes_only_selected_unlocked_block(self):
         _, bootstrap = self.request("/api/bootstrap")

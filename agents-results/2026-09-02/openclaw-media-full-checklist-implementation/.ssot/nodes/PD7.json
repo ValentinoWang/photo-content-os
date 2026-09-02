@@ -63,7 +63,7 @@
     "persistent_runtime": "active",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "优先复用上游中台身份；配对可选，未登录或平台不支持时本地功能保持完整。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "产品负责人"

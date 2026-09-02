@@ -1,0 +1,13 @@
+harness:
+  mode: symlink-local
+  source_env: HARNESS_ENGINEERING_HOME
+  upstream_path: .harness/upstream
+profiles:
+- core
+registry:
+  path: registry.yaml
+project_adapter:
+  path: .harness/overlays/project-harness-adapter.yaml
+overrides:
+  disabled_skills: []
+  extra_links: []

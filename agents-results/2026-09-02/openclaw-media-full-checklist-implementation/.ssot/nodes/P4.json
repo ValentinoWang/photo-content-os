@@ -41,7 +41,7 @@
     "DL-P4"
   ],
   "source_requirement_refs": [
-    "SRC-P4"
+    "SRC-CHECKLIST-P4"
   ],
   "surface_refs": [
     "SURF-PROJECT"
@@ -56,7 +56,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "「待补素材」缺口清单：纯前端。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

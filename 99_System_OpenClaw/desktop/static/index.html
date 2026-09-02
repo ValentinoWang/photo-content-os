@@ -3,101 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="dark">
   <title>Photo Content OS Studio</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div id="app" class="app-shell" aria-live="polite">
-    <aside class="sidebar">
-      <header class="brand">
-        <span class="brand-mark" aria-hidden="true">P</span>
-        <div><strong>Photo Content OS</strong><small>Local Studio</small></div>
-      </header>
-      <button id="create-project" class="primary full">＋ 新建项目</button>
-      <nav id="project-list" class="project-list" aria-label="项目列表"></nav>
-      <footer class="sidebar-foot">
-        <span class="privacy-dot"></span>
-        <div><strong>素材留在本机</strong><small>网页不读取原始媒体字节</small></div>
-      </footer>
-    </aside>
-
-    <main class="workspace">
-      <header class="workspace-header">
-        <div>
-          <p id="project-kicker" class="kicker">本地创作工作台</p>
-          <h1 id="project-title">选择或创建一个项目</h1>
-          <p id="project-meta" class="muted">Brief、脚本、素材、剪辑方案与交付统一版本化。</p>
-        </div>
-        <div class="header-actions">
-          <span id="save-state" class="save-state">已同步到本机</span>
-          <button id="edit-project" class="ghost" disabled>编辑项目</button>
-        </div>
-      </header>
-
-      <nav id="tabs" class="tabs" aria-label="项目工作区">
-        <button data-tab="overview" class="active">概览</button>
-        <button data-tab="references">研究与参考</button>
-        <button data-tab="brief">Brief</button>
-        <button data-tab="materials">本地素材</button>
-        <button data-tab="script">脚本</button>
-        <button data-tab="storyboard">剪辑方案</button>
-        <button data-tab="delivery">交付</button>
-        <button data-tab="publishing">发布与复盘</button>
-        <button data-tab="settings">设置</button>
+  <div id="app" class="app" aria-live="polite">
+    <aside class="side">
+      <div class="brand"><span class="brand-mark">P</span><div><b>Photo Content OS</b><small>本地创作工作台</small></div></div>
+      <nav class="nav" aria-label="主导航">
+        <button data-screen="home" aria-current="page"><span>⌂</span>工作台</button>
+        <button data-screen="inbox"><span>⌁</span>整理台 <i class="badge" id="inbox-count">0</i></button>
+        <button data-screen="library"><span>▦</span>素材库</button>
+        <button data-screen="project"><span>□</span>项目</button>
+        <button data-screen="settings"><span>⚙</span>设置与诊断</button>
       </nav>
-
-      <section id="content" class="content empty-state">
-        <div class="empty-illustration">⌁</div>
-        <h2>从一个 CreativeProject 开始</h2>
-        <p>先定义要做什么，再连接本地照片和视频。素材路径与媒体字节不会出现在网页投影中。</p>
-      </section>
+      <div class="side-sec"><button data-surface="login">上游账号</button><button data-surface="setup">安装向导</button><button data-surface="cloud">网页中台</button></div>
+      <footer class="side-foot"><div><i class="dot dot--ok"></i>本地工作台可用</div><small>原始媒体不会写入网页投影</small></footer>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><h1 id="screen-title">工作台</h1><p id="screen-sub">最近项目与本机能力状态</p></div><div class="topbar-actions"><span id="local-state" class="chip chip--ok">本机</span><button id="open-create" class="btn btn--pri">新建项目</button></div></header>
+      <section class="screen" data-screen-panel="home"></section>
+      <section class="screen" data-screen-panel="inbox" hidden></section>
+      <section class="screen" data-screen-panel="library" hidden></section>
+      <section class="screen" data-screen-panel="project" hidden></section>
+      <section class="screen" data-screen-panel="settings" hidden></section>
     </main>
   </div>
 
-  <dialog id="project-dialog">
-    <form id="project-form" method="dialog" class="dialog-form">
-      <header><div><p class="kicker">CreativeProject</p><h2>新建内容项目</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header>
-      <label>项目名称<input name="title" required maxlength="120" placeholder="例如：重回校园的一天"></label>
-      <div class="two-col">
-        <label>目标平台<select name="platform"><option>小红书</option><option>抖音</option><option>视频号</option><option>B 站</option><option>未指定</option></select></label>
-        <label>账号<input name="account" maxlength="80" placeholder="可稍后填写"></label>
-      </div>
-      <label>本地素材目录（可选）<input name="localWorkspace" placeholder="只保存在本机，不会显示到网页"></label>
-      <footer><button value="cancel" class="ghost">取消</button><button id="submit-project" value="default" class="primary">创建项目</button></footer>
-    </form>
-  </dialog>
+  <section class="surface" data-surface-panel="login" hidden>
+    <div class="login"><aside class="login-brand"><div class="brand"><span class="brand-mark">P</span><b>Photo Content OS</b></div><h1>从本地开始，按需连接上游。</h1><p>未登录时，本地项目、素材和创作能力保持完整。</p></aside><main class="login-form"><div class="login-card"><p class="eyebrow">上游中台账号</p><h2>连接账号</h2><p class="muted">连接后可使用同一套上游身份；本机不会存储令牌明文。</p><form id="pair-form" class="form"><label>配对意图<input name="localPairingIntent" maxlength="120" required placeholder="在上游完成授权后粘贴意图"></label><button class="btn btn--pri">连接上游</button><button type="button" class="btn" data-close-surface>暂时跳过</button></form></div></main></div>
+  </section>
 
-  <dialog id="edit-dialog">
-    <form id="edit-form" method="dialog" class="dialog-form">
-      <header><div><p class="kicker">项目信息</p><h2>编辑项目</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header>
-      <label>项目名称<input name="title" required maxlength="120"></label>
-      <div class="two-col">
-        <label>目标平台<input name="platform" maxlength="80"></label>
-        <label>账号<input name="account" maxlength="80"></label>
-      </div>
-      <label>阶段<select name="status"><option value="planning">策划中</option><option value="producing">制作中</option><option value="editing">精剪中</option><option value="ready">待发布</option><option value="published">已发布</option></select></label>
-      <footer><button value="cancel" class="ghost">取消</button><button value="default" class="primary">保存</button></footer>
-    </form>
-  </dialog>
+  <section class="surface" data-surface-panel="setup" hidden>
+    <div class="wizard"><header><div><p class="eyebrow">安装向导</p><h1>完成本机工作台准备</h1></div><button class="btn" data-close-surface>关闭</button></header><ol class="wizard-steps"><li data-wizard-step="1" class="active"><b>1</b><div><strong>存放位置</strong><small>选择项目状态保存位置</small></div></li><li data-wizard-step="2"><b>2</b><div><strong>运行环境</strong><small>检查本机工具链</small></div></li><li data-wizard-step="3"><b>3</b><div><strong>剪辑器</strong><small>选择标准交接或可编辑时间线</small></div></li><li data-wizard-step="4"><b>4</b><div><strong>账号与设备</strong><small>可选地连接上游中台</small></div></li></ol><div class="wizard-panel" id="wizard-panel"></div><footer><button id="wizard-prev" class="btn">上一步</button><button id="wizard-next" class="btn btn--pri">下一步</button></footer></div>
+  </section>
 
-  <dialog id="ai-dialog">
-    <form id="ai-form" method="dialog" class="dialog-form">
-      <header><div><p class="kicker">只修改选中区块</p><h2>AI 区块修改</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header>
-      <p id="ai-selection" class="notice"></p>
-      <label>修改要求<textarea name="instruction" rows="5" required placeholder="例如：保留事实不变，把开头压缩到 80 字以内，并加强冲突感。"></textarea></label>
-      <footer><button value="cancel" class="ghost">取消</button><button value="default" class="primary">生成并保存</button></footer>
-    </form>
-  </dialog>
+  <section class="surface" data-surface-panel="cloud" hidden>
+    <div class="cloud"><header><div><p class="eyebrow">网页中台</p><h1>上游任务状态</h1></div><button class="btn" data-close-surface>关闭</button></header><div id="cloud-content" class="cloud-content"></div></div>
+  </section>
 
-  <dialog id="diff-dialog" class="wide-dialog">
-    <form method="dialog" class="dialog-form">
-      <header><div><p class="kicker">版本差异</p><h2 id="diff-title">Diff</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header>
-      <pre id="diff-output" class="diff-output"></pre>
-      <footer><button value="cancel" class="primary">关闭</button></footer>
-    </form>
-  </dialog>
-
+  <dialog id="project-dialog"><form method="dialog" id="project-form" class="dialog-form"><header><div><p class="eyebrow">项目</p><h2>新建内容项目</h2></div><button value="cancel" class="icon-button" aria-label="关闭">×</button></header><label>项目名称<input name="title" maxlength="120" required></label><div class="two-col"><label>目标平台<input name="platform" value="未指定" maxlength="80"></label><label>账号<input name="account" maxlength="80"></label></div><label>本地素材目录（可选）<input name="localWorkspace" maxlength="1024"></label><footer><button value="cancel" class="btn">取消</button><button value="default" class="btn btn--pri">创建</button></footer></form></dialog>
   <div id="toast" class="toast" role="status"></div>
   <script type="module" src="/app.js"></script>
 </body>

@@ -3,7 +3,7 @@
   "semantic_key": "requirement.checklist.k4",
   "stage": "R7",
   "work_kind": "implementation",
-  "domain_lane": "studio",
+  "domain_lane": "project",
   "execution_state": "READY",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
@@ -41,10 +41,10 @@
     "DL-K4"
   ],
   "source_requirement_refs": [
-    "SRC-K4"
+    "SRC-CHECKLIST-K4"
   ],
   "surface_refs": [
-    "SURF-STUDIO"
+    "SURF-PROJECT"
   ],
   "required_evidence_profile": {
     "source_identity": "locked",
@@ -56,7 +56,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "研究与参考（reference ≠ 自有素材）：这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

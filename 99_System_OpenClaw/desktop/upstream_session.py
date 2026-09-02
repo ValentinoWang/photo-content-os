@@ -21,7 +21,7 @@ E4_RESULT_FIELDS = frozenset(
         "session_ref",
     }
 )
-_PAIRING_STATUSES = frozenset({"rejected", "unavailable", "paired"})
+_PAIRING_STATUSES = frozenset({"rejected", "unavailable", "unsupported", "paired"})
 _SECRET_FIELD_MARKERS = (
     "api_key",
     "access_key",
@@ -39,6 +39,7 @@ class UpstreamSessionStatus(str, Enum):
     DEFAULT = "default"
     UNPAIRED = "unpaired"
     UNAVAILABLE = "unavailable"
+    UNSUPPORTED = "unsupported"
     PAIRED = "paired"
     REVOKED = "revoked"
     EXPIRED = "expired"
@@ -255,6 +256,9 @@ class UpstreamSessionConsumer:
             return
         if projection.pairing_status == "unavailable":
             self._clear(UpstreamSessionStatus.UNAVAILABLE, pairing_status="unavailable")
+            return
+        if projection.pairing_status == "unsupported":
+            self._clear(UpstreamSessionStatus.UNSUPPORTED, pairing_status="unsupported")
             return
         if projection.revoked:
             self._clear(UpstreamSessionStatus.REVOKED, pairing_status="paired", revoked=True)

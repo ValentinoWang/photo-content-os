@@ -54,7 +54,7 @@
     "persistent_runtime": "installed",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "剪映脚本仅作历史材料，自动化不得修改生产剪映草稿。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "产品负责人"

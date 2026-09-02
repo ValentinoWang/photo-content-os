@@ -41,12 +41,12 @@
     "DL-Q3"
   ],
   "source_requirement_refs": [
-    "SRC-L1",
-    "SRC-L2",
-    "SRC-L3",
-    "SRC-L4",
-    "SRC-L5",
-    "SRC-T2"
+    "SRC-CHECKLIST-L1",
+    "SRC-CHECKLIST-L2",
+    "SRC-CHECKLIST-L3",
+    "SRC-CHECKLIST-L4",
+    "SRC-CHECKLIST-L5",
+    "SRC-CHECKLIST-T2"
   ],
   "surface_refs": [
     "SURF-LIBRARY"
@@ -61,7 +61,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "汇编 R3 的独立候选、证据和接受结果",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "独立验收负责人"

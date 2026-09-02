@@ -39,7 +39,7 @@
     "DL-T3"
   ],
   "source_requirement_refs": [
-    "SRC-T3"
+    "SRC-CHECKLIST-T3"
   ],
   "surface_refs": [
     "SURF-SETTINGS"
@@ -54,7 +54,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "none"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

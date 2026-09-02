@@ -42,7 +42,7 @@
     "DL-I1"
   ],
   "source_requirement_refs": [
-    "SRC-I1"
+    "SRC-CHECKLIST-I1"
   ],
   "surface_refs": [
     "SURF-ORGANIZER"
@@ -57,7 +57,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "拖入素材 → 自动成批：已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

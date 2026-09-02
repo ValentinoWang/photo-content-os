@@ -38,7 +38,7 @@
     "DL-T4"
   ],
   "source_requirement_refs": [
-    "SRC-T4"
+    "SRC-CHECKLIST-T4"
   ],
   "surface_refs": [
     "SURF-SETTINGS"
@@ -53,7 +53,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "none"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "给 analysis_tiering 的输出定 JSON Schema：补 schemas/analysis_tiering.schema.json，纳入现有的契约校验流程。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

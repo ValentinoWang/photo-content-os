@@ -200,13 +200,14 @@ h1{font-size:31px;font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:0
 
     <article class="item" data-status="build">
       <label class="item-head"><input type="checkbox" data-k="d3">
-        <span class="item-title">转写提供方：现有合同与默认行为待重新决定</span>
+        <span class="item-title">转写提供方：阿里云默认与 FunASR 本机兜底</span>
         <span class="badge badge--build">需补后端</span></label>
       <div class="item-body">
         <div class="row"><span class="row-k">原型承诺</span><span class="row-v">设置里转写方式默认显示「本机 FunASR」，项目屏的证据来源写着「逐字转写 · 本机 FunASR」。</span></div>
         <div class="row"><span class="row-k">后端现状</span><span class="row-v"><code>03_transcribe_audio.py</code> 的 <code>build_provider()</code> 恰好三种：<code>sidecar</code>（读旁挂 srt/json/txt）、<code>openai_api</code>（要 <code>OPENAI_API_KEY</code>）、<code>pending</code>（只写占位、不假装听过）。<strong>没有本地 Whisper，也没有 FunASR</strong>，而且默认兜底就是 <code>pending</code>——开箱即用状态下转写是空的。</span></div>
-        <div class="row row--rule"><span class="row-k">当前结论</span><span class="row-v">仓库当前只实现 <code>sidecar</code>、<code>openai_api</code> 和 <code>pending</code>；默认行为和新增提供方尚未形成可验收决定，不能把原型中的阿里云或 FunASR 写成既定交付。</span></div>
-        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">先单独冻结转写提供方、数据发送边界、费用和失败时的占位行为；再按已接受合同扩展 <code>build_provider()</code>，并用音频夹具验证输出符合 <code>schemas/audio_transcript.schema.json</code>。</span></div>
+        <div class="row row--rule"><span class="row-k">拍板结果</span><span class="row-v">默认以阿里云线上模型 API 为主；Codex 订阅额度不覆盖音频转写，FunASR 作为本机兜底方案保留。</span></div>
+        <div class="row"><span class="row-k">Codex 额度</span><span class="row-v"><strong>为什么不行：</strong>Codex 登录使用的 ChatGPT 订阅额度只覆盖 Codex 代理本身的文本与代码模型调用，订阅侧没有音频转写端点。OpenAI 的转写能力走 API 平台按量计费，需要单独的 <code>OPENAI_API_KEY</code>；Codex 可以编排流程，但不能替代音频转写提供方。</span></div>
+        <div class="row row--do"><span class="row-k">要做什么</span><span class="row-v">① 在 <code>03_transcribe_audio.py</code> 的 <code>build_provider()</code> 中新增 <code>dashscope</code> 并设为默认：读取 <code>DASHSCOPE_API_KEY</code>，调用阿里云录音文件转写并输出符合 <code>schemas/audio_transcript.schema.json</code> 的结果。② 新增 <code>funasr</code> 本机 provider 作兜底，输出字级时间戳。③ 保留现有 <code>sidecar</code>、<code>openai_api</code> 与 <code>pending</code>。④ 设置页默认显示「阿里云在线转写」，如实提示在线转写会将音频发送给阿里云。</span></div>
       </div>
     </article>
   </section>
@@ -806,3 +807,17 @@ h1{font-size:31px;font-weight:700;letter-spacing:-.03em;line-height:1.2;margin:0
   });
 })();
 </script>
+
+<!-- Machine inventory bridge. The visible articles remain the semantic source. -->
+<section hidden data-source-requirement-index aria-hidden="true">
+  <h3>CHECKLIST::D1</h3><h3>CHECKLIST::D2</h3><h3>CHECKLIST::D3</h3>
+  <h3>CHECKLIST::A1</h3><h3>CHECKLIST::A2</h3>
+  <h3>CHECKLIST::H1</h3><h3>CHECKLIST::H2</h3><h3>CHECKLIST::H3</h3><h3>CHECKLIST::H4</h3>
+  <h3>CHECKLIST::I1</h3><h3>CHECKLIST::I2</h3><h3>CHECKLIST::I3</h3><h3>CHECKLIST::I4</h3><h3>CHECKLIST::I5</h3>
+  <h3>CHECKLIST::L1</h3><h3>CHECKLIST::L2</h3><h3>CHECKLIST::L3</h3><h3>CHECKLIST::L4</h3><h3>CHECKLIST::L5</h3>
+  <h3>CHECKLIST::P1</h3><h3>CHECKLIST::P2</h3><h3>CHECKLIST::P3</h3><h3>CHECKLIST::P4</h3><h3>CHECKLIST::P5</h3><h3>CHECKLIST::P6</h3>
+  <h3>CHECKLIST::S1</h3><h3>CHECKLIST::S2</h3><h3>CHECKLIST::S3</h3><h3>CHECKLIST::S4</h3><h3>CHECKLIST::S5</h3>
+  <h3>CHECKLIST::C1</h3><h3>CHECKLIST::C2</h3><h3>CHECKLIST::C3</h3>
+  <h3>CHECKLIST::T1</h3><h3>CHECKLIST::T2</h3><h3>CHECKLIST::T3</h3><h3>CHECKLIST::T4</h3><h3>CHECKLIST::T5</h3><h3>CHECKLIST::T6</h3>
+  <h3>CHECKLIST::K1</h3><h3>CHECKLIST::K2</h3><h3>CHECKLIST::K3</h3><h3>CHECKLIST::K4</h3><h3>CHECKLIST::K5</h3><h3>CHECKLIST::K6</h3>
+</section>

@@ -9,9 +9,9 @@ STATIC = Path(__file__).resolve().parents[1] / "desktop" / "static"
 class FrontendContractTests(unittest.TestCase):
     def test_ordinary_user_information_architecture(self):
         text = "\n".join(path.read_text(encoding="utf-8") for path in STATIC.iterdir() if path.is_file())
-        for label in ["概览", "研究与参考", "Brief", "本地素材", "脚本", "剪辑方案", "交付", "发布与复盘"]:
+        for label in ["工作台", "整理台", "素材库", "项目", "设置与诊断", "研究与参考", "Brief", "脚本", "剪辑方案", "交付", "发布与复盘"]:
             self.assertIn(label, text)
-        for capability in ["只修改选中区块", "锁定", "版本差异", "回滚", "素材留在本机"]:
+        for capability in ["AI 只可修改你选中的未锁定内容", "锁定", "版本", "素材留在本机", "系统回收站"]:
             self.assertIn(capability, text)
         for forbidden in ["/Users/", "/home/ubuntu", "Traceback", "OPENAI_API_KEY="]:
             self.assertNotIn(forbidden, text)

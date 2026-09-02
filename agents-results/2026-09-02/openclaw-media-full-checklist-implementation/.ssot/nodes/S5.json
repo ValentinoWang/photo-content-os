@@ -43,7 +43,7 @@
     "DL-S5"
   ],
   "source_requirement_refs": [
-    "SRC-S5"
+    "SRC-CHECKLIST-S5"
   ],
   "surface_refs": [
     "SURF-SETTINGS"
@@ -58,7 +58,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "持久化用户选择的提供方、模型、端点、思考强度和密钥引用，并确保真实执行链消费该配置。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

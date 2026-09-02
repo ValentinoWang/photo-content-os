@@ -1,11 +1,12 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "artifacts": [
     {
       "artifact_id": "SRC-ART-CHECKLIST",
+      "external_dependency_id": "EXT-CHECKLIST",
       "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html",
-      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:54a496f3f457aab27c49f9f7a84391a7a46c3f76",
-      "sha256": "88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf",
+      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:6202f61978a7bc94e01e3d50e80698a32856746b",
+      "sha256": "73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb",
       "media_type": "text/html",
       "authority_by_dimension": {
         "information_architecture": "normative",
@@ -18,9 +19,10 @@
     },
     {
       "artifact_id": "SRC-ART-PROTOTYPE",
+      "external_dependency_id": "EXT-PROTOTYPE",
       "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
       "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:cc44bc4065310264b7bf398680fc6cb0750fd163",
-      "sha256": "12333526096c18d2dc0e4a0f4b49d804d0f3cf5683117730ce415e3665686978",
+      "sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8",
       "media_type": "text/html",
       "authority_by_dimension": {
         "information_architecture": "normative",
@@ -32,27 +34,815 @@
       }
     }
   ],
+  "inventory": [
+    {
+      "inventory_id": "INV-CHECKLIST-0001",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h1[1]",
+      "text": "把 OpenClaw Media 原型接到真引擎上",
+      "content_sha256": "b5f2fcfeecf0de1cbff5ccc6e5c2c3629b1ddce7ca5d59e6f27b911f6d6e93fc",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0002",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[1]",
+      "text": "先说清楚一件事：现有前端和原型不是同一个东西的两个版本",
+      "content_sha256": "5392c5cf8e0a32f77a3fc110a388cf3d5a0a826d24239bfca53f0e1b239bee59",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0003",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[2]",
+      "text": "已拍板的三件事",
+      "content_sha256": "a8b7441ee12a10afa9f4d864c314825438245f1b9b3d500f7971e9ca2c5d1b80",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0004",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[3]",
+      "text": "登录与安装向导",
+      "content_sha256": "fd2fc8bcb1ae61fffd2a987277a942448bd0eceb75dc0e50197791d7db14d460",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0005",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[4]",
+      "text": "工作台",
+      "content_sha256": "f9e02d3c13aaa72c56da7e179699a09286a3d4b75dca0fdee1eef436bbdf6679",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0006",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[5]",
+      "text": "整理台",
+      "content_sha256": "877a4f8c745bea2c0e793758fbffa268cb6b8ad76536aee6211bf0f919685abd",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0007",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[6]",
+      "text": "素材库",
+      "content_sha256": "89e906481e9ff575c4b67ff540fce6572e4ef9f495a8d084f4a77d209017c89a",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0008",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[7]",
+      "text": "项目",
+      "content_sha256": "79f326be4409d51fe60f4edc03b20c4b94de952d626e1616790e7b2384f08f00",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0009",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[8]",
+      "text": "设置与诊断",
+      "content_sha256": "0eec572ca91f1e4cc8bb5cd38e218c5b7088ed85ee3955db413dad80880b1193",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0010",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[9]",
+      "text": "网页中台",
+      "content_sha256": "c0f50500d6ab132ad647a9f5b155a50ed9d950dce85a85f82da55cbfbb8c3022",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0011",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[10]",
+      "text": "接界面之前该还的债",
+      "content_sha256": "e94016a3d7fb12c1a0042299d83f5408897fd03b6b7135080e5da1a01168d019",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0012",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h2[11]",
+      "text": "换界面时不要丢的东西",
+      "content_sha256": "e0d4f13d479a66fa3327433541dd3fa64bf744a8f07d1b90b32ba1f3c7433f88",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0013",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[1]",
+      "text": "CHECKLIST::D1",
+      "content_sha256": "8996492046a227df31d37720f49bfc974ca031617a4c618ed45ea1c87aa8b820",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-D1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0014",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[2]",
+      "text": "CHECKLIST::D2",
+      "content_sha256": "d7b36df0ed98897491e8be2395ee7a454316d6d00ba8ee0f8223e7cb8008ecb5",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-D2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0015",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[3]",
+      "text": "CHECKLIST::D3",
+      "content_sha256": "ed043705270613f18d955d087a8031d4864a768e95313bce46b19af1e3597b7c",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-D3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0016",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[4]",
+      "text": "CHECKLIST::A1",
+      "content_sha256": "722d8397cb2399170a3e8037c03962bf96604aa517400b04b5d8a0c4bee34a16",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-A1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0017",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[5]",
+      "text": "CHECKLIST::A2",
+      "content_sha256": "a1a8c01e3574f12b6dfb67f30815069c93d44062ab3edeb48a914bc71890c30c",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-A2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0018",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[6]",
+      "text": "CHECKLIST::H1",
+      "content_sha256": "152f6b5096cf21248d33240c05ea552f7a93e28f2fdf2b0d517acb745fed677c",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-H1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0019",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[7]",
+      "text": "CHECKLIST::H2",
+      "content_sha256": "61982faefde9bd8b95b0a03be31fc13dd7b10cde7f4d8ebfd07b2695feeee62c",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-H2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0020",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[8]",
+      "text": "CHECKLIST::H3",
+      "content_sha256": "ca43a01c7effa179dff0c28b689b8597d2efc4a6abaebb52249326017ff037a8",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-H3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0021",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[9]",
+      "text": "CHECKLIST::H4",
+      "content_sha256": "f2015e8f10752fc45359e1acdd8d4e8321c5d25b8f8862df54eb1ae0236bbda2",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-H4"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0022",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[10]",
+      "text": "CHECKLIST::I1",
+      "content_sha256": "64609df0459ae2b16cc35279306d4326f67ecc521f5f07299de991b85195fc6a",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-I1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0023",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[11]",
+      "text": "CHECKLIST::I2",
+      "content_sha256": "13b9153816cdebeec91dcc8df506028efd4d594d04230a53fb16c44b3cb2483e",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-I2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0024",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[12]",
+      "text": "CHECKLIST::I3",
+      "content_sha256": "66fd9bb406c121a3472bd0c61a6575aa07c3f5742c095117b66383f8be4e27ff",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-I3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0025",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[13]",
+      "text": "CHECKLIST::I4",
+      "content_sha256": "23f254200172f3400c5d0fbe4f931c082f484b49589852bf0f422dee15eed6cf",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-I4"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0026",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[14]",
+      "text": "CHECKLIST::I5",
+      "content_sha256": "1ea800fed8ddc2a813253359da26167004997ee5a017fc4bbbc689db1b7da86c",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-I5"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0027",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[15]",
+      "text": "CHECKLIST::L1",
+      "content_sha256": "3f715a8a4c4b7bc75b346f8b29f8e909e8ba441c44308ea222529dd6f49ecaf4",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-L1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0028",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[16]",
+      "text": "CHECKLIST::L2",
+      "content_sha256": "8b83f44a8d7c0d80bdfda4f25ba2d2935149e7252ebf241570d6cdb343c4f981",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-L2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0029",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[17]",
+      "text": "CHECKLIST::L3",
+      "content_sha256": "2f81bf5e6a56926c8b9ad0d598b166a6ce38b19100e93cd6ac132277fcad2bf9",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-L3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0030",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[18]",
+      "text": "CHECKLIST::L4",
+      "content_sha256": "20598c79574ee6438b609131ebe3e5737492b040d2b25a0d5161e18f4e9288fb",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-L4"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0031",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[19]",
+      "text": "CHECKLIST::L5",
+      "content_sha256": "2da2474c1ebab43d39fc7ebb41895b8ccba2248da2f12e1afe41994492980f5c",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-L5"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0032",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[20]",
+      "text": "CHECKLIST::P1",
+      "content_sha256": "d1385307b722d89af32ccaacbc0db489e9ce49b7af72b710f79ed7ffc6e382fe",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-P1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0033",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[21]",
+      "text": "CHECKLIST::P2",
+      "content_sha256": "4c1c2ea2b9d76afaf126ef38330260e0d59d1d20f820674f67eb7de7c1c1d711",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-P2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0034",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[22]",
+      "text": "CHECKLIST::P3",
+      "content_sha256": "9156da8df8cfef4755ff564b53fb59b428c1dbc65fdaac0eb017f674cdb989dd",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-P3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0035",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[23]",
+      "text": "CHECKLIST::P4",
+      "content_sha256": "35295edcca850b7fc3cd1dcf06b8c640ff3cc32178f9e1497c413acbfd656b5b",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-P4"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0036",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[24]",
+      "text": "CHECKLIST::P5",
+      "content_sha256": "7b708efe0be679bc3ad72c1a41d645b4cd5f23eb732459c0133a8b9c04765288",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-P5"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0037",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[25]",
+      "text": "CHECKLIST::P6",
+      "content_sha256": "bf1623c0e454b63b3d987d5ffb37b52ec27b933017732643bc9de407094ff7c3",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-P6"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0038",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[26]",
+      "text": "CHECKLIST::S1",
+      "content_sha256": "aaa6d397decaf2a9c8321d13a0883759dfcf876de42d5a748deff48b1d881f46",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-S1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0039",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[27]",
+      "text": "CHECKLIST::S2",
+      "content_sha256": "9832218c946618e455de316f629629d032041110e4fea4d97043ba44cb6f729d",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-S2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0040",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[28]",
+      "text": "CHECKLIST::S3",
+      "content_sha256": "48322d340611d0d92d81a10b93846c2f2c69f23fe34f0228e7a509b8bd6f5b15",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-S3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0041",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[29]",
+      "text": "CHECKLIST::S4",
+      "content_sha256": "de191591a63aa53a4e4fc710f4c61bc3e071b2806328c7c89a151da5577c0d09",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-S4"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0042",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[30]",
+      "text": "CHECKLIST::S5",
+      "content_sha256": "7d1d258eccfa18097607fbdb31d0ccc6d77dcd4ce530563a441d63cea2c396be",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-S5"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0043",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[31]",
+      "text": "CHECKLIST::C1",
+      "content_sha256": "4a5e201414823c527655b7c6fc57d8f362462eb4541d98a2b03dd8db2626b6cf",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-C1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0044",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[32]",
+      "text": "CHECKLIST::C2",
+      "content_sha256": "d3b96137743a993dd8740bfe9949a7923d182e9215ed78949acb30b08816f071",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-C2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0045",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[33]",
+      "text": "CHECKLIST::C3",
+      "content_sha256": "8be39c6b8a9cdacaa04d8f3587923830943e993a0948314f8e3c1ca1031aae05",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-C3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0046",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[34]",
+      "text": "CHECKLIST::T1",
+      "content_sha256": "44a5b5185699a4b7c371963bd35c10ba74e9d28d02e592ca86855f9ed2b20f57",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-T1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0047",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[35]",
+      "text": "CHECKLIST::T2",
+      "content_sha256": "60664dc0a3a982ff374347d046b69216a1b92753109c08612b4a0c55fe7a04c8",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-T2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0048",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[36]",
+      "text": "CHECKLIST::T3",
+      "content_sha256": "0c196aa0f5c92ab244f32cc2b784d14e997a1b1a0dab14f8f716a2e678d53597",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-T3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0049",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[37]",
+      "text": "CHECKLIST::T4",
+      "content_sha256": "375f3426ae7739c63bc68d7b3e8c25ee4ee1057a26be04d87af3dc98838d721b",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-T4"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0050",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[38]",
+      "text": "CHECKLIST::T5",
+      "content_sha256": "209361978ee8fa1d2b840b88a427ef4e85ca8fd8d661dcf109c6e26b684d0cc0",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-T5"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0051",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[39]",
+      "text": "CHECKLIST::T6",
+      "content_sha256": "3cf8b300887e32a021135c3669436c9670793db049cb65a96bee2191e8347373",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-T6"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0052",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[40]",
+      "text": "CHECKLIST::K1",
+      "content_sha256": "9087c2a84d2a81cb5ec60fe6c24ce56b47e99bfc09f55ef71ff5adafa4ba4637",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-K1"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0053",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[41]",
+      "text": "CHECKLIST::K2",
+      "content_sha256": "da510d3dfc98437397d60987e3ef6423a8f426bb8be47cec89ff18c886899fc0",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-K2"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0054",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[42]",
+      "text": "CHECKLIST::K3",
+      "content_sha256": "7f7a1e2fab079205ceca49dd159fe8b92e0b1fe11021036b3eeb8fb79de4cca0",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-K3"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0055",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[43]",
+      "text": "CHECKLIST::K4",
+      "content_sha256": "ca1f1d40f1d0628fa94c0851a8b7dd15c4c228a619ac5da97208c38a1fa319f3",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-K4"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0056",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[44]",
+      "text": "CHECKLIST::K5",
+      "content_sha256": "7b183dd5889507896b30171be4dd5eea33726adbce81ae722a1f6015820495b9",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-K5"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0057",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "heading",
+      "locator": "html:h3[45]",
+      "text": "CHECKLIST::K6",
+      "content_sha256": "5d269b4ab651d947f0af62e31aaf7d76163be4038f1aa943509a295b442d6406",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-CHECKLIST-K6"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0058",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "normative-sentence",
+      "locator": "html:normative-sentence[1]",
+      "text": "OpenClaw 落地清单 photo-content-os · 前端落地清单 把 OpenClaw Media 原型接到真引擎上 这份清单把可点击原型上的每一块承诺，对照 photo-content-os 仓库里真实存在的能力，逐条给出判定：能直接接的、要补后端的、必须先拍板的、以及原型本身写错了要改的。",
+      "content_sha256": "43d5d5a9e1f81c854ae1ce0b9e0a8624a6307234b20a4158012927449b0e4ee3",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0059",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "normative-sentence",
+      "locator": "html:normative-sentence[2]",
+      "text": "批次计划先给用户确认，确认后才交给 34 / 35 建项目和迁移——所以第 08 节 t1（给 35 补测试）必须排在它之前。",
+      "content_sha256": "87f1c3520104faf237f8e8dfb5c7c33a59c9645020ba66608ca78439cca90964",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0060",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "normative-sentence",
+      "locator": "html:normative-sentence[3]",
+      "text": "区块锁定 + AI 只改选中区块 原型要改 现状 ai_patch.py 定义了严格合同：替换集合必须与选中集合 完全一致 ，locked block 不能被保存或被 AI 改。",
+      "content_sha256": "b1c2fdc962b5552ccc699e7002a189d9123591646e19ee9592f678c1c45a084f",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-CHECKLIST-0061",
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "kind": "normative-sentence",
+      "locator": "html:normative-sentence[4]",
+      "text": "要做什么 新界面必须保留这个语义。",
+      "content_sha256": "957e9a927c4bd3148fe7edebf97bd95872c56d469626949e18c13612358c6442",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0001",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h1[1]",
+      "text": "OpenClaw Media",
+      "content_sha256": "cdf996698290716bdfa6af88f93ba6a81618b7bee0ef7d81ef72f3f9d083a938",
+      "disposition": "requirement",
+      "requirement_ref": "SRC-PROTOTYPE-UI"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0002",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h2[1]",
+      "text": "把一堆素材 变成能发的成片",
+      "content_sha256": "b6d1db31da6b95dd69aacb557404bcfdb3299eaafd54810eee8953bca5bdcc97",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0003",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h2[2]",
+      "text": "工作台",
+      "content_sha256": "f9e02d3c13aaa72c56da7e179699a09286a3d4b75dca0fdee1eef436bbdf6679",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0004",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h2[3]",
+      "text": "素材库",
+      "content_sha256": "89e906481e9ff575c4b67ff540fce6572e4ef9f495a8d084f4a77d209017c89a",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0005",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h2[4]",
+      "text": "整理台",
+      "content_sha256": "877a4f8c745bea2c0e793758fbffa268cb6b8ad76536aee6211bf0f919685abd",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0006",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h2[5]",
+      "text": "四非文科女 Vibe Coding Day 3",
+      "content_sha256": "64d0e3ddd3d109da3952bef957446c3d88893e022e898adc314b04edc75bfce0",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0007",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h2[6]",
+      "text": "设置",
+      "content_sha256": "df3d58c7d84b85f2037cdd20ffca0f386668645ea53008c11b0c8887182b0356",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0008",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h3[1]",
+      "text": "存放位置",
+      "content_sha256": "f3a8c4c52977b968175880841d53753c94b12358ea7d8e6e9cdb3a150145371d",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0009",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h3[2]",
+      "text": "AI 助手",
+      "content_sha256": "1b0049fcfd4163fe2a902e3dd533e1a7352c30aa762eae22581cf7cd3f221ac9",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0010",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h3[3]",
+      "text": "转写",
+      "content_sha256": "0339801cd54f491ceb5256a16d83cad6e5a3ee6ba14b508376e73c017df491df",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0011",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h3[4]",
+      "text": "分析预算",
+      "content_sha256": "af0d9c4bed918640b28f1c6533799bee4967301eaff3c3f0f0d08261336cfa62",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0012",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h3[5]",
+      "text": "账号与设备",
+      "content_sha256": "bef746ba958f4c35c345b699d8cd0ab48265cdfb2d17f7994ab15491ee0118b7",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0013",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "heading",
+      "locator": "html:h3[6]",
+      "text": "诊断",
+      "content_sha256": "40ff6300f9817debba19c804db928ac5312c207b425a48d3382fab28b8d558ae",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0014",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "table-row",
+      "locator": "html:tr[1]",
+      "text": "素材编号 尺寸 时长 内容摘要",
+      "content_sha256": "f0b6518d317e50bcb83fa26d250e122075f2c480b5ffe0a723d9a0b15c0583f0",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0015",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "table-row",
+      "locator": "html:tr[2]",
+      "text": "asset_001 1080×1920 18.7 秒 室内正面口播，人物居中，有环境音",
+      "content_sha256": "155bdde4894609f041232abdd77c05ceb0f2edb1eff6b57c3a54213bbbe1d66d",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0016",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "table-row",
+      "locator": "html:tr[3]",
+      "text": "asset_002 1080×1920 6.2 秒 夜间工位空镜，屏幕反光，无人声",
+      "content_sha256": "364746130c6a97c9f508e52538a582328d109d83f6b160fb0a96aa68eee0d28a",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    },
+    {
+      "inventory_id": "INV-PROTOTYPE-0017",
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "kind": "table-row",
+      "locator": "html:tr[4]",
+      "text": "asset_003 2560×1440 31.4 秒 屏幕录制，终端报错回滚，可作小窗",
+      "content_sha256": "46e0b6b19dd6e1a9a544feaa74bb88efaff34b5e86ffae4f909fc587004501db",
+      "disposition": "informative",
+      "rationale": "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+    }
+  ],
   "requirements": [
     {
-      "requirement_id": "SRC-D1",
+      "requirement_id": "SRC-CHECKLIST-D1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[1]",
+        "content_sha256": "8996492046a227df31d37720f49bfc974ca031617a4c618ed45ea1c87aa8b820"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"d1\"]",
         "content_sha256": "50d5bf241ee0a6f960fcc9f4ac16ea054d2b3a8810bba7930373d9fae8651bdf"
       },
       "summary": "从媒体清单生成可解释、可确认且不可拆分实况照片组的事件批次计划；未确认或输入漂移时禁止迁移。",
-      "source_excerpt": "整理台的「AI 自动分事件、分批」 | 需补后端 | 原型承诺 | 「AI 会按拍摄时间和地点分成一个个事件，配好实况照片、认出重复连拍，整理成批等你确认」，并展示了 3 个已分好的批次。 | 后端现状 | 这个能力 | 完全不存在 | 。全量搜索 | scripts/ | 没有任何聚类 / 时间分组 / 事件切分逻辑。批次边界 100% 靠人手动建目录 | 00_Inbox_Mac_Intake/{batch_id}/ | 再手填 | 00_批次说明.md | 。EXIF 的 GPS 经纬度 | 已经在 manifest 里采集了 | （ | gps_latitude | / | gps_longitude | / | location_raw | ，见 | 01_scan_media_manifest.py | ），但没有任何代码消费它做分组。 | 拍板结果 | 做，不做任何降级。整理台保留「AI 自动分事件、分批」的完整承诺。 | 要做什么 | 新写一个分批器模块：读 | media_manifest.json | 的拍摄时间与 GPS（字段已采集），按时间间隔 + 地理距离阈值切事件，输出带 JSON Schema 的批次计划（建议 | schemas/inbox_batch_plan.schema.json | ）。批次计划先给用户确认，确认后才交给 | 34 | / | 35 | 建项目和迁移——所以第 08 节 t1（给 | 35 | 补测试）必须排在它之前。这是整份清单里工作量最大的单块新增。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "D1"
       ],
@@ -61,34 +851,49 @@
         "D1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-D1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-D1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-D1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R1"
+        "R1",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-D2",
+      "requirement_id": "SRC-CHECKLIST-D2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[2]",
+        "content_sha256": "d7b36df0ed98897491e8be2395ee7a454316d6d00ba8ee0f8223e7cb8008ecb5"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"d2\"]",
         "content_sha256": "302bfbb04e8a93b8ec4d4d81967dcc396aba1db3eade2e1f88c03269e5f0df96"
       },
       "summary": "以稳定素材身份原子维护结构化索引，支持分类、标签、用途、计数与详情查询，同时保留 Markdown 卡片。",
-      "source_excerpt": "素材库的结构化索引层 | 需补后端 | 原型承诺 | 素材库有「按标签筛选」的一排标签、86 张卡片计数、按分类树浏览、详情栏显示复用标签和适合用途。 | 后端现状 | 资产卡片是 | Markdown 文件 | （ | 15_register_reusable_asset.py | 的 | build_card() | ，模板 | templates/02_Asset_资产卡片_TEMPLATE.asset.md | ），复用索引是 | 一行一条的 Markdown 列表 | （ | 02_Asset_Library/Reusable_通用素材索引.md | ）。标签和用途字段确实有（ | --tags | / | --uses | ），但 | 没有 JSON 索引、没有 schema、没有反查、零测试 | 。UI 要筛选就得拿正则从 Markdown 里捞。 | 拍板结果 | 增加。 | 要做什么 | 新增 | 02_Asset_Library/index.json | 结构化索引 + | schemas/asset_library_index.schema.json | ，由 | 15_register_reusable_asset.py | 写卡片时同步 upsert（Markdown 卡片继续保留，人读卡片、机器读索引）。给素材库屏提供只读查询接口，连带补 | 12 | / | 14 | / | 15 | 的测试（第 08 节 t2）。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "D2"
       ],
@@ -97,34 +902,49 @@
         "D2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-D2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-D2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-D2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R1"
+        "R1",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-D3",
+      "requirement_id": "SRC-CHECKLIST-D3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[3]",
+        "content_sha256": "ed043705270613f18d955d087a8031d4864a768e95313bce46b19af1e3597b7c"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"d3\"]",
-        "content_sha256": "e2581e9d1c0dfa8aa1d3d55965b3693cad6fce1dc8fbbc63f0fd7bdd5e8dd62a"
+        "content_sha256": "bdbc6e23c92d1e2efc5515f5b21faf1a9270024d3a89260b49cb3c4713cda87f"
       },
-      "summary": "在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。",
-      "source_excerpt": "转写提供方：现有合同与默认行为待重新决定 | 需补后端 | 原型承诺 | 设置里转写方式默认显示「本机 FunASR」，项目屏的证据来源写着「逐字转写 · 本机 FunASR」。 | 后端现状 | 03_transcribe_audio.py | 的 | build_provider() | 恰好三种： | sidecar | （读旁挂 srt/json/txt）、 | openai_api | （要 | OPENAI_API_KEY | ）、 | pending | （只写占位、不假装听过）。 | 没有本地 Whisper，也没有 FunASR | ，而且默认兜底就是 | pending | ——开箱即用状态下转写是空的。 | 当前结论 | 仓库当前只实现 | sidecar | 、 | openai_api | 和 | pending | ；默认行为和新增提供方尚未形成可验收决定，不能把原型中的阿里云或 FunASR 写成既定交付。 | 要做什么 | 先单独冻结转写提供方、数据发送边界、费用和失败时的占位行为；再按已接受合同扩展 | build_provider() | ，并用音频夹具验证输出符合 | schemas/audio_transcript.schema.json | 。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "sandbox-real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "summary": "按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。",
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "D3"
       ],
@@ -133,34 +953,52 @@
         "D3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-D3/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-D3/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-D3/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-DASHSCOPE",
+        "EXTSYS-FUNASR"
       ],
       "release_refs": [
         "M45",
-        "R1"
+        "R1",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-A1",
+      "requirement_id": "SRC-CHECKLIST-A1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[4]",
+        "content_sha256": "722d8397cb2399170a3e8037c03962bf96604aa517400b04b5d8a0c4bee34a16"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"a1\"]",
         "content_sha256": "d40f9c169b8d069256d430ba99478845bedc4d4ee63c067a78d94e7e5ea9f4e2"
       },
       "summary": "使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。",
-      "source_excerpt": "账号登录（邮箱 / Apple / 微信） | 需补后端 | 后端现状 | Studio 完全没有账号体系。 | server.py | 的安全模型是「只听 127.0.0.1 + 同源 Origin + | X-Content-OS-CSRF | 」，靠的是本机边界不是身份。云端账号属于上游 | openclaw-media | 仓库，不在这个仓库里。 | 要做什么 | 先确认登录到底登的是谁——是 openclaw-media 中台账号，还是本地应用自己的账号。如果是前者，这屏的后端在另一个仓库，本仓库只需存一个 token 引用。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "sandbox-real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "A1"
       ],
@@ -169,34 +1007,51 @@
         "A1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-A1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-A1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-A1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-UPSTREAM"
       ],
       "release_refs": [
         "M45",
-        "R6"
+        "R6",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-A2",
+      "requirement_id": "SRC-CHECKLIST-A2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[5]",
+        "content_sha256": "a1a8c01e3574f12b6dfb67f30815069c93d44062ab3edeb48a914bc71890c30c"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"a2\"]",
         "content_sha256": "53e9fe7d17a4168e57739b6ab1627e6701db53714e3bf46548635bd7b80c089d"
       },
       "summary": "向导可重入地完成位置、运行环境、编辑器、账号与设备四步，并能从失败处恢复。",
-      "source_excerpt": "安装向导的四步（存放位置 / 运行环境 / 剪辑器 / 账号与设备） | 可直接接 | 后端现状 | 四步对应的检查全都已经有 CLI 实现：环境装配 | 41_setup_dev_environment.sh/.ps1 | ，环境体检 | 43_content_os_doctor.py | ，存放位置就是 | --state-dir | （默认 | ~/.photo-content-os/studio/ | ），设备配对判据在 doctor 的 | openclaw_cloud_pairing | 项里。 | 要做什么 | 把这些 CLI 包成 HTTP 接口给向导调用即可，不需要新逻辑。注意 | 44_launch_desktop.py | 目前是纯命令行启动，向导本身得先有人能打开。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "installed",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "A2"
       ],
@@ -205,34 +1060,49 @@
         "A2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-A2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-A2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-A2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R6"
+        "R6",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-H1",
+      "requirement_id": "SRC-CHECKLIST-H1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[6]",
+        "content_sha256": "152f6b5096cf21248d33240c05ea552f7a93e28f2fdf2b0d517acb745fed677c"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"h1\"]",
         "content_sha256": "62505f0198d94492f7928a09ac65eef3cb47ae987a251f9bf2e69a12f276fe60"
       },
       "summary": "最近项目列表 + 六段流水线进度：纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。",
-      "source_excerpt": "最近项目列表 + 六段流水线进度 | 可直接接 | 后端现状 | GET /api/bootstrap | 已经返回 projects 全量， | GET /api/projects/:id | 返回单项目。项目里已有 | documents.{brief,script,storyboard,edl} | 各自的 | version | / | stale | ，以及 | delivery.state | ——这正好就是六段进度条要的数据。 | 要做什么 | 纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "H1"
       ],
@@ -241,34 +1111,49 @@
         "H1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-H1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-H1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-H1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R6"
+        "R6",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-H2",
+      "requirement_id": "SRC-CHECKLIST-H2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[7]",
+        "content_sha256": "61982faefde9bd8b95b0a03be31fc13dd7b10cde7f4d8ebfd07b2695feeee62c"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"h2\"]",
         "content_sha256": "f41f5f096b62a26cf2abce887bfa589f1d95645f3af3d9974e1b363467c24c69"
       },
       "summary": "聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。",
-      "source_excerpt": "「四个引擎」状态卡（数据中台 / Codex / ChatCut / 本机引擎） | 需补后端 | 后端现状 | 部分有：本机引擎状态可从 | analysis_tiering | 的进度推；Codex 可用性在 doctor 的 | creative_provider | 项里；数据中台连接状态在 | openclaw_media_agent.py status | 。 | ChatCut 在这个仓库里完全不存在 | ——没有任何代码引用它。 | 要做什么 | 新增本机能力的聚合状态接口。ChatCut 只能作为可选的 ChatCut Desktop 桌面本地模型上下文协议（MCP）连接：实时探测成功且用户主动连接后才显示，不属于内建导出后端。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "real",
-        "persistent_runtime": "active",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "H2"
       ],
@@ -277,34 +1162,51 @@
         "H2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-H2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-H2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-H2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-CHATCUT"
       ],
       "release_refs": [
         "M45",
-        "R6"
+        "R6",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-H3",
+      "requirement_id": "SRC-CHECKLIST-H3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[8]",
+        "content_sha256": "ca43a01c7effa179dff0c28b689b8597d2efc4a6abaebb52249326017ff037a8"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"h3\"]",
         "content_sha256": "1e441c9f3b9c026906311db527424ed651d5d86e0007485a54a0ce603dd7aa44"
       },
       "summary": "素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB）：索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。",
-      "source_excerpt": "素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB） | 需补后端 | 后端现状 | 单个项目的 manifest 有逐条媒体信息，但 | 没有跨项目的聚合统计 | 。资产库是 Markdown，数不出这些数。 | 要做什么 | 索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "H3"
       ],
@@ -313,34 +1215,49 @@
         "H3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-H3/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-H3/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-H3/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R6"
+        "R6",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-H4",
+      "requirement_id": "SRC-CHECKLIST-H4",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[9]",
+        "content_sha256": "f2015e8f10752fc45359e1acdd8d4e8321c5d25b8f8862df54eb1ae0236bbda2"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"h4\"]",
         "content_sha256": "7c963a415ec7a8d8d2b61f93c771c2094a55e4fddab31c2561b6a326c3ef7555"
       },
       "summary": "本周统计（完成任务 23 / 发布内容 4）：加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。",
-      "source_excerpt": "本周统计（完成任务 23 / 发布内容 4） | 需补后端 | 后端现状 | 发布数可从各项目的 | publishing.state | 数出来（ | project_store.record_publishing() | 已经在存）。完成任务数要从队列结果里数， | 98_Agent任务队列/02_mac_to_cloud_results | 有记录但没有按周聚合。 | 要做什么 | 加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "H4"
       ],
@@ -349,34 +1266,49 @@
         "H4/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-H4/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-H4/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-H4/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R6"
+        "R6",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-I1",
+      "requirement_id": "SRC-CHECKLIST-I1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[10]",
+        "content_sha256": "64609df0459ae2b16cc35279306d4326f67ecc521f5f07299de991b85195fc6a"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"i1\"]",
         "content_sha256": "e930dc68a37eac1397c3c5aac431b9b5f789c8a98c263ae8fdc15ffdd37d5659"
       },
       "summary": "拖入素材 → 自动成批：已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。",
-      "source_excerpt": "拖入素材 → 自动成批 | 需补后端 | 后端现状 | 见第 00 节：分批能力不存在。现有的 | 34_ensure_project_from_inbox_batch.py | 只是「拿一个已经存在的批次目录去建项目壳」，不负责把散素材分成批。 | 要做什么 | 已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "I1"
       ],
@@ -385,34 +1317,49 @@
         "I1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-I1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-I1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-I1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R2"
+        "R2",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-I2",
+      "requirement_id": "SRC-CHECKLIST-I2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[11]",
+        "content_sha256": "13b9153816cdebeec91dcc8df506028efd4d594d04230a53fb16c44b3cb2483e"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"i2\"]",
         "content_sha256": "b719c64ccef84189369b8f959d5ebdf48f56f6cbaeab847a314e1377652742cc"
       },
       "summary": "批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1）：读 manifest 分组计数即可，不用新后端。",
-      "source_excerpt": "批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1） | 可直接接 | 后端现状 | 01_scan_media_manifest.py | 的 | scan_project() | 已经把设备、编码、时长、尺寸全部写进 | _ai_analysis/media_manifest.json | （ | manifest_version: 2 | ）。 | 要做什么 | 读 manifest 分组计数即可，不用新后端。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "I2"
       ],
@@ -421,34 +1368,49 @@
         "I2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-I2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-I2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-I2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R2"
+        "R2",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-I3",
+      "requirement_id": "SRC-CHECKLIST-I3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[12]",
+        "content_sha256": "66fd9bb406c121a3472bd0c61a6575aa07c3f5742c095117b66383f8be4e27ff"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"i3\"]",
         "content_sha256": "5d10cf7c10d68902b1776ff7e73c4e0020a676ad5d8d10ff1804ce903ea933f0"
       },
       "summary": "连拍识别（「发现 4 组连拍」）与实况配对：把 12 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。",
-      "source_excerpt": "连拍识别（「发现 4 组连拍」）与实况配对 | 需补后端 | 后端现状 | 连拍分组 | 有 | ： | 12_select_repeat_photo_groups.py | 的 | create_plan() | 能出计划、还能生成 contact sheet。但它 | 零测试、零 schema | ，而且是独立 CLI，不接批次流程。Live Photo 的成组改名逻辑在 | 11_rename_media_file.py | 里有，同样零测试。 | 要做什么 | 把 | 12 | 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "I3"
       ],
@@ -457,34 +1419,49 @@
         "I3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-I3/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-I3/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-I3/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R2"
+        "R2",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-I4",
+      "requirement_id": "SRC-CHECKLIST-I4",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[13]",
+        "content_sha256": "23f254200172f3400c5d0fbe4f931c082f484b49589852bf0f422dee15eed6cf"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"i4\"]",
         "content_sha256": "84db19eaa6c87a0f3643d301c8163ee300b9549c2cc810f24ec1821df74eec49"
       },
       "summary": "三分落点：进项目 / 归档保留 / 推荐删除：新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。",
-      "source_excerpt": "三分落点：进项目 / 归档保留 / 推荐删除 | 需补后端 | 后端现状 | 没有任何「落点建议」逻辑。 | 07_validate_media_decisions.py | 名字像但其实校验的是 | 文件命名 | ，读 manifest 的 | decision_issues | 出一份 | media_decision_warnings.md | ，跟三分落点无关。 | 要做什么 | 新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "I4"
       ],
@@ -493,34 +1470,49 @@
         "I4/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-I4/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-I4/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-I4/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R2"
+        "R2",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-I5",
+      "requirement_id": "SRC-CHECKLIST-I5",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[14]",
+        "content_sha256": "1ea800fed8ddc2a813253359da26167004997ee5a017fc4bbbc689db1b7da86c"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"i5\"]",
         "content_sha256": "70832037ae6b44e53213ae2dda34fc5d414efd386994fa7cb4a00c3c1b6618cc"
       },
       "summary": "用户勾选建议并二次确认后才移入当前操作系统回收站；回读失败必须阻断，界面不得承诺固定保留天数。",
-      "source_excerpt": "「删除走系统废纸篓，30 天内可恢复」这句要核实 | 原型要改 | 后端现状 | 仓库 | 整体设计上不删除任何东西 | 。 | 45_archive_project.py | 的 | prune_plan() | 硬编码返回 | \"safe\": False | ，删除候选只返回一句「需人工确认」。没有任何代码调用系统废纸篓 API。 | 要做什么 | 要么真接一个移入废纸篓的实现（macOS 上是 | NSFileManager | / | trash | 命令），要么把这句话改成如实的说法。现在这句是空头承诺。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "I5"
       ],
@@ -529,34 +1521,51 @@
         "I5/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-I5/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-I5/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-I5/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-SYSTEM-TRASH"
       ],
       "release_refs": [
         "M45",
-        "R2"
+        "R2",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-L1",
+      "requirement_id": "SRC-CHECKLIST-L1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[15]",
+        "content_sha256": "3f715a8a4c4b7bc75b346f8b29f8e909e8ba441c44308ea222529dd6f49ecaf4"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"l1\"]",
         "content_sha256": "0d73f9f416d542b54dda41d761623095dbc0ddaffc61f58fe764ddcb5fad362a"
       },
       "summary": "复用资产卡片列表 + 分类树：索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。",
-      "source_excerpt": "复用资产卡片列表 + 分类树 | 需补后端 | 后端现状 | 15_register_reusable_asset.py | 能写卡片和索引，字段（分类 / 公开状态 / 复用标签 / 适合用途 / 建议截取 / iCloud 精选副本）跟原型详情栏几乎一一对应。但全是 Markdown，没有读取接口。 | 要做什么 | 索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "L1"
       ],
@@ -565,34 +1574,49 @@
         "L1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-L1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-L1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-L1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R3"
+        "R3",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-L2",
+      "requirement_id": "SRC-CHECKLIST-L2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[16]",
+        "content_sha256": "8b83f44a8d7c0d80bdfda4f25ba2d2935149e7252ebf241570d6cdb343c4f981"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"l2\"]",
         "content_sha256": "3eacbc24ba837aa8bd0ddacae52aeea7904ef6ba12bcb52773512ac0ab3d0109"
       },
       "summary": "按标签筛选：同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。",
-      "source_excerpt": "按标签筛选 | 需补后端 | 后端现状 | 标签存在于 Markdown 卡片的 | ## 复用标签 | 段和索引行里，但无法查询。 | 要做什么 | 同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "L2"
       ],
@@ -601,34 +1625,49 @@
         "L2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-L2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-L2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-L2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R3"
+        "R3",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-L3",
+      "requirement_id": "SRC-CHECKLIST-L3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[17]",
+        "content_sha256": "2f81bf5e6a56926c8b9ad0d598b166a6ce38b19100e93cd6ac132277fcad2bf9"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"l3\"]",
         "content_sha256": "f3f4c0356d08bf80f59c2745b0411c38153d856685ce67ac6185935443553af7"
       },
       "summary": "同时展示生命周期和每个物理位置的真实回读状态，逻辑登记不得冒充副本已存在。",
-      "source_excerpt": "「源文件现在在哪」状态（在本机 / 云盘镜像 / 移动硬盘冷归档） | 可直接接 | 后端现状 | 归档状态机在 | 45_archive_project.py | 的 | index_card() | 里。 | 但要注意 | ：模板 | templates/06_Project_Archive_Index_TEMPLATE.archive.md | 声明了 4 个状态（active/cooling/cold_archived/restored），代码 | 实际只写得出 2 个 | （cold_archived、cooling）—— | active | 和 | restored | 在 Python 里没有任何写入点。 | 要做什么 | 前端只按实际会出现的 2 个状态设计，或者先补齐代码里缺的两个写入点。别照着模板做 4 态 UI。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "L3"
       ],
@@ -637,34 +1676,51 @@
         "L3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-L3/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-L3/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-L3/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-PHYSICAL-STORAGE"
       ],
       "release_refs": [
         "M45",
-        "R3"
+        "R3",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-L4",
+      "requirement_id": "SRC-CHECKLIST-L4",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[18]",
+        "content_sha256": "20598c79574ee6438b609131ebe3e5737492b040d2b25a0d5161e18f4e9288fb"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"l4\"]",
         "content_sha256": "be32d0ad62be4d29aff05a52891e6c1e633c5f1ac53fc62aab0ae880d6df0236"
       },
       "summary": "归档索引卡（检索关键词、精选副本入口、恢复方式）：包 HTTP 接口。这是素材库里唯一后端完备的部分。",
-      "source_excerpt": "归档索引卡（检索关键词、精选副本入口、恢复方式） | 可直接接 | 后端现状 | 45 | 的 | build_manifest() | / | index_card() | / | restore_from_manifest() | 都在，有 6 个测试（ | tests/test_archive_project.py | ）。准入 4 项检查（目录齐全 / Final 非空 / 同步清单无未勾选 / 待增加为空）逻辑清晰。 | 要做什么 | 包 HTTP 接口。这是素材库里唯一后端完备的部分。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "L4"
       ],
@@ -673,34 +1729,51 @@
         "L4/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-L4/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-L4/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-L4/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-PHYSICAL-STORAGE"
       ],
       "release_refs": [
         "M45",
-        "R3"
+        "R3",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-L5",
+      "requirement_id": "SRC-CHECKLIST-L5",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[19]",
+        "content_sha256": "2da2474c1ebab43d39fc7ebb41895b8ccba2248da2f12e1afe41994492980f5c"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"l5\"]",
         "content_sha256": "fe8ff8cea2b42eb4d4968a00169178d2e7f580440cb21deb1e59f626efc3a468"
       },
       "summary": "详情栏主按钮「选择项目并加入」要落到真实动作：要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。",
-      "source_excerpt": "详情栏主按钮「选择项目并加入」要落到真实动作 | 原型要改 | 后端现状 | 「把一条复用资产加入某个项目」这个动作在仓库里没有对应脚本。缺位的 | 16 号脚本 | 正好卡在 | 15_register_reusable_asset | （资产库）和 | 17_match_materials_to_brief | （剪辑链路）之间——按序列语义，这个位置本该放的就是「资产库 → 剪辑决策」的衔接能力，从未实现。 | 要做什么 | 要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "L5"
       ],
@@ -709,34 +1782,49 @@
         "L5/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-L5/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-L5/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-L5/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R3"
+        "R3",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-P1",
+      "requirement_id": "SRC-CHECKLIST-P1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[20]",
+        "content_sha256": "d1385307b722d89af32ccaacbc0db489e9ce49b7af72b710f79ed7ffc6e382fe"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"p1\"]",
         "content_sha256": "d0c0fb4d0b7fe31fa5222c5dd3051d917766243ebb6672b553e12f3f0e56aa84"
       },
       "summary": "剪辑决策条目列表（时间码 / 台词 / 角色标签）：纯前端。EDL 已经通过 GET /api/projects/:id 返回了。",
-      "source_excerpt": "剪辑决策条目列表（时间码 / 台词 / 角色标签） | 可直接接 | 后端现状 | edl_contract.py | （504 行）+ | schemas/edit_decision_list.schema.json | 完备。v1 必填字段 | slot | / | time_range | / | source_start_sec | / | purpose | / | visual_need | / | caption | / | candidate_files | / | edit_note | 全部就位，原型列表要显示的东西都有。 | 要做什么 | 纯前端。EDL 已经通过 | GET /api/projects/:id | 返回了。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "P1"
       ],
@@ -745,34 +1833,49 @@
         "P1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-P1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-P1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-P1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R4"
+        "R4",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-P2",
+      "requirement_id": "SRC-CHECKLIST-P2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[21]",
+        "content_sha256": "4c1c2ea2b9d76afaf126ef38330260e0d59d1d20f820674f67eb7de7c1c1d711"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"p2\"]",
         "content_sha256": "370b1698151feaf7ceb610cf60406cd76144b7fad3330ae7f30e7bb10eec86f5"
       },
       "summary": "双轨时间线（主画面 + 叠加层）：纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。",
-      "source_excerpt": "双轨时间线（主画面 + 叠加层） | 可直接接 | 后端现状 | v2 的 | role | （a_roll/b_roll/overlay/title）和 | layer | （primary/overlay/background）已经落地， | clip_layer() | / | layers_used() | 可直接查询。重叠规则也定好了：只有 | EXCLUSIVE_LAYERS = {\"primary\"} | 强制不重叠，叠加层允许重叠——这正是画双轨所需要的语义。 | 要做什么 | 纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "P2"
       ],
@@ -781,34 +1884,49 @@
         "P2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-P2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-P2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-P2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R4"
+        "R4",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-P3",
+      "requirement_id": "SRC-CHECKLIST-P3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[22]",
+        "content_sha256": "9156da8df8cfef4755ff564b53fb59b428c1dbc65fdaac0eb017f674cdb989dd"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"p3\"]",
         "content_sha256": "1645f1d6a7c955af49b7c5e6ad1d2a75c526be0fe9caa9ba9e34aa814117cf7a"
       },
       "summary": "结构化时间线为主视图，同时保留文本说明与受约束的选区修改，不形成第二份机器执行权威。",
-      "source_excerpt": "现有 Studio 把 EDL 当纯文本区块编辑——换界面时这块要重做 | 原型要改 | 后端现状 | app.js | 的 | render() | 把 | edl | 交给和 Brief/脚本完全相同的 | documentView() | 处理，也就是说现在 EDL 是 | 一堆可编辑的 textarea | 。原型画的是结构化时间线。 | 要做什么 | 明确取舍：结构化时间线编辑之后，还要不要保留「按区块改 EDL 文本 + AI 只改选中区块」这条路？这是 Studio 的核心卖点之一，换成时间线就没了。建议两者并存（时间线主视图 + 文本视图兜底）。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "P3"
       ],
@@ -817,34 +1935,49 @@
         "P3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-P3/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-P3/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-P3/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R4"
+        "R4",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-P4",
+      "requirement_id": "SRC-CHECKLIST-P4",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[23]",
+        "content_sha256": "35295edcca850b7fc3cd1dcf06b8c640ff3cc32178f9e1497c413acbfd656b5b"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"p4\"]",
         "content_sha256": "25593a521d90e2eb47bf0c362b6c4383925f61eda461f4df50f46b1102a8bea1"
       },
       "summary": "「待补素材」缺口清单：纯前端。",
-      "source_excerpt": "「待补素材」缺口清单 | 可直接接 | 后端现状 | EDL 文档级必填字段就有 | missing_materials | ，而且 README 明确写了「没有真实来源的缺失镜头只能进入 | missing_materials | 」——原型里「不会拿别的镜头顶替」这句话跟后端契约完全一致。 | 要做什么 | 纯前端。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "P4"
       ],
@@ -853,34 +1986,49 @@
         "P4/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-P4/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-P4/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-P4/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R4"
+        "R4",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-P5",
+      "requirement_id": "SRC-CHECKLIST-P5",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[24]",
+        "content_sha256": "7b708efe0be679bc3ad72c1a41d645b4cd5f23eb732459c0133a8b9c04765288"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"p5\"]",
         "content_sha256": "6ebf1e44e88d8d87909ee4bc4c029f91aeddaa85360b0d564f61b2b9c736b654"
       },
       "summary": "内建只显示 handoff_pack 与 otio_kdenlive；ChatCut 仅在本地 MCP 实时探测和主动连接后成为可选去向。",
-      "source_excerpt": "交接去向：ChatCut 时间线 / Kdenlive 工程 / 剪映草稿 | 可直接接 | 后端现状 | 正式后端只有两个（ | SUPPORTED_EDITOR_BACKENDS = {\"handoff_pack\", \"otio_kdenlive\"} | ）。 | otio_kdenlive | 是真多轨； | handoff_pack | 多轨感知但交付的是文件包（manifest + clips.csv + captions.srt + 交接说明）， | 不渲染视频 | 。ChatCut 不在其中。 | 要做什么 | 原型这一栏改成如实列出两个可用后端。ChatCut 要留就得先定接入方式。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "P5"
       ],
@@ -889,34 +2037,51 @@
         "P5/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-P5/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-P5/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-P5/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-CHATCUT"
       ],
       "release_refs": [
         "M45",
-        "R4"
+        "R4",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-P6",
+      "requirement_id": "SRC-CHECKLIST-P6",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[25]",
+        "content_sha256": "bf1623c0e454b63b3d987d5ffb37b52ec27b933017732643bc9de407094ff7c3"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"p6\"]",
         "content_sha256": "9d469e28dfa340c499040faf057c439855579f276eac1792eaa5c40ecc836dac"
       },
       "summary": "统一表述为剪映生产路线已停止维护，删除没有证据的“草稿加密”理由。",
-      "source_excerpt": "剪映：原型说「草稿加密写不进去」——这个理由在仓库里查无实据 | 原型要改 | 后端现状 | 全量搜索 | 22 | – | 28 | 七个剪映脚本和 | docs/05 | ， | 零处提到加密 | 。真实情况是 | 策略性废弃 | ： | docs/05_剪映与HyperFrames.md | 写着「系统不再为新项目生成或修改剪映草稿」， | scripts/README.md | 写着「新任务不生成或修改生产用剪映草稿」， | doc_sync_contract.json | 还有一条专门门禁 | historical_jianying_evidence_is_not_production | 强制把它标成历史证据。这 7 个脚本都不在 | mac_runner_capabilities.yaml | 里，runner 从不调用。 | 要做什么 | 把诊断页和交接去向里「加密」的说法改掉，如实写成「这条路线已停止维护」。技术上做不到和策略上不做，是两件事，别混。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "P6"
       ],
@@ -925,34 +2090,49 @@
         "P6/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-P6/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-P6/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-P6/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R4"
+        "R4",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-S1",
+      "requirement_id": "SRC-CHECKLIST-S1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[26]",
+        "content_sha256": "aaa6d397decaf2a9c8321d13a0883759dfcf876de42d5a748deff48b1d881f46"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"s1\"]",
         "content_sha256": "78a6ab868a769129410aae2fb2513ad4c457c71d1538428fdb3d821a38783aa4"
       },
       "summary": "分析预算四个数字：补一个读写配置的接口。注意 analysis_tiering 的输出 没有 JSON Schema，只有 dataclass 和 POLICY_VERSION。",
-      "source_excerpt": "分析预算四个数字 | 可直接接 | 后端现状 | analysis_tiering.py | 的 | TierBudget | 默认值和原型显示的完全一致：粗看每条 3 帧、细看每条 12 帧、最多粗看 100 条、最多细看 24 条（另有 | max_audio_minutes = 120.0 | ）。 | 要做什么 | 补一个读写配置的接口。注意 | analysis_tiering | 的输出 | 没有 JSON Schema | ，只有 dataclass 和 | POLICY_VERSION | 。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "S1"
       ],
@@ -961,34 +2141,49 @@
         "S1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-S1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-S1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-S1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-S2",
+      "requirement_id": "SRC-CHECKLIST-S2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[27]",
+        "content_sha256": "9832218c946618e455de316f629629d032041110e4fea4d97043ba44cb6f729d"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"s2\"]",
         "content_sha256": "101f030d1ab26f50041c43f6a7ad9225760ac725189e3ba89c3c5f3a7b50ac2c"
       },
       "summary": "存放位置（素材根目录 / 笔记库）：现有接口是项目级的，设置页要的是全局级，得加一个。",
-      "source_excerpt": "存放位置（素材根目录 / 笔记库） | 可直接接 | 后端现状 | 已有 | POST /api/projects/:id/workspace | （ | store.connect_workspace() | ），而且已经做了隐私投影——只回 | label | 和 | path_digest | ，绝对路径不出本机。 | 要做什么 | 现有接口是项目级的，设置页要的是全局级，得加一个。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "S2"
       ],
@@ -997,34 +2192,51 @@
         "S2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-S2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-S2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-S2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-PHYSICAL-STORAGE"
       ],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-S3",
+      "requirement_id": "SRC-CHECKLIST-S3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[28]",
+        "content_sha256": "48322d340611d0d92d81a10b93846c2f2c69f23fe34f0228e7a509b8bd6f5b15"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"s3\"]",
         "content_sha256": "f07a378f3eb22333d54a54155a726e875cabe52857a1f16c3e5e014fe3570062"
       },
       "summary": "诊断页六项检查：包接口。前端别把「6 项」写死。另外这个脚本 零测试覆盖，接之前建议先补。",
-      "source_excerpt": "诊断页六项检查 | 可直接接 | 后端现状 | 43_content_os_doctor.py | 的 | collect_checks() | ：必需 4 项（ | python_version | ≥3.11、 | repository_write | 、 | ffmpeg | 、 | ffprobe | ）+ 可选项。 | 可选项数量会变 | ：默认 provider 是 | codex_cli | 时共 6 项；设成 | openai_api | 时变成 7 项（多出 | openai_key | 和 | openai_package | ）。输出 | content_os_doctor_v1 | ，exit code 0/2。 | 要做什么 | 包接口。前端别把「6 项」写死。另外这个脚本 | 零测试覆盖 | ，接之前建议先补。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "S3"
       ],
@@ -1033,34 +2245,49 @@
         "S3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-S3/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-S3/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-S3/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-S4",
+      "requirement_id": "SRC-CHECKLIST-S4",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[29]",
+        "content_sha256": "de191591a63aa53a4e4fc710f4c61bc3e071b2806328c7c89a151da5577c0d09"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"s4\"]",
         "content_sha256": "8239734c0bbbf58452e353c9136b99ab1c27bde6f7222e6076992a7c6b883132"
       },
       "summary": "Windows 与 Linux 将上游配对显示为“不支持”而不是“配置失败”，并明确本地核心能力仍可用。",
-      "source_excerpt": "云端配对在非 macOS 上永远是红的 | 原型要改 | 后端现状 | doctor 的 | openclaw_cloud_pairing | 判据是 | platform_contract_name() in {\"macos\"} | 。上游合同 | supported_device_platforms: [\"macos\"] | ，Windows / Linux 上这项 | 必然失败 | ，README 也明说了会 fail-closed。 | 要做什么 | Windows 用户看到一项永远红的检查会以为装坏了。诊断页需要区分「这台机器不支持」和「配置错了」两种状态，文案要说清楚本地流水线不受影响。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "S4"
       ],
@@ -1069,34 +2296,51 @@
         "S4/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-S4/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-S4/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-S4/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-UPSTREAM"
       ],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-S5",
+      "requirement_id": "SRC-CHECKLIST-S5",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[30]",
+        "content_sha256": "7d1d258eccfa18097607fbdb31d0ccc6d77dcd4ce530563a441d63cea2c396be"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"s5\"]",
         "content_sha256": "2f7ec9554acd857ecc0589a2b27dc2f603093722e9dff60cf49ea3de872ec47b"
       },
       "summary": "持久化用户选择的提供方、模型、端点、思考强度和密钥引用，并确保真实执行链消费该配置。",
-      "source_excerpt": "AI 助手设置（接入方式 / 模型 / 思考强度） | 需补后端 | 后端现状 | provider 选择通过环境变量 | OPENCLAW_CREATIVE_PROVIDER | （ | codex_cli | / | openai_api | ）， | llm_common.py | 里有调用封装。但 | 没有持久化的配置文件 | ，也没有配置读写接口。 | 要做什么 | 新增一层配置存储 + 接口。目前所有设置都靠环境变量，做不出设置页。另外：「默认以阿里云线上模型 API 为主」如果不止转写、也适用于文案生成和关键帧视觉分析，需要给 creative provider 新增 | dashscope | 选项（现在只有 | codex_cli | / | openai_api | 两种）——这一点建议下次一并确认。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "sandbox-real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "S5"
       ],
@@ -1105,34 +2349,51 @@
         "S5/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-S5/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-S5/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-S5/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-MODEL-PROVIDERS"
       ],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-C1",
+      "requirement_id": "SRC-CHECKLIST-C1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[31]",
+        "content_sha256": "4a5e201414823c527655b7c6fc57d8f362462eb4541d98a2b03dd8db2626b6cf"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"c1\"]",
         "content_sha256": "1a9ea657fb57b959790247c969ea8605269fb46f91dbeefcc43b17d37f5789f3"
       },
       "summary": "任务列表上的 media.xxx.v1 标识符是对的：保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。",
-      "source_excerpt": "任务列表上的 | media.xxx.v1 | 标识符是对的 | 可直接接 | 后端现状 | 全部 9 个（ | media.project.prepare.v1 | 、 | media.material.match.v1 | 、 | media.edit.timeline.v1 | 等）确实存在，但只存在于 | schemas/openclaw_media_contract_snapshot.json | 的 | pipelines | 映射里——它们是 | 上游云端的 pipeline ID 快照 | ，本地脚本不按它们分派。原型把它们放在「网页中台」这一屏是 | 放对了位置 | 。 | 要做什么 | 保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "sandbox-real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "C1"
       ],
@@ -1141,34 +2402,51 @@
         "C1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-C1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-C1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-C1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-UPSTREAM"
       ],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-C2",
+      "requirement_id": "SRC-CHECKLIST-C2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[32]",
+        "content_sha256": "d3b96137743a993dd8740bfe9949a7923d182e9215ed78949acb30b08816f071"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"c2\"]",
         "content_sha256": "501345c132e3c972b49713e5532752f075e73391517f8c9ee53480561ffced3c"
       },
       "summary": "任务状态机（执行中 / 已完成 / 已阻塞）：前端目前只画了 3 态，补齐映射即可。注意 expired 和 cancelled 也要有对应显示。",
-      "source_excerpt": "任务状态机（执行中 / 已完成 / 已阻塞） | 可直接接 | 后端现状 | 同一份快照里固化了完整状态机： | queued / leased / acknowledged / running / succeeded / blocked / failed / expired / cancelled | ，共 9 态。 | 要做什么 | 前端目前只画了 3 态，补齐映射即可。注意 | expired | 和 | cancelled | 也要有对应显示。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "sandbox-real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "C2"
       ],
@@ -1177,34 +2455,51 @@
         "C2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-C2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-C2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-C2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-UPSTREAM"
       ],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-C3",
+      "requirement_id": "SRC-CHECKLIST-C3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[33]",
+        "content_sha256": "8be39c6b8a9cdacaa04d8f3587923830943e993a0948314f8e3c1ca1031aae05"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"c3\"]",
         "content_sha256": "bee98ec69fd375563b3356c2040da7cb82d26ff015dbf4448a7dbd7c2b523818"
       },
       "summary": "冻结基线要写进界面还是文档：上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。",
-      "source_excerpt": "冻结基线要写进界面还是文档 | 原型要改 | 后端现状 | README 冻结了明确基线： | openclaw-media | @ | f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf | ，合同 | openclaw_media_product_v1 | ，catalog digest | sha256:931dba97… | 。 | 要做什么 | 上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "sandbox-real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "C3"
       ],
@@ -1213,34 +2508,50 @@
         "C3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-C3/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-C3/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-C3/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [
+        "EXTSYS-UPSTREAM"
       ],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-T1",
+      "requirement_id": "SRC-CHECKLIST-T1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[34]",
+        "content_sha256": "44a5b5185699a4b7c371963bd35c10ba74e9d28d02e592ca86855f9ed2b20f57"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"t1\"]",
         "content_sha256": "56383d571da30fb227a738021ab02cd4a8ac6294631b56f2fe5b36941b8754ae"
       },
       "summary": "给 35_promote_inbox_batch_to_project.py 补测试：接 UI 之前先补测试。这条建议优先级高于任何界面工作。",
-      "source_excerpt": "给 | 35_promote_inbox_batch_to_project.py | 补测试 | 需补后端 | 现状 | 这个脚本做的是 | 移动文件 | （不是复制），却 | 零测试覆盖 | 。整个仓库里风险最高的一处。整理台的「确认落点」一旦接上它，就是让用户一键触发一个没测过的破坏性操作。 | 要做什么 | 接 UI 之前先补测试。这条建议优先级高于任何界面工作。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "structural",
-        "interaction": "smoke",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "none"
-      },
+      "required_lanes": [
+        "machine/integration-contract"
+      ],
       "node_refs": [
         "T1"
       ],
@@ -1249,34 +2560,44 @@
         "T1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-T1/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+        {
+          "lane": "machine/integration-contract",
+          "path": "acceptance-fragments/OCM-T1/acceptance/integration-contract/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R1"
+        "R1",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-T2",
+      "requirement_id": "SRC-CHECKLIST-T2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[35]",
+        "content_sha256": "60664dc0a3a982ff374347d046b69216a1b92753109c08612b4a0c55fe7a04c8"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"t2\"]",
         "content_sha256": "3ba7338a27bb54f01b8cd5f14059a6764498a753e0de93de5aea58a1e8757da2"
       },
       "summary": "给素材库三件套补测试（12 / 14 / 15）：和第 00 节的索引层一起做，定契约的同时补测试。",
-      "source_excerpt": "给素材库三件套补测试（ | 12 | / | 14 | / | 15 | ） | 需补后端 | 现状 | 连拍筛选、合照分发、资产登记三个脚本全部零测试、零 schema。素材库这一屏完全建立在它们之上。 | 要做什么 | 和第 00 节的索引层一起做，定契约的同时补测试。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "structural",
-        "interaction": "smoke",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "none"
-      },
+      "required_lanes": [
+        "machine/integration-contract"
+      ],
       "node_refs": [
         "T2"
       ],
@@ -1285,34 +2606,44 @@
         "T2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-T2/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+        {
+          "lane": "machine/integration-contract",
+          "path": "acceptance-fragments/OCM-T2/acceptance/integration-contract/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R3"
+        "R3",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-T3",
+      "requirement_id": "SRC-CHECKLIST-T3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[36]",
+        "content_sha256": "0c196aa0f5c92ab244f32cc2b784d14e997a1b1a0dab14f8f716a2e678d53597"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"t3\"]",
         "content_sha256": "b0981754873ca3edb7a7bc315038902d3fcda032a95e93432b758e017484e6ef"
       },
       "summary": "给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
-      "source_excerpt": "给 | 43_content_os_doctor.py | 和 | 01_scan_media_manifest.py | 补测试 | 需补后端 | 现状 | 两个都是 UI 会高频调用的入口，都零测试。 | 01 | 是所有分析的数据源头，它错了后面全错。 | 要做什么 | 补基础用例。 | 01 | 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "structural",
-        "interaction": "smoke",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "none"
-      },
+      "required_lanes": [
+        "machine/integration-contract"
+      ],
       "node_refs": [
         "T3"
       ],
@@ -1321,34 +2652,44 @@
         "T3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-T3/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+        {
+          "lane": "machine/integration-contract",
+          "path": "acceptance-fragments/OCM-T3/acceptance/integration-contract/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R1"
+        "R1",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-T4",
+      "requirement_id": "SRC-CHECKLIST-T4",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[37]",
+        "content_sha256": "375f3426ae7739c63bc68d7b3e8c25ee4ee1057a26be04d87af3dc98838d721b"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"t4\"]",
         "content_sha256": "bca41792617d2f3beaa2391cdcb018ed705f53f9eb0904cf407531fa2fa4b7c8"
       },
       "summary": "给 analysis_tiering 的输出定 JSON Schema：补 schemas/analysis_tiering.schema.json，纳入现有的契约校验流程。",
-      "source_excerpt": "给 | analysis_tiering | 的输出定 JSON Schema | 需补后端 | 现状 | 有 | POLICY_VERSION = \"analysis_tiering_v1\" | 和 dataclass，但没有 schema 文件。仓库其它关键契约（EDL、转写）都有 schema，这里是个缺口。 | 要做什么 | 补 | schemas/analysis_tiering.schema.json | ，纳入现有的契约校验流程。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "structural",
-        "interaction": "smoke",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "none"
-      },
+      "required_lanes": [
+        "machine/integration-contract"
+      ],
       "node_refs": [
         "T4"
       ],
@@ -1357,34 +2698,44 @@
         "T4/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-T4/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+        {
+          "lane": "machine/integration-contract",
+          "path": "acceptance-fragments/OCM-T4/acceptance/integration-contract/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R5"
+        "R5",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-T5",
+      "requirement_id": "SRC-CHECKLIST-T5",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[38]",
+        "content_sha256": "209361978ee8fa1d2b840b88a427ef4e85ca8fd8d661dcf109c6e26b684d0cc0"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"t5\"]",
         "content_sha256": "cc526f681ae04ad05ec73433cf1db27dfcb6a9fbf76a9b41358dc31b32cb7470"
       },
       "summary": "所有新增写接口沿用 loopback、同源、CSRF 和明确 revision 域的乐观并发控制，跨端口 Origin 必须拒绝。",
-      "source_excerpt": "确认现有 Studio 的安全模型能不能撑住新界面 | 可直接接 | 现状 | server.py | 的写请求三重校验（loopback Host + 同源 Origin + | X-Content-OS-CSRF | ）+ 每次写都要 | expectedRevision | 乐观锁，模型是清楚的。静态响应带 CSP、 | X-Frame-Options: DENY | 、 | nosniff | 。 | 要做什么 | 新增的每一个写接口都要沿用同一套（尤其是乐观锁）。这套东西已经对了，别在扩界面时绕过它。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "structural",
-        "interaction": "smoke",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "none"
-      },
+      "required_lanes": [
+        "machine/integration-contract"
+      ],
       "node_refs": [
         "T5"
       ],
@@ -1393,34 +2744,44 @@
         "T5/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-T5/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+        {
+          "lane": "machine/integration-contract",
+          "path": "acceptance-fragments/OCM-T5/acceptance/integration-contract/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R1"
+        "R1",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-T6",
+      "requirement_id": "SRC-CHECKLIST-T6",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[39]",
+        "content_sha256": "3cf8b300887e32a021135c3669436c9670793db049cb65a96bee2191e8347373"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"t6\"]",
         "content_sha256": "249ca4346591ecb296047cd340b529767719c20b24d26ef9033c9f45cf776c60"
       },
       "summary": "七个剪映脚本要么物理归档，要么逐项声明历史且不维护，并使文档、能力清单和持续集成保持一致。",
-      "source_excerpt": "决定 | 22 | – | 28 | 七个剪映脚本的去留 | 需补后端 | 现状 | 约 1600 行代码 + 3 个测试文件，全部不在能力清单里、runner 从不调用，但 | 25 --help | 还留在 | 42_run_local_ci.sh | 的冒烟列表里。处于「代码在、测试在、策略上不用」的僵持状态。 | 要做什么 | 要么正式移进历史归档目录，要么在 README 明确标注「保留但不维护」。现在的状态会让人以为它可用。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "structural",
-        "interaction": "smoke",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "none"
-      },
+      "required_lanes": [
+        "machine/integration-contract"
+      ],
       "node_refs": [
         "T6"
       ],
@@ -1429,34 +2790,45 @@
         "T6/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-T6/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+        {
+          "lane": "machine/integration-contract",
+          "path": "acceptance-fragments/OCM-T6/acceptance/integration-contract/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R4"
+        "R4",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-K1",
+      "requirement_id": "SRC-CHECKLIST-K1",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[40]",
+        "content_sha256": "9087c2a84d2a81cb5ec60fe6c24ce56b47e99bfc09f55ef71ff5adafa4ba4637"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"k1\"]",
         "content_sha256": "9e11aa783e5209a85b2e38ebceb1d0da2f8c92a1cd8222d4a3dbc7466780c041"
       },
       "summary": "区块锁定 + AI 只改选中区块：新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。",
-      "source_excerpt": "区块锁定 + AI 只改选中区块 | 原型要改 | 现状 | ai_patch.py | 定义了严格合同：替换集合必须与选中集合 | 完全一致 | ，locked block 不能被保存或被 AI 改。这是防止 AI 悄悄改动你没让它改的地方——一个很硬的产品承诺。 | 要做什么 | 新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "K1"
       ],
@@ -1465,34 +2837,49 @@
         "K1/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-K1/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-K1/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-K1/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R7"
+        "R7",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-K2",
+      "requirement_id": "SRC-CHECKLIST-K2",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[41]",
+        "content_sha256": "da510d3dfc98437397d60987e3ef6423a8f426bb8be47cec89ff18c886899fc0"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"k2\"]",
         "content_sha256": "a76f17510c99f03520f67e962fcb00ddc77c8725b2a453455a706fbb6862d7c2"
       },
       "summary": "版本 diff 与非破坏性回滚：原型里没有版本概念。至少要在项目屏留一个入口。",
-      "source_excerpt": "版本 diff 与非破坏性回滚 | 原型要改 | 现状 | GET /documents/:name/diff?from=&to= | 和 | POST /documents/:name/rollback | 都在，回滚是 | 创建新版本 | 而不是删历史。 | 要做什么 | 原型里没有版本概念。至少要在项目屏留一个入口。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "K2"
       ],
@@ -1501,34 +2888,49 @@
         "K2/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-K2/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-K2/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-K2/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R7"
+        "R7",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-K3",
+      "requirement_id": "SRC-CHECKLIST-K3",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[42]",
+        "content_sha256": "7f7a1e2fab079205ceca49dd159fe8b92e0b1fe11021036b3eeb8fb79de4cca0"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"k3\"]",
         "content_sha256": "bb42356400e18dbe3c6cab632a28bddbf5dbc0b514d898f467272d63a3a5025d"
       },
       "summary": "下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新）：原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。",
-      "source_excerpt": "下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新） | 原型要改 | 现状 | 依赖关系已经实现，概览页会数出「待重算下游」的数量。这是保证证据链一致性的机制。 | 要做什么 | 原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "K3"
       ],
@@ -1537,34 +2939,49 @@
         "K3/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-K3/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-K3/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-K3/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R7"
+        "R7",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-K4",
+      "requirement_id": "SRC-CHECKLIST-K4",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[43]",
+        "content_sha256": "ca1f1d40f1d0628fa94c0851a8b7dd15c4c228a619ac5da97208c38a1fa319f3"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"k4\"]",
         "content_sha256": "1b251c23eb82cdd0ef41c730c2fe0b3f2d5b225b2a7ec4070a86d167755d6c16"
       },
       "summary": "研究与参考（reference ≠ 自有素材）：这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。",
-      "source_excerpt": "研究与参考（reference ≠ 自有素材） | 原型要改 | 现状 | 独立的 | references | 数据结构 + | POST /api/projects/:id/references | ，每条标了 | asset_role=reference | ，界面上明确写着「公开样本不会被误当成你本地拥有的可剪素材」。 | 要做什么 | 这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "K4"
       ],
@@ -1573,34 +2990,49 @@
         "K4/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-K4/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-K4/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-K4/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R7"
+        "R7",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-K5",
+      "requirement_id": "SRC-CHECKLIST-K5",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[44]",
+        "content_sha256": "7b183dd5889507896b30171be4dd5eea33726adbce81ae722a1f6015820495b9"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"k5\"]",
         "content_sha256": "292a85f96b6f474aff295829bca32be75b4510d32560dd76c63820ba0f4fe033"
       },
       "summary": "发布与复盘（指标 + 复盘结论 + 下次约束）：原型里完全没有。这块丢了，产品就退化成一次性工具。",
-      "source_excerpt": "发布与复盘（指标 + 复盘结论 + 下次约束） | 原型要改 | 现状 | record_publishing() | 存 6 项指标（播放/点赞/评论/转发/收藏/关注）+ | review_conclusion | + | next_constraint | ，而且下一次 AI 修改 | 只参考同账号已记录的结论 | ——这是让工具越用越准的闭环。 | 要做什么 | 原型里完全没有。这块丢了，产品就退化成一次性工具。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "K5"
       ],
@@ -1609,34 +3041,49 @@
         "K5/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-K5/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-K5/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-K5/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R7"
+        "R7",
+        "R8"
       ],
       "scope_deviation_ref": null
     },
     {
-      "requirement_id": "SRC-K6",
+      "requirement_id": "SRC-CHECKLIST-K6",
+      "dimension": "interaction",
       "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
       "source": {
         "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "html:h3[45]",
+        "content_sha256": "5d269b4ab651d947f0af62e31aaf7d76163be4038f1aa943509a295b442d6406"
+      },
+      "semantic_source": {
         "locator": "article[data-k=\"k6\"]",
         "content_sha256": "23c574c4a58e433ade1f16544530a3befec922bda085b76266b5ae5d219c069b"
       },
       "summary": "Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。",
-      "source_excerpt": "Brief 和脚本两个文档阶段 | 原型要改 | 现状 | Studio 有独立的 Brief 和脚本标签页，都是版本化区块文档。README 的能力链条里，「对照 Brief / Script 匹配素材」是素材匹配的前提输入。 | 要做什么 | 原型直接从素材跳到剪辑决策，中间少了 Brief 和脚本。要么补进去，要么想清楚这两步在新 IA 里搬到哪。",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
+      "required_lanes": [
+        "machine/e2e",
+        "machine/local-runtime"
+      ],
       "node_refs": [
         "K6"
       ],
@@ -1645,11 +3092,65 @@
         "K6/AC-02"
       ],
       "evidence_targets": [
-        "acceptance-fragments/OCM-K6/acceptance/machine/e2e/runs/<run-id>/result.md"
+        {
+          "lane": "machine/e2e",
+          "path": "acceptance-fragments/OCM-K6/acceptance/e2e/runs/<run-id>/result.md"
+        },
+        {
+          "lane": "machine/local-runtime",
+          "path": "acceptance-fragments/OCM-K6/acceptance/local-runtime/runs/<run-id>/result.md"
+        }
       ],
+      "external_system_refs": [],
       "release_refs": [
         "M45",
-        "R7"
+        "R7",
+        "R8"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-PROTOTYPE-UI",
+      "dimension": "visual",
+      "modality": "MUST",
+      "modality_confirmation": {
+        "status": "confirmed",
+        "value": "MUST",
+        "actor_type": "human",
+        "node_ref": "F",
+        "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+        "evidence_ref": "source-notes.md"
+      },
+      "source": {
+        "artifact_id": "SRC-ART-PROTOTYPE",
+        "locator": "html:h1[1]",
+        "content_sha256": "cdf996698290716bdfa6af88f93ba6a81618b7bee0ef7d81ef72f3f9d083a938"
+      },
+      "semantic_source": {
+        "locator": ":root + declared data-* anchors",
+        "content_sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8"
+      },
+      "summary": "冻结原型的视觉令牌、DOM 锚点、控件交互和双视口捕获合同。",
+      "required_lanes": [
+        "visual-fidelity"
+      ],
+      "node_refs": [
+        "Z1"
+      ],
+      "acceptance_refs": [
+        "Z1/AC-01",
+        "Z1/AC-02"
+      ],
+      "evidence_targets": [
+        {
+          "lane": "visual-fidelity",
+          "path": "acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs/<run-id>/result.md"
+        }
+      ],
+      "external_system_refs": [],
+      "release_refs": [
+        "M45",
+        "R8"
       ],
       "scope_deviation_ref": null
     }
@@ -1660,18 +3161,56 @@
       "release_class": "source-defined",
       "source_defined": true,
       "completion_authority": "source",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "real",
-        "persistent_runtime": "active",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-D1",
+        "SRC-CHECKLIST-D2",
+        "SRC-CHECKLIST-D3",
+        "SRC-CHECKLIST-A1",
+        "SRC-CHECKLIST-A2",
+        "SRC-CHECKLIST-H1",
+        "SRC-CHECKLIST-H2",
+        "SRC-CHECKLIST-H3",
+        "SRC-CHECKLIST-H4",
+        "SRC-CHECKLIST-I1",
+        "SRC-CHECKLIST-I2",
+        "SRC-CHECKLIST-I3",
+        "SRC-CHECKLIST-I4",
+        "SRC-CHECKLIST-I5",
+        "SRC-CHECKLIST-L1",
+        "SRC-CHECKLIST-L2",
+        "SRC-CHECKLIST-L3",
+        "SRC-CHECKLIST-L4",
+        "SRC-CHECKLIST-L5",
+        "SRC-CHECKLIST-P1",
+        "SRC-CHECKLIST-P2",
+        "SRC-CHECKLIST-P3",
+        "SRC-CHECKLIST-P4",
+        "SRC-CHECKLIST-P5",
+        "SRC-CHECKLIST-P6",
+        "SRC-CHECKLIST-S1",
+        "SRC-CHECKLIST-S2",
+        "SRC-CHECKLIST-S3",
+        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-S5",
+        "SRC-CHECKLIST-C1",
+        "SRC-CHECKLIST-C2",
+        "SRC-CHECKLIST-C3",
+        "SRC-CHECKLIST-T1",
+        "SRC-CHECKLIST-T2",
+        "SRC-CHECKLIST-T3",
+        "SRC-CHECKLIST-T4",
+        "SRC-CHECKLIST-T5",
+        "SRC-CHECKLIST-T6",
+        "SRC-CHECKLIST-K1",
+        "SRC-CHECKLIST-K2",
+        "SRC-CHECKLIST-K3",
+        "SRC-CHECKLIST-K4",
+        "SRC-CHECKLIST-K5",
+        "SRC-CHECKLIST-K6",
+        "SRC-PROTOTYPE-UI"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     },
     {
       "release_id": "R1",
@@ -1679,18 +3218,16 @@
       "source_defined": false,
       "completion_authority": "ssot-release-owner",
       "candidate_of": "M45",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "sandbox-real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-D1",
+        "SRC-CHECKLIST-D2",
+        "SRC-CHECKLIST-D3",
+        "SRC-CHECKLIST-T1",
+        "SRC-CHECKLIST-T3",
+        "SRC-CHECKLIST-T5"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     },
     {
       "release_id": "R2",
@@ -1698,18 +3235,15 @@
       "source_defined": false,
       "completion_authority": "ssot-release-owner",
       "candidate_of": "M45",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-I1",
+        "SRC-CHECKLIST-I2",
+        "SRC-CHECKLIST-I3",
+        "SRC-CHECKLIST-I4",
+        "SRC-CHECKLIST-I5"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     },
     {
       "release_id": "R3",
@@ -1717,18 +3251,16 @@
       "source_defined": false,
       "completion_authority": "ssot-release-owner",
       "candidate_of": "M45",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-L1",
+        "SRC-CHECKLIST-L2",
+        "SRC-CHECKLIST-L3",
+        "SRC-CHECKLIST-L4",
+        "SRC-CHECKLIST-L5",
+        "SRC-CHECKLIST-T2"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     },
     {
       "release_id": "R4",
@@ -1736,18 +3268,17 @@
       "source_defined": false,
       "completion_authority": "ssot-release-owner",
       "candidate_of": "M45",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-P1",
+        "SRC-CHECKLIST-P2",
+        "SRC-CHECKLIST-P3",
+        "SRC-CHECKLIST-P4",
+        "SRC-CHECKLIST-P5",
+        "SRC-CHECKLIST-P6",
+        "SRC-CHECKLIST-T6"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     },
     {
       "release_id": "R5",
@@ -1755,18 +3286,19 @@
       "source_defined": false,
       "completion_authority": "ssot-release-owner",
       "candidate_of": "M45",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "sandbox-real",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-S1",
+        "SRC-CHECKLIST-S2",
+        "SRC-CHECKLIST-S3",
+        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-S5",
+        "SRC-CHECKLIST-C1",
+        "SRC-CHECKLIST-C2",
+        "SRC-CHECKLIST-C3",
+        "SRC-CHECKLIST-T4"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     },
     {
       "release_id": "R6",
@@ -1774,18 +3306,16 @@
       "source_defined": false,
       "completion_authority": "ssot-release-owner",
       "candidate_of": "M45",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "real",
-        "persistent_runtime": "active",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-A1",
+        "SRC-CHECKLIST-A2",
+        "SRC-CHECKLIST-H1",
+        "SRC-CHECKLIST-H2",
+        "SRC-CHECKLIST-H3",
+        "SRC-CHECKLIST-H4"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     },
     {
       "release_id": "R7",
@@ -1793,18 +3323,16 @@
       "source_defined": false,
       "completion_authority": "ssot-release-owner",
       "candidate_of": "M45",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "none",
-        "persistent_runtime": "none",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-K1",
+        "SRC-CHECKLIST-K2",
+        "SRC-CHECKLIST-K3",
+        "SRC-CHECKLIST-K4",
+        "SRC-CHECKLIST-K5",
+        "SRC-CHECKLIST-K6"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     },
     {
       "release_id": "R8",
@@ -1812,19 +3340,1454 @@
       "source_defined": false,
       "completion_authority": "ssot-release-owner",
       "candidate_of": "M45",
-      "required_evidence_profile": {
-        "source_identity": "locked",
-        "source_coverage": "complete",
-        "visual_fidelity": "strict-reference",
-        "interaction": "full-e2e",
-        "local_runtime": true,
-        "external_system": "real",
-        "persistent_runtime": "active",
-        "human_visual_review": "blocking"
-      },
-      "actual_evidence_profile": {},
-      "status": "NOT_READY"
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-D1",
+        "SRC-CHECKLIST-D2",
+        "SRC-CHECKLIST-D3",
+        "SRC-CHECKLIST-A1",
+        "SRC-CHECKLIST-A2",
+        "SRC-CHECKLIST-H1",
+        "SRC-CHECKLIST-H2",
+        "SRC-CHECKLIST-H3",
+        "SRC-CHECKLIST-H4",
+        "SRC-CHECKLIST-I1",
+        "SRC-CHECKLIST-I2",
+        "SRC-CHECKLIST-I3",
+        "SRC-CHECKLIST-I4",
+        "SRC-CHECKLIST-I5",
+        "SRC-CHECKLIST-L1",
+        "SRC-CHECKLIST-L2",
+        "SRC-CHECKLIST-L3",
+        "SRC-CHECKLIST-L4",
+        "SRC-CHECKLIST-L5",
+        "SRC-CHECKLIST-P1",
+        "SRC-CHECKLIST-P2",
+        "SRC-CHECKLIST-P3",
+        "SRC-CHECKLIST-P4",
+        "SRC-CHECKLIST-P5",
+        "SRC-CHECKLIST-P6",
+        "SRC-CHECKLIST-S1",
+        "SRC-CHECKLIST-S2",
+        "SRC-CHECKLIST-S3",
+        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-S5",
+        "SRC-CHECKLIST-C1",
+        "SRC-CHECKLIST-C2",
+        "SRC-CHECKLIST-C3",
+        "SRC-CHECKLIST-T1",
+        "SRC-CHECKLIST-T2",
+        "SRC-CHECKLIST-T3",
+        "SRC-CHECKLIST-T4",
+        "SRC-CHECKLIST-T5",
+        "SRC-CHECKLIST-T6",
+        "SRC-CHECKLIST-K1",
+        "SRC-CHECKLIST-K2",
+        "SRC-CHECKLIST-K3",
+        "SRC-CHECKLIST-K4",
+        "SRC-CHECKLIST-K5",
+        "SRC-CHECKLIST-K6",
+        "SRC-PROTOTYPE-UI"
+      ],
+      "status": "NOT_READY",
+      "lane_evidence": []
     }
   ],
-  "scope_deviations": []
+  "scope_deviations": [],
+  "visual_contract": {
+    "tokens": [
+      {
+        "name": "--bg",
+        "value": "#0D1314",
+        "locator": "style:first-of-type::token(--bg)",
+        "content_sha256": "0135de3770251adb689eb6901d73f37536b6d44c6b7ee447df99c735374055b4"
+      },
+      {
+        "name": "--panel",
+        "value": "#111819",
+        "locator": "style:first-of-type::token(--panel)",
+        "content_sha256": "cf03a49d23b6e4a17e9765d713c9e5040de7de9411a3be708b94fb76579b5919"
+      },
+      {
+        "name": "--panel-2",
+        "value": "#131C1D",
+        "locator": "style:first-of-type::token(--panel-2)",
+        "content_sha256": "d6c996185451ffe102534657256616293d5baeab9906b712f2d3ac94ca43412a"
+      },
+      {
+        "name": "--raise",
+        "value": "#161F20",
+        "locator": "style:first-of-type::token(--raise)",
+        "content_sha256": "6c49bf38bd819152f2e80e4f69b84e8609b4fb854c4c09c90a7194a47ff43424"
+      },
+      {
+        "name": "--rule",
+        "value": "#1C2627",
+        "locator": "style:first-of-type::token(--rule)",
+        "content_sha256": "28f4b824ef78054bdc32a56f6b1daaea2af795c4967930add91fc05e548c486f"
+      },
+      {
+        "name": "--rule-2",
+        "value": "#253133",
+        "locator": "style:first-of-type::token(--rule-2)",
+        "content_sha256": "9880542433ff7e3be4fb6b0b47868a9f989ad491975f16fd45347e6bb25f51e1"
+      },
+      {
+        "name": "--ink",
+        "value": "#E4EBEB",
+        "locator": "style:first-of-type::token(--ink)",
+        "content_sha256": "c1c8cb35d8d57d85900fe830bedd2d6356b9558015890c2793c7e3d7843cf5f0"
+      },
+      {
+        "name": "--ink-2",
+        "value": "#B0BEBF",
+        "locator": "style:first-of-type::token(--ink-2)",
+        "content_sha256": "551e307679adfbe8a127ac57556a64fa9b6c6ad44badffc61486a618e6f05dea"
+      },
+      {
+        "name": "--ink-3",
+        "value": "#7D8C8E",
+        "locator": "style:first-of-type::token(--ink-3)",
+        "content_sha256": "e0f561baf4a43976a61a0b121b002819863f2a2651d4383ce37f3094ef57f460"
+      },
+      {
+        "name": "--ink-4",
+        "value": "#5F7477",
+        "locator": "style:first-of-type::token(--ink-4)",
+        "content_sha256": "5aabea1d881e51a1c13780e48cabcfb4913434f6906dd2df49f8c013b60fee5e"
+      },
+      {
+        "name": "--ink-5",
+        "value": "#46585A",
+        "locator": "style:first-of-type::token(--ink-5)",
+        "content_sha256": "9a256bf8dffd6c14311572333f042455c0ddf404616e662e0bd2fca741c3917d"
+      },
+      {
+        "name": "--ac",
+        "value": "#4FB3BD",
+        "locator": "style:first-of-type::token(--ac)",
+        "content_sha256": "b7fd1ffd77fa4b7610e68df4aaf380492e606edf635587c3c57faba35f308a12"
+      },
+      {
+        "name": "--ac-2",
+        "value": "#2E5F65",
+        "locator": "style:first-of-type::token(--ac-2)",
+        "content_sha256": "6cc11b958418842484784807f51d109629a149c19743f36818aa6817bdccf8e2"
+      },
+      {
+        "name": "--ac-bg",
+        "value": "#10292C",
+        "locator": "style:first-of-type::token(--ac-bg)",
+        "content_sha256": "d3868245e06032db7259032bfab7a9cd6555e4c08b15cb99ca9c868e6ec5caf3"
+      },
+      {
+        "name": "--ac-soft",
+        "value": "#8FC7CD",
+        "locator": "style:first-of-type::token(--ac-soft)",
+        "content_sha256": "fc87805dbcfb983640ca6c31806a24c2315941c45d04a961dbb47f33ad79cc82"
+      },
+      {
+        "name": "--ok",
+        "value": "#7FBB92",
+        "locator": "style:first-of-type::token(--ok)",
+        "content_sha256": "706554f66d9c275630d83b4a574ff8bf69c115eaf22de1caedb095113558f50d"
+      },
+      {
+        "name": "--ok-bg",
+        "value": "#16261B",
+        "locator": "style:first-of-type::token(--ok-bg)",
+        "content_sha256": "d0583889a182de968ff1f9cbcd444743acf66a0ea61df43cb062829787a18a8d"
+      },
+      {
+        "name": "--warn",
+        "value": "#D9A94B",
+        "locator": "style:first-of-type::token(--warn)",
+        "content_sha256": "a551ba23ede03588330062481e2b98c624648834c5e9d2384b4b3c7b5fbe99f0"
+      },
+      {
+        "name": "--warn-bg",
+        "value": "#1A1410",
+        "locator": "style:first-of-type::token(--warn-bg)",
+        "content_sha256": "4a9bf9cefb1691d3bbbcd169659a4d95b828613e24f1bc442057f6daaed717b2"
+      },
+      {
+        "name": "--warn-line",
+        "value": "#6B5528",
+        "locator": "style:first-of-type::token(--warn-line)",
+        "content_sha256": "e38b0e7490d4a321d06689b12e6361dcd83081c0f8c4d17718909ac0fb0cd712"
+      },
+      {
+        "name": "--f-ui",
+        "value": "\"Archivo\",\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",sans-serif",
+        "locator": "style:first-of-type::token(--f-ui)",
+        "content_sha256": "fa4f7fff1e23c8cd93719c9a006a073ba742906c0f3fdb6d30600b0efdae82a0"
+      },
+      {
+        "name": "--f-tx",
+        "value": "\"Asap\",\"PingFang SC\",\"Hiragino Sans GB\",\"Microsoft YaHei\",sans-serif",
+        "locator": "style:first-of-type::token(--f-tx)",
+        "content_sha256": "55cab885b1ac88c0587685eea6375100545d063fe9bfa629fc5a189071b225e7"
+      },
+      {
+        "name": "--f-mo",
+        "value": "\"JetBrains Mono\",ui-monospace,Menlo,monospace",
+        "locator": "style:first-of-type::token(--f-mo)",
+        "content_sha256": "b8d5c54b9b763950646fafb72eb6bf50c0c2199df5939f687c63a9bf51ee9ed5"
+      }
+    ],
+    "font_families": [
+      "Archivo",
+      "Asap",
+      "JetBrains Mono"
+    ],
+    "dom_anchors": [
+      {
+        "attribute": "data-screen",
+        "value": "home",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen=\"home\"]",
+        "content_sha256": "dec2b86a2daa811f4d5370cf4e27214b8a28310bc41575eb748a3fe054fc92a8"
+      },
+      {
+        "attribute": "data-screen",
+        "value": "inbox",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen=\"inbox\"]",
+        "content_sha256": "be0b62e71aa0943451f2e2e24ab7bbc4fce8e4dff27ec7f68d14bdb4dad0b3b3"
+      },
+      {
+        "attribute": "data-screen",
+        "value": "library",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen=\"library\"]",
+        "content_sha256": "6820d8a9d404288a25010fe2c607888afbd2b6159ce44839a571aecfefe379ff"
+      },
+      {
+        "attribute": "data-screen",
+        "value": "project",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen=\"project\"]",
+        "content_sha256": "0ce183ec173d3af5db3f0b45dfef7c0f92f452f294a2f48be7061a46cf91fcc3"
+      },
+      {
+        "attribute": "data-screen",
+        "value": "settings",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen=\"settings\"]",
+        "content_sha256": "3a42bd57512fac2c655015bd854c1cb685d8f8df945a0a95a29a7f4a01ce53d6"
+      },
+      {
+        "attribute": "data-screen-panel",
+        "value": "home",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen-panel=\"home\"]",
+        "content_sha256": "343a94193f8169d7f53216c353e0203e7346db4e73d0b596ee68b7efadb25fd6"
+      },
+      {
+        "attribute": "data-screen-panel",
+        "value": "inbox",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen-panel=\"inbox\"]",
+        "content_sha256": "95f5474d441cfaa23b327016bc74cebda0d1a5962de8ddb745516189ee792d69"
+      },
+      {
+        "attribute": "data-screen-panel",
+        "value": "library",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen-panel=\"library\"]",
+        "content_sha256": "8cc81ff974f30768f101c018ace6b368a59b4b089447b506ec07ee22a655cd6b"
+      },
+      {
+        "attribute": "data-screen-panel",
+        "value": "project",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen-panel=\"project\"]",
+        "content_sha256": "5a82557342be3c76d5d76e251ae4c793e61abbaad6f280d1ee3185c844a4bae3"
+      },
+      {
+        "attribute": "data-screen-panel",
+        "value": "settings",
+        "node_refs": [
+          "H1",
+          "I1",
+          "L1",
+          "P1",
+          "S1"
+        ],
+        "locator": "[data-screen-panel=\"settings\"]",
+        "content_sha256": "b0e6671194be52c597c8db5a0b265435a276de99896e5630b5c48c20b51bb2a5"
+      },
+      {
+        "attribute": "data-batch",
+        "value": "a",
+        "node_refs": [
+          "D1",
+          "I1",
+          "I2"
+        ],
+        "locator": "[data-batch=\"a\"]",
+        "content_sha256": "6a2340695f048d5906a992b9cc0ff9a93a54ae4f38e402e5010fb94ec1bcc651"
+      },
+      {
+        "attribute": "data-batch",
+        "value": "b",
+        "node_refs": [
+          "D1",
+          "I1",
+          "I2"
+        ],
+        "locator": "[data-batch=\"b\"]",
+        "content_sha256": "5c7c5d141096ffb38b00484834c93dd52034a03e4beffacbac4b94236e2423df"
+      },
+      {
+        "attribute": "data-batch",
+        "value": "c",
+        "node_refs": [
+          "D1",
+          "I1",
+          "I2"
+        ],
+        "locator": "[data-batch=\"c\"]",
+        "content_sha256": "aabce6d72695edb58618c942ef285eb2aa031dcca7edaca58194a875966ad127"
+      },
+      {
+        "attribute": "data-del",
+        "value": "d1",
+        "node_refs": [
+          "I4",
+          "I5"
+        ],
+        "locator": "[data-del=\"d1\"]",
+        "content_sha256": "f890e501b2c3d56dadd3b2628216411748e83af33347a7e78b3ac3b89d379a88"
+      },
+      {
+        "attribute": "data-del",
+        "value": "d2",
+        "node_refs": [
+          "I4",
+          "I5"
+        ],
+        "locator": "[data-del=\"d2\"]",
+        "content_sha256": "e46bc0b2d47b1f8574eca654d2b36933e0a1bc9cb4c6c9fa43f72bb10fa41b7d"
+      },
+      {
+        "attribute": "data-del",
+        "value": "d3",
+        "node_refs": [
+          "I4",
+          "I5"
+        ],
+        "locator": "[data-del=\"d3\"]",
+        "content_sha256": "4d2ffe86f1ce011fe9b5f605244a7929753b1baa4b3c6bbf372f319a0c9a5b79"
+      },
+      {
+        "attribute": "data-set-pane",
+        "value": "account",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set-pane=\"account\"]",
+        "content_sha256": "1ac705935c7895e56db9245b3fafe8af9dd66f2e3bfd31bdd39842aa5d2116bf"
+      },
+      {
+        "attribute": "data-set-pane",
+        "value": "agent",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set-pane=\"agent\"]",
+        "content_sha256": "bd20724dff6b2c804379ea3ff32bce18de1f8fa19e9d8b6a689bf9a29bf2cfc6"
+      },
+      {
+        "attribute": "data-set-pane",
+        "value": "asr",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set-pane=\"asr\"]",
+        "content_sha256": "023acad5c878f91a85b6374a6326179f4e58ebefeef3a676efdfe1c112fcc6df"
+      },
+      {
+        "attribute": "data-set-pane",
+        "value": "budget",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set-pane=\"budget\"]",
+        "content_sha256": "6381f30fd37509b80f52908efa1a98b0d77dc65f9521623e2c1c7bc8083f5792"
+      },
+      {
+        "attribute": "data-set-pane",
+        "value": "doctor",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set-pane=\"doctor\"]",
+        "content_sha256": "c0f3d1cd1bac4e1ceafd753a87fe5c6d0f4430f164df9fc214d3b8af531362e2"
+      },
+      {
+        "attribute": "data-set-pane",
+        "value": "paths",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set-pane=\"paths\"]",
+        "content_sha256": "15b5923a4307125d0e4cb5b2eac05920436cd6c2b3ec9044f2d02d06915bf2de"
+      },
+      {
+        "attribute": "data-asset-add-project",
+        "value": "present",
+        "node_refs": [
+          "L5"
+        ],
+        "locator": "[data-asset-add-project]",
+        "content_sha256": "6e69e1d6fc5751422a133f75e53b237a049919a4c85cd9fa67aa02163afcaac9"
+      },
+      {
+        "attribute": "data-edl-view",
+        "value": "text",
+        "node_refs": [
+          "P2",
+          "P3"
+        ],
+        "locator": "[data-edl-view=\"text\"]",
+        "content_sha256": "d97220810c428d2e087f878e5681589852bbb3de6722625a9d14ecd931b05b85"
+      },
+      {
+        "attribute": "data-edl-view",
+        "value": "timeline",
+        "node_refs": [
+          "P2",
+          "P3"
+        ],
+        "locator": "[data-edl-view=\"timeline\"]",
+        "content_sha256": "e929f726185bf254849fa8d029b956bcc5889579c4791e3813a0c48c1e7c815e"
+      },
+      {
+        "attribute": "data-copy-report",
+        "value": "present",
+        "node_refs": [
+          "C3",
+          "S3"
+        ],
+        "locator": "[data-copy-report]",
+        "content_sha256": "6b4fefcc7353845500b133ff1f034be3922b1958cb56661235933f147428c174"
+      },
+      {
+        "attribute": "data-preserved-k",
+        "value": "k1",
+        "node_refs": [
+          "K1"
+        ],
+        "locator": "[data-preserved-k=\"k1\"]",
+        "content_sha256": "deda9fe527701a4575adaa10b3885015803b410741dcda0066b19f2814b8765a"
+      },
+      {
+        "attribute": "data-preserved-k",
+        "value": "k2",
+        "node_refs": [
+          "K2"
+        ],
+        "locator": "[data-preserved-k=\"k2\"]",
+        "content_sha256": "ed23f82429bd76c6b14de8b264de143bfa2ef009b1f4f1db17e3cf4e2938407b"
+      },
+      {
+        "attribute": "data-preserved-k",
+        "value": "k3",
+        "node_refs": [
+          "K3"
+        ],
+        "locator": "[data-preserved-k=\"k3\"]",
+        "content_sha256": "3a3fbdc82484d6ed8c37c96dbd00b717d90101b04e146b25597048b5efaefe6c"
+      },
+      {
+        "attribute": "data-preserved-k",
+        "value": "k4",
+        "node_refs": [
+          "K4"
+        ],
+        "locator": "[data-preserved-k=\"k4\"]",
+        "content_sha256": "cf965373a16509f7dde685a56e4f03347695e9434bc639d636aee67e0f6fd531"
+      },
+      {
+        "attribute": "data-preserved-k",
+        "value": "k5",
+        "node_refs": [
+          "K5"
+        ],
+        "locator": "[data-preserved-k=\"k5\"]",
+        "content_sha256": "fa031045006191cfb81d6c699ad37fb7c03336e4e3e49c03592069473afca531"
+      },
+      {
+        "attribute": "data-preserved-k",
+        "value": "k6",
+        "node_refs": [
+          "K6"
+        ],
+        "locator": "[data-preserved-k=\"k6\"]",
+        "content_sha256": "c02eec3a773e498fcdf3c999b10c9c5c6274a5631ba127318991552fa134e0c3"
+      }
+    ],
+    "computed_style_assertions": [
+      "每个 :root 令牌的计算值与冻结原型一致",
+      "桌面和移动视口不得横向溢出、遮挡或改变主要操作位置",
+      "focus、disabled、danger、AI、success 状态保留原型语义"
+    ],
+    "capture_matrix": [
+      {
+        "surface_id": "SURF-LOGIN",
+        "route": "/login",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "1440x900",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-LOGIN",
+        "route": "/login",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "390x844",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-SETUP",
+        "route": "/setup",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "1440x900",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-SETUP",
+        "route": "/setup",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "390x844",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-DASHBOARD",
+        "route": "/app/home",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "1440x900",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-DASHBOARD",
+        "route": "/app/home",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "390x844",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-ORGANIZER",
+        "route": "/app/inbox",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "1440x900",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-ORGANIZER",
+        "route": "/app/inbox",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "390x844",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-LIBRARY",
+        "route": "/app/library",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "1440x900",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-LIBRARY",
+        "route": "/app/library",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "390x844",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-PROJECT",
+        "route": "/app/project/:projectId",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "1440x900",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-PROJECT",
+        "route": "/app/project/:projectId",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "390x844",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-SETTINGS",
+        "route": "/app/settings",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "1440x900",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-SETTINGS",
+        "route": "/app/settings",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "390x844",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-CLOUD",
+        "route": "/cloud/tasks",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "1440x900",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      },
+      {
+        "surface_id": "SURF-CLOUD",
+        "route": "/cloud/tasks",
+        "locale": "zh-CN",
+        "theme": "dark",
+        "viewport": "390x844",
+        "dataset": "prototype-frozen-v2",
+        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+      }
+    ]
+  },
+  "interaction_catalog": [
+    {
+      "id": "INT-NAV-SCREENS",
+      "surface_id": "SURF-DASHBOARD",
+      "control": "主导航",
+      "precondition": "桌面应用已启动",
+      "trigger": "选择工作台、整理台、素材库、项目或设置",
+      "state_change": "唯一 data-screen-panel 成为可见面板",
+      "visible_result": "标题、侧栏当前态和面板同步",
+      "boundary_behavior": "未知目标不改变当前屏",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-H1"
+      ],
+      "prototype_locators": [
+        "[data-screen]",
+        "[data-screen-panel]"
+      ],
+      "acceptance_refs": [
+        "H1/AC-01",
+        "Z1/AC-01"
+      ]
+    },
+    {
+      "id": "INT-INBOX-BATCHES",
+      "surface_id": "SURF-ORGANIZER",
+      "control": "批次 A/B/C 与确认落点",
+      "precondition": "媒体清单已生成且候选摘要可回读",
+      "trigger": "选择批次并确认项目落点",
+      "state_change": "候选从预览转为一次幂等迁移",
+      "visible_result": "批次来源、目标、数量和回执可见",
+      "boundary_behavior": "清单漂移、碰撞或未确认时禁止移动",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-D1",
+        "SRC-CHECKLIST-I1"
+      ],
+      "prototype_locators": [
+        "[data-batch=\"a\"]",
+        "[data-batch=\"b\"]",
+        "[data-batch=\"c\"]"
+      ],
+      "acceptance_refs": [
+        "D1/AC-01",
+        "I1/AC-01",
+        "I3/AC-01"
+      ]
+    },
+    {
+      "id": "INT-INBOX-DELETE",
+      "surface_id": "SURF-ORGANIZER",
+      "control": "删除建议、全选和二次确认",
+      "precondition": "四类机器理由已生成候选",
+      "trigger": "勾选候选并二次确认",
+      "state_change": "仅选中候选进入当前系统回收站",
+      "visible_result": "选择数量、回执和恢复入口可见",
+      "boundary_behavior": "永久删除、未选中项、失败回读一律禁止",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-I4",
+        "SRC-CHECKLIST-I5"
+      ],
+      "prototype_locators": [
+        "[data-del]",
+        "#del-all",
+        "#del-confirm"
+      ],
+      "acceptance_refs": [
+        "I4/AC-01",
+        "I5/AC-01",
+        "D2/AC-01"
+      ]
+    },
+    {
+      "id": "INT-LIBRARY-BROWSE",
+      "surface_id": "SURF-LIBRARY",
+      "control": "三种视图、七类分类、标签和详情主按钮",
+      "precondition": "结构化索引可查询",
+      "trigger": "切换视图、分类、标签或素材详情",
+      "state_change": "查询条件和当前素材改变",
+      "visible_result": "计数、卡片/列表/文本及加入项目动作同步",
+      "boundary_behavior": "空索引和未知素材显示明确空态/错误态",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-L1",
+        "SRC-CHECKLIST-L2",
+        "SRC-CHECKLIST-L5"
+      ],
+      "prototype_locators": [
+        "[data-lib]",
+        "[data-lib-view]",
+        "[data-asset-add-project]"
+      ],
+      "acceptance_refs": [
+        "L1/AC-01",
+        "L2/AC-01",
+        "L5/AC-01"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-EDL",
+      "surface_id": "SURF-PROJECT",
+      "control": "决策列表、时间线/文本双视图、待补素材与交接包",
+      "precondition": "项目和结构化 EDL 身份可回读",
+      "trigger": "切换 EDL 视图或生成交接包",
+      "state_change": "只改变展示或生成受支持输出，不改第二份权威",
+      "visible_result": "片段、轨道、缺失素材、输出后端和回执可见",
+      "boundary_behavior": "EDL 无效或后端未探测时失败关闭",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-P1",
+        "SRC-CHECKLIST-P2",
+        "SRC-CHECKLIST-P3",
+        "SRC-CHECKLIST-P4",
+        "SRC-CHECKLIST-P5"
+      ],
+      "prototype_locators": [
+        "[data-edl-view=\"timeline\"]",
+        "[data-edl-view=\"text\"]"
+      ],
+      "acceptance_refs": [
+        "P1/AC-01",
+        "P2/AC-01",
+        "P3/AC-01",
+        "P4/AC-01",
+        "P5/AC-01"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-PRESERVED",
+      "surface_id": "SURF-PROJECT",
+      "control": "锁定、版本、失效、参考、复盘、Brief 与脚本",
+      "precondition": "项目已加载",
+      "trigger": "进入 K1-K6 入口并执行对应动作",
+      "state_change": "项目文档及版本按 expectedRevision 更新",
+      "visible_result": "锁定、diff、回滚、stale、参考和发布记录均可回读",
+      "boundary_behavior": "这些能力不得拆成独立 Studio 路由",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-K1",
+        "SRC-CHECKLIST-K2",
+        "SRC-CHECKLIST-K3",
+        "SRC-CHECKLIST-K4",
+        "SRC-CHECKLIST-K5",
+        "SRC-CHECKLIST-K6"
+      ],
+      "prototype_locators": [
+        "[data-preserved-k=\"k1\"]",
+        "[data-preserved-k=\"k2\"]",
+        "[data-preserved-k=\"k3\"]",
+        "[data-preserved-k=\"k4\"]",
+        "[data-preserved-k=\"k5\"]",
+        "[data-preserved-k=\"k6\"]"
+      ],
+      "acceptance_refs": [
+        "K1/AC-01",
+        "K2/AC-01",
+        "K3/AC-01",
+        "K4/AC-01",
+        "K5/AC-01",
+        "K6/AC-01"
+      ]
+    },
+    {
+      "id": "INT-SETTINGS-PANELS",
+      "surface_id": "SURF-SETTINGS",
+      "control": "六个设置面板",
+      "precondition": "本机设置可读",
+      "trigger": "选择存放位置、创意模型、转写、预算、账号或诊断",
+      "state_change": "当前设置面板切换；保存动作带 CSRF 与 revision",
+      "visible_result": "真实配置、能力探测和动态诊断项可见",
+      "boundary_behavior": "不支持与配置错误分开，密钥不回显",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-D3",
+        "SRC-CHECKLIST-S1",
+        "SRC-CHECKLIST-S2",
+        "SRC-CHECKLIST-S3",
+        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-S5"
+      ],
+      "prototype_locators": [
+        "[data-set-pane=\"paths\"]",
+        "[data-set-pane=\"agent\"]",
+        "[data-set-pane=\"asr\"]",
+        "[data-set-pane=\"budget\"]",
+        "[data-set-pane=\"account\"]",
+        "[data-set-pane=\"doctor\"]"
+      ],
+      "acceptance_refs": [
+        "D3/AC-01",
+        "S1/AC-01",
+        "S2/AC-01",
+        "S3/AC-01",
+        "S4/AC-01",
+        "S5/AC-01"
+      ]
+    },
+    {
+      "id": "INT-LOGIN",
+      "surface_id": "SURF-LOGIN",
+      "control": "登录两步与跳过",
+      "precondition": "桌面本地能力可用",
+      "trigger": "选择上游登录、完成配对或跳过",
+      "state_change": "只改变可选上游会话",
+      "visible_result": "连接状态与本地功能可用状态同时显示",
+      "boundary_behavior": "未登录、撤销、不支持、过期均不降级本地功能",
+      "source_refs": [
+        "SRC-CHECKLIST-A1"
+      ],
+      "acceptance_refs": [
+        "A1/AC-01",
+        "S4/AC-01"
+      ]
+    },
+    {
+      "id": "INT-SETUP",
+      "surface_id": "SURF-SETUP",
+      "control": "四步可重入向导",
+      "precondition": "桌面入口可打开",
+      "trigger": "逐步配置位置、运行环境、编辑器、账号与设备",
+      "state_change": "每步状态原子保存",
+      "visible_result": "进度、失败点、重试和完成态可见",
+      "boundary_behavior": "中断后从最后成功步骤恢复",
+      "source_refs": [
+        "SRC-CHECKLIST-A2"
+      ],
+      "acceptance_refs": [
+        "A2/AC-01",
+        "A2/AC-02"
+      ]
+    },
+    {
+      "id": "INT-CLOUD-STATES",
+      "surface_id": "SURF-CLOUD",
+      "control": "网页中台任务状态",
+      "precondition": "用户已主动配对上游",
+      "trigger": "读取或刷新任务",
+      "state_change": "上游投影状态更新",
+      "visible_result": "queued/running/completed/failed/expired/cancelled 均有明确文案",
+      "boundary_behavior": "会话失效只清除上游能力，不影响本地项目",
+      "source_refs": [
+        "SRC-CHECKLIST-C2"
+      ],
+      "acceptance_refs": [
+        "C2/AC-01",
+        "C2/AC-02"
+      ]
+    }
+  ],
+  "api_mapping": [
+    {
+      "id": "API-BOOTSTRAP",
+      "method": "GET",
+      "path": "/api/bootstrap",
+      "status": "existing",
+      "schema": "csrfToken, projects, contract",
+      "revision": "none",
+      "csrf": "read-only",
+      "receipt": "ok + bootstrap snapshot",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-HEALTH",
+      "method": "GET",
+      "path": "/api/health",
+      "status": "existing",
+      "schema": "status, localOnly",
+      "revision": "none",
+      "csrf": "read-only",
+      "receipt": "ok + ready",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-SETTINGS",
+      "method": "GET",
+      "path": "/api/settings",
+      "status": "existing",
+      "schema": "settings projection",
+      "revision": "none",
+      "csrf": "read-only",
+      "receipt": "ok + settings",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-PROJECT",
+      "method": "GET",
+      "path": "/api/projects/:id",
+      "status": "existing",
+      "schema": "project projection including documents",
+      "revision": "none",
+      "csrf": "read-only",
+      "receipt": "ok + project",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-ASSETS",
+      "method": "GET",
+      "path": "/api/assets?category=&tags=",
+      "status": "existing",
+      "schema": "asset_library_index.schema.json projection",
+      "revision": "none",
+      "csrf": "read-only",
+      "receipt": "ok + assets + query",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-ASSET-STATS",
+      "method": "GET",
+      "path": "/api/assets/statistics",
+      "status": "existing",
+      "schema": "statistics by category/tag/use",
+      "revision": "none",
+      "csrf": "read-only",
+      "receipt": "ok + statistics",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-INBOX-PLAN",
+      "method": "POST",
+      "path": "/api/projects/:id/inbox-plan",
+      "status": "existing",
+      "schema": "inbox_batch_plan.schema.json",
+      "revision": "manifest digest",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "ok + read-only plan",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-INBOX-CONFIRM",
+      "method": "POST",
+      "path": "/api/projects/:id/inbox-plan/confirm",
+      "status": "new",
+      "schema": "planDigest, batchId, targetProjectId, expectedRevision",
+      "revision": "required",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "promotion receipt + journal identity",
+      "source": "planned by D1/I1/T1"
+    },
+    {
+      "id": "API-DELETE-RECOMMEND",
+      "method": "POST",
+      "path": "/api/projects/:id/media-delete/recommendations",
+      "status": "existing",
+      "schema": "manifest -> four-reason candidates",
+      "revision": "manifest digest",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "ok + candidates",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-DELETE-CONFIRM",
+      "method": "POST",
+      "path": "/api/projects/:id/media-delete/confirm",
+      "status": "existing",
+      "schema": "selectedCandidateNumbers, secondConfirmation",
+      "revision": "candidate digest",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "system-trash receipt per file",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-DOCUMENT-ACTION",
+      "method": "POST",
+      "path": "/api/projects/:id/documents/:name/:action",
+      "status": "existing",
+      "schema": "patch|lock|unlock|rollback|ai-patch",
+      "revision": "expectedRevision required for writes",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "ok + updated project",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-DOCUMENT-DIFF",
+      "method": "GET",
+      "path": "/api/projects/:id/documents/:name/diff?from=&to=",
+      "status": "existing",
+      "schema": "unified diff text",
+      "revision": "version pair",
+      "csrf": "read-only",
+      "receipt": "ok + diff",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-PROVIDER",
+      "method": "POST",
+      "path": "/api/settings/model-providers",
+      "status": "existing",
+      "schema": "provider, model, endpoint, reasoning, credentialRef",
+      "revision": "configuration identity",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "ok + redacted settings",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-ARCHIVE",
+      "method": "POST",
+      "path": "/api/settings/archive/{lifecycle|locations}",
+      "status": "existing",
+      "schema": "lifecycle or physical location + manifest readback",
+      "revision": "configuration identity",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "ok + archive projection",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-UPSTREAM",
+      "method": "POST",
+      "path": "/api/settings/upstream/{pair|refresh|logout}",
+      "status": "existing",
+      "schema": "opaque session reference projection",
+      "revision": "session generation",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "ok + secret-free upstream state",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-CHATCUT",
+      "method": "POST",
+      "path": "/api/settings/chatcut/{probe|confirm}",
+      "status": "existing",
+      "schema": "Desktop MCP capability state",
+      "revision": "probe identity",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "ok + chatcut state",
+      "source": "99_System_OpenClaw/desktop/server.py"
+    },
+    {
+      "id": "API-DOCTOR",
+      "method": "GET",
+      "path": "/api/diagnostics",
+      "status": "new",
+      "schema": "dynamic checks array + report digest",
+      "revision": "none",
+      "csrf": "read-only",
+      "receipt": "ok + checks, no fixed count",
+      "source": "planned by S3/C3"
+    },
+    {
+      "id": "API-BUDGET",
+      "method": "GET/POST",
+      "path": "/api/settings/analysis-budget",
+      "status": "new",
+      "schema": "analysis_tiering.schema.json",
+      "revision": "expectedRevision on POST",
+      "csrf": "X-Content-OS-CSRF on POST",
+      "receipt": "ok + effective budget",
+      "source": "planned by S1/T4"
+    },
+    {
+      "id": "API-ASSET-ADD",
+      "method": "POST",
+      "path": "/api/projects/:id/assets",
+      "status": "new",
+      "schema": "assetId, intendedUse, expectedRevision",
+      "revision": "expectedRevision required",
+      "csrf": "X-Content-OS-CSRF",
+      "receipt": "ok + project asset reference",
+      "source": "planned by L5/T5"
+    },
+    {
+      "id": "API-WIZARD",
+      "method": "GET/POST",
+      "path": "/api/setup/state",
+      "status": "new",
+      "schema": "four-step resumable setup state",
+      "revision": "expectedRevision on POST",
+      "csrf": "X-Content-OS-CSRF on POST",
+      "receipt": "ok + persisted step state",
+      "source": "planned by A2/T5"
+    },
+    {
+      "id": "API-CLOUD-TASKS",
+      "method": "GET",
+      "path": "/api/upstream/tasks",
+      "status": "new",
+      "schema": "queued|running|completed|failed|expired|cancelled",
+      "revision": "upstream snapshot generation",
+      "csrf": "read-only after optional pairing",
+      "receipt": "ok + task projections",
+      "source": "planned by C1/C2/C3"
+    }
+  ],
+  "surfaces": [
+    {
+      "surface_id": "SURF-LOGIN",
+      "name": "登录",
+      "routes": [
+        "/login"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "item_refs": [
+        "A1"
+      ]
+    },
+    {
+      "surface_id": "SURF-SETUP",
+      "name": "安装向导",
+      "routes": [
+        "/setup"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "item_refs": [
+        "A2"
+      ]
+    },
+    {
+      "surface_id": "SURF-DASHBOARD",
+      "name": "工作台",
+      "routes": [
+        "/app/home"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "item_refs": [
+        "H1",
+        "H2",
+        "H3",
+        "H4"
+      ]
+    },
+    {
+      "surface_id": "SURF-ORGANIZER",
+      "name": "整理台",
+      "routes": [
+        "/app/inbox"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "item_refs": [
+        "D1",
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "T1"
+      ]
+    },
+    {
+      "surface_id": "SURF-LIBRARY",
+      "name": "素材库",
+      "routes": [
+        "/app/library"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "item_refs": [
+        "D2",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "T2"
+      ]
+    },
+    {
+      "surface_id": "SURF-PROJECT",
+      "name": "项目",
+      "routes": [
+        "/app/project/:projectId"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "item_refs": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "T5",
+        "T6",
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5",
+        "K6"
+      ]
+    },
+    {
+      "surface_id": "SURF-SETTINGS",
+      "name": "设置与诊断",
+      "routes": [
+        "/app/settings"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "item_refs": [
+        "D3",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "T3",
+        "T4"
+      ]
+    },
+    {
+      "surface_id": "SURF-CLOUD",
+      "name": "网页中台",
+      "routes": [
+        "/cloud/tasks"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "item_refs": [
+        "C1",
+        "C2",
+        "C3"
+      ]
+    }
+  ],
+  "runtime_components": [
+    {
+      "id": "RT-DESKTOP",
+      "kind": "loopback desktop server",
+      "status": "implemented-partial"
+    },
+    {
+      "id": "RT-BROWSER",
+      "kind": "desktop browser frontend",
+      "status": "implemented-partial"
+    },
+    {
+      "id": "RT-UPSTREAM",
+      "kind": "optional upstream identity",
+      "status": "external-evidence-required"
+    },
+    {
+      "id": "RT-CHATCUT",
+      "kind": "Desktop local MCP",
+      "status": "external-evidence-required"
+    },
+    {
+      "id": "RT-TRASH",
+      "kind": "operating-system recycle bin",
+      "status": "platform-evidence-required"
+    },
+    {
+      "id": "RT-ARCHIVE",
+      "kind": "user-selected physical locations",
+      "status": "physical-readback-required"
+    }
+  ],
+  "governance_dependencies": {
+    "design_acceptance_contract_ref": ".harness/overlays/project-harness-adapter.yaml",
+    "runtime_visual_verification_ref": ".harness/overlays/project-harness-adapter.yaml",
+    "visual_collaboration_contract_ref": ".harness/overlays/project-harness-adapter.yaml"
+  }
 }

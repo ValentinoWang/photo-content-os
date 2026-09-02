@@ -1,7 +1,3 @@
-# Task Acceptance Evidence Index
+# Acceptance index: OCM-Z1
 
-This generated index covers non-human evidence in this task artifact root. It locates evidence but does not define acceptance behavior.
-
-| Run ID | Task ID | Lane | Status | Contract version | Source identity | Runtime identity | Result SHA-256 | Result path |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| none | none | none | none | none | none | none | none | none |
+Contract status: DRAFT. Test baseline: PLANNED. Human acceptance is not yet approved or executed.

@@ -41,7 +41,7 @@
     "DL-I2"
   ],
   "source_requirement_refs": [
-    "SRC-I2"
+    "SRC-CHECKLIST-I2"
   ],
   "surface_refs": [
     "SURF-ORGANIZER"
@@ -56,7 +56,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1）：读 manifest 分组计数即可，不用新后端。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

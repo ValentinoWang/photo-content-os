@@ -36,7 +36,7 @@
     "DL-H4"
   ],
   "source_requirement_refs": [
-    "SRC-H4"
+    "SRC-CHECKLIST-H4"
   ],
   "surface_refs": [
     "SURF-DASHBOARD"
@@ -51,7 +51,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "本周统计（完成任务 23 / 发布内容 4）：加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

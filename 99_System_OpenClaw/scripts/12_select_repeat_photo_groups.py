@@ -185,13 +185,20 @@ def validate_operations(project: Path, additions: Path, plan: dict[str, object])
     if not items:
         return []
     operations: list[dict[str, object]] = []
+    sources: set[Path] = set()
     targets: set[Path] = set()
     for item in items:
         source = additions / str(item["source_relative_path"])
         if not source.exists():
             raise FileNotFoundError(f"source file not found: {source}")
+        if not source.is_file():
+            raise IsADirectoryError(f"source path is not a file: {source}")
         if not inside(source, additions):
             raise RuntimeError(f"source escapes additions_dir: {source}")
+        resolved_source = source.resolve()
+        if resolved_source in sources:
+            raise RuntimeError(f"duplicate source path: {source}")
+        sources.add(resolved_source)
         target = target_for_item(project, additions, item)
         if not inside(target, project):
             raise RuntimeError(f"target escapes project_dir: {target}")
@@ -200,8 +207,13 @@ def validate_operations(project: Path, additions: Path, plan: dict[str, object])
         resolved = target.resolve()
         if resolved in targets:
             raise RuntimeError(f"duplicate target path: {target}")
+        if target.parent.exists() and not target.parent.is_dir():
+            raise NotADirectoryError(f"target parent is not a directory: {target.parent}")
         targets.add(resolved)
         operations.append({"item": item, "source": source, "target": target})
+    for target in targets:
+        if any(target != other and target in other.parents for other in targets):
+            raise RuntimeError(f"target path collides with another target parent: {target}")
     return operations
 
 
@@ -258,12 +270,15 @@ def append_log(project: Path, additions: Path, operations: list[dict[str, object
     log.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def clear_additions(additions: Path) -> None:
-    for child in additions.iterdir():
-        if child.is_dir():
-            shutil.rmtree(child)
-        else:
-            child.unlink()
+def prune_empty_addition_dirs(additions: Path) -> None:
+    directories = sorted(
+        (path for path in additions.rglob("*") if path.is_dir() and not path.is_symlink()),
+        key=lambda path: len(path.parts),
+        reverse=True,
+    )
+    for directory in directories:
+        if not any(directory.iterdir()):
+            directory.rmdir()
 
 
 def main() -> None:
@@ -290,9 +305,9 @@ def main() -> None:
         operations = validate_operations(project, additions, plan)
         apply_operations(operations)
         append_log(project, additions, operations)
-        clear_additions(additions)
+        prune_empty_addition_dirs(additions)
         print(f"已应用重复照片筛选计划：{len(operations)} 个文件")
-        print(f"待增加目录已清空：{additions}")
+        print(f"待增加空目录已清理，未选择文件保持原位：{additions}")
         if not args.skip_analysis:
             run_analysis(project)
         return

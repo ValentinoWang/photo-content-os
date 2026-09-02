@@ -11,7 +11,7 @@
     {
       "view_id": "main",
       "source": "view-sources/00-main.md",
-      "source_sha256": "5992d30478070524aeb3094f049f42da3bc3de98d1e9c772b937bc03cc62a0cb",
+      "source_sha256": "dbdad93b912dd50c93c4b1547253650b31ad805fd264afb90e7fe0552cb3a36e",
       "output": "../ssot-development-paths.md"
     }
   ],
@@ -19,14 +19,83 @@
   "edges_dir": "edges",
   "assumptions_dir": "assumptions",
   "conflicts_dir": "conflicts",
+  "external_dependencies": [
+    {
+      "external_dependency_id": "EXT-CHECKLIST",
+      "authority_path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html",
+      "authority_commit": "2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "authority_sha256": "73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb",
+      "required_state": "ACCEPTED",
+      "consumers": [
+        "F",
+        "A1",
+        "A2",
+        "C1",
+        "C2",
+        "C3",
+        "D1",
+        "D2",
+        "D3",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5",
+        "K6",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6"
+      ]
+    },
+    {
+      "external_dependency_id": "EXT-PROTOTYPE",
+      "authority_path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
+      "authority_commit": "2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "authority_sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8",
+      "required_state": "ACCEPTED",
+      "consumers": [
+        "F",
+        "Z1"
+      ]
+    }
+  ],
   "normative_executable_artifact_contract": {
     "mode": "strict",
     "source_milestone_authority": "source",
-    "source_requirements": "source-requirements.json",
-    "surface_inventory": "surface-inventory.json",
-    "visual_fidelity_contract": "visual-fidelity-contract.json",
-    "interaction_matrix": "interaction-matrix.json",
-    "action_vertical_slices": "action-vertical-slices.json",
-    "runtime_topology": "runtime-topology.json"
+    "source_requirements": "source-requirements.json"
+  },
+  "validation_report": {
+    "path": "validation-report.json",
+    "sha256": "4bd5ddd83e17d4f9229ae4483d0094389104fcbd7eefe4edc304319f7a1767bb",
+    "manifest_identity_sha256": "95594f375a1a5986564859698454305954abc3852e840e190d9f25b5906aa347",
+    "bundle_content_sha256": "a72ffa90531c4001f126f4a5c0a917cacf2bc0c4c18c7bc1dbe6cbcc9a0b2c0f"
   }
 }

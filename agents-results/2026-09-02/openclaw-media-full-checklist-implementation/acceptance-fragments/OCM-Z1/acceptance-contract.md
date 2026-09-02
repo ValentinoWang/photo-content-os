@@ -6,7 +6,7 @@
 - Test baseline: PLANNED
 - Acceptance owner: 产品负责人与对应领域验收负责人
 - Approval evidence: 尚未批准
-- Request source: agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html sha256:88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf
+- Request source: agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
 - SSOT node: Z1
 - SSOT path: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/ssot-development-paths.md
 - Readiness mode: FORMAL
@@ -14,14 +14,14 @@
 - Assumption IDs: none
 - Invalidation keys: checklist.z1
 - AC budget: 2
-- Baseline identity: main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35; checklist-sha256:88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf
+- Baseline identity: main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35; checklist-sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
 - Product Context refs: SRC-D1 through SRC-K6, source-notes.md
 - Role Context refs: 本地内容创作者，以及可选配对的上游中台用户
-- Resolved Surface Contract refs: .ssot/surface-inventory.json#ALL-NINE-SURFACES
-- Screen Contract ref: .ssot/interaction-matrix.json#ALL-NINE-SURFACES
-- Visual Contract refs: .ssot/visual-fidelity-contract.json
+- Resolved Surface Contract refs: .ssot/source-requirements.json#ALL-NINE-SURFACES
+- Screen Contract ref: .ssot/source-requirements.json#ALL-NINE-SURFACES
+- Visual Contract refs: .ssot/source-requirements.json
 - UI Change declaration: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/ui-change.json
-- Human acceptance workspace: acceptance/human/2026-W36/2026-09-02-OCM-Z1
+- Human acceptance workspace: none
 
 ## User and scenario
 
@@ -69,24 +69,14 @@ Then 系统完成“九个表面在真实入口中共同完成 45 项来源要�
 
 ## Acceptance criteria
 
-| ID | Class | Source requirement refs | Requirement | Verification layer | Mode | Blocking |
-| --- | --- | --- | --- | --- | --- | --- |
-| AC-01 | behavior | SRC-D1, SRC-D2, SRC-D3, SRC-A1, SRC-A2, SRC-H1, SRC-H2, SRC-H3, SRC-H4, SRC-I1, SRC-I2, SRC-I3, SRC-I4, SRC-I5, SRC-L1, SRC-L2, SRC-L3, SRC-L4, SRC-L5, SRC-P1, SRC-P2, SRC-P3, SRC-P4, SRC-P5, SRC-P6, SRC-S1, SRC-S2, SRC-S3, SRC-S4, SRC-S5, SRC-C1, SRC-C2, SRC-C3, SRC-T1, SRC-T2, SRC-T3, SRC-T4, SRC-T5, SRC-T6, SRC-K1, SRC-K2, SRC-K3, SRC-K4, SRC-K5, SRC-K6 | 九个表面在真实入口中共同完成 45 项来源要求，并保留统一安全、状态、恢复和视觉边界；项目内视觉工作台同时展示现状证据、确定性原型、候选方向、选择记录和工程交接。；从真实入口完成正常业务闭环，回读结果与可见状态一致 | E2E and local runtime | Automatic | Yes |
-| AC-02 | behavior | SRC-D1, SRC-D2, SRC-D3, SRC-A1, SRC-A2, SRC-H1, SRC-H2, SRC-H3, SRC-H4, SRC-I1, SRC-I2, SRC-I3, SRC-I4, SRC-I5, SRC-L1, SRC-L2, SRC-L3, SRC-L4, SRC-L5, SRC-P1, SRC-P2, SRC-P3, SRC-P4, SRC-P5, SRC-P6, SRC-S1, SRC-S2, SRC-S3, SRC-S4, SRC-S5, SRC-C1, SRC-C2, SRC-C3, SRC-T1, SRC-T2, SRC-T3, SRC-T4, SRC-T5, SRC-T6, SRC-K1, SRC-K2, SRC-K3, SRC-K4, SRC-K5, SRC-K6 | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Integration, E2E and negative paths | Automatic | Yes |
+| ID | Class | Lane | Source requirement refs | Requirement | Mode | Blocking |
+| --- | --- | --- | --- | --- | --- |
+| AC-01 | behavior | visual-fidelity | SRC-CHECKLIST-D1, SRC-CHECKLIST-D2, SRC-CHECKLIST-D3, SRC-CHECKLIST-A1, SRC-CHECKLIST-A2, SRC-CHECKLIST-H1, SRC-CHECKLIST-H2, SRC-CHECKLIST-H3, SRC-CHECKLIST-H4, SRC-CHECKLIST-I1, SRC-CHECKLIST-I2, SRC-CHECKLIST-I3, SRC-CHECKLIST-I4, SRC-CHECKLIST-I5, SRC-CHECKLIST-L1, SRC-CHECKLIST-L2, SRC-CHECKLIST-L3, SRC-CHECKLIST-L4, SRC-CHECKLIST-L5, SRC-CHECKLIST-P1, SRC-CHECKLIST-P2, SRC-CHECKLIST-P3, SRC-CHECKLIST-P4, SRC-CHECKLIST-P5, SRC-CHECKLIST-P6, SRC-CHECKLIST-S1, SRC-CHECKLIST-S2, SRC-CHECKLIST-S3, SRC-CHECKLIST-S4, SRC-CHECKLIST-S5, SRC-CHECKLIST-C1, SRC-CHECKLIST-C2, SRC-CHECKLIST-C3, SRC-CHECKLIST-T1, SRC-CHECKLIST-T2, SRC-CHECKLIST-T3, SRC-CHECKLIST-T4, SRC-CHECKLIST-T5, SRC-CHECKLIST-T6, SRC-CHECKLIST-K1, SRC-CHECKLIST-K2, SRC-CHECKLIST-K3, SRC-CHECKLIST-K4, SRC-CHECKLIST-K5, SRC-CHECKLIST-K6, SRC-PROTOTYPE-UI | 九个表面在真实入口中共同完成 45 项来源要求，并保留统一安全、状态、恢复和视觉边界；项目内视觉工作台同时展示现状证据、确定性原型、候选方向、选择记录和工程交接。；从真实入口完成正常业务闭环，回读结果与可见状态一致 | Automatic | Yes |
+| AC-02 | behavior | machine/e2e | SRC-CHECKLIST-D1, SRC-CHECKLIST-D2, SRC-CHECKLIST-D3, SRC-CHECKLIST-A1, SRC-CHECKLIST-A2, SRC-CHECKLIST-H1, SRC-CHECKLIST-H2, SRC-CHECKLIST-H3, SRC-CHECKLIST-H4, SRC-CHECKLIST-I1, SRC-CHECKLIST-I2, SRC-CHECKLIST-I3, SRC-CHECKLIST-I4, SRC-CHECKLIST-I5, SRC-CHECKLIST-L1, SRC-CHECKLIST-L2, SRC-CHECKLIST-L3, SRC-CHECKLIST-L4, SRC-CHECKLIST-L5, SRC-CHECKLIST-P1, SRC-CHECKLIST-P2, SRC-CHECKLIST-P3, SRC-CHECKLIST-P4, SRC-CHECKLIST-P5, SRC-CHECKLIST-P6, SRC-CHECKLIST-S1, SRC-CHECKLIST-S2, SRC-CHECKLIST-S3, SRC-CHECKLIST-S4, SRC-CHECKLIST-S5, SRC-CHECKLIST-C1, SRC-CHECKLIST-C2, SRC-CHECKLIST-C3, SRC-CHECKLIST-T1, SRC-CHECKLIST-T2, SRC-CHECKLIST-T3, SRC-CHECKLIST-T4, SRC-CHECKLIST-T5, SRC-CHECKLIST-T6, SRC-CHECKLIST-K1, SRC-CHECKLIST-K2, SRC-CHECKLIST-K3, SRC-CHECKLIST-K4, SRC-CHECKLIST-K5, SRC-CHECKLIST-K6, SRC-PROTOTYPE-UI | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Automatic | Yes |
 
 ## Human acceptance
 
-| ID | Summary | Checklist path | Required role | Blocking |
-| --- | --- | --- | --- | --- |
-| H-01 | 登录中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-01 | 产品负责人 | Yes |
-| H-02 | 安装向导中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-02 | 产品负责人 | Yes |
-| H-03 | 工作台中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-03 | 产品负责人 | Yes |
-| H-04 | 整理台中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-04 | 产品负责人 | Yes |
-| H-05 | 素材库中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-05 | 产品负责人 | Yes |
-| H-06 | 项目中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-06 | 产品负责人 | Yes |
-| H-07 | 设置与诊断中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-07 | 产品负责人 | Yes |
-| H-08 | 网页中台中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-08 | 产品负责人 | Yes |
-| H-09 | Studio 能力迁移区中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-09 | 产品负责人 | Yes |
+本次迁移仅重建机器可验证的来源登记。项目级人工验收需要在独立候选和新的交接记录建立后另行绑定。
 
 ## Protected acceptance tests
 
@@ -100,15 +90,6 @@ Then 系统完成“九个表面在真实入口中共同完成 45 项来源要�
 | --- | --- | --- | --- | --- |
 | AC-01 | 正常闭环自动验收 | acceptance-fragments/OCM-Z1/acceptance/machine/e2e/runs/&lt;run-id&gt;/result.md | Automatic | Yes |
 | AC-02 | 失败、重试与恢复自动验收 | acceptance-fragments/OCM-Z1/acceptance/machine/integration-contract/runs/&lt;run-id&gt;/result.md | Automatic | Yes |
-| H-01 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-01 | Human | Yes |
-| H-02 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-02 | Human | Yes |
-| H-03 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-03 | Human | Yes |
-| H-04 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-04 | Human | Yes |
-| H-05 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-05 | Human | Yes |
-| H-06 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-06 | Human | Yes |
-| H-07 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-07 | Human | Yes |
-| H-08 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-08 | Human | Yes |
-| H-09 | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-09 | Human | Yes |
 
 ## Exploratory testing
 
@@ -120,4 +101,4 @@ Then 系统完成“九个表面在真实入口中共同完成 45 项来源要�
 
 ## Risks and open decisions
 
-合同保持 DRAFT，至到行为被产品负责人批准且受保护的自动验收基线被锁定。
+合同保持 DRAFT，直到行为被产品负责人批准且受保护的自动验收基线被锁定。

@@ -39,7 +39,7 @@
     "DL-S3"
   ],
   "source_requirement_refs": [
-    "SRC-S3"
+    "SRC-CHECKLIST-S3"
   ],
   "surface_refs": [
     "SURF-SETTINGS"
@@ -54,7 +54,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "诊断页六项检查：包接口。前端别把「6 项」写死。另外这个脚本 零测试覆盖，接之前建议先补。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

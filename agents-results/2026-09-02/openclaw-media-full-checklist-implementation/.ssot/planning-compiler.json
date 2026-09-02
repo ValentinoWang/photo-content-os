@@ -25,7 +25,8 @@
         "R5",
         "R6",
         "R7",
-        "R8"
+        "R8",
+        "M45"
       ]
     }
   ],
@@ -61,6 +62,14 @@
         "T3",
         "T5",
         "Q1"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-D1",
+        "SRC-CHECKLIST-D2",
+        "SRC-CHECKLIST-D3",
+        "SRC-CHECKLIST-T1",
+        "SRC-CHECKLIST-T3",
+        "SRC-CHECKLIST-T5"
       ]
     },
     {
@@ -81,6 +90,13 @@
         "I4",
         "I5",
         "Q2"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-I1",
+        "SRC-CHECKLIST-I2",
+        "SRC-CHECKLIST-I3",
+        "SRC-CHECKLIST-I4",
+        "SRC-CHECKLIST-I5"
       ]
     },
     {
@@ -102,6 +118,14 @@
         "L5",
         "T2",
         "Q3"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-L1",
+        "SRC-CHECKLIST-L2",
+        "SRC-CHECKLIST-L3",
+        "SRC-CHECKLIST-L4",
+        "SRC-CHECKLIST-L5",
+        "SRC-CHECKLIST-T2"
       ]
     },
     {
@@ -124,6 +148,15 @@
         "P6",
         "T6",
         "Q4"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-P1",
+        "SRC-CHECKLIST-P2",
+        "SRC-CHECKLIST-P3",
+        "SRC-CHECKLIST-P4",
+        "SRC-CHECKLIST-P5",
+        "SRC-CHECKLIST-P6",
+        "SRC-CHECKLIST-T6"
       ]
     },
     {
@@ -148,6 +181,17 @@
         "C3",
         "T4",
         "Q5"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-S1",
+        "SRC-CHECKLIST-S2",
+        "SRC-CHECKLIST-S3",
+        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-S5",
+        "SRC-CHECKLIST-C1",
+        "SRC-CHECKLIST-C2",
+        "SRC-CHECKLIST-C3",
+        "SRC-CHECKLIST-T4"
       ]
     },
     {
@@ -169,6 +213,14 @@
         "H3",
         "H4",
         "Q6"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-A1",
+        "SRC-CHECKLIST-A2",
+        "SRC-CHECKLIST-H1",
+        "SRC-CHECKLIST-H2",
+        "SRC-CHECKLIST-H3",
+        "SRC-CHECKLIST-H4"
       ]
     },
     {
@@ -190,6 +242,14 @@
         "K5",
         "K6",
         "Q7"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-K1",
+        "SRC-CHECKLIST-K2",
+        "SRC-CHECKLIST-K3",
+        "SRC-CHECKLIST-K4",
+        "SRC-CHECKLIST-K5",
+        "SRC-CHECKLIST-K6"
       ]
     },
     {
@@ -205,8 +265,118 @@
       "release_candidate": "candidate:r8:content-digest-pending",
       "node_ids": [
         "Z1",
-        "Q8",
+        "Q8"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-D1",
+        "SRC-CHECKLIST-D2",
+        "SRC-CHECKLIST-D3",
+        "SRC-CHECKLIST-A1",
+        "SRC-CHECKLIST-A2",
+        "SRC-CHECKLIST-H1",
+        "SRC-CHECKLIST-H2",
+        "SRC-CHECKLIST-H3",
+        "SRC-CHECKLIST-H4",
+        "SRC-CHECKLIST-I1",
+        "SRC-CHECKLIST-I2",
+        "SRC-CHECKLIST-I3",
+        "SRC-CHECKLIST-I4",
+        "SRC-CHECKLIST-I5",
+        "SRC-CHECKLIST-L1",
+        "SRC-CHECKLIST-L2",
+        "SRC-CHECKLIST-L3",
+        "SRC-CHECKLIST-L4",
+        "SRC-CHECKLIST-L5",
+        "SRC-CHECKLIST-P1",
+        "SRC-CHECKLIST-P2",
+        "SRC-CHECKLIST-P3",
+        "SRC-CHECKLIST-P4",
+        "SRC-CHECKLIST-P5",
+        "SRC-CHECKLIST-P6",
+        "SRC-CHECKLIST-S1",
+        "SRC-CHECKLIST-S2",
+        "SRC-CHECKLIST-S3",
+        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-S5",
+        "SRC-CHECKLIST-C1",
+        "SRC-CHECKLIST-C2",
+        "SRC-CHECKLIST-C3",
+        "SRC-CHECKLIST-T1",
+        "SRC-CHECKLIST-T2",
+        "SRC-CHECKLIST-T3",
+        "SRC-CHECKLIST-T4",
+        "SRC-CHECKLIST-T5",
+        "SRC-CHECKLIST-T6",
+        "SRC-CHECKLIST-K1",
+        "SRC-CHECKLIST-K2",
+        "SRC-CHECKLIST-K3",
+        "SRC-CHECKLIST-K4",
+        "SRC-CHECKLIST-K5",
+        "SRC-CHECKLIST-K6",
+        "SRC-PROTOTYPE-UI"
+      ]
+    },
+    {
+      "id": "M45",
+      "macro_phase_id": "P2",
+      "title": "来源定义的 45 项完整里程碑",
+      "user_value": "所有已确认来源要求都已接受。",
+      "independent_acceptance": "每项来源要求的必需证据通道均通过。",
+      "independent_failure": "保持未晋升。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "source-milestone:m45:pending",
+      "node_ids": [
         "RZ"
+      ],
+      "source_completion_requirement_refs": [
+        "SRC-CHECKLIST-D1",
+        "SRC-CHECKLIST-D2",
+        "SRC-CHECKLIST-D3",
+        "SRC-CHECKLIST-A1",
+        "SRC-CHECKLIST-A2",
+        "SRC-CHECKLIST-H1",
+        "SRC-CHECKLIST-H2",
+        "SRC-CHECKLIST-H3",
+        "SRC-CHECKLIST-H4",
+        "SRC-CHECKLIST-I1",
+        "SRC-CHECKLIST-I2",
+        "SRC-CHECKLIST-I3",
+        "SRC-CHECKLIST-I4",
+        "SRC-CHECKLIST-I5",
+        "SRC-CHECKLIST-L1",
+        "SRC-CHECKLIST-L2",
+        "SRC-CHECKLIST-L3",
+        "SRC-CHECKLIST-L4",
+        "SRC-CHECKLIST-L5",
+        "SRC-CHECKLIST-P1",
+        "SRC-CHECKLIST-P2",
+        "SRC-CHECKLIST-P3",
+        "SRC-CHECKLIST-P4",
+        "SRC-CHECKLIST-P5",
+        "SRC-CHECKLIST-P6",
+        "SRC-CHECKLIST-S1",
+        "SRC-CHECKLIST-S2",
+        "SRC-CHECKLIST-S3",
+        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-S5",
+        "SRC-CHECKLIST-C1",
+        "SRC-CHECKLIST-C2",
+        "SRC-CHECKLIST-C3",
+        "SRC-CHECKLIST-T1",
+        "SRC-CHECKLIST-T2",
+        "SRC-CHECKLIST-T3",
+        "SRC-CHECKLIST-T4",
+        "SRC-CHECKLIST-T5",
+        "SRC-CHECKLIST-T6",
+        "SRC-CHECKLIST-K1",
+        "SRC-CHECKLIST-K2",
+        "SRC-CHECKLIST-K3",
+        "SRC-CHECKLIST-K4",
+        "SRC-CHECKLIST-K5",
+        "SRC-CHECKLIST-K6",
+        "SRC-PROTOTYPE-UI"
       ]
     }
   ],
@@ -322,8 +492,7 @@
       "release_id": "R8",
       "node_ids": [
         "Z1",
-        "Q8",
-        "RZ"
+        "Q8"
       ]
     }
   ],
@@ -481,7 +650,7 @@
     {
       "id": "D3",
       "kind": "implementation",
-      "goal": "在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。",
+      "goal": "按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。",
       "dependencies": [
         "F",
         "PD",
@@ -1175,12 +1344,83 @@
     }
   ],
   "external_systems": [
-    "上游 OpenClaw Media 身份系统",
-    "用户配置的模型提供方",
-    "ChatCut Desktop 本地 MCP",
-    "当前操作系统回收站",
-    "用户选择的云盘和移动存储",
-    "本地 Kdenlive 与 OTIO 运行时"
+    {
+      "external_system_id": "EXTSYS-UPSTREAM",
+      "kind": "external-runtime",
+      "runtime_components": [
+        "upstream-session"
+      ],
+      "source_requirement_refs": [
+        "SRC-CHECKLIST-A1",
+        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-C1",
+        "SRC-CHECKLIST-C2",
+        "SRC-CHECKLIST-C3"
+      ]
+    },
+    {
+      "external_system_id": "EXTSYS-CHATCUT",
+      "kind": "persistent-runtime",
+      "runtime_components": [
+        "chatcut-desktop-mcp"
+      ],
+      "source_requirement_refs": [
+        "SRC-CHECKLIST-H2",
+        "SRC-CHECKLIST-P5"
+      ]
+    },
+    {
+      "external_system_id": "EXTSYS-DASHSCOPE",
+      "kind": "external-runtime",
+      "runtime_components": [
+        "transcription-provider"
+      ],
+      "source_requirement_refs": [
+        "SRC-CHECKLIST-D3"
+      ]
+    },
+    {
+      "external_system_id": "EXTSYS-FUNASR",
+      "kind": "local-runtime",
+      "runtime_components": [
+        "local-transcription-runtime"
+      ],
+      "source_requirement_refs": [
+        "SRC-CHECKLIST-D3"
+      ]
+    },
+    {
+      "external_system_id": "EXTSYS-MODEL-PROVIDERS",
+      "kind": "external-runtime",
+      "runtime_components": [
+        "creative-provider-runtime"
+      ],
+      "source_requirement_refs": [
+        "SRC-CHECKLIST-S5"
+      ]
+    },
+    {
+      "external_system_id": "EXTSYS-SYSTEM-TRASH",
+      "kind": "local-runtime",
+      "runtime_components": [
+        "media-trash-flow"
+      ],
+      "source_requirement_refs": [
+        "SRC-CHECKLIST-I5"
+      ]
+    },
+    {
+      "external_system_id": "EXTSYS-PHYSICAL-STORAGE",
+      "kind": "persistent-runtime",
+      "runtime_components": [
+        "archive-location-readback"
+      ],
+      "source_requirement_refs": [
+        "SRC-CHECKLIST-L3",
+        "SRC-CHECKLIST-L4",
+        "SRC-CHECKLIST-S2"
+      ]
+    }
   ],
   "acceptance_layers": [
     "source",
@@ -1548,6 +1788,20 @@
         "K6"
       ],
       "status": "INCOMPLETE"
+    }
+  ],
+  "source_inputs": [
+    {
+      "external_dependency_id": "EXT-CHECKLIST",
+      "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html",
+      "commit": "2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "sha256": "73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb"
+    },
+    {
+      "external_dependency_id": "EXT-PROTOTYPE",
+      "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
+      "commit": "2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8"
     }
   ]
 }

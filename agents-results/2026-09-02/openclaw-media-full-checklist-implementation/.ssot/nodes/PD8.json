@@ -55,8 +55,7 @@
     "SRC-K6"
   ],
   "surface_refs": [
-    "SURF-PROJECT",
-    "SURF-STUDIO"
+    "SURF-PROJECT"
   ],
   "required_evidence_profile": {
     "source_identity": "locked",
@@ -68,7 +67,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "结构化 06_edit_decision_list.json 是机器执行唯一剪辑方案权威。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "产品负责人"

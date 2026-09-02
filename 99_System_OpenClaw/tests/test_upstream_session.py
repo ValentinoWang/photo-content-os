@@ -6,11 +6,11 @@ from pathlib import Path
 from typing import Any
 
 
-DESKTOP_DIR = Path(__file__).resolve().parents[1] / "desktop"
-if str(DESKTOP_DIR) not in sys.path:
-    sys.path.insert(0, str(DESKTOP_DIR))
+SYSTEM_ROOT = Path(__file__).resolve().parents[1]
+if str(SYSTEM_ROOT) not in sys.path:
+    sys.path.insert(0, str(SYSTEM_ROOT))
 
-from upstream_session import (  # noqa: E402
+from desktop.upstream_session import (  # noqa: E402
     UpstreamSessionConsumer,
     UpstreamSessionContractError,
 )
@@ -83,7 +83,11 @@ class UpstreamSessionConsumerTests(unittest.TestCase):
     def test_rejected_and_unavailable_results_keep_local_workbench_complete(self) -> None:
         consumer = UpstreamSessionConsumer()
 
-        for status, expected_state in (("rejected", "unpaired"), ("unavailable", "unavailable")):
+        for status, expected_state in (
+            ("rejected", "unpaired"),
+            ("unavailable", "unavailable"),
+            ("unsupported", "unsupported"),
+        ):
             with self.subTest(status=status):
                 state = consumer.consume(inactive_result(status))
                 self.assertTrue(state["local_features_available"])

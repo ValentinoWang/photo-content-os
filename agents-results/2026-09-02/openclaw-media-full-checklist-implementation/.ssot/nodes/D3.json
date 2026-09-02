@@ -4,7 +4,7 @@
   "stage": "R1",
   "work_kind": "implementation",
   "domain_lane": "settings",
-  "execution_state": "BLOCKED",
+  "execution_state": "READY",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -38,7 +38,7 @@
     "DL-D3"
   ],
   "source_requirement_refs": [
-    "SRC-D3"
+    "SRC-CHECKLIST-D3"
   ],
   "surface_refs": [
     "SURF-SETTINGS"
@@ -53,8 +53,8 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
-  "goal": "在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。",
+  "visual_contract_ref": ".ssot/source-requirements.json",
+  "goal": "按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
   "acceptance_contract_ref": "acceptance-fragments/OCM-D3/acceptance-contract.md"

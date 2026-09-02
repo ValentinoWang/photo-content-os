@@ -41,7 +41,7 @@
     "DL-S4"
   ],
   "source_requirement_refs": [
-    "SRC-S4"
+    "SRC-CHECKLIST-S4"
   ],
   "surface_refs": [
     "SURF-SETTINGS"
@@ -56,7 +56,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "Windows 与 Linux 将上游配对显示为“不支持”而不是“配置失败”，并明确本地核心能力仍可用。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

@@ -17,12 +17,18 @@ from desktop.model_provider_config import (  # noqa: E402
     CapabilityStatus,
     ConfigStorageError,
     ConfigValidationError,
+    DEFAULT_REASONING_EFFORT,
+    ExecutionProtocol,
+    LEGACY_SCHEMA_VERSION,
     ModelProviderConfig,
     ModelProviderConfigStore,
     NoNetworkCapabilityProbe,
     Provider,
+    ReasoningEffort,
     SCHEMA_VERSION,
+    SUPPORTED_REASONING_EFFORTS,
     probe_capability,
+    resolve_execution_config,
 )
 
 
@@ -48,6 +54,7 @@ class ModelProviderConfigTests(unittest.TestCase):
         endpoint: str = "https://api.openai.com/v1",
         secret_ref: str = "keychain:codex-main",
         capability: CapabilityStatus | None = None,
+        reasoning_effort: ReasoningEffort | str | None = None,
     ) -> ModelProviderConfig:
         return ModelProviderConfig(
             id=config_id,
@@ -56,6 +63,7 @@ class ModelProviderConfigTests(unittest.TestCase):
             endpoint=endpoint,
             secret_ref=secret_ref,
             capability=capability,
+            reasoning_effort=reasoning_effort,
         )
 
     def test_all_supported_providers_and_local_compatible_http(self) -> None:
@@ -89,6 +97,78 @@ class ModelProviderConfigTests(unittest.TestCase):
         )
         self.assertTrue(all(config.id for config in configs))
         self.assertTrue(all(config.secret_ref for config in configs))
+        self.assertTrue(all(config.reasoning_effort is ReasoningEffort.XHIGH for config in configs))
+
+    def test_reasoning_effort_is_strict_public_and_persisted(self) -> None:
+        self.assertEqual(
+            set(SUPPORTED_REASONING_EFFORTS),
+            {"none", "minimal", "low", "medium", "high", "xhigh", "max", "ultra"},
+        )
+        for effort in ReasoningEffort:
+            with self.subTest(effort=effort.value):
+                config = self.make_config(reasoning_effort=effort)
+                self.assertEqual(config.reasoning_effort, effort)
+                self.assertEqual(config.to_dict()["reasoning_effort"], effort.value)
+                self.assertEqual(config.to_public_dict()["reasoning_effort"], effort.value)
+
+        for invalid in ("", "HIGH", "custom", 1, True):
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ConfigValidationError):
+                    self.make_config(reasoning_effort=invalid)
+
+        legacy_input = self.make_config().to_dict()
+        legacy_input.pop("reasoning_effort")
+        self.assertEqual(
+            ModelProviderConfig.from_dict(legacy_input).reasoning_effort.value,
+            DEFAULT_REASONING_EFFORT,
+        )
+
+    def test_execution_resolution_is_deterministic_and_secret_free(self) -> None:
+        configs = [
+            self.make_config(reasoning_effort="high"),
+            self.make_config(
+                "claude-main",
+                Provider.CLAUDE_ANTHROPIC,
+                "claude-3-7-sonnet",
+                "https://api.anthropic.com/v1",
+                "keychain:claude-main",
+                reasoning_effort="medium",
+            ),
+            self.make_config(
+                "deepseek-main",
+                Provider.DEEPSEEK,
+                "deepseek-chat",
+                "https://api.deepseek.com/v1",
+                "keychain:deepseek-main",
+                reasoning_effort="low",
+            ),
+            self.make_config(
+                "local-compatible",
+                Provider.OPENAI_COMPATIBLE,
+                "local-model",
+                "http://127.0.0.1:11434/v1",
+                "keychain:local-compatible",
+                reasoning_effort="none",
+            ),
+        ]
+        expected_protocols = {
+            Provider.CODEX_OPENAI: ExecutionProtocol.OPENAI_RESPONSES,
+            Provider.CLAUDE_ANTHROPIC: ExecutionProtocol.ANTHROPIC_MESSAGES,
+            Provider.DEEPSEEK: ExecutionProtocol.OPENAI_CHAT_COMPLETIONS,
+            Provider.OPENAI_COMPATIBLE: ExecutionProtocol.OPENAI_CHAT_COMPLETIONS,
+        }
+
+        for config in configs:
+            with self.subTest(provider=config.provider.value):
+                resolved = resolve_execution_config(config)
+                self.assertEqual(resolved.protocol, expected_protocols[config.provider])
+                self.assertEqual(resolved.credential_ref, config.secret_ref)
+                self.assertEqual(resolved.reasoning_effort, config.reasoning_effort)
+                serialized = json.dumps(resolved.to_dict(), sort_keys=True)
+                self.assertNotIn(config.secret_ref, serialized)
+                self.assertNotIn(config.secret_ref, repr(resolved))
+                self.assertNotIn("secret_ref", resolved.to_dict())
+                self.assertNotIn("credential_ref", resolved.to_dict())
 
     def test_secret_reference_rejects_urls_paths_and_token_shapes_without_leak(self) -> None:
         invalid_references = [
@@ -183,6 +263,41 @@ class ModelProviderConfigTests(unittest.TestCase):
             payload = json.loads(store.path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], SCHEMA_VERSION)
             self.assertEqual(len(payload["configs"]), 2)
+            self.assertTrue(all(record["reasoning_effort"] == DEFAULT_REASONING_EFFORT for record in payload["configs"]))
+            resolved = store.resolve_execution("codex-main")
+            self.assertEqual(resolved.protocol, ExecutionProtocol.OPENAI_RESPONSES)
+            self.assertNotIn("keychain:codex-main", json.dumps(resolved.to_dict(), sort_keys=True))
+
+    def test_store_migrates_v1_and_rejects_incomplete_v2(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            store = ModelProviderConfigStore(root)
+            legacy_record = self.make_config().to_dict()
+            legacy_record.pop("reasoning_effort")
+            store.path.write_text(
+                json.dumps({"schema_version": LEGACY_SCHEMA_VERSION, "configs": [legacy_record]}),
+                encoding="utf-8",
+            )
+
+            loaded = store.load()
+            self.assertEqual(loaded[0].reasoning_effort.value, DEFAULT_REASONING_EFFORT)
+            store.save(loaded)
+            migrated = json.loads(store.path.read_text(encoding="utf-8"))
+            self.assertEqual(migrated["schema_version"], SCHEMA_VERSION)
+            self.assertEqual(migrated["configs"][0]["reasoning_effort"], DEFAULT_REASONING_EFFORT)
+
+            migrated["configs"][0].pop("reasoning_effort")
+            store.path.write_text(json.dumps(migrated), encoding="utf-8")
+            with self.assertRaisesRegex(ConfigStorageError, "config_invalid"):
+                store.load()
+
+            legacy_record["reasoning_effort"] = "high"
+            store.path.write_text(
+                json.dumps({"schema_version": LEGACY_SCHEMA_VERSION, "configs": [legacy_record]}),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ConfigStorageError, "store_schema_invalid"):
+                store.load()
 
     def test_store_fails_closed_for_unknown_fields_duplicates_and_invalid_records(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:

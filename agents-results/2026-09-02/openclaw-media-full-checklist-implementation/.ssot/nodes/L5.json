@@ -42,7 +42,7 @@
     "DL-L5"
   ],
   "source_requirement_refs": [
-    "SRC-L5"
+    "SRC-CHECKLIST-L5"
   ],
   "surface_refs": [
     "SURF-LIBRARY"
@@ -57,7 +57,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "详情栏主按钮「选择项目并加入」要落到真实动作：要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

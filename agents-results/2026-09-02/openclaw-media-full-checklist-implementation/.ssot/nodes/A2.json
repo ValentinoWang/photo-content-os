@@ -54,7 +54,7 @@
     "DL-A2"
   ],
   "source_requirement_refs": [
-    "SRC-A2"
+    "SRC-CHECKLIST-A2"
   ],
   "surface_refs": [
     "SURF-SETUP"
@@ -69,7 +69,7 @@
     "persistent_runtime": "installed",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "向导可重入地完成位置、运行环境、编辑器、账号与设备四步，并能从失败处恢复。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

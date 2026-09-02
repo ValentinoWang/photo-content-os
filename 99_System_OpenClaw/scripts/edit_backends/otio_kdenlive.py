@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -24,6 +25,7 @@ if str(_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS_DIR))
 
 from edl_contract import EDLContractError  # noqa: E402
+from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
 from media_common import file_sha256 as sha256_file  # noqa: E402
 from media_common import is_raw360_path  # noqa: E402
@@ -60,12 +62,25 @@ class TimelineClip:
     caption: str
     candidate: str
     note: str
+    source_start: float = 0.0
     layer: str = DEFAULT_LAYER
     role: str = ""
 
     @property
     def duration(self) -> float:
         return self.end - self.start
+
+
+@dataclass(frozen=True)
+class TimelineTrack:
+    layer: str
+    lane: int
+    clips: tuple[TimelineClip, ...]
+
+    @property
+    def name(self) -> str:
+        base = LAYER_TRACK_NAMES.get(self.layer, self.layer)
+        return base if self.lane == 1 else f"{base} {self.lane}"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -195,6 +210,12 @@ def load_edl(edl_path: Path, project_id: str, project_revision: int) -> tuple[di
             raise ContractError(
                 f"EDL clip #{index} selects raw 360 media; export a reframed editable video before timeline generation"
             )
+        try:
+            source_start = _canonical_parse_seconds(
+                raw.get("source_start_sec", 0), path=f"clips[{index - 1}].source_start_sec"
+            )
+        except EDLContractError as exc:
+            raise ContractError(f"invalid EDL clip #{index} source_start_sec: {exc}") from exc
         clips.append(
             TimelineClip(
                 slot=str(raw.get("slot") or index),
@@ -203,6 +224,7 @@ def load_edl(edl_path: Path, project_id: str, project_revision: int) -> tuple[di
                 caption=str(raw.get("caption") or "").strip(),
                 candidate=candidate,
                 note=str(raw.get("edit_note") or "").strip(),
+                source_start=source_start,
                 layer=layer,
                 role=str(raw.get("role") or "").strip(),
             )
@@ -211,16 +233,35 @@ def load_edl(edl_path: Path, project_id: str, project_revision: int) -> tuple[di
     return edl, clips
 
 
-def clips_by_layer(clips: list[TimelineClip]) -> list[tuple[str, list[TimelineClip]]]:
-    """Group clips into composition order, bottom track first.
+def clips_by_layer(clips: list[TimelineClip]) -> list[TimelineTrack]:
+    """Partition logical layers into non-overlapping physical tracks.
 
     Empty layers are dropped so a v1 EDL still produces exactly one track.
+    Within a logical layer, each clip uses the first lane whose previous clip
+    has ended. This preserves legal overlay/background overlaps without moving
+    either clip on the timeline.
     """
-    grouped: list[tuple[str, list[TimelineClip]]] = []
+    grouped: list[TimelineTrack] = []
     for layer in LAYER_STACK:
-        members = [clip for clip in clips if clip.layer == layer]
-        if members:
-            grouped.append((layer, sorted(members, key=lambda item: item.start)))
+        members = sorted(
+            (clip for clip in clips if clip.layer == layer),
+            key=lambda item: (item.start, item.end, item.slot),
+        )
+        lanes: list[list[TimelineClip]] = []
+        lane_ends: list[float] = []
+        for clip in members:
+            for lane_index, lane_end in enumerate(lane_ends):
+                if clip.start >= lane_end:
+                    lanes[lane_index].append(clip)
+                    lane_ends[lane_index] = clip.end
+                    break
+            else:
+                lanes.append([clip])
+                lane_ends.append(clip.end)
+        grouped.extend(
+            TimelineTrack(layer=layer, lane=lane_index, clips=tuple(lane_clips))
+            for lane_index, lane_clips in enumerate(lanes, start=1)
+        )
     return grouped
 
 
@@ -238,6 +279,16 @@ def frames(seconds: float) -> int:
     return int(round(seconds * FPS))
 
 
+def clip_frame_range(clip: TimelineClip) -> tuple[int, int]:
+    start_frame = frames(clip.start)
+    end_frame = frames(clip.end)
+    if end_frame <= start_frame:
+        raise ContractError(
+            f"EDL clip {clip.slot} is shorter than one frame at {FPS} fps"
+        )
+    return start_frame, end_frame
+
+
 def plain_metadata(value: Any) -> dict[str, Any]:
     """OTIO keeps metadata in AnyDictionary, which is mapping-like not dict."""
     try:
@@ -250,38 +301,38 @@ def make_otio_track(
     otio: Any,
     project_id: str,
     project_revision: int,
-    layer: str,
-    clips: list[TimelineClip],
+    timeline_track: TimelineTrack,
 ) -> Any:
-    """Build one video track for a single composition layer.
-
-    Clips within a layer are laid end to end with explicit gaps, exactly as the
-    single-track backend always did; layers only differ in stacking order.
-    """
+    """Build one non-overlapping physical track in composition order."""
     track = otio.schema.Track(
-        name=LAYER_TRACK_NAMES.get(layer, layer), kind=otio.schema.TrackKind.Video
+        name=timeline_track.name, kind=otio.schema.TrackKind.Video
     )
-    track.metadata["content_os"] = {"layer": layer}
-    cursor = 0.0
-    for clip in clips:
-        if clip.start > cursor:
+    track.metadata["content_os"] = {
+        "layer": timeline_track.layer,
+        "physical_lane": timeline_track.lane,
+    }
+    cursor_frame = 0
+    for clip in timeline_track.clips:
+        clip_start_frame, clip_end_frame = clip_frame_range(clip)
+        duration_frames = clip_end_frame - clip_start_frame
+        if clip_start_frame > cursor_frame:
             track.append(otio.schema.Gap(source_range=otio.opentime.TimeRange(
                 start_time=otio.opentime.RationalTime(0, FPS),
-                duration=otio.opentime.RationalTime(frames(clip.start - cursor), FPS),
+                duration=otio.opentime.RationalTime(clip_start_frame - cursor_frame, FPS),
             )))
         external = otio.schema.ExternalReference(
             target_url=candidate_resource(clip.candidate),
             available_range=otio.opentime.TimeRange(
-                start_time=otio.opentime.RationalTime(0, FPS),
-                duration=otio.opentime.RationalTime(frames(clip.duration), FPS),
+                start_time=otio.opentime.RationalTime(frames(clip.source_start), FPS),
+                duration=otio.opentime.RationalTime(duration_frames, FPS),
             ),
         )
         segment = otio.schema.Clip(
             name=f"{clip.slot}_{Path(clip.candidate).name}",
             media_reference=external,
             source_range=otio.opentime.TimeRange(
-                start_time=otio.opentime.RationalTime(0, FPS),
-                duration=otio.opentime.RationalTime(frames(clip.duration), FPS),
+                start_time=otio.opentime.RationalTime(frames(clip.source_start), FPS),
+                duration=otio.opentime.RationalTime(duration_frames, FPS),
             ),
         )
         segment.metadata["content_os"] = {
@@ -289,10 +340,12 @@ def make_otio_track(
             "project_revision": project_revision,
             "slot": clip.slot,
             "timeline_start_sec": clip.start,
+            "source_start_sec": clip.source_start,
             "candidate_file": clip.candidate,
             "edit_note": clip.note,
             "media_exists_at_generation": Path(clip.candidate).expanduser().exists(),
             "layer": clip.layer,
+            "physical_lane": timeline_track.lane,
             **({"role": clip.role} if clip.role else {}),
         }
         track.append(segment)
@@ -300,12 +353,12 @@ def make_otio_track(
             track.markers.append(otio.schema.Marker(
                 name=clip.caption,
                 marked_range=otio.opentime.TimeRange(
-                    start_time=otio.opentime.RationalTime(frames(clip.start), FPS),
-                    duration=otio.opentime.RationalTime(frames(clip.duration), FPS),
+                    start_time=otio.opentime.RationalTime(clip_start_frame, FPS),
+                    duration=otio.opentime.RationalTime(duration_frames, FPS),
                 ),
                 color=otio.schema.Marker.Color.YELLOW,
             ))
-        cursor = clip.end
+        cursor_frame = clip_end_frame
     return track
 
 
@@ -319,10 +372,11 @@ def make_otio_timeline(
 ) -> Any:
     grouped = clips_by_layer(clips)
     timeline = otio.schema.Timeline(name=f"{project_id}_r{project_revision}")
-    for layer, members in grouped:
+    for timeline_track in grouped:
         timeline.tracks.append(
-            make_otio_track(otio, project_id, project_revision, layer, members)
+            make_otio_track(otio, project_id, project_revision, timeline_track)
         )
+    logical_layers = list(dict.fromkeys(track.layer for track in grouped))
     timeline.metadata["content_os"] = {
         "spec_version": "content_os_v0.2",
         "project_id": project_id,
@@ -330,7 +384,8 @@ def make_otio_timeline(
         "editor_backend": "otio_kdenlive",
         "source_edl": str(edl.get("project_id") or project_id),
         "fps": FPS,
-        "layers": [layer for layer, _ in grouped],
+        "layers": logical_layers,
+        "physical_track_count": len(grouped),
     }
     if revision_basis is not None:
         timeline.metadata["content_os"]["revision_basis"] = revision_basis
@@ -344,6 +399,12 @@ def timeline_manifest(
     otio_path: Path,
     revision_basis: dict[str, str] | None,
 ) -> dict[str, Any]:
+    physical_tracks = clips_by_layer(clips)
+    lane_by_clip = {
+        id(clip): timeline_track.lane
+        for timeline_track in physical_tracks
+        for clip in timeline_track.clips
+    }
     manifest = {
         "doc_type": "otio_kdenlive_handoff_manifest",
         "spec_version": "content_os_v0.2",
@@ -357,15 +418,25 @@ def timeline_manifest(
                 "slot": clip.slot,
                 "timeline_start_sec": clip.start,
                 "duration_sec": clip.duration,
+                "source_start_sec": clip.source_start,
                 "candidate_file": clip.candidate,
                 "needs_relink": not Path(clip.candidate).expanduser().exists(),
                 "caption": clip.caption,
                 "layer": clip.layer,
+                "physical_lane": lane_by_clip[id(clip)],
                 **({"role": clip.role} if clip.role else {}),
             }
             for clip in clips
         ],
-        "layers": [layer for layer, _ in clips_by_layer(clips)],
+        "layers": list(dict.fromkeys(track.layer for track in physical_tracks)),
+        "physical_tracks": [
+            {
+                "layer": track.layer,
+                "physical_lane": track.lane,
+                "name": track.name,
+            }
+            for track in physical_tracks
+        ],
     }
     if revision_basis is not None:
         manifest["revision_basis"] = revision_basis
@@ -433,11 +504,76 @@ def generate_otio(args: argparse.Namespace) -> int:
 
 
 def kdenlive_executable() -> str | None:
+    configured = os.environ.get("CONTENT_OS_KDENLIVE_EXECUTABLE")
+    if configured is not None:
+        candidate = Path(configured).expanduser()
+        return str(candidate.resolve()) if candidate.is_file() and os.access(candidate, os.X_OK) else None
     executable = shutil.which("kdenlive")
     if executable:
         return executable
     bundled = Path("/Applications/kdenlive.app/Contents/MacOS/kdenlive")
-    return str(bundled) if bundled.is_file() else None
+    return str(bundled) if bundled.is_file() and os.access(bundled, os.X_OK) else None
+
+
+KDENLIVE_REOPEN_PROBE_SECONDS = 2.0
+KDENLIVE_SHUTDOWN_TIMEOUT_SECONDS = 5.0
+
+
+def probe_kdenlive_version(executable: str) -> str:
+    try:
+        probe = subprocess.run(
+            [executable, "--version"],
+            capture_output=True,
+            text=True,
+            timeout=20,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise ContractError(f"Kdenlive version probe failed: {exc}") from exc
+    if probe.returncode != 0:
+        raise ContractError(f"Kdenlive version probe failed with exit code {probe.returncode}")
+    lines = (probe.stdout or probe.stderr).strip().splitlines()
+    if not lines:
+        raise ContractError("Kdenlive version probe returned no version")
+    return lines[0]
+
+
+def probe_kdenlive_reopen(executable: str, project_path: Path) -> None:
+    """Open the project in the real application and require it to stay open."""
+
+    try:
+        process = subprocess.Popen(
+            [executable, "--no-welcome", str(project_path)],
+            cwd=project_path.parent,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    except OSError as exc:
+        raise ContractError(f"Kdenlive project reopen probe failed: {exc}") from exc
+    try:
+        return_code = process.wait(timeout=KDENLIVE_REOPEN_PROBE_SECONDS)
+    except subprocess.TimeoutExpired:
+        try:
+            process.terminate()
+        except ProcessLookupError:
+            return
+        try:
+            process.wait(timeout=KDENLIVE_SHUTDOWN_TIMEOUT_SECONDS)
+        except subprocess.TimeoutExpired:
+            try:
+                process.kill()
+            except ProcessLookupError:
+                return
+            try:
+                process.wait(timeout=KDENLIVE_SHUTDOWN_TIMEOUT_SECONDS)
+            except subprocess.TimeoutExpired as exc:
+                raise ContractError("Kdenlive project reopen probe could not stop the application") from exc
+        return
+    raise ContractError(
+        "Kdenlive project reopen probe failed: "
+        f"application exited with code {return_code} before the project remained open"
+    )
 
 
 def safe_xml_resource(candidate: str) -> str:
@@ -462,11 +598,17 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
         playlist_ids.append(playlist_id)
         playlist = ET.SubElement(root, "playlist", {"id": playlist_id})
         track_metadata = plain_metadata(track.metadata).get("content_os", {})
+        track_metadata = plain_metadata(track_metadata)
         layer = str(track_metadata.get("layer") or "")
         if layer:
             ET.SubElement(
                 playlist, "property", {"name": "content_os:layer"}
             ).text = layer
+        lane = track_metadata.get("physical_lane")
+        if lane is not None:
+            ET.SubElement(
+                playlist, "property", {"name": "content_os:physical_lane"}
+            ).text = str(lane)
         ET.SubElement(
             playlist, "property", {"name": "kdenlive:track_name"}
         ).text = str(track.name or layer or playlist_id)
@@ -481,11 +623,24 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
             metadata = plain_metadata(item.metadata).get("content_os", {})
             candidate = str(metadata.get("candidate_file") or target)
             producer_id = f"producer{count}"
-            producer = ET.SubElement(root, "producer", {"id": producer_id, "in": "0", "out": str(max(0, int(item.source_range.duration.to_frames()) - 1))})
+            source_in = int(item.source_range.start_time.to_frames())
+            duration_frames = int(item.source_range.duration.to_frames())
+            if duration_frames <= 0:
+                raise ContractError(f"OTIO clip {item.name!r} has no positive source duration")
+            source_out = source_in + duration_frames - 1
+            producer = ET.SubElement(
+                root,
+                "producer",
+                {"id": producer_id, "in": str(source_in), "out": str(source_out)},
+            )
             ET.SubElement(producer, "property", {"name": "resource"}).text = safe_xml_resource(candidate)
             ET.SubElement(producer, "property", {"name": "kdenlive:clipname"}).text = item.name
             ET.SubElement(producer, "property", {"name": "content_os:needs_relink"}).text = "1" if not Path(candidate).expanduser().exists() else "0"
-            ET.SubElement(playlist, "entry", {"producer": producer_id, "in": "0", "out": str(max(0, int(item.source_range.duration.to_frames()) - 1))})
+            ET.SubElement(
+                playlist,
+                "entry",
+                {"producer": producer_id, "in": str(source_in), "out": str(source_out)},
+            )
             count += 1
 
     tractor = ET.SubElement(root, "tractor", {"id": "tractor0"})
@@ -584,25 +739,78 @@ def validate(args: argparse.Namespace) -> int:
         raise ContractError(
             f"Kdenlive track count does not match OTIO: {len(xml_playlists)} playlists vs {len(otio_tracks)} tracks"
         )
+    producers = {producer.attrib.get("id"): producer for producer in root.findall("./producer")}
     total_entries = 0
     for track_index, track in enumerate(otio_tracks):
-        entries = root.findall(f"./playlist[@id='playlist{track_index}']/entry")
-        otio_clips = [item for item in list(track) if item.__class__.__name__ == "Clip"]
-        if len(entries) != len(otio_clips):
-            raise ContractError(
-                f"Kdenlive playlist{track_index} clip count does not match OTIO track {track_index}"
-            )
-        total_entries += len(entries)
+        playlist = root.find(f"./playlist[@id='playlist{track_index}']")
+        if playlist is None:
+            raise ContractError(f"Kdenlive playlist{track_index} is missing")
+        track_metadata = plain_metadata(plain_metadata(track.metadata).get("content_os"))
+        xml_layer = next(
+            (element.text for element in playlist.findall("property") if element.attrib.get("name") == "content_os:layer"),
+            None,
+        )
+        xml_lane = next(
+            (element.text for element in playlist.findall("property") if element.attrib.get("name") == "content_os:physical_lane"),
+            None,
+        )
+        if xml_layer != str(track_metadata.get("layer") or ""):
+            raise ContractError(f"Kdenlive playlist{track_index} layer does not match OTIO")
+        if xml_lane != str(track_metadata.get("physical_lane") or ""):
+            raise ContractError(f"Kdenlive playlist{track_index} physical lane does not match OTIO")
+
+        xml_items = [element for element in list(playlist) if element.tag in {"blank", "entry"}]
+        otio_items = [item for item in list(track) if item.__class__.__name__ in {"Gap", "Clip"}]
+        if len(xml_items) != len(otio_items):
+            raise ContractError(f"Kdenlive playlist{track_index} layout does not match OTIO track {track_index}")
+        timeline_cursor = 0
+        for item_index, (xml_item, otio_item) in enumerate(zip(xml_items, otio_items)):
+            duration_frames = int(otio_item.source_range.duration.to_frames())
+            if otio_item.__class__.__name__ == "Gap":
+                if xml_item.tag != "blank" or xml_item.attrib.get("length") != str(duration_frames):
+                    raise ContractError(
+                        f"Kdenlive playlist{track_index} gap #{item_index} does not match OTIO"
+                    )
+                timeline_cursor += duration_frames
+                continue
+            if xml_item.tag != "entry":
+                raise ContractError(f"Kdenlive playlist{track_index} clip #{item_index} is not an entry")
+            clip_metadata = plain_metadata(plain_metadata(otio_item.metadata).get("content_os"))
+            try:
+                timeline_start = _canonical_parse_seconds(
+                    clip_metadata.get("timeline_start_sec"),
+                    path=f"tracks[{track_index}].clips[{item_index}].timeline_start_sec",
+                )
+            except EDLContractError as exc:
+                raise ContractError(f"OTIO clip has invalid timeline position metadata: {exc}") from exc
+            if frames(timeline_start) != timeline_cursor:
+                raise ContractError(
+                    f"Kdenlive playlist{track_index} clip #{item_index} changed timeline position"
+                )
+            source_in = int(otio_item.source_range.start_time.to_frames())
+            source_out = source_in + duration_frames - 1
+            expected_trim = {"in": str(source_in), "out": str(source_out)}
+            if any(xml_item.attrib.get(key) != value for key, value in expected_trim.items()):
+                raise ContractError(
+                    f"Kdenlive playlist{track_index} clip #{item_index} source trim does not match OTIO"
+                )
+            producer = producers.get(xml_item.attrib.get("producer"))
+            if producer is None or any(producer.attrib.get(key) != value for key, value in expected_trim.items()):
+                raise ContractError(
+                    f"Kdenlive playlist{track_index} clip #{item_index} producer trim does not match OTIO"
+                )
+            timeline_cursor += duration_frames
+            total_entries += 1
     if not total_entries:
         raise ContractError("Kdenlive project has no clips")
     tractor_tracks = root.findall("./tractor/track")
     if len(tractor_tracks) != len(otio_tracks):
         raise ContractError("Kdenlive tractor does not reference every playlist")
     kdenlive = kdenlive_executable()
-    version = "not_installed"
-    if kdenlive:
-        probe = subprocess.run([kdenlive, "--version"], capture_output=True, text=True, timeout=20, check=False)
-        version = (probe.stdout or probe.stderr).strip().splitlines()[0] if probe.returncode == 0 else "present_but_unavailable"
+    if not kdenlive:
+        raise ContractError("Kdenlive executable is unavailable; validation is blocked")
+    version = probe_kdenlive_version(kdenlive)
+    probe_kdenlive_reopen(kdenlive, args.kdenlive.resolve())
     validation_path = args.result_output.resolve() if args.result_output else args.kdenlive.resolve().with_name("timeline_validation.json")
     validation = {
         "doc_type": "otio_kdenlive_validation",
@@ -613,9 +821,11 @@ def validate(args: argparse.Namespace) -> int:
         "editor_backend": "otio_kdenlive",
         "otio_reopened": True,
         "kdenlive_project_reopened": True,
+        "kdenlive_reopen_probe": "application_process",
+        "kdenlive_reopen_probe_seconds": KDENLIVE_REOPEN_PROBE_SECONDS,
         "clip_count": total_entries,
         "track_count": len(otio_tracks),
-        "kdenlive_available": bool(kdenlive),
+        "kdenlive_available": True,
         "kdenlive_version": version,
     }
     write_result(validation_path, validation)

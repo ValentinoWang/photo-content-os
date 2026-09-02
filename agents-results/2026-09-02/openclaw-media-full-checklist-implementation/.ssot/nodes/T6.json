@@ -43,7 +43,7 @@
     "DL-T6"
   ],
   "source_requirement_refs": [
-    "SRC-T6"
+    "SRC-CHECKLIST-T6"
   ],
   "surface_refs": [
     "SURF-PROJECT"
@@ -58,7 +58,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "none"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "七个剪映脚本要么物理归档，要么逐项声明历史且不维护，并使文档、能力清单和持续集成保持一致。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

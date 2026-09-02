@@ -3,7 +3,7 @@
   "semantic_key": "requirement.checklist.k6",
   "stage": "R7",
   "work_kind": "implementation",
-  "domain_lane": "studio",
+  "domain_lane": "project",
   "execution_state": "READY",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
@@ -41,10 +41,10 @@
     "DL-K6"
   ],
   "source_requirement_refs": [
-    "SRC-K6"
+    "SRC-CHECKLIST-K6"
   ],
   "surface_refs": [
-    "SURF-STUDIO"
+    "SURF-PROJECT"
   ],
   "required_evidence_profile": {
     "source_identity": "locked",
@@ -56,7 +56,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

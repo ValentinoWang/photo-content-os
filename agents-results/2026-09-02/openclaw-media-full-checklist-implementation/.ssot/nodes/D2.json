@@ -47,7 +47,7 @@
     "DL-D2"
   ],
   "source_requirement_refs": [
-    "SRC-D2"
+    "SRC-CHECKLIST-D2"
   ],
   "surface_refs": [
     "SURF-LIBRARY"
@@ -62,7 +62,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "以稳定素材身份原子维护结构化索引，支持分类、标签、用途、计数与详情查询，同时保留 Markdown 卡片。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

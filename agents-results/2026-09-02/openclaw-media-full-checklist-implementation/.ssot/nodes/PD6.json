@@ -55,7 +55,7 @@
     "persistent_runtime": "installed",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "生命周期和物理位置同时配置，每个位置独立保存清单、校验值与回读状态。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "产品负责人"

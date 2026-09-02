@@ -4,9 +4,9 @@
   "stage": "R1",
   "work_kind": "decision-acceptance",
   "domain_lane": "r1",
-  "execution_state": "BLOCKED",
-  "decision_state": "DISCOVERING",
-  "decision_version": null,
+  "execution_state": "ACCEPTED",
+  "decision_state": "ACCEPTED",
+  "decision_version": 1,
   "readiness_mode": "FORMAL",
   "hard_dependencies": [
     "F"
@@ -17,8 +17,8 @@
   "invalidation_keys": [
     "checklist.trd"
   ],
-  "write_authority": "isolated-draft",
-  "acceptance_authority": "产品负责人",
+  "write_authority": "isolated-record",
+  "acceptance_authority": "用户已明确决定",
   "unlocks": [
     "D3",
     "Q1"
@@ -47,7 +47,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "决定转写提供方、默认策略、音频发送边界、费用和失败占位行为",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "产品负责人"

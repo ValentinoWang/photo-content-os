@@ -809,7 +809,7 @@ tr:last-child td{border-bottom:none}
                     </div>
                     <div id="delDone" hidden class="banner" style="margin-top:11px;background:#101F1B;border:1px solid #2A5348">
                       <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#7FBB92" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M3.4 8.4l3 3 6.2-6.8"></path></svg>
-                      <span class="note">已把 <strong class="num" data-del-done-n style="color:var(--ink);font-weight:600">0</strong> 个文件移入废纸篓，原文件仍在磁盘上，30 天内可从废纸篓拖回来。</span>
+                      <span class="note">已把 <strong class="num" data-del-done-n style="color:var(--ink);font-weight:600">0</strong> 个文件移入系统回收站；恢复时间和方式以当前操作系统的回收站规则为准。</span>
                     </div>
                   </div>
 
@@ -870,6 +870,8 @@ tr:last-child td{border-bottom:none}
           <div class="topbar">
             <div><h2>四非文科女 Vibe Coding Day 3</h2><div class="sub">小红书 · 1080×1920 · 目标 58 秒 · 第 3 版</div></div>
             <div style="display:flex;gap:9px">
+              <button class="btn" data-preserved-k="k1">锁定与 AI 选区</button>
+              <button class="btn" data-preserved-k="k2">版本与回滚</button>
               <button class="btn">在访达中显示</button>
               <button class="btn btn--pri">生成剪辑交接包</button>
             </div>
@@ -890,7 +892,7 @@ tr:last-child td{border-bottom:none}
             <div class="col">
               <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:13px">
                 <p class="eyebrow-s" style="margin:0">剪辑决策</p>
-                <span style="font-size:11.5px;color:var(--ink-3)" class="num">9 段 · 缺 1 个空镜</span>
+                <span style="display:flex;gap:7px;align-items:center"><button class="btn" data-edl-view="timeline" aria-pressed="true" style="padding:5px 9px">时间线</button><button class="btn" data-edl-view="text" aria-pressed="false" style="padding:5px 9px">文本视图</button><span style="font-size:11.5px;color:var(--ink-3)" class="num">9 段 · 缺 1 个空镜</span></span>
               </div>
 
               <div class="card" style="padding:15px 17px;margin-bottom:16px">
@@ -949,12 +951,24 @@ tr:last-child td{border-bottom:none}
                   <span class="chip">主口播</span><span class="chip">主画面</span>
                 </div>
               </div>
+              <div data-edl-text-view hidden class="card" style="padding:14px;margin-top:12px">
+                <div class="hint">文本视图保留区块锁定、选中范围、版本差异与非破坏性回滚；它与时间线使用同一份剪辑决策。</div>
+                <pre class="mo" style="margin:10px 0 0;font-size:10px;color:var(--ink-2);white-space:pre-wrap">01 00:00.000-00:12.400 开场口播\n02 00:12.400-00:21.900 工位空镜</pre>
+              </div>
             </div>
 
             <div class="rail">
               <p class="eyebrow-s">待补素材</p>
               <div class="banner banner--warn" style="margin-bottom:20px">
                 <div><b>收尾空镜缺一条</b><span class="note">脚本要求「关灯离开工位」，素材库里没有匹配画面。已记进缺口清单，不会拿别的镜头顶替。</span></div>
+              </div>
+
+              <p class="eyebrow-s">项目能力</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
+                <button class="chip" data-preserved-k="k3">下游待更新</button>
+                <button class="chip" data-preserved-k="k4">研究与参考</button>
+                <button class="chip" data-preserved-k="k5">发布与复盘</button>
+                <button class="chip" data-preserved-k="k6">Brief 与脚本</button>
               </div>
 
               <p class="eyebrow-s">证据来源</p>
@@ -1115,7 +1129,7 @@ tr:last-child td{border-bottom:none}
                   <h3 style="margin:0">诊断</h3>
                   <div style="display:flex;gap:8px;flex-shrink:0">
                     <button class="btn" style="padding:6px 12px">重新检测</button>
-                    <button class="btn" style="padding:6px 12px">复制报告</button>
+                    <button class="btn" data-copy-report style="padding:6px 12px">复制报告</button>
                   </div>
                 </div>
                 <p>装不上、跑不动的时候先看这里。出问题时把报告复制给我们就行。</p>
@@ -1148,7 +1162,7 @@ tr:last-child td{border-bottom:none}
 
                 <div class="banner banner--warn">
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#D9A94B" stroke-width="1.6" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><path d="M8 4.4v4.2M8 11.4h.01"></path><circle cx="8" cy="8" r="6.2"></circle></svg>
-                  <div><b>剪映交接已停止维护</b><span class="note">剪映草稿这条路线已标记为历史能力，新项目不再生成或修改剪映草稿。这一项不在必需检查里——带口播的项目走 ChatCut 不受影响，确需交接到剪映请手动导出。</span></div>
+                  <div><b>剪映交接已停止维护</b><span class="note">剪映草稿这条路线已标记为历史能力，新项目不再生成或修改剪映草稿。这是产品策略，不是因为草稿加密；确需交接到剪映请手动导出。</span></div>
                 </div>
               </div>
 
@@ -1624,7 +1638,9 @@ tr:last-child td{border-bottom:none}
     if (c.where === "cold"){
       act.appendChild(el("button","btn btn--pri btn--full","按卡片指引取回源文件"));
     } else {
-      act.appendChild(el("button","btn btn--pri btn--full","选择项目并加入"));
+      var add = el("button","btn btn--pri btn--full","选择项目并加入");
+      add.setAttribute("data-asset-add-project", c.id);
+      act.appendChild(add);
     }
     act.appendChild(el("button","btn btn--full","编辑卡片"));
     detailEl.appendChild(act);
@@ -1778,7 +1794,7 @@ tr:last-child td{border-bottom:none}
   }
   function refreshDelState(){
     var n = delChosen().length;
-    if (delCntEl) delCntEl.textContent = n ? "已选 " + n + " 个 · 移入废纸篓，30 天内可恢复" : "已选 0 个";
+    if (delCntEl) delCntEl.textContent = n ? "已选 " + n + " 个 · 移入系统回收站" : "已选 0 个";
     if (delBtnEl){
       delBtnEl.disabled = n === 0;
       delBtnEl.style.opacity = n === 0 ? ".45" : "1";
@@ -1805,6 +1821,7 @@ tr:last-child td{border-bottom:none}
   if (delBtnEl) delBtnEl.addEventListener("click", function(){
     var chosen = delChosen();
     if (!chosen.length) return;
+    if (!window.confirm("确认将所选文件移入系统回收站？你仍可按系统规则恢复。")) return;
     chosen.forEach(function(r){ r.hidden = true; });
     delRows = document.querySelectorAll("[data-del]:not([hidden])");
     var done = document.getElementById("delDone");
@@ -1866,6 +1883,24 @@ tr:last-child td{border-bottom:none}
     if (nav){ showScreen(nav.getAttribute("data-screen")); return; }
     var go = e.target.closest("[data-goto]");
     if (go) showScreen(go.getAttribute("data-goto"));
+  });
+
+  /* ── 项目：时间线与文本视图共用同一份剪辑决策 ── */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-edl-view]"), function(button){
+    button.addEventListener("click", function(){
+      var text = button.getAttribute("data-edl-view") === "text";
+      Array.prototype.forEach.call(document.querySelectorAll("[data-edl-view]"), function(item){
+        item.setAttribute("aria-pressed", item === button ? "true" : "false");
+      });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-edl-text-view]"), function(view){ view.hidden = !text; });
+    });
+  });
+
+  var copyReport = document.querySelector("[data-copy-report]");
+  if (copyReport) copyReport.addEventListener("click", function(){
+    var report = "OpenClaw Media 诊断报告\\n系统：macOS\\n创作接入：Codex 命令行";
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(report);
+    copyReport.textContent = "已复制";
   });
 
   /* ── 设置：左侧分区切换 ── */

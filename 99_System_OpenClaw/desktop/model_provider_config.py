@@ -14,9 +14,15 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Protocol
 
 
-SCHEMA_VERSION = "model_provider_config_v1"
+SCHEMA_VERSION = "model_provider_config_v2"
+LEGACY_SCHEMA_VERSION = "model_provider_config_v1"
+SUPPORTED_SCHEMA_VERSIONS = frozenset({LEGACY_SCHEMA_VERSION, SCHEMA_VERSION})
 DEFAULT_CONFIG_FILENAME = "model-provider-config.json"
-_CONFIG_FIELDS = frozenset({"id", "provider", "model", "endpoint", "secret_ref", "capability"})
+DEFAULT_REASONING_EFFORT = "xhigh"
+_CONFIG_FIELDS = frozenset(
+    {"id", "provider", "model", "endpoint", "reasoning_effort", "secret_ref", "capability"}
+)
+_REQUIRED_CONFIG_FIELDS = frozenset({"id", "provider", "model", "endpoint", "secret_ref"})
 _CAPABILITY_FIELDS = frozenset({"state", "reason_code"})
 _IDENTIFIER_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 _MODEL_RE = re.compile(r"^[^\s\x00-\x1f\x7f]{1,200}$")
@@ -64,6 +70,45 @@ class Provider(str, Enum):
 ModelProvider = Provider
 ProviderKind = Provider
 SUPPORTED_PROVIDERS = tuple(provider.value for provider in Provider)
+
+
+class ReasoningEffort(str, Enum):
+    NONE = "none"
+    MINIMAL = "minimal"
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    XHIGH = "xhigh"
+    MAX = "max"
+    ULTRA = "ultra"
+
+    @classmethod
+    def from_value(cls, value: object) -> "ReasoningEffort":
+        if isinstance(value, cls):
+            return value
+        if not isinstance(value, str):
+            raise ConfigValidationError("reasoning_effort_invalid", "reasoning effort must be a supported value")
+        try:
+            return cls(value)
+        except ValueError as exc:
+            raise ConfigValidationError("reasoning_effort_invalid", "reasoning effort must be a supported value") from exc
+
+
+SUPPORTED_REASONING_EFFORTS = tuple(effort.value for effort in ReasoningEffort)
+
+
+class ExecutionProtocol(str, Enum):
+    OPENAI_RESPONSES = "openai_responses"
+    ANTHROPIC_MESSAGES = "anthropic_messages"
+    OPENAI_CHAT_COMPLETIONS = "openai_chat_completions"
+
+
+_EXECUTION_PROTOCOL_BY_PROVIDER = {
+    Provider.CODEX_OPENAI: ExecutionProtocol.OPENAI_RESPONSES,
+    Provider.CLAUDE_ANTHROPIC: ExecutionProtocol.ANTHROPIC_MESSAGES,
+    Provider.DEEPSEEK: ExecutionProtocol.OPENAI_CHAT_COMPLETIONS,
+    Provider.OPENAI_COMPATIBLE: ExecutionProtocol.OPENAI_CHAT_COMPLETIONS,
+}
 
 
 class CapabilityState(str, Enum):
@@ -249,6 +294,7 @@ class ModelProviderConfig:
     model: str
     endpoint: str
     secret_ref: str = field(repr=False)
+    reasoning_effort: ReasoningEffort = ReasoningEffort.XHIGH
     capability: CapabilityStatus = field(
         default_factory=lambda: CapabilityStatus.unavailable("not_probed")
     )
@@ -261,6 +307,7 @@ class ModelProviderConfig:
         endpoint: str | None = None,
         secret_ref: str | None = None,
         capability: CapabilityStatus | Mapping[str, Any] | None = None,
+        reasoning_effort: ReasoningEffort | str | None = None,
         *,
         config_id: str | None = None,
         credential_ref: str | None = None,
@@ -290,6 +337,13 @@ class ModelProviderConfig:
         object.__setattr__(self, "model", _validate_model(model))
         object.__setattr__(self, "endpoint", _validate_endpoint(endpoint, normalized_provider))
         object.__setattr__(self, "secret_ref", _validate_secret_ref(chosen_ref))
+        object.__setattr__(
+            self,
+            "reasoning_effort",
+            ReasoningEffort.from_value(
+                DEFAULT_REASONING_EFFORT if reasoning_effort is None else reasoning_effort
+            ),
+        )
         object.__setattr__(self, "capability", normalized_capability)
 
     @property
@@ -308,6 +362,10 @@ class ModelProviderConfig:
     def capability_state(self) -> str:
         return self.capability.state.value
 
+    @property
+    def reasoning(self) -> str:
+        return self.reasoning_effort.value
+
     def with_capability(self, capability: CapabilityStatus | Mapping[str, Any]) -> "ModelProviderConfig":
         return ModelProviderConfig(
             id=self.id,
@@ -316,6 +374,7 @@ class ModelProviderConfig:
             endpoint=self.endpoint,
             secret_ref=self.secret_ref,
             capability=_coerce_capability(capability),
+            reasoning_effort=self.reasoning_effort,
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -324,6 +383,7 @@ class ModelProviderConfig:
             "provider": self.provider.value,
             "model": self.model,
             "endpoint": self.endpoint,
+            "reasoning_effort": self.reasoning_effort.value,
             "secret_ref": self.secret_ref,
             "capability": self.capability.to_dict(),
         }
@@ -336,6 +396,7 @@ class ModelProviderConfig:
             "provider": self.provider.value,
             "model": self.model,
             "endpoint": self.endpoint,
+            "reasoning_effort": self.reasoning_effort.value,
             "has_secret_ref": True,
             "capability": self.capability.to_dict(),
         }
@@ -347,8 +408,7 @@ class ModelProviderConfig:
         unknown = set(value) - _CONFIG_FIELDS
         if unknown:
             raise ConfigValidationError("config_unknown_field", "provider configuration contains an unknown field")
-        required = _CONFIG_FIELDS - {"capability"}
-        if not required.issubset(value):
+        if not _REQUIRED_CONFIG_FIELDS.issubset(value):
             raise ConfigValidationError("config_missing_field", "provider configuration is incomplete")
         capability = None if "capability" not in value else CapabilityStatus.from_dict(value["capability"])
         return cls(
@@ -358,10 +418,62 @@ class ModelProviderConfig:
             endpoint=value["endpoint"],
             secret_ref=value["secret_ref"],
             capability=capability,
+            reasoning_effort=value.get("reasoning_effort", DEFAULT_REASONING_EFFORT),
         )
 
 
 ProviderConfig = ModelProviderConfig
+
+
+@dataclass(frozen=True, slots=True)
+class ProviderExecutionConfig:
+    """Validated runtime options with a non-serializable credential reference."""
+
+    config_id: str
+    provider: Provider
+    protocol: ExecutionProtocol
+    model: str
+    endpoint: str
+    reasoning_effort: ReasoningEffort
+    capability: CapabilityStatus
+    _credential_ref: str = field(repr=False)
+
+    def __post_init__(self) -> None:
+        provider = Provider.from_value(self.provider)
+        try:
+            protocol = self.protocol if isinstance(self.protocol, ExecutionProtocol) else ExecutionProtocol(self.protocol)
+        except (TypeError, ValueError) as exc:
+            raise ConfigValidationError("execution_protocol_invalid", "execution protocol is invalid") from exc
+        if _EXECUTION_PROTOCOL_BY_PROVIDER[provider] is not protocol:
+            raise ConfigValidationError("execution_protocol_mismatch", "execution protocol does not match provider")
+        object.__setattr__(self, "config_id", _validate_identifier(self.config_id))
+        object.__setattr__(self, "provider", provider)
+        object.__setattr__(self, "protocol", protocol)
+        object.__setattr__(self, "model", _validate_model(self.model))
+        object.__setattr__(self, "endpoint", _validate_endpoint(self.endpoint, provider))
+        object.__setattr__(self, "reasoning_effort", ReasoningEffort.from_value(self.reasoning_effort))
+        object.__setattr__(self, "capability", _coerce_capability(self.capability))
+        object.__setattr__(self, "_credential_ref", _validate_secret_ref(self._credential_ref))
+
+    @property
+    def credential_ref(self) -> str:
+        """Return the controlled lookup reference, never a resolved credential."""
+
+        return self._credential_ref
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return options safe for logs, diagnostics, and executor selection."""
+
+        return {
+            "config_id": self.config_id,
+            "provider": self.provider.value,
+            "protocol": self.protocol.value,
+            "model": self.model,
+            "endpoint": self.endpoint,
+            "reasoning_effort": self.reasoning_effort.value,
+            "capability": self.capability.to_dict(),
+            "has_credential_ref": True,
+        }
 
 
 def validate_config(value: object) -> ModelProviderConfig:
@@ -376,6 +488,26 @@ def serialize_config(value: object) -> dict[str, Any]:
 
 def deserialize_config(value: object) -> ModelProviderConfig:
     return ModelProviderConfig.from_dict(value)
+
+
+def resolve_execution_config(value: object) -> ProviderExecutionConfig:
+    """Resolve a stored provider into one explicit API protocol without network I/O."""
+
+    config = validate_config(value)
+    try:
+        protocol = _EXECUTION_PROTOCOL_BY_PROVIDER[config.provider]
+    except KeyError as exc:
+        raise ConfigValidationError("execution_protocol_unavailable", "provider has no execution protocol") from exc
+    return ProviderExecutionConfig(
+        config_id=config.id,
+        provider=config.provider,
+        protocol=protocol,
+        model=config.model,
+        endpoint=config.endpoint,
+        reasoning_effort=config.reasoning_effort,
+        capability=config.capability,
+        _credential_ref=config.secret_ref,
+    )
 
 
 class CapabilityProbe(Protocol):
@@ -480,12 +612,19 @@ class ModelProviderConfigStore:
             raise ConfigStorageError("store_invalid", "configuration store cannot be read") from exc
         if not isinstance(payload, Mapping) or set(payload) != {"schema_version", "configs"}:
             raise ConfigStorageError("store_schema_invalid", "configuration store schema is invalid")
-        if payload.get("schema_version") != SCHEMA_VERSION or not isinstance(payload.get("configs"), list):
+        schema_version = payload.get("schema_version")
+        if schema_version not in SUPPORTED_SCHEMA_VERSIONS or not isinstance(payload.get("configs"), list):
             raise ConfigStorageError("store_schema_invalid", "configuration store schema is invalid")
 
         configs: list[ModelProviderConfig] = []
         seen: set[str] = set()
         for item in payload["configs"]:
+            if not isinstance(item, Mapping):
+                raise ConfigStorageError("config_invalid", "configuration store contains an invalid provider")
+            if schema_version == SCHEMA_VERSION and "reasoning_effort" not in item:
+                raise ConfigStorageError("config_invalid", "configuration store contains an incomplete provider")
+            if schema_version == LEGACY_SCHEMA_VERSION and "reasoning_effort" in item:
+                raise ConfigStorageError("store_schema_invalid", "legacy configuration contains a v2 field")
             try:
                 config = ModelProviderConfig.from_dict(item)
             except ModelProviderConfigError as exc:
@@ -572,6 +711,9 @@ class ModelProviderConfigStore:
                 return config
         raise ConfigStorageError("config_not_found", "provider configuration was not found")
 
+    def resolve_execution(self, config_id: str) -> ProviderExecutionConfig:
+        return resolve_execution_config(self.get(config_id))
+
     def upsert(self, config: ModelProviderConfig) -> list[ModelProviderConfig]:
         normalized = validate_config(config)
         configs = self.load()
@@ -639,7 +781,10 @@ __all__ = [
     "ConfigStorageError",
     "ConfigValidationError",
     "DEFAULT_CONFIG_FILENAME",
+    "DEFAULT_REASONING_EFFORT",
     "DefaultCapabilityProbe",
+    "ExecutionProtocol",
+    "LEGACY_SCHEMA_VERSION",
     "ModelProvider",
     "ModelProviderConfig",
     "ModelProviderConfigError",
@@ -648,13 +793,18 @@ __all__ = [
     "Provider",
     "ProviderConfig",
     "ProviderConfigStore",
+    "ProviderExecutionConfig",
     "ProviderKind",
+    "ReasoningEffort",
     "SCHEMA_VERSION",
     "SUPPORTED_PROVIDERS",
+    "SUPPORTED_REASONING_EFFORTS",
+    "SUPPORTED_SCHEMA_VERSIONS",
     "deserialize_config",
     "load_provider_configs",
     "probe_capability",
     "probe_provider_capability",
+    "resolve_execution_config",
     "save_provider_configs",
     "serialize_config",
     "validate_config",

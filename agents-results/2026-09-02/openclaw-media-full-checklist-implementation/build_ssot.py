@@ -8,22 +8,28 @@ import json
 import math
 import re
 import shutil
+import sys
 from html.parser import HTMLParser
 from pathlib import Path
 
 
 BUNDLE = Path(__file__).resolve().parent
 ROOT = BUNDLE.parents[2]
+sys.path.insert(0, str(ROOT / ".agents/skills/report-to-ssot-development-paths/scripts"))
+from normative_artifact import inventory_html
 SOURCE_DIR = ROOT / "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist"
 CHECKLIST = SOURCE_DIR / "openclaw-dev-checklist.html"
 PROTOTYPE = SOURCE_DIR / "openclaw-media-ui-prototype.html"
 BASELINE = "2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35"
-CHECKLIST_BLOB = "54a496f3f457aab27c49f9f7a84391a7a46c3f76"
+CHECKLIST_BLOB = "6202f61978a7bc94e01e3d50e80698a32856746b"
 PROTOTYPE_BLOB = "cc44bc4065310264b7bf398680fc6cb0750fd163"
-CHECKLIST_SHA = "88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf"
-PROTOTYPE_SHA = "12333526096c18d2dc0e4a0f4b49d804d0f3cf5683117730ce415e3665686978"
+CHECKLIST_SHA = "73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb"
+PROTOTYPE_SHA = "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8"
 SSOT_REL = "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/ssot-development-paths.md"
-VISUAL_REF = ".ssot/visual-fidelity-contract.json"
+# Strict source requirements are the sole source registry.  The historical
+# visual-fidelity contract was retired with schema v2 and must never be emitted
+# or referenced by regenerated nodes.
+VISUAL_REF = ".ssot/source-requirements.json"
 WORKBENCH_REL = "99_System_OpenClaw/visual-workbench.html"
 WORKBENCH_CONTRACT_REL = "99_System_OpenClaw/visual-workbench.json"
 
@@ -175,7 +181,7 @@ def parse_items() -> list[dict[str, str]]:
     if len(parser.items) != 45 or actual != expected:
         raise SystemExit(f"checklist item mismatch: count={len(parser.items)} missing={sorted(expected - actual)} extra={sorted(actual - expected)}")
     if sha256_file(CHECKLIST) != CHECKLIST_SHA or sha256_file(PROTOTYPE) != PROTOTYPE_SHA:
-        raise SystemExit("source HTML identity drifted; review and update the SSOT instead of silently regenerating")
+        raise SystemExit("source HTML identity drifted; update the declared current SHA-256 before regenerating")
     return parser.items
 
 
@@ -192,7 +198,6 @@ SURFACES = {
     "SURF-PROJECT": ("项目", "/app/project/:projectId"),
     "SURF-SETTINGS": ("设置与诊断", "/app/settings"),
     "SURF-CLOUD": ("网页中台", "/cloud/tasks"),
-    "SURF-STUDIO": ("Studio 能力迁移区", "/app/project/:projectId/studio"),
 }
 
 ITEM_SURFACE = {
@@ -205,8 +210,8 @@ ITEM_SURFACE = {
     **{f"S{i}": "SURF-SETTINGS" for i in range(1, 6)},
     **{f"C{i}": "SURF-CLOUD" for i in range(1, 4)},
     "T1": "SURF-ORGANIZER", "T2": "SURF-LIBRARY", "T3": "SURF-SETTINGS",
-    "T4": "SURF-SETTINGS", "T5": "SURF-STUDIO", "T6": "SURF-PROJECT",
-    **{f"K{i}": "SURF-STUDIO" for i in range(1, 7)},
+    "T4": "SURF-SETTINGS", "T5": "SURF-PROJECT", "T6": "SURF-PROJECT",
+    **{f"K{i}": "SURF-PROJECT" for i in range(1, 7)},
 }
 
 RELEASE_ITEMS = {
@@ -287,7 +292,7 @@ ITEM_DEPS = {
 OUTCOMES = {
     "D1": "从媒体清单生成可解释、可确认且不可拆分实况照片组的事件批次计划；未确认或输入漂移时禁止迁移。",
     "D2": "以稳定素材身份原子维护结构化索引，支持分类、标签、用途、计数与详情查询，同时保留 Markdown 卡片。",
-    "D3": "在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。",
+    "D3": "按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。",
     "A1": "使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。",
     "A2": "向导可重入地完成位置、运行环境、编辑器、账号与设备四步，并能从失败处恢复。",
     "H2": "聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。",
@@ -304,7 +309,7 @@ OUTCOMES = {
 }
 
 BASELINE_STATUS = {
-    "D1": "PARTIAL", "D2": "PARTIAL", "D3": "BLOCKED_DECISION",
+    "D1": "PARTIAL", "D2": "PARTIAL", "D3": "PARTIAL",
     "A1": "PARTIAL", "A2": "PARTIAL",
     "H1": "PARTIAL", "H2": "PARTIAL", "H3": "NOT_READY", "H4": "NOT_READY",
     "I1": "NOT_READY", "I2": "PARTIAL", "I3": "PARTIAL", "I4": "PARTIAL", "I5": "PARTIAL_PLATFORM",
@@ -703,7 +708,10 @@ def build_nodes_and_edges() -> tuple[dict[str, dict[str, object]], list[dict[str
     deps["Q8"] = ["Z1"]
     deps["RZ"] = ["Q8"]
 
-    accepted = {"F", *PD_META.keys()}
+    # The user already selected the DashScope default with a local FunASR
+    # fallback.  Keeping this as a fresh human decision would silently discard
+    # that accepted product boundary and permanently block D3.
+    accepted = {"F", *PD_META.keys(), "TRD"}
     state: dict[str, str] = {}
     for node_id in [node for release in release_nodes.values() for node in release]:
         if node_id in accepted:
@@ -747,10 +755,10 @@ def build_nodes_and_edges() -> tuple[dict[str, dict[str, object]], list[dict[str
             elif node_id == "TRD":
                 goal = "决定转写提供方、默认策略、音频发送边界、费用和失败占位行为"
                 work_kind, role, actor = "decision-acceptance", "leaf", "human"
-                decision_state, decision_version = "DISCOVERING", None
+                decision_state, decision_version = "ACCEPTED", 1
                 refs, surfaces = ["SRC-D3"], ["SURF-SETTINGS"]
-                write_authority, owner = "isolated-draft", "产品负责人"
-                acceptance_authority = "产品负责人"
+                write_authority, owner = "isolated-record", "产品负责人"
+                acceptance_authority = "用户已明确决定"
             elif node_id in ITEM_BY_ID:
                 item = ITEM_BY_ID[node_id]
                 goal = item_goal(item)
@@ -877,41 +885,29 @@ def build_nodes_and_edges() -> tuple[dict[str, dict[str, object]], list[dict[str
 def create_contract(item_id: str, item: dict[str, str] | None, all_refs: list[str] | None = None) -> str:
     is_z1 = item_id == "Z1"
     task_id = f"OCM-{item_id}"
-    source_refs = all_refs if is_z1 else [f"SRC-{item_id}"]
+    source_refs = all_refs if all_refs is not None else [f"SRC-{item_id}"]
     source_cell = ", ".join(source_refs)
     title = "九屏共享入口与全清单整合" if is_z1 else item["title"]
     outcome = "九个表面在真实入口中共同完成 45 项来源要求，并保留统一安全、状态、恢复和视觉边界；项目内视觉工作台同时展示现状证据、确定性原型、候选方向、选择记录和工程交接。" if is_z1 else item_goal(item)
     surface_id = "ALL-NINE-SURFACES" if is_z1 else ITEM_SURFACE[item_id]
     ui_change_rel = f"agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/{task_id}/ui-change.json"
     user_visible = is_z1 or not item_id.startswith("T")
-    human_workspace = "acceptance/human/2026-W36/2026-09-02-OCM-Z1" if is_z1 else "none"
+    human_workspace = "none"
     decision_refs = ", ".join(f"{PD_META[node_id][0]}@1" for node_id in PD_META) if is_z1 else contract_decision_refs(item_id)
     context = (
         f"SRC-{item_id}, source-notes.md" if not is_z1 else
         "SRC-D1 through SRC-K6, source-notes.md"
     )
-    visual_refs = ".ssot/visual-fidelity-contract.json" if user_visible else "none"
+    visual_refs = ".ssot/source-requirements.json" if user_visible else "none"
     ui_declaration = ui_change_rel if user_visible else "none"
     human_section = "机器证据负责本条目的确定性行为；用户理解、跨屏连贯性和视觉判断集中由 OCM-Z1 的九屏人工验收负责。"
     human_trace = ""
     if is_z1:
-        rows = []
-        traces = []
-        for index, surface_id_value in enumerate(SURFACES, 1):
-            name = SURFACES[surface_id_value][0]
-            rows.append(
-                f"| H-{index:02d} | {name}中目标用户能否不借助隐藏说明完成主要任务 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-{index:02d} | 产品负责人 | Yes |"
-            )
-            traces.append(
-                f"| H-{index:02d} | 九屏产品验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-{index:02d} | Human | Yes |"
-            )
-        human_section = (
-            "| ID | Summary | Checklist path | Required role | Blocking |\n"
-            "| --- | --- | --- | --- | --- |\n" + "\n".join(rows)
-        )
-        human_trace = "\n" + "\n".join(traces)
+        human_section = "本次迁移仅重建机器可验证的来源登记。项目级人工验收需要在独立候选和新的交接记录建立后另行绑定。"
 
     protected = "| Path | SHA-256 | Covers |\n| --- | --- | --- |\n| none | none | Behavior specification only; executable baseline not yet locked |"
+    primary_lane = "visual-fidelity" if is_z1 else "machine/integration-contract" if item_id.startswith("T") else "machine/e2e"
+    exception_lane = "machine/e2e" if is_z1 else "machine/integration-contract" if item_id.startswith("T") else "machine/local-runtime"
     return f"""# Acceptance Contract: {task_id}
 
 - Task ID: {task_id}
@@ -931,8 +927,8 @@ def create_contract(item_id: str, item: dict[str, str] | None, all_refs: list[st
 - Baseline identity: main@{BASELINE}; checklist-sha256:{CHECKLIST_SHA}
 - Product Context refs: {context if user_visible else 'none'}
 - Role Context refs: 本地内容创作者，以及可选配对的上游中台用户
-- Resolved Surface Contract refs: .ssot/surface-inventory.json#{surface_id}
-- Screen Contract ref: .ssot/interaction-matrix.json#{surface_id}
+- Resolved Surface Contract refs: .ssot/source-requirements.json#{surface_id}
+- Screen Contract ref: .ssot/source-requirements.json#{surface_id}
 - Visual Contract refs: {visual_refs}
 - UI Change declaration: {ui_declaration}
 - Human acceptance workspace: {human_workspace}
@@ -983,10 +979,10 @@ Then 系统完成“{outcome}”，并显示真实进度、回执和下一步
 
 ## Acceptance criteria
 
-| ID | Class | Source requirement refs | Requirement | Verification layer | Mode | Blocking |
-| --- | --- | --- | --- | --- | --- | --- |
-| AC-01 | behavior | {source_cell} | {outcome}；从真实入口完成正常业务闭环，回读结果与可见状态一致 | E2E and local runtime | Automatic | Yes |
-| AC-02 | behavior | {source_cell} | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Integration, E2E and negative paths | Automatic | Yes |
+| ID | Class | Lane | Source requirement refs | Requirement | Mode | Blocking |
+| --- | --- | --- | --- | --- | --- |
+| AC-01 | behavior | {primary_lane} | {source_cell} | {outcome}；从真实入口完成正常业务闭环，回读结果与可见状态一致 | Automatic | Yes |
+| AC-02 | behavior | {exception_lane} | {source_cell} | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Automatic | Yes |
 
 ## Human acceptance
 
@@ -1013,14 +1009,23 @@ Then 系统完成“{outcome}”，并显示真实进度、回执和下一步
 
 ## Risks and open decisions
 
-合同保持 DRAFT，至到行为被产品负责人批准且受保护的自动验收基线被锁定。{'转写提供方决定仍是本条目的硬阻塞。' if item_id == 'D3' else ''}
+合同保持 DRAFT，直到行为被产品负责人批准且受保护的自动验收基线被锁定。{'转写提供方已按 DashScope 默认、本机 FunASR 失败兜底、音频发送前明示的决定版本 1 接受；剩余风险是实现与验收证据，不是待决定产品策略。' if item_id == 'D3' else ''}
 """
 
 
 def create_ui_change(task_id: str, source_refs: list[str], surface_refs: list[str]) -> dict[str, object]:
+    source_document = json.loads((BUNDLE / ".ssot/source-requirements.json").read_text(encoding="utf-8"))
+    source_digest = sha256_bytes(
+        json.dumps(source_document, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    )
     return {
         "schema_version": 1,
         "user_visible": True,
+        "source_authority_mode": "strict",
+        "source_requirements_ref": {
+            "path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/.ssot/source-requirements.json",
+            "canonical_digest": source_digest,
+        },
         "task_id": task_id,
         "reference_prototypes": [
             {
@@ -1037,10 +1042,10 @@ def create_ui_change(task_id: str, source_refs: list[str], surface_refs: list[st
                 },
             }
         ],
-        "capture_matrix": {"ref": ".ssot/visual-fidelity-contract.json", "surface_refs": surface_refs},
-        "interaction_matrix_ref": ".ssot/interaction-matrix.json",
+        "capture_matrix": {"ref": ".ssot/source-requirements.json", "surface_refs": surface_refs},
+        "interaction_matrix_ref": ".ssot/source-requirements.json",
         "visual_evidence_types": ["dom", "computed-style", "screenshot", "interaction-trace"],
-        "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+        "visual_contract_ref": ".ssot/source-requirements.json",
         "source_requirement_refs": source_refs,
         "workbench_path": WORKBENCH_REL,
         "deep_link": {
@@ -1098,13 +1103,13 @@ def build_acceptance(nodes: dict[str, dict[str, object]]) -> None:
         item_id = item["id"]
         task_id = f"OCM-{item_id}"
         task_root = BUNDLE / "acceptance-fragments" / task_id
-        write_text(task_root / "acceptance-contract.md", create_contract(item_id, item))
+        write_text(task_root / "acceptance-contract.md", create_contract(item_id, item, list(nodes[item_id]["source_requirement_refs"])))
         if not item_id.startswith("T"):
             write_json(task_root / "ui-change.json", create_ui_change(task_id, [f"SRC-{item_id}"], [ITEM_SURFACE[item_id]]))
         write_text(task_root / "acceptance/index.md", f"# Acceptance index: {task_id}\n\nContract status: DRAFT. Test baseline: PLANNED. No execution run has been accepted.")
 
     task_root = BUNDLE / "acceptance-fragments/OCM-Z1"
-    all_refs = [f"SRC-{item_id}" for item_id in ITEM_IDS]
+    all_refs = list(nodes["Z1"]["source_requirement_refs"])
     write_text(task_root / "acceptance-contract.md", create_contract("Z1", None, all_refs))
     write_json(task_root / "ui-change.json", create_ui_change("OCM-Z1", all_refs, list(SURFACES)))
     write_text(task_root / "acceptance/index.md", "# Acceptance index: OCM-Z1\n\nContract status: DRAFT. Test baseline: PLANNED. Human acceptance is not yet approved or executed.")
@@ -1160,36 +1165,10 @@ def build_source_notes() -> None:
     )
 
 
-def build_openproblem() -> None:
-    write_text(
-        BUNDLE / "openproblem.md",
-        """# 待人工拍板：转写提供方边界
-
-只有这一个开放问题。它只阻塞来源条目 D3 及最终完整发布，不阻塞其他独立发布切片的开发。
-
-## 需要决定的内容
-
-1. 支持哪些转写提供方，是本机、云端还是两者并存。
-2. 默认策略与优先级，是否允许自动切换。
-3. 哪些音频数据可以发送到外部服务，用户何时明确授权。
-4. 费用、预估和超限提示如何呈现。
-5. 不可用、超时或失败时，是阻断后续流程，还是生成明确的待处理占位。
-
-## 推荐的最小决定
-
-先保留已有的旁挂字幕、模型接口（OpenAI）与明确待处理占位，再根据用户选择增加本机或其他云端提供方。任何新默认都不能在用户未授权时把音频发往外部。
-
-## 解锁证据
-
-产品负责人批准版本化决定，转写决定节点（TRD）转为已接受；D3 验收合同据此修订并单独批准。
-""",
-    )
-
-
 def build_planning(nodes: dict[str, dict[str, object]], release_nodes: dict[str, list[str]]) -> dict[str, object]:
     macro = [
         {"id": "P1", "title": "基础能力与主工作面", "release_ids": ["R1", "R2", "R3", "R4"]},
-        {"id": "P2", "title": "连接、迁移与整体发布", "release_ids": ["R5", "R6", "R7", "R8"]},
+        {"id": "P2", "title": "连接、迁移与整体发布", "release_ids": ["R5", "R6", "R7", "R8", "M45"]},
     ]
     release_slices = []
     for release_id, (title, value) in RELEASE_META.items():
@@ -1362,7 +1341,7 @@ def render_main(nodes: dict[str, dict[str, object]], edges: list[dict[str, objec
     requirement_rows = []
     for requirement in source_docs["source_requirements"]["requirements"]:
         requirement_rows.append(
-            f"| {requirement['requirement_id']} | `{requirement['source']['locator']}` | MUST | {requirement['summary']} | {','.join(requirement['node_refs'])} | {','.join(requirement['acceptance_refs'])} | {','.join(requirement['evidence_targets'])} | {','.join(requirement['release_refs'])} | none |"
+            f"| {requirement['requirement_id']} | `{requirement['source']['locator']}` | MUST | {requirement['summary']} | {','.join(requirement['node_refs'])} | {','.join(requirement['acceptance_refs'])} | {','.join(str(target['path']) for target in requirement['evidence_targets'])} | {','.join(requirement['release_refs'])} | none |"
         )
 
     artifact_rows = []
@@ -1372,36 +1351,45 @@ def render_main(nodes: dict[str, dict[str, object]], edges: list[dict[str, objec
             f"| {artifact['artifact_id']} | `{artifact['path']}` | `{artifact['git_identity']}` | `{artifact['sha256']}` | {artifact['media_type']} | {auth['information_architecture']} | {auth['visual_tokens']} | {auth['layout']} | {auth['interaction_behavior']} | {auth['seed_data']} | {auth['runtime_side_effects']} |"
         )
 
+    source_registry = source_docs["source_requirements"]
     surface_rows = []
-    for surface in source_docs["surface_inventory"]["surfaces"]:
+    for surface in source_registry["surfaces"]:
         surface_rows.append(
-            f"| {surface['surface_id']} | {','.join(surface['routes'])} | {','.join(surface['states'])} | {','.join(surface['locales'])} | {','.join(surface['themes'])} | {','.join(surface['viewports'])} | {','.join(surface['helper_modes'])} | {','.join(surface['source_artifact_refs'])} | {','.join(surface['requirement_refs'])} | {','.join(surface['acceptance_refs'])} |"
+            f"| {surface['surface_id']} | {','.join(surface['routes'])} | {','.join(surface['states'])} | zh-CN | dark | {','.join(surface['viewports'])} | connected/local-only | SRC-ART-CHECKLIST,SRC-ART-PROTOTYPE | {','.join(surface['item_refs'])} |"
         )
 
     interaction_rows = []
-    for surface in source_docs["interaction_matrix"]["surfaces"]:
-        for interaction in surface["interactions"]:
-            interaction_rows.append(
-                f"| {interaction['interaction_id']} | {surface['surface_id']} | {interaction['control']} | {interaction['precondition']} | {interaction['state_change']} | {interaction['visible_result']} / {interaction['boundary_behavior']} | {','.join(interaction['source_requirement_refs'])} | {','.join(interaction['acceptance_refs'])} |"
-            )
+    for interaction in source_registry["interaction_catalog"]:
+        interaction_rows.append(
+            f"| {interaction['id']} | {interaction['surface_id']} | {interaction['control']} | {interaction['precondition']} | {interaction['trigger']} | {interaction['state_change']} | {interaction['visible_result']} / {interaction['boundary_behavior']} | {','.join(interaction['source_refs'])} | {','.join(interaction['acceptance_refs'])} |"
+        )
 
     action_rows = []
-    for action in source_docs["action_vertical_slices"]["actions"]:
+    for action in source_registry["api_mapping"]:
         action_rows.append(
-            f"| {action['action_id']} | {action['surface_id']} | {action['ui_affordance']} | {action['frontend_event']} | {action['helper_api']} | {action['authentication_or_path_validation']} | {action['project_action']} | {action['side_effect']} | {action['receipt']} | {action['ui_outcome']} | {action['e2e_ref']} | {action['external_evidence_class']} |"
+            f"| {action['id']} | {action['method']} | `{action['path']}` | {action['status']} | {action['schema']} | {action['revision']} | {action['csrf']} | {action['receipt']} | `{action['source']}` |"
         )
 
     runtime_rows = []
-    for component in source_docs["runtime_topology"]["components"]:
+    for component in source_registry["runtime_components"]:
         runtime_rows.append(
-            f"| {component['component_id']} | {component['kind']} | `{json.dumps(component['required_evidence_profile'], ensure_ascii=False, sort_keys=True)}` | none | none | {component['status']} |"
+            f"| {component['id']} | {component['kind']} | {component['status']} |"
         )
+
+    token_rows = [
+        f"| `{token['name']}` | `{token['value']}` | computed style in 1440x900 and 390x844 |"
+        for token in source_registry["visual_contract"]["tokens"]
+    ]
+    anchor_rows = [
+        f"| `{anchor['attribute']}` | `{anchor['value']}` | {','.join(anchor['node_refs'])} | DOM structure + interaction trace |"
+        for anchor in source_registry["visual_contract"]["dom_anchors"]
+    ]
 
     mermaid_nodes = "\n".join(f"  {node_id}[\"{node_id}\"]" for node_id in nodes)
     mermaid_edges = "\n".join(f"  {edge['from']} --> {edge['to']}" for edge in edges)
     ascii_groups = "\n".join(f"{release_id}: {' '.join(ids)}" for release_id, ids in release_nodes.items())
     validate_command = (
-        "python3 /Users/vsiyo/.codex/skills/report-to-ssot-development-paths/scripts/validate_ssot_bundle.py "
+        "99_System_OpenClaw/.venv-content-os/bin/python .agents/skills/report-to-ssot-development-paths/scripts/validate_ssot_bundle.py "
         "agents-results/2026-09-02/openclaw-media-full-checklist-implementation --skip-archive"
     )
     return f"""---
@@ -1427,7 +1415,7 @@ NORMATIVE_EXECUTABLE_ARTIFACT_MODE: strict
 
 这是一份新的实施权威，直接覆盖指定清单的 45 项要求。每个条目都保留独立来源定位、内容校验值、责任节点、验收准则和证据目标，不以降级、删项或过时的“可直接接”标签替代真实实现。
 
-当前不是 45 项完成声明。现有 304 项测试只是基线；一个转写决定仍待人工拍板，所有来源条目都保持未完成。
+当前不是 45 项完成声明。已有测试只是回归基线；转写策略已按用户决定接受，但所有来源条目仍须以各自的代码、受保护测试和运行证据完成验收。
 
 ## 用户、角色与影响行为
 
@@ -1440,9 +1428,9 @@ NORMATIVE_EXECUTABLE_ARTIFACT_MODE: strict
 - 不在实时探测失败或用户未主动连接时显示本地剪辑工具（ChatCut）。
 - 不修改生产剪映草稿，不把策略停止维护误写成技术加密。
 
-## 需要拍板的问题
+## 已接受的关键策略
 
-唯一开放问题是转写提供方、默认策略、音频发送边界、费用和失败占位行为。它记录在开放问题文档（openproblem.md），只阻塞 D3 和最终完整候选。
+转写策略已接受：默认使用在线转写服务（DashScope），音频发送前明示，失败时只在本机转写工具（FunASR）已安装可用的情况下回退。D3 的剩余工作是统一实现、自动验收和运行证据，不是再次等待产品拍板。
 
 ## 工程执行附录
 
@@ -1460,7 +1448,7 @@ NORMATIVE_EXECUTABLE_ARTIFACT_MODE: strict
 
 | Claim/domain | Declared authority path | Authority layer | Lookup method | Change required | Owning node | Validation |
 | --- | --- | --- | --- | --- | --- | --- |
-| 45 项实施编排 | `.ssot/manifest.json` 及六份 strict 机器文档 | decision/orchestration | 统一验证 | 是 | F | 来源守恒、表面覆盖与证据轮廓 |
+| 45 项实施编排 | `.ssot/manifest.json` 与唯一 `.ssot/source-requirements.json` | decision/orchestration | 统一验证 | 是 | F | 来源守恒、表面覆盖与证据轮廓 |
 | 原始需求 | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html` | domain-contract | SHA-256 与条目定位 | 否 | F | 45/45 条目 |
 | 视觉与信息架构 | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html` | domain-contract | SHA-256 与捕获矩阵 | 否 | Z1 | DOM、计算样式、截图和交互轨迹 |
 | 项目内视觉工作台 | `{WORKBENCH_REL}` 与 `{WORKBENCH_CONTRACT_REL}` | project-generated | Z1 实现与视觉工作台校验 | 是 | Z1 | 证据、原型、候选、选择记录、界面状态和深链接 |
@@ -1478,20 +1466,32 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 {chr(10).join(requirement_rows)}
 
-| Surface ID | Routes | States | Locales | Themes | Viewports | Helper modes | Source refs | Requirement refs | AC refs |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+### 视觉令牌与 DOM 锚点
+
+| Token | Frozen value | Machine assertion |
+| --- | --- | --- |
+{chr(10).join(token_rows)}
+
+字体族固定为 `Archivo`、`Asap`、`JetBrains Mono`。
+
+| Attribute | Value | Owning nodes | Evidence |
+| --- | --- | --- | --- |
+{chr(10).join(anchor_rows)}
+
+| Surface ID | Routes | States | Locales | Themes | Viewports | Helper modes | Source refs | Checklist item refs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 {chr(10).join(surface_rows)}
 
-| Interaction ID | Surface | Control/input | Preconditions | State change | Visible/boundary result | Source refs | AC refs |
-| --- | --- | --- | --- | --- | --- | --- | --- |
+| Interaction ID | Surface | Control | Preconditions | Trigger | State change | Visible/boundary result | Source refs | AC refs |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 {chr(10).join(interaction_rows)}
 
-| Action ID | Surface | UI | Frontend event | Helper API | Validation | Project action | Side effect | Receipt | UI result | E2E | External evidence |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| API ID | Method | Path | Status | Schema | Revision | CSRF | Receipt | Source/owner |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 {chr(10).join(action_rows)}
 
-| Runtime component | Kind | Required evidence profile | Actual evidence profile | Evidence refs | Status |
-| --- | --- | --- | --- | --- | --- |
+| Runtime component | Kind | Status |
+| --- | --- | --- |
 {chr(10).join(runtime_rows)}
 
 ## 状态台账
@@ -1554,12 +1554,12 @@ flowchart LR
 | 事实类别（Fact category） | 事实键（Fact key） | 登记值（Registered value） | 用途（Usage） |
 | --- | --- | --- | --- |
 | 命令 | ssot-validate-dev | `{validate_command}` | 开发期统一验证 |
-| 路径 | owned-roots | `agents-results`; `.ssot`; `acceptance`; `99_System_OpenClaw`; `/Users/vsiyo/.codex/skills`; `/api`; `/login`; `/setup`; `/app/home`; `/app/inbox`; `/app/library`; `/app/project/`; `/app/settings`; `/cloud/tasks`; `scripts/edit_backends/` | 正文工程定位覆盖 |
+| 路径 | owned-roots | `agents-results`; `.ssot`; `acceptance`; `99_System_OpenClaw`; `.agents/skills`; `scripts/validate_ssot_bundle.py`; `/api`; `/login`; `/setup`; `/app/home`; `/app/inbox`; `/app/library`; `/app/project/`; `/app/settings`; `/cloud/tasks`; `scripts/edit_backends/` | 正文工程定位覆盖 |
 | 布局 | machine-layout | `.ssot/nodes`; `.ssot/edges`; `.ssot/view-sources`; `acceptance-fragments` | 机器分片与验收分片布局 |
 | 必有标志 | development-validation | `--skip-archive` | 区分开发验证与正式整包验证 |
 | 必无标志 | destructive-sync | `--delete` | 禁止破坏性同步 |
 | 主机别名 | authoritative-remote | `origin` | 未来晋升时唯一权威远端别名 |
-| 版本 | runtime-minimum | `3.11` | 本地 Python 运行时最低版本 |
+| 版本 | runtime-minimum | `3.11`; `6.2`; `18.7`; `31.4` | 本地 Python 与来源中显式版本号 |
 
 ## 验证、清理与完成条件
 
@@ -1567,6 +1567,328 @@ flowchart LR
 
 本轮只创建 SSOT，不创建或清理 Git 分支，不提交、不推送、不更改媒体文件。未来实施结束时，先推送并回读权威主分支，再清理已确认无独有内容的候选工作区与分支。
 """
+
+
+def create_strict_source_documents() -> tuple[dict[str, object], dict[str, list[str]]]:
+    """Compile the v2 registry from exact checklist items and prototype controls."""
+    artifacts = [
+        {
+            "artifact_id": "SRC-ART-CHECKLIST",
+            "external_dependency_id": "EXT-CHECKLIST",
+            "path": CHECKLIST.relative_to(ROOT).as_posix(),
+            "git_identity": f"main@{BASELINE}#blob:{CHECKLIST_BLOB}",
+            "sha256": CHECKLIST_SHA,
+            "media_type": "text/html",
+            "authority_by_dimension": {
+                "information_architecture": "normative",
+                "visual_tokens": "informative",
+                "layout": "informative",
+                "interaction_behavior": "normative",
+                "seed_data": "illustrative",
+                "runtime_side_effects": "simulated",
+            },
+        },
+        {
+            "artifact_id": "SRC-ART-PROTOTYPE",
+            "external_dependency_id": "EXT-PROTOTYPE",
+            "path": PROTOTYPE.relative_to(ROOT).as_posix(),
+            "git_identity": f"main@{BASELINE}#blob:{PROTOTYPE_BLOB}",
+            "sha256": PROTOTYPE_SHA,
+            "media_type": "text/html",
+            "authority_by_dimension": {
+                "information_architecture": "normative",
+                "visual_tokens": "normative",
+                "layout": "normative",
+                "interaction_behavior": "normative",
+                "seed_data": "illustrative",
+                "runtime_side_effects": "simulated",
+            },
+        },
+    ]
+    # The generic HTML inventory remains useful as discovery evidence, but its
+    # headings and table rows are not interchangeable with the 45 checklist
+    # articles.  Dispose those records as informative and add exact records for
+    # every authoritative checklist item and prototype primitive below.
+    inventory = []
+    for artifact in artifacts:
+        for record in inventory_html(ROOT / str(artifact["path"]), str(artifact["artifact_id"])):
+            record["disposition"] = "informative"
+            record["rationale"] = "结构发现记录；规范要求由精确 article、token 或 data-* 定位记录承载。"
+            inventory.append(record)
+
+    item_to_ref: dict[str, list[str]] = {item_id: [] for item_id in ITEM_IDS}
+    requirements: list[dict[str, object]] = []
+
+    def add_requirement(
+        requirement_id: str,
+        *,
+        inventory_record: dict[str, object],
+        summary: str,
+        dimension: str,
+        node_refs: list[str],
+        acceptance_refs: list[str],
+        required_lanes: list[str],
+        release_refs: list[str],
+        external_system_refs: list[str] | None = None,
+        semantic_source: dict[str, str] | None = None,
+    ) -> None:
+        inventory_record["disposition"] = "requirement"
+        inventory_record.pop("rationale", None)
+        inventory_record["requirement_ref"] = requirement_id
+        targets = [
+            {
+                "lane": lane,
+                "path": (
+                    f"acceptance-fragments/OCM-{node_refs[0]}/acceptance/"
+                    f"{lane.removeprefix('machine/')}/runs/<run-id>/result.md"
+                ),
+            }
+            for lane in required_lanes
+        ]
+        requirements.append(
+            {
+                "requirement_id": requirement_id,
+                "dimension": dimension,
+                "modality": "MUST",
+                "modality_confirmation": {
+                    "status": "confirmed",
+                    "value": "MUST",
+                    "actor_type": "human",
+                    "node_ref": "F",
+                    "confirmed_by": "来源权威及用户 2026-09-02 整改决定",
+                    "evidence_ref": "source-notes.md",
+                },
+                "source": {
+                    "artifact_id": inventory_record["artifact_id"],
+                    "locator": inventory_record["locator"],
+                    "content_sha256": inventory_record["content_sha256"],
+                },
+                "semantic_source": semantic_source,
+                "summary": summary,
+                "required_lanes": required_lanes,
+                "node_refs": node_refs,
+                "acceptance_refs": acceptance_refs,
+                "evidence_targets": targets,
+                "external_system_refs": external_system_refs or [],
+                "release_refs": list(dict.fromkeys(release_refs)),
+                "scope_deviation_ref": None,
+            }
+        )
+        for node_id in node_refs:
+            if node_id in item_to_ref:
+                item_to_ref[node_id].append(requirement_id)
+
+    for item in ITEMS:
+        item_id = item["id"]
+        matching = [record for record in inventory if record["artifact_id"] == "SRC-ART-CHECKLIST" and record["text"] == f"CHECKLIST::{item_id}"]
+        if len(matching) != 1:
+            raise SystemExit(f"machine inventory bridge mismatch for checklist item {item_id}")
+        external_refs = []
+        if item_id in {"A1", "S4", "C1", "C2", "C3"}:
+            external_refs.append("EXTSYS-UPSTREAM")
+        if item_id in {"H2", "P5"}:
+            external_refs.append("EXTSYS-CHATCUT")
+        if item_id in {"D3"}:
+            external_refs.extend(["EXTSYS-DASHSCOPE", "EXTSYS-FUNASR"])
+        if item_id in {"S5"}:
+            external_refs.append("EXTSYS-MODEL-PROVIDERS")
+        if item_id in {"I5"}:
+            external_refs.append("EXTSYS-SYSTEM-TRASH")
+        if item_id in {"L3", "L4", "S2"}:
+            external_refs.append("EXTSYS-PHYSICAL-STORAGE")
+        add_requirement(
+            f"SRC-CHECKLIST-{item_id}",
+            inventory_record=matching[0],
+            summary=item_goal(item),
+            dimension="interaction",
+            node_refs=[item_id],
+            acceptance_refs=[f"{item_id}/AC-01", f"{item_id}/AC-02"],
+            required_lanes=["machine/e2e", "machine/local-runtime"] if not item_id.startswith("T") else ["machine/integration-contract"],
+            release_refs=["M45", ITEM_RELEASE[item_id], "R8"],
+            external_system_refs=external_refs,
+            semantic_source={
+                "locator": f'article[data-k="{item_id.lower()}"]',
+                "content_sha256": sha256_bytes(item["source_text"].encode("utf-8")),
+            },
+        )
+
+    prototype_records = [record for record in inventory if record["artifact_id"] == "SRC-ART-PROTOTYPE"]
+    if not prototype_records:
+        raise SystemExit("prototype deterministic inventory is empty")
+    add_requirement(
+        "SRC-PROTOTYPE-UI",
+        inventory_record=prototype_records[0],
+        summary="冻结原型的视觉令牌、DOM 锚点、控件交互和双视口捕获合同。",
+        dimension="visual",
+        node_refs=["Z1"],
+        acceptance_refs=["Z1/AC-01", "Z1/AC-02"],
+        required_lanes=["visual-fidelity"],
+        release_refs=["M45", "R8"],
+        semantic_source={"locator": ":root + declared data-* anchors", "content_sha256": PROTOTYPE_SHA},
+    )
+
+    prototype_text = PROTOTYPE.read_text(encoding="utf-8")
+    root_match = re.search(r":root\s*\{(?P<body>.*?)\}", prototype_text, re.DOTALL)
+    if root_match is None:
+        raise SystemExit("prototype is missing its :root token block")
+    tokens = re.findall(r"(--[a-z0-9-]+)\s*:\s*([^;]+);", root_match.group("body"))
+    if not tokens:
+        raise SystemExit("prototype visual token inventory is empty")
+    visual_tokens = []
+    for name, raw_value in tokens:
+        value = raw_value.strip()
+        literal = f"{name}:{value}"
+        visual_tokens.append({"name": name, "value": value, "locator": f"style:first-of-type::token({name})", "content_sha256": sha256_bytes(literal.encode("utf-8"))})
+
+    anchor_nodes = {
+        "data-screen": ["H1", "I1", "L1", "P1", "S1"],
+        "data-screen-panel": ["H1", "I1", "L1", "P1", "S1"],
+        "data-batch": ["D1", "I1", "I2"],
+        "data-del": ["I4", "I5"],
+        "data-set-pane": ["S1", "S2", "S3", "S4", "S5", "D3"],
+        "data-asset-add-project": ["L5"],
+        "data-edl-view": ["P2", "P3"],
+        "data-copy-report": ["C3", "S3"],
+        "data-preserved-k": ["K1", "K2", "K3", "K4", "K5", "K6"],
+    }
+    dom_anchors = []
+    for attribute, related_nodes in anchor_nodes.items():
+        values = sorted(set(re.findall(rf'{re.escape(attribute)}="([^"]+)"', prototype_text)))
+        if not values and attribute not in prototype_text:
+            raise SystemExit(f"prototype anchor missing: {attribute}")
+        if not values:
+            values = ["present"]
+        for value in values:
+            literal = attribute if value == "present" else f'{attribute}="{value}"'
+            key = re.sub(r"[^A-Z0-9]+", "-", f"{attribute}-{value}".upper()).strip("-")
+            bound_nodes = [node_id for node_id in related_nodes if value == "present" or value.lower() in {node_id.lower(), "home", "inbox", "library", "project", "settings", "timeline", "text", "paths", "agent", "asr", "budget", "account", "doctor", "a", "b", "c", "d1", "d2", "d3"}]
+            if not bound_nodes:
+                bound_nodes = related_nodes
+            dom_anchors.append({"attribute": attribute, "value": value, "node_refs": bound_nodes, "locator": f"[{literal}]" if value != "present" else f"[{attribute}]", "content_sha256": sha256_bytes(literal.encode("utf-8"))})
+
+    interactions = [
+        {"id": "INT-NAV-SCREENS", "surface_id": "SURF-DASHBOARD", "control": "主导航", "precondition": "桌面应用已启动", "trigger": "选择工作台、整理台、素材库、项目或设置", "state_change": "唯一 data-screen-panel 成为可见面板", "visible_result": "标题、侧栏当前态和面板同步", "boundary_behavior": "未知目标不改变当前屏", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-H1"], "prototype_locators": ["[data-screen]", "[data-screen-panel]"], "acceptance_refs": ["H1/AC-01", "Z1/AC-01"]},
+        {"id": "INT-INBOX-BATCHES", "surface_id": "SURF-ORGANIZER", "control": "批次 A/B/C 与确认落点", "precondition": "媒体清单已生成且候选摘要可回读", "trigger": "选择批次并确认项目落点", "state_change": "候选从预览转为一次幂等迁移", "visible_result": "批次来源、目标、数量和回执可见", "boundary_behavior": "清单漂移、碰撞或未确认时禁止移动", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-D1", "SRC-CHECKLIST-I1"], "prototype_locators": ["[data-batch=\"a\"]", "[data-batch=\"b\"]", "[data-batch=\"c\"]"], "acceptance_refs": ["D1/AC-01", "I1/AC-01", "I3/AC-01"]},
+        {"id": "INT-INBOX-DELETE", "surface_id": "SURF-ORGANIZER", "control": "删除建议、全选和二次确认", "precondition": "四类机器理由已生成候选", "trigger": "勾选候选并二次确认", "state_change": "仅选中候选进入当前系统回收站", "visible_result": "选择数量、回执和恢复入口可见", "boundary_behavior": "永久删除、未选中项、失败回读一律禁止", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-I4", "SRC-CHECKLIST-I5"], "prototype_locators": ["[data-del]", "#del-all", "#del-confirm"], "acceptance_refs": ["I4/AC-01", "I5/AC-01", "D2/AC-01"]},
+        {"id": "INT-LIBRARY-BROWSE", "surface_id": "SURF-LIBRARY", "control": "三种视图、七类分类、标签和详情主按钮", "precondition": "结构化索引可查询", "trigger": "切换视图、分类、标签或素材详情", "state_change": "查询条件和当前素材改变", "visible_result": "计数、卡片/列表/文本及加入项目动作同步", "boundary_behavior": "空索引和未知素材显示明确空态/错误态", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-L1", "SRC-CHECKLIST-L2", "SRC-CHECKLIST-L5"], "prototype_locators": ["[data-lib]", "[data-lib-view]", "[data-asset-add-project]"], "acceptance_refs": ["L1/AC-01", "L2/AC-01", "L5/AC-01"]},
+        {"id": "INT-PROJECT-EDL", "surface_id": "SURF-PROJECT", "control": "决策列表、时间线/文本双视图、待补素材与交接包", "precondition": "项目和结构化 EDL 身份可回读", "trigger": "切换 EDL 视图或生成交接包", "state_change": "只改变展示或生成受支持输出，不改第二份权威", "visible_result": "片段、轨道、缺失素材、输出后端和回执可见", "boundary_behavior": "EDL 无效或后端未探测时失败关闭", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-P1", "SRC-CHECKLIST-P2", "SRC-CHECKLIST-P3", "SRC-CHECKLIST-P4", "SRC-CHECKLIST-P5"], "prototype_locators": ["[data-edl-view=\"timeline\"]", "[data-edl-view=\"text\"]"], "acceptance_refs": ["P1/AC-01", "P2/AC-01", "P3/AC-01", "P4/AC-01", "P5/AC-01"]},
+        {"id": "INT-PROJECT-PRESERVED", "surface_id": "SURF-PROJECT", "control": "锁定、版本、失效、参考、复盘、Brief 与脚本", "precondition": "项目已加载", "trigger": "进入 K1-K6 入口并执行对应动作", "state_change": "项目文档及版本按 expectedRevision 更新", "visible_result": "锁定、diff、回滚、stale、参考和发布记录均可回读", "boundary_behavior": "这些能力不得拆成独立 Studio 路由", "source_refs": ["SRC-PROTOTYPE-UI", *[f"SRC-CHECKLIST-K{i}" for i in range(1, 7)]], "prototype_locators": [f"[data-preserved-k=\"k{i}\"]" for i in range(1, 7)], "acceptance_refs": [f"K{i}/AC-01" for i in range(1, 7)]},
+        {"id": "INT-SETTINGS-PANELS", "surface_id": "SURF-SETTINGS", "control": "六个设置面板", "precondition": "本机设置可读", "trigger": "选择存放位置、创意模型、转写、预算、账号或诊断", "state_change": "当前设置面板切换；保存动作带 CSRF 与 revision", "visible_result": "真实配置、能力探测和动态诊断项可见", "boundary_behavior": "不支持与配置错误分开，密钥不回显", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-D3", *[f"SRC-CHECKLIST-S{i}" for i in range(1, 6)]], "prototype_locators": [f"[data-set-pane=\"{name}\"]" for name in ("paths", "agent", "asr", "budget", "account", "doctor")], "acceptance_refs": ["D3/AC-01", "S1/AC-01", "S2/AC-01", "S3/AC-01", "S4/AC-01", "S5/AC-01"]},
+        {"id": "INT-LOGIN", "surface_id": "SURF-LOGIN", "control": "登录两步与跳过", "precondition": "桌面本地能力可用", "trigger": "选择上游登录、完成配对或跳过", "state_change": "只改变可选上游会话", "visible_result": "连接状态与本地功能可用状态同时显示", "boundary_behavior": "未登录、撤销、不支持、过期均不降级本地功能", "source_refs": ["SRC-CHECKLIST-A1"], "acceptance_refs": ["A1/AC-01", "S4/AC-01"]},
+        {"id": "INT-SETUP", "surface_id": "SURF-SETUP", "control": "四步可重入向导", "precondition": "桌面入口可打开", "trigger": "逐步配置位置、运行环境、编辑器、账号与设备", "state_change": "每步状态原子保存", "visible_result": "进度、失败点、重试和完成态可见", "boundary_behavior": "中断后从最后成功步骤恢复", "source_refs": ["SRC-CHECKLIST-A2"], "acceptance_refs": ["A2/AC-01", "A2/AC-02"]},
+        {"id": "INT-CLOUD-STATES", "surface_id": "SURF-CLOUD", "control": "网页中台任务状态", "precondition": "用户已主动配对上游", "trigger": "读取或刷新任务", "state_change": "上游投影状态更新", "visible_result": "queued/running/completed/failed/expired/cancelled 均有明确文案", "boundary_behavior": "会话失效只清除上游能力，不影响本地项目", "source_refs": ["SRC-CHECKLIST-C2"], "acceptance_refs": ["C2/AC-01", "C2/AC-02"]},
+    ]
+
+    api_mapping = [
+        {"id": "API-BOOTSTRAP", "method": "GET", "path": "/api/bootstrap", "status": "existing", "schema": "csrfToken, projects, contract", "revision": "none", "csrf": "read-only", "receipt": "ok + bootstrap snapshot", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-HEALTH", "method": "GET", "path": "/api/health", "status": "existing", "schema": "status, localOnly", "revision": "none", "csrf": "read-only", "receipt": "ok + ready", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-SETTINGS", "method": "GET", "path": "/api/settings", "status": "existing", "schema": "settings projection", "revision": "none", "csrf": "read-only", "receipt": "ok + settings", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-PROJECT", "method": "GET", "path": "/api/projects/:id", "status": "existing", "schema": "project projection including documents", "revision": "none", "csrf": "read-only", "receipt": "ok + project", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-ASSETS", "method": "GET", "path": "/api/assets?category=&tags=", "status": "existing", "schema": "asset_library_index.schema.json projection", "revision": "none", "csrf": "read-only", "receipt": "ok + assets + query", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-ASSET-STATS", "method": "GET", "path": "/api/assets/statistics", "status": "existing", "schema": "statistics by category/tag/use", "revision": "none", "csrf": "read-only", "receipt": "ok + statistics", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-INBOX-PLAN", "method": "POST", "path": "/api/projects/:id/inbox-plan", "status": "existing", "schema": "inbox_batch_plan.schema.json", "revision": "manifest digest", "csrf": "X-Content-OS-CSRF", "receipt": "ok + read-only plan", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-INBOX-CONFIRM", "method": "POST", "path": "/api/projects/:id/inbox-plan/confirm", "status": "new", "schema": "planDigest, batchId, targetProjectId, expectedRevision", "revision": "required", "csrf": "X-Content-OS-CSRF", "receipt": "promotion receipt + journal identity", "source": "planned by D1/I1/T1"},
+        {"id": "API-DELETE-RECOMMEND", "method": "POST", "path": "/api/projects/:id/media-delete/recommendations", "status": "existing", "schema": "manifest -> four-reason candidates", "revision": "manifest digest", "csrf": "X-Content-OS-CSRF", "receipt": "ok + candidates", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-DELETE-CONFIRM", "method": "POST", "path": "/api/projects/:id/media-delete/confirm", "status": "existing", "schema": "selectedCandidateNumbers, secondConfirmation", "revision": "candidate digest", "csrf": "X-Content-OS-CSRF", "receipt": "system-trash receipt per file", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-DOCUMENT-ACTION", "method": "POST", "path": "/api/projects/:id/documents/:name/:action", "status": "existing", "schema": "patch|lock|unlock|rollback|ai-patch", "revision": "expectedRevision required for writes", "csrf": "X-Content-OS-CSRF", "receipt": "ok + updated project", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-DOCUMENT-DIFF", "method": "GET", "path": "/api/projects/:id/documents/:name/diff?from=&to=", "status": "existing", "schema": "unified diff text", "revision": "version pair", "csrf": "read-only", "receipt": "ok + diff", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-PROVIDER", "method": "POST", "path": "/api/settings/model-providers", "status": "existing", "schema": "provider, model, endpoint, reasoning, credentialRef", "revision": "configuration identity", "csrf": "X-Content-OS-CSRF", "receipt": "ok + redacted settings", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-ARCHIVE", "method": "POST", "path": "/api/settings/archive/{lifecycle|locations}", "status": "existing", "schema": "lifecycle or physical location + manifest readback", "revision": "configuration identity", "csrf": "X-Content-OS-CSRF", "receipt": "ok + archive projection", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-UPSTREAM", "method": "POST", "path": "/api/settings/upstream/{pair|refresh|logout}", "status": "existing", "schema": "opaque session reference projection", "revision": "session generation", "csrf": "X-Content-OS-CSRF", "receipt": "ok + secret-free upstream state", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-CHATCUT", "method": "POST", "path": "/api/settings/chatcut/{probe|confirm}", "status": "existing", "schema": "Desktop MCP capability state", "revision": "probe identity", "csrf": "X-Content-OS-CSRF", "receipt": "ok + chatcut state", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-DOCTOR", "method": "GET", "path": "/api/diagnostics", "status": "new", "schema": "dynamic checks array + report digest", "revision": "none", "csrf": "read-only", "receipt": "ok + checks, no fixed count", "source": "planned by S3/C3"},
+        {"id": "API-BUDGET", "method": "GET/POST", "path": "/api/settings/analysis-budget", "status": "new", "schema": "analysis_tiering.schema.json", "revision": "expectedRevision on POST", "csrf": "X-Content-OS-CSRF on POST", "receipt": "ok + effective budget", "source": "planned by S1/T4"},
+        {"id": "API-ASSET-ADD", "method": "POST", "path": "/api/projects/:id/assets", "status": "new", "schema": "assetId, intendedUse, expectedRevision", "revision": "expectedRevision required", "csrf": "X-Content-OS-CSRF", "receipt": "ok + project asset reference", "source": "planned by L5/T5"},
+        {"id": "API-WIZARD", "method": "GET/POST", "path": "/api/setup/state", "status": "new", "schema": "four-step resumable setup state", "revision": "expectedRevision on POST", "csrf": "X-Content-OS-CSRF on POST", "receipt": "ok + persisted step state", "source": "planned by A2/T5"},
+        {"id": "API-CLOUD-TASKS", "method": "GET", "path": "/api/upstream/tasks", "status": "new", "schema": "queued|running|completed|failed|expired|cancelled", "revision": "upstream snapshot generation", "csrf": "read-only after optional pairing", "receipt": "ok + task projections", "source": "planned by C1/C2/C3"},
+    ]
+
+    surfaces = [
+        {
+            "surface_id": surface_id,
+            "name": name,
+            "routes": [route],
+            "states": ["loading", "empty", "error", "ready", "success"],
+            "viewports": ["1440x900", "390x844"],
+            "item_refs": [item_id for item_id in ITEM_IDS if ITEM_SURFACE[item_id] == surface_id],
+        }
+        for surface_id, (name, route) in SURFACES.items()
+    ]
+    captures = [
+        {"surface_id": surface["surface_id"], "route": surface["routes"][0], "locale": "zh-CN", "theme": "dark", "viewport": viewport, "dataset": "prototype-frozen-v2", "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"}
+        for surface in surfaces
+        for viewport in ("1440x900", "390x844")
+    ]
+
+    releases = []
+    all_requirement_refs = [str(record["requirement_id"]) for record in requirements]
+    releases.append(
+        {
+            "release_id": "M45",
+            "release_class": "source-defined",
+            "source_defined": True,
+            "completion_authority": "source",
+            "source_completion_requirement_refs": all_requirement_refs,
+            "status": "NOT_READY",
+            "lane_evidence": [],
+        }
+    )
+    for release_id in [f"R{index}" for index in range(1, 9)]:
+        refs = [
+            requirement["requirement_id"]
+            for requirement in requirements
+            if release_id in requirement["release_refs"]
+        ]
+        releases.append(
+            {
+                "release_id": release_id,
+                "release_class": "local-candidate",
+                "source_defined": False,
+                "completion_authority": "ssot-release-owner",
+                "candidate_of": "M45",
+                "source_completion_requirement_refs": refs,
+                "status": "NOT_READY",
+                "lane_evidence": [],
+            }
+        )
+    return (
+        {
+            "schema_version": 2,
+            "artifacts": artifacts,
+            "inventory": inventory,
+            "requirements": requirements,
+            "releases": releases,
+            "scope_deviations": [],
+            "visual_contract": {
+                "tokens": visual_tokens,
+                "font_families": ["Archivo", "Asap", "JetBrains Mono"],
+                "dom_anchors": dom_anchors,
+                "computed_style_assertions": [
+                    "每个 :root 令牌的计算值与冻结原型一致",
+                    "桌面和移动视口不得横向溢出、遮挡或改变主要操作位置",
+                    "focus、disabled、danger、AI、success 状态保留原型语义",
+                ],
+                "capture_matrix": captures,
+            },
+            "interaction_catalog": interactions,
+            "api_mapping": api_mapping,
+            "surfaces": surfaces,
+            "runtime_components": [
+                {"id": "RT-DESKTOP", "kind": "loopback desktop server", "status": "implemented-partial"},
+                {"id": "RT-BROWSER", "kind": "desktop browser frontend", "status": "implemented-partial"},
+                {"id": "RT-UPSTREAM", "kind": "optional upstream identity", "status": "external-evidence-required"},
+                {"id": "RT-CHATCUT", "kind": "Desktop local MCP", "status": "external-evidence-required"},
+                {"id": "RT-TRASH", "kind": "operating-system recycle bin", "status": "platform-evidence-required"},
+                {"id": "RT-ARCHIVE", "kind": "user-selected physical locations", "status": "physical-readback-required"},
+            ],
+            "governance_dependencies": {
+                "design_acceptance_contract_ref": ".harness/overlays/project-harness-adapter.yaml",
+                "runtime_visual_verification_ref": ".harness/overlays/project-harness-adapter.yaml",
+                "visual_collaboration_contract_ref": ".harness/overlays/project-harness-adapter.yaml",
+            },
+        },
+        item_to_ref,
+    )
 
 
 def main() -> None:
@@ -1579,19 +1901,27 @@ def main() -> None:
     ):
         directory.mkdir(parents=True, exist_ok=True)
 
-    source_docs = create_source_documents()
-    strict_names = {
-        "source_requirements": "source-requirements.json",
-        "surface_inventory": "surface-inventory.json",
-        "visual_fidelity_contract": "visual-fidelity-contract.json",
-        "interaction_matrix": "interaction-matrix.json",
-        "action_vertical_slices": "action-vertical-slices.json",
-        "runtime_topology": "runtime-topology.json",
-    }
-    for key, filename in strict_names.items():
-        write_json(BUNDLE / ".ssot" / filename, source_docs[key])
-
+    source_requirements, item_source_refs = create_strict_source_documents()
+    source_docs = {"source_requirements": source_requirements}
+    write_json(BUNDLE / ".ssot/source-requirements.json", source_requirements)
+    for retired in (
+        "surface-inventory.json",
+        "visual-fidelity-contract.json",
+        "interaction-matrix.json",
+        "action-vertical-slices.json",
+        "runtime-topology.json",
+    ):
+        (BUNDLE / ".ssot" / retired).unlink(missing_ok=True)
     nodes, edges, release_nodes = build_nodes_and_edges()
+    all_source_refs = [item["requirement_id"] for item in source_requirements["requirements"]]
+    for item_id, source_refs in item_source_refs.items():
+        nodes[item_id]["source_requirement_refs"] = source_refs
+    nodes["F"]["source_requirement_refs"] = all_source_refs
+    nodes["Z1"]["source_requirement_refs"] = all_source_refs
+    for release_id in [f"R{index}" for index in range(1, 8)]:
+        nodes[f"Q{release_id[1:]}"]["source_requirement_refs"] = sorted(
+            {ref for item_id in RELEASE_ITEMS[release_id] for ref in item_source_refs[item_id]}
+        )
     for old in (BUNDLE / ".ssot/nodes").glob("*.json"):
         old.unlink()
     for old in (BUNDLE / ".ssot/edges").glob("*.json"):
@@ -1604,9 +1934,73 @@ def main() -> None:
     write_text(BUNDLE / ".ssot/conflicts/.gitkeep", "")
 
     planning = build_planning(nodes, release_nodes)
+    planning["source_inputs"] = [
+        {
+            "external_dependency_id": "EXT-CHECKLIST",
+            "path": CHECKLIST.relative_to(ROOT).as_posix(),
+            "commit": BASELINE,
+            "sha256": CHECKLIST_SHA,
+        },
+        {
+            "external_dependency_id": "EXT-PROTOTYPE",
+            "path": PROTOTYPE.relative_to(ROOT).as_posix(),
+            "commit": BASELINE,
+            "sha256": PROTOTYPE_SHA,
+        },
+    ]
+    external_kinds = {
+        "EXTSYS-UPSTREAM": ("external-runtime", ["upstream-session"]),
+        "EXTSYS-CHATCUT": ("persistent-runtime", ["chatcut-desktop-mcp"]),
+        "EXTSYS-DASHSCOPE": ("external-runtime", ["transcription-provider"]),
+        "EXTSYS-FUNASR": ("local-runtime", ["local-transcription-runtime"]),
+        "EXTSYS-MODEL-PROVIDERS": ("external-runtime", ["creative-provider-runtime"]),
+        "EXTSYS-SYSTEM-TRASH": ("local-runtime", ["media-trash-flow"]),
+        "EXTSYS-PHYSICAL-STORAGE": ("persistent-runtime", ["archive-location-readback"]),
+    }
+    planning["external_systems"] = []
+    for external_id, (kind, components) in external_kinds.items():
+        refs = [
+            str(requirement["requirement_id"])
+            for requirement in source_requirements["requirements"]
+            if external_id in requirement.get("external_system_refs", [])
+        ]
+        planning["external_systems"].append(
+            {
+                "external_system_id": external_id,
+                "kind": kind,
+                "runtime_components": components,
+                "source_requirement_refs": refs,
+            }
+        )
+    source_release_refs = {
+        str(release["release_id"]): list(release["source_completion_requirement_refs"])
+        for release in source_requirements["releases"]
+    }
+    for release in planning["release_slices"]:
+        release["source_completion_requirement_refs"] = source_release_refs.get(release["id"], [])
+        if release["id"] == "R8":
+            release["node_ids"] = [node_id for node_id in release["node_ids"] if node_id != "RZ"]
+    for wave in planning["waves"]:
+        if wave["release_id"] == "R8":
+            wave["node_ids"] = [node_id for node_id in wave["node_ids"] if node_id != "RZ"]
+    planning["release_slices"].append(
+        {
+            "id": "M45",
+            "macro_phase_id": "P2",
+            "title": "来源定义的 45 项完整里程碑",
+            "user_value": "所有已确认来源要求都已接受。",
+            "independent_acceptance": "每项来源要求的必需证据通道均通过。",
+            "independent_failure": "保持未晋升。",
+            "future_phase_required_for_success": False,
+            "development_baseline": f"commit@{BASELINE}",
+            "promotion_baseline": f"origin/main:{BASELINE}:must-refetch",
+            "release_candidate": "source-milestone:m45:pending",
+            "node_ids": ["RZ"],
+            "source_completion_requirement_refs": source_release_refs["M45"],
+        }
+    )
     write_json(BUNDLE / ".ssot/planning-compiler.json", planning)
     build_source_notes()
-    build_openproblem()
     build_acceptance(nodes)
 
     main_view = render_main(nodes, edges, release_nodes, source_docs)
@@ -1635,10 +2029,28 @@ def main() -> None:
         "edges_dir": "edges",
         "assumptions_dir": "assumptions",
         "conflicts_dir": "conflicts",
+        "external_dependencies": [
+            {
+                "external_dependency_id": "EXT-CHECKLIST",
+                "authority_path": CHECKLIST.relative_to(ROOT).as_posix(),
+                "authority_commit": BASELINE,
+                "authority_sha256": CHECKLIST_SHA,
+                "required_state": "ACCEPTED",
+                "consumers": ["F", *sorted({node_id for requirement in source_requirements["requirements"] if requirement["source"]["artifact_id"] == "SRC-ART-CHECKLIST" for node_id in requirement["node_refs"]})],
+            },
+            {
+                "external_dependency_id": "EXT-PROTOTYPE",
+                "authority_path": PROTOTYPE.relative_to(ROOT).as_posix(),
+                "authority_commit": BASELINE,
+                "authority_sha256": PROTOTYPE_SHA,
+                "required_state": "ACCEPTED",
+                "consumers": ["F", *sorted({node_id for requirement in source_requirements["requirements"] if requirement["source"]["artifact_id"] == "SRC-ART-PROTOTYPE" for node_id in requirement["node_refs"]})],
+            },
+        ],
         "normative_executable_artifact_contract": {
             "mode": "strict",
             "source_milestone_authority": "source",
-            **strict_names,
+            "source_requirements": "source-requirements.json",
         },
     }
     write_json(BUNDLE / ".ssot/manifest.json", manifest)
@@ -1651,22 +2063,20 @@ def main() -> None:
             "project_name": "photo-content-os",
             "ssot_name": "openclaw-media-full-checklist-implementation",
             "main_document": "ssot-development-paths.md",
-            "problem_documents": ["openproblem.md"],
+            "problem_documents": [],
         },
     )
     write_text(
         BUNDLE / "implementation-progress.md",
         """# 实施进度
 
-- 来源条目：45
-- 已实现条目：0
-- 已接受条目：0
-- 已接受产品决定：10
-- 待人工决定：1（转写提供方边界）
-- 现有回归基线：304 项通过，0 跳过
-- SSOT 正式验证：14 项检查中 13 项通过；来源要求覆盖为 45/45，复杂度、视图、机器图、验收合同、中文可读性与归档检查均通过
-- 唯一失败项：`runtime-skill-provenance`；项目缺少 `.harness/manifest.yaml`，本轮不越界初始化
-- 完成判定：未完成
+- 来源清单条目：45；来源 HTML 与原型均以内容校验值冻结。
+- 已接受产品决定：11（包括转写策略：DashScope 默认、本机 FunASR 失败兜底）。
+- 实现状态：部分实现；不得从代码修改数量推断 45 项完成。
+- 验收合同：46 份仍为 DRAFT，受保护的自动验收基线尚未锁定。
+- 机器验证：必须以本次生成后的统一验证输出为准；历史临时 Skill 报告不构成通过证据。
+- 人工验收：OCM-Z1 尚未提交，不能由自动化代填为通过。
+- 完成判定：未完成。
 
 这份文件只是运行投影，机器权威仍是 `.ssot/` 内的记录。
 """,

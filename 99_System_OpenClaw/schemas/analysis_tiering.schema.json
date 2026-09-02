@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://photo-content-os.local/schemas/analysis_tiering.schema.json",
+  "title": "Photo Content OS analysis tiering plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "budget", "plans"],
+  "properties": {
+    "schema_version": {"const": "analysis_tiering_v1"},
+    "budget": {"$ref": "#/$defs/tier_budget"},
+    "plans": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/asset_plan"}
+    }
+  },
+  "$defs": {
+    "tier_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preview_images_per_asset",
+        "deep_images_per_asset",
+        "max_preview_assets",
+        "max_deep_assets",
+        "max_audio_minutes"
+      ],
+      "properties": {
+        "preview_images_per_asset": {"type": "integer", "minimum": 0},
+        "deep_images_per_asset": {"type": "integer", "minimum": 0},
+        "max_preview_assets": {"type": "integer", "minimum": 0},
+        "max_deep_assets": {"type": "integer", "minimum": 0},
+        "max_audio_minutes": {"type": "number", "minimum": 0}
+      }
+    },
+    "asset_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "media_id",
+        "relative_path",
+        "tier",
+        "image_budget",
+        "audio_seconds_budget",
+        "reason_codes",
+        "cache_key"
+      ],
+      "properties": {
+        "media_id": {"type": "string", "minLength": 1},
+        "relative_path": {"type": "string", "minLength": 1},
+        "tier": {"enum": ["metadata", "preview", "deep"]},
+        "image_budget": {"type": "integer", "minimum": 0},
+        "audio_seconds_budget": {"type": "number", "minimum": 0},
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "cache_key": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

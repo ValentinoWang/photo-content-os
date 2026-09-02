@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://photo-content-os.local/schemas/asset_library_index.schema.json",
+  "title": "Photo Content OS reusable asset library index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "revision",
+    "asset_count",
+    "categories",
+    "tags",
+    "uses",
+    "assets"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "asset_library_index_v1"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "asset_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "categories": {
+      "$ref": "#/$defs/facet_counts"
+    },
+    "tags": {
+      "$ref": "#/$defs/facet_counts"
+    },
+    "uses": {
+      "$ref": "#/$defs/facet_counts"
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    }
+  },
+  "$defs": {
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*\\\\)(?!.*\\.\\.(?:/|$)).+$"
+    },
+    "sorted_unique_strings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "facet_counts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "asset_count"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asset_count": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "asset_id",
+        "title",
+        "category",
+        "card_path",
+        "source_project",
+        "source_relative_path",
+        "source_sha256",
+        "source_size",
+        "public_status",
+        "tags",
+        "uses",
+        "cuts",
+        "icloud_copy",
+        "notes"
+      ],
+      "properties": {
+        "asset_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{12}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "card_path": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/relative_path"
+            },
+            {
+              "pattern": "\\.asset\\.md$"
+            }
+          ]
+        },
+        "source_project": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^/\\\\]+$"
+        },
+        "source_relative_path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "public_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tags": {
+          "$ref": "#/$defs/sorted_unique_strings"
+        },
+        "uses": {
+          "$ref": "#/$defs/sorted_unique_strings"
+        },
+        "cuts": {
+          "$ref": "#/$defs/sorted_unique_strings"
+        },
+        "icloud_copy": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/relative_path"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

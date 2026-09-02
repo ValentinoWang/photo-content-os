@@ -43,7 +43,7 @@
     "DL-I5"
   ],
   "source_requirement_refs": [
-    "SRC-I5"
+    "SRC-CHECKLIST-I5"
   ],
   "surface_refs": [
     "SURF-ORGANIZER"
@@ -58,7 +58,7 @@
     "persistent_runtime": "none",
     "human_visual_review": "blocking"
   },
-  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "visual_contract_ref": ".ssot/source-requirements.json",
   "goal": "用户勾选建议并二次确认后才移入当前操作系统回收站；回读失败必须阻断，界面不得承诺固定保留天数。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",

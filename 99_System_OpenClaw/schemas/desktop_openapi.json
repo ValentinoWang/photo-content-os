@@ -1,0 +1,941 @@
+{
+  "info": {
+    "description": "Loopback-only, CSRF-protected desktop contract. Upstream login is optional.",
+    "title": "Photo Content OS Desktop API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/assets": {
+      "get": {
+        "operationId": "listAssets",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Query the structured asset index"
+      }
+    },
+    "/api/assets/statistics": {
+      "get": {
+        "operationId": "getAssetStatistics",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read dynamic asset facets"
+      }
+    },
+    "/api/assets/{assetId}": {
+      "get": {
+        "operationId": "getAsset",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read one structured asset"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "assetId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/bootstrap": {
+      "get": {
+        "operationId": "getBootstrap",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read desktop bootstrap state"
+      }
+    },
+    "/api/diagnostics": {
+      "get": {
+        "operationId": "getDiagnostics",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Run dynamic local diagnostics"
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read loopback service health"
+      }
+    },
+    "/api/projects": {
+      "get": {
+        "operationId": "listProjects",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "List local projects"
+      },
+      "post": {
+        "operationId": "createProject",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Create a local project"
+      }
+    },
+    "/api/projects/{projectId}": {
+      "get": {
+        "operationId": "getProject",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read a project"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "patch": {
+        "operationId": "updateProject",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Update a project with CAS"
+      }
+    },
+    "/api/projects/{projectId}/assets": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "addProjectAsset",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Add an indexed asset reference to a project"
+      }
+    },
+    "/api/projects/{projectId}/inbox-plan": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "previewInboxPlan",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Preview deterministic inbox batches"
+      }
+    },
+    "/api/projects/{projectId}/inbox-plan/confirm": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "confirmInboxPlan",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Confirm one plan batch and target project"
+      }
+    },
+    "/api/settings": {
+      "get": {
+        "operationId": "getSettings",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read redacted desktop settings"
+      }
+    },
+    "/api/settings/analysis-budget": {
+      "get": {
+        "operationId": "getAnalysisBudget",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read the effective analysis budget"
+      },
+      "post": {
+        "operationId": "updateAnalysisBudget",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Update the analysis budget with CAS"
+      }
+    },
+    "/api/setup/state": {
+      "get": {
+        "operationId": "getSetupState",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read resumable four-step setup state"
+      },
+      "post": {
+        "operationId": "updateSetupState",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Persist one setup transition with CAS"
+      }
+    },
+    "/api/upstream/tasks": {
+      "get": {
+        "operationId": "getUpstreamTasks",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read optional upstream task projections"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8765"
+    }
+  ]
+}
