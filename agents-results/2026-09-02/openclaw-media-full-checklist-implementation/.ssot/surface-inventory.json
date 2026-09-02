@@ -1,0 +1,581 @@
+{
+  "schema_version": 1,
+  "surfaces": [
+    {
+      "surface_id": "SURF-LOGIN",
+      "name": "登录",
+      "routes": [
+        "/login"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-A1"
+      ],
+      "acceptance_refs": [
+        "A1/AC-01",
+        "A1/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-A1"
+      ],
+      "expected_action_ids": [
+        "ACT-A1"
+      ]
+    },
+    {
+      "surface_id": "SURF-SETUP",
+      "name": "安装向导",
+      "routes": [
+        "/setup"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-A2"
+      ],
+      "acceptance_refs": [
+        "A2/AC-01",
+        "A2/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-A2"
+      ],
+      "expected_action_ids": [
+        "ACT-A2"
+      ]
+    },
+    {
+      "surface_id": "SURF-DASHBOARD",
+      "name": "工作台",
+      "routes": [
+        "/app/home"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-H1",
+        "SRC-H2",
+        "SRC-H3",
+        "SRC-H4"
+      ],
+      "acceptance_refs": [
+        "H1/AC-01",
+        "H1/AC-02",
+        "H2/AC-01",
+        "H2/AC-02",
+        "H3/AC-01",
+        "H3/AC-02",
+        "H4/AC-01",
+        "H4/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-H1",
+        "INT-H2",
+        "INT-H3",
+        "INT-H4"
+      ],
+      "expected_action_ids": [
+        "ACT-H1",
+        "ACT-H2",
+        "ACT-H3",
+        "ACT-H4"
+      ]
+    },
+    {
+      "surface_id": "SURF-ORGANIZER",
+      "name": "整理台",
+      "routes": [
+        "/app/inbox"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-D1",
+        "SRC-I1",
+        "SRC-I2",
+        "SRC-I3",
+        "SRC-I4",
+        "SRC-I5",
+        "SRC-T1"
+      ],
+      "acceptance_refs": [
+        "D1/AC-01",
+        "D1/AC-02",
+        "I1/AC-01",
+        "I1/AC-02",
+        "I2/AC-01",
+        "I2/AC-02",
+        "I3/AC-01",
+        "I3/AC-02",
+        "I4/AC-01",
+        "I4/AC-02",
+        "I5/AC-01",
+        "I5/AC-02",
+        "T1/AC-01",
+        "T1/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-D1",
+        "INT-I1",
+        "INT-I2",
+        "INT-I3",
+        "INT-I4",
+        "INT-I5",
+        "INT-T1"
+      ],
+      "expected_action_ids": [
+        "ACT-D1",
+        "ACT-I1",
+        "ACT-I2",
+        "ACT-I3",
+        "ACT-I4",
+        "ACT-I5",
+        "ACT-T1"
+      ]
+    },
+    {
+      "surface_id": "SURF-LIBRARY",
+      "name": "素材库",
+      "routes": [
+        "/app/library"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-D2",
+        "SRC-L1",
+        "SRC-L2",
+        "SRC-L3",
+        "SRC-L4",
+        "SRC-L5",
+        "SRC-T2"
+      ],
+      "acceptance_refs": [
+        "D2/AC-01",
+        "D2/AC-02",
+        "L1/AC-01",
+        "L1/AC-02",
+        "L2/AC-01",
+        "L2/AC-02",
+        "L3/AC-01",
+        "L3/AC-02",
+        "L4/AC-01",
+        "L4/AC-02",
+        "L5/AC-01",
+        "L5/AC-02",
+        "T2/AC-01",
+        "T2/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-D2",
+        "INT-L1",
+        "INT-L2",
+        "INT-L3",
+        "INT-L4",
+        "INT-L5",
+        "INT-T2"
+      ],
+      "expected_action_ids": [
+        "ACT-D2",
+        "ACT-L1",
+        "ACT-L2",
+        "ACT-L3",
+        "ACT-L4",
+        "ACT-L5",
+        "ACT-T2"
+      ]
+    },
+    {
+      "surface_id": "SURF-PROJECT",
+      "name": "项目",
+      "routes": [
+        "/app/project/:projectId"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-P1",
+        "SRC-P2",
+        "SRC-P3",
+        "SRC-P4",
+        "SRC-P5",
+        "SRC-P6",
+        "SRC-T6"
+      ],
+      "acceptance_refs": [
+        "P1/AC-01",
+        "P1/AC-02",
+        "P2/AC-01",
+        "P2/AC-02",
+        "P3/AC-01",
+        "P3/AC-02",
+        "P4/AC-01",
+        "P4/AC-02",
+        "P5/AC-01",
+        "P5/AC-02",
+        "P6/AC-01",
+        "P6/AC-02",
+        "T6/AC-01",
+        "T6/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-P1",
+        "INT-P2",
+        "INT-P3",
+        "INT-P4",
+        "INT-P5",
+        "INT-P6",
+        "INT-T6"
+      ],
+      "expected_action_ids": [
+        "ACT-P1",
+        "ACT-P2",
+        "ACT-P3",
+        "ACT-P4",
+        "ACT-P5",
+        "ACT-P6",
+        "ACT-T6"
+      ]
+    },
+    {
+      "surface_id": "SURF-SETTINGS",
+      "name": "设置与诊断",
+      "routes": [
+        "/app/settings"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-D3",
+        "SRC-S1",
+        "SRC-S2",
+        "SRC-S3",
+        "SRC-S4",
+        "SRC-S5",
+        "SRC-T3",
+        "SRC-T4"
+      ],
+      "acceptance_refs": [
+        "D3/AC-01",
+        "D3/AC-02",
+        "S1/AC-01",
+        "S1/AC-02",
+        "S2/AC-01",
+        "S2/AC-02",
+        "S3/AC-01",
+        "S3/AC-02",
+        "S4/AC-01",
+        "S4/AC-02",
+        "S5/AC-01",
+        "S5/AC-02",
+        "T3/AC-01",
+        "T3/AC-02",
+        "T4/AC-01",
+        "T4/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-D3",
+        "INT-S1",
+        "INT-S2",
+        "INT-S3",
+        "INT-S4",
+        "INT-S5",
+        "INT-T3",
+        "INT-T4"
+      ],
+      "expected_action_ids": [
+        "ACT-D3",
+        "ACT-S1",
+        "ACT-S2",
+        "ACT-S3",
+        "ACT-S4",
+        "ACT-S5",
+        "ACT-T3",
+        "ACT-T4"
+      ]
+    },
+    {
+      "surface_id": "SURF-CLOUD",
+      "name": "网页中台",
+      "routes": [
+        "/cloud/tasks"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-C1",
+        "SRC-C2",
+        "SRC-C3"
+      ],
+      "acceptance_refs": [
+        "C1/AC-01",
+        "C1/AC-02",
+        "C2/AC-01",
+        "C2/AC-02",
+        "C3/AC-01",
+        "C3/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-C1",
+        "INT-C2",
+        "INT-C3"
+      ],
+      "expected_action_ids": [
+        "ACT-C1",
+        "ACT-C2",
+        "ACT-C3"
+      ]
+    },
+    {
+      "surface_id": "SURF-STUDIO",
+      "name": "Studio 能力迁移区",
+      "routes": [
+        "/app/project/:projectId/studio"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "ready",
+        "success"
+      ],
+      "locales": [
+        "zh-CN"
+      ],
+      "themes": [
+        "dark"
+      ],
+      "viewports": [
+        "desktop-1440x900",
+        "mobile-390x844"
+      ],
+      "helper_modes": [
+        "connected"
+      ],
+      "source_artifact_refs": [
+        "SRC-ART-CHECKLIST",
+        "SRC-ART-PROTOTYPE"
+      ],
+      "requirement_refs": [
+        "SRC-T5",
+        "SRC-K1",
+        "SRC-K2",
+        "SRC-K3",
+        "SRC-K4",
+        "SRC-K5",
+        "SRC-K6"
+      ],
+      "acceptance_refs": [
+        "T5/AC-01",
+        "T5/AC-02",
+        "K1/AC-01",
+        "K1/AC-02",
+        "K2/AC-01",
+        "K2/AC-02",
+        "K3/AC-01",
+        "K3/AC-02",
+        "K4/AC-01",
+        "K4/AC-02",
+        "K5/AC-01",
+        "K5/AC-02",
+        "K6/AC-01",
+        "K6/AC-02"
+      ],
+      "expected_interaction_ids": [
+        "INT-T5",
+        "INT-K1",
+        "INT-K2",
+        "INT-K3",
+        "INT-K4",
+        "INT-K5",
+        "INT-K6"
+      ],
+      "expected_action_ids": [
+        "ACT-T5",
+        "ACT-K1",
+        "ACT-K2",
+        "ACT-K3",
+        "ACT-K4",
+        "ACT-K5",
+        "ACT-K6"
+      ]
+    }
+  ]
+}

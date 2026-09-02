@@ -1,0 +1,75 @@
+{
+  "node_id": "Q5",
+  "semantic_key": "acceptance.release.r5",
+  "stage": "R5",
+  "work_kind": "validation",
+  "domain_lane": "r5",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "C1",
+    "C2",
+    "C3",
+    "T4"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.q5"
+  ],
+  "write_authority": "shared-generated",
+  "acceptance_authority": "独立验收负责人",
+  "unlocks": [
+    "Z1"
+  ],
+  "node_role": "acceptance-gate",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "planning-compiler.json#node-Q5",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "freezes",
+  "deliverable_ids": [
+    "DL-Q5"
+  ],
+  "source_requirement_refs": [
+    "SRC-S1",
+    "SRC-S2",
+    "SRC-S3",
+    "SRC-S4",
+    "SRC-S5",
+    "SRC-C1",
+    "SRC-C2",
+    "SRC-C3",
+    "SRC-T4"
+  ],
+  "surface_refs": [
+    "SURF-CLOUD",
+    "SURF-SETTINGS"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "sandbox-real",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "汇编 R5 的独立候选、证据和接受结果",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "独立验收负责人"
+}

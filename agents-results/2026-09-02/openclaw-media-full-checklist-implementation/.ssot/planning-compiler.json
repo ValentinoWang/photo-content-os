@@ -1,0 +1,1553 @@
+{
+  "planning_compiler_schema_version": 1,
+  "classification": {
+    "applicability": "ssot",
+    "ssot_depth": "L2",
+    "artifact_policy": "create-ssot",
+    "selection_authority": "user",
+    "rationale": "用户明确要求以指定 HTML 的 45 项要求创建新 SSOT；范围横跨八个独立发布切片、九个用户表面、外部身份与本地第三方工具。"
+  },
+  "macro_phases": [
+    {
+      "id": "P1",
+      "title": "基础能力与主工作面",
+      "release_ids": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "P2",
+      "title": "连接、迁移与整体发布",
+      "release_ids": [
+        "R5",
+        "R6",
+        "R7",
+        "R8"
+      ]
+    }
+  ],
+  "release_slices": [
+    {
+      "id": "R1",
+      "macro_phase_id": "P1",
+      "title": "安全、契约和已接受决定",
+      "user_value": "冻结安全边界与共用契约，先偿还会放大破坏半径的债。",
+      "independent_acceptance": "R1 所有条目合同、自动证据和所需人工判断同时通过。",
+      "independent_failure": "R1 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "candidate:r1:content-digest-pending",
+      "node_ids": [
+        "F",
+        "PD",
+        "PD1",
+        "PD2",
+        "PD3",
+        "PD4",
+        "PD5",
+        "PD6",
+        "PD7",
+        "PD8",
+        "PD9",
+        "TRD",
+        "D1",
+        "D2",
+        "D3",
+        "T1",
+        "T3",
+        "T5",
+        "Q1"
+      ]
+    },
+    {
+      "id": "R2",
+      "macro_phase_id": "P1",
+      "title": "整理台",
+      "user_value": "用户可把散素材自动分批、复核来源和落点，并由本人决定是否进入系统回收站。",
+      "independent_acceptance": "R2 所有条目合同、自动证据和所需人工判断同时通过。",
+      "independent_failure": "R2 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "candidate:r2:content-digest-pending",
+      "node_ids": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "Q2"
+      ]
+    },
+    {
+      "id": "R3",
+      "macro_phase_id": "P1",
+      "title": "素材库与归档",
+      "user_value": "用户可按结构化索引检索复用素材，并明确每个物理位置和生命周期状态。",
+      "independent_acceptance": "R3 所有条目合同、自动证据和所需人工判断同时通过。",
+      "independent_failure": "R3 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "candidate:r3:content-digest-pending",
+      "node_ids": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "T2",
+        "Q3"
+      ]
+    },
+    {
+      "id": "R4",
+      "macro_phase_id": "P1",
+      "title": "项目与结构化时间线",
+      "user_value": "用户可查看并编辑唯一权威剪辑方案，输出真实支持的交接产物。",
+      "independent_acceptance": "R4 所有条目合同、自动证据和所需人工判断同时通过。",
+      "independent_failure": "R4 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "candidate:r4:content-digest-pending",
+      "node_ids": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "T6",
+        "Q4"
+      ]
+    },
+    {
+      "id": "R5",
+      "macro_phase_id": "P2",
+      "title": "设置、诊断与网页中台",
+      "user_value": "用户可配置模型、预算、位置并理解诊断和上游任务状态。",
+      "independent_acceptance": "R5 所有条目合同、自动证据和所需人工判断同时通过。",
+      "independent_failure": "R5 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "candidate:r5:content-digest-pending",
+      "node_ids": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "C1",
+        "C2",
+        "C3",
+        "T4",
+        "Q5"
+      ]
+    },
+    {
+      "id": "R6",
+      "macro_phase_id": "P2",
+      "title": "登录、安装与工作台",
+      "user_value": "用户可选择配对上游身份、完成安装并从工作台进入最近工作。",
+      "independent_acceptance": "R6 所有条目合同、自动证据和所需人工判断同时通过。",
+      "independent_failure": "R6 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "candidate:r6:content-digest-pending",
+      "node_ids": [
+        "A1",
+        "A2",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "Q6"
+      ]
+    },
+    {
+      "id": "R7",
+      "macro_phase_id": "P2",
+      "title": "既有 Studio 能力迁移",
+      "user_value": "新界面保留锁定、版本、失效传播、参考资料、复盘和文档阶段。",
+      "independent_acceptance": "R7 所有条目合同、自动证据和所需人工判断同时通过。",
+      "independent_failure": "R7 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "candidate:r7:content-digest-pending",
+      "node_ids": [
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5",
+        "K6",
+        "Q7"
+      ]
+    },
+    {
+      "id": "R8",
+      "macro_phase_id": "P2",
+      "title": "九屏共享入口和最终整合",
+      "user_value": "九个界面共享一套导航、状态、安全和验收边界。",
+      "independent_acceptance": "R8 所有条目合同、自动证据和所需人工判断同时通过。",
+      "independent_failure": "R8 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
+      "future_phase_required_for_success": false,
+      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "release_candidate": "candidate:r8:content-digest-pending",
+      "node_ids": [
+        "Z1",
+        "Q8",
+        "RZ"
+      ]
+    }
+  ],
+  "waves": [
+    {
+      "id": "W1",
+      "release_id": "R1",
+      "node_ids": [
+        "F",
+        "PD",
+        "PD1",
+        "PD2",
+        "PD3",
+        "PD4",
+        "PD5",
+        "PD6",
+        "PD7",
+        "PD8",
+        "PD9",
+        "TRD",
+        "D1",
+        "D2",
+        "D3",
+        "T1",
+        "T3",
+        "T5",
+        "Q1"
+      ]
+    },
+    {
+      "id": "W2",
+      "release_id": "R2",
+      "node_ids": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "Q2"
+      ]
+    },
+    {
+      "id": "W3",
+      "release_id": "R3",
+      "node_ids": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "T2",
+        "Q3"
+      ]
+    },
+    {
+      "id": "W4",
+      "release_id": "R4",
+      "node_ids": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "T6",
+        "Q4"
+      ]
+    },
+    {
+      "id": "W5",
+      "release_id": "R5",
+      "node_ids": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "C1",
+        "C2",
+        "C3",
+        "T4",
+        "Q5"
+      ]
+    },
+    {
+      "id": "W6",
+      "release_id": "R6",
+      "node_ids": [
+        "A1",
+        "A2",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "Q6"
+      ]
+    },
+    {
+      "id": "W7",
+      "release_id": "R7",
+      "node_ids": [
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5",
+        "K6",
+        "Q7"
+      ]
+    },
+    {
+      "id": "W8",
+      "release_id": "R8",
+      "node_ids": [
+        "Z1",
+        "Q8",
+        "RZ"
+      ]
+    }
+  ],
+  "scheduling_model": "event-driven",
+  "scheduling_hints": [
+    "只有显式硬依赖定义拓扑；来源分组和发布切片不会自动串行。",
+    "当前就绪叶节点可按写入区域并行；共享生成物、候选汇编和发布决定始终由单一负责人串行写入。",
+    "转写决定只阻塞 D3 和最终完整候选；其他无关节点不等待该决定。"
+  ],
+  "nodes": [
+    {
+      "id": "F",
+      "kind": "validation",
+      "goal": "冻结 HTML、原型、源码和测试的可回读事实基线",
+      "dependencies": [],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "主协调者"
+    },
+    {
+      "id": "PD",
+      "kind": "decision",
+      "goal": "完整覆盖 HTML 的 45 项要求，不以降级或删除条目换取完成。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD1",
+      "kind": "decision",
+      "goal": "自动分事件、分批完整实现，先预览确认再执行迁移。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD2",
+      "kind": "decision",
+      "goal": "新增结构化素材索引，Markdown 继续供人阅读。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD3",
+      "kind": "decision",
+      "goal": "只生成删除建议；用户选择并二次确认后进入当前系统回收站，禁止永久删除。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD4",
+      "kind": "decision",
+      "goal": "创意模型由用户配置，支持 Codex/OpenAI、Claude/Anthropic、DeepSeek 和兼容接口。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD5",
+      "kind": "decision",
+      "goal": "ChatCut 只通过 Desktop 本地 MCP 接入，实时探测且主动连接后才显示。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD6",
+      "kind": "decision",
+      "goal": "生命周期和物理位置同时配置，每个位置独立保存清单、校验值与回读状态。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD7",
+      "kind": "decision",
+      "goal": "优先复用上游中台身份；配对可选，未登录或平台不支持时本地功能保持完整。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD8",
+      "kind": "decision",
+      "goal": "结构化 06_edit_decision_list.json 是机器执行唯一剪辑方案权威。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "PD9",
+      "kind": "decision",
+      "goal": "剪映脚本仅作历史材料，自动化不得修改生产剪映草稿。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "TRD",
+      "kind": "decision",
+      "goal": "决定转写提供方、默认策略、音频发送边界、费用和失败占位行为",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人"
+    },
+    {
+      "id": "D1",
+      "kind": "implementation",
+      "goal": "从媒体清单生成可解释、可确认且不可拆分实况照片组的事件批次计划；未确认或输入漂移时禁止迁移。",
+      "dependencies": [
+        "F",
+        "PD",
+        "PD1",
+        "T1"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "D2",
+      "kind": "implementation",
+      "goal": "以稳定素材身份原子维护结构化索引，支持分类、标签、用途、计数与详情查询，同时保留 Markdown 卡片。",
+      "dependencies": [
+        "F",
+        "PD",
+        "PD2",
+        "T2"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "D3",
+      "kind": "implementation",
+      "goal": "在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。",
+      "dependencies": [
+        "F",
+        "PD",
+        "TRD"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者",
+      "side_effects": [
+        "external-api"
+      ],
+      "transaction_models": {
+        "external-api": "saga"
+      },
+      "escalation": {
+        "reasons": [
+          "external-side-effect"
+        ],
+        "evidence_contract": "acceptance-fragments/OCM-D3/acceptance-contract.md",
+        "recovery_contract": "不保存明文凭据；超时或部分失败保留本地可用状态并给出待处理回执",
+        "external_identity": "用户明确选择的上游账号或转写提供方沙箱身份"
+      }
+    },
+    {
+      "id": "T1",
+      "kind": "implementation",
+      "goal": "给 35_promote_inbox_batch_to_project.py 补测试：接 UI 之前先补测试。这条建议优先级高于任何界面工作。",
+      "dependencies": [
+        "F",
+        "PD"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "T3",
+      "kind": "implementation",
+      "goal": "给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
+      "dependencies": [
+        "F",
+        "PD"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "T5",
+      "kind": "implementation",
+      "goal": "所有新增写接口沿用 loopback、同源、CSRF 和明确 revision 域的乐观并发控制，跨端口 Origin 必须拒绝。",
+      "dependencies": [
+        "F",
+        "PD"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "Q1",
+      "kind": "validation",
+      "goal": "汇编 R1 的独立候选、证据和接受结果",
+      "dependencies": [
+        "PD",
+        "PD1",
+        "PD2",
+        "PD3",
+        "PD4",
+        "PD5",
+        "PD6",
+        "PD7",
+        "PD8",
+        "PD9",
+        "TRD",
+        "D1",
+        "D2",
+        "D3",
+        "T1",
+        "T3",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "独立验收负责人"
+    },
+    {
+      "id": "I1",
+      "kind": "implementation",
+      "goal": "拖入素材 → 自动成批：已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。",
+      "dependencies": [
+        "F",
+        "D1",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "I2",
+      "kind": "implementation",
+      "goal": "批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1）：读 manifest 分组计数即可，不用新后端。",
+      "dependencies": [
+        "F",
+        "PD1"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "I3",
+      "kind": "implementation",
+      "goal": "连拍识别（「发现 4 组连拍」）与实况配对：把 12 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。",
+      "dependencies": [
+        "F",
+        "PD1",
+        "T2"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "I4",
+      "kind": "implementation",
+      "goal": "三分落点：进项目 / 归档保留 / 推荐删除：新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。",
+      "dependencies": [
+        "F",
+        "PD3",
+        "T3",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "I5",
+      "kind": "implementation",
+      "goal": "用户勾选建议并二次确认后才移入当前操作系统回收站；回读失败必须阻断，界面不得承诺固定保留天数。",
+      "dependencies": [
+        "F",
+        "PD3",
+        "I4",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "Q2",
+      "kind": "validation",
+      "goal": "汇编 R2 的独立候选、证据和接受结果",
+      "dependencies": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "独立验收负责人"
+    },
+    {
+      "id": "L1",
+      "kind": "implementation",
+      "goal": "复用资产卡片列表 + 分类树：索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。",
+      "dependencies": [
+        "F",
+        "D2"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "L2",
+      "kind": "implementation",
+      "goal": "按标签筛选：同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。",
+      "dependencies": [
+        "F",
+        "D2"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "L3",
+      "kind": "implementation",
+      "goal": "同时展示生命周期和每个物理位置的真实回读状态，逻辑登记不得冒充副本已存在。",
+      "dependencies": [
+        "F",
+        "PD6"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "L4",
+      "kind": "implementation",
+      "goal": "归档索引卡（检索关键词、精选副本入口、恢复方式）：包 HTTP 接口。这是素材库里唯一后端完备的部分。",
+      "dependencies": [
+        "F",
+        "PD6"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "L5",
+      "kind": "implementation",
+      "goal": "详情栏主按钮「选择项目并加入」要落到真实动作：要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。",
+      "dependencies": [
+        "F",
+        "D2",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "T2",
+      "kind": "implementation",
+      "goal": "给素材库三件套补测试（12 / 14 / 15）：和第 00 节的索引层一起做，定契约的同时补测试。",
+      "dependencies": [
+        "F",
+        "PD",
+        "PD2"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "Q3",
+      "kind": "validation",
+      "goal": "汇编 R3 的独立候选、证据和接受结果",
+      "dependencies": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "T2"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "独立验收负责人"
+    },
+    {
+      "id": "P1",
+      "kind": "implementation",
+      "goal": "剪辑决策条目列表（时间码 / 台词 / 角色标签）：纯前端。EDL 已经通过 GET /api/projects/:id 返回了。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "P2",
+      "kind": "implementation",
+      "goal": "双轨时间线（主画面 + 叠加层）：纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "P3",
+      "kind": "implementation",
+      "goal": "结构化时间线为主视图，同时保留文本说明与受约束的选区修改，不形成第二份机器执行权威。",
+      "dependencies": [
+        "F",
+        "PD8",
+        "P1",
+        "P2",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "P4",
+      "kind": "implementation",
+      "goal": "「待补素材」缺口清单：纯前端。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "P5",
+      "kind": "implementation",
+      "goal": "内建只显示 handoff_pack 与 otio_kdenlive；ChatCut 仅在本地 MCP 实时探测和主动连接后成为可选去向。",
+      "dependencies": [
+        "F",
+        "PD5",
+        "PD8",
+        "PD9",
+        "P2",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "P6",
+      "kind": "implementation",
+      "goal": "统一表述为剪映生产路线已停止维护，删除没有证据的“草稿加密”理由。",
+      "dependencies": [
+        "F",
+        "PD9",
+        "T6"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "T6",
+      "kind": "implementation",
+      "goal": "七个剪映脚本要么物理归档，要么逐项声明历史且不维护，并使文档、能力清单和持续集成保持一致。",
+      "dependencies": [
+        "F",
+        "PD",
+        "PD9"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "Q4",
+      "kind": "validation",
+      "goal": "汇编 R4 的独立候选、证据和接受结果",
+      "dependencies": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "T6"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "独立验收负责人"
+    },
+    {
+      "id": "S1",
+      "kind": "implementation",
+      "goal": "分析预算四个数字：补一个读写配置的接口。注意 analysis_tiering 的输出 没有 JSON Schema，只有 dataclass 和 POLICY_VERSION。",
+      "dependencies": [
+        "F",
+        "T4",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "S2",
+      "kind": "implementation",
+      "goal": "存放位置（素材根目录 / 笔记库）：现有接口是项目级的，设置页要的是全局级，得加一个。",
+      "dependencies": [
+        "F",
+        "PD6",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "S3",
+      "kind": "implementation",
+      "goal": "诊断页六项检查：包接口。前端别把「6 项」写死。另外这个脚本 零测试覆盖，接之前建议先补。",
+      "dependencies": [
+        "F",
+        "T3"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "S4",
+      "kind": "implementation",
+      "goal": "Windows 与 Linux 将上游配对显示为“不支持”而不是“配置失败”，并明确本地核心能力仍可用。",
+      "dependencies": [
+        "F",
+        "PD7"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "S5",
+      "kind": "implementation",
+      "goal": "持久化用户选择的提供方、模型、端点、思考强度和密钥引用，并确保真实执行链消费该配置。",
+      "dependencies": [
+        "F",
+        "PD4",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "C1",
+      "kind": "implementation",
+      "goal": "任务列表上的 media.xxx.v1 标识符是对的：保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。",
+      "dependencies": [
+        "F",
+        "PD7"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "C2",
+      "kind": "implementation",
+      "goal": "任务状态机（执行中 / 已完成 / 已阻塞）：前端目前只画了 3 态，补齐映射即可。注意 expired 和 cancelled 也要有对应显示。",
+      "dependencies": [
+        "F",
+        "PD7",
+        "C1"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "C3",
+      "kind": "implementation",
+      "goal": "冻结基线要写进界面还是文档：上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。",
+      "dependencies": [
+        "F",
+        "PD7",
+        "C2"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "T4",
+      "kind": "implementation",
+      "goal": "给 analysis_tiering 的输出定 JSON Schema：补 schemas/analysis_tiering.schema.json，纳入现有的契约校验流程。",
+      "dependencies": [
+        "F",
+        "PD"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "Q5",
+      "kind": "validation",
+      "goal": "汇编 R5 的独立候选、证据和接受结果",
+      "dependencies": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "C1",
+        "C2",
+        "C3",
+        "T4"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "独立验收负责人"
+    },
+    {
+      "id": "A1",
+      "kind": "implementation",
+      "goal": "使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。",
+      "dependencies": [
+        "F",
+        "PD7",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者",
+      "side_effects": [
+        "external-api"
+      ],
+      "transaction_models": {
+        "external-api": "saga"
+      },
+      "escalation": {
+        "reasons": [
+          "external-side-effect"
+        ],
+        "evidence_contract": "acceptance-fragments/OCM-A1/acceptance-contract.md",
+        "recovery_contract": "不保存明文凭据；超时或部分失败保留本地可用状态并给出待处理回执",
+        "external_identity": "用户明确选择的上游账号或转写提供方沙箱身份"
+      }
+    },
+    {
+      "id": "A2",
+      "kind": "implementation",
+      "goal": "向导可重入地完成位置、运行环境、编辑器、账号与设备四步，并能从失败处恢复。",
+      "dependencies": [
+        "F",
+        "PD6",
+        "PD7",
+        "PD9",
+        "S2",
+        "S3",
+        "T5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "H1",
+      "kind": "implementation",
+      "goal": "最近项目列表 + 六段流水线进度：纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "H2",
+      "kind": "implementation",
+      "goal": "聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。",
+      "dependencies": [
+        "F",
+        "PD4",
+        "PD5",
+        "PD7",
+        "S3",
+        "S5"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "H3",
+      "kind": "implementation",
+      "goal": "素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB）：索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。",
+      "dependencies": [
+        "F",
+        "D2"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "H4",
+      "kind": "implementation",
+      "goal": "本周统计（完成任务 23 / 发布内容 4）：加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。",
+      "dependencies": [
+        "F"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "Q6",
+      "kind": "validation",
+      "goal": "汇编 R6 的独立候选、证据和接受结果",
+      "dependencies": [
+        "A1",
+        "A2",
+        "H1",
+        "H2",
+        "H3",
+        "H4"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "独立验收负责人"
+    },
+    {
+      "id": "K1",
+      "kind": "implementation",
+      "goal": "区块锁定 + AI 只改选中区块：新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "K2",
+      "kind": "implementation",
+      "goal": "版本 diff 与非破坏性回滚：原型里没有版本概念。至少要在项目屏留一个入口。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "K3",
+      "kind": "implementation",
+      "goal": "下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新）：原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "K4",
+      "kind": "implementation",
+      "goal": "研究与参考（reference ≠ 自有素材）：这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "K5",
+      "kind": "implementation",
+      "goal": "发布与复盘（指标 + 复盘结论 + 下次约束）：原型里完全没有。这块丢了，产品就退化成一次性工具。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "K6",
+      "kind": "implementation",
+      "goal": "Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。",
+      "dependencies": [
+        "F",
+        "PD8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "对应领域维护者"
+    },
+    {
+      "id": "Q7",
+      "kind": "validation",
+      "goal": "汇编 R7 的独立候选、证据和接受结果",
+      "dependencies": [
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5",
+        "K6"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "独立验收负责人"
+    },
+    {
+      "id": "Z1",
+      "kind": "implementation",
+      "goal": "把九个表面接入同一入口、共享状态和完整纵向动作链，并建立项目内视觉工作台",
+      "dependencies": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "桌面前端与服务维护者"
+    },
+    {
+      "id": "Q8",
+      "kind": "validation",
+      "goal": "汇编 R8 的独立候选、证据和接受结果",
+      "dependencies": [
+        "Z1"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "独立验收负责人"
+    },
+    {
+      "id": "RZ",
+      "kind": "release",
+      "goal": "只在八个切片和九屏人工验收均接受后作最终发布决定",
+      "dependencies": [
+        "Q8"
+      ],
+      "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+      "owner": "产品负责人",
+      "escalation": {
+        "reasons": [
+          "production-release"
+        ],
+        "immutable_release_identity": "candidate:r8:content-digest-pending",
+        "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+        "recovery_contract": "未满足发布证据时保持上一个已接受不可变版本；已发布后使用前向修复或恢复上一已接受版本。"
+      }
+    }
+  ],
+  "external_systems": [
+    "上游 OpenClaw Media 身份系统",
+    "用户配置的模型提供方",
+    "ChatCut Desktop 本地 MCP",
+    "当前操作系统回收站",
+    "用户选择的云盘和移动存储",
+    "本地 Kdenlive 与 OTIO 运行时"
+  ],
+  "acceptance_layers": [
+    "source",
+    "static-test",
+    "fixture/mock",
+    "local-runtime",
+    "external-sandbox",
+    "human"
+  ],
+  "release_boundary_compiler": {
+    "boundary_required": true,
+    "decision_authority": "source",
+    "rationale": "HTML 的功能群具有独立用户价值和失败边界；最终 45 项完成权威仍属来源要求。"
+  },
+  "artifacts": {
+    "ssot_bundle": true,
+    "generated_views": [
+      "main"
+    ],
+    "worker_ledger": false,
+    "evidence_identity_registry": false,
+    "resource_matrix": false,
+    "runner_registry": false
+  },
+  "artifacts_inventory": {
+    "total_nodes": 67,
+    "implementation_nodes": 46,
+    "worker_nodes": 0,
+    "generated_views": 1
+  },
+  "complexity_budget": {
+    "authority": "用户要求完整覆盖 45 项与 L2 比例治理合同",
+    "rationale": "45 个来源条目各保留一个责任节点；决定、发布验收和九屏汇合只增加必要薄节点，不登记未真实运行的外部 Codex 进程。",
+    "limits": {
+      "total_nodes": 67,
+      "implementation_nodes_per_release": 9,
+      "codex_worker_nodes": 0,
+      "generated_views": 1
+    }
+  },
+  "goal_size_detector": {
+    "implementation_or_migration_nodes": 46,
+    "external_systems": 6,
+    "release_slices": 8,
+    "production_migrations": 0,
+    "acceptance_layers": 6,
+    "split_required": false,
+    "split_strategy": "release"
+  },
+  "conservation_rule": {
+    "statement": "每个 HTML MUST 条目必须绑定一个显式未完成或已证明节点；不得丢失、降级或用其他条目的证据替代。"
+  },
+  "source_requirements": [
+    {
+      "requirement_id": "SRC-D1",
+      "node_ids": [
+        "D1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-D2",
+      "node_ids": [
+        "D2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-D3",
+      "node_ids": [
+        "D3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-A1",
+      "node_ids": [
+        "A1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-A2",
+      "node_ids": [
+        "A2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-H1",
+      "node_ids": [
+        "H1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-H2",
+      "node_ids": [
+        "H2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-H3",
+      "node_ids": [
+        "H3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-H4",
+      "node_ids": [
+        "H4"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-I1",
+      "node_ids": [
+        "I1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-I2",
+      "node_ids": [
+        "I2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-I3",
+      "node_ids": [
+        "I3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-I4",
+      "node_ids": [
+        "I4"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-I5",
+      "node_ids": [
+        "I5"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-L1",
+      "node_ids": [
+        "L1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-L2",
+      "node_ids": [
+        "L2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-L3",
+      "node_ids": [
+        "L3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-L4",
+      "node_ids": [
+        "L4"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-L5",
+      "node_ids": [
+        "L5"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-P1",
+      "node_ids": [
+        "P1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-P2",
+      "node_ids": [
+        "P2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-P3",
+      "node_ids": [
+        "P3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-P4",
+      "node_ids": [
+        "P4"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-P5",
+      "node_ids": [
+        "P5"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-P6",
+      "node_ids": [
+        "P6"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-S1",
+      "node_ids": [
+        "S1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-S2",
+      "node_ids": [
+        "S2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-S3",
+      "node_ids": [
+        "S3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-S4",
+      "node_ids": [
+        "S4"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-S5",
+      "node_ids": [
+        "S5"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-C1",
+      "node_ids": [
+        "C1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-C2",
+      "node_ids": [
+        "C2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-C3",
+      "node_ids": [
+        "C3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-T1",
+      "node_ids": [
+        "T1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-T2",
+      "node_ids": [
+        "T2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-T3",
+      "node_ids": [
+        "T3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-T4",
+      "node_ids": [
+        "T4"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-T5",
+      "node_ids": [
+        "T5"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-T6",
+      "node_ids": [
+        "T6"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-K1",
+      "node_ids": [
+        "K1"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-K2",
+      "node_ids": [
+        "K2"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-K3",
+      "node_ids": [
+        "K3"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-K4",
+      "node_ids": [
+        "K4"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-K5",
+      "node_ids": [
+        "K5"
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "requirement_id": "SRC-K6",
+      "node_ids": [
+        "K6"
+      ],
+      "status": "INCOMPLETE"
+    }
+  ]
+}

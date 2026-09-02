@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-P3-Q4",
+  "from": "P3",
+  "to": "Q4",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.p3.q4"
+  ],
+  "transferred_input": "P3 已接受的合同、实现或验收产物",
+  "gate_evidence": "P3 节点状态与候选内容校验值",
+  "reason_code": "acceptance-dependency"
+}

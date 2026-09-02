@@ -1,0 +1,62 @@
+{
+  "node_id": "PD6",
+  "semantic_key": "decision.archive.location-lifecycle",
+  "stage": "R1",
+  "work_kind": "decision-acceptance",
+  "domain_lane": "r1",
+  "execution_state": "ACCEPTED",
+  "decision_state": "ACCEPTED",
+  "decision_version": 1,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [],
+  "invalidation_keys": [
+    "checklist.pd6"
+  ],
+  "write_authority": "isolated-record",
+  "acceptance_authority": "用户已明确决定",
+  "unlocks": [
+    "A2",
+    "L3",
+    "L4",
+    "S2",
+    "Q1"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "human",
+  "execution_contract_ref": "planning-compiler.json#node-PD6",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "none",
+  "deliverable_ids": [
+    "DL-PD6"
+  ],
+  "source_requirement_refs": [
+    "SRC-A2",
+    "SRC-L3",
+    "SRC-L4",
+    "SRC-S2"
+  ],
+  "surface_refs": [
+    "SURF-LIBRARY",
+    "SURF-SETTINGS",
+    "SURF-SETUP"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "none",
+    "persistent_runtime": "installed",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "生命周期和物理位置同时配置，每个位置独立保存清单、校验值与回读状态。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "产品负责人"
+}

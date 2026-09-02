@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "user_visible": true,
+  "task_id": "OCM-Z1",
+  "reference_prototypes": [
+    {
+      "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
+      "sha256": "12333526096c18d2dc0e4a0f4b49d804d0f3cf5683117730ce415e3665686978",
+      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:cc44bc4065310264b7bf398680fc6cb0750fd163",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "capture_matrix": {
+    "ref": ".ssot/visual-fidelity-contract.json",
+    "surface_refs": [
+      "SURF-LOGIN",
+      "SURF-SETUP",
+      "SURF-DASHBOARD",
+      "SURF-ORGANIZER",
+      "SURF-LIBRARY",
+      "SURF-PROJECT",
+      "SURF-SETTINGS",
+      "SURF-CLOUD",
+      "SURF-STUDIO"
+    ]
+  },
+  "interaction_matrix_ref": ".ssot/interaction-matrix.json",
+  "visual_evidence_types": [
+    "dom",
+    "computed-style",
+    "screenshot",
+    "interaction-trace"
+  ],
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "source_requirement_refs": [
+    "SRC-D1",
+    "SRC-D2",
+    "SRC-D3",
+    "SRC-A1",
+    "SRC-A2",
+    "SRC-H1",
+    "SRC-H2",
+    "SRC-H3",
+    "SRC-H4",
+    "SRC-I1",
+    "SRC-I2",
+    "SRC-I3",
+    "SRC-I4",
+    "SRC-I5",
+    "SRC-L1",
+    "SRC-L2",
+    "SRC-L3",
+    "SRC-L4",
+    "SRC-L5",
+    "SRC-P1",
+    "SRC-P2",
+    "SRC-P3",
+    "SRC-P4",
+    "SRC-P5",
+    "SRC-P6",
+    "SRC-S1",
+    "SRC-S2",
+    "SRC-S3",
+    "SRC-S4",
+    "SRC-S5",
+    "SRC-C1",
+    "SRC-C2",
+    "SRC-C3",
+    "SRC-T1",
+    "SRC-T2",
+    "SRC-T3",
+    "SRC-T4",
+    "SRC-T5",
+    "SRC-T6",
+    "SRC-K1",
+    "SRC-K2",
+    "SRC-K3",
+    "SRC-K4",
+    "SRC-K5",
+    "SRC-K6"
+  ],
+  "workbench_path": "99_System_OpenClaw/visual-workbench.html",
+  "deep_link": {
+    "supported": false,
+    "gap_note": "Z1 由桌面前端维护者在项目内新建视觉工作台，并为九个界面补齐稳定深链接；在此之前不宣称来源原型是视觉工作台。"
+  }
+}

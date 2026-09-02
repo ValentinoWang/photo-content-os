@@ -1,0 +1,75 @@
+{
+  "node_id": "PD8",
+  "semantic_key": "decision.edl.machine-authority",
+  "stage": "R1",
+  "work_kind": "decision-acceptance",
+  "domain_lane": "r1",
+  "execution_state": "ACCEPTED",
+  "decision_state": "ACCEPTED",
+  "decision_version": 1,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [],
+  "invalidation_keys": [
+    "checklist.pd8"
+  ],
+  "write_authority": "isolated-record",
+  "acceptance_authority": "用户已明确决定",
+  "unlocks": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "K1",
+    "K2",
+    "K3",
+    "K4",
+    "K5",
+    "K6",
+    "Q1"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "human",
+  "execution_contract_ref": "planning-compiler.json#node-PD8",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "none",
+  "deliverable_ids": [
+    "DL-PD8"
+  ],
+  "source_requirement_refs": [
+    "SRC-P1",
+    "SRC-P2",
+    "SRC-P3",
+    "SRC-P4",
+    "SRC-P5",
+    "SRC-K1",
+    "SRC-K2",
+    "SRC-K3",
+    "SRC-K4",
+    "SRC-K5",
+    "SRC-K6"
+  ],
+  "surface_refs": [
+    "SURF-PROJECT",
+    "SURF-STUDIO"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "real",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "结构化 06_edit_decision_list.json 是机器执行唯一剪辑方案权威。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "产品负责人"
+}

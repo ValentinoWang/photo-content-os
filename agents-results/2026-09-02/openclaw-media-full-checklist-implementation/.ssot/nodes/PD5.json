@@ -1,0 +1,57 @@
+{
+  "node_id": "PD5",
+  "semantic_key": "decision.chatcut.desktop-mcp",
+  "stage": "R1",
+  "work_kind": "decision-acceptance",
+  "domain_lane": "r1",
+  "execution_state": "ACCEPTED",
+  "decision_state": "ACCEPTED",
+  "decision_version": 1,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [],
+  "invalidation_keys": [
+    "checklist.pd5"
+  ],
+  "write_authority": "isolated-record",
+  "acceptance_authority": "用户已明确决定",
+  "unlocks": [
+    "H2",
+    "P5",
+    "Q1"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "human",
+  "execution_contract_ref": "planning-compiler.json#node-PD5",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "none",
+  "deliverable_ids": [
+    "DL-PD5"
+  ],
+  "source_requirement_refs": [
+    "SRC-H2",
+    "SRC-P5"
+  ],
+  "surface_refs": [
+    "SURF-DASHBOARD",
+    "SURF-PROJECT"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "real",
+    "persistent_runtime": "active",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "ChatCut 只通过 Desktop 本地 MCP 接入，实时探测且主动连接后才显示。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "产品负责人"
+}

@@ -1,0 +1,70 @@
+{
+  "node_id": "Q6",
+  "semantic_key": "acceptance.release.r6",
+  "stage": "R6",
+  "work_kind": "validation",
+  "domain_lane": "r6",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "A1",
+    "A2",
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.q6"
+  ],
+  "write_authority": "shared-generated",
+  "acceptance_authority": "独立验收负责人",
+  "unlocks": [
+    "Z1"
+  ],
+  "node_role": "acceptance-gate",
+  "execution_actor": "orchestrator",
+  "execution_contract_ref": "planning-compiler.json#node-Q6",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "freezes",
+  "deliverable_ids": [
+    "DL-Q6"
+  ],
+  "source_requirement_refs": [
+    "SRC-A1",
+    "SRC-A2",
+    "SRC-H1",
+    "SRC-H2",
+    "SRC-H3",
+    "SRC-H4"
+  ],
+  "surface_refs": [
+    "SURF-DASHBOARD",
+    "SURF-LOGIN",
+    "SURF-SETUP"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "real",
+    "persistent_runtime": "active",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "汇编 R6 的独立候选、证据和接受结果",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "独立验收负责人"
+}

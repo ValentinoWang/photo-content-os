@@ -1,0 +1,71 @@
+{
+  "node_id": "T5",
+  "semantic_key": "requirement.checklist.t5",
+  "stage": "R1",
+  "work_kind": "implementation",
+  "domain_lane": "studio",
+  "execution_state": "READY",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F",
+    "PD"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.t5"
+  ],
+  "write_authority": "implementation",
+  "acceptance_authority": "产品负责人和验收负责人",
+  "unlocks": [
+    "A1",
+    "A2",
+    "I1",
+    "I4",
+    "I5",
+    "L5",
+    "P3",
+    "P5",
+    "S1",
+    "S2",
+    "S5",
+    "Q1"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "codex",
+  "execution_contract_ref": "acceptance-fragments/OCM-T5/acceptance-contract.md",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": [
+    "DL-T5"
+  ],
+  "source_requirement_refs": [
+    "SRC-T5"
+  ],
+  "surface_refs": [
+    "SURF-STUDIO"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "structural",
+    "interaction": "smoke",
+    "local_runtime": true,
+    "external_system": "none",
+    "persistent_runtime": "none",
+    "human_visual_review": "none"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "所有新增写接口沿用 loopback、同源、CSRF 和明确 revision 域的乐观并发控制，跨端口 Origin 必须拒绝。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "对应领域维护者",
+  "acceptance_contract_ref": "acceptance-fragments/OCM-T5/acceptance-contract.md"
+}

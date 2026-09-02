@@ -1,0 +1,64 @@
+{
+  "node_id": "L4",
+  "semantic_key": "requirement.checklist.l4",
+  "stage": "R3",
+  "work_kind": "implementation",
+  "domain_lane": "library",
+  "execution_state": "READY",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F",
+    "PD6"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.archive.location-lifecycle",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.l4"
+  ],
+  "write_authority": "implementation",
+  "acceptance_authority": "产品负责人和验收负责人",
+  "unlocks": [
+    "Q3"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "codex",
+  "execution_contract_ref": "acceptance-fragments/OCM-L4/acceptance-contract.md",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": [
+    "DL-L4"
+  ],
+  "source_requirement_refs": [
+    "SRC-L4"
+  ],
+  "surface_refs": [
+    "SURF-LIBRARY"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "none",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "归档索引卡（检索关键词、精选副本入口、恢复方式）：包 HTTP 接口。这是素材库里唯一后端完备的部分。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "对应领域维护者",
+  "acceptance_contract_ref": "acceptance-fragments/OCM-L4/acceptance-contract.md"
+}

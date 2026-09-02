@@ -1,0 +1,62 @@
+{
+  "node_id": "T3",
+  "semantic_key": "requirement.checklist.t3",
+  "stage": "R1",
+  "work_kind": "implementation",
+  "domain_lane": "settings",
+  "execution_state": "READY",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F",
+    "PD"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.t3"
+  ],
+  "write_authority": "implementation",
+  "acceptance_authority": "产品负责人和验收负责人",
+  "unlocks": [
+    "I4",
+    "S3",
+    "Q1"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "codex",
+  "execution_contract_ref": "acceptance-fragments/OCM-T3/acceptance-contract.md",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": [
+    "DL-T3"
+  ],
+  "source_requirement_refs": [
+    "SRC-T3"
+  ],
+  "surface_refs": [
+    "SURF-SETTINGS"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "structural",
+    "interaction": "smoke",
+    "local_runtime": true,
+    "external_system": "none",
+    "persistent_runtime": "none",
+    "human_visual_review": "none"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "对应领域维护者",
+  "acceptance_contract_ref": "acceptance-fragments/OCM-T3/acceptance-contract.md"
+}

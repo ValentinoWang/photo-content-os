@@ -1,0 +1,66 @@
+{
+  "node_id": "I5",
+  "semantic_key": "requirement.checklist.i5",
+  "stage": "R2",
+  "work_kind": "implementation",
+  "domain_lane": "organizer",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F",
+    "PD3",
+    "I4",
+    "T5"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.deletion.system-trash",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.i5"
+  ],
+  "write_authority": "implementation",
+  "acceptance_authority": "产品负责人和验收负责人",
+  "unlocks": [
+    "Q2"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "codex",
+  "execution_contract_ref": "acceptance-fragments/OCM-I5/acceptance-contract.md",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": [
+    "DL-I5"
+  ],
+  "source_requirement_refs": [
+    "SRC-I5"
+  ],
+  "surface_refs": [
+    "SURF-ORGANIZER"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "none",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "用户勾选建议并二次确认后才移入当前操作系统回收站；回读失败必须阻断，界面不得承诺固定保留天数。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "对应领域维护者",
+  "acceptance_contract_ref": "acceptance-fragments/OCM-I5/acceptance-contract.md"
+}

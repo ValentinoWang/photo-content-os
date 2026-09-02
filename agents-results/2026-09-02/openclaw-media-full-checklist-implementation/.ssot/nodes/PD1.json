@@ -1,0 +1,59 @@
+{
+  "node_id": "PD1",
+  "semantic_key": "decision.organizer.auto-batching",
+  "stage": "R1",
+  "work_kind": "decision-acceptance",
+  "domain_lane": "r1",
+  "execution_state": "ACCEPTED",
+  "decision_state": "ACCEPTED",
+  "decision_version": 1,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [],
+  "invalidation_keys": [
+    "checklist.pd1"
+  ],
+  "write_authority": "isolated-record",
+  "acceptance_authority": "用户已明确决定",
+  "unlocks": [
+    "D1",
+    "I2",
+    "I3",
+    "Q1"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "human",
+  "execution_contract_ref": "planning-compiler.json#node-PD1",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "none",
+  "deliverable_ids": [
+    "DL-PD1"
+  ],
+  "source_requirement_refs": [
+    "SRC-D1",
+    "SRC-I1",
+    "SRC-I2",
+    "SRC-I3"
+  ],
+  "surface_refs": [
+    "SURF-ORGANIZER"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "none",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "自动分事件、分批完整实现，先预览确认再执行迁移。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "产品负责人"
+}

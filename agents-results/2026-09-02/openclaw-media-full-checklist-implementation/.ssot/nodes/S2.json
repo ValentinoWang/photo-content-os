@@ -1,0 +1,66 @@
+{
+  "node_id": "S2",
+  "semantic_key": "requirement.checklist.s2",
+  "stage": "R5",
+  "work_kind": "implementation",
+  "domain_lane": "settings",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F",
+    "PD6",
+    "T5"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.archive.location-lifecycle",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.s2"
+  ],
+  "write_authority": "implementation",
+  "acceptance_authority": "产品负责人和验收负责人",
+  "unlocks": [
+    "A2",
+    "Q5"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "codex",
+  "execution_contract_ref": "acceptance-fragments/OCM-S2/acceptance-contract.md",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": [
+    "DL-S2"
+  ],
+  "source_requirement_refs": [
+    "SRC-S2"
+  ],
+  "surface_refs": [
+    "SURF-SETTINGS"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "none",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "存放位置（素材根目录 / 笔记库）：现有接口是项目级的，设置页要的是全局级，得加一个。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "对应领域维护者",
+  "acceptance_contract_ref": "acceptance-fragments/OCM-S2/acceptance-contract.md"
+}

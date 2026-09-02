@@ -1,0 +1,54 @@
+{
+  "node_id": "TRD",
+  "semantic_key": "decision.transcription.provider-boundary",
+  "stage": "R1",
+  "work_kind": "decision-acceptance",
+  "domain_lane": "r1",
+  "execution_state": "BLOCKED",
+  "decision_state": "DISCOVERING",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [],
+  "invalidation_keys": [
+    "checklist.trd"
+  ],
+  "write_authority": "isolated-draft",
+  "acceptance_authority": "产品负责人",
+  "unlocks": [
+    "D3",
+    "Q1"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "human",
+  "execution_contract_ref": "planning-compiler.json#node-TRD",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "none",
+  "deliverable_ids": [
+    "DL-TRD"
+  ],
+  "source_requirement_refs": [
+    "SRC-D3"
+  ],
+  "surface_refs": [
+    "SURF-SETTINGS"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "sandbox-real",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "决定转写提供方、默认策略、音频发送边界、费用和失败占位行为",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "产品负责人"
+}

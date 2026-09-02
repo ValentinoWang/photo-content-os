@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-K1-Q7",
+  "from": "K1",
+  "to": "Q7",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.k1.q7"
+  ],
+  "transferred_input": "K1 已接受的合同、实现或验收产物",
+  "gate_evidence": "K1 节点状态与候选内容校验值",
+  "reason_code": "acceptance-dependency"
+}

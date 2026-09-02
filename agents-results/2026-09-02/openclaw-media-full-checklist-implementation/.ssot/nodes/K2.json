@@ -1,0 +1,64 @@
+{
+  "node_id": "K2",
+  "semantic_key": "requirement.checklist.k2",
+  "stage": "R7",
+  "work_kind": "implementation",
+  "domain_lane": "studio",
+  "execution_state": "READY",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F",
+    "PD8"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.edl.machine-authority",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.k2"
+  ],
+  "write_authority": "implementation",
+  "acceptance_authority": "产品负责人和验收负责人",
+  "unlocks": [
+    "Q7"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "codex",
+  "execution_contract_ref": "acceptance-fragments/OCM-K2/acceptance-contract.md",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": [
+    "DL-K2"
+  ],
+  "source_requirement_refs": [
+    "SRC-K2"
+  ],
+  "surface_refs": [
+    "SURF-STUDIO"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "none",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "版本 diff 与非破坏性回滚：原型里没有版本概念。至少要在项目屏留一个入口。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "对应领域维护者",
+  "acceptance_contract_ref": "acceptance-fragments/OCM-K2/acceptance-contract.md"
+}

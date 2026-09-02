@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-F-C1",
+  "from": "F",
+  "to": "C1",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.f.c1"
+  ],
+  "transferred_input": "F 已接受的合同、实现或验收产物",
+  "gate_evidence": "F 节点状态与候选内容校验值",
+  "reason_code": "contract-dependency"
+}

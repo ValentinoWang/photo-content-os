@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-PD2-D2",
+  "from": "PD2",
+  "to": "D2",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.pd2.d2"
+  ],
+  "transferred_input": "PD2 已接受的合同、实现或验收产物",
+  "gate_evidence": "PD2 节点状态与候选内容校验值",
+  "reason_code": "contract-dependency"
+}

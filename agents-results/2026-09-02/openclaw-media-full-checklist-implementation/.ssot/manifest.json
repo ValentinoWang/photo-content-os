@@ -1,0 +1,32 @@
+{
+  "ssot_schema_version": 2,
+  "artifact_class": "ssot-development",
+  "plan_version": 1,
+  "dag_version": 1,
+  "interface_freeze_version": 1,
+  "node_contract_version": 1,
+  "machine_validation_profile": "release",
+  "generated_main": "../ssot-development-paths.md",
+  "generated_views": [
+    {
+      "view_id": "main",
+      "source": "view-sources/00-main.md",
+      "source_sha256": "5992d30478070524aeb3094f049f42da3bc3de98d1e9c772b937bc03cc62a0cb",
+      "output": "../ssot-development-paths.md"
+    }
+  ],
+  "nodes_dir": "nodes",
+  "edges_dir": "edges",
+  "assumptions_dir": "assumptions",
+  "conflicts_dir": "conflicts",
+  "normative_executable_artifact_contract": {
+    "mode": "strict",
+    "source_milestone_authority": "source",
+    "source_requirements": "source-requirements.json",
+    "surface_inventory": "surface-inventory.json",
+    "visual_fidelity_contract": "visual-fidelity-contract.json",
+    "interaction_matrix": "interaction-matrix.json",
+    "action_vertical_slices": "action-vertical-slices.json",
+    "runtime_topology": "runtime-topology.json"
+  }
+}

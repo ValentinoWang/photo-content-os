@@ -1,0 +1,76 @@
+{
+  "node_id": "P5",
+  "semantic_key": "requirement.checklist.p5",
+  "stage": "R4",
+  "work_kind": "implementation",
+  "domain_lane": "project",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F",
+    "PD5",
+    "PD8",
+    "PD9",
+    "P2",
+    "T5"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.chatcut.desktop-mcp",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.edl.machine-authority",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.jianying.historical-only",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.p5"
+  ],
+  "write_authority": "implementation",
+  "acceptance_authority": "产品负责人和验收负责人",
+  "unlocks": [
+    "Q4"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "codex",
+  "execution_contract_ref": "acceptance-fragments/OCM-P5/acceptance-contract.md",
+  "side_effect_class": "reversible",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": [
+    "DL-P5"
+  ],
+  "source_requirement_refs": [
+    "SRC-P5"
+  ],
+  "surface_refs": [
+    "SURF-PROJECT"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "real",
+    "persistent_runtime": "none",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "内建只显示 handoff_pack 与 otio_kdenlive；ChatCut 仅在本地 MCP 实时探测和主动连接后成为可选去向。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "对应领域维护者",
+  "acceptance_contract_ref": "acceptance-fragments/OCM-P5/acceptance-contract.md"
+}

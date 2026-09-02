@@ -1,0 +1,76 @@
+{
+  "node_id": "H2",
+  "semantic_key": "requirement.checklist.h2",
+  "stage": "R6",
+  "work_kind": "implementation",
+  "domain_lane": "dashboard",
+  "execution_state": "BLOCKED",
+  "decision_state": "NOT_APPLICABLE",
+  "decision_version": null,
+  "readiness_mode": "FORMAL",
+  "hard_dependencies": [
+    "F",
+    "PD4",
+    "PD5",
+    "PD7",
+    "S3",
+    "S5"
+  ],
+  "soft_dependencies": [],
+  "assumption_ids": [],
+  "decision_refs": [
+    {
+      "semantic_key": "decision.scope.full-checklist",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.creative-model.user-config",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.chatcut.desktop-mcp",
+      "version": 1
+    },
+    {
+      "semantic_key": "decision.identity.optional-upstream",
+      "version": 1
+    }
+  ],
+  "invalidation_keys": [
+    "checklist.h2"
+  ],
+  "write_authority": "implementation",
+  "acceptance_authority": "产品负责人和验收负责人",
+  "unlocks": [
+    "Q6"
+  ],
+  "node_role": "leaf",
+  "execution_actor": "codex",
+  "execution_contract_ref": "acceptance-fragments/OCM-H2/acceptance-contract.md",
+  "side_effect_class": "none",
+  "candidate_identity_policy": "consumes",
+  "deliverable_ids": [
+    "DL-H2"
+  ],
+  "source_requirement_refs": [
+    "SRC-H2"
+  ],
+  "surface_refs": [
+    "SURF-DASHBOARD"
+  ],
+  "required_evidence_profile": {
+    "source_identity": "locked",
+    "source_coverage": "complete",
+    "visual_fidelity": "strict-reference",
+    "interaction": "full-e2e",
+    "local_runtime": true,
+    "external_system": "real",
+    "persistent_runtime": "active",
+    "human_visual_review": "blocking"
+  },
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "goal": "聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。",
+  "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
+  "owner": "对应领域维护者",
+  "acceptance_contract_ref": "acceptance-fragments/OCM-H2/acceptance-contract.md"
+}

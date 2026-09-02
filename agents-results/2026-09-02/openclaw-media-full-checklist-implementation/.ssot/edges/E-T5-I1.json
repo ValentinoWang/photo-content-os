@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-T5-I1",
+  "from": "T5",
+  "to": "I1",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.t5.i1"
+  ],
+  "transferred_input": "T5 已接受的合同、实现或验收产物",
+  "gate_evidence": "T5 节点状态与候选内容校验值",
+  "reason_code": "contract-dependency"
+}

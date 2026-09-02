@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-TRD-D3",
+  "from": "TRD",
+  "to": "D3",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.trd.d3"
+  ],
+  "transferred_input": "TRD 已接受的合同、实现或验收产物",
+  "gate_evidence": "TRD 节点状态与候选内容校验值",
+  "reason_code": "contract-dependency"
+}

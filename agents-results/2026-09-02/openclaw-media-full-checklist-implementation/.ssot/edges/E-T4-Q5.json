@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-T4-Q5",
+  "from": "T4",
+  "to": "Q5",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.t4.q5"
+  ],
+  "transferred_input": "T4 已接受的合同、实现或验收产物",
+  "gate_evidence": "T4 节点状态与候选内容校验值",
+  "reason_code": "acceptance-dependency"
+}

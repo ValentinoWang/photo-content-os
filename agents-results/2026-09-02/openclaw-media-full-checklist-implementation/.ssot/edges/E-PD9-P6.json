@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-PD9-P6",
+  "from": "PD9",
+  "to": "P6",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.pd9.p6"
+  ],
+  "transferred_input": "PD9 已接受的合同、实现或验收产物",
+  "gate_evidence": "PD9 节点状态与候选内容校验值",
+  "reason_code": "contract-dependency"
+}

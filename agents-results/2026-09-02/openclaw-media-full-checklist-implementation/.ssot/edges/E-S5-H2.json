@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-S5-H2",
+  "from": "S5",
+  "to": "H2",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.s5.h2"
+  ],
+  "transferred_input": "S5 已接受的合同、实现或验收产物",
+  "gate_evidence": "S5 节点状态与候选内容校验值",
+  "reason_code": "contract-dependency"
+}

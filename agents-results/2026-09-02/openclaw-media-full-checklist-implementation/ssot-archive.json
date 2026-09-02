@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "artifact_class": "ssot-development",
+  "artifact_date": "2026-09-02",
+  "project_name": "photo-content-os",
+  "ssot_name": "openclaw-media-full-checklist-implementation",
+  "main_document": "ssot-development-paths.md",
+  "problem_documents": [
+    "openproblem.md"
+  ]
+}

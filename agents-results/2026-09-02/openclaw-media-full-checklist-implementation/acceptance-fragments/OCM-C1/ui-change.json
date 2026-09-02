@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "user_visible": true,
+  "task_id": "OCM-C1",
+  "reference_prototypes": [
+    {
+      "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
+      "sha256": "12333526096c18d2dc0e4a0f4b49d804d0f3cf5683117730ce415e3665686978",
+      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:cc44bc4065310264b7bf398680fc6cb0750fd163",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "capture_matrix": {
+    "ref": ".ssot/visual-fidelity-contract.json",
+    "surface_refs": [
+      "SURF-CLOUD"
+    ]
+  },
+  "interaction_matrix_ref": ".ssot/interaction-matrix.json",
+  "visual_evidence_types": [
+    "dom",
+    "computed-style",
+    "screenshot",
+    "interaction-trace"
+  ],
+  "visual_contract_ref": ".ssot/visual-fidelity-contract.json",
+  "source_requirement_refs": [
+    "SRC-C1"
+  ],
+  "workbench_path": "99_System_OpenClaw/visual-workbench.html",
+  "deep_link": {
+    "supported": false,
+    "gap_note": "Z1 由桌面前端维护者在项目内新建视觉工作台，并为九个界面补齐稳定深链接；在此之前不宣称来源原型是视觉工作台。"
+  }
+}

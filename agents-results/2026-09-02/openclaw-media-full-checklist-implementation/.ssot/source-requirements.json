@@ -1,0 +1,1830 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "artifact_id": "SRC-ART-CHECKLIST",
+      "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html",
+      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:54a496f3f457aab27c49f9f7a84391a7a46c3f76",
+      "sha256": "88f32d8d882d3c98bf152c87e31ef6bf0dd7f94701a6db03e39e5bfeaa0697bf",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "informative",
+        "layout": "informative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    },
+    {
+      "artifact_id": "SRC-ART-PROTOTYPE",
+      "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
+      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:cc44bc4065310264b7bf398680fc6cb0750fd163",
+      "sha256": "12333526096c18d2dc0e4a0f4b49d804d0f3cf5683117730ce415e3665686978",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "SRC-D1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"d1\"]",
+        "content_sha256": "50d5bf241ee0a6f960fcc9f4ac16ea054d2b3a8810bba7930373d9fae8651bdf"
+      },
+      "summary": "从媒体清单生成可解释、可确认且不可拆分实况照片组的事件批次计划；未确认或输入漂移时禁止迁移。",
+      "source_excerpt": "整理台的「AI 自动分事件、分批」 | 需补后端 | 原型承诺 | 「AI 会按拍摄时间和地点分成一个个事件，配好实况照片、认出重复连拍，整理成批等你确认」，并展示了 3 个已分好的批次。 | 后端现状 | 这个能力 | 完全不存在 | 。全量搜索 | scripts/ | 没有任何聚类 / 时间分组 / 事件切分逻辑。批次边界 100% 靠人手动建目录 | 00_Inbox_Mac_Intake/{batch_id}/ | 再手填 | 00_批次说明.md | 。EXIF 的 GPS 经纬度 | 已经在 manifest 里采集了 | （ | gps_latitude | / | gps_longitude | / | location_raw | ，见 | 01_scan_media_manifest.py | ），但没有任何代码消费它做分组。 | 拍板结果 | 做，不做任何降级。整理台保留「AI 自动分事件、分批」的完整承诺。 | 要做什么 | 新写一个分批器模块：读 | media_manifest.json | 的拍摄时间与 GPS（字段已采集），按时间间隔 + 地理距离阈值切事件，输出带 JSON Schema 的批次计划（建议 | schemas/inbox_batch_plan.schema.json | ）。批次计划先给用户确认，确认后才交给 | 34 | / | 35 | 建项目和迁移——所以第 08 节 t1（给 | 35 | 补测试）必须排在它之前。这是整份清单里工作量最大的单块新增。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "D1"
+      ],
+      "acceptance_refs": [
+        "D1/AC-01",
+        "D1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-D1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R1"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-D2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"d2\"]",
+        "content_sha256": "302bfbb04e8a93b8ec4d4d81967dcc396aba1db3eade2e1f88c03269e5f0df96"
+      },
+      "summary": "以稳定素材身份原子维护结构化索引，支持分类、标签、用途、计数与详情查询，同时保留 Markdown 卡片。",
+      "source_excerpt": "素材库的结构化索引层 | 需补后端 | 原型承诺 | 素材库有「按标签筛选」的一排标签、86 张卡片计数、按分类树浏览、详情栏显示复用标签和适合用途。 | 后端现状 | 资产卡片是 | Markdown 文件 | （ | 15_register_reusable_asset.py | 的 | build_card() | ，模板 | templates/02_Asset_资产卡片_TEMPLATE.asset.md | ），复用索引是 | 一行一条的 Markdown 列表 | （ | 02_Asset_Library/Reusable_通用素材索引.md | ）。标签和用途字段确实有（ | --tags | / | --uses | ），但 | 没有 JSON 索引、没有 schema、没有反查、零测试 | 。UI 要筛选就得拿正则从 Markdown 里捞。 | 拍板结果 | 增加。 | 要做什么 | 新增 | 02_Asset_Library/index.json | 结构化索引 + | schemas/asset_library_index.schema.json | ，由 | 15_register_reusable_asset.py | 写卡片时同步 upsert（Markdown 卡片继续保留，人读卡片、机器读索引）。给素材库屏提供只读查询接口，连带补 | 12 | / | 14 | / | 15 | 的测试（第 08 节 t2）。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "D2"
+      ],
+      "acceptance_refs": [
+        "D2/AC-01",
+        "D2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-D2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R1"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-D3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"d3\"]",
+        "content_sha256": "e2581e9d1c0dfa8aa1d3d55965b3693cad6fce1dc8fbbc63f0fd7bdd5e8dd62a"
+      },
+      "summary": "在转写提供方、默认策略、音频发送边界、费用和失败占位行为获批后，统一所有入口并以音频夹具验证。",
+      "source_excerpt": "转写提供方：现有合同与默认行为待重新决定 | 需补后端 | 原型承诺 | 设置里转写方式默认显示「本机 FunASR」，项目屏的证据来源写着「逐字转写 · 本机 FunASR」。 | 后端现状 | 03_transcribe_audio.py | 的 | build_provider() | 恰好三种： | sidecar | （读旁挂 srt/json/txt）、 | openai_api | （要 | OPENAI_API_KEY | ）、 | pending | （只写占位、不假装听过）。 | 没有本地 Whisper，也没有 FunASR | ，而且默认兜底就是 | pending | ——开箱即用状态下转写是空的。 | 当前结论 | 仓库当前只实现 | sidecar | 、 | openai_api | 和 | pending | ；默认行为和新增提供方尚未形成可验收决定，不能把原型中的阿里云或 FunASR 写成既定交付。 | 要做什么 | 先单独冻结转写提供方、数据发送边界、费用和失败时的占位行为；再按已接受合同扩展 | build_provider() | ，并用音频夹具验证输出符合 | schemas/audio_transcript.schema.json | 。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "sandbox-real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "D3"
+      ],
+      "acceptance_refs": [
+        "D3/AC-01",
+        "D3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-D3/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R1"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-A1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"a1\"]",
+        "content_sha256": "d40f9c169b8d069256d430ba99478845bedc4d4ee63c067a78d94e7e5ea9f4e2"
+      },
+      "summary": "使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。",
+      "source_excerpt": "账号登录（邮箱 / Apple / 微信） | 需补后端 | 后端现状 | Studio 完全没有账号体系。 | server.py | 的安全模型是「只听 127.0.0.1 + 同源 Origin + | X-Content-OS-CSRF | 」，靠的是本机边界不是身份。云端账号属于上游 | openclaw-media | 仓库，不在这个仓库里。 | 要做什么 | 先确认登录到底登的是谁——是 openclaw-media 中台账号，还是本地应用自己的账号。如果是前者，这屏的后端在另一个仓库，本仓库只需存一个 token 引用。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "sandbox-real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "A1"
+      ],
+      "acceptance_refs": [
+        "A1/AC-01",
+        "A1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-A1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R6"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-A2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"a2\"]",
+        "content_sha256": "53e9fe7d17a4168e57739b6ab1627e6701db53714e3bf46548635bd7b80c089d"
+      },
+      "summary": "向导可重入地完成位置、运行环境、编辑器、账号与设备四步，并能从失败处恢复。",
+      "source_excerpt": "安装向导的四步（存放位置 / 运行环境 / 剪辑器 / 账号与设备） | 可直接接 | 后端现状 | 四步对应的检查全都已经有 CLI 实现：环境装配 | 41_setup_dev_environment.sh/.ps1 | ，环境体检 | 43_content_os_doctor.py | ，存放位置就是 | --state-dir | （默认 | ~/.photo-content-os/studio/ | ），设备配对判据在 doctor 的 | openclaw_cloud_pairing | 项里。 | 要做什么 | 把这些 CLI 包成 HTTP 接口给向导调用即可，不需要新逻辑。注意 | 44_launch_desktop.py | 目前是纯命令行启动，向导本身得先有人能打开。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "installed",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "A2"
+      ],
+      "acceptance_refs": [
+        "A2/AC-01",
+        "A2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-A2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R6"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-H1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"h1\"]",
+        "content_sha256": "62505f0198d94492f7928a09ac65eef3cb47ae987a251f9bf2e69a12f276fe60"
+      },
+      "summary": "最近项目列表 + 六段流水线进度：纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。",
+      "source_excerpt": "最近项目列表 + 六段流水线进度 | 可直接接 | 后端现状 | GET /api/bootstrap | 已经返回 projects 全量， | GET /api/projects/:id | 返回单项目。项目里已有 | documents.{brief,script,storyboard,edl} | 各自的 | version | / | stale | ，以及 | delivery.state | ——这正好就是六段进度条要的数据。 | 要做什么 | 纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "H1"
+      ],
+      "acceptance_refs": [
+        "H1/AC-01",
+        "H1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-H1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R6"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-H2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"h2\"]",
+        "content_sha256": "f41f5f096b62a26cf2abce887bfa589f1d95645f3af3d9974e1b363467c24c69"
+      },
+      "summary": "聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。",
+      "source_excerpt": "「四个引擎」状态卡（数据中台 / Codex / ChatCut / 本机引擎） | 需补后端 | 后端现状 | 部分有：本机引擎状态可从 | analysis_tiering | 的进度推；Codex 可用性在 doctor 的 | creative_provider | 项里；数据中台连接状态在 | openclaw_media_agent.py status | 。 | ChatCut 在这个仓库里完全不存在 | ——没有任何代码引用它。 | 要做什么 | 新增本机能力的聚合状态接口。ChatCut 只能作为可选的 ChatCut Desktop 桌面本地模型上下文协议（MCP）连接：实时探测成功且用户主动连接后才显示，不属于内建导出后端。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "real",
+        "persistent_runtime": "active",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "H2"
+      ],
+      "acceptance_refs": [
+        "H2/AC-01",
+        "H2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-H2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R6"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-H3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"h3\"]",
+        "content_sha256": "1e441c9f3b9c026906311db527424ed651d5d86e0007485a54a0ce603dd7aa44"
+      },
+      "summary": "素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB）：索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。",
+      "source_excerpt": "素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB） | 需补后端 | 后端现状 | 单个项目的 manifest 有逐条媒体信息，但 | 没有跨项目的聚合统计 | 。资产库是 Markdown，数不出这些数。 | 要做什么 | 索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "H3"
+      ],
+      "acceptance_refs": [
+        "H3/AC-01",
+        "H3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-H3/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R6"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-H4",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"h4\"]",
+        "content_sha256": "7c963a415ec7a8d8d2b61f93c771c2094a55e4fddab31c2561b6a326c3ef7555"
+      },
+      "summary": "本周统计（完成任务 23 / 发布内容 4）：加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。",
+      "source_excerpt": "本周统计（完成任务 23 / 发布内容 4） | 需补后端 | 后端现状 | 发布数可从各项目的 | publishing.state | 数出来（ | project_store.record_publishing() | 已经在存）。完成任务数要从队列结果里数， | 98_Agent任务队列/02_mac_to_cloud_results | 有记录但没有按周聚合。 | 要做什么 | 加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "H4"
+      ],
+      "acceptance_refs": [
+        "H4/AC-01",
+        "H4/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-H4/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R6"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-I1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"i1\"]",
+        "content_sha256": "e930dc68a37eac1397c3c5aac431b9b5f789c8a98c263ae8fdc15ffdd37d5659"
+      },
+      "summary": "拖入素材 → 自动成批：已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。",
+      "source_excerpt": "拖入素材 → 自动成批 | 需补后端 | 后端现状 | 见第 00 节：分批能力不存在。现有的 | 34_ensure_project_from_inbox_batch.py | 只是「拿一个已经存在的批次目录去建项目壳」，不负责把散素材分成批。 | 要做什么 | 已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "I1"
+      ],
+      "acceptance_refs": [
+        "I1/AC-01",
+        "I1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-I1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R2"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-I2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"i2\"]",
+        "content_sha256": "b719c64ccef84189369b8f959d5ebdf48f56f6cbaeab847a314e1377652742cc"
+      },
+      "summary": "批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1）：读 manifest 分组计数即可，不用新后端。",
+      "source_excerpt": "批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1） | 可直接接 | 后端现状 | 01_scan_media_manifest.py | 的 | scan_project() | 已经把设备、编码、时长、尺寸全部写进 | _ai_analysis/media_manifest.json | （ | manifest_version: 2 | ）。 | 要做什么 | 读 manifest 分组计数即可，不用新后端。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "I2"
+      ],
+      "acceptance_refs": [
+        "I2/AC-01",
+        "I2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-I2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R2"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-I3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"i3\"]",
+        "content_sha256": "5d10cf7c10d68902b1776ff7e73c4e0020a676ad5d8d10ff1804ce903ea933f0"
+      },
+      "summary": "连拍识别（「发现 4 组连拍」）与实况配对：把 12 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。",
+      "source_excerpt": "连拍识别（「发现 4 组连拍」）与实况配对 | 需补后端 | 后端现状 | 连拍分组 | 有 | ： | 12_select_repeat_photo_groups.py | 的 | create_plan() | 能出计划、还能生成 contact sheet。但它 | 零测试、零 schema | ，而且是独立 CLI，不接批次流程。Live Photo 的成组改名逻辑在 | 11_rename_media_file.py | 里有，同样零测试。 | 要做什么 | 把 | 12 | 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "I3"
+      ],
+      "acceptance_refs": [
+        "I3/AC-01",
+        "I3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-I3/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R2"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-I4",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"i4\"]",
+        "content_sha256": "84db19eaa6c87a0f3643d301c8163ee300b9549c2cc810f24ec1821df74eec49"
+      },
+      "summary": "三分落点：进项目 / 归档保留 / 推荐删除：新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。",
+      "source_excerpt": "三分落点：进项目 / 归档保留 / 推荐删除 | 需补后端 | 后端现状 | 没有任何「落点建议」逻辑。 | 07_validate_media_decisions.py | 名字像但其实校验的是 | 文件命名 | ，读 manifest 的 | decision_issues | 出一份 | media_decision_warnings.md | ，跟三分落点无关。 | 要做什么 | 新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "I4"
+      ],
+      "acceptance_refs": [
+        "I4/AC-01",
+        "I4/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-I4/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R2"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-I5",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"i5\"]",
+        "content_sha256": "70832037ae6b44e53213ae2dda34fc5d414efd386994fa7cb4a00c3c1b6618cc"
+      },
+      "summary": "用户勾选建议并二次确认后才移入当前操作系统回收站；回读失败必须阻断，界面不得承诺固定保留天数。",
+      "source_excerpt": "「删除走系统废纸篓，30 天内可恢复」这句要核实 | 原型要改 | 后端现状 | 仓库 | 整体设计上不删除任何东西 | 。 | 45_archive_project.py | 的 | prune_plan() | 硬编码返回 | \"safe\": False | ，删除候选只返回一句「需人工确认」。没有任何代码调用系统废纸篓 API。 | 要做什么 | 要么真接一个移入废纸篓的实现（macOS 上是 | NSFileManager | / | trash | 命令），要么把这句话改成如实的说法。现在这句是空头承诺。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "I5"
+      ],
+      "acceptance_refs": [
+        "I5/AC-01",
+        "I5/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-I5/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R2"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-L1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"l1\"]",
+        "content_sha256": "0d73f9f416d542b54dda41d761623095dbc0ddaffc61f58fe764ddcb5fad362a"
+      },
+      "summary": "复用资产卡片列表 + 分类树：索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。",
+      "source_excerpt": "复用资产卡片列表 + 分类树 | 需补后端 | 后端现状 | 15_register_reusable_asset.py | 能写卡片和索引，字段（分类 / 公开状态 / 复用标签 / 适合用途 / 建议截取 / iCloud 精选副本）跟原型详情栏几乎一一对应。但全是 Markdown，没有读取接口。 | 要做什么 | 索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "L1"
+      ],
+      "acceptance_refs": [
+        "L1/AC-01",
+        "L1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-L1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R3"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-L2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"l2\"]",
+        "content_sha256": "3eacbc24ba837aa8bd0ddacae52aeea7904ef6ba12bcb52773512ac0ab3d0109"
+      },
+      "summary": "按标签筛选：同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。",
+      "source_excerpt": "按标签筛选 | 需补后端 | 后端现状 | 标签存在于 Markdown 卡片的 | ## 复用标签 | 段和索引行里，但无法查询。 | 要做什么 | 同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "L2"
+      ],
+      "acceptance_refs": [
+        "L2/AC-01",
+        "L2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-L2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R3"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-L3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"l3\"]",
+        "content_sha256": "f3f4c0356d08bf80f59c2745b0411c38153d856685ce67ac6185935443553af7"
+      },
+      "summary": "同时展示生命周期和每个物理位置的真实回读状态，逻辑登记不得冒充副本已存在。",
+      "source_excerpt": "「源文件现在在哪」状态（在本机 / 云盘镜像 / 移动硬盘冷归档） | 可直接接 | 后端现状 | 归档状态机在 | 45_archive_project.py | 的 | index_card() | 里。 | 但要注意 | ：模板 | templates/06_Project_Archive_Index_TEMPLATE.archive.md | 声明了 4 个状态（active/cooling/cold_archived/restored），代码 | 实际只写得出 2 个 | （cold_archived、cooling）—— | active | 和 | restored | 在 Python 里没有任何写入点。 | 要做什么 | 前端只按实际会出现的 2 个状态设计，或者先补齐代码里缺的两个写入点。别照着模板做 4 态 UI。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "L3"
+      ],
+      "acceptance_refs": [
+        "L3/AC-01",
+        "L3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-L3/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R3"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-L4",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"l4\"]",
+        "content_sha256": "be32d0ad62be4d29aff05a52891e6c1e633c5f1ac53fc62aab0ae880d6df0236"
+      },
+      "summary": "归档索引卡（检索关键词、精选副本入口、恢复方式）：包 HTTP 接口。这是素材库里唯一后端完备的部分。",
+      "source_excerpt": "归档索引卡（检索关键词、精选副本入口、恢复方式） | 可直接接 | 后端现状 | 45 | 的 | build_manifest() | / | index_card() | / | restore_from_manifest() | 都在，有 6 个测试（ | tests/test_archive_project.py | ）。准入 4 项检查（目录齐全 / Final 非空 / 同步清单无未勾选 / 待增加为空）逻辑清晰。 | 要做什么 | 包 HTTP 接口。这是素材库里唯一后端完备的部分。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "L4"
+      ],
+      "acceptance_refs": [
+        "L4/AC-01",
+        "L4/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-L4/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R3"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-L5",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"l5\"]",
+        "content_sha256": "fe8ff8cea2b42eb4d4968a00169178d2e7f580440cb21deb1e59f626efc3a468"
+      },
+      "summary": "详情栏主按钮「选择项目并加入」要落到真实动作：要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。",
+      "source_excerpt": "详情栏主按钮「选择项目并加入」要落到真实动作 | 原型要改 | 后端现状 | 「把一条复用资产加入某个项目」这个动作在仓库里没有对应脚本。缺位的 | 16 号脚本 | 正好卡在 | 15_register_reusable_asset | （资产库）和 | 17_match_materials_to_brief | （剪辑链路）之间——按序列语义，这个位置本该放的就是「资产库 → 剪辑决策」的衔接能力，从未实现。 | 要做什么 | 要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "L5"
+      ],
+      "acceptance_refs": [
+        "L5/AC-01",
+        "L5/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-L5/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R3"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-P1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"p1\"]",
+        "content_sha256": "d0c0fb4d0b7fe31fa5222c5dd3051d917766243ebb6672b553e12f3f0e56aa84"
+      },
+      "summary": "剪辑决策条目列表（时间码 / 台词 / 角色标签）：纯前端。EDL 已经通过 GET /api/projects/:id 返回了。",
+      "source_excerpt": "剪辑决策条目列表（时间码 / 台词 / 角色标签） | 可直接接 | 后端现状 | edl_contract.py | （504 行）+ | schemas/edit_decision_list.schema.json | 完备。v1 必填字段 | slot | / | time_range | / | source_start_sec | / | purpose | / | visual_need | / | caption | / | candidate_files | / | edit_note | 全部就位，原型列表要显示的东西都有。 | 要做什么 | 纯前端。EDL 已经通过 | GET /api/projects/:id | 返回了。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "P1"
+      ],
+      "acceptance_refs": [
+        "P1/AC-01",
+        "P1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-P1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R4"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-P2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"p2\"]",
+        "content_sha256": "370b1698151feaf7ceb610cf60406cd76144b7fad3330ae7f30e7bb10eec86f5"
+      },
+      "summary": "双轨时间线（主画面 + 叠加层）：纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。",
+      "source_excerpt": "双轨时间线（主画面 + 叠加层） | 可直接接 | 后端现状 | v2 的 | role | （a_roll/b_roll/overlay/title）和 | layer | （primary/overlay/background）已经落地， | clip_layer() | / | layers_used() | 可直接查询。重叠规则也定好了：只有 | EXCLUSIVE_LAYERS = {\"primary\"} | 强制不重叠，叠加层允许重叠——这正是画双轨所需要的语义。 | 要做什么 | 纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "P2"
+      ],
+      "acceptance_refs": [
+        "P2/AC-01",
+        "P2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-P2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R4"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-P3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"p3\"]",
+        "content_sha256": "1645f1d6a7c955af49b7c5e6ad1d2a75c526be0fe9caa9ba9e34aa814117cf7a"
+      },
+      "summary": "结构化时间线为主视图，同时保留文本说明与受约束的选区修改，不形成第二份机器执行权威。",
+      "source_excerpt": "现有 Studio 把 EDL 当纯文本区块编辑——换界面时这块要重做 | 原型要改 | 后端现状 | app.js | 的 | render() | 把 | edl | 交给和 Brief/脚本完全相同的 | documentView() | 处理，也就是说现在 EDL 是 | 一堆可编辑的 textarea | 。原型画的是结构化时间线。 | 要做什么 | 明确取舍：结构化时间线编辑之后，还要不要保留「按区块改 EDL 文本 + AI 只改选中区块」这条路？这是 Studio 的核心卖点之一，换成时间线就没了。建议两者并存（时间线主视图 + 文本视图兜底）。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "P3"
+      ],
+      "acceptance_refs": [
+        "P3/AC-01",
+        "P3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-P3/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R4"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-P4",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"p4\"]",
+        "content_sha256": "25593a521d90e2eb47bf0c362b6c4383925f61eda461f4df50f46b1102a8bea1"
+      },
+      "summary": "「待补素材」缺口清单：纯前端。",
+      "source_excerpt": "「待补素材」缺口清单 | 可直接接 | 后端现状 | EDL 文档级必填字段就有 | missing_materials | ，而且 README 明确写了「没有真实来源的缺失镜头只能进入 | missing_materials | 」——原型里「不会拿别的镜头顶替」这句话跟后端契约完全一致。 | 要做什么 | 纯前端。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "P4"
+      ],
+      "acceptance_refs": [
+        "P4/AC-01",
+        "P4/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-P4/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R4"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-P5",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"p5\"]",
+        "content_sha256": "6ebf1e44e88d8d87909ee4bc4c029f91aeddaa85360b0d564f61b2b9c736b654"
+      },
+      "summary": "内建只显示 handoff_pack 与 otio_kdenlive；ChatCut 仅在本地 MCP 实时探测和主动连接后成为可选去向。",
+      "source_excerpt": "交接去向：ChatCut 时间线 / Kdenlive 工程 / 剪映草稿 | 可直接接 | 后端现状 | 正式后端只有两个（ | SUPPORTED_EDITOR_BACKENDS = {\"handoff_pack\", \"otio_kdenlive\"} | ）。 | otio_kdenlive | 是真多轨； | handoff_pack | 多轨感知但交付的是文件包（manifest + clips.csv + captions.srt + 交接说明）， | 不渲染视频 | 。ChatCut 不在其中。 | 要做什么 | 原型这一栏改成如实列出两个可用后端。ChatCut 要留就得先定接入方式。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "P5"
+      ],
+      "acceptance_refs": [
+        "P5/AC-01",
+        "P5/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-P5/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R4"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-P6",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"p6\"]",
+        "content_sha256": "9d469e28dfa340c499040faf057c439855579f276eac1792eaa5c40ecc836dac"
+      },
+      "summary": "统一表述为剪映生产路线已停止维护，删除没有证据的“草稿加密”理由。",
+      "source_excerpt": "剪映：原型说「草稿加密写不进去」——这个理由在仓库里查无实据 | 原型要改 | 后端现状 | 全量搜索 | 22 | – | 28 | 七个剪映脚本和 | docs/05 | ， | 零处提到加密 | 。真实情况是 | 策略性废弃 | ： | docs/05_剪映与HyperFrames.md | 写着「系统不再为新项目生成或修改剪映草稿」， | scripts/README.md | 写着「新任务不生成或修改生产用剪映草稿」， | doc_sync_contract.json | 还有一条专门门禁 | historical_jianying_evidence_is_not_production | 强制把它标成历史证据。这 7 个脚本都不在 | mac_runner_capabilities.yaml | 里，runner 从不调用。 | 要做什么 | 把诊断页和交接去向里「加密」的说法改掉，如实写成「这条路线已停止维护」。技术上做不到和策略上不做，是两件事，别混。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "P6"
+      ],
+      "acceptance_refs": [
+        "P6/AC-01",
+        "P6/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-P6/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R4"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-S1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"s1\"]",
+        "content_sha256": "78a6ab868a769129410aae2fb2513ad4c457c71d1538428fdb3d821a38783aa4"
+      },
+      "summary": "分析预算四个数字：补一个读写配置的接口。注意 analysis_tiering 的输出 没有 JSON Schema，只有 dataclass 和 POLICY_VERSION。",
+      "source_excerpt": "分析预算四个数字 | 可直接接 | 后端现状 | analysis_tiering.py | 的 | TierBudget | 默认值和原型显示的完全一致：粗看每条 3 帧、细看每条 12 帧、最多粗看 100 条、最多细看 24 条（另有 | max_audio_minutes = 120.0 | ）。 | 要做什么 | 补一个读写配置的接口。注意 | analysis_tiering | 的输出 | 没有 JSON Schema | ，只有 dataclass 和 | POLICY_VERSION | 。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "S1"
+      ],
+      "acceptance_refs": [
+        "S1/AC-01",
+        "S1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-S1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-S2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"s2\"]",
+        "content_sha256": "101f030d1ab26f50041c43f6a7ad9225760ac725189e3ba89c3c5f3a7b50ac2c"
+      },
+      "summary": "存放位置（素材根目录 / 笔记库）：现有接口是项目级的，设置页要的是全局级，得加一个。",
+      "source_excerpt": "存放位置（素材根目录 / 笔记库） | 可直接接 | 后端现状 | 已有 | POST /api/projects/:id/workspace | （ | store.connect_workspace() | ），而且已经做了隐私投影——只回 | label | 和 | path_digest | ，绝对路径不出本机。 | 要做什么 | 现有接口是项目级的，设置页要的是全局级，得加一个。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "S2"
+      ],
+      "acceptance_refs": [
+        "S2/AC-01",
+        "S2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-S2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-S3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"s3\"]",
+        "content_sha256": "f07a378f3eb22333d54a54155a726e875cabe52857a1f16c3e5e014fe3570062"
+      },
+      "summary": "诊断页六项检查：包接口。前端别把「6 项」写死。另外这个脚本 零测试覆盖，接之前建议先补。",
+      "source_excerpt": "诊断页六项检查 | 可直接接 | 后端现状 | 43_content_os_doctor.py | 的 | collect_checks() | ：必需 4 项（ | python_version | ≥3.11、 | repository_write | 、 | ffmpeg | 、 | ffprobe | ）+ 可选项。 | 可选项数量会变 | ：默认 provider 是 | codex_cli | 时共 6 项；设成 | openai_api | 时变成 7 项（多出 | openai_key | 和 | openai_package | ）。输出 | content_os_doctor_v1 | ，exit code 0/2。 | 要做什么 | 包接口。前端别把「6 项」写死。另外这个脚本 | 零测试覆盖 | ，接之前建议先补。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "S3"
+      ],
+      "acceptance_refs": [
+        "S3/AC-01",
+        "S3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-S3/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-S4",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"s4\"]",
+        "content_sha256": "8239734c0bbbf58452e353c9136b99ab1c27bde6f7222e6076992a7c6b883132"
+      },
+      "summary": "Windows 与 Linux 将上游配对显示为“不支持”而不是“配置失败”，并明确本地核心能力仍可用。",
+      "source_excerpt": "云端配对在非 macOS 上永远是红的 | 原型要改 | 后端现状 | doctor 的 | openclaw_cloud_pairing | 判据是 | platform_contract_name() in {\"macos\"} | 。上游合同 | supported_device_platforms: [\"macos\"] | ，Windows / Linux 上这项 | 必然失败 | ，README 也明说了会 fail-closed。 | 要做什么 | Windows 用户看到一项永远红的检查会以为装坏了。诊断页需要区分「这台机器不支持」和「配置错了」两种状态，文案要说清楚本地流水线不受影响。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "S4"
+      ],
+      "acceptance_refs": [
+        "S4/AC-01",
+        "S4/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-S4/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-S5",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"s5\"]",
+        "content_sha256": "2f7ec9554acd857ecc0589a2b27dc2f603093722e9dff60cf49ea3de872ec47b"
+      },
+      "summary": "持久化用户选择的提供方、模型、端点、思考强度和密钥引用，并确保真实执行链消费该配置。",
+      "source_excerpt": "AI 助手设置（接入方式 / 模型 / 思考强度） | 需补后端 | 后端现状 | provider 选择通过环境变量 | OPENCLAW_CREATIVE_PROVIDER | （ | codex_cli | / | openai_api | ）， | llm_common.py | 里有调用封装。但 | 没有持久化的配置文件 | ，也没有配置读写接口。 | 要做什么 | 新增一层配置存储 + 接口。目前所有设置都靠环境变量，做不出设置页。另外：「默认以阿里云线上模型 API 为主」如果不止转写、也适用于文案生成和关键帧视觉分析，需要给 creative provider 新增 | dashscope | 选项（现在只有 | codex_cli | / | openai_api | 两种）——这一点建议下次一并确认。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "sandbox-real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "S5"
+      ],
+      "acceptance_refs": [
+        "S5/AC-01",
+        "S5/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-S5/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-C1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"c1\"]",
+        "content_sha256": "1a9ea657fb57b959790247c969ea8605269fb46f91dbeefcc43b17d37f5789f3"
+      },
+      "summary": "任务列表上的 media.xxx.v1 标识符是对的：保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。",
+      "source_excerpt": "任务列表上的 | media.xxx.v1 | 标识符是对的 | 可直接接 | 后端现状 | 全部 9 个（ | media.project.prepare.v1 | 、 | media.material.match.v1 | 、 | media.edit.timeline.v1 | 等）确实存在，但只存在于 | schemas/openclaw_media_contract_snapshot.json | 的 | pipelines | 映射里——它们是 | 上游云端的 pipeline ID 快照 | ，本地脚本不按它们分派。原型把它们放在「网页中台」这一屏是 | 放对了位置 | 。 | 要做什么 | 保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "sandbox-real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "C1"
+      ],
+      "acceptance_refs": [
+        "C1/AC-01",
+        "C1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-C1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-C2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"c2\"]",
+        "content_sha256": "501345c132e3c972b49713e5532752f075e73391517f8c9ee53480561ffced3c"
+      },
+      "summary": "任务状态机（执行中 / 已完成 / 已阻塞）：前端目前只画了 3 态，补齐映射即可。注意 expired 和 cancelled 也要有对应显示。",
+      "source_excerpt": "任务状态机（执行中 / 已完成 / 已阻塞） | 可直接接 | 后端现状 | 同一份快照里固化了完整状态机： | queued / leased / acknowledged / running / succeeded / blocked / failed / expired / cancelled | ，共 9 态。 | 要做什么 | 前端目前只画了 3 态，补齐映射即可。注意 | expired | 和 | cancelled | 也要有对应显示。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "sandbox-real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "C2"
+      ],
+      "acceptance_refs": [
+        "C2/AC-01",
+        "C2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-C2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-C3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"c3\"]",
+        "content_sha256": "bee98ec69fd375563b3356c2040da7cb82d26ff015dbf4448a7dbd7c2b523818"
+      },
+      "summary": "冻结基线要写进界面还是文档：上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。",
+      "source_excerpt": "冻结基线要写进界面还是文档 | 原型要改 | 后端现状 | README 冻结了明确基线： | openclaw-media | @ | f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf | ，合同 | openclaw_media_product_v1 | ，catalog digest | sha256:931dba97… | 。 | 要做什么 | 上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "sandbox-real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "C3"
+      ],
+      "acceptance_refs": [
+        "C3/AC-01",
+        "C3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-C3/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-T1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"t1\"]",
+        "content_sha256": "56383d571da30fb227a738021ab02cd4a8ac6294631b56f2fe5b36941b8754ae"
+      },
+      "summary": "给 35_promote_inbox_batch_to_project.py 补测试：接 UI 之前先补测试。这条建议优先级高于任何界面工作。",
+      "source_excerpt": "给 | 35_promote_inbox_batch_to_project.py | 补测试 | 需补后端 | 现状 | 这个脚本做的是 | 移动文件 | （不是复制），却 | 零测试覆盖 | 。整个仓库里风险最高的一处。整理台的「确认落点」一旦接上它，就是让用户一键触发一个没测过的破坏性操作。 | 要做什么 | 接 UI 之前先补测试。这条建议优先级高于任何界面工作。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "structural",
+        "interaction": "smoke",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "none"
+      },
+      "node_refs": [
+        "T1"
+      ],
+      "acceptance_refs": [
+        "T1/AC-01",
+        "T1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-T1/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R1"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-T2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"t2\"]",
+        "content_sha256": "3ba7338a27bb54f01b8cd5f14059a6764498a753e0de93de5aea58a1e8757da2"
+      },
+      "summary": "给素材库三件套补测试（12 / 14 / 15）：和第 00 节的索引层一起做，定契约的同时补测试。",
+      "source_excerpt": "给素材库三件套补测试（ | 12 | / | 14 | / | 15 | ） | 需补后端 | 现状 | 连拍筛选、合照分发、资产登记三个脚本全部零测试、零 schema。素材库这一屏完全建立在它们之上。 | 要做什么 | 和第 00 节的索引层一起做，定契约的同时补测试。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "structural",
+        "interaction": "smoke",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "none"
+      },
+      "node_refs": [
+        "T2"
+      ],
+      "acceptance_refs": [
+        "T2/AC-01",
+        "T2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-T2/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R3"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-T3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"t3\"]",
+        "content_sha256": "b0981754873ca3edb7a7bc315038902d3fcda032a95e93432b758e017484e6ef"
+      },
+      "summary": "给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
+      "source_excerpt": "给 | 43_content_os_doctor.py | 和 | 01_scan_media_manifest.py | 补测试 | 需补后端 | 现状 | 两个都是 UI 会高频调用的入口，都零测试。 | 01 | 是所有分析的数据源头，它错了后面全错。 | 要做什么 | 补基础用例。 | 01 | 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "structural",
+        "interaction": "smoke",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "none"
+      },
+      "node_refs": [
+        "T3"
+      ],
+      "acceptance_refs": [
+        "T3/AC-01",
+        "T3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-T3/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R1"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-T4",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"t4\"]",
+        "content_sha256": "bca41792617d2f3beaa2391cdcb018ed705f53f9eb0904cf407531fa2fa4b7c8"
+      },
+      "summary": "给 analysis_tiering 的输出定 JSON Schema：补 schemas/analysis_tiering.schema.json，纳入现有的契约校验流程。",
+      "source_excerpt": "给 | analysis_tiering | 的输出定 JSON Schema | 需补后端 | 现状 | 有 | POLICY_VERSION = \"analysis_tiering_v1\" | 和 dataclass，但没有 schema 文件。仓库其它关键契约（EDL、转写）都有 schema，这里是个缺口。 | 要做什么 | 补 | schemas/analysis_tiering.schema.json | ，纳入现有的契约校验流程。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "structural",
+        "interaction": "smoke",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "none"
+      },
+      "node_refs": [
+        "T4"
+      ],
+      "acceptance_refs": [
+        "T4/AC-01",
+        "T4/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-T4/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R5"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-T5",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"t5\"]",
+        "content_sha256": "cc526f681ae04ad05ec73433cf1db27dfcb6a9fbf76a9b41358dc31b32cb7470"
+      },
+      "summary": "所有新增写接口沿用 loopback、同源、CSRF 和明确 revision 域的乐观并发控制，跨端口 Origin 必须拒绝。",
+      "source_excerpt": "确认现有 Studio 的安全模型能不能撑住新界面 | 可直接接 | 现状 | server.py | 的写请求三重校验（loopback Host + 同源 Origin + | X-Content-OS-CSRF | ）+ 每次写都要 | expectedRevision | 乐观锁，模型是清楚的。静态响应带 CSP、 | X-Frame-Options: DENY | 、 | nosniff | 。 | 要做什么 | 新增的每一个写接口都要沿用同一套（尤其是乐观锁）。这套东西已经对了，别在扩界面时绕过它。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "structural",
+        "interaction": "smoke",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "none"
+      },
+      "node_refs": [
+        "T5"
+      ],
+      "acceptance_refs": [
+        "T5/AC-01",
+        "T5/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-T5/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R1"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-T6",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"t6\"]",
+        "content_sha256": "249ca4346591ecb296047cd340b529767719c20b24d26ef9033c9f45cf776c60"
+      },
+      "summary": "七个剪映脚本要么物理归档，要么逐项声明历史且不维护，并使文档、能力清单和持续集成保持一致。",
+      "source_excerpt": "决定 | 22 | – | 28 | 七个剪映脚本的去留 | 需补后端 | 现状 | 约 1600 行代码 + 3 个测试文件，全部不在能力清单里、runner 从不调用，但 | 25 --help | 还留在 | 42_run_local_ci.sh | 的冒烟列表里。处于「代码在、测试在、策略上不用」的僵持状态。 | 要做什么 | 要么正式移进历史归档目录，要么在 README 明确标注「保留但不维护」。现在的状态会让人以为它可用。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "structural",
+        "interaction": "smoke",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "none"
+      },
+      "node_refs": [
+        "T6"
+      ],
+      "acceptance_refs": [
+        "T6/AC-01",
+        "T6/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-T6/acceptance/machine/integration-contract/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R4"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-K1",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"k1\"]",
+        "content_sha256": "9e11aa783e5209a85b2e38ebceb1d0da2f8c92a1cd8222d4a3dbc7466780c041"
+      },
+      "summary": "区块锁定 + AI 只改选中区块：新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。",
+      "source_excerpt": "区块锁定 + AI 只改选中区块 | 原型要改 | 现状 | ai_patch.py | 定义了严格合同：替换集合必须与选中集合 | 完全一致 | ，locked block 不能被保存或被 AI 改。这是防止 AI 悄悄改动你没让它改的地方——一个很硬的产品承诺。 | 要做什么 | 新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "K1"
+      ],
+      "acceptance_refs": [
+        "K1/AC-01",
+        "K1/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-K1/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R7"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-K2",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"k2\"]",
+        "content_sha256": "a76f17510c99f03520f67e962fcb00ddc77c8725b2a453455a706fbb6862d7c2"
+      },
+      "summary": "版本 diff 与非破坏性回滚：原型里没有版本概念。至少要在项目屏留一个入口。",
+      "source_excerpt": "版本 diff 与非破坏性回滚 | 原型要改 | 现状 | GET /documents/:name/diff?from=&to= | 和 | POST /documents/:name/rollback | 都在，回滚是 | 创建新版本 | 而不是删历史。 | 要做什么 | 原型里没有版本概念。至少要在项目屏留一个入口。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "K2"
+      ],
+      "acceptance_refs": [
+        "K2/AC-01",
+        "K2/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-K2/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R7"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-K3",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"k3\"]",
+        "content_sha256": "bb42356400e18dbe3c6cab632a28bddbf5dbc0b514d898f467272d63a3a5025d"
+      },
+      "summary": "下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新）：原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。",
+      "source_excerpt": "下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新） | 原型要改 | 现状 | 依赖关系已经实现，概览页会数出「待重算下游」的数量。这是保证证据链一致性的机制。 | 要做什么 | 原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "K3"
+      ],
+      "acceptance_refs": [
+        "K3/AC-01",
+        "K3/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-K3/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R7"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-K4",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"k4\"]",
+        "content_sha256": "1b251c23eb82cdd0ef41c730c2fe0b3f2d5b225b2a7ec4070a86d167755d6c16"
+      },
+      "summary": "研究与参考（reference ≠ 自有素材）：这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。",
+      "source_excerpt": "研究与参考（reference ≠ 自有素材） | 原型要改 | 现状 | 独立的 | references | 数据结构 + | POST /api/projects/:id/references | ，每条标了 | asset_role=reference | ，界面上明确写着「公开样本不会被误当成你本地拥有的可剪素材」。 | 要做什么 | 这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "K4"
+      ],
+      "acceptance_refs": [
+        "K4/AC-01",
+        "K4/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-K4/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R7"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-K5",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"k5\"]",
+        "content_sha256": "292a85f96b6f474aff295829bca32be75b4510d32560dd76c63820ba0f4fe033"
+      },
+      "summary": "发布与复盘（指标 + 复盘结论 + 下次约束）：原型里完全没有。这块丢了，产品就退化成一次性工具。",
+      "source_excerpt": "发布与复盘（指标 + 复盘结论 + 下次约束） | 原型要改 | 现状 | record_publishing() | 存 6 项指标（播放/点赞/评论/转发/收藏/关注）+ | review_conclusion | + | next_constraint | ，而且下一次 AI 修改 | 只参考同账号已记录的结论 | ——这是让工具越用越准的闭环。 | 要做什么 | 原型里完全没有。这块丢了，产品就退化成一次性工具。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "K5"
+      ],
+      "acceptance_refs": [
+        "K5/AC-01",
+        "K5/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-K5/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R7"
+      ],
+      "scope_deviation_ref": null
+    },
+    {
+      "requirement_id": "SRC-K6",
+      "modality": "MUST",
+      "source": {
+        "artifact_id": "SRC-ART-CHECKLIST",
+        "locator": "article[data-k=\"k6\"]",
+        "content_sha256": "23c574c4a58e433ade1f16544530a3befec922bda085b76266b5ae5d219c069b"
+      },
+      "summary": "Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。",
+      "source_excerpt": "Brief 和脚本两个文档阶段 | 原型要改 | 现状 | Studio 有独立的 Brief 和脚本标签页，都是版本化区块文档。README 的能力链条里，「对照 Brief / Script 匹配素材」是素材匹配的前提输入。 | 要做什么 | 原型直接从素材跳到剪辑决策，中间少了 Brief 和脚本。要么补进去，要么想清楚这两步在新 IA 里搬到哪。",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "node_refs": [
+        "K6"
+      ],
+      "acceptance_refs": [
+        "K6/AC-01",
+        "K6/AC-02"
+      ],
+      "evidence_targets": [
+        "acceptance-fragments/OCM-K6/acceptance/machine/e2e/runs/<run-id>/result.md"
+      ],
+      "release_refs": [
+        "M45",
+        "R7"
+      ],
+      "scope_deviation_ref": null
+    }
+  ],
+  "releases": [
+    {
+      "release_id": "M45",
+      "release_class": "source-defined",
+      "source_defined": true,
+      "completion_authority": "source",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "real",
+        "persistent_runtime": "active",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    },
+    {
+      "release_id": "R1",
+      "release_class": "local-candidate",
+      "source_defined": false,
+      "completion_authority": "ssot-release-owner",
+      "candidate_of": "M45",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "sandbox-real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    },
+    {
+      "release_id": "R2",
+      "release_class": "local-candidate",
+      "source_defined": false,
+      "completion_authority": "ssot-release-owner",
+      "candidate_of": "M45",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    },
+    {
+      "release_id": "R3",
+      "release_class": "local-candidate",
+      "source_defined": false,
+      "completion_authority": "ssot-release-owner",
+      "candidate_of": "M45",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    },
+    {
+      "release_id": "R4",
+      "release_class": "local-candidate",
+      "source_defined": false,
+      "completion_authority": "ssot-release-owner",
+      "candidate_of": "M45",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    },
+    {
+      "release_id": "R5",
+      "release_class": "local-candidate",
+      "source_defined": false,
+      "completion_authority": "ssot-release-owner",
+      "candidate_of": "M45",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "sandbox-real",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    },
+    {
+      "release_id": "R6",
+      "release_class": "local-candidate",
+      "source_defined": false,
+      "completion_authority": "ssot-release-owner",
+      "candidate_of": "M45",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "real",
+        "persistent_runtime": "active",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    },
+    {
+      "release_id": "R7",
+      "release_class": "local-candidate",
+      "source_defined": false,
+      "completion_authority": "ssot-release-owner",
+      "candidate_of": "M45",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "none",
+        "persistent_runtime": "none",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    },
+    {
+      "release_id": "R8",
+      "release_class": "local-candidate",
+      "source_defined": false,
+      "completion_authority": "ssot-release-owner",
+      "candidate_of": "M45",
+      "required_evidence_profile": {
+        "source_identity": "locked",
+        "source_coverage": "complete",
+        "visual_fidelity": "strict-reference",
+        "interaction": "full-e2e",
+        "local_runtime": true,
+        "external_system": "real",
+        "persistent_runtime": "active",
+        "human_visual_review": "blocking"
+      },
+      "actual_evidence_profile": {},
+      "status": "NOT_READY"
+    }
+  ],
+  "scope_deviations": []
+}

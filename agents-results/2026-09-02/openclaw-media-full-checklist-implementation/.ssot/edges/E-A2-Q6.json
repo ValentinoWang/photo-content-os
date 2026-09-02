@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-A2-Q6",
+  "from": "A2",
+  "to": "Q6",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.a2.q6"
+  ],
+  "transferred_input": "A2 已接受的合同、实现或验收产物",
+  "gate_evidence": "A2 节点状态与候选内容校验值",
+  "reason_code": "acceptance-dependency"
+}
