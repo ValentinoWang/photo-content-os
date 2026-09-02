@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-Q6-Q8",
+  "from": "Q6",
+  "to": "Q8",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.q6.q8"
+  ],
+  "transferred_input": "Q6 已接受的合同、实现或验收产物",
+  "gate_evidence": "Q6 节点状态与候选内容校验值",
+  "reason_code": "candidate-identity"
+}

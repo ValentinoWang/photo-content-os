@@ -1,0 +1,1344 @@
+{
+  "schema_version": 1,
+  "source_commit": "a3ae47100d6fce4cb139ce17a479eea16717e73a",
+  "source_checklist_sha256": "73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb",
+  "items": {
+    "D1": {
+      "source_requirement_id": "SRC-CHECKLIST-D1",
+      "ssot_node_id": "D1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-D1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/01_scan_media_manifest.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "从媒体清单生成可解释、可确认且不可拆分实况照片组的事件批次计划；未确认或输入漂移时禁止迁移。",
+        "分批建议在用户确认前不得移动文件；确认必须携带 planDigest、批次、目标项目和 expectedRevision，计划漂移返回冲突。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "D2": {
+      "source_requirement_id": "SRC-CHECKLIST-D2",
+      "ssot_node_id": "D2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-D2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/15_register_reusable_asset.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "以稳定素材身份原子维护结构化索引，支持分类、标签、用途、计数与详情查询，同时保留 Markdown 卡片。",
+        "生产删除只能生成建议；未勾选、未二次确认、回收站不可用或回读失败时不得移动任何媒体。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "D3": {
+      "source_requirement_id": "SRC-CHECKLIST-D3",
+      "ssot_node_id": "D3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-D3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/03_transcribe_audio.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。",
+        "发送音频前必须明示 DashScope 边界；在线失败时仅在本机 FunASR 已安装可用才回退，二者失败保留可重试占位。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "A1": {
+      "source_requirement_id": "SRC-CHECKLIST-A1",
+      "ssot_node_id": "A1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-A1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/upstream_session.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。",
+        "跳过、解除配对、会话过期及 Windows/Linux 不支持配对时，本地项目、素材和创作操作仍可完整使用。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "A2": {
+      "source_requirement_id": "SRC-CHECKLIST-A2",
+      "ssot_node_id": "A2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-A2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/41_setup_dev_environment.sh",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "向导可重入地完成位置、运行环境、编辑器、账号与设备四步，并能从失败处恢复。",
+        "四步向导逐步 CAS 保存；中断后从最后成功步骤恢复，账号步骤可跳过且不得把本地能力改为只读。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "H1": {
+      "source_requirement_id": "SRC-CHECKLIST-H1",
+      "ssot_node_id": "H1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-H1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/project_store.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "最近项目列表 + 六段流水线进度：纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。",
+        "首页六段业务命名与项目五段字段投影必须显式对齐；未知阶段显示受控兜底，不得错算当前进度。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "H2": {
+      "source_requirement_id": "SRC-CHECKLIST-H2",
+      "ssot_node_id": "H2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-H2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/server.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。",
+        "能力状态来自实时健康、上游与 ChatCut 探测；超时、未配对和不支持必须分开显示，不得写死可用。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "H3": {
+      "source_requirement_id": "SRC-CHECKLIST-H3",
+      "ssot_node_id": "H3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-H3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/15_register_reusable_asset.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB）：索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。",
+        "本周统计从真实索引和任务时间窗口聚合；空数据为零值空态，损坏记录不得被计入成功统计。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "H4": {
+      "source_requirement_id": "SRC-CHECKLIST-H4",
+      "ssot_node_id": "H4",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-H4/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/project_store.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "本周统计（完成任务 23 / 发布内容 4）：加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。",
+        "发布记录必须按项目 revision 写入并可回读；重复提交保持幂等，冲突不覆盖较新发布状态。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "I1": {
+      "source_requirement_id": "SRC-CHECKLIST-I1",
+      "ssot_node_id": "I1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/34_ensure_project_from_inbox_batch.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "拖入素材 → 自动成批：已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。",
+        "批次确认只能消费同一 planDigest；目标碰撞、来源漂移或 expectedRevision 过期时原子拒绝且不产生半迁移。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "I2": {
+      "source_requirement_id": "SRC-CHECKLIST-I2",
+      "ssot_node_id": "I2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/01_scan_media_manifest.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1）：读 manifest 分组计数即可，不用新后端。",
+        "分批依据必须展示时间、位置和实况照片不可拆分原因；缺少元数据时使用明确兜底且不拆散绑定组。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "I3": {
+      "source_requirement_id": "SRC-CHECKLIST-I3",
+      "ssot_node_id": "I3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/12_select_repeat_photo_groups.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "连拍识别（「发现 4 组连拍」）与实况配对：把 12 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。",
+        "归档预览逐项显示来源、目标、数量与碰撞；预览不得创建目录或移动媒体，确认后回执必须可重放核对。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "I4": {
+      "source_requirement_id": "SRC-CHECKLIST-I4",
+      "ssot_node_id": "I4",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I4/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/media_delete_recommendations.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "三分落点：进项目 / 归档保留 / 推荐删除：新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。",
+        "删除建议只允许四类机器可验证理由：低于策略阈值的误触片段、文件损坏、哈希完全重复、已保留原片的相机低清代理；每项附证据。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "I5": {
+      "source_requirement_id": "SRC-CHECKLIST-I5",
+      "ssot_node_id": "I5",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I5/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/media_trash_flow.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "用户勾选建议并二次确认后才移入当前操作系统回收站；回读失败必须阻断，界面不得承诺固定保留天数。",
+        "仅用户选中的候选进入当前操作系统回收站；永久删除被禁止，平台失败逐文件报告并保留可恢复状态。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "L1": {
+      "source_requirement_id": "SRC-CHECKLIST-L1",
+      "ssot_node_id": "L1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/15_register_reusable_asset.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "复用资产卡片列表 + 分类树：索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。",
+        "索引缺失、损坏或版本不兼容时显示可修复错误，不得从展示卡片猜测结构化事实或返回伪造素材。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "L2": {
+      "source_requirement_id": "SRC-CHECKLIST-L2",
+      "ssot_node_id": "L2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/15_register_reusable_asset.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "按标签筛选：同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。",
+        "分类、标签和用途筛选必须来自索引并可组合；未知条件返回空结果而不是放宽查询或静默显示全部。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "L3": {
+      "source_requirement_id": "SRC-CHECKLIST-L3",
+      "ssot_node_id": "L3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/45_archive_project.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "同时展示生命周期和每个物理位置的真实回读状态，逻辑登记不得冒充副本已存在。",
+        "界面同时展示生命周期与每个物理位置的独立清单、校验值和回读状态；登记位置不得冒充副本存在。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "L4": {
+      "source_requirement_id": "SRC-CHECKLIST-L4",
+      "ssot_node_id": "L4",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L4/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/45_archive_project.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "归档索引卡（检索关键词、精选副本入口、恢复方式）：包 HTTP 接口。这是素材库里唯一后端完备的部分。",
+        "恢复必须写入新目录并逐项校验大小与 SHA-256；目标非空、清单漂移或校验失败时禁止覆盖原件。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "L5": {
+      "source_requirement_id": "SRC-CHECKLIST-L5",
+      "ssot_node_id": "L5",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L5/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/17_match_materials_to_brief.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "详情栏主按钮「选择项目并加入」要落到真实动作：要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。",
+        "导入、登记新资产、加入项目和在访达中显示分别有真实动作；未知 assetId、路径越界或 revision 冲突时拒绝。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "P1": {
+      "source_requirement_id": "SRC-CHECKLIST-P1",
+      "ssot_node_id": "P1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-P1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/edl_bridge.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "剪辑决策条目列表（时间码 / 台词 / 角色标签）：纯前端。EDL 已经通过 GET /api/projects/:id 返回了。",
+        "项目读取必须返回同一 revision 的文档和 EDL 投影；缺失或无效 EDL 显示阻断，不得从界面文本拼出权威。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "P2": {
+      "source_requirement_id": "SRC-CHECKLIST-P2",
+      "ssot_node_id": "P2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-P2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/edit_backends/otio_kdenlive.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "双轨时间线（主画面 + 叠加层）：纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。",
+        "时间线只消费结构化 EDL；轨道、片段、入出点和素材引用非法时不渲染可执行候选。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "P3": {
+      "source_requirement_id": "SRC-CHECKLIST-P3",
+      "ssot_node_id": "P3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-P3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/static/app.js",
+        "99_System_OpenClaw/desktop/static/index.html"
+      ],
+      "acceptance_assertions": [
+        "结构化时间线为主视图，同时保留文本说明与受约束的选区修改，不形成第二份机器执行权威。",
+        "时间线与文本仅是同一 EDL 的两种视图；切换不得创建第二份权威，受约束选区修改必须带 revision。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "P4": {
+      "source_requirement_id": "SRC-CHECKLIST-P4",
+      "ssot_node_id": "P4",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-P4/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/schemas/edit_decision_list.schema.json",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "「待补素材」缺口清单：纯前端。",
+        "待补素材逐项保留用途、约束和状态；缺失项不得被标记完成，加入素材后必须回读更新。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "P5": {
+      "source_requirement_id": "SRC-CHECKLIST-P5",
+      "ssot_node_id": "P5",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-P5/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/validate_content_os_task.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "内建只显示 handoff_pack 与 otio_kdenlive；ChatCut 仅在本地 MCP 实时探测和主动连接后成为可选去向。",
+        "内建后端仅 handoff_pack 与 otio_kdenlive；ChatCut 只在 Desktop MCP 实时探测成功且用户确认后显示。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "P6": {
+      "source_requirement_id": "SRC-CHECKLIST-P6",
+      "ssot_node_id": "P6",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-P6/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/docs/05_剪映与HyperFrames.md",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "统一表述为剪映生产路线已停止维护，删除没有证据的“草稿加密”理由。",
+        "界面和文档统一表述剪映生产路线停止维护；不得声称草稿加密，也不得修改生产剪映草稿。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "S1": {
+      "source_requirement_id": "SRC-CHECKLIST-S1",
+      "ssot_node_id": "S1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/analysis_tiering.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "分析预算四个数字：补一个读写配置的接口。注意 analysis_tiering 的输出 没有 JSON Schema，只有 dataclass 和 POLICY_VERSION。",
+        "预算五个字段可增减并持久化，均为非负整数；revision 冲突或非法值不得覆盖当前配置。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "S2": {
+      "source_requirement_id": "SRC-CHECKLIST-S2",
+      "ssot_node_id": "S2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/archive_location_config.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "存放位置（素材根目录 / 笔记库）：现有接口是项目级的，设置页要的是全局级，得加一个。",
+        "生命周期和物理位置分别持久化并回读；受控路径越界、重复身份或不可访问位置返回可操作错误。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "S3": {
+      "source_requirement_id": "SRC-CHECKLIST-S3",
+      "ssot_node_id": "S3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/43_content_os_doctor.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "诊断页六项检查：包接口。前端别把「6 项」写死。另外这个脚本 零测试覆盖，接之前建议先补。",
+        "诊断项由运行时动态生成，不写死六项或固定数量；复制报告必须等于当前无密钥诊断 JSON。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "S4": {
+      "source_requirement_id": "SRC-CHECKLIST-S4",
+      "ssot_node_id": "S4",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S4/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/upstream_session.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "Windows 与 Linux 将上游配对显示为“不支持”而不是“配置失败”，并明确本地核心能力仍可用。",
+        "上游账号只呈现已连接与未连接两态；平台不支持是能力说明，不得伪装为第三个账号状态或配置失败。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "S5": {
+      "source_requirement_id": "SRC-CHECKLIST-S5",
+      "ssot_node_id": "S5",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S5/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/model_provider_config.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "持久化用户选择的提供方、模型、端点、思考强度和密钥引用，并确保真实执行链消费该配置。",
+        "提供方、模型、端点、思考强度和密钥引用可配置并被真实执行链消费；密钥明文不得写盘或回显。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "C1": {
+      "source_requirement_id": "SRC-CHECKLIST-C1",
+      "ssot_node_id": "C1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-C1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/schemas/openclaw_media_contract_snapshot.json",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "任务列表上的 media.xxx.v1 标识符是对的：保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。",
+        "网页中台只投影用户已配对身份可见的任务；会话失效返回明确空态/认证态且不影响本地工作台。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "C2": {
+      "source_requirement_id": "SRC-CHECKLIST-C2",
+      "ssot_node_id": "C2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-C2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/schemas/openclaw_media_contract_snapshot.json",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "任务状态机（执行中 / 已完成 / 已阻塞）：前端目前只画了 3 态，补齐映射即可。注意 expired 和 cancelled 也要有对应显示。",
+        "任务状态只允许 queued、running、completed、failed、expired、cancelled 六态，expired 与 cancelled 必须独立映射。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "C3": {
+      "source_requirement_id": "SRC-CHECKLIST-C3",
+      "ssot_node_id": "C3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-C3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/schemas/openclaw_media_contract_snapshot.json",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "冻结基线要写进界面还是文档：上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。",
+        "复制报告包含候选提交、内容摘要、状态和错误边界；缺少上游证据时不得展示已发布或已完成。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "T1": {
+      "source_requirement_id": "SRC-CHECKLIST-T1",
+      "ssot_node_id": "T1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-T1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/tests/test_promote_inbox_batch_to_project.py"
+      ],
+      "acceptance_assertions": [
+        "给 35_promote_inbox_batch_to_project.py 补测试：接 UI 之前先补测试。这条建议优先级高于任何界面工作。",
+        "破坏性批次迁移必须有同 planDigest 的预览、幂等回执和可恢复日志；重复调用不得重复移动。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "T2": {
+      "source_requirement_id": "SRC-CHECKLIST-T2",
+      "ssot_node_id": "T2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-T2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/12_select_repeat_photo_groups.py"
+      ],
+      "acceptance_assertions": [
+        "给素材库三件套补测试（12 / 14 / 15）：和第 00 节的索引层一起做，定契约的同时补测试。",
+        "重复照片选择保留实况绑定和用户保留规则；阈值边界、空组及无候选都有确定结果。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "T3": {
+      "source_requirement_id": "SRC-CHECKLIST-T3",
+      "ssot_node_id": "T3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-T3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/tests/test_media_manifest_contract.py"
+      ],
+      "acceptance_assertions": [
+        "给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
+        "媒体清单 schema 对路径、哈希、大小、设备与定位字段做双向校验；非法清单不得进入后续动作。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "T4": {
+      "source_requirement_id": "SRC-CHECKLIST-T4",
+      "ssot_node_id": "T4",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-T4/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/analysis_tiering.py"
+      ],
+      "acceptance_assertions": [
+        "给 analysis_tiering 的输出定 JSON Schema：补 schemas/analysis_tiering.schema.json，纳入现有的契约校验流程。",
+        "分析策略版本、层级和预算由同一配置权威消费；耗尽时显式停止或降档，不得静默超额。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "T5": {
+      "source_requirement_id": "SRC-CHECKLIST-T5",
+      "ssot_node_id": "T5",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-T5/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/server.py"
+      ],
+      "acceptance_assertions": [
+        "所有新增写接口沿用 loopback、同源、CSRF 和明确 revision 域的乐观并发控制，跨端口 Origin 必须拒绝。",
+        "所有新增写接口强制 loopback、同源、CSRF 和真正整数 expectedRevision；bool、string、float 与跨端口 Origin 均拒绝。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "T6": {
+      "source_requirement_id": "SRC-CHECKLIST-T6",
+      "ssot_node_id": "T6",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-T6/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/README.md"
+      ],
+      "acceptance_assertions": [
+        "七个剪映脚本要么物理归档，要么逐项声明历史且不维护，并使文档、能力清单和持续集成保持一致。",
+        "七个剪映脚本逐项标记历史或物理归档，README、能力清单与 CI 不得继续宣称受支持。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "K1": {
+      "source_requirement_id": "SRC-CHECKLIST-K1",
+      "ssot_node_id": "K1",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-K1/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/ai_patch.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "区块锁定 + AI 只改选中区块：新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。",
+        "锁定与 AI 选区状态按文档 revision 保存；锁定内容不得被 AI patch 或过期客户端覆盖。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "K2": {
+      "source_requirement_id": "SRC-CHECKLIST-K2",
+      "ssot_node_id": "K2",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-K2/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/project_store.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "版本 diff 与非破坏性回滚：原型里没有版本概念。至少要在项目屏留一个入口。",
+        "每版可查看 diff 并回滚到明确版本；回滚产生新 revision，不重写或删除历史版本。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "K3": {
+      "source_requirement_id": "SRC-CHECKLIST-K3",
+      "ssot_node_id": "K3",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-K3/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/project_store.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新）：原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。",
+        "上游输入变化后 stale 状态传播到所有受影响下游；未受影响文档不得被连带失效。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "K4": {
+      "source_requirement_id": "SRC-CHECKLIST-K4",
+      "ssot_node_id": "K4",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-K4/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/project_store.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "研究与参考（reference ≠ 自有素材）：这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。",
+        "研究参考与可剪素材分开存储和标识；外部参考不得自动进入媒体执行清单。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "K5": {
+      "source_requirement_id": "SRC-CHECKLIST-K5",
+      "ssot_node_id": "K5",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-K5/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/desktop/project_store.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "发布与复盘（指标 + 复盘结论 + 下次约束）：原型里完全没有。这块丢了，产品就退化成一次性工具。",
+        "复盘与发布记录绑定候选摘要和 revision；失败发布不得写成成功，重试保留前次证据。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    },
+    "K6": {
+      "source_requirement_id": "SRC-CHECKLIST-K6",
+      "ssot_node_id": "K6",
+      "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-K6/acceptance-contract.md",
+      "implementation_paths": [
+        "99_System_OpenClaw/scripts/mac_openclaw_runner.py",
+        "99_System_OpenClaw/desktop/static/index.html",
+        "99_System_OpenClaw/desktop/static/app.js"
+      ],
+      "acceptance_assertions": [
+        "Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。",
+        "Brief 与脚本保持独立版本阶段，脚本只从获批 Brief 和素材匹配输入编译；反向编辑不得改写 Brief。"
+      ],
+      "protected_tests": [
+        {
+          "path": "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+          "sha256": "7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+          "sha256": "188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5"
+        },
+        {
+          "path": "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+          "sha256": "f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174"
+        }
+      ],
+      "implementation_state": "IMPLEMENTED",
+      "verification_state": "PENDING_EXECUTION_EVIDENCE"
+    }
+  }
+}

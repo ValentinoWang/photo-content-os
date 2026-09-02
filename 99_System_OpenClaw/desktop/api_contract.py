@@ -1,8 +1,70 @@
-"""Canonical OpenAPI contract for the loopback desktop service."""
+"""Canonical route inventory and OpenAPI contract for the loopback desktop service."""
 
 from __future__ import annotations
 
+import re
 from typing import Any
+
+
+ROUTE_SPECS: tuple[dict[str, object], ...] = (
+    {"method": "GET", "path": "/api/bootstrap", "operation_id": "getBootstrap", "summary": "Read desktop bootstrap state"},
+    {"method": "GET", "path": "/api/health", "operation_id": "getHealth", "summary": "Read loopback service health"},
+    {"method": "GET", "path": "/api/diagnostics", "operation_id": "getDiagnostics", "summary": "Run dynamic local diagnostics"},
+    {"method": "GET", "path": "/api/settings", "operation_id": "getSettings", "summary": "Read redacted desktop settings"},
+    {"method": "GET", "path": "/api/settings/analysis-budget", "operation_id": "getAnalysisBudget", "summary": "Read the effective analysis budget"},
+    {"method": "POST", "path": "/api/settings/analysis-budget", "operation_id": "updateAnalysisBudget", "summary": "Update the analysis budget with CAS", "write": True},
+    {"method": "GET", "path": "/api/projects", "operation_id": "listProjects", "summary": "List local projects"},
+    {"method": "POST", "path": "/api/projects", "operation_id": "createProject", "summary": "Create a local project", "write": True},
+    {"method": "GET", "path": "/api/projects/{projectId}", "operation_id": "getProject", "summary": "Read a project"},
+    {"method": "PATCH", "path": "/api/projects/{projectId}", "operation_id": "updateProject", "summary": "Update a project with CAS", "write": True},
+    {"method": "POST", "path": "/api/projects/{projectId}/inbox-plan", "operation_id": "previewInboxPlan", "summary": "Preview deterministic inbox batches", "write": True},
+    {"method": "POST", "path": "/api/projects/{projectId}/inbox-plan/confirm", "operation_id": "confirmInboxPlan", "summary": "Confirm one plan batch and target project", "write": True},
+    {"method": "GET", "path": "/api/assets", "operation_id": "listAssets", "summary": "Query the structured asset index"},
+    {"method": "GET", "path": "/api/assets/statistics", "operation_id": "getAssetStatistics", "summary": "Read dynamic asset facets"},
+    {"method": "GET", "path": "/api/assets/{assetId}", "operation_id": "getAsset", "summary": "Read one structured asset"},
+    {"method": "POST", "path": "/api/projects/{projectId}/assets", "operation_id": "addProjectAsset", "summary": "Add an indexed asset reference to a project", "write": True},
+    {"method": "GET", "path": "/api/setup/state", "operation_id": "getSetupState", "summary": "Read resumable four-step setup state"},
+    {"method": "POST", "path": "/api/setup/state", "operation_id": "updateSetupState", "summary": "Persist one setup transition with CAS", "write": True},
+    {"method": "GET", "path": "/api/upstream/tasks", "operation_id": "getUpstreamTasks", "summary": "Read optional upstream task projections"},
+    {"method": "POST", "path": "/api/projects/{projectId}/media-delete/recommendations", "operation_id": "recommendMediaDeletion", "summary": "Build explainable deletion recommendations", "write": True},
+    {"method": "POST", "path": "/api/projects/{projectId}/media-delete/confirm", "operation_id": "confirmMediaDeletion", "summary": "Move selected media to the system recycle bin", "write": True},
+    {"method": "POST", "path": "/api/projects/{projectId}/media-delete/restore", "operation_id": "restoreMediaDeletion", "summary": "Restore one recycle-bin receipt", "write": True},
+    {"method": "GET", "path": "/api/projects/{projectId}/media-delete/receipts", "operation_id": "listMediaDeletionReceipts", "summary": "Read recycle-bin receipts"},
+    {"method": "POST", "path": "/api/projects/{projectId}/documents/{documentName}/{action}", "operation_id": "mutateProjectDocument", "summary": "Patch, lock, unlock, roll back, or AI-patch a project document", "write": True},
+    {"method": "GET", "path": "/api/projects/{projectId}/documents/{documentName}/diff", "operation_id": "getProjectDocumentDiff", "summary": "Read a document version diff"},
+    {"method": "GET", "path": "/api/projects/{projectId}/edl-bridge", "operation_id": "getEdlBridge", "summary": "Read the structured EDL bridge"},
+    {"method": "POST", "path": "/api/projects/{projectId}/workspace", "operation_id": "connectProjectWorkspace", "summary": "Connect a local project workspace", "write": True},
+    {"method": "POST", "path": "/api/projects/{projectId}/publishing", "operation_id": "recordPublishing", "summary": "Record publishing and review evidence", "write": True},
+    {"method": "POST", "path": "/api/projects/{projectId}/references", "operation_id": "addProjectReference", "summary": "Add a non-editing reference", "write": True},
+    {"method": "POST", "path": "/api/settings/model-providers", "operation_id": "saveModelProvider", "summary": "Save a redacted model provider configuration", "write": True},
+    {"method": "POST", "path": "/api/settings/model-providers/{providerId}/probe", "operation_id": "probeModelProvider", "summary": "Probe one configured model provider", "write": True},
+    {"method": "POST", "path": "/api/settings/archive/lifecycle", "operation_id": "saveArchiveLifecycle", "summary": "Save the two-state archive lifecycle", "write": True},
+    {"method": "POST", "path": "/api/settings/archive/locations", "operation_id": "addArchiveLocation", "summary": "Register one physical archive location", "write": True},
+    {"method": "POST", "path": "/api/settings/upstream/pair", "operation_id": "pairUpstream", "summary": "Pair the optional upstream identity", "write": True},
+    {"method": "POST", "path": "/api/settings/upstream/refresh", "operation_id": "refreshUpstream", "summary": "Refresh the optional upstream identity", "write": True},
+    {"method": "POST", "path": "/api/settings/upstream/logout", "operation_id": "logoutUpstream", "summary": "Clear the optional upstream identity", "write": True},
+    {"method": "POST", "path": "/api/settings/chatcut/probe", "operation_id": "probeChatCut", "summary": "Probe the local ChatCut MCP", "write": True},
+    {"method": "POST", "path": "/api/settings/chatcut/confirm", "operation_id": "confirmChatCut", "summary": "Confirm a detected local ChatCut MCP", "write": True},
+)
+
+
+def route_inventory() -> list[dict[str, str]]:
+    """Return the exact path/method registration consumed by server and tests."""
+
+    return [
+        {"method": str(spec["method"]), "path": str(spec["path"]), "operation_id": str(spec["operation_id"])}
+        for spec in ROUTE_SPECS
+    ]
+
+
+def is_registered_route(method: str, path: str) -> bool:
+    for spec in ROUTE_SPECS:
+        if spec["method"] != method.upper():
+            continue
+        pattern = re.sub(r"\{[A-Za-z][A-Za-z0-9]*\}", r"[^/]+", str(spec["path"]))
+        if re.fullmatch(pattern, path):
+            return True
+    return False
 
 
 def _response(description: str = "Successful local response") -> dict[str, Any]:
@@ -12,83 +74,37 @@ def _response(description: str = "Successful local response") -> dict[str, Any]:
     }
 
 
-def _operation(operation_id: str, summary: str, *, write: bool = False) -> dict[str, Any]:
+def _operation(spec: dict[str, object]) -> dict[str, Any]:
     operation: dict[str, Any] = {
-        "operationId": operation_id,
-        "summary": summary,
+        "operationId": spec["operation_id"],
+        "summary": spec["summary"],
         "responses": {"200": _response(), "400": _response("Invalid request")},
     }
-    if write:
+    if spec.get("write") is True:
         operation["parameters"] = [
-            {
-                "name": "X-Content-OS-CSRF",
-                "in": "header",
-                "required": True,
-                "schema": {"type": "string", "minLength": 1},
-            }
+            {"name": "X-Content-OS-CSRF", "in": "header", "required": True, "schema": {"type": "string", "minLength": 1}}
         ]
-        operation["requestBody"] = {
-            "required": True,
-            "content": {"application/json": {"schema": {"type": "object"}}},
-        }
+        operation["requestBody"] = {"required": True, "content": {"application/json": {"schema": {"type": "object"}}}}
         operation["responses"]["409"] = _response("Revision conflict")
     return operation
 
 
-def _project_parameters() -> list[dict[str, Any]]:
+def _path_parameters(path: str) -> list[dict[str, Any]]:
     return [
-        {
-            "name": "projectId",
-            "in": "path",
-            "required": True,
-            "schema": {"type": "string"},
-        }
+        {"name": name, "in": "path", "required": True, "schema": {"type": "string"}}
+        for name in re.findall(r"\{([A-Za-z][A-Za-z0-9]*)\}", path)
     ]
 
 
 def build_openapi() -> dict[str, Any]:
-    paths: dict[str, Any] = {
-        "/api/bootstrap": {"get": _operation("getBootstrap", "Read desktop bootstrap state")},
-        "/api/health": {"get": _operation("getHealth", "Read loopback service health")},
-        "/api/diagnostics": {"get": _operation("getDiagnostics", "Run dynamic local diagnostics")},
-        "/api/settings": {"get": _operation("getSettings", "Read redacted desktop settings")},
-        "/api/settings/analysis-budget": {
-            "get": _operation("getAnalysisBudget", "Read the effective analysis budget"),
-            "post": _operation("updateAnalysisBudget", "Update the analysis budget with CAS", write=True),
-        },
-        "/api/projects": {
-            "get": _operation("listProjects", "List local projects"),
-            "post": _operation("createProject", "Create a local project", write=True),
-        },
-        "/api/projects/{projectId}": {
-            "parameters": _project_parameters(),
-            "get": _operation("getProject", "Read a project"),
-            "patch": _operation("updateProject", "Update a project with CAS", write=True),
-        },
-        "/api/projects/{projectId}/inbox-plan": {
-            "parameters": _project_parameters(),
-            "post": _operation("previewInboxPlan", "Preview deterministic inbox batches", write=True),
-        },
-        "/api/projects/{projectId}/inbox-plan/confirm": {
-            "parameters": _project_parameters(),
-            "post": _operation("confirmInboxPlan", "Confirm one plan batch and target project", write=True),
-        },
-        "/api/assets": {"get": _operation("listAssets", "Query the structured asset index")},
-        "/api/assets/statistics": {"get": _operation("getAssetStatistics", "Read dynamic asset facets")},
-        "/api/assets/{assetId}": {
-            "parameters": [{"name": "assetId", "in": "path", "required": True, "schema": {"type": "string"}}],
-            "get": _operation("getAsset", "Read one structured asset"),
-        },
-        "/api/projects/{projectId}/assets": {
-            "parameters": _project_parameters(),
-            "post": _operation("addProjectAsset", "Add an indexed asset reference to a project", write=True),
-        },
-        "/api/setup/state": {
-            "get": _operation("getSetupState", "Read resumable four-step setup state"),
-            "post": _operation("updateSetupState", "Persist one setup transition with CAS", write=True),
-        },
-        "/api/upstream/tasks": {"get": _operation("getUpstreamTasks", "Read optional upstream task projections")},
-    }
+    paths: dict[str, Any] = {}
+    for spec in ROUTE_SPECS:
+        path = str(spec["path"])
+        item = paths.setdefault(path, {})
+        parameters = _path_parameters(path)
+        if parameters:
+            item["parameters"] = parameters
+        item[str(spec["method"]).lower()] = _operation(spec)
     return {
         "openapi": "3.1.0",
         "info": {
@@ -101,4 +117,4 @@ def build_openapi() -> dict[str, Any]:
     }
 
 
-__all__ = ["build_openapi"]
+__all__ = ["ROUTE_SPECS", "build_openapi", "is_registered_route", "route_inventory"]

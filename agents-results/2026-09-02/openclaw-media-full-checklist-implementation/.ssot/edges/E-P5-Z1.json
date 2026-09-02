@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-P5-Z1",
+  "from": "P5",
+  "to": "Z1",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.p5.z1"
+  ],
+  "transferred_input": "P5 已接受的合同、实现或验收产物",
+  "gate_evidence": "P5 节点状态与候选内容校验值",
+  "reason_code": "candidate-identity"
+}

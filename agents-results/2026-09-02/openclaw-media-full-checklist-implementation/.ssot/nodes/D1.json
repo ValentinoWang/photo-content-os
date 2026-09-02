@@ -33,7 +33,8 @@
   "acceptance_authority": "产品负责人和验收负责人",
   "unlocks": [
     "I1",
-    "Q1"
+    "Q1",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -63,5 +64,6 @@
   "goal": "从媒体清单生成可解释、可确认且不可拆分实况照片组的事件批次计划；未确认或输入漂移时禁止迁移。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-D1/acceptance-contract.md"
 }

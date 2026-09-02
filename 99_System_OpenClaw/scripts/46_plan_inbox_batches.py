@@ -153,7 +153,7 @@ def plan_batches(
     if current:
         batches.append(make_batch(len(batches) + 1, current))
 
-    return {
+    plan = {
         "schema_version": PLAN_SCHEMA_VERSION,
         "input_manifest": {
             "manifest_sha256": f"sha256:{manifest_sha256}",
@@ -177,6 +177,9 @@ def plan_batches(
             for unit in pending_units
         ],
     }
+    canonical = json.dumps(plan, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    plan["plan_digest"] = "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    return plan
 
 
 def make_batch(sequence: int, units: list[dict[str, Any]]) -> dict[str, Any]:

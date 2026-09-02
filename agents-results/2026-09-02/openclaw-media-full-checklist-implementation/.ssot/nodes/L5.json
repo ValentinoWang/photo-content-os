@@ -31,7 +31,8 @@
   "write_authority": "implementation",
   "acceptance_authority": "产品负责人和验收负责人",
   "unlocks": [
-    "Q3"
+    "Q3",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -61,5 +62,6 @@
   "goal": "详情栏主按钮「选择项目并加入」要落到真实动作：要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-L5/acceptance-contract.md"
 }

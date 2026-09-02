@@ -1,0 +1,15 @@
+{
+  "edge_id": "E-T2-Z1",
+  "from": "T2",
+  "to": "Z1",
+  "dependency_type": "hard",
+  "dependency_scope": "specific-output",
+  "required_state": "ACCEPTED",
+  "assumption_ids": [],
+  "invalidation_keys": [
+    "edge.t2.z1"
+  ],
+  "transferred_input": "T2 已接受的合同、实现或验收产物",
+  "gate_evidence": "T2 节点状态与候选内容校验值",
+  "reason_code": "candidate-identity"
+}

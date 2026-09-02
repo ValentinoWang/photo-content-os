@@ -5,7 +5,7 @@
       "artifact_id": "SRC-ART-CHECKLIST",
       "external_dependency_id": "EXT-CHECKLIST",
       "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html",
-      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:6202f61978a7bc94e01e3d50e80698a32856746b",
+      "git_identity": "main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:6202f61978a7bc94e01e3d50e80698a32856746b",
       "sha256": "73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb",
       "media_type": "text/html",
       "authority_by_dimension": {
@@ -21,7 +21,7 @@
       "artifact_id": "SRC-ART-PROTOTYPE",
       "external_dependency_id": "EXT-PROTOTYPE",
       "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
-      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:cc44bc4065310264b7bf398680fc6cb0750fd163",
+      "git_identity": "main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:d881b06ab26d0cb46b88b653e72dc15160611fce",
       "sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8",
       "media_type": "text/html",
       "authority_by_dimension": {
@@ -853,11 +853,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-D1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-D1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-D1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-D1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -904,11 +904,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-D2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-D2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-D2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-D2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -955,11 +955,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-D3/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-D3/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-D3/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-D3/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -1009,11 +1009,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-A1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-A1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-A1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-A1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -1062,11 +1062,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-A2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-A2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-A2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-A2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1113,11 +1113,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-H1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-H1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-H1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-H1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1164,11 +1164,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-H2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-H2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-H2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-H2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -1217,11 +1217,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-H3/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-H3/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-H3/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-H3/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1268,11 +1268,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-H4/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-H4/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-H4/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-H4/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1319,11 +1319,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-I1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-I1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1370,11 +1370,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-I2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-I2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1421,11 +1421,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-I3/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I3/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-I3/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I3/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1472,11 +1472,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-I4/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I4/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-I4/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I4/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1523,11 +1523,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-I5/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I5/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-I5/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-I5/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -1576,11 +1576,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-L1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-L1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1627,11 +1627,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-L2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-L2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1678,11 +1678,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-L3/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L3/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-L3/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L3/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -1731,11 +1731,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-L4/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L4/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-L4/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L4/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -1784,11 +1784,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-L5/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L5/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-L5/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-L5/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1835,11 +1835,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-P1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-P1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1886,11 +1886,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-P2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-P2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1937,11 +1937,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-P3/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P3/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-P3/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P3/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -1988,11 +1988,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-P4/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P4/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-P4/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P4/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2039,11 +2039,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-P5/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P5/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-P5/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P5/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -2092,11 +2092,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-P6/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P6/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-P6/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-P6/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2143,11 +2143,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-S1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-S1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2194,11 +2194,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-S2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-S2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -2247,11 +2247,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-S3/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S3/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-S3/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S3/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2298,11 +2298,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-S4/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S4/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-S4/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S4/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -2351,11 +2351,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-S5/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S5/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-S5/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-S5/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -2404,11 +2404,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-C1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-C1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-C1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-C1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -2457,11 +2457,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-C2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-C2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-C2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-C2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -2510,11 +2510,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-C3/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-C3/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-C3/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-C3/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [
@@ -2562,7 +2562,7 @@
       "evidence_targets": [
         {
           "lane": "machine/integration-contract",
-          "path": "acceptance-fragments/OCM-T1/acceptance/integration-contract/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-T1/acceptance/machine/integration-contract/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2608,7 +2608,7 @@
       "evidence_targets": [
         {
           "lane": "machine/integration-contract",
-          "path": "acceptance-fragments/OCM-T2/acceptance/integration-contract/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-T2/acceptance/machine/integration-contract/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2654,7 +2654,7 @@
       "evidence_targets": [
         {
           "lane": "machine/integration-contract",
-          "path": "acceptance-fragments/OCM-T3/acceptance/integration-contract/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-T3/acceptance/machine/integration-contract/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2700,7 +2700,7 @@
       "evidence_targets": [
         {
           "lane": "machine/integration-contract",
-          "path": "acceptance-fragments/OCM-T4/acceptance/integration-contract/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-T4/acceptance/machine/integration-contract/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2746,7 +2746,7 @@
       "evidence_targets": [
         {
           "lane": "machine/integration-contract",
-          "path": "acceptance-fragments/OCM-T5/acceptance/integration-contract/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-T5/acceptance/machine/integration-contract/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2792,7 +2792,7 @@
       "evidence_targets": [
         {
           "lane": "machine/integration-contract",
-          "path": "acceptance-fragments/OCM-T6/acceptance/integration-contract/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-T6/acceptance/machine/integration-contract/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2839,11 +2839,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-K1/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K1/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-K1/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K1/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2890,11 +2890,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-K2/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K2/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-K2/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K2/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2941,11 +2941,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-K3/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K3/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-K3/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K3/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -2992,11 +2992,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-K4/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K4/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-K4/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K4/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -3043,11 +3043,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-K5/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K5/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-K5/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K5/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -3094,11 +3094,11 @@
       "evidence_targets": [
         {
           "lane": "machine/e2e",
-          "path": "acceptance-fragments/OCM-K6/acceptance/e2e/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K6/acceptance/machine/e2e/runs/<run-id>/result.md"
         },
         {
           "lane": "machine/local-runtime",
-          "path": "acceptance-fragments/OCM-K6/acceptance/local-runtime/runs/<run-id>/result.md"
+          "path": "acceptance-fragments/OCM-K6/acceptance/machine/local-runtime/runs/<run-id>/result.md"
         }
       ],
       "external_system_refs": [],
@@ -3543,6 +3543,7 @@
       {
         "attribute": "data-screen",
         "value": "home",
+        "implementation_anchor": "data-screen",
         "node_refs": [
           "H1",
           "I1",
@@ -3556,6 +3557,7 @@
       {
         "attribute": "data-screen",
         "value": "inbox",
+        "implementation_anchor": "data-screen",
         "node_refs": [
           "H1",
           "I1",
@@ -3569,6 +3571,7 @@
       {
         "attribute": "data-screen",
         "value": "library",
+        "implementation_anchor": "data-screen",
         "node_refs": [
           "H1",
           "I1",
@@ -3582,6 +3585,7 @@
       {
         "attribute": "data-screen",
         "value": "project",
+        "implementation_anchor": "data-screen",
         "node_refs": [
           "H1",
           "I1",
@@ -3595,6 +3599,7 @@
       {
         "attribute": "data-screen",
         "value": "settings",
+        "implementation_anchor": "data-screen",
         "node_refs": [
           "H1",
           "I1",
@@ -3608,6 +3613,7 @@
       {
         "attribute": "data-screen-panel",
         "value": "home",
+        "implementation_anchor": "data-screen-panel",
         "node_refs": [
           "H1",
           "I1",
@@ -3621,6 +3627,7 @@
       {
         "attribute": "data-screen-panel",
         "value": "inbox",
+        "implementation_anchor": "data-screen-panel",
         "node_refs": [
           "H1",
           "I1",
@@ -3634,6 +3641,7 @@
       {
         "attribute": "data-screen-panel",
         "value": "library",
+        "implementation_anchor": "data-screen-panel",
         "node_refs": [
           "H1",
           "I1",
@@ -3647,6 +3655,7 @@
       {
         "attribute": "data-screen-panel",
         "value": "project",
+        "implementation_anchor": "data-screen-panel",
         "node_refs": [
           "H1",
           "I1",
@@ -3660,6 +3669,7 @@
       {
         "attribute": "data-screen-panel",
         "value": "settings",
+        "implementation_anchor": "data-screen-panel",
         "node_refs": [
           "H1",
           "I1",
@@ -3673,6 +3683,7 @@
       {
         "attribute": "data-batch",
         "value": "a",
+        "implementation_anchor": "data-batch",
         "node_refs": [
           "D1",
           "I1",
@@ -3684,6 +3695,7 @@
       {
         "attribute": "data-batch",
         "value": "b",
+        "implementation_anchor": "data-batch",
         "node_refs": [
           "D1",
           "I1",
@@ -3695,6 +3707,7 @@
       {
         "attribute": "data-batch",
         "value": "c",
+        "implementation_anchor": "data-batch",
         "node_refs": [
           "D1",
           "I1",
@@ -3706,6 +3719,7 @@
       {
         "attribute": "data-del",
         "value": "d1",
+        "implementation_anchor": "data-delete (row also retains data-del)",
         "node_refs": [
           "I4",
           "I5"
@@ -3716,6 +3730,7 @@
       {
         "attribute": "data-del",
         "value": "d2",
+        "implementation_anchor": "data-delete (row also retains data-del)",
         "node_refs": [
           "I4",
           "I5"
@@ -3726,6 +3741,7 @@
       {
         "attribute": "data-del",
         "value": "d3",
+        "implementation_anchor": "data-delete (row also retains data-del)",
         "node_refs": [
           "I4",
           "I5"
@@ -3734,8 +3750,162 @@
         "content_sha256": "4d2ffe86f1ce011fe9b5f605244a7929753b1baa4b3c6bbf372f319a0c9a5b79"
       },
       {
+        "attribute": "data-lib",
+        "value": "archive",
+        "implementation_anchor": "data-category / data-tags",
+        "node_refs": [
+          "L1",
+          "L2"
+        ],
+        "locator": "[data-lib=\"archive\"]",
+        "content_sha256": "dea88f0219659bb469f57702b0833c2d3d7b7c7bcbb6bf5ca7e2daea565d60d3"
+      },
+      {
+        "attribute": "data-lib",
+        "value": "projects",
+        "implementation_anchor": "data-category / data-tags",
+        "node_refs": [
+          "L1",
+          "L2"
+        ],
+        "locator": "[data-lib=\"projects\"]",
+        "content_sha256": "84e4624996d7b9d74a53d57b39a21ac220290237f8297b6121da3af758c1834f"
+      },
+      {
+        "attribute": "data-lib",
+        "value": "reuse",
+        "implementation_anchor": "data-category / data-tags",
+        "node_refs": [
+          "L1",
+          "L2"
+        ],
+        "locator": "[data-lib=\"reuse\"]",
+        "content_sha256": "6f1fd2e54e29d73ba02d132d696fab2d038ccf8754579287bf6a9d3eb76f6c52"
+      },
+      {
+        "attribute": "data-lib-view",
+        "value": "archive",
+        "implementation_anchor": "data-library-view",
+        "node_refs": [
+          "L1"
+        ],
+        "locator": "[data-lib-view=\"archive\"]",
+        "content_sha256": "79a1c09f08ae1713cd2f290d3e0723485cd4f9d205b2c8efb95dd7ee6e70b106"
+      },
+      {
+        "attribute": "data-lib-view",
+        "value": "projects",
+        "implementation_anchor": "data-library-view",
+        "node_refs": [
+          "L1"
+        ],
+        "locator": "[data-lib-view=\"projects\"]",
+        "content_sha256": "e01ca3835ad5897525fe3196d73f811b7a0e63e4ba08a9d6ff2a585d34be2e02"
+      },
+      {
+        "attribute": "data-lib-view",
+        "value": "reuse",
+        "implementation_anchor": "data-library-view",
+        "node_refs": [
+          "L1"
+        ],
+        "locator": "[data-lib-view=\"reuse\"]",
+        "content_sha256": "ef66d535ffb39b9b0706b56d078baa772470f90e8bbb2bbbb4b4276c9e4b8f64"
+      },
+      {
+        "attribute": "data-set",
+        "value": "account",
+        "implementation_anchor": "data-set-nav",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set=\"account\"]",
+        "content_sha256": "12aedb1b93847f1a78e82a0b084d78ee4bef8b284628f482b2220cc263412111"
+      },
+      {
+        "attribute": "data-set",
+        "value": "agent",
+        "implementation_anchor": "data-set-nav",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set=\"agent\"]",
+        "content_sha256": "c9b52f3dfcda5c7dc21844055b3a1eaf3a3e42a67dad13c21ac8f795dba1af4e"
+      },
+      {
+        "attribute": "data-set",
+        "value": "asr",
+        "implementation_anchor": "data-set-nav",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set=\"asr\"]",
+        "content_sha256": "bb6e1b9ff9daae7450a420dab1e302a5fa9e60bb1d2c4aed8ab4f5fd7174113a"
+      },
+      {
+        "attribute": "data-set",
+        "value": "budget",
+        "implementation_anchor": "data-set-nav",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set=\"budget\"]",
+        "content_sha256": "561f494dff4a5cfbad1a25fc3685dea727a9bb892a21874869965027d6763d5d"
+      },
+      {
+        "attribute": "data-set",
+        "value": "doctor",
+        "implementation_anchor": "data-set-nav",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set=\"doctor\"]",
+        "content_sha256": "c0256c8e4a21bb0fbde8ba615bd0bd17fda0cd86c172e95d6c8a6703e9a545ff"
+      },
+      {
+        "attribute": "data-set",
+        "value": "paths",
+        "implementation_anchor": "data-set-nav",
+        "node_refs": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D3"
+        ],
+        "locator": "[data-set=\"paths\"]",
+        "content_sha256": "df36276626a8525659e91efe36ce2f15ec03e50119ea26213cc5ae71e32803b5"
+      },
+      {
         "attribute": "data-set-pane",
         "value": "account",
+        "implementation_anchor": "data-set-pane",
         "node_refs": [
           "S1",
           "S2",
@@ -3750,6 +3920,7 @@
       {
         "attribute": "data-set-pane",
         "value": "agent",
+        "implementation_anchor": "data-set-pane",
         "node_refs": [
           "S1",
           "S2",
@@ -3764,6 +3935,7 @@
       {
         "attribute": "data-set-pane",
         "value": "asr",
+        "implementation_anchor": "data-set-pane",
         "node_refs": [
           "S1",
           "S2",
@@ -3778,6 +3950,7 @@
       {
         "attribute": "data-set-pane",
         "value": "budget",
+        "implementation_anchor": "data-set-pane",
         "node_refs": [
           "S1",
           "S2",
@@ -3792,6 +3965,7 @@
       {
         "attribute": "data-set-pane",
         "value": "doctor",
+        "implementation_anchor": "data-set-pane",
         "node_refs": [
           "S1",
           "S2",
@@ -3806,6 +3980,7 @@
       {
         "attribute": "data-set-pane",
         "value": "paths",
+        "implementation_anchor": "data-set-pane",
         "node_refs": [
           "S1",
           "S2",
@@ -3820,6 +3995,7 @@
       {
         "attribute": "data-asset-add-project",
         "value": "present",
+        "implementation_anchor": "data-asset-add-project",
         "node_refs": [
           "L5"
         ],
@@ -3829,6 +4005,7 @@
       {
         "attribute": "data-edl-view",
         "value": "text",
+        "implementation_anchor": "data-edl-view",
         "node_refs": [
           "P2",
           "P3"
@@ -3839,6 +4016,7 @@
       {
         "attribute": "data-edl-view",
         "value": "timeline",
+        "implementation_anchor": "data-edl-view",
         "node_refs": [
           "P2",
           "P3"
@@ -3849,6 +4027,7 @@
       {
         "attribute": "data-copy-report",
         "value": "present",
+        "implementation_anchor": "data-copy-report",
         "node_refs": [
           "C3",
           "S3"
@@ -3859,6 +4038,7 @@
       {
         "attribute": "data-preserved-k",
         "value": "k1",
+        "implementation_anchor": "data-preserved-k",
         "node_refs": [
           "K1"
         ],
@@ -3868,6 +4048,7 @@
       {
         "attribute": "data-preserved-k",
         "value": "k2",
+        "implementation_anchor": "data-preserved-k",
         "node_refs": [
           "K2"
         ],
@@ -3877,6 +4058,7 @@
       {
         "attribute": "data-preserved-k",
         "value": "k3",
+        "implementation_anchor": "data-preserved-k",
         "node_refs": [
           "K3"
         ],
@@ -3886,6 +4068,7 @@
       {
         "attribute": "data-preserved-k",
         "value": "k4",
+        "implementation_anchor": "data-preserved-k",
         "node_refs": [
           "K4"
         ],
@@ -3895,6 +4078,7 @@
       {
         "attribute": "data-preserved-k",
         "value": "k5",
+        "implementation_anchor": "data-preserved-k",
         "node_refs": [
           "K5"
         ],
@@ -3904,11 +4088,32 @@
       {
         "attribute": "data-preserved-k",
         "value": "k6",
+        "implementation_anchor": "data-preserved-k",
         "node_refs": [
           "K6"
         ],
         "locator": "[data-preserved-k=\"k6\"]",
         "content_sha256": "c02eec3a773e498fcdf3c999b10c9c5c6274a5631ba127318991552fa134e0c3"
+      },
+      {
+        "attribute": "data-login-step",
+        "value": "account",
+        "implementation_anchor": "data-login-step",
+        "node_refs": [
+          "A1"
+        ],
+        "locator": "[data-login-step=\"account\"]",
+        "content_sha256": "ca35fa5c3243ec278ac953bd577bbe19ee3bdf4f3ac6479bb5b0211e7cb6df6d"
+      },
+      {
+        "attribute": "data-login-step",
+        "value": "agent",
+        "implementation_anchor": "data-login-step",
+        "node_refs": [
+          "A1"
+        ],
+        "locator": "[data-login-step=\"agent\"]",
+        "content_sha256": "6b042e71d3925496f506e7804ded37bcf673912d41f1e8f7457098403b2622e7"
       }
     ],
     "computed_style_assertions": [
@@ -3918,148 +4123,212 @@
     ],
     "capture_matrix": [
       {
+        "capture_id": "CAP-LOGIN-1440x900",
         "surface_id": "SURF-LOGIN",
         "route": "/login",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "1440x900",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-LOGIN-390x844",
         "surface_id": "SURF-LOGIN",
         "route": "/login",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "390x844",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-SETUP-1440x900",
         "surface_id": "SURF-SETUP",
         "route": "/setup",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "1440x900",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-SETUP-390x844",
         "surface_id": "SURF-SETUP",
         "route": "/setup",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "390x844",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-DASHBOARD-1440x900",
         "surface_id": "SURF-DASHBOARD",
         "route": "/app/home",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "1440x900",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-DASHBOARD-390x844",
         "surface_id": "SURF-DASHBOARD",
         "route": "/app/home",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "390x844",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-ORGANIZER-1440x900",
         "surface_id": "SURF-ORGANIZER",
         "route": "/app/inbox",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "1440x900",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-ORGANIZER-390x844",
         "surface_id": "SURF-ORGANIZER",
         "route": "/app/inbox",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "390x844",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-LIBRARY-1440x900",
         "surface_id": "SURF-LIBRARY",
         "route": "/app/library",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "1440x900",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-LIBRARY-390x844",
         "surface_id": "SURF-LIBRARY",
         "route": "/app/library",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "390x844",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-PROJECT-1440x900",
         "surface_id": "SURF-PROJECT",
         "route": "/app/project/:projectId",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "1440x900",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-PROJECT-390x844",
         "surface_id": "SURF-PROJECT",
         "route": "/app/project/:projectId",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "390x844",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-SETTINGS-1440x900",
         "surface_id": "SURF-SETTINGS",
         "route": "/app/settings",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "1440x900",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-SETTINGS-390x844",
         "surface_id": "SURF-SETTINGS",
         "route": "/app/settings",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "390x844",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-CLOUD-1440x900",
         "surface_id": "SURF-CLOUD",
         "route": "/cloud/tasks",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "1440x900",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       },
       {
+        "capture_id": "CAP-CLOUD-390x844",
         "surface_id": "SURF-CLOUD",
         "route": "/cloud/tasks",
         "locale": "zh-CN",
         "theme": "dark",
         "viewport": "390x844",
         "dataset": "prototype-frozen-v2",
-        "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"
+        "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+        "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+        "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+        "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence"
       }
     ]
   },
@@ -4068,11 +4337,11 @@
       "id": "INT-NAV-SCREENS",
       "surface_id": "SURF-DASHBOARD",
       "control": "主导航",
-      "precondition": "桌面应用已启动",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
       "trigger": "选择工作台、整理台、素材库、项目或设置",
-      "state_change": "唯一 data-screen-panel 成为可见面板",
-      "visible_result": "标题、侧栏当前态和面板同步",
-      "boundary_behavior": "未知目标不改变当前屏",
+      "state_change": "唯一面板成为可见页",
+      "visible_result": "标题、导航当前态和 URL 一致",
+      "boundary_behavior": "未知目标保持原页",
       "source_refs": [
         "SRC-PROTOTYPE-UI",
         "SRC-CHECKLIST-H1"
@@ -4087,23 +4356,84 @@
       ]
     },
     {
-      "id": "INT-INBOX-BATCHES",
-      "surface_id": "SURF-ORGANIZER",
-      "control": "批次 A/B/C 与确认落点",
-      "precondition": "媒体清单已生成且候选摘要可回读",
-      "trigger": "选择批次并确认项目落点",
-      "state_change": "候选从预览转为一次幂等迁移",
-      "visible_result": "批次来源、目标、数量和回执可见",
-      "boundary_behavior": "清单漂移、碰撞或未确认时禁止移动",
+      "id": "INT-DASHBOARD-REFRESH",
+      "surface_id": "SURF-DASHBOARD",
+      "control": "刷新",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "点击刷新",
+      "state_change": "重新读取项目与能力状态",
+      "visible_result": "更新时间、项目与能力状态同步",
+      "boundary_behavior": "失败保留旧数据并显示错误",
       "source_refs": [
-        "SRC-PROTOTYPE-UI",
-        "SRC-CHECKLIST-D1",
-        "SRC-CHECKLIST-I1"
+        "SRC-CHECKLIST-H2",
+        "SRC-CHECKLIST-H3"
       ],
       "prototype_locators": [
-        "[data-batch=\"a\"]",
-        "[data-batch=\"b\"]",
-        "[data-batch=\"c\"]"
+        "[data-refresh]"
+      ],
+      "acceptance_refs": [
+        "H2/AC-01",
+        "H3/AC-01"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-CREATE",
+      "surface_id": "SURF-DASHBOARD",
+      "control": "新建项目",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "提交项目表单",
+      "state_change": "创建项目并选中",
+      "visible_result": "对话框关闭且项目页显示新项目",
+      "boundary_behavior": "字段非法或冲突时对话框保留输入",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-H1"
+      ],
+      "prototype_locators": [
+        "#project-dialog",
+        "[data-create]"
+      ],
+      "acceptance_refs": [
+        "H1/AC-01",
+        "Z1/AC-01"
+      ]
+    },
+    {
+      "id": "INT-INBOX-BATCH-SELECT",
+      "surface_id": "SURF-ORGANIZER",
+      "control": "批次 A/B/C",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "选择一个自动分批候选",
+      "state_change": "当前批次改变，不移动媒体",
+      "visible_result": "来源、数量、依据和目标预览同步",
+      "boundary_behavior": "未知批次不改变选择",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-I2"
+      ],
+      "prototype_locators": [
+        "[data-batch]"
+      ],
+      "acceptance_refs": [
+        "I2/AC-01"
+      ]
+    },
+    {
+      "id": "INT-INBOX-BATCH-CONFIRM",
+      "surface_id": "SURF-ORGANIZER",
+      "control": "确认落点",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "确认所选批次与项目",
+      "state_change": "带 planDigest 和 revision 写入确认回执",
+      "visible_result": "批次、目标、revision 和回执可见",
+      "boundary_behavior": "计划漂移、碰撞或未确认时禁止移动",
+      "source_refs": [
+        "SRC-CHECKLIST-D1",
+        "SRC-CHECKLIST-I1",
+        "SRC-CHECKLIST-I3"
+      ],
+      "prototype_locators": [
+        "#confirm-batch"
       ],
       "acceptance_refs": [
         "D1/AC-01",
@@ -4112,166 +4442,527 @@
       ]
     },
     {
-      "id": "INT-INBOX-DELETE",
+      "id": "INT-INBOX-REANALYZE",
       "surface_id": "SURF-ORGANIZER",
-      "control": "删除建议、全选和二次确认",
-      "precondition": "四类机器理由已生成候选",
-      "trigger": "勾选候选并二次确认",
-      "state_change": "仅选中候选进入当前系统回收站",
-      "visible_result": "选择数量、回执和恢复入口可见",
-      "boundary_behavior": "永久删除、未选中项、失败回读一律禁止",
+      "control": "重新分析",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "点击重新分析",
+      "state_change": "废弃旧计划并读取新 planDigest",
+      "visible_result": "批次列表和依据刷新",
+      "boundary_behavior": "分析失败保留旧计划且不能误确认",
       "source_refs": [
         "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-I2"
+      ],
+      "prototype_locators": [
+        "#reanalyze"
+      ],
+      "acceptance_refs": [
+        "I2/AC-02"
+      ]
+    },
+    {
+      "id": "INT-DELETE-SELECT",
+      "surface_id": "SURF-ORGANIZER",
+      "control": "逐项勾选删除建议",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "勾选或取消候选",
+      "state_change": "仅改变待确认集合",
+      "visible_result": "选择数与确认按钮同步",
+      "boundary_behavior": "无机器理由项不可选择",
+      "source_refs": [
         "SRC-CHECKLIST-I4",
         "SRC-CHECKLIST-I5"
       ],
       "prototype_locators": [
         "[data-del]",
-        "#del-all",
-        "#del-confirm"
+        "[data-delete]"
       ],
       "acceptance_refs": [
         "I4/AC-01",
-        "I5/AC-01",
-        "D2/AC-01"
+        "I5/AC-01"
       ]
     },
     {
-      "id": "INT-LIBRARY-BROWSE",
-      "surface_id": "SURF-LIBRARY",
-      "control": "三种视图、七类分类、标签和详情主按钮",
-      "precondition": "结构化索引可查询",
-      "trigger": "切换视图、分类、标签或素材详情",
-      "state_change": "查询条件和当前素材改变",
-      "visible_result": "计数、卡片/列表/文本及加入项目动作同步",
-      "boundary_behavior": "空索引和未知素材显示明确空态/错误态",
+      "id": "INT-DELETE-SELECT-ALL",
+      "surface_id": "SURF-ORGANIZER",
+      "control": "全选/取消全选",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "点击全选",
+      "state_change": "切换当前可见候选集合",
+      "visible_result": "所有可选项和总数同步",
+      "boundary_behavior": "过滤外、无证据或不可恢复项不纳入",
       "source_refs": [
         "SRC-PROTOTYPE-UI",
-        "SRC-CHECKLIST-L1",
-        "SRC-CHECKLIST-L2",
-        "SRC-CHECKLIST-L5"
+        "SRC-CHECKLIST-I4"
       ],
       "prototype_locators": [
-        "[data-lib]",
-        "[data-lib-view]",
-        "[data-asset-add-project]"
+        "#delAll",
+        "#delete-all"
+      ],
+      "acceptance_refs": [
+        "I4/AC-01"
+      ]
+    },
+    {
+      "id": "INT-DELETE-CONFIRM",
+      "surface_id": "SURF-ORGANIZER",
+      "control": "移入系统回收站",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "二次确认选中项",
+      "state_change": "仅选中媒体进入系统回收站",
+      "visible_result": "逐文件回执与恢复提示可见",
+      "boundary_behavior": "未二次确认、永久删除或回读失败一律禁止",
+      "source_refs": [
+        "SRC-CHECKLIST-D2",
+        "SRC-CHECKLIST-I5"
+      ],
+      "prototype_locators": [
+        "#confirm-delete"
+      ],
+      "acceptance_refs": [
+        "D2/AC-01",
+        "I5/AC-01"
+      ]
+    },
+    {
+      "id": "INT-LIBRARY-IMPORT",
+      "surface_id": "SURF-LIBRARY",
+      "control": "导入素材",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "选择文件夹导入",
+      "state_change": "扫描并建立受控素材候选",
+      "visible_result": "进度、数量和错误可见",
+      "boundary_behavior": "路径越界或重复身份不写入索引",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-L1"
+      ],
+      "prototype_locators": [
+        "[data-library-import]"
+      ],
+      "acceptance_refs": [
+        "L1/AC-01"
+      ]
+    },
+    {
+      "id": "INT-LIBRARY-REGISTER",
+      "surface_id": "SURF-LIBRARY",
+      "control": "登记新资产",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "提交资产登记",
+      "state_change": "结构化索引新增或幂等更新",
+      "visible_result": "资产卡和索引字段回读一致",
+      "boundary_behavior": "缺少哈希、来源或受控路径时拒绝",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-L1"
+      ],
+      "prototype_locators": [
+        "[data-library-register]"
       ],
       "acceptance_refs": [
         "L1/AC-01",
-        "L2/AC-01",
-        "L5/AC-01"
+        "L1/AC-02"
       ]
     },
     {
-      "id": "INT-PROJECT-EDL",
-      "surface_id": "SURF-PROJECT",
-      "control": "决策列表、时间线/文本双视图、待补素材与交接包",
-      "precondition": "项目和结构化 EDL 身份可回读",
-      "trigger": "切换 EDL 视图或生成交接包",
-      "state_change": "只改变展示或生成受支持输出，不改第二份权威",
-      "visible_result": "片段、轨道、缺失素材、输出后端和回执可见",
-      "boundary_behavior": "EDL 无效或后端未探测时失败关闭",
+      "id": "INT-LIBRARY-VIEW",
+      "surface_id": "SURF-LIBRARY",
+      "control": "网格/列表/卡片视图",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "切换素材库视图",
+      "state_change": "仅改变展示模式",
+      "visible_result": "同一查询结果以目标视图呈现",
+      "boundary_behavior": "切换不得改变索引或选中素材",
       "source_refs": [
         "SRC-PROTOTYPE-UI",
-        "SRC-CHECKLIST-P1",
-        "SRC-CHECKLIST-P2",
-        "SRC-CHECKLIST-P3",
-        "SRC-CHECKLIST-P4",
-        "SRC-CHECKLIST-P5"
+        "SRC-CHECKLIST-L1"
       ],
       "prototype_locators": [
-        "[data-edl-view=\"timeline\"]",
-        "[data-edl-view=\"text\"]"
+        "[data-lib-view]",
+        "[data-library-view]"
+      ],
+      "acceptance_refs": [
+        "L1/AC-01"
+      ]
+    },
+    {
+      "id": "INT-LIBRARY-FILTER",
+      "surface_id": "SURF-LIBRARY",
+      "control": "分类与标签筛选",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "选择分类或标签",
+      "state_change": "查询条件改变",
+      "visible_result": "结果、计数和详情同步",
+      "boundary_behavior": "未知条件显示空态，不放宽为全部",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-L2"
+      ],
+      "prototype_locators": [
+        "[data-lib]",
+        "[data-category]",
+        "[data-tags]"
+      ],
+      "acceptance_refs": [
+        "L2/AC-01",
+        "L2/AC-02"
+      ]
+    },
+    {
+      "id": "INT-ASSET-ADD-PROJECT",
+      "surface_id": "SURF-LIBRARY",
+      "control": "加入项目",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "把当前素材加入选中项目",
+      "state_change": "带 expectedRevision 写入素材引用",
+      "visible_result": "项目 revision 与资产用途可回读",
+      "boundary_behavior": "未知 assetId 或冲突不写入",
+      "source_refs": [
+        "SRC-CHECKLIST-L5",
+        "SRC-CHECKLIST-T5"
+      ],
+      "prototype_locators": [
+        "[data-asset-add-project]"
+      ],
+      "acceptance_refs": [
+        "L5/AC-01",
+        "T5/AC-01"
+      ]
+    },
+    {
+      "id": "INT-ASSET-REVEAL",
+      "surface_id": "SURF-LIBRARY",
+      "control": "在访达中显示",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "点击显示文件",
+      "state_change": "请求系统定位受控路径",
+      "visible_result": "文件位置被系统打开",
+      "boundary_behavior": "路径不存在、越界或非 macOS 时明确不支持",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-L5"
+      ],
+      "prototype_locators": [
+        "[data-reveal-file]"
+      ],
+      "acceptance_refs": [
+        "L5/AC-02"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-EDL-VIEW",
+      "surface_id": "SURF-PROJECT",
+      "control": "时间线/文本视图",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "切换 EDL 视图",
+      "state_change": "只改变展示方式",
+      "visible_result": "两种视图呈现同一 EDL revision",
+      "boundary_behavior": "无效 EDL 不生成第二权威",
+      "source_refs": [
+        "SRC-CHECKLIST-P1",
+        "SRC-CHECKLIST-P2",
+        "SRC-CHECKLIST-P3"
+      ],
+      "prototype_locators": [
+        "[data-edl-view]"
       ],
       "acceptance_refs": [
         "P1/AC-01",
         "P2/AC-01",
-        "P3/AC-01",
+        "P3/AC-01"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-HANDOFF",
+      "surface_id": "SURF-PROJECT",
+      "control": "生成剪辑交接包",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "选择受支持后端并生成",
+      "state_change": "创建不可变交接产物",
+      "visible_result": "后端、摘要、路径和回执可见",
+      "boundary_behavior": "未探测 ChatCut 或无效 EDL 时失败关闭",
+      "source_refs": [
+        "SRC-CHECKLIST-P4",
+        "SRC-CHECKLIST-P5"
+      ],
+      "prototype_locators": [
+        "#create-handoff"
+      ],
+      "acceptance_refs": [
         "P4/AC-01",
         "P5/AC-01"
       ]
     },
     {
-      "id": "INT-PROJECT-PRESERVED",
+      "id": "INT-PROJECT-K1",
       "surface_id": "SURF-PROJECT",
-      "control": "锁定、版本、失效、参考、复盘、Brief 与脚本",
-      "precondition": "项目已加载",
-      "trigger": "进入 K1-K6 入口并执行对应动作",
-      "state_change": "项目文档及版本按 expectedRevision 更新",
-      "visible_result": "锁定、diff、回滚、stale、参考和发布记录均可回读",
-      "boundary_behavior": "这些能力不得拆成独立 Studio 路由",
+      "control": "锁定与 AI 选区",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "打开并执行该项目能力",
+      "state_change": "按 expectedRevision 更新项目文档",
+      "visible_result": "状态、版本和回执可回读",
+      "boundary_behavior": "不得创建独立 /studio 路由或覆盖较新版本",
       "source_refs": [
         "SRC-PROTOTYPE-UI",
-        "SRC-CHECKLIST-K1",
-        "SRC-CHECKLIST-K2",
-        "SRC-CHECKLIST-K3",
-        "SRC-CHECKLIST-K4",
-        "SRC-CHECKLIST-K5",
-        "SRC-CHECKLIST-K6"
+        "SRC-CHECKLIST-K1"
       ],
       "prototype_locators": [
-        "[data-preserved-k=\"k1\"]",
-        "[data-preserved-k=\"k2\"]",
-        "[data-preserved-k=\"k3\"]",
-        "[data-preserved-k=\"k4\"]",
-        "[data-preserved-k=\"k5\"]",
-        "[data-preserved-k=\"k6\"]"
+        "[data-preserved-k=\"k1\"]"
       ],
       "acceptance_refs": [
         "K1/AC-01",
-        "K2/AC-01",
-        "K3/AC-01",
-        "K4/AC-01",
-        "K5/AC-01",
-        "K6/AC-01"
+        "K1/AC-02"
       ]
     },
     {
-      "id": "INT-SETTINGS-PANELS",
-      "surface_id": "SURF-SETTINGS",
-      "control": "六个设置面板",
-      "precondition": "本机设置可读",
-      "trigger": "选择存放位置、创意模型、转写、预算、账号或诊断",
-      "state_change": "当前设置面板切换；保存动作带 CSRF 与 revision",
-      "visible_result": "真实配置、能力探测和动态诊断项可见",
-      "boundary_behavior": "不支持与配置错误分开，密钥不回显",
+      "id": "INT-PROJECT-K2",
+      "surface_id": "SURF-PROJECT",
+      "control": "版本与回滚",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "打开并执行该项目能力",
+      "state_change": "按 expectedRevision 更新项目文档",
+      "visible_result": "状态、版本和回执可回读",
+      "boundary_behavior": "不得创建独立 /studio 路由或覆盖较新版本",
       "source_refs": [
         "SRC-PROTOTYPE-UI",
-        "SRC-CHECKLIST-D3",
-        "SRC-CHECKLIST-S1",
-        "SRC-CHECKLIST-S2",
-        "SRC-CHECKLIST-S3",
-        "SRC-CHECKLIST-S4",
+        "SRC-CHECKLIST-K2"
+      ],
+      "prototype_locators": [
+        "[data-preserved-k=\"k2\"]"
+      ],
+      "acceptance_refs": [
+        "K2/AC-01",
+        "K2/AC-02"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-K3",
+      "surface_id": "SURF-PROJECT",
+      "control": "下游失效传播",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "打开并执行该项目能力",
+      "state_change": "按 expectedRevision 更新项目文档",
+      "visible_result": "状态、版本和回执可回读",
+      "boundary_behavior": "不得创建独立 /studio 路由或覆盖较新版本",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-K3"
+      ],
+      "prototype_locators": [
+        "[data-preserved-k=\"k3\"]"
+      ],
+      "acceptance_refs": [
+        "K3/AC-01",
+        "K3/AC-02"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-K4",
+      "surface_id": "SURF-PROJECT",
+      "control": "研究与参考",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "打开并执行该项目能力",
+      "state_change": "按 expectedRevision 更新项目文档",
+      "visible_result": "状态、版本和回执可回读",
+      "boundary_behavior": "不得创建独立 /studio 路由或覆盖较新版本",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-K4"
+      ],
+      "prototype_locators": [
+        "[data-preserved-k=\"k4\"]"
+      ],
+      "acceptance_refs": [
+        "K4/AC-01",
+        "K4/AC-02"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-K5",
+      "surface_id": "SURF-PROJECT",
+      "control": "发布与复盘",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "打开并执行该项目能力",
+      "state_change": "按 expectedRevision 更新项目文档",
+      "visible_result": "状态、版本和回执可回读",
+      "boundary_behavior": "不得创建独立 /studio 路由或覆盖较新版本",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-K5"
+      ],
+      "prototype_locators": [
+        "[data-preserved-k=\"k5\"]"
+      ],
+      "acceptance_refs": [
+        "K5/AC-01",
+        "K5/AC-02"
+      ]
+    },
+    {
+      "id": "INT-PROJECT-K6",
+      "surface_id": "SURF-PROJECT",
+      "control": "Brief 与脚本",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "打开并执行该项目能力",
+      "state_change": "按 expectedRevision 更新项目文档",
+      "visible_result": "状态、版本和回执可回读",
+      "boundary_behavior": "不得创建独立 /studio 路由或覆盖较新版本",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-K6"
+      ],
+      "prototype_locators": [
+        "[data-preserved-k=\"k6\"]"
+      ],
+      "acceptance_refs": [
+        "K6/AC-01",
+        "K6/AC-02"
+      ]
+    },
+    {
+      "id": "INT-SETTINGS-NAV",
+      "surface_id": "SURF-SETTINGS",
+      "control": "六个设置面板",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "选择存放位置、创意模型、转写、预算、账号或诊断",
+      "state_change": "当前面板改变",
+      "visible_result": "导航当前态与面板同步",
+      "boundary_behavior": "未知面板不隐藏当前内容",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-S3"
+      ],
+      "prototype_locators": [
+        "[data-set]",
+        "[data-set-nav]",
+        "[data-set-pane]"
+      ],
+      "acceptance_refs": [
+        "S3/AC-01"
+      ]
+    },
+    {
+      "id": "INT-SETTINGS-LOCATION",
+      "surface_id": "SURF-SETTINGS",
+      "control": "登记存放位置",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "保存生命周期与物理位置",
+      "state_change": "配置与独立位置回读更新",
+      "visible_result": "生命周期、清单、校验值和位置状态可见",
+      "boundary_behavior": "不可访问或越界位置不登记为已存在",
+      "source_refs": [
+        "SRC-CHECKLIST-L3",
+        "SRC-CHECKLIST-S2"
+      ],
+      "prototype_locators": [
+        "#save-location"
+      ],
+      "acceptance_refs": [
+        "L3/AC-01",
+        "S2/AC-01"
+      ]
+    },
+    {
+      "id": "INT-SETTINGS-PROVIDER",
+      "surface_id": "SURF-SETTINGS",
+      "control": "添加创意模型",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "提交提供方配置",
+      "state_change": "保存模型配置和密钥引用",
+      "visible_result": "提供方、模型、能力状态可见",
+      "boundary_behavior": "密钥不回显，探测失败不伪造可用",
+      "source_refs": [
         "SRC-CHECKLIST-S5"
       ],
       "prototype_locators": [
-        "[data-set-pane=\"paths\"]",
-        "[data-set-pane=\"agent\"]",
-        "[data-set-pane=\"asr\"]",
-        "[data-set-pane=\"budget\"]",
-        "[data-set-pane=\"account\"]",
-        "[data-set-pane=\"doctor\"]"
+        "#add-provider"
       ],
       "acceptance_refs": [
-        "D3/AC-01",
-        "S1/AC-01",
-        "S2/AC-01",
-        "S3/AC-01",
-        "S4/AC-01",
-        "S5/AC-01"
+        "S5/AC-01",
+        "S5/AC-02"
       ]
     },
     {
-      "id": "INT-LOGIN",
-      "surface_id": "SURF-LOGIN",
-      "control": "登录两步与跳过",
-      "precondition": "桌面本地能力可用",
-      "trigger": "选择上游登录、完成配对或跳过",
-      "state_change": "只改变可选上游会话",
-      "visible_result": "连接状态与本地功能可用状态同时显示",
-      "boundary_behavior": "未登录、撤销、不支持、过期均不降级本地功能",
+      "id": "INT-BUDGET-ADJUST",
+      "surface_id": "SURF-SETTINGS",
+      "control": "分析预算加减",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "点击任一字段的加号或减号",
+      "state_change": "本地候选数值改变",
+      "visible_result": "五个字段的新值立即可见",
+      "boundary_behavior": "不得低于零或产生非整数",
       "source_refs": [
-        "SRC-CHECKLIST-A1"
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-S1"
+      ],
+      "prototype_locators": [
+        "[data-budget-adjust]"
+      ],
+      "acceptance_refs": [
+        "S1/AC-01"
+      ]
+    },
+    {
+      "id": "INT-BUDGET-SAVE",
+      "surface_id": "SURF-SETTINGS",
+      "control": "保存分析预算",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "保存当前预算",
+      "state_change": "带 expectedRevision 持久化",
+      "visible_result": "新 revision 和五字段回读一致",
+      "boundary_behavior": "冲突或非法值保留服务器当前值",
+      "source_refs": [
+        "SRC-CHECKLIST-S1",
+        "SRC-CHECKLIST-T4"
+      ],
+      "prototype_locators": [
+        "#save-budget"
+      ],
+      "acceptance_refs": [
+        "S1/AC-02",
+        "T4/AC-01"
+      ]
+    },
+    {
+      "id": "INT-DIAGNOSTICS-COPY",
+      "surface_id": "SURF-SETTINGS",
+      "control": "复制报告",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "复制当前诊断",
+      "state_change": "剪贴板写入无密钥 JSON",
+      "visible_result": "复制内容与动态诊断一致",
+      "boundary_behavior": "诊断项不得写死六项，密钥不得进入报告",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-S3",
+        "SRC-CHECKLIST-C3"
+      ],
+      "prototype_locators": [
+        "[data-copy-report]"
+      ],
+      "acceptance_refs": [
+        "S3/AC-01",
+        "C3/AC-01"
+      ]
+    },
+    {
+      "id": "INT-LOGIN-PAIR",
+      "surface_id": "SURF-LOGIN",
+      "control": "连接上游",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "提交配对意图",
+      "state_change": "可选上游会话改变",
+      "visible_result": "配对状态与本地可用状态同时显示",
+      "boundary_behavior": "失败或不支持不降级本地功能",
+      "source_refs": [
+        "SRC-CHECKLIST-A1",
+        "SRC-CHECKLIST-S4"
+      ],
+      "prototype_locators": [
+        "#pair-form",
+        "[data-login-step]"
       ],
       "acceptance_refs": [
         "A1/AC-01",
@@ -4279,16 +4970,61 @@
       ]
     },
     {
-      "id": "INT-SETUP",
+      "id": "INT-LOGIN-UNPAIR",
+      "surface_id": "SURF-LOGIN",
+      "control": "解除配对",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "点击解除配对",
+      "state_change": "清除上游会话引用",
+      "visible_result": "回到未连接态且本地能力可用",
+      "boundary_behavior": "重复解除保持幂等",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-A1"
+      ],
+      "prototype_locators": [
+        "#logout-upstream"
+      ],
+      "acceptance_refs": [
+        "A1/AC-02"
+      ]
+    },
+    {
+      "id": "INT-LOGIN-SKIP",
+      "surface_id": "SURF-LOGIN",
+      "control": "跳过，稍后再连",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "点击跳过",
+      "state_change": "关闭登录表面，不创建会话",
+      "visible_result": "进入本地工作台",
+      "boundary_behavior": "不得进入只读态",
+      "source_refs": [
+        "SRC-PROTOTYPE-UI",
+        "SRC-CHECKLIST-A1"
+      ],
+      "prototype_locators": [
+        "[data-close-surface]"
+      ],
+      "acceptance_refs": [
+        "A1/AC-01"
+      ]
+    },
+    {
+      "id": "INT-SETUP-STEPS",
       "surface_id": "SURF-SETUP",
       "control": "四步可重入向导",
-      "precondition": "桌面入口可打开",
-      "trigger": "逐步配置位置、运行环境、编辑器、账号与设备",
-      "state_change": "每步状态原子保存",
-      "visible_result": "进度、失败点、重试和完成态可见",
-      "boundary_behavior": "中断后从最后成功步骤恢复",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "上一步、下一步、完成或跳过账号",
+      "state_change": "每步以独立 revision 原子保存",
+      "visible_result": "当前步骤、完成态与重入位置一致",
+      "boundary_behavior": "中断、冲突或失败从最后成功步骤恢复",
       "source_refs": [
         "SRC-CHECKLIST-A2"
+      ],
+      "prototype_locators": [
+        "[data-wizard-step]",
+        "#wizard-prev",
+        "#wizard-next"
       ],
       "acceptance_refs": [
         "A2/AC-01",
@@ -4296,20 +5032,26 @@
       ]
     },
     {
-      "id": "INT-CLOUD-STATES",
+      "id": "INT-CLOUD-REFRESH",
       "surface_id": "SURF-CLOUD",
-      "control": "网页中台任务状态",
-      "precondition": "用户已主动配对上游",
-      "trigger": "读取或刷新任务",
-      "state_change": "上游投影状态更新",
-      "visible_result": "queued/running/completed/failed/expired/cancelled 均有明确文案",
-      "boundary_behavior": "会话失效只清除上游能力，不影响本地项目",
+      "control": "网页中台任务刷新",
+      "precondition": "对应真实数据已加载且当前候选身份可回读",
+      "trigger": "读取上游任务",
+      "state_change": "六态投影更新",
+      "visible_result": "queued/running/completed/failed/expired/cancelled 文案明确",
+      "boundary_behavior": "会话失效只清除上游投影",
       "source_refs": [
-        "SRC-CHECKLIST-C2"
+        "SRC-CHECKLIST-C1",
+        "SRC-CHECKLIST-C2",
+        "SRC-CHECKLIST-C3"
+      ],
+      "prototype_locators": [
+        "[data-surface-panel=\"cloud\"]"
       ],
       "acceptance_refs": [
+        "C1/AC-01",
         "C2/AC-01",
-        "C2/AC-02"
+        "C3/AC-01"
       ]
     }
   ],
@@ -4395,12 +5137,12 @@
       "id": "API-INBOX-CONFIRM",
       "method": "POST",
       "path": "/api/projects/:id/inbox-plan/confirm",
-      "status": "new",
+      "status": "existing",
       "schema": "planDigest, batchId, targetProjectId, expectedRevision",
       "revision": "required",
       "csrf": "X-Content-OS-CSRF",
       "receipt": "promotion receipt + journal identity",
-      "source": "planned by D1/I1/T1"
+      "source": "99_System_OpenClaw/desktop/server.py"
     },
     {
       "id": "API-DELETE-RECOMMEND",
@@ -4494,56 +5236,56 @@
       "id": "API-DOCTOR",
       "method": "GET",
       "path": "/api/diagnostics",
-      "status": "new",
+      "status": "existing",
       "schema": "dynamic checks array + report digest",
       "revision": "none",
       "csrf": "read-only",
       "receipt": "ok + checks, no fixed count",
-      "source": "planned by S3/C3"
+      "source": "99_System_OpenClaw/desktop/server.py"
     },
     {
       "id": "API-BUDGET",
       "method": "GET/POST",
       "path": "/api/settings/analysis-budget",
-      "status": "new",
+      "status": "existing",
       "schema": "analysis_tiering.schema.json",
       "revision": "expectedRevision on POST",
       "csrf": "X-Content-OS-CSRF on POST",
       "receipt": "ok + effective budget",
-      "source": "planned by S1/T4"
+      "source": "99_System_OpenClaw/desktop/server.py"
     },
     {
       "id": "API-ASSET-ADD",
       "method": "POST",
       "path": "/api/projects/:id/assets",
-      "status": "new",
+      "status": "existing",
       "schema": "assetId, intendedUse, expectedRevision",
       "revision": "expectedRevision required",
       "csrf": "X-Content-OS-CSRF",
       "receipt": "ok + project asset reference",
-      "source": "planned by L5/T5"
+      "source": "99_System_OpenClaw/desktop/server.py"
     },
     {
       "id": "API-WIZARD",
       "method": "GET/POST",
       "path": "/api/setup/state",
-      "status": "new",
+      "status": "existing",
       "schema": "four-step resumable setup state",
       "revision": "expectedRevision on POST",
       "csrf": "X-Content-OS-CSRF on POST",
       "receipt": "ok + persisted step state",
-      "source": "planned by A2/T5"
+      "source": "99_System_OpenClaw/desktop/server.py"
     },
     {
       "id": "API-CLOUD-TASKS",
       "method": "GET",
       "path": "/api/upstream/tasks",
-      "status": "new",
+      "status": "existing",
       "schema": "queued|running|completed|failed|expired|cancelled",
       "revision": "upstream snapshot generation",
       "csrf": "read-only after optional pairing",
       "receipt": "ok + task projections",
-      "source": "planned by C1/C2/C3"
+      "source": "99_System_OpenClaw/desktop/server.py"
     }
   ],
   "surfaces": [

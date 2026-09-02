@@ -237,22 +237,29 @@ class StudioPolicyIntegrationTests(unittest.TestCase):
         csrf, _ = self.bootstrap()
         project = self.create_project(csrf)
         workspace = self.root / "workspace"
-        source = workspace / "camera" / "one.jpg"
+        source = workspace / "camera" / "one.mov"
         source.parent.mkdir()
         source.write_bytes(b"fixture media")
         item = {
-            "media_id": hashlib.sha1(b"camera/one.jpg").hexdigest()[:12],
-            "relative_path": "camera/one.jpg",
+            "media_id": hashlib.sha1(b"camera/one.mov").hexdigest()[:12],
+            "relative_path": "camera/one.mov",
             "sha256": sha256_file(source),
-            "image_health": "healthy",
-            "image_readable": True,
+            "media_type": "video",
+            "extension": ".mov",
+            "stem": "one",
+            "duration_sec": 0.4,
+            "image_health": "not_applicable",
+            "image_readable": None,
         }
+        manifest_path = workspace / "_ai_analysis" / "media_manifest.json"
+        manifest_path.parent.mkdir()
+        manifest_path.write_text(json.dumps({"items": [item]}), encoding="utf-8")
         base = f"/api/projects/{project['id']}/media-delete"
         status, suggested = self.request(
             base + "/recommendations",
             method="POST",
             csrf=csrf,
-            body={"manifest": {"items": [item]}},
+            body={},
         )
         self.assertEqual(status, 200)
         candidate = suggested["candidates"][0]

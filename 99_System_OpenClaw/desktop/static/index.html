@@ -32,7 +32,7 @@
   </div>
 
   <section class="surface" data-surface-panel="login" hidden>
-    <div class="login"><aside class="login-brand"><div class="brand"><span class="brand-mark">P</span><b>Photo Content OS</b></div><h1>从本地开始，按需连接上游。</h1><p>未登录时，本地项目、素材和创作能力保持完整。</p></aside><main class="login-form"><div class="login-card"><p class="eyebrow">上游中台账号</p><h2>连接账号</h2><p class="muted">连接后可使用同一套上游身份；本机不会存储令牌明文。</p><form id="pair-form" class="form"><label>配对意图<input name="localPairingIntent" maxlength="120" required placeholder="在上游完成授权后粘贴意图"></label><button class="btn btn--pri">连接上游</button><button type="button" class="btn" data-close-surface>暂时跳过</button></form></div></main></div>
+    <div class="login"><aside class="login-brand" data-login-step="identity"><div class="brand"><span class="brand-mark">P</span><b>Photo Content OS</b></div><h1>从本地开始，按需连接上游。</h1><p>未登录时，本地项目、素材和创作能力保持完整。</p></aside><main class="login-form" data-login-step="pair"><div class="login-card"><p class="eyebrow">上游中台账号</p><h2>连接账号</h2><p class="muted">连接后可使用同一套上游身份；本机不会存储令牌明文。</p><form id="pair-form" class="form"><label>配对意图<input name="localPairingIntent" maxlength="120" required placeholder="在上游完成授权后粘贴意图"></label><button class="btn btn--pri">连接上游</button><button type="button" class="btn" id="logout-upstream">解除配对</button><button type="button" class="btn" data-close-surface>跳过，稍后再连</button></form></div></main></div>
   </section>
 
   <section class="surface" data-surface-panel="setup" hidden>

@@ -381,7 +381,9 @@ def _candidate_evidence(candidate: Mapping[str, Any]) -> tuple[str, dict[str, An
     if not isinstance(candidate, Mapping):
         _fail("invalid_candidate", "candidate must be an object")
     required = ("media_id", "relative_path", "sha256", "image_health", "image_readable")
-    if any(field not in candidate or candidate.get(field) is None for field in required):
+    if any(field not in candidate for field in required) or any(
+        candidate.get(field) is None for field in ("media_id", "relative_path", "sha256", "image_health")
+    ):
         _fail("missing_candidate_evidence", "candidate evidence is incomplete")
     media_id = candidate.get("media_id")
     relative_path = _validate_relative_path(candidate.get("relative_path"))
@@ -390,18 +392,18 @@ def _candidate_evidence(candidate: Mapping[str, Any]) -> tuple[str, dict[str, An
         _fail("invalid_candidate_evidence", "candidate media identity is invalid")
     if not isinstance(sha256, str) or not _SHA256_RE.fullmatch(sha256):
         _fail("invalid_candidate_evidence", "candidate content hash is invalid")
-    if candidate.get("image_health") != "healthy" or candidate.get("image_readable") is not True:
-        _fail("invalid_candidate_evidence", "candidate image evidence is not eligible")
+    image_health = candidate.get("image_health")
+    image_readable = candidate.get("image_readable")
     evidence = {
         "media_id": media_id,
         "relative_path": relative_path,
         "sha256": sha256,
-        "image_health": "healthy",
-        "image_readable": True,
+        "image_health": image_health,
+        "image_readable": image_readable,
     }
     number = _candidate_number(candidate)
     try:
-        expected_number = candidate_number_for_evidence(evidence)
+        expected_number = candidate_number_for_evidence(candidate)
     except DeleteRecommendationError as exc:
         _fail("invalid_candidate_evidence", "candidate evidence is invalid")
         raise AssertionError("unreachable") from exc
@@ -409,6 +411,8 @@ def _candidate_evidence(candidate: Mapping[str, Any]) -> tuple[str, dict[str, An
         _fail("stale_candidate_number", "candidate number does not match evidence")
     if candidate.get("state") != CANDIDATE_STATE:
         _fail("candidate_state_invalid", "candidate is not a B2 suggested candidate")
+    evidence["reason"] = candidate["reason"]
+    evidence["reason_evidence"] = dict(candidate["reason_evidence"])
     return number, evidence
 
 
@@ -645,6 +649,10 @@ class MediaTrashFlow:
                 "original_relative_path": evidence["relative_path"],
                 "sha256": evidence["sha256"],
                 "content_sha256": evidence["sha256"],
+                "image_health": evidence["image_health"],
+                "image_readable": evidence["image_readable"],
+                "reason": evidence["reason"],
+                "reason_evidence": evidence["reason_evidence"],
                 "operator": audit_operator,
                 "operation_time": timestamp,
                 "trash_location_id": location_id,
@@ -694,16 +702,18 @@ class MediaTrashFlow:
         ):
             _fail("invalid_receipt", "receipt evidence is incomplete")
         _validate_relative_path(relative_path)
+        candidate_evidence = {
+            "media_id": media_id,
+            "relative_path": relative_path,
+            "sha256": expected_sha256,
+            "image_health": receipt.get("image_health", "healthy"),
+            "image_readable": receipt.get("image_readable", True),
+        }
+        if "reason" in receipt or "reason_evidence" in receipt:
+            candidate_evidence["reason"] = receipt.get("reason")
+            candidate_evidence["reason_evidence"] = receipt.get("reason_evidence")
         try:
-            expected_number = candidate_number_for_evidence(
-                {
-                    "media_id": media_id,
-                    "relative_path": relative_path,
-                    "sha256": expected_sha256,
-                    "image_health": "healthy",
-                    "image_readable": True,
-                }
-            )
+            expected_number = candidate_number_for_evidence(candidate_evidence)
         except DeleteRecommendationError as exc:
             _fail("invalid_receipt", "receipt evidence is invalid")
             raise AssertionError("unreachable") from exc

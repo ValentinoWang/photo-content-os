@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "candidateBaseUrl": "http://127.0.0.1:18765",
+  "baselineRoot": "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+  "captureCount": 16,
+  "expectedCaptureCount": 16,
+  "captures": [
+    {
+      "captureId": "CAP-LOGIN-DESKTOP",
+      "surface": "login",
+      "route": "/login",
+      "viewport": "1440x900",
+      "url": "http://127.0.0.1:18765/login",
+      "file": "login-desktop-1440x900.png",
+      "sha256": "c6877d14aa40967d9cbe1ec8b0205486be4de1df4f572d27fc045b2dea0213d3",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-LOGIN-MOBILE",
+      "surface": "login",
+      "route": "/login",
+      "viewport": "390x844",
+      "url": "http://127.0.0.1:18765/login",
+      "file": "login-mobile-390x844.png",
+      "sha256": "940916e1fbb08958c19717e98fe20fd75106a1b22d2afa40ebe691f5f51ac65d",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-SETUP-DESKTOP",
+      "surface": "setup",
+      "route": "/setup",
+      "viewport": "1440x900",
+      "url": "http://127.0.0.1:18765/setup",
+      "file": "setup-desktop-1440x900.png",
+      "sha256": "1d16716ee056b06a34f5fba719be7805ed01526254de66ce2296dbee7d997c51",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-SETUP-MOBILE",
+      "surface": "setup",
+      "route": "/setup",
+      "viewport": "390x844",
+      "url": "http://127.0.0.1:18765/setup",
+      "file": "setup-mobile-390x844.png",
+      "sha256": "512564500c7f01e1a5e0b38e0d9ab2c51e48c626cad46f271560a98e3ccff23b",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-DASHBOARD-DESKTOP",
+      "surface": "dashboard",
+      "route": "/app/home",
+      "viewport": "1440x900",
+      "url": "http://127.0.0.1:18765/app/home",
+      "file": "dashboard-desktop-1440x900.png",
+      "sha256": "0c0a3ce9633ce3e0ff1478bdcda9f33ee1d3d1bb09c673093df246c8da03e264",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-DASHBOARD-MOBILE",
+      "surface": "dashboard",
+      "route": "/app/home",
+      "viewport": "390x844",
+      "url": "http://127.0.0.1:18765/app/home",
+      "file": "dashboard-mobile-390x844.png",
+      "sha256": "52588265f65a5bc3ebf5cd5da57153ed2bb6007bd8931f2a9f048700951e99eb",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-ORGANIZER-DESKTOP",
+      "surface": "organizer",
+      "route": "/app/inbox",
+      "viewport": "1440x900",
+      "url": "http://127.0.0.1:18765/app/inbox",
+      "file": "organizer-desktop-1440x900.png",
+      "sha256": "05f4fc6518e85e01e3bf9d54c435cda77b830f0b9d992c7709e9d021607156cb",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-ORGANIZER-MOBILE",
+      "surface": "organizer",
+      "route": "/app/inbox",
+      "viewport": "390x844",
+      "url": "http://127.0.0.1:18765/app/inbox",
+      "file": "organizer-mobile-390x844.png",
+      "sha256": "6a9fa846322ad94c379823882537e0a263ab53e5417cb1342c56292a3f018a8a",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-LIBRARY-DESKTOP",
+      "surface": "library",
+      "route": "/app/library",
+      "viewport": "1440x900",
+      "url": "http://127.0.0.1:18765/app/library",
+      "file": "library-desktop-1440x900.png",
+      "sha256": "f9f8d0114c1eca4ba411e796b7e90f7d8fc5bd1d185e24006f6d5253e5dac7f1",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-LIBRARY-MOBILE",
+      "surface": "library",
+      "route": "/app/library",
+      "viewport": "390x844",
+      "url": "http://127.0.0.1:18765/app/library",
+      "file": "library-mobile-390x844.png",
+      "sha256": "9fdb02c1e30e593195fc9a3e318149dfc5a57bfa05c7ddbe25128150a457c5f6",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-PROJECT-DESKTOP",
+      "surface": "project",
+      "route": "/app/project/capture-project",
+      "viewport": "1440x900",
+      "url": "http://127.0.0.1:18765/app/project/capture-project",
+      "file": "project-desktop-1440x900.png",
+      "sha256": "a31d0ecd515e7eadaf0abe5c60fb72e5796a6f8214e5c10c96d4e298a0a84c27",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-PROJECT-MOBILE",
+      "surface": "project",
+      "route": "/app/project/capture-project",
+      "viewport": "390x844",
+      "url": "http://127.0.0.1:18765/app/project/capture-project",
+      "file": "project-mobile-390x844.png",
+      "sha256": "715dd998c8dcd77bc20923888e1cf2d694413d9fd973ded7a483cbf16dacc75d",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-SETTINGS-DESKTOP",
+      "surface": "settings",
+      "route": "/app/settings",
+      "viewport": "1440x900",
+      "url": "http://127.0.0.1:18765/app/settings",
+      "file": "settings-desktop-1440x900.png",
+      "sha256": "77d8a69dba57f5fe9246ce20e1a7edd5f55bf98eeefabbb44288952ac2062a69",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-SETTINGS-MOBILE",
+      "surface": "settings",
+      "route": "/app/settings",
+      "viewport": "390x844",
+      "url": "http://127.0.0.1:18765/app/settings",
+      "file": "settings-mobile-390x844.png",
+      "sha256": "378f1d5af2dbdc00be5f0a802923569937dbcabcf63a629e0ec780933d132e0e",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-CLOUD-DESKTOP",
+      "surface": "cloud",
+      "route": "/cloud/tasks",
+      "viewport": "1440x900",
+      "url": "http://127.0.0.1:18765/cloud/tasks",
+      "file": "cloud-desktop-1440x900.png",
+      "sha256": "452881e60e34a323e861b964746d3e612354ce775c1b901d3eb1967cb5439712",
+      "chromeExit": "bounded-after-write"
+    },
+    {
+      "captureId": "CAP-CLOUD-MOBILE",
+      "surface": "cloud",
+      "route": "/cloud/tasks",
+      "viewport": "390x844",
+      "url": "http://127.0.0.1:18765/cloud/tasks",
+      "file": "cloud-mobile-390x844.png",
+      "sha256": "0808d30f3222c7599721e3ada6cc29d68c301bea082a688f0c2c3dbddd037eae",
+      "chromeExit": "bounded-after-write"
+    }
+  ]
+}

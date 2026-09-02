@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "task_id": "OCM-ACCEPTANCE-DESIGN",
+  "reported_executor_attempts": [
+    {
+      "attempt": 1,
+      "executor": "external-codex",
+      "result": "BLOCKED",
+      "failure": "local gateway 127.0.0.1:8080 returned 502"
+    },
+    {
+      "attempt": 2,
+      "executor": "external-codex",
+      "result": "BLOCKED",
+      "failure": "local gateway 127.0.0.1:8080 returned 502"
+    }
+  ],
+  "takeover": {
+    "actor": "main-session",
+    "authority": "user requested completion after executor failure",
+    "scope": [
+      "acceptance contracts",
+      "protected test baseline",
+      "interaction catalog",
+      "DOM anchor mapping",
+      "API route synchronization guard",
+      "visual capture executor",
+      "implementation traceability"
+    ],
+    "node_state": "IMPLEMENTED_PENDING_VERIFICATION"
+  },
+  "provenance": "user-reported executor failure plus repository diff and generated records"
+}

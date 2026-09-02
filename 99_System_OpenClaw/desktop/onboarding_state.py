@@ -6,6 +6,7 @@ import json
 import os
 import re
 import tempfile
+import threading
 from collections.abc import Mapping
 from dataclasses import dataclass
 from enum import Enum
@@ -15,6 +16,8 @@ from typing import Any
 
 SCHEMA_VERSION = "photo_content_os_onboarding_v1"
 STATE_FILE_NAME = "onboarding_state.json"
+VERSIONED_STATE_FILE_NAME = "onboarding_state_versioned.json"
+VERSIONED_SCHEMA_VERSION = "photo_content_os_onboarding_versioned_v1"
 
 
 class OnboardingStep(str, Enum):
@@ -348,6 +351,88 @@ class OnboardingStateStore:
         return self.save(updated)
 
 
+class VersionedOnboardingStateStore:
+    """CAS envelope used by the desktop HTTP API without changing the core state contract."""
+
+    def __init__(self, work_dir: str | os.PathLike[str]) -> None:
+        self.work_dir = Path(work_dir).expanduser().resolve()
+        self.path = self.work_dir / VERSIONED_STATE_FILE_NAME
+        self._lock = threading.RLock()
+
+    def _write(self, revision: int, state: OnboardingState) -> None:
+        self.work_dir.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "schema_version": VERSIONED_SCHEMA_VERSION,
+            "revision": revision,
+            "state": state.to_dict(),
+        }
+        descriptor: int | None = None
+        temporary_path: str | None = None
+        try:
+            descriptor, temporary_path = tempfile.mkstemp(
+                prefix=f".{VERSIONED_STATE_FILE_NAME}.", suffix=".tmp", dir=self.work_dir
+            )
+            with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
+                descriptor = None
+                json.dump(payload, handle, ensure_ascii=True, indent=2, sort_keys=True)
+                handle.write("\n")
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.replace(temporary_path, self.path)
+            temporary_path = None
+        except OSError as exc:
+            raise OnboardingStateError("storage_write_failed") from exc
+        finally:
+            if descriptor is not None:
+                os.close(descriptor)
+            if temporary_path is not None:
+                try:
+                    os.unlink(temporary_path)
+                except OSError:
+                    pass
+
+    def _load(self) -> tuple[int, OnboardingState]:
+        if not self.path.exists():
+            state = OnboardingState.initial()
+            self._write(1, state)
+            return 1, state
+        if self.path.is_symlink() or not self.path.is_file():
+            _reject("storage_unavailable")
+        try:
+            payload = json.loads(self.path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            raise OnboardingStateError("state_json_invalid") from exc
+        if not isinstance(payload, Mapping) or set(payload) != {"schema_version", "revision", "state"}:
+            _reject("state_schema_invalid")
+        revision = payload["revision"]
+        if payload["schema_version"] != VERSIONED_SCHEMA_VERSION or type(revision) is not int or revision < 1:
+            _reject("state_schema_invalid")
+        return revision, OnboardingState.from_dict(payload["state"])
+
+    def snapshot(self) -> dict[str, Any]:
+        with self._lock:
+            revision, state = self._load()
+            return {"revision": revision, **state.to_dict()}
+
+    def transition(
+        self,
+        step: OnboardingStep | str,
+        status: StepStatus | str,
+        *,
+        expected_revision: int,
+        reason_code: str | None = None,
+    ) -> dict[str, Any]:
+        if type(expected_revision) is not int or expected_revision < 1:
+            _reject("revision_invalid")
+        with self._lock:
+            revision, state = self._load()
+            if revision != expected_revision:
+                _reject("revision_conflict")
+            updated = state.transition(step, status, reason_code=reason_code)
+            self._write(revision + 1, updated)
+            return {"revision": revision + 1, **updated.to_dict()}
+
+
 __all__ = [
     "ONBOARDING_STEPS",
     "OnboardingState",
@@ -358,4 +443,7 @@ __all__ = [
     "SCHEMA_VERSION",
     "STATE_FILE_NAME",
     "StepStatus",
+    "VersionedOnboardingStateStore",
+    "VERSIONED_SCHEMA_VERSION",
+    "VERSIONED_STATE_FILE_NAME",
 ]

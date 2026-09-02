@@ -122,8 +122,10 @@ class MediaTrashFlowTests(unittest.TestCase):
             "media_id": hashlib.sha1(name.encode("utf-8")).hexdigest()[:12],
             "relative_path": name,
             "sha256": sha256_file(path),
-            "image_health": "healthy",
-            "image_readable": True,
+            "media_type": "video",
+            "duration_sec": 0.4,
+            "image_health": "not_applicable",
+            "image_readable": None,
         }
         return name, item
 

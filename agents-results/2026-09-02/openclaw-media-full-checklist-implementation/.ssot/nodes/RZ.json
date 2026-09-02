@@ -101,7 +101,7 @@
     "human_visual_review": "blocking"
   },
   "visual_contract_ref": ".ssot/source-requirements.json",
-  "goal": "只在八个切片和九屏人工验收均接受后作最终发布决定",
+  "goal": "只在八个切片及八个 Surface 与项目对话框人工验收均接受后作最终发布决定",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "产品负责人"
 }

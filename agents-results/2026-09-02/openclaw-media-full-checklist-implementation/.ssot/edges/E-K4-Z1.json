@@ -1,15 +1,15 @@
 {
-  "edge_id": "E-Q5-Z1",
-  "from": "Q5",
+  "edge_id": "E-K4-Z1",
+  "from": "K4",
   "to": "Z1",
   "dependency_type": "hard",
   "dependency_scope": "specific-output",
   "required_state": "ACCEPTED",
   "assumption_ids": [],
   "invalidation_keys": [
-    "edge.q5.z1"
+    "edge.k4.z1"
   ],
-  "transferred_input": "Q5 已接受的合同、实现或验收产物",
-  "gate_evidence": "Q5 节点状态与候选内容校验值",
+  "transferred_input": "K4 已接受的合同、实现或验收产物",
+  "gate_evidence": "K4 节点状态与候选内容校验值",
   "reason_code": "candidate-identity"
 }

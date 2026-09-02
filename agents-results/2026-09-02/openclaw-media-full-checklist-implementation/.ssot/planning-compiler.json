@@ -5,7 +5,7 @@
     "ssot_depth": "L2",
     "artifact_policy": "create-ssot",
     "selection_authority": "user",
-    "rationale": "用户明确要求以指定 HTML 的 45 项要求创建新 SSOT；范围横跨八个独立发布切片、九个用户表面、外部身份与本地第三方工具。"
+    "rationale": "用户明确要求以指定 HTML 的 45 项要求创建新 SSOT；范围横跨八个独立发布切片、八个 Surface、新建项目对话框、外部身份与本地第三方工具。"
   },
   "macro_phases": [
     {
@@ -39,8 +39,8 @@
       "independent_acceptance": "R1 所有条目合同、自动证据和所需人工判断同时通过。",
       "independent_failure": "R1 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "candidate:r1:content-digest-pending",
       "node_ids": [
         "F",
@@ -80,8 +80,8 @@
       "independent_acceptance": "R2 所有条目合同、自动证据和所需人工判断同时通过。",
       "independent_failure": "R2 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "candidate:r2:content-digest-pending",
       "node_ids": [
         "I1",
@@ -107,8 +107,8 @@
       "independent_acceptance": "R3 所有条目合同、自动证据和所需人工判断同时通过。",
       "independent_failure": "R3 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "candidate:r3:content-digest-pending",
       "node_ids": [
         "L1",
@@ -136,8 +136,8 @@
       "independent_acceptance": "R4 所有条目合同、自动证据和所需人工判断同时通过。",
       "independent_failure": "R4 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "candidate:r4:content-digest-pending",
       "node_ids": [
         "P1",
@@ -167,8 +167,8 @@
       "independent_acceptance": "R5 所有条目合同、自动证据和所需人工判断同时通过。",
       "independent_failure": "R5 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "candidate:r5:content-digest-pending",
       "node_ids": [
         "S1",
@@ -202,8 +202,8 @@
       "independent_acceptance": "R6 所有条目合同、自动证据和所需人工判断同时通过。",
       "independent_failure": "R6 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "candidate:r6:content-digest-pending",
       "node_ids": [
         "A1",
@@ -231,8 +231,8 @@
       "independent_acceptance": "R7 所有条目合同、自动证据和所需人工判断同时通过。",
       "independent_failure": "R7 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "candidate:r7:content-digest-pending",
       "node_ids": [
         "K1",
@@ -255,13 +255,13 @@
     {
       "id": "R8",
       "macro_phase_id": "P2",
-      "title": "九屏共享入口和最终整合",
-      "user_value": "九个界面共享一套导航、状态、安全和验收边界。",
+      "title": "八个 Surface、项目对话框和最终整合",
+      "user_value": "八个 Surface 与新建项目对话框共享一套导航、状态、安全和验收边界。",
       "independent_acceptance": "R8 所有条目合同、自动证据和所需人工判断同时通过。",
       "independent_failure": "R8 候选保持未晋升；不改变其他切片、原始媒体或既有本地功能。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "candidate:r8:content-digest-pending",
       "node_ids": [
         "Z1",
@@ -324,8 +324,8 @@
       "independent_acceptance": "每项来源要求的必需证据通道均通过。",
       "independent_failure": "保持未晋升。",
       "future_phase_required_for_success": false,
-      "development_baseline": "commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
-      "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+      "development_baseline": "commit@a3ae47100d6fce4cb139ce17a479eea16717e73a",
+      "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
       "release_candidate": "source-milestone:m45:pending",
       "node_ids": [
         "RZ"
@@ -1301,15 +1301,53 @@
     {
       "id": "Z1",
       "kind": "implementation",
-      "goal": "把九个表面接入同一入口、共享状态和完整纵向动作链，并建立项目内视觉工作台",
+      "goal": "把八个 Surface 与新建项目对话框接入同一入口、共享状态和完整纵向动作链，并建立项目内视觉工作台",
       "dependencies": [
-        "Q1",
-        "Q2",
-        "Q3",
-        "Q4",
-        "Q5",
-        "Q6",
-        "Q7"
+        "D1",
+        "D2",
+        "D3",
+        "A1",
+        "A2",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "C1",
+        "C2",
+        "C3",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5",
+        "K6"
       ],
       "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
       "owner": "桌面前端与服务维护者"
@@ -1319,6 +1357,13 @@
       "kind": "validation",
       "goal": "汇编 R8 的独立候选、证据和接受结果",
       "dependencies": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
         "Z1"
       ],
       "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
@@ -1327,7 +1372,7 @@
     {
       "id": "RZ",
       "kind": "release",
-      "goal": "只在八个切片和九屏人工验收均接受后作最终发布决定",
+      "goal": "只在八个切片及八个 Surface 与项目对话框人工验收均接受后作最终发布决定",
       "dependencies": [
         "Q8"
       ],
@@ -1338,7 +1383,7 @@
           "production-release"
         ],
         "immutable_release_identity": "candidate:r8:content-digest-pending",
-        "promotion_baseline": "origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch",
+        "promotion_baseline": "origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch",
         "recovery_contract": "未满足发布证据时保持上一个已接受不可变版本；已发布后使用前向修复或恢复上一已接受版本。"
       }
     }
@@ -1453,7 +1498,7 @@
   },
   "complexity_budget": {
     "authority": "用户要求完整覆盖 45 项与 L2 比例治理合同",
-    "rationale": "45 个来源条目各保留一个责任节点；决定、发布验收和九屏汇合只增加必要薄节点，不登记未真实运行的外部 Codex 进程。",
+    "rationale": "45 个来源条目各保留一个责任节点；决定、发布验收和界面汇合只增加必要薄节点；两次外部执行器 502 与主会话接管单独登记。",
     "limits": {
       "total_nodes": 67,
       "implementation_nodes_per_release": 9,
@@ -1475,332 +1520,332 @@
   },
   "source_requirements": [
     {
-      "requirement_id": "SRC-D1",
+      "requirement_id": "SRC-CHECKLIST-D1",
       "node_ids": [
         "D1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-D2",
+      "requirement_id": "SRC-CHECKLIST-D2",
       "node_ids": [
         "D2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-D3",
+      "requirement_id": "SRC-CHECKLIST-D3",
       "node_ids": [
         "D3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-A1",
+      "requirement_id": "SRC-CHECKLIST-A1",
       "node_ids": [
         "A1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-A2",
+      "requirement_id": "SRC-CHECKLIST-A2",
       "node_ids": [
         "A2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-H1",
+      "requirement_id": "SRC-CHECKLIST-H1",
       "node_ids": [
         "H1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-H2",
+      "requirement_id": "SRC-CHECKLIST-H2",
       "node_ids": [
         "H2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-H3",
+      "requirement_id": "SRC-CHECKLIST-H3",
       "node_ids": [
         "H3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-H4",
+      "requirement_id": "SRC-CHECKLIST-H4",
       "node_ids": [
         "H4"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-I1",
+      "requirement_id": "SRC-CHECKLIST-I1",
       "node_ids": [
         "I1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-I2",
+      "requirement_id": "SRC-CHECKLIST-I2",
       "node_ids": [
         "I2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-I3",
+      "requirement_id": "SRC-CHECKLIST-I3",
       "node_ids": [
         "I3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-I4",
+      "requirement_id": "SRC-CHECKLIST-I4",
       "node_ids": [
         "I4"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-I5",
+      "requirement_id": "SRC-CHECKLIST-I5",
       "node_ids": [
         "I5"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-L1",
+      "requirement_id": "SRC-CHECKLIST-L1",
       "node_ids": [
         "L1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-L2",
+      "requirement_id": "SRC-CHECKLIST-L2",
       "node_ids": [
         "L2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-L3",
+      "requirement_id": "SRC-CHECKLIST-L3",
       "node_ids": [
         "L3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-L4",
+      "requirement_id": "SRC-CHECKLIST-L4",
       "node_ids": [
         "L4"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-L5",
+      "requirement_id": "SRC-CHECKLIST-L5",
       "node_ids": [
         "L5"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-P1",
+      "requirement_id": "SRC-CHECKLIST-P1",
       "node_ids": [
         "P1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-P2",
+      "requirement_id": "SRC-CHECKLIST-P2",
       "node_ids": [
         "P2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-P3",
+      "requirement_id": "SRC-CHECKLIST-P3",
       "node_ids": [
         "P3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-P4",
+      "requirement_id": "SRC-CHECKLIST-P4",
       "node_ids": [
         "P4"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-P5",
+      "requirement_id": "SRC-CHECKLIST-P5",
       "node_ids": [
         "P5"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-P6",
+      "requirement_id": "SRC-CHECKLIST-P6",
       "node_ids": [
         "P6"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-S1",
+      "requirement_id": "SRC-CHECKLIST-S1",
       "node_ids": [
         "S1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-S2",
+      "requirement_id": "SRC-CHECKLIST-S2",
       "node_ids": [
         "S2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-S3",
+      "requirement_id": "SRC-CHECKLIST-S3",
       "node_ids": [
         "S3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-S4",
+      "requirement_id": "SRC-CHECKLIST-S4",
       "node_ids": [
         "S4"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-S5",
+      "requirement_id": "SRC-CHECKLIST-S5",
       "node_ids": [
         "S5"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-C1",
+      "requirement_id": "SRC-CHECKLIST-C1",
       "node_ids": [
         "C1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-C2",
+      "requirement_id": "SRC-CHECKLIST-C2",
       "node_ids": [
         "C2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-C3",
+      "requirement_id": "SRC-CHECKLIST-C3",
       "node_ids": [
         "C3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-T1",
+      "requirement_id": "SRC-CHECKLIST-T1",
       "node_ids": [
         "T1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-T2",
+      "requirement_id": "SRC-CHECKLIST-T2",
       "node_ids": [
         "T2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-T3",
+      "requirement_id": "SRC-CHECKLIST-T3",
       "node_ids": [
         "T3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-T4",
+      "requirement_id": "SRC-CHECKLIST-T4",
       "node_ids": [
         "T4"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-T5",
+      "requirement_id": "SRC-CHECKLIST-T5",
       "node_ids": [
         "T5"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-T6",
+      "requirement_id": "SRC-CHECKLIST-T6",
       "node_ids": [
         "T6"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-K1",
+      "requirement_id": "SRC-CHECKLIST-K1",
       "node_ids": [
         "K1"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-K2",
+      "requirement_id": "SRC-CHECKLIST-K2",
       "node_ids": [
         "K2"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-K3",
+      "requirement_id": "SRC-CHECKLIST-K3",
       "node_ids": [
         "K3"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-K4",
+      "requirement_id": "SRC-CHECKLIST-K4",
       "node_ids": [
         "K4"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-K5",
+      "requirement_id": "SRC-CHECKLIST-K5",
       "node_ids": [
         "K5"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     },
     {
-      "requirement_id": "SRC-K6",
+      "requirement_id": "SRC-CHECKLIST-K6",
       "node_ids": [
         "K6"
       ],
-      "status": "INCOMPLETE"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION"
     }
   ],
   "source_inputs": [
     {
       "external_dependency_id": "EXT-CHECKLIST",
       "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html",
-      "commit": "2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "commit": "a3ae47100d6fce4cb139ce17a479eea16717e73a",
       "sha256": "73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb"
     },
     {
       "external_dependency_id": "EXT-PROTOTYPE",
       "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
-      "commit": "2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35",
+      "commit": "a3ae47100d6fce4cb139ce17a479eea16717e73a",
       "sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8"
     }
   ]

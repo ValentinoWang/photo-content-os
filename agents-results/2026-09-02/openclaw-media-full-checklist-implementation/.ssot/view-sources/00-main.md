@@ -1,7 +1,7 @@
 ---
 ARTIFACT_CLASS: ssot-development
 APPLICABILITY_DECISION: ssot
-GOVERNANCE_REASON: 指定 HTML 的 45 项要求横跨八个独立发布切片、九个界面和多个外部边界，需要持久来源守恒和验收权威。
+GOVERNANCE_REASON: 指定 HTML 的 45 项要求横跨八个独立发布切片、八个 Surface、新建项目对话框和多个外部边界，需要持久来源守恒和验收权威。
 SSOT_DEPTH: L2
 TARGET_EVIDENCE_LEVEL: local-runtime
 PLAN_VERSION: 1
@@ -44,18 +44,18 @@ NORMATIVE_EXECUTABLE_ARTIFACT_MODE: strict
 
 | Macro phase | Release ID | User value | Independent acceptance | Independent failure | Development baseline | Promotion baseline | Release candidate |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| R1 | 安全、契约和已接受决定 | 冻结安全边界与共用契约，先偿还会放大破坏半径的债。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35` | `origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch` | `candidate:r1:content-digest-pending` |
-| R2 | 整理台 | 用户可把散素材自动分批、复核来源和落点，并由本人决定是否进入系统回收站。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35` | `origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch` | `candidate:r2:content-digest-pending` |
-| R3 | 素材库与归档 | 用户可按结构化索引检索复用素材，并明确每个物理位置和生命周期状态。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35` | `origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch` | `candidate:r3:content-digest-pending` |
-| R4 | 项目与结构化时间线 | 用户可查看并编辑唯一权威剪辑方案，输出真实支持的交接产物。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35` | `origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch` | `candidate:r4:content-digest-pending` |
-| R5 | 设置、诊断与网页中台 | 用户可配置模型、预算、位置并理解诊断和上游任务状态。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35` | `origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch` | `candidate:r5:content-digest-pending` |
-| R6 | 登录、安装与工作台 | 用户可选择配对上游身份、完成安装并从工作台进入最近工作。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35` | `origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch` | `candidate:r6:content-digest-pending` |
-| R7 | 既有 Studio 能力迁移 | 新界面保留锁定、版本、失效传播、参考资料、复盘和文档阶段。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35` | `origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch` | `candidate:r7:content-digest-pending` |
-| R8 | 九屏共享入口和最终整合 | 九个界面共享一套导航、状态、安全和验收边界。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35` | `origin/main:2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35:must-refetch` | `candidate:r8:content-digest-pending` |
+| R1 | 安全、契约和已接受决定 | 冻结安全边界与共用契约，先偿还会放大破坏半径的债。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@a3ae47100d6fce4cb139ce17a479eea16717e73a` | `origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch` | `candidate:r1:content-digest-pending` |
+| R2 | 整理台 | 用户可把散素材自动分批、复核来源和落点，并由本人决定是否进入系统回收站。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@a3ae47100d6fce4cb139ce17a479eea16717e73a` | `origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch` | `candidate:r2:content-digest-pending` |
+| R3 | 素材库与归档 | 用户可按结构化索引检索复用素材，并明确每个物理位置和生命周期状态。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@a3ae47100d6fce4cb139ce17a479eea16717e73a` | `origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch` | `candidate:r3:content-digest-pending` |
+| R4 | 项目与结构化时间线 | 用户可查看并编辑唯一权威剪辑方案，输出真实支持的交接产物。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@a3ae47100d6fce4cb139ce17a479eea16717e73a` | `origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch` | `candidate:r4:content-digest-pending` |
+| R5 | 设置、诊断与网页中台 | 用户可配置模型、预算、位置并理解诊断和上游任务状态。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@a3ae47100d6fce4cb139ce17a479eea16717e73a` | `origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch` | `candidate:r5:content-digest-pending` |
+| R6 | 登录、安装与工作台 | 用户可选择配对上游身份、完成安装并从工作台进入最近工作。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@a3ae47100d6fce4cb139ce17a479eea16717e73a` | `origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch` | `candidate:r6:content-digest-pending` |
+| R7 | 既有 Studio 能力迁移 | 新界面保留锁定、版本、失效传播、参考资料、复盘和文档阶段。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@a3ae47100d6fce4cb139ce17a479eea16717e73a` | `origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch` | `candidate:r7:content-digest-pending` |
+| R8 | 八个 Surface、项目对话框和最终整合 | 八个 Surface 与新建项目对话框共享一套导航、状态、安全和验收边界。 | 全部节点合同和证据接受 | 候选不晋升，其他切片不受影响 | `commit@a3ae47100d6fce4cb139ce17a479eea16717e73a` | `origin/main:a3ae47100d6fce4cb139ce17a479eea16717e73a:must-refetch` | `candidate:r8:content-digest-pending` |
 
 ## 实施路径摘要
 
-实施按真实依赖事件驱动：安全与破坏性操作门禁先行；结构化索引、整理台、时间线、设置与 Studio 能力迁移只在有真实产物依赖时串行。八个切片各自形成不可变候选，最后才进入九屏共享入口、机器端到端验收与人工产品验收。
+实施按真实依赖事件驱动：安全与破坏性操作门禁先行；结构化索引、整理台、时间线、设置与旧 Studio 语义迁移只在有真实产物依赖时串行。八个切片各自形成不可变候选，最后进入八个 Surface、项目对话框的机器端到端验收与人工产品验收。
 
 ## 权威登记
 
@@ -71,58 +71,58 @@ NORMATIVE_EXECUTABLE_ARTIFACT_MODE: strict
 
 | Artifact ID | Path | Git identity | SHA-256 | Media type | Information architecture | Visual tokens | Layout | Interaction behavior | Seed data | Runtime side effects |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| SRC-ART-CHECKLIST | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html` | `main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:6202f61978a7bc94e01e3d50e80698a32856746b` | `73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb` | text/html | normative | informative | informative | normative | illustrative | simulated |
-| SRC-ART-PROTOTYPE | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html` | `main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:cc44bc4065310264b7bf398680fc6cb0750fd163` | `aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8` | text/html | normative | normative | normative | normative | illustrative | simulated |
+| SRC-ART-CHECKLIST | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html` | `main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:6202f61978a7bc94e01e3d50e80698a32856746b` | `73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb` | text/html | normative | informative | informative | normative | illustrative | simulated |
+| SRC-ART-PROTOTYPE | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html` | `main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:d881b06ab26d0cb46b88b653e72dc15160611fce` | `aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8` | text/html | normative | normative | normative | normative | illustrative | simulated |
 
 MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 
 | Requirement ID | Source locator | Modality | Summary | Node refs | AC refs | Evidence targets | Release refs | Scope deviation |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| SRC-CHECKLIST-D1 | `html:h3[1]` | MUST | 从媒体清单生成可解释、可确认且不可拆分实况照片组的事件批次计划；未确认或输入漂移时禁止迁移。 | D1 | D1/AC-01,D1/AC-02 | acceptance-fragments/OCM-D1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-D1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R1,R8 | none |
-| SRC-CHECKLIST-D2 | `html:h3[2]` | MUST | 以稳定素材身份原子维护结构化索引，支持分类、标签、用途、计数与详情查询，同时保留 Markdown 卡片。 | D2 | D2/AC-01,D2/AC-02 | acceptance-fragments/OCM-D2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-D2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R1,R8 | none |
-| SRC-CHECKLIST-D3 | `html:h3[3]` | MUST | 按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。 | D3 | D3/AC-01,D3/AC-02 | acceptance-fragments/OCM-D3/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-D3/acceptance/local-runtime/runs/<run-id>/result.md | M45,R1,R8 | none |
-| SRC-CHECKLIST-A1 | `html:h3[4]` | MUST | 使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。 | A1 | A1/AC-01,A1/AC-02 | acceptance-fragments/OCM-A1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-A1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
-| SRC-CHECKLIST-A2 | `html:h3[5]` | MUST | 向导可重入地完成位置、运行环境、编辑器、账号与设备四步，并能从失败处恢复。 | A2 | A2/AC-01,A2/AC-02 | acceptance-fragments/OCM-A2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-A2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
-| SRC-CHECKLIST-H1 | `html:h3[6]` | MUST | 最近项目列表 + 六段流水线进度：纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。 | H1 | H1/AC-01,H1/AC-02 | acceptance-fragments/OCM-H1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-H1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
-| SRC-CHECKLIST-H2 | `html:h3[7]` | MUST | 聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。 | H2 | H2/AC-01,H2/AC-02 | acceptance-fragments/OCM-H2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-H2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
-| SRC-CHECKLIST-H3 | `html:h3[8]` | MUST | 素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB）：索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。 | H3 | H3/AC-01,H3/AC-02 | acceptance-fragments/OCM-H3/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-H3/acceptance/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
-| SRC-CHECKLIST-H4 | `html:h3[9]` | MUST | 本周统计（完成任务 23 / 发布内容 4）：加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。 | H4 | H4/AC-01,H4/AC-02 | acceptance-fragments/OCM-H4/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-H4/acceptance/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
-| SRC-CHECKLIST-I1 | `html:h3[10]` | MUST | 拖入素材 → 自动成批：已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。 | I1 | I1/AC-01,I1/AC-02 | acceptance-fragments/OCM-I1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
-| SRC-CHECKLIST-I2 | `html:h3[11]` | MUST | 批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1）：读 manifest 分组计数即可，不用新后端。 | I2 | I2/AC-01,I2/AC-02 | acceptance-fragments/OCM-I2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
-| SRC-CHECKLIST-I3 | `html:h3[12]` | MUST | 连拍识别（「发现 4 组连拍」）与实况配对：把 12 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。 | I3 | I3/AC-01,I3/AC-02 | acceptance-fragments/OCM-I3/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I3/acceptance/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
-| SRC-CHECKLIST-I4 | `html:h3[13]` | MUST | 三分落点：进项目 / 归档保留 / 推荐删除：新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。 | I4 | I4/AC-01,I4/AC-02 | acceptance-fragments/OCM-I4/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I4/acceptance/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
-| SRC-CHECKLIST-I5 | `html:h3[14]` | MUST | 用户勾选建议并二次确认后才移入当前操作系统回收站；回读失败必须阻断，界面不得承诺固定保留天数。 | I5 | I5/AC-01,I5/AC-02 | acceptance-fragments/OCM-I5/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I5/acceptance/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
-| SRC-CHECKLIST-L1 | `html:h3[15]` | MUST | 复用资产卡片列表 + 分类树：索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。 | L1 | L1/AC-01,L1/AC-02 | acceptance-fragments/OCM-L1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
-| SRC-CHECKLIST-L2 | `html:h3[16]` | MUST | 按标签筛选：同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。 | L2 | L2/AC-01,L2/AC-02 | acceptance-fragments/OCM-L2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
-| SRC-CHECKLIST-L3 | `html:h3[17]` | MUST | 同时展示生命周期和每个物理位置的真实回读状态，逻辑登记不得冒充副本已存在。 | L3 | L3/AC-01,L3/AC-02 | acceptance-fragments/OCM-L3/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L3/acceptance/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
-| SRC-CHECKLIST-L4 | `html:h3[18]` | MUST | 归档索引卡（检索关键词、精选副本入口、恢复方式）：包 HTTP 接口。这是素材库里唯一后端完备的部分。 | L4 | L4/AC-01,L4/AC-02 | acceptance-fragments/OCM-L4/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L4/acceptance/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
-| SRC-CHECKLIST-L5 | `html:h3[19]` | MUST | 详情栏主按钮「选择项目并加入」要落到真实动作：要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。 | L5 | L5/AC-01,L5/AC-02 | acceptance-fragments/OCM-L5/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L5/acceptance/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
-| SRC-CHECKLIST-P1 | `html:h3[20]` | MUST | 剪辑决策条目列表（时间码 / 台词 / 角色标签）：纯前端。EDL 已经通过 GET /api/projects/:id 返回了。 | P1 | P1/AC-01,P1/AC-02 | acceptance-fragments/OCM-P1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
-| SRC-CHECKLIST-P2 | `html:h3[21]` | MUST | 双轨时间线（主画面 + 叠加层）：纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。 | P2 | P2/AC-01,P2/AC-02 | acceptance-fragments/OCM-P2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
-| SRC-CHECKLIST-P3 | `html:h3[22]` | MUST | 结构化时间线为主视图，同时保留文本说明与受约束的选区修改，不形成第二份机器执行权威。 | P3 | P3/AC-01,P3/AC-02 | acceptance-fragments/OCM-P3/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P3/acceptance/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
-| SRC-CHECKLIST-P4 | `html:h3[23]` | MUST | 「待补素材」缺口清单：纯前端。 | P4 | P4/AC-01,P4/AC-02 | acceptance-fragments/OCM-P4/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P4/acceptance/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
-| SRC-CHECKLIST-P5 | `html:h3[24]` | MUST | 内建只显示 handoff_pack 与 otio_kdenlive；ChatCut 仅在本地 MCP 实时探测和主动连接后成为可选去向。 | P5 | P5/AC-01,P5/AC-02 | acceptance-fragments/OCM-P5/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P5/acceptance/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
-| SRC-CHECKLIST-P6 | `html:h3[25]` | MUST | 统一表述为剪映生产路线已停止维护，删除没有证据的“草稿加密”理由。 | P6 | P6/AC-01,P6/AC-02 | acceptance-fragments/OCM-P6/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P6/acceptance/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
-| SRC-CHECKLIST-S1 | `html:h3[26]` | MUST | 分析预算四个数字：补一个读写配置的接口。注意 analysis_tiering 的输出 没有 JSON Schema，只有 dataclass 和 POLICY_VERSION。 | S1 | S1/AC-01,S1/AC-02 | acceptance-fragments/OCM-S1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-S2 | `html:h3[27]` | MUST | 存放位置（素材根目录 / 笔记库）：现有接口是项目级的，设置页要的是全局级，得加一个。 | S2 | S2/AC-01,S2/AC-02 | acceptance-fragments/OCM-S2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-S3 | `html:h3[28]` | MUST | 诊断页六项检查：包接口。前端别把「6 项」写死。另外这个脚本 零测试覆盖，接之前建议先补。 | S3 | S3/AC-01,S3/AC-02 | acceptance-fragments/OCM-S3/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S3/acceptance/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-S4 | `html:h3[29]` | MUST | Windows 与 Linux 将上游配对显示为“不支持”而不是“配置失败”，并明确本地核心能力仍可用。 | S4 | S4/AC-01,S4/AC-02 | acceptance-fragments/OCM-S4/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S4/acceptance/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-S5 | `html:h3[30]` | MUST | 持久化用户选择的提供方、模型、端点、思考强度和密钥引用，并确保真实执行链消费该配置。 | S5 | S5/AC-01,S5/AC-02 | acceptance-fragments/OCM-S5/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S5/acceptance/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-C1 | `html:h3[31]` | MUST | 任务列表上的 media.xxx.v1 标识符是对的：保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。 | C1 | C1/AC-01,C1/AC-02 | acceptance-fragments/OCM-C1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-C1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-C2 | `html:h3[32]` | MUST | 任务状态机（执行中 / 已完成 / 已阻塞）：前端目前只画了 3 态，补齐映射即可。注意 expired 和 cancelled 也要有对应显示。 | C2 | C2/AC-01,C2/AC-02 | acceptance-fragments/OCM-C2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-C2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-C3 | `html:h3[33]` | MUST | 冻结基线要写进界面还是文档：上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。 | C3 | C3/AC-01,C3/AC-02 | acceptance-fragments/OCM-C3/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-C3/acceptance/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-T1 | `html:h3[34]` | MUST | 给 35_promote_inbox_batch_to_project.py 补测试：接 UI 之前先补测试。这条建议优先级高于任何界面工作。 | T1 | T1/AC-01,T1/AC-02 | acceptance-fragments/OCM-T1/acceptance/integration-contract/runs/<run-id>/result.md | M45,R1,R8 | none |
-| SRC-CHECKLIST-T2 | `html:h3[35]` | MUST | 给素材库三件套补测试（12 / 14 / 15）：和第 00 节的索引层一起做，定契约的同时补测试。 | T2 | T2/AC-01,T2/AC-02 | acceptance-fragments/OCM-T2/acceptance/integration-contract/runs/<run-id>/result.md | M45,R3,R8 | none |
-| SRC-CHECKLIST-T3 | `html:h3[36]` | MUST | 给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。 | T3 | T3/AC-01,T3/AC-02 | acceptance-fragments/OCM-T3/acceptance/integration-contract/runs/<run-id>/result.md | M45,R1,R8 | none |
-| SRC-CHECKLIST-T4 | `html:h3[37]` | MUST | 给 analysis_tiering 的输出定 JSON Schema：补 schemas/analysis_tiering.schema.json，纳入现有的契约校验流程。 | T4 | T4/AC-01,T4/AC-02 | acceptance-fragments/OCM-T4/acceptance/integration-contract/runs/<run-id>/result.md | M45,R5,R8 | none |
-| SRC-CHECKLIST-T5 | `html:h3[38]` | MUST | 所有新增写接口沿用 loopback、同源、CSRF 和明确 revision 域的乐观并发控制，跨端口 Origin 必须拒绝。 | T5 | T5/AC-01,T5/AC-02 | acceptance-fragments/OCM-T5/acceptance/integration-contract/runs/<run-id>/result.md | M45,R1,R8 | none |
-| SRC-CHECKLIST-T6 | `html:h3[39]` | MUST | 七个剪映脚本要么物理归档，要么逐项声明历史且不维护，并使文档、能力清单和持续集成保持一致。 | T6 | T6/AC-01,T6/AC-02 | acceptance-fragments/OCM-T6/acceptance/integration-contract/runs/<run-id>/result.md | M45,R4,R8 | none |
-| SRC-CHECKLIST-K1 | `html:h3[40]` | MUST | 区块锁定 + AI 只改选中区块：新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。 | K1 | K1/AC-01,K1/AC-02 | acceptance-fragments/OCM-K1/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K1/acceptance/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
-| SRC-CHECKLIST-K2 | `html:h3[41]` | MUST | 版本 diff 与非破坏性回滚：原型里没有版本概念。至少要在项目屏留一个入口。 | K2 | K2/AC-01,K2/AC-02 | acceptance-fragments/OCM-K2/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K2/acceptance/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
-| SRC-CHECKLIST-K3 | `html:h3[42]` | MUST | 下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新）：原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。 | K3 | K3/AC-01,K3/AC-02 | acceptance-fragments/OCM-K3/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K3/acceptance/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
-| SRC-CHECKLIST-K4 | `html:h3[43]` | MUST | 研究与参考（reference ≠ 自有素材）：这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。 | K4 | K4/AC-01,K4/AC-02 | acceptance-fragments/OCM-K4/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K4/acceptance/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
-| SRC-CHECKLIST-K5 | `html:h3[44]` | MUST | 发布与复盘（指标 + 复盘结论 + 下次约束）：原型里完全没有。这块丢了，产品就退化成一次性工具。 | K5 | K5/AC-01,K5/AC-02 | acceptance-fragments/OCM-K5/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K5/acceptance/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
-| SRC-CHECKLIST-K6 | `html:h3[45]` | MUST | Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。 | K6 | K6/AC-01,K6/AC-02 | acceptance-fragments/OCM-K6/acceptance/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K6/acceptance/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
+| SRC-CHECKLIST-D1 | `html:h3[1]` | MUST | 从媒体清单生成可解释、可确认且不可拆分实况照片组的事件批次计划；未确认或输入漂移时禁止迁移。 | D1 | D1/AC-01,D1/AC-02 | acceptance-fragments/OCM-D1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-D1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R1,R8 | none |
+| SRC-CHECKLIST-D2 | `html:h3[2]` | MUST | 以稳定素材身份原子维护结构化索引，支持分类、标签、用途、计数与详情查询，同时保留 Markdown 卡片。 | D2 | D2/AC-01,D2/AC-02 | acceptance-fragments/OCM-D2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-D2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R1,R8 | none |
+| SRC-CHECKLIST-D3 | `html:h3[3]` | MUST | 按已接受的 DashScope 默认、本机 FunASR 失败兜底与音频发送前明示策略统一所有入口，并以音频夹具验证。 | D3 | D3/AC-01,D3/AC-02 | acceptance-fragments/OCM-D3/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-D3/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R1,R8 | none |
+| SRC-CHECKLIST-A1 | `html:h3[4]` | MUST | 使用上游中台身份完成邮箱、Apple 或微信登录；配对始终可选，未登录、撤销或平台不支持时本地能力不退化。 | A1 | A1/AC-01,A1/AC-02 | acceptance-fragments/OCM-A1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-A1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
+| SRC-CHECKLIST-A2 | `html:h3[5]` | MUST | 向导可重入地完成位置、运行环境、编辑器、账号与设备四步，并能从失败处恢复。 | A2 | A2/AC-01,A2/AC-02 | acceptance-fragments/OCM-A2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-A2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
+| SRC-CHECKLIST-H1 | `html:h3[6]` | MUST | 最近项目列表 + 六段流水线进度：纯前端改造，接口不用动。原型的六段（素材归档/取证分析/脚本分镜/剪辑决策/时间线/人工精剪）需要和现有五段（Brief/脚本/分镜/EDL/交付）对齐命名。 | H1 | H1/AC-01,H1/AC-02 | acceptance-fragments/OCM-H1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-H1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
+| SRC-CHECKLIST-H2 | `html:h3[7]` | MUST | 聚合数据中台、Codex、ChatCut Desktop 本地 MCP 与本机引擎的实时状态；单项失败不拖垮整体。 | H2 | H2/AC-01,H2/AC-02 | acceptance-fragments/OCM-H2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-H2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
+| SRC-CHECKLIST-H3 | `html:h3[8]` | MUST | 素材库统计（视频 412 / 照片 1,240 / 音频 36 / 占用 412 GB）：索引层已拍板要做（第 00 节 d2）。索引层落地后这个统计是顺手的事。 | H3 | H3/AC-01,H3/AC-02 | acceptance-fragments/OCM-H3/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-H3/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
+| SRC-CHECKLIST-H4 | `html:h3[9]` | MUST | 本周统计（完成任务 23 / 发布内容 4）：加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。 | H4 | H4/AC-01,H4/AC-02 | acceptance-fragments/OCM-H4/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-H4/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R6,R8 | none |
+| SRC-CHECKLIST-I1 | `html:h3[10]` | MUST | 拖入素材 → 自动成批：已拍板：做。按第 00 节 d1 的分批器方案实现，整理台保持原型的完整交互（自动成批 → 你确认落点）。 | I1 | I1/AC-01,I1/AC-02 | acceptance-fragments/OCM-I1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
+| SRC-CHECKLIST-I2 | `html:h3[11]` | MUST | 批次卡上的来源构成（iPhone ×6 · 屏幕录制 ×2 · 相机 ×1）：读 manifest 分组计数即可，不用新后端。 | I2 | I2/AC-01,I2/AC-02 | acceptance-fragments/OCM-I2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
+| SRC-CHECKLIST-I3 | `html:h3[12]` | MUST | 连拍识别（「发现 4 组连拍」）与实况配对：把 12 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。 | I3 | I3/AC-01,I3/AC-02 | acceptance-fragments/OCM-I3/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I3/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
+| SRC-CHECKLIST-I4 | `html:h3[13]` | MUST | 三分落点：进项目 / 归档保留 / 推荐删除：新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。 | I4 | I4/AC-01,I4/AC-02 | acceptance-fragments/OCM-I4/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I4/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
+| SRC-CHECKLIST-I5 | `html:h3[14]` | MUST | 用户勾选建议并二次确认后才移入当前操作系统回收站；回读失败必须阻断，界面不得承诺固定保留天数。 | I5 | I5/AC-01,I5/AC-02 | acceptance-fragments/OCM-I5/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-I5/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R2,R8 | none |
+| SRC-CHECKLIST-L1 | `html:h3[15]` | MUST | 复用资产卡片列表 + 分类树：索引层已拍板（第 00 节 d2）。落地后这屏基本是纯前端工作。 | L1 | L1/AC-01,L1/AC-02 | acceptance-fragments/OCM-L1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
+| SRC-CHECKLIST-L2 | `html:h3[16]` | MUST | 按标签筛选：同上（索引层已拍板）。原型上这排标签目前是静态的，索引接口就位后一并接活。 | L2 | L2/AC-01,L2/AC-02 | acceptance-fragments/OCM-L2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
+| SRC-CHECKLIST-L3 | `html:h3[17]` | MUST | 同时展示生命周期和每个物理位置的真实回读状态，逻辑登记不得冒充副本已存在。 | L3 | L3/AC-01,L3/AC-02 | acceptance-fragments/OCM-L3/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L3/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
+| SRC-CHECKLIST-L4 | `html:h3[18]` | MUST | 归档索引卡（检索关键词、精选副本入口、恢复方式）：包 HTTP 接口。这是素材库里唯一后端完备的部分。 | L4 | L4/AC-01,L4/AC-02 | acceptance-fragments/OCM-L4/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L4/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
+| SRC-CHECKLIST-L5 | `html:h3[19]` | MUST | 详情栏主按钮「选择项目并加入」要落到真实动作：要么补 16 号能力，要么这个按钮先降级为「复制卡片路径」这类真能做到的动作。 | L5 | L5/AC-01,L5/AC-02 | acceptance-fragments/OCM-L5/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-L5/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R3,R8 | none |
+| SRC-CHECKLIST-P1 | `html:h3[20]` | MUST | 剪辑决策条目列表（时间码 / 台词 / 角色标签）：纯前端。EDL 已经通过 GET /api/projects/:id 返回了。 | P1 | P1/AC-01,P1/AC-02 | acceptance-fragments/OCM-P1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
+| SRC-CHECKLIST-P2 | `html:h3[21]` | MUST | 双轨时间线（主画面 + 叠加层）：纯前端渲染。这是原型里少数「后端先行、界面还没跟上」的部分。 | P2 | P2/AC-01,P2/AC-02 | acceptance-fragments/OCM-P2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
+| SRC-CHECKLIST-P3 | `html:h3[22]` | MUST | 结构化时间线为主视图，同时保留文本说明与受约束的选区修改，不形成第二份机器执行权威。 | P3 | P3/AC-01,P3/AC-02 | acceptance-fragments/OCM-P3/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P3/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
+| SRC-CHECKLIST-P4 | `html:h3[23]` | MUST | 「待补素材」缺口清单：纯前端。 | P4 | P4/AC-01,P4/AC-02 | acceptance-fragments/OCM-P4/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P4/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
+| SRC-CHECKLIST-P5 | `html:h3[24]` | MUST | 内建只显示 handoff_pack 与 otio_kdenlive；ChatCut 仅在本地 MCP 实时探测和主动连接后成为可选去向。 | P5 | P5/AC-01,P5/AC-02 | acceptance-fragments/OCM-P5/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P5/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
+| SRC-CHECKLIST-P6 | `html:h3[25]` | MUST | 统一表述为剪映生产路线已停止维护，删除没有证据的“草稿加密”理由。 | P6 | P6/AC-01,P6/AC-02 | acceptance-fragments/OCM-P6/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-P6/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R4,R8 | none |
+| SRC-CHECKLIST-S1 | `html:h3[26]` | MUST | 分析预算四个数字：补一个读写配置的接口。注意 analysis_tiering 的输出 没有 JSON Schema，只有 dataclass 和 POLICY_VERSION。 | S1 | S1/AC-01,S1/AC-02 | acceptance-fragments/OCM-S1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-S2 | `html:h3[27]` | MUST | 存放位置（素材根目录 / 笔记库）：现有接口是项目级的，设置页要的是全局级，得加一个。 | S2 | S2/AC-01,S2/AC-02 | acceptance-fragments/OCM-S2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-S3 | `html:h3[28]` | MUST | 诊断页六项检查：包接口。前端别把「6 项」写死。另外这个脚本 零测试覆盖，接之前建议先补。 | S3 | S3/AC-01,S3/AC-02 | acceptance-fragments/OCM-S3/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S3/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-S4 | `html:h3[29]` | MUST | Windows 与 Linux 将上游配对显示为“不支持”而不是“配置失败”，并明确本地核心能力仍可用。 | S4 | S4/AC-01,S4/AC-02 | acceptance-fragments/OCM-S4/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S4/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-S5 | `html:h3[30]` | MUST | 持久化用户选择的提供方、模型、端点、思考强度和密钥引用，并确保真实执行链消费该配置。 | S5 | S5/AC-01,S5/AC-02 | acceptance-fragments/OCM-S5/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-S5/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-C1 | `html:h3[31]` | MUST | 任务列表上的 media.xxx.v1 标识符是对的：保持现状。上一轮审计已经把它们从主标签降级为次要说明，这个处理是对的。 | C1 | C1/AC-01,C1/AC-02 | acceptance-fragments/OCM-C1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-C1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-C2 | `html:h3[32]` | MUST | 任务状态机（执行中 / 已完成 / 已阻塞）：前端目前只画了 3 态，补齐映射即可。注意 expired 和 cancelled 也要有对应显示。 | C2 | C2/AC-01,C2/AC-02 | acceptance-fragments/OCM-C2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-C2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-C3 | `html:h3[33]` | MUST | 冻结基线要写进界面还是文档：上一轮审计已经把裸 hash 从诊断页移走了，这是对的。但版本不匹配时得有个地方告诉用户——建议放进诊断页的「复制报告」，不放主界面。 | C3 | C3/AC-01,C3/AC-02 | acceptance-fragments/OCM-C3/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-C3/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-T1 | `html:h3[34]` | MUST | 给 35_promote_inbox_batch_to_project.py 补测试：接 UI 之前先补测试。这条建议优先级高于任何界面工作。 | T1 | T1/AC-01,T1/AC-02 | acceptance-fragments/OCM-T1/acceptance/machine/integration-contract/runs/<run-id>/result.md | M45,R1,R8 | none |
+| SRC-CHECKLIST-T2 | `html:h3[35]` | MUST | 给素材库三件套补测试（12 / 14 / 15）：和第 00 节的索引层一起做，定契约的同时补测试。 | T2 | T2/AC-01,T2/AC-02 | acceptance-fragments/OCM-T2/acceptance/machine/integration-contract/runs/<run-id>/result.md | M45,R3,R8 | none |
+| SRC-CHECKLIST-T3 | `html:h3[36]` | MUST | 给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。 | T3 | T3/AC-01,T3/AC-02 | acceptance-fragments/OCM-T3/acceptance/machine/integration-contract/runs/<run-id>/result.md | M45,R1,R8 | none |
+| SRC-CHECKLIST-T4 | `html:h3[37]` | MUST | 给 analysis_tiering 的输出定 JSON Schema：补 schemas/analysis_tiering.schema.json，纳入现有的契约校验流程。 | T4 | T4/AC-01,T4/AC-02 | acceptance-fragments/OCM-T4/acceptance/machine/integration-contract/runs/<run-id>/result.md | M45,R5,R8 | none |
+| SRC-CHECKLIST-T5 | `html:h3[38]` | MUST | 所有新增写接口沿用 loopback、同源、CSRF 和明确 revision 域的乐观并发控制，跨端口 Origin 必须拒绝。 | T5 | T5/AC-01,T5/AC-02 | acceptance-fragments/OCM-T5/acceptance/machine/integration-contract/runs/<run-id>/result.md | M45,R1,R8 | none |
+| SRC-CHECKLIST-T6 | `html:h3[39]` | MUST | 七个剪映脚本要么物理归档，要么逐项声明历史且不维护，并使文档、能力清单和持续集成保持一致。 | T6 | T6/AC-01,T6/AC-02 | acceptance-fragments/OCM-T6/acceptance/machine/integration-contract/runs/<run-id>/result.md | M45,R4,R8 | none |
+| SRC-CHECKLIST-K1 | `html:h3[40]` | MUST | 区块锁定 + AI 只改选中区块：新界面必须保留这个语义。原型里完全没有「锁定」和「选中范围」的表达。 | K1 | K1/AC-01,K1/AC-02 | acceptance-fragments/OCM-K1/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K1/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
+| SRC-CHECKLIST-K2 | `html:h3[41]` | MUST | 版本 diff 与非破坏性回滚：原型里没有版本概念。至少要在项目屏留一个入口。 | K2 | K2/AC-01,K2/AC-02 | acceptance-fragments/OCM-K2/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K2/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
+| SRC-CHECKLIST-K3 | `html:h3[42]` | MUST | 下游 stale 标记（Brief 改了，脚本/分镜/EDL 自动标记需更新）：原型的六段流水线进度条是个好载体，可以顺势把 stale 状态表达进去。 | K3 | K3/AC-01,K3/AC-02 | acceptance-fragments/OCM-K3/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K3/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
+| SRC-CHECKLIST-K4 | `html:h3[43]` | MUST | 研究与参考（reference ≠ 自有素材）：这是一条重要的边界。原型完全没有，接进去时别把参考内容混进素材库。 | K4 | K4/AC-01,K4/AC-02 | acceptance-fragments/OCM-K4/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K4/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
+| SRC-CHECKLIST-K5 | `html:h3[44]` | MUST | 发布与复盘（指标 + 复盘结论 + 下次约束）：原型里完全没有。这块丢了，产品就退化成一次性工具。 | K5 | K5/AC-01,K5/AC-02 | acceptance-fragments/OCM-K5/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K5/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
+| SRC-CHECKLIST-K6 | `html:h3[45]` | MUST | Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。 | K6 | K6/AC-01,K6/AC-02 | acceptance-fragments/OCM-K6/acceptance/machine/e2e/runs/<run-id>/result.md,acceptance-fragments/OCM-K6/acceptance/machine/local-runtime/runs/<run-id>/result.md | M45,R7,R8 | none |
 | SRC-PROTOTYPE-UI | `html:h1[1]` | MUST | 冻结原型的视觉令牌、DOM 锚点、控件交互和双视口捕获合同。 | Z1 | Z1/AC-01,Z1/AC-02 | acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs/<run-id>/result.md | M45,R8 | none |
 
 ### 视觉令牌与 DOM 锚点
@@ -155,40 +155,54 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 
 字体族固定为 `Archivo`、`Asap`、`JetBrains Mono`。
 
-| Attribute | Value | Owning nodes | Evidence |
-| --- | --- | --- | --- |
-| `data-screen` | `home` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen` | `inbox` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen` | `library` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen` | `project` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen` | `settings` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen-panel` | `home` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen-panel` | `inbox` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen-panel` | `library` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen-panel` | `project` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-screen-panel` | `settings` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
-| `data-batch` | `a` | D1,I1,I2 | DOM structure + interaction trace |
-| `data-batch` | `b` | D1,I1,I2 | DOM structure + interaction trace |
-| `data-batch` | `c` | D1,I1,I2 | DOM structure + interaction trace |
-| `data-del` | `d1` | I4,I5 | DOM structure + interaction trace |
-| `data-del` | `d2` | I4,I5 | DOM structure + interaction trace |
-| `data-del` | `d3` | I4,I5 | DOM structure + interaction trace |
-| `data-set-pane` | `account` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
-| `data-set-pane` | `agent` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
-| `data-set-pane` | `asr` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
-| `data-set-pane` | `budget` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
-| `data-set-pane` | `doctor` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
-| `data-set-pane` | `paths` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
-| `data-asset-add-project` | `present` | L5 | DOM structure + interaction trace |
-| `data-edl-view` | `text` | P2,P3 | DOM structure + interaction trace |
-| `data-edl-view` | `timeline` | P2,P3 | DOM structure + interaction trace |
-| `data-copy-report` | `present` | C3,S3 | DOM structure + interaction trace |
-| `data-preserved-k` | `k1` | K1 | DOM structure + interaction trace |
-| `data-preserved-k` | `k2` | K2 | DOM structure + interaction trace |
-| `data-preserved-k` | `k3` | K3 | DOM structure + interaction trace |
-| `data-preserved-k` | `k4` | K4 | DOM structure + interaction trace |
-| `data-preserved-k` | `k5` | K5 | DOM structure + interaction trace |
-| `data-preserved-k` | `k6` | K6 | DOM structure + interaction trace |
+| Prototype attribute | Value | Implementation mapping | Owning nodes | Evidence |
+| --- | --- | --- | --- | --- |
+| `data-screen` | `home` | `data-screen` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen` | `inbox` | `data-screen` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen` | `library` | `data-screen` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen` | `project` | `data-screen` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen` | `settings` | `data-screen` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen-panel` | `home` | `data-screen-panel` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen-panel` | `inbox` | `data-screen-panel` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen-panel` | `library` | `data-screen-panel` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen-panel` | `project` | `data-screen-panel` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-screen-panel` | `settings` | `data-screen-panel` | H1,I1,L1,P1,S1 | DOM structure + interaction trace |
+| `data-batch` | `a` | `data-batch` | D1,I1,I2 | DOM structure + interaction trace |
+| `data-batch` | `b` | `data-batch` | D1,I1,I2 | DOM structure + interaction trace |
+| `data-batch` | `c` | `data-batch` | D1,I1,I2 | DOM structure + interaction trace |
+| `data-del` | `d1` | `data-delete (row also retains data-del)` | I4,I5 | DOM structure + interaction trace |
+| `data-del` | `d2` | `data-delete (row also retains data-del)` | I4,I5 | DOM structure + interaction trace |
+| `data-del` | `d3` | `data-delete (row also retains data-del)` | I4,I5 | DOM structure + interaction trace |
+| `data-lib` | `archive` | `data-category / data-tags` | L1,L2 | DOM structure + interaction trace |
+| `data-lib` | `projects` | `data-category / data-tags` | L1,L2 | DOM structure + interaction trace |
+| `data-lib` | `reuse` | `data-category / data-tags` | L1,L2 | DOM structure + interaction trace |
+| `data-lib-view` | `archive` | `data-library-view` | L1 | DOM structure + interaction trace |
+| `data-lib-view` | `projects` | `data-library-view` | L1 | DOM structure + interaction trace |
+| `data-lib-view` | `reuse` | `data-library-view` | L1 | DOM structure + interaction trace |
+| `data-set` | `account` | `data-set-nav` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set` | `agent` | `data-set-nav` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set` | `asr` | `data-set-nav` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set` | `budget` | `data-set-nav` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set` | `doctor` | `data-set-nav` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set` | `paths` | `data-set-nav` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set-pane` | `account` | `data-set-pane` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set-pane` | `agent` | `data-set-pane` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set-pane` | `asr` | `data-set-pane` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set-pane` | `budget` | `data-set-pane` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set-pane` | `doctor` | `data-set-pane` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-set-pane` | `paths` | `data-set-pane` | S1,S2,S3,S4,S5,D3 | DOM structure + interaction trace |
+| `data-asset-add-project` | `present` | `data-asset-add-project` | L5 | DOM structure + interaction trace |
+| `data-edl-view` | `text` | `data-edl-view` | P2,P3 | DOM structure + interaction trace |
+| `data-edl-view` | `timeline` | `data-edl-view` | P2,P3 | DOM structure + interaction trace |
+| `data-copy-report` | `present` | `data-copy-report` | C3,S3 | DOM structure + interaction trace |
+| `data-preserved-k` | `k1` | `data-preserved-k` | K1 | DOM structure + interaction trace |
+| `data-preserved-k` | `k2` | `data-preserved-k` | K2 | DOM structure + interaction trace |
+| `data-preserved-k` | `k3` | `data-preserved-k` | K3 | DOM structure + interaction trace |
+| `data-preserved-k` | `k4` | `data-preserved-k` | K4 | DOM structure + interaction trace |
+| `data-preserved-k` | `k5` | `data-preserved-k` | K5 | DOM structure + interaction trace |
+| `data-preserved-k` | `k6` | `data-preserved-k` | K6 | DOM structure + interaction trace |
+| `data-login-step` | `account` | `data-login-step` | A1 | DOM structure + interaction trace |
+| `data-login-step` | `agent` | `data-login-step` | A1 | DOM structure + interaction trace |
 
 | Surface ID | Routes | States | Locales | Themes | Viewports | Helper modes | Source refs | Checklist item refs |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -203,16 +217,40 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 
 | Interaction ID | Surface | Control | Preconditions | Trigger | State change | Visible/boundary result | Source refs | AC refs |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| INT-NAV-SCREENS | SURF-DASHBOARD | 主导航 | 桌面应用已启动 | 选择工作台、整理台、素材库、项目或设置 | 唯一 data-screen-panel 成为可见面板 | 标题、侧栏当前态和面板同步 / 未知目标不改变当前屏 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-H1 | H1/AC-01,Z1/AC-01 |
-| INT-INBOX-BATCHES | SURF-ORGANIZER | 批次 A/B/C 与确认落点 | 媒体清单已生成且候选摘要可回读 | 选择批次并确认项目落点 | 候选从预览转为一次幂等迁移 | 批次来源、目标、数量和回执可见 / 清单漂移、碰撞或未确认时禁止移动 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-D1,SRC-CHECKLIST-I1 | D1/AC-01,I1/AC-01,I3/AC-01 |
-| INT-INBOX-DELETE | SURF-ORGANIZER | 删除建议、全选和二次确认 | 四类机器理由已生成候选 | 勾选候选并二次确认 | 仅选中候选进入当前系统回收站 | 选择数量、回执和恢复入口可见 / 永久删除、未选中项、失败回读一律禁止 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-I4,SRC-CHECKLIST-I5 | I4/AC-01,I5/AC-01,D2/AC-01 |
-| INT-LIBRARY-BROWSE | SURF-LIBRARY | 三种视图、七类分类、标签和详情主按钮 | 结构化索引可查询 | 切换视图、分类、标签或素材详情 | 查询条件和当前素材改变 | 计数、卡片/列表/文本及加入项目动作同步 / 空索引和未知素材显示明确空态/错误态 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-L1,SRC-CHECKLIST-L2,SRC-CHECKLIST-L5 | L1/AC-01,L2/AC-01,L5/AC-01 |
-| INT-PROJECT-EDL | SURF-PROJECT | 决策列表、时间线/文本双视图、待补素材与交接包 | 项目和结构化 EDL 身份可回读 | 切换 EDL 视图或生成交接包 | 只改变展示或生成受支持输出，不改第二份权威 | 片段、轨道、缺失素材、输出后端和回执可见 / EDL 无效或后端未探测时失败关闭 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-P1,SRC-CHECKLIST-P2,SRC-CHECKLIST-P3,SRC-CHECKLIST-P4,SRC-CHECKLIST-P5 | P1/AC-01,P2/AC-01,P3/AC-01,P4/AC-01,P5/AC-01 |
-| INT-PROJECT-PRESERVED | SURF-PROJECT | 锁定、版本、失效、参考、复盘、Brief 与脚本 | 项目已加载 | 进入 K1-K6 入口并执行对应动作 | 项目文档及版本按 expectedRevision 更新 | 锁定、diff、回滚、stale、参考和发布记录均可回读 / 这些能力不得拆成独立 Studio 路由 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-K1,SRC-CHECKLIST-K2,SRC-CHECKLIST-K3,SRC-CHECKLIST-K4,SRC-CHECKLIST-K5,SRC-CHECKLIST-K6 | K1/AC-01,K2/AC-01,K3/AC-01,K4/AC-01,K5/AC-01,K6/AC-01 |
-| INT-SETTINGS-PANELS | SURF-SETTINGS | 六个设置面板 | 本机设置可读 | 选择存放位置、创意模型、转写、预算、账号或诊断 | 当前设置面板切换；保存动作带 CSRF 与 revision | 真实配置、能力探测和动态诊断项可见 / 不支持与配置错误分开，密钥不回显 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-D3,SRC-CHECKLIST-S1,SRC-CHECKLIST-S2,SRC-CHECKLIST-S3,SRC-CHECKLIST-S4,SRC-CHECKLIST-S5 | D3/AC-01,S1/AC-01,S2/AC-01,S3/AC-01,S4/AC-01,S5/AC-01 |
-| INT-LOGIN | SURF-LOGIN | 登录两步与跳过 | 桌面本地能力可用 | 选择上游登录、完成配对或跳过 | 只改变可选上游会话 | 连接状态与本地功能可用状态同时显示 / 未登录、撤销、不支持、过期均不降级本地功能 | SRC-CHECKLIST-A1 | A1/AC-01,S4/AC-01 |
-| INT-SETUP | SURF-SETUP | 四步可重入向导 | 桌面入口可打开 | 逐步配置位置、运行环境、编辑器、账号与设备 | 每步状态原子保存 | 进度、失败点、重试和完成态可见 / 中断后从最后成功步骤恢复 | SRC-CHECKLIST-A2 | A2/AC-01,A2/AC-02 |
-| INT-CLOUD-STATES | SURF-CLOUD | 网页中台任务状态 | 用户已主动配对上游 | 读取或刷新任务 | 上游投影状态更新 | queued/running/completed/failed/expired/cancelled 均有明确文案 / 会话失效只清除上游能力，不影响本地项目 | SRC-CHECKLIST-C2 | C2/AC-01,C2/AC-02 |
+| INT-NAV-SCREENS | SURF-DASHBOARD | 主导航 | 对应真实数据已加载且当前候选身份可回读 | 选择工作台、整理台、素材库、项目或设置 | 唯一面板成为可见页 | 标题、导航当前态和 URL 一致 / 未知目标保持原页 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-H1 | H1/AC-01,Z1/AC-01 |
+| INT-DASHBOARD-REFRESH | SURF-DASHBOARD | 刷新 | 对应真实数据已加载且当前候选身份可回读 | 点击刷新 | 重新读取项目与能力状态 | 更新时间、项目与能力状态同步 / 失败保留旧数据并显示错误 | SRC-CHECKLIST-H2,SRC-CHECKLIST-H3 | H2/AC-01,H3/AC-01 |
+| INT-PROJECT-CREATE | SURF-DASHBOARD | 新建项目 | 对应真实数据已加载且当前候选身份可回读 | 提交项目表单 | 创建项目并选中 | 对话框关闭且项目页显示新项目 / 字段非法或冲突时对话框保留输入 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-H1 | H1/AC-01,Z1/AC-01 |
+| INT-INBOX-BATCH-SELECT | SURF-ORGANIZER | 批次 A/B/C | 对应真实数据已加载且当前候选身份可回读 | 选择一个自动分批候选 | 当前批次改变，不移动媒体 | 来源、数量、依据和目标预览同步 / 未知批次不改变选择 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-I2 | I2/AC-01 |
+| INT-INBOX-BATCH-CONFIRM | SURF-ORGANIZER | 确认落点 | 对应真实数据已加载且当前候选身份可回读 | 确认所选批次与项目 | 带 planDigest 和 revision 写入确认回执 | 批次、目标、revision 和回执可见 / 计划漂移、碰撞或未确认时禁止移动 | SRC-CHECKLIST-D1,SRC-CHECKLIST-I1,SRC-CHECKLIST-I3 | D1/AC-01,I1/AC-01,I3/AC-01 |
+| INT-INBOX-REANALYZE | SURF-ORGANIZER | 重新分析 | 对应真实数据已加载且当前候选身份可回读 | 点击重新分析 | 废弃旧计划并读取新 planDigest | 批次列表和依据刷新 / 分析失败保留旧计划且不能误确认 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-I2 | I2/AC-02 |
+| INT-DELETE-SELECT | SURF-ORGANIZER | 逐项勾选删除建议 | 对应真实数据已加载且当前候选身份可回读 | 勾选或取消候选 | 仅改变待确认集合 | 选择数与确认按钮同步 / 无机器理由项不可选择 | SRC-CHECKLIST-I4,SRC-CHECKLIST-I5 | I4/AC-01,I5/AC-01 |
+| INT-DELETE-SELECT-ALL | SURF-ORGANIZER | 全选/取消全选 | 对应真实数据已加载且当前候选身份可回读 | 点击全选 | 切换当前可见候选集合 | 所有可选项和总数同步 / 过滤外、无证据或不可恢复项不纳入 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-I4 | I4/AC-01 |
+| INT-DELETE-CONFIRM | SURF-ORGANIZER | 移入系统回收站 | 对应真实数据已加载且当前候选身份可回读 | 二次确认选中项 | 仅选中媒体进入系统回收站 | 逐文件回执与恢复提示可见 / 未二次确认、永久删除或回读失败一律禁止 | SRC-CHECKLIST-D2,SRC-CHECKLIST-I5 | D2/AC-01,I5/AC-01 |
+| INT-LIBRARY-IMPORT | SURF-LIBRARY | 导入素材 | 对应真实数据已加载且当前候选身份可回读 | 选择文件夹导入 | 扫描并建立受控素材候选 | 进度、数量和错误可见 / 路径越界或重复身份不写入索引 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-L1 | L1/AC-01 |
+| INT-LIBRARY-REGISTER | SURF-LIBRARY | 登记新资产 | 对应真实数据已加载且当前候选身份可回读 | 提交资产登记 | 结构化索引新增或幂等更新 | 资产卡和索引字段回读一致 / 缺少哈希、来源或受控路径时拒绝 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-L1 | L1/AC-01,L1/AC-02 |
+| INT-LIBRARY-VIEW | SURF-LIBRARY | 网格/列表/卡片视图 | 对应真实数据已加载且当前候选身份可回读 | 切换素材库视图 | 仅改变展示模式 | 同一查询结果以目标视图呈现 / 切换不得改变索引或选中素材 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-L1 | L1/AC-01 |
+| INT-LIBRARY-FILTER | SURF-LIBRARY | 分类与标签筛选 | 对应真实数据已加载且当前候选身份可回读 | 选择分类或标签 | 查询条件改变 | 结果、计数和详情同步 / 未知条件显示空态，不放宽为全部 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-L2 | L2/AC-01,L2/AC-02 |
+| INT-ASSET-ADD-PROJECT | SURF-LIBRARY | 加入项目 | 对应真实数据已加载且当前候选身份可回读 | 把当前素材加入选中项目 | 带 expectedRevision 写入素材引用 | 项目 revision 与资产用途可回读 / 未知 assetId 或冲突不写入 | SRC-CHECKLIST-L5,SRC-CHECKLIST-T5 | L5/AC-01,T5/AC-01 |
+| INT-ASSET-REVEAL | SURF-LIBRARY | 在访达中显示 | 对应真实数据已加载且当前候选身份可回读 | 点击显示文件 | 请求系统定位受控路径 | 文件位置被系统打开 / 路径不存在、越界或非 macOS 时明确不支持 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-L5 | L5/AC-02 |
+| INT-PROJECT-EDL-VIEW | SURF-PROJECT | 时间线/文本视图 | 对应真实数据已加载且当前候选身份可回读 | 切换 EDL 视图 | 只改变展示方式 | 两种视图呈现同一 EDL revision / 无效 EDL 不生成第二权威 | SRC-CHECKLIST-P1,SRC-CHECKLIST-P2,SRC-CHECKLIST-P3 | P1/AC-01,P2/AC-01,P3/AC-01 |
+| INT-PROJECT-HANDOFF | SURF-PROJECT | 生成剪辑交接包 | 对应真实数据已加载且当前候选身份可回读 | 选择受支持后端并生成 | 创建不可变交接产物 | 后端、摘要、路径和回执可见 / 未探测 ChatCut 或无效 EDL 时失败关闭 | SRC-CHECKLIST-P4,SRC-CHECKLIST-P5 | P4/AC-01,P5/AC-01 |
+| INT-PROJECT-K1 | SURF-PROJECT | 锁定与 AI 选区 | 对应真实数据已加载且当前候选身份可回读 | 打开并执行该项目能力 | 按 expectedRevision 更新项目文档 | 状态、版本和回执可回读 / 不得创建独立 /studio 路由或覆盖较新版本 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-K1 | K1/AC-01,K1/AC-02 |
+| INT-PROJECT-K2 | SURF-PROJECT | 版本与回滚 | 对应真实数据已加载且当前候选身份可回读 | 打开并执行该项目能力 | 按 expectedRevision 更新项目文档 | 状态、版本和回执可回读 / 不得创建独立 /studio 路由或覆盖较新版本 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-K2 | K2/AC-01,K2/AC-02 |
+| INT-PROJECT-K3 | SURF-PROJECT | 下游失效传播 | 对应真实数据已加载且当前候选身份可回读 | 打开并执行该项目能力 | 按 expectedRevision 更新项目文档 | 状态、版本和回执可回读 / 不得创建独立 /studio 路由或覆盖较新版本 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-K3 | K3/AC-01,K3/AC-02 |
+| INT-PROJECT-K4 | SURF-PROJECT | 研究与参考 | 对应真实数据已加载且当前候选身份可回读 | 打开并执行该项目能力 | 按 expectedRevision 更新项目文档 | 状态、版本和回执可回读 / 不得创建独立 /studio 路由或覆盖较新版本 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-K4 | K4/AC-01,K4/AC-02 |
+| INT-PROJECT-K5 | SURF-PROJECT | 发布与复盘 | 对应真实数据已加载且当前候选身份可回读 | 打开并执行该项目能力 | 按 expectedRevision 更新项目文档 | 状态、版本和回执可回读 / 不得创建独立 /studio 路由或覆盖较新版本 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-K5 | K5/AC-01,K5/AC-02 |
+| INT-PROJECT-K6 | SURF-PROJECT | Brief 与脚本 | 对应真实数据已加载且当前候选身份可回读 | 打开并执行该项目能力 | 按 expectedRevision 更新项目文档 | 状态、版本和回执可回读 / 不得创建独立 /studio 路由或覆盖较新版本 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-K6 | K6/AC-01,K6/AC-02 |
+| INT-SETTINGS-NAV | SURF-SETTINGS | 六个设置面板 | 对应真实数据已加载且当前候选身份可回读 | 选择存放位置、创意模型、转写、预算、账号或诊断 | 当前面板改变 | 导航当前态与面板同步 / 未知面板不隐藏当前内容 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-S3 | S3/AC-01 |
+| INT-SETTINGS-LOCATION | SURF-SETTINGS | 登记存放位置 | 对应真实数据已加载且当前候选身份可回读 | 保存生命周期与物理位置 | 配置与独立位置回读更新 | 生命周期、清单、校验值和位置状态可见 / 不可访问或越界位置不登记为已存在 | SRC-CHECKLIST-L3,SRC-CHECKLIST-S2 | L3/AC-01,S2/AC-01 |
+| INT-SETTINGS-PROVIDER | SURF-SETTINGS | 添加创意模型 | 对应真实数据已加载且当前候选身份可回读 | 提交提供方配置 | 保存模型配置和密钥引用 | 提供方、模型、能力状态可见 / 密钥不回显，探测失败不伪造可用 | SRC-CHECKLIST-S5 | S5/AC-01,S5/AC-02 |
+| INT-BUDGET-ADJUST | SURF-SETTINGS | 分析预算加减 | 对应真实数据已加载且当前候选身份可回读 | 点击任一字段的加号或减号 | 本地候选数值改变 | 五个字段的新值立即可见 / 不得低于零或产生非整数 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-S1 | S1/AC-01 |
+| INT-BUDGET-SAVE | SURF-SETTINGS | 保存分析预算 | 对应真实数据已加载且当前候选身份可回读 | 保存当前预算 | 带 expectedRevision 持久化 | 新 revision 和五字段回读一致 / 冲突或非法值保留服务器当前值 | SRC-CHECKLIST-S1,SRC-CHECKLIST-T4 | S1/AC-02,T4/AC-01 |
+| INT-DIAGNOSTICS-COPY | SURF-SETTINGS | 复制报告 | 对应真实数据已加载且当前候选身份可回读 | 复制当前诊断 | 剪贴板写入无密钥 JSON | 复制内容与动态诊断一致 / 诊断项不得写死六项，密钥不得进入报告 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-S3,SRC-CHECKLIST-C3 | S3/AC-01,C3/AC-01 |
+| INT-LOGIN-PAIR | SURF-LOGIN | 连接上游 | 对应真实数据已加载且当前候选身份可回读 | 提交配对意图 | 可选上游会话改变 | 配对状态与本地可用状态同时显示 / 失败或不支持不降级本地功能 | SRC-CHECKLIST-A1,SRC-CHECKLIST-S4 | A1/AC-01,S4/AC-01 |
+| INT-LOGIN-UNPAIR | SURF-LOGIN | 解除配对 | 对应真实数据已加载且当前候选身份可回读 | 点击解除配对 | 清除上游会话引用 | 回到未连接态且本地能力可用 / 重复解除保持幂等 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-A1 | A1/AC-02 |
+| INT-LOGIN-SKIP | SURF-LOGIN | 跳过，稍后再连 | 对应真实数据已加载且当前候选身份可回读 | 点击跳过 | 关闭登录表面，不创建会话 | 进入本地工作台 / 不得进入只读态 | SRC-PROTOTYPE-UI,SRC-CHECKLIST-A1 | A1/AC-01 |
+| INT-SETUP-STEPS | SURF-SETUP | 四步可重入向导 | 对应真实数据已加载且当前候选身份可回读 | 上一步、下一步、完成或跳过账号 | 每步以独立 revision 原子保存 | 当前步骤、完成态与重入位置一致 / 中断、冲突或失败从最后成功步骤恢复 | SRC-CHECKLIST-A2 | A2/AC-01,A2/AC-02 |
+| INT-CLOUD-REFRESH | SURF-CLOUD | 网页中台任务刷新 | 对应真实数据已加载且当前候选身份可回读 | 读取上游任务 | 六态投影更新 | queued/running/completed/failed/expired/cancelled 文案明确 / 会话失效只清除上游投影 | SRC-CHECKLIST-C1,SRC-CHECKLIST-C2,SRC-CHECKLIST-C3 | C1/AC-01,C2/AC-01,C3/AC-01 |
 
 | API ID | Method | Path | Status | Schema | Revision | CSRF | Receipt | Source/owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -223,7 +261,7 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 | API-ASSETS | GET | `/api/assets?category=&tags=` | existing | asset_library_index.schema.json projection | none | read-only | ok + assets + query | `99_System_OpenClaw/desktop/server.py` |
 | API-ASSET-STATS | GET | `/api/assets/statistics` | existing | statistics by category/tag/use | none | read-only | ok + statistics | `99_System_OpenClaw/desktop/server.py` |
 | API-INBOX-PLAN | POST | `/api/projects/:id/inbox-plan` | existing | inbox_batch_plan.schema.json | manifest digest | X-Content-OS-CSRF | ok + read-only plan | `99_System_OpenClaw/desktop/server.py` |
-| API-INBOX-CONFIRM | POST | `/api/projects/:id/inbox-plan/confirm` | new | planDigest, batchId, targetProjectId, expectedRevision | required | X-Content-OS-CSRF | promotion receipt + journal identity | `planned by D1/I1/T1` |
+| API-INBOX-CONFIRM | POST | `/api/projects/:id/inbox-plan/confirm` | existing | planDigest, batchId, targetProjectId, expectedRevision | required | X-Content-OS-CSRF | promotion receipt + journal identity | `99_System_OpenClaw/desktop/server.py` |
 | API-DELETE-RECOMMEND | POST | `/api/projects/:id/media-delete/recommendations` | existing | manifest -> four-reason candidates | manifest digest | X-Content-OS-CSRF | ok + candidates | `99_System_OpenClaw/desktop/server.py` |
 | API-DELETE-CONFIRM | POST | `/api/projects/:id/media-delete/confirm` | existing | selectedCandidateNumbers, secondConfirmation | candidate digest | X-Content-OS-CSRF | system-trash receipt per file | `99_System_OpenClaw/desktop/server.py` |
 | API-DOCUMENT-ACTION | POST | `/api/projects/:id/documents/:name/:action` | existing | patch|lock|unlock|rollback|ai-patch | expectedRevision required for writes | X-Content-OS-CSRF | ok + updated project | `99_System_OpenClaw/desktop/server.py` |
@@ -232,11 +270,11 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 | API-ARCHIVE | POST | `/api/settings/archive/{lifecycle|locations}` | existing | lifecycle or physical location + manifest readback | configuration identity | X-Content-OS-CSRF | ok + archive projection | `99_System_OpenClaw/desktop/server.py` |
 | API-UPSTREAM | POST | `/api/settings/upstream/{pair|refresh|logout}` | existing | opaque session reference projection | session generation | X-Content-OS-CSRF | ok + secret-free upstream state | `99_System_OpenClaw/desktop/server.py` |
 | API-CHATCUT | POST | `/api/settings/chatcut/{probe|confirm}` | existing | Desktop MCP capability state | probe identity | X-Content-OS-CSRF | ok + chatcut state | `99_System_OpenClaw/desktop/server.py` |
-| API-DOCTOR | GET | `/api/diagnostics` | new | dynamic checks array + report digest | none | read-only | ok + checks, no fixed count | `planned by S3/C3` |
-| API-BUDGET | GET/POST | `/api/settings/analysis-budget` | new | analysis_tiering.schema.json | expectedRevision on POST | X-Content-OS-CSRF on POST | ok + effective budget | `planned by S1/T4` |
-| API-ASSET-ADD | POST | `/api/projects/:id/assets` | new | assetId, intendedUse, expectedRevision | expectedRevision required | X-Content-OS-CSRF | ok + project asset reference | `planned by L5/T5` |
-| API-WIZARD | GET/POST | `/api/setup/state` | new | four-step resumable setup state | expectedRevision on POST | X-Content-OS-CSRF on POST | ok + persisted step state | `planned by A2/T5` |
-| API-CLOUD-TASKS | GET | `/api/upstream/tasks` | new | queued|running|completed|failed|expired|cancelled | upstream snapshot generation | read-only after optional pairing | ok + task projections | `planned by C1/C2/C3` |
+| API-DOCTOR | GET | `/api/diagnostics` | existing | dynamic checks array + report digest | none | read-only | ok + checks, no fixed count | `99_System_OpenClaw/desktop/server.py` |
+| API-BUDGET | GET/POST | `/api/settings/analysis-budget` | existing | analysis_tiering.schema.json | expectedRevision on POST | X-Content-OS-CSRF on POST | ok + effective budget | `99_System_OpenClaw/desktop/server.py` |
+| API-ASSET-ADD | POST | `/api/projects/:id/assets` | existing | assetId, intendedUse, expectedRevision | expectedRevision required | X-Content-OS-CSRF | ok + project asset reference | `99_System_OpenClaw/desktop/server.py` |
+| API-WIZARD | GET/POST | `/api/setup/state` | existing | four-step resumable setup state | expectedRevision on POST | X-Content-OS-CSRF on POST | ok + persisted step state | `99_System_OpenClaw/desktop/server.py` |
+| API-CLOUD-TASKS | GET | `/api/upstream/tasks` | existing | queued|running|completed|failed|expired|cancelled | upstream snapshot generation | read-only after optional pairing | ok + task projections | `99_System_OpenClaw/desktop/server.py` |
 
 | Runtime component | Kind | Status |
 | --- | --- | --- |
@@ -251,7 +289,7 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 
 | Task ID | Stage | Versions | State | Attempt | Owner | Guard ID | Blocking reason | Evidence | Unlocks |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| F | R1 | v1 | ACCEPTED | 0 | 主协调者 | G-SSOT | none | source-notes.md 中的来源校验值、主分支身份、45 项代码定位和 304 项回归基线 | PD,PD1,PD2,PD3,PD4,PD5,PD6,PD7,PD8,PD9,TRD,D1,D2,D3,A1,A2,H1,H2,H3,H4,I1,I2,I3,I4,I5,L1,L2,L3,L4,L5,P1,P2,P3,P4,P5,P6,S1,S2,S3,S4,S5,C1,C2,C3,T1,T2,T3,T4,T5,T6,K1,K2,K3,K4,K5,K6 |
+| F | R1 | v1 | ACCEPTED | 0 | 主协调者 | G-SSOT | none | source-notes.md 中的来源校验值、主分支身份、45 项代码定位和本轮最终回归命令 | PD,PD1,PD2,PD3,PD4,PD5,PD6,PD7,PD8,PD9,TRD,D1,D2,D3,A1,A2,H1,H2,H3,H4,I1,I2,I3,I4,I5,L1,L2,L3,L4,L5,P1,P2,P3,P4,P5,P6,S1,S2,S3,S4,S5,C1,C2,C3,T1,T2,T3,T4,T5,T6,K1,K2,K3,K4,K5,K6 |
 | PD | R1 | v1 | ACCEPTED | 0 | 产品负责人 | G-SSOT | none | 用户在本任务中明确拍板，并登记为决定版本 1 | D1,D2,D3,T1,T2,T3,T4,T5,T6,Q1 |
 | PD1 | R1 | v1 | ACCEPTED | 0 | 产品负责人 | G-SSOT | none | 用户在本任务中明确拍板，并登记为决定版本 1 | D1,I2,I3,Q1 |
 | PD2 | R1 | v1 | ACCEPTED | 0 | 产品负责人 | G-SSOT | none | 用户在本任务中明确拍板，并登记为决定版本 1 | D2,T2,Q1 |
@@ -263,60 +301,60 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 | PD8 | R1 | v1 | ACCEPTED | 0 | 产品负责人 | G-SSOT | none | 用户在本任务中明确拍板，并登记为决定版本 1 | P1,P2,P3,P4,P5,K1,K2,K3,K4,K5,K6,Q1 |
 | PD9 | R1 | v1 | ACCEPTED | 0 | 产品负责人 | G-SSOT | none | 用户在本任务中明确拍板，并登记为决定版本 1 | A2,P5,P6,T6,Q1 |
 | TRD | R1 | v1 | ACCEPTED | 0 | 产品负责人 | G-SSOT | none | 尚无完成证据；硬依赖或人工决定未满足 | D3,Q1 |
-| D1 | R1 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T1 | 尚无完成证据；硬依赖或人工决定未满足 | I1,Q1 |
-| D2 | R1 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T2 | 尚无完成证据；硬依赖或人工决定未满足 | H3,L1,L2,L5,Q1 |
-| D3 | R1 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q1 |
-| T1 | R1 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | D1,Q1 |
-| T3 | R1 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | I4,S3,Q1 |
-| T5 | R1 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | A1,A2,I1,I4,I5,L5,P3,P5,S1,S2,S5,Q1 |
-| Q1 | R1 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | D1,D2,D3,T1,T3,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Z1 |
-| I1 | R2 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D1,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q2 |
-| I2 | R2 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q2 |
-| I3 | R2 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T2 | 尚无完成证据；硬依赖或人工决定未满足 | Q2 |
-| I4 | R2 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T3,T5 | 尚无完成证据；硬依赖或人工决定未满足 | I5,Q2 |
-| I5 | R2 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | I4,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q2 |
-| Q2 | R2 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | I1,I2,I3,I4,I5 | 尚无完成证据；硬依赖或人工决定未满足 | Z1 |
-| L1 | R3 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D2 | 尚无完成证据；硬依赖或人工决定未满足 | Q3 |
-| L2 | R3 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D2 | 尚无完成证据；硬依赖或人工决定未满足 | Q3 |
-| L3 | R3 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q3 |
-| L4 | R3 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q3 |
-| L5 | R3 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D2,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q3 |
-| T2 | R3 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | D2,I3,Q3 |
-| Q3 | R3 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | L1,L2,L3,L4,L5,T2 | 尚无完成证据；硬依赖或人工决定未满足 | Z1 |
-| P1 | R4 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | P3,Q4 |
-| P2 | R4 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | P3,P5,Q4 |
-| P3 | R4 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | P1,P2,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q4 |
-| P4 | R4 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q4 |
-| P5 | R4 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | P2,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q4 |
-| P6 | R4 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T6 | 尚无完成证据；硬依赖或人工决定未满足 | Q4 |
-| T6 | R4 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | P6,Q4 |
-| Q4 | R4 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | P1,P2,P3,P4,P5,P6,T6 | 尚无完成证据；硬依赖或人工决定未满足 | Z1 |
-| S1 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T4,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q5 |
-| S2 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T5 | 尚无完成证据；硬依赖或人工决定未满足 | A2,Q5 |
-| S3 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T3 | 尚无完成证据；硬依赖或人工决定未满足 | A2,H2,Q5 |
-| S4 | R5 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q5 |
-| S5 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T5 | 尚无完成证据；硬依赖或人工决定未满足 | H2,Q5 |
-| C1 | R5 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | C2,Q5 |
-| C2 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | C1 | 尚无完成证据；硬依赖或人工决定未满足 | C3,Q5 |
-| C3 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | C2 | 尚无完成证据；硬依赖或人工决定未满足 | Q5 |
-| T4 | R5 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | S1,Q5 |
-| Q5 | R5 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | S1,S2,S3,S4,S5,C1,C2,C3,T4 | 尚无完成证据；硬依赖或人工决定未满足 | Z1 |
-| A1 | R6 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q6 |
-| A2 | R6 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | S2,S3,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q6 |
-| H1 | R6 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q6 |
-| H2 | R6 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | S3,S5 | 尚无完成证据；硬依赖或人工决定未满足 | Q6 |
-| H3 | R6 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D2 | 尚无完成证据；硬依赖或人工决定未满足 | Q6 |
-| H4 | R6 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q6 |
-| Q6 | R6 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | A1,A2,H1,H2,H3,H4 | 尚无完成证据；硬依赖或人工决定未满足 | Z1 |
-| K1 | R7 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q7 |
-| K2 | R7 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q7 |
-| K3 | R7 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q7 |
-| K4 | R7 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q7 |
-| K5 | R7 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q7 |
-| K6 | R7 | v1 | READY | 0 | 对应领域维护者 | G-SSOT | none | 尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED | Q7 |
-| Q7 | R7 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | K1,K2,K3,K4,K5,K6 | 尚无完成证据；硬依赖或人工决定未满足 | Z1 |
-| Z1 | R8 | v1 | BLOCKED | 0 | 桌面前端与服务维护者 | G-SSOT | Q1,Q2,Q3,Q4,Q5,Q6,Q7 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
-| Q8 | R8 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | Z1 | 尚无完成证据；硬依赖或人工决定未满足 | RZ |
+| D1 | R1 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T1 | 尚无完成证据；硬依赖或人工决定未满足 | I1,Q1,Z1 |
+| D2 | R1 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T2 | 尚无完成证据；硬依赖或人工决定未满足 | H3,L1,L2,L5,Q1,Z1 |
+| D3 | R1 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q1,Z1 |
+| T1 | R1 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | D1,Q1,Z1 |
+| T3 | R1 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | I4,S3,Q1,Z1 |
+| T5 | R1 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | A1,A2,I1,I4,I5,L5,P3,P5,S1,S2,S5,Q1,Z1 |
+| Q1 | R1 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | D1,D2,D3,T1,T3,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
+| I1 | R2 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D1,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q2,Z1 |
+| I2 | R2 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q2,Z1 |
+| I3 | R2 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T2 | 尚无完成证据；硬依赖或人工决定未满足 | Q2,Z1 |
+| I4 | R2 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T3,T5 | 尚无完成证据；硬依赖或人工决定未满足 | I5,Q2,Z1 |
+| I5 | R2 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | I4,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q2,Z1 |
+| Q2 | R2 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | I1,I2,I3,I4,I5 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
+| L1 | R3 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D2 | 尚无完成证据；硬依赖或人工决定未满足 | Q3,Z1 |
+| L2 | R3 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D2 | 尚无完成证据；硬依赖或人工决定未满足 | Q3,Z1 |
+| L3 | R3 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q3,Z1 |
+| L4 | R3 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q3,Z1 |
+| L5 | R3 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D2,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q3,Z1 |
+| T2 | R3 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | D2,I3,Q3,Z1 |
+| Q3 | R3 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | L1,L2,L3,L4,L5,T2 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
+| P1 | R4 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | P3,Q4,Z1 |
+| P2 | R4 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | P3,P5,Q4,Z1 |
+| P3 | R4 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | P1,P2,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q4,Z1 |
+| P4 | R4 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q4,Z1 |
+| P5 | R4 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | P2,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q4,Z1 |
+| P6 | R4 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T6 | 尚无完成证据；硬依赖或人工决定未满足 | Q4,Z1 |
+| T6 | R4 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | P6,Q4,Z1 |
+| Q4 | R4 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | P1,P2,P3,P4,P5,P6,T6 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
+| S1 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T4,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q5,Z1 |
+| S2 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T5 | 尚无完成证据；硬依赖或人工决定未满足 | A2,Q5,Z1 |
+| S3 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T3 | 尚无完成证据；硬依赖或人工决定未满足 | A2,H2,Q5,Z1 |
+| S4 | R5 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q5,Z1 |
+| S5 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T5 | 尚无完成证据；硬依赖或人工决定未满足 | H2,Q5,Z1 |
+| C1 | R5 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | C2,Q5,Z1 |
+| C2 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | C1 | 尚无完成证据；硬依赖或人工决定未满足 | C3,Q5,Z1 |
+| C3 | R5 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | C2 | 尚无完成证据；硬依赖或人工决定未满足 | Q5,Z1 |
+| T4 | R5 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | S1,Q5,Z1 |
+| Q5 | R5 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | S1,S2,S3,S4,S5,C1,C2,C3,T4 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
+| A1 | R6 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q6,Z1 |
+| A2 | R6 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | S2,S3,T5 | 尚无完成证据；硬依赖或人工决定未满足 | Q6,Z1 |
+| H1 | R6 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q6,Z1 |
+| H2 | R6 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | S3,S5 | 尚无完成证据；硬依赖或人工决定未满足 | Q6,Z1 |
+| H3 | R6 | v1 | BLOCKED | 0 | 对应领域维护者 | G-SSOT | D2 | 尚无完成证据；硬依赖或人工决定未满足 | Q6,Z1 |
+| H4 | R6 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q6,Z1 |
+| Q6 | R6 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | A1,A2,H1,H2,H3,H4 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
+| K1 | R7 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q7,Z1 |
+| K2 | R7 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q7,Z1 |
+| K3 | R7 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q7,Z1 |
+| K4 | R7 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q7,Z1 |
+| K5 | R7 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q7,Z1 |
+| K6 | R7 | v1 | IMPLEMENTED | 2 | 对应领域维护者 | G-SSOT | 待人工决定 | 主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收 | Q7,Z1 |
+| Q7 | R7 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | K1,K2,K3,K4,K5,K6 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
+| Z1 | R8 | v1 | BLOCKED | 0 | 桌面前端与服务维护者 | G-SSOT | D1,D2,D3,A1,A2,H1,H2,H3,H4,I1,I2,I3,I4,I5,L1,L2,L3,L4,L5,P1,P2,P3,P4,P5,P6,S1,S2,S3,S4,S5,C1,C2,C3,T1,T2,T3,T4,T5,T6,K1,K2,K3,K4,K5,K6 | 尚无完成证据；硬依赖或人工决定未满足 | Q8 |
+| Q8 | R8 | v1 | BLOCKED | 0 | 独立验收负责人 | G-SSOT | Q1,Q2,Q3,Q4,Q5,Q6,Q7,Z1 | 尚无完成证据；硬依赖或人工决定未满足 | RZ |
 | RZ | R8 | v1 | BLOCKED | 0 | 产品负责人 | G-SSOT | Q8 | 尚无完成证据；硬依赖或人工决定未满足 | none |
 
 ## 语义节点注册表
@@ -337,58 +375,58 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 | TRD | decision.transcription.provider-boundary | decision-acceptance | r1 | ACCEPTED | ACCEPTED | 1 | FORMAL | F | none | none | none | checklist.trd | isolated-record | 用户已明确决定 |
 | D1 | requirement.checklist.d1 | implementation | organizer | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD,PD1,T1 | none | none | decision.scope.full-checklist@1,decision.organizer.auto-batching@1 | checklist.d1 | implementation | 产品负责人和验收负责人 |
 | D2 | requirement.checklist.d2 | implementation | library | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD,PD2,T2 | none | none | decision.scope.full-checklist@1,decision.library.structured-index@1 | checklist.d2 | implementation | 产品负责人和验收负责人 |
-| D3 | requirement.checklist.d3 | implementation | settings | READY | NOT_APPLICABLE | none | FORMAL | F,PD,TRD | none | none | decision.scope.full-checklist@1 | checklist.d3 | implementation | 产品负责人和验收负责人 |
-| T1 | requirement.checklist.t1 | implementation | organizer | READY | NOT_APPLICABLE | none | FORMAL | F,PD | none | none | decision.scope.full-checklist@1 | checklist.t1 | implementation | 产品负责人和验收负责人 |
-| T3 | requirement.checklist.t3 | implementation | settings | READY | NOT_APPLICABLE | none | FORMAL | F,PD | none | none | decision.scope.full-checklist@1 | checklist.t3 | implementation | 产品负责人和验收负责人 |
-| T5 | requirement.checklist.t5 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD | none | none | decision.scope.full-checklist@1 | checklist.t5 | implementation | 产品负责人和验收负责人 |
+| D3 | requirement.checklist.d3 | implementation | settings | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD,TRD | none | none | decision.scope.full-checklist@1 | checklist.d3 | implementation | 产品负责人和验收负责人 |
+| T1 | requirement.checklist.t1 | implementation | organizer | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD | none | none | decision.scope.full-checklist@1 | checklist.t1 | implementation | 产品负责人和验收负责人 |
+| T3 | requirement.checklist.t3 | implementation | settings | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD | none | none | decision.scope.full-checklist@1 | checklist.t3 | implementation | 产品负责人和验收负责人 |
+| T5 | requirement.checklist.t5 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD | none | none | decision.scope.full-checklist@1 | checklist.t5 | implementation | 产品负责人和验收负责人 |
 | Q1 | acceptance.release.r1 | validation | r1 | BLOCKED | NOT_APPLICABLE | none | FORMAL | PD,PD1,PD2,PD3,PD4,PD5,PD6,PD7,PD8,PD9,TRD,D1,D2,D3,T1,T3,T5 | none | none | decision.scope.full-checklist@1 | checklist.q1 | shared-generated | 独立验收负责人 |
 | I1 | requirement.checklist.i1 | implementation | organizer | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,D1,T5 | none | none | decision.scope.full-checklist@1,decision.organizer.auto-batching@1 | checklist.i1 | implementation | 产品负责人和验收负责人 |
-| I2 | requirement.checklist.i2 | implementation | organizer | READY | NOT_APPLICABLE | none | FORMAL | F,PD1 | none | none | decision.scope.full-checklist@1,decision.organizer.auto-batching@1 | checklist.i2 | implementation | 产品负责人和验收负责人 |
+| I2 | requirement.checklist.i2 | implementation | organizer | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD1 | none | none | decision.scope.full-checklist@1,decision.organizer.auto-batching@1 | checklist.i2 | implementation | 产品负责人和验收负责人 |
 | I3 | requirement.checklist.i3 | implementation | organizer | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD1,T2 | none | none | decision.scope.full-checklist@1,decision.organizer.auto-batching@1 | checklist.i3 | implementation | 产品负责人和验收负责人 |
 | I4 | requirement.checklist.i4 | implementation | organizer | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD3,T3,T5 | none | none | decision.scope.full-checklist@1,decision.deletion.system-trash@1 | checklist.i4 | implementation | 产品负责人和验收负责人 |
 | I5 | requirement.checklist.i5 | implementation | organizer | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD3,I4,T5 | none | none | decision.scope.full-checklist@1,decision.deletion.system-trash@1 | checklist.i5 | implementation | 产品负责人和验收负责人 |
 | Q2 | acceptance.release.r2 | validation | r2 | BLOCKED | NOT_APPLICABLE | none | FORMAL | I1,I2,I3,I4,I5 | none | none | decision.scope.full-checklist@1 | checklist.q2 | shared-generated | 独立验收负责人 |
 | L1 | requirement.checklist.l1 | implementation | library | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,D2 | none | none | decision.scope.full-checklist@1,decision.library.structured-index@1 | checklist.l1 | implementation | 产品负责人和验收负责人 |
 | L2 | requirement.checklist.l2 | implementation | library | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,D2 | none | none | decision.scope.full-checklist@1,decision.library.structured-index@1 | checklist.l2 | implementation | 产品负责人和验收负责人 |
-| L3 | requirement.checklist.l3 | implementation | library | READY | NOT_APPLICABLE | none | FORMAL | F,PD6 | none | none | decision.scope.full-checklist@1,decision.archive.location-lifecycle@1 | checklist.l3 | implementation | 产品负责人和验收负责人 |
-| L4 | requirement.checklist.l4 | implementation | library | READY | NOT_APPLICABLE | none | FORMAL | F,PD6 | none | none | decision.scope.full-checklist@1,decision.archive.location-lifecycle@1 | checklist.l4 | implementation | 产品负责人和验收负责人 |
+| L3 | requirement.checklist.l3 | implementation | library | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD6 | none | none | decision.scope.full-checklist@1,decision.archive.location-lifecycle@1 | checklist.l3 | implementation | 产品负责人和验收负责人 |
+| L4 | requirement.checklist.l4 | implementation | library | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD6 | none | none | decision.scope.full-checklist@1,decision.archive.location-lifecycle@1 | checklist.l4 | implementation | 产品负责人和验收负责人 |
 | L5 | requirement.checklist.l5 | implementation | library | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,D2,T5 | none | none | decision.scope.full-checklist@1,decision.library.structured-index@1 | checklist.l5 | implementation | 产品负责人和验收负责人 |
-| T2 | requirement.checklist.t2 | implementation | library | READY | NOT_APPLICABLE | none | FORMAL | F,PD,PD2 | none | none | decision.scope.full-checklist@1,decision.library.structured-index@1 | checklist.t2 | implementation | 产品负责人和验收负责人 |
+| T2 | requirement.checklist.t2 | implementation | library | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD,PD2 | none | none | decision.scope.full-checklist@1,decision.library.structured-index@1 | checklist.t2 | implementation | 产品负责人和验收负责人 |
 | Q3 | acceptance.release.r3 | validation | r3 | BLOCKED | NOT_APPLICABLE | none | FORMAL | L1,L2,L3,L4,L5,T2 | none | none | decision.scope.full-checklist@1 | checklist.q3 | shared-generated | 独立验收负责人 |
-| P1 | requirement.checklist.p1 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.p1 | implementation | 产品负责人和验收负责人 |
-| P2 | requirement.checklist.p2 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.p2 | implementation | 产品负责人和验收负责人 |
+| P1 | requirement.checklist.p1 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.p1 | implementation | 产品负责人和验收负责人 |
+| P2 | requirement.checklist.p2 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.p2 | implementation | 产品负责人和验收负责人 |
 | P3 | requirement.checklist.p3 | implementation | project | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD8,P1,P2,T5 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.p3 | implementation | 产品负责人和验收负责人 |
-| P4 | requirement.checklist.p4 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.p4 | implementation | 产品负责人和验收负责人 |
+| P4 | requirement.checklist.p4 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.p4 | implementation | 产品负责人和验收负责人 |
 | P5 | requirement.checklist.p5 | implementation | project | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD5,PD8,PD9,P2,T5 | none | none | decision.scope.full-checklist@1,decision.chatcut.desktop-mcp@1,decision.edl.machine-authority@1,decision.jianying.historical-only@1 | checklist.p5 | implementation | 产品负责人和验收负责人 |
 | P6 | requirement.checklist.p6 | implementation | project | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD9,T6 | none | none | decision.scope.full-checklist@1,decision.jianying.historical-only@1 | checklist.p6 | implementation | 产品负责人和验收负责人 |
-| T6 | requirement.checklist.t6 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD,PD9 | none | none | decision.scope.full-checklist@1,decision.jianying.historical-only@1 | checklist.t6 | implementation | 产品负责人和验收负责人 |
+| T6 | requirement.checklist.t6 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD,PD9 | none | none | decision.scope.full-checklist@1,decision.jianying.historical-only@1 | checklist.t6 | implementation | 产品负责人和验收负责人 |
 | Q4 | acceptance.release.r4 | validation | r4 | BLOCKED | NOT_APPLICABLE | none | FORMAL | P1,P2,P3,P4,P5,P6,T6 | none | none | decision.scope.full-checklist@1 | checklist.q4 | shared-generated | 独立验收负责人 |
 | S1 | requirement.checklist.s1 | implementation | settings | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,T4,T5 | none | none | decision.scope.full-checklist@1 | checklist.s1 | implementation | 产品负责人和验收负责人 |
 | S2 | requirement.checklist.s2 | implementation | settings | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD6,T5 | none | none | decision.scope.full-checklist@1,decision.archive.location-lifecycle@1 | checklist.s2 | implementation | 产品负责人和验收负责人 |
 | S3 | requirement.checklist.s3 | implementation | settings | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,T3 | none | none | decision.scope.full-checklist@1 | checklist.s3 | implementation | 产品负责人和验收负责人 |
-| S4 | requirement.checklist.s4 | implementation | settings | READY | NOT_APPLICABLE | none | FORMAL | F,PD7 | none | none | decision.scope.full-checklist@1,decision.identity.optional-upstream@1 | checklist.s4 | implementation | 产品负责人和验收负责人 |
+| S4 | requirement.checklist.s4 | implementation | settings | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD7 | none | none | decision.scope.full-checklist@1,decision.identity.optional-upstream@1 | checklist.s4 | implementation | 产品负责人和验收负责人 |
 | S5 | requirement.checklist.s5 | implementation | settings | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD4,T5 | none | none | decision.scope.full-checklist@1,decision.creative-model.user-config@1 | checklist.s5 | implementation | 产品负责人和验收负责人 |
-| C1 | requirement.checklist.c1 | implementation | cloud | READY | NOT_APPLICABLE | none | FORMAL | F,PD7 | none | none | decision.scope.full-checklist@1,decision.identity.optional-upstream@1 | checklist.c1 | implementation | 产品负责人和验收负责人 |
+| C1 | requirement.checklist.c1 | implementation | cloud | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD7 | none | none | decision.scope.full-checklist@1,decision.identity.optional-upstream@1 | checklist.c1 | implementation | 产品负责人和验收负责人 |
 | C2 | requirement.checklist.c2 | implementation | cloud | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD7,C1 | none | none | decision.scope.full-checklist@1,decision.identity.optional-upstream@1 | checklist.c2 | implementation | 产品负责人和验收负责人 |
 | C3 | requirement.checklist.c3 | implementation | cloud | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD7,C2 | none | none | decision.scope.full-checklist@1,decision.identity.optional-upstream@1 | checklist.c3 | implementation | 产品负责人和验收负责人 |
-| T4 | requirement.checklist.t4 | implementation | settings | READY | NOT_APPLICABLE | none | FORMAL | F,PD | none | none | decision.scope.full-checklist@1 | checklist.t4 | implementation | 产品负责人和验收负责人 |
+| T4 | requirement.checklist.t4 | implementation | settings | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD | none | none | decision.scope.full-checklist@1 | checklist.t4 | implementation | 产品负责人和验收负责人 |
 | Q5 | acceptance.release.r5 | validation | r5 | BLOCKED | NOT_APPLICABLE | none | FORMAL | S1,S2,S3,S4,S5,C1,C2,C3,T4 | none | none | decision.scope.full-checklist@1 | checklist.q5 | shared-generated | 独立验收负责人 |
 | A1 | requirement.checklist.a1 | implementation | login | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD7,T5 | none | none | decision.scope.full-checklist@1,decision.identity.optional-upstream@1 | checklist.a1 | implementation | 产品负责人和验收负责人 |
 | A2 | requirement.checklist.a2 | implementation | setup | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD6,PD7,PD9,S2,S3,T5 | none | none | decision.scope.full-checklist@1,decision.archive.location-lifecycle@1,decision.identity.optional-upstream@1,decision.jianying.historical-only@1 | checklist.a2 | implementation | 产品负责人和验收负责人 |
-| H1 | requirement.checklist.h1 | implementation | dashboard | READY | NOT_APPLICABLE | none | FORMAL | F | none | none | decision.scope.full-checklist@1 | checklist.h1 | implementation | 产品负责人和验收负责人 |
+| H1 | requirement.checklist.h1 | implementation | dashboard | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F | none | none | decision.scope.full-checklist@1 | checklist.h1 | implementation | 产品负责人和验收负责人 |
 | H2 | requirement.checklist.h2 | implementation | dashboard | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,PD4,PD5,PD7,S3,S5 | none | none | decision.scope.full-checklist@1,decision.creative-model.user-config@1,decision.chatcut.desktop-mcp@1,decision.identity.optional-upstream@1 | checklist.h2 | implementation | 产品负责人和验收负责人 |
 | H3 | requirement.checklist.h3 | implementation | dashboard | BLOCKED | NOT_APPLICABLE | none | FORMAL | F,D2 | none | none | decision.scope.full-checklist@1,decision.library.structured-index@1 | checklist.h3 | implementation | 产品负责人和验收负责人 |
-| H4 | requirement.checklist.h4 | implementation | dashboard | READY | NOT_APPLICABLE | none | FORMAL | F | none | none | decision.scope.full-checklist@1 | checklist.h4 | implementation | 产品负责人和验收负责人 |
+| H4 | requirement.checklist.h4 | implementation | dashboard | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F | none | none | decision.scope.full-checklist@1 | checklist.h4 | implementation | 产品负责人和验收负责人 |
 | Q6 | acceptance.release.r6 | validation | r6 | BLOCKED | NOT_APPLICABLE | none | FORMAL | A1,A2,H1,H2,H3,H4 | none | none | decision.scope.full-checklist@1 | checklist.q6 | shared-generated | 独立验收负责人 |
-| K1 | requirement.checklist.k1 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k1 | implementation | 产品负责人和验收负责人 |
-| K2 | requirement.checklist.k2 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k2 | implementation | 产品负责人和验收负责人 |
-| K3 | requirement.checklist.k3 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k3 | implementation | 产品负责人和验收负责人 |
-| K4 | requirement.checklist.k4 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k4 | implementation | 产品负责人和验收负责人 |
-| K5 | requirement.checklist.k5 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k5 | implementation | 产品负责人和验收负责人 |
-| K6 | requirement.checklist.k6 | implementation | project | READY | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k6 | implementation | 产品负责人和验收负责人 |
+| K1 | requirement.checklist.k1 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k1 | implementation | 产品负责人和验收负责人 |
+| K2 | requirement.checklist.k2 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k2 | implementation | 产品负责人和验收负责人 |
+| K3 | requirement.checklist.k3 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k3 | implementation | 产品负责人和验收负责人 |
+| K4 | requirement.checklist.k4 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k4 | implementation | 产品负责人和验收负责人 |
+| K5 | requirement.checklist.k5 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k5 | implementation | 产品负责人和验收负责人 |
+| K6 | requirement.checklist.k6 | implementation | project | IMPLEMENTED | NOT_APPLICABLE | none | FORMAL | F,PD8 | none | none | decision.scope.full-checklist@1,decision.edl.machine-authority@1 | checklist.k6 | implementation | 产品负责人和验收负责人 |
 | Q7 | acceptance.release.r7 | validation | r7 | BLOCKED | NOT_APPLICABLE | none | FORMAL | K1,K2,K3,K4,K5,K6 | none | none | decision.scope.full-checklist@1 | checklist.q7 | shared-generated | 独立验收负责人 |
-| Z1 | integration.nine-surfaces | implementation | r8 | BLOCKED | NOT_APPLICABLE | none | FORMAL | Q1,Q2,Q3,Q4,Q5,Q6,Q7 | none | none | decision.scope.full-checklist@1,decision.organizer.auto-batching@1,decision.library.structured-index@1,decision.deletion.system-trash@1,decision.creative-model.user-config@1,decision.chatcut.desktop-mcp@1,decision.archive.location-lifecycle@1,decision.identity.optional-upstream@1,decision.edl.machine-authority@1,decision.jianying.historical-only@1 | checklist.z1 | implementation | 产品负责人和独立验收负责人 |
-| Q8 | acceptance.release.r8 | validation | r8 | BLOCKED | NOT_APPLICABLE | none | FORMAL | Z1 | none | none | decision.scope.full-checklist@1 | checklist.q8 | shared-generated | 独立验收负责人 |
+| Z1 | integration.nine-surfaces | implementation | r8 | BLOCKED | NOT_APPLICABLE | none | FORMAL | D1,D2,D3,A1,A2,H1,H2,H3,H4,I1,I2,I3,I4,I5,L1,L2,L3,L4,L5,P1,P2,P3,P4,P5,P6,S1,S2,S3,S4,S5,C1,C2,C3,T1,T2,T3,T4,T5,T6,K1,K2,K3,K4,K5,K6 | none | none | decision.scope.full-checklist@1,decision.organizer.auto-batching@1,decision.library.structured-index@1,decision.deletion.system-trash@1,decision.creative-model.user-config@1,decision.chatcut.desktop-mcp@1,decision.archive.location-lifecycle@1,decision.identity.optional-upstream@1,decision.edl.machine-authority@1,decision.jianying.historical-only@1 | checklist.z1 | implementation | 产品负责人和独立验收负责人 |
+| Q8 | acceptance.release.r8 | validation | r8 | BLOCKED | NOT_APPLICABLE | none | FORMAL | Q1,Q2,Q3,Q4,Q5,Q6,Q7,Z1 | none | none | decision.scope.full-checklist@1 | checklist.q8 | shared-generated | 独立验收负责人 |
 | RZ | release.full-checklist | release-decision | r8 | BLOCKED | NOT_APPLICABLE | none | FORMAL | Q8 | none | none | decision.scope.full-checklist@1 | checklist.rz | shared-generated | 产品负责人 |
 
 ## 依赖边表
@@ -587,13 +625,58 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 | K4 | Q7 | hard | specific-output | ACCEPTED | none | edge.k4.q7 | K4 已接受的合同、实现或验收产物 | K4 节点状态与候选内容校验值 |
 | K5 | Q7 | hard | specific-output | ACCEPTED | none | edge.k5.q7 | K5 已接受的合同、实现或验收产物 | K5 节点状态与候选内容校验值 |
 | K6 | Q7 | hard | specific-output | ACCEPTED | none | edge.k6.q7 | K6 已接受的合同、实现或验收产物 | K6 节点状态与候选内容校验值 |
-| Q1 | Z1 | hard | specific-output | ACCEPTED | none | edge.q1.z1 | Q1 已接受的合同、实现或验收产物 | Q1 节点状态与候选内容校验值 |
-| Q2 | Z1 | hard | specific-output | ACCEPTED | none | edge.q2.z1 | Q2 已接受的合同、实现或验收产物 | Q2 节点状态与候选内容校验值 |
-| Q3 | Z1 | hard | specific-output | ACCEPTED | none | edge.q3.z1 | Q3 已接受的合同、实现或验收产物 | Q3 节点状态与候选内容校验值 |
-| Q4 | Z1 | hard | specific-output | ACCEPTED | none | edge.q4.z1 | Q4 已接受的合同、实现或验收产物 | Q4 节点状态与候选内容校验值 |
-| Q5 | Z1 | hard | specific-output | ACCEPTED | none | edge.q5.z1 | Q5 已接受的合同、实现或验收产物 | Q5 节点状态与候选内容校验值 |
-| Q6 | Z1 | hard | specific-output | ACCEPTED | none | edge.q6.z1 | Q6 已接受的合同、实现或验收产物 | Q6 节点状态与候选内容校验值 |
-| Q7 | Z1 | hard | specific-output | ACCEPTED | none | edge.q7.z1 | Q7 已接受的合同、实现或验收产物 | Q7 节点状态与候选内容校验值 |
+| D1 | Z1 | hard | specific-output | ACCEPTED | none | edge.d1.z1 | D1 已接受的合同、实现或验收产物 | D1 节点状态与候选内容校验值 |
+| D2 | Z1 | hard | specific-output | ACCEPTED | none | edge.d2.z1 | D2 已接受的合同、实现或验收产物 | D2 节点状态与候选内容校验值 |
+| D3 | Z1 | hard | specific-output | ACCEPTED | none | edge.d3.z1 | D3 已接受的合同、实现或验收产物 | D3 节点状态与候选内容校验值 |
+| A1 | Z1 | hard | specific-output | ACCEPTED | none | edge.a1.z1 | A1 已接受的合同、实现或验收产物 | A1 节点状态与候选内容校验值 |
+| A2 | Z1 | hard | specific-output | ACCEPTED | none | edge.a2.z1 | A2 已接受的合同、实现或验收产物 | A2 节点状态与候选内容校验值 |
+| H1 | Z1 | hard | specific-output | ACCEPTED | none | edge.h1.z1 | H1 已接受的合同、实现或验收产物 | H1 节点状态与候选内容校验值 |
+| H2 | Z1 | hard | specific-output | ACCEPTED | none | edge.h2.z1 | H2 已接受的合同、实现或验收产物 | H2 节点状态与候选内容校验值 |
+| H3 | Z1 | hard | specific-output | ACCEPTED | none | edge.h3.z1 | H3 已接受的合同、实现或验收产物 | H3 节点状态与候选内容校验值 |
+| H4 | Z1 | hard | specific-output | ACCEPTED | none | edge.h4.z1 | H4 已接受的合同、实现或验收产物 | H4 节点状态与候选内容校验值 |
+| I1 | Z1 | hard | specific-output | ACCEPTED | none | edge.i1.z1 | I1 已接受的合同、实现或验收产物 | I1 节点状态与候选内容校验值 |
+| I2 | Z1 | hard | specific-output | ACCEPTED | none | edge.i2.z1 | I2 已接受的合同、实现或验收产物 | I2 节点状态与候选内容校验值 |
+| I3 | Z1 | hard | specific-output | ACCEPTED | none | edge.i3.z1 | I3 已接受的合同、实现或验收产物 | I3 节点状态与候选内容校验值 |
+| I4 | Z1 | hard | specific-output | ACCEPTED | none | edge.i4.z1 | I4 已接受的合同、实现或验收产物 | I4 节点状态与候选内容校验值 |
+| I5 | Z1 | hard | specific-output | ACCEPTED | none | edge.i5.z1 | I5 已接受的合同、实现或验收产物 | I5 节点状态与候选内容校验值 |
+| L1 | Z1 | hard | specific-output | ACCEPTED | none | edge.l1.z1 | L1 已接受的合同、实现或验收产物 | L1 节点状态与候选内容校验值 |
+| L2 | Z1 | hard | specific-output | ACCEPTED | none | edge.l2.z1 | L2 已接受的合同、实现或验收产物 | L2 节点状态与候选内容校验值 |
+| L3 | Z1 | hard | specific-output | ACCEPTED | none | edge.l3.z1 | L3 已接受的合同、实现或验收产物 | L3 节点状态与候选内容校验值 |
+| L4 | Z1 | hard | specific-output | ACCEPTED | none | edge.l4.z1 | L4 已接受的合同、实现或验收产物 | L4 节点状态与候选内容校验值 |
+| L5 | Z1 | hard | specific-output | ACCEPTED | none | edge.l5.z1 | L5 已接受的合同、实现或验收产物 | L5 节点状态与候选内容校验值 |
+| P1 | Z1 | hard | specific-output | ACCEPTED | none | edge.p1.z1 | P1 已接受的合同、实现或验收产物 | P1 节点状态与候选内容校验值 |
+| P2 | Z1 | hard | specific-output | ACCEPTED | none | edge.p2.z1 | P2 已接受的合同、实现或验收产物 | P2 节点状态与候选内容校验值 |
+| P3 | Z1 | hard | specific-output | ACCEPTED | none | edge.p3.z1 | P3 已接受的合同、实现或验收产物 | P3 节点状态与候选内容校验值 |
+| P4 | Z1 | hard | specific-output | ACCEPTED | none | edge.p4.z1 | P4 已接受的合同、实现或验收产物 | P4 节点状态与候选内容校验值 |
+| P5 | Z1 | hard | specific-output | ACCEPTED | none | edge.p5.z1 | P5 已接受的合同、实现或验收产物 | P5 节点状态与候选内容校验值 |
+| P6 | Z1 | hard | specific-output | ACCEPTED | none | edge.p6.z1 | P6 已接受的合同、实现或验收产物 | P6 节点状态与候选内容校验值 |
+| S1 | Z1 | hard | specific-output | ACCEPTED | none | edge.s1.z1 | S1 已接受的合同、实现或验收产物 | S1 节点状态与候选内容校验值 |
+| S2 | Z1 | hard | specific-output | ACCEPTED | none | edge.s2.z1 | S2 已接受的合同、实现或验收产物 | S2 节点状态与候选内容校验值 |
+| S3 | Z1 | hard | specific-output | ACCEPTED | none | edge.s3.z1 | S3 已接受的合同、实现或验收产物 | S3 节点状态与候选内容校验值 |
+| S4 | Z1 | hard | specific-output | ACCEPTED | none | edge.s4.z1 | S4 已接受的合同、实现或验收产物 | S4 节点状态与候选内容校验值 |
+| S5 | Z1 | hard | specific-output | ACCEPTED | none | edge.s5.z1 | S5 已接受的合同、实现或验收产物 | S5 节点状态与候选内容校验值 |
+| C1 | Z1 | hard | specific-output | ACCEPTED | none | edge.c1.z1 | C1 已接受的合同、实现或验收产物 | C1 节点状态与候选内容校验值 |
+| C2 | Z1 | hard | specific-output | ACCEPTED | none | edge.c2.z1 | C2 已接受的合同、实现或验收产物 | C2 节点状态与候选内容校验值 |
+| C3 | Z1 | hard | specific-output | ACCEPTED | none | edge.c3.z1 | C3 已接受的合同、实现或验收产物 | C3 节点状态与候选内容校验值 |
+| T1 | Z1 | hard | specific-output | ACCEPTED | none | edge.t1.z1 | T1 已接受的合同、实现或验收产物 | T1 节点状态与候选内容校验值 |
+| T2 | Z1 | hard | specific-output | ACCEPTED | none | edge.t2.z1 | T2 已接受的合同、实现或验收产物 | T2 节点状态与候选内容校验值 |
+| T3 | Z1 | hard | specific-output | ACCEPTED | none | edge.t3.z1 | T3 已接受的合同、实现或验收产物 | T3 节点状态与候选内容校验值 |
+| T4 | Z1 | hard | specific-output | ACCEPTED | none | edge.t4.z1 | T4 已接受的合同、实现或验收产物 | T4 节点状态与候选内容校验值 |
+| T5 | Z1 | hard | specific-output | ACCEPTED | none | edge.t5.z1 | T5 已接受的合同、实现或验收产物 | T5 节点状态与候选内容校验值 |
+| T6 | Z1 | hard | specific-output | ACCEPTED | none | edge.t6.z1 | T6 已接受的合同、实现或验收产物 | T6 节点状态与候选内容校验值 |
+| K1 | Z1 | hard | specific-output | ACCEPTED | none | edge.k1.z1 | K1 已接受的合同、实现或验收产物 | K1 节点状态与候选内容校验值 |
+| K2 | Z1 | hard | specific-output | ACCEPTED | none | edge.k2.z1 | K2 已接受的合同、实现或验收产物 | K2 节点状态与候选内容校验值 |
+| K3 | Z1 | hard | specific-output | ACCEPTED | none | edge.k3.z1 | K3 已接受的合同、实现或验收产物 | K3 节点状态与候选内容校验值 |
+| K4 | Z1 | hard | specific-output | ACCEPTED | none | edge.k4.z1 | K4 已接受的合同、实现或验收产物 | K4 节点状态与候选内容校验值 |
+| K5 | Z1 | hard | specific-output | ACCEPTED | none | edge.k5.z1 | K5 已接受的合同、实现或验收产物 | K5 节点状态与候选内容校验值 |
+| K6 | Z1 | hard | specific-output | ACCEPTED | none | edge.k6.z1 | K6 已接受的合同、实现或验收产物 | K6 节点状态与候选内容校验值 |
+| Q1 | Q8 | hard | specific-output | ACCEPTED | none | edge.q1.q8 | Q1 已接受的合同、实现或验收产物 | Q1 节点状态与候选内容校验值 |
+| Q2 | Q8 | hard | specific-output | ACCEPTED | none | edge.q2.q8 | Q2 已接受的合同、实现或验收产物 | Q2 节点状态与候选内容校验值 |
+| Q3 | Q8 | hard | specific-output | ACCEPTED | none | edge.q3.q8 | Q3 已接受的合同、实现或验收产物 | Q3 节点状态与候选内容校验值 |
+| Q4 | Q8 | hard | specific-output | ACCEPTED | none | edge.q4.q8 | Q4 已接受的合同、实现或验收产物 | Q4 节点状态与候选内容校验值 |
+| Q5 | Q8 | hard | specific-output | ACCEPTED | none | edge.q5.q8 | Q5 已接受的合同、实现或验收产物 | Q5 节点状态与候选内容校验值 |
+| Q6 | Q8 | hard | specific-output | ACCEPTED | none | edge.q6.q8 | Q6 已接受的合同、实现或验收产物 | Q6 节点状态与候选内容校验值 |
+| Q7 | Q8 | hard | specific-output | ACCEPTED | none | edge.q7.q8 | Q7 已接受的合同、实现或验收产物 | Q7 节点状态与候选内容校验值 |
 | Z1 | Q8 | hard | specific-output | ACCEPTED | none | edge.z1.q8 | Z1 已接受的合同、实现或验收产物 | Z1 节点状态与候选内容校验值 |
 | Q8 | RZ | hard | specific-output | ACCEPTED | none | edge.q8.rz | Q8 已接受的合同、实现或验收产物 | Q8 节点状态与候选内容校验值 |
 
@@ -601,29 +684,7 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 
 | Frontier | Task ID | Eligibility | Unsatisfied hard dependencies | Active assumptions | Resource decision |
 | --- | --- | --- | --- | --- | --- |
-| F0 | D3 | FORMAL | none | none | conflict-free |
-| F0 | T1 | FORMAL | none | none | conflict-free |
-| F0 | T3 | FORMAL | none | none | conflict-free |
-| F0 | T5 | FORMAL | none | none | conflict-free |
-| F0 | I2 | FORMAL | none | none | conflict-free |
-| F0 | L3 | FORMAL | none | none | conflict-free |
-| F0 | L4 | FORMAL | none | none | conflict-free |
-| F0 | T2 | FORMAL | none | none | conflict-free |
-| F0 | P1 | FORMAL | none | none | conflict-free |
-| F0 | P2 | FORMAL | none | none | conflict-free |
-| F0 | P4 | FORMAL | none | none | conflict-free |
-| F0 | T6 | FORMAL | none | none | conflict-free |
-| F0 | S4 | FORMAL | none | none | conflict-free |
-| F0 | C1 | FORMAL | none | none | conflict-free |
-| F0 | T4 | FORMAL | none | none | conflict-free |
-| F0 | H1 | FORMAL | none | none | conflict-free |
-| F0 | H4 | FORMAL | none | none | conflict-free |
-| F0 | K1 | FORMAL | none | none | conflict-free |
-| F0 | K2 | FORMAL | none | none | conflict-free |
-| F0 | K3 | FORMAL | none | none | conflict-free |
-| F0 | K4 | FORMAL | none | none | conflict-free |
-| F0 | K5 | FORMAL | none | none | conflict-free |
-| F0 | K6 | FORMAL | none | none | conflict-free |
+| F0 | none | blocked | none | none | no-ready-node |
 
 ## 叶交付物清单
 
@@ -693,9 +754,9 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 | DL-K5 | R7 | 发布与复盘（指标 + 复盘结论 + 下次约束）：原型里完全没有。这块丢了，产品就退化成一次性工具。 | 99_System_OpenClaw/desktop/; 99_System_OpenClaw/tests/ | F,PD8 | independent | none | K5 | n/a |
 | DL-K6 | R7 | Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。 | 99_System_OpenClaw/desktop/; 99_System_OpenClaw/tests/ | F,PD8 | independent | none | K6 | n/a |
 | DL-Q7 | R7 | 汇编 R7 的独立候选、证据和接受结果 | .ssot/nodes/Q7.json | K1,K2,K3,K4,K5,K6 | independent | none | Q7 | n/a |
-| DL-Z1 | R8 | 把九个表面接入同一入口、共享状态和完整纵向动作链，并建立项目内视觉工作台 | 99_System_OpenClaw/desktop/; 99_System_OpenClaw/visual-workbench.html; 99_System_OpenClaw/visual-workbench.json; 99_System_OpenClaw/tests/ | Q1,Q2,Q3,Q4,Q5,Q6,Q7 | independent | none | Z1 | n/a |
-| DL-Q8 | R8 | 汇编 R8 的独立候选、证据和接受结果 | .ssot/nodes/Q8.json | Z1 | independent | none | Q8 | n/a |
-| DL-RZ | R8 | 只在八个切片和九屏人工验收均接受后作最终发布决定 | .ssot/nodes/RZ.json | Q8 | independent | none | RZ | n/a |
+| DL-Z1 | R8 | 把八个 Surface 与新建项目对话框接入同一入口、共享状态和完整纵向动作链，并建立项目内视觉工作台 | 99_System_OpenClaw/desktop/; 99_System_OpenClaw/visual-workbench.html; 99_System_OpenClaw/visual-workbench.json; 99_System_OpenClaw/tests/ | D1,D2,D3,A1,A2,H1,H2,H3,H4,I1,I2,I3,I4,I5,L1,L2,L3,L4,L5,P1,P2,P3,P4,P5,P6,S1,S2,S3,S4,S5,C1,C2,C3,T1,T2,T3,T4,T5,T6,K1,K2,K3,K4,K5,K6 | independent | none | Z1 | n/a |
+| DL-Q8 | R8 | 汇编 R8 的独立候选、证据和接受结果 | .ssot/nodes/Q8.json | Q1,Q2,Q3,Q4,Q5,Q6,Q7,Z1 | independent | none | Q8 | n/a |
+| DL-RZ | R8 | 只在八个切片及八个 Surface 与项目对话框人工验收均接受后作最终发布决定 | .ssot/nodes/RZ.json | Q8 | independent | none | RZ | n/a |
 
 ## 并行宽度
 
@@ -988,13 +1049,58 @@ flowchart LR
   K4 --> Q7
   K5 --> Q7
   K6 --> Q7
-  Q1 --> Z1
-  Q2 --> Z1
-  Q3 --> Z1
-  Q4 --> Z1
-  Q5 --> Z1
-  Q6 --> Z1
-  Q7 --> Z1
+  D1 --> Z1
+  D2 --> Z1
+  D3 --> Z1
+  A1 --> Z1
+  A2 --> Z1
+  H1 --> Z1
+  H2 --> Z1
+  H3 --> Z1
+  H4 --> Z1
+  I1 --> Z1
+  I2 --> Z1
+  I3 --> Z1
+  I4 --> Z1
+  I5 --> Z1
+  L1 --> Z1
+  L2 --> Z1
+  L3 --> Z1
+  L4 --> Z1
+  L5 --> Z1
+  P1 --> Z1
+  P2 --> Z1
+  P3 --> Z1
+  P4 --> Z1
+  P5 --> Z1
+  P6 --> Z1
+  S1 --> Z1
+  S2 --> Z1
+  S3 --> Z1
+  S4 --> Z1
+  S5 --> Z1
+  C1 --> Z1
+  C2 --> Z1
+  C3 --> Z1
+  T1 --> Z1
+  T2 --> Z1
+  T3 --> Z1
+  T4 --> Z1
+  T5 --> Z1
+  T6 --> Z1
+  K1 --> Z1
+  K2 --> Z1
+  K3 --> Z1
+  K4 --> Z1
+  K5 --> Z1
+  K6 --> Z1
+  Q1 --> Q8
+  Q2 --> Q8
+  Q3 --> Q8
+  Q4 --> Q8
+  Q5 --> Q8
+  Q6 --> Q8
+  Q7 --> Q8
   Z1 --> Q8
   Q8 --> RZ
   classDef accepted fill:#163c2e,stroke:#63d89b,color:#ffffff;
@@ -1008,6 +1114,7 @@ flowchart LR
 | --- | --- | --- | --- |
 | 命令 | ssot-validate-dev | `99_System_OpenClaw/.venv-content-os/bin/python .agents/skills/report-to-ssot-development-paths/scripts/validate_ssot_bundle.py agents-results/2026-09-02/openclaw-media-full-checklist-implementation --skip-archive` | 开发期统一验证 |
 | 路径 | owned-roots | `agents-results`; `.ssot`; `acceptance`; `99_System_OpenClaw`; `.agents/skills`; `scripts/validate_ssot_bundle.py`; `/api`; `/login`; `/setup`; `/app/home`; `/app/inbox`; `/app/library`; `/app/project/`; `/app/settings`; `/cloud/tasks`; `scripts/edit_backends/` | 正文工程定位覆盖 |
+| 路径 | forbidden-studio-route | `/studio` | K1-K6 必须并入工作台和项目页，不建立独立 Studio 路由 |
 | 布局 | machine-layout | `.ssot/nodes`; `.ssot/edges`; `.ssot/view-sources`; `acceptance-fragments` | 机器分片与验收分片布局 |
 | 必有标志 | development-validation | `--skip-archive` | 区分开发验证与正式整包验证 |
 | 必无标志 | destructive-sync | `--delete` | 禁止破坏性同步 |
@@ -1016,6 +1123,6 @@ flowchart LR
 
 ## 验证、清理与完成条件
 
-开发期统一验证命令为 `99_System_OpenClaw/.venv-content-os/bin/python .agents/skills/report-to-ssot-development-paths/scripts/validate_ssot_bundle.py agents-results/2026-09-02/openclaw-media-full-checklist-implementation --skip-archive`。正式完成还要求受保护测试基线、九屏机器验收、产品负责人签署、Obsidian 快照核验与全局归档审计。运行环境最低版本为 `3.11`。
+开发期统一验证命令为 `99_System_OpenClaw/.venv-content-os/bin/python .agents/skills/report-to-ssot-development-paths/scripts/validate_ssot_bundle.py agents-results/2026-09-02/openclaw-media-full-checklist-implementation --skip-archive`。正式完成还要求受保护测试执行、16 张界面捕获、产品负责人签署、Obsidian 快照核验与全局归档审计。运行环境最低版本为 `3.11`。
 
-本轮只创建 SSOT，不创建或清理 Git 分支，不提交、不推送、不更改媒体文件。未来实施结束时，先推送并回读权威主分支，再清理已确认无独有内容的候选工作区与分支。
+本轮由主会话在两次外部执行器均经本机 8080 网关返回 502 后接管实现；接管记录见 `execution-takeover.json`。实现、验证、提交与推送必须按最终证据分别登记，不更改用户媒体文件。

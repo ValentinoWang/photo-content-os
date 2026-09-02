@@ -3,7 +3,7 @@
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
 - 事实时间：-
-- 来源事实 SHA-256：5816c487cfb43532ba3d6cfc5fd8896678e0ce2c9d00c1abe3c3170a8d3f1aba
+- 来源事实 SHA-256：c1a7a6fe882670beff3a828e09fc336bb844e25241735302e16a457dbcc3da23
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项

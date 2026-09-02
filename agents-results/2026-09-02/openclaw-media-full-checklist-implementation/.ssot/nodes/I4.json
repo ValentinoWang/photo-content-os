@@ -33,7 +33,8 @@
   "acceptance_authority": "产品负责人和验收负责人",
   "unlocks": [
     "I5",
-    "Q2"
+    "Q2",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -63,5 +64,6 @@
   "goal": "三分落点：进项目 / 归档保留 / 推荐删除：新写。原型已经把规则收得很紧了——推荐删除只按机器可验证的四条理由（时长过短、文件损坏、哈希完全重复、相机低清代理），这四条全都能从 manifest 直接算出来，实现成本不高。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-I4/acceptance-contract.md"
 }

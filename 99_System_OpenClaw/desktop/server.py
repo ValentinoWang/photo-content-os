@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import importlib.util
 import mimetypes
@@ -26,6 +27,8 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from desktop.ai_patch import AIPatchError, generate_patch  # type: ignore  # noqa: E402
+from desktop.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore  # type: ignore  # noqa: E402
+from desktop.api_contract import is_registered_route, route_inventory  # type: ignore  # noqa: E402
 from desktop.archive_location_config import (  # type: ignore  # noqa: E402
     ArchiveLocationConfig,
     ArchiveLocationConfigError,
@@ -37,6 +40,10 @@ from desktop.model_provider_config import (  # type: ignore  # noqa: E402
     ModelProviderConfig,
     ModelProviderConfigError,
     ModelProviderConfigStore,
+)
+from desktop.onboarding_state import (  # type: ignore  # noqa: E402
+    OnboardingStateError,
+    VersionedOnboardingStateStore,
 )
 from desktop.project_store import DOCUMENT_NAMES, ProjectStore, ProjectStoreError  # type: ignore  # noqa: E402
 from desktop.upstream_session import UpstreamSessionConsumer, UpstreamSessionContractError  # type: ignore  # noqa: E402
@@ -165,6 +172,7 @@ class StudioApplication:
         chatcut_mcp: ChatCutMcp | None = None,
         trash_backend_factory: CollectionCallable[[str, Path], object] | None = None,
         asset_index_path: Path | None = None,
+        upstream_task_reader: CollectionCallable[[], list[Mapping[str, object]]] | None = None,
     ) -> None:
         self.store = store
         self.csrf_token = csrf_token or secrets.token_urlsafe(32)
@@ -179,6 +187,9 @@ class StudioApplication:
         self.chatcut_mcp = chatcut_mcp or ChatCutMcp()
         self.trash_backend_factory = trash_backend_factory or self._default_trash_backend
         self.asset_index_path = asset_index_path or self.store.state_dir / ASSET_LIBRARY_DIRNAME / ASSET_LIBRARY_INDEX_NAME
+        self.analysis_budget_store = AnalysisBudgetStore(self.settings_dir)
+        self.onboarding_store = VersionedOnboardingStateStore(self.settings_dir)
+        self.upstream_task_reader = upstream_task_reader
 
     @staticmethod
     def _default_trash_backend(platform_name: str, registry_path: Path) -> object:
@@ -206,6 +217,25 @@ class StudioApplication:
         except AssetIndexError as exc:
             # Index diagnostics may include the configured filesystem location.
             raise ProjectStoreError("asset_library_unavailable", "素材库索引不可用") from exc
+
+    def media_manifest(self, project_id: str) -> dict[str, Any]:
+        """Read the connected project's manifest without exposing its path."""
+
+        workspace = self.store.local_workspace_path(project_id)
+        manifest_path = (workspace / INBOX_MANIFEST_RELATIVE_PATH).resolve()
+        try:
+            manifest_path.relative_to(workspace.resolve())
+        except ValueError as exc:
+            raise ProjectStoreError("inbox_manifest_invalid", "媒体清单位置无效") from exc
+        if not manifest_path.is_file():
+            raise ProjectStoreError("inbox_manifest_missing", "项目尚未生成媒体清单")
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise ProjectStoreError("inbox_manifest_invalid", "媒体清单无法读取") from exc
+        if not isinstance(manifest, dict):
+            raise ProjectStoreError("inbox_manifest_invalid", "媒体清单格式无效")
+        return manifest
 
     def inbox_batch_plan(self, project_id: str) -> dict[str, Any]:
         """Build a preview from a connected project's current manifest only."""
@@ -239,6 +269,58 @@ class StudioApplication:
             "tags": index["tags"],
             "uses": index["uses"],
         }
+
+    def diagnostics_projection(self) -> dict[str, Any]:
+        checks = [
+            {
+                "id": "project_store",
+                "status": "ready",
+                "summary": "项目存储可读写",
+                "repair": None,
+            },
+            {
+                "id": "asset_library",
+                "status": "ready" if self.asset_index_path.is_file() else "not_configured",
+                "summary": "结构化素材索引已就绪" if self.asset_index_path.is_file() else "尚未建立结构化素材索引",
+                "repair": None if self.asset_index_path.is_file() else "登记一项可复用素材",
+            },
+        ]
+        providers = self.model_provider_store.list_configs()
+        checks.append(
+            {
+                "id": "creative_model",
+                "status": "ready" if providers else "not_configured",
+                "summary": "创意模型已配置" if providers else "尚未配置创意模型",
+                "repair": None if providers else "在设置中添加模型提供方",
+            }
+        )
+        upstream = self.upstream_session.snapshot()
+        checks.append(
+            {
+                "id": "upstream_identity",
+                "status": "ready" if upstream.get("upstream_features_available") is True else "optional",
+                "summary": "上游身份已连接" if upstream.get("upstream_features_available") is True else "上游身份未连接，本地功能仍可用",
+                "repair": None,
+            }
+        )
+        canonical = json.dumps(checks, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        return {
+            "schemaVersion": "photo_content_os_diagnostics_v1",
+            "checks": checks,
+            "reportDigest": "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest(),
+        }
+
+    def upstream_tasks_projection(self) -> list[dict[str, object]]:
+        allowed = {"queued", "running", "completed", "failed", "expired", "cancelled"}
+        raw_tasks = self.upstream_task_reader() if self.upstream_task_reader is not None else []
+        tasks: list[dict[str, object]] = []
+        for raw in raw_tasks:
+            status = raw.get("status")
+            task_id = raw.get("task_id")
+            if status not in allowed or not isinstance(task_id, str) or not task_id:
+                raise ProjectStoreError("upstream_task_invalid", "上游任务投影无效")
+            tasks.append({"taskId": task_id, "status": status, "title": str(raw.get("title") or "")[:160]})
+        return tasks
 
     def _receipt_path(self, project_id: str) -> Path:
         # Project IDs are validated by ProjectStore before every caller reaches
@@ -365,6 +447,9 @@ class StudioApplication:
                     self._assert_local()
                     parsed = urllib.parse.urlparse(self.path)
                     segments = self._segments(parsed.path)
+                    if parsed.path.startswith("/api/") and not is_registered_route("GET", parsed.path):
+                        self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
+                        return
                     if parsed.path == "/api/bootstrap":
                         self._json(
                             HTTPStatus.OK,
@@ -380,8 +465,29 @@ class StudioApplication:
                     if parsed.path == "/api/health":
                         self._json(HTTPStatus.OK, {"ok": True, "status": "ready", "localOnly": True})
                         return
+                    if parsed.path == "/api/diagnostics":
+                        self._json(HTTPStatus.OK, {"ok": True, "diagnostics": app.diagnostics_projection()})
+                        return
                     if parsed.path == "/api/settings":
                         self._json(HTTPStatus.OK, {"ok": True, "settings": app.settings_projection()})
+                        return
+                    if parsed.path == "/api/settings/analysis-budget":
+                        self._json(HTTPStatus.OK, {"ok": True, "analysisBudget": app.analysis_budget_store.load()})
+                        return
+                    if parsed.path == "/api/setup/state":
+                        self._json(HTTPStatus.OK, {"ok": True, "setup": app.onboarding_store.snapshot()})
+                        return
+                    if parsed.path == "/api/upstream/tasks":
+                        upstream = app.upstream_session.snapshot()
+                        self._json(
+                            HTTPStatus.OK,
+                            {
+                                "ok": True,
+                                "tasks": app.upstream_tasks_projection(),
+                                "localFeaturesAvailable": upstream.get("local_features_available") is True,
+                                "upstreamFeaturesAvailable": upstream.get("upstream_features_available") is True,
+                            },
+                        )
                         return
                     if parsed.path == "/api/projects":
                         self._json(HTTPStatus.OK, {"ok": True, "projects": app.store.list_projects()})
@@ -483,9 +589,33 @@ class StudioApplication:
                     self._assert_write()
                     parsed = urllib.parse.urlparse(self.path)
                     segments = self._segments(parsed.path)
+                    if not is_registered_route(method, parsed.path):
+                        self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
+                        return
                     body = self._body()
                     expected = body.get("expectedRevision")
-                    expected_revision = int(expected) if expected is not None else None
+                    if expected is not None and type(expected) is not int:
+                        raise ProjectStoreError("revision_invalid", "expectedRevision 必须是整数")
+                    expected_revision = expected
+                    if method == "POST" and segments == ["api", "settings", "analysis-budget"]:
+                        if expected_revision is None:
+                            raise ProjectStoreError("revision_invalid", "expectedRevision 必须是整数")
+                        updated = app.analysis_budget_store.update(
+                            body.get("budget"), expected_revision=expected_revision
+                        )
+                        self._json(HTTPStatus.OK, {"ok": True, "analysisBudget": updated})
+                        return
+                    if method == "POST" and segments == ["api", "setup", "state"]:
+                        if expected_revision is None:
+                            raise ProjectStoreError("revision_invalid", "expectedRevision 必须是整数")
+                        setup = app.onboarding_store.transition(
+                            body.get("step"),
+                            body.get("status"),
+                            expected_revision=expected_revision,
+                            reason_code=body.get("reasonCode"),
+                        )
+                        self._json(HTTPStatus.OK, {"ok": True, "setup": setup})
+                        return
                     if method == "POST" and segments == ["api", "settings", "model-providers"]:
                         config = ModelProviderConfig.from_dict(body.get("config"))
                         app.model_provider_store.upsert(config)
@@ -555,6 +685,35 @@ class StudioApplication:
                         return
                     if (
                         method == "POST"
+                        and len(segments) == 5
+                        and segments[:2] == ["api", "projects"]
+                        and segments[3:] == ["inbox-plan", "confirm"]
+                    ):
+                        if expected_revision is None:
+                            raise ProjectStoreError("revision_invalid", "expectedRevision 必须是整数")
+                        plan = app.inbox_batch_plan(segments[2])
+                        supplied_digest = body.get("planDigest")
+                        if supplied_digest != plan.get("plan_digest"):
+                            raise ProjectStoreError("plan_digest_conflict", "分批计划已变化，请重新预览")
+                        batch_id = body.get("batchId")
+                        batch = next((item for item in plan["batches"] if item.get("batch_id") == batch_id), None)
+                        if batch is None:
+                            raise ProjectStoreError("batch_not_found", "分批不存在")
+                        project, confirmation = app.store.confirm_inbox_batch(
+                            segments[2],
+                            plan_digest=str(supplied_digest),
+                            batch_id=str(batch_id),
+                            target_project_id=str(body.get("targetProjectId") or ""),
+                            expected_revision=expected_revision,
+                            media_ids=list(batch["media_ids"]),
+                        )
+                        self._json(
+                            HTTPStatus.OK,
+                            {"ok": True, "project": project, "confirmation": confirmation},
+                        )
+                        return
+                    if (
+                        method == "POST"
                         and len(segments) == 4
                         and segments[:2] == ["api", "projects"]
                         and segments[3] == "inbox-plan"
@@ -563,11 +722,33 @@ class StudioApplication:
                         return
                     if (
                         method == "POST"
+                        and len(segments) == 4
+                        and segments[:2] == ["api", "projects"]
+                        and segments[3] == "assets"
+                    ):
+                        if expected_revision is None:
+                            raise ProjectStoreError("revision_invalid", "expectedRevision 必须是整数")
+                        asset_id = body.get("assetId")
+                        if not isinstance(asset_id, str) or not asset_id:
+                            raise ProjectStoreError("asset_id_invalid", "素材 ID 无效")
+                        asset = get_asset(app.load_asset_index(), asset_id)
+                        if asset is None:
+                            raise ProjectStoreError("asset_not_found", "素材不存在")
+                        project = app.store.add_asset_reference(
+                            segments[2],
+                            asset=asset,
+                            intended_use=str(body.get("intendedUse") or ""),
+                            expected_revision=expected_revision,
+                        )
+                        self._json(HTTPStatus.OK, {"ok": True, "project": project})
+                        return
+                    if (
+                        method == "POST"
                         and len(segments) == 5
                         and segments[:2] == ["api", "projects"]
                         and segments[3:] == ["media-delete", "recommendations"]
                     ):
-                        candidates = generate_delete_recommendations(body.get("manifest"))
+                        candidates = generate_delete_recommendations(app.media_manifest(segments[2]))
                         self._json(HTTPStatus.OK, {"ok": True, "candidates": candidates})
                         return
                     if (
@@ -759,9 +940,11 @@ class StudioApplication:
                     self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                 except (
                     ArchiveLocationConfigError,
+                    AnalysisBudgetError,
                     DeleteRecommendationError,
                     MediaTrashFlowError,
                     ModelProviderConfigError,
+                    OnboardingStateError,
                     ProjectStoreError,
                     TypeError,
                     UpstreamIdentityContractError,
@@ -810,6 +993,7 @@ def serve(
     chatcut_mcp: ChatCutMcp | None = None,
     trash_backend_factory: CollectionCallable[[str, Path], object] | None = None,
     asset_index_path: Path | None = None,
+    upstream_task_reader: CollectionCallable[[], list[Mapping[str, object]]] | None = None,
 ) -> ThreadingHTTPServer:
     if host not in {"127.0.0.1", "localhost", "::1"}:
         raise ValueError("Photo Content OS Studio only supports loopback hosts")
@@ -824,6 +1008,7 @@ def serve(
         chatcut_mcp=chatcut_mcp,
         trash_backend_factory=trash_backend_factory,
         asset_index_path=asset_index_path,
+        upstream_task_reader=upstream_task_reader,
     )
     server = ThreadingHTTPServer((host, port), application.handler())
     actual_host, actual_port = server.server_address[:2]
@@ -832,3 +1017,9 @@ def serve(
     if on_ready:
         on_ready(url)
     return server
+
+
+def served_route_inventory() -> list[dict[str, str]]:
+    """Expose the exact canonical registration used to guard every API request."""
+
+    return route_inventory()

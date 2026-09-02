@@ -31,7 +31,8 @@
   "write_authority": "implementation",
   "acceptance_authority": "产品负责人和验收负责人",
   "unlocks": [
-    "Q2"
+    "Q2",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -61,5 +62,6 @@
   "goal": "连拍识别（「发现 4 组连拍」）与实况配对：把 12 的输出定契约（JSON + schema）、补测试，再接进批次分析流程。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-I3/acceptance-contract.md"
 }

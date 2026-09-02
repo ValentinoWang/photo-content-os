@@ -1,3 +1,3 @@
 # Acceptance index: OCM-Z1
 
-Contract status: DRAFT. Test baseline: PLANNED. Human acceptance is not yet approved or executed.
+Contract status: APPROVED. Test baseline: LOCKED. Human acceptance remains PREPARING and has not been executed.

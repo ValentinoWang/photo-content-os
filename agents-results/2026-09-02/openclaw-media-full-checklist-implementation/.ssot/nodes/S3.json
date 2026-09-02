@@ -28,7 +28,8 @@
   "unlocks": [
     "A2",
     "H2",
-    "Q5"
+    "Q5",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -58,5 +59,6 @@
   "goal": "诊断页六项检查：包接口。前端别把「6 项」写死。另外这个脚本 零测试覆盖，接之前建议先补。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-S3/acceptance-contract.md"
 }

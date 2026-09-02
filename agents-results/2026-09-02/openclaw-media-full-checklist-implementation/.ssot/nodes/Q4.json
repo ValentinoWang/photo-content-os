@@ -31,7 +31,7 @@
   "write_authority": "shared-generated",
   "acceptance_authority": "独立验收负责人",
   "unlocks": [
-    "Z1"
+    "Q8"
   ],
   "node_role": "acceptance-gate",
   "execution_actor": "orchestrator",

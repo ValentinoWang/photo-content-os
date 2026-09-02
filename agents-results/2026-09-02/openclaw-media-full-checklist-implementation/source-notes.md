@@ -6,8 +6,8 @@
 - 要求来源 SHA-256：`73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb`
 - 视觉原型：`agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html`
 - 视觉原型 SHA-256：`aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8`
-- 源码基线：`main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35`，创建本 SSOT 时本地、跟踪分支与远端主分支一致。
-- 新鲜回归基线：304 项通过，0 跳过。它只证明现有行为，不证明 45 项需求完成。
+- 源码基线：`main@a3ae47100d6fce4cb139ce17a479eea16717e73a`，创建本 SSOT 时本地、跟踪分支与远端主分支一致。
+- 回归基线：以本轮最终生成后的完整 unittest 运行记录为准；历史通过数不得替代当前候选证据。
 
 ## 已接受的产品决定
 
@@ -32,10 +32,10 @@
 | D3 | 已拍板的三件事 | build | PARTIAL | `99_System_OpenClaw/scripts/03_transcribe_audio.py:321` | `bdbc6e23c92d1e2efc5515f5b21faf1a9270024d3a89260b49cb3c4713cda87f` |
 | A1 | 登录与安装向导 | build | PARTIAL | `99_System_OpenClaw/desktop/upstream_session.py:70` | `d40f9c169b8d069256d430ba99478845bedc4d4ee63c067a78d94e7e5ea9f4e2` |
 | A2 | 登录与安装向导 | ready | PARTIAL | `99_System_OpenClaw/scripts/41_setup_dev_environment.sh:6` | `53e9fe7d17a4168e57739b6ab1627e6701db53714e3bf46548635bd7b80c089d` |
-| H1 | 工作台 | ready | PARTIAL | `99_System_OpenClaw/desktop/project_store.py:334` | `62505f0198d94492f7928a09ac65eef3cb47ae987a251f9bf2e69a12f276fe60` |
-| H2 | 工作台 | build | PARTIAL | `99_System_OpenClaw/desktop/server.py:380` | `f41f5f096b62a26cf2abce887bfa589f1d95645f3af3d9974e1b363467c24c69` |
+| H1 | 工作台 | ready | PARTIAL | `99_System_OpenClaw/desktop/project_store.py:340` | `62505f0198d94492f7928a09ac65eef3cb47ae987a251f9bf2e69a12f276fe60` |
+| H2 | 工作台 | build | PARTIAL | `99_System_OpenClaw/desktop/server.py:465` | `f41f5f096b62a26cf2abce887bfa589f1d95645f3af3d9974e1b363467c24c69` |
 | H3 | 工作台 | build | NOT_READY | `99_System_OpenClaw/scripts/15_register_reusable_asset.py:22` | `1e441c9f3b9c026906311db527424ed651d5d86e0007485a54a0ce603dd7aa44` |
-| H4 | 工作台 | build | NOT_READY | `99_System_OpenClaw/desktop/project_store.py:529` | `7c963a415ec7a8d8d2b61f93c771c2094a55e4fddab31c2561b6a326c3ef7555` |
+| H4 | 工作台 | build | NOT_READY | `99_System_OpenClaw/desktop/project_store.py:616` | `7c963a415ec7a8d8d2b61f93c771c2094a55e4fddab31c2561b6a326c3ef7555` |
 | I1 | 整理台 | build | NOT_READY | `99_System_OpenClaw/scripts/34_ensure_project_from_inbox_batch.py:18` | `e930dc68a37eac1397c3c5aac431b9b5f789c8a98c263ae8fdc15ffdd37d5659` |
 | I2 | 整理台 | ready | PARTIAL | `99_System_OpenClaw/scripts/01_scan_media_manifest.py:1` | `b719c64ccef84189369b8f959d5ebdf48f56f6cbaeab847a314e1377652742cc` |
 | I3 | 整理台 | build | PARTIAL | `99_System_OpenClaw/scripts/12_select_repeat_photo_groups.py:98` | `5d10cf7c10d68902b1776ff7e73c4e0020a676ad5d8d10ff1804ce903ea933f0` |
@@ -64,7 +64,7 @@
 | T2 | 接界面之前该还的债 | build | NOT_READY | `99_System_OpenClaw/scripts/12_select_repeat_photo_groups.py:284` | `3ba7338a27bb54f01b8cd5f14059a6764498a753e0de93de5aea58a1e8757da2` |
 | T3 | 接界面之前该还的债 | build | PARTIAL | `99_System_OpenClaw/tests/test_media_manifest_contract.py:59` | `b0981754873ca3edb7a7bc315038902d3fcda032a95e93432b758e017484e6ef` |
 | T4 | 接界面之前该还的债 | build | NOT_READY | `99_System_OpenClaw/scripts/analysis_tiering.py:20` | `bca41792617d2f3beaa2391cdcb018ed705f53f9eb0904cf407531fa2fa4b7c8` |
-| T5 | 接界面之前该还的债 | ready | PARTIAL | `99_System_OpenClaw/desktop/server.py:349` | `cc526f681ae04ad05ec73433cf1db27dfcb6a9fbf76a9b41358dc31b32cb7470` |
+| T5 | 接界面之前该还的债 | ready | PARTIAL | `99_System_OpenClaw/desktop/server.py:431` | `cc526f681ae04ad05ec73433cf1db27dfcb6a9fbf76a9b41358dc31b32cb7470` |
 | T6 | 接界面之前该还的债 | build | PARTIAL | `99_System_OpenClaw/scripts/README.md:3` | `249ca4346591ecb296047cd340b529767719c20b24d26ef9033c9f45cf776c60` |
 | K1 | 换界面时不要丢的东西 | fix | PARTIAL | `99_System_OpenClaw/desktop/ai_patch.py:2` | `9e11aa783e5209a85b2e38ebceb1d0da2f8c92a1cd8222d4a3dbc7466780c041` |
 | K2 | 换界面时不要丢的东西 | fix | PARTIAL | `99_System_OpenClaw/desktop/project_store.py:5` | `a76f17510c99f03520f67e962fcb00ddc77c8725b2a453455a706fbb6862d7c2` |
@@ -75,4 +75,4 @@
 
 ## 证据边界
 
-原 HTML 中的“可直接接”是设计阶段判断，不是当前验收状态。上表重新绑定当前主分支；所有 45 项仍需独立合同、受保护测试、本地运行或外部证据和最终九屏人工验收。
+原 HTML 中的“可直接接”是设计阶段判断，不是当前验收状态。上表重新绑定当前主分支；所有 45 项仍需独立合同、受保护测试、本地运行或外部证据和最终人工验收。

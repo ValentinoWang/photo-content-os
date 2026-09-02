@@ -4,7 +4,7 @@
   "stage": "R3",
   "work_kind": "implementation",
   "domain_lane": "library",
-  "execution_state": "READY",
+  "execution_state": "IMPLEMENTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -30,7 +30,8 @@
   "write_authority": "implementation",
   "acceptance_authority": "产品负责人和验收负责人",
   "unlocks": [
-    "Q3"
+    "Q3",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -60,5 +61,6 @@
   "goal": "同时展示生命周期和每个物理位置的真实回读状态，逻辑登记不得冒充副本已存在。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-L3/acceptance-contract.md"
 }

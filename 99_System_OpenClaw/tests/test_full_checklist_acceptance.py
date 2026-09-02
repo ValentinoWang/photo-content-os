@@ -75,7 +75,16 @@ class FullChecklistStaticAcceptanceTests(unittest.TestCase):
         app = (STATIC / "app.js").read_text(encoding="utf-8")
         css = (STATIC / "styles.css").read_text(encoding="utf-8")
 
-        for token in ("--bg:#0D1314", "--ac:#4FB3BD", "Archivo", "Asap", "JetBrains Mono"):
+        for token in (
+            "--bg:#0D1314",
+            "--ink-5:#46585A",
+            "--ac:#4FB3BD",
+            "Archivo",
+            "Asap",
+            "JetBrains Mono",
+            "Hiragino Sans GB",
+            "Menlo",
+        ):
             self.assertIn(token, css)
         for screen in ("home", "inbox", "library", "project", "settings"):
             self.assertIn(f'data-screen="{screen}"', html)
@@ -102,6 +111,17 @@ class FullChecklistStaticAcceptanceTests(unittest.TestCase):
             self.assertIn(route, app)
         self.assertIn("expectedRevision", app)
         self.assertIn("secondConfirmation", app)
+        self.assertIn("loadDeleteRecommendations", app)
+        self.assertIn("data-select-all-delete", app)
+        self.assertIn("selectedCandidateNumbers: selected", app)
+        self.assertNotIn("selectedCandidateNumbers: []", app)
+        for reason in (
+            "duration_too_short",
+            "file_damaged",
+            "sha256_duplicate",
+            "camera_low_resolution_proxy",
+        ):
+            self.assertIn(reason, app)
         for status in ("queued", "running", "completed", "failed", "expired", "cancelled"):
             self.assertIn(status, app)
 
@@ -293,6 +313,48 @@ class FullChecklistHttpAcceptanceTests(unittest.TestCase):
         )
         self.assertEqual(status, 200)
         self.assertEqual(added["project"]["assets"][0]["asset_id"], asset_id)
+
+    def test_delete_recommendations_read_the_connected_project_manifest(self) -> None:
+        _, bootstrap = self.request("/api/bootstrap")
+        csrf = bootstrap["csrfToken"]
+        workspace = Path(self.temp.name) / "delete-workspace"
+        manifest_path = workspace / "_ai_analysis" / "media_manifest.json"
+        manifest_path.parent.mkdir(parents=True)
+        manifest_path.write_text(
+            json.dumps(
+                {
+                    "items": [
+                        {
+                            "media_id": "aaaaaaaaaaaa",
+                            "relative_path": "short.mov",
+                            "sha256": "b" * 64,
+                            "media_type": "video",
+                            "duration_sec": 0.4,
+                            "image_health": "not_applicable",
+                            "image_readable": None,
+                        }
+                    ]
+                }
+            ),
+            encoding="utf-8",
+        )
+        _, created = self.request(
+            "/api/projects",
+            method="POST",
+            csrf=csrf,
+            body={"title": "删除建议验收", "localWorkspace": str(workspace)},
+        )
+
+        status, payload = self.request(
+            f"/api/projects/{created['project']['id']}/media-delete/recommendations",
+            method="POST",
+            csrf=csrf,
+            body={"manifest": {"items": []}},
+        )
+
+        self.assertEqual(status, 200)
+        self.assertEqual(len(payload["candidates"]), 1)
+        self.assertEqual(payload["candidates"][0]["reason"], "duration_too_short")
 
 
 if __name__ == "__main__":

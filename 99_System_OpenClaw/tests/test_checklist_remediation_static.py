@@ -60,8 +60,17 @@ class ChecklistRemediationStaticTests(unittest.TestCase):
         self.assertIn("/api/assets", app)
         self.assertIn("/api/assets/statistics", app)
         self.assertIn("state.selectedAsset", app)
-        for recommendation in ("d1", "d2", "d3"):
-            self.assertIn(f"'{recommendation}'", app)
+        self.assertIn('data-del="${esc(candidate.candidate_number)}"', app)
+        self.assertIn("state.selectedDeleteNumbers", app)
+        for reason in (
+            "duration_too_short",
+            "file_damaged",
+            "sha256_duplicate",
+            "camera_low_resolution_proxy",
+        ):
+            self.assertIn(f"candidate.reason === '{reason}'", app)
+        self.assertIn("/media-delete/recommendations", app)
+        self.assertIn("/media-delete/confirm", app)
         for pane in ("paths", "agent", "asr", "budget", "account", "doctor"):
             self.assertIn(f"settingsPane('{pane}'", app)
         self.assertIn("系统回收站", app)

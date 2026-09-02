@@ -4,7 +4,7 @@
   "stage": "R1",
   "work_kind": "implementation",
   "domain_lane": "settings",
-  "execution_state": "READY",
+  "execution_state": "IMPLEMENTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -28,7 +28,8 @@
   "unlocks": [
     "I4",
     "S3",
-    "Q1"
+    "Q1",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -58,5 +59,6 @@
   "goal": "给 43_content_os_doctor.py 和 01_scan_media_manifest.py 补测试：补基础用例。 01 至少要覆盖损坏文件、零时长、缺 EXIF 这几种边界。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-T3/acceptance-contract.md"
 }

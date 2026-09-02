@@ -33,7 +33,8 @@
   "write_authority": "implementation",
   "acceptance_authority": "产品负责人和验收负责人",
   "unlocks": [
-    "Q4"
+    "Q4",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -63,5 +64,6 @@
   "goal": "结构化时间线为主视图，同时保留文本说明与受约束的选区修改，不形成第二份机器执行权威。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-P3/acceptance-contract.md"
 }

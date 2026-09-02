@@ -12,12 +12,26 @@ import json
 import re
 from collections.abc import Iterable, Mapping, Sequence
 from datetime import datetime, timezone
+from pathlib import PurePosixPath
 from typing import Any
 
 
 CANDIDATE_STATE = "suggested"
 CONFIRMED_STATE = "confirmed"
-GENERATION_REASON = "manifest_item_is_healthy_and_readable_with_verified_sha256"
+MIN_USABLE_VIDEO_DURATION_SECONDS = 1.0
+REASON_DURATION_TOO_SHORT = "duration_too_short"
+REASON_FILE_DAMAGED = "file_damaged"
+REASON_HASH_DUPLICATE = "sha256_duplicate"
+REASON_CAMERA_LOW_RES_PROXY = "camera_low_resolution_proxy"
+REASON_LABELS = {
+    REASON_DURATION_TOO_SHORT: "时长过短",
+    REASON_FILE_DAMAGED: "文件损坏",
+    REASON_HASH_DUPLICATE: "哈希完全重复",
+    REASON_CAMERA_LOW_RES_PROXY: "相机低清代理",
+}
+GENERATION_REASON = REASON_DURATION_TOO_SHORT
+_IMAGE_HEALTH_STATES = {"healthy", "malformed", "unreadable", "probe_unavailable", "not_applicable"}
+_HIGH_RES_CAMERA_EXTENSIONS = {".mp4", ".mov", ".m4v"}
 
 _MEDIA_ID_RE = re.compile(r"^[0-9a-f]{12}$")
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -70,27 +84,72 @@ def _validate_evidence(item: Mapping[str, Any]) -> dict[str, Any]:
 
     if "image_health" not in item or item.get("image_health") is None:
         _reject("missing_image_health", "image_health is required")
-    if item.get("image_health") != "healthy":
-        _reject("image_not_healthy", "only healthy images can be suggested")
+    image_health = item.get("image_health")
+    if image_health not in _IMAGE_HEALTH_STATES:
+        _reject("invalid_image_health", "image_health is invalid")
 
-    if "image_readable" not in item or item.get("image_readable") is None:
+    if "image_readable" not in item:
         _reject("missing_image_readable", "image_readable is required")
-    if item.get("image_readable") is not True:
-        _reject("image_not_readable", "image_readable must be true")
+    image_readable = item.get("image_readable")
+    if image_readable is not None and not isinstance(image_readable, bool):
+        _reject("invalid_image_readable", "image_readable must be boolean or null")
 
     return {
         "media_id": media_id,
         "relative_path": relative_path,
         "sha256": sha256,
-        "image_health": "healthy",
-        "image_readable": True,
+        "image_health": image_health,
+        "image_readable": image_readable,
     }
+
+
+def _validate_reason(value: Mapping[str, Any]) -> tuple[str, dict[str, Any]]:
+    reason = value.get("reason")
+    if reason not in REASON_LABELS:
+        _reject("invalid_reason", "candidate reason is not one of the four supported machine reasons")
+    evidence = value.get("reason_evidence")
+    if not isinstance(evidence, Mapping) or not evidence:
+        _reject("invalid_reason_evidence", "reason_evidence must be a non-empty object")
+    normalized = dict(evidence)
+    if reason == REASON_DURATION_TOO_SHORT:
+        duration = normalized.get("duration_sec")
+        threshold = normalized.get("threshold_sec")
+        if not isinstance(duration, (int, float)) or isinstance(duration, bool) or duration < 0:
+            _reject("invalid_reason_evidence", "duration reason requires a non-negative duration_sec")
+        if not isinstance(threshold, (int, float)) or isinstance(threshold, bool) or threshold <= 0 or duration >= threshold:
+            _reject("invalid_reason_evidence", "duration reason must prove duration_sec is below threshold_sec")
+    elif reason == REASON_FILE_DAMAGED:
+        if normalized.get("image_health") not in {"malformed", "unreadable"}:
+            _reject("invalid_reason_evidence", "damaged-file reason requires malformed or unreadable image health")
+    elif reason == REASON_HASH_DUPLICATE:
+        duplicate_of = normalized.get("duplicate_of_media_id")
+        duplicate_sha = normalized.get("sha256")
+        if not isinstance(duplicate_of, str) or not _MEDIA_ID_RE.fullmatch(duplicate_of):
+            _reject("invalid_reason_evidence", "duplicate reason requires a valid duplicate_of_media_id")
+        if not isinstance(duplicate_sha, str) or not _SHA256_RE.fullmatch(duplicate_sha):
+            _reject("invalid_reason_evidence", "duplicate reason requires the shared sha256")
+    else:
+        original_id = normalized.get("original_media_id")
+        original_path = normalized.get("original_relative_path")
+        if not isinstance(original_id, str) or not _MEDIA_ID_RE.fullmatch(original_id):
+            _reject("invalid_reason_evidence", "proxy reason requires a valid original_media_id")
+        _validate_relative_path(original_path)
+    try:
+        json.dumps(normalized, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+    except (TypeError, ValueError) as exc:
+        _reject("invalid_reason_evidence", "reason_evidence must be JSON serializable")
+        raise AssertionError("unreachable") from exc
+    return str(reason), normalized
 
 
 def candidate_number_for_evidence(evidence: Mapping[str, Any]) -> str:
     """Return the stable candidate number for the complete immutable evidence."""
 
     normalized = _validate_evidence(evidence)
+    if "reason" in evidence or "reason_evidence" in evidence:
+        reason, reason_evidence = _validate_reason(evidence)
+        normalized["reason"] = reason
+        normalized["reason_evidence"] = reason_evidence
     payload = json.dumps(normalized, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
     digest = hashlib.sha256(payload.encode("ascii")).hexdigest()
     return f"DEL-{digest[:20]}"
@@ -111,13 +170,72 @@ def _manifest_items(manifest: Mapping[str, Any]) -> Sequence[Mapping[str, Any]]:
 
 
 def generate_delete_recommendations(manifest: Mapping[str, Any]) -> list[dict[str, Any]]:
-    """Generate deterministic, review-only candidates from a B1 manifest object."""
+    """Generate deterministic review candidates for four machine-verifiable reasons."""
+
+    items = list(_manifest_items(manifest))
+    hashed_items: list[tuple[Mapping[str, Any], dict[str, Any]]] = []
+    for item in items:
+        if item.get("sha256") is None:
+            continue
+        hashed_items.append((item, _validate_evidence(item)))
+
+    first_by_hash: dict[str, dict[str, Any]] = {}
+    original_by_stem: dict[tuple[str, str], dict[str, Any]] = {}
+    for item, evidence in hashed_items:
+        first_by_hash.setdefault(evidence["sha256"], evidence)
+        path = PurePosixPath(evidence["relative_path"])
+        extension = str(item.get("extension") or path.suffix).lower()
+        stem = str(item.get("stem") or path.stem)
+        if extension in _HIGH_RES_CAMERA_EXTENSIONS:
+            original_by_stem.setdefault((path.parent.as_posix(), stem), evidence)
 
     recommendations: list[dict[str, Any]] = []
     seen_numbers: set[str] = set()
-    for item in _manifest_items(manifest):
-        evidence = _validate_evidence(item)
-        candidate_number = candidate_number_for_evidence(evidence)
+    for item, evidence in hashed_items:
+        path = PurePosixPath(evidence["relative_path"])
+        extension = str(item.get("extension") or path.suffix).lower()
+        stem = str(item.get("stem") or path.stem)
+        reason: str | None = None
+        reason_evidence: dict[str, Any] = {}
+
+        if evidence["image_health"] in {"malformed", "unreadable"}:
+            reason = REASON_FILE_DAMAGED
+            reason_evidence = {
+                "image_health": evidence["image_health"],
+                "image_health_reason": item.get("image_health_reason"),
+            }
+        elif extension == ".lrf" and (path.parent.as_posix(), stem) in original_by_stem:
+            original = original_by_stem[(path.parent.as_posix(), stem)]
+            reason = REASON_CAMERA_LOW_RES_PROXY
+            reason_evidence = {
+                "original_media_id": original["media_id"],
+                "original_relative_path": original["relative_path"],
+            }
+        elif first_by_hash[evidence["sha256"]]["media_id"] != evidence["media_id"]:
+            original = first_by_hash[evidence["sha256"]]
+            reason = REASON_HASH_DUPLICATE
+            reason_evidence = {
+                "duplicate_of_media_id": original["media_id"],
+                "sha256": evidence["sha256"],
+            }
+        else:
+            duration = item.get("duration_sec")
+            if (
+                item.get("media_type") == "video"
+                and isinstance(duration, (int, float))
+                and not isinstance(duration, bool)
+                and 0 <= duration < MIN_USABLE_VIDEO_DURATION_SECONDS
+            ):
+                reason = REASON_DURATION_TOO_SHORT
+                reason_evidence = {
+                    "duration_sec": duration,
+                    "threshold_sec": MIN_USABLE_VIDEO_DURATION_SECONDS,
+                }
+
+        if reason is None:
+            continue
+        candidate_evidence = {**evidence, "reason": reason, "reason_evidence": reason_evidence}
+        candidate_number = candidate_number_for_evidence(candidate_evidence)
         if candidate_number in seen_numbers:
             _reject("duplicate_candidate_number", "manifest produced a duplicate candidate number")
         seen_numbers.add(candidate_number)
@@ -130,8 +248,10 @@ def generate_delete_recommendations(manifest: Mapping[str, Any]) -> list[dict[st
                 "sha256": evidence["sha256"],
                 "image_health": evidence["image_health"],
                 "image_readable": evidence["image_readable"],
-                "reason": GENERATION_REASON,
-                "generation_reason": GENERATION_REASON,
+                "reason": reason,
+                "reason_label": REASON_LABELS[reason],
+                "reason_evidence": reason_evidence,
+                "generation_reason": reason,
                 "state": CANDIDATE_STATE,
             }
         )
@@ -154,8 +274,9 @@ def _validate_candidate(candidate: Mapping[str, Any]) -> tuple[str, dict[str, An
     if not isinstance(candidate, Mapping):
         _reject("invalid_candidate", "each candidate must be an object")
     evidence = _validate_evidence(candidate)
+    reason, reason_evidence = _validate_reason(candidate)
     number = _candidate_number(candidate)
-    expected_number = candidate_number_for_evidence(evidence)
+    expected_number = candidate_number_for_evidence({**evidence, "reason": reason, "reason_evidence": reason_evidence})
     if number != expected_number:
         _reject("stale_candidate_number", "candidate number does not match its evidence")
     if candidate.get("state") != CANDIDATE_STATE:
@@ -209,8 +330,10 @@ def confirm_delete_selection(
             "candidate_number": number,
             "candidate_id": number,
             **evidence,
-            "reason": candidate.get("reason", GENERATION_REASON),
-            "generation_reason": candidate.get("generation_reason", candidate.get("reason", GENERATION_REASON)),
+            "reason": candidate["reason"],
+            "reason_label": candidate.get("reason_label", REASON_LABELS[str(candidate["reason"])]),
+            "reason_evidence": dict(candidate["reason_evidence"]),
+            "generation_reason": candidate["reason"],
             "state": CANDIDATE_STATE,
         }
 
@@ -241,6 +364,13 @@ confirm_selection = confirm_delete_selection
 __all__ = [
     "CANDIDATE_STATE",
     "CONFIRMED_STATE",
+    "GENERATION_REASON",
+    "MIN_USABLE_VIDEO_DURATION_SECONDS",
+    "REASON_CAMERA_LOW_RES_PROXY",
+    "REASON_DURATION_TOO_SHORT",
+    "REASON_FILE_DAMAGED",
+    "REASON_HASH_DUPLICATE",
+    "REASON_LABELS",
     "DeleteRecommendationError",
     "candidate_number_for_evidence",
     "confirm_delete_selection",

@@ -193,12 +193,15 @@ def scan_project(project_dir: str) -> dict[str, object]:
             "exif_location": None,
         }
 
+        try:
+            item["sha256"] = file_sha256(path)
+        except OSError:
+            item["sha256"] = None
+
         if media_type == "video":
             item.update(video_info(path))
         elif media_type == "image":
-            try:
-                item["sha256"] = file_sha256(path)
-            except OSError:
+            if item["sha256"] is None:
                 item["image_readable"] = False
                 item["image_health"] = "unreadable"
                 item["image_health_reason"] = "read_error"

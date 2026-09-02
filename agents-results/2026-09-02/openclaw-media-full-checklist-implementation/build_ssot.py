@@ -20,9 +20,9 @@ from normative_artifact import inventory_html
 SOURCE_DIR = ROOT / "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist"
 CHECKLIST = SOURCE_DIR / "openclaw-dev-checklist.html"
 PROTOTYPE = SOURCE_DIR / "openclaw-media-ui-prototype.html"
-BASELINE = "2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35"
+BASELINE = "a3ae47100d6fce4cb139ce17a479eea16717e73a"
 CHECKLIST_BLOB = "6202f61978a7bc94e01e3d50e80698a32856746b"
-PROTOTYPE_BLOB = "cc44bc4065310264b7bf398680fc6cb0750fd163"
+PROTOTYPE_BLOB = "d881b06ab26d0cb46b88b653e72dc15160611fce"
 CHECKLIST_SHA = "73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb"
 PROTOTYPE_SHA = "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8"
 SSOT_REL = "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/ssot-development-paths.md"
@@ -32,6 +32,11 @@ SSOT_REL = "agents-results/2026-09-02/openclaw-media-full-checklist-implementati
 VISUAL_REF = ".ssot/source-requirements.json"
 WORKBENCH_REL = "99_System_OpenClaw/visual-workbench.html"
 WORKBENCH_CONTRACT_REL = "99_System_OpenClaw/visual-workbench.json"
+PROTECTED_TESTS = (
+    ROOT / "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+    ROOT / "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+    ROOT / "99_System_OpenClaw/tests/test_media_delete_recommendations.py",
+)
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -236,7 +241,7 @@ RELEASE_META = {
     "R5": ("设置、诊断与网页中台", "用户可配置模型、预算、位置并理解诊断和上游任务状态。"),
     "R6": ("登录、安装与工作台", "用户可选择配对上游身份、完成安装并从工作台进入最近工作。"),
     "R7": ("既有 Studio 能力迁移", "新界面保留锁定、版本、失效传播、参考资料、复盘和文档阶段。"),
-    "R8": ("九屏共享入口和最终整合", "九个界面共享一套导航、状态、安全和验收边界。"),
+    "R8": ("八个 Surface、项目对话框和最终整合", "八个 Surface 与新建项目对话框共享一套导航、状态、安全和验收边界。"),
 }
 
 PD_META = {
@@ -307,6 +312,59 @@ OUTCOMES = {
     "T6": "七个剪映脚本要么物理归档，要么逐项声明历史且不维护，并使文档、能力清单和持续集成保持一致。",
     "K6": "Brief 与脚本作为独立版本化阶段保留，并建立到项目文件和素材匹配输入的单向权威编译。",
 }
+
+# AC-01 consumes the item-specific OUTCOMES value.  AC-02 is deliberately
+# explicit per source item so the protected contracts cannot regress into one
+# generic failure sentence shared by every requirement.
+AC_BOUNDARIES = {
+    "D1": "分批建议在用户确认前不得移动文件；确认必须携带 planDigest、批次、目标项目和 expectedRevision，计划漂移返回冲突。",
+    "D2": "生产删除只能生成建议；未勾选、未二次确认、回收站不可用或回读失败时不得移动任何媒体。",
+    "D3": "发送音频前必须明示 DashScope 边界；在线失败时仅在本机 FunASR 已安装可用才回退，二者失败保留可重试占位。",
+    "A1": "跳过、解除配对、会话过期及 Windows/Linux 不支持配对时，本地项目、素材和创作操作仍可完整使用。",
+    "A2": "四步向导逐步 CAS 保存；中断后从最后成功步骤恢复，账号步骤可跳过且不得把本地能力改为只读。",
+    "H1": "首页六段业务命名与项目五段字段投影必须显式对齐；未知阶段显示受控兜底，不得错算当前进度。",
+    "H2": "能力状态来自实时健康、上游与 ChatCut 探测；超时、未配对和不支持必须分开显示，不得写死可用。",
+    "H3": "本周统计从真实索引和任务时间窗口聚合；空数据为零值空态，损坏记录不得被计入成功统计。",
+    "H4": "发布记录必须按项目 revision 写入并可回读；重复提交保持幂等，冲突不覆盖较新发布状态。",
+    "I1": "批次确认只能消费同一 planDigest；目标碰撞、来源漂移或 expectedRevision 过期时原子拒绝且不产生半迁移。",
+    "I2": "分批依据必须展示时间、位置和实况照片不可拆分原因；缺少元数据时使用明确兜底且不拆散绑定组。",
+    "I3": "归档预览逐项显示来源、目标、数量与碰撞；预览不得创建目录或移动媒体，确认后回执必须可重放核对。",
+    "I4": "删除建议只允许四类机器可验证理由：低于策略阈值的误触片段、文件损坏、哈希完全重复、已保留原片的相机低清代理；每项附证据。",
+    "I5": "仅用户选中的候选进入当前操作系统回收站；永久删除被禁止，平台失败逐文件报告并保留可恢复状态。",
+    "L1": "索引缺失、损坏或版本不兼容时显示可修复错误，不得从展示卡片猜测结构化事实或返回伪造素材。",
+    "L2": "分类、标签和用途筛选必须来自索引并可组合；未知条件返回空结果而不是放宽查询或静默显示全部。",
+    "L3": "界面同时展示生命周期与每个物理位置的独立清单、校验值和回读状态；登记位置不得冒充副本存在。",
+    "L4": "恢复必须写入新目录并逐项校验大小与 SHA-256；目标非空、清单漂移或校验失败时禁止覆盖原件。",
+    "L5": "导入、登记新资产、加入项目和在访达中显示分别有真实动作；未知 assetId、路径越界或 revision 冲突时拒绝。",
+    "P1": "项目读取必须返回同一 revision 的文档和 EDL 投影；缺失或无效 EDL 显示阻断，不得从界面文本拼出权威。",
+    "P2": "时间线只消费结构化 EDL；轨道、片段、入出点和素材引用非法时不渲染可执行候选。",
+    "P3": "时间线与文本仅是同一 EDL 的两种视图；切换不得创建第二份权威，受约束选区修改必须带 revision。",
+    "P4": "待补素材逐项保留用途、约束和状态；缺失项不得被标记完成，加入素材后必须回读更新。",
+    "P5": "内建后端仅 handoff_pack 与 otio_kdenlive；ChatCut 只在 Desktop MCP 实时探测成功且用户确认后显示。",
+    "P6": "界面和文档统一表述剪映生产路线停止维护；不得声称草稿加密，也不得修改生产剪映草稿。",
+    "S1": "预算五个字段可增减并持久化，均为非负整数；revision 冲突或非法值不得覆盖当前配置。",
+    "S2": "生命周期和物理位置分别持久化并回读；受控路径越界、重复身份或不可访问位置返回可操作错误。",
+    "S3": "诊断项由运行时动态生成，不写死六项或固定数量；复制报告必须等于当前无密钥诊断 JSON。",
+    "S4": "上游账号只呈现已连接与未连接两态；平台不支持是能力说明，不得伪装为第三个账号状态或配置失败。",
+    "S5": "提供方、模型、端点、思考强度和密钥引用可配置并被真实执行链消费；密钥明文不得写盘或回显。",
+    "C1": "网页中台只投影用户已配对身份可见的任务；会话失效返回明确空态/认证态且不影响本地工作台。",
+    "C2": "任务状态只允许 queued、running、completed、failed、expired、cancelled 六态，expired 与 cancelled 必须独立映射。",
+    "C3": "复制报告包含候选提交、内容摘要、状态和错误边界；缺少上游证据时不得展示已发布或已完成。",
+    "T1": "破坏性批次迁移必须有同 planDigest 的预览、幂等回执和可恢复日志；重复调用不得重复移动。",
+    "T2": "重复照片选择保留实况绑定和用户保留规则；阈值边界、空组及无候选都有确定结果。",
+    "T3": "媒体清单 schema 对路径、哈希、大小、设备与定位字段做双向校验；非法清单不得进入后续动作。",
+    "T4": "分析策略版本、层级和预算由同一配置权威消费；耗尽时显式停止或降档，不得静默超额。",
+    "T5": "所有新增写接口强制 loopback、同源、CSRF 和真正整数 expectedRevision；bool、string、float 与跨端口 Origin 均拒绝。",
+    "T6": "七个剪映脚本逐项标记历史或物理归档，README、能力清单与 CI 不得继续宣称受支持。",
+    "K1": "锁定与 AI 选区状态按文档 revision 保存；锁定内容不得被 AI patch 或过期客户端覆盖。",
+    "K2": "每版可查看 diff 并回滚到明确版本；回滚产生新 revision，不重写或删除历史版本。",
+    "K3": "上游输入变化后 stale 状态传播到所有受影响下游；未受影响文档不得被连带失效。",
+    "K4": "研究参考与可剪素材分开存储和标识；外部参考不得自动进入媒体执行清单。",
+    "K5": "复盘与发布记录绑定候选摘要和 revision；失败发布不得写成成功，重试保留前次证据。",
+    "K6": "Brief 与脚本保持独立版本阶段，脚本只从获批 Brief 和素材匹配输入编译；反向编辑不得改写 Brief。",
+}
+if set(AC_BOUNDARIES) != set(ITEM_IDS):
+    raise SystemExit("item-specific acceptance boundaries must cover all 45 checklist items")
 
 BASELINE_STATUS = {
     "D1": "PARTIAL", "D2": "PARTIAL", "D3": "PARTIAL",
@@ -636,7 +694,7 @@ def create_source_documents() -> dict[str, dict[str, object]]:
         "schema_version": 1,
         "source_artifact_refs": ["SRC-ART-PROTOTYPE"],
         "semantic_structure_assertions": [
-            "九个表面共享稳定导航和项目上下文，不把设置、诊断或旧 Studio 能力藏成无入口功能",
+            "八个 Surface 与新建项目对话框共享稳定导航和项目上下文，不把设置、诊断或旧 Studio 能力藏成无入口功能",
             "列表、筛选、详情、进度和确认对话框保持来源原型的信息层级",
             "loading、empty、error、ready、success 五种状态不会互相覆盖或移动稳定布局",
         ],
@@ -704,21 +762,22 @@ def build_nodes_and_edges() -> tuple[dict[str, dict[str, object]], list[dict[str
     for index in range(1, 8):
         release_id = f"R{index}"
         deps[f"Q{index}"] = [node_id for node_id in release_nodes[release_id] if node_id not in {"F", f"Q{index}"}]
-    deps["Z1"] = [f"Q{i}" for i in range(1, 8)]
-    deps["Q8"] = ["Z1"]
+    deps["Z1"] = list(ITEM_IDS)
+    deps["Q8"] = [*[f"Q{i}" for i in range(1, 8)], "Z1"]
     deps["RZ"] = ["Q8"]
 
     # The user already selected the DashScope default with a local FunASR
     # fallback.  Keeping this as a fresh human decision would silently discard
     # that accepted product boundary and permanently block D3.
     accepted = {"F", *PD_META.keys(), "TRD"}
+    implemented = {*ITEM_IDS, "Z1"}
     state: dict[str, str] = {}
     for node_id in [node for release in release_nodes.values() for node in release]:
         if node_id in accepted:
             state[node_id] = "ACCEPTED"
-        elif node_id == "TRD":
-            state[node_id] = "BLOCKED"
-        elif all(dependency in accepted for dependency in deps[node_id]):
+        elif node_id in implemented and all(dependency in accepted for dependency in deps[node_id]):
+            state[node_id] = "IMPLEMENTED"
+        elif node_id not in implemented and all(dependency in accepted for dependency in deps[node_id]):
             state[node_id] = "READY"
         else:
             state[node_id] = "BLOCKED"
@@ -779,14 +838,14 @@ def build_nodes_and_edges() -> tuple[dict[str, dict[str, object]], list[dict[str
                 write_authority, owner = "shared-generated", "独立验收负责人"
                 acceptance_authority = "独立验收负责人"
             elif node_id == "Z1":
-                goal = "把九个表面接入同一入口、共享状态和完整纵向动作链，并建立项目内视觉工作台"
+                goal = "把八个 Surface 与新建项目对话框接入同一入口、共享状态和完整纵向动作链，并建立项目内视觉工作台"
                 work_kind, role, actor = "implementation", "leaf", "codex"
                 decision_state, decision_version = "NOT_APPLICABLE", None
                 refs, surfaces = all_reqs, all_surfaces
                 write_authority, owner = "implementation", "桌面前端与服务维护者"
                 acceptance_authority = "产品负责人和独立验收负责人"
             elif node_id == "RZ":
-                goal = "只在八个切片和九屏人工验收均接受后作最终发布决定"
+                goal = "只在八个切片及八个 Surface 与项目对话框人工验收均接受后作最终发布决定"
                 work_kind, role, actor = "release-decision", "release-decision", "human"
                 decision_state, decision_version = "NOT_APPLICABLE", None
                 refs, surfaces = all_reqs, all_surfaces
@@ -850,6 +909,8 @@ def build_nodes_and_edges() -> tuple[dict[str, dict[str, object]], list[dict[str
                 "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
                 "owner": owner,
             }
+            if node_id in implemented:
+                node["implementation_progress"] = "IMPLEMENTED_PENDING_VERIFICATION"
             if acceptance_ref:
                 node["acceptance_contract_ref"] = acceptance_ref
             if node_id == "Z1":
@@ -887,12 +948,13 @@ def create_contract(item_id: str, item: dict[str, str] | None, all_refs: list[st
     task_id = f"OCM-{item_id}"
     source_refs = all_refs if all_refs is not None else [f"SRC-{item_id}"]
     source_cell = ", ".join(source_refs)
-    title = "九屏共享入口与全清单整合" if is_z1 else item["title"]
-    outcome = "九个表面在真实入口中共同完成 45 项来源要求，并保留统一安全、状态、恢复和视觉边界；项目内视觉工作台同时展示现状证据、确定性原型、候选方向、选择记录和工程交接。" if is_z1 else item_goal(item)
-    surface_id = "ALL-NINE-SURFACES" if is_z1 else ITEM_SURFACE[item_id]
+    title = "八个 Surface、项目对话框与全清单整合" if is_z1 else item["title"]
+    outcome = "八个 Surface 与新建项目对话框在真实入口中共同覆盖 45 项来源要求，并保留统一安全、状态、恢复和视觉边界；K1-K6 并入工作台与项目页，不建立独立 Studio。" if is_z1 else item_goal(item)
+    boundary = "16 张双视口截图、DOM 锚点、计算样式、交互轨迹与路由清单必须绑定同一候选；任一漂移或人工验收未签署时不得晋升。" if is_z1 else AC_BOUNDARIES[item_id]
+    surface_id = "ALL-EIGHT-SURFACES-AND-PROJECT-DIALOG" if is_z1 else ITEM_SURFACE[item_id]
     ui_change_rel = f"agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/{task_id}/ui-change.json"
     user_visible = is_z1 or not item_id.startswith("T")
-    human_workspace = "none"
+    human_workspace = "acceptance/human/2026-W36/2026-09-02-OCM-Z1" if is_z1 else "none"
     decision_refs = ", ".join(f"{PD_META[node_id][0]}@1" for node_id in PD_META) if is_z1 else contract_decision_refs(item_id)
     context = (
         f"SRC-{item_id}, source-notes.md" if not is_z1 else
@@ -900,22 +962,40 @@ def create_contract(item_id: str, item: dict[str, str] | None, all_refs: list[st
     )
     visual_refs = ".ssot/source-requirements.json" if user_visible else "none"
     ui_declaration = ui_change_rel if user_visible else "none"
-    human_section = "机器证据负责本条目的确定性行为；用户理解、跨屏连贯性和视觉判断集中由 OCM-Z1 的九屏人工验收负责。"
+    human_section = "机器证据负责本条目的确定性行为；用户理解、跨屏连贯性和视觉判断集中由 OCM-Z1 的八个 Surface 与项目对话框人工验收负责。"
     human_trace = ""
     if is_z1:
-        human_section = "本次迁移仅重建机器可验证的来源登记。项目级人工验收需要在独立候选和新的交接记录建立后另行绑定。"
+        human_rows = [
+            f"| H-{index:02d} | {name}完整业务闭环的理解成本、视觉层级和恢复体验 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-{index:02d} | 产品负责人 | Yes |"
+            for index, name in enumerate((name for name, _ in SURFACES.values()), 1)
+        ]
+        human_section = (
+            "H-01 至 H-08 分别覆盖八个 Surface，项目对话框随 H-03 工作台闭环验收。工作区处于 PREPARING；"
+            "机器门禁全绿并生成新 handoff 后由产品负责人独立执行，自动化不得代签。\n\n"
+            "| ID | Summary | Checklist path | Required role | Blocking |\n"
+            "| --- | --- | --- | --- | --- |\n"
+            + "\n".join(human_rows)
+        )
+        human_trace = "\n" + "\n".join(
+            f"| H-{index:02d} | 产品人工验收 | acceptance/human/2026-W36/2026-09-02-OCM-Z1/checklist.md#h-{index:02d} | Human | Yes |"
+            for index in range(1, 9)
+        )
 
-    protected = "| Path | SHA-256 | Covers |\n| --- | --- | --- |\n| none | none | Behavior specification only; executable baseline not yet locked |"
+    protected_rows = [
+        f"| {path.relative_to(ROOT).as_posix()} | {sha256_file(path)} | 45 项静态、HTTP 与 OpenAPI/服务器双向同步门禁 |"
+        for path in PROTECTED_TESTS
+    ]
+    protected = "| Path | SHA-256 | Covers |\n| --- | --- | --- |\n" + "\n".join(protected_rows)
     primary_lane = "visual-fidelity" if is_z1 else "machine/integration-contract" if item_id.startswith("T") else "machine/e2e"
     exception_lane = "machine/e2e" if is_z1 else "machine/integration-contract" if item_id.startswith("T") else "machine/local-runtime"
     return f"""# Acceptance Contract: {task_id}
 
 - Task ID: {task_id}
-- Contract version: 1
-- Contract status: DRAFT
-- Test baseline: PLANNED
+- Contract version: 2
+- Contract status: APPROVED
+- Test baseline: LOCKED
 - Acceptance owner: 产品负责人与对应领域验收负责人
-- Approval evidence: 尚未批准
+- Approval evidence: 用户于 2026-09-02 明确要求逐条可判定 AC、锁定新增测试并修复全部已列问题
 - Request source: {CHECKLIST.relative_to(ROOT).as_posix()} sha256:{CHECKLIST_SHA}
 - SSOT node: {item_id}
 - SSOT path: {SSOT_REL}
@@ -982,7 +1062,7 @@ Then 系统完成“{outcome}”，并显示真实进度、回执和下一步
 | ID | Class | Lane | Source requirement refs | Requirement | Mode | Blocking |
 | --- | --- | --- | --- | --- | --- |
 | AC-01 | behavior | {primary_lane} | {source_cell} | {outcome}；从真实入口完成正常业务闭环，回读结果与可见状态一致 | Automatic | Yes |
-| AC-02 | behavior | {exception_lane} | {source_cell} | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Automatic | Yes |
+| AC-02 | behavior | {exception_lane} | {source_cell} | {boundary} | Automatic | Yes |
 
 ## Human acceptance
 
@@ -996,8 +1076,8 @@ Then 系统完成“{outcome}”，并显示真实进度、回执和下一步
 
 | Requirement | Verification | Evidence target | Mode | Blocking |
 | --- | --- | --- | --- | --- |
-| AC-01 | 正常闭环自动验收 | acceptance-fragments/{task_id}/acceptance/machine/e2e/runs/&lt;run-id&gt;/result.md | Automatic | Yes |
-| AC-02 | 失败、重试与恢复自动验收 | acceptance-fragments/{task_id}/acceptance/machine/integration-contract/runs/&lt;run-id&gt;/result.md | Automatic | Yes |{human_trace}
+| AC-01 | 正常闭环自动验收 | acceptance-fragments/{task_id}/acceptance/{primary_lane}/runs/&lt;run-id&gt;/result.md | Automatic | Yes |
+| AC-02 | 失败、重试与恢复自动验收 | acceptance-fragments/{task_id}/acceptance/{exception_lane}/runs/&lt;run-id&gt;/result.md | Automatic | Yes |{human_trace}
 
 ## Exploratory testing
 
@@ -1009,7 +1089,7 @@ Then 系统完成“{outcome}”，并显示真实进度、回执和下一步
 
 ## Risks and open decisions
 
-合同保持 DRAFT，直到行为被产品负责人批准且受保护的自动验收基线被锁定。{'转写提供方已按 DashScope 默认、本机 FunASR 失败兜底、音频发送前明示的决定版本 1 接受；剩余风险是实现与验收证据，不是待决定产品策略。' if item_id == 'D3' else ''}
+合同已按用户本次明确整改指令批准并锁定测试基线；实现节点仅登记 IMPLEMENTED，仍需执行证据与独立验收后才能晋升 VERIFIED/ACCEPTED。{' 转写提供方已按 DashScope 默认、本机 FunASR 失败兜底、音频发送前明示的决定版本 1 接受。' if item_id == 'D3' else ''}
 """
 
 
@@ -1050,7 +1130,7 @@ def create_ui_change(task_id: str, source_refs: list[str], surface_refs: list[st
         "workbench_path": WORKBENCH_REL,
         "deep_link": {
             "supported": False,
-            "gap_note": "Z1 由桌面前端维护者在项目内新建视觉工作台，并为九个界面补齐稳定深链接；在此之前不宣称来源原型是视觉工作台。",
+            "gap_note": "Z1 由桌面前端维护者在项目内新建视觉工作台，并为八个 Surface 与项目对话框补齐稳定深链接；在此之前不宣称来源原型是视觉工作台。",
         },
     }
 
@@ -1066,7 +1146,7 @@ def create_human_checklist() -> str:
 - 验收角色：产品负责人，使用受支持本地设备和需要的测试账号。
 - 进入方式：从获批候选的共享导航进入{name}，不使用调试绕过。
 - 要做的事：进入界面，识别当前状态，完成一次正常任务，触发一次失败或阻断，然后恢复并再次进入。
-- 前置条件：九屏机器验收已全绿，候选身份、测试资料、角色和外部能力状态已记录。
+- 前置条件：八个 Surface 与项目对话框的机器验收已全绿，候选身份、测试资料、角色和外部能力状态已记录。
 - 验收步骤：
   1. 从真实入口进入{name}。
   2. 不查看实现说明，独立完成主要任务。
@@ -1085,14 +1165,14 @@ def create_human_checklist() -> str:
 - 任务编号：OCM-Z1
 - 人工验收绑定：acceptance/human/2026-W36/2026-09-02-OCM-Z1/binding.md
 - 验收合同：{contract_rel}
-- 合同版本：1
-- 清单状态：草稿
+- 合同版本：2
+- 清单状态：已批准
 - 所需人工角色：产品负责人
 - 清单负责人：产品负责人
-- 批准证据：尚未批准
+- 批准证据：用户于 2026-09-02 明确要求按八个 Surface 与项目对话框重构、逐条锁定并进入后续机器验收
 - 执行结果：acceptance/human/2026-W36/2026-09-02-OCM-Z1/runs/<run-id>/result.md
 
-本清单只判断九个表面的产品含义、理解成本、流程质量、视觉层级和跨屏一致性。接口、数据、权限、路径、回执和错误码必须在进入本清单前由机器证据全部通过。
+本清单只判断八个 Surface 与新建项目对话框的产品含义、理解成本、流程质量、视觉层级和跨屏一致性。接口、数据、权限、路径、回执和错误码必须在进入本清单前由机器证据全部通过。
 
 {''.join(sections)}
 """
@@ -1105,17 +1185,57 @@ def build_acceptance(nodes: dict[str, dict[str, object]]) -> None:
         task_root = BUNDLE / "acceptance-fragments" / task_id
         write_text(task_root / "acceptance-contract.md", create_contract(item_id, item, list(nodes[item_id]["source_requirement_refs"])))
         if not item_id.startswith("T"):
-            write_json(task_root / "ui-change.json", create_ui_change(task_id, [f"SRC-{item_id}"], [ITEM_SURFACE[item_id]]))
-        write_text(task_root / "acceptance/index.md", f"# Acceptance index: {task_id}\n\nContract status: DRAFT. Test baseline: PLANNED. No execution run has been accepted.")
+            write_json(task_root / "ui-change.json", create_ui_change(task_id, list(nodes[item_id]["source_requirement_refs"]), [ITEM_SURFACE[item_id]]))
+        write_text(task_root / "acceptance/index.md", f"# Acceptance index: {task_id}\n\nContract status: APPROVED. Test baseline: LOCKED. Implementation state: IMPLEMENTED. No execution run has been accepted.")
 
     task_root = BUNDLE / "acceptance-fragments/OCM-Z1"
     all_refs = list(nodes["Z1"]["source_requirement_refs"])
     write_text(task_root / "acceptance-contract.md", create_contract("Z1", None, all_refs))
     write_json(task_root / "ui-change.json", create_ui_change("OCM-Z1", all_refs, list(SURFACES)))
-    write_text(task_root / "acceptance/index.md", "# Acceptance index: OCM-Z1\n\nContract status: DRAFT. Test baseline: PLANNED. Human acceptance is not yet approved or executed.")
+    write_text(task_root / "acceptance/index.md", "# Acceptance index: OCM-Z1\n\nContract status: APPROVED. Test baseline: LOCKED. Human acceptance remains PREPARING and has not been executed.")
 
     human = ROOT / "acceptance/human/2026-W36/未-2026-09-02-OCM-Z1"
     write_text(human / "checklist.md", create_human_checklist())
+
+
+def build_traceability() -> None:
+    items: dict[str, dict[str, object]] = {}
+    for item in ITEMS:
+        item_id = item["id"]
+        evidence_path, _ = EVIDENCE_LOOKUPS[item_id]
+        implementation_paths = [evidence_path]
+        if not item_id.startswith("T"):
+            implementation_paths.extend(
+                [
+                    "99_System_OpenClaw/desktop/static/index.html",
+                    "99_System_OpenClaw/desktop/static/app.js",
+                ]
+            )
+        items[item_id] = {
+            "source_requirement_id": f"SRC-CHECKLIST-{item_id}",
+            "ssot_node_id": item_id,
+            "contract_path": f"agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-{item_id}/acceptance-contract.md",
+            "implementation_paths": list(dict.fromkeys(implementation_paths)),
+            "acceptance_assertions": [item_goal(item), AC_BOUNDARIES[item_id]],
+            "protected_tests": [
+                {
+                    "path": path.relative_to(ROOT).as_posix(),
+                    "sha256": sha256_file(path),
+                }
+                for path in PROTECTED_TESTS
+            ],
+            "implementation_state": "IMPLEMENTED",
+            "verification_state": "PENDING_EXECUTION_EVIDENCE",
+        }
+    write_json(
+        ROOT / "99_System_OpenClaw/schemas/full_checklist_traceability.json",
+        {
+            "schema_version": 1,
+            "source_commit": BASELINE,
+            "source_checklist_sha256": CHECKLIST_SHA,
+            "items": items,
+        },
+    )
 
 
 def build_source_notes() -> None:
@@ -1136,7 +1256,7 @@ def build_source_notes() -> None:
 - 视觉原型：`{PROTOTYPE.relative_to(ROOT).as_posix()}`
 - 视觉原型 SHA-256：`{PROTOTYPE_SHA}`
 - 源码基线：`main@{BASELINE}`，创建本 SSOT 时本地、跟踪分支与远端主分支一致。
-- 新鲜回归基线：304 项通过，0 跳过。它只证明现有行为，不证明 45 项需求完成。
+- 回归基线：以本轮最终生成后的完整 unittest 运行记录为准；历史通过数不得替代当前候选证据。
 
 ## 已接受的产品决定
 
@@ -1160,7 +1280,7 @@ def build_source_notes() -> None:
 
 ## 证据边界
 
-原 HTML 中的“可直接接”是设计阶段判断，不是当前验收状态。上表重新绑定当前主分支；所有 45 项仍需独立合同、受保护测试、本地运行或外部证据和最终九屏人工验收。
+原 HTML 中的“可直接接”是设计阶段判断，不是当前验收状态。上表重新绑定当前主分支；所有 45 项仍需独立合同、受保护测试、本地运行或外部证据和最终人工验收。
 """,
     )
 
@@ -1223,7 +1343,7 @@ def build_planning(nodes: dict[str, dict[str, object]], release_nodes: dict[str,
             "ssot_depth": "L2",
             "artifact_policy": "create-ssot",
             "selection_authority": "user",
-            "rationale": "用户明确要求以指定 HTML 的 45 项要求创建新 SSOT；范围横跨八个独立发布切片、九个用户表面、外部身份与本地第三方工具。",
+            "rationale": "用户明确要求以指定 HTML 的 45 项要求创建新 SSOT；范围横跨八个独立发布切片、八个 Surface、新建项目对话框、外部身份与本地第三方工具。",
         },
         "macro_phases": macro,
         "release_slices": release_slices,
@@ -1261,7 +1381,7 @@ def build_planning(nodes: dict[str, dict[str, object]], release_nodes: dict[str,
         },
         "complexity_budget": {
             "authority": "用户要求完整覆盖 45 项与 L2 比例治理合同",
-            "rationale": "45 个来源条目各保留一个责任节点；决定、发布验收和九屏汇合只增加必要薄节点，不登记未真实运行的外部 Codex 进程。",
+            "rationale": "45 个来源条目各保留一个责任节点；决定、发布验收和界面汇合只增加必要薄节点；两次外部执行器 502 与主会话接管单独登记。",
             "limits": {"total_nodes": 67, "implementation_nodes_per_release": 9, "codex_worker_nodes": 0, "generated_views": 1},
         },
         "goal_size_detector": {
@@ -1277,7 +1397,7 @@ def build_planning(nodes: dict[str, dict[str, object]], release_nodes: dict[str,
             "statement": "每个 HTML MUST 条目必须绑定一个显式未完成或已证明节点；不得丢失、降级或用其他条目的证据替代。"
         },
         "source_requirements": [
-            {"requirement_id": f"SRC-{item_id}", "node_ids": [item_id], "status": "INCOMPLETE"}
+            {"requirement_id": f"SRC-CHECKLIST-{item_id}", "node_ids": [item_id], "status": "IMPLEMENTED_PENDING_VERIFICATION"}
             for item_id in ITEM_IDS
         ],
     }
@@ -1290,15 +1410,17 @@ def render_main(nodes: dict[str, dict[str, object]], edges: list[dict[str, objec
     for node_id, node in nodes.items():
         blocking = "none" if node["execution_state"] in {"READY", "ACCEPTED"} else ",".join(dep for dep in node["hard_dependencies"] if nodes[dep]["execution_state"] != "ACCEPTED") or "待人工决定"
         if node_id == "F":
-            evidence = "source-notes.md 中的来源校验值、主分支身份、45 项代码定位和 304 项回归基线"
+            evidence = "source-notes.md 中的来源校验值、主分支身份、45 项代码定位和本轮最终回归命令"
         elif node_id in PD_META:
             evidence = "用户在本任务中明确拍板，并登记为决定版本 1"
+        elif node["execution_state"] == "IMPLEMENTED":
+            evidence = "主会话接管外部执行器 502 后完成落盘；合同 APPROVED、测试基线 LOCKED，仍待本轮执行证据和独立验收"
         elif node["execution_state"] == "READY":
-            evidence = "尚无完成证据；验收合同为 DRAFT，测试基线为 PLANNED"
+            evidence = "合同 APPROVED、测试基线 LOCKED；尚未进入实现"
         else:
             evidence = "尚无完成证据；硬依赖或人工决定未满足"
         state_rows.append(
-            f"| {node_id} | {node['stage']} | v1 | {node['execution_state']} | 0 | {node['owner']} | G-SSOT | {blocking} | {evidence} | {','.join(node['unlocks']) or 'none'} |"
+            f"| {node_id} | {node['stage']} | v1 | {node['execution_state']} | {'2' if node['execution_state'] == 'IMPLEMENTED' else '0'} | {node['owner']} | G-SSOT | {blocking} | {evidence} | {','.join(node['unlocks']) or 'none'} |"
         )
         refs = ",".join(f"{ref['semantic_key']}@{ref['version']}" for ref in node["decision_refs"]) or "none"
         semantic_rows.append(
@@ -1315,7 +1437,7 @@ def render_main(nodes: dict[str, dict[str, object]], edges: list[dict[str, objec
         )
 
     edge_rows = [
-        f"| {edge['from']} | {edge['to']} | {edge['dependency_type']} | {edge['dependency_scope']} | ACCEPTED | none | {','.join(edge['invalidation_keys'])} | {edge['transferred_input']} | {edge['gate_evidence']} |"
+        f"| {edge['from']} | {edge['to']} | {edge['dependency_type']} | {edge['dependency_scope']} | {edge['required_state']} | none | {','.join(edge['invalidation_keys'])} | {edge['transferred_input']} | {edge['gate_evidence']} |"
         for edge in edges
     ]
     ready_rows = []
@@ -1381,7 +1503,7 @@ def render_main(nodes: dict[str, dict[str, object]], edges: list[dict[str, objec
         for token in source_registry["visual_contract"]["tokens"]
     ]
     anchor_rows = [
-        f"| `{anchor['attribute']}` | `{anchor['value']}` | {','.join(anchor['node_refs'])} | DOM structure + interaction trace |"
+        f"| `{anchor['attribute']}` | `{anchor['value']}` | `{anchor['implementation_anchor']}` | {','.join(anchor['node_refs'])} | DOM structure + interaction trace |"
         for anchor in source_registry["visual_contract"]["dom_anchors"]
     ]
 
@@ -1395,7 +1517,7 @@ def render_main(nodes: dict[str, dict[str, object]], edges: list[dict[str, objec
     return f"""---
 ARTIFACT_CLASS: ssot-development
 APPLICABILITY_DECISION: ssot
-GOVERNANCE_REASON: 指定 HTML 的 45 项要求横跨八个独立发布切片、九个界面和多个外部边界，需要持久来源守恒和验收权威。
+GOVERNANCE_REASON: 指定 HTML 的 45 项要求横跨八个独立发布切片、八个 Surface、新建项目对话框和多个外部边界，需要持久来源守恒和验收权威。
 SSOT_DEPTH: L2
 TARGET_EVIDENCE_LEVEL: local-runtime
 PLAN_VERSION: 1
@@ -1442,7 +1564,7 @@ NORMATIVE_EXECUTABLE_ARTIFACT_MODE: strict
 
 ## 实施路径摘要
 
-实施按真实依赖事件驱动：安全与破坏性操作门禁先行；结构化索引、整理台、时间线、设置与 Studio 能力迁移只在有真实产物依赖时串行。八个切片各自形成不可变候选，最后才进入九屏共享入口、机器端到端验收与人工产品验收。
+实施按真实依赖事件驱动：安全与破坏性操作门禁先行；结构化索引、整理台、时间线、设置与旧 Studio 语义迁移只在有真实产物依赖时串行。八个切片各自形成不可变候选，最后进入八个 Surface、项目对话框的机器端到端验收与人工产品验收。
 
 ## 权威登记
 
@@ -1474,8 +1596,8 @@ MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 
 字体族固定为 `Archivo`、`Asap`、`JetBrains Mono`。
 
-| Attribute | Value | Owning nodes | Evidence |
-| --- | --- | --- | --- |
+| Prototype attribute | Value | Implementation mapping | Owning nodes | Evidence |
+| --- | --- | --- | --- | --- |
 {chr(10).join(anchor_rows)}
 
 | Surface ID | Routes | States | Locales | Themes | Viewports | Helper modes | Source refs | Checklist item refs |
@@ -1555,6 +1677,7 @@ flowchart LR
 | --- | --- | --- | --- |
 | 命令 | ssot-validate-dev | `{validate_command}` | 开发期统一验证 |
 | 路径 | owned-roots | `agents-results`; `.ssot`; `acceptance`; `99_System_OpenClaw`; `.agents/skills`; `scripts/validate_ssot_bundle.py`; `/api`; `/login`; `/setup`; `/app/home`; `/app/inbox`; `/app/library`; `/app/project/`; `/app/settings`; `/cloud/tasks`; `scripts/edit_backends/` | 正文工程定位覆盖 |
+| 路径 | forbidden-studio-route | `/studio` | K1-K6 必须并入工作台和项目页，不建立独立 Studio 路由 |
 | 布局 | machine-layout | `.ssot/nodes`; `.ssot/edges`; `.ssot/view-sources`; `acceptance-fragments` | 机器分片与验收分片布局 |
 | 必有标志 | development-validation | `--skip-archive` | 区分开发验证与正式整包验证 |
 | 必无标志 | destructive-sync | `--delete` | 禁止破坏性同步 |
@@ -1563,9 +1686,9 @@ flowchart LR
 
 ## 验证、清理与完成条件
 
-开发期统一验证命令为 `{validate_command}`。正式完成还要求受保护测试基线、九屏机器验收、产品负责人签署、Obsidian 快照核验与全局归档审计。运行环境最低版本为 `3.11`。
+开发期统一验证命令为 `{validate_command}`。正式完成还要求受保护测试执行、16 张界面捕获、产品负责人签署、Obsidian 快照核验与全局归档审计。运行环境最低版本为 `3.11`。
 
-本轮只创建 SSOT，不创建或清理 Git 分支，不提交、不推送、不更改媒体文件。未来实施结束时，先推送并回读权威主分支，再清理已确认无独有内容的候选工作区与分支。
+本轮由主会话在两次外部执行器均经本机 8080 网关返回 502 后接管实现；接管记录见 `execution-takeover.json`。实现、验证、提交与推送必须按最终证据分别登记，不更改用户媒体文件。
 """
 
 
@@ -1640,7 +1763,7 @@ def create_strict_source_documents() -> tuple[dict[str, object], dict[str, list[
                 "lane": lane,
                 "path": (
                     f"acceptance-fragments/OCM-{node_refs[0]}/acceptance/"
-                    f"{lane.removeprefix('machine/')}/runs/<run-id>/result.md"
+                    f"{lane}/runs/<run-id>/result.md"
                 ),
             }
             for lane in required_lanes
@@ -1745,11 +1868,30 @@ def create_strict_source_documents() -> tuple[dict[str, object], dict[str, list[
         "data-screen-panel": ["H1", "I1", "L1", "P1", "S1"],
         "data-batch": ["D1", "I1", "I2"],
         "data-del": ["I4", "I5"],
+        "data-lib": ["L1", "L2"],
+        "data-lib-view": ["L1"],
+        "data-set": ["S1", "S2", "S3", "S4", "S5", "D3"],
         "data-set-pane": ["S1", "S2", "S3", "S4", "S5", "D3"],
         "data-asset-add-project": ["L5"],
         "data-edl-view": ["P2", "P3"],
         "data-copy-report": ["C3", "S3"],
         "data-preserved-k": ["K1", "K2", "K3", "K4", "K5", "K6"],
+        "data-login-step": ["A1"],
+    }
+    implementation_anchor_map = {
+        "data-screen": "data-screen",
+        "data-screen-panel": "data-screen-panel",
+        "data-batch": "data-batch",
+        "data-del": "data-delete (row also retains data-del)",
+        "data-lib": "data-category / data-tags",
+        "data-lib-view": "data-library-view",
+        "data-set": "data-set-nav",
+        "data-set-pane": "data-set-pane",
+        "data-asset-add-project": "data-asset-add-project",
+        "data-edl-view": "data-edl-view",
+        "data-copy-report": "data-copy-report",
+        "data-preserved-k": "data-preserved-k",
+        "data-login-step": "data-login-step",
     }
     dom_anchors = []
     for attribute, related_nodes in anchor_nodes.items():
@@ -1764,19 +1906,68 @@ def create_strict_source_documents() -> tuple[dict[str, object], dict[str, list[
             bound_nodes = [node_id for node_id in related_nodes if value == "present" or value.lower() in {node_id.lower(), "home", "inbox", "library", "project", "settings", "timeline", "text", "paths", "agent", "asr", "budget", "account", "doctor", "a", "b", "c", "d1", "d2", "d3"}]
             if not bound_nodes:
                 bound_nodes = related_nodes
-            dom_anchors.append({"attribute": attribute, "value": value, "node_refs": bound_nodes, "locator": f"[{literal}]" if value != "present" else f"[{attribute}]", "content_sha256": sha256_bytes(literal.encode("utf-8"))})
+            dom_anchors.append({"attribute": attribute, "value": value, "implementation_anchor": implementation_anchor_map[attribute], "node_refs": bound_nodes, "locator": f"[{literal}]" if value != "present" else f"[{attribute}]", "content_sha256": sha256_bytes(literal.encode("utf-8"))})
+
+    def interaction(
+        interaction_id: str,
+        surface_id: str,
+        control: str,
+        trigger: str,
+        state_change: str,
+        visible_result: str,
+        boundary_behavior: str,
+        source_refs: list[str],
+        acceptance_refs: list[str],
+        locators: list[str],
+        precondition: str = "对应真实数据已加载且当前候选身份可回读",
+    ) -> dict[str, object]:
+        return {
+            "id": interaction_id,
+            "surface_id": surface_id,
+            "control": control,
+            "precondition": precondition,
+            "trigger": trigger,
+            "state_change": state_change,
+            "visible_result": visible_result,
+            "boundary_behavior": boundary_behavior,
+            "source_refs": source_refs,
+            "prototype_locators": locators,
+            "acceptance_refs": acceptance_refs,
+        }
 
     interactions = [
-        {"id": "INT-NAV-SCREENS", "surface_id": "SURF-DASHBOARD", "control": "主导航", "precondition": "桌面应用已启动", "trigger": "选择工作台、整理台、素材库、项目或设置", "state_change": "唯一 data-screen-panel 成为可见面板", "visible_result": "标题、侧栏当前态和面板同步", "boundary_behavior": "未知目标不改变当前屏", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-H1"], "prototype_locators": ["[data-screen]", "[data-screen-panel]"], "acceptance_refs": ["H1/AC-01", "Z1/AC-01"]},
-        {"id": "INT-INBOX-BATCHES", "surface_id": "SURF-ORGANIZER", "control": "批次 A/B/C 与确认落点", "precondition": "媒体清单已生成且候选摘要可回读", "trigger": "选择批次并确认项目落点", "state_change": "候选从预览转为一次幂等迁移", "visible_result": "批次来源、目标、数量和回执可见", "boundary_behavior": "清单漂移、碰撞或未确认时禁止移动", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-D1", "SRC-CHECKLIST-I1"], "prototype_locators": ["[data-batch=\"a\"]", "[data-batch=\"b\"]", "[data-batch=\"c\"]"], "acceptance_refs": ["D1/AC-01", "I1/AC-01", "I3/AC-01"]},
-        {"id": "INT-INBOX-DELETE", "surface_id": "SURF-ORGANIZER", "control": "删除建议、全选和二次确认", "precondition": "四类机器理由已生成候选", "trigger": "勾选候选并二次确认", "state_change": "仅选中候选进入当前系统回收站", "visible_result": "选择数量、回执和恢复入口可见", "boundary_behavior": "永久删除、未选中项、失败回读一律禁止", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-I4", "SRC-CHECKLIST-I5"], "prototype_locators": ["[data-del]", "#del-all", "#del-confirm"], "acceptance_refs": ["I4/AC-01", "I5/AC-01", "D2/AC-01"]},
-        {"id": "INT-LIBRARY-BROWSE", "surface_id": "SURF-LIBRARY", "control": "三种视图、七类分类、标签和详情主按钮", "precondition": "结构化索引可查询", "trigger": "切换视图、分类、标签或素材详情", "state_change": "查询条件和当前素材改变", "visible_result": "计数、卡片/列表/文本及加入项目动作同步", "boundary_behavior": "空索引和未知素材显示明确空态/错误态", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-L1", "SRC-CHECKLIST-L2", "SRC-CHECKLIST-L5"], "prototype_locators": ["[data-lib]", "[data-lib-view]", "[data-asset-add-project]"], "acceptance_refs": ["L1/AC-01", "L2/AC-01", "L5/AC-01"]},
-        {"id": "INT-PROJECT-EDL", "surface_id": "SURF-PROJECT", "control": "决策列表、时间线/文本双视图、待补素材与交接包", "precondition": "项目和结构化 EDL 身份可回读", "trigger": "切换 EDL 视图或生成交接包", "state_change": "只改变展示或生成受支持输出，不改第二份权威", "visible_result": "片段、轨道、缺失素材、输出后端和回执可见", "boundary_behavior": "EDL 无效或后端未探测时失败关闭", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-P1", "SRC-CHECKLIST-P2", "SRC-CHECKLIST-P3", "SRC-CHECKLIST-P4", "SRC-CHECKLIST-P5"], "prototype_locators": ["[data-edl-view=\"timeline\"]", "[data-edl-view=\"text\"]"], "acceptance_refs": ["P1/AC-01", "P2/AC-01", "P3/AC-01", "P4/AC-01", "P5/AC-01"]},
-        {"id": "INT-PROJECT-PRESERVED", "surface_id": "SURF-PROJECT", "control": "锁定、版本、失效、参考、复盘、Brief 与脚本", "precondition": "项目已加载", "trigger": "进入 K1-K6 入口并执行对应动作", "state_change": "项目文档及版本按 expectedRevision 更新", "visible_result": "锁定、diff、回滚、stale、参考和发布记录均可回读", "boundary_behavior": "这些能力不得拆成独立 Studio 路由", "source_refs": ["SRC-PROTOTYPE-UI", *[f"SRC-CHECKLIST-K{i}" for i in range(1, 7)]], "prototype_locators": [f"[data-preserved-k=\"k{i}\"]" for i in range(1, 7)], "acceptance_refs": [f"K{i}/AC-01" for i in range(1, 7)]},
-        {"id": "INT-SETTINGS-PANELS", "surface_id": "SURF-SETTINGS", "control": "六个设置面板", "precondition": "本机设置可读", "trigger": "选择存放位置、创意模型、转写、预算、账号或诊断", "state_change": "当前设置面板切换；保存动作带 CSRF 与 revision", "visible_result": "真实配置、能力探测和动态诊断项可见", "boundary_behavior": "不支持与配置错误分开，密钥不回显", "source_refs": ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-D3", *[f"SRC-CHECKLIST-S{i}" for i in range(1, 6)]], "prototype_locators": [f"[data-set-pane=\"{name}\"]" for name in ("paths", "agent", "asr", "budget", "account", "doctor")], "acceptance_refs": ["D3/AC-01", "S1/AC-01", "S2/AC-01", "S3/AC-01", "S4/AC-01", "S5/AC-01"]},
-        {"id": "INT-LOGIN", "surface_id": "SURF-LOGIN", "control": "登录两步与跳过", "precondition": "桌面本地能力可用", "trigger": "选择上游登录、完成配对或跳过", "state_change": "只改变可选上游会话", "visible_result": "连接状态与本地功能可用状态同时显示", "boundary_behavior": "未登录、撤销、不支持、过期均不降级本地功能", "source_refs": ["SRC-CHECKLIST-A1"], "acceptance_refs": ["A1/AC-01", "S4/AC-01"]},
-        {"id": "INT-SETUP", "surface_id": "SURF-SETUP", "control": "四步可重入向导", "precondition": "桌面入口可打开", "trigger": "逐步配置位置、运行环境、编辑器、账号与设备", "state_change": "每步状态原子保存", "visible_result": "进度、失败点、重试和完成态可见", "boundary_behavior": "中断后从最后成功步骤恢复", "source_refs": ["SRC-CHECKLIST-A2"], "acceptance_refs": ["A2/AC-01", "A2/AC-02"]},
-        {"id": "INT-CLOUD-STATES", "surface_id": "SURF-CLOUD", "control": "网页中台任务状态", "precondition": "用户已主动配对上游", "trigger": "读取或刷新任务", "state_change": "上游投影状态更新", "visible_result": "queued/running/completed/failed/expired/cancelled 均有明确文案", "boundary_behavior": "会话失效只清除上游能力，不影响本地项目", "source_refs": ["SRC-CHECKLIST-C2"], "acceptance_refs": ["C2/AC-01", "C2/AC-02"]},
+        interaction("INT-NAV-SCREENS", "SURF-DASHBOARD", "主导航", "选择工作台、整理台、素材库、项目或设置", "唯一面板成为可见页", "标题、导航当前态和 URL 一致", "未知目标保持原页", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-H1"], ["H1/AC-01", "Z1/AC-01"], ["[data-screen]", "[data-screen-panel]"]),
+        interaction("INT-DASHBOARD-REFRESH", "SURF-DASHBOARD", "刷新", "点击刷新", "重新读取项目与能力状态", "更新时间、项目与能力状态同步", "失败保留旧数据并显示错误", ["SRC-CHECKLIST-H2", "SRC-CHECKLIST-H3"], ["H2/AC-01", "H3/AC-01"], ["[data-refresh]"]),
+        interaction("INT-PROJECT-CREATE", "SURF-DASHBOARD", "新建项目", "提交项目表单", "创建项目并选中", "对话框关闭且项目页显示新项目", "字段非法或冲突时对话框保留输入", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-H1"], ["H1/AC-01", "Z1/AC-01"], ["#project-dialog", "[data-create]"]),
+        interaction("INT-INBOX-BATCH-SELECT", "SURF-ORGANIZER", "批次 A/B/C", "选择一个自动分批候选", "当前批次改变，不移动媒体", "来源、数量、依据和目标预览同步", "未知批次不改变选择", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-I2"], ["I2/AC-01"], ["[data-batch]"]),
+        interaction("INT-INBOX-BATCH-CONFIRM", "SURF-ORGANIZER", "确认落点", "确认所选批次与项目", "带 planDigest 和 revision 写入确认回执", "批次、目标、revision 和回执可见", "计划漂移、碰撞或未确认时禁止移动", ["SRC-CHECKLIST-D1", "SRC-CHECKLIST-I1", "SRC-CHECKLIST-I3"], ["D1/AC-01", "I1/AC-01", "I3/AC-01"], ["#confirm-batch"]),
+        interaction("INT-INBOX-REANALYZE", "SURF-ORGANIZER", "重新分析", "点击重新分析", "废弃旧计划并读取新 planDigest", "批次列表和依据刷新", "分析失败保留旧计划且不能误确认", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-I2"], ["I2/AC-02"], ["#reanalyze"]),
+        interaction("INT-DELETE-SELECT", "SURF-ORGANIZER", "逐项勾选删除建议", "勾选或取消候选", "仅改变待确认集合", "选择数与确认按钮同步", "无机器理由项不可选择", ["SRC-CHECKLIST-I4", "SRC-CHECKLIST-I5"], ["I4/AC-01", "I5/AC-01"], ["[data-del]", "[data-delete]"]),
+        interaction("INT-DELETE-SELECT-ALL", "SURF-ORGANIZER", "全选/取消全选", "点击全选", "切换当前可见候选集合", "所有可选项和总数同步", "过滤外、无证据或不可恢复项不纳入", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-I4"], ["I4/AC-01"], ["#delAll", "#delete-all"]),
+        interaction("INT-DELETE-CONFIRM", "SURF-ORGANIZER", "移入系统回收站", "二次确认选中项", "仅选中媒体进入系统回收站", "逐文件回执与恢复提示可见", "未二次确认、永久删除或回读失败一律禁止", ["SRC-CHECKLIST-D2", "SRC-CHECKLIST-I5"], ["D2/AC-01", "I5/AC-01"], ["#confirm-delete"]),
+        interaction("INT-LIBRARY-IMPORT", "SURF-LIBRARY", "导入素材", "选择文件夹导入", "扫描并建立受控素材候选", "进度、数量和错误可见", "路径越界或重复身份不写入索引", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-L1"], ["L1/AC-01"], ["[data-library-import]"]),
+        interaction("INT-LIBRARY-REGISTER", "SURF-LIBRARY", "登记新资产", "提交资产登记", "结构化索引新增或幂等更新", "资产卡和索引字段回读一致", "缺少哈希、来源或受控路径时拒绝", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-L1"], ["L1/AC-01", "L1/AC-02"], ["[data-library-register]"]),
+        interaction("INT-LIBRARY-VIEW", "SURF-LIBRARY", "网格/列表/卡片视图", "切换素材库视图", "仅改变展示模式", "同一查询结果以目标视图呈现", "切换不得改变索引或选中素材", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-L1"], ["L1/AC-01"], ["[data-lib-view]", "[data-library-view]"]),
+        interaction("INT-LIBRARY-FILTER", "SURF-LIBRARY", "分类与标签筛选", "选择分类或标签", "查询条件改变", "结果、计数和详情同步", "未知条件显示空态，不放宽为全部", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-L2"], ["L2/AC-01", "L2/AC-02"], ["[data-lib]", "[data-category]", "[data-tags]"]),
+        interaction("INT-ASSET-ADD-PROJECT", "SURF-LIBRARY", "加入项目", "把当前素材加入选中项目", "带 expectedRevision 写入素材引用", "项目 revision 与资产用途可回读", "未知 assetId 或冲突不写入", ["SRC-CHECKLIST-L5", "SRC-CHECKLIST-T5"], ["L5/AC-01", "T5/AC-01"], ["[data-asset-add-project]"]),
+        interaction("INT-ASSET-REVEAL", "SURF-LIBRARY", "在访达中显示", "点击显示文件", "请求系统定位受控路径", "文件位置被系统打开", "路径不存在、越界或非 macOS 时明确不支持", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-L5"], ["L5/AC-02"], ["[data-reveal-file]"]),
+        interaction("INT-PROJECT-EDL-VIEW", "SURF-PROJECT", "时间线/文本视图", "切换 EDL 视图", "只改变展示方式", "两种视图呈现同一 EDL revision", "无效 EDL 不生成第二权威", ["SRC-CHECKLIST-P1", "SRC-CHECKLIST-P2", "SRC-CHECKLIST-P3"], ["P1/AC-01", "P2/AC-01", "P3/AC-01"], ["[data-edl-view]"]),
+        interaction("INT-PROJECT-HANDOFF", "SURF-PROJECT", "生成剪辑交接包", "选择受支持后端并生成", "创建不可变交接产物", "后端、摘要、路径和回执可见", "未探测 ChatCut 或无效 EDL 时失败关闭", ["SRC-CHECKLIST-P4", "SRC-CHECKLIST-P5"], ["P4/AC-01", "P5/AC-01"], ["#create-handoff"]),
+        *[
+            interaction(f"INT-PROJECT-K{index}", "SURF-PROJECT", label, "打开并执行该项目能力", "按 expectedRevision 更新项目文档", "状态、版本和回执可回读", "不得创建独立 /studio 路由或覆盖较新版本", ["SRC-PROTOTYPE-UI", f"SRC-CHECKLIST-K{index}"], [f"K{index}/AC-01", f"K{index}/AC-02"], [f"[data-preserved-k=\"k{index}\"]"])
+            for index, label in enumerate(("锁定与 AI 选区", "版本与回滚", "下游失效传播", "研究与参考", "发布与复盘", "Brief 与脚本"), 1)
+        ],
+        interaction("INT-SETTINGS-NAV", "SURF-SETTINGS", "六个设置面板", "选择存放位置、创意模型、转写、预算、账号或诊断", "当前面板改变", "导航当前态与面板同步", "未知面板不隐藏当前内容", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-S3"], ["S3/AC-01"], ["[data-set]", "[data-set-nav]", "[data-set-pane]"]),
+        interaction("INT-SETTINGS-LOCATION", "SURF-SETTINGS", "登记存放位置", "保存生命周期与物理位置", "配置与独立位置回读更新", "生命周期、清单、校验值和位置状态可见", "不可访问或越界位置不登记为已存在", ["SRC-CHECKLIST-L3", "SRC-CHECKLIST-S2"], ["L3/AC-01", "S2/AC-01"], ["#save-location"]),
+        interaction("INT-SETTINGS-PROVIDER", "SURF-SETTINGS", "添加创意模型", "提交提供方配置", "保存模型配置和密钥引用", "提供方、模型、能力状态可见", "密钥不回显，探测失败不伪造可用", ["SRC-CHECKLIST-S5"], ["S5/AC-01", "S5/AC-02"], ["#add-provider"]),
+        interaction("INT-BUDGET-ADJUST", "SURF-SETTINGS", "分析预算加减", "点击任一字段的加号或减号", "本地候选数值改变", "五个字段的新值立即可见", "不得低于零或产生非整数", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-S1"], ["S1/AC-01"], ["[data-budget-adjust]"]),
+        interaction("INT-BUDGET-SAVE", "SURF-SETTINGS", "保存分析预算", "保存当前预算", "带 expectedRevision 持久化", "新 revision 和五字段回读一致", "冲突或非法值保留服务器当前值", ["SRC-CHECKLIST-S1", "SRC-CHECKLIST-T4"], ["S1/AC-02", "T4/AC-01"], ["#save-budget"]),
+        interaction("INT-DIAGNOSTICS-COPY", "SURF-SETTINGS", "复制报告", "复制当前诊断", "剪贴板写入无密钥 JSON", "复制内容与动态诊断一致", "诊断项不得写死六项，密钥不得进入报告", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-S3", "SRC-CHECKLIST-C3"], ["S3/AC-01", "C3/AC-01"], ["[data-copy-report]"]),
+        interaction("INT-LOGIN-PAIR", "SURF-LOGIN", "连接上游", "提交配对意图", "可选上游会话改变", "配对状态与本地可用状态同时显示", "失败或不支持不降级本地功能", ["SRC-CHECKLIST-A1", "SRC-CHECKLIST-S4"], ["A1/AC-01", "S4/AC-01"], ["#pair-form", "[data-login-step]"]),
+        interaction("INT-LOGIN-UNPAIR", "SURF-LOGIN", "解除配对", "点击解除配对", "清除上游会话引用", "回到未连接态且本地能力可用", "重复解除保持幂等", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-A1"], ["A1/AC-02"], ["#logout-upstream"]),
+        interaction("INT-LOGIN-SKIP", "SURF-LOGIN", "跳过，稍后再连", "点击跳过", "关闭登录表面，不创建会话", "进入本地工作台", "不得进入只读态", ["SRC-PROTOTYPE-UI", "SRC-CHECKLIST-A1"], ["A1/AC-01"], ["[data-close-surface]"]),
+        interaction("INT-SETUP-STEPS", "SURF-SETUP", "四步可重入向导", "上一步、下一步、完成或跳过账号", "每步以独立 revision 原子保存", "当前步骤、完成态与重入位置一致", "中断、冲突或失败从最后成功步骤恢复", ["SRC-CHECKLIST-A2"], ["A2/AC-01", "A2/AC-02"], ["[data-wizard-step]", "#wizard-prev", "#wizard-next"]),
+        interaction("INT-CLOUD-REFRESH", "SURF-CLOUD", "网页中台任务刷新", "读取上游任务", "六态投影更新", "queued/running/completed/failed/expired/cancelled 文案明确", "会话失效只清除上游投影", ["SRC-CHECKLIST-C1", "SRC-CHECKLIST-C2", "SRC-CHECKLIST-C3"], ["C1/AC-01", "C2/AC-01", "C3/AC-01"], ["[data-surface-panel=\"cloud\"]"]),
     ]
 
     api_mapping = [
@@ -1787,7 +1978,7 @@ def create_strict_source_documents() -> tuple[dict[str, object], dict[str, list[
         {"id": "API-ASSETS", "method": "GET", "path": "/api/assets?category=&tags=", "status": "existing", "schema": "asset_library_index.schema.json projection", "revision": "none", "csrf": "read-only", "receipt": "ok + assets + query", "source": "99_System_OpenClaw/desktop/server.py"},
         {"id": "API-ASSET-STATS", "method": "GET", "path": "/api/assets/statistics", "status": "existing", "schema": "statistics by category/tag/use", "revision": "none", "csrf": "read-only", "receipt": "ok + statistics", "source": "99_System_OpenClaw/desktop/server.py"},
         {"id": "API-INBOX-PLAN", "method": "POST", "path": "/api/projects/:id/inbox-plan", "status": "existing", "schema": "inbox_batch_plan.schema.json", "revision": "manifest digest", "csrf": "X-Content-OS-CSRF", "receipt": "ok + read-only plan", "source": "99_System_OpenClaw/desktop/server.py"},
-        {"id": "API-INBOX-CONFIRM", "method": "POST", "path": "/api/projects/:id/inbox-plan/confirm", "status": "new", "schema": "planDigest, batchId, targetProjectId, expectedRevision", "revision": "required", "csrf": "X-Content-OS-CSRF", "receipt": "promotion receipt + journal identity", "source": "planned by D1/I1/T1"},
+        {"id": "API-INBOX-CONFIRM", "method": "POST", "path": "/api/projects/:id/inbox-plan/confirm", "status": "existing", "schema": "planDigest, batchId, targetProjectId, expectedRevision", "revision": "required", "csrf": "X-Content-OS-CSRF", "receipt": "promotion receipt + journal identity", "source": "99_System_OpenClaw/desktop/server.py"},
         {"id": "API-DELETE-RECOMMEND", "method": "POST", "path": "/api/projects/:id/media-delete/recommendations", "status": "existing", "schema": "manifest -> four-reason candidates", "revision": "manifest digest", "csrf": "X-Content-OS-CSRF", "receipt": "ok + candidates", "source": "99_System_OpenClaw/desktop/server.py"},
         {"id": "API-DELETE-CONFIRM", "method": "POST", "path": "/api/projects/:id/media-delete/confirm", "status": "existing", "schema": "selectedCandidateNumbers, secondConfirmation", "revision": "candidate digest", "csrf": "X-Content-OS-CSRF", "receipt": "system-trash receipt per file", "source": "99_System_OpenClaw/desktop/server.py"},
         {"id": "API-DOCUMENT-ACTION", "method": "POST", "path": "/api/projects/:id/documents/:name/:action", "status": "existing", "schema": "patch|lock|unlock|rollback|ai-patch", "revision": "expectedRevision required for writes", "csrf": "X-Content-OS-CSRF", "receipt": "ok + updated project", "source": "99_System_OpenClaw/desktop/server.py"},
@@ -1796,11 +1987,11 @@ def create_strict_source_documents() -> tuple[dict[str, object], dict[str, list[
         {"id": "API-ARCHIVE", "method": "POST", "path": "/api/settings/archive/{lifecycle|locations}", "status": "existing", "schema": "lifecycle or physical location + manifest readback", "revision": "configuration identity", "csrf": "X-Content-OS-CSRF", "receipt": "ok + archive projection", "source": "99_System_OpenClaw/desktop/server.py"},
         {"id": "API-UPSTREAM", "method": "POST", "path": "/api/settings/upstream/{pair|refresh|logout}", "status": "existing", "schema": "opaque session reference projection", "revision": "session generation", "csrf": "X-Content-OS-CSRF", "receipt": "ok + secret-free upstream state", "source": "99_System_OpenClaw/desktop/server.py"},
         {"id": "API-CHATCUT", "method": "POST", "path": "/api/settings/chatcut/{probe|confirm}", "status": "existing", "schema": "Desktop MCP capability state", "revision": "probe identity", "csrf": "X-Content-OS-CSRF", "receipt": "ok + chatcut state", "source": "99_System_OpenClaw/desktop/server.py"},
-        {"id": "API-DOCTOR", "method": "GET", "path": "/api/diagnostics", "status": "new", "schema": "dynamic checks array + report digest", "revision": "none", "csrf": "read-only", "receipt": "ok + checks, no fixed count", "source": "planned by S3/C3"},
-        {"id": "API-BUDGET", "method": "GET/POST", "path": "/api/settings/analysis-budget", "status": "new", "schema": "analysis_tiering.schema.json", "revision": "expectedRevision on POST", "csrf": "X-Content-OS-CSRF on POST", "receipt": "ok + effective budget", "source": "planned by S1/T4"},
-        {"id": "API-ASSET-ADD", "method": "POST", "path": "/api/projects/:id/assets", "status": "new", "schema": "assetId, intendedUse, expectedRevision", "revision": "expectedRevision required", "csrf": "X-Content-OS-CSRF", "receipt": "ok + project asset reference", "source": "planned by L5/T5"},
-        {"id": "API-WIZARD", "method": "GET/POST", "path": "/api/setup/state", "status": "new", "schema": "four-step resumable setup state", "revision": "expectedRevision on POST", "csrf": "X-Content-OS-CSRF on POST", "receipt": "ok + persisted step state", "source": "planned by A2/T5"},
-        {"id": "API-CLOUD-TASKS", "method": "GET", "path": "/api/upstream/tasks", "status": "new", "schema": "queued|running|completed|failed|expired|cancelled", "revision": "upstream snapshot generation", "csrf": "read-only after optional pairing", "receipt": "ok + task projections", "source": "planned by C1/C2/C3"},
+        {"id": "API-DOCTOR", "method": "GET", "path": "/api/diagnostics", "status": "existing", "schema": "dynamic checks array + report digest", "revision": "none", "csrf": "read-only", "receipt": "ok + checks, no fixed count", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-BUDGET", "method": "GET/POST", "path": "/api/settings/analysis-budget", "status": "existing", "schema": "analysis_tiering.schema.json", "revision": "expectedRevision on POST", "csrf": "X-Content-OS-CSRF on POST", "receipt": "ok + effective budget", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-ASSET-ADD", "method": "POST", "path": "/api/projects/:id/assets", "status": "existing", "schema": "assetId, intendedUse, expectedRevision", "revision": "expectedRevision required", "csrf": "X-Content-OS-CSRF", "receipt": "ok + project asset reference", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-WIZARD", "method": "GET/POST", "path": "/api/setup/state", "status": "existing", "schema": "four-step resumable setup state", "revision": "expectedRevision on POST", "csrf": "X-Content-OS-CSRF on POST", "receipt": "ok + persisted step state", "source": "99_System_OpenClaw/desktop/server.py"},
+        {"id": "API-CLOUD-TASKS", "method": "GET", "path": "/api/upstream/tasks", "status": "existing", "schema": "queued|running|completed|failed|expired|cancelled", "revision": "upstream snapshot generation", "csrf": "read-only after optional pairing", "receipt": "ok + task projections", "source": "99_System_OpenClaw/desktop/server.py"},
     ]
 
     surfaces = [
@@ -1815,7 +2006,19 @@ def create_strict_source_documents() -> tuple[dict[str, object], dict[str, list[
         for surface_id, (name, route) in SURFACES.items()
     ]
     captures = [
-        {"surface_id": surface["surface_id"], "route": surface["routes"][0], "locale": "zh-CN", "theme": "dark", "viewport": viewport, "dataset": "prototype-frozen-v2", "baseline_policy": "render source prototype and candidate with identical data; store both images and pixel report in the run evidence directory"}
+        {
+            "capture_id": f"CAP-{surface['surface_id'].removeprefix('SURF-')}-{viewport}",
+            "surface_id": surface["surface_id"],
+            "route": surface["routes"][0],
+            "locale": "zh-CN",
+            "theme": "dark",
+            "viewport": viewport,
+            "dataset": "prototype-frozen-v2",
+            "baseline_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+            "evidence_root": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+            "capture_command": "node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765",
+            "baseline_policy": "render source prototype and candidate with identical data; store source-approved baselines separately from run evidence",
+        }
         for surface in surfaces
         for viewport in ("1440x900", "390x844")
     ]
@@ -2000,8 +2203,35 @@ def main() -> None:
         }
     )
     write_json(BUNDLE / ".ssot/planning-compiler.json", planning)
+    write_json(
+        BUNDLE / "execution-takeover.json",
+        {
+            "schema_version": 1,
+            "task_id": "OCM-ACCEPTANCE-DESIGN",
+            "reported_executor_attempts": [
+                {"attempt": 1, "executor": "external-codex", "result": "BLOCKED", "failure": "local gateway 127.0.0.1:8080 returned 502"},
+                {"attempt": 2, "executor": "external-codex", "result": "BLOCKED", "failure": "local gateway 127.0.0.1:8080 returned 502"},
+            ],
+            "takeover": {
+                "actor": "main-session",
+                "authority": "user requested completion after executor failure",
+                "scope": [
+                    "acceptance contracts",
+                    "protected test baseline",
+                    "interaction catalog",
+                    "DOM anchor mapping",
+                    "API route synchronization guard",
+                    "visual capture executor",
+                    "implementation traceability",
+                ],
+                "node_state": "IMPLEMENTED_PENDING_VERIFICATION",
+            },
+            "provenance": "user-reported executor failure plus repository diff and generated records",
+        },
+    )
     build_source_notes()
     build_acceptance(nodes)
+    build_traceability()
 
     main_view = render_main(nodes, edges, release_nodes, source_docs)
     source_view = BUNDLE / ".ssot/view-sources/00-main.md"
@@ -2072,8 +2302,9 @@ def main() -> None:
 
 - 来源清单条目：45；来源 HTML 与原型均以内容校验值冻结。
 - 已接受产品决定：11（包括转写策略：DashScope 默认、本机 FunASR 失败兜底）。
-- 实现状态：部分实现；不得从代码修改数量推断 45 项完成。
-- 验收合同：46 份仍为 DRAFT，受保护的自动验收基线尚未锁定。
+- 实现状态：45 个条目节点与 Z1 均登记为 IMPLEMENTED；不得将其提升为 VERIFIED/ACCEPTED。
+- 验收合同：46 份均为 APPROVED，受保护测试基线均为 LOCKED。
+- 执行接管：外部执行器两次因本机 8080 网关 502 阻塞后，由主会话接管；详见 `execution-takeover.json`。
 - 机器验证：必须以本次生成后的统一验证输出为准；历史临时 Skill 报告不构成通过证据。
 - 人工验收：OCM-Z1 尚未提交，不能由自动化代填为通过。
 - 完成判定：未完成。

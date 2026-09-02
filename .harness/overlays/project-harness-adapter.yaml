@@ -2,16 +2,31 @@ project:
   name: photo-content-os
   profile: core
 design:
-  token_sources: []
-  theme_sources: []
-  page_shell_sources: []
-  component_sources: []
+  token_sources:
+    - agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html
+  theme_sources:
+    - 99_System_OpenClaw/desktop/static/styles.css
+  page_shell_sources:
+    - 99_System_OpenClaw/desktop/static/index.html
+  component_sources:
+    - 99_System_OpenClaw/desktop/static/app.js
 quality:
-  static_guards: []
+  static_guards:
+    - command: 99_System_OpenClaw/.venv-content-os/bin/python -m unittest 99_System_OpenClaw.tests.test_full_checklist_acceptance 99_System_OpenClaw.tests.test_desktop_openapi_route_sync
+      failure_class: desktop-contract-route-drift
+      repair: regenerate desktop_openapi.json from desktop.api_contract and keep server registration on canonical ROUTE_SPECS
   formatting: []
 qa:
-  screenshot: []
-  integration: []
+  screenshot:
+    - id: openclaw-media-eight-surfaces-two-viewports
+      command: node 99_System_OpenClaw/scripts/47_capture_desktop_surfaces.mjs --base-url http://127.0.0.1:8765
+      capture_matrix: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/.ssot/source-requirements.json
+      baseline_root: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines
+      evidence_root: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs
+      expected_capture_count: 16
+  integration:
+    - 99_System_OpenClaw/tests/test_full_checklist_acceptance.py
+    - 99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py
   evidence_root: agents-results
 skills:
   enabled: []

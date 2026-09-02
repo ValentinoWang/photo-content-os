@@ -7,7 +7,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any, Iterator, Mapping
 
 try:
     import fcntl
@@ -198,6 +198,12 @@ def _normalize_project(project: dict[str, Any]) -> None:
         if role != REFERENCE_ASSET_ROLE:
             raise ProjectStoreError("reference_role_invalid", "references 中的资产必须保持 reference 角色")
         reference["editing_eligible"] = False
+    assets = project.setdefault("assets", [])
+    if not isinstance(assets, list) or any(not isinstance(item, dict) for item in assets):
+        raise ProjectStoreError("store_schema_invalid", "项目素材引用存储格式无效")
+    confirmations = project.setdefault("inbox_confirmations", [])
+    if not isinstance(confirmations, list) or any(not isinstance(item, dict) for item in confirmations):
+        raise ProjectStoreError("store_schema_invalid", "分批确认存储格式无效")
 
 
 def _public(project: dict[str, Any]) -> dict[str, Any]:
@@ -342,7 +348,7 @@ class ProjectStore:
             path = Path(local_workspace).expanduser().resolve()
             if not path.is_dir(): raise ProjectStoreError("workspace_not_found", "本地素材目录不存在")
             local_path, label = str(path), path.name
-        now = _now(); project = {"schema_version": PROJECT_SCHEMA_VERSION, "id": f"{_slug(title)}-{secrets.token_hex(5)}", "title": title, "platform": str(platform or "未指定")[:40], "account": str(account or "")[:80], "status": "planning", "revision": 1, "created_at": now, "updated_at": now, "local_workspace": {"workspace_id": "workspace-" + secrets.token_hex(8), "label": label, "local_path": local_path, "path_digest": _digest(local_path) if local_path else None}, "references": [], "documents": {n: _document(n) for n in DOCUMENT_NAMES}, "delivery": {"state": "not_started", "stale": False, "stale_reason": "", "stale_sources": [], "consumed_inputs": {}, "artifacts": []}, "publishing": {"state": "not_published", "published_at": None, "links": [], "metrics": {}}, "publishing_history": [], "analysis": {"state": "not_started", "tier": "metadata", "transcript_state": "not_started", "preview_state": "not_started"}, "audit": [{"id": "audit-" + secrets.token_hex(8), "at": now, "actor": "user", "action": "project_created", "detail": {"platform": str(platform or "未指定")[:40]}}]}
+        now = _now(); project = {"schema_version": PROJECT_SCHEMA_VERSION, "id": f"{_slug(title)}-{secrets.token_hex(5)}", "title": title, "platform": str(platform or "未指定")[:40], "account": str(account or "")[:80], "status": "planning", "revision": 1, "created_at": now, "updated_at": now, "local_workspace": {"workspace_id": "workspace-" + secrets.token_hex(8), "label": label, "local_path": local_path, "path_digest": _digest(local_path) if local_path else None}, "references": [], "assets": [], "inbox_confirmations": [], "documents": {n: _document(n) for n in DOCUMENT_NAMES}, "delivery": {"state": "not_started", "stale": False, "stale_reason": "", "stale_sources": [], "consumed_inputs": {}, "artifacts": []}, "publishing": {"state": "not_published", "published_at": None, "links": [], "metrics": {}}, "publishing_history": [], "analysis": {"state": "not_started", "tier": "metadata", "transcript_state": "not_started", "preview_state": "not_started"}, "audit": [{"id": "audit-" + secrets.token_hex(8), "at": now, "actor": "user", "action": "project_created", "detail": {"platform": str(platform or "未指定")[:40]}}]}
         with self._transaction() as data:
             data["projects"].append(project)
         return _public(project)
@@ -427,6 +433,87 @@ class ProjectStore:
         with self._transaction() as data:
             project = self._find(data, project_id); self._revision(project, expected_revision); project["references"].append({"id": "reference-" + secrets.token_hex(8), "asset_role": REFERENCE_ASSET_ROLE, "editing_eligible": False, "title": title[:160], "url": url[:2000], "platform": str(platform or "未指定")[:40], "note": str(note or "")[:2000], "created_at": _now()})
             self._touch(project, "user", "reference_added", {"title": title[:160]})
+        return _public(project)
+
+    def confirm_inbox_batch(
+        self,
+        project_id: str,
+        *,
+        plan_digest: str,
+        batch_id: str,
+        target_project_id: str,
+        expected_revision: int,
+        media_ids: list[str],
+        actor: str = "user",
+    ) -> tuple[dict[str, Any], dict[str, Any]]:
+        if not _is_digest(plan_digest):
+            raise ProjectStoreError("plan_digest_invalid", "分批计划摘要无效")
+        if not SAFE_ID.fullmatch(batch_id) or not isinstance(media_ids, list) or not media_ids:
+            raise ProjectStoreError("batch_invalid", "分批内容无效")
+        if any(not isinstance(value, str) or not value for value in media_ids):
+            raise ProjectStoreError("batch_invalid", "分批内容无效")
+        with self._transaction() as data:
+            project = self._find(data, project_id)
+            target = self._find(data, target_project_id)
+            if project["id"] != target["id"]:
+                raise ProjectStoreError("target_project_invalid", "当前版本只能确认到当前项目")
+            self._revision(project, expected_revision)
+            existing = next(
+                (
+                    item
+                    for item in project["inbox_confirmations"]
+                    if item.get("plan_digest") == plan_digest and item.get("batch_id") == batch_id
+                ),
+                None,
+            )
+            if existing is not None:
+                return _public(project), copy.deepcopy(existing)
+            confirmation = {
+                "confirmation_id": "batch-confirmation-" + secrets.token_hex(8),
+                "status": "confirmed",
+                "plan_digest": plan_digest,
+                "batch_id": batch_id,
+                "target_project_id": target_project_id,
+                "media_ids": list(media_ids),
+                "confirmed_at": _now(),
+            }
+            project["inbox_confirmations"].append(confirmation)
+            self._touch(
+                project,
+                actor,
+                "inbox_batch_confirmed",
+                {"plan_digest": plan_digest, "batch_id": batch_id, "media_count": len(media_ids)},
+            )
+        return _public(project), copy.deepcopy(confirmation)
+
+    def add_asset_reference(
+        self,
+        project_id: str,
+        *,
+        asset: Mapping[str, Any],
+        intended_use: str,
+        expected_revision: int,
+        actor: str = "user",
+    ) -> dict[str, Any]:
+        asset_id = str(asset.get("asset_id") or "")
+        intended_use = str(intended_use or "").strip()
+        if not asset_id or not intended_use or len(intended_use) > 80:
+            raise ProjectStoreError("asset_reference_invalid", "素材引用参数无效")
+        with self._transaction() as data:
+            project = self._find(data, project_id)
+            self._revision(project, expected_revision)
+            if any(item.get("asset_id") == asset_id for item in project["assets"]):
+                raise ProjectStoreError("asset_reference_exists", "该素材已加入项目")
+            reference = {
+                "asset_id": asset_id,
+                "title": str(asset.get("title") or "")[:160],
+                "category": str(asset.get("category") or "")[:80],
+                "intended_use": intended_use,
+                "source_sha256": str(asset.get("source_sha256") or ""),
+                "added_at": _now(),
+            }
+            project["assets"].append(reference)
+            self._touch(project, actor, "project_asset_added", {"asset_id": asset_id, "intended_use": intended_use})
         return _public(project)
 
     def reject_known_reference_ids(self, project_id: str, asset_ids: list[str]) -> list[str]:

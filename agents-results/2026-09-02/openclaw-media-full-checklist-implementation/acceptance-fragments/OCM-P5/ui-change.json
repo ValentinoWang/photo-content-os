@@ -4,14 +4,14 @@
   "source_authority_mode": "strict",
   "source_requirements_ref": {
     "path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/.ssot/source-requirements.json",
-    "canonical_digest": "b0ac893140e4dc3b3457ecd88fbeeecee364f8add669cbd4b86561f65110bcb0"
+    "canonical_digest": "1c569da86263716f8a9e193458d8b1b2e289eb6d886b896ff64ff9ed55d2da32"
   },
   "task_id": "OCM-P5",
   "reference_prototypes": [
     {
       "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
       "sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8",
-      "git_identity": "main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35#blob:cc44bc4065310264b7bf398680fc6cb0750fd163",
+      "git_identity": "main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:d881b06ab26d0cb46b88b653e72dc15160611fce",
       "authority_by_dimension": {
         "information_architecture": "normative",
         "visual_tokens": "normative",
@@ -37,11 +37,11 @@
   ],
   "visual_contract_ref": ".ssot/source-requirements.json",
   "source_requirement_refs": [
-    "SRC-P5"
+    "SRC-CHECKLIST-P5"
   ],
   "workbench_path": "99_System_OpenClaw/visual-workbench.html",
   "deep_link": {
     "supported": false,
-    "gap_note": "Z1 由桌面前端维护者在项目内新建视觉工作台，并为九个界面补齐稳定深链接；在此之前不宣称来源原型是视觉工作台。"
+    "gap_note": "Z1 由桌面前端维护者在项目内新建视觉工作台，并为八个 Surface 与项目对话框补齐稳定深链接；在此之前不宣称来源原型是视觉工作台。"
   }
 }

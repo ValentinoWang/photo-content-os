@@ -4,7 +4,7 @@
   "stage": "R7",
   "work_kind": "implementation",
   "domain_lane": "project",
-  "execution_state": "READY",
+  "execution_state": "IMPLEMENTED",
   "decision_state": "NOT_APPLICABLE",
   "decision_version": null,
   "readiness_mode": "FORMAL",
@@ -30,7 +30,8 @@
   "write_authority": "implementation",
   "acceptance_authority": "产品负责人和验收负责人",
   "unlocks": [
-    "Q7"
+    "Q7",
+    "Z1"
   ],
   "node_role": "leaf",
   "execution_actor": "codex",
@@ -60,5 +61,6 @@
   "goal": "发布与复盘（指标 + 复盘结论 + 下次约束）：原型里完全没有。这块丢了，产品就退化成一次性工具。",
   "acceptance": "对应验收合同与所需证据全部通过，且没有把未验证层级提升为完成。",
   "owner": "对应领域维护者",
+  "implementation_progress": "IMPLEMENTED_PENDING_VERIFICATION",
   "acceptance_contract_ref": "acceptance-fragments/OCM-K5/acceptance-contract.md"
 }

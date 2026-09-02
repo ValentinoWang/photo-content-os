@@ -1,11 +1,11 @@
 # Acceptance Contract: OCM-H4
 
 - Task ID: OCM-H4
-- Contract version: 1
-- Contract status: DRAFT
-- Test baseline: PLANNED
+- Contract version: 2
+- Contract status: APPROVED
+- Test baseline: LOCKED
 - Acceptance owner: 产品负责人与对应领域验收负责人
-- Approval evidence: 尚未批准
+- Approval evidence: 用户于 2026-09-02 明确要求逐条可判定 AC、锁定新增测试并修复全部已列问题
 - Request source: agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
 - SSOT node: H4
 - SSOT path: agents-results/2026-09-02/openclaw-media-full-checklist-implementation/ssot-development-paths.md
@@ -14,7 +14,7 @@
 - Assumption IDs: none
 - Invalidation keys: checklist.h4
 - AC budget: 2
-- Baseline identity: main@2b4f5c61f5cb3cc6a2284fcf19d22f3eaa1d5d35; checklist-sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
+- Baseline identity: main@a3ae47100d6fce4cb139ce17a479eea16717e73a; checklist-sha256:73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb
 - Product Context refs: SRC-H4, source-notes.md
 - Role Context refs: 本地内容创作者，以及可选配对的上游中台用户
 - Resolved Surface Contract refs: .ssot/source-requirements.json#SURF-DASHBOARD
@@ -72,24 +72,26 @@ Then 系统完成“本周统计（完成任务 23 / 发布内容 4）：加一�
 | ID | Class | Lane | Source requirement refs | Requirement | Mode | Blocking |
 | --- | --- | --- | --- | --- | --- |
 | AC-01 | behavior | machine/e2e | SRC-CHECKLIST-H4 | 本周统计（完成任务 23 / 发布内容 4）：加一个按时间窗聚合的只读接口。数据源都在，只是没人聚合。；从真实入口完成正常业务闭环，回读结果与可见状态一致 | Automatic | Yes |
-| AC-02 | behavior | machine/local-runtime | SRC-CHECKLIST-H4 | 前置、权限、路径、版本、能力或外部系统异常时失败关闭，不伪造成功且可重试或恢复 | Automatic | Yes |
+| AC-02 | behavior | machine/local-runtime | SRC-CHECKLIST-H4 | 发布记录必须按项目 revision 写入并可回读；重复提交保持幂等，冲突不覆盖较新发布状态。 | Automatic | Yes |
 
 ## Human acceptance
 
-机器证据负责本条目的确定性行为；用户理解、跨屏连贯性和视觉判断集中由 OCM-Z1 的九屏人工验收负责。
+机器证据负责本条目的确定性行为；用户理解、跨屏连贯性和视觉判断集中由 OCM-Z1 的八个 Surface 与项目对话框人工验收负责。
 
 ## Protected acceptance tests
 
 | Path | SHA-256 | Covers |
 | --- | --- | --- |
-| none | none | Behavior specification only; executable baseline not yet locked |
+| 99_System_OpenClaw/tests/test_full_checklist_acceptance.py | 7da3443fa91763713b05943f1a5961f3b0f5b140090afb88222bca9376a38435 | 45 项静态、HTTP 与 OpenAPI/服务器双向同步门禁 |
+| 99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py | 188cee88f34e367eddbfa78f77ae9e072f56131ace6ad730088be259c3486bd5 | 45 项静态、HTTP 与 OpenAPI/服务器双向同步门禁 |
+| 99_System_OpenClaw/tests/test_media_delete_recommendations.py | f0997262a8d178ff96a971489c6cd9fb73efd4fd0ba0ce59f4f12c76ea0a5174 | 45 项静态、HTTP 与 OpenAPI/服务器双向同步门禁 |
 
 ## Requirements-test traceability
 
 | Requirement | Verification | Evidence target | Mode | Blocking |
 | --- | --- | --- | --- | --- |
 | AC-01 | 正常闭环自动验收 | acceptance-fragments/OCM-H4/acceptance/machine/e2e/runs/&lt;run-id&gt;/result.md | Automatic | Yes |
-| AC-02 | 失败、重试与恢复自动验收 | acceptance-fragments/OCM-H4/acceptance/machine/integration-contract/runs/&lt;run-id&gt;/result.md | Automatic | Yes |
+| AC-02 | 失败、重试与恢复自动验收 | acceptance-fragments/OCM-H4/acceptance/machine/local-runtime/runs/&lt;run-id&gt;/result.md | Automatic | Yes |
 
 ## Exploratory testing
 
@@ -101,4 +103,4 @@ Then 系统完成“本周统计（完成任务 23 / 发布内容 4）：加一�
 
 ## Risks and open decisions
 
-合同保持 DRAFT，直到行为被产品负责人批准且受保护的自动验收基线被锁定。
+合同已按用户本次明确整改指令批准并锁定测试基线；实现节点仅登记 IMPLEMENTED，仍需执行证据与独立验收后才能晋升 VERIFIED/ACCEPTED。
