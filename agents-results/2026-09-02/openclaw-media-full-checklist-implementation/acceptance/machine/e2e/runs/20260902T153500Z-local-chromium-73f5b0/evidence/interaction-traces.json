@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-02T15:35:00Z",
+  "browser": "Codex In-app Browser",
+  "route": "/app/library",
+  "viewport": {"width": 390, "height": 844},
+  "traces": [
+    {
+      "id": "library_view_switch",
+      "status": "PASS",
+      "interaction_id": "library_view_switch",
+      "before": {"selector": "[data-library-view=grid]", "class": "active"},
+      "event": "click [data-library-view=list]",
+      "after": {"selector": "[data-library-view=list]", "class": "active"}
+    }
+  ]
+}

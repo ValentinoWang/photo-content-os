@@ -1,0 +1,35 @@
+{
+  "binding_sha256": "a236894eaa96d28ee2726fecd5db323e262b8e73c78e08add4a1487fd3f5e066",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "43ab0767c0ed508c1da7077e0e7e677cbf75a58ebed47de691277c7d1f47642c",
+  "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance-contract.md",
+  "contract_sha256": "6039f9de5d4a62b9a3c0c62d85b053b6fed05a6fce45d6682534b273a4746c01",
+  "contract_version": "2",
+  "estimated_minutes": 80,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "checklist.z1"
+  ],
+  "loop_name": "八个 Surface 与项目对话框终端验收",
+  "machine_evidence": [
+    {
+      "layer": "machine/e2e",
+      "result_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance/machine/e2e/runs/20260902T153500Z-local-chromium-73f5b0/result.md",
+      "result_sha256": "2202bb6721ef745c6a5d6cd24936acd8f986a647c7e00731c2b382296ebfe285",
+      "run_id": "20260902T153500Z-local-chromium-73f5b0",
+      "source_identity": "commit@73f5b02564b9ac102481d8ee9b1cba7d528aa48b"
+    }
+  ],
+  "ready_at": "2026-09-02T15:39:45.556603Z",
+  "release_slice": "R8",
+  "required_role": "产品负责人",
+  "schema_version": 1,
+  "scope_hints": [
+    "eight-surfaces-project-dialog"
+  ],
+  "source_commit": "commit@73f5b02564b9ac102481d8ee9b1cba7d528aa48b",
+  "summary": "候选已完成自动 E2E、双视口截图、运行时视觉验证与受保护测试；进入产品负责人终端验收。",
+  "task_id": "OCM-Z1"
+}

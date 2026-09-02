@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-02T15:35:00Z",
+  "browser": "Codex In-app Browser",
+  "route": "/app/library",
+  "viewport": {"width": 390, "height": 844},
+  "assertions": [
+    {
+      "id": "library_actions_in_bounds",
+      "status": "PASS",
+      "selector": ".screen-head > .topbar-actions",
+      "rect": {"left": 74, "right": 374, "top": 165.5, "bottom": 235.5, "width": 300, "height": 70},
+      "computed_flex_wrap": "wrap"
+    },
+    {
+      "id": "mobile_document_no_horizontal_overflow",
+      "status": "PASS",
+      "document_scroll_width": 390,
+      "viewport_width": 390
+    },
+    {
+      "id": "topbar_primary_visible",
+      "status": "PASS",
+      "selector": "#open-create",
+      "text": "新建项目",
+      "rect": {"left": 306, "right": 378, "top": 10, "bottom": 46, "width": 72, "height": 36}
+    }
+  ]
+}

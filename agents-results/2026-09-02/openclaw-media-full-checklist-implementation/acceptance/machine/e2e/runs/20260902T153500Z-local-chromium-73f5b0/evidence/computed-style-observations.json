@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-02T15:35:00Z",
+  "browser": "Codex In-app Browser",
+  "route": "/app/library",
+  "viewport": {"width": 390, "height": 844},
+  "assertions": [
+    {
+      "id": "theme_tokens_resolved",
+      "status": "PASS",
+      "selector": ":root",
+      "computed_custom_properties": {"--bg": "#0D1314", "--ac": "#4FB3BD", "--ink": "#E4EBEB"}
+    },
+    {
+      "id": "library_actions_wrap_on_mobile",
+      "status": "PASS",
+      "selector": ".screen-head > .topbar-actions",
+      "computed": {"display": "flex", "flexWrap": "wrap", "width": "300px"}
+    }
+  ]
+}

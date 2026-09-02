@@ -1,25 +1,29 @@
 {
-  "blocking_entries": [],
-  "generated_at": null,
-  "non_blocking_entries": [
+  "blocking_entries": [
     {
-      "blocking": false,
+      "blocking": true,
       "checklist_path": "acceptance/human/2026-W36/未-2026-09-02-OCM-Z1/checklist.md",
-      "estimated_minutes": null,
-      "handoff_path": null,
-      "invalidation_keys": [],
+      "estimated_minutes": 80,
+      "handoff_path": "acceptance/human/2026-W36/未-2026-09-02-OCM-Z1/handoff.json",
+      "invalidation_keys": [
+        "checklist.z1"
+      ],
       "latest_run": null,
-      "loop_name": "OCM-Z1",
-      "ready_at": null,
-      "release_slice": null,
-      "required_role": null,
-      "scope_hints": [],
-      "status": "PREPARING",
-      "summary": "人工验收工作区已建立，尚未完成机器验收递交。",
+      "loop_name": "八个 Surface 与项目对话框终端验收",
+      "ready_at": "2026-09-02T15:39:45.556603Z",
+      "release_slice": "R8",
+      "required_role": "产品负责人",
+      "scope_hints": [
+        "eight-surfaces-project-dialog"
+      ],
+      "status": "PENDING",
+      "summary": "候选已完成自动 E2E、双视口截图、运行时视觉验证与受保护测试；进入产品负责人终端验收。",
       "task_id": "OCM-Z1",
       "workspace": "acceptance/human/2026-W36/2026-09-02-OCM-Z1"
     }
   ],
+  "generated_at": "2026-09-02T15:39:45.556603Z",
+  "non_blocking_entries": [],
   "schema_version": 1,
-  "source_facts_sha256": "c1a7a6fe882670beff3a828e09fc336bb844e25241735302e16a457dbcc3da23"
+  "source_facts_sha256": "774e6eee9979c38a1e15eeae6d0047296fd90f4782d5c6f6d7f52f7ff3b8c849"
 }

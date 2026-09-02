@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-02T15:35:00Z",
+  "calculation": "WCAG relative luminance using the computed --ink foreground and --bg background tokens",
+  "checks": [
+    {
+      "id": "default_text_on_workbench_background",
+      "status": "PASS",
+      "foreground": "#E4EBEB",
+      "background": "#0D1314",
+      "ratio": 15.51,
+      "minimum": 4.5
+    }
+  ]
+}

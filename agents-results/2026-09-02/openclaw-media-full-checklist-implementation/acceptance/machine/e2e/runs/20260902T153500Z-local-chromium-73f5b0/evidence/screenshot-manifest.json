@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "source_identity": "commit@73f5b02564b9ac102481d8ee9b1cba7d528aa48b",
+  "runtime_identity": "desktop@127.0.0.1:18766-chrome-headless",
+  "review": {
+    "status": "PASS",
+    "reviewer": "main-session",
+    "reviewed_at": "2026-09-02T15:35:00Z",
+    "conclusion": "All eight declared surfaces were freshly captured at desktop and mobile viewports. The mobile library action group and primary topbar action are within the viewport; no horizontal document overflow was observed."
+  },
+  "screenshots": [
+    {"path":"evidence/screenshots/login-desktop-1440x900.png","sha256":"c6877d14aa40967d9cbe1ec8b0205486be4de1df4f572d27fc045b2dea0213d3","page_id":"SURF-LOGIN","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":1440,"height":900},"captured_at":"2026-09-02T15:33:59Z"},
+    {"path":"evidence/screenshots/login-mobile-390x844.png","sha256":"940916e1fbb08958c19717e98fe20fd75106a1b22d2afa40ebe691f5f51ac65d","page_id":"SURF-LOGIN","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":390,"height":844},"captured_at":"2026-09-02T15:34:02Z"},
+    {"path":"evidence/screenshots/setup-desktop-1440x900.png","sha256":"1d16716ee056b06a34f5fba719be7805ed01526254de66ce2296dbee7d997c51","page_id":"SURF-SETUP","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":1440,"height":900},"captured_at":"2026-09-02T15:34:04Z"},
+    {"path":"evidence/screenshots/setup-mobile-390x844.png","sha256":"512564500c7f01e1a5e0b38e0d9ab2c51e48c626cad46f271560a98e3ccff23b","page_id":"SURF-SETUP","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":390,"height":844},"captured_at":"2026-09-02T15:34:07Z"},
+    {"path":"evidence/screenshots/dashboard-desktop-1440x900.png","sha256":"0c0a3ce9633ce3e0ff1478bdcda9f33ee1d3d1bb09c673093df246c8da03e264","page_id":"SURF-DASHBOARD","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":1440,"height":900},"captured_at":"2026-09-02T15:34:09Z"},
+    {"path":"evidence/screenshots/dashboard-mobile-390x844.png","sha256":"a08d959a8d4c8b55b3ec162cb2ce3a535fa128606ff4828a103e483021d60eb3","page_id":"SURF-DASHBOARD","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":390,"height":844},"captured_at":"2026-09-02T15:34:12Z"},
+    {"path":"evidence/screenshots/organizer-desktop-1440x900.png","sha256":"05f4fc6518e85e01e3bf9d54c435cda77b830f0b9d992c7709e9d021607156cb","page_id":"SURF-ORGANIZER","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":1440,"height":900},"captured_at":"2026-09-02T15:34:14Z"},
+    {"path":"evidence/screenshots/organizer-mobile-390x844.png","sha256":"385f1ed27bac4d73904e1e7c10429c5cad656afb258ddd8f566257e341e18d43","page_id":"SURF-ORGANIZER","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":390,"height":844},"captured_at":"2026-09-02T15:34:17Z"},
+    {"path":"evidence/screenshots/library-desktop-1440x900.png","sha256":"f9f8d0114c1eca4ba411e796b7e90f7d8fc5bd1d185e24006f6d5253e5dac7f1","page_id":"SURF-LIBRARY","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":1440,"height":900},"captured_at":"2026-09-02T15:34:19Z"},
+    {"path":"evidence/screenshots/library-mobile-390x844.png","sha256":"a0d573711af02b97cfa7e4ed598c2f96c5d18a864a18f44fb84a32cdee4b8bd0","page_id":"SURF-LIBRARY","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":390,"height":844},"captured_at":"2026-09-02T15:34:22Z"},
+    {"path":"evidence/screenshots/project-desktop-1440x900.png","sha256":"a31d0ecd515e7eadaf0abe5c60fb72e5796a6f8214e5c10c96d4e298a0a84c27","page_id":"SURF-PROJECT","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":1440,"height":900},"captured_at":"2026-09-02T15:34:25Z"},
+    {"path":"evidence/screenshots/project-mobile-390x844.png","sha256":"22e9579025a40fc8019051cfb13a18555fea70abac494fbb84845400e2523a1f","page_id":"SURF-PROJECT","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":390,"height":844},"captured_at":"2026-09-02T15:34:27Z"},
+    {"path":"evidence/screenshots/settings-desktop-1440x900.png","sha256":"77d8a69dba57f5fe9246ce20e1a7edd5f55bf98eeefabbb44288952ac2062a69","page_id":"SURF-SETTINGS","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":1440,"height":900},"captured_at":"2026-09-02T15:34:30Z"},
+    {"path":"evidence/screenshots/settings-mobile-390x844.png","sha256":"4bb9193bec089564c0ad499204332f2868ebc31809c845029cf4286da0aaf60e","page_id":"SURF-SETTINGS","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":390,"height":844},"captured_at":"2026-09-02T15:34:32Z"},
+    {"path":"evidence/screenshots/cloud-desktop-1440x900.png","sha256":"452881e60e34a323e861b964746d3e612354ce775c1b901d3eb1967cb5439712","page_id":"SURF-CLOUD","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":1440,"height":900},"captured_at":"2026-09-02T15:34:35Z"},
+    {"path":"evidence/screenshots/cloud-mobile-390x844.png","sha256":"0808d30f3222c7599721e3ada6cc29d68c301bea082a688f0c2c3dbddd037eae","page_id":"SURF-CLOUD","browser":"Google Chrome 152.0.7977.65 headless","viewport":{"width":390,"height":844},"captured_at":"2026-09-02T15:34:37Z"}
+  ]
+}
