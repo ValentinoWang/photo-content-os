@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-02T15:22:25.087205+00:00",
+  "generated_at": "2026-09-02T15:52:58.403550+00:00",
   "generator": {
     "repository": "ValentinoWang/Harness_Engineering",
     "commit": "ac6811b1d8d6e595b93f085c817657af6c804797",
@@ -78,15 +78,15 @@
   },
   "runtime": {
     "project_root": "/Users/vsiyo/Desktop/照片筛选",
-    "project_commit": "a3ae47100d6fce4cb139ce17a479eea16717e73a",
+    "project_commit": "2b712875a34ce6c366fd9f0dfeb3c90ed8a1a3c5",
     "project_dirty": true,
-    "project_dirty_diff_sha256": "b91c6eb940db14feb5f3bf28e60fbb603b0998d1e17a895683944b8c166f4332",
-    "harness_lock_sha256": "919be2983b1c7806a46ef5c45548dd7e44b8d3a329a76e68e0e7712bd69b4ef2"
+    "project_dirty_diff_sha256": "6117e7db54fc310d427d103ee72319998b3fadc5288865c00e8e6f8444134f06",
+    "harness_lock_sha256": null
   },
   "bundle": {
     "path": "/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-02/openclaw-media-full-checklist-implementation",
-    "sha256": "9e3923a3e9d22910ebc332a364e4bc14b6d31beb5d6ba171aaa20664fa75a7c4",
-    "content_sha256": "9e3923a3e9d22910ebc332a364e4bc14b6d31beb5d6ba171aaa20664fa75a7c4",
+    "sha256": "f914f6d31c7b865afbe5abc1618b356f44f44f7c53164000f4351c20e1b21c77",
+    "content_sha256": "f914f6d31c7b865afbe5abc1618b356f44f44f7c53164000f4351c20e1b21c77",
     "manifest_sha256": "293fc99a2089163550e6c0d32ac37d300681ebe986f0159f806e9787a176617b",
     "manifest_identity_sha256": "293fc99a2089163550e6c0d32ac37d300681ebe986f0159f806e9787a176617b"
   },
@@ -159,9 +159,9 @@
         "--project-root",
         "/Users/vsiyo/Desktop/照片筛选"
       ],
-      "exit_code": 1,
-      "result": "failed",
-      "output": "ERROR: Z1: ERROR: stale human binding contract sha-256: expected 6039f9de5d4a62b9a3c0c62d85b053b6fed05a6fce45d6682534b273a4746c01\n"
+      "exit_code": 0,
+      "result": "passed",
+      "output": "SSOT acceptance contract check passed: /Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-02/openclaw-media-full-checklist-implementation/.ssot/manifest.json (contracts=46)\n"
     },
     {
       "id": "parallelism-analysis",
@@ -229,9 +229,9 @@
         "/Users/vsiyo/Desktop/照片筛选",
         "--check"
       ],
-      "exit_code": 2,
-      "result": "failed",
-      "output": "SSOT snapshot error: snapshot manifest managed_files do not match current source hashes\n"
+      "exit_code": 0,
+      "result": "passed",
+      "output": "{\n  \"status\": \"verified\",\n  \"source\": \"/Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-02/openclaw-media-full-checklist-implementation\",\n  \"destination\": \"/Users/vsiyo/Library/Mobile Documents/iCloud~md~obsidian/Documents/日记/开发/每日开发/SSOT合集/2026-09-02/photo-content-os/openclaw-media-full-checklist-implementation\",\n  \"project_name\": \"photo-content-os\",\n  \"ssot_name\": \"openclaw-media-full-checklist-implementation\",\n  \"snapshot_date\": \"2026-09-02\",\n  \"main_document\": \"ssot-development-paths.md\",\n  \"file_count\": 1,\n  \"contains_openproblem\": false\n}\n"
     }
   ],
   "parallelism": {
@@ -1199,5 +1199,5 @@
     "scheduling_model": "event-driven",
     "static_waves_are_authority": false
   },
-  "result": "fail"
+  "result": "pass"
 }

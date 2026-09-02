@@ -91,5 +91,11 @@
     "mode": "strict",
     "source_milestone_authority": "source",
     "source_requirements": "source-requirements.json"
+  },
+  "validation_report": {
+    "path": "validation-report.json",
+    "sha256": "982f6f5a9f2c6e3a23863db455250b71288ff4484a2a24976b2a18bfd217daaf",
+    "manifest_identity_sha256": "293fc99a2089163550e6c0d32ac37d300681ebe986f0159f806e9787a176617b",
+    "bundle_content_sha256": "f914f6d31c7b865afbe5abc1618b356f44f44f7c53164000f4351c20e1b21c77"
   }
 }
