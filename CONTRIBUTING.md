@@ -13,11 +13,11 @@ git switch -c feature/简短功能名
 ## 提交前检查
 
 ```bash
-bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh
-bash 99_System_OpenClaw/scripts/42_run_local_ci.sh
+bash scripts/setup_dev_environment.sh
+bash scripts/run_local_ci.sh
 ```
 
-首次克隆或 `requirements-dev.txt` 变化后运行环境安装脚本；每次提交前必须运行本机 CI。修改作品审核能力时，还要完成 `.github/PULL_REQUEST_TEMPLATE/review-capability-change.md` 中的单一事实源检查。
+首次克隆或 `requirements-dev.txt` 变化后运行环境安装脚本；每次提交前必须运行本机 CI。修改作品审核能力时，还要完成 `.github/pull-request-template/review-capability-change.md` 中的单一事实源检查。
 
 ## 数据安全
 

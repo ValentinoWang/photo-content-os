@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regression coverage for the shared queue_identity module (L-06 dedup).
 
-Before 32_process_openclaw_queue.py, 33_enqueue_openclaw_queue_job.py and
+Before process_openclaw_queue.py, enqueue_openclaw_queue_job.py and
 mac_openclaw_runner.py were switched to import VOLATILE_TASK_FIELDS,
 request_fingerprint and TASK_INBOX/RESULT_OUTBOX from queue_identity, each
 of them defined an identical, hand-rolled copy. This test asserts the three
@@ -29,8 +29,8 @@ def load(name: str):
 
 
 queue_identity = load("queue_identity")
-openclaw_queue = load("32_process_openclaw_queue")
-enqueue_queue = load("33_enqueue_openclaw_queue_job")
+openclaw_queue = load("process_openclaw_queue")
+enqueue_queue = load("enqueue_openclaw_queue_job")
 runner = load("mac_openclaw_runner")
 
 
@@ -53,8 +53,8 @@ class QueueIdentityRegressionTests(unittest.TestCase):
     def test_request_fingerprint_agrees_across_all_three_call_sites(self) -> None:
         fingerprints = {
             "queue_identity": queue_identity.request_fingerprint(SAMPLE_PAYLOAD),
-            "32_process_openclaw_queue": openclaw_queue.request_fingerprint(SAMPLE_PAYLOAD),
-            "33_enqueue_openclaw_queue_job": enqueue_queue.request_fingerprint(SAMPLE_PAYLOAD),
+            "process_openclaw_queue": openclaw_queue.request_fingerprint(SAMPLE_PAYLOAD),
+            "enqueue_openclaw_queue_job": enqueue_queue.request_fingerprint(SAMPLE_PAYLOAD),
             "mac_openclaw_runner": runner.request_fingerprint(SAMPLE_PAYLOAD),
         }
         distinct = set(fingerprints.values())

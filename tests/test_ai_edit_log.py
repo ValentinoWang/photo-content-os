@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from _support import load_script
 
 
-edit_log = load_script("29_generate_ai_edit_log.py", "generate_ai_edit_log")
+edit_log = load_script("generate_ai_edit_log.py", "generate_ai_edit_log")
 
 
 class AIEditLogTest(unittest.TestCase):
@@ -53,7 +53,7 @@ evidence_level: content_plan_only
     def test_validate_markdown_rejects_malformed_closing_fence(self) -> None:
         """Regression test for the L-03 frontmatter-parsing bug fix.
 
-        Before the fix, 29_generate_ai_edit_log.py's own parse_frontmatter
+        Before the fix, generate_ai_edit_log.py's own parse_frontmatter
         located the closing fence with `text.find("\n---", 4)`, a byte
         substring search that matches ANY line starting with "---" rather
         than a line that IS exactly "---". A malformed closing fence such as

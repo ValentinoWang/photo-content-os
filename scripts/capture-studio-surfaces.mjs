@@ -10,11 +10,11 @@ const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const ROOT = resolve(import.meta.dirname, "../..");
 const DEFAULT_RUN_ROOT = join(
   ROOT,
-  "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
+  "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs",
 );
 const DEFAULT_BASELINE_ROOT = join(
   ROOT,
-  "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
+  "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/baselines",
 );
 
 const surfaces = [
@@ -28,7 +28,7 @@ const surfaces = [
   ["cloud", "/cloud/tasks"],
 ];
 const viewports = [
-  ["desktop", 1440, 900],
+  ["studio", 1440, 900],
   ["mobile", 390, 844],
 ];
 

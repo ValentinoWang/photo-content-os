@@ -4,8 +4,8 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$RepositoryRoot = (Resolve-Path (Join-Path $ScriptDir '..\..')).Path
-$RuntimeDir = Join-Path $RepositoryRoot '99_System_OpenClaw\.venv-content-os'
+$RepositoryRoot = (Resolve-Path (Join-Path $ScriptDir '..')).Path
+$RuntimeDir = Join-Path $RepositoryRoot '.venv'
 $RuntimePython = Join-Path $RuntimeDir 'Scripts\python.exe'
 $Requirements = Join-Path $RepositoryRoot 'requirements-dev.txt'
 if (-not $PythonBin) { $PythonBin = 'py' }
@@ -37,6 +37,6 @@ if ($LASTEXITCODE -ne 0) { throw 'dependency installation failed.' }
 Write-Host '== Verify fixed development runtime =='
 & $RuntimePython (Join-Path $ScriptDir 'check_runtime_contract.py')
 if ($LASTEXITCODE -ne 0) { throw 'Runtime contract failed.' }
-& $RuntimePython (Join-Path $ScriptDir '43_content_os_doctor.py') --allow-offline
+& $RuntimePython (Join-Path $ScriptDir 'doctor.py') --allow-offline
 if ($LASTEXITCODE -ne 0) { throw 'Content OS doctor failed.' }
 Write-Host "Development environment is ready: $RuntimeDir"

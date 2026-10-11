@@ -4,9 +4,9 @@
 
 Codex may edit:
 
-- `99_System_OpenClaw/scripts/`
-- `99_System_OpenClaw/tests/`
-- `99_System_OpenClaw/schemas/`
+- `scripts/`
+- `tests/`
+- `schemas/`
 - automation documentation
 - Content OS protocol documents under `$OBSIDIAN_ROOT/00_入口与总览/`
 - Content OS automation protocol documents under `$OBSIDIAN_ROOT/06_技术栈与自动化/`
@@ -20,42 +20,35 @@ Codex must not edit:
 
 ## Required checks
 
-`LOCAL_MEDIA_ROOT` is the explicitly configured media repository root. It must
-contain `99_System_OpenClaw/`; commands must stop when it is unset or invalid.
-`OBSIDIAN_ROOT` is the explicitly configured Content OS vault root. It has no
-personal-path default and must be set before any vault read or write.
+Software root and local media root are independent. Read material paths only
+through `runtime_paths.local_media_root()` (`LOCAL_MEDIA_ROOT`, default
+`~/Desktop/照片筛选`). Never derive material paths from the software root.
+Tests use temporary media directories.
 
-Run these from `$LOCAL_MEDIA_ROOT` before handing off an automation or protocol
-change:
+Run from the software root:
 
 ```bash
-if [ -z "${LOCAL_MEDIA_ROOT:-}" ] || [ ! -d "$LOCAL_MEDIA_ROOT/99_System_OpenClaw" ]; then
-  printf '%s\n' "Set LOCAL_MEDIA_ROOT to the media repository root." >&2
-  exit 1
-fi
-cd -- "$LOCAL_MEDIA_ROOT" || exit 1
-
-bash 99_System_OpenClaw/scripts/check_runtime_contract.sh
-python3 99_System_OpenClaw/scripts/30_check_obsidian_doc_sync.py
-python3 99_System_OpenClaw/scripts/06_check_outline_contract.py .
-99_System_OpenClaw/.venv-content-os/bin/python -m unittest discover -s 99_System_OpenClaw/tests
-99_System_OpenClaw/.venv-content-os/bin/python 99_System_OpenClaw/scripts/validate_content_os_task.py --help
-python3 99_System_OpenClaw/scripts/25_validate_jianying_draft.py --help
+bash scripts/check_runtime_contract.sh
+.venv/bin/python scripts/check_obsidian_doc_sync.py
+.venv/bin/python scripts/check_outline_contract.py .
+.venv/bin/python -m pytest -q tests
+.venv/bin/python scripts/validate_content_os_task.py --help
+.venv/bin/python scripts/validate_jianying_draft.py --help
 ```
 
-`check_runtime_contract.sh` also verifies the fixed OTIO/Kdenlive runtime. Do
-not replace that environment with the system Python ad hoc.
+Set `OBSIDIAN_ROOT` explicitly for document synchronization. Use the fixed
+`.venv` for OTIO/Kdenlive execution.
 
 ## Document synchronization
 
 The local execution rules and Obsidian protocol pages are kept aligned by:
 
 ```text
-$LOCAL_MEDIA_ROOT/99_System_OpenClaw/doc_sync_contract.json
+$SOFTWARE_ROOT/doc-sync-contract.json
 ```
 
 After changing a covered local execution document, script README, or matching
-Obsidian protocol page, run `30_check_obsidian_doc_sync.py`. Update the paired
+Obsidian protocol page, run `check_obsidian_doc_sync.py`. Update the paired
 document; do not weaken a marker merely to make the check pass.
 
 ## Content OS project and task rules
@@ -84,13 +77,13 @@ records one choice per version; it is never selected automatically.
 
 1. **标准剪辑交接（`handoff_pack`，默认）**
    - Mac generates an immutable package at
-     `90_Draft_Project/edit_handoff/{project_revision}/`.
+     `draft-project/edit-handoff/{project_revision}/`.
    - It contains the manifest, ordered clips list, editable subtitles and a
      human-readable handoff note. A person then chooses their editing tool and
      performs the fine edit.
 2. **自动生成可编辑时间线（`otio_kdenlive`，可选）**
    - Mac uses only
-     `99_System_OpenClaw/.venv-content-os/bin/python` to generate and validate
+     `.venv/bin/python` to generate and validate
      the OTIO/Kdenlive timeline for the same revision.
    - If that runtime or Kdenlive evidence is unavailable, the task is blocked;
      it does not fall back to the standard package or another editor.
@@ -132,7 +125,7 @@ must not show internal paths, task IDs, error stacks or backend names.
 uses `04_script.md`, `05_storyboard.md`, `06_edit_decision_list.json`, the
 selected editing-method result, optional human notes and output-review evidence.
 
-- Call `29_generate_ai_edit_log.py` only through the Mac Runner action
+- Call `generate_ai_edit_log.py` only through the Mac Runner action
   `generate_ai_edit_log`.
 - Keep the distinction between `已确认人工修改`, `AI 建议修改`, and `AI 推断修改`.
 - Do not claim BGM, effects, timing, cuts or grading as facts without human

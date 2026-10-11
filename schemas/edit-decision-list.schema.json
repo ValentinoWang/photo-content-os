@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://photo-content-os.local/schemas/edit_decision_list.schema.json",
+  "$id": "https://photo-content-os.local/schemas/edit-decision-list.schema.json",
   "title": "Photo Content OS Edit Decision List",
   "description": "Canonical edit decision document shared by the AI, preview, handoff and editor backends. v2 adds the role/layer vocabulary plus transition, speed, crop, motion, audio, subtitle and music coverage. Every v2 field is optional, so a v1 document validates unchanged.",
   "type": "object",

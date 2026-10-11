@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://photo-content-os.local/schemas/audio_transcript.schema.json",
+  "$id": "https://photo-content-os.local/schemas/audio-transcript.schema.json",
   "title": "Photo Content OS Audio Transcript",
   "type": "object",
   "additionalProperties": false,

@@ -2,15 +2,15 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPOSITORY_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-RUNTIME_DIR="$REPOSITORY_ROOT/99_System_OpenClaw/.venv-content-os"
+REPOSITORY_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+RUNTIME_DIR="$REPOSITORY_ROOT/.venv"
 RUNTIME_PYTHON="$RUNTIME_DIR/bin/python"
 REQUIREMENTS_FILE="$REPOSITORY_ROOT/requirements-dev.txt"
 BOOTSTRAP_PYTHON="${PYTHON_BIN:-python3}"
 
 if [[ "${OS:-}" == "Windows_NT" ]]; then
   echo "检测到 Windows。请运行 PowerShell 入口：" >&2
-  echo "  powershell -ExecutionPolicy Bypass -File 99_System_OpenClaw/scripts/41_setup_dev_environment.ps1" >&2
+  echo "  powershell -ExecutionPolicy Bypass -File scripts/setup_dev_environment.ps1" >&2
   exit 2
 fi
 
@@ -65,6 +65,6 @@ echo "== Install pinned development dependencies =="
 
 echo "== Verify fixed development runtime =="
 PYTHON_BIN="$RUNTIME_PYTHON" bash "$SCRIPT_DIR/check_runtime_contract.sh"
-"$RUNTIME_PYTHON" "$SCRIPT_DIR/43_content_os_doctor.py" --allow-offline
+"$RUNTIME_PYTHON" "$SCRIPT_DIR/doctor.py" --allow-offline
 
 echo "Development environment is ready: $RUNTIME_DIR"

@@ -8,9 +8,9 @@ from pathlib import Path
 from _support import load_script
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "22_probe_jianying_environment.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "probe_jianying_environment.py"
 sys.path.insert(0, str(SCRIPT.parent))
-MODULE = load_script("22_probe_jianying_environment.py", "jianying_probe_paths")
+MODULE = load_script("probe_jianying_environment.py", "jianying_probe_paths")
 
 
 class JianyingProbePathTests(unittest.TestCase):

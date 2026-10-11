@@ -19,7 +19,7 @@ import threading
 import time
 from typing import Any, Callable
 
-RENDERER = Path(__file__).with_name('render_frames.mjs')
+RENDERER = Path(__file__).with_name('render-frames.mjs')
 
 
 class RenderError(RuntimeError):

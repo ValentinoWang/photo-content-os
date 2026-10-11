@@ -47,8 +47,8 @@ def write_yaml(path: Path, data: dict[str, Any]) -> None:
 
 
 def track_by_id(plan: dict[str, Any], track_id: str) -> dict[str, Any]:
-    """Look up one track by id (L-16). Baseline: 24_create_jianying_roughcut_draft.py's
-    version, which is byte-identical to 26_create_native_import_pack.py's -- the only
+    """Look up one track by id (L-16). Baseline: create_jianying_roughcut_draft.py's
+    version, which is byte-identical to create_native_import_pack.py's -- the only
     difference from 25/27's inline track lookup (folded into count_plan_clips below) is
     the explicit plan.tracks-must-be-a-list check."""
     tracks = plan.get("tracks")
@@ -77,7 +77,7 @@ def parse_time_range(value: str) -> tuple[float, float]:
     enforcement) as the rest of the EDL pipeline. This is a deliberate
     tightening versus the previous unrounded, precision-unchecked parsing:
     every EDL this route consumes is produced by edl_contract.write_edl
-    (via 18_generate_storyboard_edl.py normalise_edl -> canonical_time_range)
+    (via generate_storyboard_edl.py normalise_edl -> canonical_time_range)
     before it ever reaches this script, so it is already millisecond-precise
     and this closes a validation gap instead of risking a regression on
     historical draft plans.

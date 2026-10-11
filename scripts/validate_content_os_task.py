@@ -191,7 +191,7 @@ def is_revision_scoped_local_editor_output(task: dict[str, Any], output: str) ->
     if task.get("task_type") not in LOCAL_EDITOR_OUTPUT_TASK_TYPES:
         return False
     path = Path(output)
-    expected_prefix = ("90_Draft_Project", "edit_handoff", str(task["project_revision"]))
+    expected_prefix = ("draft-project", "edit-handoff", str(task["project_revision"]))
     return not path.is_absolute() and len(path.parts) > len(expected_prefix) and path.parts[:3] == expected_prefix
 
 

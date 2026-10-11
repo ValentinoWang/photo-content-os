@@ -8,7 +8,7 @@ from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "40_check_repository_safety.py"
+SCRIPT = ROOT / "scripts" / "check_repository_safety.py"
 repository_safety = load_script(SCRIPT.name, "repository_safety")
 
 
@@ -16,7 +16,7 @@ class RepositorySafetyTest(unittest.TestCase):
     def test_accepts_small_source_file(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
-            relative = Path("99_System_OpenClaw/scripts/example.py")
+            relative = Path("scripts/example.py")
             (root / relative).parent.mkdir(parents=True)
             (root / relative).write_text("print('ok')\n", encoding="utf-8")
 
@@ -25,7 +25,7 @@ class RepositorySafetyTest(unittest.TestCase):
     def test_rejects_personal_workspace_even_for_text(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
-            relative = Path("01_Project_Workspace/private/readme.md")
+            relative = Path("projects/private/readme.md")
             (root / relative).parent.mkdir(parents=True)
             (root / relative).write_text("private\n", encoding="utf-8")
 

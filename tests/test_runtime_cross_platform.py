@@ -29,9 +29,9 @@ class RuntimePathTests(unittest.TestCase):
     def test_platform_runtime_paths(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            self.assertEqual(runtime_python(root, platform="win32"), root / "99_System_OpenClaw" / ".venv-content-os" / "Scripts" / "python.exe")
-            self.assertEqual(runtime_pip(root, platform="win32"), root / "99_System_OpenClaw" / ".venv-content-os" / "Scripts" / "pip.exe")
-            self.assertEqual(runtime_python(root, platform="darwin"), root / "99_System_OpenClaw" / ".venv-content-os" / "bin" / "python")
+            self.assertEqual(runtime_python(root, platform="win32"), root / ".venv" / "Scripts" / "python.exe")
+            self.assertEqual(runtime_pip(root, platform="win32"), root / ".venv" / "Scripts" / "pip.exe")
+            self.assertEqual(runtime_python(root, platform="darwin"), root / ".venv" / "bin" / "python")
         self.assertEqual(platform_contract_name("win32"), "windows")
         self.assertEqual(platform_contract_name("darwin"), "macos")
         self.assertTrue(supported_python((3, 11, 0)))
@@ -39,7 +39,17 @@ class RuntimePathTests(unittest.TestCase):
 
     def test_explicit_repository_root_is_not_resolved(self):
         root = Path("/var/tmp/photo-content-os")
-        self.assertEqual(runtime_dir(root), root / "99_System_OpenClaw" / ".venv-content-os")
+        self.assertEqual(runtime_dir(root), root / ".venv")
+
+    def test_media_root_configuration_is_independent_of_checkout(self):
+        with tempfile.TemporaryDirectory() as directory:
+            media = Path(directory) / "private-media"
+            with patch.dict(runtime_paths.os.environ, {"LOCAL_MEDIA_ROOT": str(media)}, clear=True):
+                self.assertEqual(runtime_paths.local_media_root(), media.resolve())
+                self.assertEqual(runtime_paths.workspace_root(SCRIPTS), media.resolve())
+                self.assertNotEqual(runtime_paths.repository_root(), media.resolve())
+            with patch.dict(runtime_paths.os.environ, {}, clear=True):
+                self.assertEqual(runtime_paths.local_media_root(), (Path.home() / "Desktop" / "照片筛选").resolve())
 
     def test_obsidian_root_uses_configuration_before_platform_default(self):
         configured = Path("/var/tmp/content-os-vault")

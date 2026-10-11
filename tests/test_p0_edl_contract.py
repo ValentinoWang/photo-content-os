@@ -39,7 +39,7 @@ class EDLContractTests(unittest.TestCase):
         self.assertEqual(result["schema_version"], "edit_decision_list_v1")
         self.assertEqual(result["clips"][0]["time_range"], "0.000-4.000")
         self.assertEqual(result["clips"][0]["source_start_sec"], 1.25)
-        schema = json.loads((SCHEMAS / "edit_decision_list.schema.json").read_text(encoding="utf-8"))
+        schema = json.loads((SCHEMAS / "edit-decision-list.schema.json").read_text(encoding="utf-8"))
         self.assertEqual(
             schema["properties"]["schema_version"]["enum"],
             ["edit_decision_list_v1", "edit_decision_list_v2"],

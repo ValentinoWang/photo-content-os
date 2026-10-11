@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cross-platform runtime path helpers used by setup, CI and the desktop app."""
+"""Cross-platform runtime path helpers used by setup, CI and the studio app."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 MINIMUM_PYTHON = (3, 11)
-RUNTIME_NAME = ".venv-content-os"
+RUNTIME_NAME = ".venv"
 DEFAULT_OBSIDIAN_RELATIVE = Path("Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体")
 
 
@@ -29,37 +29,25 @@ def repository_root(anchor: Path | None = None) -> Path:
     if path.is_file():
         path = path.parent
     for candidate in (path, *path.parents):
-        if (candidate / "99_System_OpenClaw").is_dir() and (candidate / "requirements-dev.txt").is_file():
+        if (candidate / "scripts").is_dir() and (candidate / "studio").is_dir() and (candidate / "requirements-dev.txt").is_file():
             return candidate
     raise RuntimeError(f"cannot locate repository root from {path}")
 
 
-def workspace_root(anchor: Path | None = None) -> Path:
-    """Best-effort workspace root for scripts that must tolerate running from
-    a copy that lacks requirements-dev.txt (pe-09/L-15).
+def local_media_root(value: Path | None = None) -> Path:
+    """The sole media-root configuration; independent of the software checkout."""
+    configured = value or os.environ.get("LOCAL_MEDIA_ROOT", "").strip()
+    root = Path(configured).expanduser() if configured else Path.home() / "Desktop" / "照片筛选"
+    return root.resolve()
 
-    Prefers repository_root()'s marker-verified result. When that raises
-    (no ancestor has both a 99_System_OpenClaw/ directory and
-    requirements-dev.txt), falls back to exactly what several scripts used
-    to compute inline before this consolidation: SCRIPT_DIR.parent, then one
-    more level up if THAT directory happens to be named "99_System_OpenClaw"
-    -- a name-only check, unlike repository_root()'s marker check, kept
-    unchanged here so this fallback still produces the same directory those
-    scripts used to compute for a tree missing requirements-dev.txt.
-    """
-    try:
-        return repository_root(anchor)
-    except RuntimeError:
-        script_dir = (anchor or Path(__file__)).expanduser().resolve()
-        if script_dir.is_file():
-            script_dir = script_dir.parent
-        system_root = script_dir.parent
-        return system_root.parent if system_root.name == "99_System_OpenClaw" else system_root
+
+def workspace_root(anchor: Path | None = None) -> Path:
+    return local_media_root()
 
 
 def runtime_dir(repo_root: Path | None = None) -> Path:
     root = repo_root.expanduser() if repo_root is not None else repository_root()
-    return root / "99_System_OpenClaw" / RUNTIME_NAME
+    return root / RUNTIME_NAME
 
 
 def is_windows(platform: str | None = None) -> bool:
@@ -70,7 +58,7 @@ def is_windows(platform: str | None = None) -> bool:
     "nt"` so this still resolves correctly on a host whose `sys.platform`
     string doesn't start with "win" (pe-10). Baseline: runtime_python's and
     runtime_pip's identical two-line check, also duplicated verbatim in
-    22_probe_jianying_environment.jianying_root_candidates. Deliberately NOT
+    probe_jianying_environment.jianying_root_candidates. Deliberately NOT
     consulted by platform_contract_name() below, which is a pure mapper over
     the platform string only -- see its own docstring.
     """

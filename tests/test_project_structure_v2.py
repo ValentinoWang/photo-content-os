@@ -10,7 +10,7 @@ from _support import load_script
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-MODULE = load_script("13_ensure_project_structure.py", "project_structure")
+MODULE = load_script("ensure_project_structure.py", "project_structure")
 
 
 class ProjectStructureV2Tests(unittest.TestCase):
@@ -19,9 +19,9 @@ class ProjectStructureV2Tests(unittest.TestCase):
             project = Path(temp_dir) / "project"
             project.mkdir()
             MODULE.ensure_structure(project)
-            self.assertTrue((project / "90_Draft_Project" / "edit_handoff" / "README.md").is_file())
-            self.assertFalse((project / "90_Draft_Project" / "剪映工程").exists())
-            note = (project / "90_Draft_Project" / "工程说明.md").read_text(encoding="utf-8")
+            self.assertTrue((project / "draft-project" / "edit-handoff" / "README.md").is_file())
+            self.assertFalse((project / "draft-project" / "jianying").exists())
+            note = (project / "draft-project" / "project-notes.md").read_text(encoding="utf-8")
             self.assertIn("标准剪辑交接包", note)
             self.assertIn("可编辑时间线", note)
 

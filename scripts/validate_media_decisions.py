@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate naming and Raw_待处理 decisions recorded in the media manifest."""
+"""Validate naming and raw-pending decisions recorded in the media manifest."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ def collect_issues(manifest: dict[str, object]) -> list[tuple[dict[str, object],
     collected: list[tuple[dict[str, object], dict[str, str]]] = []
     for item in manifest["items"]:
         if "decision_issues" not in item:
-            raise RuntimeError("manifest lacks decision_issues; rerun 01_scan_media_manifest.py before validation.")
+            raise RuntimeError("manifest lacks decision_issues; rerun scan_media_manifest.py before validation.")
         for issue in item["decision_issues"]:
             collected.append((item, issue))
     return sorted(
@@ -39,7 +39,7 @@ def collect_issues(manifest: dict[str, object]) -> list[tuple[dict[str, object],
 
 
 def write_report(project: Path, issues: list[tuple[dict[str, object], dict[str, str]]]) -> Path:
-    report = analysis_dir(project) / "media_decision_warnings.md"
+    report = analysis_dir(project) / "media-decision-warnings.md"
     report.parent.mkdir(parents=True, exist_ok=True)
 
     counts = Counter(issue.get("severity", "INFO") for _, issue in issues)
@@ -57,7 +57,7 @@ def write_report(project: Path, issues: list[tuple[dict[str, object], dict[str, 
         "",
         "- “低清/低分辨率”只能在短边低于 720p 时使用；短边达到 720p 或以上不能叫低清。",
         "- 不使用“低质/画质差”这类不可复核判断，必须改成具体原因。",
-        "- 普通照片 / 普通视频进入 `Raw_待处理` 时，文件名必须写明不可直用原因，例如：录屏、模糊待选、待截取、待修复、待防抖、待降噪、待转码、待重构。",
+        "- 普通照片 / 普通视频进入 `raw-pending` 时，文件名必须写明不可直用原因，例如：录屏、模糊待选、待截取、待修复、待防抖、待降噪、待转码、待重构。",
         "- DJI / Insta360 / Live Photo 原始关联组不强制改名，原因写入所在文件夹名或 readme。",
         "- 有清楚画面、只是需要裁掉开头或结尾的素材，应放在 L3 根部并使用 `_待截取`。",
         "",
@@ -91,7 +91,7 @@ def write_report(project: Path, issues: list[tuple[dict[str, object], dict[str, 
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="校验 Raw_待处理、低清、低质等命名判断是否可复核")
+    parser = argparse.ArgumentParser(description="校验 raw-pending、低清、低质等命名判断是否可复核")
     parser.add_argument("project_dir", help="项目文件夹路径")
     parser.add_argument("--report-only", action="store_true", help="只生成报告，即使存在 ERROR 也不返回失败")
     args = parser.parse_args()

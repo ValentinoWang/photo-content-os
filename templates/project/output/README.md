@@ -25,17 +25,17 @@ HyperFrames/
 封面、发布图、字幕图等临时导出先放项目级缓存：
 
 ```text
-App_WorkCache/发布图临时导出/
+work-cache/publishing-images/
 ```
 
 确认值得长期回看或复用的封面，再复制到：
 
 ```text
-80_To_iCloudPhotos_精选入库/02_Cover_Candidates_封面候选/
+icloud-selected/cover-candidates/
 ```
 
 Final 发布版如要进入 iCloud 照片，复制一份到：
 
 ```text
-80_To_iCloudPhotos_精选入库/06_Final_Output_发布成片与高光/
+icloud-selected/final-output/
 ```

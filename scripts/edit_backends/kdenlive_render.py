@@ -25,7 +25,7 @@ from edit_backends.otio_kdenlive import (
 def review_module():
     name = "pipeline_output_review"
     if name not in sys.modules:
-        spec = importlib.util.spec_from_file_location(name, SCRIPTS / "19_review_output_video.py")
+        spec = importlib.util.spec_from_file_location(name, SCRIPTS / "review_output_video.py")
         module = importlib.util.module_from_spec(spec)
         sys.modules[name] = module
         spec.loader.exec_module(module)

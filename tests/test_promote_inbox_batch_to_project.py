@@ -13,7 +13,7 @@ from _support import load_script
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
-PROMOTE = load_script("35_promote_inbox_batch_to_project.py", "promote_inbox_batch_to_project")
+PROMOTE = load_script("promote_inbox_batch_to_project.py", "promote_inbox_batch_to_project")
 
 
 class PromoteInboxBatchTests(unittest.TestCase):
@@ -21,11 +21,11 @@ class PromoteInboxBatchTests(unittest.TestCase):
         self.temp_dir = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp_dir.cleanup)
         self.workspace = Path(self.temp_dir.name)
-        self.project = self.workspace / "01_Project_Workspace" / "demo"
+        self.project = self.workspace / "projects" / "demo"
         self.project.mkdir(parents=True)
 
     def make_batch(self, *files: str) -> Path:
-        batch = self.workspace / "00_Inbox_Mac_Intake" / "2026-09-02_demo"
+        batch = self.workspace / "inbox" / "2026-09-02_demo"
         batch.mkdir(parents=True)
         for name in files:
             (batch / name).write_bytes(f"fixture-{name}".encode())
@@ -40,11 +40,11 @@ class PromoteInboxBatchTests(unittest.TestCase):
 
     def test_promotes_only_temp_fixture_and_keeps_a_recovery_record(self) -> None:
         batch = self.make_batch("clip.mp4")
-        (batch / "00_批次说明.md").write_text("fixture", encoding="utf-8")
-        (batch / "_ai_analysis").mkdir()
-        (batch / "_ai_analysis" / "analysis.json").write_text("{}", encoding="utf-8")
-        (batch / "90_Draft_Project").mkdir()
-        (batch / "90_Draft_Project" / "draft.txt").write_text("fixture", encoding="utf-8")
+        (batch / "batch-notes.md").write_text("fixture", encoding="utf-8")
+        (batch / "ai-analysis").mkdir()
+        (batch / "ai-analysis" / "analysis.json").write_text("{}", encoding="utf-8")
+        (batch / "draft-project").mkdir()
+        (batch / "draft-project" / "draft.txt").write_text("fixture", encoding="utf-8")
         (batch / ".DS_Store").write_bytes(b"ignored")
 
         with self.resolved_project():
@@ -53,17 +53,17 @@ class PromoteInboxBatchTests(unittest.TestCase):
         self.assertTrue(result["source_batch_removed"])
         self.assertFalse(batch.exists())
         self.assertEqual(
-            (self.project / "00_Inbox_待分类" / "clip.mp4").read_bytes(),
+            (self.project / "unclassified" / "clip.mp4").read_bytes(),
             b"fixture-clip.mp4",
         )
-        self.assertTrue((self.project / "00_Inbox_待分类" / "00_批次说明.md").is_file())
+        self.assertTrue((self.project / "unclassified" / "batch-notes.md").is_file())
         archived_scaffold = Path(result["archived_generated_scaffold"][0])
-        self.assertEqual(archived_scaffold.name, "90_Draft_Project")
+        self.assertEqual(archived_scaffold.name, "draft-project")
         self.assertEqual((archived_scaffold / "draft.txt").read_text(encoding="utf-8"), "fixture")
         record = Path(result["promotion_record"])
         self.assertTrue(record.is_file())
         self.assertIn("source_batch_path", record.read_text(encoding="utf-8"))
-        self.assertIn("Inbox 批次迁移", (self.project / "素材整理记录.md").read_text(encoding="utf-8"))
+        self.assertIn("Inbox 批次迁移", (self.project / "material-organization.md").read_text(encoding="utf-8"))
         self.assertEqual(list(self.project.rglob(f"*{PROMOTE.PROMOTION_JOURNAL_SUFFIX}")), [])
 
     def test_refuses_a_batch_outside_the_inbox_root(self) -> None:
@@ -74,7 +74,7 @@ class PromoteInboxBatchTests(unittest.TestCase):
 
     def test_preflight_collision_rejects_before_any_source_move(self) -> None:
         batch = self.make_batch("clip.mp4", "other.mp4")
-        collision = self.project / "00_Inbox_待分类" / "clip.mp4"
+        collision = self.project / "unclassified" / "clip.mp4"
         collision.parent.mkdir(parents=True)
         collision.write_bytes(b"existing-target")
 
@@ -105,8 +105,8 @@ class PromoteInboxBatchTests(unittest.TestCase):
 
         self.assertEqual((batch / "a.mp4").read_bytes(), b"fixture-a.mp4")
         self.assertEqual((batch / "b.mp4").read_bytes(), b"fixture-b.mp4")
-        self.assertFalse((self.project / "00_Inbox_待分类" / "a.mp4").exists())
-        self.assertFalse((self.project / "00_Inbox_待分类" / "b.mp4").exists())
+        self.assertFalse((self.project / "unclassified" / "a.mp4").exists())
+        self.assertFalse((self.project / "unclassified" / "b.mp4").exists())
         self.assertEqual(list(self.project.rglob(f"*{PROMOTE.PROMOTION_RECORD_SUFFIX}")), [])
         self.assertEqual(list(self.project.rglob(f"*{PROMOTE.PROMOTION_JOURNAL_SUFFIX}")), [])
 
@@ -132,14 +132,14 @@ class PromoteInboxBatchTests(unittest.TestCase):
                 PROMOTE.promote_batch(batch, self.workspace)
 
         self.assertEqual((batch / "clip.mp4").read_bytes(), b"fixture-clip.mp4")
-        self.assertFalse((self.project / "00_Inbox_待分类" / "clip.mp4").exists())
+        self.assertFalse((self.project / "unclassified" / "clip.mp4").exists())
         self.assertEqual(list(self.project.rglob(f"*{PROMOTE.PROMOTION_RECORD_SUFFIX}")), [])
         self.assertEqual(list(self.project.rglob(f"*{PROMOTE.PROMOTION_JOURNAL_SUFFIX}")), [])
-        self.assertFalse((self.project / "素材整理记录.md").exists())
+        self.assertFalse((self.project / "material-organization.md").exists())
 
     def test_log_write_failure_removes_record_and_restores_prior_log(self) -> None:
         batch = self.make_batch("clip.mp4")
-        log_path = self.project / "素材整理记录.md"
+        log_path = self.project / "material-organization.md"
         original_log = "# 素材整理记录\n\n原有记录\n"
         log_path.write_text(original_log, encoding="utf-8")
         real_append_log = PROMOTE.append_project_log
@@ -205,7 +205,7 @@ class PromoteInboxBatchTests(unittest.TestCase):
         records = list(self.project.rglob(f"*{PROMOTE.PROMOTION_RECORD_SUFFIX}"))
         self.assertEqual(len(records), 1)
         self.assertEqual(records[0].resolve(), Path(first["promotion_record"]).resolve())
-        log_text = (self.project / "素材整理记录.md").read_text(encoding="utf-8")
+        log_text = (self.project / "material-organization.md").read_text(encoding="utf-8")
         self.assertEqual(log_text.count("Inbox 批次迁移"), 1)
 
 

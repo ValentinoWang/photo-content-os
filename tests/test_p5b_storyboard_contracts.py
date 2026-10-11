@@ -15,8 +15,8 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 
-storyboard = load_script("18_generate_storyboard_edl.py", "p5b_storyboard", register=True)
-jianying = load_script("23_generate_jianying_draft_plan.py", "p5b_jianying", register=True)
+storyboard = load_script("generate_storyboard_edl.py", "p5b_storyboard", register=True)
+jianying = load_script("generate_jianying_draft_plan.py", "p5b_jianying", register=True)
 import jianying_roughcut_common as roughcut_common  # noqa: E402
 
 
@@ -95,10 +95,10 @@ class StoryboardContractTests(unittest.TestCase):
     def test_long_summary_has_shared_limit_and_explicit_marker(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
-            summaries = project / "_ai_analysis" / "summaries"
+            summaries = project / "ai-analysis" / "summaries"
             summaries.mkdir(parents=True)
             evidence_boundary = "证据边界：超出提示预算后必须人工复核。"
-            (summaries / "m1_clip.summary.md").write_text("画面事实\n" + "视觉证据" * 1000 + evidence_boundary, encoding="utf-8")
+            (summaries / "asset-m1-clip.summary.md").write_text("画面事实\n" + "视觉证据" * 1000 + evidence_boundary, encoding="utf-8")
             value = storyboard.summary_text(project, {"media_id": "m1", "relative_path": "clip.mp4"})
             self.assertLessEqual(len(value), storyboard.MAX_SUMMARY_CHARS)
             self.assertEqual(storyboard.MAX_SUMMARY_CHARS, 2500)
@@ -107,41 +107,25 @@ class StoryboardContractTests(unittest.TestCase):
     def test_short_summary_is_preserved_without_truncation_marker(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
-            summaries = project / "_ai_analysis" / "summaries"
+            summaries = project / "ai-analysis" / "summaries"
             summaries.mkdir(parents=True)
             expected = "画面事实：人物进入画面。\n证据边界：仅支持这一结论。"
-            (summaries / "m1_clip.summary.md").write_text(expected, encoding="utf-8")
+            (summaries / "asset-m1-clip.summary.md").write_text(expected, encoding="utf-8")
             value = storyboard.summary_text(project, {"media_id": "m1", "relative_path": "clip.mp4"})
             self.assertEqual(value, expected)
             self.assertNotIn("[已截断]", value)
 
     def test_summary_fallback_glob_matches_safe_slugged_stem(self) -> None:
-        """Regression test for the L-19 silent-miss bug.
-
-        05_write_content_summary.py always names summary files
-        `{media_id}_{safe_slug(stem)}.summary.md` (see item_summary_path in
-        media_common.py). When a manifest item is missing media_id --
-        genuinely possible, and exactly the case this bug hid -- summary_text
-        must fall back to a stem-based glob to find that same file.
-
-        Before the fix, that fallback globbed on the RAW stem
-        (`*_{stem}.summary.md`), not safe_slug(stem). For a stem containing
-        spaces or CJK punctuation (illegal/unglobbable-as-written in the
-        actual filename on disk, which was slugified when written), the raw
-        stem never matches, so the fallback silently returns no summary --
-        indistinguishable from "no summary was ever written". After the fix,
-        the fallback globs on safe_slug(stem), matching what the writer
-        actually produced.
-        """
+        """A missing media ID still resolves the English filename by its portable stem."""
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
-            summaries = project / "_ai_analysis" / "summaries"
+            summaries = project / "ai-analysis" / "summaries"
             summaries.mkdir(parents=True)
             stem = "a b c，测试"
-            from media_common import safe_slug
+            from media_common import directory_slug
 
             expected = "画面事实：人物进入画面。\n证据边界：仅支持这一结论。"
-            (summaries / f"m1_{safe_slug(stem)}.summary.md").write_text(expected, encoding="utf-8")
+            (summaries / f"asset-m1-{directory_slug(stem, 'clip')}.summary.md").write_text(expected, encoding="utf-8")
 
             # media_id absent on the manifest item: the first (media_id-based)
             # glob can't run, so this exercises the stem-based fallback alone.
@@ -155,7 +139,7 @@ class StoryboardContractTests(unittest.TestCase):
             self.assertEqual(value, expected)
 
     def test_storyboard_script_has_no_historical_slot_mapping(self) -> None:
-        source = (SCRIPTS / "23_generate_jianying_draft_plan.py").read_text(encoding="utf-8")
+        source = (SCRIPTS / "generate_jianying_draft_plan.py").read_text(encoding="utf-8")
         self.assertNotIn("slot_map", source)
         self.assertNotIn("赛前候场", source)
 

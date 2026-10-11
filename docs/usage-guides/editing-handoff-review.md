@@ -21,7 +21,7 @@
 云端创建 `generate_edit_handoff_pack` 任务，Mac 输出：
 
 ```text
-90_Draft_Project/edit_handoff/{项目版本}/
+draft-project/edit-handoff/{项目版本}/
 ├── manifest.json
 ├── clips.csv
 ├── captions.srt
@@ -37,7 +37,7 @@
 云端创建 `generate_otio_kdenlive_timeline` 任务，Mac 输出：
 
 ```text
-90_Draft_Project/edit_handoff/{项目版本}/
+draft-project/edit-handoff/{项目版本}/
 ├── timeline.otio
 ├── timeline.kdenlive
 ├── timeline_validation.json
@@ -52,15 +52,15 @@
 人负责镜头取舍、音乐、节奏、字幕、封面、调色和特效。若使用剪映，真实草稿留在：
 
 ```text
-03_Jianying_Active_Drafts/
+jianying-drafts/
 ```
 
 它不进入同步盘，不由自动化移动或写入。导出物回到项目：
 
 ```text
-91_Output/V1/
-91_Output/V2/
-91_Output/Final/
+output/v1/
+output/v2/
+output/final/
 ```
 
 ## 成片复核与发布
@@ -78,7 +78,7 @@
 
 ## 历史导入包说明
 
-旧项目可能仍有 `native_import_packs`、`06b_jianying_draft_plan.json`、
+旧项目可能仍有 `native-import-packs`、`06b_jianying_draft_plan.json`、
 `06d_native_import_pack_result.yaml` 或真实剪映草稿。这些文件是历史交付证据，不能
 删除，也不能作为当前 v0.2 项目的新生产路线。
 

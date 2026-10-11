@@ -2,9 +2,9 @@
   "blocking_entries": [
     {
       "blocking": true,
-      "checklist_path": "acceptance/human/2026-W36/未-2026-09-02-OCM-Z1/checklist.md",
+      "checklist_path": "acceptance/human/2026-w36/pending-2026-09-02-ocm-z1/checklist.md",
       "estimated_minutes": 80,
-      "handoff_path": "acceptance/human/2026-W36/未-2026-09-02-OCM-Z1/handoff.json",
+      "handoff_path": "acceptance/human/2026-w36/pending-2026-09-02-ocm-z1/handoff.json",
       "invalidation_keys": [
         "checklist.z1"
       ],
@@ -19,7 +19,7 @@
       "status": "PENDING",
       "summary": "候选已完成自动 E2E、双视口截图、运行时视觉验证与受保护测试；进入产品负责人终端验收。",
       "task_id": "OCM-Z1",
-      "workspace": "acceptance/human/2026-W36/2026-09-02-OCM-Z1"
+      "workspace": "acceptance/human/2026-w36/2026-09-02-OCM-Z1"
     }
   ],
   "generated_at": "2026-09-02T15:39:45.556603Z",

@@ -26,27 +26,27 @@ if str(SYSTEM_ROOT) not in sys.path:
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from desktop.ai_patch import AIPatchError, generate_patch  # type: ignore  # noqa: E402
-from desktop.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore  # type: ignore  # noqa: E402
-from desktop.api_contract import is_registered_route, route_inventory  # type: ignore  # noqa: E402
-from desktop.archive_location_config import (  # type: ignore  # noqa: E402
+from studio.ai_patch import AIPatchError, generate_patch  # type: ignore  # noqa: E402
+from studio.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore  # type: ignore  # noqa: E402
+from studio.api_contract import is_registered_route, route_inventory  # type: ignore  # noqa: E402
+from studio.archive_location_config import (  # type: ignore  # noqa: E402
     ArchiveLocationConfig,
     ArchiveLocationConfigError,
     ArchiveLocationConfigStore,
 )
-from desktop.chatcut_mcp import ChatCutMcp  # type: ignore  # noqa: E402
-from desktop.edl_bridge import EDLBridgeError, bridge_state, read_edl_bridge  # type: ignore  # noqa: E402
-from desktop.model_provider_config import (  # type: ignore  # noqa: E402
+from studio.chatcut_mcp import ChatCutMcp  # type: ignore  # noqa: E402
+from studio.edl_bridge import EDLBridgeError, bridge_state, read_edl_bridge  # type: ignore  # noqa: E402
+from studio.model_provider_config import (  # type: ignore  # noqa: E402
     ModelProviderConfig,
     ModelProviderConfigError,
     ModelProviderConfigStore,
 )
-from desktop.onboarding_state import (  # type: ignore  # noqa: E402
+from studio.onboarding_state import (  # type: ignore  # noqa: E402
     OnboardingStateError,
     VersionedOnboardingStateStore,
 )
-from desktop.project_store import DOCUMENT_NAMES, ProjectStore, ProjectStoreError  # type: ignore  # noqa: E402
-from desktop.upstream_session import UpstreamSessionConsumer, UpstreamSessionContractError  # type: ignore  # noqa: E402
+from studio.project_store import DOCUMENT_NAMES, ProjectStore, ProjectStoreError  # type: ignore  # noqa: E402
+from studio.upstream_session import UpstreamSessionConsumer, UpstreamSessionContractError  # type: ignore  # noqa: E402
 from llm_common import LLMError, load_creator_context  # type: ignore  # noqa: E402
 from media_delete_recommendations import (  # type: ignore  # noqa: E402
     DeleteRecommendationError,
@@ -72,7 +72,7 @@ MAX_BODY_BYTES = 2 * 1024 * 1024
 SETTINGS_DIRNAME = "settings"
 ASSET_LIBRARY_DIRNAME = "asset-library"
 TRASH_RECEIPT_SCHEMA_VERSION = "studio_trash_receipts_v1"
-INBOX_MANIFEST_RELATIVE_PATH = Path("_ai_analysis") / "media_manifest.json"
+INBOX_MANIFEST_RELATIVE_PATH = Path("ai-analysis") / "media-manifest.json"
 
 
 def _inbox_batch_planner() -> object:
@@ -82,7 +82,7 @@ def _inbox_batch_planner() -> object:
     existing = sys.modules.get(module_name)
     if existing is not None:
         return existing
-    source = SCRIPTS_DIR / "46_plan_inbox_batches.py"
+    source = SCRIPTS_DIR / "plan_inbox_batches.py"
     spec = importlib.util.spec_from_file_location(module_name, source)
     if spec is None or spec.loader is None:
         raise RuntimeError("inbox batch planner is unavailable")
@@ -101,7 +101,7 @@ def _error(code: str, message: str) -> dict[str, Any]:
 
 
 def _public_contract_snapshot() -> dict[str, Any]:
-    path = SYSTEM_ROOT / "schemas" / "openclaw_media_contract_snapshot.json"
+    path = SYSTEM_ROOT / "schemas" / "openclaw-media-contract-snapshot.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     return {
         "upstream_commit": data["upstream_commit"],

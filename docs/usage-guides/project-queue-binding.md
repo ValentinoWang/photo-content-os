@@ -16,8 +16,8 @@
 Mac 本地至少应有：
 
 ```text
-00_Inbox_Mac_Intake/YYYYMMDD_事件名/
-└── 00_批次说明.md
+inbox/YYYYMMDD_事件名/
+└── batch-notes.md
 ```
 
 云端默认不需要知道完整 Mac 路径。它只需要知道稳定的批次名：
@@ -29,7 +29,7 @@ batch_id: YYYYMMDD_事件名
 Mac 会把它解析为：
 
 ```text
-/Users/vsiyo/Desktop/照片筛选/00_Inbox_Mac_Intake/YYYYMMDD_事件名/
+/Users/vsiyo/Desktop/照片筛选/inbox/YYYYMMDD_事件名/
 ```
 
 只有当人明确提供完整路径时，云端 task 才可以把它作为可选 hint 写入 `local_batch_path`；不能假设腾讯云天然知道 `/Users/...`。
@@ -70,14 +70,14 @@ tags：#xxx #xxx
 不建议默认写：
 
 ```text
-我的素材批次：/Users/vsiyo/Desktop/照片筛选/00_Inbox_Mac_Intake/YYYYMMDD_事件名
+我的素材批次：/Users/vsiyo/Desktop/照片筛选/inbox/YYYYMMDD_事件名
 ```
 
 除非这条完整路径是人明确提供给云端的。
 
 ## 允许的 Mac 能力
 
-只允许使用 `mac_runner_capabilities.yaml` 中的白名单 action，例如：
+只允许使用 `mac-runner-capabilities.yaml` 中的白名单 action，例如：
 
 ```text
 analyze_project
@@ -95,25 +95,25 @@ review_output_video
 手动处理当前 ready 队列：
 
 ```bash
-python3 99_System_OpenClaw/scripts/33_enqueue_openclaw_queue_job.py --all-ready --process
+python3 scripts/enqueue_openclaw_queue_job.py --all-ready --process
 ```
 
 常驻监听：
 
 ```bash
-python3 99_System_OpenClaw/scripts/33_enqueue_openclaw_queue_job.py --watch --process --interval 10
+python3 scripts/enqueue_openclaw_queue_job.py --watch --process --interval 10
 ```
 
 ## 执行链路
 
 ```text
 98_Agent任务队列/01_cloud_to_mac_ready/task_*.yaml
--> 33_enqueue_openclaw_queue_job.py
--> _OpenClawQueue/cloud_to_mac/*.json
--> 32_process_openclaw_queue.py
--> 00_Inbox_Mac_Intake/事件批次/_openclaw/link.json
--> 如无正式项目目录，自动创建 01_Project_Workspace/主题集合/项目名
--> _OpenClawQueue/mac_to_cloud/*.result.json
+-> enqueue_openclaw_queue_job.py
+-> openclaw-queue/cloud_to_mac/*.json
+-> process_openclaw_queue.py
+-> inbox/事件批次/openclaw/link.json
+-> 如无正式项目目录，自动创建 projects/主题集合/项目名
+-> openclaw-queue/mac_to_cloud/*.result.json
 -> 98_Agent任务队列/02_mac_to_cloud_results/result_*.yaml
 ```
 
@@ -122,9 +122,9 @@ python3 99_System_OpenClaw/scripts/33_enqueue_openclaw_queue_job.py --watch --pr
 本地批次：
 
 ```text
-_openclaw/link.json
-_openclaw/status.json
-_openclaw/project.json
+openclaw/link.json
+openclaw/status.json
+openclaw/project.json
 ```
 
 任务层回写：
@@ -136,8 +136,8 @@ _openclaw/project.json
 ## 下一步
 
 ```text
-正式项目壳已创建，但素材还在 00_Inbox_Mac_Intake
--> 运行 35_promote_inbox_batch_to_project.py，把素材移动进 01 并清掉 00
+正式项目壳已创建，但素材还在 inbox
+-> 运行 promote_inbox_batch_to_project.py，把素材移动进 01 并清掉 00
 
 素材已经进入正式项目或需要生成素材匹配 / 分镜 / EDL
 -> 看 08.04

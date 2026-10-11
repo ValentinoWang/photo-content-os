@@ -23,16 +23,16 @@ IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".tif", ".tiff", ".webp
 METADATA_EXTS = {".xmp"}
 MEDIA_EXTS = VIDEO_EXTS | IMAGE_EXTS | METADATA_EXTS
 
-ANALYSIS_DIR = "_ai_analysis"
-MANIFEST_NAME = "media_manifest.json"
+ANALYSIS_DIR = "ai-analysis"
+MANIFEST_NAME = "media-manifest.json"
 
 DERIVED_DIR_NAMES = {
-    "80_To_iCloudPhotos_精选入库": "selected_copy",
-    "90_Draft_Project": "draft_project",
-    "91_Output": "output",
-    "92_Aliyun_SyncReady": "sync_ready",
-    "93_GroupPhoto_Distribution_合照发放": "group_photo_distribution",
-    "App_WorkCache": "work_cache",
+    "icloud-selected": "selected_copy",
+    "draft-project": "draft_project",
+    "output": "output",
+    "sync-ready": "sync_ready",
+    "group-photo-distribution": "group_photo_distribution",
+    "work-cache": "work_cache",
 }
 
 
@@ -46,24 +46,24 @@ def project_path(value: str) -> Path:
 
 
 def project_additions_dir(project: Path) -> Path:
-    return project / "待增加"
+    return project / "additions"
 
 
 def ensure_project_additions_dir(additions: Path, project: Path) -> Path:
     additions = additions.expanduser().resolve()
     expected = project_additions_dir(project).resolve()
     if additions != expected:
-        raise RuntimeError(f"待增加目录必须位于正式项目内：{expected}\n当前目录：{additions}")
+        raise RuntimeError(f"additions目录必须位于正式项目内：{expected}\n当前目录：{additions}")
     return additions
 
 
-ANALYSIS_PLAN_NAME = "analysis_plan.json"
+ANALYSIS_PLAN_NAME = "analysis-plan.json"
 
 
 def analysis_dir(project: Path) -> Path:
-    """The `_ai_analysis/` root every per-project AI-analysis output lives
+    """The `ai-analysis/` root every per-project AI-analysis output lives
     under (L-18). One-off files that don't warrant their own named helper
-    (e.g. project_overview.md) should join directly onto this rather than
+    (e.g. project-overview.md) should join directly onto this rather than
     repeating the ANALYSIS_DIR literal."""
     return project / ANALYSIS_DIR
 
@@ -111,7 +111,7 @@ def utc_now_z() -> str:
     whole-second UTC ending in 'Z' (e.g. `...T00:00:00Z`), while now_iso()
     is seconds-precision with the machine's *local* offset (e.g.
     `...+08:00`). Baseline: edit_backends/handoff_pack.py's utc_now(),
-    byte-identical to desktop/project_store.py's _now() before this
+    byte-identical to studio/project_store.py's _now() before this
     consolidation. Those two producers write persisted audit-trail records
     (an edit handoff manifest, a versioned project store) where the UTC/Z
     form is the deliberate on-disk format -- do not rewrite either call site
@@ -174,6 +174,14 @@ def safe_slug(text: str, max_len: int = 96) -> str:
     return (cleaned or "media")[:max_len]
 
 
+def directory_slug(text: str, prefix: str = "item") -> str:
+    """Produce a portable directory identifier without translating its title."""
+    if re.search(r"[^\x00-\x7f]", text):
+        return prefix + "-" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
+    slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:80]
+    return slug or prefix
+
+
 def media_id(relative_path: str) -> str:
     return hashlib.sha1(relative_path.encode("utf-8")).hexdigest()[:12]
 
@@ -182,7 +190,7 @@ def media_id(relative_path: str) -> str:
 # --- was duplicated verbatim across 5+ scripts; stable_json_hash is its
 # --- canonical-JSON counterpart used to derive cache/idempotency keys), and
 # --- by edit_backends/handoff_pack.py, edit_backends/otio_kdenlive.py,
-# --- 32_process_openclaw_queue.py and 45_archive_project.py, all of which
+# --- process_openclaw_queue.py and archive_project.py, all of which
 # --- previously carried their own byte-identical streaming sha256_file.
 
 
@@ -231,8 +239,8 @@ def safe_project_file(project: Path, raw: object, *, must_be_file: bool = True) 
     `project` (directory-escape guard), or -- when must_be_file=True, the
     default -- a resolved path that is not an existing file.
 
-    Baseline: 05_write_content_summary.py's _safe_project_file (identical to
-    03_transcribe_audio.py's _safe_audio_path). Callers needing a different
+    Baseline: write_content_summary.py's _safe_project_file (identical to
+    transcribe_audio.py's _safe_audio_path). Callers needing a different
     failure mode than "return None" -- e.g. raising a domain-specific error,
     or explicitly tolerating a not-yet-existing output path -- should call
     this with must_be_file=False and apply their own existence/escape
@@ -252,34 +260,26 @@ def safe_project_file(project: Path, raw: object, *, must_be_file: bool = True) 
 
 
 # Directory-wide glob patterns shared by writers (04/05) and prune helpers.
-PROMPT_GLOB = "*_prompt.md"
+PROMPT_GLOB = "asset-*-prompt.md"
 SUMMARY_GLOB = "*.summary.md"
 
 
 def item_prompt_path(prompt_dir: Path, item: dict[str, Any]) -> Path:
-    """Canonical per-item prompt file path, as written by 04_generate_ai_prompt.py."""
-    return prompt_dir / f"{item['media_id']}_{safe_slug(Path(str(item['relative_path'])).stem)}_prompt.md"
+    """Canonical per-item prompt file path, as written by generate_ai_prompt.py."""
+    return prompt_dir / f"asset-{item['media_id']}-{directory_slug(Path(str(item['relative_path'])).stem, 'clip')}-prompt.md"
 
 
 def item_summary_path(summary_dir: Path, item: dict[str, Any]) -> Path:
-    """Canonical per-item summary file path, as written by 05_write_content_summary.py."""
-    return summary_dir / f"{item['media_id']}_{safe_slug(Path(str(item['relative_path'])).stem)}.summary.md"
+    """Canonical per-item summary file path, as written by write_content_summary.py."""
+    return summary_dir / f"asset-{item['media_id']}-{directory_slug(Path(str(item['relative_path'])).stem, 'clip')}.summary.md"
 
 
 def find_item_summary(summaries_dir: Path, item: dict[str, Any]) -> Path | None:
-    """Locate an existing summary file for `item`, tolerating filename drift.
-
-    Tries the media_id-prefixed glob first (the stable identity every writer
-    uses); falls back to a slug-based glob on the relative_path stem. The
-    fallback MUST use safe_slug(stem), matching what item_summary_path()
-    above actually writes -- matching on the raw, un-slugged stem instead
-    means a stem containing spaces, CJK punctuation, or other characters
-    safe_slug() rewrites can never be found by this fallback.
-    """
+    """Find summaries by stable media ID, or by their portable stem if ID is absent."""
     media_id_value = str(item.get("media_id") or item.get("id") or "")
     stem = Path(str(item.get("relative_path", ""))).stem
-    candidates = list(summaries_dir.glob(f"{media_id_value}_*.summary.md")) if media_id_value else []
-    candidates.extend(summaries_dir.glob(f"*_{safe_slug(stem)}.summary.md"))
+    candidates = list(summaries_dir.glob(f"asset-{media_id_value}-*.summary.md")) if media_id_value else []
+    candidates.extend(summaries_dir.glob(f"asset-*-{directory_slug(stem, 'clip')}.summary.md"))
     for path in candidates:
         if path.exists():
             return path
@@ -301,7 +301,7 @@ def lifecycle_for(path: Path, project: Path) -> str:
     for part in path.relative_to(project).parts:
         if part in DERIVED_DIR_NAMES:
             return DERIVED_DIR_NAMES[part]
-    if "Raw_待处理" in path.parts or "00_RawVault_不可直用" in path.parts:
+    if "raw-pending" in path.parts or "raw-vault" in path.parts:
         return "raw_or_pending"
     return "primary"
 
@@ -323,8 +323,8 @@ def source_type(filename: str, relative_path: str, live_status: str | None = Non
     return "普通素材"
 
 
-# --- Media scan helpers shared by 01_scan_media_manifest.py and
-# --- 08_plan_additions_merge.py.
+# --- Media scan helpers shared by scan_media_manifest.py and
+# --- plan_additions_merge.py.
 
 # HEIC/JPEG (still) + MOV (motion) + XMP (metadata) sharing the same
 # directory and stem are treated as one Live Photo group.
@@ -355,9 +355,9 @@ def live_status_for(
 ) -> tuple[str | None, str | None, str | None]:
     """Return (status, role, group_id) for a Live Photo group member, or (None, None, None).
 
-    group_id is 08_plan_additions_merge.py's addition (a stable id for the
+    group_id is plan_additions_merge.py's addition (a stable id for the
     still/motion/xmp trio, used to name merged Live Photo output files
-    consistently). 01_scan_media_manifest.py's caller ignores it -- writing
+    consistently). scan_media_manifest.py's caller ignores it -- writing
     live_group_id into the manifest is a separate behavior change the audit
     flagged as needing its own decision, not something to add as a side
     effect of this consolidation.
@@ -571,7 +571,7 @@ def image_info_for_image(path: Path) -> dict[str, Any]:
 def video_info(path: Path) -> dict[str, object]:
     """ffprobe-derived video facts, including avg_frame_rate.
 
-    01_scan_media_manifest.py originally carried this field; 08's own copy
+    scan_media_manifest.py originally carried this field; 08's own copy
     did not. Both now get it -- 08's addition-plan JSON gaining
     avg_frame_rate is a verified-safe additive field, not a behavior removal.
     """
@@ -603,9 +603,9 @@ def video_info(path: Path) -> dict[str, object]:
 
 # Raw 360/panoramic-camera source material cannot be used as an executable
 # edit clip until it has been reframed/reconstructed (see
-# 99_System_OpenClaw/docs/03_项目目录与素材处理.md and
-# 11_rename_media_file.py:RAW_ASSOCIATED_EXTS). ".insv" is included alongside
-# ".osv"/".lrf" because 11_rename_media_file.py already groups it with them
+# docs/project-materials.md and
+# rename_media_file.py:RAW_ASSOCIATED_EXTS). ".insv" is included alongside
+# ".osv"/".lrf" because rename_media_file.py already groups it with them
 # as one raw-associated set, and the project docs consistently describe
 # OSV/LRF/INSV as one "must not be split, must be reconstructed before use"
 # group.
@@ -669,7 +669,7 @@ def is_raw360_item(item: dict[str, Any]) -> bool:
 def load_manifest(project: Path) -> dict[str, Any]:
     path = manifest_path(project)
     if not path.exists():
-        raise FileNotFoundError(f"manifest not found, run 01_scan_media_manifest.py first: {path}")
+        raise FileNotFoundError(f"manifest not found, run scan_media_manifest.py first: {path}")
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
     if isinstance(data, list):
@@ -705,7 +705,7 @@ def read_yaml_mapping(
 ) -> dict[str, Any]:
     """Read `path` as YAML and require its root to be a mapping.
 
-    Baseline: 33_enqueue_openclaw_queue_job.py's load_yaml -- the only one
+    Baseline: enqueue_openclaw_queue_job.py's load_yaml -- the only one
     of 5 near-identical copies that also rejected a directory path (not
     just a missing one) before this consolidation. Catching yaml.YAMLError
     here (none of the 5 originals did) is a deliberate behavior improvement,
@@ -736,7 +736,7 @@ def read_json_object(
     Catches both OSError and json.JSONDecodeError (edit_backends/
     otio_kdenlive.py's read_json was the only one of the 3 folded-in copies
     that caught OSError; jianying_roughcut_common.py's load_json and
-    32_process_openclaw_queue.py's load_json did not, so a missing/
+    process_openclaw_queue.py's load_json did not, so a missing/
     unreadable file previously escaped as a raw OSError instead of the
     caller's own domain exception for those two -- the same deliberate
     improvement as read_yaml_mapping's YAMLError handling above).
@@ -754,9 +754,9 @@ def read_json_object(
 #
 # This is a first, deliberately narrow pass (L-12): only the two call sites
 # named by the audit (validate_content_os_task.write_blocked_result,
-# mac_openclaw_runner.write_yaml) are migrated to these helpers in this
+# run_tasks.write_yaml) are migrated to these helpers in this
 # round. The cluster's other ~12 non-atomic write points (31's write_link,
-# several in 19_review_output_video.py, jianying_roughcut_common.py,
+# several in review_output_video.py, jianying_roughcut_common.py,
 # otio_kdenlive.py, run_analyze_project.py, etc.) are NOT touched here --
 # each has its own behavior nuances that need individually checking before
 # switching them over. sort_keys is deliberately a per-call parameter, not
@@ -831,7 +831,7 @@ def eligible_item(item: dict[str, Any], include_derived: bool = False) -> bool:
 def missing_markers(text: str, markers: list[str]) -> list[str]:
     """Which of `markers` are absent from `text` (L-22).
 
-    Shared by 06_check_outline_contract.py and 30_check_obsidian_doc_sync.py,
+    Shared by check_outline_contract.py and check_obsidian_doc_sync.py,
     the two doc-contract checkers -- byte-identical before this
     consolidation. 30's read_text (an IsADirectoryError-checking variant with
     no second caller) stays where it is; this is only the two-line
@@ -840,10 +840,10 @@ def missing_markers(text: str, markers: list[str]) -> list[str]:
     return [marker for marker in markers if marker not in text]
 
 
-# --- Keyframe sampling / preview generation, shared by 08_plan_additions_merge.py,
-# --- 11_rename_media_file.py and 19_review_output_video.py.
+# --- Keyframe sampling / preview generation, shared by plan_additions_merge.py,
+# --- rename_media_file.py and review_output_video.py.
 #
-# 02_extract_keyframes.py's own sampling variant (_timestamp_candidates) is
+# extract_keyframes.py's own sampling variant (_timestamp_candidates) is
 # deliberately NOT folded in here: it is its own independent sampling
 # strategy within that one module, not a duplicate of this one.
 
@@ -874,7 +874,7 @@ class SamplingPreset:
     single_frame_floor: float | None
 
 
-# 08_plan_additions_merge.py and 11_rename_media_file.py: sparse preview frames
+# plan_additions_merge.py and rename_media_file.py: sparse preview frames
 # (up to 5, one per ~3s), used only to help a human/LLM recognize the clip.
 RENAME_PREVIEW_SAMPLING = SamplingPreset(
     max_frames=5,
@@ -885,7 +885,7 @@ RENAME_PREVIEW_SAMPLING = SamplingPreset(
     single_frame_floor=0.2,
 )
 
-# 19_review_output_video.py: dense uniform frames (up to 48, one per 0.75s) for
+# review_output_video.py: dense uniform frames (up to 48, one per 0.75s) for
 # frame-level output review; duration<=0 falls back to 0.0, not 0.5.
 OUTPUT_REVIEW_SAMPLING = SamplingPreset(
     max_frames=48,

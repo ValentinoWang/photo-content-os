@@ -39,7 +39,7 @@ class MediaIntegrationTests(unittest.TestCase):
             project = Path(directory)
             video = project / "clip.mp4"
             create_video(video, 2.0)
-            analysis = project / "_ai_analysis"
+            analysis = project / "ai-analysis"
             analysis.mkdir()
             manifest = {
                 "items": [{
@@ -47,20 +47,20 @@ class MediaIntegrationTests(unittest.TestCase):
                     "analysis_eligible": True, "duration_sec": 2.0,
                 }]
             }
-            (analysis / "media_manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+            (analysis / "media-manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
             plan = {
                 "schema_version": "analysis_tiering_v1",
                 "plans": [{"media_id": "m1", "tier": "preview", "image_budget": 3, "cache_key": "sha256:test"}],
             }
-            plan_path = analysis / "analysis_plan.json"
+            plan_path = analysis / "analysis-plan.json"
             plan_path.write_text(json.dumps(plan), encoding="utf-8")
             completed = subprocess.run(
-                [sys.executable, str(SCRIPTS / "02_extract_keyframes.py"), str(project), "--analysis-plan", str(plan_path)],
+                [sys.executable, str(SCRIPTS / "extract_keyframes.py"), str(project), "--analysis-plan", str(plan_path)],
                 text=True, encoding="utf-8", errors="replace", stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
                 env={**dict(__import__("os").environ), "PYTHONPATH": str(SCRIPTS)},
             )
             self.assertEqual(completed.returncode, 0, completed.stderr)
-            updated = json.loads((analysis / "media_manifest.json").read_text(encoding="utf-8"))
+            updated = json.loads((analysis / "media-manifest.json").read_text(encoding="utf-8"))
             item = updated["items"][0]
             self.assertEqual(item["keyframe_status"], "ok")
             self.assertEqual(len(item["keyframes"]), 3)
@@ -68,7 +68,7 @@ class MediaIntegrationTests(unittest.TestCase):
                 self.assertTrue((project / ref).is_file())
 
     def test_preview_execute_creates_local_mp4(self):
-        module = load_script("20_render_preview.py", "preview_execution_under_test", register=True)
+        module = load_script("render_preview.py", "preview_execution_under_test", register=True)
         with tempfile.TemporaryDirectory() as directory:
             project = Path(directory)
             media = project / "01_Media"

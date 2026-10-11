@@ -1,4 +1,4 @@
-# Copy to 00_入口与总览/mac_runner_capabilities.yaml for a new vault.
+# Copy to 00_入口与总览/mac-runner-capabilities.yaml for a new vault.
 editor_backends:
   supported:
     handoff_pack:

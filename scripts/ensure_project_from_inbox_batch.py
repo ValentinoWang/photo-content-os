@@ -17,7 +17,7 @@ WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("batch_dir", type=Path, help="00_Inbox_Mac_Intake 下的事件批次目录")
+    parser.add_argument("batch_dir", type=Path, help="inbox 下的事件批次目录")
     parser.add_argument("--workspace-root", type=Path, default=WORKSPACE_ROOT, help="本地素材根目录")
     parser.add_argument("--topic", default="", help="可选：覆盖项目剪辑目标 / 主题")
     parser.add_argument("--platform", default="", help="可选：目标平台")

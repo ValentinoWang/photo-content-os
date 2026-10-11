@@ -51,16 +51,16 @@ actual consumed resources and every PNG are hash-checked. Changing only narratio
 does not rerender frames. Repairing a failed shot reuses the other verified shots.
 
 ```bash
-99_System_OpenClaw/.venv-content-os/bin/python \
-  99_System_OpenClaw/scripts/video_render/multi_shot.py \
+.venv/bin/python \
+  scripts/video_render/multi_shot.py \
   --manifest /local/job/manifest.json --output /local/job/frames-run
 
-99_System_OpenClaw/.venv-content-os/bin/python \
-  99_System_OpenClaw/scripts/video_render/compose.py \
+.venv/bin/python \
+  scripts/video_render/compose.py \
   --manifest /local/job/manifest.json --output /local/job/direct-run
 
-99_System_OpenClaw/.venv-content-os/bin/python \
-  99_System_OpenClaw/scripts/video_render/teaching_clips.py \
+.venv/bin/python \
+  scripts/video_render/teaching_clips.py \
   --manifest /local/job/manifest.json --output /local/job/teaching-run --transparent
 ```
 

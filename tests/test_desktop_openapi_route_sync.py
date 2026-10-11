@@ -1,4 +1,4 @@
-"""Fail closed when the desktop OpenAPI and served route inventory drift."""
+"""Fail closed when the studio OpenAPI and served route inventory drift."""
 
 from __future__ import annotations
 
@@ -17,9 +17,9 @@ if str(SYSTEM) not in sys.path:
 
 class DesktopOpenApiRouteSyncTests(unittest.TestCase):
     def test_openapi_methods_equal_the_server_registration(self) -> None:
-        contract = importlib.import_module("desktop.api_contract")
-        server = importlib.import_module("desktop.server")
-        checked_in = json.loads((SYSTEM / "schemas" / "desktop_openapi.json").read_text(encoding="utf-8"))
+        contract = importlib.import_module("studio.api_contract")
+        server = importlib.import_module("studio.server")
+        checked_in = json.loads((SYSTEM / "schemas" / "studio-openapi.json").read_text(encoding="utf-8"))
 
         documented = {
             (method.upper(), path)

@@ -3,27 +3,27 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-if [[ "$(basename "$ROOT_DIR")" == "99_System_OpenClaw" ]]; then
+if [[ "$(basename "$ROOT_DIR")" == "photo-content-os" ]]; then
   ROOT_DIR="$(cd "$ROOT_DIR/.." && pwd)"
 fi
 
 usage() {
   cat <<'USAGE'
 用法：
-  ./99_System_OpenClaw/scripts/10_run_additions_merge.sh 目标正式项目目录
-  ./99_System_OpenClaw/scripts/10_run_additions_merge.sh 目标正式项目目录 --plan
-  ./99_System_OpenClaw/scripts/10_run_additions_merge.sh 目标正式项目目录 --apply
+  ./scripts/run_additions_merge.sh 目标正式项目目录
+  ./scripts/run_additions_merge.sh 目标正式项目目录 --plan
+  ./scripts/run_additions_merge.sh 目标正式项目目录 --apply
 
 兼容旧写法：
-  ./99_System_OpenClaw/scripts/10_run_additions_merge.sh 目标正式项目目录/待增加 目标正式项目目录
-  ./99_System_OpenClaw/scripts/10_run_additions_merge.sh 目标正式项目目录/待增加 目标正式项目目录 --plan
+  ./scripts/run_additions_merge.sh 目标正式项目目录/additions 目标正式项目目录
+  ./scripts/run_additions_merge.sh 目标正式项目目录/additions 目标正式项目目录 --plan
 
 默认会直接合并。执行时会：
   1. 重新生成 additions_merge_plan
   2. 按计划移动全部 pending 素材
   3. 允许 needs_review 条目执行
   4. 自动重跑目标项目 AI 分析
-  5. 清空待增加目录
+  5. 清空additions目录
 
 加 --plan 时只生成计划，不移动文件。
 USAGE
@@ -42,7 +42,7 @@ fi
 
 if [[ "$#" -eq 1 ]]; then
   TARGET_PROJECT_DIR="$1"
-  ADDITIONS_DIR="$TARGET_PROJECT_DIR/待增加"
+  ADDITIONS_DIR="$TARGET_PROJECT_DIR/additions"
   DEFAULT_ADDITIONS=1
 elif [[ "$#" -eq 2 ]]; then
   ADDITIONS_DIR="$1"
@@ -64,7 +64,7 @@ if [[ ! -d "$TARGET_PROJECT_DIR" ]]; then
 fi
 
 TARGET_PROJECT_DIR="$(cd "$TARGET_PROJECT_DIR" && pwd)"
-EXPECTED_ADDITIONS_DIR="$TARGET_PROJECT_DIR/待增加"
+EXPECTED_ADDITIONS_DIR="$TARGET_PROJECT_DIR/additions"
 if [[ "$DEFAULT_ADDITIONS" == "1" ]]; then
   ADDITIONS_DIR="$EXPECTED_ADDITIONS_DIR"
 fi
@@ -74,31 +74,31 @@ if [[ ! -d "$ADDITIONS_DIR" && "$ADDITIONS_DIR" == "$EXPECTED_ADDITIONS_DIR" ]];
 fi
 
 if [[ ! -d "$ADDITIONS_DIR" ]]; then
-  echo "待增加目录不存在：$ADDITIONS_DIR"
+  echo "additions目录不存在：$ADDITIONS_DIR"
   exit 1
 fi
 
 ADDITIONS_DIR="$(cd "$ADDITIONS_DIR" && pwd)"
 
-if [[ "$(basename "$ADDITIONS_DIR")" != "待增加" ]]; then
-  echo "为避免误删，待增加目录的最后一级目录名必须是：待增加"
+if [[ "$(basename "$ADDITIONS_DIR")" != "additions" ]]; then
+  echo "为避免误删，additions目录的最后一级目录名必须是：additions"
   echo "当前目录：$ADDITIONS_DIR"
   exit 1
 fi
 
 if [[ "$ADDITIONS_DIR" != "$EXPECTED_ADDITIONS_DIR" ]]; then
-  echo "待增加目录必须位于正式项目内：$EXPECTED_ADDITIONS_DIR"
+  echo "additions目录必须位于正式项目内：$EXPECTED_ADDITIONS_DIR"
   echo "当前目录：$ADDITIONS_DIR"
   exit 1
 fi
 
-if [[ -f "$ROOT_DIR/99_System_OpenClaw/docs/00_本地素材与剪映HyperFrames流转总纲.md" ]]; then
-  python3 "$SCRIPT_DIR/06_check_outline_contract.py" "$ROOT_DIR"
+if [[ -f "$ROOT_DIR/docs/media-workflow.md" ]]; then
+  python3 "$SCRIPT_DIR/check_outline_contract.py" "$ROOT_DIR"
 fi
 
-python3 "$SCRIPT_DIR/08_plan_additions_merge.py" "$ADDITIONS_DIR" "$TARGET_PROJECT_DIR"
+python3 "$SCRIPT_DIR/plan_additions_merge.py" "$ADDITIONS_DIR" "$TARGET_PROJECT_DIR"
 
-PLAN_PATH="$ADDITIONS_DIR/_ai_analysis/additions_merge_plan.json"
+PLAN_PATH="$ADDITIONS_DIR/ai-analysis/additions-merge-plan.json"
 ITEM_COUNT="$(python3 - "$PLAN_PATH" <<'PY'
 import json
 import sys
@@ -122,15 +122,15 @@ PY
 )"
 
 if [[ "$ITEM_COUNT" == "0" ]]; then
-  echo "待增加目录没有发现可合并媒体。"
+  echo "additions目录没有发现可合并媒体。"
   if [[ "$MODE" == "--apply" ]]; then
-    rm -rf "$ADDITIONS_DIR/_ai_analysis"
+    rm -rf "$ADDITIONS_DIR/ai-analysis"
   fi
   exit 0
 fi
 
 if [[ "$MODE" == "--plan" ]]; then
-  echo "已生成合并计划：$ADDITIONS_DIR/_ai_analysis/additions_merge_plan.md"
+  echo "已生成合并计划：$ADDITIONS_DIR/ai-analysis/additions-merge-plan.md"
   echo "默认运行本脚本会直接合并："
   echo "$0 \"$TARGET_PROJECT_DIR\""
   exit 0
@@ -138,14 +138,14 @@ fi
 
 if [[ "$BLOCKED_COUNT" != "0" ]]; then
   echo "有 $BLOCKED_COUNT 个素材无法可靠分类，已停止自动合并。"
-  echo "请查看：$ADDITIONS_DIR/_ai_analysis/additions_merge_plan.md"
-  echo "如果是视频，可查看：$ADDITIONS_DIR/_ai_analysis/addition_keyframes"
+  echo "请查看：$ADDITIONS_DIR/ai-analysis/additions-merge-plan.md"
+  echo "如果是视频，可查看：$ADDITIONS_DIR/ai-analysis/addition-keyframes"
   echo "修正 JSON 里的 target_relative_path 并把 status 改成 pending 后，再重新运行本脚本。"
   exit 1
 fi
 
-python3 "$SCRIPT_DIR/09_apply_additions_merge.py" "$ADDITIONS_DIR" "$TARGET_PROJECT_DIR" --apply-all-pending --allow-review-items
+python3 "$SCRIPT_DIR/apply_additions_merge.py" "$ADDITIONS_DIR" "$TARGET_PROJECT_DIR" --apply-all-pending --allow-review-items
 
 find "$ADDITIONS_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 
-echo "待增加素材已合并，待增加目录已清空：$ADDITIONS_DIR"
+echo "additions素材已合并，additions目录已清空：$ADDITIONS_DIR"

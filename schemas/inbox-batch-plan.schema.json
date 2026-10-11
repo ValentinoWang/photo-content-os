@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://photo-content-os.local/schemas/inbox_batch_plan.schema.json",
+  "$id": "https://photo-content-os.local/schemas/inbox-batch-plan.schema.json",
   "title": "Photo Content OS inbox event batch plan",
   "description": "Read-only, deterministic proposal. A separate confirmed workflow must verify the manifest digest before migration.",
   "type": "object",

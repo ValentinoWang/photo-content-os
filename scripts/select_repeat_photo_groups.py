@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plan and apply repeat-photo group merging from a 待增加 folder."""
+"""Plan and apply repeat-photo group merging from a additions folder."""
 
 from __future__ import annotations
 
@@ -27,13 +27,13 @@ PLAN_NAME = "repeat_photo_selection_plan.json"
 
 
 def resolve_additions(project: Path, value: str | None) -> Path:
-    additions = Path(value).expanduser().resolve() if value else project / "待增加"
+    additions = Path(value).expanduser().resolve() if value else project / "additions"
     if not additions.exists():
         raise FileNotFoundError(f"additions dir not found: {additions}")
     if not additions.is_dir():
         raise NotADirectoryError(f"additions path is not a directory: {additions}")
-    if additions.name != "待增加":
-        raise RuntimeError(f"for safety, additions dir must be named 待增加: {additions}")
+    if additions.name != "additions":
+        raise RuntimeError(f"for safety, additions dir must be named additions: {additions}")
     return ensure_project_additions_dir(additions, project)
 
 
@@ -57,7 +57,7 @@ def media_number(path: Path) -> int | None:
 
 
 def generate_contact_sheets(files: list[Path], additions: Path, output_dir: Path) -> list[Path]:
-    contact_dir = output_dir / "contact_sheets"
+    contact_dir = output_dir / "contact-sheets"
     if contact_dir.exists():
         shutil.rmtree(contact_dir)
     contact_dir.mkdir(parents=True, exist_ok=True)
@@ -122,7 +122,7 @@ def create_plan(project: Path, additions: Path, output_dir: Path) -> dict[str, o
         "generated_at": now_iso(),
         "project_dir": str(project),
         "additions_dir": str(additions),
-        "contact_sheets": [relative_posix(sheet, project) for sheet in sheets],
+        "contact-sheets": [relative_posix(sheet, project) for sheet in sheets],
         "retention_policy": "项目素材库不做 AI 高光筛选；L3 项目归档层使用 补充01/补充02 和 未修/待修复 等状态；代表/情绪/封面候选只用于 80 或发布层。",
         "instructions": "把每个 item 的 status 改成 pending，并填写 action/target_section/group_id/scene/role/reason。action 可选 merge、raw；L3 归档层 role 建议填写 补充01、补充02 等。",
         "items": items,
@@ -169,7 +169,7 @@ def target_for_item(project: Path, additions: Path, item: dict[str, object]) -> 
     if action == "raw":
         if explicit_target:
             return project / str(explicit_target)
-        return project / "00_RawVault_不可直用" / "Raw_待处理" / role_filename(item, source)
+        return project / "raw-vault" / "raw-pending" / role_filename(item, source)
     raise RuntimeError(f"unsupported action for {item.get('source_relative_path')}: {action}")
 
 
@@ -241,7 +241,7 @@ def append_log(project: Path, additions: Path, operations: list[dict[str, object
         counts[action] = counts.get(action, 0) + 1
     lines.extend(
         [
-            f"## 待增加重复照片整理 {now_iso()}",
+            f"## additions重复照片整理 {now_iso()}",
             "",
             f"- 来源目录：{additions}",
             f"- L3 主题目录合并：{counts.get('merge', 0) + counts.get('selected', 0)} 张",
@@ -282,12 +282,12 @@ def prune_empty_addition_dirs(additions: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="为重复照片/合照待增加目录生成合并计划，并按计划合并")
+    parser = argparse.ArgumentParser(description="为重复照片/合照additions目录生成合并计划，并按计划合并")
     parser.add_argument("project_dir", help="正式项目目录")
-    parser.add_argument("--additions-dir", help="待增加目录，默认是 项目/待增加")
+    parser.add_argument("--additions-dir", help="additions目录，默认是 项目/additions")
     parser.add_argument("--plan", action="store_true", help="只生成联系表和筛选计划，不移动文件")
     parser.add_argument("--apply", action="store_true", help="应用已填写好的 repeat_photo_selection_plan.json")
-    parser.add_argument("--plan-path", help="自定义计划文件路径；应用时默认读取 _ai_analysis/repeat_photo_additions/current/repeat_photo_selection_plan.json")
+    parser.add_argument("--plan-path", help="自定义计划文件路径；应用时默认读取 ai-analysis/repeat_photo_additions/current/repeat_photo_selection_plan.json")
     parser.add_argument("--skip-analysis", action="store_true", help="应用后不重跑 run_analyze_project.sh")
     args = parser.parse_args()
 
@@ -307,7 +307,7 @@ def main() -> None:
         append_log(project, additions, operations)
         prune_empty_addition_dirs(additions)
         print(f"已应用重复照片筛选计划：{len(operations)} 个文件")
-        print(f"待增加空目录已清理，未选择文件保持原位：{additions}")
+        print(f"additions空目录已清理，未选择文件保持原位：{additions}")
         if not args.skip_analysis:
             run_analysis(project)
         return
@@ -315,7 +315,7 @@ def main() -> None:
     plan = create_plan(project, additions, output_dir)
     written = write_plan(plan, output_dir)
     print(f"重复照片筛选计划已生成：{written}")
-    print(f"联系表目录：{output_dir / 'contact_sheets'}")
+    print(f"联系表目录：{output_dir / 'contact-sheets'}")
     print(f"共发现待处理图片：{len(plan['items'])} 张")
     if not args.plan:
         print("这是需要角色判断的重复照片流程；请先填写计划，再加 --apply 执行。")

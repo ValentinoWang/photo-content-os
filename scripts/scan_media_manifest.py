@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scan a project folder and write _ai_analysis/media_manifest.json."""
+"""Scan a project folder and write ai-analysis/media-manifest.json."""
 
 from __future__ import annotations
 
@@ -118,7 +118,7 @@ def assess_decision(item: dict[str, object]) -> None:
             issue(
                 "ERROR",
                 "raw_pending_without_reason_token",
-                "素材放在 Raw_待处理，但文件名没有写明不可直用原因。",
+                "素材放在 raw-pending，但文件名没有写明不可直用原因。",
                 "在文件名中加入具体原因，例如：原始、录屏、模糊待选、待截取、待修复、待防抖、待降噪、待转码或待重构。",
             )
         )
@@ -237,7 +237,7 @@ def scan_project(project_dir: str) -> dict[str, object]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="扫描项目素材并生成 media_manifest.json")
+    parser = argparse.ArgumentParser(description="扫描项目素材并生成 media-manifest.json")
     parser.add_argument("project_dir", help="项目文件夹路径")
     args = parser.parse_args()
 

@@ -125,7 +125,7 @@ def parse_json_response(text: str, *, salvage: bool = False, require: type | Non
     a deliberately maintained contract (see tests/test_p5b_storyboard_contracts.py)
     -- do not loosen it for existing strict callers.
 
-    salvage=True (absorbed from 19_review_output_video.py's former
+    salvage=True (absorbed from review_output_video.py's former
     extract_json_object, TC-09) takes an entirely separate, more lenient
     path instead of falling through the strict one: it strips a leading/
     trailing ``` or ```json fence with a regex (tolerating unclosed fences
@@ -137,7 +137,7 @@ def parse_json_response(text: str, *, salvage: bool = False, require: type | Non
 
     require=dict enforces the response parses to a JSON object, raising
     ValueError with 19's original wording otherwise; this check is a
-    caller-level concern (18_generate_storyboard_edl.py's parse_llm_json
+    caller-level concern (generate_storyboard_edl.py's parse_llm_json
     already does its own dict check on the default path), not baked into
     the default contract.
     """

@@ -10,8 +10,8 @@ from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT_PATH = ROOT / "scripts" / "46_plan_inbox_batches.py"
-planner = load_script("46_plan_inbox_batches.py", "plan_inbox_batches")
+SCRIPT_PATH = ROOT / "scripts" / "plan_inbox_batches.py"
+planner = load_script("plan_inbox_batches.py", "plan_inbox_batches")
 
 
 def item(media_id, captured_at, latitude, longitude, **extra):
@@ -92,7 +92,7 @@ class InboxBatchPlannerTests(unittest.TestCase):
     def test_cli_writes_a_plan_only_and_uses_the_manifest_digest(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            manifest_path = root / "media_manifest.json"
+            manifest_path = root / "media-manifest.json"
             raw = json.dumps({"manifest_version": 2, "items": [item("one", "2026-09-02T09:00:00+00:00", 22.5, 114.0)]}).encode()
             manifest_path.write_bytes(raw)
             output_path = root / "nested" / "plan.json"

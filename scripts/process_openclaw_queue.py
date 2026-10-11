@@ -29,7 +29,7 @@ from runtime_paths import obsidian_root, workspace_root as _shared_workspace_roo
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 
-QUEUE_DIR_NAME = "_OpenClawQueue"
+QUEUE_DIR_NAME = "openclaw-queue"
 CLOUD_TO_MAC_DIR = "cloud_to_mac"
 MAC_TO_CLOUD_DIR = "mac_to_cloud"
 PROCESSED_DIR = "processed"
@@ -113,7 +113,7 @@ class QueueConfig:
 
     @property
     def inbox_root(self) -> Path:
-        return self.workspace_root / "00_Inbox_Mac_Intake"
+        return self.workspace_root / "inbox"
 
 
 def ensure_queue_dirs(config: QueueConfig) -> None:
@@ -266,7 +266,7 @@ def resolve_local_batch_path(task: dict[str, Any], config: QueueConfig, creation
     try:
         batch.relative_to(inbox_root)
     except ValueError as exc:
-        raise QueueError(f"local_batch_path must stay under 00_Inbox_Mac_Intake: {batch}") from exc
+        raise QueueError(f"local_batch_path must stay under inbox: {batch}") from exc
     if batch.exists() and not batch.is_dir():
         raise QueueError(f"local_batch_path is not a directory: {batch}")
     if batch.exists():
@@ -526,8 +526,8 @@ def build_link(
         "media_file_count": count_media_files(batch_dir),
         "warnings": warnings,
         "sync_policy": [
-            "_OpenClawQueue 只同步 JSON 控制文件。",
-            "00_Inbox_Mac_Intake 原始照片和视频只留在 Mac 本地。",
+            "openclaw-queue 只同步 JSON 控制文件。",
+            "inbox 原始照片和视频只留在 Mac 本地。",
             "mac_to_cloud result 不写入原素材文件名清单。",
         ],
     }
@@ -616,7 +616,7 @@ def success_result(
         "warnings": warnings,
         "next_actions": [
             "Mac 本地读取批次说明、正式项目目录和真实素材，生成素材匹配、Storyboard 或 EDL。",
-            "腾讯云只读取本 result 和后续 Mac 回写产物，不同步 00_Inbox_Mac_Intake 原素材。",
+            "腾讯云只读取本 result 和后续 Mac 回写产物，不同步 inbox 原素材。",
         ],
     }
 
@@ -658,8 +658,8 @@ def blocked_result(
         "local_status_path": str(status_path) if status_path else "",
         "next_actions": [
             "如果 detail 指向路径越界、字段错误或文件占用了批次目录，修正 cloud_to_mac JSON 后重新投递一个新任务文件。",
-            "本地批次目录和 00_批次说明.md 缺失时会由 Mac OpenClaw 自动创建。",
-            "不要把 00_Inbox_Mac_Intake 原始素材同步到云端。",
+            "本地批次目录和 batch-notes.md 缺失时会由 Mac OpenClaw 自动创建。",
+            "不要把 inbox 原始素材同步到云端。",
         ],
     }
 
@@ -849,9 +849,9 @@ def default_queue_root(workspace_root: Path) -> Path:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="处理 _OpenClawQueue/cloud_to_mac 中的轻量 JSON 任务")
+    parser = argparse.ArgumentParser(description="处理 openclaw-queue/cloud_to_mac 中的轻量 JSON 任务")
     parser.add_argument("--workspace-root", type=Path, default=WORKSPACE_ROOT, help="本地素材根目录")
-    parser.add_argument("--queue-root", type=Path, default=None, help="轻量同步队列目录；默认使用本地素材根/_OpenClawQueue")
+    parser.add_argument("--queue-root", type=Path, default=None, help="轻量同步队列目录；默认使用本地素材根/openclaw-queue")
     parser.add_argument("--once", action="store_true", help="处理当前任务后退出；默认行为")
     parser.add_argument("--watch", action="store_true", help="常驻监听 cloud_to_mac")
     parser.add_argument("--interval", type=float, default=10.0, help="watch 模式轮询秒数")

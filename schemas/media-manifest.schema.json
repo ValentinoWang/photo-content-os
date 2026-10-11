@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://photo-content-os.local/schemas/media_manifest.schema.json",
+  "$id": "https://photo-content-os.local/schemas/media-manifest.schema.json",
   "title": "Photo Content OS media manifest",
   "description": "Deterministic scan output. Image health and EXIF location are fail-closed facts.",
   "type": "object",

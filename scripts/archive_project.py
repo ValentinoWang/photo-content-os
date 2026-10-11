@@ -12,15 +12,15 @@ from typing import Any
 from media_common import ANALYSIS_DIR, file_sha256 as sha256_file, now_iso, project_path, safe_slug
 
 
-EXCLUDED_TOP_LEVELS = {"App_WorkCache", "待增加", "80_To_iCloudPhotos_精选入库", "05_Archive_Cold_Storage", "02_Asset_Library"}
-REQUIRED_DIRS = {"90_Draft_Project", "91_Output", "92_Aliyun_SyncReady"}
+EXCLUDED_TOP_LEVELS = {"work-cache", "additions", "icloud-selected", "archive", "library"}
+REQUIRED_DIRS = {"draft-project", "output", "sync-ready"}
 
 
 def readiness(project: Path) -> dict[str, Any]:
     checks: list[dict[str, Any]] = []
-    final_dir = project / "91_Output" / "Final"
-    sync_checklist = project / "92_Aliyun_SyncReady" / "项目同步检查清单.md"
-    additions = project / "待增加"
+    final_dir = project / "output" / "final"
+    sync_checklist = project / "sync-ready" / "sync-checklist.md"
+    additions = project / "additions"
     checks.append({"id": "project_dirs", "passed": all((project / d).is_dir() for d in REQUIRED_DIRS), "evidence": [d for d in sorted(REQUIRED_DIRS) if (project / d).is_dir()]})
     checks.append({"id": "final_output", "passed": final_dir.is_dir() and any(p.is_file() for p in final_dir.iterdir()), "evidence": [p.relative_to(project).as_posix() for p in final_dir.iterdir() if p.is_file()] if final_dir.is_dir() else []})
     checks.append({"id": "sync_checklist", "passed": sync_checklist.is_file() and "[ ]" not in sync_checklist.read_text(encoding="utf-8"), "evidence": [sync_checklist.relative_to(project).as_posix()] if sync_checklist.is_file() else []})
@@ -37,13 +37,13 @@ def build_manifest(project: Path, gate: dict[str, Any]) -> dict[str, Any]:
         if rel.parts[0] in EXCLUDED_TOP_LEVELS or rel.parts[0] == ANALYSIS_DIR:
             continue
         files.append({"path": rel.as_posix(), "size": path.stat().st_size, "sha256": sha256_file(path)})
-    return {"schema_version": 1, "tool": "45_archive_project", "generated_at": now_iso(), "project": project.name, "readiness": gate, "files": files}
+    return {"schema_version": 1, "tool": "archive_project", "generated_at": now_iso(), "project": project.name, "readiness": gate, "files": files}
 
 
 def index_card(project: Path, gate: dict[str, Any], manifest: dict[str, Any]) -> str:
     date = project.name[:8] if project.name[:8].isdigit() else "YYYYMMDD"
     status = "cold_archived" if gate["ready"] else "cooling"
-    return f"""# {project.name} 归档索引卡\n\n项目名称：{project.name}\n归档状态：{status}\n生成时间：{manifest['generated_at']}\n归档准入：{'通过' if gate['ready'] else '未通过'}\n\n## 证据\n\n- 归档清单：`05_Archive_Cold_Storage/{date}_{safe_slug(project.name)}/archive_manifest.json`\n- 项目内文件数：{len(manifest['files'])}\n- 说明：本卡由 `45_archive_project.py` 生成；云盘、移动硬盘回读和恢复演练仍需独立证据。\n\n## 人工补充\n\n- 检索关键词：\n- iCloud 照片入口：\n- 阿里云盘镜像路径及回读时间：\n- 移动硬盘卷标及路径：\n- 恢复演练证据：\n"""
+    return f"""# {project.name} 归档索引卡\n\n项目名称：{project.name}\n归档状态：{status}\n生成时间：{manifest['generated_at']}\n归档准入：{'通过' if gate['ready'] else '未通过'}\n\n## 证据\n\n- 归档清单：`archive/{date}_{safe_slug(project.name)}/archive_manifest.json`\n- 项目内文件数：{len(manifest['files'])}\n- 说明：本卡由 `archive_project.py` 生成；云盘、移动硬盘回读和恢复演练仍需独立证据。\n\n## 人工补充\n\n- 检索关键词：\n- iCloud 照片入口：\n- 阿里云盘镜像路径及回读时间：\n- 移动硬盘卷标及路径：\n- 恢复演练证据：\n"""
 
 
 def verify_target(manifest_path: Path, target: Path) -> dict[str, Any]:
@@ -133,7 +133,7 @@ def main() -> None:
     parser.add_argument("--receipt", action="append", type=Path, default=[], help="副本回读回执，可重复指定")
     args = parser.parse_args()
     project = project_path(args.project_dir)
-    manifest_path = args.manifest or project / "05_Archive_Cold_Storage" / "YYYY_Completed_Projects" / project.name / "archive_manifest.json"
+    manifest_path = args.manifest or project / "archive" / "completed-projects" / project.name / "archive_manifest.json"
     if args.verify_target:
         result = verify_target(manifest_path, args.verify_target)
         if args.write_receipt:
@@ -149,7 +149,7 @@ def main() -> None:
         print(json.dumps(result, ensure_ascii=False, indent=2))
         raise SystemExit(0 if result["status"] == "passed" else 2)
     if args.prune_plan:
-        index_path = args.index_card or project / "02_Asset_Library" / "Project_Archive_Index" / f"{project.name}.archive.md"
+        index_path = args.index_card or project / "library" / "project-archive-index" / f"{project.name}.archive.md"
         result = prune_plan(project, manifest_path, index_path, args.receipt)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         raise SystemExit(0 if result["status"] == "ready" else 2)
@@ -157,10 +157,10 @@ def main() -> None:
     manifest = build_manifest(project, gate)
     result = {"project": str(project), "readiness": gate, "manifest_file_count": len(manifest["files"]), "written": False}
     if args.write:
-        archive_dir = project / "05_Archive_Cold_Storage" / "YYYY_Completed_Projects" / project.name
+        archive_dir = project / "archive" / "completed-projects" / project.name
         archive_dir.mkdir(parents=True, exist_ok=True)
         (archive_dir / "archive_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        index_dir = project / "02_Asset_Library" / "Project_Archive_Index"
+        index_dir = project / "library" / "project-archive-index"
         index_dir.mkdir(parents=True, exist_ok=True)
         (index_dir / f"{project.name}.archive.md").write_text(index_card(project, gate, manifest), encoding="utf-8")
         result["written"] = True

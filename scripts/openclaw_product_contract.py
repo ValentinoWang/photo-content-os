@@ -15,7 +15,7 @@ from typing import Any
 
 from runtime_paths import platform_contract_name
 
-SNAPSHOT_PATH = Path(__file__).resolve().parent.parent / "schemas" / "openclaw_media_contract_snapshot.json"
+SNAPSHOT_PATH = Path(__file__).resolve().parent.parent / "schemas" / "openclaw-media-contract-snapshot.json"
 
 
 class ProductContractError(RuntimeError):

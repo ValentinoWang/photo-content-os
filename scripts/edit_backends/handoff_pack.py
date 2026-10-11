@@ -4,7 +4,7 @@
 This backend deliberately produces an auditable editing brief, not an editor
 project.  One immutable pack is created for each project revision at:
 
-    90_Draft_Project/edit_handoff/<project_revision>/
+    draft-project/edit-handoff/<project_revision>/
 
 It may be used by a human editor or by a later editor adapter, but it never
 writes proprietary editor drafts and it never substitutes a different editor

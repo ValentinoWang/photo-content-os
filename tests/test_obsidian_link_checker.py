@@ -7,7 +7,7 @@ from pathlib import Path
 from _support import load_script
 
 
-MODULE = load_script("38_check_obsidian_links.py", "obsidian_link_checker")
+MODULE = load_script("check_obsidian_links.py", "obsidian_link_checker")
 
 
 class ObsidianLinkCheckerTests(unittest.TestCase):

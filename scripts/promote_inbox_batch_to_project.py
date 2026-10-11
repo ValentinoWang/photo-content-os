@@ -17,27 +17,27 @@ from runtime_paths import workspace_root as _shared_workspace_root
 
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 
-BATCH_NOTE_NAME = "00_批次说明.md"
-LOCAL_LINK_DIR = "_openclaw"
-PROJECT_INBOX_DIR = "00_Inbox_待分类"
-PROMOTED_ANALYSIS_ROOT = f"{ANALYSIS_DIR}/promoted_inbox_batches"
-PROMOTED_LINK_ROOT = "_openclaw/promoted_inbox_batches"
+BATCH_NOTE_NAME = "batch-notes.md"
+LOCAL_LINK_DIR = "openclaw"
+PROJECT_INBOX_DIR = "unclassified"
+PROMOTED_ANALYSIS_ROOT = f"{ANALYSIS_DIR}/promoted-inbox-batches"
+PROMOTED_LINK_ROOT = "openclaw/promoted-inbox-batches"
 NON_MEDIA_DIR = "_随批次非素材"
-PROMOTION_RECORD_DIR = "_openclaw/promotion_records"
+PROMOTION_RECORD_DIR = "openclaw/promotion-records"
 PROMOTION_RECORD_SUFFIX = ".promotion.json"
 PROMOTION_JOURNAL_SUFFIX = ".promotion.journal.json"
 PROMOTION_JOURNAL_VERSION = "openclaw_inbox_promotion_journal_v0.1"
 
 GENERATED_PROJECT_DIRS = {
-    "80_To_iCloudPhotos_精选入库",
-    "90_Draft_Project",
-    "91_Output",
-    "92_Aliyun_SyncReady",
-    "待增加",
+    "icloud-selected",
+    "draft-project",
+    "output",
+    "sync-ready",
+    "additions",
 }
 
 GENERATED_PROJECT_FILES = {
-    "aliyun_sync_manifest.md",
+    "aliyun-sync-manifest.md",
 }
 
 IGNORED_NAMES = {
@@ -50,7 +50,7 @@ class PromoteError(Exception):
 
 
 def workspace_inbox_root(workspace_root: Path) -> Path:
-    return workspace_root / "00_Inbox_Mac_Intake"
+    return workspace_root / "inbox"
 
 
 def assert_inbox_batch(batch_dir: Path, workspace_root: Path) -> None:
@@ -58,7 +58,7 @@ def assert_inbox_batch(batch_dir: Path, workspace_root: Path) -> None:
     try:
         batch_dir.resolve().relative_to(inbox_root)
     except ValueError as exc:
-        raise PromoteError(f"batch_dir must stay under 00_Inbox_Mac_Intake: {batch_dir}") from exc
+        raise PromoteError(f"batch_dir must stay under inbox: {batch_dir}") from exc
 
 
 def path_exists(path: Path) -> bool:
@@ -116,11 +116,11 @@ def read_json_object(path: Path, label: str) -> dict[str, Any]:
 
 
 def assert_project_dir(project_dir: Path, workspace_root: Path) -> None:
-    project_root = (workspace_root / "01_Project_Workspace").resolve()
+    project_root = (workspace_root / "projects").resolve()
     try:
         project_dir.resolve().relative_to(project_root)
     except ValueError as exc:
-        raise PromoteError(f"formal project must stay under 01_Project_Workspace: {project_dir}") from exc
+        raise PromoteError(f"formal project must stay under projects: {project_dir}") from exc
     if not project_dir.is_dir():
         raise PromoteError(f"formal project does not exist: {project_dir}")
 
@@ -182,7 +182,7 @@ def top_level_item_target(source: Path, batch_dir: Path, project_dir: Path, batc
 
 def build_move_plan(batch_dir: Path, project_dir: Path, batch_slug: str) -> list[dict[str, str]]:
     plan: list[dict[str, str]] = []
-    archive_root = project_dir / PROMOTED_ANALYSIS_ROOT / batch_slug / "generated_scaffold_from_inbox"
+    archive_root = project_dir / PROMOTED_ANALYSIS_ROOT / batch_slug / "generated-scaffold-from-inbox"
     for source in sorted(batch_dir.iterdir(), key=lambda path: path.name):
         if source.name in IGNORED_NAMES:
             continue
@@ -332,7 +332,7 @@ def write_promotion_record(
 
 
 def append_project_log(project_dir: Path, batch_dir: Path, moved: list[dict[str, str]], record_path: Path) -> None:
-    log_path = project_dir / "素材整理记录.md"
+    log_path = project_dir / "material-organization.md"
     lines: list[str] = []
     if log_path.exists():
         lines.append(log_path.read_text(encoding="utf-8").rstrip())
@@ -484,7 +484,7 @@ def discover_artifact(
     suffix: str,
     label: str,
 ) -> tuple[Path, dict[str, Any]] | None:
-    project_root = workspace_root / "01_Project_Workspace"
+    project_root = workspace_root / "projects"
     if not project_root.is_dir():
         return None
     filename = f"{safe_slug(batch_dir.name, 80)}{suffix}"
@@ -584,7 +584,7 @@ def result_from_completed_record(
             names = ", ".join(str(path) for path in sorted(leftovers))
             raise PromoteError(f"completed promotion retry found unrecorded batch content: {names}")
 
-    log_path = project_dir / "素材整理记录.md"
+    log_path = project_dir / "material-organization.md"
     try:
         log_text = log_path.read_text(encoding="utf-8")
     except OSError as exc:
@@ -701,7 +701,7 @@ def recover_matching_journal(batch_dir: Path, workspace_root: Path) -> dict[str,
         raise PromoteError(f"promotion journal is outside its expected project location: {journal_path}")
     if journal.get("promotion_record") != str(expected_record):
         raise PromoteError(f"promotion journal record path is invalid: {journal_path}")
-    if journal.get("project_log") != str(project_dir / "素材整理记录.md"):
+    if journal.get("project_log") != str(project_dir / "material-organization.md"):
         raise PromoteError(f"promotion journal project log path is invalid: {journal_path}")
     validate_recovery_journal(
         journal,
@@ -765,7 +765,7 @@ def promote_batch(batch_dir: Path, workspace_root: Path) -> dict[str, Any]:
     assert_project_dir(project_dir, workspace_root)
     batch_slug = safe_slug(batch_dir.name, 80)
     record_path, journal_path = promotion_paths(project_dir, batch_slug)
-    log_path = project_dir / "素材整理记录.md"
+    log_path = project_dir / "material-organization.md"
     plan = build_move_plan(batch_dir, project_dir, batch_slug)
     validate_move_plan(
         plan,
@@ -882,7 +882,7 @@ def promote_batch(batch_dir: Path, workspace_root: Path) -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("batch_dir", type=Path, help="00_Inbox_Mac_Intake 下的事件批次目录")
+    parser.add_argument("batch_dir", type=Path, help="inbox 下的事件批次目录")
     parser.add_argument("--workspace-root", type=Path, default=WORKSPACE_ROOT, help="本地素材根目录")
     args = parser.parse_args()
 

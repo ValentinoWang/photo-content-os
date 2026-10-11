@@ -12,118 +12,117 @@ from document_contract_common import missing_markers
 
 
 REQUIRED_SCRIPTS = [
-    "01_scan_media_manifest.py",
-    "02_extract_keyframes.py",
-    "03_extract_audio.sh",
-    "04_generate_ai_prompt.py",
-    "05_write_content_summary.py",
-    "07_validate_media_decisions.py",
-    "08_plan_additions_merge.py",
-    "09_apply_additions_merge.py",
-    "10_run_additions_merge.sh",
-    "11_rename_media_file.py",
-    "12_select_repeat_photo_groups.py",
-    "13_ensure_project_structure.py",
-    "14_distribute_group_photos_by_name.py",
-    "15_register_reusable_asset.py",
-    "36_validate_review_capability_registry.py",
-    "30_check_obsidian_doc_sync.py",
+    "scan_media_manifest.py",
+    "extract_keyframes.py",
+    "extract_audio.sh",
+    "generate_ai_prompt.py",
+    "write_content_summary.py",
+    "validate_media_decisions.py",
+    "plan_additions_merge.py",
+    "apply_additions_merge.py",
+    "run_additions_merge.sh",
+    "rename_media_file.py",
+    "select_repeat_photo_groups.py",
+    "ensure_project_structure.py",
+    "distribute_group_photos_by_name.py",
+    "register_reusable_asset.py",
+    "validate_review_capability_registry.py",
+    "check_obsidian_doc_sync.py",
     "run_analyze_project.sh",
 ]
 
 OUTLINE_MARKERS = [
-    "99_System_OpenClaw/scripts/",
+    "scripts/",
     "制度工具根",
     "本地素材根",
     "L1 本地素材根",
     "L2 主题集合",
     "L3 项目根",
     "L4 内容目录",
-    "01_Project_Workspace",
+    "projects",
     "项目根",
     "项目 L3 源文件",
     "80 精选副本",
     "iCloudReady",
-    "_ai_analysis",
-    "media_manifest.json",
+    "ai-analysis",
+    "media-manifest.json",
     "keyframes",
     "prompts",
     "summaries",
-    "media_decision_warnings.md",
-    "additions_merge_plan",
-    "11_rename_media_file.py",
-    "12_select_repeat_photo_groups.py",
-    "13_ensure_project_structure.py",
-    "14_distribute_group_photos_by_name.py",
-    "15_register_reusable_asset.py",
-    "80_To_iCloudPhotos_精选入库",
-    "01_Project_Selected_项目精选",
-    "03_Memorial_纪念资产",
-    "04_Reusable_To_iPhone_手机常用复用素材",
+    "media-decision-warnings.md",
+    "additions-merge-plan",
+    "rename_media_file.py",
+    "select_repeat_photo_groups.py",
+    "ensure_project_structure.py",
+    "distribute_group_photos_by_name.py",
+    "register_reusable_asset.py",
+    "icloud-selected",
+    "project-selected",
+    "memorial",
+    "phone-reusable",
     "连拍原始组_保留",
-    "Memorial_人生节点",
-    "93_GroupPhoto_Distribution_合照发放",
-    "02_Asset_Library",
-    "07_decision_tables_决策表",
+    "memorial",
+    "group-photo-distribution",
+    "library",
+    "decision-tables",
     "素材高频情形决策表",
-    "07.01_高频情形决策表",
-    "08_usage_guides_使用指南",
-    "08.01_只有tags灵感想法_从信号到项目包",
-    "08.02_已有拍摄素材但未立项_Mac_Inbox落盘",
-    "08.03_已有项目包和本地素材_绑定任务队列",
-    "08.04_素材已进正式项目_分析匹配分镜EDL",
-    "08.05_需要进入剪映或成片复核_导入包与验收",
-    "03_Jianying_Active_Drafts",
+    "frequent-decisions",
+    "usage-guides",
+    "ideas-to-project",
+    "footage-to-inbox",
+    "project-queue-binding",
+    "analysis-storyboard-edl",
+    "editing-handoff-review",
+    "jianying-drafts",
     "HyperFrames",
-    "native_import_packs",
-    "official_backups",
-    "拼图素材暂存",
+    "native-import-packs",
+    "official-backups",
+    "collage-assets",
     "最大信息保留",
-    "aliyun_sync_manifest.md",
+    "aliyun-sync-manifest.md",
 ]
 
 README_MARKERS = [
-    "00_本地素材与剪映HyperFrames流转总纲.md",
+    "media-workflow.md",
     "制度层",
     "执行层",
     "本地素材根",
-    "01_Project_Workspace",
-    "_ai_analysis",
-    "media_decision_warnings.md",
-    "additions_merge_plan",
-    "11_rename_media_file.py",
-    "12_select_repeat_photo_groups.py",
-    "13_ensure_project_structure.py",
-    "14_distribute_group_photos_by_name.py",
-    "15_register_reusable_asset.py",
-    "80_To_iCloudPhotos_精选入库",
-    "01_Project_Selected_项目精选",
-    "03_Memorial_纪念资产",
-    "04_Reusable_To_iPhone_手机常用复用素材",
+    "projects",
+    "ai-analysis",
+    "media-decision-warnings.md",
+    "additions-merge-plan",
+    "rename_media_file.py",
+    "select_repeat_photo_groups.py",
+    "ensure_project_structure.py",
+    "distribute_group_photos_by_name.py",
+    "register_reusable_asset.py",
+    "icloud-selected",
+    "project-selected",
+    "memorial",
+    "phone-reusable",
     "连拍原始组_保留",
-    "Memorial_人生节点",
-    "93_GroupPhoto_Distribution_合照发放",
-    "02_Asset_Library",
-    "07_decision_tables_决策表",
+    "memorial",
+    "group-photo-distribution",
+    "library",
+    "decision-tables",
     "素材决策表",
     "07.xx",
-    "08_usage_guides_使用指南",
+    "usage-guides",
     "08.xx",
-    "03_Jianying_Active_Drafts",
+    "jianying-drafts",
     "HyperFrames",
-    "native_import_packs",
-    "official_backups",
-    "拼图素材暂存",
+    "native-import-packs",
+    "official-backups",
+    "collage-assets",
     "最大信息保留",
-    "doc_sync_contract.json",
-    "30_check_obsidian_doc_sync.py",
+    "doc-sync-contract.json",
+    "check_obsidian_doc_sync.py",
     "run_analyze_project.sh",
 ]
 
 
 def read_child_docs(root: Path) -> str:
     docs_candidates = [
-        root / "99_System_OpenClaw" / "docs",
         root / "docs",
     ]
     docs_dir = next((candidate for candidate in docs_candidates if candidate.exists()), None)
@@ -139,7 +138,6 @@ def read_child_docs(root: Path) -> str:
 
 def resolve_scripts_dir(root: Path) -> Path:
     candidates = [
-        root / "99_System_OpenClaw" / "scripts",
         root / "scripts",
     ]
     for candidate in candidates:
@@ -150,12 +148,12 @@ def resolve_scripts_dir(root: Path) -> Path:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="检查脚本与大纲的闭环契约")
-    parser.add_argument("root_dir", nargs="?", default=".", help="本地素材根目录，包含 99_System_OpenClaw/docs/ 和 99_System_OpenClaw/scripts/")
+    parser.add_argument("root_dir", nargs="?", default=".", help="本地素材根目录，包含 docs/ 和 scripts/")
     parser.add_argument("--skip-obsidian-sync", action="store_true", help="只检查本地执行总纲/脚本契约，跳过 Obsidian 协议同步检查")
     args = parser.parse_args()
 
     root = Path(args.root_dir).expanduser().resolve()
-    outline = root / "99_System_OpenClaw" / "docs" / "00_本地素材与剪映HyperFrames流转总纲.md"
+    outline = root / "docs" / "media-workflow.md"
     scripts_dir = resolve_scripts_dir(root)
     readme = scripts_dir / "README.md"
 
@@ -177,13 +175,13 @@ def main() -> None:
     if outline_missing or readme_missing:
         details = []
         if outline_missing:
-            details.append(f"00_本地素材与剪映HyperFrames流转总纲.md missing markers: {', '.join(outline_missing)}")
+            details.append(f"media-workflow.md missing markers: {', '.join(outline_missing)}")
         if readme_missing:
-            details.append(f"99_System_OpenClaw/scripts/README.md missing markers: {', '.join(readme_missing)}")
+            details.append(f"scripts/README.md missing markers: {', '.join(readme_missing)}")
         raise RuntimeError("; ".join(details))
 
     if not args.skip_obsidian_sync:
-        obsidian_sync_script = scripts_dir / "30_check_obsidian_doc_sync.py"
+        obsidian_sync_script = scripts_dir / "check_obsidian_doc_sync.py"
         if not obsidian_sync_script.exists():
             raise FileNotFoundError(f"missing Obsidian sync checker: {obsidian_sync_script}")
         subprocess.run(
@@ -191,7 +189,7 @@ def main() -> None:
             check=True,
         )
 
-    print("00_本地素材与剪映HyperFrames流转总纲.md ↔ scripts 闭环契约检查通过")
+    print("media-workflow.md ↔ scripts 闭环契约检查通过")
 
 
 if __name__ == "__main__":

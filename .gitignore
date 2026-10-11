@@ -22,25 +22,24 @@ htmlcov/
 *.key
 
 # The repository contains the automation system, not personal media workspaces.
-/00_START_HERE_今天看这里.md
-/00_Inbox_Mac_Intake/
-/01_Project_Workspace/
-/02_Asset_Library/
-/03_Jianying_Active_Drafts/
-/04_Delivery_External/
-/05_Archive_Cold_Storage/
-/90_SSOT_E2E/
-/_OpenClawQueue/
-/demo_workspace/
+/inbox/
+/projects/
+/library/
+/jianying-drafts/
+/deliveries/
+/archive/
+/ssot-e2e/
+/openclaw-queue/
+/demo-workspace/
 
 # Local production runtimes and historical machine audits
-/99_System_OpenClaw/.venv-content-os/
-/99_System_OpenClaw/restructure_audit/
+/.venv/
+/restructure-audit/
 
 # Generated project evidence, caches, and editing outputs
-**/_ai_analysis/
-**/_openclaw/
-**/App_WorkCache/
+**/ai-analysis/
+**/openclaw/
+**/work-cache/
 
 # Media must never be committed. Keep fixtures synthetic and generate them at test time.
 *.[3][gG][pP]
@@ -81,3 +80,5 @@ htmlcov/
 *.[tT][iI][fF][fF]
 *.[wW][aA][vV]
 *.[wW][eE][bB][pP]
+
+/evidence/2026-10-12/thread-r/software-residue/

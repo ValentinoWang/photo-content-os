@@ -1,4 +1,4 @@
-"""Versioned, atomic persistence for the desktop analysis budget."""
+"""Versioned, atomic persistence for the studio analysis budget."""
 
 from __future__ import annotations
 

@@ -11,7 +11,7 @@ SYSTEM_ROOT = Path(__file__).resolve().parents[1]
 if str(SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(SYSTEM_ROOT))
 
-from desktop.onboarding_state import (  # noqa: E402
+from studio.onboarding_state import (  # noqa: E402
     OnboardingState,
     OnboardingStateError,
     OnboardingStateStore,

@@ -21,8 +21,8 @@ SYSTEM = Path(__file__).resolve().parents[1]
 if str(SYSTEM) not in sys.path:
     sys.path.insert(0, str(SYSTEM))
 
-from desktop.chatcut_mcp import ChatCutMcp  # noqa: E402
-from desktop.server import serve  # noqa: E402
+from studio.chatcut_mcp import ChatCutMcp  # noqa: E402
+from studio.server import serve  # noqa: E402
 from openclaw_product_contract import Compatibility  # noqa: E402
 
 
@@ -251,7 +251,7 @@ class StudioPolicyIntegrationTests(unittest.TestCase):
             "image_health": "not_applicable",
             "image_readable": None,
         }
-        manifest_path = workspace / "_ai_analysis" / "media_manifest.json"
+        manifest_path = workspace / "ai-analysis" / "media-manifest.json"
         manifest_path.parent.mkdir()
         manifest_path.write_text(json.dumps({"items": [item]}), encoding="utf-8")
         base = f"/api/projects/{project['id']}/media-delete"

@@ -84,7 +84,7 @@ def resolve_target_project(raw: str, root: Path) -> str:
     direct = (root / path).resolve()
     if direct.exists():
         return str(direct)
-    project_root = root / "01_Project_Workspace"
+    project_root = root / "projects"
     if project_root.exists():
         matches = [candidate.resolve() for candidate in project_root.rglob(value) if candidate.is_dir()]
         unique = sorted({match for match in matches})
@@ -201,7 +201,7 @@ def next_actions(status: str) -> list[str]:
         ]
     return [
         "让腾讯云 OpenClaw 先补齐 08_内容项目/{project_id}/01_idea_card.md、02_project_brief.md、04_script.md。",
-        "项目包齐全后重新运行 31_link_batch_to_content_project.py。",
+        "项目包齐全后重新运行 link_batch_to_content_project.py。",
     ]
 
 

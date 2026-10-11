@@ -6,9 +6,9 @@ from pathlib import Path
 from _support import load_script
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "17_match_materials_to_brief.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "match_materials_to_brief.py"
 sys.path.insert(0, str(SCRIPT.parent))
-MODULE = load_script("17_match_materials_to_brief.py", "match_materials_to_brief")
+MODULE = load_script("match_materials_to_brief.py", "match_materials_to_brief")
 
 
 def _report(*, sections: tuple[str, ...] | None = None, **overrides: object) -> str:
@@ -60,7 +60,7 @@ class MaterialMatchReportContractTests(unittest.TestCase):
     def test_validate_report_rejects_malformed_closing_fence(self) -> None:
         """Regression test for the L-03 frontmatter-parsing bug fix.
 
-        Before the fix, 17_match_materials_to_brief.py's own parse_frontmatter
+        Before the fix, match_materials_to_brief.py's own parse_frontmatter
         located the closing fence with `text.find("\n---", 4)` -- a byte
         substring search that matches ANY line starting with "---", not just a
         line that IS exactly "---". A malformed closing fence such as

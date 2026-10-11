@@ -1,17 +1,17 @@
 # Photo Content OS Studio
 
-`desktop/` 是 Photo Content OS 的本地普通用户入口。它使用 Python 标准库提供只监听 loopback 的 HTTP 服务，并直接托管 `static/` 中的零构建依赖前端。
+`studio/` 是 Photo Content OS 的本地普通用户入口。它使用 Python 标准库提供只监听 loopback 的 HTTP 服务，并直接托管 `static/` 中的零构建依赖前端。
 
 ## 启动
 
 ```bash
-python 99_System_OpenClaw/scripts/44_launch_desktop.py
+python scripts/launch_studio.py
 ```
 
 常用参数：
 
 ```bash
-python 99_System_OpenClaw/scripts/44_launch_desktop.py \
+python scripts/launch_studio.py \
   --state-dir ~/.photo-content-os/studio \
   --port 8765 \
   --no-browser

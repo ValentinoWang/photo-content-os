@@ -8,4 +8,4 @@ else
   echo "请安装 ffmpeg 和 exiftool，并确保它们在 PATH 中。" >&2
   exit 1
 fi
-echo "系统依赖检查完成。Python 环境请运行 41_setup_dev_environment.sh。"
+echo "系统依赖检查完成。Python 环境请运行 setup_dev_environment.sh。"

@@ -282,7 +282,7 @@ def generate_project_overview(
     model: str,
     reasoning: str,
 ) -> None:
-    prompt_path = prompt_dir / "project_overview_prompt.md"
+    prompt_path = prompt_dir / "project-overview-prompt.md"
     if not prompt_path.exists():
         raise FileNotFoundError(f"project overview prompt not found: {prompt_path}")
     summary_index = []
@@ -331,7 +331,7 @@ def generate_project_overview(
     )
     if "待 AI 分析" in overview:
         raise RuntimeError("LLM project overview still contains placeholder text")
-    (analysis_dir(project) / "project_overview.md").write_text(overview.rstrip() + "\n", encoding="utf-8")
+    (analysis_dir(project) / "project-overview.md").write_text(overview.rstrip() + "\n", encoding="utf-8")
 
 
 def _load_analysis_plan(path: Path | None) -> dict[str, dict[str, Any]]:
@@ -385,7 +385,7 @@ def main() -> None:
                 continue
             prompt_path = item_prompt_path(prompt_dir, item)
             if not prompt_path.exists():
-                raise FileNotFoundError(f"item prompt not found, run 04_generate_ai_prompt.py first: {prompt_path}")
+                raise FileNotFoundError(f"item prompt not found, run generate_ai_prompt.py first: {prompt_path}")
             media_id = str(item.get("media_id") or item.get("id") or "")
             plan = plan_by_id.get(media_id, {})
             tier = str(plan.get("tier") or item.get("analysis_tier") or "deep")

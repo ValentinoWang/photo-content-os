@@ -3,12 +3,12 @@
   "updated_on": "2026-06-28",
   "canonical_management": {
     "system": "github",
-    "registry_path": "99_System_OpenClaw/review_capabilities.registry.json",
+    "registry_path": "review-capabilities.registry.json",
     "default_branch": "main",
-    "governance_doc": "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.08_GitHub单一事实源_作品审核能力管理.md",
-    "algorithm_doc": "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.09_视频评分判断算法收敛路线图.md",
+    "governance_doc": "docs/usage-guides/review-capability-authority.md",
+    "algorithm_doc": "docs/usage-guides/video-scoring-roadmap.md",
     "current_convergence_scope": "video_scoring_judgement_algorithm",
-    "change_gate": "python3 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py",
+    "change_gate": "python3 scripts/validate_review_capability_registry.py",
     "rule": "本版本优先收敛视频评分、判断、排序算法本身；远端服务器纳入调用边界，但不另建算法事实源。"
   },
   "capabilities": [
@@ -22,13 +22,13 @@
         "cloud_task_to_mac_runner"
       ],
       "implementation_files": [
-        "99_System_OpenClaw/scripts/19_review_output_video.py"
+        "scripts/review_output_video.py"
       ],
       "contract_files": [
-        "99_System_OpenClaw/scripts/mac_openclaw_runner.py",
-        "99_System_OpenClaw/tests/test_output_video_review.py",
-        "99_System_OpenClaw/tests/test_mac_openclaw_runner.py",
-        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.05_需要进入剪映或成片复核_导入包与验收.md"
+        "scripts/mac_openclaw_runner.py",
+        "tests/test_output_video_review.py",
+        "tests/test_mac_openclaw_runner.py",
+        "docs/usage-guides/editing-handoff-review.md"
       ],
       "execution_contract": {
         "runner_task_types": [
@@ -54,7 +54,7 @@
           "scene_change_sheet.jpg"
         ],
         "schemas": [
-          "output_review.v1",
+          "output-review.v1",
           "output_review_result.v1"
         ]
       },
@@ -101,7 +101,7 @@
         "human_boundary": "算法只给 pass/warning/fail、版本倾向和返修建议；Final 与发布仍由 human_editor 确认。"
       },
       "github_policy": {
-        "canonical_repository_scope": "99_System_OpenClaw",
+        "canonical_repository_scope": "photo-content-os",
         "required_pr_checks": [
           "validate_review_capability_registry",
           "test_output_video_review",
@@ -109,7 +109,7 @@
         ],
         "remote_server_rule": "远端服务器只能提交 local_output_review 任务、读取 Mac 回写结果，不得另写视频探测、抽帧、评分或发布判断实现。"
       },
-      "dedupe_guard": "如果要新增成片质检维度，优先改 19_review_output_video.py 的现有 schema；不得在远端新增第二套 output_review 评分器。"
+      "dedupe_guard": "如果要新增成片质检维度，优先改 review_output_video.py 的现有 schema；不得在远端新增第二套 output-review 评分器。"
     },
     {
       "capability_id": "rhythm_sync_review",
@@ -120,11 +120,11 @@
         "mac_local"
       ],
       "implementation_files": [
-        "99_System_OpenClaw/scripts/19_review_output_video.py"
+        "scripts/review_output_video.py"
       ],
       "contract_files": [
-        "99_System_OpenClaw/tests/test_output_video_review.py",
-        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.07_成片节奏同步算法评估与版本排序落地.md"
+        "tests/test_output_video_review.py",
+        "docs/usage-guides/rhythm-review-and-ranking.md"
       ],
       "execution_contract": {
         "cli_flags": [
@@ -179,7 +179,7 @@
         "human_boundary": "算法输出可修复时间点和版本排序，不自动改剪映时间线。"
       },
       "github_policy": {
-        "canonical_repository_scope": "99_System_OpenClaw",
+        "canonical_repository_scope": "photo-content-os",
         "required_pr_checks": [
           "validate_review_capability_registry",
           "test_output_video_review"
@@ -198,11 +198,11 @@
         "codex_vlm"
       ],
       "implementation_files": [
-        "99_System_OpenClaw/scripts/19_review_output_video.py"
+        "scripts/review_output_video.py"
       ],
       "contract_files": [
-        "99_System_OpenClaw/tests/test_output_video_review.py",
-        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.05_需要进入剪映或成片复核_导入包与验收.md"
+        "tests/test_output_video_review.py",
+        "docs/usage-guides/editing-handoff-review.md"
       ],
       "execution_contract": {
         "cli_flags": [
@@ -246,14 +246,14 @@
         "human_boundary": "VLM 只读取 contact sheet；它补足语义观感，不替代完整逐帧观看和发布确认。"
       },
       "github_policy": {
-        "canonical_repository_scope": "99_System_OpenClaw",
+        "canonical_repository_scope": "photo-content-os",
         "required_pr_checks": [
           "validate_review_capability_registry",
           "test_output_video_review"
         ],
         "remote_server_rule": "远端不得把截图语义审阅改写为另一个不可追溯的主观评分口径；只允许消费 Mac 侧已落盘的 VLM 结果。"
       },
-      "dedupe_guard": "所有 VLM 观感字段必须继续写入 output_review metrics/result，不单独生成第二份成片语义结论。"
+      "dedupe_guard": "所有 VLM 观感字段必须继续写入 output-review metrics/result，不单独生成第二份成片语义结论。"
     },
     {
       "capability_id": "remote_review_orchestration",
@@ -266,15 +266,15 @@
         "mac_runner"
       ],
       "implementation_files": [
-        "99_System_OpenClaw/scripts/mac_openclaw_runner.py",
-        "99_System_OpenClaw/scripts/32_process_openclaw_queue.py",
-        "99_System_OpenClaw/scripts/33_enqueue_openclaw_queue_job.py",
-        "99_System_OpenClaw/scripts/validate_content_os_task.py"
+        "scripts/mac_openclaw_runner.py",
+        "scripts/process_openclaw_queue.py",
+        "scripts/enqueue_openclaw_queue_job.py",
+        "scripts/validate_content_os_task.py"
       ],
       "contract_files": [
-        "99_System_OpenClaw/tests/test_mac_openclaw_runner.py",
-        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.03_已有项目包和本地素材_绑定任务队列.md",
-        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.05_需要进入剪映或成片复核_导入包与验收.md"
+        "tests/test_mac_openclaw_runner.py",
+        "docs/usage-guides/project-queue-binding.md",
+        "docs/usage-guides/editing-handoff-review.md"
       ],
       "execution_contract": {
         "orchestrates_task_types": [
@@ -283,8 +283,8 @@
         "queue_paths": [
           "98_Agent任务队列/01_cloud_to_mac_ready/task_*.yaml",
           "98_Agent任务队列/02_mac_to_cloud_results/result_*.yaml",
-          "_OpenClawQueue/cloud_to_mac/*.json",
-          "_OpenClawQueue/mac_to_cloud/*.result.json"
+          "openclaw-queue/cloud_to_mac/*.json",
+          "openclaw-queue/mac_to_cloud/*.result.json"
         ],
         "allowed_actions": [
           "review_output_video"
@@ -309,7 +309,7 @@
         "human_boundary": "远端只编排任务和消费结果；视频评分、判断、排序算法不在远端实现。"
       },
       "github_policy": {
-        "canonical_repository_scope": "99_System_OpenClaw",
+        "canonical_repository_scope": "photo-content-os",
         "required_pr_checks": [
           "validate_review_capability_registry",
           "test_mac_openclaw_runner"
@@ -332,8 +332,8 @@
         "/home/ubuntu/selfmedia-tools/tools/data_review/workflow.py"
       ],
       "contract_files": [
-        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.10_远端作品验收与数据复盘评价边界.md",
-        "99_System_OpenClaw/docs/08_usage_guides_使用指南/08.09_视频评分判断算法收敛路线图.md"
+        "docs/usage-guides/remote-review-boundaries.md",
+        "docs/usage-guides/video-scoring-roadmap.md"
       ],
       "execution_contract": {
         "remote_capabilities": [

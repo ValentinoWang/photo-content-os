@@ -208,7 +208,7 @@ def read_manifest(path: Path) -> tuple[dict[str, Any], str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("manifest", type=Path, help="path to _ai_analysis/media_manifest.json")
+    parser.add_argument("manifest", type=Path, help="path to ai-analysis/media-manifest.json")
     parser.add_argument("--output", type=Path, help="plan path; defaults beside the manifest")
     parser.add_argument("--time-gap-seconds", type=int, default=DEFAULT_TIME_GAP_SECONDS)
     parser.add_argument("--distance-meters", type=float, default=DEFAULT_DISTANCE_METERS)

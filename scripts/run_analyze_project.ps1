@@ -9,7 +9,7 @@ param(
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = (Resolve-Path (Join-Path $ScriptDir "../..")).Path
-$Runtime = Join-Path $RepoRoot "99_System_OpenClaw/.venv-content-os/Scripts/python.exe"
+$Runtime = Join-Path $RepoRoot ".venv/Scripts/python.exe"
 if (-not (Test-Path $Runtime)) {
     $Runtime = if ($env:PYTHON_BIN) { $env:PYTHON_BIN } else { "python" }
 }

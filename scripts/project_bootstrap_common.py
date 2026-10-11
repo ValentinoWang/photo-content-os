@@ -10,12 +10,12 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-from media_common import ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, safe_slug
+from media_common import directory_slug, ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, safe_slug
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-BATCH_NOTE_NAME = "00_批次说明.md"
-LOCAL_LINK_DIR = "_openclaw"
+BATCH_NOTE_NAME = "batch-notes.md"
+LOCAL_LINK_DIR = "openclaw"
 PROJECT_LINK_NAME = "project.json"
 
 EMPTY_VALUES = {"", "无", "none", "null", "待定", "未定", "unknown"}
@@ -48,7 +48,7 @@ class ProjectBootstrapError(Exception):
 
 
 def ensure_structure_function():
-    module_path = SCRIPT_DIR / "13_ensure_project_structure.py"
+    module_path = SCRIPT_DIR / "ensure_project_structure.py"
     spec = importlib.util.spec_from_file_location("openclaw_ensure_project_structure", module_path)
     if spec is None or spec.loader is None:
         raise ProjectBootstrapError(f"failed to load ensure project structure module: {module_path}")
@@ -95,9 +95,9 @@ def append_value(existing: str, line: str) -> str:
 
 
 def parse_batch_note(path: Path, field_map: dict[str, str]) -> dict[str, str]:
-    """Parse a 00_批次说明.md into {field_map[label]: value}, with continuation-line support.
+    """Parse a batch-notes.md into {field_map[label]: value}, with continuation-line support.
 
-    Moved verbatim from 31_link_batch_to_content_project.py's own
+    Moved verbatim from link_batch_to_content_project.py's own
     parse_batch_note. field_map is a parameter (not a module constant) so
     31's FIELD_TO_KEY and this module's own FIELD_ALIASES can each drive
     this same parsing logic without merging the two alias tables -- they
@@ -137,12 +137,12 @@ def read_batch_note_fields(note_path: Path) -> dict[str, str]:
 
 
 def count_media_files(batch_dir: Path) -> int:
-    """Count media files under batch_dir, excluding hidden dirs, _ai_analysis and LOCAL_LINK_DIR.
+    """Count media files under batch_dir, excluding hidden dirs, ai-analysis and LOCAL_LINK_DIR.
 
-    This is 32_process_openclaw_queue.py's version (the superset): it also
-    excludes LOCAL_LINK_DIR, which 31_link_batch_to_content_project.py's
+    This is process_openclaw_queue.py's version (the superset): it also
+    excludes LOCAL_LINK_DIR, which link_batch_to_content_project.py's
     prior, independent copy did not. 31 switching to this shared version is
-    a deliberate bug fix -- files openclaw itself writes under _openclaw
+    a deliberate bug fix -- files openclaw itself writes under openclaw
     should never have been counted as source media -- not a regression.
     """
     count = 0
@@ -163,7 +163,7 @@ def is_empty_value(value: str) -> bool:
 
 def strip_date_prefix(name: str) -> str:
     text = re.sub(r"^\d{8}[_ -]*", "", name.strip())
-    text = re.sub(r"(?:_?待整理|_?待增加)$", "", text)
+    text = re.sub(r"(?:_?待整理|_?additions)$", "", text)
     return text.strip("_ -")
 
 
@@ -204,7 +204,7 @@ def optional_task_text(task: dict[str, Any] | None, key: str) -> str:
 
 
 def project_workspace_root(workspace_root: Path) -> Path:
-    return workspace_root / "01_Project_Workspace"
+    return workspace_root / "projects"
 
 
 def resolve_existing_project(raw: str, workspace_root: Path) -> Path | None:
@@ -250,8 +250,8 @@ def generated_project_path(batch_dir: Path, fields: dict[str, str], task: dict[s
     topic = optional_task_text(task, "topic")
     project_source = topic or fields.get("event") or batch_title
     project_title = clean_title(project_source, fallback=batch_title)
-    theme_dir = safe_slug(f"{year}年{theme_title}内容创作", 80)
-    project_dir = safe_slug(f"{date_token}_{project_title}", 96)
+    theme_dir = f"{year}-{directory_slug(optional_task_text(task, 'theme_slug') or theme_title, 'theme')}"
+    project_dir = f"{year}-{directory_slug(optional_task_text(task, 'project_slug') or project_title, 'project')}"
     return project_workspace_root(workspace_root) / theme_dir / project_dir
 
 
@@ -322,7 +322,7 @@ Obsidian 项目路径：
 ## 当前状态
 
 - [ ] 素材已从 Inbox 合并进入项目 L3
-- [ ] 已运行 `13_ensure_project_structure.py`
+- [ ] 已运行 `ensure_project_structure.py`
 - [ ] 已运行 `run_analyze_project.sh`
 - [ ] 已融合 Obsidian brief / script
 - [ ] 已生成素材匹配 / Storyboard / EDL / native import pack
@@ -381,13 +381,17 @@ def ensure_formal_project_for_batch(
         project_dir = generated_project_path(batch_dir, fields, task, workspace_root).resolve()
         warnings.append("auto_generated_local_project_path")
     elif not inside(project_dir, project_workspace_root(workspace_root)):
-        raise ProjectBootstrapError(f"formal project must stay under 01_Project_Workspace: {project_dir}")
+        raise ProjectBootstrapError(f"formal project must stay under projects: {project_dir}")
 
     existed_before = project_dir.exists()
     project_dir.mkdir(parents=True, exist_ok=True)
     ensure_structure = ensure_structure_function()
     created_dirs, created_workcache_dirs, created_files, workcache_root = ensure_structure(project_dir)
     readme = write_project_readme(project_dir, batch_dir, fields, task)
+    title = optional_task_text(task, "topic") or fields.get("event") or batch_dir.name
+    manifest = project_dir / "project-manifest.json"
+    if not manifest.exists():
+        manifest.write_text(json.dumps({"title": title, "directory": project_dir.name}, ensure_ascii=False, indent=2) + "\n")
     changed_fields = update_batch_note_project_fields(note_path, batch_dir, project_dir) if note_path.exists() else []
     project_link = write_project_link(batch_dir, project_dir, created=not existed_before, warnings=warnings)
 
@@ -410,8 +414,8 @@ def ensure_formal_project_for_batch(
 def run_project_analysis(project: Path) -> None:
     """Invoke run_analyze_project.sh against `project` (L-21).
 
-    Baseline: 09_apply_additions_merge.py's run_analysis, byte-identical to
-    11_rename_media_file.py's own copy. 12_select_repeat_photo_groups.py's
+    Baseline: apply_additions_merge.py's run_analysis, byte-identical to
+    rename_media_file.py's own copy. select_repeat_photo_groups.py's
     version lacked the runner.exists() pre-check; it gets that check now,
     a deliberate improvement (a missing runner script previously surfaced
     there as a bare subprocess FileNotFoundError with no context, now it

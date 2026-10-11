@@ -15,7 +15,7 @@ def load(name):
     return load_script(name, register=True)
 
 
-queue = load("33_enqueue_openclaw_queue_job")
+queue = load("enqueue_openclaw_queue_job")
 runner = load("mac_openclaw_runner")
 validator = load("validate_content_os_task")
 
@@ -39,7 +39,7 @@ class LBQueueContractTests(unittest.TestCase):
     def test_project_index_hit_and_miss_are_scoped(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            workspace = root / "01_Project_Workspace"
+            workspace = root / "projects"
             project = workspace / "project-a"
             project.mkdir(parents=True)
             (workspace / ".content_os_project_index.json").write_text(json.dumps({"project-a": str(project)}), encoding="utf-8")

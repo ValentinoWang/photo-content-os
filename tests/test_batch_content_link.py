@@ -16,12 +16,12 @@ from _support import load_script
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
-batch_link = load_script("31_link_batch_to_content_project.py", "batch_link")
+batch_link = load_script("link_batch_to_content_project.py", "batch_link")
 
 
 def write_batch_note(batch: Path, project_id: str) -> None:
     batch.mkdir(parents=True)
-    (batch / "00_批次说明.md").write_text(
+    (batch / "batch-notes.md").write_text(
         f"""# 20260626_测试事件_待整理
 
 ## 云端项目引用
@@ -63,7 +63,7 @@ class BatchContentLinkTest(unittest.TestCase):
             package.mkdir(parents=True)
             for name in ["01_idea_card.md", "02_project_brief.md", "04_script.md"]:
                 (package / name).write_text(f"# {name}\n", encoding="utf-8")
-            batch = root / "00_Inbox_Mac_Intake/20260626_测试事件_待整理"
+            batch = root / "inbox/20260626_测试事件_待整理"
             write_batch_note(batch, "20260626_测试项目")
             (batch / "clip.mp4").write_bytes(b"not a real video")
 
@@ -80,7 +80,7 @@ class BatchContentLinkTest(unittest.TestCase):
             root = Path(tmp)
             vault = root / "vault"
             vault.mkdir()
-            batch = root / "00_Inbox_Mac_Intake/20260626_测试事件_待整理"
+            batch = root / "inbox/20260626_测试事件_待整理"
             write_batch_note(batch, "")
 
             link = batch_link.build_link(batch, vault, root)
@@ -91,7 +91,7 @@ class BatchContentLinkTest(unittest.TestCase):
 
     def test_write_link_creates_yaml_artifact(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            output = Path(tmp) / "_ai_analysis/content_os_link.yaml"
+            output = Path(tmp) / "ai-analysis/content_os_link.yaml"
             data = {"spec_version": "content_os_batch_link_v0.1", "status": "brief_ready"}
 
             batch_link.write_link(output, data)

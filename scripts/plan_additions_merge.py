@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plan how a mixed 待增加 folder should merge into a target project."""
+"""Plan how a mixed additions folder should merge into a target project."""
 
 from __future__ import annotations
 
@@ -38,7 +38,7 @@ GENERIC_NAME_RE = re.compile(r"^(IMG|VID|DJI|GX|GP|PXL|MVIMG|DSC|ScreenRecording
 
 
 def addition_keyframes_dir(additions_dir: Path, record: dict[str, object]) -> Path:
-    output_dir = additions_dir / ANALYSIS_DIR / "addition_keyframes" / str(record["media_id"])
+    output_dir = additions_dir / ANALYSIS_DIR / "addition-keyframes" / str(record["media_id"])
     output_dir.mkdir(parents=True, exist_ok=True)
     for old in output_dir.glob("frame_*.jpg"):
         old.unlink()
@@ -100,7 +100,7 @@ def choose_live_stem(
 
 def section_dirs(target_project: Path) -> dict[str, str | None]:
     sections: dict[str, str | None] = {
-        "raw": "00_RawVault_不可直用/Raw_待处理",
+        "raw": "raw-vault/raw-pending",
         "llm_pending": "__LLM待定__",
     }
     return sections
@@ -143,7 +143,7 @@ def suggested_filename(
     if target_lifecycle == "needs_llm_review":
         return f"{safe_slug(stem)}_待命名{ext}", "缺少显式场景线索，需要 LLM/人工判读后再确认命名", True
     if target_lifecycle == "raw_or_pending" and not any(token in stem for token in RAW_TOKENS):
-        return f"{safe_slug(stem)}_待确认{ext}", "进入 Raw_待处理但原名没有不可直用原因，追加待确认", True
+        return f"{safe_slug(stem)}_待确认{ext}", "进入 raw-pending但原名没有不可直用原因，追加待确认", True
     return name, "沿用已有描述性文件名", False
 
 
@@ -265,7 +265,7 @@ def build_plan(additions_dir: Path, target_project: Path) -> dict[str, object]:
                 "classification_key": classification_key,
                 "classification_reason": classification_reason,
                 "naming_reason": naming_reason,
-                "addition_keyframes": [relative_posix(frame, additions_dir) for frame in visual.get("frames", [])],
+                "addition-keyframes": [relative_posix(frame, additions_dir) for frame in visual.get("frames", [])],
                 "addition_contact_sheet": relative_posix(visual["contact_sheet"], additions_dir)
                 if isinstance(visual.get("contact_sheet"), Path)
                 else None,
@@ -282,26 +282,26 @@ def build_plan(additions_dir: Path, target_project: Path) -> dict[str, object]:
         "generated_at": now_iso(),
         "additions_dir": str(additions_dir),
         "target_project_dir": str(target_project),
-        "notes": "08 只生成证据和机械合并计划，不移动文件，也不按关键帧颜色硬判语义；确认后再用 09_apply_additions_merge.py 执行。",
+        "notes": "08 只生成证据和机械合并计划，不移动文件，也不按关键帧颜色硬判语义；确认后再用 apply_additions_merge.py 执行。",
         "items": items,
     }
 
 
 def llm_review_prompt(plan: dict[str, object]) -> str:
     lines = [
-        "# 待增加素材 LLM 合并判读任务",
+        "# additions素材 LLM 合并判读任务",
         "",
         "你是素材库整理助理。请根据项目语境、文件元数据、关键帧目录和联系表，给出宏观语义判断。",
         "",
         "## 项目信息",
         "",
-        f"- 待增加目录：{plan['additions_dir']}",
+        f"- additions目录：{plan['additions_dir']}",
         f"- 目标项目：{plan['target_project_dir']}",
         "",
         "## 判读原则",
         "",
         "1. 不要按颜色、单个关键词或脚本启发式硬猜；要结合项目主题、前后素材、关键帧和文件名整体判断。",
-        "2. 能确认的条目，把 `additions_merge_plan.json` 中的 `status` 改为 `approved`，并填写准确的 `target_relative_path`。",
+        "2. 能确认的条目，把 `additions-merge-plan.json` 中的 `status` 改为 `approved`，并填写准确的 `target_relative_path`。",
         "3. 不能确认的条目保持 `blocked` 或 `needs_review=true`，不要强行放入 Raw。",
         "4. Live Photo 或原始关联组必须保持同名不同后缀；不要把同组素材拆成不同语义。",
         "5. 命名只说画面内容和处理状态，不把“精选”“高光”写进 L3 项目归档文件名。",
@@ -323,7 +323,7 @@ def llm_review_prompt(plan: dict[str, object]) -> str:
                 f"- 当前状态：{item.get('status')}，需复核：{item.get('needs_review')}",
                 f"- 依据：{item.get('classification_reason')}",
                 f"- 联系表：{item.get('addition_contact_sheet') or '无'}",
-                f"- 关键帧：{', '.join(item.get('addition_keyframes') or []) or '无'}",
+                f"- 关键帧：{', '.join(item.get('addition-keyframes') or []) or '无'}",
                 "",
             ]
         )
@@ -333,25 +333,25 @@ def llm_review_prompt(plan: dict[str, object]) -> str:
 def write_plan(plan: dict[str, object], additions_dir: Path) -> tuple[Path, Path, Path]:
     output_dir = additions_dir / ANALYSIS_DIR
     output_dir.mkdir(parents=True, exist_ok=True)
-    json_path = output_dir / "additions_merge_plan.json"
-    md_path = output_dir / "additions_merge_plan.md"
-    prompt_path = output_dir / "additions_llm_review_prompt.md"
+    json_path = output_dir / "additions-merge-plan.json"
+    md_path = output_dir / "additions-merge-plan.md"
+    prompt_path = output_dir / "additions-llm-review-prompt.md"
     json_path.write_text(json.dumps(plan, ensure_ascii=False, indent=2), encoding="utf-8")
     prompt_path.write_text(llm_review_prompt(plan), encoding="utf-8")
 
     lines = [
-        "# 待增加素材合并计划",
+        "# additions素材合并计划",
         "",
         f"- 生成时间：{plan['generated_at']}",
-        f"- 待增加目录：{plan['additions_dir']}",
+        f"- additions目录：{plan['additions_dir']}",
         f"- 目标项目：{plan['target_project_dir']}",
         f"- 素材数量：{len(plan['items'])}",
         "",
         "## 使用方式",
         "",
-        "1. 先检查下表中的目标目录、建议命名和是否需复核；泛名素材请优先看 `additions_llm_review_prompt.md` 和联系表。",
-        "2. 需要调整时，编辑 `additions_merge_plan.json` 中对应条目的 `target_relative_path`、`suggested_filename`、`classification_reason` 或 `status`。",
-        "3. 确认后把要执行的条目设为 `approved`，或在明确确认整表无误后使用 `09_apply_additions_merge.py --apply-all-pending`。",
+        "1. 先检查下表中的目标目录、建议命名和是否需复核；泛名素材请优先看 `additions-llm-review-prompt.md` 和联系表。",
+        "2. 需要调整时，编辑 `additions-merge-plan.json` 中对应条目的 `target_relative_path`、`suggested_filename`、`classification_reason` 或 `status`。",
+        "3. 确认后把要执行的条目设为 `approved`，或在明确确认整表无误后使用 `apply_additions_merge.py --apply-all-pending`。",
         "",
     ]
     if plan["items"]:
@@ -381,8 +381,8 @@ def write_plan(plan: dict[str, object], additions_dir: Path) -> tuple[Path, Path
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="扫描待增加目录，生成合并到目标项目的分类与命名计划")
-    parser.add_argument("additions_dir", help="待增加素材目录")
+    parser = argparse.ArgumentParser(description="扫描additions目录，生成合并到目标项目的分类与命名计划")
+    parser.add_argument("additions_dir", help="additions素材目录")
     parser.add_argument("target_project_dir", help="目标正式项目目录")
     args = parser.parse_args()
 
@@ -391,7 +391,7 @@ def main() -> None:
     ensure_project_additions_dir(additions_dir, target_project)
     plan = build_plan(additions_dir, target_project)
     json_path, md_path, prompt_path = write_plan(plan, additions_dir)
-    print(f"待增加合并计划已生成：{md_path}")
+    print(f"additions合并计划已生成：{md_path}")
     print(f"JSON 计划：{json_path}")
     print(f"LLM 判读 prompt：{prompt_path}")
     print(f"共发现素材：{len(plan['items'])} 个")

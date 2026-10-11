@@ -24,7 +24,7 @@ Obsidian 项目路径：
 ## 当前状态
 
 - [ ] 素材已进入项目目录
-- [ ] 已运行 `13_ensure_project_structure.py`
+- [ ] 已运行 `ensure_project_structure.py`
 - [ ] 已运行 `run_analyze_project.sh`
 - [ ] 已融合 Obsidian brief / script
 - [ ] 已生成素材匹配 / Storyboard / EDL / native import pack

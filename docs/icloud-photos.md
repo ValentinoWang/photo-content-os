@@ -18,7 +18,7 @@ iCloud 云盘 = 文档同步 / 按需中转 / 归档副本
 
 iCloudReady 的含义固定为：已整理、已修复或已确认无需修复、已去重、可长期回看、可导入 iCloud 照片的内容。
 
-重要边界：`80_To_iCloudPhotos_精选入库` 是精选展示入口，不是项目全量归档入口。进入 80 的内容应该少而准；未入 80 的项目源素材不代表删除，发布稳定后应进入阿里云盘镜像和移动硬盘冷归档，并通过归档索引卡检索。
+重要边界：`icloud-selected` 是精选展示入口，不是项目全量归档入口。进入 80 的内容应该少而准；未入 80 的项目源素材不代表删除，发布稳定后应进入阿里云盘镜像和移动硬盘冷归档，并通过归档索引卡检索。
 
 ### 可以进入 iCloud 照片的内容
 
@@ -44,7 +44,7 @@ iCloudReady 的含义固定为：已整理、已修复或已确认无需修复�
 5. Log 文件
 6. DJI 原始全景文件
 7. Insta360 .insv / .lrv 原始文件
-8. 剪映工程文件
+8. jianying文件
 9. 转码缓存
 10. 临时测试输出
 11. 拆散或命名不一致的 Live Photo 半组
@@ -56,33 +56,33 @@ iCloudReady 的含义固定为：已整理、已修复或已确认无需修复�
 每个项目只允许从这个文件夹导入 iCloud 照片：
 
 ```text
-80_To_iCloudPhotos_精选入库
+icloud-selected
 ```
 
-`80_To_iCloudPhotos_精选入库` 必须继续分下一级目录，不能把所有精选平铺在 80 根部：
+`icloud-selected` 必须继续分下一级目录，不能把所有精选平铺在 80 根部：
 
 ```text
-80_To_iCloudPhotos_精选入库/
-├── 01_Project_Selected_项目精选
-├── 02_Cover_Candidates_封面候选
-├── 03_Memorial_纪念资产
-├── 04_Reusable_To_iPhone_手机常用复用素材
-├── 05_LivePhoto_Groups_同名原始组
-├── 06_Final_Output_发布成片与高光
-└── 99_To_Check_入库前复核
+icloud-selected/
+├── project-selected
+├── cover-candidates
+├── memorial
+├── phone-reusable
+├── live-photo-groups
+├── final-output
+└── pending-review
 ```
 
 各目录含义固定：
 
 | 目录 | 放什么 | 导入 iPhone / iCloud 照片后的相册建议 |
 | --- | --- | --- |
-| `01_Project_Selected_项目精选` | 这个项目最值得回看的代表照片、视频、情绪瞬间 | `项目_YYYYMM_项目名精选` |
-| `02_Cover_Candidates_封面候选` | 可做小红书、抖音、视频封面或图文首图的图片 | `素材库_封面候选` |
-| `03_Memorial_纪念资产` | 超脱项目本身的人生节点、身份节点、重要关系、重要成果 | `纪念_主题名` |
-| `04_Reusable_To_iPhone_手机常用复用素材` | 未来经常会在手机端调用的空镜、人物状态、口播垫片、通用图 | `素材库_校园空镜常用` / `素材库_人物状态常用` |
-| `05_LivePhoto_Groups_同名原始组` | 准备回导照片 App 的 HEIC / MOV / XMP 同名 Live Photo 组 | `项目_YYYYMM_LivePhoto精选` |
-| `06_Final_Output_发布成片与高光` | Final 成片、发布版、高光回看短片 | `项目_YYYYMM_发布成片` |
-| `99_To_Check_入库前复核` | 暂时不确定归类、待确认是否值得进 iCloud 照片的内容 | 不直接导入，确认后移动到 01-06 |
+| `project-selected` | 这个项目最值得回看的代表照片、视频、情绪瞬间 | `项目_YYYYMM_项目名精选` |
+| `cover-candidates` | 可做小红书、抖音、视频封面或图文首图的图片 | `素材库_封面候选` |
+| `memorial` | 超脱项目本身的人生节点、身份节点、重要关系、重要成果 | `纪念_主题名` |
+| `phone-reusable` | 未来经常会在手机端调用的空镜、人物状态、口播垫片、通用图 | `素材库_校园空镜常用` / `素材库_人物状态常用` |
+| `live-photo-groups` | 准备回导照片 App 的 HEIC / MOV / XMP 同名 Live Photo 组 | `项目_YYYYMM_LivePhoto精选` |
+| `final-output` | Final 成片、发布版、高光回看短片 | `项目_YYYYMM_发布成片` |
+| `pending-review` | 暂时不确定归类、待确认是否值得进 iCloud 照片的内容 | 不直接导入，确认后移动到 01-06 |
 
 执行路径：
 
@@ -91,7 +91,7 @@ iCloudReady 的含义固定为：已整理、已修复或已确认无需修复�
 ↓
 挑选长期值得保存的内容
 ↓
-复制到 80_To_iCloudPhotos_精选入库/对应子目录
+复制到 icloud-selected/对应子目录
 ↓
 检查是否已修复 / 已重构 / 已去重 / 可展示
 ↓
@@ -109,8 +109,8 @@ iCloudReady 的含义固定为：已整理、已修复或已确认无需修复�
 | 80 精选副本 | 导入 iCloud 照片，并可保留在项目包里参与镜像 / 冷归档 | 可不长期保留文件副本，照片 App 已是展示入口 |
 | L3 全量项目源素材 | 阿里云盘单向镜像 + 移动硬盘冷归档 | 发布稳定后不长期保留 |
 | RawVault / 360 / Log / 原始组 | 移动硬盘冷归档，必要时阿里云盘镜像 | 不长期保留 |
-| Final / 高光成片 | 91_Output、80/06、阿里云盘、移动硬盘 | 可按需要留小体积 Final；大体积项目包进冷归档 |
-| 检索信息 | `02_Asset_Library/Project_Archive_Index/*.archive.md` | 必须长期保留 |
+| Final / 高光成片 | output、80/06、阿里云盘、移动硬盘 | 可按需要留小体积 Final；大体积项目包进冷归档 |
+| 检索信息 | `library/project-archive-index/*.archive.md` | 必须长期保留 |
 
 以后找旧素材时，不从 80 反推全量项目；先搜归档索引卡，再按索引卡里的阿里云盘路径或移动硬盘路径恢复。
 
@@ -118,7 +118,7 @@ iCloudReady 的含义固定为：已整理、已修复或已确认无需修复�
 
 Apple 官方说明，Live Photo 使用「导出未修改的原片」时会导出为一个静态图文件和一个视频文件；如果勾选 “Export IPTC as XMP”，还会导出保存 IPTC 信息的 XMP 边车文件。照片 App 也支持通过「文件 → 导入」把外部存储里的照片和视频重新导入图库。([苹果支持][9])([苹果支持][10])
 
-因此 Live Photo 进入 `80_To_iCloudPhotos_精选入库` 时必须按原始组处理：
+因此 Live Photo 进入 `icloud-selected` 时必须按原始组处理：
 
 ```text
 同一个 Live Photo 的 HEIC / MOV / XMP 必须同名不同后缀

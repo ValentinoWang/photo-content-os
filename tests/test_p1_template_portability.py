@@ -10,8 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTROLLED_DOCUMENTS = (
-    ROOT / "templates/00_Inbox_事件批次_TEMPLATE/README.md",
-    ROOT / "docs/01_术语与目录层级.md",
+    ROOT / "templates/inbox-batch/README.md",
+    ROOT / "docs/terminology-and-layout.md",
     ROOT / "AGENTS.md",
 )
 NONEXECUTING_ABSTRACT_MARKER = "PORTABILITY-ABSTRACT-NONEXECUTING"
@@ -66,10 +66,10 @@ class TemplatePortabilityTest(unittest.TestCase):
         template = CONTROLLED_DOCUMENTS[0].read_text(encoding="utf-8")
         self.assertIn("${LOCAL_MEDIA_ROOT:-}", template)
         self.assertIn("${OBSIDIAN_ROOT:-}", template)
-        self.assertIn("31_link_batch_to_content_project.py", template)
+        self.assertIn("link_batch_to_content_project.py", template)
         self.assertIn('--obsidian-root "$OBSIDIAN_ROOT"', template)
         self.assertIn("exit 1", template)
-        self.assertIn("$LOCAL_MEDIA_ROOT/00_Inbox_Mac_Intake/", template)
+        self.assertIn("$LOCAL_MEDIA_ROOT/inbox/", template)
 
 
 if __name__ == "__main__":

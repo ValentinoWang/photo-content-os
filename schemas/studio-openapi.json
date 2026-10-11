@@ -1,6 +1,6 @@
 {
   "info": {
-    "description": "Loopback-only, CSRF-protected desktop contract. Upstream login is optional.",
+    "description": "Loopback-only, CSRF-protected studio contract. Upstream login is optional.",
     "title": "Photo Content OS Desktop API",
     "version": "1.0.0"
   },
@@ -149,7 +149,7 @@
             "description": "Invalid request"
           }
         },
-        "summary": "Read desktop bootstrap state"
+        "summary": "Read studio bootstrap state"
       }
     },
     "/api/diagnostics": {
@@ -1397,7 +1397,7 @@
             "description": "Invalid request"
           }
         },
-        "summary": "Read redacted desktop settings"
+        "summary": "Read redacted studio settings"
       }
     },
     "/api/settings/analysis-budget": {

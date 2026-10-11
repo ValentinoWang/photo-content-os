@@ -33,13 +33,11 @@ CAPABILITY_ID_PATTERN = re.compile(r"^[a-z][a-z0-9_]*$")
 
 
 def default_registry_path() -> Path:
-    return Path(__file__).resolve().parents[1] / "review_capabilities.registry.json"
+    return Path(__file__).resolve().parents[1] / "review-capabilities.registry.json"
 
 
 def repo_root_from_registry(registry_path: Path) -> Path:
     path = registry_path.resolve()
-    if path.parent.name == "99_System_OpenClaw":
-        return path.parent.parent
     return path.parent
 
 
@@ -327,7 +325,7 @@ def markdown_summary(registry: dict[str, Any]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate review capability SSOT registry")
-    parser.add_argument("--registry", default=str(default_registry_path()), help="Path to review_capabilities.registry.json")
+    parser.add_argument("--registry", default=str(default_registry_path()), help="Path to review-capabilities.registry.json")
     parser.add_argument("--summary-output", help="Optional Markdown summary output path")
     args = parser.parse_args()
 

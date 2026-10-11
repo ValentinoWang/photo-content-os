@@ -12,8 +12,8 @@ from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REGISTRY_PATH = ROOT / "review_capabilities.registry.json"
-validator = load_script("36_validate_review_capability_registry.py", "review_capability_validator", register=True)
+REGISTRY_PATH = ROOT / "review-capabilities.registry.json"
+validator = load_script("validate_review_capability_registry.py", "review_capability_validator", register=True)
 
 
 def load_registry() -> dict:
@@ -22,7 +22,7 @@ def load_registry() -> dict:
 
 class ReviewCapabilityRegistryTest(unittest.TestCase):
     def test_current_registry_is_valid(self) -> None:
-        errors = validator.validate_registry(load_registry(), ROOT.parent)
+        errors = validator.validate_registry(load_registry(), ROOT)
 
         self.assertEqual(errors, [])
 
@@ -33,15 +33,15 @@ class ReviewCapabilityRegistryTest(unittest.TestCase):
         duplicate["display_name"] = "Duplicate output review"
         registry["capabilities"].append(duplicate)
 
-        errors = validator.validate_registry(registry, ROOT.parent)
+        errors = validator.validate_registry(registry, ROOT)
 
         self.assertTrue(any("local_output_review" in error for error in errors))
 
     def test_missing_implementation_file_is_rejected(self) -> None:
         registry = load_registry()
-        registry["capabilities"][0]["implementation_files"] = ["99_System_OpenClaw/scripts/missing_review.py"]
+        registry["capabilities"][0]["implementation_files"] = ["scripts/missing_review.py"]
 
-        errors = validator.validate_registry(registry, ROOT.parent)
+        errors = validator.validate_registry(registry, ROOT)
 
         self.assertTrue(any("missing_review.py" in error for error in errors))
 
@@ -49,7 +49,7 @@ class ReviewCapabilityRegistryTest(unittest.TestCase):
         registry = load_registry()
         registry["dedupe_rules"][0]["canonical_capability_id"] = "unknown_capability"
 
-        errors = validator.validate_registry(registry, ROOT.parent)
+        errors = validator.validate_registry(registry, ROOT)
 
         self.assertTrue(any("unknown_capability" in error for error in errors))
 
@@ -59,7 +59,7 @@ class ReviewCapabilityRegistryTest(unittest.TestCase):
         remote["algorithm_contract"]["algorithm_role"] = "scoring_core"
         remote["algorithm_contract"]["scoring_dimensions"] = ["remote_score"]
 
-        errors = validator.validate_registry(registry, ROOT.parent)
+        errors = validator.validate_registry(registry, ROOT)
 
         self.assertTrue(any("must not be video scoring core" in error for error in errors))
 
@@ -75,7 +75,7 @@ class ReviewCapabilityRegistryTest(unittest.TestCase):
         local = next(item for item in registry["capabilities"] if item["capability_id"] == "local_output_review")
         local["algorithm_contract"]["strategy_weights"]["platform_format"] = 0.2
 
-        errors = validator.validate_registry(registry, ROOT.parent)
+        errors = validator.validate_registry(registry, ROOT)
 
         self.assertTrue(any("strategy_weights must sum to 1.0" in error for error in errors))
 

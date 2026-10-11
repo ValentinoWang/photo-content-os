@@ -10,7 +10,7 @@ from pathlib import Path
 from _support import load_script
 
 
-check_obsidian_doc_sync = load_script("30_check_obsidian_doc_sync.py", "check_obsidian_doc_sync")
+check_obsidian_doc_sync = load_script("check_obsidian_doc_sync.py", "check_obsidian_doc_sync")
 
 
 class ObsidianDocSyncTest(unittest.TestCase):
@@ -86,14 +86,14 @@ class ObsidianDocSyncTest(unittest.TestCase):
         self.assertTrue(any("source doc is newer than Obsidian target" in error for error in errors))
 
     def test_document_contract_commands_run_with_system_python_without_media_dependencies(self) -> None:
-        root = Path(__file__).resolve().parents[2]
+        root = Path(__file__).resolve().parents[1]
         env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
         for script, extra_args in (
-            ("30_check_obsidian_doc_sync.py", []),
-            ("06_check_outline_contract.py", ["."]),
+            ("check_obsidian_doc_sync.py", []),
+            ("check_outline_contract.py", ["."]),
         ):
             result = subprocess.run(
-                ["python3", str(root / "99_System_OpenClaw" / "scripts" / script), *extra_args],
+                ["python3", str(root / "scripts" / script), *extra_args],
                 cwd=root,
                 env=env,
                 capture_output=True,

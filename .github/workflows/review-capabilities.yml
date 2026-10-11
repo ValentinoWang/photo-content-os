@@ -3,27 +3,27 @@ name: Review capability registry
 on:
   pull_request:
     paths:
-      - "99_System_OpenClaw/review_capabilities.registry.json"
-      - "99_System_OpenClaw/scripts/36_validate_review_capability_registry.py"
-      - "99_System_OpenClaw/scripts/19_review_output_video.py"
-      - "99_System_OpenClaw/scripts/mac_openclaw_runner.py"
-      - "99_System_OpenClaw/tests/test_review_capability_registry.py"
-      - "99_System_OpenClaw/tests/test_output_video_review.py"
-      - "99_System_OpenClaw/tests/test_mac_openclaw_runner.py"
-      - "99_System_OpenClaw/docs/08_usage_guides_使用指南/**"
+      - "review-capabilities.registry.json"
+      - "scripts/validate_review_capability_registry.py"
+      - "scripts/review_output_video.py"
+      - "scripts/mac_openclaw_runner.py"
+      - "tests/test_review_capability_registry.py"
+      - "tests/test_output_video_review.py"
+      - "tests/test_mac_openclaw_runner.py"
+      - "docs/usage-guides/**"
       - ".github/workflows/review-capabilities.yml"
   push:
     branches:
       - main
     paths:
-      - "99_System_OpenClaw/review_capabilities.registry.json"
-      - "99_System_OpenClaw/scripts/36_validate_review_capability_registry.py"
-      - "99_System_OpenClaw/scripts/19_review_output_video.py"
-      - "99_System_OpenClaw/scripts/mac_openclaw_runner.py"
-      - "99_System_OpenClaw/tests/test_review_capability_registry.py"
-      - "99_System_OpenClaw/tests/test_output_video_review.py"
-      - "99_System_OpenClaw/tests/test_mac_openclaw_runner.py"
-      - "99_System_OpenClaw/docs/08_usage_guides_使用指南/**"
+      - "review-capabilities.registry.json"
+      - "scripts/validate_review_capability_registry.py"
+      - "scripts/review_output_video.py"
+      - "scripts/mac_openclaw_runner.py"
+      - "tests/test_review_capability_registry.py"
+      - "tests/test_output_video_review.py"
+      - "tests/test_mac_openclaw_runner.py"
+      - "docs/usage-guides/**"
 
 jobs:
   validate-review-capabilities:
@@ -36,8 +36,8 @@ jobs:
       - name: Install test dependencies
         run: python3 -m pip install PyYAML
       - name: Validate registry
-        run: python3 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py
+        run: python3 scripts/validate_review_capability_registry.py
       - name: Run registry and runner contract tests
         run: |
-          python3 -m unittest 99_System_OpenClaw/tests/test_review_capability_registry.py
-          python3 -m unittest 99_System_OpenClaw/tests/test_mac_openclaw_runner.py
+          python3 -m unittest tests/test_review_capability_registry.py
+          python3 -m unittest tests/test_mac_openclaw_runner.py

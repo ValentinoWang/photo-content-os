@@ -17,16 +17,16 @@ SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 SCHEMAS = Path(__file__).resolve().parents[1] / "schemas"
 sys.path.insert(0, str(SCRIPTS))
 
-repeat_photos = load_script("12_select_repeat_photo_groups.py", "select_repeat_photo_groups")
-group_distribution = load_script("14_distribute_group_photos_by_name.py", "distribute_group_photos")
-register_asset = load_script("15_register_reusable_asset.py", "register_reusable_asset")
+repeat_photos = load_script("select_repeat_photo_groups.py", "select_repeat_photo_groups")
+group_distribution = load_script("distribute_group_photos_by_name.py", "distribute_group_photos")
+register_asset = load_script("register_reusable_asset.py", "register_reusable_asset")
 import asset_library_index  # noqa: E402
 
 
 class RepeatPhotoSelectionTests(unittest.TestCase):
     def make_project(self, root: Path) -> tuple[Path, Path]:
         project = root / "project"
-        additions = project / "待增加"
+        additions = project / "additions"
         additions.mkdir(parents=True)
         return project, additions
 
@@ -35,7 +35,7 @@ class RepeatPhotoSelectionTests(unittest.TestCase):
             project, additions = self.make_project(Path(directory))
             source = additions / "photo.jpg"
             source.write_bytes(b"source")
-            argv = ["12_select_repeat_photo_groups.py", str(project)]
+            argv = ["select_repeat_photo_groups.py", str(project)]
 
             with patch.object(repeat_photos, "generate_contact_sheets", return_value=[]), patch.object(
                 sys, "argv", argv
@@ -147,7 +147,7 @@ class GroupPhotoDistributionTests(unittest.TestCase):
             source.write_bytes(b"source")
             mapping = self.write_mapping(project, [("source.jpg", "小王", "")])
             argv = [
-                "14_distribute_group_photos_by_name.py",
+                "distribute_group_photos_by_name.py",
                 str(project),
                 "--mapping",
                 str(mapping),
@@ -168,9 +168,9 @@ class GroupPhotoDistributionTests(unittest.TestCase):
 
             group_distribution.distribute(str(project), str(mapping), None, dry_run=False)
             output_root = project / group_distribution.DISTRIBUTION_DIR
-            target = output_root / "按姓名" / "小王" / "source.jpg"
+            target = output_root / "by-name" / "person-f5c982ae4094" / "source.jpg"
             first_files = sorted(path.relative_to(output_root) for path in output_root.rglob("*") if path.is_file())
-            log_before = (output_root / "合照发放记录.md").read_bytes()
+            log_before = (output_root / "distribution-log.md").read_bytes()
 
             group_distribution.distribute(str(project), str(mapping), None, dry_run=False)
 
@@ -178,7 +178,7 @@ class GroupPhotoDistributionTests(unittest.TestCase):
             self.assertEqual(source.read_bytes(), b"source")
             self.assertEqual(target.read_bytes(), b"source")
             self.assertEqual(second_files, first_files)
-            self.assertEqual((output_root / "合照发放记录.md").read_bytes(), log_before)
+            self.assertEqual((output_root / "distribution-log.md").read_bytes(), log_before)
 
     def test_same_filename_different_content_gets_stable_suffix(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -196,7 +196,7 @@ class GroupPhotoDistributionTests(unittest.TestCase):
 
             group_distribution.distribute(str(project), str(mapping), None, dry_run=False)
 
-            target_dir = project / group_distribution.DISTRIBUTION_DIR / "按姓名" / "小王"
+            target_dir = project / group_distribution.DISTRIBUTION_DIR / "by-name" / "person-f5c982ae4094"
             suffix = group_distribution.media_id("two/photo.jpg")
             self.assertEqual((target_dir / "photo.jpg").read_bytes(), b"first")
             self.assertEqual((target_dir / f"photo_{suffix}.jpg").read_bytes(), b"second")
@@ -238,7 +238,7 @@ class ReusableAssetRegistrationTests(unittest.TestCase):
             "uses": "开场、转场",
             "cuts": "00:00-00:03",
             "public_status": "待确认",
-            "icloud_copy": "80_To_iCloudPhotos_精选入库/source.mp4",
+            "icloud_copy": "icloud-selected/source.mp4",
             "notes": "fixture",
         }
         values.update(overrides)
@@ -250,7 +250,7 @@ class ReusableAssetRegistrationTests(unittest.TestCase):
             project, media = self.make_project(root)
             library = root / "library"
             argv = [
-                "15_register_reusable_asset.py",
+                "register_reusable_asset.py",
                 str(project),
                 str(media),
                 "--library-root",
@@ -276,7 +276,7 @@ class ReusableAssetRegistrationTests(unittest.TestCase):
             data = json.loads(structured_path.read_text(encoding="utf-8"))
 
             asset_library_index.validate_index(data)
-            schema = json.loads((SCHEMAS / "asset_library_index.schema.json").read_text(encoding="utf-8"))
+            schema = json.loads((SCHEMAS / "asset-library-index.schema.json").read_text(encoding="utf-8"))
             self.assertEqual(schema["properties"]["schema_version"]["const"], data["schema_version"])
             self.assertEqual(data["revision"], 1)
             self.assertEqual(data["asset_count"], 1)

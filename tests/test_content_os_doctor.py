@@ -13,7 +13,7 @@ SCRIPTS_DIR = SYSTEM_ROOT / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-SPEC = importlib.util.spec_from_file_location("content_os_doctor", SCRIPTS_DIR / "43_content_os_doctor.py")
+SPEC = importlib.util.spec_from_file_location("content_os_doctor", SCRIPTS_DIR / "doctor.py")
 if SPEC is None or SPEC.loader is None:
     raise RuntimeError("doctor module could not be loaded")
 doctor = importlib.util.module_from_spec(SPEC)

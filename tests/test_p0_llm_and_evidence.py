@@ -16,7 +16,7 @@ sys.path.insert(0, str(SCRIPTS))
 import llm_common  # noqa: E402
 
 
-summary_module = load_script("05_write_content_summary.py", "content_summary_under_test")
+summary_module = load_script("write_content_summary.py", "content_summary_under_test")
 
 
 class LLMAndEvidenceTests(unittest.TestCase):
@@ -53,7 +53,7 @@ class LLMAndEvidenceTests(unittest.TestCase):
             project = Path(directory)
             paths = []
             for index in range(5):
-                path = project / "_ai_analysis" / "keyframes" / f"{index}.jpg"
+                path = project / "ai-analysis" / "keyframes" / f"{index}.jpg"
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(f"frame-{index}".encode())
                 paths.append(path.relative_to(project).as_posix())
@@ -69,7 +69,7 @@ class LLMAndEvidenceTests(unittest.TestCase):
     def test_pending_transcript_is_not_reported_as_ok(self):
         with tempfile.TemporaryDirectory() as directory:
             project = Path(directory)
-            transcript = project / "_ai_analysis" / "transcripts" / "m1.transcript.json"
+            transcript = project / "ai-analysis" / "transcripts" / "m1.transcript.json"
             transcript.parent.mkdir(parents=True)
             transcript.write_text(json.dumps({"status": "pending", "segments": [], "text": "", "language": None}), encoding="utf-8")
             payload = summary_module.transcript_payload(project, {"media_id": "m1", "transcript_path": transcript.relative_to(project).as_posix(), "transcript_status": "pending"})

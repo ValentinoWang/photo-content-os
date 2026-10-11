@@ -4,6 +4,8 @@ Photo Content OS 是一套 **local-first（本地优先）** 的照片与视频�
 
 仓库只保存代码、机器合同、模板和自动化测试，不保存真实照片、视频或个人项目产物。
 
+软件仓库与素材根分开。素材根统一通过 `LOCAL_MEDIA_ROOT` 配置；未设置时默认 `~/Desktop/照片筛选`。当前机器的素材目录迁移尚待解决历史剪映草稿路径引用，详情见 `docs/renames.md`；目录变更前请勿对真实素材启动新布局的自动整理。
+
 ## 当前能力
 
 ```text
@@ -40,9 +42,9 @@ Photo Content OS Studio 是零前端构建依赖的本地工作台，提供：
 ```bash
 git clone https://github.com/ValentinoWang/photo-content-os.git
 cd photo-content-os
-bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh
-99_System_OpenClaw/.venv-content-os/bin/python \
-  99_System_OpenClaw/scripts/44_launch_desktop.py
+bash scripts/setup_dev_environment.sh
+.venv/bin/python \
+  scripts/launch_studio.py
 ```
 
 ### Windows 11
@@ -53,10 +55,10 @@ bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh
 git clone https://github.com/ValentinoWang/photo-content-os.git
 cd photo-content-os
 powershell -ExecutionPolicy Bypass `
-  -File 99_System_OpenClaw/scripts/41_setup_dev_environment.ps1
+  -File scripts/setup_dev_environment.ps1
 
-99_System_OpenClaw\.venv-content-os\Scripts\python.exe `
-  99_System_OpenClaw\scripts\44_launch_desktop.py
+.venv\Scripts\python.exe `
+  scripts\launch_studio.py
 ```
 
 工作台只监听 `127.0.0.1`，项目状态默认保存在：
@@ -70,7 +72,7 @@ powershell -ExecutionPolicy Bypass `
 跨平台编排入口：
 
 ```bash
-python 99_System_OpenClaw/scripts/run_analyze_project.py \
+python scripts/run_analyze_project.py \
   "/path/to/project" \
   --tier preview \
   --audio \
@@ -101,14 +103,14 @@ python 99_System_OpenClaw/scripts/run_analyze_project.py \
 - legacy `timeline_in/timeline_out` 只做确定性格式修复；
 - `slot` 必须是唯一正整数，时间精确到毫秒；
 - 没有真实来源的缺失镜头只能进入 `missing_materials`；
-- Windows 使用 `.venv-content-os\Scripts\python.exe`；
-- `43_content_os_doctor.py` 提供只读环境诊断。
+- Windows 使用 `.venv\Scripts\python.exe`；
+- `doctor.py` 提供只读环境诊断。
 
 机器合同位于：
 
 ```text
-99_System_OpenClaw/schemas/edit_decision_list.schema.json
-99_System_OpenClaw/schemas/audio_transcript.schema.json
+schemas/edit-decision-list.schema.json
+schemas/audio-transcript.schema.json
 ```
 
 ## P1：与 OpenClaw Media 的可选关系
@@ -135,9 +137,9 @@ catalog digest: sha256:931dba97f9d9ed3fa1a03da4e15783f5d449ead7a56ff0919f3e0087e
 薄桥入口：
 
 ```bash
-python 99_System_OpenClaw/scripts/openclaw_media_agent.py contract
-python 99_System_OpenClaw/scripts/openclaw_media_agent.py status
-python 99_System_OpenClaw/scripts/openclaw_media_agent.py run match \
+python scripts/openclaw_media_agent.py contract
+python scripts/openclaw_media_agent.py status
+python scripts/openclaw_media_agent.py run match \
   --workspace /local/workspace \
   --workspace-ref projects/demo
 ```
@@ -162,17 +164,17 @@ python 99_System_OpenClaw/scripts/openclaw_media_agent.py run match \
 macOS / Linux：
 
 ```bash
-bash 99_System_OpenClaw/scripts/41_setup_dev_environment.sh
-bash 99_System_OpenClaw/scripts/42_run_local_ci.sh
+bash scripts/setup_dev_environment.sh
+bash scripts/run_local_ci.sh
 ```
 
 Windows：
 
 ```powershell
 powershell -ExecutionPolicy Bypass `
-  -File 99_System_OpenClaw/scripts/41_setup_dev_environment.ps1
+  -File scripts/setup_dev_environment.ps1
 powershell -ExecutionPolicy Bypass `
-  -File 99_System_OpenClaw/scripts/42_run_local_ci.ps1
+  -File scripts/run_local_ci.ps1
 ```
 
 本机 CI 会执行运行时合同、完整单元测试、文档合同、审核能力注册表、仓库安全边界、公共入口和合成 Demo。未安装本地 Obsidian 自媒体库时，只跳过该项机器集成，并明确打印原因。
@@ -180,8 +182,8 @@ powershell -ExecutionPolicy Bypass `
 ## 仓库结构
 
 ```text
-99_System_OpenClaw/
-├── desktop/                 # 本地 Studio 与静态前端
+
+├── studio/                 # 本地 Studio 与静态前端
 ├── docs/                    # 执行规则和使用指南
 ├── schemas/                 # EDL、转写和上游兼容合同
 ├── scripts/                 # 扫描、分析、任务、交接、预览和诊断
@@ -193,4 +195,4 @@ powershell -ExecutionPolicy Bypass `
 
 ## 协作方式
 
-从 `main` 创建短分支，提交前运行本机 CI，再通过 Pull Request 合并。详细约束见 [CONTRIBUTING.md](CONTRIBUTING.md) 和 [99_System_OpenClaw/AGENTS.md](99_System_OpenClaw/AGENTS.md)。
+从 `main` 创建短分支，提交前运行本机 CI，再通过 Pull Request 合并。详细约束见 [CONTRIBUTING.md](CONTRIBUTING.md) 和 [docs/execution-rules.md](docs/execution-rules.md)。

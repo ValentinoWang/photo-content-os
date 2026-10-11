@@ -18,7 +18,7 @@ sys.path.insert(0, str(SCRIPTS))
 import mac_openclaw_runner as runner  # noqa: E402
 
 
-output_review = load_script("19_review_output_video.py", "p5c2_output_review", register=True)
+output_review = load_script("review_output_video.py", "p5c2_output_review", register=True)
 
 
 class P5C2LocalReviewRunnerTests(unittest.TestCase):
@@ -29,7 +29,7 @@ class P5C2LocalReviewRunnerTests(unittest.TestCase):
             project.mkdir()
             video = root / "candidate.mp4"
             video.write_bytes(b"fixture")
-            bgm_dir = root / "bgm-review"
+            bgm_dir = root / "bgm_review"
             bgm_dir.mkdir()
             vault = root / "vault"
             package = vault / "08_内容项目" / "project"

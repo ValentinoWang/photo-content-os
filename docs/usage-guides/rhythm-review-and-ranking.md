@@ -8,7 +8,7 @@
 当前成片复核已经有本地入口：
 
 ```text
-99_System_OpenClaw/scripts/19_review_output_video.py
+scripts/review_output_video.py
 ```
 
 它可以做：
@@ -42,7 +42,7 @@ ffprobe 元数据
 本能力已经登记在：
 
 ```text
-99_System_OpenClaw/review_capabilities.registry.json
+review-capabilities.registry.json
 ```
 
 它的 canonical owner 是 `mac_openclaw`。远端服务器可以消费 `rhythm_sync_result.yaml` 做汇总和任务推进，但不能另写一套 rhythm analyzer。
@@ -101,21 +101,21 @@ optional_intent 人工意图
 成片仍然放：
 
 ```text
-项目根/91_Output/V1/
-项目根/91_Output/V2/
-项目根/91_Output/Final/
+项目根/output/v1/
+项目根/output/v2/
+项目根/output/final/
 ```
 
 节奏同步分析产物建议放：
 
 ```text
-项目根/_ai_analysis/output_review/rhythm_sync/
+项目根/ai-analysis/output-review/rhythm_sync/
 ```
 
 建议结构：
 
 ```text
-_ai_analysis/output_review/rhythm_sync/
+ai-analysis/output-review/rhythm_sync/
 ├── rhythm_sync_metrics.json
 ├── rhythm_sync_result.yaml
 ├── rhythm_sync_report.md
@@ -142,19 +142,19 @@ review_frames/ = 问题时间点截图证据
 
 ## V1：先落地到现有成片复核
 
-第一步不要新开一条复杂系统。直接扩展 `19_review_output_video.py`，新增可选参数：
+第一步不要新开一条复杂系统。直接扩展 `review_output_video.py`，新增可选参数：
 
 ```bash
-python3 99_System_OpenClaw/scripts/19_review_output_video.py \
+python3 scripts/review_output_video.py \
   --task-id rhythm_sync_review \
-  --project-id 20260625_第一视角体验清华毕业典礼 \
+  --project-id 2026-tsinghua-graduation-pov \
   --idea-id tsinghua_graduation_pov \
   --video "上下分屏=/path/to/a.mp4" \
   --compare-video "单人会场=/path/to/b.mp4" \
-  --output-root "/path/to/project/_ai_analysis/output_review" \
-  --report-output "/path/to/project/_ai_analysis/output_review/_output_review.md" \
-  --metrics-output "/path/to/project/_ai_analysis/output_review/metrics.json" \
-  --result-output "/path/to/project/_ai_analysis/output_review/result.yaml" \
+  --output-root "/path/to/project/ai-analysis/output-review" \
+  --report-output "/path/to/project/ai-analysis/output-review/_output_review.md" \
+  --metrics-output "/path/to/project/ai-analysis/output-review/metrics.json" \
+  --result-output "/path/to/project/ai-analysis/output-review/result.yaml" \
   --rhythm-sync \
   --profile split_screen_comparison
 ```
@@ -162,10 +162,10 @@ python3 99_System_OpenClaw/scripts/19_review_output_video.py \
 如果暂时不改 CLI，也可以先做独立脚本：
 
 ```text
-99_System_OpenClaw/scripts/36_analyze_rhythm_sync.py
+scripts/analyze_rhythm_sync.py
 ```
 
-但输出路径和 JSON / YAML / Markdown 口径要跟 `19_review_output_video.py` 保持一致，避免后续队列和文档层分叉。
+但输出路径和 JSON / YAML / Markdown 口径要跟 `review_output_video.py` 保持一致，避免后续队列和文档层分叉。
 
 ## 音频事件线
 
@@ -540,20 +540,20 @@ penalties：
 项目路径示例：
 
 ```text
-/Users/vsiyo/Desktop/照片筛选/01_Project_Workspace/2026年清华毕业典礼内容创作/20260625_第一视角体验清华毕业典礼
+/Users/vsiyo/Desktop/照片筛选/projects/2026-tsinghua-graduation/2026-tsinghua-graduation-pov
 ```
 
 若用 `single_person_stage_walk` 评估：
 
 ```text
-单人会场舞台版 / 加长版的 step_sync 权重高
+solo-stage / 加长版的 step_sync 权重高
 步点、身体起伏、走位和 BGM 对齐更重要
 ```
 
 若用 `split_screen_comparison` 评估：
 
 ```text
-上下分屏签到墙对照版不应该因为 step_sync 低就直接判差
+check-in-split-screen不应该因为 step_sync 低就直接判差
 它更重视上下对照结构、动作节点、主体关系和首帧信息
 ```
 
@@ -655,7 +655,7 @@ Markdown 报告必须包含：
 目标：在现有成片复核里跑出可解释的节奏报告。
 
 ```text
-复用 19_review_output_video.py 的 ffprobe / ffmpeg / 抽帧 / 音频 wav
+复用 review_output_video.py 的 ffprobe / ffmpeg / 抽帧 / 音频 wav
 新增 audio_events.json
 新增 visual_events.json
 新增 matches.json
@@ -761,7 +761,7 @@ foot contact 步点
 -> 看 08.05
 
 需要比较多个导出版本哪一版更卡、更值得发
--> 用本指南扩展 output_review
+-> 用本指南扩展 output-review
 
 需要自动生成剪映导入包
 -> 看 08.04 和 08.05

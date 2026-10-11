@@ -10,7 +10,7 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "37_migrate_content_os_v2.py"
+SCRIPT = ROOT / "scripts" / "migrate_content_os_v2.py"
 
 
 def write_project(vault: Path, name: str, status: str) -> Path:

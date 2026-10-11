@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bridge a Content OS task into the local OpenClaw execution queue.
 
-98_Agent任务队列 is the document/task layer. _OpenClawQueue is the local
+98_Agent任务队列 is the document/task layer. openclaw-queue is the local
 material execution layer. This script creates the lower-layer JSON control
 file from an upper-layer YAML task without copying media.
 """
@@ -26,7 +26,7 @@ from runtime_paths import obsidian_root, workspace_root as _shared_workspace_roo
 SCRIPT_DIR = Path(__file__).resolve().parent
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 DEFAULT_VAULT_ROOT = obsidian_root()
-QUEUE_DIR_NAME = "_OpenClawQueue"
+QUEUE_DIR_NAME = "openclaw-queue"
 CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
 
 
@@ -200,7 +200,7 @@ def default_requested_outputs(task: dict[str, Any]) -> list[str]:
         return ["素材匹配", "Storyboard", "EDL", "local_assets"]
     if task_type == "local_output_review":
         return ["成片质检", "metrics", "问题清单"]
-    return ["写入批次/_openclaw/link.json", "写入批次/_openclaw/status.json", "回写 _OpenClawQueue/mac_to_cloud/*.result.json"]
+    return ["写入批次/openclaw/link.json", "写入批次/openclaw/status.json", "回写 openclaw-queue/mac_to_cloud/*.result.json"]
 
 
 def requested_outputs(task: dict[str, Any]) -> list[str]:
@@ -342,7 +342,7 @@ def enqueue_task(
         result = subprocess.run(
             [
                 sys.executable,
-                str(SCRIPT_DIR / "32_process_openclaw_queue.py"),
+                str(SCRIPT_DIR / "process_openclaw_queue.py"),
                 "--workspace-root",
                 str(workspace_root),
                 "--queue-root",
@@ -359,7 +359,7 @@ def enqueue_task(
         if result.stderr.strip():
             print(result.stderr.rstrip(), file=sys.stderr)
         if result.returncode != 0:
-            raise EnqueueError(f"32_process_openclaw_queue.py failed: {result.returncode}")
+            raise EnqueueError(f"process_openclaw_queue.py failed: {result.returncode}")
         write_dispatch_result(task, task_path, vault_root, queue_root, output, run_id)
     return output
 
@@ -494,7 +494,7 @@ def write_dispatch_result(
         "next_owner": "human" if status != "linked" else "mac_openclaw",
         "notes": [
             "98_Agent任务队列 only carries the task/result summary.",
-            "_OpenClawQueue carries local material execution control.",
+            "openclaw-queue carries local material execution control.",
             "Original photos and videos remain only in the Mac local Inbox/project workspace.",
         ],
     }
@@ -504,13 +504,13 @@ def write_dispatch_result(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="把 98_Agent任务队列 YAML 任务桥接为 _OpenClawQueue JSON 执行任务")
+    parser = argparse.ArgumentParser(description="把 98_Agent任务队列 YAML 任务桥接为 openclaw-queue JSON 执行任务")
     parser.add_argument("task", nargs="?", help="task_id、YAML 文件名或 YAML 路径")
     parser.add_argument("--vault-root", type=Path, default=DEFAULT_VAULT_ROOT)
     parser.add_argument("--workspace-root", type=Path, default=WORKSPACE_ROOT)
     parser.add_argument("--queue-root", type=Path, default=None)
     parser.add_argument("--allow-replace", action="store_true")
-    parser.add_argument("--process", action="store_true", help="写入 JSON 后立即运行 32_process_openclaw_queue.py --once")
+    parser.add_argument("--process", action="store_true", help="写入 JSON 后立即运行 process_openclaw_queue.py --once")
     parser.add_argument("--all-ready", action="store_true", help="处理 98_Agent任务队列/01_cloud_to_mac_ready 下所有未完成任务")
     parser.add_argument("--watch", action="store_true", help="常驻监听 98_Agent任务队列，云端有任务单就桥接并处理")
     parser.add_argument("--interval", type=float, default=10.0, help="watch 模式轮询秒数")

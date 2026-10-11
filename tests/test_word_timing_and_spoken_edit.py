@@ -14,10 +14,10 @@ import jsonschema
 
 from _support import load_script
 
-transcribe = load_script("03_transcribe_audio.py", "pa_transcribe")
+transcribe = load_script("transcribe_audio.py", "pa_transcribe")
 spoken = load_script("spoken_edit.py", "pa_spoken")
 SYSTEM = Path(__file__).resolve().parents[1]
-SCHEMA = json.loads((SYSTEM / "schemas/audio_transcript.schema.json").read_text())
+SCHEMA = json.loads((SYSTEM / "schemas/audio-transcript.schema.json").read_text())
 
 
 def sentence(start, end, text, words=None, speaker=None):
@@ -394,9 +394,9 @@ class SyntheticAudioTests(unittest.TestCase):
         self.assertEqual(spoken.source_sha256(self.audio), hashes[0])
 
     def test_process_project_sidecar_persists_word_contract(self):
-        analysis = self.root / "_ai_analysis"
+        analysis = self.root / "ai-analysis"
         analysis.mkdir()
-        (analysis / "media_manifest.json").write_text(json.dumps({"items": [{"media_id": "fixture", "audio_path": "audio.wav"}]}))
+        (analysis / "media-manifest.json").write_text(json.dumps({"items": [{"media_id": "fixture", "audio_path": "audio.wav"}]}))
         self.audio.with_suffix(".json").write_text(json.dumps(raw_asr(), ensure_ascii=False))
         result = transcribe.process_project(self.root, provider=transcribe.SidecarProvider(), language="zh",
                                             overwrite=False, limit=None, allow_pending=False)

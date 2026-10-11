@@ -9,17 +9,17 @@
     {
       "name": "local_execution_to_obsidian_collaboration_v2",
       "source_paths": [
-        "$LOCAL_ROOT/99_System_OpenClaw/docs/00_本地素材与剪映HyperFrames流转总纲.md",
-        "$LOCAL_ROOT/99_System_OpenClaw/docs/05_剪映与HyperFrames.md",
-        "$LOCAL_ROOT/99_System_OpenClaw/scripts/README.md",
-        "$LOCAL_ROOT/99_System_OpenClaw/AGENTS.md"
+        "$LOCAL_ROOT/docs/media-workflow.md",
+        "$LOCAL_ROOT/docs/editing-and-hyperframes.md",
+        "$LOCAL_ROOT/scripts/README.md",
+        "$LOCAL_ROOT/docs/execution-rules.md"
       ],
       "target_paths": [
         {
           "path": "$OBSIDIAN_ROOT/06_技术栈与自动化/腾讯云OpenClaw与MAC_OpenClaw本地素材协同流转规范.md",
           "markers": [
             "Obsidian 项目总览 =",
-            "_OpenClawQueue = Mac 本机执行层",
+            "openclaw-queue = Mac 本机执行层",
             "iCloud 云盘 = 文档同步与按需中转",
             "协作界面必须使用运营中文",
             "提交修改"
@@ -38,10 +38,10 @@
     {
       "name": "local_execution_to_obsidian_editing_handoff_v2",
       "source_paths": [
-        "$LOCAL_ROOT/99_System_OpenClaw/docs/00_本地素材与剪映HyperFrames流转总纲.md",
-        "$LOCAL_ROOT/99_System_OpenClaw/docs/05_剪映与HyperFrames.md",
-        "$LOCAL_ROOT/99_System_OpenClaw/scripts/README.md",
-        "$LOCAL_ROOT/99_System_OpenClaw/AGENTS.md"
+        "$LOCAL_ROOT/docs/media-workflow.md",
+        "$LOCAL_ROOT/docs/editing-and-hyperframes.md",
+        "$LOCAL_ROOT/scripts/README.md",
+        "$LOCAL_ROOT/docs/execution-rules.md"
       ],
       "target_paths": [
         {
@@ -65,8 +65,8 @@
     {
       "name": "historical_jianying_evidence_is_not_production",
       "source_paths": [
-        "$LOCAL_ROOT/99_System_OpenClaw/docs/05_剪映与HyperFrames.md",
-        "$LOCAL_ROOT/99_System_OpenClaw/AGENTS.md"
+        "$LOCAL_ROOT/docs/editing-and-hyperframes.md",
+        "$LOCAL_ROOT/docs/execution-rules.md"
       ],
       "target_paths": [
         {

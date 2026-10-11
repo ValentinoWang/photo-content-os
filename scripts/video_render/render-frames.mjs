@@ -16,7 +16,7 @@ function fail(code, message, details = {}) {
 }
 
 async function main() {
-  if (process.argv.length !== 4) throw fail('invalid_input', 'Usage: node render_frames.mjs REQUEST.json OUTPUT_DIR');
+  if (process.argv.length !== 4) throw fail('invalid_input', 'Usage: node render-frames.mjs REQUEST.json OUTPUT_DIR');
   const request = JSON.parse(readFileSync(process.argv[2], 'utf8'));
   const output = resolve(process.argv[3]);
   for (const key of ['width', 'height', 'fps', 'frames']) {

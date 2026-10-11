@@ -19,7 +19,7 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 import asset_library_index  # noqa: E402
-from desktop.server import serve  # noqa: E402
+from studio.server import serve  # noqa: E402
 
 
 class AssetLibraryApiTests(unittest.TestCase):

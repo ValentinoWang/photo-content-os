@@ -118,7 +118,7 @@ def video_duration(path: Path) -> float:
 
 def analysis_output_dir(project: Path, source: Path) -> Path:
     rel = relative_posix(source, project)
-    output = project / ANALYSIS_DIR / "rename_keyframes" / media_id(rel)
+    output = project / ANALYSIS_DIR / "rename-keyframes" / media_id(rel)
     output.mkdir(parents=True, exist_ok=True)
     for old in output.glob("frame_*.jpg"):
         old.unlink()
@@ -138,7 +138,7 @@ def extract_content_frames(project: Path, source: Path) -> list[Path]:
 
 
 def contact_sheet(project: Path, source: Path, frames: list[Path]) -> Path | None:
-    path = project / ANALYSIS_DIR / "rename_keyframes" / media_id(relative_posix(source, project)) / "contact_sheet.jpg"
+    path = project / ANALYSIS_DIR / "rename-keyframes" / media_id(relative_posix(source, project)) / "contact_sheet.jpg"
     return build_frame_contact_sheet(frames, path)
 
 
@@ -281,7 +281,7 @@ def apply_operations(operations: list[tuple[Path, Path]]) -> None:
 
 
 def append_rename_log(project: Path, operations: list[tuple[Path, Path]], decision: ContentDecision, group_mode: bool) -> None:
-    log_path = project / "素材整理记录.md"
+    log_path = project / "material-organization.md"
     lines: list[str] = []
     if log_path.exists():
         lines.append(log_path.read_text(encoding="utf-8").rstrip())
@@ -303,7 +303,7 @@ def append_rename_log(project: Path, operations: list[tuple[Path, Path]], decisi
 
 
 def write_rename_plan(project: Path, source: Path, group: list[Path], decision: ContentDecision, operations: list[tuple[Path, Path]]) -> Path:
-    output_dir = project / ANALYSIS_DIR / "rename_plans"
+    output_dir = project / ANALYSIS_DIR / "rename-plans"
     output_dir.mkdir(parents=True, exist_ok=True)
     plan_path = output_dir / f"{media_id(relative_posix(source, project))}_rename_plan.json"
     payload = {

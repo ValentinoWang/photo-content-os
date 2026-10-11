@@ -13,22 +13,22 @@ from runtime_paths import repository_root as _repository_root
 
 MAX_TRACKED_FILE_BYTES = 5 * 1024 * 1024
 PROHIBITED_TOP_LEVELS = {
-    "00_Inbox_Mac_Intake",
-    "01_Project_Workspace",
-    "02_Asset_Library",
-    "03_Jianying_Active_Drafts",
-    "04_Delivery_External",
-    "05_Archive_Cold_Storage",
-    "90_SSOT_E2E",
-    "_OpenClawQueue",
+    "inbox",
+    "projects",
+    "library",
+    "jianying-drafts",
+    "deliveries",
+    "archive",
+    "ssot-e2e",
+    "openclaw-queue",
     "demo_workspace",
 }
 PROHIBITED_PARTS = {
-    ".venv-content-os",
-    "App_WorkCache",
+    ".venv",
+    "work-cache",
     ANALYSIS_DIR,
-    "_openclaw",
-    "restructure_audit",
+    "openclaw",
+    "restructure-audit",
 }
 PROHIBITED_MACHINE_NAMES = {
     ".ds_store",

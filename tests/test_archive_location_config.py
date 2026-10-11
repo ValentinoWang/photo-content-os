@@ -11,8 +11,8 @@ import unittest
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DESKTOP_DIR = PROJECT_ROOT / "99_System_OpenClaw" / "desktop"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DESKTOP_DIR = PROJECT_ROOT / "studio"
 if str(DESKTOP_DIR) not in sys.path:
     sys.path.insert(0, str(DESKTOP_DIR))
 

@@ -71,11 +71,11 @@ def write_readme(result_path: Path, output: Path | None) -> Path:
 ## 操作
 
 1. 打开剪映，新建空项目。
-2. 导入 `01_clips/` 下全部 mp4。
+2. 导入 `clips/` 下全部 mp4。
 3. 按文件名排序。
 4. 全选拖入主时间线。
 5. 不要在“媒体/导入”里导入 `captions.srt`。字幕要走 `文本 -> 本地字幕`。
-6. 在 `文本 -> 本地字幕` 中选择 `02_captions/captions.srt`，预览后添加到时间线。
+6. 在 `文本 -> 本地字幕` 中选择 `captions/captions.srt`，预览后添加到时间线。
 7. 保存草稿。
 8. 在 `11_roughcut_review.md` 里记录人工验收结果。
 """

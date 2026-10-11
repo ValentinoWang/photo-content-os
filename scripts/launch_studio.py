@@ -12,7 +12,7 @@ SYSTEM_ROOT = Path(__file__).resolve().parent.parent
 if str(SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(SYSTEM_ROOT))
 
-from desktop.server import serve  # noqa: E402
+from studio.server import serve  # noqa: E402
 
 
 def main() -> int:

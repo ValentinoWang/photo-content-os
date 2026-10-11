@@ -12,7 +12,7 @@ from threading import Barrier
 SYSTEM = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SYSTEM))
 
-from desktop.project_store import ProjectStore, ProjectStoreError  # noqa: E402
+from studio.project_store import ProjectStore, ProjectStoreError  # noqa: E402
 
 
 class ProjectStoreTests(unittest.TestCase):
@@ -274,6 +274,17 @@ class ProjectStoreTests(unittest.TestCase):
         self.assertEqual(compatible["documents"]["brief"]["stale_sources"], [])
         self.assertIn("consumer_surface_digest", compatible["documents"]["brief"]["history"][0])
         self.assertEqual(compatible["documents"]["brief"]["authority_bridge"]["export_state"], "pending_export")
+
+
+class WorkspaceManifestTitleTests(unittest.TestCase):
+    def test_original_title_is_displayed_independently_of_directory_identifier(self):
+        import json
+        from studio.project_store import workspace_label
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory) / "2026-tsinghua-graduation"
+            workspace.mkdir()
+            (workspace / "project-manifest.json").write_text(json.dumps({"title": "2026年清华毕业典礼内容创作"}, ensure_ascii=False))
+            self.assertEqual(workspace_label(workspace), "2026年清华毕业典礼内容创作")
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ from pathlib import Path
 SYSTEM = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SYSTEM))
 
-from desktop.server import serve  # noqa: E402
+from studio.server import serve  # noqa: E402
 
 
 class StructuredEDLBridgeTests(unittest.TestCase):

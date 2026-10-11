@@ -50,8 +50,8 @@ def find_draft_markers(root: Path) -> dict[str, Any]:
 
 
 def create_probe_draft(work_dir: Path) -> dict[str, Any]:
-    media_dir = ensure_dir(work_dir / "probe_media")
-    drafts_dir = ensure_dir(work_dir / "probe_drafts")
+    media_dir = ensure_dir(work_dir / "probe-media")
+    drafts_dir = ensure_dir(work_dir / "probe-drafts")
     clip1 = media_dir / "clip1.mp4"
     clip2 = media_dir / "clip2.mp4"
 
@@ -89,7 +89,7 @@ def create_probe_draft(work_dir: Path) -> dict[str, Any]:
     import pyJianYingDraft as jy
 
     draft_folder = jy.DraftFolder(str(drafts_dir))
-    draft_name = "roughcut_api_probe"
+    draft_name = "roughcut-api-probe"
     script = draft_folder.create_draft(draft_name, 1080, 1920, fps=30, allow_replace=True)
     script.add_track(jy.TrackType.video, "video_main")
     script.add_track(jy.TrackType.text, "text_caption")
@@ -158,7 +158,7 @@ def main() -> int:
     if not project_dir.exists() or not project_dir.is_dir():
         raise ContractError(f"project-dir does not exist: {project_dir}")
 
-    work_dir = ensure_dir(project_dir / "90_Draft_Project" / "剪映工程" / "_draft_generation" / f"environment_probe_{now_compact()}")
+    work_dir = ensure_dir(project_dir / "draft-project" / "jianying" / "-draft-generation" / f"environment_probe_{now_compact()}")
     roots = find_jianying_roots()
 
     pyjy: dict[str, Any]

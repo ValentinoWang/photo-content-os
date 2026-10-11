@@ -8,7 +8,7 @@
 
 ```text
 制度工具根
-= /Users/vsiyo/Desktop/照片筛选/99_System_OpenClaw/
+= /Users/vsiyo/Desktop/照片筛选/
 = 本地执行总纲、SOP、脚本、测试、schema 和运行器所在位置
 
 本地素材根
@@ -16,7 +16,7 @@
 = 存放素材、工程、输出、精选、同步记录和 AI 分析产物；根目录只保留日常入口和业务目录
 
 项目根
-= 本地素材根 / 01_Project_Workspace / 主题集合 / 具体项目
+= 本地素材根 / projects / 主题集合 / 具体项目
 = 单个项目的正式目录
 ```
 
@@ -27,116 +27,116 @@
 ```text
 本地素材根 / 制度工具根
 ├── 00_START_HERE_今天看这里.md
-├── 00_Inbox_Mac_Intake     # 新素材入口
-├── 01_Project_Workspace    # 项目工作区，主题集合统一放这里
-├── 02_Asset_Library       # 跨项目资产库
-├── 03_Jianying_Active_Drafts # 本机剪映真实草稿活动根
-├── 04_Delivery_External   # 对外交付区
-├── 05_Archive_Cold_Storage
-└── 99_System_OpenClaw      # 制度细则、脚本、测试、schema、审计
+├── inbox     # 新素材入口
+├── projects    # 项目工作区，主题集合统一放这里
+├── library       # 跨项目资产库
+├── jianying-drafts # 本机剪映真实草稿活动根
+├── deliveries   # 对外交付区
+├── archive
+└── photo-content-os      # 制度细则、脚本、测试、schema、审计
 ```
 
-`2026年重回兰州大学内容创作` 这类主题集合必须放在本地素材根的 `01_Project_Workspace` 下面；具体项目再放在主题集合下面。当前事实位置是 `/Users/vsiyo/Desktop/照片筛选/01_Project_Workspace/2026年重回兰州大学内容创作/20260514_兰州大学_奔赴与校运会`。
+`2026-lzu-revisit` 这类主题集合必须放在本地素材根的 `projects` 下面；具体项目再放在主题集合下面。当前事实位置是 `/Users/vsiyo/Desktop/照片筛选/projects/2026-lzu-revisit/2026-lzu-travel-and-sports`。
 
 本地素材根标准结构为：
 
 ```text
 /Users/vsiyo/Desktop/照片筛选
-├── 00_Inbox_Mac_Intake
-├── 01_Project_Workspace
-│   └── 2026年重回兰州大学内容创作
-│       └── 20260514_兰州大学_奔赴与校运会
-│           └── App_WorkCache
-├── 02_Asset_Library
-├── 03_Jianying_Active_Drafts
-├── 04_Delivery_External
-├── 05_Archive_Cold_Storage
-└── 99_System_OpenClaw
+├── inbox
+├── projects
+│   └── 2026-lzu-revisit
+│       └── 2026-lzu-travel-and-sports
+│           └── work-cache
+├── library
+├── jianying-drafts
+├── deliveries
+├── archive
+└── photo-content-os
 ```
 
-`/Users/vsiyo/Desktop/照片筛选/01_Project_Workspace/2026年重回兰州大学内容创作` 是当前规范位置，不再迁往 iCloud 云盘。
+`/Users/vsiyo/Desktop/照片筛选/projects/2026-lzu-revisit` 是当前规范位置，不再迁往 iCloud 云盘。
 
-`01_Project_Workspace/2026年重回兰州大学内容创作/...` 里的具体项目目录是源文件和项目上下文的来源地；`02_Asset_Library` 是跨项目复用层。一个兰州大学素材如果有长期通用价值，默认做法是源文件仍留在项目 L3 目录，资产库只登记它的来源、标签、用途和建议截取。只有已经做成跨项目可直接剪辑的调色、裁切、Wink 修复、模板或品牌资产副本，才放进 `02_Asset_Library` 作为独立可复用成品。
+`projects/2026-lzu-revisit/...` 里的具体项目目录是源文件和项目上下文的来源地；`library` 是跨项目复用层。一个兰州大学素材如果有长期通用价值，默认做法是源文件仍留在项目 L3 目录，资产库只登记它的来源、标签、用途和建议截取。只有已经做成跨项目可直接剪辑的调色、裁切、Wink 修复、模板或品牌资产副本，才放进 `library` 作为独立可复用成品。
 
 本地素材根整体建议保持为：
 
 ```text
 📂 照片筛选
 ├── 📄 00_START_HERE_今天看这里.md
-├── 📂 99_System_OpenClaw
+├── 📂 photo-content-os
 │   ├── 📂 docs
-│   │   ├── 📄 00_本地素材与剪映HyperFrames流转总纲.md
+│   │   ├── 📄 media-workflow.md
 │   │   └── 📄 01-06 SOP 子文档
 │   ├── 📂 scripts
 │   ├── 📂 tests
 │   └── 📂 schemas
-├── 📂 00_Inbox_Mac_Intake
+├── 📂 inbox
 │   ├── 📂 20260615_毕业典礼_待整理
-│   │   ├── 📄 00_批次说明.md
+│   │   ├── 📄 batch-notes.md
 │   │   ├── 📄 IMG_0001.HEIC
 │   │   ├── 📄 IMG_0001.MOV
 │   │   └── 📄 ScreenRecording_原始.mp4
 │   └── 📂 20260620_麦积山旅行_待整理
-│       └── 📄 00_批次说明.md
-├── 📂 01_Project_Workspace
-│   └── 📂 2026年重回兰州大学内容创作
-│       ├── 📂 20260514_兰州大学_奔赴与校运会
+│       └── 📄 batch-notes.md
+├── 📂 projects
+│   └── 📂 2026-lzu-revisit
+│       ├── 📂 2026-lzu-travel-and-sports
 │       │   ├── 📄 readme.md
-│       │   ├── 📄 aliyun_sync_manifest.md
-│       │   ├── 📂 _ai_analysis
-│       │   │   ├── media_manifest.json
-│       │   │   ├── media_decision_warnings.md
+│       │   ├── 📄 aliyun-sync-manifest.md
+│       │   ├── 📂 ai-analysis
+│       │   │   ├── media-manifest.json
+│       │   │   ├── media-decision-warnings.md
 │       │   │   ├── keyframes
 │       │   │   ├── audio
 │       │   │   ├── prompts
-│       │   │   │   ├── project_overview_prompt.md
-│       │   │   │   └── project_l3_structure_prompt.md
+│       │   │   │   ├── project-overview-prompt.md
+│       │   │   │   └── project-l3-structure-prompt.md
 │       │   │   ├── summaries
-│       │   │   ├── user_intent_notes.md
-│       │   │   ├── visual_similarity_groups.md
-│       │   │   ├── l3_structure_plan.json
-│       │   │   ├── additions_merge_plan.md
-│       │   │   ├── additions_merge_plan.json
-│       │   │   └── project_overview.md
-│       │   ├── 📂 00_RawVault_不可直用
-│       │   │   └── 📂 Raw_待处理
+│       │   │   ├── user-intent-notes.md
+│       │   │   ├── visual-similarity-groups.md
+│       │   │   ├── l3-structure-plan.json
+│       │   │   ├── additions-merge-plan.md
+│       │   │   ├── additions-merge-plan.json
+│       │   │   └── project-overview.md
+│       │   ├── 📂 raw-vault
+│       │   │   └── 📂 raw-pending
 │       │   ├── 📂 01_由LLM全局分析确认的内容目录
 │       │   ├── 📂 02_由LLM全局分析确认的内容目录
 │       │   ├── 📂 03_由LLM全局分析确认的内容目录
-│       │   ├── 📂 App_WorkCache
-│       │   │   ├── 📂 Wink_修复输出暂存
-│       │   │   ├── 📂 调色输出暂存
-│       │   │   ├── 📂 拼图素材暂存
-│       │   │   ├── 📂 拼图输出暂存
-│       │   │   ├── 📂 发布图临时导出
-│       │   │   ├── 📂 DJI_Studio_Exports
-│       │   │   ├── 📂 Insta360_Studio_Exports
-│       │   │   └── 📂 Transcode_转码暂存
-│       │   ├── 📂 80_To_iCloudPhotos_精选入库
-│       │   ├── 📂 90_Draft_Project
-│       │   ├── 📂 91_Output
-│       │   ├── 📂 92_Aliyun_SyncReady
-│       │   └── 📂 待增加
+│       │   ├── 📂 work-cache
+│       │   │   ├── 📂 wink-exports
+│       │   │   ├── 📂 color-exports
+│       │   │   ├── 📂 collage-assets
+│       │   │   ├── 📂 collage-exports
+│       │   │   ├── 📂 publishing-images
+│       │   │   ├── 📂 dji-exports
+│       │   │   ├── 📂 insta360-exports
+│       │   │   └── 📂 transcode
+│       │   ├── 📂 icloud-selected
+│       │   ├── 📂 draft-project
+│       │   ├── 📂 output
+│       │   ├── 📂 sync-ready
+│       │   └── 📂 additions
 │
-├── 📂 02_Asset_Library
+├── 📂 library
 │   ├── 📄 Reusable_通用素材索引.md
 │   ├── 📂 B-Roll_Scenery
 │   ├── 📂 Campus_校园空镜
 │   ├── 📂 Music_SFX
 │   ├── 📂 Fonts_Brand
-│   ├── 📂 HyperFrames_Components
-│   ├── 📂 Memorial_人生节点
-│   ├── 📂 Reusable_颜值类
+│   ├── 📂 hyperframes-components
+│   ├── 📂 memorial
+│   ├── 📂 reusable-portraits
 │   └── 📂 Reusable_封面模板
-├── 📂 03_Jianying_Active_Drafts
+├── 📂 jianying-drafts
 │   └── 📄 README.md
-├── 📂 04_Delivery_External
-│   ├── 📂 For_Outsourcing
-│   ├── 📂 For_Photographer
-│   └── 📂 For_Client_Review
+├── 📂 deliveries
+│   ├── 📂 outsourcing
+│   ├── 📂 photographer
+│   └── 📂 client-review
 │
-└── 📂 05_Archive_Cold_Storage
-    └── 📂 2026_Completed_Projects
+└── 📂 archive
+    └── 📂 2026-completed-projects
 ```
 
 ---
@@ -144,19 +144,19 @@
 
 ## 九、素材进入 Mac 的统一入口
 
-所有素材先进入 `00_Inbox_Mac_Intake`，但 Inbox 的第一层必须按事件、主题或拍摄批次建目录，不按来源建目录。
+所有素材先进入 `inbox`，但 Inbox 的第一层必须按事件、主题或拍摄批次建目录，不按来源建目录。
 
 正确结构：
 
 ```text
-00_Inbox_Mac_Intake/
+inbox/
 ├── YYYYMMDD_事件名_待整理/
-│   ├── 00_批次说明.md
+│   ├── batch-notes.md
 │   ├── IMG_0001.HEIC
 │   ├── IMG_0001.MOV
 │   └── ScreenRecording_原始.mp4
 └── YYYYMM_主题混合素材_待拆分/
-    └── 00_批次说明.md
+    └── batch-notes.md
 ```
 
 不要把毕业典礼、麦积山旅行、校运会、商业拍摄等不同事件因为同样来自 iPhone 或 AirDrop 就混在同一个来源目录里。反过来，同一个事件里的 iPhone、相机卡、360、录屏、外部交付文件也不必再手工拆成固定来源目录。
@@ -180,7 +180,7 @@
 是否是录屏原始文件？
 ```
 
-`00_批次说明.md` 模板：
+`batch-notes.md` 模板：
 
 ```markdown
 # YYYYMMDD_事件名_待整理
@@ -212,11 +212,11 @@ Obsidian 项目ID：
 绑定到 Content OS 项目包时执行：
 
 ```bash
-python3 99_System_OpenClaw/scripts/31_link_batch_to_content_project.py \
-  "00_Inbox_Mac_Intake/YYYYMMDD_事件名_待整理"
+python3 scripts/link_batch_to_content_project.py \
+  "inbox/YYYYMMDD_事件名_待整理"
 ```
 
-脚本会读取 Obsidian 项目ID，校验 `08_内容项目/{project_id}/01_idea_card.md`、`02_project_brief.md`、`04_script.md` 和可选 task，生成 `事件批次/_ai_analysis/content_os_link.yaml`。没有项目ID或项目包缺文件时，本地状态是 `pending_cloud_brief`；项目包齐全时是 `brief_ready`。
+脚本会读取 Obsidian 项目ID，校验 `08_内容项目/{project_id}/01_idea_card.md`、`02_project_brief.md`、`04_script.md` 和可选 task，生成 `事件批次/ai-analysis/content_os_link.yaml`。没有项目ID或项目包缺文件时，本地状态是 `pending_cloud_brief`；项目包齐全时是 `brief_ready`。
 
 事件批次内部不强制建来源子目录：
 
@@ -231,7 +231,7 @@ python3 99_System_OpenClaw/scripts/31_link_batch_to_content_project.py \
 | 类型 | 识别后处理 |
 | --- | --- |
 | Live Photo 同名组 | 保持 HEIC / MOV / XMP 同组，不拆散 |
-| 360 原始组 | 进入项目 `00_RawVault_不可直用`，重构后再剪 |
+| 360 原始组 | 进入项目 `raw-vault`，重构后再剪 |
 | 录屏原始文件 | 默认作为证据或参考源，能否剪辑后续判定 |
 | 外部交付包 | 保留包边界，再拆入正式项目 |
 | 普通照片 / 视频 | 按内容进入正式项目 L3 |
@@ -243,7 +243,7 @@ iPhone / iPad 拍摄
 ↓
 AirDrop / USB / 图像捕捉 / Finder 导入 Mac
 ↓
-00_Inbox_Mac_Intake/YYYYMMDD_事件名_待整理
+inbox/YYYYMMDD_事件名_待整理
 ↓
 Mac 上筛选
 ↓
@@ -253,7 +253,7 @@ Mac 上筛选
 ↓
 Wink 修复 / 增强
 ↓
-精选进入 80_To_iCloudPhotos_精选入库
+精选进入 icloud-selected
 ↓
 最终导入 iCloud 照片
 ```
@@ -349,13 +349,13 @@ MOV剪辑版.mp4
 
 Wink 是统一修复入口。
 
-Wink 暂存目录位于具体项目根内的 `App_WorkCache/`：
+Wink 暂存目录位于具体项目根内的 `work-cache/`：
 
 ```text
-本地素材根/01_Project_Workspace/主题集合/具体项目/App_WorkCache/Wink_修复输出暂存
+本地素材根/projects/主题集合/具体项目/work-cache/wink-exports
 ```
 
-照片修复、人像美颜、视频增强、防抖、降噪等 Wink 输出都先放这里；确认可用后再回填项目 L3 根部或进入 `91_Output` / `80_To_iCloudPhotos_精选入库`。
+照片修复、人像美颜、视频增强、防抖、降噪等 Wink 输出都先放这里；确认可用后再回填项目 L3 根部或进入 `output` / `icloud-selected`。
 
 ### 基本原则
 
@@ -370,9 +370,9 @@ Wink 暂存目录位于具体项目根内的 `App_WorkCache/`：
 ### 照片修复流程
 
 ```text
-项目 L3 / Raw_待处理 / 源文件
+项目 L3 / raw-pending / 源文件
 ↓
-复制副本到 项目根/App_WorkCache/Wink_修复输出暂存
+复制副本到 项目根/work-cache/wink-exports
 ↓
 Wink Mac 版修复
 ↓
@@ -380,7 +380,7 @@ Wink Mac 版修复
 ↓
 放回项目对应 L3 根部
 ↓
-复制到 80_To_iCloudPhotos_精选入库
+复制到 icloud-selected
 ↓
 导入 iCloud 照片
 ↓
@@ -390,9 +390,9 @@ Wink Mac 版修复
 ### 视频增强流程
 
 ```text
-项目 L3 / Raw_待处理 / 原视频
+项目 L3 / raw-pending / 原视频
 ↓
-复制副本到 项目根/App_WorkCache/Wink_修复输出暂存
+复制副本到 项目根/work-cache/wink-exports
 ↓
 Wink 增强 / 防抖 / 降噪 / 画质提升
 ↓
@@ -400,9 +400,9 @@ Wink 增强 / 防抖 / 降噪 / 画质提升
 ↓
 放回项目对应 L3 根部
 ↓
-需要发布或长期保存的复制到 80_To_iCloudPhotos_精选入库
+需要发布或长期保存的复制到 icloud-selected
 ↓
-Final 成片进入 91_Output
+Final 成片进入 output
 ↓
 项目文件夹由阿里云盘单向远程镜像
 ```
@@ -447,9 +447,9 @@ DJI 设备 / SD 卡
 ↓
 Mac 整卡复制
 ↓
-00_Inbox_Mac_Intake/YYYYMMDD_事件名_待整理
+inbox/YYYYMMDD_事件名_待整理
 ↓
-项目/00_RawVault_不可直用/DJI360_原始全景_待重构/
+项目/raw-vault/DJI360_原始全景_待重构/
 ↓
 DJI Studio
 ↓
@@ -457,11 +457,11 @@ DJI Studio
 ↓
 导出 9:16 / 16:9 / snapshot / flat360 master
 ↓
-输出到 项目根/App_WorkCache/DJI_Studio_Exports
+输出到 项目根/work-cache/dji-exports
 ↓
 确认可用后回填项目 L3 根部
 ↓
-精选复制到 80_To_iCloudPhotos_精选入库
+精选复制到 icloud-selected
 ↓
 项目文件夹由阿里云盘单向远程镜像
 ```
@@ -489,7 +489,7 @@ DJI Studio
 DJI 原始关联文件不强制把原因写进每个文件名；用文件夹名或 readme 标记状态，例如：
 
 ```text
-00_RawVault_不可直用/
+raw-vault/
 └── DJI360_原始全景_待重构/
     ├── DJI_0001.MP4
     ├── DJI_0002.MP4
@@ -512,9 +512,9 @@ Insta360 相机 / SD 卡
 ↓
 Mac 整卡复制
 ↓
-00_Inbox_Mac_Intake/YYYYMMDD_事件名_待整理
+inbox/YYYYMMDD_事件名_待整理
 ↓
-项目/00_RawVault_不可直用/Insta360_原始全景_待重构/
+项目/raw-vault/Insta360_原始全景_待重构/
 ↓
 保持 .insv / .lrv / 元数据文件同目录
 ↓
@@ -524,11 +524,11 @@ Insta360 Studio
 ↓
 导出 9:16 / 16:9 / snapshot
 ↓
-输出到 项目根/App_WorkCache/Insta360_Studio_Exports
+输出到 项目根/work-cache/insta360-exports
 ↓
 确认可用后回填项目 L3 根部
 ↓
-精选复制到 80_To_iCloudPhotos_精选入库
+精选复制到 icloud-selected
 ↓
 项目文件夹由阿里云盘单向远程镜像
 ```
@@ -565,10 +565,10 @@ L3 是剪辑师和人工复核真正工作的地方，但它不是最终精选�
 = 位于 项目根/某个 L3 内容目录/文件名.后缀 的项目正式素材
 = 这个素材在项目语境里的事实原件或工作源
 ≠ 80 精选副本
-≠ 90 剪映工程文件
+≠ 90 jianying文件
 ≠ 91 成片输出
-≠ _ai_analysis 分析缓存
-≠ 待增加 里的未归档素材
+≠ ai-analysis 分析缓存
+≠ additions 里的未归档素材
 
 L3 根部 = 项目可用素材区
 = 可直接查看、剪辑或进入下一步处理
@@ -576,7 +576,7 @@ L3 根部 = 项目可用素材区
 ≠ 一定可发布
 ≠ 一定可进 iCloud 照片
 
-Raw_待处理 = 场景级待处理区
+raw-pending = 场景级待处理区
 = 已知道属于哪个场景，但还需要修复、防抖、转码、补齐或人工确认
 ```
 
@@ -587,35 +587,35 @@ Raw_待处理 = 场景级待处理区
 ├── 400米弯道推进_DJI360_reframe_9x16.mp4
 ├── 400米看台视角全程.mp4
 ├── 冲刺段_关键帧_Wink已修.jpg
-└── Raw_待处理/
+└── raw-pending/
     ├── 起跑准备_待防抖.mp4
     └── LivePhoto半组待补齐/
 ```
 
-剪辑师打开 L3 根部就能工作和继续筛选；是否发布、是否进入 iCloud 照片，必须再经过 `80_To_iCloudPhotos_精选入库` 判断。
-Raw_待处理 只在需要返修、重构、补救或人工确认时进入。
+剪辑师打开 L3 根部就能工作和继续筛选；是否发布、是否进入 iCloud 照片，必须再经过 `icloud-selected` 判断。
+raw-pending 只在需要返修、重构、补救或人工确认时进入。
 
 例子：
 
 ```text
 项目 L3 源文件：
-项目根/03_赛后交流与合照/红墙团队领奖合影_G01_补充01_未修.jpg
+项目根/post-race-group/红墙团队领奖合影_G01_补充01_未修.jpg
 
 80 精选副本：
-项目根/80_To_iCloudPhotos_精选入库/03_Memorial_纪念资产/红墙团队领奖合影_G01_代表01_Wink已修.jpg
+项目根/icloud-selected/memorial/红墙团队领奖合影_G01_代表01_Wink已修.jpg
 
 资产库索引：
-02_Asset_Library/Memorial_人生节点/兰州大学校运会领奖合影.asset.md
+library/memorial/兰州大学校运会领奖合影.asset.md
 ```
 
-`00_RawVault_不可直用` 和 `L3/Raw_待处理` 的边界固定为：
+`raw-vault` 和 `L3/raw-pending` 的边界固定为：
 
 ```text
-00_RawVault_不可直用
+raw-vault
 = 项目级技术源素材区
 = DJI 原始全景、Insta360 INSV/LRV、Log、Raw、未重构全景、Live Photo 半组等
 
-L3/Raw_待处理
+L3/raw-pending
 = 场景级待处理区
 = 已归入场景但需修复、转码、防抖、补齐或人工确认的素材
 
@@ -623,12 +623,12 @@ L3/Raw_待处理
 = L3 根部 _未修
 
 需要修复但有价值
-= L3/Raw_待处理 _待修复
+= L3/raw-pending _待修复
 ```
 
-### Raw_待处理 判别规则
+### raw-pending 判别规则
 
-`Raw_待处理` 不是“看起来一般”的筐。普通照片 / 普通视频进入 `Raw_待处理` 必须有可复核原因，并且原因要写进文件名。DJI / Insta360 / Live Photo 原始关联组不强制改名，原因写入所在文件夹名或 readme。
+`raw-pending` 不是“看起来一般”的筐。普通照片 / 普通视频进入 `raw-pending` 必须有可复核原因，并且原因要写进文件名。DJI / Insta360 / Live Photo 原始关联组不强制改名，原因写入所在文件夹名或 readme。
 
 可以进入：
 
@@ -659,7 +659,7 @@ Live Photo 半组或同名组待补齐
 榆中高铁站广场阴天空镜_模糊待选.mp4
 ```
 
-L3 / L4 限制只适用于正式项目素材区；`_ai_analysis`、`项目根/App_WorkCache`、`93_GroupPhoto_Distribution_合照发放`、`04_Delivery_External` 不受 L3/L4 限制。
+L3 / L4 限制只适用于正式项目素材区；`ai-analysis`、`项目根/work-cache`、`group-photo-distribution`、`deliveries` 不受 L3/L4 限制。
 
 “低清”只能在技术指标支持时使用：
 
@@ -686,7 +686,7 @@ _画质差
 _随便待选
 ```
 
-`99_System_OpenClaw/scripts/07_validate_media_decisions.py` 会检查这些规则；一键脚本会在抽帧前先生成 `_ai_analysis/media_decision_warnings.md`，有 ERROR 时停止后续分析。
+`scripts/validate_media_decisions.py` 会检查这些规则；一键脚本会在抽帧前先生成 `ai-analysis/media-decision-warnings.md`，有 ERROR 时停止后续分析。
 
 ---
 
@@ -702,9 +702,9 @@ _随便待选
 命名的唯一事实来源是：
 
 ```text
-99_System_OpenClaw/docs/00_本地素材与剪映HyperFrames流转总纲.md 的命名规则
-99_System_OpenClaw/scripts/prompt_templates/ 的命名与结构 prompt
-项目 _ai_analysis/prompts/workflows/ 中按项目渲染后的 prompt
+docs/media-workflow.md 的命名规则
+scripts/prompt-templates/ 的命名与结构 prompt
+项目 ai-analysis/prompts/workflows/ 中按项目渲染后的 prompt
 ```
 
 脚本不能内置“跑道/成绩表/自拍/高燃”等语义硬编码；脚本只生成证据、执行已确认计划、保护关联组和处理同名冲突。内容目录和文件名由 LLM/人工依据上述 prompt 判读。
@@ -714,13 +714,13 @@ _随便待选
 ```text
 项目名
 = 时间 + 主题 + 叙事对象
-= 20260514_400米比赛_第一视角
+= 2026-lzu-400m-pov
 
 L3 内容目录
 = 剪辑/复核功能
-= 01_人物呈现与候场状态
-= 02_起跑与比赛过程
-= 03_赛后交流与结果记录
+= participants
+= race
+= post-race
 
 文件名
 = 画面主体 + 动作/内容 + 镜头/关系 + 状态
@@ -756,10 +756,10 @@ L3 原素材命名
 summary / project_overview / 资产卡片
 = 画面事实 + 隐含叙事意图 + 可表达观点 + 适配作品风格
 
-90_Draft_Project
+draft-project
 = 某次剪辑的作品风格、叙事方案、使用素材记录
 
-91_Output
+output
 = 最终成片，可以按作品风格命名
 ```
 
@@ -788,10 +788,10 @@ L3 源文件：
 summary / 资产卡片：
 适配作品风格：第一视角全景跑400米、400米比赛记录、全景相机幕后感
 
-90_Draft_Project：
+draft-project：
 第一视角全景跑400米_剪辑方案.md
 
-91_Output：
+output：
 第一视角全景跑400米_竖屏版_Final.mp4
 400米比赛记录_横屏完整版_Final.mp4
 ```
@@ -844,7 +844,7 @@ summary / 资产卡片：
 10. 视觉相似、同一主体、同一机位、同一场景、同一动作链条的短片段，默认归入同一个 L3 内容目录；除非画面证据能证明功能不同
 11. 文件名只写画面事实，不直接写观点判断；隐含叙事意图写进 summary、项目总览、资产卡片或剪辑备注
 12. 看到相机、全景相机、胸前固定设备、控制器、脚架、收音、箱包等创作工具时，必须判断是否存在“创作幕后 / 设备负担 / 拍摄准备成本”的叙事价值，不能简单归为普通候场、普通自拍或普通空镜
-13. 作品风格不直接驱动 L3 源文件名；同一素材可适配多个作品风格，风格写进 summary、资产卡片、90_Draft_Project 和 91_Output
+13. 作品风格不直接驱动 L3 源文件名；同一素材可适配多个作品风格，风格写进 summary、资产卡片、draft-project 和 output
 14. 只有风格化衍生物、发布成片、剪辑工程、封面候选或对外交付副本，才允许在文件名中写 `第一视角`、`小行星视角`、`竖屏高燃剪辑版`、`Final` 等风格 / 版本信息
 ```
 
@@ -862,25 +862,25 @@ LLM / 人工做命名时，先判断素材属于哪种剪辑内容功能，再�
 | 情绪互动 | 合照、拥抱、击掌、同学互动 | `同学合照_G01_补充01_未修` |
 | 可复用通用素材 | 源文件留项目 L3，资产库只登记索引 | 文件名不为复用强行改名，资产卡片标题可带项目名和用途 |
 | Raw 重构源素材 | RawVault 按原始关联组或待重构类型收纳 | `赛前候场_360原始组.OSV/LRF` |
-| 待修复/待确认 | 原位置或 Raw_待处理，必须写明原因 | `看台候场_待防抖`、`人物近景_模糊待选` |
+| 待修复/待确认 | 原位置或 raw-pending，必须写明原因 | `看台候场_待防抖`、`人物近景_模糊待选` |
 
 ### Prompt 工作流
 
-每次运行 `04_generate_ai_prompt.py` 后，项目内会生成：
+每次运行 `generate_ai_prompt.py` 后，项目内会生成：
 
 ```text
-_ai_analysis/prompts/workflows/
-├── 01_l3_structure_prompt.md
-├── 02_file_rename_prompt.md
-├── 03_clip_content_prompts.md
-├── 04_batch_rename_plan_prompt.md
-└── 05_icloud_asset_delivery_prompt.md
+ai-analysis/prompts/workflows/
+├── l3-structure-prompt.md
+├── file-rename-prompt.md
+├── clip-content-prompts.md
+├── batch-rename-plan-prompt.md
+└── icloud-asset-delivery-prompt.md
 ```
 
 同时生成：
 
 ```text
-_ai_analysis/visual_similarity_groups.md
+ai-analysis/visual-similarity-groups.md
 = 关键帧视觉相似候选组，只用于复核和提示 LLM，不作为删除或精选依据
 ```
 

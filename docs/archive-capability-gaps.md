@@ -4,31 +4,31 @@
 
 现有归档规则已经明确了“发布稳定后，阿里云盘做远程镜像、移动硬盘做冷归档、Mac 只保留索引和精选”的业务边界，但过去主要依靠人工复制模板和勾选清单，缺少可核对的文件清单、内容校验值和机器可判定的归档准入条件。
 
-本次落地先闭合本地、无破坏性的第一段：`45_archive_project.py` 会检查正式项目目录、Final 成片、同步清单和“待增加”目录，随后生成归档清单与索引卡。工具不会自动删除素材、上传云盘、移动硬盘或修改真实剪映草稿。阿里云盘/移动硬盘回读、恢复演练和 Mac 瘦身仍需独立的后续能力，不能用本地清单冒充完成证据。
+本次落地先闭合本地、无破坏性的第一段：`archive_project.py` 会检查正式项目目录、Final 成片、同步清单和“additions”目录，随后生成归档清单与索引卡。工具不会自动删除素材、上传云盘、移动硬盘或修改真实剪映草稿。阿里云盘/移动硬盘回读、恢复演练和 Mac 瘦身仍需独立的后续能力，不能用本地清单冒充完成证据。
 
 ## 已落地能力
 
 运行：
 
 ```bash
-python3 99_System_OpenClaw/scripts/45_archive_project.py \
-  "01_Project_Workspace/主题集合/YYYYMMDD_项目名"
+python3 scripts/archive_project.py \
+  "projects/主题集合/YYYYMMDD_项目名"
 ```
 
-默认只输出检查结果和候选文件数。确认无误后才使用 `--write`，它只在项目内写入 `archive_manifest.json` 和 `Project_Archive_Index/*.archive.md`，每个纳入文件记录相对路径、大小和 SHA-256 内容校验值，并排除 `_ai_analysis`、`App_WorkCache`、`待增加` 和精选临时目录。
+默认只输出检查结果和候选文件数。确认无误后才使用 `--write`，它只在项目内写入 `archive_manifest.json` 和 `project-archive-index/*.archive.md`，每个纳入文件记录相对路径、大小和 SHA-256 内容校验值，并排除 `ai-analysis`、`work-cache`、`additions` 和精选临时目录。
 
 目标副本回读：
 
 ```bash
-python3 99_System_OpenClaw/scripts/45_archive_project.py \
-  "项目目录" --manifest "项目目录/05_Archive_Cold_Storage/YYYY_Completed_Projects/项目名/archive_manifest.json" \
+python3 scripts/archive_project.py \
+  "项目目录" --manifest "项目目录/archive/YYYY_Completed_Projects/项目名/archive_manifest.json" \
   --verify-target "/Volumes/归档盘/项目名" --write-receipt "项目目录/归档回读回执.json"
 ```
 
 恢复演练必须指向一个尚不存在的新目录：
 
 ```bash
-python3 99_System_OpenClaw/scripts/45_archive_project.py \
+python3 scripts/archive_project.py \
   "项目目录" --manifest "归档清单.json" --restore-from "/Volumes/归档盘/项目名" \
   --restore-to "项目目录_RESTORE_YYYYMMDD"
 ```
@@ -36,7 +36,7 @@ python3 99_System_OpenClaw/scripts/45_archive_project.py \
 Mac 瘦身只生成计划，不执行删除：
 
 ```bash
-python3 99_System_OpenClaw/scripts/45_archive_project.py \
+python3 scripts/archive_project.py \
   "项目目录" --prune-plan --receipt "阿里云回读回执.json" --receipt "移动硬盘回读回执.json"
 ```
 

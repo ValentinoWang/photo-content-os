@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://photo-content-os.local/schemas/asset_library_index.schema.json",
+  "$id": "https://photo-content-os.local/schemas/asset-library-index.schema.json",
   "title": "Photo Content OS reusable asset library index",
   "type": "object",
   "additionalProperties": false,

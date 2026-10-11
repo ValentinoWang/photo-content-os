@@ -40,7 +40,7 @@ def make_inputs(base: Path, *, raw_second_source: bool = False, gap: bool = Fals
     first = media / "intro.mp4"
     first.write_bytes(b"fixture-media-intro")
     if raw_second_source:
-        second = project / "00_RawVault_不可直用" / "360原始组" / "camera.LRF"
+        second = project / "raw-vault" / "360原始组" / "camera.LRF"
         second.parent.mkdir(parents=True)
     else:
         second = media / "middle.mp4"
@@ -82,7 +82,7 @@ def make_inputs(base: Path, *, raw_second_source: bool = False, gap: bool = Fals
         json.dumps({"local_project_path": str(project), "files": [str(first), str(second)]}, ensure_ascii=False),
         encoding="utf-8",
     )
-    output_root = project / "90_Draft_Project" / "edit_handoff"
+    output_root = project / "draft-project" / "edit-handoff"
     return edl_path, storyboard, materials, output_root
 
 

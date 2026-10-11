@@ -28,7 +28,7 @@ from analysis_tiering import (  # noqa: E402
 from edl_contract import normalise_edl  # noqa: E402
 from _support import load_script  # noqa: E402
 
-preview = load_script("20_render_preview.py", "preview_under_test", register=True)
+preview = load_script("render_preview.py", "preview_under_test", register=True)
 
 
 class TieringPreviewTests(unittest.TestCase):
@@ -132,7 +132,7 @@ class TieringPreviewTests(unittest.TestCase):
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
         schema["required"].remove("budget")
         with tempfile.TemporaryDirectory() as directory:
-            drifted_path = Path(directory) / "analysis_tiering.schema.json"
+            drifted_path = Path(directory) / "analysis-tiering.schema.json"
             drifted_path.write_text(json.dumps(schema), encoding="utf-8")
             with mock.patch.object(analysis_tiering, "SCHEMA_PATH", drifted_path):
                 with self.assertRaisesRegex(TieringValidationError, "schema_drift"):

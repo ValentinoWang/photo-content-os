@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply a confirmed 待增加 merge plan."""
+"""Apply a confirmed additions merge plan."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from media_common import ANALYSIS_DIR, ensure_project_additions_dir, now_iso, pa
 from project_bootstrap_common import run_project_analysis as run_analysis
 
 
-PLAN_NAME = "additions_merge_plan.json"
+PLAN_NAME = "additions-merge-plan.json"
 
 
 def load_plan(additions_dir: Path, plan_path: str | None) -> dict[str, object]:
@@ -36,7 +36,7 @@ def selected_items(plan: dict[str, object], apply_all_pending: bool) -> list[dic
 def append_merge_log(target_project: Path, moved: list[dict[str, object]]) -> None:
     if not moved:
         return
-    log_path = target_project / "素材整理记录.md"
+    log_path = target_project / "material-organization.md"
     lines = []
     if log_path.exists():
         lines.append(log_path.read_text(encoding="utf-8").rstrip())
@@ -45,7 +45,7 @@ def append_merge_log(target_project: Path, moved: list[dict[str, object]]) -> No
         lines.extend(["# 素材整理记录", ""])
     lines.extend(
         [
-            f"## 待增加合并记录 {now_iso()}",
+            f"## additions合并记录 {now_iso()}",
             "",
             "| 来源 | 合并后位置 | 说明 |",
             "| --- | --- | --- |",
@@ -99,10 +99,10 @@ def apply_plan(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="执行已经确认的待增加合并计划")
-    parser.add_argument("additions_dir", help="待增加素材目录")
+    parser = argparse.ArgumentParser(description="执行已经确认的additions合并计划")
+    parser.add_argument("additions_dir", help="additions素材目录")
     parser.add_argument("target_project_dir", help="目标正式项目目录")
-    parser.add_argument("--plan", help="自定义 additions_merge_plan.json 路径")
+    parser.add_argument("--plan", help="自定义 additions-merge-plan.json 路径")
     parser.add_argument("--apply-all-pending", action="store_true", help="确认整表无误后，把 pending 条目也作为已批准执行")
     parser.add_argument("--allow-review-items", action="store_true", help="允许执行 needs_review=true 的条目")
     parser.add_argument("--dry-run", action="store_true", help="只打印将要移动的文件，不真正移动")

@@ -9,7 +9,7 @@ from _support import load_script
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-module = load_script("18_generate_storyboard_edl.py", "storyboard_under_test")
+module = load_script("generate_storyboard_edl.py", "storyboard_under_test")
 
 
 class StoryboardContractTests(unittest.TestCase):

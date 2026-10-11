@@ -15,7 +15,7 @@ from _support import load_script
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
-openclaw_queue = load_script("32_process_openclaw_queue.py", "openclaw_queue", register=True)
+openclaw_queue = load_script("process_openclaw_queue.py", "openclaw_queue", register=True)
 
 
 def write_json(path: Path, data: dict[str, object]) -> None:
@@ -24,7 +24,7 @@ def write_json(path: Path, data: dict[str, object]) -> None:
 
 
 def make_config(root: Path) -> object:
-    return openclaw_queue.QueueConfig(workspace_root=root, queue_root=root / "_OpenClawQueue")
+    return openclaw_queue.QueueConfig(workspace_root=root, queue_root=root / "openclaw-queue")
 
 
 class OpenClawQueueTest(unittest.TestCase):
@@ -90,9 +90,9 @@ class OpenClawQueueTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_清华毕业典礼"
+            batch = root / "inbox/2026-tsinghua-graduation"
             batch.mkdir(parents=True)
-            (batch / "00_批次说明.md").write_text("# 20260627_清华毕业典礼\n", encoding="utf-8")
+            (batch / "batch-notes.md").write_text("# 2026-tsinghua-graduation\n", encoding="utf-8")
             (batch / "clip.mp4").write_bytes(b"not a real video")
             task_path = config.cloud_to_mac / "run_20260627_115051_382a.json"
             write_json(
@@ -101,7 +101,7 @@ class OpenClawQueueTest(unittest.TestCase):
                     "task_type": "bind_creation_run_to_local_batch",
                     "creation_run_id": "run_20260627_115051_382a",
                     "feishu_doc_link": "https://tcnwueberajc.feishu.cn/wiki/demo",
-                    "batch_id": "20260627_清华毕业典礼",
+                    "batch_id": "2026-tsinghua-graduation",
                     "topic": "第一视角体验清华毕业典礼",
                     "platform": "抖音",
                     "content_type": "视频",
@@ -116,8 +116,8 @@ class OpenClawQueueTest(unittest.TestCase):
             self.assertEqual(results[0]["status"], "linked")
             self.assertFalse(task_path.exists())
             self.assertTrue((config.processed / task_path.name).exists())
-            link = json.loads((batch / "_openclaw/link.json").read_text(encoding="utf-8"))
-            status = json.loads((batch / "_openclaw/status.json").read_text(encoding="utf-8"))
+            link = json.loads((batch / "openclaw/link.json").read_text(encoding="utf-8"))
+            status = json.loads((batch / "openclaw/status.json").read_text(encoding="utf-8"))
             result = json.loads((config.mac_to_cloud / "run_20260627_115051_382a.result.json").read_text(encoding="utf-8"))
             self.assertEqual(link["creation_run_id"], "run_20260627_115051_382a")
             self.assertEqual(status["status"], "linked")
@@ -128,9 +128,9 @@ class OpenClawQueueTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_idempotent"
+            batch = root / "inbox/20260627_idempotent"
             batch.mkdir(parents=True)
-            (batch / "00_批次说明.md").write_text("# 批次\n", encoding="utf-8")
+            (batch / "batch-notes.md").write_text("# 批次\n", encoding="utf-8")
             first = config.cloud_to_mac / "first.json"
             self._queue_task(first, batch)
 
@@ -158,9 +158,9 @@ class OpenClawQueueTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_conflict"
+            batch = root / "inbox/20260627_conflict"
             batch.mkdir(parents=True)
-            (batch / "00_批次说明.md").write_text("# 批次\n", encoding="utf-8")
+            (batch / "batch-notes.md").write_text("# 批次\n", encoding="utf-8")
             self._queue_task(config.cloud_to_mac / "first.json", batch)
             openclaw_queue.process_pending(config)
             result_path = config.mac_to_cloud / "run_20260627_idempotent.result.json"
@@ -199,7 +199,7 @@ class OpenClawQueueTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_markdown"
+            batch = root / "inbox/20260627_markdown"
             batch.mkdir(parents=True)
             package = config.cloud_to_mac / "package"
             package.mkdir(parents=True)
@@ -220,14 +220,14 @@ class OpenClawQueueTest(unittest.TestCase):
             moved = config.processed / "package"
             self.assertEqual(result["status"], "linked")
             self.assertEqual(result["cloud_markdown"]["local_markdown_path"], str(moved / "draft.md"))
-            link = json.loads((batch / "_openclaw/link.json").read_text(encoding="utf-8"))
+            link = json.loads((batch / "openclaw/link.json").read_text(encoding="utf-8"))
             self.assertEqual(link["cloud_markdown"]["markdown_sha256"], result["cloud_markdown"]["markdown_sha256"])
 
     def test_rejects_batch_outside_inbox(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            outside = root / "01_Project_Workspace/not_an_inbox_batch"
+            outside = root / "projects/not_an_inbox_batch"
             outside.mkdir(parents=True)
             task_path = config.cloud_to_mac / "run_20260627_bad.json"
             write_json(
@@ -242,7 +242,7 @@ class OpenClawQueueTest(unittest.TestCase):
             results = openclaw_queue.process_pending(config)
 
             self.assertEqual(results[0]["status"], "blocked")
-            self.assertIn("00_Inbox_Mac_Intake", results[0]["detail"])
+            self.assertIn("inbox", results[0]["detail"])
             self.assertTrue((config.failed / task_path.name).exists())
             result = json.loads((config.mac_to_cloud / "run_20260627_bad.result.json").read_text(encoding="utf-8"))
             self.assertEqual(result["blocked_reason"], "queue_contract_failed")
@@ -251,9 +251,9 @@ class OpenClawQueueTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_清华毕业典礼"
+            batch = root / "inbox/2026-tsinghua-graduation"
             batch.mkdir(parents=True)
-            (batch / "00_批次说明.md").write_text("# 20260627_清华毕业典礼\n", encoding="utf-8")
+            (batch / "batch-notes.md").write_text("# 2026-tsinghua-graduation\n", encoding="utf-8")
             task_path = config.cloud_to_mac / "run_20260627_nested.json"
             write_json(
                 task_path,
@@ -262,21 +262,21 @@ class OpenClawQueueTest(unittest.TestCase):
                     "task_type": "bind_creation_run_to_local_batch",
                     "creation_run_id": "run_20260627_nested",
                     "local_batch": {"path": str(batch), "required": True},
-                    "requested_outputs": ["写入批次/_openclaw/link.json"],
+                    "requested_outputs": ["写入批次/openclaw/link.json"],
                 },
             )
 
             results = openclaw_queue.process_pending(config)
 
             self.assertEqual(results[0]["status"], "linked")
-            link = json.loads((batch / "_openclaw/link.json").read_text(encoding="utf-8"))
+            link = json.loads((batch / "openclaw/link.json").read_text(encoding="utf-8"))
             self.assertEqual(link["local_batch_path"], str(batch.resolve()))
 
     def test_missing_batch_dir_is_created_and_linked(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_新云端批次"
+            batch = root / "inbox/20260627_新云端批次"
             task_path = config.cloud_to_mac / "run_20260627_auto_create.json"
             write_json(
                 task_path,
@@ -293,8 +293,8 @@ class OpenClawQueueTest(unittest.TestCase):
 
             self.assertEqual(results[0]["status"], "linked")
             self.assertTrue(batch.is_dir())
-            self.assertTrue((batch / "00_批次说明.md").is_file())
-            self.assertTrue((batch / "_openclaw/link.json").is_file())
+            self.assertTrue((batch / "batch-notes.md").is_file())
+            self.assertTrue((batch / "openclaw/link.json").is_file())
             self.assertIn("auto_created_local_batch_dir", results[0]["warnings"])
             self.assertIn("auto_created_batch_note", results[0]["warnings"])
 
@@ -302,7 +302,7 @@ class OpenClawQueueTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_只给批次ID"
+            batch = root / "inbox/20260627_只给批次ID"
             task_path = config.cloud_to_mac / "run_20260627_batch_id_only.json"
             write_json(
                 task_path,
@@ -318,17 +318,17 @@ class OpenClawQueueTest(unittest.TestCase):
 
             self.assertEqual(results[0]["status"], "linked")
             self.assertTrue(batch.is_dir())
-            self.assertTrue((batch / "00_批次说明.md").is_file())
+            self.assertTrue((batch / "batch-notes.md").is_file())
             self.assertEqual(results[0]["local_batch_path"], str(batch.resolve()))
             self.assertIn("local_batch_path_derived_from_batch_id", results[0]["warnings"])
-            note = (batch / "00_批次说明.md").read_text(encoding="utf-8")
+            note = (batch / "batch-notes.md").read_text(encoding="utf-8")
             self.assertIn("batch_id：20260627_只给批次ID", note)
 
     def test_missing_batch_note_is_created_and_linked(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_自动补说明"
+            batch = root / "inbox/20260627_自动补说明"
             batch.mkdir(parents=True)
             task_path = config.cloud_to_mac / "run_20260627_missing_note.json"
             write_json(
@@ -343,18 +343,18 @@ class OpenClawQueueTest(unittest.TestCase):
             results = openclaw_queue.process_pending(config)
 
             self.assertEqual(results[0]["status"], "linked")
-            status = json.loads((batch / "_openclaw/status.json").read_text(encoding="utf-8"))
+            status = json.loads((batch / "openclaw/status.json").read_text(encoding="utf-8"))
             self.assertEqual(status["status"], "linked")
-            self.assertTrue((batch / "00_批次说明.md").is_file())
+            self.assertTrue((batch / "batch-notes.md").is_file())
             self.assertTrue((config.processed / task_path.name).exists())
 
     def test_existing_batch_note_gets_cloud_prefill_without_overwriting_manual_fields(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            batch = root / "00_Inbox_Mac_Intake/20260627_已有人工说明"
+            batch = root / "inbox/20260627_已有人工说明"
             batch.mkdir(parents=True)
-            note = batch / "00_批次说明.md"
+            note = batch / "batch-notes.md"
             note.write_text(
                 "# 20260627_已有人工说明\n\n"
                 "## 本地素材批次\n\n"
@@ -393,12 +393,12 @@ class OpenClawQueueTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             config = make_config(root)
-            original = root / "00_Inbox_Mac_Intake/20260627_云端旧名"
-            renamed = root / "00_Inbox_Mac_Intake/20260627_我改过的新名字"
+            original = root / "inbox/20260627_云端旧名"
+            renamed = root / "inbox/20260627_我改过的新名字"
             renamed.mkdir(parents=True)
-            (renamed / "00_批次说明.md").write_text("# 20260627_我改过的新名字\n", encoding="utf-8")
+            (renamed / "batch-notes.md").write_text("# 20260627_我改过的新名字\n", encoding="utf-8")
             write_json(
-                renamed / "_openclaw/link.json",
+                renamed / "openclaw/link.json",
                 {
                     "creation_run_id": "run_20260627_rename",
                     "batch_id": "20260627_云端旧名",

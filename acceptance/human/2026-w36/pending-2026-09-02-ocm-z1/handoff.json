@@ -4,7 +4,7 @@
   "blocking_budget": 3,
   "budget_exception": null,
   "checklist_sha256": "43ab0767c0ed508c1da7077e0e7e677cbf75a58ebed47de691277c7d1f47642c",
-  "contract_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance-contract.md",
+  "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/ocm-z1/acceptance-contract.md",
   "contract_sha256": "6039f9de5d4a62b9a3c0c62d85b053b6fed05a6fce45d6682534b273a4746c01",
   "contract_version": "2",
   "estimated_minutes": 80,
@@ -16,7 +16,7 @@
   "machine_evidence": [
     {
       "layer": "machine/e2e",
-      "result_path": "agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance/machine/e2e/runs/20260902T153500Z-local-chromium-73f5b0/result.md",
+      "result_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance/machine/e2e/runs/20260902T153500Z-local-chromium-73f5b0/result.md",
       "result_sha256": "2202bb6721ef745c6a5d6cd24936acd8f986a647c7e00731c2b382296ebfe285",
       "run_id": "20260902T153500Z-local-chromium-73f5b0",
       "source_identity": "commit@73f5b02564b9ac102481d8ee9b1cba7d528aa48b"

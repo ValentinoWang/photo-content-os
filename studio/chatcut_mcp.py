@@ -1,4 +1,4 @@
-"""ChatCut registration, local MCP handshake and secret-free desktop state."""
+"""ChatCut registration, local MCP handshake and secret-free studio state."""
 
 from __future__ import annotations
 
@@ -285,7 +285,7 @@ class LocalMcpSession:
     """MCP JSON-RPC over registered stdio or loopback Streamable HTTP only.
 
     A session owns only its launched stdio child. No application process or
-    other MCP client is stopped. Credentials never enter desktop state.
+    other MCP client is stopped. Credentials never enter studio state.
     """
 
     def __init__(self, config: dict | None = None, *, timeout_seconds: float = 5):

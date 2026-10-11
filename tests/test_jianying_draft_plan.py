@@ -78,7 +78,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "23_generate_jianying_draft_plan.py"),
+                    str(ROOT / "scripts" / "generate_jianying_draft_plan.py"),
                     "--edl",
                     str(edl_path),
                     "--local-assets",
@@ -99,7 +99,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "24_create_jianying_roughcut_draft.py"),
+                    str(ROOT / "scripts" / "create_jianying_roughcut_draft.py"),
                     "--plan",
                     str(plan_path),
                     "--draft-root",
@@ -133,7 +133,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "25_validate_jianying_draft.py"),
+                    str(ROOT / "scripts" / "validate_jianying_draft.py"),
                     "--plan",
                     str(plan_path),
                     "--result",
@@ -152,7 +152,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "25_validate_jianying_draft.py"),
+                    str(ROOT / "scripts" / "validate_jianying_draft.py"),
                     "--plan",
                     str(plan_path),
                     "--result",
@@ -169,7 +169,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             project = base / "project"
-            raw_dir = project / "00_RawVault_不可直用" / "400米第一视角_360原始组_待重构"
+            raw_dir = project / "raw-vault" / "400m-pov-360-raw"
             raw_dir.mkdir(parents=True)
             raw = raw_dir / "全程记录_360原始组.LRF"
             raw.write_bytes(b"not-a-production-source")
@@ -198,7 +198,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "23_generate_jianying_draft_plan.py"),
+                    str(ROOT / "scripts" / "generate_jianying_draft_plan.py"),
                     "--edl",
                     str(edl_path),
                     "--local-assets",

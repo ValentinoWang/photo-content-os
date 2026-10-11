@@ -18,8 +18,8 @@ from typing import Any, Iterable, Mapping, Sequence
 from media_common import file_sha256, stable_json_hash  # noqa: F401  (re-exported: L-13/r8)
 
 POLICY_VERSION = "analysis_tiering_v1"
-SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas" / "analysis_tiering.schema.json"
-_SCHEMA_CONTRACT_SHA256 = "79385a1d4f5a192af99c3a28200dda690b6dc5ad01c10252a45b0aab70dd3939"
+SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas" / "analysis-tiering.schema.json"
+_SCHEMA_CONTRACT_SHA256 = "118c66e111790140924c9bec793a1bd04232eef707d48e44135d42011a6a98fb"
 _BUDGET_FIELDS = frozenset(
     {
         "preview_images_per_asset",

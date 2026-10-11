@@ -228,7 +228,7 @@ def main() -> int:
     parser.add_argument("--project-package", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--human-notes", type=Path)
-    parser.add_argument("--video", type=Path, help="Optional V1/V2/Final export for metadata-level evidence.")
+    parser.add_argument("--video", type=Path, help="Optional V1/v2/Final export for metadata-level evidence.")
     parser.add_argument("--model", default=DEFAULT_CREATIVE_MODEL)
     parser.add_argument("--reasoning", default=DEFAULT_REASONING_EFFORT)
     parser.add_argument("--prompt-output", type=Path)

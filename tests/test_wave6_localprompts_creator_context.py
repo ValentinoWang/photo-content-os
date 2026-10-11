@@ -17,16 +17,16 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 
-storyboard = load_script("18_generate_storyboard_edl.py", "wave6_storyboard", register=True)
-edit_log = load_script("29_generate_ai_edit_log.py", "wave6_edit_log", register=True)
+storyboard = load_script("generate_storyboard_edl.py", "wave6_storyboard", register=True)
+edit_log = load_script("generate_ai_edit_log.py", "wave6_edit_log", register=True)
 
 
 class LocalPromptCreatorContextTests(unittest.TestCase):
     def test_storyboard_prompt_uses_explicit_creator_context_without_inference(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
-            (project / "_ai_analysis").mkdir()
-            (project / "_ai_analysis" / "media_manifest.json").write_text(
+            (project / "ai-analysis").mkdir()
+            (project / "ai-analysis" / "media-manifest.json").write_text(
                 json.dumps({"items": []}, ensure_ascii=False), encoding="utf-8"
             )
             brief = project / "02_brief.md"

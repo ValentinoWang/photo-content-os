@@ -19,13 +19,13 @@ def default_local_root() -> Path:
     """L-15: delegates to the marker-based runtime_paths.repository_root,
     anchored at this file, instead of this script's former hardcoded
     parents[2]. Only used as this script's --local-root argparse default;
-    every actual caller (06_check_outline_contract.py) passes --local-root
+    every actual caller (check_outline_contract.py) passes --local-root
     explicitly, so this only affects standalone direct invocation."""
     return _repository_root(Path(__file__))
 
 
 def default_contract_path(local_root: Path) -> Path:
-    return local_root / "99_System_OpenClaw" / "doc_sync_contract.json"
+    return local_root / "doc-sync-contract.json"
 
 
 def expand_contract_path(raw_path: str, local_root: Path, obsidian_root: Path) -> Path:
@@ -166,7 +166,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="检查本地执行文档与 Obsidian 协议文档是否同步")
     parser.add_argument("--local-root", default=str(default_local_root()), help="本地素材根目录")
     parser.add_argument("--obsidian-root", default=str(DEFAULT_OBSIDIAN_ROOT), help="Obsidian 自媒体库根目录")
-    parser.add_argument("--contract", default=None, help="doc_sync_contract.json 路径")
+    parser.add_argument("--contract", default=None, help="doc-sync-contract.json 路径")
     args = parser.parse_args()
 
     local_root = Path(args.local_root).expanduser().resolve()

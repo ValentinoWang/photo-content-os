@@ -1,14 +1,14 @@
 # 人工验收清单：OCM-Z1
 
 - 任务编号：OCM-Z1
-- 人工验收绑定：acceptance/human/2026-W36/2026-09-02-OCM-Z1/binding.md
-- 验收合同：agents-results/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance-contract.md
+- 人工验收绑定：acceptance/human/2026-w36/2026-09-02-OCM-Z1/binding.md
+- 验收合同：evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/ocm-z1/acceptance-contract.md
 - 合同版本：2
 - 清单状态：已批准
 - 所需人工角色：产品负责人
 - 清单负责人：产品负责人
 - 批准证据：用户于 2026-09-02 明确要求按八个 Surface 与项目对话框重构、逐条锁定并进入后续机器验收
-- 执行结果：acceptance/human/2026-W36/2026-09-02-OCM-Z1/runs/<run-id>/result.md
+- 执行结果：acceptance/human/2026-w36/2026-09-02-OCM-Z1/runs/<run-id>/result.md
 
 本清单只判断八个 Surface 与新建项目对话框的产品含义、理解成本、流程质量、视觉层级和跨屏一致性。接口、数据、权限、路径、回执和错误码必须在进入本清单前由机器证据全部通过。
 

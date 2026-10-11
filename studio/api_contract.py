@@ -1,4 +1,4 @@
-"""Canonical route inventory and OpenAPI contract for the loopback desktop service."""
+"""Canonical route inventory and OpenAPI contract for the loopback studio service."""
 
 from __future__ import annotations
 
@@ -7,10 +7,10 @@ from typing import Any
 
 
 ROUTE_SPECS: tuple[dict[str, object], ...] = (
-    {"method": "GET", "path": "/api/bootstrap", "operation_id": "getBootstrap", "summary": "Read desktop bootstrap state"},
+    {"method": "GET", "path": "/api/bootstrap", "operation_id": "getBootstrap", "summary": "Read studio bootstrap state"},
     {"method": "GET", "path": "/api/health", "operation_id": "getHealth", "summary": "Read loopback service health"},
     {"method": "GET", "path": "/api/diagnostics", "operation_id": "getDiagnostics", "summary": "Run dynamic local diagnostics"},
-    {"method": "GET", "path": "/api/settings", "operation_id": "getSettings", "summary": "Read redacted desktop settings"},
+    {"method": "GET", "path": "/api/settings", "operation_id": "getSettings", "summary": "Read redacted studio settings"},
     {"method": "GET", "path": "/api/settings/analysis-budget", "operation_id": "getAnalysisBudget", "summary": "Read the effective analysis budget"},
     {"method": "POST", "path": "/api/settings/analysis-budget", "operation_id": "updateAnalysisBudget", "summary": "Update the analysis budget with CAS", "write": True},
     {"method": "GET", "path": "/api/projects", "operation_id": "listProjects", "summary": "List local projects"},
@@ -110,7 +110,7 @@ def build_openapi() -> dict[str, Any]:
         "info": {
             "title": "Photo Content OS Desktop API",
             "version": "1.0.0",
-            "description": "Loopback-only, CSRF-protected desktop contract. Upstream login is optional.",
+            "description": "Loopback-only, CSRF-protected studio contract. Upstream login is optional.",
         },
         "servers": [{"url": "http://127.0.0.1:8765"}],
         "paths": paths,

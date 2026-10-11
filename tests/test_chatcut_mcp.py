@@ -14,7 +14,7 @@ SYSTEM_ROOT = Path(__file__).resolve().parents[1]
 if str(SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(SYSTEM_ROOT))
 
-from desktop.chatcut_mcp import (
+from studio.chatcut_mcp import (
     DEFAULT_PROBE_TIMEOUT_SECONDS,
     MAX_PROBE_TIMEOUT_SECONDS,
     PROBE_COMMAND,
@@ -148,7 +148,7 @@ class ChatCutMcpTests(unittest.TestCase):
         self.assertNotIn("secret diagnostic", state_text)
         self.assertNotIn("codex", state_text)
 
-    @mock.patch("desktop.chatcut_mcp.subprocess.run")
+    @mock.patch("studio.chatcut_mcp.subprocess.run")
     def test_default_executor_discards_output_and_uses_short_timeout(
         self, run: mock.Mock
     ) -> None:
@@ -167,7 +167,7 @@ class ChatCutMcpTests(unittest.TestCase):
         self.assertLessEqual(kwargs["timeout"], MAX_PROBE_TIMEOUT_SECONDS)
 
     def test_implementation_uses_only_standard_library_for_local_transport(self) -> None:
-        source = (SYSTEM_ROOT / "desktop" / "chatcut_mcp.py").read_text(encoding="utf-8")
+        source = (SYSTEM_ROOT / "studio" / "chatcut_mcp.py").read_text(encoding="utf-8")
         tree = ast.parse(source)
         imported_modules = {
             node.module if isinstance(node, ast.ImportFrom) else alias.name.split(".")[0]

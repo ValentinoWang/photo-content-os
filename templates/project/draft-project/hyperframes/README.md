@@ -5,12 +5,12 @@
 导出的 MP4、PNG、透明叠加素材或口播增强片段放到：
 
 ```text
-91_Output/HyperFrames/
+output/hyperframes/
 ```
 
 确认会长期复用的组件再登记到：
 
 ```text
-02_Asset_Library/HyperFrames_Components/
+library/hyperframes-components/
 ```
 

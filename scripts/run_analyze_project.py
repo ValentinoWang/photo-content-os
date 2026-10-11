@@ -50,7 +50,7 @@ def script(name: str) -> str:
 
 
 def is_inbox(project: Path) -> bool:
-    return "00_Inbox_Mac_Intake" in project.parts
+    return "inbox" in project.parts
 
 
 def apply_requested_tier(plan_path: Path, requested_tier: str) -> None:
@@ -82,13 +82,13 @@ def main() -> int:
     args = parser.parse_args()
 
     project = project_path(args.project_dir)
-    outline = SYSTEM_ROOT / "docs" / "00_本地素材与剪映HyperFrames流转总纲.md"
+    outline = SYSTEM_ROOT / "docs" / "media-workflow.md"
     if outline.is_file():
-        run([sys.executable, script("06_check_outline_contract.py"), str(REPOSITORY_ROOT)])
+        run([sys.executable, script("check_outline_contract.py"), str(REPOSITORY_ROOT)])
     if not is_inbox(project):
-        run([sys.executable, script("13_ensure_project_structure.py"), str(project)])
-    run([sys.executable, script("01_scan_media_manifest.py"), str(project)])
-    run([sys.executable, script("07_validate_media_decisions.py"), str(project)])
+        run([sys.executable, script("ensure_project_structure.py"), str(project)])
+    run([sys.executable, script("scan_media_manifest.py"), str(project)])
+    run([sys.executable, script("validate_media_decisions.py"), str(project)])
 
     analysis_root = analysis_dir(project)
     plan_path = analysis_plan_path(project)
@@ -108,7 +108,7 @@ def main() -> int:
     )
     apply_requested_tier(plan_path, args.tier)
 
-    keyframe_args = [sys.executable, script("02_extract_keyframes.py"), str(project), "--analysis-plan", str(plan_path)]
+    keyframe_args = [sys.executable, script("extract_keyframes.py"), str(project), "--analysis-plan", str(plan_path)]
     if args.include_derived:
         keyframe_args.append("--include-derived")
     if args.overwrite:
@@ -116,13 +116,13 @@ def main() -> int:
     run(keyframe_args)
 
     if args.audio:
-        audio_args = [sys.executable, script("03_extract_audio_helper.py"), str(project)]
+        audio_args = [sys.executable, script("extract_audio_helper.py"), str(project)]
         if args.include_derived:
             audio_args.append("--include-derived")
         run(audio_args)
         transcript_args = [
             sys.executable,
-            script("03_transcribe_audio.py"),
+            script("transcribe_audio.py"),
             str(project),
             "--provider",
             args.transcript_provider,
@@ -133,11 +133,11 @@ def main() -> int:
             transcript_args.append("--overwrite")
         run(transcript_args)
 
-    run([sys.executable, script("04_generate_ai_prompt.py"), str(project)])
+    run([sys.executable, script("generate_ai_prompt.py"), str(project)])
     if not args.skip_llm and args.tier != "metadata":
         summary_args = [
             sys.executable,
-            script("05_write_content_summary.py"),
+            script("write_content_summary.py"),
             str(project),
             "--analysis-plan",
             str(plan_path),

@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "edit_backends" / "otio_kdenlive.py"
-OTIO_KDENLIVE_PYTHON = ROOT / ".venv-content-os" / "bin" / "python"
+OTIO_KDENLIVE_PYTHON = ROOT / ".venv" / "bin" / "python"
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
@@ -25,7 +25,7 @@ def write_edl(path: Path, *, raw360: bool = False, overlap: bool = False) -> Non
     # real edl_contract producer (edl_contract.canonical_time_range) emits.
     candidate_one = "素材/第一段.mp4"
     if raw360:
-        candidate_one = "00_RawVault_不可直用/第一视角.OSV"
+        candidate_one = "raw-vault/第一视角.OSV"
     data = {
         "doc_type": "edit_decision_list",
         "project_id": "demo_中文",
@@ -151,7 +151,7 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             storyboard = root / "storyboard.md"
             storyboard.write_text("# 分镜\n", encoding="utf-8")
             write_edl(edl)
-            output = root / "edit_handoff"
+            output = root / "edit-handoff"
             revision_dir = output / "3"
             otio_result = root / "otio_result.json"
             self.run_script(
@@ -200,7 +200,7 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             storyboard = root / "storyboard.md"
             storyboard.write_text("# 分镜\n", encoding="utf-8")
             write_edl(edl)
-            output = root / "edit_handoff"
+            output = root / "edit-handoff"
             revision_dir = output / "1"
             self.run_script(
                 "generate-otio", "--project-id", "demo_中文", "--project-revision", "1",
@@ -289,7 +289,7 @@ class OtioKdenliveBackendTests(unittest.TestCase):
                     "reason": "人工确认",
                 },
             }, ensure_ascii=False), encoding="utf-8")
-            output = root / "edit_handoff"
+            output = root / "edit-handoff"
             revision_dir = output / "4"
             self.run_script(
                 "generate-otio", "--project-id", "demo_中文", "--project-revision", "4",
@@ -311,7 +311,7 @@ class OtioKdenliveBackendTests(unittest.TestCase):
         """Regression test for the parse_time_range format mismatch (L-11).
 
         edl_contract.canonical_time_range/write_edl is the authoritative EDL
-        producer used by the real pipeline (18_generate_storyboard_edl.py).
+        producer used by the real pipeline (generate_storyboard_edl.py).
         It never appends a trailing "s" (e.g. "0.000-4.000"). The otio_kdenlive
         backend used to require that trailing "s" and would reject any EDL
         coming straight out of the canonical producer. This test feeds a real
@@ -355,7 +355,7 @@ class OtioKdenliveBackendTests(unittest.TestCase):
 
             storyboard = root / "storyboard.md"
             storyboard.write_text("# 分镜\n", encoding="utf-8")
-            output = root / "edit_handoff"
+            output = root / "edit-handoff"
             self.run_script(
                 "generate-otio", "--project-id", "demo_canonical", "--project-revision", "1",
                 "--edl", str(edl), "--storyboard", str(storyboard), "--output-root", str(output),
@@ -384,7 +384,7 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             storyboard = root / "storyboard.md"
             storyboard.write_text("# 分镜\n", encoding="utf-8")
             write_layered_edl(edl)
-            output = root / "edit_handoff"
+            output = root / "edit-handoff"
             revision_dir = output / "1"
             self.run_script(
                 "generate-otio", "--project-id", "demo_中文", "--project-revision", "1",
@@ -459,7 +459,7 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             completed = self.run_script(
                 "generate-otio", "--project-id", "demo_中文", "--project-revision", "1",
                 "--edl", str(edl), "--storyboard", str(storyboard),
-                "--output-root", str(root / "edit_handoff"),
+                "--output-root", str(root / "edit-handoff"),
                 expected=2,
             )
             self.assertIn("unknown layer", completed.stderr)

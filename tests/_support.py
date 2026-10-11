@@ -1,4 +1,4 @@
-"""Shared helper for tests that load a script under 99_System_OpenClaw/scripts/
+"""Shared helper for tests that load a script under scripts/
 as a module via importlib, instead of each test file re-implementing the
 same spec_from_file_location / module_from_spec / exec_module triple.
 

@@ -108,7 +108,7 @@ def extract_for_item(
     if not math.isfinite(duration) or duration <= 0:
         return []
     media_id = str(item.get("media_id") or item.get("id") or safe_slug(source.stem))
-    item_dir = output_root / f"{media_id}_{safe_slug(source.stem)}"
+    item_dir = output_root / f"asset-{media_id}"
     item_dir.mkdir(parents=True, exist_ok=True)
     outputs: list[str] = []
     for index, timestamp in enumerate(_timestamp_candidates(duration, image_budget), start=1):

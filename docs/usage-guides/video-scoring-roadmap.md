@@ -30,26 +30,26 @@ VLM 语义融合
 版本倾向、返修建议、人工审看点
 ```
 
-远端服务器也要被纳入视野。本路线图只收敛视频文件本体的评分算法；远端的 `【作品验收】` 和 `【数据复盘】` 仍作为策略评价层保留，详见 `08.10_远端作品验收与数据复盘评价边界.md`。远端不能成为第二套视频评分器，但也不应被削弱成只有任务编排。
+远端服务器也要被纳入视野。本路线图只收敛视频文件本体的评分算法；远端的 `【作品验收】` 和 `【数据复盘】` 仍作为策略评价层保留，详见 `remote-review-boundaries.md`。远端不能成为第二套视频评分器，但也不应被削弱成只有任务编排。
 
 ## 单一事实源
 
 算法事实源登记在：
 
 ```text
-99_System_OpenClaw/review_capabilities.registry.json
+review-capabilities.registry.json
 ```
 
 算法实现入口是：
 
 ```text
-99_System_OpenClaw/scripts/19_review_output_video.py
+scripts/review_output_video.py
 ```
 
 校验入口是：
 
 ```bash
-python3 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py
+python3 scripts/validate_review_capability_registry.py
 ```
 
 ## 算法层 1：技术门禁

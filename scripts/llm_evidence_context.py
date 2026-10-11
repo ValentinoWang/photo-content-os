@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Shared LLM material-evidence-context helpers for 17/18's generation scripts.
 
-17_match_materials_to_brief.py and 18_generate_storyboard_edl.py each grew an
+match_materials_to_brief.py and generate_storyboard_edl.py each grew an
 almost-identical set of helpers for turning one manifest item into evidence a
 model can be trusted to reason from (RawVault/360 framing, transcript
 segments, keyframe references, cached summaries). This module is their single
@@ -16,7 +16,7 @@ its own SYSTEM_PROMPT explicitly promises the model ("你拿到的 keyframes
 would catch a field silently dropped or reshaped during such a merge. Each
 script keeps its own context_items() referencing the shared helpers below.
 
-05_write_content_summary.py's transcript_payload() is also deliberately left
+write_content_summary.py's transcript_payload() is also deliberately left
 unmerged: it returns a different-shaped status/language/text envelope (not a
 plain segment list), it silently slices per-segment text instead of using
 bounded_prompt_text's explicit truncation marker, and unifying that truncation
@@ -47,8 +47,8 @@ def nearby_script_path(brief_path: Path) -> Path:
 def raw360_reference_summary(item: dict[str, Any]) -> str:
     """Describe a RawVault/360 item as strong first-person evidence, not a missing clip.
 
-    This is 17_match_materials_to_brief.py's original (longer) wording, which
-    18_generate_storyboard_edl.py's own copy was missing one sentence of --
+    This is match_materials_to_brief.py's original (longer) wording, which
+    generate_storyboard_edl.py's own copy was missing one sentence of --
     "报告中不得再把第一视角素材简单判为缺失" -- the explicit instruction not
     to report this kind of evidence as missing footage. Both scripts now get
     the fuller text.

@@ -24,7 +24,7 @@ Final 文件名：
 原 Mac 项目路径：
 
 ```text
-/Users/vsiyo/Desktop/照片筛选/01_Project_Workspace/主题集合/项目目录
+/Users/vsiyo/Desktop/照片筛选/projects/主题集合/项目目录
 ```
 
 Mac 当前保留：
@@ -73,7 +73,7 @@ Creator_Media_ColdArchive/YYYY/YYYYMMDD_项目名/
 2. 从冷归档路径复制项目包回：
 
 ```text
-/Users/vsiyo/Desktop/照片筛选/01_Project_Workspace/主题集合/项目目录_RESTORE_YYYYMMDD
+/Users/vsiyo/Desktop/照片筛选/projects/主题集合/项目目录_RESTORE_YYYYMMDD
 ```
 
 3. 如只需要发布版，优先从 iCloud 照片或阿里云盘取 Final，不恢复全量源素材。

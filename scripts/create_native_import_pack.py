@@ -109,7 +109,7 @@ def run_ffmpeg(args: list[str]) -> None:
 def heic_proxy(source: Path, output: Path) -> Path:
     if source.suffix.lower() not in {".heic", ".heif"}:
         return source
-    cache_dir = output.parent.parent / "_source_cache"
+    cache_dir = output.parent.parent / "-source-cache"
     cache_dir.mkdir(parents=True, exist_ok=True)
     proxy = cache_dir / f"{slug_text(source.stem)}.jpg"
     if proxy.exists() and proxy.stat().st_size > 0:
@@ -230,7 +230,7 @@ def write_caption_readme(captions_dir: Path, srt_path: Path) -> Path:
 
 正确操作：
 
-1. 在剪映里先导入 `01_clips/` 下全部视频，并拖入时间线。
+1. 在剪映里先导入 `clips/` 下全部视频，并拖入时间线。
 2. 打开 `文本 -> 本地字幕`。
 3. 选择本目录下的 `captions.srt`。
 4. 预览字幕后添加到时间线。
@@ -242,7 +242,7 @@ def write_caption_readme(captions_dir: Path, srt_path: Path) -> Path:
 
 
 def concat_preview(package_dir: Path, preview_dir: Path, clips: list[Path]) -> Path:
-    list_path = package_dir / "_concat_list.txt"
+    list_path = package_dir / "concat-list.txt"
     list_path.write_text("\n".join(f"file '{clip}'" for clip in clips) + "\n", encoding="utf-8")
     preview = preview_dir / "preview_roughcut.mp4"
     run_ffmpeg(
@@ -302,20 +302,20 @@ def write_readme(
 ## 剪映导入步骤
 
 1. 打开剪映，新建空项目。
-2. 导入 `01_clips/` 下全部 mp4。
+2. 导入 `clips/` 下全部 mp4。
 3. 按文件名排序。
 4. 全选所有片段，拖入主时间线。
-5. 字幕文件已经在 `02_captions/captions.srt`，但剪映不会自动把它放到时间线。
+5. 字幕文件已经在 `captions/captions.srt`，但剪映不会自动把它放到时间线。
 6. 不要在“媒体/导入”里导入 `captions.srt`。字幕必须走 `文本 -> 本地字幕`。
-7. 在 `文本 -> 本地字幕` 中选择 `02_captions/captions.srt`，预览后添加到时间线。
-8. BGM 优先在剪映或平台曲库里人工选择；如果 `03_audio/` 有文件，可按需导入。
+7. 在 `文本 -> 本地字幕` 中选择 `captions/captions.srt`，预览后添加到时间线。
+8. BGM 优先在剪映或平台曲库里人工选择；如果 `audio/` 有文件，可按需导入。
 9. 保存草稿后，在 `11_roughcut_review.md` 里勾选人工检查项。
 
 ## 说明
 
-- `04_preview/preview_roughcut.mp4` 只用于预览，不用于最终精剪。
-- `01_clips/` 中每段都是独立可编辑片段。
-- `02_captions/README_字幕导入.md` 是单独的字幕操作说明。
+- `preview/preview_roughcut.mp4` 只用于预览，不用于最终精剪。
+- `clips/` 中每段都是独立可编辑片段。
+- `captions/README_字幕导入.md` 是单独的字幕操作说明。
 - 所有片段均按 H.264 / yuv420p / {width}x{height} / {fps}fps 生成。
 - Mac OpenClaw 不自动插入 BGM。
 """
@@ -363,10 +363,10 @@ def create_package(plan_path: Path, output_root: Path, result_output: Path | Non
         if not allow_replace:
             raise ContractError(f"pack already exists: {pack_dir}")
         shutil.rmtree(pack_dir)
-    clips_dir = ensure_dir(pack_dir / "01_clips")
-    captions_dir = ensure_dir(pack_dir / "02_captions")
-    audio_dir = ensure_dir(pack_dir / "03_audio")
-    preview_dir = ensure_dir(pack_dir / "04_preview")
+    clips_dir = ensure_dir(pack_dir / "clips")
+    captions_dir = ensure_dir(pack_dir / "captions")
+    audio_dir = ensure_dir(pack_dir / "audio")
+    preview_dir = ensure_dir(pack_dir / "preview")
 
     rendered_clips: list[Path] = []
     manifest_clips: list[dict[str, Any]] = []
@@ -391,7 +391,7 @@ def create_package(plan_path: Path, output_root: Path, result_output: Path | Non
             {
                 "slot": int(clip.get("slot", index)),
                 "filename": output.name,
-                "relative_path": f"01_clips/{output.name}",
+                "relative_path": f"clips/{output.name}",
                 "output": str(output),
                 "source_file": str(source),
                 "timeline_start_sec": start,
@@ -408,7 +408,7 @@ def create_package(plan_path: Path, output_root: Path, result_output: Path | Non
     caption_readme = write_caption_readme(captions_dir, srt_path)
     bgm_optional = copy_optional_bgm(plan, audio_dir)
     preview = concat_preview(pack_dir, preview_dir, rendered_clips)
-    edit_manifest = pack_dir / "edit_manifest.json"
+    edit_manifest = pack_dir / "edit-manifest.json"
     manifest = {
         "spec_version": "content_os_v0.1",
         "doc_type": "native_import_pack_manifest",
@@ -425,11 +425,11 @@ def create_package(plan_path: Path, output_root: Path, result_output: Path | Non
         },
         "import_order": [item["relative_path"] for item in manifest_clips],
         "clips": manifest_clips,
-        "captions_srt": "02_captions/captions.srt",
-        "caption_readme": "02_captions/README_字幕导入.md",
+        "captions_srt": "captions/captions.srt",
+        "caption_readme": "captions/README_字幕导入.md",
         "caption_import_method": "Jianying: 文本 -> 本地字幕 -> 选择 captions.srt",
-        "bgm_optional": "03_audio/" + Path(bgm_optional).name if bgm_optional else "",
-        "preview_video": "04_preview/preview_roughcut.mp4",
+        "bgm_optional": "audio/" + Path(bgm_optional).name if bgm_optional else "",
+        "preview_video": "preview/preview_roughcut.mp4",
         "human_steps_required": [
             "open_jianying",
             "create_new_project",

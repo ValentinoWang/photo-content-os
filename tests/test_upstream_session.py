@@ -10,7 +10,7 @@ SYSTEM_ROOT = Path(__file__).resolve().parents[1]
 if str(SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(SYSTEM_ROOT))
 
-from desktop.upstream_session import (  # noqa: E402
+from studio.upstream_session import (  # noqa: E402
     UpstreamSessionConsumer,
     UpstreamSessionContractError,
 )

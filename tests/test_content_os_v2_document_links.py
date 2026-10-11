@@ -8,15 +8,15 @@ import unittest
 from pathlib import Path
 
 
-LOCAL_ROOT = Path(__file__).resolve().parents[2]
-SYSTEM_ROOT = LOCAL_ROOT / "99_System_OpenClaw"
+LOCAL_ROOT = Path(__file__).resolve().parents[1]
+SYSTEM_ROOT = LOCAL_ROOT
 OBSIDIAN_ROOT = Path("~/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体").expanduser()
 
 LOCAL_DOCUMENTS = [
     SYSTEM_ROOT / "AGENTS.md",
-    SYSTEM_ROOT / "docs/00_本地素材与剪映HyperFrames流转总纲.md",
-    SYSTEM_ROOT / "docs/05_剪映与HyperFrames.md",
-    SYSTEM_ROOT / "docs/08_usage_guides_使用指南/08.05_需要进入剪映或成片复核_导入包与验收.md",
+    SYSTEM_ROOT / "docs/media-workflow.md",
+    SYSTEM_ROOT / "docs/editing-and-hyperframes.md",
+    SYSTEM_ROOT / "docs/usage-guides/editing-handoff-review.md",
     SYSTEM_ROOT / "docs/README.md",
     SYSTEM_ROOT / "scripts/README.md",
 ]

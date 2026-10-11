@@ -43,7 +43,7 @@ DEFAULT_VAULT_ROOT = obsidian_root()
 CAPABILITIES = Path("00_入口与总览/mac_runner_capabilities.yaml")
 REQUIRED_CREATIVE_PROVIDER = DEFAULT_CREATIVE_PROVIDER
 CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
-OTIO_KDENLIVE_PYTHON = runtime_python(WORKSPACE_ROOT)
+OTIO_KDENLIVE_PYTHON = runtime_python()
 
 REQUIRED_ACTIONS = {
     "local_material_match": [
@@ -424,15 +424,15 @@ def validate_content_os_link(config: RunnerConfig, task: dict[str, Any], project
 
 
 def find_project_by_id(config: RunnerConfig, project_id: str) -> Path:
-    index_path = config.workspace_root / "01_Project_Workspace" / ".content_os_project_index.json"
+    index_path = config.workspace_root / "projects" / ".content_os_project_index.json"
     try:
         index = json.loads(index_path.read_text(encoding="utf-8"))
         indexed = Path(str(index.get(project_id, ""))).expanduser()
-        if indexed.is_dir() and indexed.resolve().parent == (config.workspace_root / "01_Project_Workspace").resolve():
+        if indexed.is_dir() and indexed.resolve().parent == (config.workspace_root / "projects").resolve():
             return indexed.resolve()
     except (OSError, ValueError, AttributeError):
         pass
-    roots = [config.workspace_root / "01_Project_Workspace"]
+    roots = [config.workspace_root / "projects"]
     matches: list[Path] = []
     for root in roots:
         if not root.exists() or not root.is_dir():
@@ -533,31 +533,31 @@ status: local_assets_recorded
 # AI 分析文件
 
 ```text
-_ai_analysis/media_manifest.json
-_ai_analysis/keyframes/
-_ai_analysis/prompts/
-_ai_analysis/summaries/
-_ai_analysis/project_overview.md
+ai-analysis/media-manifest.json
+ai-analysis/keyframes/
+ai-analysis/prompts/
+ai-analysis/summaries/
+ai-analysis/project-overview.md
 ```
 
 # 剪辑工程区
 
 ```text
-90_Draft_Project/
+draft-project/
 ```
 
 # 输出区
 
 ```text
-91_Output/V1
-91_Output/V2
-91_Output/Final
+output/V1
+output/V2
+output/Final
 ```
 
 # WorkCache
 
 ```text
-App_WorkCache/
+work-cache/
 ```
 
 # 本次建议进入剪辑的素材
@@ -686,7 +686,7 @@ def run_local_material_match(
         run_command(
             [
                 sys.executable,
-                script_path("17_match_materials_to_brief.py"),
+                script_path("match_materials_to_brief.py"),
                 str(project_dir),
                 "--brief",
                 str(brief),
@@ -700,12 +700,12 @@ def run_local_material_match(
                 REQUIRED_CREATIVE_REASONING,
             ]
         )
-        tools_used["match_materials_to_brief"] = script_path("17_match_materials_to_brief.py")
+        tools_used["match_materials_to_brief"] = script_path("match_materials_to_brief.py")
 
         run_command(
             [
                 sys.executable,
-                script_path("18_generate_storyboard_edl.py"),
+                script_path("generate_storyboard_edl.py"),
                 str(project_dir),
                 "--brief",
                 str(brief),
@@ -723,7 +723,7 @@ def run_local_material_match(
                 REQUIRED_CREATIVE_REASONING,
             ]
         )
-        tools_used["generate_storyboard_edl"] = script_path("18_generate_storyboard_edl.py")
+        tools_used["generate_storyboard_edl"] = script_path("generate_storyboard_edl.py")
 
         write_local_assets(local_assets, task, project_dir, edl)
         tools_used["write_local_assets"] = str(Path(__file__).resolve())
@@ -822,7 +822,7 @@ def output_review_result(
         "next_owner": summary.get("next_owner", "human_editor"),
         "risk_flags": summary.get("risk_flags") or [],
         "outputs": {
-            "output_review": vault_rel(config, report),
+            "output-review": vault_rel(config, report),
         },
         "local_outputs": {
             "metrics": str(metrics),
@@ -860,7 +860,7 @@ def backend_source_files(config: RunnerConfig, task: dict[str, Any]) -> tuple[Pa
 def backend_output_root(config: RunnerConfig, task: dict[str, Any]) -> Path:
     """Return the revision-scoped local handoff root without creating it."""
 
-    return local_project_path(config, task) / "90_Draft_Project" / "edit_handoff"
+    return local_project_path(config, task) / "draft-project" / "edit-handoff"
 
 
 def write_confirmed_revision_basis(config: RunnerConfig, task: dict[str, Any]) -> Path | None:
@@ -898,7 +898,7 @@ def write_confirmed_revision_basis(config: RunnerConfig, task: dict[str, Any]) -
     }
     path = (
         local_project_path(config, task)
-        / "90_Draft_Project"
+        / "draft-project"
         / "revision_basis"
         / str(task["project_revision"])
         / f"{change_request_id}.json"
@@ -1213,19 +1213,19 @@ def run_ai_edit_log(
     edit_log = expected_output(config, task, "07_edit_log.md")
     generation_dir = (
         local_project_path(config, task)
-        / "90_Draft_Project"
-        / "edit_handoff"
+        / "draft-project"
+        / "edit-handoff"
         / str(task["project_revision"])
         / "ai_edit_log"
         / str(task["task_id"])
     )
-    prompt_output = generation_dir / "ai_edit_log_prompt.txt"
+    prompt_output = generation_dir / "ai-edit-log-prompt.txt"
     tools_used: dict[str, str] = {}
 
     if execute:
         args = [
             sys.executable,
-            script_path("29_generate_ai_edit_log.py"),
+            script_path("generate_ai_edit_log.py"),
             "--project-package",
             str(project_dir),
             "--output",
@@ -1246,7 +1246,7 @@ def run_ai_edit_log(
         if allow_replace_generated:
             args.append("--allow-overwrite")
         run_command(args)
-        tools_used["generate_ai_edit_log"] = script_path("29_generate_ai_edit_log.py")
+        tools_used["generate_ai_edit_log"] = script_path("generate_ai_edit_log.py")
     else:
         tools_used["write_result"] = "existing_outputs"
 
@@ -1267,7 +1267,7 @@ def run_output_review(
     script = optional_input_file_path(config, task, "script_path") or (project_package_dir(config, task) / "04_script.md")
     publish_pack = optional_input_file_path(config, task, "publish_pack_path") or (project_package_dir(config, task) / "09_publish_pack.md")
     bgm_review_dir = output_review_bgm_review_dir(config, task)
-    generation_dir = analysis_dir(project_dir) / "output_review" / str(task["task_id"])
+    generation_dir = analysis_dir(project_dir) / "output-review" / str(task["task_id"])
     metrics = generation_dir / "metrics.json"
     local_result = generation_dir / "output_review_result.yaml"
     tools_used: dict[str, str] = {}
@@ -1275,7 +1275,7 @@ def run_output_review(
     if execute:
         args = [
             sys.executable,
-            script_path("19_review_output_video.py"),
+            script_path("review_output_video.py"),
             "--task-id",
             str(task["task_id"]),
             "--project-id",
@@ -1310,7 +1310,7 @@ def run_output_review(
         if publish_pack.exists():
             args.extend(["--publish-pack", str(publish_pack)])
         run_command(args)
-        tools_used["review_output_video"] = script_path("19_review_output_video.py")
+        tools_used["review_output_video"] = script_path("review_output_video.py")
     else:
         tools_used["write_result"] = "existing_outputs"
 
@@ -1447,7 +1447,7 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--allow-replace-result", action="store_true")
     run_parser.add_argument("--allow-replace-generated", action="store_true")
     run_parser.add_argument("--skip-runtime-check", action="store_true")
-    run_parser.add_argument("--skip-analyze", action="store_true", help="Reuse existing _ai_analysis/media_manifest.json")
+    run_parser.add_argument("--skip-analyze", action="store_true", help="Reuse existing ai-analysis/media-manifest.json")
 
     write_parser = subparsers.add_parser("write-result", help="Write a result from existing task outputs.")
     write_parser.add_argument("task")

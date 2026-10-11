@@ -15,7 +15,7 @@ SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 SCHEMAS = Path(__file__).resolve().parents[1] / "schemas"
 sys.path.insert(0, str(SCRIPTS))
 
-module = load_script("03_transcribe_audio.py", "transcription_under_test")
+module = load_script("transcribe_audio.py", "transcription_under_test")
 
 
 class TranscriptionTests(unittest.TestCase):
@@ -23,7 +23,7 @@ class TranscriptionTests(unittest.TestCase):
         segments = module.parse_srt("1\n00:00:00,000 --> 00:00:01,250\n你好\n\n2\n00:00:01,250 --> 00:00:03,000\n世界\n")
         document = module.transcript_document(
             media_id="m1",
-            audio_ref="_ai_analysis/audio/m1.wav",
+            audio_ref="ai-analysis/audio/m1.wav",
             provider="sidecar",
             model="sidecar-v1",
             language="zh",
@@ -31,7 +31,7 @@ class TranscriptionTests(unittest.TestCase):
         )
         self.assertEqual(document["status"], "ok")
         self.assertEqual(document["segments"][1]["start_sec"], 1.25)
-        schema = json.loads((SCHEMAS / "audio_transcript.schema.json").read_text(encoding="utf-8"))
+        schema = json.loads((SCHEMAS / "audio-transcript.schema.json").read_text(encoding="utf-8"))
         self.assertIn(document["status"], schema["properties"]["status"]["enum"])
         self.assertTrue(set(schema["required"]).issubset(document))
 

@@ -13,7 +13,7 @@ from pathlib import Path
 SYSTEM = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SYSTEM))
 
-from desktop.server import serve  # noqa: E402
+from studio.server import serve  # noqa: E402
 from llm_common import LLMError  # noqa: E402
 
 
@@ -68,7 +68,7 @@ class DesktopServerTests(unittest.TestCase):
         status, bootstrap = self.request("/api/bootstrap")
         self.assertEqual(status, 200)
         workspace = Path(self.temp.name) / "project-media"
-        manifest_path = workspace / "_ai_analysis" / "media_manifest.json"
+        manifest_path = workspace / "ai-analysis" / "media-manifest.json"
         manifest_path.parent.mkdir(parents=True)
         manifest_path.write_text(json.dumps({
             "manifest_version": 1,

@@ -16,19 +16,19 @@ from asset_library_index import (
     stable_asset_id,
     upsert_asset,
 )
-from media_common import file_sha256, path_inside, project_path, relative_posix, safe_slug
+from media_common import file_sha256, path_inside, project_path, relative_posix, directory_slug
 
 
-DEFAULT_INDEX_NAME = "Reusable_通用素材索引.md"
+DEFAULT_INDEX_NAME = "reusable-assets.md"
+
+
+from runtime_paths import local_media_root
 
 
 def find_library_root(project: Path, value: str | None) -> Path:
     if value:
         return Path(value).expanduser().resolve()
-    for parent in [project, *project.parents]:
-        if (parent / "99_System_OpenClaw" / "docs" / "00_本地素材与剪映HyperFrames流转总纲.md").exists():
-            return parent / "02_Asset_Library"
-    return project.parent / "02_Asset_Library"
+    return local_media_root() / "library"
 
 
 def resolve_media(project: Path, value: str) -> Path:
@@ -181,7 +181,7 @@ def register_asset(args: argparse.Namespace, *, apply: bool = False) -> tuple[Pa
     existing_asset = get_asset(structured_index, asset_key)
 
     if existing_asset is None:
-        card_rel = f"{safe_slug(category)}/{asset_key}_{safe_slug(title)}.asset.md"
+        card_rel = f"{directory_slug(category, 'category')}/asset-{asset_key}.asset.md"
     else:
         card_rel = existing_asset["card_path"]
     card_path = (library_root / card_rel).resolve()
@@ -239,14 +239,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="登记多重价值素材到通用资产索引")
     parser.add_argument("project_dir", help="素材所属项目目录")
     parser.add_argument("media_path", help="项目内相对路径或绝对路径")
-    parser.add_argument("--library-root", help="资产库目录，默认查找本地素材根下的 02_Asset_Library")
-    parser.add_argument("--category", default="Reusable_通用素材", help="资产分类目录，如 Reusable_颜值类")
+    parser.add_argument("--library-root", help="资产库目录，默认查找本地素材根下的 library")
+    parser.add_argument("--category", default="Reusable_通用素材", help="资产分类目录，如 reusable-portraits")
     parser.add_argument("--title", help="索引标题")
     parser.add_argument("--tags", help="标签，支持用顿号/逗号/分号分隔")
     parser.add_argument("--uses", help="复用用途，支持用顿号/逗号/分号分隔")
     parser.add_argument("--cuts", help="建议截取，支持用顿号/逗号/分号分隔")
     parser.add_argument("--public-status", help="公开状态，例如 可公开 / 待确认 / 私密")
-    parser.add_argument("--icloud-copy", help="已进入 80_To_iCloudPhotos_精选入库 的副本路径")
+    parser.add_argument("--icloud-copy", help="已进入 icloud-selected 的副本路径")
     parser.add_argument("--notes", help="补充备注")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--apply", action="store_true", help="写入结构化索引、Markdown 索引和资产卡片")

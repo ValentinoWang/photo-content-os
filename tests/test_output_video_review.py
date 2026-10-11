@@ -17,7 +17,7 @@ from _support import load_script
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-output_review = load_script("19_review_output_video.py", "output_review", register=True)
+output_review = load_script("review_output_video.py", "output_review", register=True)
 
 
 def run_ffmpeg(args: list[str]) -> None:
@@ -153,9 +153,9 @@ class OutputVideoReviewIntegrationTest(unittest.TestCase):
             )
 
             metrics = json.loads((root / "review/metrics.json").read_text(encoding="utf-8"))
-            rhythm_metrics = root / "review/rhythm_sync/rhythm_sync_metrics.json"
-            rhythm_result = root / "review/rhythm_sync/rhythm_sync_result.yaml"
-            rhythm_report = root / "review/rhythm_sync/rhythm_sync_report.md"
+            rhythm_metrics = root / "review/rhythm-sync/rhythm_sync_metrics.json"
+            rhythm_result = root / "review/rhythm-sync/rhythm_sync_result.yaml"
+            rhythm_report = root / "review/rhythm-sync/rhythm_sync_report.md"
 
             self.assertTrue(result["rhythm_sync_enabled"])
             self.assertEqual(result["rhythm_profile"], "general_bgm_edit")
@@ -255,7 +255,7 @@ class OutputVideoReviewUnitTest(unittest.TestCase):
     def test_apply_vlm_semantic_review_updates_strategy_score(self) -> None:
         versions = [
             {
-                "version_name": "单人会场舞台加长版",
+                "version_name": "solo-stage-extended",
                 "creative_review": {
                     "score": 67.3,
                     "confidence": "low",
@@ -271,7 +271,7 @@ class OutputVideoReviewUnitTest(unittest.TestCase):
                 "confidence": "medium",
                 "versions": [
                     {
-                        "version_name": "单人会场舞台加长版",
+                        "version_name": "solo-stage-extended",
                         "overall_score": 82,
                         "person_state_score": 78,
                         "composition_aesthetic_score": 80,

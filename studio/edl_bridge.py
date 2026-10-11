@@ -20,7 +20,7 @@ AUTHORITY_FILE = "06_edit_decision_list.json"
 BRIDGE_SCHEMA_VERSION = "studio_edl_bridge_v1"
 VALIDATOR = "edl_contract.normalise_edl"
 EDL_SCHEMA_VERSIONS = frozenset({"edit_decision_list_v1", "edit_decision_list_v2"})
-EDL_SCHEMA_PATH = SCRIPTS_DIR.parent / "schemas" / "edit_decision_list.schema.json"
+EDL_SCHEMA_PATH = SCRIPTS_DIR.parent / "schemas" / "edit-decision-list.schema.json"
 
 
 def _load_required_fields() -> tuple[tuple[str, ...], tuple[str, ...]]:

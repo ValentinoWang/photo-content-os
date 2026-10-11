@@ -53,7 +53,7 @@ def capabilities() -> dict:
 
 class ContentOsV2RunnerContractTest(unittest.TestCase):
     def test_runner_uses_shared_runtime_path_helper(self) -> None:
-        self.assertEqual(runner.OTIO_KDENLIVE_PYTHON, runtime_python(ROOT.parent))
+        self.assertEqual(runner.OTIO_KDENLIVE_PYTHON, runtime_python(ROOT))
 
     def test_runtime_check_passes_fixed_runtime_to_shell_gate(self) -> None:
         with patch.object(runner, "run_command") as run_command:
@@ -217,7 +217,7 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
             runner.RunnerConfig(vault_root=self.vault, workspace_root=self.root), task
         )
 
-        self.assertEqual(path, local_project / "90_Draft_Project/revision_basis/3" / f"{CHANGE_ID}.json")
+        self.assertEqual(path, local_project / "draft-project/revision_basis/3" / f"{CHANGE_ID}.json")
         payload = json.loads(path.read_text(encoding="utf-8"))
         self.assertEqual(payload["doc_type"], "confirmed_revision_basis")
         self.assertEqual(payload["change_request_id"], CHANGE_ID)
@@ -281,7 +281,7 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
                 "storyboard_path": f"08_内容项目/{PROJECT_ID}/05_storyboard.md",
                 "local_project_path": str(local_project),
             },
-            expected_outputs=["90_Draft_Project/edit_handoff/3/manifest.json"],
+            expected_outputs=["draft-project/edit-handoff/3/manifest.json"],
             allowed_actions=["generate_edit_handoff_pack", "validate_edit_handoff_pack"],
         )
         inbox = self.vault / "98_Agent任务队列" / "01_cloud_to_mac_ready"
@@ -346,7 +346,7 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
                 "storyboard_path": f"08_内容项目/{PROJECT_ID}/05_storyboard.md",
                 "local_project_path": str(local_project),
             },
-            expected_outputs=["90_Draft_Project/edit_handoff/3/timeline.otio"],
+            expected_outputs=["draft-project/edit-handoff/3/timeline.otio"],
             allowed_actions=["generate_otio_timeline", "create_kdenlive_timeline", "validate_kdenlive_timeline"],
         )
         inbox = self.vault / "98_Agent任务队列" / "01_cloud_to_mac_ready"

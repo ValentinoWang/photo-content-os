@@ -20,7 +20,7 @@ from media_common import (
 )
 
 VISUAL_SIMILARITY_THRESHOLD = 8
-USER_INTENT_NOTES = f"{ANALYSIS_DIR}/user_intent_notes.md"
+USER_INTENT_NOTES = f"{ANALYSIS_DIR}/user-intent-notes.md"
 
 CARD_SCHEMA = """# 作品内容概述
 
@@ -137,8 +137,8 @@ L3_STRUCTURE_PROMPT_HEADER = """# 项目 L3 内容结构判读任务
 1. 不使用固定模板目录。不要因为脚本、旧项目或目录历史里出现过某些分类名就照抄。
 2. 先判断这个项目真实叙事：它是单一事件、旅程、人物线、交付包，还是多主题集合。
 3. L3 内容目录必须来自全局语义分析，目录名要服务剪辑和复核，不要服务“高光筛选”。
-4. `80_To_iCloudPhotos_精选入库`、`90_Draft_Project`、`91_Output`、`92_Aliyun_SyncReady`、`待增加`、`_ai_analysis` 是工作流目录，不是内容分类目录。
-5. `00_RawVault_不可直用` 可以按原始关联组或待重构类型建立子目录，但 OSV/LRF/INSV、HEIC/MOV/XMP 等关联组必须同组移动，不拆语义。
+4. `icloud-selected`、`draft-project`、`output`、`sync-ready`、`additions`、`ai-analysis` 是工作流目录，不是内容分类目录。
+5. `raw-vault` 可以按原始关联组或待重构类型建立子目录，但 OSV/LRF/INSV、HEIC/MOV/XMP 等关联组必须同组移动，不拆语义。
 6. 输出结构计划时，只移动项目内已有素材，不覆盖已有文件，不删除素材。
 7. 先检查“视觉相似候选组”。同一主体、同一机位、同一场景、同一动作链条的短片段，默认归入同一个 L3 内容目录；只有画面证据能证明功能不同，才允许拆开。
 8. `同框 / 互动 / 交流 / 关系` 这类人物关系词必须有明确画面证据；如果只是单人主体，优先写可观察的站位、动作或场景描述。
@@ -322,7 +322,7 @@ def l3_structure_prompt(
 def keyframe_block(item: dict[str, object]) -> str:
     frames = item.get("keyframes") or []
     if not frames:
-        return "无。请先运行 02_extract_keyframes.py，或仅根据素材信息保守判断。"
+        return "无。请先运行 extract_keyframes.py，或仅根据素材信息保守判断。"
     return "\n".join(f"- {frame}" for frame in frames)
 
 
@@ -354,7 +354,7 @@ def load_user_intent_notes(project: Path) -> str:
 
 
 def write_workflow_prompts(project: Path, prompt_dir: Path, creator_context: str = "") -> int:
-    template_dir = Path(__file__).resolve().parent / "prompt_templates"
+    template_dir = Path(__file__).resolve().parent / "prompt-templates"
     output_dir = prompt_dir / "workflows"
     output_dir.mkdir(parents=True, exist_ok=True)
     if not template_dir.exists():
@@ -389,8 +389,8 @@ def main() -> None:
         for item in manifest["items"]
         if eligible_item(item, include_derived=args.include_derived)
     }
-    expected_prompts.add(prompt_dir / "project_overview_prompt.md")
-    expected_prompts.add(prompt_dir / "project_l3_structure_prompt.md")
+    expected_prompts.add(prompt_dir / "project-overview-prompt.md")
+    expected_prompts.add(prompt_dir / "project-l3-structure-prompt.md")
     pruned = prune_stale_prompts(prompt_dir, expected_prompts)
 
     count = 0
@@ -433,16 +433,16 @@ def main() -> None:
         if eligible_item(item, include_derived=args.include_derived) or item.get("lifecycle") == "raw_or_pending"
     ]
     similarity_groups, similarity_pairs = visual_similarity_groups(project, l3_items)
-    (analysis_dir(project) / "visual_similarity_groups.md").write_text(
+    (analysis_dir(project) / "visual-similarity-groups.md").write_text(
         visual_similarity_markdown(similarity_groups, similarity_pairs),
         encoding="utf-8",
     )
 
-    (prompt_dir / "project_overview_prompt.md").write_text(
+    (prompt_dir / "project-overview-prompt.md").write_text(
         PROJECT_PROMPT.format(user_intent_notes=user_intent_notes, creator_context=creator_context),
         encoding="utf-8",
     )
-    (prompt_dir / "project_l3_structure_prompt.md").write_text(
+    (prompt_dir / "project-l3-structure-prompt.md").write_text(
         l3_structure_prompt(project, manifest, args.include_derived, similarity_groups, similarity_pairs, user_intent_notes, creator_context),
         encoding="utf-8",
     )

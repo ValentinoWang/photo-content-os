@@ -27,7 +27,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             pack_dir = base / "pack"
-            manifest = pack_dir / "edit_manifest.json"
+            manifest = pack_dir / "edit-manifest.json"
             manifest.parent.mkdir(parents=True)
             manifest.write_text(
                 json.dumps({"target": {"width": 720, "height": 1280, "fps": 24}}),
@@ -40,10 +40,10 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
                         "doc_type": "native_import_pack_result",
                         "pack_dir": str(pack_dir),
                         "contents": {
-                            "clips_dir": str(pack_dir / "01_clips"),
-                            "captions_srt": str(pack_dir / "02_captions/captions.srt"),
+                            "clips_dir": str(pack_dir / "clips"),
+                            "captions_srt": str(pack_dir / "captions/captions.srt"),
                             "bgm_optional": "",
-                            "preview_video": str(pack_dir / "04_preview/preview.mp4"),
+                            "preview_video": str(pack_dir / "preview/preview.mp4"),
                             "edit_manifest": str(manifest),
                         },
                     },
@@ -56,7 +56,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "28_generate_jianying_import_readme.py"),
+                    str(ROOT / "scripts" / "generate_jianying_import_readme.py"),
                     "--result",
                     str(result_path),
                     "--output",
@@ -142,11 +142,11 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             plan_path.write_text(json.dumps(plan, ensure_ascii=False), encoding="utf-8")
 
             result_path = base / "06d_native_import_pack_result.yaml"
-            output_root = base / "native_import_packs"
+            output_root = base / "native-import-packs"
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "26_create_native_import_pack.py"),
+                    str(ROOT / "scripts" / "create_native_import_pack.py"),
                     "--plan",
                     str(plan_path),
                     "--output-root",
@@ -160,12 +160,12 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             self.assertEqual(result["doc_type"], "native_import_pack_result")
             package_dir = Path(result["pack_dir"])
             self.assertEqual(result["pack_name"], "jy_import_pack_unit_native")
-            self.assertTrue((package_dir / "01_clips" / "001_000-002_开头.mp4").exists())
-            self.assertTrue((package_dir / "01_clips" / "002_002-004_第二段.mp4").exists())
-            self.assertTrue((package_dir / "02_captions" / "captions.srt").exists())
-            self.assertTrue((package_dir / "02_captions" / "README_字幕导入.md").exists())
-            self.assertTrue((package_dir / "04_preview" / "preview_roughcut.mp4").exists())
-            self.assertTrue((package_dir / "edit_manifest.json").exists())
+            self.assertTrue((package_dir / "clips" / "001_000-002_开头.mp4").exists())
+            self.assertTrue((package_dir / "clips" / "002_002-004_第二段.mp4").exists())
+            self.assertTrue((package_dir / "captions" / "captions.srt").exists())
+            self.assertTrue((package_dir / "captions" / "README_字幕导入.md").exists())
+            self.assertTrue((package_dir / "preview" / "preview_roughcut.mp4").exists())
+            self.assertTrue((package_dir / "edit-manifest.json").exists())
             self.assertTrue((package_dir / "README_导入剪映.md").exists())
             readme = (package_dir / "README_导入剪映.md").read_text(encoding="utf-8")
             self.assertIn("720x1280 / 24fps", readme)
@@ -177,7 +177,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "27_validate_native_import_pack.py"),
+                    str(ROOT / "scripts" / "validate_native_import_pack.py"),
                     "--plan",
                     str(plan_path),
                     "--result",
@@ -198,7 +198,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
     def test_native_import_pack_rejects_raw360_source(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
-            raw = base / "00_RawVault_不可直用" / "400米第一视角_360原始组_待重构" / "全程记录_360原始组.LRF"
+            raw = base / "raw-vault" / "400m-pov-360-raw" / "全程记录_360原始组.LRF"
             raw.parent.mkdir(parents=True)
             raw.write_bytes(b"not-a-production-source")
 
@@ -238,11 +238,11 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "26_create_native_import_pack.py"),
+                    str(ROOT / "scripts" / "create_native_import_pack.py"),
                     "--plan",
                     str(plan_path),
                     "--output-root",
-                    str(base / "native_import_packs"),
+                    str(base / "native-import-packs"),
                     "--result-output",
                     str(base / "06d_native_import_pack_result.yaml"),
                 ],

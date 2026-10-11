@@ -13,7 +13,7 @@ SYSTEM = Path(__file__).resolve().parents[2]
 for directory in (SYSTEM, SYSTEM / "scripts"):
     if str(directory) not in sys.path:
         sys.path.insert(0, str(directory))
-from desktop.chatcut_mcp import LocalMcpSession
+from studio.chatcut_mcp import LocalMcpSession
 from media_common import file_sha256
 from edit_backends.kdenlive_render import plan_ranges, probe_media
 

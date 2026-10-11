@@ -21,7 +21,7 @@ from runtime_paths import MINIMUM_PYTHON, platform_contract_name, repository_roo
 _SYSTEM_ROOT = Path(__file__).resolve().parents[1]
 if str(_SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(_SYSTEM_ROOT))
-from desktop.chatcut_mcp import LocalMcpSession, McpError, read_registration
+from studio.chatcut_mcp import LocalMcpSession, McpError, read_registration
 from edit_backends.kdenlive_render import melt_executable
 from edit_backends.otio_kdenlive import kdenlive_executable
 

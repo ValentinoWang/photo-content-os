@@ -49,7 +49,7 @@ class ProjectStoreError(ValueError):
 
 # Semantic baseline: scripts/media_common.py's utc_now_z() (TF-09) -- byte-identical
 # to this function. Kept as its own definition rather than importing across the
-# desktop/ <-> scripts/ boundary: desktop/server.py adds scripts/ to sys.path before
+# studio/ <-> scripts/ boundary: studio/server.py adds scripts/ to sys.path before
 # importing this module, but tests/test_p2_project_store.py imports it directly with
 # only the repo root on sys.path, so `from media_common import utc_now_z` would break
 # under that entrypoint without also adding path-setup here. If either producer's
@@ -76,6 +76,19 @@ def _atomic(path: Path, value: Any) -> None:
             tmp.unlink()
 
 
+def workspace_label(path: Path) -> str:
+    manifest = path / "project-manifest.json"
+    if manifest.is_file():
+        try:
+            data = json.loads(manifest.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return path.name
+        title = data.get("title") if isinstance(data, dict) else None
+        if isinstance(title, str) and title.strip():
+            return title.strip()
+    return path.name
+
+
 def _thread_lock(path: Path) -> threading.RLock:
     key = str(path)
     with _THREAD_LOCKS_GUARD:
@@ -86,7 +99,7 @@ def _lock_file(handle: Any) -> None:
     if fcntl is not None:
         fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
         return
-    if msvcrt is None:  # pragma: no cover - all supported desktop platforms provide one.
+    if msvcrt is None:  # pragma: no cover - all supported studio platforms provide one.
         raise RuntimeError("no supported file locking primitive")
     handle.seek(0, os.SEEK_END)
     if handle.tell() == 0:
@@ -347,7 +360,7 @@ class ProjectStore:
         if local_workspace:
             path = Path(local_workspace).expanduser().resolve()
             if not path.is_dir(): raise ProjectStoreError("workspace_not_found", "本地素材目录不存在")
-            local_path, label = str(path), path.name
+            local_path, label = str(path), workspace_label(path)
         now = _now(); project = {"schema_version": PROJECT_SCHEMA_VERSION, "id": f"{_slug(title)}-{secrets.token_hex(5)}", "title": title, "platform": str(platform or "未指定")[:40], "account": str(account or "")[:80], "status": "planning", "revision": 1, "created_at": now, "updated_at": now, "local_workspace": {"workspace_id": "workspace-" + secrets.token_hex(8), "label": label, "local_path": local_path, "path_digest": _digest(local_path) if local_path else None}, "references": [], "assets": [], "inbox_confirmations": [], "documents": {n: _document(n) for n in DOCUMENT_NAMES}, "delivery": {"state": "not_started", "stale": False, "stale_reason": "", "stale_sources": [], "consumed_inputs": {}, "artifacts": []}, "publishing": {"state": "not_published", "published_at": None, "links": [], "metrics": {}}, "publishing_history": [], "analysis": {"state": "not_started", "tier": "metadata", "transcript_state": "not_started", "preview_state": "not_started"}, "audit": [{"id": "audit-" + secrets.token_hex(8), "at": now, "actor": "user", "action": "project_created", "detail": {"platform": str(platform or "未指定")[:40]}}]}
         with self._transaction() as data:
             data["projects"].append(project)
@@ -369,7 +382,7 @@ class ProjectStore:
         if not path.is_dir(): raise ProjectStoreError("workspace_not_found", "本地素材目录不存在")
         with self._transaction() as data:
             project = self._find(data, project_id); self._revision(project, expected_revision)
-            project["local_workspace"] = {"workspace_id": project.get("local_workspace", {}).get("workspace_id") or "workspace-" + secrets.token_hex(8), "label": path.name, "local_path": str(path), "path_digest": _digest(str(path))}; project["analysis"]["state"] = "not_started"
+            project["local_workspace"] = {"workspace_id": project.get("local_workspace", {}).get("workspace_id") or "workspace-" + secrets.token_hex(8), "label": workspace_label(path), "local_path": str(path), "path_digest": _digest(str(path))}; project["analysis"]["state"] = "not_started"
             self._touch(project, actor, "workspace_connected", {"label": path.name})
         return _public(project)
     def local_workspace_path(self, project_id: str) -> Path:

@@ -18,9 +18,9 @@ ROOT = SYSTEM.parent
 if str(SYSTEM) not in sys.path:
     sys.path.insert(0, str(SYSTEM))
 
-STATIC = SYSTEM / "desktop" / "static"
-OPENAPI = SYSTEM / "schemas" / "desktop_openapi.json"
-TRACEABILITY = SYSTEM / "schemas" / "full_checklist_traceability.json"
+STATIC = SYSTEM / "studio" / "static"
+OPENAPI = SYSTEM / "schemas" / "studio-openapi.json"
+TRACEABILITY = SYSTEM / "schemas" / "full-checklist-traceability.json"
 
 EXPECTED_ITEMS = {
     "D1", "D2", "D3", "A1", "A2",
@@ -49,7 +49,7 @@ REQUIRED_OPERATIONS = {
 
 class FullChecklistStaticAcceptanceTests(unittest.TestCase):
     def test_openapi_is_generated_from_the_canonical_contract(self) -> None:
-        api_contract = importlib.import_module("desktop.api_contract")
+        api_contract = importlib.import_module("studio.api_contract")
         checked_in = json.loads(OPENAPI.read_text(encoding="utf-8"))
         self.assertEqual(checked_in, api_contract.build_openapi())
         operation_ids = {
@@ -128,7 +128,7 @@ class FullChecklistStaticAcceptanceTests(unittest.TestCase):
 
 class FullChecklistHttpAcceptanceTests(unittest.TestCase):
     def setUp(self) -> None:
-        server_module = importlib.import_module("desktop.server")
+        server_module = importlib.import_module("studio.server")
         self.temp = tempfile.TemporaryDirectory()
         self.state_dir = Path(self.temp.name) / "state"
         self.server = server_module.serve(
@@ -252,7 +252,7 @@ class FullChecklistHttpAcceptanceTests(unittest.TestCase):
         _, bootstrap = self.request("/api/bootstrap")
         csrf = bootstrap["csrfToken"]
         workspace = Path(self.temp.name) / "workspace"
-        manifest_path = workspace / "_ai_analysis" / "media_manifest.json"
+        manifest_path = workspace / "ai-analysis" / "media-manifest.json"
         manifest_path.parent.mkdir(parents=True)
         manifest_path.write_text(
             json.dumps(
@@ -318,7 +318,7 @@ class FullChecklistHttpAcceptanceTests(unittest.TestCase):
         _, bootstrap = self.request("/api/bootstrap")
         csrf = bootstrap["csrfToken"]
         workspace = Path(self.temp.name) / "delete-workspace"
-        manifest_path = workspace / "_ai_analysis" / "media_manifest.json"
+        manifest_path = workspace / "ai-analysis" / "media-manifest.json"
         manifest_path.parent.mkdir(parents=True)
         manifest_path.write_text(
             json.dumps(

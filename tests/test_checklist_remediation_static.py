@@ -6,12 +6,12 @@ import unittest
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[2]
-ARTIFACT_DIR = ROOT / "agents-results" / "2026-09-01" / "openclaw-media-ui-prototype-and-checklist"
+ROOT = Path(__file__).resolve().parents[1]
+ARTIFACT_DIR = ROOT / "evidence" / "2026-09-01" / "openclaw-media-ui-prototype-and-checklist"
 CHECKLIST = ARTIFACT_DIR / "openclaw-dev-checklist.html"
 PROTOTYPE = ARTIFACT_DIR / "openclaw-media-ui-prototype.html"
-STUDIO_INDEX = ROOT / "99_System_OpenClaw" / "desktop" / "static" / "index.html"
-STUDIO_APP = ROOT / "99_System_OpenClaw" / "desktop" / "static" / "app.js"
+STUDIO_INDEX = ROOT / "studio" / "static" / "index.html"
+STUDIO_APP = ROOT / "studio" / "static" / "app.js"
 
 
 class ChecklistRemediationStaticTests(unittest.TestCase):

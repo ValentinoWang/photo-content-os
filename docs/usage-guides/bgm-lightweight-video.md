@@ -70,28 +70,28 @@ native import pack
 真实素材仍然先进：
 
 ```text
-00_Inbox_Mac_Intake/YYYYMMDD_事件名/
+inbox/YYYYMMDD_事件名/
 ```
 
 如果已经确定要做成片，再进入正式项目：
 
 ```text
-01_Project_Workspace/主题集合/YYYYMMDD_项目名/
+projects/主题集合/YYYYMMDD_项目名/
 ```
 
 参考爆款和 BGM 信息不要塞进 Raw 素材目录，写到：
 
 ```text
-90_Draft_Project/剪映工程/轻量反抄剪辑卡.md
+draft-project/jianying/轻量反抄剪辑卡.md
 ```
 
 如果你确实有下载好的音频文件，临时放：
 
 ```text
-项目根/App_WorkCache/BGM临时参考/
+项目根/work-cache/BGM临时参考/
 ```
 
-最终以剪映工程里实际使用的音乐为准。没有版权确认的音频，不进入长期资产库。
+最终以jianying里实际使用的音乐为准。没有版权确认的音频，不进入长期资产库。
 
 ## 轻量剪辑卡格式
 
@@ -137,8 +137,8 @@ native import pack
 输出仍然放：
 
 ```text
-91_Output/V1/
-91_Output/Final/
+output/v1/
+output/final/
 ```
 
 如果只是低技术快速反抄，`V1` 可以直接人工判断，不强制跑完整 `local_output_review`；但 Final 发布前至少检查：

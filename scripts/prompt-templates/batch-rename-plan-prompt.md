@@ -36,7 +36,7 @@ JSON 结构示意（不要用代码围栏包裹输出）：
       "narrative_value": "素材可表达的隐含叙事意图",
       "compatible_work_styles": ["示例风格A_示例主题", "示例风格B_示例主题"],
       "reason": "关键帧显示...",
-      "command_hint": "python3 99_System_OpenClaw/scripts/11_rename_media_file.py ... --override-stem ..."
+      "command_hint": "python3 scripts/rename_media_file.py ... --override-stem ..."
     }
   ]
 }

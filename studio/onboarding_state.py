@@ -21,7 +21,7 @@ VERSIONED_SCHEMA_VERSION = "photo_content_os_onboarding_versioned_v1"
 
 
 class OnboardingStep(str, Enum):
-    """The fixed order presented by the desktop onboarding flow."""
+    """The fixed order presented by the studio onboarding flow."""
 
     STORAGE_LOCATION = "storage_location"
     RUNTIME_ENVIRONMENT = "runtime_environment"
@@ -352,7 +352,7 @@ class OnboardingStateStore:
 
 
 class VersionedOnboardingStateStore:
-    """CAS envelope used by the desktop HTTP API without changing the core state contract."""
+    """CAS envelope used by the studio HTTP API without changing the core state contract."""
 
     def __init__(self, work_dir: str | os.PathLike[str]) -> None:
         self.work_dir = Path(work_dir).expanduser().resolve()

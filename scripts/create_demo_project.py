@@ -36,18 +36,18 @@ def run_script(script: Path, project: Path) -> None:
 
 
 def create_demo(workspace_root: Path, project_name: str) -> dict[str, object]:
-    project = workspace_root / "01_Project_Workspace" / "00_Demo_试用" / project_name
+    project = workspace_root / "projects" / "demo" / project_name
     if project.exists():
         raise FileExistsError(f"demo project already exists: {project}")
 
-    source_dir = project / "00_Inbox_待分类"
+    source_dir = project / "unclassified"
     source_dir.mkdir(parents=True)
     for name in SAMPLE_NAMES:
         (source_dir / name).write_bytes(SAMPLE_PNG)
 
     scripts_dir = Path(__file__).resolve().parent
-    run_script(scripts_dir / "13_ensure_project_structure.py", project)
-    run_script(scripts_dir / "01_scan_media_manifest.py", project)
+    run_script(scripts_dir / "ensure_project_structure.py", project)
+    run_script(scripts_dir / "scan_media_manifest.py", project)
 
     manifest_path = _manifest_path(project)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

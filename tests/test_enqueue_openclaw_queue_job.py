@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for bridging Content OS tasks into _OpenClawQueue."""
+"""Tests for bridging Content OS tasks into openclaw-queue."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from _support import load_script
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
-enqueue_queue = load_script("33_enqueue_openclaw_queue_job.py", "enqueue_queue", register=True)
+enqueue_queue = load_script("enqueue_openclaw_queue_job.py", "enqueue_queue", register=True)
 
 
 class EnqueueOpenClawQueueJobTest(unittest.TestCase):
@@ -30,10 +30,10 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             root = Path(tmp)
             vault = root / "vault"
             workspace = root / "workspace"
-            queue = workspace / "_OpenClawQueue"
-            batch = workspace / "00_Inbox_Mac_Intake/20260627_清华毕业典礼"
+            queue = workspace / "openclaw-queue"
+            batch = workspace / "inbox/2026-tsinghua-graduation"
             task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
-            link = root / "batch/_ai_analysis/content_os_link.yaml"
+            link = root / "batch/ai-analysis/content_os_link.yaml"
             task_dir.mkdir(parents=True)
             link.parent.mkdir(parents=True)
             batch.mkdir(parents=True)
@@ -55,7 +55,7 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
                     {
                         "task_id": "task_20260627_material_match",
                         "task_type": "local_material_match",
-                        "project_id": "20260627_清华毕业典礼",
+                        "project_id": "2026-tsinghua-graduation",
                         "idea_id": "idea_001",
                         "feishu_doc_link": "https://example.com/doc",
                         "inputs": {"content_os_link_path": str(link)},
@@ -89,7 +89,7 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             root = Path(tmp)
             vault = root / "vault"
             workspace = root / "workspace"
-            queue = workspace / "_OpenClawQueue"
+            queue = workspace / "openclaw-queue"
             task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
             task_dir.mkdir(parents=True)
             task_path = task_dir / "task_20260627_identity.yaml"
@@ -138,7 +138,7 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             root = Path(tmp)
             vault = root / "vault"
             workspace = root / "workspace"
-            queue = workspace / "_OpenClawQueue"
+            queue = workspace / "openclaw-queue"
             task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
             task_dir.mkdir(parents=True)
             task_path = task_dir / "task_no_batch.yaml"
@@ -162,7 +162,7 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             root = Path(tmp)
             vault = root / "vault"
             workspace = root / "workspace"
-            queue = workspace / "_OpenClawQueue"
+            queue = workspace / "openclaw-queue"
             task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
             task_dir.mkdir(parents=True)
             task_path = task_dir / "task_batch_id_only.yaml"
@@ -200,11 +200,11 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             root = Path(tmp)
             vault = root / "vault"
             workspace = root / "workspace"
-            queue = workspace / "_OpenClawQueue"
+            queue = workspace / "openclaw-queue"
             task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
             task_dir.mkdir(parents=True)
             task_path = task_dir / "task_payload.yaml"
-            local_batch = str(workspace / "00_Inbox_Mac_Intake/20260627_清华毕业典礼")
+            local_batch = str(workspace / "inbox/2026-tsinghua-graduation")
             task_path.write_text(
                 yaml.safe_dump(
                     {
@@ -216,7 +216,7 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
                             "schema_version": "openclaw_mac_queue_task_v1",
                             "task_type": "bind_creation_run_to_local_batch",
                             "creation_run_id": "run_payload",
-                            "batch_id": "20260627_清华毕业典礼",
+                            "batch_id": "2026-tsinghua-graduation",
                             "local_batch_path": local_batch,
                             "requested_outputs": ["剪辑说明", "素材匹配"],
                         },
@@ -246,10 +246,10 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             root = Path(tmp)
             vault = root / "vault"
             workspace = root / "workspace"
-            queue = workspace / "_OpenClawQueue"
+            queue = workspace / "openclaw-queue"
             task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
             task_dir.mkdir(parents=True)
-            batch = workspace / "00_Inbox_Mac_Intake/20260627_清华毕业典礼"
+            batch = workspace / "inbox/2026-tsinghua-graduation"
             task_path = task_dir / "task_20260627_dispatch.yaml"
             task_path.write_text(
                 yaml.safe_dump(
@@ -262,7 +262,7 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
                             "schema_version": "openclaw_mac_queue_task_v1",
                             "task_type": "bind_creation_run_to_local_batch",
                             "creation_run_id": "run_20260627_dispatch",
-                            "batch_id": "20260627_清华毕业典礼",
+                            "batch_id": "2026-tsinghua-graduation",
                             "local_batch_path": str(batch),
                             "requested_outputs": ["剪辑说明", "素材匹配"],
                         },
@@ -281,8 +281,8 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             )
 
             self.assertEqual(outcomes, [(task_path, "processed")])
-            self.assertTrue((batch / "00_批次说明.md").is_file())
-            self.assertTrue((batch / "_openclaw/link.json").is_file())
+            self.assertTrue((batch / "batch-notes.md").is_file())
+            self.assertTrue((batch / "openclaw/link.json").is_file())
             result = yaml.safe_load(
                 (vault / "98_Agent任务队列/02_mac_to_cloud_results/result_20260627_dispatch.yaml").read_text(
                     encoding="utf-8"
@@ -299,7 +299,7 @@ class EnqueueOpenClawQueueJobTest(unittest.TestCase):
             root = Path(tmp)
             vault = root / "vault"
             workspace = root / "workspace"
-            queue = workspace / "_OpenClawQueue"
+            queue = workspace / "openclaw-queue"
             task_dir = vault / "98_Agent任务队列/01_cloud_to_mac_ready"
             task_dir.mkdir(parents=True)
             task_path = task_dir / "task_20260627_dispatch.yaml"

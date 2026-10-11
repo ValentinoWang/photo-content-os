@@ -8,17 +8,17 @@
 | ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **MacBook**                  | 活动整理中枢        | 所有照片、视频、Live Photo、DJI 全景、Insta 全景、录屏原始文件、外部交付原包都先进入 Mac，并先按事件批次收口；发布稳定后不长期保留全量源素材，只保留轻量索引、精选入口和必要 Final。                                                                                                              |
 | **98_Agent任务队列**          | 文档任务队列        | 位于 Obsidian / iCloud vault，负责云端和 Mac 之间的任务说明、brief、YAML task 和结果文档沉淀；它告诉 Mac “要做什么”，不承载真实素材执行状态。 |
-| **_OpenClawQueue**           | 本地素材执行控制队列 | 位于 Mac 本地素材根，负责 JSON 控制文件、本地批次绑定、执行状态和结果位置；它告诉 Mac 本地素材系统“从哪个批次开始、怎么执行、结果放哪里”。 |
-| **剪映 Mac 版**                | 人工精剪活动工具      | 真实草稿优先留在本机 SSD，由人创建和编辑；项目 `90_Draft_Project/edit_handoff/{project_revision}` 保存当前版本的剪辑交接物，旧 native import pack 仅保留为历史证据。                                                                                   |
+| **openclaw-queue**           | 本地素材执行控制队列 | 位于 Mac 本地素材根，负责 JSON 控制文件、本地批次绑定、执行状态和结果位置；它告诉 Mac 本地素材系统“从哪个批次开始、怎么执行、结果放哪里”。 |
+| **剪映 Mac 版**                | 人工精剪活动工具      | 真实草稿优先留在本机 SSD，由人创建和编辑；项目 `draft-project/edit-handoff/{project_revision}` 保存当前版本的剪辑交接物，旧 native import pack 仅保留为历史证据。                                                                                   |
 | **HyperFrames**              | AI 动态包装素材生产器  | 负责标题卡、信息卡、图文动画、口播增强和可复用组件；进入剪映的是导出的 MP4/PNG，不是 HyperFrames 源工程。                                                                                         |
 | **iCloud 云盘**                | 按需中转盘         | 不承载全量素材库；只在需要跨设备、临时传输或人工导入 iCloud 照片时使用，不能作为项目源文件、Raw、缓存和分析资产的唯一位置。                                                                                                           |
-| **Syncthing / iCloud 文档同步** | 文档任务层同步器 | 只承载 Obsidian vault 里的 `98_Agent任务队列` 等轻量任务说明和结果摘要；不直接同步 Mac 本机 `_OpenClawQueue`，不把 `00_Inbox_Mac_Intake`、项目 L3、原始照片、视频、Live Photo 组或剪映缓存作为同步对象。 |
+| **Syncthing / iCloud 文档同步** | 文档任务层同步器 | 只承载 Obsidian vault 里的 `98_Agent任务队列` 等轻量任务说明和结果摘要；不直接同步 Mac 本机 `openclaw-queue`，不把 `inbox`、项目 L3、原始照片、视频、Live Photo 组或剪映缓存作为同步对象。 |
 | **iCloud 照片**                | 精选展示库         | 只保存整理过、修复过、值得长期回看的内容；Live Photo 只接收已整理的同名原始组或精选衍生图，不保存未筛选素材、Raw、废片、全景原始文件、临时文件。                                                                                                             |
 | **Wink Mac 版**               | 修复与增强工具       | 统一负责照片修复、视频增强、人像修复、画质增强、防抖、降噪、调色等。Wink 在 App Store 标注支持 iPhone、iPad、Mac，并提供视频与照片增强、4K upscaling、防抖、降噪、AI Color 等功能。([App Store][1])                           |
 | **DJI Studio / DJI Reframe 插件** | DJI 全景重构工具    | 日常默认用 DJI Studio 把 DJI 原始全景素材重构成 9:16、16:9、截图或 master 文件，再进入剪映。DJI Reframe 是给 Adobe Premiere 或 DaVinci Resolve 使用的官方全景重构插件，不是剪映流程的必经步骤；只有需要在 Premiere / DaVinci 里继续调视角时才用。DJI 官方下载中心列有 DJI Studio、DJI Reframe - Plugin for Adobe Premiere 和 DJI Reframe - Plugin for DaVinci Resolve。([DJI Official][2]) |
 | **Insta360 Studio**          | Insta 全景重构工具  | Insta 原始 .insv / .lrv / 元数据文件成组保留，先用 Insta360 Studio 重构后再剪。Insta360 官方说明，桌面端通过 USB 或读卡器传输最稳定，并且 INSV、LRV、元数据应作为一组保留。([Insta360][3])                           |
 | **阿里云盘**                     | 远程镜像备份盘       | 每个整理后的项目文件夹单向上传到阿里云盘；不在阿里云盘端改名、移动、删除、剪辑。阿里云盘官网显示其支持 Mac 客户端并可开启本地自动同步；阿里云文档也说明同步备份可支持双向同步或单向上传。([阿里云盘][4])                                                    |
-| **外接硬盘**                     | 冷归档           | 项目发布稳定 1 个月后，完整项目包从 Mac 本地素材根迁移到外接硬盘，同时保留阿里云盘远程镜像；Mac 只留 `Project_Archive_Index` 索引卡用于检索和恢复。                                                                                                            |
+| **外接硬盘**                     | 冷归档           | 项目发布稳定 1 个月后，完整项目包从 Mac 本地素材根迁移到外接硬盘，同时保留阿里云盘远程镜像；Mac 只留 `project-archive-index` 索引卡用于检索和恢复。                                                                                                            |
 
 ---
 
@@ -48,8 +48,8 @@ iCloud 照片
 
 Syncthing / iCloud 文档同步
 = 同步 Obsidian vault 里的 98_Agent任务队列
-= Mac Agent 再桥接到本机 _OpenClawQueue
-= 不同步 00_Inbox_Mac_Intake 原素材
+= Mac Agent 再桥接到本机 openclaw-queue
+= 不同步 inbox 原素材
 ```
 
 Apple 官方说明 iCloud Drive 可以在 Mac 上开启 “Sync this Mac”，并可在 Finder 里查看 iCloud Drive 文件夹；同时 Apple 也提醒，第三方云服务管理同类文件夹可能干扰 iCloud Drive 的更新。因此阿里云盘在这套系统中只做**单向远程镜像**，不做第二个工作同步盘。([苹果支持][5])
@@ -77,15 +77,15 @@ Mac 长期只留轻量索引卡
 | 阶段 | 触发条件 | Mac 上状态 | 备份 / 归档状态 | 检索入口 |
 | --- | --- | --- | --- | --- |
 | 活动期 | 正在剪辑或刚导出 V1/V2 | 完整项目留 Mac | 可暂不同步完整包 | 项目目录 |
-| 发布冷却期 | Final 发布后到稳定期 | 完整项目可暂留，方便返修 | 阿里云盘单向镜像完成 | `aliyun_sync_manifest.md` |
-| 冷归档期 | 发布稳定约 1 个月 | 全量源素材迁出 Mac | 移动硬盘完整包 + 阿里云盘镜像 | `Project_Archive_Index` |
+| 发布冷却期 | Final 发布后到稳定期 | 完整项目可暂留，方便返修 | 阿里云盘单向镜像完成 | `aliyun-sync-manifest.md` |
+| 冷归档期 | 发布稳定约 1 个月 | 全量源素材迁出 Mac | 移动硬盘完整包 + 阿里云盘镜像 | `project-archive-index` |
 | 恢复期 | 要复剪旧项目 | 从冷归档恢复副本到 Mac | 原归档不直接编辑 | 索引卡里的恢复步骤 |
 
 Mac 长期保留的不是全量素材，而是：
 
 ```text
-02_Asset_Library/Project_Archive_Index/*.archive.md
-02_Asset_Library 的资产卡片
+library/project-archive-index/*.archive.md
+library 的资产卡片
 必要的 Final 小体积副本
 iCloud 照片里的 80 精选和相册
 ```
@@ -94,11 +94,11 @@ Mac 发布稳定后可以移走：
 
 ```text
 项目 L3 全量源素材
-00_RawVault_不可直用
+raw-vault
 大体积 360 / Raw / Log 原始组
 剪映官方备份包的大体积副本
-_ai_analysis/keyframes 和 audio 等可重建缓存
-项目根/App_WorkCache 临时输出
+ai-analysis/keyframes 和 audio 等可重建缓存
+项目根/work-cache 临时输出
 ```
 
 ---
@@ -112,23 +112,23 @@ _ai_analysis/keyframes 和 audio 等可重建缓存
 📂 Creator_Media_RemoteMirror_阿里云盘
 │
 ├── 📂 项目素材
-│   └── 📂 2026年重回兰州大学内容创作
-│       └── 📂 20260514_兰州大学_奔赴与校运会
+│   └── 📂 2026-lzu-revisit
+│       └── 📂 2026-lzu-travel-and-sports
 │
-├── 📂 02_Asset_Library
+├── 📂 library
 │
-├── 📂 04_Delivery_External
+├── 📂 deliveries
 │
-└── 📂 05_Archive_Cold_Storage
+└── 📂 archive
 ```
 
 阿里云盘不镜像这些目录和临时入口：
 
 ```text
-00_Inbox_Mac_Intake
-项目根/App_WorkCache
-03_Jianying_Active_Drafts
-项目/待增加
+inbox
+项目根/work-cache
+jianying-drafts
+项目/additions
 未完成临时转码文件
 软件缓存
 本地删除复核区
@@ -137,19 +137,19 @@ _ai_analysis/keyframes 和 audio 等可重建缓存
 原因很简单：
 
 ```text
-00_Inbox_Mac_Intake = 未整理入口，里面可能有废片、重复素材、临时素材
-项目根/App_WorkCache = 项目级加工缓存区，里面是加工副本、临时输出、转码中间件
-03_Jianying_Active_Drafts = 本机活动剪映草稿区，不作为远程镜像源
-项目/待增加 = 未合并增量入口，还没有进入正式项目素材判断
+inbox = 未整理入口，里面可能有废片、重复素材、临时素材
+项目根/work-cache = 项目级加工缓存区，里面是加工副本、临时输出、转码中间件
+jianying-drafts = 本机活动剪映草稿区，不作为远程镜像源
+项目/additions = 未合并增量入口，还没有进入正式项目素材判断
 ```
 
 阿里云盘只接收整理后的内容：
 
 ```text
 项目素材
-02_Asset_Library
-04_Delivery_External
-05_Archive_Cold_Storage
+library
+deliveries
+archive
 ```
 
 ---
@@ -183,33 +183,33 @@ Mac 本地素材根 → 阿里云盘
 ```text
 任务 1：
 本地路径：
-/Users/vsiyo/Desktop/照片筛选/01_Project_Workspace/2026年重回兰州大学内容创作
+/Users/vsiyo/Desktop/照片筛选/projects/2026-lzu-revisit
 云端路径：
-Creator_Media_RemoteMirror_阿里云盘/项目素材/2026年重回兰州大学内容创作
+Creator_Media_RemoteMirror_阿里云盘/项目素材/2026-lzu-revisit
 模式：
 单向上传
 
 任务 2：
 本地路径：
-/Users/vsiyo/Desktop/照片筛选/02_Asset_Library
+/Users/vsiyo/Desktop/照片筛选/library
 云端路径：
-Creator_Media_RemoteMirror_阿里云盘/02_Asset_Library
+Creator_Media_RemoteMirror_阿里云盘/library
 模式：
 单向上传
 
 任务 3：
 本地路径：
-/Users/vsiyo/Desktop/照片筛选/04_Delivery_External
+/Users/vsiyo/Desktop/照片筛选/deliveries
 云端路径：
-Creator_Media_RemoteMirror_阿里云盘/04_Delivery_External
+Creator_Media_RemoteMirror_阿里云盘/deliveries
 模式：
 单向上传
 
 任务 4：
 本地路径：
-/Users/vsiyo/Desktop/照片筛选/05_Archive_Cold_Storage
+/Users/vsiyo/Desktop/照片筛选/archive
 云端路径：
-Creator_Media_RemoteMirror_阿里云盘/05_Archive_Cold_Storage
+Creator_Media_RemoteMirror_阿里云盘/archive
 模式：
 单向上传
 ```
@@ -219,7 +219,7 @@ Creator_Media_RemoteMirror_阿里云盘/05_Archive_Cold_Storage
 每个具体项目文件夹必须有：
 
 ```text
-aliyun_sync_manifest.md
+aliyun-sync-manifest.md
 ```
 
 模板：
@@ -227,15 +227,15 @@ aliyun_sync_manifest.md
 ```markdown
 # 阿里云盘远程镜像记录
 
-项目名称：20260514_兰州大学_奔赴与校运会
+项目名称：2026-lzu-travel-and-sports
 
 ## 本地工作路径
 
-/Users/vsiyo/Desktop/照片筛选/01_Project_Workspace/2026年重回兰州大学内容创作/20260514_兰州大学_奔赴与校运会
+/Users/vsiyo/Desktop/照片筛选/projects/2026-lzu-revisit/2026-lzu-travel-and-sports
 
 ## 阿里云盘镜像路径
 
-Creator_Media_RemoteMirror_阿里云盘/项目素材/2026年重回兰州大学内容创作/20260514_兰州大学_奔赴与校运会
+Creator_Media_RemoteMirror_阿里云盘/项目素材/2026-lzu-revisit/2026-lzu-travel-and-sports
 
 ## 同步模式
 
@@ -248,22 +248,22 @@ Creator_Media_RemoteMirror_阿里云盘/项目素材/2026年重回兰州大学�
 - [x] Wink 修复结果
 - [x] DJI Studio 输出
 - [x] Insta360 Studio 输出
-- [x] 剪映工程说明
+- [x] jianying说明
 - [x] Final 成片
 - [x] iCloud 照片精选入库文件夹
 
 ## 不同步范围
 
-- [ ] 00_Inbox_Mac_Intake
-- [ ] 项目根/App_WorkCache
-- [ ] 项目/待增加
+- [ ] inbox
+- [ ] 项目根/work-cache
+- [ ] 项目/additions
 - [ ] 未完成临时转码文件
-- [ ] 未合并的待增加素材
+- [ ] 未合并的additions素材
 - [ ] 软件缓存
 
-## _ai_analysis 同步规则
+## ai-analysis 同步规则
 
-- [x] 默认同步 media_manifest.json、project_overview.md、summaries/、prompts/、*_plan.json
+- [x] 默认同步 media-manifest.json、project-overview.md、summaries/、prompts/、*_plan.json
 - [ ] keyframes/ 与 audio/ 是可重建分析缓存，可按空间情况排除
 
 ## 操作日志

@@ -67,7 +67,7 @@ class MacOpenClawRunnerTest(unittest.TestCase):
     def test_local_project_path_resolves_hint_under_workspace(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp) / "workspace"
-            project = workspace / "01_Project_Workspace/theme/20260520_400米比赛_第一视角"
+            project = workspace / "projects/theme/20260520_400米比赛_第一视角"
             project.mkdir(parents=True)
             config = runner.RunnerConfig(vault_root=Path(tmp) / "vault", workspace_root=workspace)
             task = {
@@ -82,9 +82,9 @@ class MacOpenClawRunnerTest(unittest.TestCase):
             root = Path(tmp)
             workspace = root / "workspace"
             vault = root / "vault"
-            project = workspace / "01_Project_Workspace/theme/20260626_测试项目"
+            project = workspace / "projects/theme/20260626_测试项目"
             project.mkdir(parents=True)
-            link = root / "batch/_ai_analysis/content_os_link.yaml"
+            link = root / "batch/ai-analysis/content_os_link.yaml"
             link.parent.mkdir(parents=True)
             link.write_text(
                 yaml.safe_dump(
@@ -113,9 +113,9 @@ class MacOpenClawRunnerTest(unittest.TestCase):
             root = Path(tmp)
             workspace = root / "workspace"
             vault = root / "vault"
-            project = workspace / "01_Project_Workspace/theme/20260626_测试项目"
+            project = workspace / "projects/theme/20260626_测试项目"
             project.mkdir(parents=True)
-            link = root / "batch/_ai_analysis/content_os_link.yaml"
+            link = root / "batch/ai-analysis/content_os_link.yaml"
             link.parent.mkdir(parents=True)
             link.write_text(
                 yaml.safe_dump(

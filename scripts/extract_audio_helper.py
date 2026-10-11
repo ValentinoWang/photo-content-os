@@ -28,7 +28,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if not shutil.which("ffmpeg"):
-        raise RuntimeError("ffmpeg not found. Install ffmpeg, then run 99_System_OpenClaw/scripts/41_setup_dev_environment.sh.")
+        raise RuntimeError("ffmpeg not found. Install ffmpeg, then run scripts/setup_dev_environment.sh.")
 
     include_derived = args.include_derived_marker == "--include-derived"
     project = project_path(args.project_dir)

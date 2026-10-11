@@ -16,10 +16,10 @@ sys.path.insert(0, str(SCRIPTS))
 import llm_common
 
 
-content_summary = load_script("05_write_content_summary.py", "p5_content_summary", register=True)
-prompt_generator = load_script("04_generate_ai_prompt.py", "p5_prompt_generator", register=True)
-material_match = load_script("17_match_materials_to_brief.py", "p5_material_match", register=True)
-output_review = load_script("19_review_output_video.py", "p5_output_review", register=True)
+content_summary = load_script("write_content_summary.py", "p5_content_summary", register=True)
+prompt_generator = load_script("generate_ai_prompt.py", "p5_prompt_generator", register=True)
+material_match = load_script("match_materials_to_brief.py", "p5_material_match", register=True)
+output_review = load_script("review_output_video.py", "p5_output_review", register=True)
 
 
 class P5LocalPromptRegressionTests(unittest.TestCase):
@@ -85,7 +85,7 @@ class P5LocalPromptRegressionTests(unittest.TestCase):
 
     def test_prompts_use_bare_json_contract_and_report_is_chinese_first(self):
         self.assertNotIn("```json", prompt_generator.L3_STRUCTURE_PROMPT_HEADER)
-        for template in (SCRIPTS / "prompt_templates").glob("*.md"):
+        for template in (SCRIPTS / "prompt-templates").glob("*.md"):
             template_text = template.read_text(encoding="utf-8")
             self.assertNotIn("```json", template_text)
             if template.name != "README.md":

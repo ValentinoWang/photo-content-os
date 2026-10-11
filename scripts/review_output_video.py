@@ -19,7 +19,7 @@ from typing import Any
 import yaml
 
 from llm_common import LLMError, creator_context_block, load_creator_context, parse_json_response, public_llm_error, generate_text
-from media_common import OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_label, file_sha256
+from media_common import directory_slug, OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_label, file_sha256
 from media_common import sample_times as _shared_sample_times
 
 SCHEMA_VERSION = "output_review.v1"
@@ -2188,7 +2188,7 @@ def run_vlm_semantic_review(
             "versions": [],
         }
     output_dir.mkdir(parents=True, exist_ok=True)
-    prompt_path = output_dir / "vlm_semantic_prompt.json"
+    prompt_path = output_dir / "vlm-semantic-prompt.json"
     prompt_path.write_text(
         json.dumps(
             {
@@ -2211,7 +2211,7 @@ def run_vlm_semantic_review(
             reasoning_effort=reasoning_effort,
             provider=provider,
         )
-        raw_path = output_dir / "vlm_semantic_raw.md"
+        raw_path = output_dir / "vlm-semantic-raw.md"
         raw_path.write_text(text + "\n", encoding="utf-8")
         data = parse_json_response(text, salvage=True, require=dict)
     except (LLMError, json.JSONDecodeError, ValueError) as exc:
@@ -2225,9 +2225,9 @@ def run_vlm_semantic_review(
     data.setdefault("schema_version", VLM_SCHEMA_VERSION)
     data["status"] = "success"
     data["prompt_path"] = str(prompt_path)
-    json_path = output_dir / "vlm_semantic_review.json"
+    json_path = output_dir / "vlm-semantic-review.json"
     json_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    write_vlm_semantic_markdown(output_dir / "vlm_semantic_review.md", data)
+    write_vlm_semantic_markdown(output_dir / "vlm-semantic-review.md", data)
     return data
 
 
@@ -2409,10 +2409,10 @@ def map_recommendation(
 
 
 def review_one(input_video: ReviewInput, output_root: Path, *, bgm_review_dir: Path | None, context: ProjectContext) -> dict[str, Any]:
-    version_dir = output_root / input_video.version_name
+    version_dir = output_root / directory_slug(input_video.version_name, "version")
     probe = run_ffprobe(input_video.path)
     frames = extract_uniform_frames(input_video.path, version_dir / "frames", float(probe.get("duration_sec") or 0))
-    scene_frames = extract_scene_change_frames(input_video.path, version_dir / "scene_frames")
+    scene_frames = extract_scene_change_frames(input_video.path, version_dir / "scene-frames")
     contact_sheet = build_contact_sheet(frames, version_dir / "contact_sheet.jpg", label_prefix=input_video.version_name)
     scene_sheet = build_contact_sheet(scene_frames, version_dir / "scene_change_sheet.jpg", label_prefix=input_video.version_name)
     video_metrics = compute_image_metrics(frames, probe)
@@ -2656,8 +2656,7 @@ def artifact_relative(path: Path, base: Path | None) -> str:
 
 
 def safe_artifact_name(value: str) -> str:
-    cleaned = re.sub(r"[^\w\u4e00-\u9fff.-]+", "_", value, flags=re.UNICODE).strip("._")
-    return cleaned or "version"
+    return directory_slug(value, "version")
 
 
 def write_json_artifact(path: Path, data: Any) -> None:
@@ -2964,11 +2963,11 @@ def review_output_video(
     context = load_project_context(project_root)
     versions = [review_one(video, output_root, bgm_review_dir=bgm_review_dir, context=context) for video in videos]
     rhythm_report: dict[str, Any] | None = None
-    rhythm_metrics_output = (rhythm_output_root or output_root / "rhythm_sync") / "rhythm_sync_metrics.json"
-    rhythm_result_output = (rhythm_output_root or output_root / "rhythm_sync") / "rhythm_sync_result.yaml"
-    rhythm_report_output = (rhythm_output_root or output_root / "rhythm_sync") / "rhythm_sync_report.md"
+    rhythm_metrics_output = (rhythm_output_root or output_root / "rhythm-sync") / "rhythm_sync_metrics.json"
+    rhythm_result_output = (rhythm_output_root or output_root / "rhythm-sync") / "rhythm_sync_result.yaml"
+    rhythm_report_output = (rhythm_output_root or output_root / "rhythm-sync") / "rhythm_sync_report.md"
     if rhythm_sync:
-        rhythm_root = rhythm_output_root or output_root / "rhythm_sync"
+        rhythm_root = rhythm_output_root or output_root / "rhythm-sync"
         rhythm_report = compare_rhythm_sync_versions(
             versions,
             profile=rhythm_profile,
@@ -2979,7 +2978,7 @@ def review_output_video(
         write_result_yaml(rhythm_result_output, rhythm_report)
         write_rhythm_sync_report(rhythm_report_output, rhythm_report)
     vlm_report: dict[str, Any] | None = None
-    vlm_root = vlm_output_root or metrics_output.parent / "vlm_semantic_review"
+    vlm_root = vlm_output_root or metrics_output.parent / "vlm-semantic-review"
     if run_vlm_review:
         vlm_report = run_vlm_semantic_review(
             versions=versions,
@@ -3073,7 +3072,7 @@ def review_output_video(
         "vlm_review_enabled": run_vlm_review,
         "vlm_review_status": vlm_report.get("status") if vlm_report else "",
         "vlm_preferred_version": vlm_report.get("preferred_version") if vlm_report else "",
-        "vlm_review_path": artifact_relative(vlm_root / "vlm_semantic_review.json", artifact_base) if run_vlm_review else "",
+        "vlm_review_path": artifact_relative(vlm_root / "vlm-semantic-review.json", artifact_base) if run_vlm_review else "",
         "contact_sheet_path": artifact_relative(Path(preferred["artifacts"].get("contact_sheet") or ""), artifact_base)
         if preferred["artifacts"].get("contact_sheet")
         else "",
@@ -3174,8 +3173,8 @@ def review_output_video(
             "rhythm_sync_metrics": artifact_relative(rhythm_metrics_output, artifact_base) if rhythm_sync else "",
             "rhythm_sync_result": artifact_relative(rhythm_result_output, artifact_base) if rhythm_sync else "",
             "rhythm_sync_report": artifact_relative(rhythm_report_output, artifact_base) if rhythm_sync else "",
-            "vlm_semantic_json": artifact_relative(vlm_root / "vlm_semantic_review.json", artifact_base) if run_vlm_review else "",
-            "vlm_semantic_markdown": artifact_relative(vlm_root / "vlm_semantic_review.md", artifact_base) if run_vlm_review else "",
+            "vlm_semantic_json": artifact_relative(vlm_root / "vlm-semantic-review.json", artifact_base) if run_vlm_review else "",
+            "vlm_semantic_markdown": artifact_relative(vlm_root / "vlm-semantic-review.md", artifact_base) if run_vlm_review else "",
         },
     }
     write_metrics_json(metrics_output, metrics)

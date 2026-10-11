@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://photo-content-os.local/schemas/analysis_tiering.schema.json",
+  "$id": "https://photo-content-os.local/schemas/analysis-tiering.schema.json",
   "title": "Photo Content OS analysis tiering plan",
   "type": "object",
   "additionalProperties": false,

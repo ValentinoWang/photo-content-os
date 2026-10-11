@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Any
 
 
-_spec = importlib.util.spec_from_file_location("spoken_transcription", Path(__file__).with_name("03_transcribe_audio.py"))
+_spec = importlib.util.spec_from_file_location("spoken_transcription", Path(__file__).with_name("transcribe_audio.py"))
 assert _spec and _spec.loader
 _transcription = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_transcription)

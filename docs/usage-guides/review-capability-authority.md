@@ -22,7 +22,7 @@ VLM 语义融合
 算法路线图见：
 
 ```text
-99_System_OpenClaw/docs/08_usage_guides_使用指南/08.09_视频评分判断算法收敛路线图.md
+docs/usage-guides/video-scoring-roadmap.md
 ```
 
 ## 核心原则
@@ -31,7 +31,7 @@ VLM 语义融合
 
 ```text
 GitHub repo
-└── 99_System_OpenClaw/review_capabilities.registry.json
+└── review-capabilities.registry.json
 ```
 
 所有算法实现、评分口径、输出 schema、任务协议、文档、测试都必须围绕这份 registry 更新。不能因为本机能跑、远端也能跑，就各自维护一套判断口径。
@@ -40,25 +40,25 @@ GitHub repo
 
 | 能力 | 单一实现位置 | 远端服务器能做什么 | 远端服务器不能做什么 |
 | --- | --- | --- | --- |
-| `local_output_review` | `99_System_OpenClaw/scripts/19_review_output_video.py` | 派发 `local_output_review` 任务，读取 Mac 回写结果 | 另写 ffprobe、抽帧、黑白场、压缩、构图评分 |
-| `rhythm_sync_review` | `99_System_OpenClaw/scripts/19_review_output_video.py --rhythm-sync` | 读取 `rhythm_sync_result.yaml`，用于版本选择和返修建议 | 另写音画事件检测、卡点评分、版本排序 |
-| `vlm_semantic_output_review` | `99_System_OpenClaw/scripts/19_review_output_video.py --run-vlm-review` | 读取 VLM 语义结果 | 用另一套提示词直接覆盖 Mac 侧语义结论 |
+| `local_output_review` | `scripts/review_output_video.py` | 派发 `local_output_review` 任务，读取 Mac 回写结果 | 另写 ffprobe、抽帧、黑白场、压缩、构图评分 |
+| `rhythm_sync_review` | `scripts/review_output_video.py --rhythm-sync` | 读取 `rhythm_sync_result.yaml`，用于版本选择和返修建议 | 另写音画事件检测、卡点评分、版本排序 |
+| `vlm_semantic_output_review` | `scripts/review_output_video.py --run-vlm-review` | 读取 VLM 语义结果 | 用另一套提示词直接覆盖 Mac 侧语义结论 |
 | `remote_review_orchestration` | `mac_openclaw_runner.py` + 队列脚本 | 创建任务、校验 task、推进状态、消费 result | 直接接触 Mac 私有素材并形成最终审核结论 |
 
 ## 变更流程
 
-1. 先改 `99_System_OpenClaw/review_capabilities.registry.json`，尤其是对应能力的 `algorithm_contract`。
+1. 先改 `review-capabilities.registry.json`，尤其是对应能力的 `algorithm_contract`。
 2. 再改对应实现、Runner 协议、文档或测试。
 3. 本机运行：
 
 ```bash
-python3 99_System_OpenClaw/scripts/36_validate_review_capability_registry.py
-python3 -m unittest 99_System_OpenClaw/tests/test_review_capability_registry.py
-python3 -m unittest 99_System_OpenClaw/tests/test_output_video_review.py
-python3 -m unittest 99_System_OpenClaw/tests/test_mac_openclaw_runner.py
+python3 scripts/validate_review_capability_registry.py
+python3 -m unittest tests/test_review_capability_registry.py
+python3 -m unittest tests/test_output_video_review.py
+python3 -m unittest tests/test_mac_openclaw_runner.py
 ```
 
-4. 通过 GitHub PR 提交，PR 使用 `.github/PULL_REQUEST_TEMPLATE/review-capability-change.md`。
+4. 通过 GitHub PR 提交，PR 使用 `.github/pull-request-template/review-capability-change.md`。
 5. 合并后，本机和远端都从 GitHub 拉取同一份 registry、脚本和文档。
 
 ## GitHub 仓库落地
@@ -68,7 +68,7 @@ python3 -m unittest 99_System_OpenClaw/tests/test_mac_openclaw_runner.py
 ```bash
 cd "/Users/vsiyo/Desktop/照片筛选"
 git init
-git add 99_System_OpenClaw .github 00_START_HERE_今天看这里.md
+git add photo-content-os .github 00_START_HERE_今天看这里.md
 git commit -m "Add review capability SSOT registry"
 git branch -M main
 git remote add origin git@github.com:<owner>/<repo>.git
@@ -94,7 +94,7 @@ git push -u origin main
 ## 禁止的重复造轮子
 
 ```text
-远端另写一个 output_review.py
+远端另写一个 output-review.py
 远端另写一个 rhythm_sync_analyzer.py
 远端直接抽 Mac 视频帧做主观评分
 本机另开一个不写 registry 的 review 脚本

@@ -9,7 +9,7 @@ from threading import RLock
 from typing import Protocol
 
 
-# Keep this boundary identical to upstream_identity.RESULT_FIELDS.  The desktop
+# Keep this boundary identical to upstream_identity.RESULT_FIELDS.  The studio
 # consumer intentionally does not import the upstream transport/compatibility
 # module, so it remains usable when the optional upstream package is absent.
 E4_RESULT_FIELDS = frozenset(

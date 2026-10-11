@@ -10,19 +10,19 @@ import re
 import shutil
 from pathlib import Path
 
-from media_common import media_id, now_iso, path_inside as inside, project_path, relative_posix, safe_slug
+from media_common import directory_slug, media_id, now_iso, path_inside as inside, project_path, relative_posix, safe_slug
 
 
-DISTRIBUTION_DIR = "93_GroupPhoto_Distribution_合照发放"
-DEFAULT_MAPPING_NAME = "合照发放清单.csv"
+DISTRIBUTION_DIR = "group-photo-distribution"
+DEFAULT_MAPPING_NAME = "distribution-map.csv"
 UNKNOWN_NAME_TOKENS = {"", "?", "？", "待确认", "未知", "unknown", "Unknown", "UNKNOWN"}
 MAPPING_TEMPLATE = "photo_path,names,note\n"
 README_TEMPLATE = """# 合照发放
 
-- 在 `合照发放清单.csv` 中填写 `photo_path,names,note`。
+- 在 `distribution-map.csv` 中填写 `photo_path,names,note`。
 - `photo_path` 使用项目内相对路径；`names` 用 `、` 分隔多人。
-- 执行 `python3 99_System_OpenClaw/scripts/14_distribute_group_photos_by_name.py "项目目录" --apply` 后，会把照片复制到 `按姓名/姓名/`。
-- 姓名为空或写 `待确认` 的照片会复制到 `待确认姓名/`。
+- 执行 `python3 scripts/distribute_group_photos_by_name.py "项目目录" --apply` 后，会把照片复制到 `by-name/姓名/`。
+- 姓名为空或写 `待确认` 的照片会复制到 `pending-names/`。
 """
 
 
@@ -100,8 +100,8 @@ def read_rows(mapping_path: Path) -> list[dict[str, str]]:
 
 def ensure_distribution_scaffold(distribution_root: Path) -> None:
     distribution_root.mkdir(parents=True, exist_ok=True)
-    (distribution_root / "按姓名").mkdir(parents=True, exist_ok=True)
-    (distribution_root / "待确认姓名").mkdir(parents=True, exist_ok=True)
+    (distribution_root / "by-name").mkdir(parents=True, exist_ok=True)
+    (distribution_root / "pending-names").mkdir(parents=True, exist_ok=True)
     mapping_path = distribution_root / DEFAULT_MAPPING_NAME
     readme_path = distribution_root / "README.md"
     if not mapping_path.exists():
@@ -113,7 +113,7 @@ def ensure_distribution_scaffold(distribution_root: Path) -> None:
 def append_log(distribution_root: Path, entries: list[dict[str, str]], dry_run: bool) -> None:
     if dry_run or not entries:
         return
-    log_path = distribution_root / "合照发放记录.md"
+    log_path = distribution_root / "distribution-log.md"
     lines = []
     if log_path.exists():
         lines.append(log_path.read_text(encoding="utf-8").rstrip())
@@ -151,10 +151,10 @@ def distribute(
     if not inside(distribution_root, project):
         raise RuntimeError(f"distribution directory must stay inside project: {distribution_root}")
     mapping_path = Path(mapping).expanduser().resolve() if mapping else distribution_root / DEFAULT_MAPPING_NAME
-    named_root = Path(output_dir).expanduser().resolve() if output_dir else distribution_root / "按姓名"
+    named_root = Path(output_dir).expanduser().resolve() if output_dir else distribution_root / "by-name"
     if not inside(named_root, project):
         raise RuntimeError(f"output directory must stay inside project: {named_root}")
-    unknown_root = distribution_root / "待确认姓名"
+    unknown_root = distribution_root / "pending-names"
     if not inside(unknown_root, project):
         raise RuntimeError(f"unknown-name directory must stay inside project: {unknown_root}")
     if not mapping_path.exists() and not mapping and not dry_run:
@@ -167,10 +167,10 @@ def distribute(
         source = resolve_photo(project, distribution_root, row.get("photo_path", ""))
         names = parse_names(row.get("names", ""))
         if not names:
-            names = ["待确认姓名"]
+            names = ["pending-names"]
         note = (row.get("note") or "").strip()
         for name in names:
-            target_dir = unknown_root if name == "待确认姓名" else named_root / safe_slug(name)
+            target_dir = unknown_root if name == "pending-names" else named_root / directory_slug(name, "person")
             if not inside(target_dir, project):
                 raise RuntimeError(f"distribution target directory escapes project: {target_dir}")
             if target_dir.exists() and not target_dir.is_dir():
@@ -213,10 +213,10 @@ def distribute(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="按姓名复制合照发放副本")
+    parser = argparse.ArgumentParser(description="by-name复制合照发放副本")
     parser.add_argument("project_dir", help="项目目录")
     parser.add_argument("--mapping", help=f"发放 CSV，默认 {DISTRIBUTION_DIR}/{DEFAULT_MAPPING_NAME}")
-    parser.add_argument("--output-dir", help=f"姓名目录，默认 {DISTRIBUTION_DIR}/按姓名")
+    parser.add_argument("--output-dir", help=f"姓名目录，默认 {DISTRIBUTION_DIR}/by-name")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--apply", action="store_true", help="按计划复制发放副本")
     mode.add_argument("--dry-run", action="store_true", help="只检查并打印计划（默认）")

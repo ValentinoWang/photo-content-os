@@ -21,13 +21,13 @@ from openclaw_product_contract import ProductContractError, safe_workspace_ref, 
 
 
 SCRIPTS = Path(__file__).resolve().parent
-PHOTO_PYTHON = SCRIPTS.parent / ".venv-content-os/bin/python"
+PHOTO_PYTHON = SCRIPTS.parent / ".venv/bin/python"
 ENTRYPOINTS = {
-    "transcribe": "03_transcribe_audio.py",
+    "transcribe": "transcribe_audio.py",
     "suggest": "spoken_edit.py",
     "chatcut": "edit_backends/chatcut_handoff.py",
     "kdenlive": "edit_backends/kdenlive_render.py",
-    "review": "19_review_output_video.py",
+    "review": "review_output_video.py",
     "compose": "video_render/compose.py",
     "multi_shot": "video_render/multi_shot.py",
     "teaching_clips": "video_render/teaching_clips.py",

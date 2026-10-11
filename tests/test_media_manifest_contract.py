@@ -14,12 +14,12 @@ from PIL.TiffImagePlugin import IFDRational
 
 SYSTEM = Path(__file__).resolve().parents[1]
 SCRIPTS = SYSTEM / "scripts"
-SCHEMA = SYSTEM / "schemas" / "media_manifest.schema.json"
+SCHEMA = SYSTEM / "schemas" / "media-manifest.schema.json"
 sys.path.insert(0, str(SCRIPTS))
 
 
 def load_scanner():
-    source = SCRIPTS / "01_scan_media_manifest.py"
+    source = SCRIPTS / "scan_media_manifest.py"
     spec = importlib.util.spec_from_file_location("scan_media_manifest_contract", source)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"cannot load scanner: {source}")

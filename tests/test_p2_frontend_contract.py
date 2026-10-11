@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-STATIC = Path(__file__).resolve().parents[1] / "desktop" / "static"
+STATIC = Path(__file__).resolve().parents[1] / "studio" / "static"
 
 
 class FrontendContractTests(unittest.TestCase):
