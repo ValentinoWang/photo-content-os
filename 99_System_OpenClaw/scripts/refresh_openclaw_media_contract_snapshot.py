@@ -21,7 +21,7 @@ from typing import Any
 from openclaw_product_contract import SNAPSHOT_PATH, validate_snapshot
 
 
-CATALOG_RELATIVE_PATH = Path("openclaw_media/data/pipelines.json")
+CATALOG_RELATIVE_PATH = Path("apps/media/agent/openclaw_media/data/pipelines.json")
 PIPELINE_ALIASES = {
     "prepare": "media.project.prepare.v1",
     "organize": "media.material.organize.v1",

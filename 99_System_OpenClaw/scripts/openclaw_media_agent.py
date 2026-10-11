@@ -11,7 +11,9 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
+import hashlib
+from dataclasses import asdict
+from importlib import import_module
 import subprocess
 import sys
 from pathlib import Path
@@ -70,18 +72,24 @@ def build_parser() -> argparse.ArgumentParser:
     once.add_argument("--workspace")
     once.add_argument("--agent-dir")
     once.add_argument("--local-endpoint", action="store_true")
+    once.add_argument("--photo-binding", type=Path, help="Explicit local CreativeProject and Photo entrypoint binding")
+    once.add_argument("--live", action="store_true", help="Allow explicitly bound paid transcription")
 
     watch = commands.add_parser("watch", help="run the canonical outbound agent in the foreground")
     watch.add_argument("--workspace")
     watch.add_argument("--agent-dir")
     watch.add_argument("--interval", type=float, default=30.0)
     watch.add_argument("--local-endpoint", action="store_true")
+    watch.add_argument("--photo-binding", type=Path)
+    watch.add_argument("--live", action="store_true")
 
     local_run = commands.add_parser("run", help="run one installed pipeline locally through the canonical runtime")
     local_run.add_argument("pipeline", help="allowed alias or canonical pipeline id")
     local_run.add_argument("--workspace", required=True)
     local_run.add_argument("--workspace-ref")
     local_run.add_argument("--descriptor-json")
+    local_run.add_argument("--photo-binding", type=Path)
+    local_run.add_argument("--live", action="store_true")
 
     return parser
 
@@ -108,6 +116,42 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         require_cloud = opts.command == "pair"
         assert_compatible(require_cloud_platform=require_cloud)
+
+        if getattr(opts, "photo_binding", None):
+            from openclaw_video_execution import runtime_factory
+            factory = runtime_factory(opts.photo_binding, live=opts.live, for_agent=opts.command in {"once", "watch"})
+            if opts.command in {"once", "watch"}:
+                # The installed CLI owns endpoint, credentials and persistent
+                # agent state. Only its existing runtime_factory hook changes.
+                cli = import_module("openclaw_media.cli")
+                agent, remote = cli._agent_from_state(cli._agent_store(opts.agent_dir), workspace=opts.workspace, local_endpoint=opts.local_endpoint)
+                agent.runtime_factory = factory
+                try:
+                    if opts.command == "watch":
+                        agent.run_forever(interval=max(1.0, opts.interval))
+                    else:
+                        agent.run_once()
+                    print(json.dumps(asdict(agent.state()), ensure_ascii=False))
+                    return 1 if agent.state().status == "blocked" else 0
+                finally:
+                    remote.close()
+            if opts.command == "run":
+                InstalledCatalog = import_module("openclaw_media.catalog").InstalledCatalog
+                descriptor = json.loads(opts.descriptor_json) if opts.descriptor_json else {"workspace_ref": safe_workspace_ref(opts.workspace_ref)}
+                if not isinstance(descriptor, dict):
+                    raise ProductContractError("descriptor_invalid")
+                catalog = InstalledCatalog()
+                resolved = pipeline_id(opts.pipeline)
+                pipeline = next(p for p in catalog.manifest["pipelines"] if p["pipeline_id"] == resolved)
+                runtime = factory(Path(opts.workspace).expanduser().resolve(), catalog)
+                # The local operator selects a run identity; PipelineRuntime
+                # enforces replay conflicts and checks durable artifacts.
+                run_ref = "runs/" + hashlib.sha256(json.dumps(descriptor, sort_keys=True).encode()).hexdigest()[:32]
+                outcome = runtime.create_run(resolved, pipeline["version"], catalog.manifest["catalog_digest"], run_ref=run_ref, inputs=descriptor)
+                if outcome.status not in {"pending_manual", "cancelled"}:
+                    outcome = runtime.execute(run_ref, inputs=descriptor)
+                print(outcome.model_dump_json())
+                return 0 if outcome.status == "succeeded" else 1
 
         if opts.command == "pair":
             args = [

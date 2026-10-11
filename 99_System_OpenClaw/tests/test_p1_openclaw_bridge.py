@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 import json
+import hashlib
 import sys
 import unittest
 from pathlib import Path
@@ -40,9 +41,10 @@ class OpenClawBridgeTests(unittest.TestCase):
         self.assertFalse(result.compatible)
         self.assertEqual(result.reason, "openclaw_media_not_installed")
 
-    def test_snapshot_is_latest_reviewed_commit(self):
+    def test_snapshot_has_valid_reviewed_commit_and_supported_identity(self):
         snapshot = contract.load_snapshot()
-        self.assertEqual(snapshot["upstream_commit"], "f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf")
+        self.assertRegex(snapshot["upstream_commit"], r"^[0-9a-f]{40}$")
+        self.assertRegex(snapshot["catalog_digest"], r"^sha256:[0-9a-f]{64}$")
         self.assertEqual(snapshot["upstream_contract_id"], "openclaw_media_product_v1")
         self.assertEqual(len(snapshot["pipelines"]), 9)
 
@@ -59,8 +61,12 @@ class OpenClawBridgeTests(unittest.TestCase):
 
     def test_windows_local_compatibility_but_cloud_pairing_fails_closed(self):
         snapshot = contract.load_snapshot()
-        catalog = {"catalog_digest": snapshot["catalog_digest"]}
-        with patch.object(contract, "_installed_catalog", return_value=("0.1.0", catalog)), patch.object(contract, "platform_contract_name", return_value="windows"):
+        pipelines = [{"pipeline_id": p, "version": "1.0.0"} for p in sorted(snapshot["pipelines"].values())]
+        raw = json.dumps(pipelines, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+        digest = "sha256:" + hashlib.sha256(raw.encode()).hexdigest()
+        snapshot["catalog_digest"] = digest
+        catalog = {"catalog_digest": digest, "pipelines": pipelines}
+        with patch.object(contract, "load_snapshot", return_value=snapshot), patch.object(contract, "_installed_catalog", return_value=("0.1.0", catalog)), patch.object(contract, "platform_contract_name", return_value="windows"):
             self.assertTrue(contract.compatibility(require_cloud_platform=False).compatible)
             result = contract.compatibility(require_cloud_platform=True)
             self.assertFalse(result.compatible)

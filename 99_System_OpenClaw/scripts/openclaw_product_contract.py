@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import json
+import hashlib
+import copy
 import re
 import sys
 from dataclasses import dataclass
@@ -88,12 +90,82 @@ def validate_snapshot(data: dict[str, Any]) -> None:
 
 
 def safe_workspace_ref(value: str) -> str:
-    if not isinstance(value, str) or not value or "\\" in value or "://" in value:
+    if not isinstance(value, str) or not value or "\\" in value or ":" in value:
         raise ProductContractError("invalid_workspace_ref", str(value))
     path = PurePosixPath(value)
-    if path.is_absolute() or any(part in {"", ".", ".."} for part in path.parts):
+    if path.is_absolute() or not path.parts or path.as_posix() != value or any(part in {"", ".", ".."} for part in path.parts):
         raise ProductContractError("invalid_workspace_ref", value)
     return path.as_posix()
+
+
+VIDEO_IDENTITY_FIELDS = frozenset({"job_id", "tenant_id", "work_id", "work_revision", "project_id", "project_revision", "catalog_digest", "confirmation_ref"})
+VIDEO_STORYBOARD_COLUMNS = frozenset({"shot", "visual", "dialogue", "subtitle", "camera", "audio"})
+
+
+def video_digest(value: dict[str, Any]) -> str:
+    raw = json.dumps(value, ensure_ascii=True, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return "sha256:" + hashlib.sha256(raw.encode()).hexdigest()
+
+
+def validate_video_handoff(payload: dict[str, Any], current_identity: dict[str, Any], *, expected_handoff_digest: str) -> dict[str, Any]:
+    """Check a locally delivered descriptor against an explicit, current binding.
+
+    This does not authorize cloud execution or define a second job protocol.
+    The binding belongs to the local CreativeProject, never to its title.
+    """
+    import uuid
+
+    fields = {"identity", "script", "storyboard", "animations", "tts_ref", "handoff_digest"}
+    if not isinstance(payload, dict) or set(payload) != fields:
+        raise ProductContractError("video_handoff_rejected")
+    identity = payload["identity"]
+    if not isinstance(identity, dict) or set(identity) != VIDEO_IDENTITY_FIELDS or set(current_identity) != VIDEO_IDENTITY_FIELDS:
+        raise ProductContractError("video_identity_rejected")
+    for key, value in identity.items():
+        if key in {"work_revision", "project_revision"}:
+            valid = type(value) is int and value > 0
+        elif key == "tenant_id":
+            try:
+                valid = str(uuid.UUID(value)) == value
+            except (ValueError, TypeError, AttributeError):
+                valid = False
+        elif key == "catalog_digest":
+            valid = isinstance(value, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", value) is not None
+        else:
+            valid = isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_-]{1,128}", value) is not None
+        if not valid or type(value) is not type(current_identity[key]) or value != current_identity[key]:
+            raise ProductContractError("video_identity_rejected")
+    if identity["catalog_digest"] != load_snapshot()["catalog_digest"]:
+        raise ProductContractError("catalog_digest_mismatch")
+    raw = {k: v for k, v in payload.items() if k != "handoff_digest"}
+    if video_digest(raw) != payload["handoff_digest"] or payload["handoff_digest"] != expected_handoff_digest:
+        raise ProductContractError("handoff_digest_mismatch")
+    if not isinstance(payload["script"], str) or not payload["script"].strip():
+        raise ProductContractError("video_handoff_rejected")
+    rows = payload["storyboard"]
+    if not isinstance(rows, list) or not rows or any(not isinstance(row, dict) or set(row) != VIDEO_STORYBOARD_COLUMNS or any(not isinstance(v, str) for v in row.values()) for row in rows):
+        raise ProductContractError("video_handoff_rejected")
+    shots = [row["shot"] for row in rows]
+    if any(not shot for shot in shots) or len(set(shots)) != len(shots):
+        raise ProductContractError("video_handoff_rejected")
+    animations = payload["animations"]
+    if not isinstance(animations, list) or any(not isinstance(row, dict) or set(row) != {"shot", "narration", "requirement"} or any(not isinstance(v, str) for v in row.values()) or row["shot"] not in shots for row in animations):
+        raise ProductContractError("video_handoff_rejected")
+    if payload["tts_ref"] is not None:
+        safe_workspace_ref(payload["tts_ref"])
+    # The wire descriptor contains text and controlled refs only, no local paths.
+    def check_text(value: Any) -> None:
+        if isinstance(value, str):
+            if re.search(r"(?:^|[\s\"'=(:：])(?:/(?:[\w.-]+/)+[^\s\"']*|[A-Za-z]:[\\/][^\s\"']*)", value) or "\x00" in value:
+                raise ProductContractError("video_privacy_rejected")
+        elif isinstance(value, dict):
+            for child in value.values():
+                check_text(child)
+        elif isinstance(value, list):
+            for child in value:
+                check_text(child)
+    check_text(payload)
+    return copy.deepcopy(payload)
 
 
 def _installed_catalog() -> tuple[str | None, dict[str, Any] | None]:
@@ -117,12 +189,24 @@ def compatibility(*, require_cloud_platform: bool = False) -> Compatibility:
     actual = str(catalog.get("catalog_digest")) if catalog else None
     reason = None
     compatible = bool(catalog and actual == expected)
+    if compatible:
+        try:
+            definitions = [copy.deepcopy(item) for item in catalog["pipelines"]]
+            for item in definitions:
+                item.pop("catalog_digest", None)
+            definitions.sort(key=lambda item: (item["pipeline_id"], item["version"]))
+            raw = json.dumps(definitions, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+            compatible = actual == "sha256:" + hashlib.sha256(raw.encode()).hexdigest()
+        except (KeyError, TypeError, AttributeError):
+            compatible = False
     if version is None:
         reason = "openclaw_media_not_installed"
     elif catalog is None:
         reason = "openclaw_media_catalog_unavailable"
     elif actual != expected:
         reason = "catalog_digest_mismatch"
+    elif not compatible:
+        reason = "catalog_definitions_mismatch"
     elif require_cloud_platform and platform not in set(snapshot.get("supported_device_platforms") or []):
         compatible = False
         reason = "upstream_platform_unsupported"
