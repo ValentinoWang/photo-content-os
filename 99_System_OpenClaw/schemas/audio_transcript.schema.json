@@ -4,30 +4,193 @@
   "title": "Photo Content OS Audio Transcript",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "media_id", "audio_ref", "provider", "model", "language", "status", "segments", "text"],
+  "required": [
+    "schema_version",
+    "media_id",
+    "audio_ref",
+    "provider",
+    "model",
+    "language",
+    "status",
+    "segments",
+    "text",
+    "precision",
+    "words",
+    "auto_cut_allowed"
+  ],
   "properties": {
-    "schema_version": {"const": "audio_transcript_v1"},
-    "media_id": {"type": "string", "minLength": 1},
-    "audio_ref": {"type": "string", "minLength": 1},
-    "provider": {"type": "string", "minLength": 1},
-    "model": {"type": "string", "minLength": 1},
-    "language": {"type": ["string", "null"]},
-    "status": {"enum": ["ok", "pending", "empty"]},
-    "text": {"type": "string"},
+    "schema_version": {
+      "const": "audio_transcript_v1"
+    },
+    "media_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audio_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "language": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "pending",
+        "empty"
+      ]
+    },
+    "text": {
+      "type": "string"
+    },
     "segments": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["start_sec", "end_sec", "speaker", "text", "confidence"],
+        "required": [
+          "start_sec",
+          "end_sec",
+          "speaker",
+          "text",
+          "confidence",
+          "precision",
+          "words"
+        ],
         "properties": {
-          "start_sec": {"type": "number", "minimum": 0},
-          "end_sec": {"type": "number", "minimum": 0},
-          "speaker": {"type": ["string", "null"]},
-          "text": {"type": "string"},
-          "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+          "start_sec": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end_sec": {
+            "type": "number",
+            "minimum": 0
+          },
+          "speaker": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1
+          },
+          "precision": {
+            "enum": [
+              "word",
+              "sentence",
+              "chunk"
+            ]
+          },
+          "words": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/word"
+            }
+          }
+        }
+      }
+    },
+    "precision": {
+      "enum": [
+        "word",
+        "sentence",
+        "chunk"
+      ]
+    },
+    "words": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/word"
+      }
+    },
+    "auto_cut_allowed": {
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "word": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end",
+        "text"
+      ],
+      "properties": {
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "precision": {
+            "const": "word"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "auto_cut_allowed": {
+            "const": true
+          },
+          "words": {
+            "minItems": 1
+          },
+          "segments": {
+            "minItems": 1,
+            "items": {
+              "properties": {
+                "precision": {
+                  "const": "word"
+                },
+                "words": {
+                  "minItems": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "auto_cut_allowed": {
+            "const": false
+          }
+        }
+      }
+    }
+  ]
 }

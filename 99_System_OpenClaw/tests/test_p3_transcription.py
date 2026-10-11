@@ -68,7 +68,7 @@ class TranscriptionTests(unittest.TestCase):
         try:
             with self.assertRaisesRegex(module.TranscriptionError, "DASHSCOPE_API_KEY"):
                 module.DashscopeProvider("paraformer-v2")
-            self.assertEqual(module.build_provider("dashscope", model="paraformer-v2", sidecar_dir=None).name, "dashscope")
+            self.assertEqual(module.build_provider("dashscope", model="paraformer-v2", sidecar_dir=None, live=True).name, "dashscope")
         finally:
             if previous is not None:
                 os.environ["DASHSCOPE_API_KEY"] = previous
@@ -113,7 +113,7 @@ class TranscriptionTests(unittest.TestCase):
 
                 with patch.object(module.DashscopeProvider, "transcribe", side_effect=module.TranscriptionError("network")):
                     with patch.object(module, "FunASRProvider", LocalFunASR):
-                        result = module.build_provider("dashscope", model="paraformer-v2", sidecar_dir=None).transcribe(audio)
+                        result = module.build_provider("dashscope", model="paraformer-v2", sidecar_dir=None, live=True).transcribe(audio)
                 self.assertEqual(result["segments"][0]["text"], "本机结果")
         finally:
             if previous is None:

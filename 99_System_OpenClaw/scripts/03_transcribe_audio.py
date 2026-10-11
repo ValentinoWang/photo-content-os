@@ -5,6 +5,7 @@ Providers:
 - ``dashscope``: DashScope-compatible online transcription; the configured
   endpoint receives the selected audio file.
 - ``funasr``: local FunASR fallback when its optional runtime is installed.
+- ``fun_asr``: official asynchronous Fun-ASR file transcription (``--live``).
 - ``sidecar``: deterministic; reads an adjacent .srt/.json/.txt file.
 - ``openai_api``: uses the OpenAI Transcription API and requests SRT output.
 - ``pending``: records an explicit pending state without pretending audio was read.
@@ -14,11 +15,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import re
-import tempfile
+import time
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit
 import uuid
 from pathlib import Path
 from typing import Any, Protocol
@@ -45,6 +48,109 @@ class Provider(Protocol):
 
 class ProviderResult(dict[str, Any]):
     """Provider output that preserves the provider that actually produced it."""
+
+
+def text_key(text: str) -> str:
+    return "".join(character.casefold() for character in text if character.isalnum())
+
+
+def timing_number(value: Any) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+        raise TranscriptionError("timestamps must be finite numbers")
+    return float(value)
+
+
+def normalize_words(words: Any, *, start: float, end: float) -> list[dict[str, Any]]:
+    """Validate acoustic intervals without sorting, clamping or interpolation."""
+    if not isinstance(words, list):
+        raise TranscriptionError("words must be an array")
+    result = []
+    previous_end = start
+    for word in words:
+        if not isinstance(word, dict):
+            raise TranscriptionError("word must be an object")
+        begin, finish = timing_number(word.get("start")), timing_number(word.get("end"))
+        text = word.get("text")
+        if not isinstance(text, str) or not text.strip():
+            raise TranscriptionError("word text must not be empty")
+        if begin < previous_end or finish <= begin or finish > end:
+            raise TranscriptionError("word times overlap, reverse or exceed their segment")
+        result.append({"start": begin, "end": finish, "text": text})
+        previous_end = finish
+    return result
+
+
+def vendor_words(items: Any, *, milliseconds: bool) -> list[dict[str, Any]]:
+    if not isinstance(items, list):
+        raise TranscriptionError("provider words must be an array")
+    result = []
+    for item in items:
+        if not isinstance(item, dict):
+            raise TranscriptionError("provider word must be an object")
+        begin = item.get("begin_time", item.get("start"))
+        finish = item.get("end_time", item.get("end"))
+        scale = 1000 if milliseconds else 1
+        punctuation = item.get("punctuation", "")
+        text = item.get("text", item.get("word"))
+        if not isinstance(text, str) or not isinstance(punctuation, str):
+            raise TranscriptionError("provider word text must be a string")
+        result.append({"start": timing_number(begin) / scale,
+                       "end": timing_number(finish) / scale, "text": text + punctuation})
+    return result
+
+
+def normalize_asr_payload(payload: dict[str, Any], *, local: bool = False) -> dict[str, Any]:
+    """Convert provider units; only explicitly aligned tokens retain word precision."""
+    segments = []
+    if "transcripts" in payload:
+        transcripts = payload["transcripts"]
+        if not isinstance(transcripts, list):
+            raise TranscriptionError("transcripts must be an array")
+        for transcript in transcripts:
+            if not isinstance(transcript, dict) or transcript.get("channel_id", 0) != 0:
+                raise TranscriptionError("only the selected first audio channel is supported")
+            normalized = normalize_asr_payload({"sentences": transcript.get("sentences", []),
+                                                "text": transcript.get("text", transcript.get("transcript", ""))})
+            segments.extend(normalized["segments"])
+        return {"segments": segments}
+    source_key = next((key for key in ("segments", "sentence_info", "sentences") if payload.get(key)), None)
+    raw_segments = payload[source_key] if source_key else [payload]
+    if not isinstance(raw_segments, list):
+        raise TranscriptionError("provider segments must be an array")
+    for item in raw_segments:
+        if not isinstance(item, dict):
+            raise TranscriptionError("provider segment must be an object")
+        text = item.get("text", item.get("sentence", ""))
+        if not isinstance(text, str):
+            raise TranscriptionError("provider segment text must be a string")
+        if not text.strip():
+            continue
+        milliseconds = local or source_key in {"sentence_info", "sentences"} or "begin_time" in item
+        scale = 1000 if milliseconds else 1
+        start = item.get("begin_time", item.get("start", item.get("start_sec", 0)))
+        end = item.get("end_time", item.get("end", item.get("end_sec", start)))
+        words = vendor_words(item.get("words", []), milliseconds=milliseconds)
+        # FunASR's raw_text is the acoustic token sequence. Display characters
+        # cannot be substituted when its token count or text coverage differs.
+        timestamps = item.get("timestamp")
+        tokens = item.get("raw_text", "").split() if isinstance(item.get("raw_text"), str) else []
+        if not words and local and isinstance(timestamps, list) and tokens and len(tokens) == len(timestamps):
+            if text_key("".join(tokens)) == text_key(text):
+                for token, interval in zip(tokens, timestamps):
+                    if not isinstance(interval, (list, tuple)) or len(interval) != 2:
+                        raise TranscriptionError("invalid acoustic token interval")
+                    words.append({"start": timing_number(interval[0]) / 1000,
+                                  "end": timing_number(interval[1]) / 1000, "text": token})
+        if source_key is None and words and end == start == 0:
+            start, end = words[0]["start"] * scale, words[-1]["end"] * scale
+        elif source_key is None and not words and local and isinstance(timestamps, list) and timestamps:
+            start, end = timestamps[0][0], timestamps[-1][1]
+        segments.append({"start_sec": timing_number(start) / scale, "end_sec": timing_number(end) / scale,
+                         "text": text, "speaker": item.get("speaker", item.get("speaker_id")),
+                         "confidence": item.get("confidence"), "words": words,
+                         "precision": "chunk" if source_key is None and not words else "sentence"})
+    return {"language": payload.get("language"), "segments": segments,
+            "words": vendor_words(payload.get("words", []), milliseconds=False) if source_key else []}
 
 
 def seconds_from_srt(value: str) -> float:
@@ -96,23 +202,34 @@ def transcript_document(
     model: str,
     language: str | None,
     segments: list[dict[str, Any]],
+    words: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
+    if not isinstance(segments, list) or any(not isinstance(segment, dict) for segment in segments):
+        raise TranscriptionError("segments must be an array of objects")
+    if words is not None and not isinstance(words, list):
+        raise TranscriptionError("words must be an array")
     previous_end = 0.0
     cleaned: list[dict[str, Any]] = []
     for segment in segments:
-        start = round(float(segment.get("start_sec", 0)), 3)
-        end = round(float(segment.get("end_sec", start)), 3)
-        if start < 0 or end < start or start < previous_end - 0.001:
+        start = timing_number(segment.get("start_sec", 0))
+        end = timing_number(segment.get("end_sec", start))
+        if start < 0 or end < start or start < previous_end:
             raise TranscriptionError("transcript segments must be ordered and non-overlapping")
-        text = str(segment.get("text") or "").strip()
+        if not isinstance(segment.get("text"), str):
+            raise TranscriptionError("segment text must be a string")
+        text = segment["text"].strip()
         if not text:
             continue
         speaker = segment.get("speaker")
         confidence = segment.get("confidence")
         if confidence is not None:
-            confidence = float(confidence)
+            confidence = timing_number(confidence)
             if not 0 <= confidence <= 1:
                 raise TranscriptionError("confidence must be between 0 and 1")
+        segment_words = normalize_words(segment.get("words", []), start=start, end=end)
+        precision = "chunk" if end == start or segment.get("precision") == "chunk" else "sentence"
+        if segment_words and text_key("".join(word["text"] for word in segment_words)) == text_key(text):
+            precision = "word"
         cleaned.append(
             {
                 "start_sec": start,
@@ -120,9 +237,27 @@ def transcript_document(
                 "speaker": str(speaker).strip() if speaker not in (None, "") else None,
                 "text": text,
                 "confidence": confidence,
+                "words": segment_words,
+                "precision": precision,
             }
         )
         previous_end = end
+    if words:
+        aligned = normalize_words(words, start=0, end=previous_end)
+        assigned = []
+        for segment in cleaned:
+            contained = [word for word in aligned if word["start"] >= segment["start_sec"]
+                         and word["end"] <= segment["end_sec"]]
+            if segment["words"] and contained != segment["words"]:
+                raise TranscriptionError("top-level and segment words disagree")
+            segment["words"] = contained
+            assigned.extend(contained)
+            if contained and text_key("".join(word["text"] for word in contained)) == text_key(segment["text"]):
+                segment["precision"] = "word"
+        if assigned != aligned:
+            raise TranscriptionError("word is outside every transcript segment")
+    precision = "chunk" if not cleaned or any(item["precision"] == "chunk" for item in cleaned) else (
+        "word" if all(item["precision"] == "word" for item in cleaned) else "sentence")
     return {
         "schema_version": SCHEMA_VERSION,
         "media_id": media_id,
@@ -133,6 +268,9 @@ def transcript_document(
         "status": "ok" if cleaned else ("pending" if provider == "pending" else "empty"),
         "segments": cleaned,
         "text": "\n".join(item["text"] for item in cleaned),
+        "words": [word for segment in cleaned for word in segment["words"]],
+        "precision": precision,
+        "auto_cut_allowed": precision == "word",
     }
 
 
@@ -157,6 +295,7 @@ class SidecarProvider:
         path = next((candidate for candidate in self.candidates(audio_path) if candidate.is_file()), None)
         if path is None:
             raise TranscriptionError(f"transcript sidecar not found for {audio_path.name}")
+        words = []
         if path.suffix.lower() == ".srt":
             segments = parse_srt(path.read_text(encoding="utf-8"))
         elif path.suffix.lower() == ".txt":
@@ -166,12 +305,15 @@ class SidecarProvider:
             data = json.loads(path.read_text(encoding="utf-8"))
             if isinstance(data, dict) and isinstance(data.get("segments"), list):
                 segments = data["segments"]
+                words = data.get("words", [])
                 language = data.get("language") or language
+            elif isinstance(data, dict) and any(key in data for key in ("transcripts", "sentence_info", "sentences", "timestamp")):
+                return normalize_asr_payload(data, local="timestamp" in data or "sentence_info" in data)
             elif isinstance(data, dict) and isinstance(data.get("text"), str):
                 segments = [{"start_sec": 0.0, "end_sec": 0.0, "speaker": None, "text": data["text"], "confidence": None}]
             else:
                 raise TranscriptionError(f"unsupported sidecar JSON: {path}")
-        return {"language": language, "segments": segments}
+        return {"language": language, "segments": segments, "words": words}
 
 
 class OpenAIProvider:
@@ -220,8 +362,8 @@ class DashscopeProvider:
             fields.append(("language", language))
         chunks: list[bytes] = []
         for name, value in fields:
-            chunks.extend((f"--{boundary}\\r\\n".encode(), f'Content-Disposition: form-data; name="{name}"\\r\\n\\r\\n'.encode(), value.encode(), b"\\r\\n"))
-        chunks.extend((f"--{boundary}\\r\\n".encode(), f'Content-Disposition: form-data; name="file"; filename="{audio_path.name}"\\r\\n'.encode(), b"Content-Type: application/octet-stream\\r\\n\\r\\n", audio_path.read_bytes(), b"\\r\\n", f"--{boundary}--\\r\\n".encode()))
+            chunks.extend((f"--{boundary}\r\n".encode(), f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode(), value.encode(), b"\r\n"))
+        chunks.extend((f"--{boundary}\r\n".encode(), f'Content-Disposition: form-data; name="file"; filename="{audio_path.name}"\r\n'.encode(), b"Content-Type: application/octet-stream\r\n\r\n", audio_path.read_bytes(), b"\r\n", f"--{boundary}--\r\n".encode()))
         return b"".join(chunks), boundary
 
     def transcribe(self, audio_path: Path, *, language: str | None = None) -> dict[str, Any]:
@@ -239,23 +381,8 @@ class DashscopeProvider:
             raise TranscriptionError("DashScope transcription request failed") from exc
         if not isinstance(payload, dict):
             raise TranscriptionError("DashScope response must be a JSON object")
-        used_sentence_info = not payload.get("segments") and isinstance(payload.get("sentence_info"), list)
-        raw_segments = payload.get("segments") or payload.get("sentence_info") or []
-        segments: list[dict[str, Any]] = []
-        if isinstance(raw_segments, list):
-            for item in raw_segments:
-                if not isinstance(item, dict):
-                    continue
-                start = item.get("start") if item.get("start") is not None else item.get("start_sec", 0)
-                end = item.get("end") if item.get("end") is not None else item.get("end_sec", start)
-                # DashScope sentence_info uses milliseconds even for a segment
-                # shorter than one second. Compatible `segments` use seconds.
-                if used_sentence_info:
-                    start, end = float(start) / 1000, float(end) / 1000
-                segments.append({"start_sec": start, "end_sec": end, "speaker": item.get("speaker"), "text": item.get("text") or item.get("sentence") or "", "confidence": item.get("confidence")})
-        if not segments and isinstance(payload.get("text"), str):
-            segments = [{"start_sec": 0, "end_sec": 0, "speaker": None, "text": payload["text"], "confidence": None}]
-        return ProviderResult(language=payload.get("language") or language, segments=segments, provider=self.name, model=self.model)
+        result = normalize_asr_payload(payload)
+        return ProviderResult(**{**result, "language": result.get("language") or language}, provider=self.name, model=self.model)
 
 
 class FunASRProvider:
@@ -270,23 +397,112 @@ class FunASRProvider:
         self.client = AutoModel(model=self.model, disable_update=True)
 
     def transcribe(self, audio_path: Path, *, language: str | None = None) -> dict[str, Any]:
-        result = self.client.generate(input=str(audio_path), batch_size_s=300)
-        first = result[0] if isinstance(result, list) and result else {}
-        if not isinstance(first, dict):
+        result = self.client.generate(input=str(audio_path), batch_size_s=300, sentence_timestamp=True, return_raw_text=True)
+        if not isinstance(result, list) or not result or any(not isinstance(item, dict) for item in result):
             raise TranscriptionError("FunASR returned an invalid response")
-        text = str(first.get("text") or "").strip()
-        timestamps = first.get("timestamp")
-        end = 0.0
-        if isinstance(timestamps, list) and timestamps:
-            last = timestamps[-1]
-            if isinstance(last, (list, tuple)) and len(last) > 1:
-                end = float(last[1]) / 1000
+        segments = [segment for item in result for segment in normalize_asr_payload(item, local=True)["segments"]]
         return ProviderResult(
             language=language,
-            segments=[{"start_sec": 0, "end_sec": end, "speaker": None, "text": text, "confidence": None}] if text else [],
+            segments=segments,
             provider=self.name,
             model=self.model,
         )
+
+
+class FunASRFileProvider:
+    """Official asynchronous Fun-ASR transport, independent of the other repo."""
+
+    name = "fun_asr"
+
+    def __init__(self, model: str) -> None:
+        self.model = model
+        self.api_key = os.getenv("SPEECH_TO_TEXT_API_KEY") or os.getenv("DASHSCOPE_API_KEY")
+        base = os.getenv("SPEECH_TO_TEXT_BASE_URL", "https://dashscope.aliyuncs.com/api/v1")
+        parsed = urlsplit(base)
+        if parsed.scheme != "https" or not parsed.netloc or parsed.username or parsed.password or parsed.query or parsed.fragment:
+            raise TranscriptionError("Fun-ASR requires a valid HTTPS service endpoint")
+        if parsed.path.rstrip("/") not in {"", "/api/v1", "/compatible-mode/v1"}:
+            raise TranscriptionError("invalid Fun-ASR service root")
+        self.api_root = f"https://{parsed.netloc}/api/v1"
+        if not self.api_key:
+            raise TranscriptionError("SPEECH_TO_TEXT_API_KEY or DASHSCOPE_API_KEY is required")
+        self.timeout = float(os.getenv("SPEECH_TO_TEXT_TIMEOUT_SECONDS", "60"))
+        self.max_wait = float(os.getenv("SPEECH_TO_TEXT_MAX_WAIT_SECONDS", "900"))
+        self.poll_interval = float(os.getenv("SPEECH_TO_TEXT_POLL_INTERVAL_SECONDS", "2"))
+        if any(not math.isfinite(number) or number <= 0 for number in (self.timeout, self.max_wait, self.poll_interval)):
+            raise TranscriptionError("Fun-ASR timeout and polling interval must be positive")
+
+    def _request(self, url: str, *, data: bytes | None = None, headers: dict | None = None,
+                 authenticated: bool = False, timeout: float | None = None, json_response: bool = True) -> Any:
+        parsed = urlsplit(url)
+        if parsed.scheme != "https" or not parsed.netloc or parsed.username or parsed.password:
+            raise TranscriptionError("provider resource must use HTTPS")
+        request_headers = dict(headers or {})
+        if authenticated:
+            if parsed.netloc != urlsplit(self.api_root).netloc:
+                raise TranscriptionError("provider authentication cannot leave its service host")
+            request_headers["Authorization"] = f"Bearer {self.api_key}"
+        request = urllib.request.Request(url, data=data, headers=request_headers)
+        try:
+            with urllib.request.urlopen(request, timeout=timeout or self.timeout) as response:
+                raw = response.read()
+                return json.loads(raw) if json_response else None
+        except (urllib.error.URLError, OSError, ValueError) as exc:
+            raise TranscriptionError("Fun-ASR transport failed") from exc
+
+    def transcribe(self, audio_path: Path, *, language: str | None = None) -> dict[str, Any]:
+        if not audio_path.is_file() or not 0 < audio_path.stat().st_size <= 20 * 1024 * 1024:
+            raise TranscriptionError("Fun-ASR input must be nonempty and within the 20 MB upload budget")
+        policy = self._request(self.api_root + "/uploads?action=getPolicy&model=" + self.model,
+                               authenticated=True)["data"]
+        object_key = policy["upload_dir"].rstrip("/") + "/" + uuid.uuid4().hex + audio_path.suffix
+        fields = {name: str(policy[key]) for name, key in (
+            ("OSSAccessKeyId", "oss_access_key_id"), ("Signature", "signature"), ("policy", "policy"),
+            ("x-oss-object-acl", "x_oss_object_acl"), ("x-oss-forbid-overwrite", "x_oss_forbid_overwrite"))}
+        fields.update(key=object_key, success_action_status="200")
+        boundary = "----PhotoFunASR" + uuid.uuid4().hex
+        parts = []
+        for name, value in fields.items():
+            parts.extend((f"--{boundary}\r\n".encode(),
+                          f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode(),
+                          value.encode(), b"\r\n"))
+        parts.extend((f"--{boundary}\r\n".encode(),
+                      b'Content-Disposition: form-data; name="file"; filename="audio.bin"\r\n',
+                      b"Content-Type: application/octet-stream\r\n\r\n", audio_path.read_bytes(),
+                      b"\r\n", f"--{boundary}--\r\n".encode()))
+        self._request(policy["upload_host"], data=b"".join(parts),
+                      headers={"Content-Type": f"multipart/form-data; boundary={boundary}"}, json_response=False)
+        parameters: dict[str, Any] = {"channel_id": [0]}
+        if language:
+            parameters["language_hints"] = [language]
+        submitted = self._request(self.api_root + "/services/audio/asr/transcription", authenticated=True,
+            headers={"Content-Type": "application/json", "X-DashScope-Async": "enable", "X-DashScope-OssResourceResolve": "enable"},
+            data=json.dumps({"model": self.model, "input": {"file_urls": ["oss://" + object_key]},
+                             "parameters": parameters}).encode())
+        task_id = submitted["output"]["task_id"]
+        if not isinstance(task_id, str) or not re.fullmatch(r"[A-Za-z0-9_.:-]{1,128}", task_id) or self.api_key in task_id:
+            raise TranscriptionError("invalid Fun-ASR task identity")
+        deadline = time.monotonic() + self.max_wait
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TranscriptionError(f"Fun-ASR task timed out; task_id={task_id}; do not resubmit without checking it")
+            polled = self._request(self.api_root + "/tasks/" + task_id, authenticated=True,
+                                   timeout=min(self.timeout, remaining))
+            output = polled["output"]
+            if output.get("task_id", task_id) != task_id:
+                raise TranscriptionError("Fun-ASR returned a mismatched task identity")
+            status = output["task_status"]
+            if status == "SUCCEEDED":
+                results = output["results"]
+                if not isinstance(results, list) or len(results) != 1 or results[0].get("subtask_status") != "SUCCEEDED":
+                    raise TranscriptionError("Fun-ASR file subtask failed")
+                raw = self._request(results[0]["transcription_url"])
+                normalized = normalize_asr_payload(raw)
+                return ProviderResult(**{**normalized, "language": language}, provider=self.name, model=self.model)
+            if status not in {"PENDING", "RUNNING"}:
+                raise TranscriptionError("Fun-ASR task failed or returned an unknown status")
+            time.sleep(min(self.poll_interval, max(0, deadline - time.monotonic())))
 
 
 class DashscopeWithFunASRFallback:
@@ -318,8 +534,10 @@ class PendingProvider:
         return {"language": language, "segments": []}
 
 
-def build_provider(name: str, *, model: str, sidecar_dir: Path | None) -> Provider:
+def build_provider(name: str, *, model: str, sidecar_dir: Path | None, live: bool = False) -> Provider:
     value = name.strip().lower()
+    if value in {"openai", "openai_api", "openai-api", "dashscope", "dashscope_api", "dashscope-api", "fun_asr"} and not live:
+        raise TranscriptionError("online transcription requires explicit --live")
     if value == "sidecar":
         return SidecarProvider(sidecar_dir)
     if value in {"openai", "openai_api", "openai-api"}:
@@ -328,6 +546,8 @@ def build_provider(name: str, *, model: str, sidecar_dir: Path | None) -> Provid
         return DashscopeWithFunASRFallback(model or DEFAULT_DASHSCOPE_MODEL)
     if value in {"funasr", "local_funasr", "local-funasr"}:
         return FunASRProvider(model or DEFAULT_FUNASR_MODEL)
+    if value == "fun_asr":
+        return FunASRFileProvider(model or "fun-asr")
     if value in {"pending", "none", "disabled"}:
         return PendingProvider()
     raise TranscriptionError(f"unsupported transcription provider: {name}")
@@ -377,6 +597,7 @@ def process_project(
                 model=actual_model,
                 language=result.get("language") or language,
                 segments=result.get("segments") or [],
+                words=result.get("words"),
             )
             if not document["segments"] and actual_provider != "pending":
                 raise TranscriptionError("provider returned no transcript segments")
@@ -408,9 +629,10 @@ def main() -> int:
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--allow-pending", action="store_true")
+    parser.add_argument("--live", action="store_true", help="Explicitly enable paid online ASR")
     args = parser.parse_args()
     project = project_path(args.project_dir)
-    provider = build_provider(args.provider, model=args.model, sidecar_dir=args.sidecar_dir)
+    provider = build_provider(args.provider, model=args.model, sidecar_dir=args.sidecar_dir, live=args.live)
     result = process_project(
         project,
         provider=provider,
