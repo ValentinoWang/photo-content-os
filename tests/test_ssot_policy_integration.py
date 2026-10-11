@@ -107,7 +107,7 @@ class StudioPolicyIntegrationTests(unittest.TestCase):
             port=0,
             upstream_client=self.client,
             compatibility_checker=compatible_checker,
-            chatcut_mcp=ChatCutMcp(executor=lambda _command, _timeout: 0),
+            chatcut_mcp=ChatCutMcp(executor=lambda _command, _timeout: 0, handshake=lambda: True),
             trash_backend_factory=lambda _platform, _registry: self.trash,
         )
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)

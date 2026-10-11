@@ -8,6 +8,7 @@ fixed local scripts. It never executes commands from a task file.
 from __future__ import annotations
 
 import argparse
+import os
 import json
 import shlex
 import subprocess
@@ -15,6 +16,15 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+# Re-enter the fixed runtime before importing its third-party dependencies.
+if __name__ == "__main__":
+    fixed_runtime = Path(__file__).resolve().parent.parent / ".venv"
+    fixed_python = fixed_runtime / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+    if Path(sys.prefix).resolve() != fixed_runtime.resolve():
+        if not fixed_python.is_file():
+            raise SystemExit(f"Fixed runner runtime is missing: {fixed_python}")
+        os.execv(str(fixed_python), [str(fixed_python), str(Path(__file__).resolve()), *sys.argv[1:]])
 
 import yaml
 
