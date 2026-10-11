@@ -10,11 +10,20 @@ import os
 import shutil
 import sys
 import tempfile
+import plistlib
+import subprocess
 from dataclasses import asdict, dataclass
 from enum import Enum
 from pathlib import Path
 
 from runtime_paths import MINIMUM_PYTHON, platform_contract_name, repository_root, runtime_python, supported_python
+
+_SYSTEM_ROOT = Path(__file__).resolve().parents[1]
+if str(_SYSTEM_ROOT) not in sys.path:
+    sys.path.insert(0, str(_SYSTEM_ROOT))
+from desktop.chatcut_mcp import LocalMcpSession, McpError, read_registration
+from edit_backends.kdenlive_render import melt_executable
+from edit_backends.otio_kdenlive import kdenlive_executable
 
 UPSTREAM_OPENCLAW_MEDIA_SHA = "f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf"
 UPSTREAM_DEVICE_PLATFORMS = {"macos"}
@@ -59,6 +68,62 @@ def writable_directory(path: Path) -> bool:
         return True
     except OSError:
         return False
+
+
+def probe_app(path: Path) -> dict[str, object]:
+    if not path.is_dir():
+        return {"installed": False, "path": str(path), "version": None}
+    try:
+        with (path / "Contents/Info.plist").open("rb") as handle:
+            info = plistlib.load(handle)
+        version = info.get("CFBundleShortVersionString") or info.get("CFBundleVersion")
+        return {"installed": True, "path": str(path), "version": version}
+    except (OSError, ValueError, plistlib.InvalidFileException):
+        return {"installed": True, "path": str(path), "version": None}
+
+
+def probe_editing_tools(*, applications: Path = Path("/Applications"), session_factory=LocalMcpSession,
+                        registration_reader=read_registration) -> dict[str, object]:
+    """Installation checks and read-only MCP handshake; no draft traversal."""
+    chatcut = probe_app(applications / "ChatCut.app")
+    chatcut.update(status="unknown", reason="connection_not_verified", mcp_registered=None, connection_verified=False)
+    try:
+        config = registration_reader()
+        chatcut["mcp_registered"] = True
+        with session_factory(config) as session:
+            tools = session.list_tools()
+        chatcut.update(status="online", reason="mcp_handshake_and_tools_verified", connection_verified=True,
+                       tool_count=len(tools))
+    except McpError as exc:
+        reason = str(exc)
+        if reason in {"mcp_not_registered", "mcp_disabled"}:
+            chatcut.update(status="unavailable", reason=reason, mcp_registered=False)
+        else:
+            chatcut.update(reason="mcp_handshake_failed")
+    except (OSError, ValueError, subprocess.SubprocessError):
+        chatcut.update(reason="mcp_probe_failed")
+    if chatcut["installed"] is False:
+        chatcut.update(status="unavailable", reason="app_missing", connection_verified=False)
+    elif chatcut["version"] is None and chatcut["status"] == "online":
+        chatcut.update(status="unknown", reason="app_version_unknown")
+    kdenlive = probe_app(applications / "kdenlive.app")
+    kdenlive.update(status="unavailable", reason="melt_unavailable", executable=kdenlive_executable(),
+                    melt_path=melt_executable(), melt_version=None)
+    if kdenlive["melt_path"]:
+        try:
+            result = subprocess.run([kdenlive["melt_path"], "--version"], capture_output=True, text=True, timeout=5, check=True)
+            version = (result.stdout or result.stderr).strip()
+            if not version:
+                raise ValueError()
+            kdenlive.update(melt_version=version, status="online" if kdenlive["executable"] and kdenlive["version"] else "unknown",
+                            reason="versions_verified" if kdenlive["executable"] and kdenlive["version"] else "kdenlive_version_unknown")
+        except (OSError, ValueError, subprocess.SubprocessError):
+            kdenlive.update(status="unknown", reason="melt_version_probe_failed")
+    jianying = probe_app(applications / "VideoFusion-macOS.app")
+    jianying.update(status="online" if jianying["installed"] and jianying["version"] else ("unknown" if jianying["installed"] else "unavailable"),
+                    reason="installation_and_version_only" if jianying["version"] else "app_missing_or_version_unknown",
+                    scope="app_and_version_only")
+    return {"chatcut": chatcut, "kdenlive": kdenlive, "jianying": jianying}
 
 
 def collect_checks(repo: Path | None = None) -> tuple[list[Check], dict[str, object]]:
@@ -142,6 +207,7 @@ def collect_checks(repo: Path | None = None) -> tuple[list[Check], dict[str, obj
         "upstream_openclaw_media_sha": UPSTREAM_OPENCLAW_MEDIA_SHA,
         "cloud_pairing_supported": upstream_supported,
         "local_core_supported": platform_name in {"macos", "windows", "linux"},
+        "tools": probe_editing_tools(),
     }
     return checks, metadata
 
@@ -176,6 +242,8 @@ def main() -> int:
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     else:
         print(f"Photo Content OS doctor: {status}")
+        for name, tool in metadata["tools"].items():
+            print(f"{name}: {tool['status']} ({tool['reason']})")
         for check in checks:
             marker = "✓" if check.ok else ("✗" if check.required else "!")
             print(f"{marker} {check.id}: {check.summary}")

@@ -10,6 +10,8 @@ import re
 import shutil
 import subprocess
 import wave
+import sys
+from fractions import Fraction
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -17,7 +19,7 @@ from typing import Any
 import yaml
 
 from llm_common import LLMError, creator_context_block, load_creator_context, parse_json_response, public_llm_error, generate_text
-from media_common import OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_label
+from media_common import OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_label, file_sha256
 from media_common import sample_times as _shared_sample_times
 
 SCHEMA_VERSION = "output_review.v1"
@@ -283,6 +285,198 @@ def run_ffprobe(path: Path) -> dict[str, Any]:
         "format_name": format_info.get("format_name"),
         "file_size_bytes": int_or_none(format_info.get("size")),
     }
+
+
+_SRT_TIMESTAMP = re.compile(r"(\d{2,}):([0-5]\d):([0-5]\d),(\d{3})")
+
+
+def read_srt_cues(path: Path) -> list[tuple[float, float, str]]:
+    text = path.read_text(encoding="utf-8-sig").strip()
+    if not text:
+        raise ValueError("subtitle_empty")
+    cues = []
+    for index, block in enumerate(re.split(r"\n\s*\n", text), 1):
+        lines = block.splitlines()
+        if len(lines) < 3 or lines[0].strip() != str(index) or not "\n".join(lines[2:]).strip():
+            raise ValueError("subtitle_invalid")
+        values = lines[1].split(" --> ")
+        if len(values) != 2:
+            raise ValueError("subtitle_invalid")
+        times = []
+        for value in values:
+            match = _SRT_TIMESTAMP.fullmatch(value.strip())
+            if match is None:
+                raise ValueError("subtitle_invalid")
+            h, m, sec, ms = map(int, match.groups())
+            times.append(h * 3600 + m * 60 + sec + ms / 1000)
+        if times[1] <= times[0]:
+            raise ValueError("subtitle_invalid")
+        cues.append((*times, "\n".join(lines[2:])))
+    return cues
+
+
+def check_output_video(
+    path: Path, *, original_hashes: dict[Path, str] | None = None,
+    subtitles: Path | None = None, expected_duration: float | None = None,
+    expected_frames: int | None = None, expected_fps: float | None = None,
+    expected_dimensions: tuple[int, int] | None = None, expected_tracks: tuple[int, int] | None = None,
+) -> dict[str, Any]:
+    """Read-only deterministic checks. Missing input evidence remains unknown."""
+    checks = []
+
+    def record(name: str, errors: list[str], *, unknown: bool = False, **details: Any) -> None:
+        checks.append({"check": name, "status": "unknown" if unknown else ("failed" if errors else "passed"),
+                       "error_codes": errors, "details": details})
+
+    def finish():
+        errors = sorted({code for item in checks for code in item["error_codes"]})
+        return {"status": "failed" if errors else ("unknown" if any(c["status"] == "unknown" for c in checks) else "passed"),
+                "error_codes": errors, "checks": checks}
+
+    if not original_hashes:
+        record("original_integrity", [], unknown=True, reason="original_hashes_not_supplied")
+    else:
+        for original, digest in original_hashes.items():
+            try:
+                errors = [] if re.fullmatch(r"[0-9a-f]{64}", digest) and file_sha256(original) == digest else ["input_hash_mismatch"]
+                if path.exists() and original.exists() and path.samefile(original):
+                    errors.append("output_equals_input")
+            except (OSError, TypeError):
+                errors = ["input_unreadable"]
+            record("original_integrity", errors)
+    try:
+        decoded = subprocess.run(
+            ["ffmpeg", "-nostdin", "-v", "error", "-xerror", "-i", str(path),
+             "-map", "0:v?", "-map", "0:a?", "-f", "null", "-"],
+            capture_output=True, text=True, timeout=300, check=False,
+        )
+        record("decode", [] if decoded.returncode == 0 and not decoded.stderr.strip() else ["output_decode_failed"])
+    except (OSError, subprocess.SubprocessError):
+        record("decode", ["output_decode_failed"])
+    try:
+        result = subprocess.run(
+            ["ffprobe", "-v", "error", "-count_frames", "-show_streams", "-show_format", "-of", "json", str(path)],
+            capture_output=True, text=True, timeout=300, check=True,
+        )
+        data = json.loads(result.stdout)
+        streams = data["streams"]
+        if not isinstance(streams, list) or not all(isinstance(v, dict) for v in streams):
+            raise ValueError()
+        duration = Fraction(str(data["format"]["duration"]))
+        if duration <= 0:
+            raise ValueError()
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError, TypeError, ZeroDivisionError):
+        record("probe", ["output_probe_failed"])
+        return finish()
+    videos = [v for v in streams if v.get("codec_type") == "video"]
+    audios = [v for v in streams if v.get("codec_type") == "audio"]
+    record("tracks", (["video_track_missing"] if not videos else []) + (["audio_track_missing"] if not audios else []),
+           video_tracks=len(videos), audio_tracks=len(audios))
+    if expected_tracks is not None:
+        record("track_counts", [] if (len(videos), len(audios)) == expected_tracks else ["track_count_mismatch"])
+    if expected_dimensions is not None:
+        record("dimensions", [] if videos and all((v.get("width"), v.get("height")) == expected_dimensions for v in videos) else ["dimensions_mismatch"])
+    try:
+        durations = [Fraction(str(v["duration"])) for v in videos + audios]
+        if not videos or not audios or any(v <= 0 for v in durations):
+            raise ValueError()
+        record("av_duration", [] if all(abs(v - a) <= Fraction(1, 10)
+               for v in durations[:len(videos)] for a in durations[len(videos):]) else ["av_duration_mismatch"],
+               stream_seconds=[float(v) for v in durations])
+    except (ValueError, KeyError, TypeError, ZeroDivisionError):
+        record("av_duration", ["av_duration_unknown"])
+    for video in videos:
+        try:
+            fps = Fraction(video["avg_frame_rate"])
+            frame_count = int(video["nb_read_frames"])
+            video_duration = Fraction(video["duration"])
+            if fps <= 0 or frame_count <= 0:
+                raise ValueError()
+            errors = []
+            if any(abs(frame_count - fps * d) > 1 for d in (duration, video_duration)):
+                errors.append("frame_count_mismatch")
+            if expected_frames is not None and frame_count != expected_frames:
+                errors.append("frame_count_mismatch")
+            if expected_fps is not None and abs(float(fps) - expected_fps) > 0.000001:
+                errors.append("fps_mismatch")
+            if expected_duration is not None and abs(duration - Fraction(str(expected_duration))) > 1 / fps:
+                errors.append("duration_mismatch")
+            record("frames", sorted(set(errors)), frames=frame_count, fps=float(fps), duration=float(duration))
+        except (ValueError, KeyError, TypeError, ZeroDivisionError):
+            record("frames", ["frame_count_unknown"])
+    if subtitles is not None:
+        try:
+            cues = read_srt_cues(subtitles)
+            errors = []
+            previous_end = 0
+            for start, end, _ in cues:
+                if start < previous_end:
+                    errors.append("subtitle_nonmonotonic")
+                if Fraction(str(end)) > duration:
+                    errors.append("subtitle_out_of_bounds")
+                previous_end = end
+            record("subtitles", sorted(set(errors)), cues=len(cues))
+        except (OSError, UnicodeError, ValueError):
+            record("subtitles", ["subtitle_invalid"])
+    return finish()
+
+
+def check_pipeline_manifest(path: Path, *, expected_output: Path | None = None) -> dict[str, Any]:
+    """Validate producer hashes and expected timing before checking a candidate."""
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        if raw["contract"] != "video_pipeline_manifest.v1" or raw.get("failure") is not None:
+            raise ValueError()
+        inputs = raw["inputs"]
+        if not isinstance(inputs, list) or not inputs:
+            raise ValueError()
+        if any(not isinstance(item, dict) or not isinstance(item.get("role"), str) or not item["role"].strip()
+               or not isinstance(item.get("sha256"), str) or not re.fullmatch(r"[0-9a-f]{64}", item["sha256"]) for item in inputs):
+            raise ValueError()
+        originals = {(path.parent / item["path"]).resolve(): item["sha256"] for item in inputs}
+        if len(originals) != len(inputs):
+            raise ValueError()
+        assets = raw["assets"]
+        if not isinstance(assets, list):
+            raise ValueError()
+        for item in assets:
+            if not isinstance(item.get("source"), str) or not item["source"].strip() or not isinstance(item.get("license"), str) or not item["license"].strip():
+                raise ValueError()
+            asset = (path.parent / item["path"]).resolve()
+            if asset in originals or not isinstance(item.get("sha256"), str) or not re.fullmatch(r"[0-9a-f]{64}", item["sha256"]):
+                raise ValueError()
+            originals[asset] = item["sha256"]
+        output = (path.parent / raw["output"]["path"]).resolve()
+        if expected_output is not None and output != expected_output.resolve():
+            raise ValueError()
+        width, height = raw["width"], raw["height"]
+        video_tracks, audio_tracks = raw["video_tracks"], raw["audio_tracks"]
+        if any(type(v) is not int or v <= 0 for v in (width, height, video_tracks, audio_tracks)):
+            raise ValueError()
+        if isinstance(raw["duration"], bool) or isinstance(raw["fps"], bool):
+            raise ValueError()
+        duration = float(raw["duration"])
+        fps = float(Fraction(*raw["fps"])) if isinstance(raw["fps"], list) else float(raw["fps"])
+        if not math.isfinite(duration) or not math.isfinite(fps) or min(duration, fps) <= 0:
+            raise ValueError()
+        previous_source_end = previous_output_end = 0
+        if not isinstance(raw["time_map"], list):
+            raise ValueError()
+        for item in raw["time_map"]:
+            a, b, c = (item[key] for key in ("source_start", "source_end", "output_start"))
+            if any(isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) or v < 0 for v in (a,b,c)):
+                raise ValueError()
+            if b <= a or a < previous_source_end or c < previous_output_end or c + b - a > duration + 1e-6:
+                raise ValueError()
+            previous_source_end, previous_output_end = b, c + b - a
+        subtitles = (path.parent / raw["subtitles"]).resolve() if raw.get("subtitles") else None
+        if file_sha256(output) != raw["output"]["sha256"]:
+            raise ValueError()
+    except (OSError, UnicodeError, ValueError, KeyError, TypeError, ZeroDivisionError):
+        return {"status": "failed", "error_codes": ["manifest_invalid"], "checks": []}
+    return check_output_video(output, original_hashes=originals, subtitles=subtitles,
+                              expected_duration=duration, expected_frames=round(duration * fps), expected_fps=fps,
+                              expected_dimensions=(width, height), expected_tracks=(video_tracks, audio_tracks))
 
 
 def sample_times(duration: float) -> list[float]:
@@ -2225,6 +2419,11 @@ def review_one(input_video: ReviewInput, output_root: Path, *, bgm_review_dir: P
     audio_metrics = compute_audio_metrics(input_video.path, probe, version_dir)
     flags = risk_flags_for(probe, video_metrics, audio_metrics)
     technical_status = technical_status_for(probe, video_metrics, audio_metrics, flags)
+    manifest_path = input_video.path.with_suffix(input_video.path.suffix + ".manifest.json")
+    deterministic = check_pipeline_manifest(manifest_path, expected_output=input_video.path) if manifest_path.exists() else check_output_video(input_video.path)
+    if deterministic["status"] == "failed":
+        technical_status = "fail"
+        flags = sorted(set(flags + deterministic["error_codes"]))
     bgm_review = load_bgm_review(input_video.path, bgm_review_dir)
     creative_review = creative_review_for_version(
         version_name=input_video.version_name,
@@ -2238,6 +2437,7 @@ def review_one(input_video: ReviewInput, output_root: Path, *, bgm_review_dir: P
         "path": str(input_video.path),
         "task_status": "success",
         "technical_status": technical_status,
+        "deterministic_checks": deterministic,
         "probe": probe,
         "video_metrics": video_metrics,
         "audio_metrics": audio_metrics,
@@ -2996,6 +3196,14 @@ def parse_video_arg(value: str, default_name: str) -> ReviewInput:
 
 
 def main() -> int:
+    if "--deterministic-only" in sys.argv:
+        deterministic_parser = argparse.ArgumentParser(description="Read-only video integrity checks")
+        deterministic_parser.add_argument("--deterministic-only", action="store_true")
+        deterministic_parser.add_argument("--pipeline-manifest", required=True, type=Path)
+        deterministic_args = deterministic_parser.parse_args()
+        result = check_pipeline_manifest(deterministic_args.pipeline_manifest)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result["status"] == "passed" else 2
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task-id", required=True)
     parser.add_argument("--project-id", required=True)

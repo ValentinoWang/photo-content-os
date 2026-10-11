@@ -580,9 +580,11 @@ def safe_xml_resource(candidate: str) -> str:
     return str(Path(candidate).expanduser()) if Path(candidate).is_absolute() else candidate
 
 
-def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_revision: int) -> int:
+def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_revision: int, *, width: int = 1080, height: int = 1920) -> int:
+    if width <= 0 or height <= 0:
+        raise ContractError("timeline dimensions must be positive")
     root = ET.Element("mlt", {"LC_NUMERIC": "C", "version": "7.28.0", "title": f"{project_id}_r{project_revision}"})
-    ET.SubElement(root, "profile", {"description": "HD Vertical 1080p 30 fps", "width": "1080", "height": "1920", "frame_rate_num": "30", "frame_rate_den": "1", "progressive": "1", "sample_aspect_num": "1", "sample_aspect_den": "1", "display_aspect_num": "9", "display_aspect_den": "16"})
+    ET.SubElement(root, "profile", {"description": f"Content OS {width}x{height} {FPS} fps", "width": str(width), "height": str(height), "frame_rate_num": str(FPS), "frame_rate_den": "1", "progressive": "1", "sample_aspect_num": "1", "sample_aspect_den": "1", "display_aspect_num": str(width), "display_aspect_den": str(height)})
     ET.SubElement(root, "property", {"name": "kdenlive:docproperties.projectid"}).text = project_id
     ET.SubElement(root, "property", {"name": "content_os.project_revision"}).text = str(project_revision)
     tracks = list(otio_data.tracks)
@@ -643,6 +645,12 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
             )
             count += 1
 
+    # MLT resolves producer references while reading XML, in document order.
+    # Referenced media must precede every playlist that consumes it.
+    for playlist_id in playlist_ids:
+        playlist = root.find(f"playlist[@id='{playlist_id}']")
+        root.remove(playlist)
+        root.append(playlist)
     tractor = ET.SubElement(root, "tractor", {"id": "tractor0"})
     for playlist_id in playlist_ids:
         ET.SubElement(tractor, "track", {"producer": playlist_id})
@@ -650,16 +658,13 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
     # track opaque, which would hide everything beneath an overlay.  Blend each
     # track above the bottom one onto the accumulated result instead.
     for track_index in range(1, len(playlist_ids)):
-        ET.SubElement(
+        transition = ET.SubElement(
             tractor,
             "transition",
-            {
-                "id": f"transition{track_index - 1}",
-                "a_track": "0",
-                "b_track": str(track_index),
-                "mlt_service": "frei0r.cairoblend",
-            },
+            {"id": f"transition{track_index - 1}"},
         )
+        for name, value in {"a_track": "0", "b_track": str(track_index), "mlt_service": "frei0r.cairoblend"}.items():
+            ET.SubElement(transition, "property", {"name": name}).text = value
     ET.SubElement(tractor, "property", {"name": "kdenlive:docproperties.documentversion"}).text = "1"
     path.write_text(ET.tostring(root, encoding="unicode") + "\n", encoding="utf-8")
     return count

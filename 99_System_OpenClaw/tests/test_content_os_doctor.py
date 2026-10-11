@@ -73,5 +73,55 @@ class ContentOsDoctorTests(unittest.TestCase):
                 self.assertTrue(metadata["local_core_supported"])
 
 
+class EditingToolDoctorTests(unittest.TestCase):
+    def apps(self, root):
+        import plistlib
+        for name in ("ChatCut.app", "kdenlive.app", "VideoFusion-macOS.app"):
+            contents = root / name / "Contents"
+            contents.mkdir(parents=True)
+            with (contents / "Info.plist").open("wb") as handle:
+                plistlib.dump({"CFBundleShortVersionString": "fixture-1"}, handle)
+
+    def test_registered_without_handshake_is_unknown(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.apps(root)
+            def failed(_):
+                raise doctor.McpError("mcp_timeout")
+            with patch.object(doctor, "melt_executable", return_value=None):
+                tools = doctor.probe_editing_tools(applications=root, registration_reader=lambda: {"transport": {}}, session_factory=failed)
+            self.assertEqual(tools["chatcut"]["status"], "unknown")
+            self.assertTrue(tools["chatcut"]["mcp_registered"])
+            self.assertFalse(tools["chatcut"]["connection_verified"])
+            self.assertEqual(tools["jianying"]["scope"], "app_and_version_only")
+            self.assertEqual(tools["jianying"]["version"], "fixture-1")
+            self.assertNotIn("draft_roots", tools["jianying"])
+
+    def test_real_handshake_evidence_required_for_online(self):
+        class Session:
+            def __init__(self, _): pass
+            def __enter__(self): return self
+            def __exit__(self, *_): pass
+            def list_tools(self): return []
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.apps(root)
+            with patch.object(doctor, "melt_executable", return_value=None):
+                tools = doctor.probe_editing_tools(applications=root, registration_reader=lambda: {"transport": {}}, session_factory=Session)
+            self.assertEqual(tools["chatcut"]["status"], "online")
+            self.assertTrue(tools["chatcut"]["connection_verified"])
+
+    def test_missing_registration_is_unavailable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.apps(root)
+            def missing():
+                raise doctor.McpError("mcp_not_registered")
+            with patch.object(doctor, "melt_executable", return_value=None):
+                tools = doctor.probe_editing_tools(applications=root, registration_reader=missing)
+            self.assertEqual(tools["chatcut"]["status"], "unavailable")
+            self.assertFalse(tools["chatcut"]["mcp_registered"])
+
+
 if __name__ == "__main__":
     unittest.main()

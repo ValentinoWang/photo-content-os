@@ -1,12 +1,14 @@
-"""Optional ChatCut Desktop local MCP capability probing.
-
-The integration is deliberately capability-only. It probes the public local
-Codex command and keeps the command result out of the exposed state.
-"""
+"""ChatCut registration, local MCP handshake and secret-free desktop state."""
 
 from __future__ import annotations
 
 import subprocess
+import json
+import os
+import selectors
+import time
+import urllib.request
+from urllib.parse import urlsplit
 from dataclasses import dataclass
 from typing import Callable, Literal, Sequence
 
@@ -114,6 +116,7 @@ class ChatCutMcp:
         self,
         *,
         executor: CommandExecutor | None = None,
+        handshake: Callable[[], object] | None = None,
         timeout_seconds: float = DEFAULT_PROBE_TIMEOUT_SECONDS,
     ) -> None:
         if isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, (int, float)):
@@ -124,6 +127,7 @@ class ChatCutMcp:
             raise TypeError("executor must be callable")
 
         self._executor = executor if executor is not None else _subprocess_executor
+        self._handshake = handshake
         self._timeout_seconds = float(timeout_seconds)
         self._state = ChatCutMcpState(
             schema_version=SCHEMA_VERSION,
@@ -194,6 +198,19 @@ class ChatCutMcp:
 
         success, reason_code = self._probe_once()
         if success:
+            try:
+                if self._handshake is not None:
+                    if self._handshake() is not True:
+                        raise McpError("handshake_failed")
+                else:
+                    with LocalMcpSession(timeout_seconds=self._timeout_seconds) as session:
+                        session.list_tools()
+            except Exception:
+                self._state = _state(
+                    "unavailable", visible=True, available=False,
+                    can_connect=False, reason_code="handshake_failed",
+                )
+                return self.state
             self._state = _state(
                 "connected",
                 visible=True,
@@ -224,12 +241,6 @@ class ChatCutMcp:
         )
         return self.state
 
-    # These names keep the user actions explicit while offering concise callers.
-    trigger_probe = probe
-    confirm = confirm_connection
-    connect = confirm_connection
-
-
 __all__ = [
     "ChatCutMcp",
     "ChatCutMcpState",
@@ -241,3 +252,200 @@ __all__ = [
     "SCHEMA_VERSION",
     "default_state",
 ]
+
+
+class McpError(RuntimeError):
+    """A local transport or protocol failure with a secret-free reason."""
+
+
+def read_registration(timeout_seconds: float = DEFAULT_PROBE_TIMEOUT_SECONDS) -> dict:
+    result = subprocess.run(
+        [*PROBE_COMMAND, "--json"], capture_output=True, text=True,
+        timeout=timeout_seconds, check=False,
+    )
+    if result.returncode:
+        raise McpError("mcp_not_registered")
+    try:
+        config = json.loads(result.stdout)
+        if not isinstance(config, dict) or not isinstance(config.get("transport"), dict):
+            raise ValueError()
+    except ValueError as exc:
+        raise McpError("mcp_registration_invalid") from exc
+    if config.get("enabled") is False:
+        raise McpError("mcp_disabled")
+    return config
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise McpError("mcp_redirect_rejected")
+
+
+class LocalMcpSession:
+    """MCP JSON-RPC over registered stdio or loopback Streamable HTTP only.
+
+    A session owns only its launched stdio child. No application process or
+    other MCP client is stopped. Credentials never enter desktop state.
+    """
+
+    def __init__(self, config: dict | None = None, *, timeout_seconds: float = 5):
+        self.config = config
+        self.timeout = timeout_seconds
+        self.process = None
+        self.selector = None
+        self.buffer = b""
+        self.sequence = 0
+        self.session_id = None
+        self.protocol = "2024-11-05"
+
+    def __enter__(self):
+        try:
+            config = self.config if self.config is not None else read_registration(self.timeout)
+            transport = config["transport"]
+            self.transport = transport
+            if transport["type"] == "stdio":
+                command = transport.get("command")
+                args = transport.get("args", [])
+                if not isinstance(command, str) or not isinstance(args, list) or not all(isinstance(v, str) for v in args):
+                    raise McpError("mcp_registration_invalid")
+                self.process = subprocess.Popen(
+                    [command, *args], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                    stderr=subprocess.DEVNULL, env={**os.environ, **(transport.get("env") or {})},
+                    cwd=transport.get("cwd") or None, bufsize=0,
+                )
+                self.selector = selectors.DefaultSelector()
+                self.selector.register(self.process.stdout, selectors.EVENT_READ)
+            elif transport["type"] == "streamable_http":
+                url = urlsplit(transport["url"])
+                if url.scheme not in {"http", "https"} or url.hostname not in {"localhost", "127.0.0.1", "::1"} or url.username or url.password:
+                    raise McpError("mcp_nonlocal_transport_rejected")
+                self.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), _NoRedirect())
+            else:
+                raise McpError("mcp_transport_unsupported")
+            initialized = self.request("initialize", {
+                "protocolVersion": self.protocol, "capabilities": {},
+                "clientInfo": {"name": "photo-content-os", "version": "1"},
+            })
+            if not isinstance(initialized.get("serverInfo"), dict) or not isinstance(initialized.get("protocolVersion"), str):
+                raise McpError("mcp_initialize_invalid")
+            self.protocol = initialized["protocolVersion"]
+            self.request("notifications/initialized", {}, notification=True)
+            return self
+        except Exception:
+            self.close()
+            raise
+
+    def __exit__(self, *_):
+        self.close()
+
+    def close(self):
+        if self.selector is not None:
+            self.selector.close()
+        if self.process is not None:
+            if self.process.poll() is None:
+                self.process.terminate()
+                try:
+                    self.process.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    self.process.kill()
+                    self.process.wait(timeout=2)
+            self.process.stdin.close()
+            self.process.stdout.close()
+            self.process = None
+
+    def request(self, method: str, params: dict, *, notification: bool = False) -> dict:
+        self.sequence += 1
+        message = {"jsonrpc": "2.0", "method": method, "params": params}
+        if not notification:
+            message["id"] = self.sequence
+        payload = json.dumps(message, ensure_ascii=False).encode()
+        deadline = time.monotonic() + self.timeout
+        if self.process is not None:
+            try:
+                self.process.stdin.write(payload + b"\n")
+                self.process.stdin.flush()
+            except OSError as exc:
+                raise McpError("mcp_connection_closed") from exc
+            if notification:
+                return {}
+            while time.monotonic() < deadline:
+                while b"\n" in self.buffer:
+                    line, self.buffer = self.buffer.split(b"\n", 1)
+                    reply = json.loads(line)
+                    if reply.get("id") == self.sequence and ("result" in reply or "error" in reply):
+                        return self._result(reply)
+                    if "method" in reply and "id" in reply:
+                        self.process.stdin.write(json.dumps({
+                            "jsonrpc": "2.0", "id": reply["id"],
+                            "error": {"code": -32601, "message": "unsupported client request"},
+                        }).encode() + b"\n")
+                if not self.selector.select(max(0, deadline - time.monotonic())):
+                    break
+                chunk = os.read(self.process.stdout.fileno(), 65536)
+                if not chunk:
+                    raise McpError("mcp_connection_closed")
+                self.buffer += chunk
+            raise McpError("mcp_timeout")
+        headers = {"Content-Type": "application/json", "Accept": "application/json, text/event-stream",
+                   "MCP-Protocol-Version": self.protocol, **(self.transport.get("http_headers") or {})}
+        for name, variable in (self.transport.get("env_http_headers") or {}).items():
+            if variable not in os.environ:
+                raise McpError("mcp_auth_unavailable")
+            headers[name] = os.environ[variable]
+        token_var = self.transport.get("bearer_token_env_var")
+        if token_var:
+            if token_var not in os.environ:
+                raise McpError("mcp_auth_unavailable")
+            headers["Authorization"] = "Bearer " + os.environ[token_var]
+        if self.session_id:
+            headers["Mcp-Session-Id"] = self.session_id
+        req = urllib.request.Request(self.transport["url"], data=payload, headers=headers, method="POST")
+        with self.opener.open(req, timeout=self.timeout) as response:
+            self.session_id = response.headers.get("Mcp-Session-Id", self.session_id)
+            if notification:
+                return {}
+            if "text/event-stream" in response.headers.get("Content-Type", ""):
+                for line in response:
+                    if time.monotonic() > deadline:
+                        raise McpError("mcp_timeout")
+                    if line.startswith(b"data:"):
+                        reply = json.loads(line[5:])
+                        if reply.get("id") == self.sequence:
+                            return self._result(reply)
+                raise McpError("mcp_response_missing")
+            reply = json.loads(response.read())
+            if reply.get("id") != self.sequence:
+                raise McpError("mcp_response_id_mismatch")
+            return self._result(reply)
+
+    @staticmethod
+    def _result(reply):
+        if "error" in reply or not isinstance(reply.get("result"), dict):
+            raise McpError("mcp_request_failed")
+        return reply["result"]
+
+    def list_tools(self) -> list[dict]:
+        tools, cursors = [], set()
+        params = {}
+        while True:
+            result = self.request("tools/list", params)
+            batch = result.get("tools")
+            if not isinstance(batch, list) or not all(isinstance(t, dict) and isinstance(t.get("name"), str) and isinstance(t.get("inputSchema"), dict) for t in batch):
+                raise McpError("mcp_tool_schema_invalid")
+            tools.extend(batch)
+            cursor = result.get("nextCursor")
+            if cursor is None:
+                break
+            if not isinstance(cursor, str) or cursor in cursors:
+                raise McpError("mcp_cursor_invalid")
+            cursors.add(cursor)
+            params = {"cursor": cursor}
+        if len({tool["name"] for tool in tools}) != len(tools):
+            raise McpError("mcp_duplicate_tools")
+        return tools
+
+    def call_tool(self, name: str, arguments: dict) -> dict:
+        result = self.request("tools/call", {"name": name, "arguments": arguments})
+        if result.get("isError"):
+            raise McpError("mcp_tool_failed")
+        return result

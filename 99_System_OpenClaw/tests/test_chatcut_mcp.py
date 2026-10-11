@@ -78,9 +78,9 @@ class ChatCutMcpTests(unittest.TestCase):
         self.assertFalse(client.state["available"])
         self.assertEqual(len(executor.calls), 1)
 
-    def test_confirmation_reprobes_before_connected_state(self) -> None:
+    def test_confirmation_reprobes_and_handshakes_before_connected_state(self) -> None:
         executor = FakeExecutor(ProbeCommandResult(0), ProbeCommandResult(0))
-        client = ChatCutMcp(executor=executor)
+        client = ChatCutMcp(executor=executor, handshake=lambda: True)
 
         client.probe()
         state = client.confirm_connection()
@@ -166,7 +166,7 @@ class ChatCutMcpTests(unittest.TestCase):
         self.assertEqual(kwargs["stderr"], subprocess.DEVNULL)
         self.assertLessEqual(kwargs["timeout"], MAX_PROBE_TIMEOUT_SECONDS)
 
-    def test_implementation_imports_only_local_process_support(self) -> None:
+    def test_implementation_uses_only_standard_library_for_local_transport(self) -> None:
         source = (SYSTEM_ROOT / "desktop" / "chatcut_mcp.py").read_text(encoding="utf-8")
         tree = ast.parse(source)
         imported_modules = {
@@ -176,7 +176,7 @@ class ChatCutMcpTests(unittest.TestCase):
             for alias in (node.names if isinstance(node, ast.Import) else [node])
         }
 
-        self.assertLessEqual(imported_modules, {"__future__", "dataclasses", "subprocess", "typing"})
+        self.assertLessEqual(imported_modules, {"__future__", "dataclasses", "subprocess", "typing", "json", "os", "selectors", "time", "urllib.request", "urllib.parse", "urllib"})
 
 
 if __name__ == "__main__":

@@ -431,9 +431,9 @@ class OtioKdenliveBackendTests(unittest.TestCase):
             # Without a blend the top track would hide the cut underneath it.
             transitions = mlt.findall("./tractor/transition")
             self.assertEqual(len(transitions), 2)
-            self.assertEqual(transitions[0].attrib["mlt_service"], "frei0r.cairoblend")
-            self.assertEqual(transitions[0].attrib["b_track"], "1")
-            self.assertEqual(transitions[1].attrib["b_track"], "2")
+            self.assertEqual(transitions[0].find("property[@name='mlt_service']").text, "frei0r.cairoblend")
+            self.assertEqual(transitions[0].find("property[@name='b_track']").text, "1")
+            self.assertEqual(transitions[1].find("property[@name='b_track']").text, "2")
 
             validation = root / "validation.json"
             self.run_script(
