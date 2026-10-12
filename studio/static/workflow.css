@@ -440,7 +440,7 @@
 .handoff .clips .edit-clip{position:absolute;top:0;bottom:0;display:flex;align-items:flex-start;padding:3px 5px;background:transparent;border:1px solid #2E5F65aa;border-radius:4px;color:var(--ac-soft);font:11px var(--f-mo);min-width:0}
 .handoff .clips .edit-clip[aria-pressed=true]{border:2px solid var(--ac);background:#4fb3bd14}
 .handoff .applied-cut{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,#000 0 4px,#0d1314 4px 8px);z-index:1}
-.handoff .playhead{position:absolute;top:30px;bottom:10px;left:calc(12px + var(--lane-x) + (100% - 24px - var(--lane-x)) * var(--at));width:2px;background:var(--ac);border-radius:1px;z-index:2}
+.handoff .playhead{position:absolute;top:30px;bottom:10px;left:calc(12px + var(--lane-x) + (100% - 24px - var(--lane-x)) * var(--at,0));width:2px;background:var(--ac);border-radius:1px;z-index:2}
 .handoff .playhead::before{content:"";position:absolute;top:-4px;left:-4px;width:10px;height:10px;border-radius:2px;background:var(--ac)}
 @media(max-width:1180px){
 .handoff .nle-top{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
@@ -486,7 +486,7 @@
 .handoff .sug li{grid-template-columns:44px 82px minmax(0,1fr) 35px}
 .handoff .nle-timeline .edit-clip{padding-left:2px}
 .handoff .topbar>div{flex:1 1 100%}}
-.handoff .portrait{width:191px;height:340px;flex:none;overflow:hidden}
+.handoff .portrait{width:191px;height:340px;flex:none;overflow:hidden;display:grid;place-items:center}
 .handoff .portrait iframe{transform-origin:0 0}
 .handoff .transport svg{width:18px;height:18px;fill:var(--ink);stroke:none}
 .handoff .transport>span{margin-left:auto}
@@ -517,3 +517,5 @@
 .handoff .handoff-reference .pane-body>section{min-width:0;border:1px solid var(--rule);border-radius:8px;overflow:hidden}
 
 .handoff .pane-body>.first-cut-action{width:100%}
+
+.handoff .cs-dot[data-tone="unknown"]{background:var(--ink-3);box-shadow:none}
