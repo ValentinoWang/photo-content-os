@@ -263,13 +263,150 @@ def animation_suggestions(document: dict[str, Any], animations: list[dict[str, A
     return suggestions, unmatched
 
 
+def script_alignment(document: dict[str, Any], handoff: dict[str, Any] | None, *,
+                     threshold: float, min_chars: int) -> tuple[dict, list[dict], list[tuple[float, float]]]:
+    """Align ordered script sentences without inventing ASR words or speaker intent.
+
+    Exact normalized sentence coverage is deliberately conservative. Among equally
+    complete ordered readings, keep the latest one; repeated sentences written in
+    the script remain separate obligations. Uncertain text is review-only.
+    """
+    if isinstance(threshold, bool) or not isinstance(threshold, (int, float)) or not math.isfinite(threshold) or not 0 < threshold <= 1:
+        raise SuggestionError("script alignment threshold must be in (0, 1]")
+    if type(min_chars) is not int or min_chars < 1:
+        raise SuggestionError("minimum repeat characters must be a positive integer")
+    receipt = {"mode": "transcript_only", "notice": "没有按稿对齐", "reason": "missing_script",
+               "threshold": threshold, "alignment_rate": 0.0, "work_id": None,
+               "work_revision": None, "script_version": None, "version_basis": None,
+               "script_sha256": None, "sentences": [], "missing_sentences": []}
+    if handoff is None:
+        return receipt, [], []
+    if not isinstance(handoff, dict):
+        raise SuggestionError("handoff must be an object")
+    mx = handoff.get("mxHandoff", handoff)
+    if not isinstance(mx, dict) or not isinstance(mx.get("identity"), dict):
+        raise SuggestionError("handoff identity is required")
+    identity = mx["identity"]
+    work, revision = identity.get("work_id"), identity.get("work_revision")
+    if not isinstance(work, str) or not work.strip() or type(revision) is not int or revision < 1:
+        raise SuggestionError("handoff work identity is required")
+    script = mx.get("script")
+    if not isinstance(script, str):
+        raise SuggestionError("handoff script must be text")
+    if "mxHandoff" in handoff and handoff.get("script") != script:
+        raise SuggestionError("descriptor and handoff scripts disagree")
+    ref = handoff.get("documentRef")
+    if ref is not None and (not isinstance(ref, dict) or type(ref.get("revision")) is not int or ref["revision"] < 1):
+        raise SuggestionError("document revision is invalid")
+    receipt.update(work_id=work, work_revision=revision,
+                   script_version=ref["revision"] if ref else revision,
+                   version_basis="documentRef.revision" if ref else "identity.work_revision",
+                   script_sha256=hashlib.sha256(script.encode()).hexdigest())
+    sentences = [part.strip() for part in re.split(r"(?<=[。！？.!?])|\n+", script) if text_key(part)]
+    if not sentences:
+        return receipt, [], []
+    units, owners, tape = [], [], ""
+    for segment in document["segments"]:
+        for word in segment["words"] if segment["precision"] == "word" else [
+                {"text": segment["text"], "start": segment["start_sec"], "end": segment["end_sec"]}]:
+            key = text_key(word["text"])
+            if not key:
+                continue
+            owners.extend([len(units)] * len(key))
+            units.append({**word, "speaker": segment["speaker"], "left": len(tape), "right": len(tape) + len(key),
+                          "exact": segment["precision"] == "word"})
+            tape += key
+    # State is the end of the last retained sentence. Skips record missing speech;
+    # maximizing covered characters before recency prevents a late phrase from
+    # displacing the remaining script. No fuzzy match grants a cut permission.
+    states = {0: (0, (), [])}
+    for sentence in sentences:
+        key = text_key(sentence)
+        matches, offset = [], 0
+        while (start := tape.find(key, offset)) >= 0:
+            matches.append((start, start + len(key)))
+            offset = start + 1
+        updated = {}
+        for end, (covered, ranks, chosen) in states.items():
+            for match in [None] + [m for m in matches if m[0] >= end]:
+                next_end = match[1] if match else end
+                value = (covered + (len(key) if match else 0), ranks + (match[1] if match else -1,), chosen + [match])
+                if next_end not in updated or value[:2] > updated[next_end][:2]:
+                    updated[next_end] = value
+        states = updated
+    covered, _, chosen = max(states.values(), key=lambda value: value[:2])
+    receipt["alignment_rate"] = covered / sum(len(text_key(s)) for s in sentences)
+    for index, (sentence, match) in enumerate(zip(sentences, chosen)):
+        row = {"sentence_index": index, "text": sentence, "status": "matched" if match else "missing"}
+        if match:
+            row.update(start=units[owners[match[0]]]["start"], end=units[owners[match[1] - 1]]["end"])
+        else:
+            receipt["missing_sentences"].append({"sentence_index": index, "text": sentence})
+        receipt["sentences"].append(row)
+    if receipt["alignment_rate"] < threshold:
+        receipt["reason"] = "low_alignment"
+        return receipt, [], []
+    receipt.update(mode="script", notice="已按稿对齐", reason="exact_ordered_sentences")
+    protected, occupied, suggestions = [], [], []
+
+    def bounds(start, end):
+        first, last = units[owners[start]], units[owners[end - 1]]
+        exact = (document["auto_cut_allowed"] and first["left"] == start and last["right"] == end
+                 and all(u["exact"] for u in units[owners[start]:owners[end - 1] + 1]))
+        return first["start"], last["end"], exact
+
+    previous = 0
+    for index, (sentence, match) in enumerate(zip(sentences, chosen)):
+        if not match:
+            continue
+        start, end = match
+        begin, finish, retained_exact = bounds(start, end)
+        protected.append((begin, finish))
+        occupied.append((start, end))
+        key, cursor = text_key(sentence), previous
+        while cursor < start:
+            common = 0
+            while cursor + common < start and common < len(key) and tape[cursor + common] == key[common]:
+                common += 1
+            stop = cursor + common
+            if common >= min_chars and units[owners[cursor]]["left"] == cursor and units[owners[stop - 1]]["right"] == stop:
+                # Divergent tails are not a proven interrupted attempt. A word
+                # ending in punctuation or the next attempt bounds a clean prefix.
+                clean_end = stop == start or bool(re.search(r"[，,。.!！?？;；:：]\s*$", units[owners[stop - 1]]["text"]))
+                speakers = {u["speaker"] for u in units[owners[cursor]:owners[end - 1] + 1] if u["speaker"] is not None}
+                if clean_end and len(speakers) <= 1:
+                    a, b, exact = bounds(cursor, stop)
+                    suggestions.append(candidate("repetition", a, b, tape[cursor:stop], 1.0,
+                        reason="script_repeated_sentence" if common == len(key) else "script_interrupted_restart",
+                        basis="script", sentence_index=index, script_text=sentence,
+                        auto_cut_allowed=exact and retained_exact, precision="word" if exact else document["precision"],
+                        repeated_at={"start": begin, "end": finish}))
+                    occupied.append((cursor, stop))
+                    protected.append((a, b))
+                    cursor = stop
+                    continue
+            cursor += 1
+        previous = end
+    cursor = 0
+    for start, end in sorted(occupied) + [(len(tape), len(tape))]:
+        if start > cursor:
+            a, b, _ = bounds(cursor, start)
+            suggestions.append(candidate("review", a, b, tape[cursor:start], 0.0,
+                reason="script_unmatched_speech", basis="script", precision=document["precision"]))
+        cursor = max(cursor, end)
+    return receipt, suggestions, protected
+
+
 def generate_suggestions(audio: Path, transcript: dict[str, Any], *, animations: list[dict[str, Any]] | None = None,
                          threshold_db: float = -35, min_silence: float = 0.4,
-                         max_repeat_gap: float = 8, min_repeat_chars: int = 4) -> dict[str, Any]:
+                         max_repeat_gap: float = 8, min_repeat_chars: int = 4,
+                         handoff: dict[str, Any] | None = None, min_script_alignment: float = 0.8) -> dict[str, Any]:
     audio = audio.expanduser().resolve(strict=True)
     digest = source_sha256(audio)
     duration = probe_duration(audio)
     document = validate_transcript(transcript, duration=duration)
+    alignment, script_suggestions, protected = script_alignment(document, handoff,
+        threshold=min_script_alignment, min_chars=min_repeat_chars)
     silences = detect_silences(audio, threshold_db=threshold_db, min_duration=min_silence, duration=duration)
     suggestions = []
     for start, end in silences:
@@ -286,23 +423,32 @@ def generate_suggestions(audio: Path, transcript: dict[str, Any], *, animations:
         # Intersect with acoustic word gaps rather than weakening overlap checks.
         exact = document["auto_cut_allowed"] and bool(safe_ranges)
         for begin, finish in safe_ranges if exact else [(start, end)]:
+            if alignment["mode"] == "script" and any(a < finish and b > begin for a, b in protected):
+                continue
             suggestions.append(candidate("silence", begin, finish,
                 "".join(word["text"] for word in overlaps), 1.0, reason="ffmpeg_silencedetect",
+                basis="silence",
                 auto_cut_allowed=exact, detected_range={"start": start, "end": end},
                 threshold_db=threshold_db, min_duration=min_silence))
-    suggestions.extend(repetition_suggestions(document, max_gap=max_repeat_gap, min_chars=min_repeat_chars))
+    if alignment["mode"] == "script":
+        suggestions.extend(script_suggestions)
+    else:
+        suggestions.extend({**item, "basis": "repetition"} for item in
+            repetition_suggestions(document, max_gap=max_repeat_gap, min_chars=min_repeat_chars))
     animation_matches, unmatched = animation_suggestions(document, animations or [])
-    suggestions.extend(animation_matches)
+    suggestions.extend({**item, "basis": "script"} for item in animation_matches)
     suggestions.sort(key=lambda item: (item["start"], item["end"], item["type"]))
     if source_sha256(audio) != digest:
         raise SuggestionError("source changed while generating suggestions")
     return {"schema_version": "edit_suggestions_v1", "status": "candidate", "source_sha256": digest,
             "media_id": document["media_id"], "duration": duration,
             "precision": document["precision"], "auto_cut_allowed": document["auto_cut_allowed"],
+            "script_alignment": alignment,
             "transcript_sha256": hashlib.sha256(json.dumps(transcript, ensure_ascii=False, sort_keys=True,
                                                            allow_nan=False).encode()).hexdigest(),
             "parameters": {"silence_threshold_db": threshold_db, "min_silence_duration": min_silence,
-                           "max_repeat_gap": max_repeat_gap, "min_repeat_chars": min_repeat_chars},
+                           "max_repeat_gap": max_repeat_gap, "min_repeat_chars": min_repeat_chars,
+                           "min_script_alignment": min_script_alignment},
             "suggestions": suggestions, "unmatched_animations": unmatched}
 
 
@@ -311,20 +457,24 @@ def main() -> int:
     parser.add_argument("audio", type=Path)
     parser.add_argument("transcript", type=Path)
     parser.add_argument("--animations", type=Path)
+    parser.add_argument("--handoff", type=Path, help="Media video.json or handoff.json containing the confirmed script")
+    parser.add_argument("--min-script-alignment", type=float, default=0.8)
     parser.add_argument("--output", type=Path, default=Path("edit_suggestions.json"))
     parser.add_argument("--silence-threshold-db", type=float, default=-35)
     parser.add_argument("--min-silence-duration", type=float, default=0.4)
     parser.add_argument("--max-repeat-gap", type=float, default=8)
     parser.add_argument("--min-repeat-chars", type=int, default=4)
     args = parser.parse_args()
-    inputs = {path.resolve() for path in (args.audio, args.transcript, args.animations) if path is not None}
+    inputs = {path.resolve() for path in (args.audio, args.transcript, args.animations, args.handoff) if path is not None}
     output = args.output.expanduser().resolve()
     if output in inputs:
         parser.error("suggestion output must not overwrite any input")
     payload = generate_suggestions(args.audio, json.loads(args.transcript.read_text(encoding="utf-8")),
         animations=json.loads(args.animations.read_text(encoding="utf-8")) if args.animations else None,
         threshold_db=args.silence_threshold_db, min_silence=args.min_silence_duration,
-        max_repeat_gap=args.max_repeat_gap, min_repeat_chars=args.min_repeat_chars)
+        max_repeat_gap=args.max_repeat_gap, min_repeat_chars=args.min_repeat_chars,
+        handoff=json.loads(args.handoff.read_text(encoding="utf-8")) if args.handoff else None,
+        min_script_alignment=args.min_script_alignment)
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=output.parent, suffix=".tmp", delete=False) as stream:
         temporary = Path(stream.name)
@@ -335,6 +485,7 @@ def main() -> int:
         finally:
             temporary.unlink(missing_ok=True)
     print(json.dumps({"status": payload["status"], "suggestion_count": len(payload["suggestions"]),
+                      "script_alignment": payload["script_alignment"],
                       "unmatched_animation_count": len(payload["unmatched_animations"])}, ensure_ascii=False))
     return 0
 

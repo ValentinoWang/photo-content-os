@@ -78,6 +78,29 @@ class VideoExecutionContractTests(unittest.TestCase):
                     with self.subTest(step=step), self.assertRaises(adapter.ProductContractError):
                         registry._invoke(step, root=root, handoff={}, output_root=root)
 
+    def test_suggest_receives_validated_descriptor_instead_of_binding_script(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            registry = adapter.PhotoNodeRegistry(SimpleNamespace(), root / 'binding.json')
+            confirmed = {'script': '已确认口播稿', 'documentRef': {'revision': 7}}
+            registry.descriptor = confirmed
+            observed = []
+
+            def run(*args, **kwargs):
+                request = json.loads(kwargs['input'])
+                observed.append(request['kwargs'])
+                Path(request['result_path']).write_text('{}')
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.object(adapter.subprocess, 'run', side_effect=run):
+                registry._invoke({'action': 'suggest', 'function': 'generate_suggestions',
+                                  'kwargs': {'handoff': '$handoff'}}, root=root,
+                                 handoff={'script': '绑定里的另一份稿'}, output_root=root)
+                self.assertEqual(observed[0]['handoff'], confirmed)
+                with self.assertRaises(adapter.ProductContractError):
+                    registry._invoke({'action': 'suggest', 'function': 'main', 'kwargs': {}},
+                                     root=root, handoff={}, output_root=root)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -143,6 +143,12 @@ class PhotoNodeRegistry:
         if not PHOTO_PYTHON.is_file():
             raise ProductContractError("photo_entrypoint_unavailable")
         kwargs = {k: self._argument(v, root=root, handoff=handoff, output_root=output_root / step["action"], tts_path=tts_path) for k, v in step["kwargs"].items()}
+        if step['action'] == 'suggest' and self.descriptor is not None:
+            if function != 'generate_suggestions':
+                raise ProductContractError('photo_binding_rejected')
+            # The descriptor has already passed confirmation/digest validation.
+            # Local binding text must not substitute for the confirmed script.
+            kwargs['handoff'] = self.descriptor
         if step['action'] == 'shot_image':
             if function != 'create_shot_image' or self.descriptor is None or 'shotImageTask' not in self.descriptor:
                 raise ProductContractError('photo_image_action_rejected')
