@@ -112,9 +112,7 @@ def read_project(project_dir: Path) -> dict:
                 # The XML establishes boundaries; the producer supplies only
                 # the acoustic reason, which cannot be invented from a gap.
                 facts = [c for c in plan.get('executed_cuts', []) if c['startSeconds'] <= cursor+1e-6 and c['endSeconds'] >= r['source_start']-1e-6]
-                if not facts:
-                    raise BackendError('kdenlive_cut_reason_unverified')
-                cuts.append({'kind': facts[0]['kind'], 'startSeconds': cursor, 'endSeconds': min(r['source_start'], source_duration)})
+                cuts.append({'kind': facts[0]['kind'] if facts else 'manual', 'startSeconds': cursor, 'endSeconds': min(r['source_start'], source_duration)})
             cursor = r['source_end']
             output += r['source_end']-r['source_start']
         animation_paths = [p for p,i in originals.items() if i['role']=='teaching_animation']

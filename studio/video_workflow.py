@@ -459,6 +459,7 @@ class VideoWorkflow:
             if cut['kind'] in ('silence','retake'): continue
             facts=[s for s in ctx['data']['suggestions'] if s['automatic'] and s['type'] in ('silence','repetition') and s['start']<=cut['startSeconds']+1e-6 and s['end']>=cut['endSeconds']-1e-6]
             if not facts:
+                if cut['kind']=='manual': continue
                 raise ValueError('native_cut_reason_unverified')
             cut['kind']='retake' if any(s['type']=='repetition' for s in facts) else 'silence'
         (ctx['run']/'studio-check.json').unlink(missing_ok=True)

@@ -126,9 +126,9 @@ class WorkflowBoundaryTests(unittest.TestCase):
         assert not {'subtitles','blackFrames'} & candidate['checks'].keys()
         assert next(self.run.glob('returned-*/returned.mp4')).read_bytes()==raw
 
-    def test_unknown_native_cut_reason_never_writes_green_receipt(self):
+    def test_invalid_native_cut_kind_never_writes_green_receipt(self):
         ctx=self.app.video_workflow.context(self.project['id'])
-        candidate={'status':'candidate','cuts':[{'kind':'manual','startSeconds':8,'endSeconds':9}]}
+        candidate={'status':'candidate','cuts':[{'kind':'invented','startSeconds':8,'endSeconds':9}]}
         with pytest.raises(ValueError,match='native_cut_reason_unverified'):
             self.app.video_workflow._record_candidate(ctx,self.app.video_workflow._session(ctx),{'candidate':candidate,'progress':{}},editing_method='software_workflow',editor_id='openfilm')
         assert not (self.run/'studio-candidate.json').exists()

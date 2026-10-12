@@ -32,9 +32,8 @@ def openfilm_plan(backend, directory, output, suggestions):
     for row in [*rows, {'source_start': config['source_duration'], 'source_end': config['source_duration']}]:
         if row['source_start'] > cursor+1e-6:
             contributors = [s for s in suggestions if s.get('automatic') and s['type'] in ('silence','repetition') and s['start'] <= cursor+1e-6 and s['end'] >= row['source_start']-1e-6]
-            if not contributors:
-                raise BackendError('openfilm_cut_reason_unverified')
-            cuts.append({'kind':'retake' if any(s['type']=='repetition' for s in contributors) else 'silence', 'startSeconds':cursor,'endSeconds':row['source_start']})
+            kind = 'manual' if not contributors else 'retake' if any(s['type']=='repetition' for s in contributors) else 'silence'
+            cuts.append({'kind':kind, 'startSeconds':cursor,'endSeconds':row['source_start']})
         cursor = row['source_end']
     clips = [c for t in state['doc']['tracks'] if not t.get('hidden') for c in t['clips']]
     assets = {a['path']: a for a in config['animation_assets']}

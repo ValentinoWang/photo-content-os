@@ -143,5 +143,26 @@ def test_native_export_projects_only_actual_selected_animations(tmp_path,monkeyp
         assert receipt['cuts']==[{'kind':'retake','startSeconds':1,'endSeconds':2}]
         assert receipt['animations']==[] and receipt['subtitleBurnedIn'] is True
         assert next(run.glob('returned-*/returned.mp4')).read_bytes()==raw
+        # A person trims a further half-second outside the automatic suggestion.
+        # Exercise the native HTTP API, export, and MP4 return against saved disk.
+        session = app.video_workflow._session(app.video_workflow.context(p['id']))
+        backend = session['backend']
+        state = backend._state(session['project_dir']/'openfilm-project')
+        last = state['doc']['tracks'][0]['clips'][-1]
+        backend.studio_edit(base=state['rev'], ops=[{'op':'set','clip':last['id'],'field':'time','value':[2,3.5]}])
+        d = app.video_workflow.command(p['id'],{**base,'op':'reload'})
+        d = app.video_workflow.command(p['id'],{**base,'op':'export','engineRevision':d['engineRevision']})
+        assert d['state']=='returned', d
+        receipt=json.loads((media/'candidate.json').read_text())['candidate']
+        expected=[{'kind':'retake','startSeconds':1,'endSeconds':2}, {'kind':'manual','startSeconds':3.5,'endSeconds':4}]
+        assert receipt['cuts']==expected and receipt['frameCount']==75
+        assert receipt['removedSeconds']==1.5 and receipt['cutCount']==2
+        exported=max(run.glob('export-*/candidate.mp4'),key=lambda path:path.stat().st_mtime_ns)
+        raw=exported.read_bytes()
+        d=app.video_workflow.receive(p['id'],io.BytesIO(raw),len(raw),base)
+        assert d['state']=='returned', d
+        receipt=json.loads((media/'candidate.json').read_text())['candidate']
+        assert receipt['cuts']==expected and receipt['provenance']=='native_readback'
+        assert receipt['checks']['expectedFrames']==75
     finally:
         app.video_workflow.close()

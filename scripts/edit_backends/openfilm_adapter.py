@@ -398,8 +398,8 @@ class Backend:
                 if row['source_start'] > cursor:
                     contributors = [s for s in config['source_suggestions']
                                     if s.get('auto_cut_allowed') is True and s.get('type') in {'silence', 'repetition'}
-                                    and s['start'] < row['source_start'] and s['end'] > cursor]
-                    kind = 'manual' if self._matches_readback(kwargs) else ('retake' if any(s['type'] == 'repetition' for s in contributors) else 'silence')
+                                    and s['start'] <= cursor+1e-6 and s['end'] >= row['source_start']-1e-6]
+                    kind = 'manual' if not contributors else ('retake' if any(s['type'] == 'repetition' for s in contributors) else 'silence')
                     cuts.append({'kind': kind, 'startSeconds': cursor, 'endSeconds': row['source_start']})
                 cursor = row['source_end']
             manifest = {'contract': 'video_pipeline_manifest.v1', 'output': {'path': str(output), 'sha256': sha256_file(output)},
