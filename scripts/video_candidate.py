@@ -136,6 +136,24 @@ def cut_projection(plan: dict, source_duration: float) -> list[dict]:
     return cuts
 
 
+def failed_shot_progress(native: dict, descriptor: dict, fps: float) -> dict:
+    """Bound real failed-render counters without exposing native diagnostics."""
+    known = {row['shot']['shotId'] for row in descriptor['shots']}
+    selected = {descriptor['retryShotId']} if descriptor.get('retryShotId') else set(descriptor.get('renderShotIds', known))
+    progress = []
+    for shot in native.get('shots', []):
+        if shot.get('id') not in known or shot['id'] not in selected or shot.get('status') not in {'failed', 'completed'}:
+            continue
+        code = shot.get('code') if shot['status'] == 'failed' else None
+        if code is not None and (not isinstance(code, str) or not re.fullmatch(r'[a-z][a-z0-9_]{0,127}', code)):
+            code = 'photo_execution_failed'
+        progress.append({'shotId': shot['id'], 'status': shot['status'], 'renderedFrames': shot.get('progress_frames', 0),
+                         'totalFrames': shot['total_frames'], 'durationSeconds': shot['total_frames'] / fps,
+                         'failureCode': code, 'lineNumber': None, 'assetName': None, 'timeoutSeconds': None, 'codeExcerpt': None})
+    failed = [shot['shotId'] for shot in progress if shot['status'] == 'failed']
+    return {'shotProgress': progress, 'failedShotId': failed[0] if len(failed) == 1 else None}
+
+
 def project_candidate(*, native: dict, descriptor: dict, source: Path, original_hashes: dict[Path, str],
                       output_dir: Path, workspace: Path) -> dict:
     if native.get('status') not in {'candidate', 'completed'}:
@@ -215,7 +233,20 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
     if abs(source_duration - removed - duration) > .1:
         raise ProductContractError('photo_source_timing_rejected')
     placements = {}
-    for placement in plan.get('animation_placements', []):
+    executed_placements = plan.get('animation_placements', [])
+    if not plan and descriptor['animations']:
+        rendered = {s['id']: s for s in native.get('shots', []) if s['status'] == 'completed'}
+        if len({a['shotId'] for a in descriptor['animations']}) != len(descriptor['animations']):
+            raise ProductContractError('photo_animation_projection_missing')
+        executed_placements = []
+        for animation in descriptor['animations']:
+            shot = rendered.get(animation['shotId'])
+            if shot is None:
+                raise ProductContractError('photo_animation_projection_missing')
+            start = shot['start_frame'] / fps
+            executed_placements.append({'animation_id': animation['animationId'], 'start': start,
+                                        'end': start + shot.get('animation_frames', shot['total_frames']) / fps})
+    for placement in executed_placements:
         aid = placement['animation_id']
         if aid in placements:
             if abs(placements[aid]['end'] - placement['start']) > 1e-6:
@@ -229,7 +260,7 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
     for original in descriptor['animations']:
         placement = placements[original['animationId']]
         animation = copy.deepcopy(original)
-        animation.update(suggestedStartSeconds=placement['start'], durationSeconds=placement['end'] - placement['start'])
+        animation.update(suggestedStartSeconds=placement['start'], durationSeconds=placement['end'] - placement['start'], timeBasis='edited')
         animations.append(animation)
     candidate = {'publicCandidateId': 'candidate_' + file_sha256(captioned)[:32], 'identity': copy.deepcopy(descriptor['identity']),
                  'status': 'candidate' if successful else 'check_failed', 'description': '',
@@ -238,16 +269,26 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
                  'subtitles': subtitle_text, 'subtitleBurnedIn': True, 'subtitleBottomRatio': bottom, 'preview': preview,
                  'returnedAt': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'), 'waveformPeaks': waveform_peaks(source)}
     candidate['candidateDigest'] = video_digest(candidate)
-    progress = {'shotProgress': [], 'waveformPeaks': candidate['waveformPeaks']}
+    progress = {'shotProgress': [], 'waveformPeaks': candidate['waveformPeaks'], 'waveformSource': 'source' if plan else 'narration'}
     if plan:
         progress.update(precutCount=len(cuts), exported=True)
     for shot in native.get('shots', []):
         if shot['id'] not in {r['shot']['shotId'] for r in descriptor['shots']}:
             raise ProductContractError('photo_shot_identity_rejected')
+        selected = [descriptor['retryShotId']] if descriptor.get('retryShotId') else descriptor.get('renderShotIds')
+        if selected is not None and shot['id'] not in selected:
+            continue
+        shot_fps = native.get('shot_fps', fps)
         progress['shotProgress'].append({'shotId': shot['id'], 'status': 'completed' if shot['status'] == 'completed' else 'failed',
                                         'renderedFrames': shot.get('progress_frames', 0), 'totalFrames': shot['total_frames'],
-                                        'durationSeconds': shot['total_frames'] / fps, 'failureCode': None,
+                                        'durationSeconds': shot['total_frames'] / shot_fps, 'failureCode': None,
                                         'lineNumber': None, 'assetName': None, 'timeoutSeconds': None, 'codeExcerpt': None})
+        if not plan and shot['status'] == 'completed':
+            from video_derivatives import jpeg_frame
+            poster = output_dir / ('poster-' + shot['id'] + '.jpg')
+            measured = jpeg_frame(Path(shot['frames_dir']) / 'frame-000000.png', poster)
+            progress['shotProgress'][-1].update(poster_ref=str(poster.resolve().relative_to(workspace.resolve())),
+                poster_width=measured['width'], poster_height=measured['height'], poster_short_edge=measured['shortEdge'])
     payload = {'candidate': candidate, 'preview_ref': str(preview_path.resolve().relative_to(workspace.resolve())), 'progress': progress}
     encoded = json.dumps(payload, ensure_ascii=True, allow_nan=False)
     if len(encoded.encode()) > 1_000_000:

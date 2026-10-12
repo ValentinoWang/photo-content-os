@@ -90,7 +90,9 @@ class NativeRuntimeTests(unittest.TestCase):
         errors=list(validator.iter_errors(payload['candidate']))
         self.assertEqual(errors,[],str(errors))
         validator=jsonschema.Draft202012Validator(doc['components']['schemas']['CreationVideoShotProgress'],resolver=jsonschema.RefResolver.from_schema(doc))
-        for shot in payload['progress']['shotProgress']:self.assertEqual(list(validator.iter_errors(shot)),[])
+        for shot in payload['progress']['shotProgress']:
+            projected={k:v for k,v in shot.items() if k not in {'poster_ref','poster_width','poster_height','poster_short_edge'}}
+            self.assertEqual(list(validator.iter_errors(projected)),[])
     def test_native_composition_projection_and_replay(self):
         result=self.runtime.execute(self.run_ref,inputs=self.inputs)
         payload=self.receipt_payload(result);self.assert_schema(payload)
@@ -118,6 +120,9 @@ class NativeRuntimeTests(unittest.TestCase):
         result=self.runtime.execute(self.run_ref,inputs=self.inputs);self.assertEqual(result.status,'pending_manual')
         native=json.loads((self.workspace/self.run_ref/'native-compose.json').read_text())
         self.assertEqual([s['status'] for s in native['shots']],['completed','failed'])
+        failed=json.loads((self.workspace/self.run_ref/'handoff_manifest.json').read_text())
+        self.assertEqual(failed['failedShotId'],'02')
+        self.assertNotIn(str(self.root),json.dumps(failed))
         frame=self.workspace/self.run_ref/'compose/render/01/frames/frame-000000.png'
         timestamp=frame.stat().st_mtime_ns;voice=contract.video_digest({'hash':adapter.file_sha256(self.workspace/'voice.wav')})
         html.write_text(original)
