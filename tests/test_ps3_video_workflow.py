@@ -1,5 +1,7 @@
 """Regression boundaries: measured failures, SA review-only, explicit dispatch."""
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from unittest.mock import Mock, patch
 import json
 import pytest
@@ -70,3 +72,28 @@ class WorkflowBoundaryTests(unittest.TestCase):
         with pytest.raises(Exception,match='成片大小无效'):
             self.app.video_workflow.receive(self.project['id'],None,0,{'identity':self.identity,'expectedRevision':1})
         assert not list(self.run.glob('returned-*'))
+
+    def test_reopening_engine_keeps_cors_for_validated_request_only(self):
+        import threading
+        import urllib.request
+        from http.server import ThreadingHTTPServer
+        active = [True]
+        native_origin = 'http://127.0.0.1:45678'
+        self.app.video_workflow.allowed_origin = lambda origin: active[0] and origin == native_origin
+        def reopen(*args):
+            active[0] = False
+            return {'state': 'self', 'host': 'http://127.0.0.1:45679/'}
+        server = ThreadingHTTPServer(('127.0.0.1', 0), self.app.handler())
+        worker = threading.Thread(target=server.serve_forever, daemon=True); worker.start()
+        try:
+            url = f'http://127.0.0.1:{server.server_port}/api/projects/{self.project["id"]}/video-workflow'
+            headers = {'Content-Type': 'application/json', 'X-Content-OS-CSRF': self.app.csrf_token, 'Origin': native_origin}
+            with patch.object(self.app.video_workflow, 'command', side_effect=reopen):
+                request = urllib.request.Request(url, data=b'{"op":"self-open"}', headers=headers)
+                with urllib.request.urlopen(request) as response:
+                    assert response.headers['Access-Control-Allow-Origin'] == native_origin
+                # The retired origin receives no allowance on a later request.
+                with urllib.request.urlopen(request) as response:
+                    assert response.headers['Access-Control-Allow-Origin'] is None
+        finally:
+            server.shutdown();server.server_close();worker.join()

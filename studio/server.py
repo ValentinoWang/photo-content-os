@@ -622,7 +622,7 @@ class StudioApplication:
                 self.send_header("Referrer-Policy", "no-referrer")
                 self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'")
                 origin = self.headers.get('Origin')
-                if app.video_workflow.allowed_origin(origin):
+                if app.video_workflow.allowed_origin(origin) or (origin and getattr(self, '_validated_response_origin', None) == origin):
                     self.send_header('Access-Control-Allow-Origin', origin)
                     self.send_header('Vary', 'Origin')
                 self.end_headers()
@@ -834,6 +834,10 @@ class StudioApplication:
             def _write_request(self, method: str) -> None:
                 try:
                     self._assert_write()
+                    # Reopening the native engine rotates its origin during this
+                    # request. Preserve only the origin validated at entry.
+                    origin = self.headers.get('Origin')
+                    self._validated_response_origin = origin if app.video_workflow.allowed_origin(origin) else None
                     parsed = urllib.parse.urlparse(self.path)
                     segments = self._segments(parsed.path)
                     if not is_registered_route(method, parsed.path):

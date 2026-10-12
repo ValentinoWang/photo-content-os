@@ -45,6 +45,9 @@ def test_native_accept_retract_split_undo_redo_and_conflict(tmp_path,monkeypatch
         module=urllib.request.urlopen(data['hostModule'])
         assert module.headers.get_content_type()=='text/javascript'
         assert b'renderHandoff' in module.read()
+        painter=urllib.request.urlopen(data['hostModule'].replace('handoff.js','film-subtitle.js'))
+        assert painter.headers.get_content_type()=='text/javascript'
+        assert b'export function filmSubtitleFrameHtml' in painter.read()
         configuration=json.load(urllib.request.urlopen(data['hostModule'].replace('handoff.js','session.json')))
         assert set(configuration)=={'photoOrigin','projectId'}
         # The host URL is authenticated; its key never becomes a cloud field.
