@@ -1,0 +1,69 @@
+{
+  "verified_at": "2026-10-12T05:17:36.945774+00:00",
+  "scope": "EI only; local synthetic fixture, no desktop UI or paid API",
+  "source_sha256": {
+    "scripts/edit_backends/interface.py": "cd9387e8ff9c310a34dc8e1083256fe7cac01801142f546bf6db3c9a2ea2e4f6",
+    "scripts/edit_backends/registry.py": "568ee2f4c0e208b9ec93925cfd157186dbe619599faad7bc14db631b49c70ee0",
+    "scripts/edit_backends/kdenlive_adapter.py": "275dd77e7a0bb9fa12e84c8cefefb65e29b3c989819558870854b8239788ac5d",
+    "tests/test_edit_backend_interface.py": "50895e770ca85bff2c2eda2aaa28874a5c80d101b5ec992d86b2a03811762efa",
+    "tests/test_edit_backend_qualification.py": "458fc2fc3b75b1620a455983ac8d39e8caf128d7c1317d949214f059a839674a",
+    "tests/editor_backend_ocr.swift": "76e9344b125a14b6102c5a73f0a0ef9645af7312363547f203988b388f792aed"
+  },
+  "protected_sha256": {
+    "scripts/edit_backends/kdenlive_render.py": "3fe083d65cedd17eeda06498ee7246f8c711d4683d48c4e0718e3503a2dd4c4a",
+    "scripts/openclaw_video_execution.py": "3e54765d820418af8c5e857ae837cbbcdbcf22f5f210771ba5d5fb824d44c0b4"
+  },
+  "qualification": "21 passed, 0 skipped",
+  "full_suite": "508 passed, 18 skipped, 161 subtests passed",
+  "required_checks": [
+    {
+      "command": [
+        "bash",
+        "scripts/check_runtime_contract.sh"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_obsidian_doc_sync.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_outline_contract.py",
+        "."
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/validate_content_os_task.py",
+        "--help"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/validate_jianying_draft.py",
+        "--help"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "melt_processes": "",
+  "temporary_videos_removed": true,
+  "visual_inspection": [
+    "caption-1.png",
+    "caption-5.png",
+    "caption-7.png",
+    "caption-11.png",
+    "overlay-10.png",
+    "overlay-11.5.png",
+    "overlay-12.9.png"
+  ]
+}

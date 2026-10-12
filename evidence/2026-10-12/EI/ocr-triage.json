@@ -1,0 +1,14 @@
+{
+  "failure_class": "fixture-ocr-recognition",
+  "original_failure": {
+    "expected": "第一句：这是合成彩条。",
+    "recognized": "第一甸：这是合成彩条。"
+  },
+  "second_failure": {
+    "expected": "保留这一遍，随后叠动画。",
+    "recognized": "像留这一遍，随后叠动画。"
+  },
+  "finding": "已查看实际字幕帧，句和保的字形正确；Vision 对 16px 描边字误识。",
+  "calibration": "字幕文件全文和保留区间逐字比对；OCR 只评估正文可读性，字符错误率 <=10%，不使用字符替换或自定义候选词；无字幕原片为负例。",
+  "promotion": "本次夹具合格测试；未新增全项目强制门禁或修改受保护基线。"
+}

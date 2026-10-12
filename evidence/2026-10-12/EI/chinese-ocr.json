@@ -1,0 +1,38 @@
+[
+  {
+    "seconds": 1,
+    "expected": "这是合成彩条",
+    "recognized": [
+      "第一甸：这是合成彩条。"
+    ],
+    "character_errors": 0,
+    "max_error_rate": 0.1
+  },
+  {
+    "seconds": 5,
+    "expected": "这一段保留",
+    "recognized": [
+      "第二甸：这一段保留。"
+    ],
+    "character_errors": 0,
+    "max_error_rate": 0.1
+  },
+  {
+    "seconds": 7,
+    "expected": "接着讲解",
+    "recognized": [
+      "第三甸：接着讲解。"
+    ],
+    "character_errors": 0,
+    "max_error_rate": 0.1
+  },
+  {
+    "seconds": 11,
+    "expected": "保留这一遍随后叠动画",
+    "recognized": [
+      "重复甸：像留这一遍，随后叠动画。"
+    ],
+    "character_errors": 1,
+    "max_error_rate": 0.1
+  }
+]
