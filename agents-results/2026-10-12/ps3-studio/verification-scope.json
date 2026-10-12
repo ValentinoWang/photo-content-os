@@ -1,0 +1,6 @@
+{
+  "sourceSHA256": "5bdb9e947d334d1f3397660221ecdb25193ec85dd38a5ecb58f28582d9faf36a",
+  "nativeOverlayFixture": "alpha 0..230 after geq repair; drawbox-only fixture had alpha 0 and was replaced",
+  "manualImport": "raw bytes preserved; no automatic projector and no Media upload",
+  "validation": "latest pytest-stack-final.log / local-ci-stack-final.log / stack-native-final.log"
+}

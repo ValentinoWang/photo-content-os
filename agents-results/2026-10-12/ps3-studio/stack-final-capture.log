@@ -1,0 +1,3 @@
+lockf: /tmp/openclaw-media-chromium-slots/slot-1.lock: already locked
+captured 116 complete pages
+Chromium slot 2/2 acquired for: node scripts/qa/capture_ps3_studio.mjs

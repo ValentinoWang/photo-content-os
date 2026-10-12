@@ -1,0 +1,10 @@
+{
+  "ownedTempRootRemoved": true,
+  "activeOwnedProcesses": [],
+  "browserClosed": true,
+  "studioClosed": true,
+  "externalDesktopAppsStarted": false,
+  "onlyOwnedDraftsRemoved": true,
+  "otherThreadRuntimePreserved": true,
+  "disk": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   405Gi    12Gi    98%    5.0M  123M    4%   /System/Volumes/Data\n"
+}

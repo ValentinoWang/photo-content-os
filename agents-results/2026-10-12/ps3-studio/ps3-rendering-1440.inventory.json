@@ -1,0 +1,797 @@
+{
+  "states": {
+    "rendering": {
+      "texts": [
+        {
+          "text": "剪这件作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-rendering"
+        },
+        {
+          "text": "AI 不会“生成”视频，它在写代码 · 原片 4:12 · 来自 MediaClaw",
+          "kind": "text",
+          "data": true,
+          "design_id": "studio-rendering"
+        },
+        {
+          "text": "回到 MediaClaw 作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-rendering"
+        },
+        {
+          "text": "这台电脑",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "本机 Agent",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "创作电脑 · 心跳 10:52",
+          "kind": "text",
+          "data": true,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "Photo Studio",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "127.0.0.1:8765 ↗",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "开源软件剪辑",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "自动出第一版，交给开源软件精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "剪映指导",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "照着剪点清单在剪映里自己剪",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "软件自有工作流",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "在 Studio 里采纳建议、看预览、改时间线",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "Kdenlive / MLT 正在剪第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "原片留在本机，正在去静音和重说、叠动画、烧字幕。",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "这次剪辑",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-rendering"
+        },
+        {
+          "text": "原片和建议已读取",
+          "kind": "text",
+          "data": false,
+          "design_id": "cut-progress"
+        },
+        {
+          "text": "13 处自动剪点已安排，另 1 处只复核",
+          "kind": "text",
+          "data": false,
+          "design_id": "cut-progress"
+        },
+        {
+          "text": "画面、动画和字幕正在合成",
+          "kind": "text",
+          "data": false,
+          "design_id": "cut-progress"
+        },
+        {
+          "text": "导出后检查成片",
+          "kind": "text",
+          "data": false,
+          "design_id": "cut-progress"
+        },
+        {
+          "text": "查看软件和能力",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-rendering"
+        },
+        {
+          "text": "剪辑软件",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-list"
+        },
+        {
+          "text": "开源",
+          "kind": "text",
+          "data": false,
+          "design_id": "open-source-software"
+        },
+        {
+          "text": "Kdenlive / MLT",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "已选择",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "已安装 · 可选 · 26.04 / 7.39",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "GPL-3.0-only",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "自动第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "透明动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "中文字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "网页精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "撤销",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "官网",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "源码",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "下载",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "openfilm",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "选择",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "已安装 · 可选 · 0.1.5",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "MIT",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "自动第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "透明动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "中文字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "网页精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "撤销",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "官网",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "源码",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "OpenChatCut",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "选择",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "已安装 · 可选 · 0.2.16",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "AGPL-3.0-or-later",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "自动第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "透明动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "中文字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "网页精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "撤销",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "官网",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "源码",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "下载",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "外部剪辑软件",
+          "kind": "text",
+          "data": false,
+          "design_id": "external-software"
+        },
+        {
+          "text": "ChatCut",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "需要登录",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "选择",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "已安装 · 在 ChatCut 里登录 · 0.6.9",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "闭源",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "自动第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "登录后",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "透明动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "待验证",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "中文字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "待验证",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "网页精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "撤销",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "软件内",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "官网",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "建议位置",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "红色是重说预剪建议，灰色是静音，虚线框只复核，竖线是动画建议。",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "段落",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "01",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "02",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "03",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "04",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "05",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "06",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "02",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "04",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "05",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "0:00",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "1:03",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "2:06",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "3:09",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "4:12",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "这一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "4:12 · 1080×1920",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "剪辑建议",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "14 处 · 可自动剪 13 · 复核 1",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "依据",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "预计剪后",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "2:45",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "剪辑方式",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "开源软件剪辑",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "这台电脑",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "只在这台电脑上能打开",
+          "kind": "title",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "剪辑方式",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "Kdenlive / MLT 链接",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "openfilm 链接",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "OpenChatCut 链接",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "ChatCut 链接",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "时间线",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "重说（按稿） 0:06–0:11",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "静音 0:16–0:20",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "静音 0:40–0:47",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "重说（按稿） 1:05–1:13",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "重说（按稿） 1:15–1:21",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "稿外 · 只复核 1:24–1:31",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "静音 1:36–1:45",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "重说（按稿） 1:52–1:58",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "重说（按稿） 2:20–2:28",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "重说（按稿） 2:45–2:50",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "重说（按稿） 3:02–3:08",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "静音 3:15–3:27",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "重说（按稿） 3:55–4:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "静音 4:04–4:10",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "动画 02 0:31–0:39",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "动画 04 2:28–2:40",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        },
+        {
+          "text": "动画 05 2:52–3:02",
+          "kind": "title",
+          "data": false,
+          "design_id": "suggestion-timeline"
+        }
+      ],
+      "ids": [
+        "cut-progress",
+        "external-software",
+        "local-chain",
+        "open-source-software",
+        "software-chatcut",
+        "software-list",
+        "software-openchatcut",
+        "software-openfilm",
+        "software-otio_kdenlive",
+        "suggestion-timeline",
+        "work-summary",
+        "workflow-choice",
+        "workflow-head"
+      ]
+    }
+  }
+}

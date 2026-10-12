@@ -1,0 +1,349 @@
+{
+  "scope": "本地 Photo Studio；逐状态对照已看。记录差异，不宣称合同或人工视觉验收通过。",
+  "states": {
+    "check-failed": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "红色检查失败；实测 0.40 秒、允许 0.10 秒；缺文件按钮禁用。",
+      "captures": [
+        "ps3-check-failed-1440.png",
+        "ps3-check-failed-430.png"
+      ]
+    },
+    "checking": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "无实际检查回执前只显示检查中，不显示绿色通过。",
+      "captures": [
+        "ps3-checking-1440.png",
+        "ps3-checking-430.png"
+      ]
+    },
+    "connected": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "选择卡、软件列表/素材/建议区与同状态稿对照；保留后端注册表顺序和实际读回数据。",
+      "captures": [
+        "ps3-connected-1440.png",
+        "ps3-connected-430.png"
+      ]
+    },
+    "connected-chatcut": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "登录提示及禁用开始；探测值是 UI 夹具。",
+      "captures": [
+        "ps3-connected-chatcut-1440.png",
+        "ps3-connected-chatcut-430.png"
+      ]
+    },
+    "connected-low-alignment": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "63%/80% 转写回退，与稿中示例数值不同。",
+      "captures": [
+        "ps3-connected-low-alignment-1440.png",
+        "ps3-connected-low-alignment-430.png"
+      ]
+    },
+    "connected-missing": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "99.1% 保留小数；漏说不生成剪点，有核稿/补录提示。",
+      "captures": [
+        "ps3-connected-missing-1440.png",
+        "ps3-connected-missing-430.png"
+      ]
+    },
+    "connected-no-script": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "只有转写依据，不标按稿；外部列表重复依据已去掉。",
+      "captures": [
+        "ps3-connected-no-script-1440.png",
+        "ps3-connected-no-script-430.png"
+      ]
+    },
+    "connected-unavailable": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "保留本人选中的软件；连接失败时不能开始，无自动换软件。",
+      "captures": [
+        "ps3-connected-unavailable-1440.png",
+        "ps3-connected-unavailable-430.png"
+      ]
+    },
+    "failed": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "只重试本人选中的 OpenChatCut；自己改选需显式操作。",
+      "captures": [
+        "ps3-failed-1440.png",
+        "ps3-failed-430.png"
+      ]
+    },
+    "guide": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "三步骤；只复核单列初始展示，TC 原片、字幕预剪时基。",
+      "captures": [
+        "ps3-guide-1440.png",
+        "ps3-guide-430.png"
+      ]
+    },
+    "guide-low-alignment": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "63% 回退；新增黄色依据提醒，与稿不同。",
+      "captures": [
+        "ps3-guide-low-alignment-1440.png",
+        "ps3-guide-low-alignment-430.png"
+      ]
+    },
+    "guide-missing": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "漏说提示在步骤线之前，与稿位置不同。",
+      "captures": [
+        "ps3-guide-missing-1440.png",
+        "ps3-guide-missing-430.png"
+      ]
+    },
+    "guide-no-script": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "不标按稿；新增黄色依据提醒，与稿不同。",
+      "captures": [
+        "ps3-guide-no-script-1440.png",
+        "ps3-guide-no-script-430.png"
+      ]
+    },
+    "offline": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "默认偏好保留 Kdenlive，未安装时不能开始；与稿中未选软件不同。",
+      "captures": [
+        "ps3-offline-1440.png",
+        "ps3-offline-430.png"
+      ]
+    },
+    "refine": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "选择卡、软件列表/素材/建议区与同状态稿对照；保留后端注册表顺序和实际读回数据。",
+      "captures": [
+        "ps3-refine-1440.png",
+        "ps3-refine-430.png"
+      ]
+    },
+    "refine-open": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "确认本机精修已打开；与稿的说明/按钮顺序有差异。",
+      "captures": [
+        "ps3-refine-open-1440.png",
+        "ps3-refine-open-430.png"
+      ]
+    },
+    "rendering": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "显示步骤，不能误显示另一份不存在的候选。",
+      "captures": [
+        "ps3-rendering-1440.png",
+        "ps3-rendering-430.png"
+      ]
+    },
+    "returned": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "两张真实合成 MP4 预览、独立失败软件；软件名称/通过状态是界面夹具。",
+      "captures": [
+        "ps3-returned-1440.png",
+        "ps3-returned-430.png"
+      ]
+    },
+    "self": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "工具条无浏览器默认灰底；真实源色块/原生字幕；三轨、片段与镜头缩略图区分。",
+      "captures": [
+        "ps3-self-1440.png",
+        "ps3-self-430.png"
+      ]
+    },
+    "self-applied": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "一条建议采纳后输出 4:07，原片区段保留 0–6、11–252；粗 SRT 原生中点映射导致第一条不再显示。",
+      "captures": [
+        "ps3-self-applied-1440.png",
+        "ps3-self-applied-430.png"
+      ]
+    },
+    "self-conflict": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "黄色版本冲突提示；拒绝覆盖新版本。",
+      "captures": [
+        "ps3-self-conflict-1440.png",
+        "ps3-self-conflict-430.png"
+      ]
+    },
+    "self-export-failed": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "黄色导出失败，保留工程，重试同一引擎。",
+      "captures": [
+        "ps3-self-export-failed-1440.png",
+        "ps3-self-export-failed-430.png"
+      ]
+    },
+    "self-low-alignment": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "63% 回退提醒在建议卡外；与稿不同。",
+      "captures": [
+        "ps3-self-low-alignment-1440.png",
+        "ps3-self-low-alignment-430.png"
+      ]
+    },
+    "self-missing": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "99.1%、漏说/核稿/补录提示；无缺句剪点。",
+      "captures": [
+        "ps3-self-missing-1440.png",
+        "ps3-self-missing-430.png"
+      ]
+    },
+    "self-no-script": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "转写回退提醒在建议卡外；与稿不同，未冒充按稿。",
+      "captures": [
+        "ps3-self-no-script-1440.png",
+        "ps3-self-no-script-430.png"
+      ]
+    },
+    "self-preview-failed": {
+      "viewports": [
+        1440,
+        430
+      ],
+      "finding": "空预览显示暂不可用，禁用播放；工程和建议仍可见。",
+      "captures": [
+        "ps3-self-preview-failed-1440.png",
+        "ps3-self-preview-failed-430.png"
+      ]
+    }
+  },
+  "native": [
+    {
+      "file": "ps3-native-self-1440.png",
+      "finding": "工具条无浏览器默认灰底；真实源色块/原生字幕；三轨、片段与镜头缩略图区分。",
+      "sha256": "f8bdb4c1f8ca5b7436b3e44aa24ccd5bdf02c857ac0b1b6e7e63fe12f01897bd"
+    },
+    {
+      "file": "ps3-native-self-430.png",
+      "finding": "工具条无浏览器默认灰底；真实源色块/原生字幕；三轨、片段与镜头缩略图区分。",
+      "sha256": "ffc49f87756391e05ab8231885f77e4d2b1f45953a9d39cfcc7de8eba65e5772"
+    },
+    {
+      "file": "ps3-native-self-applied-1440.png",
+      "finding": "一条建议采纳后输出 4:07，原片区段保留 0–6、11–252；粗 SRT 原生中点映射导致第一条不再显示。",
+      "sha256": "4f65739570aac7f85744f7d641eb4a4e1e3709cc6509fb015ef5f1eda1cc73b5"
+    },
+    {
+      "file": "ps3-native-self-conflict-1440.png",
+      "finding": "黄色版本冲突提示；拒绝覆盖新版本。",
+      "sha256": "6d0763d5599fba8aa0b49e55cdc3daf1218ecc16b3d9a678cc47609553889b4a"
+    },
+    {
+      "file": "ps3-native-guide-1440.png",
+      "finding": "三步骤；只复核单列初始展示，TC 原片、字幕预剪时基。",
+      "sha256": "89cc837b8eb5dd85d80b79ddaea1d7dc50dd67dd7a7d8fc00b3dbfd6f44303fa"
+    },
+    {
+      "file": "ps3-native-guide-430.png",
+      "finding": "三步骤；只复核单列初始展示，TC 原片、字幕预剪时基。",
+      "sha256": "f3d05cc9f58a34b259703c2d67ec47120b457f661a53afdee96b946e5fba1cca"
+    },
+    {
+      "file": "ps3-native-check-failed-1440.png",
+      "finding": "红色检查失败；实测 0.40 秒、允许 0.10 秒；缺文件按钮禁用。",
+      "sha256": "2127b84112cbb79e25ea875a5d11c9ae4ed5f9b8fcfb01a7ae67ed11f1c643ab"
+    },
+    {
+      "file": "ps3-native-check-failed-430.png",
+      "finding": "红色检查失败；实测 0.40 秒、允许 0.10 秒；缺文件按钮禁用。",
+      "sha256": "c18f99fc05c99b423a9c8fb8894f6fd8de2cbee03841607a3a9c224b6c67bdf2"
+    },
+    {
+      "file": "ps3-native-self-animation-1440.png",
+      "finding": "原生轨道 0 为前景；实际看到了右侧透明 cyan 色块叠加在源画面上。",
+      "sha256": "c971dcfe7ff4a6f0b51f3e73fe22efab30842934e610296ae54d1e54fc02c690"
+    },
+    {
+      "file": "ps3-native-self-animation-430.png",
+      "finding": "原生轨道 0 为前景；实际看到了右侧透明 cyan 色块叠加在源画面上。",
+      "sha256": "841bc5e6692bf71f85b2709797c673864022333f838b0891a91fb52528f9ec00"
+    }
+  ],
+  "findings": [
+    "工具条默认灰底已修复；预览字幕调用 pinned openfilm filmSubtitleFrameHtml。",
+    "动态帧数、时间、素材采用真实读回，合成夹具不冒充口播实拍。",
+    "长页面已看到页尾，1440/430 无横向溢出；手机 V2 动画标签折行，完整显示。",
+    "严格合同仍为红；没有添加自行批准 extras，也没有修改定稿。"
+  ]
+}

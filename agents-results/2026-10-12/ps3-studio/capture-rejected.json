@@ -1,0 +1,24 @@
+{
+  "scope": "Local synthetic records; backend probes and receipt variants are UI fixtures. Native interactions use the live Photo API and actual openfilm disk readback.",
+  "captures": [],
+  "nativeActions": [],
+  "events": [
+    {
+      "kind": "console",
+      "message": "Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Asap:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap' violates the following Content Security Policy directive: \"style-src 'self'\". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked."
+    },
+    {
+      "kind": "console",
+      "message": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "kind": "console",
+      "message": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "kind": "console",
+      "message": "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is enforced for module scripts per HTML spec."
+    }
+  ],
+  "browserClosed": true
+}

@@ -1,0 +1,420 @@
+[
+  {
+    "state": "check-failed",
+    "width": 1440,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "check-failed",
+    "width": 430,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "checking",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "checking",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "connected",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "connected",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "connected-chatcut",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "connected-chatcut",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "connected-low-alignment",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "connected-low-alignment",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "connected-missing",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "connected-missing",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "connected-no-script",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "connected-no-script",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "connected-unavailable",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "connected-unavailable",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "failed",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "failed",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "guide",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "guide-export",
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "guide",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "guide-export",
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "guide-low-alignment",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "guide-export",
+      "script-alignment-notice",
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "guide-low-alignment",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "guide-export",
+      "script-alignment-notice",
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "guide-missing",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "guide-export",
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "guide-missing",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "guide-export",
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "guide-no-script",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "guide-export",
+      "script-alignment-notice",
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "guide-no-script",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "guide-export",
+      "script-alignment-notice",
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "offline",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "offline",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed",
+      "suggestion-basis"
+    ]
+  },
+  {
+    "state": "refine",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "refine",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "refine-open",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "refine-open",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "rendering",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "rendering",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "returned",
+    "width": 1440,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "returned",
+    "width": 430,
+    "missing": [],
+    "extra": [
+      "studio-check-failed"
+    ]
+  },
+  {
+    "state": "self",
+    "width": 1440,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self",
+    "width": 430,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-applied",
+    "width": 1440,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-applied",
+    "width": 430,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-conflict",
+    "width": 1440,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-conflict",
+    "width": 430,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-export-failed",
+    "width": 1440,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-export-failed",
+    "width": 430,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-low-alignment",
+    "width": 1440,
+    "missing": [
+      "suggestion-basis"
+    ],
+    "extra": [
+      "script-alignment-notice"
+    ]
+  },
+  {
+    "state": "self-low-alignment",
+    "width": 430,
+    "missing": [
+      "suggestion-basis"
+    ],
+    "extra": [
+      "script-alignment-notice"
+    ]
+  },
+  {
+    "state": "self-missing",
+    "width": 1440,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-missing",
+    "width": 430,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-no-script",
+    "width": 1440,
+    "missing": [
+      "suggestion-basis"
+    ],
+    "extra": [
+      "script-alignment-notice"
+    ]
+  },
+  {
+    "state": "self-no-script",
+    "width": 430,
+    "missing": [
+      "suggestion-basis"
+    ],
+    "extra": [
+      "script-alignment-notice"
+    ]
+  },
+  {
+    "state": "self-preview-failed",
+    "width": 1440,
+    "missing": [],
+    "extra": []
+  },
+  {
+    "state": "self-preview-failed",
+    "width": 430,
+    "missing": [],
+    "extra": []
+  }
+]

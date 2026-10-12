@@ -1,0 +1,1066 @@
+{
+  "states": {
+    "connected-missing": {
+      "texts": [
+        {
+          "text": "剪这件作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "AI 不会“生成”视频，它在写代码 · 原片 4:12 · 来自 MediaClaw",
+          "kind": "text",
+          "data": true,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "回到 MediaClaw 作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "这台电脑",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "本机 Agent",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "创作电脑 · 心跳 10:52",
+          "kind": "text",
+          "data": true,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "Photo Studio",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "127.0.0.1:8765 ↗",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "开源软件剪辑",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "自动出第一版，交给开源软件精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "剪映指导",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "照着剪点清单在剪映里自己剪",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "软件自有工作流",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "在 Studio 里采纳建议、看预览、改时间线",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "选择这次用的软件",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "自动出第一版后，在选中的软件里精修；失败不会换软件。",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "开始剪第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "first-cut-action"
+        },
+        {
+          "text": "当前选择：Kdenlive / MLT",
+          "kind": "text",
+          "data": false,
+          "design_id": "start-first-cut"
+        },
+        {
+          "text": "自动出第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "start-first-cut"
+        },
+        {
+          "text": "剪辑软件",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-list"
+        },
+        {
+          "text": "开源",
+          "kind": "text",
+          "data": false,
+          "design_id": "open-source-software"
+        },
+        {
+          "text": "Kdenlive / MLT",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "已选择",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "已安装 · 可选 · 26.04 / 7.39",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "GPL-3.0-only",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "自动第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "透明动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "中文字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "网页精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "撤销",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "官网",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "源码",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "下载",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "openfilm",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "选择",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "已安装 · 可选 · 0.1.5",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "MIT",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "自动第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "透明动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "中文字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "网页精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "撤销",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "官网",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "源码",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "OpenChatCut",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "选择",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "已安装 · 可选 · 0.2.16",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "AGPL-3.0-or-later",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "自动第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "透明动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "中文字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "网页精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "撤销",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "官网",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "源码",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "下载",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "外部剪辑软件",
+          "kind": "text",
+          "data": false,
+          "design_id": "external-software"
+        },
+        {
+          "text": "ChatCut",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "需要登录",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "选择",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "已安装 · 在 ChatCut 里登录 · 0.6.9",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "闭源",
+          "kind": "text",
+          "data": true,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "自动第一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "登录后",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "透明动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "待验证",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "中文字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "待验证",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "网页精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "撤销",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "软件内",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "官网",
+          "kind": "text",
+          "data": false,
+          "design_id": "software-chatcut"
+        },
+        {
+          "text": "这次交给软件的",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "交过去的素材",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "都在你电脑上",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "口播原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "talk.mp4 · 4:12",
+          "kind": "text",
+          "data": true,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "已入库",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "转写",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "1460 字 · 按词对齐时间",
+          "kind": "text",
+          "data": true,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "已完成",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "讲解动画 02",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "五步流程图 · 8 秒 · 240 / 240 帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "已渲染",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "讲解动画 04",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "自绘 vs 真实 · 12 秒 · 360 / 360 帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "已渲染",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "讲解动画 05",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "编号字卡 · 10 秒 · 160 / 300 帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "渲染中",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "按转写生成 · 42 条",
+          "kind": "text",
+          "data": true,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "已生成",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "图片素材",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "4 张",
+          "kind": "text",
+          "data": true,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "2 张待确认",
+          "kind": "text",
+          "data": false,
+          "design_id": "handoff-pack"
+        },
+        {
+          "text": "剪辑建议",
+          "kind": "text",
+          "data": false,
+          "design_id": "edit-suggestions"
+        },
+        {
+          "text": "只给位置，精修在剪辑软件里做",
+          "kind": "text",
+          "data": false,
+          "design_id": "edit-suggestions"
+        },
+        {
+          "text": "剪辑建议 14 处 · 可自动剪 13 处共 1:27，复核 1 处",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "按第 3 版口播稿对齐 · 对齐率 99.1%",
+          "kind": "text",
+          "data": false,
+          "design_id": "suggestion-basis"
+        },
+        {
+          "text": "漏说",
+          "kind": "text",
+          "data": false,
+          "design_id": "missing-speech"
+        },
+        {
+          "text": "1 句没说到 · 模型写出画面的代码。",
+          "kind": "text",
+          "data": true,
+          "design_id": "missing-speech"
+        },
+        {
+          "text": "这句没有说到，不生成剪点。核对稿件或补录后再检查。",
+          "kind": "text",
+          "data": false,
+          "design_id": "missing-speech"
+        },
+        {
+          "text": "0:06",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "这三条视频没有一帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "5 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "0:16",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "“…AI 画的。”之后",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "4 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "0:40",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "“…截下来。”之后",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "7 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "1:05",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "第一个案例只用了一句话，呃——",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "8 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "1:15",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "你会发现，它能做好",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "6 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "1:24",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "稿外 · 只复核",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "但是风格……很模板",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "7 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "1:36",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "“…很模板。”之后",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "9 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "1:52",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "第二个案例我故意让它……",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "6 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "…",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "另 6 处",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "2:20 之后",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "动画建议位置 3 处（交给剪辑软件叠到口播上）",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "0:31",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "动画 02",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "五步流程图",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "8 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "2:28",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "动画 04",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "自绘 vs 真实",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "12 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "2:52",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "动画 05",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "编号字卡",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "10 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-connected-missing"
+        },
+        {
+          "text": "把导出的成片拖回这里",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "收回后检查播放、音画、帧数和原片，再回传低清候选。",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "选择成片",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "检查这份成片",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "这一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "4:12 · 1080×1920",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "剪辑建议",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "14 处 · 可自动剪 13 · 复核 1",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "依据",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "按第 3 版口播稿对齐 · 对齐率 99.1%",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "预计剪后",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "2:45",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "剪辑方式",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "开源软件剪辑",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "这台电脑",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "只在这台电脑上能打开",
+          "kind": "title",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "剪辑方式",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "Kdenlive / MLT 链接",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "software-otio_kdenlive"
+        },
+        {
+          "text": "openfilm 链接",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "software-openfilm"
+        },
+        {
+          "text": "OpenChatCut 链接",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "software-openchatcut"
+        },
+        {
+          "text": "ChatCut 链接",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "software-chatcut"
+        }
+      ],
+      "ids": [
+        "edit-suggestions",
+        "external-software",
+        "first-cut-action",
+        "handoff-pack",
+        "local-chain",
+        "missing-speech",
+        "open-source-software",
+        "return-input",
+        "software-chatcut",
+        "software-list",
+        "software-openchatcut",
+        "software-openfilm",
+        "software-otio_kdenlive",
+        "start-first-cut",
+        "suggestion-basis",
+        "work-summary",
+        "workflow-choice",
+        "workflow-head"
+      ]
+    }
+  }
+}
