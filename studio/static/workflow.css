@@ -307,7 +307,7 @@
 .handoff .cut-row[data-kind=review] .tag{color:var(--warn);background:var(--warn-bg);border-color:var(--warn-line)}
 .handoff .cut-row .what{min-width:0}
 .handoff .cut-row .words{color:var(--ink-3)}
-.handoff .cut-row[data-kind=repetition] .words{text-decoration:line-through;text-decoration-color:#e07a6a99}
+.handoff .cut-row[data-kind=repetition] .words{text-decoration:line-through;text-decoration-color:currentColor;text-decoration-thickness:1px;opacity:.65}
 .handoff .cut-row[data-kind=review] .words{color:var(--ink-2)}
 .handoff .cut-row .len{text-align:right;font:12px var(--f-mo);color:var(--ink-3)}
 .handoff [data-guide-all]>summary{padding:12px 2px 2px;color:var(--ac-soft);cursor:pointer;font-size:13px}
@@ -318,7 +318,7 @@
 .handoff .return-zone{text-align:center;padding:26px 18px;border:1.5px dashed var(--rule-2);background:var(--panel-2)}
 .handoff .return-zone::before{content:"";display:block;width:36px;height:36px;margin:0 auto 10px;border-radius:50%;background:var(--ac-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238FC7CD' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V4M7 9l5-5 5 5M5 20h14'/%3E%3C/svg%3E") center/18px no-repeat}
 .handoff .return-zone h2{font-size:16px}
-.handoff .return-zone p{margin:0 auto 14px;max-width:44ch}
+.handoff .return-zone p{margin:0 auto 14px;max-width:100%;text-wrap:balance}
 .handoff .capabilities{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;margin:12px 0}
 .handoff .capabilities li.cap{display:flex;align-items:baseline;gap:6px;color:var(--ink-2)}
 .handoff .capabilities li.cap::before{flex:0 0 12px;font:600 12px var(--f-mo);text-align:center}
@@ -520,13 +520,8 @@
 
 .handoff .cs-dot[data-tone="unknown"]{background:var(--ink-3);box-shadow:none}
 
-.handoff .self-work-summary{padding:0 14px 12px}
-.handoff .self-work-summary h3{margin:0 0 6px;font-size:13px}
-.handoff .self-work-summary p{margin:0;line-height:1.6}
 .handoff .guide-animations dd{margin:0}
-.handoff .guide-animations dd p{margin:5px 0 0}
 
-.handoff .nle-inspect .self-work-summary p{padding:0;margin:0}
 .handoff>.interaction-note{margin:0 24px 18px;font-size:13px;color:var(--ac-soft)}
 .handoff>.interaction-note:empty{display:none}
 @media(max-width:700px){
@@ -534,3 +529,11 @@
 .handoff .ruler span:last-child,.handoff .nle-ruler span:last-child{top:12px}
 .handoff>.interaction-note{margin:0 16px 16px}
 }
+
+/* A single candidate uses the whole comparison region. */
+.handoff .candidate-card:only-child{grid-column:1/-1;display:grid;grid-template-columns:180px minmax(0,1fr);grid-template-rows:max-content 1fr;column-gap:20px;align-items:start}
+.handoff .candidate-card:only-child video{grid-column:1;grid-row:1/3;width:100%;height:auto;aspect-ratio:9/16}
+.handoff .candidate-card:only-child .candidate-facts{grid-column:2;grid-row:1}
+.handoff .candidate-card:only-child .candidate-actions{grid-column:2;grid-row:2}
+@media(max-width:700px){
+.handoff .candidate-card:only-child{grid-template-columns:minmax(96px,30%) minmax(0,1fr);column-gap:14px}}
