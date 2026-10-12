@@ -434,11 +434,13 @@ def validate_content_os_link(config: RunnerConfig, task: dict[str, Any], project
 
 
 def find_project_by_id(config: RunnerConfig, project_id: str) -> Path:
-    index_path = config.workspace_root / "projects" / ".content_os_project_index.json"
+    index_path = config.workspace_root / "projects" / ".content-os-project-index.json"
     try:
         index = json.loads(index_path.read_text(encoding="utf-8"))
         indexed = Path(str(index.get(project_id, ""))).expanduser()
-        if indexed.is_dir() and indexed.resolve().parent == (config.workspace_root / "projects").resolve():
+        project_root = (config.workspace_root / "projects").resolve()
+        if indexed.is_dir() and indexed.resolve() != project_root:
+            indexed.resolve().relative_to(project_root)
             return indexed.resolve()
     except (OSError, ValueError, AttributeError):
         pass
