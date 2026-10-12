@@ -10,6 +10,10 @@ from .interface import BackendError, CloseResult, Description, Probe
 
 
 class Backend:
+    def __init__(self):
+        self._application = None
+        self._started = set()
+
     def describe(self) -> Description:
         return {"id": "otio_kdenlive", "display_name": "Kdenlive / MLT",
                 "license": "GPL-3.0-only", "capabilities": {
@@ -67,12 +71,26 @@ class Backend:
             raise BackendError(str(exc)) from exc
 
     def open_for_refine(self, *, project_dir: Path) -> dict:
-        raise BackendError("editor_refine_unsupported:otio_kdenlive")
+        import json
+        project=project_dir.resolve()/'timeline.kdenlive'
+        receipt=project_dir.resolve()/'render-result.json'
+        executable=Path('/Applications/kdenlive.app/Contents/MacOS/kdenlive')
+        if not receipt.is_file() or not project.is_file() or not executable.is_file():
+            raise BackendError('kdenlive_refine_unsupported_missing_project')
+        result=json.loads(receipt.read_text())
+        if result.get('status')!='candidate' or result.get('editor_backend')!='otio_kdenlive':
+            raise BackendError('kdenlive_owned_project_required')
+        if self._application is None or self._application.poll() is not None:
+            self._application=subprocess.Popen([str(executable),str(project)],start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+            self._started.add(self._application.pid)
+        return {'editor_backend':'otio_kdenlive','opened':True,'local_only':True}
 
     def read_back(self, *, project_dir: Path) -> dict:
         raise BackendError("editor_read_back_unsupported:otio_kdenlive")
 
     def close(self) -> CloseResult:
-        # Producer uses subprocess.run: normal, timeout and error paths reap melt.
-        # This adapter launches no persistent session or desktop application.
-        return {"id": "otio_kdenlive", "started_pids": [], "remaining_pids": []}
+        from .openfilm_adapter import _stop, _process_table
+        if self._application:
+            self._started.update(_stop(self._application))
+            self._application=None
+        return {'id':'otio_kdenlive','started_pids':sorted(self._started),'remaining_pids':sorted(self._started.intersection(_process_table()))}

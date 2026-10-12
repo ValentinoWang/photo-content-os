@@ -12,6 +12,7 @@ BACKENDS = MappingProxyType({
     "otio_kdenlive": "edit_backends.kdenlive_adapter",
     "openfilm": "edit_backends.openfilm_adapter",
     "openchatcut": "edit_backends.openchatcut_adapter",
+    "chatcut": "edit_backends.chatcut_adapter",
 })
 
 
@@ -46,3 +47,20 @@ def describe_backends() -> list[dict]:
             finally:
                 backend.close()
     return rows
+
+
+def local_editor_choice(store_dir, project_id):
+    """Read Studio's explicit preference from the canonical project's store."""
+    import hashlib
+    import json
+    from pathlib import Path
+    path = Path(store_dir) / 'settings/video-editors' / (hashlib.sha256(project_id.encode()).hexdigest()+'.json')
+    if not path.is_file():
+        return None
+    if path.stat().st_size > 4096:
+        raise BackendError('editor_choice_invalid')
+    value = json.loads(path.read_text())
+    if value.get('editor')=='kdenlive': value={**value,'editor':'otio_kdenlive'}
+    if value.get('editor') not in BACKENDS or value.get('method','external') not in ('external','guide','self') or type(value.get('revision')) is not int or value['revision'] < 1:
+        raise BackendError('editor_choice_invalid')
+    return value

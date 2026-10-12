@@ -13,7 +13,7 @@ from edit_backends.interface import BackendError, EditBackend
 
 
 def test_single_table_and_descriptions():
-    assert set(registry.BACKENDS) == {"otio_kdenlive", "openfilm", "openchatcut"}
+    assert set(registry.BACKENDS) == {"otio_kdenlive", "openfilm", "openchatcut", "chatcut"}
     backend = registry.get_backend("otio_kdenlive")
     assert isinstance(backend, EditBackend)
     assert backend.describe()["capabilities"]["transparent_overlay"]

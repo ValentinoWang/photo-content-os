@@ -27,7 +27,8 @@ ENTRYPOINTS = {
     "transcribe": "transcribe_audio.py",
     "suggest": "spoken_edit.py",
     "chatcut": "edit_backends/chatcut_handoff.py",
-    "kdenlive": "edit_backends/kdenlive_render.py",
+    "kdenlive": "edit_backends/execution.py",
+    "editor": "edit_backends/execution.py",
     "review": "review_output_video.py",
     "compose": "video_render/compose.py",
     "multi_shot": "video_render/multi_shot.py",
@@ -171,12 +172,28 @@ class PhotoNodeRegistry:
             if function != step['action']:
                 raise ProductContractError("photo_shot_retry_unavailable")
             kwargs["retry_shot_id"] = self.retry_shot_id
-        if self.descriptor is not None and step['action'] == 'kdenlive' and (self.descriptor.get('renderShotIds') or (output_root / 'native-teaching_clips.json').is_file()):
+        if self.descriptor is not None and step['action'] in {'kdenlive', 'editor'} and (self.descriptor.get('renderShotIds') or (output_root / 'native-teaching_clips.json').is_file()):
             from video_derivatives import teaching_overlays
             if function != 'render' or not (output_root / 'native-teaching_clips.json').is_file():
                 raise ProductContractError('photo_plan_revision_unavailable')
             clips = json.loads((output_root / 'native-teaching_clips.json').read_text())
             kwargs['animations'] = teaching_overlays(clips, self.descriptor, kwargs['source'])
+        if step['action'] in {'kdenlive', 'editor'}:
+            from edit_backends.registry import BACKENDS, local_editor_choice
+            if function != 'render':
+                raise ProductContractError('photo_binding_rejected')
+            selected = kwargs.get('backend_id', 'otio_kdenlive' if step['action'] == 'kdenlive' else None)
+            if self.binding_path.is_file():
+                frozen = self._binding()
+                choice = local_editor_choice(Path(frozen['creative_store']).parent, frozen['identity']['project_id'])
+                if choice:
+                    if choice.get('method','external') != 'external':
+                        raise ProductContractError('photo_manual_workflow_required')
+                    selected = choice['editor']
+            if selected not in BACKENDS:
+                raise ProductContractError('photo_editor_selection_required')
+            kwargs['backend_id'] = selected
+            kwargs['editing_method'] = 'open_source'
         if step["action"] == "transcribe":
             if function != "transcribe_project":
                 raise ProductContractError("photo_entrypoint_unavailable")
@@ -198,7 +215,7 @@ class PhotoNodeRegistry:
         if completed.returncode != 0:
             raise ProductContractError("photo_execution_failed")
         native = json.loads(result_path.read_text())
-        if step["action"] in {"kdenlive", "compose", "teaching_clips"} and (not isinstance(native, dict) or native.get("status") not in {"candidate", "completed"}):
+        if step["action"] in {"kdenlive", "editor", "compose", "teaching_clips"} and (not isinstance(native, dict) or native.get("status") not in {"candidate", "completed"}):
             raise ProductContractError("photo_execution_failed")
         return native
 
@@ -286,10 +303,10 @@ class PhotoNodeRegistry:
             try:
                 native = None
                 for step in binding["steps"]:
-                    if (self.retry_shot_id is not None or full_descriptor.get('renderShotIds')) and step["action"] not in {'compose', 'teaching_clips', 'kdenlive'}:
+                    if (self.retry_shot_id is not None or full_descriptor.get('renderShotIds')) and step["action"] not in {'compose', 'teaching_clips', 'kdenlive', 'editor'}:
                         continue
                     returned = self._invoke(step, root=root, handoff=handoff, output_root=output_root, tts_path=tts_path)
-                    if step["action"] in {"kdenlive", "compose"}:
+                    if step["action"] in {"kdenlive", "editor", "compose"}:
                         native = returned
                 if native is not None and native.get('manifest') and (output_root / 'native-teaching_clips.json').is_file():
                     teaching = json.loads((output_root / 'native-teaching_clips.json').read_text())
