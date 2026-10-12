@@ -86,3 +86,36 @@ def test_native_accept_retract_split_undo_redo_and_conflict(tmp_path,monkeypatch
     finally:
         app.video_workflow.close()
         assert all(s['backend'].close()['remaining_pids']==[] for s in app.video_workflow.sessions.values() if s.get('backend'))
+
+
+@pytest.mark.skipif(not os.environ.get('CONTENT_OS_OPENFILM_PACKAGE'),reason='explicit pinned openfilm runtime required')
+def test_native_export_projects_only_actual_selected_animations(tmp_path,monkeypatch):
+    media=tmp_path/'media';media.mkdir()
+    monkeypatch.setenv('LOCAL_MEDIA_ROOT',str(media));monkeypatch.setenv('PHOTO_STUDIO_VIDEO_WORKSPACE',str(media))
+    source=media/'source.mp4'
+    subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i','color=c=0x25516b:s=288x512:r=30:d=4','-f','lavfi','-i','sine=frequency=660:duration=4','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-shortest',str(source)],check=True)
+    (media/'source.srt').write_text('1\n00:00:00,000 --> 00:00:04,000\n真实工程导出验证\n')
+    app=StudioApplication(ProjectStore(tmp_path/'state'));app.video_workflow.origin='http://127.0.0.1:8765'
+    app.video_workflow.probes=[{**r,'probe':{'installed':True,'runnable':True,'version':'fixture'}} for r in describe_backends()]
+    p=app.store.create_project(title='真实工程导出',local_workspace=str(media));identity={'photoProjectId':p['id'],'photoProjectRevision':1,'jobId':'ps3-export-native'}
+    descriptor={'scope':'video_handoff_v1','identity':identity,'shots':[{'shot':{'shotId':'01','startSeconds':0,'endSeconds':4},'subtitle':'真实工程导出验证'}], 'animations':[{'animationId':'pending-animation','shotId':'01','requirement':'待采纳动画','dialogue':'验证','suggestedStartSeconds':0,'durationSeconds':4}]}
+    (media/'video.json').write_text(json.dumps(descriptor))
+    binding=tmp_path/'binding.json';binding.write_text(json.dumps({'identity':{'project_id':p['id'],'project_revision':1,'job_id':identity['jobId']},'creative_store':str(app.store.path),'project_root':str(media),'source_refs':['source.mp4','source.srt'],'candidate_ref':'candidate.json','steps':[]}));monkeypatch.setenv('PHOTO_STUDIO_VIDEO_BINDING',str(binding))
+    run=media/'runs'/hashlib.sha256(identity['jobId'].encode()).hexdigest()[:32];run.mkdir(parents=True)
+    (run/'native-suggest.json').write_text(json.dumps({'duration':4,'precision':'word','auto_cut_allowed':True,'suggestions':[{'type':'repetition','start':1,'end':2,'auto_cut_allowed':True}]}))
+    app.video_editor_choice(p['id'],{'editor':'openfilm','method':'self','revision':1})
+    base={'identity':identity,'expectedRevision':1}
+    try:
+        d=app.video_workflow.command(p['id'],{**base,'op':'self-open'})
+        d=app.video_workflow.command(p['id'],{**base,'op':'accept','suggestionId':0,'engineRevision':d['engineRevision']})
+        old_host=d['host']
+        d=app.video_workflow.command(p['id'],{**base,'op':'export','engineRevision':d['engineRevision']})
+        assert d['state']=='returned',d
+        candidate=json.loads((media/'candidate.json').read_text())['candidate']
+        assert candidate['status']=='candidate' and candidate['frameCount']==90
+        assert candidate['durationSeconds']==3 and candidate['removedSeconds']==1
+        assert candidate['animations']==[] and candidate['cutCount']==1
+        assert candidate['editingMethod']=='software_workflow'
+        assert d['host']!=old_host
+    finally:
+        app.video_workflow.close()

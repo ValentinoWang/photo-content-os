@@ -104,3 +104,37 @@ class WorkflowBoundaryTests(unittest.TestCase):
         self.app.video_editor_choice(self.project['id'],{'editor':'openfilm','method':'self','revision':1})
         self.app.video_workflow._session(ctx)['public']={'state':'self','host':'http://127.0.0.1:45678/'}
         assert self.projection()['state']=='self'
+
+    def test_positive_manual_return_preserves_bytes_without_inventing_edit_receipts(self):
+        import io
+        import os
+        import subprocess
+        source=self.media/'source.mp4'
+        subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i','color=c=0x25516b:s=288x512:r=30:d=1','-f','lavfi','-i','sine=frequency=660:duration=1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-shortest',str(source)],check=True)
+        binding=self.root/'binding.json'
+        self.write(binding,{'identity':{'project_id':self.project['id'],'project_revision':1,'job_id':self.identity['jobId']},'creative_store':str(self.app.store.path),'project_root':str(self.media),'source_refs':['source.mp4'],'steps':[]})
+        os.environ['PHOTO_STUDIO_VIDEO_BINDING']=str(binding)
+        raw=source.read_bytes()
+        with patch('video_candidate.project_candidate') as automatic:
+            data=self.app.video_workflow.receive(self.project['id'],io.BytesIO(raw),len(raw),{'identity':self.identity,'expectedRevision':1})
+        automatic.assert_not_called()
+        assert data['state']=='check-failed'
+        assert data['candidate']['checks']['playable']=='pass'
+        assert data['candidate']['checks']['subtitles']=='unknown'
+        assert '缺少可验证' in data['candidate']['reviewNotice']
+        assert next(self.run.glob('returned-*/returned.mp4')).read_bytes()==raw
+
+    def test_failed_editor_keeps_other_software_candidate(self):
+        ctx=self.app.video_workflow.context(self.project['id'])
+        source=self.media/'unchanged-source';source.write_bytes(b'original')
+        ctx['source']=source
+        earlier={'identity':self.identity,'status':'candidate','editingMethod':'open_source','editor':{'toolId':'openfilm','displayName':'openfilm'},'publicCandidateId':'existing-candidate'}
+        self.write(self.run/'studio-candidates.json',{'candidates':[earlier]})
+        adapter=Mock();adapter.render.side_effect=ValueError('selected_editor_failed')
+        with patch('studio.video_workflow.get_backend',return_value=adapter) as selected,patch.object(self.app.video_workflow,'_kwargs',return_value={'source':source}):
+            self.app.video_workflow.render(ctx,self.app.video_workflow._session(ctx),{})
+        selected.assert_called_once_with('otio_kdenlive')
+        rows=json.loads((self.run/'studio-candidates.json').read_text())['candidates']
+        assert rows[0]==earlier
+        assert rows[1]['status']=='failed' and rows[1]['editor']['toolId']=='otio_kdenlive'
+        assert rows[1]['identity']==self.identity

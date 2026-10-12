@@ -134,7 +134,7 @@ class VideoWorkflow:
         if candidate_failed(data.get('candidate', {})) and not data['state'].startswith('self'):
             data['state'] = 'check-failed'
         records=self.app._video_json(ctx['run'],'studio-candidates.json').get('candidates',[])
-        data['candidates']=[{**{k:c[k] for k in ('status','durationSeconds','frameCount','cutCount','editingMethod') if k in c},'editorName':c.get('editor',{}).get('displayName'),'previewUrl':f"/api/projects/{project_id}/video-preview/{c['publicCandidateId']}"} for c in records if c.get('identity')==ctx['identity']]
+        data['candidates']=[{**{k:c[k] for k in ('status','durationSeconds','frameCount','cutCount','editingMethod') if k in c},'editorName':c.get('editor',{}).get('displayName'),'previewUrl':f"/api/projects/{project_id}/video-preview/{c['publicCandidateId']}" if c.get('publicCandidateId') else None} for c in records if c.get('identity')==ctx['identity']]
         if ctx['suggestions_path'].is_file() and data.get('sourceDuration'):
             from edit_backends.kdenlive_render import plan_ranges, remap_span
             raw=self.app._video_json(ctx['suggestions_path'].parent,ctx['suggestions_path'].name)
@@ -415,6 +415,9 @@ class VideoWorkflow:
         original = {ctx['source']: sha256_file(ctx['source'])}
         session['public']['state'] = 'rendering'
         try:
+            # A Studio host starts no browser and owns no Chromium slot. Close it
+            # before exporting so the adapter uses its queued one-shot path.
+            if own: backend.close()
             native = backend.render(output_dir=output, **args)
             native['editingMethod']='software_workflow' if own else 'open_source'
             (ctx['run'] / 'native-editor.json').write_text(json.dumps(native, default=str), encoding='utf-8')
@@ -425,15 +428,29 @@ class VideoWorkflow:
                 session['public'].update(state='refine', editorName='ChatCut')
                 return
             from video_candidate import project_candidate
-            payload = project_candidate(native=native, descriptor=ctx['descriptor'], source=ctx['source'],
+            descriptor=copy.deepcopy(ctx['descriptor'])
+            if own:
+                plan=json.loads(Path(native['manifest']).read_text())
+                actual={a['animation_id'] for a in plan.get('animation_placements',[])}
+                descriptor['animations']=[a for a in descriptor['animations'] if a['animationId'] in actual]
+            payload = project_candidate(native=native, descriptor=descriptor, source=ctx['source'],
                                         original_hashes=original, output_dir=output / 'studio-check', workspace=ctx['workspace'])
             self._record_candidate(ctx, session, payload, editing_method='software_workflow' if own else 'open_source', editor_id=bid, verified=True)
             if not own and not candidate_failed(payload['candidate']): session['public']['state'] = 'refine'
         except Exception as exc:
             session['public'].update(state='self-export-failed' if own else 'failed', failureCode=type(exc).__name__)
             (ctx['run'] / 'studio-failure.json').write_text(json.dumps({'identity':ctx['identity'], 'editor_backend':bid, 'status':'failed', 'reason':str(exc)}))
+            history=self.app._video_json(ctx['run'],'studio-candidates.json')
+            method='software_workflow' if own else 'open_source'
+            rows=[c for c in history.get('candidates',[]) if c.get('identity')==ctx['identity'] and (c.get('editingMethod'),c.get('editor',{}).get('toolId'))!=(method,bid)]
+            rows.append({'identity':ctx['identity'],'status':'failed','editingMethod':method,'editor':{'toolId':bid,'displayName':next(r['display_name'] for r in self.editors() if r['id']==bid)}})
+            (ctx['run']/'studio-candidates.json').write_text(json.dumps({**history,'candidates':rows[-12:]},default=str),encoding='utf-8')
         finally:
-            if not own and session.get('backend') is not backend: backend.close()
+            if own:
+                exported_state=session['public']['state']
+                self.start_self(ctx,session)
+                session['public']['state']=exported_state
+            elif session.get('backend') is not backend: backend.close()
 
     def _record_candidate(self, ctx, session, payload, *, editing_method, editor_id, verified=False):
         (ctx['run'] / 'studio-candidate.json').write_text(json.dumps(payload, default=str), encoding='utf-8')
@@ -493,16 +510,10 @@ class VideoWorkflow:
                 self._session(ctx)['public'].update(public)
                 (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
                 return self.projection(project_id,ctx['data'])
-            info = probe_media(video)
-            from fractions import Fraction
-            v = next(s for s in info['streams'] if s['codec_type'] == 'video')
-            expected = round(float(v.get('duration', info['format']['duration'])) * float(Fraction(v['avg_frame_rate'])))
-            from video_candidate import project_candidate
-            payload = project_candidate(native={'status':'candidate','output':str(video),'checks':{'frames':expected}},
-                descriptor=ctx['descriptor'], source=ctx['source'], original_hashes=original,
-                output_dir=output / 'check', workspace=ctx['workspace'])
-            self._record_candidate(ctx, self._session(ctx), payload, editing_method={'external':'open_source','guide':'jianying_guidance','self':'software_workflow'}[choice.get('method','external')], editor_id='jianying' if choice.get('method')=='guide' else 'openfilm' if choice.get('method')=='self' else choice['editor'])
-            return self.projection(project_id, ctx['data'])
+            public={'state':'check-failed','candidate':{'status':'check_failed','checks':{**review_projection(inspected),'subtitles':'unknown','blackFrames':'unknown'},'reviewNotice':'播放、音画、帧数和原片检查已通过；成片缺少可验证的剪点、字幕和动画回执，暂不能回传候选。'},'uploaded':False}
+            self._session(ctx)['public'].update(public)
+            (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
+            return self.projection(project_id,ctx['data'])
         except Exception:
             shutil.rmtree(output, ignore_errors=True)
             raise
