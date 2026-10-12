@@ -7,6 +7,18 @@ import json
 from pathlib import Path
 
 
+def mapped_path(path: Path, moves: dict[Path, Path]) -> Path:
+    seen = set()
+    while True:
+        if path in seen:
+            raise ValueError(f'cyclic rename plan: {path}')
+        seen.add(path)
+        source = next((parent for parent in (path, *path.parents) if parent in moves), None)
+        if source is None:
+            return path
+        path = moves[source] / path.relative_to(source)
+
+
 def inventory(roots: list[Path]) -> dict[str, dict[str, object]]:
     result = {}
     for root in roots:
@@ -50,14 +62,11 @@ def apply_plan(plan: dict, *, execute: bool, evidence: Path) -> dict:
                 temporary.rename(target)
             else:
                 source.rename(target)
+            with (evidence / 'completed-moves.jsonl').open('a', encoding='utf-8') as stream:
+                stream.write(json.dumps({'from': str(source), 'to': str(target)}, ensure_ascii=False) + '\n')
         after = inventory([Path(p) for p in plan['final_roots']])
-        expected = {}
-        for name, record in before.items():
-            path = Path(name)
-            for source, target in sorted(moves, key=lambda m: len(m[0].parts), reverse=True):
-                if path == source or source in path.parents:
-                    path = target / path.relative_to(source)
-            expected[str(path)] = record
+        mapping = dict(moves)
+        expected = {str(mapped_path(Path(name), mapping)): record for name, record in before.items()}
         if expected != after:
             raise RuntimeError('file identities, byte counts or hashes changed during rename; retain evidence and stop')
         result = {'dry_run': False, 'moves': len(moves), 'before': totals,

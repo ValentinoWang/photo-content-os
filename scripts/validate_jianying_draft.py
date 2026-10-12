@@ -239,11 +239,28 @@ next_owner: human
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--plan", required=True, type=Path)
-    parser.add_argument("--result", required=True, type=Path)
+    parser.add_argument("--plan", type=Path)
+    parser.add_argument("--result", type=Path)
+    parser.add_argument("--rewritten-json", type=Path)
+    parser.add_argument("--rewrite-proof", type=Path)
     parser.add_argument("--validation-output", type=Path)
     parser.add_argument("--roughcut-review-output", type=Path)
     args = parser.parse_args()
+
+    if args.rewritten_json is not None:
+        if args.rewrite_proof is None or args.plan is not None or args.result is not None:
+            parser.error('--rewritten-json requires --rewrite-proof and excludes --plan/--result')
+        from rewrite_media_references import verify_rewrite
+        proof = json.loads(args.rewrite_proof.read_bytes())
+        matches = [record for record in proof['records']
+                   if Path(record['file']).resolve() == args.rewritten_json.resolve()]
+        if len(matches) != 1:
+            parser.error('rewritten JSON must have exactly one backup-bound proof record')
+        validation = verify_rewrite(matches[0])
+        print(json.dumps(validation, ensure_ascii=False))
+        return 0
+    if args.rewrite_proof is not None or args.plan is None or args.result is None:
+        parser.error('generated drafts require --plan and --result')
 
     validation = validate(
         args.plan.expanduser().resolve(),
