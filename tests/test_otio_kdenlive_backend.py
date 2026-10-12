@@ -422,18 +422,21 @@ class OtioKdenliveBackendTests(unittest.TestCase):
                 "--result-output", str(root / "kdenlive_result.json"),
             )
             mlt = ET.parse(revision_dir / "timeline.kdenlive").getroot()
-            self.assertEqual(len(mlt.findall("./playlist")), 3)
-            self.assertEqual(len(mlt.findall("./tractor/track")), 3)
+            editable = [p for p in mlt.findall("./playlist") if p.find("property[@name='content_os:layer']") is not None]
+            self.assertEqual(len(editable), 3)
+            sequence = next(t for t in mlt.findall("tractor") if t.find("property[@name='content_os:timeline']") is not None)
+            self.assertEqual(len([t for t in sequence.findall("track") if t.get("producer").startswith("track")]), 3)
+            self.assertEqual(mlt.find("playlist[@id='main_bin']/property[@name='kdenlive:docproperties.version']").text, "1.1")
             self.assertEqual(
-                [playlist.find("./property[@name='kdenlive:track_name']").text for playlist in mlt.findall("./playlist")],
+                [playlist.find("./property[@name='kdenlive:track_name']").text for playlist in editable],
                 ["主画面", "叠加", "叠加 2"],
             )
             # Without a blend the top track would hide the cut underneath it.
-            transitions = mlt.findall("./tractor/transition")
+            transitions = sequence.findall("transition")
             self.assertEqual(len(transitions), 2)
             self.assertEqual(transitions[0].find("property[@name='mlt_service']").text, "frei0r.cairoblend")
-            self.assertEqual(transitions[0].find("property[@name='b_track']").text, "1")
-            self.assertEqual(transitions[1].find("property[@name='b_track']").text, "2")
+            self.assertEqual(transitions[0].find("property[@name='b_track']").text, "2")
+            self.assertEqual(transitions[1].find("property[@name='b_track']").text, "3")
 
             validation = root / "validation.json"
             self.run_script(

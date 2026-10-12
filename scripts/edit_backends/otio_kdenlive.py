@@ -14,6 +14,7 @@ import os
 import shutil
 import subprocess
 import sys
+import uuid
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
@@ -65,6 +66,7 @@ class TimelineClip:
     source_start: float = 0.0
     layer: str = DEFAULT_LAYER
     role: str = ""
+    geometry: tuple[int, int, int, int] | None = None
 
     @property
     def duration(self) -> float:
@@ -347,6 +349,7 @@ def make_otio_track(
             "layer": clip.layer,
             "physical_lane": timeline_track.lane,
             **({"role": clip.role} if clip.role else {}),
+            **({"geometry": list(clip.geometry)} if clip.geometry else {}),
         }
         track.append(segment)
         if clip.caption:
@@ -580,10 +583,98 @@ def safe_xml_resource(candidate: str) -> str:
     return str(Path(candidate).expanduser()) if Path(candidate).is_absolute() else candidate
 
 
+def xml_properties(element, values):
+    for name, value in values.items():
+        ET.SubElement(element, "property", {"name": name}).text = str(value)
+
+
+def timeline_tractor(root):
+    for element in root.findall("tractor"):
+        if element.find("property[@name='content_os:timeline']") is not None:
+            return element
+    raise ContractError("kdenlive_sequence_missing")
+
+
+def wrap_kdenlive_document(root, sequence, playlist_ids, project_id, revision, total):
+    """Give the render graph the editable bin/track/sequence structure Kdenlive reads."""
+    if total <= 0:
+        raise ContractError("kdenlive_empty_timeline")
+    sequence_id = "{" + str(uuid.uuid5(uuid.NAMESPACE_URL, f"content-os:{project_id}:{revision}")) + "}"
+    sequence.set("id", sequence_id)
+    sequence.set("in", "0")
+    sequence.set("out", str(total - 1))
+    xml_properties(sequence, {"content_os:timeline": 1, "kdenlive:uuid": sequence_id,
+                             "kdenlive:clipname": project_id})
+    root.remove(sequence)
+    resources = {}
+    for producer in root.findall("producer"):
+        resource = producer.find("property[@name='resource']").text
+        bin_id = resources.setdefault(resource, str(len(resources) + 4))
+        xml_properties(producer, {"mlt_service": "avformat", "kdenlive:id": bin_id})
+    background = ET.Element("producer", {"id": "black", "in": "0", "out": str(total - 1)})
+    xml_properties(background, {"mlt_service": "color", "resource": "black", "length": total,
+                                "eof": "continue", "kdenlive:playlistid": "black_track"})
+    root.insert(1, background)
+    # Kdenlive expects a track tractor with two playlists for each editing lane.
+    for index, playlist_id in enumerate(playlist_ids):
+        playlist = root.find(f"playlist[@id='{playlist_id}']")
+        for entry in playlist.findall("entry"):
+            producer = root.find(f"producer[@id='{entry.get('producer')}']")
+            xml_properties(entry, {"kdenlive:id": producer.find("property[@name='kdenlive:id']").text})
+        empty_id = f"empty{index}"
+        ET.SubElement(root, "playlist", {"id": empty_id})
+        track = ET.SubElement(root, "tractor", {"id": f"track{index}", "in": "0", "out": str(total - 1)})
+        name = playlist.find("property[@name='kdenlive:track_name']").text
+        xml_properties(track, {"kdenlive:timeline_active": 1, "kdenlive:track_name": name})
+        ET.SubElement(track, "track", {"producer": playlist_id, "hide": "audio"})
+        ET.SubElement(track, "track", {"producer": empty_id, "hide": "audio"})
+    original_tracks = sequence.findall("track")
+    for index, track in enumerate(original_tracks):
+        track.set("producer", f"track{index}")
+    sequence.insert(0, ET.Element("track", {"producer": "black"}))
+    for transition in sequence.findall("transition"):
+        for name in ("a_track", "b_track"):
+            prop = transition.find(f"property[@name='{name}']")
+            prop.text = str(int(prop.text) + 1)
+    # Keep primary audio as an independent, editable lane; overlay audio is muted.
+    primary = next((root.find(f"playlist[@id='{pid}']") for pid in playlist_ids
+                    if root.find(f"playlist[@id='{pid}']/property[@name='content_os:layer']").text == "primary"), None)
+    if primary is not None:
+        import copy
+        audio = copy.deepcopy(primary)
+        audio.set("id", "audio_playlist")
+        for prop in list(audio.findall("property")):
+            audio.remove(prop)
+        xml_properties(audio, {"kdenlive:audio_track": 1})
+        root.append(audio)
+        ET.SubElement(root, "playlist", {"id": "audio_empty"})
+        audio_track = ET.SubElement(root, "tractor", {"id": "audio_track", "in": "0", "out": str(total - 1)})
+        xml_properties(audio_track, {"kdenlive:audio_track": 1, "kdenlive:timeline_active": 1})
+        ET.SubElement(audio_track, "track", {"producer": "audio_playlist", "hide": "video"})
+        ET.SubElement(audio_track, "track", {"producer": "audio_empty", "hide": "video"})
+        ET.SubElement(sequence, "track", {"producer": "audio_track", "hide": "video"})
+    root.append(sequence)
+    main_bin = ET.SubElement(root, "playlist", {"id": "main_bin"})
+    xml_properties(main_bin, {"kdenlive:docproperties.uuid": sequence_id,
+                             "kdenlive:docproperties.version": "1.1", "xml_retain": 1,
+                             "kdenlive:docproperties.projectid": project_id,
+                             "content_os.project_revision": revision})
+    ET.SubElement(main_bin, "entry", {"producer": sequence_id, "in": "0", "out": str(total - 1)})
+    seen = set()
+    for producer in root.findall("producer"):
+        prop = producer.find("property[@name='kdenlive:id']")
+        if prop is not None and prop.text not in seen:
+            seen.add(prop.text)
+            ET.SubElement(main_bin, "entry", {"producer": producer.get("id"), "in": "0"})
+    master = ET.SubElement(root, "tractor", {"id": "project_tractor", "in": "0", "out": str(total - 1)})
+    xml_properties(master, {"kdenlive:projectTractor": 1})
+    ET.SubElement(master, "track", {"producer": sequence_id, "in": "0", "out": str(total - 1)})
+
+
 def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_revision: int, *, width: int = 1080, height: int = 1920) -> int:
     if width <= 0 or height <= 0:
         raise ContractError("timeline dimensions must be positive")
-    root = ET.Element("mlt", {"LC_NUMERIC": "C", "version": "7.28.0", "title": f"{project_id}_r{project_revision}"})
+    root = ET.Element("mlt", {"LC_NUMERIC": "C", "version": "7.39.0", "producer": "main_bin", "title": f"{project_id}_r{project_revision}"})
     ET.SubElement(root, "profile", {"description": f"Content OS {width}x{height} {FPS} fps", "width": str(width), "height": str(height), "frame_rate_num": str(FPS), "frame_rate_den": "1", "progressive": "1", "sample_aspect_num": "1", "sample_aspect_den": "1", "display_aspect_num": str(width), "display_aspect_den": str(height)})
     ET.SubElement(root, "property", {"name": "kdenlive:docproperties.projectid"}).text = project_id
     ET.SubElement(root, "property", {"name": "content_os.project_revision"}).text = str(project_revision)
@@ -633,11 +724,20 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
             producer = ET.SubElement(
                 root,
                 "producer",
-                {"id": producer_id, "in": str(source_in), "out": str(source_out)},
+                {"id": producer_id, "in": "0", "out": str(source_out)},
             )
             ET.SubElement(producer, "property", {"name": "resource"}).text = safe_xml_resource(candidate)
             ET.SubElement(producer, "property", {"name": "kdenlive:clipname"}).text = item.name
             ET.SubElement(producer, "property", {"name": "content_os:needs_relink"}).text = "1" if not Path(candidate).expanduser().exists() else "0"
+            if metadata.get("geometry"):
+                x, y, w, h = metadata["geometry"]
+                transform = ET.SubElement(producer, "filter", {"in": "0", "out": str(source_out)})
+                xml_properties(transform, {"mlt_service": "affine", "kdenlive:id": "affine",
+                                           "transition.rect": f"{x} {y} {w} {h} 1",
+                                           "transition.distort": 1, "transition.fill": 1,
+                                           "transition.b_scaled": 1, "transition.valign": "top",
+                                           "transition.halign": "left"})
+
             ET.SubElement(
                 playlist,
                 "entry",
@@ -665,7 +765,8 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
         )
         for name, value in {"a_track": "0", "b_track": str(track_index), "mlt_service": "frei0r.cairoblend"}.items():
             ET.SubElement(transition, "property", {"name": name}).text = value
-    ET.SubElement(tractor, "property", {"name": "kdenlive:docproperties.documentversion"}).text = "1"
+    wrap_kdenlive_document(root, tractor, playlist_ids, project_id, project_revision,
+                           int(otio_data.duration().to_frames()))
     path.write_text(ET.tostring(root, encoding="unicode") + "\n", encoding="utf-8")
     return count
 
@@ -739,7 +840,7 @@ def validate(args: argparse.Namespace) -> int:
     otio_tracks = list(timeline.tracks)
     if not otio_tracks:
         raise ContractError("OTIO timeline has no tracks")
-    xml_playlists = root.findall("./playlist")
+    xml_playlists = [p for p in root.findall("./playlist") if p.find("property[@name='content_os:layer']") is not None]
     if len(xml_playlists) != len(otio_tracks):
         raise ContractError(
             f"Kdenlive track count does not match OTIO: {len(xml_playlists)} playlists vs {len(otio_tracks)} tracks"
@@ -800,7 +901,7 @@ def validate(args: argparse.Namespace) -> int:
                     f"Kdenlive playlist{track_index} clip #{item_index} source trim does not match OTIO"
                 )
             producer = producers.get(xml_item.attrib.get("producer"))
-            if producer is None or any(producer.attrib.get(key) != value for key, value in expected_trim.items()):
+            if producer is None or producer.attrib.get("in") != "0" or int(producer.attrib.get("out", "-1")) < source_out:
                 raise ContractError(
                     f"Kdenlive playlist{track_index} clip #{item_index} producer trim does not match OTIO"
                 )
@@ -808,7 +909,7 @@ def validate(args: argparse.Namespace) -> int:
             total_entries += 1
     if not total_entries:
         raise ContractError("Kdenlive project has no clips")
-    tractor_tracks = root.findall("./tractor/track")
+    tractor_tracks = [t for t in timeline_tractor(root).findall("track") if t.get("producer", "").startswith("track")]
     if len(tractor_tracks) != len(otio_tracks):
         raise ContractError("Kdenlive tractor does not reference every playlist")
     kdenlive = kdenlive_executable()
