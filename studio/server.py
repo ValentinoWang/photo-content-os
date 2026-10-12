@@ -8,6 +8,10 @@ import json
 import importlib.util
 import mimetypes
 import os
+import math
+import re
+import threading
+from datetime import datetime, timezone
 import secrets
 import sys
 import tempfile
@@ -190,6 +194,7 @@ class StudioApplication:
         self.analysis_budget_store = AnalysisBudgetStore(self.settings_dir)
         self.onboarding_store = VersionedOnboardingStateStore(self.settings_dir)
         self.upstream_task_reader = upstream_task_reader
+        self.video_choice_lock = threading.Lock()
 
     @staticmethod
     def _default_trash_backend(platform_name: str, registry_path: Path) -> object:
@@ -210,6 +215,207 @@ class StudioApplication:
             "upstream": _public_upstream_snapshot(self.upstream_session.snapshot()),
             "chatcut": self.chatcut_mcp.state,
         }
+
+    def video_editor_choice(self, project_id: str, value: dict | None = None) -> dict:
+        """Local next-handoff preference; never rewrite a run or project stage."""
+        self.store.get_project(project_id)
+        name = hashlib.sha256(project_id.encode()).hexdigest() + ".json"
+        path = self.settings_dir / "video-editors" / name
+        with self.video_choice_lock:
+            current = json.loads(path.read_text()) if path.is_file() else {"editor": "chatcut", "revision": 1}
+            if value is not None:
+                if value.get("editor") not in {"chatcut", "kdenlive"}:
+                    raise ProjectStoreError("editor_invalid", "剪辑软件选择无效")
+                if type(value.get("revision")) is not int or value["revision"] != current["revision"]:
+                    raise ProjectStoreError("revision_conflict", "剪辑软件选择已变化")
+                current = {"editor": value["editor"], "revision": current["revision"] + 1}
+                path.parent.mkdir(parents=True, exist_ok=True)
+                with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent, delete=False) as handle:
+                    json.dump(current, handle)
+                    temporary = Path(handle.name)
+                os.replace(temporary, path)
+            return current
+
+    @staticmethod
+    def _video_json(root: Path, ref: str) -> dict:
+        path = (root / ref).resolve()
+        if not path.is_relative_to(root.resolve()) or not path.is_file() or path.stat().st_size > MAX_BODY_BYTES:
+            return {}
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return {}
+        return data if isinstance(data, dict) else {}
+
+    def video_handoff_projection(self, project_id: str) -> dict | None:
+        """Read PF's explicitly bound inputs and results, with no local locators."""
+        from runtime_paths import local_media_root
+        from doctor import probe_app
+        project = self.store.get_project(project_id)
+        try:
+            root = self.store.local_workspace_path(project_id).resolve()
+        except ProjectStoreError:
+            return None
+        if not root.is_relative_to(local_media_root()):
+            return None
+        binding_ref = os.environ.get("PHOTO_STUDIO_VIDEO_BINDING")
+        binding = {}
+        if binding_ref:
+            binding_path = Path(binding_ref).expanduser().resolve()
+            binding = self._video_json(binding_path.parent, binding_path.name)
+            if (binding.get("identity", {}).get("project_id") != project_id
+                    or Path(binding.get("project_root", "")).resolve() != root):
+                return None
+            canonical_path = Path(binding.get("creative_store", "")).expanduser().resolve()
+            canonical = self._video_json(canonical_path.parent, canonical_path.name)
+            active = [p for p in canonical.get("projects", []) if p.get("id") == project_id]
+            if len(active) != 1 or active[0].get("revision") != binding["identity"].get("project_revision"):
+                return None
+            revision = active[0]["revision"]
+        else:
+            revision = project["revision"]
+        workspace = Path(os.environ.get("PHOTO_STUDIO_VIDEO_WORKSPACE", str(root))).expanduser().resolve()
+        if not workspace.is_relative_to(local_media_root()):
+            return None
+        job = binding.get("identity", {}).get("job_id")
+        if job:
+            descriptor = self._video_json(workspace, "video-inputs/" + job + "/video.json")
+            if not descriptor:
+                descriptor = self._video_json(workspace, "video.json")
+        else:
+            descriptor = self._video_json(workspace, "video.json")
+        identity = descriptor.get("identity", {})
+        if not isinstance(identity.get("jobId"), str) or not identity["jobId"] or "/" in identity["jobId"] or "\\" in identity["jobId"]:
+            return None
+        if (descriptor.get("scope") != "video_handoff_v1" or identity.get("photoProjectId") != project_id
+                or identity.get("photoProjectRevision") != revision or (job and identity.get("jobId") != job)):
+            return None
+        run = workspace / "runs" / hashlib.sha256(identity["jobId"].encode()).hexdigest()[:32]
+        handoff = self._video_json(run, "handoff_manifest.json")
+        payload = self._video_json(root, binding.get("candidate_ref", "candidate.json")) or handoff
+        candidate = payload.get("candidate") or {}
+        if candidate.get("identity") != identity:
+            candidate = {}
+            payload = {}
+        progress = payload.get("progress") or {}
+        suggestions = self._video_json(run, "native-suggest.json")
+        if not suggestions:
+            suggestions = self._video_json(root, "ai-analysis/edit_suggestions.json")
+        native = self._video_json(run, "native-kdenlive.json")
+        package = {}
+        package_root = root
+        for step in binding.get("steps", []):
+            if step.get("action") == "chatcut":
+                package_arg = step.get("kwargs", {}).get("package", {})
+                ref = package_arg.get("local_ref") if isinstance(package_arg, dict) else None
+                if ref:
+                    package_root = (root / ref).resolve()
+                    if package_root.is_relative_to(root):
+                        package = self._video_json(package_root, "handoff.json")
+                break
+        if package.get("project_id") != project_id or package.get("project_revision") != revision:
+            package = {}
+        result = self._video_json(package_root, "handoff-result.json") if package else {}
+        results = self._video_json(package_root, "mcp-results.json") if package and result.get("connection_verified") is True else {}
+        # Only named structured editor facts are used. Textual tool output is not a receipt.
+        imported = results.get("import", {}).get("structuredContent", {})
+        precut = results.get("precut", {}).get("structuredContent", {})
+        project_ref = imported.get("projectRef") if result.get("status") == "candidate" else None
+        if not isinstance(project_ref, str) or not project_ref.strip():
+            project_ref = None
+        deep_link = imported.get("projectUrl") if project_ref else None
+        if not isinstance(deep_link, str) or not deep_link.startswith("chatcut://project/") or any(c in deep_link for c in "\r\n\x00"):
+            deep_link = None
+        installed = probe_app(Path("/Applications/ChatCut.app"))
+        kdenlive = probe_app(Path("/Applications/kdenlive.app"))
+        report_ref = os.environ.get("OPENCLAW_MEDIA_VIDEO_TOOLS_REPORT")
+        report = {}
+        if report_ref:
+            report_path = Path(report_ref).expanduser().resolve()
+            report = self._video_json(report_path.parent, report_path.name)
+        tool = report.get("editor") or {}
+        now = datetime.now(timezone.utc)
+        try:
+            checked = datetime.fromisoformat(tool["checkedAt"].replace("Z", "+00:00"))
+            expires = datetime.fromisoformat(tool["expiresAt"].replace("Z", "+00:00"))
+            fresh = checked <= now < expires
+        except (KeyError, TypeError, ValueError):
+            fresh = False
+        if fresh and tool.get("toolId") == "chatcut":
+            installed = {"installed": tool.get("installed") is True, "version": tool.get("version")}
+        else:
+            tool = {}
+        connected = self.chatcut_mcp.state.get("available") is True
+        handshake = connected or (tool.get("status") == "online" and tool.get("evidenceKind") == "mcp_handshake")
+        # Historical package success is not a current connection or login probe.
+        login = True if handshake or tool.get("reasonCode") == "logged_in" else False if tool.get("reasonCode") == "not_logged_in" else None
+        editor = candidate.get("editor") or {"displayName": "Kdenlive" if native and native.get("status") == "candidate" else None}
+        duration = candidate.get("sourceDurationSeconds") or suggestions.get("duration")
+        def number(value):
+            return value if type(value) in {int, float} and math.isfinite(value) and value >= 0 else None
+        cuts = []
+        for item in suggestions.get("suggestions", []):
+            if item.get("type") not in {"silence", "repetition", "animation"}:
+                continue
+            start, end = number(item.get("start")), number(item.get("end"))
+            if start is None or end is None or end <= start or (number(duration) is not None and end > duration):
+                continue
+            cuts.append({"type": item["type"], "start": start, "end": end,
+                         "text": item.get("evidence_text", ""), "animationId": item.get("animation_id"),
+                         "automatic": item.get("auto_cut_allowed") is True and suggestions.get("auto_cut_allowed") is not False
+                         and (item["type"] != "repetition" or suggestions.get("precision") == "word")})
+        peaks = payload.get("progress", {}).get("waveformPeaks", [])
+        if progress.get("waveformSource") != "source" or not isinstance(peaks, list) or len(peaks) > 400 or any(number(p) is None or p > 1 for p in peaks):
+            peaks = []
+        assets = []
+        if package:
+            assets = [{"role": entry["role"], "name": Path(entry["path"]).name} for entry in package.get("files", [])
+                      if entry.get("role") not in {"suggestions", "executable_suggestions"}]
+        if not any(a["role"] == "original" for a in assets):
+            for ref in binding.get("source_refs", []):
+                source_path = (root / ref).resolve()
+                if source_path.is_relative_to(root) and source_path.is_file() and source_path.suffix.lower() in {".mp4", ".mov", ".mkv"}:
+                    assets.append({"role": "original", "name": source_path.name})
+        manifest = self._video_json(root, "ai-analysis/media-manifest.json")
+        for item in manifest.get("items", []):
+            transcript = self._video_json(root, item.get("transcript_path", ""))
+            if transcript.get("status") == "ok":
+                chars = sum(len(segment.get("text", "")) for segment in transcript.get("segments", []))
+                assets.append({"role": "transcript", "characters": chars, "precision": transcript.get("precision")})
+        if not any(a["role"] == "subtitles" for a in assets) and candidate.get("subtitles"):
+            assets.append({"role": "subtitles", "count": len(re.findall(r"(?m)^\d+\s*$", candidate["subtitles"]))})
+        shots = [{"shotId": row["shot"]["shotId"], "start": row["shot"]["startSeconds"]} for row in descriptor.get("shots", [])]
+        animations = []
+        by_id = {s["shotId"]: s for s in progress.get("shotProgress", [])}
+        teaching = self._video_json(run, "native-teaching_clips.json")
+        for shot in teaching.get("shots", []):
+            by_id.setdefault(shot["id"], {"status": shot.get("status"), "renderedFrames": shot.get("progress_frames"), "totalFrames": shot.get("total_frames")})
+        for item in descriptor.get("animations", []):
+            fact = by_id.get(item["shotId"], {})
+            animations.append({"shotId": item["shotId"], "title": item.get("requirement", ""),
+                               "duration": item.get("durationSeconds"), "status": fact.get("status"),
+                               "frames": fact.get("renderedFrames"), "totalFrames": fact.get("totalFrames")})
+        uploaded = False
+        for journal_path in run.glob("video-result-*.json"):
+            journal = self._video_json(run, journal_path.name)
+            remote_result = journal.get("video_result") or {}
+            if (journal.get("result_status") == "succeeded" and remote_result.get("identity") == identity
+                    and remote_result.get("candidateArtifact") and remote_result.get("previewArtifact") and remote_result.get("subtitleArtifact")):
+                uploaded = True
+        images = [r["visual"]["image"] for r in descriptor.get("shots", []) if r.get("visual", {}).get("image") and r["visual"]["image"].get("status") in {"saved", "unsaved"}]
+        if images:
+            assets.append({"role": "images", "count": len(images), "pending": sum(i.get("rightsStatus") != "confirmed" for i in images)})
+        return {"state": "returned" if candidate else "connected" if handshake else "offline", "title": project["title"],
+                "sourceDuration": number(duration), "materials": assets, "animations": animations,
+                "suggestions": cuts, "shots": shots, "waveformPeaks": peaks,
+                "tools": {"chatcut": {"installed": installed["installed"], "version": installed["version"],
+                                      "login": login, "handshake": handshake, "projectRef": project_ref, "projectUrl": deep_link},
+                          "kdenlive": {"installed": kdenlive["installed"], "version": kdenlive["version"]}},
+                "precutCount": precut.get("precutCount") if type(precut.get("precutCount")) is int and precut["precutCount"] >= 0 else None,
+                "exported": progress.get("exported") is True, "animationCount": len(candidate.get("animations", [])),
+                "candidate": {key: candidate[key] for key in ("status", "durationSeconds", "frameCount", "cutCount", "removedSeconds", "returnedAt", "checks") if key in candidate},
+                "editorName": editor.get("displayName"), "choice": self.video_editor_choice(project_id),
+                "uploaded": uploaded}
 
     def load_asset_index(self) -> dict[str, Any]:
         try:
@@ -526,7 +732,7 @@ class StudioApplication:
                         self._json(HTTPStatus.OK, {"ok": True, "asset": asset})
                         return
                     if len(segments) == 3 and segments[:2] == ["api", "projects"]:
-                        self._json(HTTPStatus.OK, {"ok": True, "project": app.store.get_project(segments[2])})
+                        self._json(HTTPStatus.OK, {"ok": True, "project": app.store.get_project(segments[2]), "videoHandoff": app.video_handoff_projection(segments[2])})
                         return
                     if (
                         len(segments) == 5
@@ -816,6 +1022,15 @@ class StudioApplication:
                         self._json(HTTPStatus.CREATED, {"ok": True, "project": project})
                         return
                     if method == "PATCH" and len(segments) == 3 and segments[:2] == ["api", "projects"]:
+                        if "videoEditor" in body:
+                            project = app.store.get_project(segments[2])
+                            if expected_revision != project["revision"]:
+                                raise ProjectStoreError("revision_conflict", "项目已变化")
+                            if body.get("changes"):
+                                raise ProjectStoreError("editor_invalid", "剪辑软件选择不能混合修改")
+                            choice = app.video_editor_choice(segments[2], body["videoEditor"])
+                            self._json(HTTPStatus.OK, {"ok": True, "project": project, "videoEditor": choice})
+                            return
                         project = app.store.update_project(
                             segments[2],
                             body.get("changes") if isinstance(body.get("changes"), dict) else {},
