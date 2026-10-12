@@ -1,4 +1,5 @@
 import { renderHandoff } from '/handoff.js';
+import { videoActions } from '/video-actions.js';
 const state = { csrf: '', projects: [], project: null, settings: null, screen: 'home', wizard: 1, deleteCandidates: [], deleteError: '', selectedDeleteNumbers: [], inboxPlan: null, inboxPlanError: '', selectedBatchId: '', assets: [], assetStatistics: null, assetError: '', selectedAsset: null, libraryView: 'grid', edlView: 'timeline', diagnostics: null, analysisBudget: null, setup: null, upstreamTasks: [], videoHandoff: null };
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
@@ -90,16 +91,14 @@ function renderProject() {
   if (!state.project) { target.innerHTML = '<div class="empty"><h2>先选择一个项目</h2><p>项目屏保留 Brief、脚本、锁定范围、版本、失效提示、参考资料和复盘。</p><button class="btn btn--pri" data-screen="home">返回工作台</button></div>'; target.querySelector('button').onclick = () => showScreen('home'); return; }
   const project = state.project;
   if (state.videoHandoff) {
+    if(state.videoHandoff.choice?.method==='self'&&state.videoHandoff.host){if(state.screen==='project')location.assign(state.videoHandoff.host);return;}
     if (state.screen === 'project') {
     document.querySelector('.main').dataset.designId = `studio-${state.videoHandoff.state}`;
-    $('#screen-title').textContent = state.videoHandoff.state === 'returned' ? '成片收回与检查' : '把素材交给剪辑软件';
+    $('#screen-title').textContent = '剪这件作品';
     $('#screen-sub').setAttribute('data-design-data','project.title/sourceDuration');
     $('#screen-sub').textContent = `${project.title}${Number.isFinite(state.videoHandoff.sourceDuration) ? ` · 原片 ${Math.floor(state.videoHandoff.sourceDuration/60)}:${String(Math.floor(state.videoHandoff.sourceDuration%60)).padStart(2,'0')}` : ''} · 来自 MediaClaw 作品`;
     }
-    renderHandoff(target, state.videoHandoff, {
-      choose: async choice => (await api(`/api/projects/${encodeURIComponent(project.id)}`, {method:'PATCH', body:{expectedRevision:project.revision,videoEditor:choice}})).videoEditor,
-      recheck: async () => { await api('/api/settings/chatcut/probe', {method:'POST',body:{}}); await api('/api/settings/chatcut/confirm', {method:'POST',body:{}}); await selectProject(project.id); }
-    });
+    renderHandoff(target, state.videoHandoff, videoActions({projectId:project.id,csrf:state.csrf,getData:()=>state.videoHandoff}));
     return;
   }
   const documents = Object.entries(project.documents || {}).map(([name, document]) => `<article class="document-card"><header><div><span class="chip">${esc(document.label || name)}</span><h3>${esc(document.label || name)}</h3></div><span class="chip ${document.stale ? 'chip--warn' : 'chip--ok'}">${document.stale ? '需要更新' : `v${document.version}`}</span></header><p>${document.blocks?.filter(block => block.locked).length || 0} 个区块已锁定，AI 只可修改你选中的未锁定内容。</p><button class="btn" data-open-document="${esc(name)}">查看与编辑</button></article>`).join('');
