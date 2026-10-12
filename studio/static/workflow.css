@@ -17,10 +17,10 @@
 .handoff .segs i{position:absolute;top:0;height:22px;border-left:1px solid var(--rule-2);font:11px var(--f-mo);color:var(--ink-3);padding-left:4px;font-style:normal;line-height:22px}
 .handoff .after{height:22px}
 .handoff .after .bar{position:absolute;inset:0 auto 0 0;background:var(--ac-2);border-radius:5px;display:flex;align-items:center;padding-left:8px;font:12px var(--f-mo);color:var(--ac-soft)}
-.handoff .ruler{position:relative;height:14px;font:11px var(--f-mo);color:#46585A;margin:4px 0 0 74px}
+.handoff .ruler{position:relative;height:28px;font:11px var(--f-mo);color:#46585A;margin:4px 0 0 74px}
 .handoff .ruler span{position:absolute;transform:translateX(-50%)}
 .handoff .ruler span:first-child{transform:none}
-.handoff .ruler span:last-child{transform:translateX(-100%)}
+.handoff .ruler span:last-child{transform:translateX(-100%);top:12px}
 .handoff .proto{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:4px;padding:5px;border-radius:999px;background:#000c;border:1px solid var(--rule-2);font-size:12px;z-index:9}
 .handoff .proto a{padding:5px 12px;border-radius:999px;color:var(--ink-3);text-decoration:none}
 .handoff .proto a[aria-current]{background:var(--ac);color:#071719}
@@ -525,3 +525,12 @@
 .handoff .self-work-summary p{margin:0;line-height:1.6}
 .handoff .guide-animations dd{margin:0}
 .handoff .guide-animations dd p{margin:5px 0 0}
+
+.handoff .nle-inspect .self-work-summary p{padding:0;margin:0}
+.handoff>.interaction-note{margin:0 24px 18px;font-size:13px;color:var(--ac-soft)}
+.handoff>.interaction-note:empty{display:none}
+@media(max-width:700px){
+.handoff .ruler,.handoff .nle-ruler{height:28px}
+.handoff .ruler span:last-child,.handoff .nle-ruler span:last-child{top:12px}
+.handoff>.interaction-note{margin:0 16px 16px}
+}
