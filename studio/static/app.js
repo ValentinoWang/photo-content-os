@@ -85,14 +85,17 @@ function renderLibrary() {
 }
 
 function renderProject() {
-  document.querySelector('.main > .topbar .topbar-actions').hidden = Boolean(state.videoHandoff);
+  if (state.screen === 'project') document.querySelector('.main > .topbar .topbar-actions').hidden = Boolean(state.videoHandoff);
   const target = $('[data-screen-panel="project"]');
   if (!state.project) { target.innerHTML = '<div class="empty"><h2>先选择一个项目</h2><p>项目屏保留 Brief、脚本、锁定范围、版本、失效提示、参考资料和复盘。</p><button class="btn btn--pri" data-screen="home">返回工作台</button></div>'; target.querySelector('button').onclick = () => showScreen('home'); return; }
   const project = state.project;
   if (state.videoHandoff) {
+    if (state.screen === 'project') {
+    document.querySelector('.main').dataset.designId = `studio-${state.videoHandoff.state}`;
     $('#screen-title').textContent = state.videoHandoff.state === 'returned' ? '成片收回与检查' : '把素材交给剪辑软件';
     $('#screen-sub').setAttribute('data-design-data','project.title/sourceDuration');
     $('#screen-sub').textContent = `${project.title}${Number.isFinite(state.videoHandoff.sourceDuration) ? ` · 原片 ${Math.floor(state.videoHandoff.sourceDuration/60)}:${String(Math.floor(state.videoHandoff.sourceDuration%60)).padStart(2,'0')}` : ''} · 来自 MediaClaw 作品`;
+    }
     renderHandoff(target, state.videoHandoff, {
       choose: async choice => (await api(`/api/projects/${encodeURIComponent(project.id)}`, {method:'PATCH', body:{expectedRevision:project.revision,videoEditor:choice}})).videoEditor,
       recheck: async () => { await api('/api/settings/chatcut/probe', {method:'POST',body:{}}); await api('/api/settings/chatcut/confirm', {method:'POST',body:{}}); await selectProject(project.id); }
@@ -124,7 +127,7 @@ function renderSettings() {
 }
 
 function render() { renderHome(); renderInbox(); renderLibrary(); renderProject(); renderSettings(); }
-function showScreen(name) { state.screen = name; document.querySelectorAll('[data-screen-panel]').forEach(panel => panel.hidden = panel.dataset.screenPanel !== name); document.querySelectorAll('[data-screen]').forEach(button => button.setAttribute('aria-current', String(button.dataset.screen === name))); const labels = { home: ['工作台', '最近项目与本机能力状态'], inbox: ['整理台', '按事件建议整理本地素材'], library: ['素材库', '筛选可复用素材'], project: ['项目', '创作链路与剪辑方案'], settings: ['设置与诊断', '本机配置与可选连接'] }; $('#screen-title').textContent = labels[name][0]; $('#screen-sub').textContent = labels[name][1]; }
+function showScreen(name) { state.screen = name; document.querySelectorAll('[data-screen-panel]').forEach(panel => panel.hidden = panel.dataset.screenPanel !== name); document.querySelectorAll('[data-screen]').forEach(button => button.setAttribute('aria-current', String(button.dataset.screen === name))); const labels = { home: ['工作台', '最近项目与本机能力状态'], inbox: ['整理台', '按事件建议整理本地素材'], library: ['素材库', '筛选可复用素材'], project: ['项目', '创作链路与剪辑方案'], settings: ['设置与诊断', '本机配置与可选连接'] }; $('#screen-title').textContent = labels[name][0]; $('#screen-sub').textContent = labels[name][1]; document.querySelector('.main > .topbar .topbar-actions').hidden = name === 'project' && Boolean(state.videoHandoff); if (name === 'project' && state.videoHandoff) renderProject(); else { $('#screen-sub').removeAttribute('data-design-data'); delete document.querySelector('.main').dataset.designId; } }
 function openSurface(name) { document.querySelectorAll('[data-surface-panel]').forEach(panel => panel.hidden = panel.dataset.surfacePanel !== name); if (name === 'cloud') renderCloud(); if (name === 'setup') renderWizard(); }
 function closeSurface() { document.querySelectorAll('[data-surface-panel]').forEach(panel => panel.hidden = true); }
 function renderWizard() { const copy = [['存放位置', '状态目录可重新进入；不要求上传原始媒体。'], ['运行环境', '检查本机工具链并给出可执行修复建议。'], ['剪辑器', '选择标准剪辑交接，或在本机条件满足时选择可编辑时间线。'], ['账号与设备', '连接上游是可选项；跳过不会关闭本地工作台。']][state.wizard - 1]; $('#wizard-panel').innerHTML = `<p class="eyebrow">第 ${state.wizard} 步</p><h2>${copy[0]}</h2><p>${copy[1]}</p>`; document.querySelectorAll('[data-wizard-step]').forEach(node => node.classList.toggle('active', Number(node.dataset.wizardStep) === state.wizard)); $('#wizard-prev').disabled = state.wizard === 1; $('#wizard-next').textContent = state.wizard === 4 ? '完成' : '下一步'; }
