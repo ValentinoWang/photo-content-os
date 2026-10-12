@@ -68,7 +68,7 @@ class VideoExecutionContractTests(unittest.TestCase):
     def test_whitelist_executes_real_local_function_and_rejects_unknowns(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); (root / "video_render").mkdir()
-            (root / "video_render/compose.py").write_text("import sys\ndef fixture(project_root):\n    (project_root / 'ran').write_text('yes')\n    (project_root / 'python').write_text(sys.executable)\n")
+            (root / "video_render/compose.py").write_text("import sys\ndef fixture(project_root):\n    (project_root / 'ran').write_text('yes')\n    (project_root / 'python').write_text(sys.executable)\n    return {'status': 'completed'}\n")
             registry = adapter.PhotoNodeRegistry(SimpleNamespace(), root / "binding.json")
             with patch.object(adapter, "SCRIPTS", root):
                 registry._invoke({"action": "compose", "function": "fixture", "kwargs": {"project_root": "$project_root"}}, root=root, handoff={}, output_root=root)
