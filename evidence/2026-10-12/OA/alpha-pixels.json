@@ -1,0 +1,20 @@
+[
+  {
+    "seconds": 10,
+    "alpha_error": 4.8150892857142855,
+    "outside_error": 3.3574019607843137,
+    "painted_error": 4.140833333333333
+  },
+  {
+    "seconds": 11.5,
+    "alpha_error": 3.3425,
+    "outside_error": 3.1337132352941173,
+    "painted_error": 4.209479166666667
+  },
+  {
+    "seconds": 12.9,
+    "alpha_error": 3.3746130952380953,
+    "outside_error": 3.8204197303921568,
+    "painted_error": 4.183958333333334
+  }
+]

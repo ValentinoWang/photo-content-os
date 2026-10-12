@@ -1,0 +1,33 @@
+{
+  "observed_oa_pids": [
+    63087,
+    63089,
+    63090,
+    63109,
+    63114,
+    63115,
+    63116,
+    63232,
+    63376,
+    63384,
+    63393,
+    63501,
+    64049,
+    65242,
+    77117,
+    77122,
+    77123,
+    77132,
+    77169,
+    77172,
+    77204,
+    77217,
+    77218
+  ],
+  "remaining_oa_pids": [],
+  "pgrep_openfilm_bridge_exit": 1,
+  "pgrep_openfilm_bridge_output": "",
+  "pgrep_Chromium_exit": 0,
+  "pgrep_Chromium_count": 5,
+  "unrelated_Chromium_matches": "WPS Office CEF processes; not started or touched by OA"
+}

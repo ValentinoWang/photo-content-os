@@ -1,0 +1,8 @@
+{
+  "id": "openfilm",
+  "installed": false,
+  "version": null,
+  "runnable": false,
+  "status": "unavailable",
+  "reason": "openfilm_runtime_unavailable"
+}

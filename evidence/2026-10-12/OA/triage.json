@@ -1,0 +1,45 @@
+{
+  "unchanged_common_tests": {
+    "tests/test_edit_backend_interface.py": "50895e770ca85bff2c2eda2aaa28874a5c80d101b5ec992d86b2a03811762efa",
+    "tests/test_edit_backend_qualification.py": "458fc2fc3b75b1620a455983ac8d39e8caf128d7c1317d949214f059a839674a"
+  },
+  "failures": [
+    {
+      "class": "bridge.initialization-race",
+      "red": "qualification-initial-failure.log",
+      "repair": "等内层window.film与film.ready；没有修改上游或共同断言"
+    },
+    {
+      "class": "source.color-matrix",
+      "red": "qualification-color-cue-undo-failure.log",
+      "repair": "显式生成BT.709工作副本；原片哈希不变；逐帧和alpha像素门槛原样通过"
+    },
+    {
+      "class": "caption.content-normalization",
+      "red": "qualification-color-cue-undo-failure.log",
+      "repair": "从实际VTT恢复标点，时间取当前HTML工程；保持已手工切好的cue，不重新分句"
+    },
+    {
+      "class": "refine.undo-locator",
+      "red": "qualification-color-cue-undo-failure.log",
+      "repair": "按真实原生按钮可访问名定位，失败的等待promise被处理，真实撤销写回并重新导出"
+    },
+    {
+      "class": "caption.readability",
+      "red": "qualification-small-caption-failure.log",
+      "repair": "原生字幕底条和5%字号；四帧原始Apple Vision OCR错误数均为0"
+    },
+    {
+      "class": "queue.startup-deadline",
+      "red": "full-queue-timeout-failure.log",
+      "repair": "探测/精修启动允许槽位脚本默认900秒排队；渲染预算仍由调用方规定"
+    },
+    {
+      "class": "vp9.alpha-decoder",
+      "negative": "默认FFmpeg VP9解码不会保留WebM alpha；新增独立实测夹具保持alpha=0与255均超过100像素",
+      "repair": "显式用libvpx-vp9解码VP9输入；12项OA回归和最终全量通过"
+    }
+  ],
+  "green": "full-tests.log: 522 passed, 18 skipped, 161 subtests passed; fast-tests.log: 22 passed",
+  "unresolved_native_ui_observation": "删段与撤销即时截图中，原生字幕轨/字幕显示落后一次操作；实际read_back与三次导出正确。未修改上游或声称预览字幕同步通过。"
+}

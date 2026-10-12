@@ -1,0 +1,256 @@
+{
+  "at": "2026-10-12T06:18:05.090Z",
+  "route": "/projects/8JZ64Hxzf6kG",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "screenshot": "evidence/2026-10-12/OA/editor-deleted.png",
+  "state": {
+    "value": {
+      "stage": {
+        "w": 640,
+        "h": 360
+      },
+      "tracks": [
+        {
+          "clips": [
+            {
+              "id": "overlay0-0",
+              "src": "assets/overlay-0.webm",
+              "time": [
+                0,
+                3
+              ],
+              "at": 6,
+              "box": {
+                "x": 0,
+                "y": 0,
+                "w": 160,
+                "h": 90
+              },
+              "volume": 0
+            }
+          ],
+          "attrs": {
+            "id": "overlay"
+          }
+        },
+        {
+          "clips": [
+            {
+              "id": "talk2",
+              "src": "assets/source.mp4",
+              "time": [
+                6,
+                8
+              ],
+              "box": {
+                "x": 0,
+                "y": 0,
+                "w": 640,
+                "h": 360
+              }
+            },
+            {
+              "id": "talk3",
+              "src": "assets/source.mp4",
+              "time": [
+                10,
+                12
+              ],
+              "at": 2,
+              "box": {
+                "x": 0,
+                "y": 0,
+                "w": 640,
+                "h": 360
+              }
+            },
+            {
+              "id": "talk4",
+              "src": "assets/source.mp4",
+              "time": [
+                14,
+                20
+              ],
+              "at": 4,
+              "box": {
+                "x": 0,
+                "y": 0,
+                "w": 640,
+                "h": 360
+              }
+            }
+          ],
+          "attrs": {
+            "id": "talk"
+          }
+        }
+      ]
+    },
+    "doc": {
+      "stage": {
+        "w": 640,
+        "h": 360
+      },
+      "tracks": [
+        {
+          "clips": [
+            {
+              "src": "assets/overlay-0.webm",
+              "id": "overlay0-0",
+              "at": 6,
+              "time": [
+                0,
+                3
+              ],
+              "box": {
+                "x": 0,
+                "y": 0,
+                "w": 160,
+                "h": 90
+              },
+              "volume": 0
+            }
+          ],
+          "attrs": {
+            "id": "overlay"
+          }
+        },
+        {
+          "clips": [
+            {
+              "src": "assets/source.mp4",
+              "id": "talk2",
+              "time": [
+                6,
+                8
+              ],
+              "box": {
+                "x": 0,
+                "y": 0,
+                "w": 640,
+                "h": 360
+              }
+            },
+            {
+              "src": "assets/source.mp4",
+              "id": "talk3",
+              "at": 2,
+              "time": [
+                10,
+                12
+              ],
+              "box": {
+                "x": 0,
+                "y": 0,
+                "w": 640,
+                "h": 360
+              }
+            },
+            {
+              "src": "assets/source.mp4",
+              "id": "talk4",
+              "at": 4,
+              "time": [
+                14,
+                20
+              ],
+              "box": {
+                "x": 0,
+                "y": 0,
+                "w": 640,
+                "h": 360
+              }
+            }
+          ],
+          "attrs": {
+            "id": "talk"
+          }
+        }
+      ]
+    },
+    "rev": "108419d3d9504acb",
+    "subtitles": {
+      "cues": [
+        {
+          "startMs": 0,
+          "durMs": 2000,
+          "text": "第二句：这一段保留。",
+          "clip": "talk2",
+          "src": "assets/source.mp4",
+          "line": 6000
+        },
+        {
+          "startMs": 2000,
+          "durMs": 2000,
+          "text": "第三句：接着讲解。",
+          "clip": "talk3",
+          "src": "assets/source.mp4",
+          "line": 10000
+        },
+        {
+          "startMs": 4000,
+          "durMs": 6000,
+          "text": "重复句：保留这一遍，随后叠动画。",
+          "clip": "talk4",
+          "src": "assets/source.mp4",
+          "line": 14000
+        }
+      ],
+      "style": {
+        "on": true,
+        "pos": {
+          "x": 0.5,
+          "y": 0.94
+        },
+        "maxWidthPct": 100,
+        "align": "center",
+        "font": {
+          "family": "PingFang SC",
+          "sizePct": 5,
+          "weight": 500,
+          "italic": false,
+          "letterSpacingEm": 0.04,
+          "lineHeight": 1.45,
+          "upper": false
+        },
+        "fill": "#ffffff",
+        "stroke": null,
+        "shadow": null,
+        "box": {
+          "color": "#000000",
+          "opacity": 0.62,
+          "radiusEm": 0.08,
+          "padXEm": 0.4,
+          "padYEm": 0.12
+        },
+        "karaoke": null,
+        "language": null,
+        "bilingual": false
+      }
+    }
+  },
+  "events": [
+    {
+      "kind": "requestfailed",
+      "url": "/p/j-1In9E4O0V8d2ZaVAJX876z/assets/source.mp4",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "kind": "requestfailed",
+      "url": "/p/j-1In9E4O0V8d2ZaVAJX876z/assets/source.mp4",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "kind": "requestfailed",
+      "url": "/p/j-1In9E4O0V8d2ZaVAJX876z/assets/source.mp4",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "scroll": {
+    "height": 1000,
+    "width": 1440
+  }
+}

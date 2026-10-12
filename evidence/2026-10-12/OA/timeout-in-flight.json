@@ -1,0 +1,28 @@
+{
+  "receipt": {
+    "status": "failed",
+    "editor_backend": "openfilm",
+    "project_id": "oa-timeout-proof",
+    "project_revision": 21,
+    "reason": "openfilm_render_timeout"
+  },
+  "actual_frames_started": true,
+  "observed_owned_pids": [
+    77117,
+    77122,
+    77123,
+    77132,
+    77169,
+    77172,
+    77204,
+    77217,
+    77218
+  ],
+  "remaining_observed_pids": [],
+  "close": {
+    "id": "openfilm",
+    "started_pids": [],
+    "remaining_pids": []
+  },
+  "candidate_exists": false
+}

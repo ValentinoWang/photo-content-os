@@ -1,0 +1,138 @@
+{
+  "source_hashes": {
+    "scripts/edit_backends/openfilm_adapter.py": "0bfd1053d1ee3b59c337300b0c1fa61aaaa8fa8309dfc5d43cfa55c1d1430439",
+    "scripts/edit_backends/openfilm_bridge.mjs": "fab5ada3223a7f5cfef9e8c34c4bb4e4b8cd4fe649c02458a1da7f4e9d0e6991",
+    "tests/test_openfilm_adapter.py": "f07a34ea3f215be1e270809bbac6ddd492ea2ab3da801005d0444ca1aba10593"
+  },
+  "protected_sources": {
+    "scripts/edit_backends/registry.py": "568ee2f4c0e208b9ec93925cfd157186dbe619599faad7bc14db631b49c70ee0",
+    "scripts/edit_backends/kdenlive_adapter.py": "275dd77e7a0bb9fa12e84c8cefefb65e29b3c989819558870854b8239788ac5d",
+    "scripts/edit_backends/kdenlive_render.py": "3fe083d65cedd17eeda06498ee7246f8c711d4683d48c4e0718e3503a2dd4c4a",
+    "scripts/openclaw_video_execution.py": "3e54765d820418af8c5e857ae837cbbcdbcf22f5f210771ba5d5fb824d44c0b4"
+  },
+  "runtime": {
+    "openfilm": "0.1.5",
+    "node": "v22.22.2",
+    "source_hashes": {
+      "package.json": "68d15c038f636b650a5a5c15ad4eee8c20498f3fb7ee27d09fa05f98f01fe2e0",
+      "src/render.mjs": "d308b672e7e2d60b6e06ea432bbf009ae96b5e197b3f4d1d50bab7c40fcae84f",
+      "src/seekable.mjs": "fa3b91513d666ebd414fc6c4fc1798f3aad5c09c6be1e760ca3ae9d95be85b79",
+      "studio/server/film-subtitle.mjs": "be4b1852bc254ff597e43694a732044ef51dd43a78df13735c2ff023957687dd"
+    }
+  },
+  "full_suite": {
+    "passed": 522,
+    "failed": 0,
+    "skipped": 18,
+    "subtests_passed": 161,
+    "seconds": 203.22,
+    "log": "full-tests.log"
+  },
+  "own_test_count": 12,
+  "common_interface_test_count": 10,
+  "common_real_qualification_test_count": 11,
+  "reviewed_images": [
+    {
+      "file": "editor-initial.png",
+      "sha256": "ea0aad00a8b737eaf30cebbfc4134084c90bc1e52945858716560a9f50e7b38b",
+      "dimensions": [
+        1440,
+        1000
+      ],
+      "finding": "原生编辑页首帧、4 段口播、10–13 秒动画轨与14秒末端完整可见，字幕可读。"
+    },
+    {
+      "file": "editor-deleted.png",
+      "sha256": "b43baa7680ec2f771b5b950cb604f035bdeac3a469201e19a7d243a4de177ea2",
+      "dimensions": [
+        1440,
+        1000
+      ],
+      "finding": "真实波纹删除后3段，源时钟6秒，工程10秒；即时截图的原生字幕轨与预览字幕尚显示上次内容，单列为待复查。"
+    },
+    {
+      "file": "editor-restored.png",
+      "sha256": "a1c1aee5cc6c04b374792c4e7144039453fb53b92d61ec9cea274984f1164676",
+      "dimensions": [
+        1440,
+        1000
+      ],
+      "finding": "撤销后4段、14秒、源时钟0恢复；即时原生字幕仍落后一次操作，不能据此宣称字幕预览同步通过。"
+    },
+    {
+      "file": "caption-1.png",
+      "sha256": "7ba1f4609b8c7277ebdcd83c2bca8c43874c40875ab2c820729f7ae0a287e90f",
+      "dimensions": [
+        1280,
+        160
+      ],
+      "finding": "烧录字幕完整、清晰。"
+    },
+    {
+      "file": "caption-5.png",
+      "sha256": "f5b75ca248b39bab01c11f2d3b5ffd45e8978a694fa1f9ffae447dcb8c389cff",
+      "dimensions": [
+        1280,
+        160
+      ],
+      "finding": "烧录字幕完整、清晰。"
+    },
+    {
+      "file": "caption-7.png",
+      "sha256": "bdf65f9c817c33d9d32cf903fc49c91ff4e828128e6f9451aae8ca2fc9aa66fe",
+      "dimensions": [
+        1280,
+        160
+      ],
+      "finding": "烧录字幕完整、清晰。"
+    },
+    {
+      "file": "caption-11.png",
+      "sha256": "dd51bc39b39dbceb81566a553b883f8ca45a58c050b71a7dc3b137864d7f449e",
+      "dimensions": [
+        1280,
+        160
+      ],
+      "finding": "烧录字幕完整、清晰。"
+    },
+    {
+      "file": "overlay-10.png",
+      "sha256": "68855c9996135be95b5add7d68a0d7476559d15e6338ec189b0f0667f6ee4bee",
+      "dimensions": [
+        640,
+        360
+      ],
+      "finding": "红色动画外及透明角落保留彩条口播背景，无黑底矩形。"
+    },
+    {
+      "file": "overlay-11.5.png",
+      "sha256": "632f2657014e1ece45b094fa1d8022e1bf97bd310063fe285e314922ca3f46ee",
+      "dimensions": [
+        640,
+        360
+      ],
+      "finding": "红色动画外及透明角落保留彩条口播背景，无黑底矩形。"
+    },
+    {
+      "file": "overlay-12.9.png",
+      "sha256": "a02f2954d26438c0c9ccb051afd6d80274740f90853b3729748182876a26e3b2",
+      "dimensions": [
+        640,
+        360
+      ],
+      "finding": "红色动画外及透明角落保留彩条口播背景，无黑底矩形。"
+    }
+  ],
+  "in_flight_timeout_proof": "timeout-in-flight.json",
+  "before_oa_commits": "63f9201057d9b0b44a30022a23ea1cf11fcab4a6",
+  "adapter_commit": "51956f002f0a6f0bf67ce39717473fafb7dea256",
+  "fast_suite": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "log": "fast-tests.log"
+  },
+  "required_checks": "required-checks.json",
+  "final_process_cleanup": "final-process-cleanup.json",
+  "post_cleanup_probe": "post-cleanup-probe.json"
+}

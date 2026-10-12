@@ -1,0 +1,7 @@
+lockf: /tmp/openclaw-media-chromium-slots/slot-1.lock: already locked
+  rendering 420 frames with 1 browser…
+  42/420 frames · about 26 s left
+  84/420 frames · about 26 s left
+  126/420 frames · about 24 s left
+  168/420 frames · about 22 s left
+Chromium slot 2/2 acquired for: node /Users/vsiyo/Desktop/创业项目/photo-content-os/scripts/edit_backends/openfilm_bridge.mjs
