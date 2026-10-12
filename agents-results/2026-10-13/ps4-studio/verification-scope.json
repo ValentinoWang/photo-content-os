@@ -1,0 +1,23 @@
+{
+  "request": "2026-10-12-openfilm-backup-editor",
+  "handoff": 28,
+  "mc8_commit": "65b22da5",
+  "runtime_pages": 66,
+  "design_references_reused": 52,
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 430,
+      "height": 900
+    }
+  ],
+  "renderer": "existing Chrome, one owned browser at a time, default withChromiumSlot.sh",
+  "studio": "fixed 8765; serial reopen for affected visual fixes; all closed",
+  "cloud_agent_adoption_tested": false,
+  "human_OCM_Z1": "PENDING",
+  "strict_contract_guard": "not green; diagnostics preserved",
+  "capture_gallery_links_and_all_png_hashes": "verified"
+}

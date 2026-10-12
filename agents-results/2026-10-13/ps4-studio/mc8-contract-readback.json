@@ -1,0 +1,18 @@
+{
+  "contractCommit": "65b22da5",
+  "scope": "Actual local producer objects. Synthetic valid wire identity substitution; no Agent auth, cloud upload or adoption exercised.",
+  "results": [
+    {
+      "receipt": "manual-export.json",
+      "provenance": "manual_export",
+      "status": "candidate",
+      "errors": []
+    },
+    {
+      "receipt": "native-readback.json",
+      "provenance": "native_readback",
+      "status": "candidate",
+      "errors": []
+    }
+  ]
+}

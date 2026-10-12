@@ -1,0 +1,13 @@
+{
+  "guard": "ui-copy-quality",
+  "status": "PASS",
+  "lexicon": "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/ui-copy-quality/assets/ui-copy-lexicon.default.json",
+  "targets": [
+    "studio/static/handoff.js",
+    "studio/static/workflow.css",
+    "studio/returned_candidate.py"
+  ],
+  "error_count": 0,
+  "warning_count": 0,
+  "findings": []
+}

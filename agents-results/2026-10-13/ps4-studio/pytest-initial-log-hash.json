@@ -1,0 +1,5 @@
+{
+  "originalRawSha256": "c296e1359f202952c1ad05547122bd103c90a6c5b8767e574b70e3f28b1e0a9c",
+  "compressedArtifact": "pytest-initial.log.gz",
+  "scope": "Original red proof bytes retained unchanged in gzip, including pytest whitespace."
+}

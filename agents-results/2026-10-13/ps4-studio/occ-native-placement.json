@@ -1,0 +1,1 @@
+{"scope":"Static upstream source inspection only; runtime tsx dependency is unavailable. Full OpenChatCut readback not qualified in PS4.","source":"OpenChatCut/src/captions/renderStyles.ts:213","nativeCalculation":"1 - CSS bottom / canvas height - layout offsetYRatio","status":"source_verified_runtime_not_run"}

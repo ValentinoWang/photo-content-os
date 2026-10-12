@@ -1,0 +1,692 @@
+{
+  "states": {
+    "self-export-failed": {
+      "texts": [
+        {
+          "text": "剪这件作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-self-export-failed"
+        },
+        {
+          "text": "AI 不会“生成”视频，它在写代码 · 原片 4:12 · 来自 MediaClaw",
+          "kind": "text",
+          "data": true,
+          "design_id": "studio-self-export-failed"
+        },
+        {
+          "text": "回到 MediaClaw 作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-self-export-failed"
+        },
+        {
+          "text": "这台电脑",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "本机 Agent",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "创作电脑 · 心跳 10:52",
+          "kind": "text",
+          "data": true,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "Photo Studio",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "127.0.0.1:8765 ↗",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "开源软件剪辑",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "自动出第一版，交给开源软件精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "剪映指导",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "照着剪点清单在剪映里自己剪",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "软件自有工作流",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "在 Studio 里采纳建议、看预览、改时间线",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "在 Studio 里剪这件作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "在 Studio 里采纳建议、看预览、改时间线；底下由内置的 openfilm 渲染和导出。",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "openfilm 0.1.5",
+          "kind": "text",
+          "data": false,
+          "design_id": "engine-choice"
+        },
+        {
+          "text": "已内置",
+          "kind": "text",
+          "data": false,
+          "design_id": "engine-choice"
+        },
+        {
+          "text": "保存修改",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "导出并检查",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "成片导出失败",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-error"
+        },
+        {
+          "text": "工程已保存；重试仍用 openfilm。",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-error"
+        },
+        {
+          "text": "重试导出",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-error"
+        },
+        {
+          "text": "剪辑建议",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "已采纳 0 / 14",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "0:06–0:11",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "5 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "这三条视频没有一帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "待采纳",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "采纳",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "0:16–0:20",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "4 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "“…AI 画的。”之后",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "待采纳",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "采纳",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "1:24–1:31",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "稿外 · 只复核",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "7 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "但是风格……很模板",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "先听再决定",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "定位试听",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "0:31–0:39",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "动画 02",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "8 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "五步流程图",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "待采纳",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "采纳",
+          "kind": "text",
+          "data": false,
+          "design_id": "editable-suggestions"
+        },
+        {
+          "text": "另 11 处在时间线上，点红色区段逐条处理",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "0:00 / 4:12",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-preview"
+        },
+        {
+          "text": "当前 4:12",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-preview"
+        },
+        {
+          "text": "当前片段",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "01",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "画面",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "talk.mp4",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "0:00–4:12",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "未添加",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "合成镜头 1",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "这一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "撤销回到上一步；撤回建议会恢复这条建议对应的原片区间。",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "时间线",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "原片时间 · 4:12",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说待剪",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "只复核",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "0:00",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "1:00",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "2:00",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "3:00",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "4:00",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "4:12",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "字幕",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "合成镜头 1",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "合成镜头 2",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "合成镜头 3",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "合成镜头 4",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "合成镜头 5",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "合成镜头 6",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "V2 动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "02",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "04",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "05",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "V1 口播",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "01",
+          "kind": "text",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "这台电脑",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "只在这台电脑上能打开",
+          "kind": "title",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "剪辑方式",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "撤销",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "重做",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "在播放头处分割",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-editor"
+        },
+        {
+          "text": "当前镜头预览",
+          "kind": "title",
+          "data": false,
+          "design_id": "self-preview"
+        },
+        {
+          "text": "播放当前预览",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-preview"
+        },
+        {
+          "text": "0:00–4:12",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说（按稿） 0:06–0:11",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "静音 0:16–0:20",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "静音 0:40–0:47",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说（按稿） 1:05–1:13",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说（按稿） 1:15–1:21",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "稿外 · 只复核 1:24–1:31",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "静音 1:36–1:45",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说（按稿） 1:52–1:58",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说（按稿） 2:20–2:28",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说（按稿） 2:45–2:50",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说（按稿） 3:02–3:08",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "静音 3:15–3:27",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "重说（按稿） 3:55–4:00",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        },
+        {
+          "text": "静音 4:04–4:10",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "self-timeline"
+        }
+      ],
+      "ids": [
+        "editable-suggestions",
+        "engine-choice",
+        "local-chain",
+        "self-editor",
+        "self-error",
+        "self-preview",
+        "self-timeline",
+        "work-summary",
+        "workflow-choice",
+        "workflow-head"
+      ]
+    }
+  }
+}
