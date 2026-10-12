@@ -454,11 +454,11 @@ The software repository root moved from `~/Desktop/照片筛选` to `~/Desktop/�
 | `agents-results/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/ui-contract-workbench/logs/` | `evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/ui-contract-workbench/logs/` |
 | `develop/Harness/` | `develop/harness/` |
 
-## Media (planned, not executed)
+## Media (executed)
 
-Historical editor drafts contain 91 references to existing source files. These moves require the coordinator to resolve the read-only draft constraint first. Official Jianying JSON basenames remain unchanged because Jianying consumes them directly.
+The 1,154 nested moves were executed after backing up and relinking 91 authorized historical editor path fields. All 2,442 original files and 9,025,490,029 bytes matched before and after the rename, including SHA-256. Official Jianying JSON basenames remain unchanged because Jianying consumes them directly. See local evidence in evidence/2026-10-12/thread-r/material-migration-final/.
 
-| Original | Planned final path |
+| Original | Current path |
 | --- | --- |
 | `/Users/vsiyo/Desktop/照片筛选/00_Inbox_Mac_Intake` | `/Users/vsiyo/Desktop/照片筛选/inbox` |
 | `/Users/vsiyo/Desktop/照片筛选/00_Inbox_Mac_Intake/00_Inbox_事件批次_TEMPLATE` | `/Users/vsiyo/Desktop/创业项目/photo-content-os/templates/inbox-batch-example` |

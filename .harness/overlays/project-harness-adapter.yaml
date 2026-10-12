@@ -19,7 +19,7 @@ quality:
 qa:
   screenshot:
     - id: openclaw-media-eight-surfaces-two-viewports
-      command: node scripts/capture_studio_surfaces.mjs --base-url http://127.0.0.1:8765
+      command: node scripts/capture-studio-surfaces.mjs --base-url http://127.0.0.1:8765
       capture_matrix: evidence/2026-09-02/openclaw-media-full-checklist-implementation/.ssot/source-requirements.json
       baseline_root: evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/ocm-z1/acceptance/visual-fidelity/baselines
       evidence_root: evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/ocm-z1/acceptance/visual-fidelity/runs
