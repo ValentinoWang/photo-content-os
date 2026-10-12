@@ -466,7 +466,11 @@ def check_pipeline_manifest(path: Path, *, expected_output: Path | None = None) 
             a, b, c = (item[key] for key in ("source_start", "source_end", "output_start"))
             if any(isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) or v < 0 for v in (a,b,c)):
                 raise ValueError()
-            if b <= a or a < previous_source_end or c < previous_output_end or c + b - a > duration + 1e-6:
+            # Frame-grid thirds acquire a few ULPs of error in c + b - a.
+            # Accept arithmetic roundoff, while rejecting actual overlaps.
+            roundoff = 4 * max(math.ulp(v) for v in (a, b, c, previous_output_end))
+            overlaps = c < previous_output_end and previous_output_end - c > roundoff
+            if b <= a or a < previous_source_end or overlaps or c + b - a > duration + 1e-6:
                 raise ValueError()
             previous_source_end, previous_output_end = b, c + b - a
         subtitles = (path.parent / raw["subtitles"]).resolve() if raw.get("subtitles") else None
