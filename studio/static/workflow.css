@@ -458,7 +458,7 @@
 .handoff .pane-body:has(>.first-cut-action)>p{margin:0}
 @media(max-width:700px){
 .handoff .nle-stage{order:-1}
-.handoff .nle-ruler span:nth-child(5){display:none}
+.handoff .nle-ruler span:not(:first-child):not(:last-child){font-size:10px}
 .handoff .cue{font-size:0;padding:0}}
 .handoff .btn.pri{background:var(--ac);border-color:var(--ac);color:var(--bg)}
 .handoff .btn:disabled{opacity:.45;cursor:not-allowed}
@@ -519,3 +519,9 @@
 .handoff .pane-body>.first-cut-action{width:100%}
 
 .handoff .cs-dot[data-tone="unknown"]{background:var(--ink-3);box-shadow:none}
+
+.handoff .self-work-summary{padding:0 14px 12px}
+.handoff .self-work-summary h3{margin:0 0 6px;font-size:13px}
+.handoff .self-work-summary p{margin:0;line-height:1.6}
+.handoff .guide-animations dd{margin:0}
+.handoff .guide-animations dd p{margin:5px 0 0}
