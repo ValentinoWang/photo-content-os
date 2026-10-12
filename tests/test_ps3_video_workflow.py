@@ -97,3 +97,10 @@ class WorkflowBoundaryTests(unittest.TestCase):
                     assert response.headers['Access-Control-Allow-Origin'] is None
         finally:
             server.shutdown();server.server_close();worker.join()
+
+    def test_failed_manual_return_does_not_hide_reopened_editor(self):
+        ctx=self.app.video_workflow.context(self.project['id'])
+        self.write(self.run/'studio-check.json',{'identity':self.identity,'public':{'state':'check-failed','candidate':{'status':'check_failed','checks':{'avSync':'fail'}}}})
+        self.app.video_editor_choice(self.project['id'],{'editor':'openfilm','method':'self','revision':1})
+        self.app.video_workflow._session(ctx)['public']={'state':'self','host':'http://127.0.0.1:45678/'}
+        assert self.projection()['state']=='self'

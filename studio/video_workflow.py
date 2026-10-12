@@ -131,7 +131,7 @@ class VideoWorkflow:
         if choice.get('method','external')=='external' and data['state'].startswith('self'):
             selected=next(r for r in rows if r['id']==choice['editor'])
             data['state']='connected' if selected['probe']['runnable'] else 'connected-unavailable'
-        if candidate_failed(data.get('candidate', {})):
+        if candidate_failed(data.get('candidate', {})) and not data['state'].startswith('self'):
             data['state'] = 'check-failed'
         records=self.app._video_json(ctx['run'],'studio-candidates.json').get('candidates',[])
         data['candidates']=[{**{k:c[k] for k in ('status','durationSeconds','frameCount','cutCount','editingMethod') if k in c},'editorName':c.get('editor',{}).get('displayName'),'previewUrl':f"/api/projects/{project_id}/video-preview/{c['publicCandidateId']}"} for c in records if c.get('identity')==ctx['identity']]
