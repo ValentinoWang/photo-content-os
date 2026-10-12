@@ -51,7 +51,7 @@ async function snapshot(root) {
       cue.text = trimToWindow(line, clip.time[0] * 1000, clip.time[1] * 1000);
     }
   }
-  return { value: film.value, doc: film.doc, rev: film.rev, subtitles };
+  return { value: film.value, doc: film.doc, rev: film.rev, subtitles, subtitleSrt: filmSubtitleSrt(filmSubtitleShown(subtitles.cues, subtitles.style)) };
 }
 async function exportVideo(request) {
   const state = await snapshot(request.project);

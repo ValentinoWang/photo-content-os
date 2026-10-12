@@ -263,7 +263,7 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
         animation.update(suggestedStartSeconds=placement['start'], durationSeconds=placement['end'] - placement['start'], timeBasis='edited')
         animations.append(animation)
     candidate = {'publicCandidateId': 'candidate_' + file_sha256(captioned)[:32], 'identity': copy.deepcopy(descriptor['identity']),
-                 'status': 'candidate' if successful else 'check_failed', 'description': '',
+                 'status': 'candidate' if successful else 'check_failed', 'description': '', 'provenance': 'native_readback',
                  'durationSeconds': duration, 'sourceDurationSeconds': source_duration, 'frameCount': frames, 'fps': fps,
                  'removedSeconds': removed, 'cutCount': len(cuts), 'cuts': cuts, 'animations': animations, 'checks': checks,
                  'subtitles': subtitle_text, 'subtitleBurnedIn': True, 'subtitleBottomRatio': bottom, 'preview': preview,

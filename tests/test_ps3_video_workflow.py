@@ -118,10 +118,12 @@ class WorkflowBoundaryTests(unittest.TestCase):
         with patch('video_candidate.project_candidate') as automatic:
             data=self.app.video_workflow.receive(self.project['id'],io.BytesIO(raw),len(raw),{'identity':self.identity,'expectedRevision':1})
         automatic.assert_not_called()
-        assert data['state']=='check-failed'
+        assert data['state']=='returned'
         assert data['candidate']['checks']['playable']=='pass'
-        assert data['candidate']['checks']['subtitles']=='unknown'
-        assert '缺少可验证' in data['candidate']['reviewNotice']
+        assert data['candidate']['provenance']=='manual_export'
+        candidate=json.loads((self.run/'studio-candidate.json').read_text())['candidate']
+        assert not {'cuts','cutCount','removedSeconds','animations','subtitles','subtitleBurnedIn','subtitleBottomRatio'} & candidate.keys()
+        assert not {'subtitles','blackFrames'} & candidate['checks'].keys()
         assert next(self.run.glob('returned-*/returned.mp4')).read_bytes()==raw
 
     def test_failed_editor_keeps_other_software_candidate(self):

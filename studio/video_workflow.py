@@ -134,7 +134,7 @@ class VideoWorkflow:
         if candidate_failed(data.get('candidate', {})) and not data['state'].startswith('self'):
             data['state'] = 'check-failed'
         records=self.app._video_json(ctx['run'],'studio-candidates.json').get('candidates',[])
-        data['candidates']=[{**{k:c[k] for k in ('status','durationSeconds','frameCount','cutCount','editingMethod') if k in c},'editorName':c.get('editor',{}).get('displayName'),'previewUrl':f"/api/projects/{project_id}/video-preview/{c['publicCandidateId']}" if c.get('publicCandidateId') else None} for c in records if c.get('identity')==ctx['identity']]
+        data['candidates']=[{**{k:c[k] for k in ('status','durationSeconds','frameCount','cutCount','editingMethod','provenance') if k in c},'editorName':c.get('editor',{}).get('displayName'),'previewUrl':f"/api/projects/{project_id}/video-preview/{c['publicCandidateId']}" if c.get('publicCandidateId') else None} for c in records if c.get('identity')==ctx['identity']]
         if ctx['suggestions_path'].is_file() and data.get('sourceDuration'):
             from edit_backends.kdenlive_render import plan_ranges, remap_span
             raw=self.app._video_json(ctx['suggestions_path'].parent,ctx['suggestions_path'].name)
@@ -474,7 +474,7 @@ class VideoWorkflow:
         (ctx['run']/'studio-candidates.json').write_text(json.dumps({'candidates':entries[-12:],'previews':previews},default=str),encoding='utf-8')
         (ctx['run']/'studio-candidate.json').write_text(json.dumps(payload,default=str),encoding='utf-8')
         session['public'].update(editorName=name,
-                                 candidate={k:v for k,v in candidate.items() if k in ('status','durationSeconds','frameCount','cutCount','removedSeconds','returnedAt','checks')},
+                                 candidate={k:v for k,v in candidate.items() if k in ('status','durationSeconds','frameCount','cutCount','removedSeconds','returnedAt','checks','provenance')},
                                  state='check-failed' if candidate_failed(candidate) else 'returned', uploaded=False)
         binding_ref=os.environ.get('PHOTO_STUDIO_VIDEO_BINDING')
         if binding_ref:
@@ -511,9 +511,32 @@ class VideoWorkflow:
                 self._session(ctx)['public'].update(public)
                 (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
                 return self.projection(project_id,ctx['data'])
-            public={'state':'check-failed','candidate':{'status':'check_failed','checks':{**review_projection(inspected),'subtitles':'unknown','blackFrames':'unknown'},'reviewNotice':'播放、音画、帧数和原片检查已通过；成片缺少可验证的剪点、字幕和动画回执，暂不能回传候选。'},'uploaded':False}
-            self._session(ctx)['public'].update(public)
-            (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
+            session=self._session(ctx)
+            bid='jianying' if choice.get('method')=='guide' else 'openfilm' if choice.get('method')=='self' else choice['editor']
+            from studio.returned_candidate import openfilm_plan, project_returned
+            backend=session.get('backend')
+            directory=session.get('project_dir')
+            plan=None
+            can_read=bid!='jianying' and next(r for r in self.editors() if r['id']==bid)['capabilities']['read_back']
+            project_name={'otio_kdenlive':'timeline.kdenlive','openfilm':'openfilm-project/adapter-project.json'}.get(bid)
+            if can_read and directory and project_name and (directory/project_name).is_file():
+                if not backend or backend.describe()['id']!=bid:
+                    raise ProjectStoreError('video_session_missing','所选软件工程不属于当前会话，请重新打开精修')
+                try:
+                    plan=openfilm_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openfilm' else backend.read_back(project_dir=directory)
+                    if bid=='otio_kdenlive' and (plan['project_id'],plan['project_revision'])!=(ctx['identity']['photoProjectId'],ctx['identity']['photoProjectRevision']):
+                        raise ValueError('kdenlive_project_identity_mismatch')
+                    inspected=check_output_video(video,original_hashes=original,subtitles=Path(plan['subtitles']),expected_duration=plan['duration'],expected_frames=plan['frames'],expected_fps=plan['fps'])
+                except (OSError,ValueError,KeyError) as exc:
+                    public={'state':'check-failed','candidate':{'status':'check_failed','checks':review_projection(inspected),'reviewNotice':'保存的工程没有提供完整、可核对的剪辑记录；请检查工程后重新导出。'},'uploaded':False}
+                    session['public'].update(public)
+                    (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
+                    return self.projection(project_id,ctx['data'])
+            checks=review_projection(inspected)
+            if plan: checks['expectedFrames']=plan['frames']
+            payload=project_returned(ctx,video,output,inspected,checks,plan)
+            method={'external':'open_source','guide':'jianying_guidance','self':'software_workflow'}[choice.get('method','external')]
+            self._record_candidate(ctx,session,payload,editing_method=method,editor_id=bid,verified=plan is not None)
             return self.projection(project_id,ctx['data'])
         except Exception:
             shutil.rmtree(output, ignore_errors=True)

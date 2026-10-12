@@ -130,5 +130,18 @@ def test_native_export_projects_only_actual_selected_animations(tmp_path,monkeyp
         assert candidate['animations']==[] and candidate['cutCount']==1
         assert candidate['editingMethod']=='software_workflow'
         assert d['host']!=old_host
+        assert candidate['provenance']=='native_readback'
+        # A returned MP4 with the current saved engine project must be checked
+        # against that project, rather than classified as a manual export.
+        import io
+        exported=next(run.glob('export-*/candidate.mp4'))
+        raw=exported.read_bytes()
+        returned=app.video_workflow.receive(p['id'],io.BytesIO(raw),len(raw),base)
+        assert returned['state']=='returned',returned
+        receipt=json.loads((media/'candidate.json').read_text())['candidate']
+        assert receipt['provenance']=='native_readback' and receipt['checks']['expectedFrames']==90
+        assert receipt['cuts']==[{'kind':'retake','startSeconds':1,'endSeconds':2}]
+        assert receipt['animations']==[] and receipt['subtitleBurnedIn'] is True
+        assert next(run.glob('returned-*/returned.mp4')).read_bytes()==raw
     finally:
         app.video_workflow.close()
