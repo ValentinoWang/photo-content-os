@@ -67,24 +67,24 @@ def inspect_video(path: Path, *, frames: int, fps: int, timeout: float = 300) ->
             'video_codec': video['codec_name'], 'audio_codec': audio['codec_name'], 'decodable': True, 'sha256': sha256(path)}
 
 
-def compose(manifest_path: Path, output: Path, *, timeout: float = 300, on_event=None, retry_shot_id: str | None = None) -> dict[str, Any]:
+def compose(manifest_path: Path, output: Path, *, timeout: float = 300, on_event=None, retry_shot_id: str | None = None, render_shot_ids: list[str] | None = None) -> dict[str, Any]:
     manifest = load_manifest(manifest_path)
     if not math.isfinite(timeout) or timeout <= 0:
         raise RenderError('invalid_input', 'timeout must be positive and finite')
     with owned_workspace(output, Path(manifest['assets_dir']), 'compose') as workspace:
         try:
-            return _compose(manifest, workspace, timeout=timeout, on_event=on_event, retry_shot_id=retry_shot_id)
+            return _compose(manifest, workspace, timeout=timeout, on_event=on_event, retry_shot_id=retry_shot_id, render_shot_ids=render_shot_ids)
         except (RenderError, OSError, ValueError, subprocess.SubprocessError) as error:
             write_json(workspace / 'compose-status.json', {'status': 'failed', 'candidate': None, 'shots': [],
                        'code': getattr(error, 'code', 'compose_failed'), 'reason': str(error)})
             raise
 
 
-def _compose(manifest: dict[str, Any], output: Path, *, timeout: float, on_event, retry_shot_id: str | None = None) -> dict[str, Any]:
+def _compose(manifest: dict[str, Any], output: Path, *, timeout: float, on_event, retry_shot_id: str | None = None, render_shot_ids: list[str] | None = None) -> dict[str, Any]:
     narration = audio_inputs(manifest)
     audio_hashes = {str(path): sha256(path) for path in narration}
     output = output.resolve()
-    state = render_shots(manifest, output / 'render', on_event=on_event, retry_shot_id=retry_shot_id)
+    state = render_shots(manifest, output / 'render', on_event=on_event, retry_shot_id=retry_shot_id, render_shot_ids=render_shot_ids)
     result_path = output / 'compose-status.json'
     result = {'status': 'running', 'shots': state['shots'], 'candidate': None}
     write_json(result_path, result)
@@ -106,6 +106,9 @@ def _compose(manifest: dict[str, Any], output: Path, *, timeout: float, on_event
             if receipt.get('key') == key and segment.is_file() and sha256(segment) == receipt.get('sha256'):
                 continue
             try:
+                # Revision caches may hard-link immutable segments from an old
+                # run. Replace a changed segment without changing that old run.
+                segment.unlink(missing_ok=True)
                 run_ffmpeg(['-framerate', str(manifest['fps']), '-start_number', '0', '-i', str(Path(entry['frames_dir']) / 'frame-%06d.png'),
                             '-frames:v', str(shot['frames']), '-an', '-c:v', 'libx264', '-threads', '1', '-crf', '18',
                             '-pix_fmt', 'yuv420p', '-map_metadata', '-1', str(segment)], timeout)

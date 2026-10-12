@@ -15,20 +15,20 @@ from video_render.compose import run_ffmpeg
 from video_render.multi_shot import RenderError, load_manifest, owned_workspace, render_shots, sha256, write_json
 
 
-def teaching_clips(manifest_path: Path, output: Path, *, transparent: bool = False, on_event=None) -> dict:
+def teaching_clips(manifest_path: Path, output: Path, *, transparent: bool = False, on_event=None, render_shot_ids: list[str] | None = None, retry_shot_id: str | None = None) -> dict:
     manifest = load_manifest(manifest_path)
     with owned_workspace(output, Path(manifest['assets_dir']), 'teaching') as workspace:
         try:
-            return _teaching_clips(manifest, workspace, transparent=transparent, on_event=on_event)
+            return _teaching_clips(manifest, workspace, transparent=transparent, on_event=on_event, render_shot_ids=render_shot_ids, retry_shot_id=retry_shot_id)
         except (RenderError, OSError, ValueError, subprocess.SubprocessError) as error:
             write_json(workspace / 'teaching-clips.json', {'status': 'failed', 'clips': [], 'shots': [],
                        'code': getattr(error, 'code', 'render_failed'), 'reason': str(error)})
             raise
 
 
-def _teaching_clips(manifest: dict, output: Path, *, transparent: bool, on_event) -> dict:
+def _teaching_clips(manifest: dict, output: Path, *, transparent: bool, on_event, render_shot_ids: list[str] | None = None, retry_shot_id: str | None = None) -> dict:
     output = output.resolve()
-    state = render_shots(manifest, output / 'render', transparent=transparent, on_event=on_event)
+    state = render_shots(manifest, output / 'render', transparent=transparent, on_event=on_event, render_shot_ids=render_shot_ids, retry_shot_id=retry_shot_id)
     result = {'status': 'running', 'clips': [], 'shots': state['shots']}
     for shot, entry in zip(manifest['shots'], state['shots']):
         clip = {'id': shot['id'], 'status': entry['status'], 'frames': shot['frames'], 'fps': manifest['fps'],

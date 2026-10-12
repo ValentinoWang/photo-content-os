@@ -115,14 +115,15 @@ async function main() {
   if (errors.length) throw errors[0];
   emit({ status: 'running', phase: 'font_load', progress_frames: 0 });
   await page.addStyleTag({ content: `${fonts.map(font => `@font-face {font-family:"${font.family}";src:url(data:font/ttf;base64,${font.data});font-display:block;}`).join('\n')}\n* { font-family: "PCPinned0" !important; }\nhtml,body { margin:0; overflow:hidden; }` });
-  await page.evaluate(async () => {
+  await page.evaluate(async (cssFrameClock) => {
     await document.fonts.load('16px PCPinned0');
     await document.fonts.ready;
     if (!document.fonts.check('16px PCPinned0')) throw new Error('Pinned font failed to load');
+    if (typeof window.seekFrame !== 'function' && cssFrameClock) window.seekFrame = async () => {};
     if (typeof window.seekFrame !== 'function') throw new Error('HTML must define window.seekFrame(frame, fps)');
     for (const animation of document.getAnimations()) animation.pause();
     if (document.querySelector('video,audio')) throw new Error('Pre-render media into local still frames; video/audio clocks are forbidden');
-  });
+  }, request.css_frame_clock === true);
   mkdirSync(output, { recursive: true });
   emit({ status: 'running', phase: 'frames', progress_frames: 0 });
   for (let frame = 0; frame < request.frames; frame += 1) {
@@ -133,7 +134,7 @@ async function main() {
       for (const animation of document.getAnimations()) { animation.pause(); animation.currentTime = window.__pcTime; }
       await Promise.all([...document.images].map(img => img.decode()));
       await document.fonts.ready;
-      }, { frame, fps: request.fps });
+      }, { frame: Math.min(frame, (request.animation_frames ?? request.frames) - 1) * (request.frame_clock_scale ?? 1), fps: request.fps });
     } catch (error) {
       throw errors[0] || error;
     }

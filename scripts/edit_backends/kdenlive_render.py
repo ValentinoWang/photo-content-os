@@ -162,7 +162,7 @@ def build_timeline(*, source: Path, suggestions: dict, subtitles: Path | None,
         if stream is None:
             raise ContractError("animation_video_missing")
         clip_duration = float(stream.get("duration") or info["format"]["duration"])
-        if "animation_id" in animation:
+        if "animation_id" in animation and 'start' not in animation:
             matches = [item for item in suggestions["suggestions"] if item.get("type") == "animation"
                        and item.get("animation_id") == animation["animation_id"]]
             if len(matches) != 1 or matches[0].get("ambiguous") is True:

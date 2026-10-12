@@ -107,6 +107,13 @@ def load_manifest(path: Path) -> dict[str, Any]:
             raise RenderError('invalid_input', 'Shot IDs must be unique safe directory names')
         ids.add(shot_id)
         positive_integer(shot.get('frames'), f'{shot_id}.frames')
+        if 'animation_frames' in shot:
+            positive_integer(shot['animation_frames'], f'{shot_id}.animation_frames')
+            if shot['animation_frames'] > shot['frames']:
+                raise RenderError('invalid_input', 'Animation frame clock exceeds the shot')
+        scale = shot.get('frame_clock_scale', 1)
+        if isinstance(scale, bool) or not isinstance(scale, (int, float)) or not math.isfinite(scale) or scale <= 0:
+            raise RenderError('invalid_input', 'Frame clock scale must be finite and positive')
         if type(shot.get('start_frame', cursor)) is not int or shot.get('start_frame', cursor) != cursor:
             raise RenderError('invalid_input', f'{shot_id}: start_frame must be {cursor}; gaps/overlaps are forbidden')
         shot['start_frame'] = cursor
@@ -134,8 +141,12 @@ def load_manifest(path: Path) -> dict[str, Any]:
 
 def request_for(manifest: dict[str, Any], shot: dict[str, Any], *, transparent: bool) -> dict[str, Any]:
     return {**{key: manifest[key] for key in ('width', 'height', 'fps', 'assets_dir', 'fonts')},
+            'assets_dir': shot.get('render_assets_dir', manifest['assets_dir']),
             **{key: shot[key] for key in ('html', 'frames', 'timeout_seconds')},
             'seed': shot.get('seed', 1), 'transparent': transparent,
+            **({'css_frame_clock': True} if shot.get('css_frame_clock') is True else {}),
+            **({'animation_frames': shot['animation_frames']} if 'animation_frames' in shot else {}),
+            **({'frame_clock_scale': shot['frame_clock_scale']} if shot.get('frame_clock_scale', 1) != 1 else {}),
             'browser_executable': manifest.get('browser_executable')}
 
 
@@ -248,7 +259,7 @@ def run_renderer(request_file: Path, frames_dir: Path, timeout: float, on_event:
 
 def render_shots(manifest: dict[str, Any], output: Path, *, transparent: bool = False,
                  on_event: Callable[[dict[str, Any]], None] | None = None,
-                 retry_shot_id: str | None = None) -> dict[str, Any]:
+                 retry_shot_id: str | None = None, render_shot_ids: list[str] | None = None) -> dict[str, Any]:
     output = output.resolve()
     source_root = Path(manifest['assets_dir'])
     if output.is_relative_to(source_root) or source_root.is_relative_to(output):
@@ -272,6 +283,17 @@ def render_shots(manifest: dict[str, Any], output: Path, *, transparent: bool = 
             raise
         state = {'status': 'running', 'runtime': runtime, 'shots': []}
         old = {shot['id']: shot for shot in previous.get('shots', [])}
+        if render_shot_ids is not None:
+            selected = set(render_shot_ids)
+            if not selected or len(selected) != len(render_shot_ids) or not selected <= {s['id'] for s in manifest['shots']}:
+                raise RenderError('shot_revision_rejected', 'Revision must select existing unique shots')
+            if retry_shot_id is not None:
+                selected = {retry_shot_id}
+            for shot in manifest['shots']:
+                if shot['id'] not in selected:
+                    request = request_for(manifest, shot, transparent=transparent)
+                    if not cache_valid(old.get(shot['id'], {}), fingerprint(request, runtime), output / shot['id'] / 'frames', shot['frames']):
+                        raise RenderError('unaffected_shot_changed', 'Revision cannot render an unselected shot')
         if retry_shot_id is not None:
             if retry_shot_id not in old or old[retry_shot_id].get('status') != 'failed':
                 raise RenderError('shot_retry_rejected', 'Only a recorded failed shot can be retried')
@@ -283,6 +305,8 @@ def render_shots(manifest: dict[str, Any], output: Path, *, transparent: bool = 
         state['shots'] = [{'id': shot['id'], 'status': 'pending', 'progress_frames': 0, 'total_frames': shot['frames'], 'start_frame': shot['start_frame']} for shot in manifest['shots']]
         write_json(state_path, state)
         for shot, entry in zip(manifest['shots'], state['shots']):
+            if 'animation_frames' in shot:
+                entry['animation_frames'] = shot['animation_frames']
             frames_dir = output / shot['id'] / 'frames'
             entry['frames_dir'] = str(frames_dir)
             request = request_for(manifest, shot, transparent=transparent)
