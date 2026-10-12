@@ -1,0 +1,5117 @@
+{
+  "failures": [
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "当前选择：ChatCut",
+      "kind": "text",
+      "design_id": "start-first-cut",
+      "message": "页面上的「当前选择：ChatCut」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "登录后才能开始。",
+      "kind": "text",
+      "design_id": "first-cut-action",
+      "message": "页面上的「登录后才能开始。」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "选择",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「选择」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "自动第一版",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「自动第一版」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "透明动画",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「透明动画」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "中文字幕",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「中文字幕」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "网页精修",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「网页精修」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "撤销",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「撤销」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "下载",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「下载」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "已选择",
+      "kind": "text",
+      "design_id": "software-chatcut",
+      "message": "页面上的「已选择」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "登录后",
+      "kind": "text",
+      "design_id": "software-chatcut",
+      "message": "页面上的「登录后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "待验证",
+      "kind": "text",
+      "design_id": "software-chatcut",
+      "message": "页面上的「待验证」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "软件内",
+      "kind": "text",
+      "design_id": "software-chatcut",
+      "message": "页面上的「软件内」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "五步流程图 · 8 秒 · 240 / 240 帧",
+      "kind": "text",
+      "design_id": "handoff-pack",
+      "message": "页面上的「五步流程图 · 8 秒 · 240 / 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "自绘 vs 真实 · 12 秒 · 360 / 360 帧",
+      "kind": "text",
+      "design_id": "handoff-pack",
+      "message": "页面上的「自绘 vs 真实 · 12 秒 · 360 / 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "五步流程图",
+      "kind": "text",
+      "design_id": "studio-connected-chatcut",
+      "message": "页面上的「五步流程图」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "自绘 vs 真实",
+      "kind": "text",
+      "design_id": "studio-connected-chatcut",
+      "message": "页面上的「自绘 vs 真实」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "编号字卡",
+      "kind": "text",
+      "design_id": "studio-connected-chatcut",
+      "message": "页面上的「编号字卡」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "connected-chatcut",
+      "text": "这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。",
+      "kind": "text",
+      "design_id": "return-input",
+      "message": "页面上的「这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "connected-chatcut",
+      "design_id": "studio-connected-chatcut",
+      "message": "设计稿的块「studio-connected-chatcut」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "重说（按稿）",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「重说（按稿）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "静音",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "稿外 · 只复核",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「稿外 · 只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "但是风格……很模板 · 先听再决定",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「但是风格……很模板 · 先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "0:40–0:47",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "“…截下来。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…截下来。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "1:05–1:13",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "第一个案例只用了一句话，呃——",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「第一个案例只用了一句话，呃——」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "8 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「8 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "1:15–1:21",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "你会发现，它能做好",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「你会发现，它能做好」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "6 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「6 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "1:36–1:45",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "“…很模板。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…很模板。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "9 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「9 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "1:52–1:58",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "第二个案例我故意让它……",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「第二个案例我故意让它……」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "2:20–2:28",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "试听这一段重说",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「试听这一段重说」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "2:45–2:50",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "3:02–3:08",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "3:15–3:27",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "这一段静音",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「这一段静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "12 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「12 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "3:55–4:00",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "4:04–4:10",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "· 8 秒 · 240 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 8 秒 · 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "· 10 秒 · 300 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 10 秒 · 300 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。",
+      "kind": "text",
+      "design_id": "return-input",
+      "message": "页面上的「这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:00:06:00–00:00:11:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:06:00–00:00:11:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "这三条视频没有一帧",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:00:16:00–00:00:20:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:16:00–00:00:20:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "“…AI 画的。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:01:24:00–00:01:31:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:24:00–00:01:31:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "但是风格……很模板",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:00:40:00–00:00:47:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:40:00–00:00:47:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "“…截下来。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…截下来。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:01:05:00–00:01:13:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:05:00–00:01:13:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "第一个案例只用了一句话，呃——",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「第一个案例只用了一句话，呃——」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:01:15:00–00:01:21:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:15:00–00:01:21:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "你会发现，它能做好",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「你会发现，它能做好」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:01:36:00–00:01:45:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:36:00–00:01:45:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "“…很模板。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…很模板。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:01:52:00–00:01:58:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:52:00–00:01:58:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "第二个案例我故意让它……",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「第二个案例我故意让它……」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:02:20:00–00:02:28:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:02:20:00–00:02:28:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "试听这一段重说",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「试听这一段重说」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:02:45:00–00:02:50:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:02:45:00–00:02:50:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:03:02:00–00:03:08:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:02:00–00:03:08:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:03:15:00–00:03:27:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:15:00–00:03:27:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "这一段静音",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「这一段静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:03:55:00–00:04:00:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:55:00–00:04:00:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "00:04:04:00–00:04:10:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:04:04:00–00:04:10:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.unapproved-element",
+      "state": "guide",
+      "design_id": "guide-export",
+      "message": "块「guide-export」不在设计稿里：删掉，或写进汇报的「稿外元素」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "guide",
+      "design_id": "studio-guide",
+      "message": "设计稿的块「studio-guide」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "剪辑建议依据",
+      "kind": "text",
+      "design_id": "script-alignment-notice",
+      "message": "页面上的「剪辑建议依据」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "重说（重复）",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「重说（重复）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "静音",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "只复核",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "但是风格……很模板 · 先听再决定",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「但是风格……很模板 · 先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "0:40–0:47",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "“…截下来。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…截下来。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "1:05–1:13",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "第一个案例只用了一句话，呃——",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「第一个案例只用了一句话，呃——」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "8 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「8 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "1:15–1:21",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "你会发现，它能做好",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「你会发现，它能做好」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "6 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「6 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "1:36–1:45",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "“…很模板。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…很模板。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "9 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「9 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "1:52–1:58",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "第二个案例我故意让它……",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「第二个案例我故意让它……」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "2:20–2:28",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "试听这一段重说",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「试听这一段重说」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "2:45–2:50",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "3:02–3:08",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "3:15–3:27",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "这一段静音",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「这一段静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "12 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「12 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "3:55–4:00",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "4:04–4:10",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "· 8 秒 · 240 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 8 秒 · 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "· 10 秒 · 300 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 10 秒 · 300 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。",
+      "kind": "text",
+      "design_id": "return-input",
+      "message": "页面上的「这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:00:06:00–00:00:11:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:06:00–00:00:11:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "这三条视频没有一帧",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:00:16:00–00:00:20:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:16:00–00:00:20:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "“…AI 画的。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:01:24:00–00:01:31:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:24:00–00:01:31:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "但是风格……很模板",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:00:40:00–00:00:47:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:40:00–00:00:47:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "“…截下来。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…截下来。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:01:05:00–00:01:13:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:05:00–00:01:13:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "第一个案例只用了一句话，呃——",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「第一个案例只用了一句话，呃——」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:01:15:00–00:01:21:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:15:00–00:01:21:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "你会发现，它能做好",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「你会发现，它能做好」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:01:36:00–00:01:45:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:36:00–00:01:45:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "“…很模板。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…很模板。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:01:52:00–00:01:58:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:52:00–00:01:58:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "第二个案例我故意让它……",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「第二个案例我故意让它……」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:02:20:00–00:02:28:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:02:20:00–00:02:28:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "试听这一段重说",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「试听这一段重说」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:02:45:00–00:02:50:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:02:45:00–00:02:50:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:03:02:00–00:03:08:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:02:00–00:03:08:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:03:15:00–00:03:27:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:15:00–00:03:27:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "这一段静音",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「这一段静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:03:55:00–00:04:00:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:55:00–00:04:00:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "00:04:04:00–00:04:10:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:04:04:00–00:04:10:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.unapproved-element",
+      "state": "guide-low-alignment",
+      "design_id": "guide-export",
+      "message": "块「guide-export」不在设计稿里：删掉，或写进汇报的「稿外元素」"
+    },
+    {
+      "rule": "design.unapproved-element",
+      "state": "guide-low-alignment",
+      "design_id": "script-alignment-notice",
+      "message": "块「script-alignment-notice」不在设计稿里：删掉，或写进汇报的「稿外元素」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "guide-low-alignment",
+      "design_id": "studio-guide-low-alignment",
+      "message": "设计稿的块「studio-guide-low-alignment」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "重说（按稿）",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「重说（按稿）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "静音",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "稿外 · 只复核",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「稿外 · 只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "但是风格……很模板 · 先听再决定",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「但是风格……很模板 · 先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "0:40–0:47",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "“…截下来。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…截下来。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "1:05–1:13",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "第一个案例只用了一句话，呃——",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「第一个案例只用了一句话，呃——」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "8 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「8 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "1:15–1:21",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "你会发现，它能做好",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「你会发现，它能做好」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "6 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「6 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "1:36–1:45",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "“…很模板。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…很模板。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "9 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「9 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "1:52–1:58",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "第二个案例我故意让它……",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「第二个案例我故意让它……」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "2:20–2:28",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "试听这一段重说",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「试听这一段重说」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "2:45–2:50",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "3:02–3:08",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "3:15–3:27",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "这一段静音",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「这一段静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "12 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「12 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "3:55–4:00",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "4:04–4:10",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "· 8 秒 · 240 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 8 秒 · 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "· 10 秒 · 300 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 10 秒 · 300 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。",
+      "kind": "text",
+      "design_id": "return-input",
+      "message": "页面上的「这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:00:06:00–00:00:11:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:06:00–00:00:11:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "这三条视频没有一帧",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:00:16:00–00:00:20:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:16:00–00:00:20:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "“…AI 画的。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:01:24:00–00:01:31:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:24:00–00:01:31:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "但是风格……很模板",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:00:40:00–00:00:47:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:40:00–00:00:47:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "“…截下来。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…截下来。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:01:05:00–00:01:13:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:05:00–00:01:13:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "第一个案例只用了一句话，呃——",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「第一个案例只用了一句话，呃——」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:01:15:00–00:01:21:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:15:00–00:01:21:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "你会发现，它能做好",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「你会发现，它能做好」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:01:36:00–00:01:45:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:36:00–00:01:45:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "“…很模板。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…很模板。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:01:52:00–00:01:58:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:52:00–00:01:58:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "第二个案例我故意让它……",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「第二个案例我故意让它……」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:02:20:00–00:02:28:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:02:20:00–00:02:28:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "试听这一段重说",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「试听这一段重说」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:02:45:00–00:02:50:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:02:45:00–00:02:50:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:03:02:00–00:03:08:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:02:00–00:03:08:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:03:15:00–00:03:27:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:15:00–00:03:27:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "这一段静音",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「这一段静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:03:55:00–00:04:00:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:55:00–00:04:00:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "00:04:04:00–00:04:10:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:04:04:00–00:04:10:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.unapproved-element",
+      "state": "guide-missing",
+      "design_id": "guide-export",
+      "message": "块「guide-export」不在设计稿里：删掉，或写进汇报的「稿外元素」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "guide-missing",
+      "design_id": "studio-guide-missing",
+      "message": "设计稿的块「studio-guide-missing」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "剪辑建议依据",
+      "kind": "text",
+      "design_id": "script-alignment-notice",
+      "message": "页面上的「剪辑建议依据」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "重说（重复）",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「重说（重复）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "静音",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "只复核",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "但是风格……很模板 · 先听再决定",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「但是风格……很模板 · 先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "0:40–0:47",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "“…截下来。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…截下来。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "1:05–1:13",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "第一个案例只用了一句话，呃——",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「第一个案例只用了一句话，呃——」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "8 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「8 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "1:15–1:21",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "你会发现，它能做好",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「你会发现，它能做好」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "6 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「6 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "1:36–1:45",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "“…很模板。”之后",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「“…很模板。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "9 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「9 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "1:52–1:58",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "第二个案例我故意让它……",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「第二个案例我故意让它……」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "2:20–2:28",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "试听这一段重说",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「试听这一段重说」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "2:45–2:50",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "3:02–3:08",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "3:15–3:27",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "这一段静音",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「这一段静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "12 秒",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「12 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "3:55–4:00",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "4:04–4:10",
+      "kind": "text",
+      "design_id": "guide-cuts",
+      "message": "页面上的「4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "· 8 秒 · 240 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 8 秒 · 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "· 10 秒 · 300 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 10 秒 · 300 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。",
+      "kind": "text",
+      "design_id": "return-input",
+      "message": "页面上的「这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:00:06:00–00:00:11:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:06:00–00:00:11:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "这三条视频没有一帧",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:00:16:00–00:00:20:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:16:00–00:00:20:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "“…AI 画的。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:01:24:00–00:01:31:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:24:00–00:01:31:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "但是风格……很模板",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:00:40:00–00:00:47:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:00:40:00–00:00:47:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "“…截下来。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…截下来。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:01:05:00–00:01:13:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:05:00–00:01:13:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "第一个案例只用了一句话，呃——",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「第一个案例只用了一句话，呃——」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:01:15:00–00:01:21:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:15:00–00:01:21:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "你会发现，它能做好",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「你会发现，它能做好」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:01:36:00–00:01:45:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:36:00–00:01:45:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "“…很模板。”之后",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「“…很模板。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:01:52:00–00:01:58:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:01:52:00–00:01:58:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "第二个案例我故意让它……",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「第二个案例我故意让它……」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:02:20:00–00:02:28:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:02:20:00–00:02:28:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "试听这一段重说",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「试听这一段重说」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:02:45:00–00:02:50:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:02:45:00–00:02:50:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:03:02:00–00:03:08:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:02:00–00:03:08:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:03:15:00–00:03:27:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:15:00–00:03:27:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "这一段静音",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「这一段静音」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:03:55:00–00:04:00:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:03:55:00–00:04:00:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "00:04:04:00–00:04:10:00",
+      "kind": "title",
+      "design_id": "guide-cuts",
+      "message": "title 属性里的「00:04:04:00–00:04:10:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.unapproved-element",
+      "state": "guide-no-script",
+      "design_id": "guide-export",
+      "message": "块「guide-export」不在设计稿里：删掉，或写进汇报的「稿外元素」"
+    },
+    {
+      "rule": "design.unapproved-element",
+      "state": "guide-no-script",
+      "design_id": "script-alignment-notice",
+      "message": "块「script-alignment-notice」不在设计稿里：删掉，或写进汇报的「稿外元素」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "guide-no-script",
+      "design_id": "studio-guide-no-script",
+      "message": "设计稿的块「studio-guide-no-script」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "查看软件和能力",
+      "kind": "text",
+      "design_id": "studio-returned",
+      "message": "页面上的「查看软件和能力」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "已选择",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「已选择」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "自动第一版",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「自动第一版」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "透明动画",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「透明动画」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "中文字幕",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「中文字幕」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "网页精修",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「网页精修」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "撤销",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「撤销」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "下载",
+      "kind": "text",
+      "design_id": "software-otio_kdenlive",
+      "message": "页面上的「下载」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "选择",
+      "kind": "text",
+      "design_id": "software-openchatcut",
+      "message": "页面上的「选择」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "登录后",
+      "kind": "text",
+      "design_id": "software-chatcut",
+      "message": "页面上的「登录后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "待验证",
+      "kind": "text",
+      "design_id": "software-chatcut",
+      "message": "页面上的「待验证」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "软件内",
+      "kind": "text",
+      "design_id": "software-chatcut",
+      "message": "页面上的「软件内」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "returned",
+      "text": "依据",
+      "kind": "text",
+      "design_id": "work-summary",
+      "message": "页面上的「依据」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "returned",
+      "design_id": "studio-returned",
+      "message": "设计稿的块「studio-returned」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿）",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「重说（按稿）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "待采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「待采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "稿外 · 只复核",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「稿外 · 只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "但是风格……很模板",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "先听再决定",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "定位试听",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「定位试听」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "0:31–0:39",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:31–0:39」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "另 11 处在时间线上，点红色区段逐条处理",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「另 11 处在时间线上，点红色区段逐条处理」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "0:00 / 4:12",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「0:00 / 4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "talk.mp4",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「talk.mp4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "0:00–4:12",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "合成镜头 1",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「合成镜头 1」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "合成镜头 2",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 2」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "合成镜头 3",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 3」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "合成镜头 4",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "合成镜头 5",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 5」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "合成镜头 6",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 6」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "0:00–4:12",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿） 0:06–0:11",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "静音 0:16–0:20",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "静音 0:40–0:47",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿） 1:05–1:13",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿） 1:15–1:21",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "稿外 · 只复核 1:24–1:31",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「稿外 · 只复核 1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "静音 1:36–1:45",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿） 1:52–1:58",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿） 2:20–2:28",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿） 2:45–2:50",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿） 3:02–3:08",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "静音 3:15–3:27",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "重说（按稿） 3:55–4:00",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "静音 4:04–4:10",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self",
+      "design_id": "studio-self",
+      "message": "设计稿的块「studio-self」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿）",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「重说（按稿）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "已采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「已采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "撤回",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「撤回」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "待采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「待采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "稿外 · 只复核",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「稿外 · 只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "但是风格……很模板",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "先听再决定",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "定位试听",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「定位试听」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "0:31–0:39",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:31–0:39」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "另 11 处在时间线上，点红色区段逐条处理",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「另 11 处在时间线上，点红色区段逐条处理」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "0:00 / 4:07",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「0:00 / 4:07」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "当前 4:07",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「当前 4:07」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "talk.mp4",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「talk.mp4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "0:00–0:06",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「0:00–0:06」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "合成镜头 1",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「合成镜头 1」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "合成镜头 2",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 2」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "合成镜头 3",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 3」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "合成镜头 4",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "合成镜头 5",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 5」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "合成镜头 6",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 6」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "0:00–0:06",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:00–0:06」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "0:11–4:12",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:11–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿） 0:06–0:11",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "静音 0:16–0:20",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "静音 0:40–0:47",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿） 1:05–1:13",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿） 1:15–1:21",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "稿外 · 只复核 1:24–1:31",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「稿外 · 只复核 1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "静音 1:36–1:45",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿） 1:52–1:58",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿） 2:20–2:28",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿） 2:45–2:50",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿） 3:02–3:08",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "静音 3:15–3:27",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "重说（按稿） 3:55–4:00",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "静音 4:04–4:10",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-applied",
+      "design_id": "studio-self-applied",
+      "message": "设计稿的块「studio-self-applied」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿）",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「重说（按稿）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "待采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「待采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "稿外 · 只复核",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「稿外 · 只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "但是风格……很模板",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "先听再决定",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "定位试听",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「定位试听」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "0:31–0:39",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:31–0:39」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "另 11 处在时间线上，点红色区段逐条处理",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「另 11 处在时间线上，点红色区段逐条处理」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "0:00 / 4:12",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「0:00 / 4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "talk.mp4",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「talk.mp4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "0:00–4:12",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "合成镜头 1",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「合成镜头 1」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "合成镜头 2",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 2」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "合成镜头 3",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 3」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "合成镜头 4",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "合成镜头 5",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 5」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "合成镜头 6",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 6」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "0:00–4:12",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿） 0:06–0:11",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "静音 0:16–0:20",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "静音 0:40–0:47",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿） 1:05–1:13",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿） 1:15–1:21",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "稿外 · 只复核 1:24–1:31",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「稿外 · 只复核 1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "静音 1:36–1:45",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿） 1:52–1:58",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿） 2:20–2:28",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿） 2:45–2:50",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿） 3:02–3:08",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "静音 3:15–3:27",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "重说（按稿） 3:55–4:00",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "静音 4:04–4:10",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-conflict",
+      "design_id": "studio-self-conflict",
+      "message": "设计稿的块「studio-self-conflict」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿）",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「重说（按稿）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "待采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「待采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "稿外 · 只复核",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「稿外 · 只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "但是风格……很模板",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "先听再决定",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "定位试听",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「定位试听」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "0:31–0:39",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:31–0:39」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "另 11 处在时间线上，点红色区段逐条处理",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「另 11 处在时间线上，点红色区段逐条处理」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "0:00 / 4:12",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「0:00 / 4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "talk.mp4",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「talk.mp4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "0:00–4:12",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "合成镜头 1",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「合成镜头 1」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "合成镜头 2",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 2」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "合成镜头 3",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 3」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "合成镜头 4",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "合成镜头 5",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 5」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "合成镜头 6",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 6」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "0:00–4:12",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿） 0:06–0:11",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "静音 0:16–0:20",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "静音 0:40–0:47",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿） 1:05–1:13",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿） 1:15–1:21",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "稿外 · 只复核 1:24–1:31",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「稿外 · 只复核 1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "静音 1:36–1:45",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿） 1:52–1:58",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿） 2:20–2:28",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿） 2:45–2:50",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿） 3:02–3:08",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "静音 3:15–3:27",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "重说（按稿） 3:55–4:00",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "静音 4:04–4:10",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-export-failed",
+      "design_id": "studio-self-export-failed",
+      "message": "设计稿的块「studio-self-export-failed」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "剪辑建议依据",
+      "kind": "text",
+      "design_id": "script-alignment-notice",
+      "message": "页面上的「剪辑建议依据」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复）",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「重说（重复）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "待采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「待采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "但是风格……很模板",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "先听再决定",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "定位试听",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「定位试听」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "0:31–0:39",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:31–0:39」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "另 11 处在时间线上，点红色区段逐条处理",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「另 11 处在时间线上，点红色区段逐条处理」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "0:00 / 4:12",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「0:00 / 4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "talk.mp4",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「talk.mp4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "0:00–4:12",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "合成镜头 1",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「合成镜头 1」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "合成镜头 2",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 2」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "合成镜头 3",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 3」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "合成镜头 4",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "合成镜头 5",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 5」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "合成镜头 6",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 6」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "0:00–4:12",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复） 0:06–0:11",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "静音 0:16–0:20",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "静音 0:40–0:47",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复） 1:05–1:13",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复） 1:15–1:21",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "只复核 1:24–1:31",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「只复核 1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "静音 1:36–1:45",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复） 1:52–1:58",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复） 2:20–2:28",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复） 2:45–2:50",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复） 3:02–3:08",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "静音 3:15–3:27",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "重说（重复） 3:55–4:00",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-low-alignment",
+      "text": "静音 4:04–4:10",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.unapproved-element",
+      "state": "self-low-alignment",
+      "design_id": "script-alignment-notice",
+      "message": "块「script-alignment-notice」不在设计稿里：删掉，或写进汇报的「稿外元素」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-low-alignment",
+      "design_id": "studio-self-low-alignment",
+      "message": "设计稿的块「studio-self-low-alignment」没有实现"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-low-alignment",
+      "design_id": "suggestion-basis",
+      "message": "设计稿的块「suggestion-basis」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "按第 3 版口播稿对齐 · 对齐率 99.1%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 99.1%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿）",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「重说（按稿）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "待采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「待采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "稿外 · 只复核",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「稿外 · 只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "但是风格……很模板",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "先听再决定",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "定位试听",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「定位试听」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "0:31–0:39",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:31–0:39」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "另 11 处在时间线上，点红色区段逐条处理",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「另 11 处在时间线上，点红色区段逐条处理」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "0:00 / 4:12",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「0:00 / 4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "talk.mp4",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「talk.mp4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "0:00–4:12",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "合成镜头 1",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「合成镜头 1」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "合成镜头 2",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 2」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "合成镜头 3",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 3」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "合成镜头 4",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "合成镜头 5",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 5」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "合成镜头 6",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 6」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "0:00–4:12",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿） 0:06–0:11",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "静音 0:16–0:20",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "静音 0:40–0:47",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿） 1:05–1:13",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿） 1:15–1:21",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "稿外 · 只复核 1:24–1:31",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「稿外 · 只复核 1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "静音 1:36–1:45",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿） 1:52–1:58",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿） 2:20–2:28",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿） 2:45–2:50",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿） 3:02–3:08",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "静音 3:15–3:27",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "重说（按稿） 3:55–4:00",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "静音 4:04–4:10",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-missing",
+      "design_id": "studio-self-missing",
+      "message": "设计稿的块「studio-self-missing」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "剪辑建议依据",
+      "kind": "text",
+      "design_id": "script-alignment-notice",
+      "message": "页面上的「剪辑建议依据」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复）",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「重说（重复）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "待采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「待采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "但是风格……很模板",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "先听再决定",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "定位试听",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「定位试听」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "0:31–0:39",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:31–0:39」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "另 11 处在时间线上，点红色区段逐条处理",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「另 11 处在时间线上，点红色区段逐条处理」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "0:00 / 4:12",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「0:00 / 4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "talk.mp4",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「talk.mp4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "0:00–4:12",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "合成镜头 1",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「合成镜头 1」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "合成镜头 2",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 2」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "合成镜头 3",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 3」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "合成镜头 4",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "合成镜头 5",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 5」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "合成镜头 6",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 6」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "0:00–4:12",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复） 0:06–0:11",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "静音 0:16–0:20",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "静音 0:40–0:47",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复） 1:05–1:13",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复） 1:15–1:21",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "只复核 1:24–1:31",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「只复核 1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "静音 1:36–1:45",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复） 1:52–1:58",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复） 2:20–2:28",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复） 2:45–2:50",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复） 3:02–3:08",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "静音 3:15–3:27",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "重说（重复） 3:55–4:00",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（重复） 3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-no-script",
+      "text": "静音 4:04–4:10",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.unapproved-element",
+      "state": "self-no-script",
+      "design_id": "script-alignment-notice",
+      "message": "块「script-alignment-notice」不在设计稿里：删掉，或写进汇报的「稿外元素」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-no-script",
+      "design_id": "studio-self-no-script",
+      "message": "设计稿的块「studio-self-no-script」没有实现"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-no-script",
+      "design_id": "suggestion-basis",
+      "message": "设计稿的块「suggestion-basis」没有实现"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "0:06–0:11",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿）",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「重说（按稿）」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "5 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「5 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "这三条视频没有一帧",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「这三条视频没有一帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "待采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「待采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "采纳",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「采纳」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "0:16–0:20",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "4 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「4 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "“…AI 画的。”之后",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「“…AI 画的。”之后」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "1:24–1:31",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "稿外 · 只复核",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「稿外 · 只复核」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "7 秒",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「7 秒」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "但是风格……很模板",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「但是风格……很模板」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "先听再决定",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「先听再决定」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "定位试听",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「定位试听」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "0:31–0:39",
+      "kind": "text",
+      "design_id": "editable-suggestions",
+      "message": "页面上的「0:31–0:39」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "另 11 处在时间线上，点红色区段逐条处理",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「另 11 处在时间线上，点红色区段逐条处理」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "0:00 / 4:12",
+      "kind": "text",
+      "design_id": "self-preview",
+      "message": "页面上的「0:00 / 4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "talk.mp4",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「talk.mp4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "0:00–4:12",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "合成镜头 1",
+      "kind": "text",
+      "design_id": "self-editor",
+      "message": "页面上的「合成镜头 1」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "合成镜头 2",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 2」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "合成镜头 3",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 3」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "合成镜头 4",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 4」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "合成镜头 5",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 5」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "合成镜头 6",
+      "kind": "text",
+      "design_id": "self-timeline",
+      "message": "页面上的「合成镜头 6」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "播放当前预览",
+      "kind": "aria-label",
+      "design_id": "self-preview",
+      "message": "aria-label 属性里的「播放当前预览」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "0:00–4:12",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「0:00–4:12」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿） 0:06–0:11",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 0:06–0:11」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "静音 0:16–0:20",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:16–0:20」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "静音 0:40–0:47",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 0:40–0:47」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿） 1:05–1:13",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:05–1:13」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿） 1:15–1:21",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:15–1:21」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "稿外 · 只复核 1:24–1:31",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「稿外 · 只复核 1:24–1:31」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "静音 1:36–1:45",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 1:36–1:45」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿） 1:52–1:58",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 1:52–1:58」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿） 2:20–2:28",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:20–2:28」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿） 2:45–2:50",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 2:45–2:50」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿） 3:02–3:08",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:02–3:08」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "静音 3:15–3:27",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 3:15–3:27」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "重说（按稿） 3:55–4:00",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「重说（按稿） 3:55–4:00」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "静音 4:04–4:10",
+      "kind": "aria-label",
+      "design_id": "self-timeline",
+      "message": "aria-label 属性里的「静音 4:04–4:10」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "design.missing-element",
+      "state": "self-preview-failed",
+      "design_id": "studio-self-preview-failed",
+      "message": "设计稿的块「studio-self-preview-failed」没有实现"
+    }
+  ],
+  "result": "FAIL"
+}

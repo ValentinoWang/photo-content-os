@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-12T21:39:08.024915+00:00",
+  "repos": {
+    "Photo": {
+      "head": "35cf54f03f6734f864f7203c6398a8de204b515f",
+      "branch": "main",
+      "trackedDirty": 0,
+      "untracked": 30
+    },
+    "Media": {
+      "head": "4be7b3d9af516a9e76e99c151fabb3b38bafd46d",
+      "branch": "dev",
+      "trackedDirty": 77,
+      "untracked": 82
+    },
+    "Harness": {
+      "head": "91fa2739d357bf137f8d268bf35ab6d95f9302b3",
+      "branch": "main",
+      "trackedDirty": 83,
+      "untracked": 4
+    }
+  },
+  "uiSourceCommit": "d0d98b7",
+  "backendSourceCommit": "770ce59",
+  "manualContractCommit": "30511ace",
+  "tscDemo": "pass",
+  "tscMediaU12b": "pass",
+  "harnessEdited": false,
+  "humanAcceptance": "OCM-Z1 remains PENDING; no human decision changed",
+  "scope": "PS5 handoff 29, local fixtures/native API. No Media frontend edits, cloud auth/adoption or external paid calls."
+}

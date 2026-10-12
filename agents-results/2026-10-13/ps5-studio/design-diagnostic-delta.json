@@ -1,0 +1,167 @@
+{
+  "scope": "Distinct diagnostic comparison only; PS4 inventories covered both widths, PS5 here covers 1440. Not a green contract result.",
+  "states": [
+    "connected-chatcut",
+    "guide",
+    "guide-low-alignment",
+    "guide-missing",
+    "guide-no-script",
+    "returned",
+    "self",
+    "self-applied",
+    "self-conflict",
+    "self-export-failed",
+    "self-low-alignment",
+    "self-missing",
+    "self-no-script",
+    "self-preview-failed"
+  ],
+  "newDistinct": 18,
+  "removedDistinct": 36,
+  "newDiagnostics": [
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "· 8 秒 · 240 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 8 秒 · 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide",
+      "text": "· 10 秒 · 300 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 10 秒 · 300 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "· 8 秒 · 240 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 8 秒 · 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-low-alignment",
+      "text": "· 10 秒 · 300 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 10 秒 · 300 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "· 8 秒 · 240 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 8 秒 · 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-missing",
+      "text": "· 10 秒 · 300 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 10 秒 · 300 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "· 8 秒 · 240 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 8 秒 · 240 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "guide-no-script",
+      "text": "· 10 秒 · 300 帧",
+      "kind": "text",
+      "design_id": "guide-animations",
+      "message": "页面上的「· 10 秒 · 300 帧」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-applied",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-conflict",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-export-failed",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-missing",
+      "text": "按第 3 版口播稿对齐 · 对齐率 99.1%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 99.1%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    },
+    {
+      "rule": "copy.unapproved-text",
+      "state": "self-preview-failed",
+      "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+      "kind": "text",
+      "design_id": "suggestion-basis",
+      "message": "页面上的「按第 3 版口播稿对齐 · 对齐率 100%」不在文案表里：删掉，或写进汇报的「需要新文案」"
+    }
+  ]
+}

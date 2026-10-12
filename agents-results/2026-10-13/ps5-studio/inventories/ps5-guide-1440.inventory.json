@@ -1,0 +1,1008 @@
+{
+  "states": {
+    "guide": {
+      "texts": [
+        {
+          "text": "剪这件作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-guide"
+        },
+        {
+          "text": "AI 不会“生成”视频，它在写代码 · 原片 4:12 · 来自 MediaClaw",
+          "kind": "text",
+          "data": true,
+          "design_id": "studio-guide"
+        },
+        {
+          "text": "回到 MediaClaw 作品",
+          "kind": "text",
+          "data": false,
+          "design_id": "studio-guide"
+        },
+        {
+          "text": "这台电脑",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "本机 Agent",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "创作电脑 · 心跳 10:52",
+          "kind": "text",
+          "data": true,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "Photo Studio",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "127.0.0.1:8765 ↗",
+          "kind": "text",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "开源软件剪辑",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "自动出第一版，交给开源软件精修",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "剪映指导",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "照着剪点清单在剪映里自己剪",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "软件自有工作流",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "在 Studio 里采纳建议、看预览、改时间线",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "在剪映里按这份指导剪",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "时间码按原片 4:12、30 帧/秒。先删静音和重说，再叠动画和字幕。",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "剪映官网 / 下载",
+          "kind": "text",
+          "data": false,
+          "design_id": "workflow-head"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "去掉这些台词和静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "0:06–0:11",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "这三条视频没有一帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "5 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "0:16–0:20",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "“…AI 画的。”之后",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "4 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "1:24–1:31",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "稿外 · 只复核",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "但是风格……很模板 · 先听再决定",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "7 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "查看其余 11 处建议",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "0:40–0:47",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "“…截下来。”之后",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "7 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "1:05–1:13",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "第一个案例只用了一句话，呃——",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "8 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "1:15–1:21",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "你会发现，它能做好",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "6 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "1:36–1:45",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "“…很模板。”之后",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "9 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "1:52–1:58",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "第二个案例我故意让它……",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "6 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "2:20–2:28",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "试听这一段重说",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "8 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "2:45–2:50",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "试听这一段重说",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "5 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "3:02–3:08",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "试听这一段重说",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "6 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "3:15–3:27",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "这一段静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "12 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "3:55–4:00",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "重说（按稿）",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "试听这一段重说",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "5 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "4:04–4:10",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "这一段静音",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "6 秒",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "2",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "在对应台词处叠动画",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "02 · 五步流程图",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "0:31",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "→",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "剪后",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "0:22",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "· 8 秒 · 240 帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "04 · 自绘 vs 真实",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "2:28",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "→",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "剪后",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "1:35",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "· 动画 12 秒，口播 8 秒；先定时长处理 · 360 帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "05 · 编号字卡",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "2:52",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "→",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "剪后",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "1:54",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "· 10 秒 · 300 帧",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-animations"
+        },
+        {
+          "text": "3",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-export"
+        },
+        {
+          "text": "导入字幕，导出后拖回",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-export"
+        },
+        {
+          "text": "字幕按预剪后的 2:45 排；自己再改剪点后，检查字幕是否仍对齐。",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-export"
+        },
+        {
+          "text": "下载这版 SRT",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-export"
+        },
+        {
+          "text": "现在提供逐步指导，不生成剪映草稿。",
+          "kind": "text",
+          "data": false,
+          "design_id": "guide-export"
+        },
+        {
+          "text": "把导出的成片拖回这里",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "收回后检查播放、音画、帧数和原片，再回传低清候选。",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "选择成片",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "检查这份成片",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "这个软件读不回工程：回传后剪点和字幕标「没核验」，只看实测四项。",
+          "kind": "text",
+          "data": false,
+          "design_id": "return-input"
+        },
+        {
+          "text": "这一版",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "原片",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "4:12 · 1080×1920",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "剪辑建议",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "14 处 · 可自动剪 13 · 复核 1",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "依据",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "按第 3 版口播稿对齐 · 对齐率 100%",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "预计剪后",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "2:45",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "剪辑方式",
+          "kind": "text",
+          "data": false,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "剪映指导",
+          "kind": "text",
+          "data": true,
+          "design_id": "work-summary"
+        },
+        {
+          "text": "这台电脑",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "只在这台电脑上能打开",
+          "kind": "title",
+          "data": false,
+          "design_id": "local-chain"
+        },
+        {
+          "text": "剪辑方式",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "workflow-choice"
+        },
+        {
+          "text": "00:00:06:00–00:00:11:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "这三条视频没有一帧",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:00:16:00–00:00:20:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "“…AI 画的。”之后",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:01:24:00–00:01:31:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "但是风格……很模板",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:00:40:00–00:00:47:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "“…截下来。”之后",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:01:05:00–00:01:13:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "第一个案例只用了一句话，呃——",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:01:15:00–00:01:21:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "你会发现，它能做好",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:01:36:00–00:01:45:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "“…很模板。”之后",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:01:52:00–00:01:58:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "第二个案例我故意让它……",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:02:20:00–00:02:28:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "试听这一段重说",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:02:45:00–00:02:50:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "试听这一段重说",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:03:02:00–00:03:08:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "试听这一段重说",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:03:15:00–00:03:27:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "这一段静音",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:03:55:00–00:04:00:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "试听这一段重说",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "00:04:04:00–00:04:10:00",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "复制时间码",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "guide-cuts"
+        },
+        {
+          "text": "这一段静音",
+          "kind": "title",
+          "data": false,
+          "design_id": "guide-cuts"
+        }
+      ],
+      "ids": [
+        "guide-animations",
+        "guide-cuts",
+        "guide-export",
+        "local-chain",
+        "return-input",
+        "work-summary",
+        "workflow-choice",
+        "workflow-head"
+      ]
+    }
+  }
+}

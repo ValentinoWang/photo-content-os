@@ -1,0 +1,231 @@
+== Runtime contract ==
+python=3.13.16
+compileall=ok
+packages=ok
+encoding_contract=ok
+Runtime contract check passed.
+== Doctor (offline-tolerant) ==
+Photo Content OS doctor: ready
+chatcut: unavailable (mcp_not_registered)
+kdenlive: online (versions_verified)
+jianying: online (installation_and_version_only)
+✓ python_version: Python 3.13.16（最低 3.11）
+✓ repository_write: 仓库工作目录可写
+✓ ffmpeg: ffmpeg 可用于关键帧、音频与预览
+✓ ffprobe: ffprobe 可读取媒体元数据
+✓ creative_provider: Codex CLI 可用
+✓ openclaw_cloud_pairing: 上游 f0460b4ce84c 的设备合同支持：macos
+== Unit tests ==
+................studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+.studio: "GET /api/assets?category=Reusable_%E4%BA%BA%E7%89%A9&tags=%E4%BA%BA%E7%89%A9&tags=%E5%BC%80%E5%9C%BA HTTP/1.1" 200 -
+.studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/assets/1fc6e66111da HTTP/1.1" 200 -
+studio: "GET /api/assets/000000000000 HTTP/1.1" 404 -
+.studio: "GET /api/assets HTTP/1.1" 400 -
+..............................................................................studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/project-f78acdda89/media-delete/recommendations HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/project-40658db5d0/inbox-plan HTTP/1.1" 200 -
+studio: "POST /api/projects/project-40658db5d0/inbox-plan/confirm HTTP/1.1" 200 -
+studio: "POST /api/projects/project-40658db5d0/assets HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "POST /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "POST /api/settings/analysis-budget HTTP/1.1" 409 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "POST /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+................................................................................................................................................................studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/ai-f6915a2030/documents/brief/ai-patch HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: ai patch generation failed
+studio: "POST /api/projects/project-e76b74664d/documents/brief/ai-patch HTTP/1.1" 400 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/project-465209b08b/publishing HTTP/1.1" 200 -
+studio: "POST /api/projects/project-e30441743f/publishing HTTP/1.1" 200 -
+studio: "POST /api/projects/project-6229f0dea9/documents/brief/ai-patch HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/project-3202c1c8be/documents/brief/ai-patch HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 403 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/project-b0643341c3/inbox-plan HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/project-0222882587/publishing HTTP/1.1" 403 -
+studio: "POST /api/projects/project-0222882587/publishing HTTP/1.1" 200 -
+studio: "POST /api/projects/project-0222882587/publishing HTTP/1.1" 409 -
+.studio: "GET / HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+........................................................sssss.....ssss........................................合照发放计划：1 份副本
+小王: source.jpg -> group-photo-distribution/by-name/person-f5c982ae4094/source.jpg
+重复照片筛选计划已生成：/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpyjfc8s2p/project/ai-analysis/repeat_photo_additions/current/repeat_photo_selection_plan.json
+联系表目录：/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpyjfc8s2p/project/ai-analysis/repeat_photo_additions/current/contact-sheets
+共发现待处理图片：1 张
+这是需要角色判断的重复照片流程；请先填写计划，再加 --apply 执行。
+结构化素材索引计划更新：/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmp9x2n9hol/library/index.json
+通用素材索引计划更新：/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmp9x2n9hol/library/reusable-assets.md
+资产卡片计划更新：/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmp9x2n9hol/library/category-abc461af7d5b/asset-0f4ba0cce5a2.asset.md
++ '/Users/vsiyo/Desktop/创业项目/photo-content-os/.venv/bin/python' '/Users/vsiyo/Desktop/创业项目/photo-content-os/scripts/edit_backends/handoff_pack.py' generate --project-id project_v2_test --project-revision 3 --edl '/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/vault/08_内容项目/project_v2_test/06_edit_decision_list.json' --storyboard '/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/vault/08_内容项目/project_v2_test/05_storyboard.md' --output-root /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff --result-output /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/handoff_generation.json
+{"artifacts": {"captions_srt": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/captions.srt", "clips_csv": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/clips.csv", "handoff_note": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/剪辑交接说明.md", "preview_note": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/预览说明.md"}, "doc_type": "edit_handoff_result", "editor_backend": "handoff_pack", "manifest": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/manifest.json", "manifest_sha256": "1e809d886bac1c9ae9dd9b21937fabdbb12cba6eb71e9e9d999f4acd353c4759", "pack_dir": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3", "project_id": "project_v2_test", "project_revision": 3, "raw360_direct_use": "blocked", "spec_version": "content_os_v0.2", "status": "done"}
++ '/Users/vsiyo/Desktop/创业项目/photo-content-os/.venv/bin/python' '/Users/vsiyo/Desktop/创业项目/photo-content-os/scripts/edit_backends/handoff_pack.py' validate --manifest /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/manifest.json --result-output /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/handoff_validation.json
+{"caption_count": 1, "clip_count": 1, "doc_type": "edit_handoff_validation", "editor_backend": "handoff_pack", "manifest": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/local-project/draft-project/edit-handoff/3/manifest.json", "preview_kind": "explanation", "project_id": "project_v2_test", "project_revision": 3, "raw360_direct_use": "blocked", "spec_version": "content_os_v0.2", "status": "passed"}
+result=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpdv03m4xa/vault/98_Agent任务队列/02_mac_to_cloud_results/result_20260710_001_handoff.yaml
+dispatch_result=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmp48j5b989/vault/98_Agent任务队列/02_mac_to_cloud_results/result_20260627_dispatch.yaml
+dispatch_result=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmp48j5b989/vault/98_Agent任务队列/02_mac_to_cloud_results/result_20260627_dispatch.conflict-7da78b84cc212c98.yaml
+linked run_20260627_dispatch -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmp3y3wbumb/workspace/openclaw-queue/mac_to_cloud/run_20260627_dispatch.result.json
+dispatch_result=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmp3y3wbumb/vault/98_Agent任务队列/02_mac_to_cloud_results/result_20260627_dispatch.yaml
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/new
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old/nested -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old/renamed
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old/nested/note.md -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old/nested/readme.md
+{"dry_run": true, "moves": 3, "before": {"files": 2, "bytes": 41}}
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/new
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old/nested -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old/renamed
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old/nested/note.md -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmprhmnramn/old/nested/readme.md
+{"dry_run": false, "moves": 3, "before": {"files": 2, "bytes": 41}, "after": {"files": 2, "bytes": 41}, "hashes_equal": true}
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpecht70ht/old -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpecht70ht/new
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpecht70ht/old/child -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpecht70ht/old/renamed
+{"dry_run": false, "moves": 2, "before": {"files": 2, "bytes": 16}, "after": {"files": 2, "bytes": 16}, "hashes_equal": true}
+{"dry_run": true, "restored_text_files": 1, "removed_created_metadata": 1, "reverse_moves": 2}
+{"dry_run": false, "restored_text_files": 1, "removed_created_metadata": 1, "reverse_moves": 2, "original_file_hashes_restored": true}
+{"changed_files": 1, "changed_fields": 1, "unchanged_missing": 1, "dry_run": true}
+{"changed_files": 1, "changed_fields": 1, "unchanged_missing": 1, "dry_run": false}
+跳过创作模型调用；本地清单、层级计划、关键帧和可选转写已完成。
+分析流程完成。
+manifest=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpd94lbvcd/ai-analysis/media-manifest.json
+analysis_plan=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpd94lbvcd/ai-analysis/analysis-plan.json
+keyframes=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpd94lbvcd/ai-analysis/keyframes
+transcripts=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpd94lbvcd/ai-analysis/transcripts
+summaries=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpd94lbvcd/ai-analysis/summaries
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpt8t2g83e/media/old-projects -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpt8t2g83e/media/projects
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpt8t2g83e/media/old-projects/中文主题 -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpt8t2g83e/media/old-projects/2026-theme
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpt8t2g83e/media/old-projects/中文主题/中文项目 -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpt8t2g83e/media/old-projects/中文主题/2026-project..................studio: "POST /api/projects/project-2104f3e563/video-workflow HTTP/1.1" 200 -
+studio: "POST /api/projects/project-2104f3e563/video-workflow HTTP/1.1" 200 -
+..............................................studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "GET /api/projects/edl-bridge-fixture-72e3d5eb53/edl-bridge HTTP/1.1" 404 -
+studio: "GET /api/projects/edl-bridge-fixture-72e3d5eb53/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-72e3d5eb53/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-72e3d5eb53/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-72e3d5eb53/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-72e3d5eb53/edl-bridge HTTP/1.1" 409 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+studio: "GET /api/projects/edl-bridge-fixture-b7ad3f7b75/edl-bridge HTTP/1.1" 422 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/edl-bridge-fixture-be5606451d/documents/edl/patch HTTP/1.1" 200 -
+studio: "GET /api/projects/edl-bridge-fixture-be5606451d/edl-bridge HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/settings/archive/lifecycle HTTP/1.1" 200 -
+studio: "POST /api/settings/archive/locations HTTP/1.1" 200 -
+studio: "POST /api/settings/upstream/pair HTTP/1.1" 200 -
+studio: "POST /api/settings/chatcut/probe HTTP/1.1" 200 -
+studio: "POST /api/settings/chatcut/confirm HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "POST /api/projects/r4-fixture-7a97643530/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/r4-fixture-7a97643530/media-delete/confirm HTTP/1.1" 400 -
+studio: "POST /api/projects/r4-fixture-7a97643530/media-delete/confirm HTTP/1.1" 200 -
+studio: "POST /api/projects/r4-fixture-7a97643530/media-delete/restore HTTP/1.1" 200 -
+.studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "POST /api/settings/model-providers HTTP/1.1" 200 -
+studio: "POST /api/settings/model-providers/creative-codex/probe HTTP/1.1" 200 -
+.......................ssssssss......................................................
+----------------------------------------------------------------------
+Ran 530 tests in 68.071s
+
+OK (skipped=17)
+
+/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpt8t2g83e/media/old-projects/中文主题/中文项目/旧场景 -> /Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmpt8t2g83e/media/old-projects/中文主题/中文项目/scene
+{"dry_run": false, "moves": 4, "before": {"files": 3, "bytes": 362}, "after": {"files": 3, "bytes": 362}, "hashes_equal": true}
+{"metadata_files": 2, "title_manifests": 2, "indexed_projects": 1, "dry_run": true}
+{"metadata_files": 2, "title_manifests": 2, "indexed_projects": 1, "dry_run": false}
+result=/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/tmp8o24e3q7/result.yaml
+== Outline and Obsidian synchronization contracts ==
+本地执行文档 ↔ Obsidian 协议文档同步检查通过
+media-workflow.md ↔ scripts 闭环契约检查通过
+== Review capability registry ==
+review capability registry OK: 5 capabilities
+== Repository safety boundary ==
+Repository safety check passed.
+== Public entry points ==
+== Synthetic trial ==
+项目结构检查完成：/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/photo-content-os-ci.kpcKfy/projects/demo/local_ci_demo
+新建项目目录：22 个
+项目级 WorkCache：/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/photo-content-os-ci.kpcKfy/projects/demo/local_ci_demo/work-cache
+新建 WorkCache 目录：9 个
+新建文件：7 个
+dir  work-cache
+dir  icloud-selected
+dir  icloud-selected/project-selected
+dir  icloud-selected/cover-candidates
+dir  icloud-selected/memorial
+dir  icloud-selected/phone-reusable
+dir  icloud-selected/live-photo-groups
+dir  icloud-selected/final-output
+dir  icloud-selected/pending-review
+dir  draft-project
+dir  draft-project/edit-handoff
+dir  draft-project/hyperframes
+dir  draft-project/hyperframes/src
+dir  draft-project/hyperframes/render-logs
+dir  output
+dir  output/v1
+dir  output/v2
+dir  output/final
+dir  output/hyperframes
+dir  sync-ready
+dir  sync-ready/outsourcing-pack
+dir  additions
+workcache wink-exports
+workcache color-exports
+workcache collage-assets
+workcache collage-exports
+workcache publishing-images
+workcache dji-exports
+workcache insta360-exports
+workcache hyperframes-render-cache
+workcache transcode
+file icloud-selected/README.md
+file draft-project/project-notes.md
+file draft-project/materials-used.md
+file draft-project/edit-handoff/README.md
+file draft-project/hyperframes/README.md
+file sync-ready/sync-checklist.md
+file aliyun-sync-manifest.md
+扫描完成：/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/photo-content-os-ci.kpcKfy/projects/demo/local_ci_demo/ai-analysis/media-manifest.json
+共发现媒体/元数据：3 个；默认进入 AI 分析：3 个
+{
+  "status": "passed",
+  "project_dir": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/photo-content-os-ci.kpcKfy/projects/demo/local_ci_demo",
+  "manifest_path": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329/tests/photo-content-os-ci.kpcKfy/projects/demo/local_ci_demo/ai-analysis/media-manifest.json",
+  "media_count": 3
+}
+Local CI passed.

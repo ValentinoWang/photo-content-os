@@ -1,0 +1,12 @@
+[
+  {
+    "pid": 79534,
+    "ppid": 69849,
+    "command": "node"
+  },
+  {
+    "pid": 69849,
+    "ppid": 78434,
+    "command": "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "contractCommit": "30511ace",
+  "scope": "Actual local native producer receipt; synthetic wire identity fields added for schema verification only. No Agent auth, cloud upload, or adoption proof.",
+  "cuts": [
+    {
+      "kind": "retake",
+      "startSeconds": 1,
+      "endSeconds": 2
+    },
+    {
+      "kind": "manual",
+      "startSeconds": 3.5,
+      "endSeconds": 4.0
+    }
+  ],
+  "durationSeconds": 2.5,
+  "frameCount": 75,
+  "errors": []
+}

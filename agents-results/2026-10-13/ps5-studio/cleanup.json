@@ -1,0 +1,16 @@
+{
+  "ownedRuntimeRoot": "/Users/vsiyo/Desktop/Opensource_Tool/openfilm-ps5-ge4sd329",
+  "ownedRuntimeRemoved": true,
+  "removedBytes": 33366873,
+  "ownedStudioLaunchCount": 1,
+  "servicePids": [
+    79534,
+    69849
+  ],
+  "remainingServicePids": [],
+  "browserClosed": true,
+  "nativeTestBackendsClosed": true,
+  "finalRuntimePngsPreserved": 42,
+  "duplicateDesignPngsRemoved": 28,
+  "otherThreadsFilesDeleted": false
+}
