@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from typing import Callable, Literal, Sequence
 
 
-PROBE_COMMAND = ("codex", "mcp", "get", "chatcut")
+PROBE_COMMAND = ("codex", "mcp", "get", "chatcut_desktop")
 DEFAULT_PROBE_TIMEOUT_SECONDS = 3.0
 MAX_PROBE_TIMEOUT_SECONDS = 5.0
 SCHEMA_VERSION = "chatcut_desktop_local_mcp_v1"

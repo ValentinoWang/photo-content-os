@@ -72,7 +72,8 @@ def main() -> int:
     parser.add_argument("project_dir")
     parser.add_argument("--tier", choices=("metadata", "preview", "deep"), default="preview")
     parser.add_argument("--audio", action="store_true", help="提取音频并运行转写步骤")
-    parser.add_argument("--transcript-provider", choices=("pending", "sidecar", "openai_api", "dashscope", "funasr"), default=os.getenv("OPENCLAW_TRANSCRIPTION_PROVIDER", "dashscope"))
+    parser.add_argument("--transcript-provider", choices=("pending", "sidecar", "openai_api", "dashscope", "funasr", "fun_asr"), default=os.getenv("OPENCLAW_TRANSCRIPTION_PROVIDER", "dashscope"))
+    parser.add_argument("--live", action="store_true", help="显式允许在线转写")
     parser.add_argument("--transcript-model", default=os.getenv("OPENCLAW_TRANSCRIPTION_MODEL", "paraformer-v2"))
     parser.add_argument("--model", default=DEFAULT_CREATIVE_MODEL)
     parser.add_argument("--reasoning", default=DEFAULT_REASONING_EFFORT)
@@ -80,6 +81,8 @@ def main() -> int:
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--skip-llm", action="store_true", help="只生成清单、层级计划和本地证据，不调用创作模型")
     args = parser.parse_args()
+    if args.audio and args.transcript_provider in {"openai_api", "dashscope", "fun_asr"} and not args.live:
+        parser.error("online transcription requires explicit --live")
 
     project = project_path(args.project_dir)
     outline = SYSTEM_ROOT / "docs" / "media-workflow.md"
@@ -131,6 +134,8 @@ def main() -> int:
         ]
         if args.overwrite:
             transcript_args.append("--overwrite")
+        if args.live:
+            transcript_args.append("--live")
         run(transcript_args)
 
     run([sys.executable, script("generate_ai_prompt.py"), str(project)])

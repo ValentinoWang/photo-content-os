@@ -619,6 +619,15 @@ def process_project(
     return {"generated": generated, "skipped": skipped, "pending": pending, "failed": failed}
 
 
+def transcribe_project(project: Path, *, provider_name: str, model: str,
+                       sidecar_dir: Path | None = None, live: bool = False,
+                       language: str | None = None, overwrite: bool = False,
+                       limit: int | None = None, allow_pending: bool = False) -> dict[str, int]:
+    provider = build_provider(provider_name, model=model, sidecar_dir=sidecar_dir, live=live)
+    return process_project(project, provider=provider, language=language, overwrite=overwrite,
+                           limit=limit, allow_pending=allow_pending)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("project_dir")
