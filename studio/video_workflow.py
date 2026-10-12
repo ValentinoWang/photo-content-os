@@ -454,7 +454,6 @@ class VideoWorkflow:
             elif session.get('backend') is not backend: backend.close()
 
     def _record_candidate(self, ctx, session, payload, *, editing_method, editor_id, verified=False):
-        (ctx['run'] / 'studio-candidate.json').write_text(json.dumps(payload, default=str), encoding='utf-8')
         candidate = payload['candidate']
         for cut in candidate.get('cuts',[]):
             if cut['kind'] in ('silence','retake'): continue
@@ -532,6 +531,8 @@ class VideoWorkflow:
                     plan=openfilm_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openfilm' else openchatcut_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openchatcut' else backend.read_back(project_dir=directory)
                     if bid in ('otio_kdenlive','openchatcut') and (plan['project_id'],plan['project_revision'])!=(ctx['identity']['photoProjectId'],ctx['identity']['photoProjectRevision']):
                         raise ValueError('kdenlive_project_identity_mismatch')
+                    if not 0<=plan['subtitle_bottom_ratio']<=1:
+                        raise ValueError('native_subtitle_position_unverified')
                     inspected=check_output_video(video,original_hashes=original,subtitles=Path(plan['subtitles']),expected_duration=plan['duration'],expected_frames=plan['frames'],expected_fps=plan['fps'])
                 except (OSError,ValueError,KeyError) as exc:
                     public={'state':'check-failed','candidate':{'status':'check_failed','checks':review_projection(inspected),'reviewNotice':'保存的工程没有提供完整、可核对的剪辑记录；请检查工程后重新导出。'},'uploaded':False}
@@ -542,7 +543,7 @@ class VideoWorkflow:
             if plan: checks['expectedFrames']=plan['frames']
             payload=project_returned(ctx,video,output,inspected,checks,plan)
             method={'external':'open_source','guide':'jianying_guidance','self':'software_workflow'}[choice.get('method','external')]
-            self._record_candidate(ctx,session,payload,editing_method=method,editor_id=bid,verified=plan is not None)
+            self._record_candidate(ctx,session,payload,editing_method=method,editor_id=bid,verified=False)
             return self.projection(project_id,ctx['data'])
         except Exception:
             shutil.rmtree(output, ignore_errors=True)

@@ -84,12 +84,21 @@ def openchatcut_plan(backend,directory,output,suggestions):
         if path not in allowed:raise BackendError('openchatcut_animation_identity_unverified')
         placement['animation_id']=allowed[path]
     if not data['captions']:raise BackendError('openchatcut_subtitle_trace_missing')
-    if not data.get('captionTracks') or any(t.get('layout',{}).get('anchor')!='bottom-center' for t in data['captionTracks']):
-        raise BackendError('openchatcut_subtitle_position_unverified')
+    ratios=[]
+    for track in data.get('captionTracks',[]):
+        layout=track.get('layout',{})
+        if layout.get('anchor','bottom-center')!='bottom-center' or layout.get('rotation',0)!=0 or layout.get('scale',1)!=1 or layout.get('opacity',1)!=1 or any(e.get('layout') or e.get('styleOverride') for e in track.get('sourceEntries',[])):
+            raise BackendError('openchatcut_subtitle_position_unverified')
+        style=track.get('nativePlacement',{});bottom=style.get('bottom')
+        if isinstance(bottom,str) and bottom.endswith('%'):ratio=1-float(bottom[:-1])/100
+        elif isinstance(bottom,(int,float)):ratio=1-bottom/state['height']
+        else:raise BackendError('openchatcut_subtitle_position_unverified')
+        ratios.append(ratio-layout.get('offsetYRatio',0))
+    if not ratios:raise BackendError('openchatcut_subtitle_position_unverified')
     subs=output/'readback.srt';subs.write_text('\n\n'.join(f"{i}\n{srt_timestamp(w['start']/1000)} --> {srt_timestamp(w['end']/1000)}\n{w['text']}" for i,w in enumerate(data['captions'],1))+'\n')
     fps=float(state['fps']);duration=max((i['startFrame']+i['durationInFrames'])/fps for i in state['items'])
     return {'time_map':readback['time_map'],'fps':fps,'duration':duration,'frames':round(duration*fps),'executed_cuts':cuts,
-            'animation_placements':placements,'subtitles':str(subs),'subtitle_burned_in':True,'subtitle_bottom_ratio':.8,
+            'animation_placements':placements,'subtitles':str(subs),'subtitle_burned_in':True,'subtitle_bottom_ratio':min(ratios),
             'project_id':binding['project_id'],'project_revision':binding['project_revision']}
 
 
@@ -119,7 +128,7 @@ def project_returned(ctx, video, output, inspected, checks, plan=None):
             a=copy.deepcopy(original);a.update(suggestedStartSeconds=p['start'],durationSeconds=p['end']-p['start'],timeBasis='edited');animations.append(a)
         c['animations']=animations
         black=subprocess.run(['ffmpeg','-nostdin','-v','info','-i',str(video),'-vf','blackframe=amount=98:threshold=32','-an','-f','null','-'],capture_output=True,text=True,check=True,timeout=1800)
-        checks.update(subtitles='pass' if next((r['status'] for r in inspected['checks'] if r['check']=='subtitles'),None)=='passed' else 'fail',blackFrames='fail' if re.search(r'\bpblack:',black.stderr) else 'pass')
+        checks.update(subtitles='pass' if next((r['status'] for r in inspected['checks'] if r['check']=='subtitles'),None)=='passed' and plan['subtitle_burned_in'] and .8<=plan['subtitle_bottom_ratio']<=1 else 'fail',blackFrames='fail' if re.search(r'\bpblack:',black.stderr) else 'pass')
         if any(checks.get(k)!='pass' for k in ('playable','avSync','frameCount','sourceUnchanged','subtitles','blackFrames')):
             c['status']='check_failed'
     preview=output/'preview.mp4';c['preview']=preview_video(video,preview)

@@ -29,6 +29,7 @@ import { setStoredEntry } from './server/plugins/project-store.ts';
 import { parseSrt } from './src/captions/srt.ts';
 import { captionTrackEntries } from './src/editor/types.ts';
 import { resolveCaptionWords } from './src/captions/resolve.ts';
+import { containerStyle, effectivePreset } from './src/captions/renderStyles.ts';
 import { acceptExportSubmission } from './server/plugins/export-submission.ts';
 import { renderTimeline, setUploadsDirProvider } from './server/plugins/export-rendering.ts';
 import { uploadDir, resolveUploadFile } from './server/media-dir.ts';
@@ -81,7 +82,7 @@ try {
   }
   const captions=captionTrackEntries(state).filter(e=>e.captions?.enabled)
     .flatMap(e=>resolveCaptionWords(e.captions,state.items,state.fps));
-  await fs.writeFile(job.reply,JSON.stringify({projectId,doc,state,captions,captionTracks:captionTrackEntries(state).filter(e=>e.captions?.enabled).map(e=>e.captions),media:doc.assets.map(a=>({id:a.id,path:a.src.startsWith("/media/uploads/")?resolveUploadFile(a.src.slice("/media/uploads/".length)):null}))}));
+  await fs.writeFile(job.reply,JSON.stringify({projectId,doc,state,captions,captionTracks:captionTrackEntries(state).filter(e=>e.captions?.enabled).map(e=>({...e.captions,nativePlacement:containerStyle(effectivePreset(e.captions),e.captions.template,state.width,state.height,e.captions.layout)})),media:doc.assets.map(a=>({id:a.id,path:a.src.startsWith("/media/uploads/")?resolveUploadFile(a.src.slice("/media/uploads/".length)):null}))}));
 } finally {await disposeServeBundle();}
 """
 
