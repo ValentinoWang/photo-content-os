@@ -1,0 +1,8 @@
+/Users/vsiyo/Desktop/Opensource_Tool/OpenChatCut/.occ-runner.ts:39
+      draft.commands.setTransform(id,placement.transform);
+                     ^
+
+TypeError: draft.commands.setTransform is not a function
+    at <anonymous> (/Users/vsiyo/Desktop/Opensource_Tool/OpenChatCut/.occ-runner.ts:39:22)
+
+Node.js v24.19.0

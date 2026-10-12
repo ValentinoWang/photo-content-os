@@ -1,0 +1,5 @@
+{
+  "invalid_token": 401,
+  "foreign_origin": 403,
+  "codex_status_disabled": 403
+}

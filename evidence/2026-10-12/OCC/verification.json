@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-12T14:23:50.396388+08:00",
+  "scope": "OCC adapter, synthetic fixture, native local editor only",
+  "adapter_sha256": "829affaa5d400abf555abf6dcea8bbd30e779fb7595897bcc05735a843cf4811",
+  "protected_files_unchanged": true,
+  "protected_files": {
+    "scripts/edit_backends/kdenlive_render.py": "3fe083d65cedd17eeda06498ee7246f8c711d4683d48c4e0718e3503a2dd4c4a",
+    "scripts/edit_backends/registry.py": "568ee2f4c0e208b9ec93925cfd157186dbe619599faad7bc14db631b49c70ee0",
+    "scripts/openclaw_video_execution.py": "3e54765d820418af8c5e857ae837cbbcdbcf22f5f210771ba5d5fb824d44c0b4",
+    "tests/test_edit_backend_qualification.py": "458fc2fc3b75b1620a455983ac8d39e8caf128d7c1317d949214f059a839674a",
+    "tests/test_edit_backend_interface.py": "50895e770ca85bff2c2eda2aaa28874a5c80d101b5ec992d86b2a03811762efa"
+  },
+  "tests": {
+    "EI_interface_and_qualification": 21,
+    "OCC_negative": 8,
+    "shared_suite_failures": 0,
+    "full_tests_passed": 510,
+    "full_tests_skipped": 30,
+    "subtests_passed": 161
+  },
+  "viewed_images": {
+    "final3/overlay-10.png": "4662717bd76c3705ec98ee3a6ec750aec4ac779377f6c2204df95f4f1c5e21e4",
+    "final3/overlay-11.5.png": "44ec0e23531dc335ba9d9eec73ba6a77db4e8104fb5570b5386d8abe19808181",
+    "final3/overlay-12.9.png": "ade038f98a39a01e47671cd42deddcc4a33a6a88ca05853d72278233b201cda2",
+    "final3/caption-1.png": "896c8b9f10c9bb35f7292b50b1bdd88d97aaa492ff096b44a155637abc2d6b9d",
+    "final3/caption-5.png": "d44efeb134a766501f459f5553e14c82354b8d96cdbdb740824b34ee3314d484",
+    "final3/caption-7.png": "6b6056b2fd2ec020cae06d648efe7b6535ded714829de0601aa39f7c4ca6f307",
+    "final3/caption-11.png": "14398a4690753682dc1f165761fac2b1b9220fde0bfd67f3cc118cfc3c9b2447",
+    "final3/refine-restored.png": "07b4b24823879486742516e00dc6aa5e780d01c6a5be8d5c729fb9951417b166",
+    "headed/refine-editor.png": "2e7459a4cf532506601e134181ef82c52dc4c9bddc83e7081227699cdce7ebc3"
+  },
+  "native_editor_viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "owned_pids_verified_absent": [
+    68105,
+    68269,
+    68313,
+    68315,
+    68316,
+    68324,
+    68328,
+    68329,
+    68333,
+    68421,
+    75781,
+    76227,
+    76248,
+    76257,
+    76260,
+    76291,
+    76624,
+    76625,
+    76627,
+    76642,
+    76656,
+    76675,
+    76860
+  ],
+  "native_trace_has_codex_or_electron": false,
+  "paid_apis_called": false,
+  "human_acceptance_signed": false
+}

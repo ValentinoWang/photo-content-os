@@ -1,0 +1,411 @@
+EEEEEEEEEEE                                                              [100%]
+==================================== ERRORS ====================================
+_____ ERROR at setup of test_candidate_duration_frames_audio_and_manifest ______
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+___ ERROR at setup of test_source_frames_at_each_retained_interval[segment0] ___
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+___ ERROR at setup of test_source_frames_at_each_retained_interval[segment1] ___
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+___ ERROR at setup of test_source_frames_at_each_retained_interval[segment2] ___
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+___ ERROR at setup of test_source_frames_at_each_retained_interval[segment3] ___
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+_ ERROR at setup of test_alpha_overlay_preserves_background_and_contains_animation _
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+____ ERROR at setup of test_chinese_captions_are_burned_in_and_recognizable ____
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+_ ERROR at setup of test_bad_input_writes_failure_receipt_without_backend_change _
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+____ ERROR at setup of test_render_timeout_writes_failure_and_reaps_process ____
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+_ ERROR at setup of test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported _
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+________ ERROR at setup of test_close_leaves_no_owned_editor_processes _________
+
+tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=<pluggy._tracing.TagTracerSub object at 0x10aaedcd0>, _basetemp=PosixPath...folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1128'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def qualification(tmp_path_factory):
+        backend_id = os.environ.get("EI_TEST_BACKEND")
+        if not backend_id:
+            pytest.skip("real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE")
+        fixture = Path(os.environ["EI_TEST_FIXTURE"]).expanduser().resolve()
+        hashes = json.loads((fixture / "fixture-hashes.json").read_text())
+        for name, digest in hashes.items():
+            assert review.file_sha256(fixture / name) == digest, f"fixture hash changed: {name}"
+        assert shutil.which("ffmpeg") and shutil.which("ffprobe")
+        backend = get_backend(backend_id)
+        root = tmp_path_factory.mktemp(f"editor-{backend_id}")
+        evidence = Path(os.environ["EI_TEST_EVIDENCE"]).resolve() if os.environ.get("EI_TEST_EVIDENCE") else root / "evidence"
+        evidence.mkdir(parents=True, exist_ok=True)
+        before = processes()
+        kwargs = {"source": fixture / "source.mp4", "suggestions_path": fixture / "edit_suggestions.json",
+                  "subtitles": fixture / "source.srt",
+                  "animations": [{**item, "path": str(fixture / Path(item["path"]).name)}
+                                 for item in json.loads((fixture / "animations.json").read_text())],
+                  "project_id": "ei-qualification", "project_revision": 18, "timeout_seconds": 120}
+        try:
+            probe = backend.probe()
+            assert probe["id"] == backend_id and probe["runnable"] is True, probe
+            result = backend.render(**kwargs, output_dir=root / "render")
+            receipt = json.loads((root / "render/render-result.json").read_text())
+            assert result == receipt
+            assert result["editor_backend"] == backend_id
+>           manifest = json.loads(Path(result["manifest"]).read_text())
+                                       ^^^^^^^^^^^^^^^^^^
+E           KeyError: 'manifest'
+
+tests/test_edit_backend_qualification.py:109: KeyError
+=========================== short test summary info ============================
+ERROR tests/test_edit_backend_qualification.py::test_candidate_duration_frames_audio_and_manifest
+ERROR tests/test_edit_backend_qualification.py::test_source_frames_at_each_retained_interval[segment0]
+ERROR tests/test_edit_backend_qualification.py::test_source_frames_at_each_retained_interval[segment1]
+ERROR tests/test_edit_backend_qualification.py::test_source_frames_at_each_retained_interval[segment2]
+ERROR tests/test_edit_backend_qualification.py::test_source_frames_at_each_retained_interval[segment3]
+ERROR tests/test_edit_backend_qualification.py::test_alpha_overlay_preserves_background_and_contains_animation
+ERROR tests/test_edit_backend_qualification.py::test_chinese_captions_are_burned_in_and_recognizable
+ERROR tests/test_edit_backend_qualification.py::test_bad_input_writes_failure_receipt_without_backend_change
+ERROR tests/test_edit_backend_qualification.py::test_render_timeout_writes_failure_and_reaps_process
+ERROR tests/test_edit_backend_qualification.py::test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported
+ERROR tests/test_edit_backend_qualification.py::test_close_leaves_no_owned_editor_processes
+11 errors in 9.26s

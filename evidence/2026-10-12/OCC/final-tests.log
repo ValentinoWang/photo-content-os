@@ -1,0 +1,46 @@
+...................F.........                                            [100%]
+=================================== FAILURES ===================================
+____ test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported ____
+
+qualification = {'backend': <edit_backends.openchatcut_adapter.Backend object at 0x1094d4190>, 'id': 'openchatcut', 'root': PosixPath(...openchatcut0'), 'evidence': PosixPath('/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/final'), ...}
+
+    def test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported(qualification):
+        q = qualification
+        backend, project = q["backend"], q["root"] / "render"
+        capabilities = backend.describe()["capabilities"]
+        if not capabilities["web_refine"]:
+            assert capabilities["undo"] is False and capabilities["read_back"] is False
+            for method in (backend.open_for_refine, backend.read_back):
+                with pytest.raises(BackendError, match="unsupported"):
+                    method(project_dir=project)
+            return
+        assert capabilities["undo"] is True and capabilities["read_back"] is True
+        driver = import_module(os.environ["EI_TEST_REFINE_DRIVER"])
+        backend.open_for_refine(project_dir=project)
+>       driver.delete_segment(backend, project, 0)
+
+tests/test_edit_backend_qualification.py:273: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+backend = <edit_backends.openchatcut_adapter.Backend object at 0x1094d4190>
+project_dir = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1143/editor-openchatcut0/render')
+index = 0
+
+    def delete_segment(backend, project_dir, index):
+        origin = backend._session["origin"]
+        message = {"jsonrpc": "2.0", "id": 999, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "negative-proof", "version": "1"}}}
+        common = {"Content-Type": "application/json", "Accept": "application/json, text/event-stream"}
+        proof = {
+            "invalid_token": request_status(backend, "/api/external-mcp/mcp", {**common, "Origin": origin, "Authorization": "Bearer invalid-token"}, message),
+            "foreign_origin": request_status(backend, "/api/external-mcp/mcp", {**common, "Origin": "https://example.invalid", "Authorization": "Bearer " + backend._token}, message),
+            "codex_status_disabled": request_status(backend, "/api/codex/status", {"Origin": origin}),
+        }
+        record("authorization-proof.json", proof)
+>       assert proof == {"invalid_token": 401, "foreign_origin": 403, "codex_status_disabled": 403}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError
+
+evidence/2026-10-12/OCC/occ_proof_driver.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_edit_backend_qualification.py::test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported
+1 failed, 28 passed in 84.59s (0:01:24)

@@ -1,0 +1,157 @@
+{
+  "backend": {
+    "id": "openchatcut",
+    "display_name": "OpenChatCut",
+    "license": "AGPL-3.0-or-later",
+    "capabilities": {
+      "automatic_first_cut": true,
+      "transparent_overlay": true,
+      "chinese_subtitle_burn_in": true,
+      "web_refine": true,
+      "undo": true,
+      "read_back": true,
+      "export_formats": [
+        "mp4"
+      ]
+    }
+  },
+  "probe": {
+    "id": "openchatcut",
+    "installed": true,
+    "version": "0.2.16",
+    "runnable": true,
+    "status": "online",
+    "reason": null
+  },
+  "fixture_hashes": {
+    "overlay.mp4": "e5a91b63d0d1c98ca6feb41db4932397513f05f016735ac21c60268f8cad3e99",
+    "source.mp4": "120072626a4d8bc726bb4ce1da3567fd98c71d004249be9d77211b4ef5256c6f",
+    "animations.json": "9d1452fe685c1bc6bdd151e28f29e30b642ca98856eda60aa2fb25ac710d1c40",
+    "overlay.mov": "0e1a7d47312756ffbdc7279f6baa0ca83090a99773e46576a6728da0d298019f",
+    "edit_suggestions.json": "3b6cd8936b7fde0078c5f78c55cd941c1c271e93d20e36946660f368f2318b89",
+    "source.srt": "c52d0559aa179eb0464930c03ac026cab6aac68d66a2ec846ecc8a8d463fa086"
+  },
+  "result": {
+    "status": "candidate",
+    "editor_backend": "openchatcut",
+    "project_id": "ei-qualification",
+    "project_revision": 18,
+    "container_finalization": {
+      "operation": "stream_copy_trim_aac_tail",
+      "native_sha256": "6a5487fb36e86631d2ab94cf248c6fd3f957bafadd25f6f0bdc81594063d63db"
+    },
+    "output": "/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1131/editor-openchatcut0/render/candidate.mp4",
+    "manifest": "/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-1131/editor-openchatcut0/render/candidate.mp4.manifest.json",
+    "duration": 14.0,
+    "frames": 420,
+    "removed_seconds": 6.0,
+    "checks": {
+      "status": "passed",
+      "error_codes": [],
+      "checks": [
+        {
+          "check": "original_integrity",
+          "status": "passed",
+          "error_codes": [],
+          "details": {}
+        },
+        {
+          "check": "original_integrity",
+          "status": "passed",
+          "error_codes": [],
+          "details": {}
+        },
+        {
+          "check": "original_integrity",
+          "status": "passed",
+          "error_codes": [],
+          "details": {}
+        },
+        {
+          "check": "original_integrity",
+          "status": "passed",
+          "error_codes": [],
+          "details": {}
+        },
+        {
+          "check": "decode",
+          "status": "passed",
+          "error_codes": [],
+          "details": {}
+        },
+        {
+          "check": "tracks",
+          "status": "passed",
+          "error_codes": [],
+          "details": {
+            "video_tracks": 1,
+            "audio_tracks": 1
+          }
+        },
+        {
+          "check": "track_counts",
+          "status": "passed",
+          "error_codes": [],
+          "details": {}
+        },
+        {
+          "check": "dimensions",
+          "status": "passed",
+          "error_codes": [],
+          "details": {}
+        },
+        {
+          "check": "av_duration",
+          "status": "passed",
+          "error_codes": [],
+          "details": {
+            "stream_seconds": [
+              14.0,
+              14.016
+            ]
+          }
+        },
+        {
+          "check": "frames",
+          "status": "passed",
+          "error_codes": [],
+          "details": {
+            "frames": 420,
+            "fps": 30.0,
+            "duration": 14.016
+          }
+        },
+        {
+          "check": "subtitles",
+          "status": "passed",
+          "error_codes": [],
+          "details": {
+            "cues": 4
+          }
+        }
+      ]
+    }
+  },
+  "time_map": [
+    {
+      "source_start": 0.0,
+      "source_end": 4.0,
+      "output_start": 0.0
+    },
+    {
+      "source_start": 6.0,
+      "source_end": 8.0,
+      "output_start": 4.0
+    },
+    {
+      "source_start": 10.0,
+      "source_end": 12.0,
+      "output_start": 6.0
+    },
+    {
+      "source_start": 14.0,
+      "source_end": 20.0,
+      "output_start": 8.0
+    }
+  ]
+}

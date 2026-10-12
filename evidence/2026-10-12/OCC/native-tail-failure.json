@@ -1,0 +1,103 @@
+{
+  "status": "failed",
+  "editor_backend": "openchatcut",
+  "project_id": "ei-qualification",
+  "project_revision": 18,
+  "output": "/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/debug2/candidate.mp4",
+  "manifest": "/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/debug2/candidate.mp4.manifest.json",
+  "duration": 14.0,
+  "frames": 420,
+  "removed_seconds": 6.0,
+  "checks": {
+    "status": "failed",
+    "error_codes": [
+      "duration_mismatch",
+      "frame_count_mismatch"
+    ],
+    "checks": [
+      {
+        "check": "original_integrity",
+        "status": "passed",
+        "error_codes": [],
+        "details": {}
+      },
+      {
+        "check": "original_integrity",
+        "status": "passed",
+        "error_codes": [],
+        "details": {}
+      },
+      {
+        "check": "original_integrity",
+        "status": "passed",
+        "error_codes": [],
+        "details": {}
+      },
+      {
+        "check": "original_integrity",
+        "status": "passed",
+        "error_codes": [],
+        "details": {}
+      },
+      {
+        "check": "decode",
+        "status": "passed",
+        "error_codes": [],
+        "details": {}
+      },
+      {
+        "check": "tracks",
+        "status": "passed",
+        "error_codes": [],
+        "details": {
+          "video_tracks": 1,
+          "audio_tracks": 1
+        }
+      },
+      {
+        "check": "track_counts",
+        "status": "passed",
+        "error_codes": [],
+        "details": {}
+      },
+      {
+        "check": "dimensions",
+        "status": "passed",
+        "error_codes": [],
+        "details": {}
+      },
+      {
+        "check": "av_duration",
+        "status": "passed",
+        "error_codes": [],
+        "details": {
+          "stream_seconds": [
+            14.0,
+            14.058667
+          ]
+        }
+      },
+      {
+        "check": "frames",
+        "status": "failed",
+        "error_codes": [
+          "duration_mismatch",
+          "frame_count_mismatch"
+        ],
+        "details": {
+          "frames": 420,
+          "fps": 30.0,
+          "duration": 14.058667
+        }
+      },
+      {
+        "check": "subtitles",
+        "status": "passed",
+        "error_codes": [],
+        "details": {
+          "cues": 4
+        }
+      }
+    ]
+  }
+}

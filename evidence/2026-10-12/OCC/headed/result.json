@@ -1,0 +1,37 @@
+{
+  "session": {
+    "editor_backend": "openchatcut",
+    "url": "http://127.0.0.1:64305/#/editor/090a1af2-440c-480b-9638-c9a3aaed7da5",
+    "project_id": "ei-qualification",
+    "project_revision": 18,
+    "local_only": true
+  },
+  "time_map": [
+    {
+      "source_start": 0.0,
+      "source_end": 4.0,
+      "output_start": 0.0
+    },
+    {
+      "source_start": 6.0,
+      "source_end": 8.0,
+      "output_start": 4.0
+    },
+    {
+      "source_start": 10.0,
+      "source_end": 12.0,
+      "output_start": 6.0
+    },
+    {
+      "source_start": 14.0,
+      "source_end": 20.0,
+      "output_start": 8.0
+    }
+  ],
+  "headless": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "memory_free_percentage": 61
+}

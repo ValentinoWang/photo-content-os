@@ -1,0 +1,18 @@
+{"pid":73323,"method":"spawn","executable":"esbuild","blocked":false}
+{"pid":73323,"method":"spawn","executable":"ffprobe","blocked":false}
+{"pid":73323,"method":"spawn","executable":"ffprobe","blocked":false}
+{"pid":73323,"method":"spawn","executable":"ffmpeg","blocked":false}
+{"pid":73323,"method":"spawn","executable":"ffprobe","blocked":false}
+{"pid":78053,"method":"spawn","executable":"esbuild","blocked":false}
+{"pid":78053,"method":"execSync","executable":"nproc","blocked":true}
+{"pid":78053,"method":"spawn","executable":"chrome-headless-shell","blocked":false}
+{"pid":78053,"method":"spawn","executable":"remotion","blocked":false}
+{"pid":78053,"method":"execSync","executable":"nproc","blocked":true}
+{"pid":78053,"method":"spawn","executable":"remotion","blocked":false}
+{"pid":78053,"method":"execSync","executable":"nproc","blocked":true}
+{"pid":78053,"method":"spawn","executable":"ffmpeg","blocked":false}
+{"pid":78053,"method":"spawn","executable":"ffmpeg","blocked":false}
+{"pid":78053,"method":"spawn","executable":"ffmpeg","blocked":false}
+{"pid":75781,"method":"spawn","executable":"esbuild","blocked":false}
+{"pid":76260,"method":"spawn","executable":"Google Chrome for Testing","blocked":false}
+{"pid":76990,"method":"spawn","executable":"esbuild","blocked":false}

@@ -1,0 +1,7 @@
+{
+  "scripts/edit_backends/kdenlive_render.py": "3fe083d65cedd17eeda06498ee7246f8c711d4683d48c4e0718e3503a2dd4c4a",
+  "scripts/edit_backends/registry.py": "568ee2f4c0e208b9ec93925cfd157186dbe619599faad7bc14db631b49c70ee0",
+  "scripts/openclaw_video_execution.py": "3e54765d820418af8c5e857ae837cbbcdbcf22f5f210771ba5d5fb824d44c0b4",
+  "tests/test_edit_backend_qualification.py": "458fc2fc3b75b1620a455983ac8d39e8caf128d7c1317d949214f059a839674a",
+  "tests/test_edit_backend_interface.py": "50895e770ca85bff2c2eda2aaa28874a5c80d101b5ec992d86b2a03811762efa"
+}

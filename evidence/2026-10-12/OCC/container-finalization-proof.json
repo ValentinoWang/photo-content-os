@@ -1,0 +1,9 @@
+{
+  "native_video_packets": "MD5=260337a60e29770c27f81dcb6660924f",
+  "final_video_packets": "MD5=260337a60e29770c27f81dcb6660924f",
+  "video_packets_unchanged": true,
+  "native_container_duration": 14.058667,
+  "final_container_duration": 14.016,
+  "video_duration": 14.0,
+  "frames": 420
+}

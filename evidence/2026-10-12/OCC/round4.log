@@ -1,0 +1,67 @@
+.........F.                                                              [100%]
+=================================== FAILURES ===================================
+____ test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported ____
+
+qualification = {'backend': <edit_backends.openchatcut_adapter.Backend object at 0x107fdf4d0>, 'id': 'openchatcut', 'root': PosixPath(...penchatcut0'), 'evidence': PosixPath('/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/round4'), ...}
+
+    def test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported(qualification):
+        q = qualification
+        backend, project = q["backend"], q["root"] / "render"
+        capabilities = backend.describe()["capabilities"]
+        if not capabilities["web_refine"]:
+            assert capabilities["undo"] is False and capabilities["read_back"] is False
+            for method in (backend.open_for_refine, backend.read_back):
+                with pytest.raises(BackendError, match="unsupported"):
+                    method(project_dir=project)
+            return
+        assert capabilities["undo"] is True and capabilities["read_back"] is True
+        driver = import_module(os.environ["EI_TEST_REFINE_DRIVER"])
+        backend.open_for_refine(project_dir=project)
+        driver.delete_segment(backend, project, 0)
+        deleted = backend.read_back(project_dir=project)
+        expected_deleted = [{**r, "output_start": r["output_start"] - 4} for r in EXPECTED_MAP[1:]]
+        assert deleted["time_map"] == expected_deleted
+        result = backend.render(**deleted["render_kwargs"], output_dir=q["root"] / "deleted-export")
+        assert result["status"] == "candidate" and result["frames"] == 300 and result["duration"] == 10
+        assert json.loads(Path(result["manifest"]).read_text())["time_map"] == expected_deleted
+        assert review.check_pipeline_manifest(Path(result["manifest"]))["status"] == "passed"
+>       driver.undo(backend, project)
+
+tests/test_edit_backend_qualification.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/edit_backends/openchatcut_adapter.py:536: in undo
+    "-map",
+scripts/edit_backends/openchatcut_adapter.py:432: in _tool
+    raise subprocess.TimeoutExpired("openchatcut", timeout_seconds)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/edit_backends/openchatcut_adapter.py:418: in _rpc
+    "role": "source_subtitles",
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:189: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:495: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:604: in http_response
+    response = self.parent.error(
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:533: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:466: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x108c2e900>
+req = <urllib.request.Request object at 0x108986620>
+fp = <http.client.HTTPResponse object at 0x108ca7820>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x108c9fe30>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:613: HTTPError
+=========================== short test summary info ============================
+FAILED tests/test_edit_backend_qualification.py::test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported
+1 failed, 10 passed in 142.41s (0:02:22)

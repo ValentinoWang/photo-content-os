@@ -1,0 +1,94 @@
+.....F...F.                                                              [100%]
+=================================== FAILURES ===================================
+________ test_alpha_overlay_preserves_background_and_contains_animation ________
+
+qualification = {'backend': <edit_backends.openchatcut_adapter.Backend object at 0x1065a27b0>, 'id': 'openchatcut', 'root': PosixPath(...penchatcut0'), 'evidence': PosixPath('/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/round3'), ...}
+
+    def test_alpha_overlay_preserves_background_and_contains_animation(qualification):
+        q = qualification
+        metrics = []
+        for seconds in (10, 11.5, 12.9):
+            source_number, output_number = round((seconds + 6) * 30), round(seconds * 30)
+            original = frame(str(q["fixture"] / "source.mp4"), source_number)
+            candidate = frame(q["result"]["output"], output_number)
+            overlay = frame(str(q["fixture"] / "overlay.mov"), round((seconds - 10) * 30), 160, 90, True)
+            transparent = overlay.getchannel("A").point(lambda v: 255 if v < 5 else 0)
+            opaque = overlay.getchannel("A").point(lambda v: 255 if v > 250 else 0)
+            assert transparent.histogram()[255] > 100 and opaque.histogram()[255] > 100
+            original_inside, candidate_inside = original.crop((0, 0, 160, 90)), candidate.crop((0, 0, 160, 90))
+            alpha_error = pixel_error(candidate_inside, original_inside, transparent)
+            outside_error = pixel_error(candidate.crop((0, 100, 640, 270)), original.crop((0, 100, 640, 270)))
+            painted_error = pixel_error(candidate_inside, overlay.convert("RGB"), opaque)
+>           assert alpha_error < 5 and outside_error < 4 and painted_error < 15, (alpha_error, outside_error, painted_error)
+E           AssertionError: (5.227351190476191, 2.952769607843137, 9.995208333333334)
+E           assert (5.227351190476191 < 5)
+
+tests/test_edit_backend_qualification.py:190: AssertionError
+____ test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported ____
+
+qualification = {'backend': <edit_backends.openchatcut_adapter.Backend object at 0x1065a27b0>, 'id': 'openchatcut', 'root': PosixPath(...penchatcut0'), 'evidence': PosixPath('/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/round3'), ...}
+
+    def test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported(qualification):
+        q = qualification
+        backend, project = q["backend"], q["root"] / "render"
+        capabilities = backend.describe()["capabilities"]
+        if not capabilities["web_refine"]:
+            assert capabilities["undo"] is False and capabilities["read_back"] is False
+            for method in (backend.open_for_refine, backend.read_back):
+                with pytest.raises(BackendError, match="unsupported"):
+                    method(project_dir=project)
+            return
+        assert capabilities["undo"] is True and capabilities["read_back"] is True
+        driver = import_module(os.environ["EI_TEST_REFINE_DRIVER"])
+        backend.open_for_refine(project_dir=project)
+        driver.delete_segment(backend, project, 0)
+        deleted = backend.read_back(project_dir=project)
+        expected_deleted = [{**r, "output_start": r["output_start"] - 4} for r in EXPECTED_MAP[1:]]
+        assert deleted["time_map"] == expected_deleted
+        result = backend.render(**deleted["render_kwargs"], output_dir=q["root"] / "deleted-export")
+        assert result["status"] == "candidate" and result["frames"] == 300 and result["duration"] == 10
+        assert json.loads(Path(result["manifest"]).read_text())["time_map"] == expected_deleted
+        assert review.check_pipeline_manifest(Path(result["manifest"]))["status"] == "passed"
+>       driver.undo(backend, project)
+
+tests/test_edit_backend_qualification.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/edit_backends/openchatcut_adapter.py:523: in undo
+    clip=clips[index]
+            ^^^^^^^^^^
+scripts/edit_backends/openchatcut_adapter.py:419: in _tool
+    self._mcp_session=response.headers.get("Mcp-Session-Id",self._mcp_session)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/edit_backends/openchatcut_adapter.py:405: in _rpc
+    raise BackendError("openchatcut_speed_change_unsupported")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:189: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:495: in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:604: in http_response
+    response = self.parent.error(
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:533: in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:466: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPDefaultErrorHandler object at 0x106a9af90>
+req = <urllib.request.Request object at 0x105e871d0>
+fp = <http.client.HTTPResponse object at 0x105f7da80>, code = 404
+msg = 'Not Found', hdrs = <http.client.HTTPMessage object at 0x1070df070>
+
+    def http_error_default(self, req, fp, code, msg, hdrs):
+>       raise HTTPError(req.full_url, code, msg, hdrs, fp)
+E       urllib.error.HTTPError: HTTP Error 404: Not Found
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:613: HTTPError
+=========================== short test summary info ============================
+FAILED tests/test_edit_backend_qualification.py::test_alpha_overlay_preserves_background_and_contains_animation
+FAILED tests/test_edit_backend_qualification.py::test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported
+2 failed, 9 passed in 165.31s (0:02:45)

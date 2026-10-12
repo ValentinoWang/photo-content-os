@@ -1,0 +1,17 @@
+{
+  "removed": [
+    "OpenChatCut/node_modules",
+    "OpenChatCut/.occ-format",
+    "generated .occ bridges",
+    "OCC/debug1",
+    "OCC/debug2"
+  ],
+  "probe_after_cleanup": {
+    "id": "openchatcut",
+    "installed": true,
+    "version": null,
+    "runnable": false,
+    "status": "unavailable",
+    "reason": "openchatcut_runtime_missing"
+  }
+}

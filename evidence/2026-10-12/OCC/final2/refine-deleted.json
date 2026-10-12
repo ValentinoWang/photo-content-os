@@ -1,0 +1,19 @@
+{
+  "time_map": [
+    {
+      "source_start": 6.0,
+      "source_end": 8.0,
+      "output_start": 0.0
+    },
+    {
+      "source_start": 10.0,
+      "source_end": 12.0,
+      "output_start": 2.0
+    },
+    {
+      "source_start": 14.0,
+      "source_end": 20.0,
+      "output_start": 4.0
+    }
+  ]
+}

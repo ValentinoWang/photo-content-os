@@ -1,0 +1,5 @@
+
+  VITE v8.1.4  ready in 4813 ms
+
+  ➜  Local:   http://127.0.0.1:64305/
+2:21:33 PM [vite] (client) Pre-transform error: Failed to load url /@fs/src/main.tsx (resolved id: /src/main.tsx). Does the file exist?

@@ -1,0 +1,13 @@
+{
+  "before": {},
+  "after": {},
+  "new_remaining": {},
+  "close": {
+    "id": "openchatcut",
+    "started_pids": [
+      97053,
+      97633
+    ],
+    "remaining_pids": []
+  }
+}

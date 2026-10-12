@@ -1,0 +1,7 @@
+
+  VITE v8.1.4  ready in 5342 ms
+
+  ➜  Local:   http://127.0.0.1:52018/
+2:16:00 PM [vite] (client) Pre-transform error: Failed to load url /@fs/src/main.tsx (resolved id: /src/main.tsx). Does the file exist?
+[media-dir] c3a392d3-1712-4262-8acb-8d5616a84815.mp4: Premature close
+[media-dir] c3a392d3-1712-4262-8acb-8d5616a84815.mp4: Premature close

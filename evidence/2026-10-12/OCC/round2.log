@@ -1,0 +1,87 @@
+.....FF..F.                                                              [100%]
+=================================== FAILURES ===================================
+________ test_alpha_overlay_preserves_background_and_contains_animation ________
+
+qualification = {'backend': <edit_backends.openchatcut_adapter.Backend object at 0x10914e7b0>, 'id': 'openchatcut', 'root': PosixPath(...penchatcut0'), 'evidence': PosixPath('/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/round2'), ...}
+
+    def test_alpha_overlay_preserves_background_and_contains_animation(qualification):
+        q = qualification
+        metrics = []
+        for seconds in (10, 11.5, 12.9):
+            source_number, output_number = round((seconds + 6) * 30), round(seconds * 30)
+            original = frame(str(q["fixture"] / "source.mp4"), source_number)
+            candidate = frame(q["result"]["output"], output_number)
+            overlay = frame(str(q["fixture"] / "overlay.mov"), round((seconds - 10) * 30), 160, 90, True)
+            transparent = overlay.getchannel("A").point(lambda v: 255 if v < 5 else 0)
+            opaque = overlay.getchannel("A").point(lambda v: 255 if v > 250 else 0)
+            assert transparent.histogram()[255] > 100 and opaque.histogram()[255] > 100
+            original_inside, candidate_inside = original.crop((0, 0, 160, 90)), candidate.crop((0, 0, 160, 90))
+            alpha_error = pixel_error(candidate_inside, original_inside, transparent)
+            outside_error = pixel_error(candidate.crop((0, 100, 640, 270)), original.crop((0, 100, 640, 270)))
+            painted_error = pixel_error(candidate_inside, overlay.convert("RGB"), opaque)
+>           assert alpha_error < 5 and outside_error < 4 and painted_error < 15, (alpha_error, outside_error, painted_error)
+E           AssertionError: (5.229077380952381, 2.952794117647059, 10.076875)
+E           assert (5.229077380952381 < 5)
+
+tests/test_edit_backend_qualification.py:190: AssertionError
+_____________ test_chinese_captions_are_burned_in_and_recognizable _____________
+
+qualification = {'backend': <edit_backends.openchatcut_adapter.Backend object at 0x10914e7b0>, 'id': 'openchatcut', 'root': PosixPath(...penchatcut0'), 'evidence': PosixPath('/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/round2'), ...}
+
+    def test_chinese_captions_are_burned_in_and_recognizable(qualification):
+        q = qualification
+        assert q["manifest"]["subtitle_burned_in"] is True
+        assert sys.platform == "darwin" and shutil.which("swift"), "Chinese OCR requires local Apple Vision and swift"
+        # Verbatim SRT is checked above. OCR measures readability with <=10% character
+        # error: local Vision reads the outlined 保 as 像 even in an inspected valid frame.
+        # No custom OCR words or character substitutions are used.
+        samples = [(1, "这是合成彩条"), (5, "这一段保留"),
+                   (7, "接着讲解"), (11, "保留这一遍随后叠动画")]
+        recognized = []
+        for seconds, expected in samples:
+            image = q["evidence"] / f"caption-{seconds}.png"
+            pixels = frame(q["result"]["output"], seconds * 30)
+            pixels.crop((0, 280, 640, 360)).resize((1280, 160)).save(image)
+            lines = json.loads(run("swift", str(Path(__file__).with_name("editor_backend_ocr.swift")), str(image)))
+            bodies = ["".join(c for c in line.partition("：")[-1] if "\u4e00" <= c <= "\u9fff") for line in lines]
+            errors = min((character_errors(expected, body) for body in bodies), default=len(expected))
+            recognized.append({"seconds": seconds, "expected": expected, "recognized": lines,
+                               "character_errors": errors, "max_error_rate": 0.1})
+>           assert errors / len(expected) <= 0.1, recognized[-1]
+E           AssertionError: {'seconds': 7, 'expected': '接着讲解', 'recognized': ['第三句：接省讲的。重复句', '：保留这一遍，随后叠动画。'], 'character_errors': 5, ...}
+E           assert (5 / 4) <= 0.1
+E            +  where 4 = len('接着讲解')
+
+tests/test_edit_backend_qualification.py:217: AssertionError
+____ test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported ____
+
+qualification = {'backend': <edit_backends.openchatcut_adapter.Backend object at 0x10914e7b0>, 'id': 'openchatcut', 'root': PosixPath(...penchatcut0'), 'evidence': PosixPath('/Users/vsiyo/Desktop/创业项目/photo-content-os/evidence/2026-10-12/OCC/round2'), ...}
+
+    def test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported(qualification):
+        q = qualification
+        backend, project = q["backend"], q["root"] / "render"
+        capabilities = backend.describe()["capabilities"]
+        if not capabilities["web_refine"]:
+            assert capabilities["undo"] is False and capabilities["read_back"] is False
+            for method in (backend.open_for_refine, backend.read_back):
+                with pytest.raises(BackendError, match="unsupported"):
+                    method(project_dir=project)
+            return
+        assert capabilities["undo"] is True and capabilities["read_back"] is True
+        driver = import_module(os.environ["EI_TEST_REFINE_DRIVER"])
+        backend.open_for_refine(project_dir=project)
+        driver.delete_segment(backend, project, 0)
+        deleted = backend.read_back(project_dir=project)
+        expected_deleted = [{**r, "output_start": r["output_start"] - 4} for r in EXPECTED_MAP[1:]]
+>       assert deleted["time_map"] == expected_deleted
+E       AssertionError: assert [{'source_sta..._start': 8.0}] == [{'source_sta...ut_start': 4}]
+E         
+E         At index 0 diff: {'source_start': 6.0, 'source_end': 8.0, 'output_start': 4.0} != {'source_start': 6, 'source_end': 8, 'output_start': 0}
+E         Use -v to get more diff
+
+tests/test_edit_backend_qualification.py:276: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_edit_backend_qualification.py::test_alpha_overlay_preserves_background_and_contains_animation
+FAILED tests/test_edit_backend_qualification.py::test_chinese_captions_are_burned_in_and_recognizable
+FAILED tests/test_edit_backend_qualification.py::test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported
+3 failed, 8 passed in 169.09s (0:02:49)
