@@ -19,7 +19,7 @@ shots=[{'shot':{'shotId':f'{i+1:02}','startSeconds':starts[i],'endSeconds':start
 animations=[];clips=[]
 for sid,start,duration,title in [('02',31,8,'五步流程图'),('04',148,12,'自绘 vs 真实'),('05',172,10,'编号字卡')]:
  movie=media/f'animation-{sid}.webm'
- if not movie.exists():subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i',f'color=c=black@0.0:s=144x512:r=30:d={duration},format=rgba,drawbox=x=10:y=200:w=124:h=80:color=0x4fb3bd@0.9:t=fill,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='if(between(X,10,133)*between(Y,200,279),230,0)'','-c:v','libvpx-vp9','-pix_fmt','yuva420p','-auto-alt-ref','0','-an',str(movie)],check=True)
+ if not movie.exists():subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i',f"color=c=black@0.0:s=144x512:r=30:d={duration},format=rgba,drawbox=x=10:y=200:w=124:h=80:color=0x4fb3bd@0.9:t=fill,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='if(between(X,10,133)*between(Y,200,279),230,0)'",'-c:v','libvpx-vp9','-pix_fmt','yuva420p','-auto-alt-ref','0','-an',str(movie)],check=True)
  animations.append({'shotId':sid,'animationId':sid,'suggestedStartSeconds':start,'durationSeconds':duration,'requirement':title,'selectedLayout':'split_screen','timeBasis':'source'})
  clips.append({'id':sid,'status':'completed','file':str(movie),'fps':30})
 descriptor={'scope':'video_handoff_v1','identity':identity,'shots':shots,'animations':animations,'narration':None}

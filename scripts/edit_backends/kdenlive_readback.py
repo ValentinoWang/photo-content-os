@@ -17,6 +17,8 @@ def properties(node):
 def read_project(project_dir: Path) -> dict:
     directory = project_dir.resolve()
     project = directory / 'timeline.kdenlive'
+    if not project.is_file():
+        raise BackendError('kdenlive_owned_project_missing')
     raw = project.read_bytes()
     if len(raw) > 10_000_000 or b'<!DOCTYPE' in raw or b'<!ENTITY' in raw:
         raise BackendError('kdenlive_project_invalid')

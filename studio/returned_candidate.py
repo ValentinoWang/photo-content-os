@@ -18,6 +18,12 @@ def openfilm_plan(backend, directory, output, suggestions):
     readback = backend.read_back(project_dir=directory)
     root = directory/'openfilm-project'
     config = json.loads((root/'adapter-project.json').read_text())
+    for item in config['inputs']:
+        if file_sha256(Path(item['path']))!=item['sha256']:
+            raise BackendError('openfilm_original_input_changed')
+    for item in config['working_media']:
+        if file_sha256(root/item['path'])!=item['sha256']:
+            raise BackendError('openfilm_working_media_changed')
     state = backend._state(root)
     if state['rev'] != readback['engine_revision']:
         raise BackendError('openfilm_project_changed_during_readback')
@@ -48,6 +54,43 @@ def openfilm_plan(backend, directory, output, suggestions):
     return {'time_map':rows,'duration':duration,'fps':fps,'frames':round(duration*fps),'executed_cuts':cuts,
             'animation_placements':placements,'subtitles':str(subtitles),'subtitle_burned_in':True,
             'subtitle_bottom_ratio':style['pos']['y']}
+
+
+def openchatcut_plan(backend,directory,output,suggestions):
+    import json
+    readback=backend.read_back(project_dir=directory)
+    binding=json.loads((directory/'openchatcut-project.json').read_text())
+    data=readback['native_snapshot'];state=data['state']
+    for item in binding['inputs']:
+        if file_sha256(Path(item['path']))!=item['sha256']:
+            raise BackendError('openchatcut_original_input_changed')
+    source_info=probe_media(Path(binding['source']))
+    video=next(s for s in source_info['streams'] if s['codec_type']=='video')
+    source_duration=float(video.get('duration') or source_info['format']['duration'])
+    cuts=[];cursor=0.
+    for row in [*readback['time_map'],{'source_start':source_duration,'source_end':source_duration}]:
+        if row['source_start']>cursor+1e-6:
+            contributors=[s for s in suggestions if s['automatic'] and s['type'] in ('silence','repetition') and s['start']<=cursor+1e-6 and s['end']>=row['source_start']-1e-6]
+            if not contributors:raise BackendError('openchatcut_cut_reason_unverified')
+            cuts.append({'kind':'retake' if any(s['type']=='repetition' for s in contributors) else 'silence','startSeconds':cursor,'endSeconds':row['source_start']})
+        cursor=row['source_end']
+    paths={a['id']:a['path'] for a in data['media']}
+    allowed={a['path']:a['animation_id'] for a in binding['animations']}
+    placements=backend._placements(data,binding['source_asset_id'])
+    for placement in placements:
+        path=paths.get(placement['editor_asset_id'])
+        # Converted alpha assets retain the binding's conversion source.
+        path=next((c['source'] for c in binding.get('conversions',[]) if c['output']==path),path)
+        if path not in allowed:raise BackendError('openchatcut_animation_identity_unverified')
+        placement['animation_id']=allowed[path]
+    if not data['captions']:raise BackendError('openchatcut_subtitle_trace_missing')
+    if not data.get('captionTracks') or any(t.get('layout',{}).get('anchor')!='bottom-center' for t in data['captionTracks']):
+        raise BackendError('openchatcut_subtitle_position_unverified')
+    subs=output/'readback.srt';subs.write_text('\n\n'.join(f"{i}\n{srt_timestamp(w['start']/1000)} --> {srt_timestamp(w['end']/1000)}\n{w['text']}" for i,w in enumerate(data['captions'],1))+'\n')
+    fps=float(state['fps']);duration=max((i['startFrame']+i['durationInFrames'])/fps for i in state['items'])
+    return {'time_map':readback['time_map'],'fps':fps,'duration':duration,'frames':round(duration*fps),'executed_cuts':cuts,
+            'animation_placements':placements,'subtitles':str(subs),'subtitle_burned_in':True,'subtitle_bottom_ratio':.8,
+            'project_id':binding['project_id'],'project_revision':binding['project_revision']}
 
 
 def project_returned(ctx, video, output, inspected, checks, plan=None):

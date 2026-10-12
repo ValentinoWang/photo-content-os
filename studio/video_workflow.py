@@ -456,6 +456,12 @@ class VideoWorkflow:
     def _record_candidate(self, ctx, session, payload, *, editing_method, editor_id, verified=False):
         (ctx['run'] / 'studio-candidate.json').write_text(json.dumps(payload, default=str), encoding='utf-8')
         candidate = payload['candidate']
+        for cut in candidate.get('cuts',[]):
+            if cut['kind'] in ('silence','retake'): continue
+            facts=[s for s in ctx['data']['suggestions'] if s['automatic'] and s['type'] in ('silence','repetition') and s['start']<=cut['startSeconds']+1e-6 and s['end']>=cut['endSeconds']-1e-6]
+            if not facts:
+                raise ValueError('native_cut_reason_unverified')
+            cut['kind']='retake' if any(s['type']=='repetition' for s in facts) else 'silence'
         (ctx['run']/'studio-check.json').unlink(missing_ok=True)
         name='剪映' if editor_id=='jianying' else next(r['display_name'] for r in self.editors() if r['id']==editor_id)
         from datetime import datetime, timedelta, timezone
@@ -513,18 +519,18 @@ class VideoWorkflow:
                 return self.projection(project_id,ctx['data'])
             session=self._session(ctx)
             bid='jianying' if choice.get('method')=='guide' else 'openfilm' if choice.get('method')=='self' else choice['editor']
-            from studio.returned_candidate import openfilm_plan, project_returned
+            from studio.returned_candidate import openfilm_plan, openchatcut_plan, project_returned
             backend=session.get('backend')
             directory=session.get('project_dir')
             plan=None
             can_read=bid!='jianying' and next(r for r in self.editors() if r['id']==bid)['capabilities']['read_back']
-            project_name={'otio_kdenlive':'timeline.kdenlive','openfilm':'openfilm-project/adapter-project.json'}.get(bid)
+            project_name={'otio_kdenlive':'timeline.kdenlive','openfilm':'openfilm-project/adapter-project.json','openchatcut':'openchatcut-project.json'}.get(bid)
             if can_read and directory and project_name and (directory/project_name).is_file():
                 if not backend or backend.describe()['id']!=bid:
                     raise ProjectStoreError('video_session_missing','所选软件工程不属于当前会话，请重新打开精修')
                 try:
-                    plan=openfilm_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openfilm' else backend.read_back(project_dir=directory)
-                    if bid=='otio_kdenlive' and (plan['project_id'],plan['project_revision'])!=(ctx['identity']['photoProjectId'],ctx['identity']['photoProjectRevision']):
+                    plan=openfilm_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openfilm' else openchatcut_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openchatcut' else backend.read_back(project_dir=directory)
+                    if bid in ('otio_kdenlive','openchatcut') and (plan['project_id'],plan['project_revision'])!=(ctx['identity']['photoProjectId'],ctx['identity']['photoProjectRevision']):
                         raise ValueError('kdenlive_project_identity_mismatch')
                     inspected=check_output_video(video,original_hashes=original,subtitles=Path(plan['subtitles']),expected_duration=plan['duration'],expected_frames=plan['frames'],expected_fps=plan['fps'])
                 except (OSError,ValueError,KeyError) as exc:

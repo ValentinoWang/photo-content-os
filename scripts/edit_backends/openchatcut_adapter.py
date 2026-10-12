@@ -81,7 +81,7 @@ try {
   }
   const captions=captionTrackEntries(state).filter(e=>e.captions?.enabled)
     .flatMap(e=>resolveCaptionWords(e.captions,state.items,state.fps));
-  await fs.writeFile(job.reply,JSON.stringify({projectId,doc,state,captions,media:doc.assets.map(a=>({id:a.id,path:a.src.startsWith("/media/uploads/")?resolveUploadFile(a.src.slice("/media/uploads/".length)):null}))}));
+  await fs.writeFile(job.reply,JSON.stringify({projectId,doc,state,captions,captionTracks:captionTrackEntries(state).filter(e=>e.captions?.enabled).map(e=>e.captions),media:doc.assets.map(a=>({id:a.id,path:a.src.startsWith("/media/uploads/")?resolveUploadFile(a.src.slice("/media/uploads/".length)):null}))}));
 } finally {await disposeServeBundle();}
 """
 
@@ -1059,6 +1059,7 @@ class Backend:
         self._readback = binding
         return {
             "time_map": ranges,
+            "native_snapshot": data,
             "render_kwargs": {
                 "source": Path(binding["source"]),
                 "suggestions_path": Path(binding["suggestions_path"]),

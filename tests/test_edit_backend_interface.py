@@ -82,8 +82,10 @@ def test_missing_adapter_dependency_is_not_a_missing_slot():
 
 def test_no_refine_claim_and_idempotent_close(tmp_path):
     backend = kdenlive_adapter.Backend()
-    for method in (backend.open_for_refine, backend.read_back):
-        with pytest.raises(BackendError, match="unsupported"):
-            method(project_dir=tmp_path)
+    assert backend.describe()['capabilities']['read_back'] is True
+    with pytest.raises(BackendError,match='unsupported'):
+        backend.open_for_refine(project_dir=tmp_path)
+    with pytest.raises(BackendError,match='owned_project_missing'):
+        backend.read_back(project_dir=tmp_path)
     assert backend.close() == backend.close()
     assert backend.close()["remaining_pids"] == []
