@@ -359,7 +359,8 @@ class VideoWorkflow:
                     anchor=c.get('at',0)
                     for i,(start,end,offset) in enumerate(remap_span(anchor,anchor+c['time'][1]-c['time'][0],new_rows)):
                         overlays.append({**c,'id':f"studio-anim-{suggestion['id']}-{i}",'at':start,'time':[c['time'][0]+offset,c['time'][0]+offset+end-start]})
-            if overlays: tracks.append({'clips':overlays})
+            # openfilm track 0 is the front layer; the talk must stay behind overlays.
+            if overlays: tracks.insert(0,{'clips':overlays})
             target['tracks'] = tracks
         elif op in ('undo', 'redo'):
             stack = session[op]

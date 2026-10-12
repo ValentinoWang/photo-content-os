@@ -14,7 +14,7 @@ const collectInventorySource=await fs.readFile('/Users/vsiyo/Desktop/Opensource_
 let browser;
 let context,page,initial,native,accepted,fixture;
 const manifest={scope:'Local synthetic records; backend probes and receipt variants are UI fixtures. Native interactions use the live Photo API and actual openfilm disk readback.',captures:[],nativeActions:[],events:[]};
-if(process.env.PS3_CAPTURE_STATES){const previous=JSON.parse(await fs.readFile(path.join(output,'ps3-capture-manifest.json'),'utf8'));const states=process.env.PS3_CAPTURE_STATES.split(',');manifest.captures=previous.captures.filter(c=>(c.kind==='native'?Boolean(process.env.PS3_SKIP_NATIVE):!states.includes(c.state)&&!(c.state==='returned-failure-details'&&states.includes('returned'))));manifest.nativeActions=previous.nativeActions;}
+if(process.env.PS3_CAPTURE_STATES){const previous=JSON.parse(await fs.readFile(path.join(output,'ps3-capture-manifest.json'),'utf8'));const states=process.env.PS3_CAPTURE_STATES.split(',');manifest.captures=previous.captures.filter(c=>(c.kind==='native'?Boolean(process.env.PS3_SKIP_NATIVE):!states.includes(c.state)&&!(c.state==='returned-failure-details'&&states.includes('returned'))));manifest.nativeActions=process.env.PS3_SKIP_NATIVE?previous.nativeActions:[];}
 let recording=true;
 const responseJSON=async url=>{const r=await fetch(url);assert(r.ok,`${url}: ${r.status}`);return r.json();};
 let csrf=(await responseJSON(origin+'/api/bootstrap')).csrfToken;

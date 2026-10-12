@@ -19,18 +19,21 @@ def test_native_accept_retract_split_undo_redo_and_conflict(tmp_path,monkeypatch
     monkeypatch.setenv('PHOTO_STUDIO_VIDEO_WORKSPACE',str(media))
     source=media/'source.mp4'
     subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i','color=c=0x25516b:s=288x512:r=30:d=6','-f','lavfi','-i','sine=frequency=660:duration=6','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-shortest',str(source)],check=True)
+    overlay=media/'stack-test.webm'
+    subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i',"color=c=0x4fb3bd:s=144x512:r=30:d=1,format=rgba,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='if(between(X,10,133)*between(Y,200,279),230,0)'",'-c:v','libvpx-vp9','-pix_fmt','yuva420p','-auto-alt-ref','0','-an',str(overlay)],check=True)
     app=StudioApplication(ProjectStore(tmp_path/'state'))
     app.video_workflow.origin='http://127.0.0.1:8765'
     app.video_workflow.probes=[{**r,'probe':{'id':r['id'],'installed':True,'version':'fixture','runnable':True,'status':'online','reason':None}} for r in describe_backends()]
     p=app.store.create_project(title='原生 HTTP 回读',local_workspace=str(media))
     identity={'photoProjectId':p['id'],'photoProjectRevision':1,'jobId':'ps3-native'}
-    descriptor={'scope':'video_handoff_v1','identity':identity,'animations':[], 'shots':[{'shot':{'shotId':'01','startSeconds':0,'endSeconds':6},'subtitle':'原生 HTTP 回读'}]}
+    descriptor={'scope':'video_handoff_v1','identity':identity,'animations':[{'animationId':'stack-test','shotId':'01','suggestedStartSeconds':3,'durationSeconds':1,'selectedLayout':'split_screen','timeBasis':'source','requirement':'原生前景轨回归'}], 'shots':[{'shot':{'shotId':'01','startSeconds':0,'endSeconds':6},'subtitle':'原生 HTTP 回读'}]}
     (media/'video.json').write_text(json.dumps(descriptor))
     binding=tmp_path/'binding.json'
     binding.write_text(json.dumps({'identity':{'project_id':p['id'],'project_revision':1,'job_id':'ps3-native'},'creative_store':str(app.store.path),'project_root':str(media),'steps':[],'source_refs':['source.mp4'],'candidate_ref':'candidate.json'}))
     monkeypatch.setenv('PHOTO_STUDIO_VIDEO_BINDING',str(binding))
     run=media/'runs'/hashlib.sha256(b'ps3-native').hexdigest()[:32];run.mkdir(parents=True)
     (run/'native-suggest.json').write_text(json.dumps({'duration':6,'precision':'word','auto_cut_allowed':True,'suggestions':[{'type':'repetition','start':1,'end':2,'auto_cut_allowed':True},{'type':'silence','start':1.5,'end':2.5,'auto_cut_allowed':True},{'type':'review','start':3,'end':4,'auto_cut_allowed':False}]}))
+    (run/'native-teaching_clips.json').write_text(json.dumps({'clips':[{'id':'01','status':'completed','file':str(overlay),'fps':30}]}))
     app.video_editor_choice(p['id'],{'editor':'openfilm','method':'self','revision':1})
     digest=hashlib.sha256(source.read_bytes()).hexdigest()
     ctx=app.video_workflow.context(p['id'])
@@ -82,6 +85,16 @@ def test_native_accept_retract_split_undo_redo_and_conflict(tmp_path,monkeypatch
         assert (len(session['undo']),len(session['redo']),set(session['accepted']))==(old_history,old_redo,old_accepted)
         before=times(command('reload'))
         assert times(command('self-open'))==before
+        # Native openfilm puts track 0 in front. An accepted overlay must not
+        # be hidden behind the unchanged full-frame talk clip.
+        suggestions=json.loads((run/'native-suggest.json').read_text())
+        suggestions['suggestions'].append({'type':'animation','animation_id':'stack-test','start':3,'end':4,'auto_cut_allowed':False})
+        (run/'native-suggest.json').write_text(json.dumps(suggestions))
+        before=times(command('reload'))
+        data=command('accept',suggestionId=3)
+        assert data['film']['tracks'][0]['clips'][0]['src']=='assets/overlay-0.webm'
+        assert times(data)==before
+        assert times(command('retract',suggestionId=3))==before
         assert hashlib.sha256(source.read_bytes()).hexdigest()==digest
     finally:
         app.video_workflow.close()
