@@ -181,6 +181,23 @@ async function dispatch(request) {
       finally { if (!browser) await probeBrowser.close(); }
     }
     case 'snapshot': return snapshot(request.project);
+    case 'studio-host': {
+      if (studio) throw Error('openfilm_host_already_active');
+      const { startStudio } = await moduleOf('studio/server/server.mjs');
+      studio = await startStudio({port: 0, editorDir: request.host, openBrowser: () => {}});
+      opened = await api('open', {path: request.project, fallback: 0});
+      project = request.project;
+      const current = await api(`projects/${opened.project.id}`);
+      return {origin: studio.origin, url: `${studio.origin}/open?key=${studio.key}&to=/`,
+              project_id: opened.project.id, filmUrl: `${current.folder}film.html`, ...await snapshot(project)};
+    }
+    case 'studio-edit': {
+      const before = await snapshot(project);
+      if (request.base !== before.rev) throw Error('openfilm_revision_conflict');
+      await api(`projects/${opened.project.id}/edit`, {base: request.base, ops: request.ops});
+      return snapshot(project);
+    }
+
     case 'render': return exportVideo(request);
     case 'refine': return refine(request.project);
     case 'delete': return deleteSegment(request.index);

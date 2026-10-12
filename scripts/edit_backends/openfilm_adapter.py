@@ -430,6 +430,37 @@ class Backend:
         write_json(output_dir / 'render-result.json', result)
         return result
 
+    def prepare_for_studio(self, *, output_dir: Path, **kwargs) -> Path:
+        """Build an owned film without opening a browser or exporting a video."""
+        self._package()
+        output_dir = output_dir.expanduser().resolve()
+        if output_dir.exists():
+            raise BackendError('output_directory_already_exists')
+        output_dir.mkdir(parents=True)
+        args = {**kwargs, 'source': str(Path(kwargs['source']).resolve()),
+                'suggestions_path': str(Path(kwargs['suggestions_path']).resolve()),
+                'subtitles': str(Path(kwargs['subtitles']).resolve()) if kwargs.get('subtitles') else None,
+                'animations': kwargs.get('animations') or [], 'timeout_seconds': kwargs.get('timeout_seconds', 300)}
+        self._compile(args, output_dir, time.monotonic() + args['timeout_seconds'])
+        return output_dir
+
+    def open_for_studio(self, *, project_dir: Path, host_dir: Path) -> dict:
+        root = project_dir.resolve() / 'openfilm-project'
+        if not (root / 'adapter-project.json').is_file() or self._session:
+            raise BackendError('openfilm_owned_project_required')
+        self._start(persistent=True)
+        self._session_project = root
+        try:
+            self._session_descriptor = self._rpc({'action': 'studio-host', 'project': str(root), 'host': str(host_dir.resolve())})
+            return self._session_descriptor
+        except BaseException:
+            self.close()
+            raise
+
+    def studio_edit(self, *, base: str, ops: list) -> dict:
+        """CAS then native local HTTP edit; the disk snapshot is authoritative."""
+        return self._rpc({'action': 'studio-edit', 'base': base, 'ops': ops})
+
     def open_for_refine(self, *, project_dir: Path) -> dict:
         root = project_dir.expanduser().resolve() / 'openfilm-project'
         if not (root / 'adapter-project.json').is_file():

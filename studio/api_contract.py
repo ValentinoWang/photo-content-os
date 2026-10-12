@@ -19,6 +19,10 @@ ROUTE_SPECS: tuple[dict[str, object], ...] = (
     {"method": "PATCH", "path": "/api/projects/{projectId}", "operation_id": "updateProject", "summary": "Update a project with CAS", "write": True},
     {"method": "POST", "path": "/api/projects/{projectId}/inbox-plan", "operation_id": "previewInboxPlan", "summary": "Preview deterministic inbox batches", "write": True},
     {"method": "POST", "path": "/api/projects/{projectId}/inbox-plan/confirm", "operation_id": "confirmInboxPlan", "summary": "Confirm one plan batch and target project", "write": True},
+    {"method": "POST", "path": "/api/projects/{projectId}/video-workflow", "operation_id": "editLocalVideoWorkflow", "summary": "Edit the identity-bound local video workflow", "write": True},
+    {"method": "POST", "path": "/api/projects/{projectId}/video-return", "operation_id": "returnLocalVideo", "summary": "Stream an exported video for deterministic checks", "write": True, "binary": True},
+    {"method": "GET", "path": "/api/projects/{projectId}/video-preview/{candidateId}", "operation_id": "getLocalVideoPreview", "summary": "Read a checked low-resolution candidate preview", "response_media": "video/mp4"},
+    {"method": "GET", "path": "/api/projects/{projectId}/video-subtitles", "operation_id": "downloadVideoSubtitles", "summary": "Download the bound SRT", "response_media": "application/x-subrip"},
     {"method": "GET", "path": "/api/assets", "operation_id": "listAssets", "summary": "Query the structured asset index"},
     {"method": "GET", "path": "/api/assets/statistics", "operation_id": "getAssetStatistics", "summary": "Read dynamic asset facets"},
     {"method": "GET", "path": "/api/assets/{assetId}", "operation_id": "getAsset", "summary": "Read one structured asset"},
@@ -80,11 +84,16 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
         "summary": spec["summary"],
         "responses": {"200": _response(), "400": _response("Invalid request")},
     }
+    if spec.get('response_media'):
+        operation['responses']['200']['content']={str(spec['response_media']):{'schema':{'type':'string','format':'binary'}}}
     if spec.get("write") is True:
         operation["parameters"] = [
             {"name": "X-Content-OS-CSRF", "in": "header", "required": True, "schema": {"type": "string", "minLength": 1}}
         ]
         operation["requestBody"] = {"required": True, "content": {"application/json": {"schema": {"type": "object"}}}}
+        if spec.get('binary'):
+            operation['requestBody'] = {'required': True, 'content': {'video/mp4': {'schema': {'type': 'string', 'format': 'binary'}}}}
+            operation['parameters'].append({'name': 'X-Video-Identity', 'in': 'header', 'required': True, 'schema': {'type': 'string'}})
         operation["responses"]["409"] = _response("Revision conflict")
     return operation
 

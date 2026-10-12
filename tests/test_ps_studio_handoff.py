@@ -20,6 +20,8 @@ class StudioHandoffTests(unittest.TestCase):
         self.media = self.root / 'media'
         self.media.mkdir()
         self.app = StudioApplication(ProjectStore(self.root / 'state'))
+        from edit_backends.registry import describe_backends
+        self.app.video_workflow.probes = [{**r, 'probe': {'id':r['id'],'installed':False,'version':None,'runnable':False,'status':'unavailable','reason':'fixture'}} for r in describe_backends()]
         self.project = self.app.store.create_project(title='交接测试', local_workspace=str(self.media))
         self.identity = {'jobId': 'job_ps', 'photoProjectId': self.project['id'], 'photoProjectRevision': 1}
         self.write(self.media / 'video.json', {'scope': 'video_handoff_v1', 'identity': self.identity, 'shots': [], 'animations': []})
@@ -55,6 +57,7 @@ class StudioHandoffTests(unittest.TestCase):
         self.assertIsNone(data['tools']['chatcut']['projectUrl'])
 
     def test_five_tool_levels_and_expiry(self):
+        self.app.video_editor_choice(self.project['id'], {'editor':'chatcut','revision':1})
         self.tool_report(installed=False)
         self.assertFalse(self.projection()['tools']['chatcut']['installed'])
         self.tool_report()
@@ -80,15 +83,15 @@ class StudioHandoffTests(unittest.TestCase):
         before=self.app.store.get_project(self.project['id'])
         self.write(self.run/'handoff_manifest.json', {'private':'unchanged'})
         old=(self.run/'handoff_manifest.json').read_bytes()
-        self.assertEqual(self.app.video_editor_choice(self.project['id']), {'editor':'chatcut','revision':1})
-        chosen=self.app.video_editor_choice(self.project['id'], {'editor':'kdenlive','revision':1})
-        self.assertEqual(chosen, {'editor':'kdenlive','revision':2})
+        self.assertEqual(self.app.video_editor_choice(self.project['id']), {'editor':'otio_kdenlive','method':'external','revision':1})
+        chosen=self.app.video_editor_choice(self.project['id'], {'editor':'openfilm','method':'external','revision':1})
+        self.assertEqual(chosen, {'editor':'openfilm','method':'external','revision':2})
         restarted=StudioApplication(ProjectStore(self.root/'state'))
         self.assertEqual(restarted.video_editor_choice(self.project['id']),chosen)
         self.assertEqual(before,self.app.store.get_project(self.project['id']))
         self.assertEqual(old,(self.run/'handoff_manifest.json').read_bytes())
         with self.assertRaises(ProjectStoreError):
-            self.app.video_editor_choice(self.project['id'],{'editor':'chatcut','revision':1})
+            self.app.video_editor_choice(self.project['id'],{'editor':'otio_kdenlive','method':'external','revision':1})
         with self.assertRaises(ProjectStoreError):
             self.app.video_editor_choice(self.project['id'],{'editor':'unknown','revision':2})
 

@@ -195,6 +195,8 @@ class StudioApplication:
         self.onboarding_store = VersionedOnboardingStateStore(self.settings_dir)
         self.upstream_task_reader = upstream_task_reader
         self.video_choice_lock = threading.Lock()
+        from studio.video_workflow import VideoWorkflow
+        self.video_workflow = VideoWorkflow(self)
 
     @staticmethod
     def _default_trash_backend(platform_name: str, registry_path: Path) -> object:
@@ -222,13 +224,18 @@ class StudioApplication:
         name = hashlib.sha256(project_id.encode()).hexdigest() + ".json"
         path = self.settings_dir / "video-editors" / name
         with self.video_choice_lock:
-            current = json.loads(path.read_text()) if path.is_file() else {"editor": "chatcut", "revision": 1}
+            current = json.loads(path.read_text()) if path.is_file() else {"editor": "otio_kdenlive", "method": "external", "revision": 1}
+            # PS persisted this exact software under the old local ID. Reading
+            # it preserves the user's choice and CAS; it does not rewrite a run.
+            if current.get('editor')=='kdenlive': current={**current,'editor':'otio_kdenlive'}
+            current.setdefault('method','external')
             if value is not None:
-                if value.get("editor") not in {"chatcut", "kdenlive"}:
+                from edit_backends.registry import BACKENDS
+                if value.get("editor") not in {*BACKENDS, "chatcut"} or value.get("method", current.get("method", "external")) not in {"external", "guide", "self"}:
                     raise ProjectStoreError("editor_invalid", "剪辑软件选择无效")
                 if type(value.get("revision")) is not int or value["revision"] != current["revision"]:
                     raise ProjectStoreError("revision_conflict", "剪辑软件选择已变化")
-                current = {"editor": value["editor"], "revision": current["revision"] + 1}
+                current = {"editor": value["editor"], "method": value.get("method", current.get("method", "external")), "revision": current["revision"] + 1}
                 path.parent.mkdir(parents=True, exist_ok=True)
                 with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent, delete=False) as handle:
                     json.dump(current, handle)
@@ -248,9 +255,14 @@ class StudioApplication:
         return data if isinstance(data, dict) else {}
 
     def video_handoff_projection(self, project_id: str) -> dict | None:
+        data = self._video_handoff_projection(project_id)
+        return self.video_workflow.projection(project_id, data) if data is not None else None
+
+    def _video_handoff_projection(self, project_id: str) -> dict | None:
         """Read PF's explicitly bound inputs and results, with no local locators."""
         from runtime_paths import local_media_root
         from doctor import probe_app
+        from studio.video_workflow import candidate_failed
         project = self.store.get_project(project_id)
         try:
             root = self.store.local_workspace_path(project_id).resolve()
@@ -355,15 +367,21 @@ class StudioApplication:
             return value if type(value) in {int, float} and math.isfinite(value) and value >= 0 else None
         cuts = []
         for item in suggestions.get("suggestions", []):
-            if item.get("type") not in {"silence", "repetition", "animation"}:
+            if item.get("type") not in {"silence", "repetition", "animation", "review"}:
                 continue
             start, end = number(item.get("start")), number(item.get("end"))
             if start is None or end is None or end <= start or (number(duration) is not None and end > duration):
                 continue
             cuts.append({"type": item["type"], "start": start, "end": end,
-                         "text": item.get("evidence_text", ""), "animationId": item.get("animation_id"),
+                         "id": len(cuts), "basis": item.get("basis"), "text": item.get("evidence_text", ""), "animationId": item.get("animation_id"),
                          "automatic": item.get("auto_cut_allowed") is True and suggestions.get("auto_cut_allowed") is not False
                          and (item["type"] != "repetition" or suggestions.get("precision") == "word")})
+        existing_animations={c['animationId'] for c in cuts if c['type']=='animation'}
+        for animation in descriptor.get('animations',[]):
+            start=number(animation.get('suggestedStartSeconds'));length=number(animation.get('durationSeconds'))
+            aid=animation.get('animationId')
+            if aid in existing_animations or animation.get('timeBasis')!='source' or start is None or not length or number(duration) is None or start+length>duration: continue
+            cuts.append({'id':len(cuts),'type':'animation','start':start,'end':start+length,'text':animation.get('requirement',''),'animationId':aid,'automatic':False,'basis':'confirmed_animation'})
         peaks = payload.get("progress", {}).get("waveformPeaks", [])
         if progress.get("waveformSource") != "source" or not isinstance(peaks, list) or len(peaks) > 400 or any(number(p) is None or p > 1 for p in peaks):
             peaks = []
@@ -405,7 +423,7 @@ class StudioApplication:
         images = [r["visual"]["image"] for r in descriptor.get("shots", []) if r.get("visual", {}).get("image") and r["visual"]["image"].get("status") in {"saved", "unsaved"}]
         if images:
             assets.append({"role": "images", "count": len(images), "pending": sum(i.get("rightsStatus") != "confirmed" for i in images)})
-        return {"state": "returned" if candidate else "connected" if handshake else "offline", "title": project["title"],
+        return {"state": "check-failed" if candidate and candidate_failed(candidate) else "returned" if candidate else "connected" if handshake else "offline", "scriptAlignment": suggestions.get("script_alignment", {}), "mediaUrl": descriptor.get("mediaUrl") if isinstance(descriptor.get("mediaUrl"), str) and urllib.parse.urlparse(descriptor["mediaUrl"]).scheme in {"http", "https"} else None, "title": project["title"],
                 "sourceDuration": number(duration), "materials": assets, "animations": animations,
                 "suggestions": cuts, "shots": shots, "waveformPeaks": peaks,
                 "tools": {"chatcut": {"installed": installed["installed"], "version": installed["version"],
@@ -603,6 +621,10 @@ class StudioApplication:
                 self.send_header("X-Frame-Options", "DENY")
                 self.send_header("Referrer-Policy", "no-referrer")
                 self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'")
+                origin = self.headers.get('Origin')
+                if app.video_workflow.allowed_origin(origin):
+                    self.send_header('Access-Control-Allow-Origin', origin)
+                    self.send_header('Vary', 'Origin')
                 self.end_headers()
                 self.wfile.write(body)
 
@@ -647,6 +669,18 @@ class StudioApplication:
             @staticmethod
             def _segments(path: str) -> list[str]:
                 return [urllib.parse.unquote(part) for part in path.split("/") if part]
+
+            def do_OPTIONS(self) -> None:  # noqa: N802
+                origin = self.headers.get('Origin')
+                if not app.video_workflow.allowed_origin(origin):
+                    self._json(HTTPStatus.FORBIDDEN, _error('origin_forbidden', '只允许本机页面提交修改'))
+                    return
+                self.send_response(204)
+                self.send_header('Access-Control-Allow-Origin', origin)
+                self.send_header('Access-Control-Allow-Methods', 'GET, POST, PATCH')
+                self.send_header('Access-Control-Allow-Headers', 'Content-Type, X-Content-OS-CSRF, X-Video-Identity')
+                self.send_header('Content-Length', '0')
+                self.end_headers()
 
             def do_GET(self) -> None:  # noqa: N802
                 try:
@@ -731,6 +765,13 @@ class StudioApplication:
                             return
                         self._json(HTTPStatus.OK, {"ok": True, "asset": asset})
                         return
+                    if len(segments)==5 and segments[:2]==['api','projects'] and segments[3]=='video-preview':
+                        preview=app.video_workflow.preview(segments[2],segments[4])
+                        self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+                        return
+                    if len(segments) == 4 and segments[:2] == ['api', 'projects'] and segments[3] == 'video-subtitles':
+                        self._send(HTTPStatus.OK, app.video_workflow.subtitles(segments[2]), 'application/x-subrip; charset=utf-8')
+                        return
                     if len(segments) == 3 and segments[:2] == ["api", "projects"]:
                         self._json(HTTPStatus.OK, {"ok": True, "project": app.store.get_project(segments[2]), "videoHandoff": app.video_handoff_projection(segments[2])})
                         return
@@ -797,6 +838,16 @@ class StudioApplication:
                     segments = self._segments(parsed.path)
                     if not is_registered_route(method, parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
+                        return
+                    segments = self._segments(urllib.parse.urlparse(self.path).path)
+                    if method == 'POST' and len(segments) == 4 and segments[:2] == ['api', 'projects'] and segments[3] == 'video-return':
+                        try:
+                            identity = json.loads(self.headers.get('X-Video-Identity', ''))
+                            length = int(self.headers.get('Content-Length', '0'))
+                        except (ValueError, TypeError) as exc:
+                            raise ProjectStoreError('body_invalid', '成片交接信息无效') from exc
+                        data = app.video_workflow.receive(segments[2], self.rfile, length, identity)
+                        self._json(HTTPStatus.OK, {'ok': True, 'videoHandoff': data})
                         return
                     body = self._body()
                     expected = body.get("expectedRevision")
@@ -1021,6 +1072,10 @@ class StudioApplication:
                         )
                         self._json(HTTPStatus.CREATED, {"ok": True, "project": project})
                         return
+                    if method == 'POST' and len(segments) == 4 and segments[:2] == ['api', 'projects'] and segments[3] == 'video-workflow':
+                        data = app.video_workflow.command(segments[2], body)
+                        self._json(HTTPStatus.OK, {'ok': True, 'videoHandoff': data})
+                        return
                     if method == "PATCH" and len(segments) == 3 and segments[:2] == ["api", "projects"]:
                         if "videoEditor" in body:
                             project = app.store.get_project(segments[2])
@@ -1229,6 +1284,14 @@ def serve(
     actual_host, actual_port = server.server_address[:2]
     url_host = "127.0.0.1" if actual_host in {"0.0.0.0", "::"} else actual_host
     url = f"http://{url_host}:{actual_port}/"
+    application.video_workflow.origin = url.rstrip('/')
+    original_close = server.server_close
+    def close_owned_sessions():
+        try:
+            application.video_workflow.close()
+        finally:
+            original_close()
+    server.server_close = close_owned_sessions
     if on_ready:
         on_ready(url)
     return server
