@@ -176,6 +176,27 @@ class BrowserRenderTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.manifest = create_fixture(self.root)
         self.output = self.root / 'output'
+        self.browser_groups = []
+        from video_render import multi_shot as renderer_module
+        original_runner = renderer_module.run_renderer
+        def tracked_runner(request, frames, timeout, on_event):
+            def track(event):
+                if event.get('phase') == 'browser_owned':
+                    self.browser_groups.append(event['browser_pid'])
+                on_event(event)
+            return original_runner(request, frames, timeout, track)
+        tracker = patch.object(renderer_module, 'run_renderer', side_effect=tracked_runner)
+        tracker.start()
+        self.addCleanup(tracker.stop)
+        self.addCleanup(self.assert_owned_browsers_closed)
+
+    def assert_owned_browsers_closed(self):
+        for group in self.browser_groups:
+            result = subprocess.run(['pgrep', '-g', str(group)], capture_output=True, text=True)
+            self.assertEqual(result.stdout.strip(), '', f'Owned Chromium group {group} survived: {result.stdout}')
+        if os.getenv('PF_BROWSER_PID_LOG'):
+            with open(os.environ['PF_BROWSER_PID_LOG'], 'a') as log:
+                log.write(json.dumps({'test': self.id(), 'owned_groups': self.browser_groups, 'remaining': 0}) + '\n')
 
     def test_three_shot_mp4_schedule_tracks_and_original_inputs(self):
         original = sha256(self.root / 'voice.wav')
@@ -205,7 +226,7 @@ class BrowserRenderTests(unittest.TestCase):
         unchanged = {name: (self.output / 'render' / name / 'frames/frame-000000.png').stat().st_mtime_ns for name in ['shot-1', 'shot-3']}
         subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-nostdin', '-y', '-f', 'lavfi', '-i',
                         'color=yellow:s=16x16', '-frames:v', '1', str(self.root / 'assets/fig-3.png')], check=True)
-        second = compose(self.manifest, self.output)
+        second = compose(self.manifest, self.output, retry_shot_id='shot-2')
         self.assertEqual(second['status'], 'completed', second)
         self.assertEqual([shot['cached'] for shot in second['shots']], [True, False, True])
         self.assertEqual([shot['attempts'] for shot in second['shots']], [1, 2, 1])

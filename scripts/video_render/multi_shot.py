@@ -193,6 +193,7 @@ def run_renderer(request_file: Path, frames_dir: Path, timeout: float, on_event:
         reader.start()
         deadline = time.monotonic() + timeout
         final: dict[str, Any] | None = None
+        browser_pid = None
         try:
             while True:
                 remaining = deadline - time.monotonic()
@@ -205,6 +206,8 @@ def run_renderer(request_file: Path, frames_dir: Path, timeout: float, on_event:
                 if line is None:
                     break
                 event = json.loads(line)
+                if event.get('phase') == 'browser_owned':
+                    browser_pid = event['browser_pid']
                 on_event(event)
                 if event.get('status') in ('completed', 'failed'):
                     final = event
@@ -213,11 +216,23 @@ def run_renderer(request_file: Path, frames_dir: Path, timeout: float, on_event:
                 process.wait(timeout=max(0.01, deadline - time.monotonic()))
                 errors.seek(0)
                 raise RenderError('render_failed', errors.read()[-4000:] or 'Renderer exited without a completion receipt')
+            process.wait(timeout=5)
             return final
         except subprocess.TimeoutExpired as error:
             raise RenderError('shot_timeout', 'Shot exceeded timeout') from error
         finally:
-            # Only the process group created for this shot is terminated.
+            # Chromium starts its own process group; the renderer reports its owned PID.
+            if process.poll() is None:
+                process.terminate()
+                try:
+                    process.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    pass
+            if os.name != 'nt' and browser_pid is not None and final is None:
+                try:
+                    os.killpg(browser_pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
             if os.name != 'nt':
                 try:
                     os.killpg(process.pid, signal.SIGKILL)
@@ -232,7 +247,8 @@ def run_renderer(request_file: Path, frames_dir: Path, timeout: float, on_event:
 
 
 def render_shots(manifest: dict[str, Any], output: Path, *, transparent: bool = False,
-                 on_event: Callable[[dict[str, Any]], None] | None = None) -> dict[str, Any]:
+                 on_event: Callable[[dict[str, Any]], None] | None = None,
+                 retry_shot_id: str | None = None) -> dict[str, Any]:
     output = output.resolve()
     source_root = Path(manifest['assets_dir'])
     if output.is_relative_to(source_root) or source_root.is_relative_to(output):
@@ -256,6 +272,14 @@ def render_shots(manifest: dict[str, Any], output: Path, *, transparent: bool = 
             raise
         state = {'status': 'running', 'runtime': runtime, 'shots': []}
         old = {shot['id']: shot for shot in previous.get('shots', [])}
+        if retry_shot_id is not None:
+            if retry_shot_id not in old or old[retry_shot_id].get('status') != 'failed':
+                raise RenderError('shot_retry_rejected', 'Only a recorded failed shot can be retried')
+            for shot in manifest['shots']:
+                if shot['id'] != retry_shot_id:
+                    request = request_for(manifest, shot, transparent=transparent)
+                    if not cache_valid(old.get(shot['id'], {}), fingerprint(request, runtime), output / shot['id'] / 'frames', shot['frames']):
+                        raise RenderError('unaffected_shot_changed', 'An unaffected shot cache changed; retry cannot render it')
         state['shots'] = [{'id': shot['id'], 'status': 'pending', 'progress_frames': 0, 'total_frames': shot['frames'], 'start_frame': shot['start_frame']} for shot in manifest['shots']]
         write_json(state_path, state)
         for shot, entry in zip(manifest['shots'], state['shots']):
@@ -265,7 +289,7 @@ def render_shots(manifest: dict[str, Any], output: Path, *, transparent: bool = 
             entry['attempts'] = old.get(shot['id'], {}).get('attempts', 0)
             try:
                 expected = fingerprint(request, runtime)
-                if cache_valid(old.get(shot['id'], {}), expected, frames_dir, shot['frames']):
+                if shot['id'] != retry_shot_id and cache_valid(old.get(shot['id'], {}), expected, frames_dir, shot['frames']):
                     entry.update(old[shot['id']], cached=True, start_frame=shot['start_frame'])
                     if on_event:
                         on_event(dict(entry))

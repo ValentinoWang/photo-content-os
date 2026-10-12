@@ -67,24 +67,24 @@ def inspect_video(path: Path, *, frames: int, fps: int, timeout: float = 300) ->
             'video_codec': video['codec_name'], 'audio_codec': audio['codec_name'], 'decodable': True, 'sha256': sha256(path)}
 
 
-def compose(manifest_path: Path, output: Path, *, timeout: float = 300, on_event=None) -> dict[str, Any]:
+def compose(manifest_path: Path, output: Path, *, timeout: float = 300, on_event=None, retry_shot_id: str | None = None) -> dict[str, Any]:
     manifest = load_manifest(manifest_path)
     if not math.isfinite(timeout) or timeout <= 0:
         raise RenderError('invalid_input', 'timeout must be positive and finite')
     with owned_workspace(output, Path(manifest['assets_dir']), 'compose') as workspace:
         try:
-            return _compose(manifest, workspace, timeout=timeout, on_event=on_event)
+            return _compose(manifest, workspace, timeout=timeout, on_event=on_event, retry_shot_id=retry_shot_id)
         except (RenderError, OSError, ValueError, subprocess.SubprocessError) as error:
             write_json(workspace / 'compose-status.json', {'status': 'failed', 'candidate': None, 'shots': [],
                        'code': getattr(error, 'code', 'compose_failed'), 'reason': str(error)})
             raise
 
 
-def _compose(manifest: dict[str, Any], output: Path, *, timeout: float, on_event) -> dict[str, Any]:
+def _compose(manifest: dict[str, Any], output: Path, *, timeout: float, on_event, retry_shot_id: str | None = None) -> dict[str, Any]:
     narration = audio_inputs(manifest)
     audio_hashes = {str(path): sha256(path) for path in narration}
     output = output.resolve()
-    state = render_shots(manifest, output / 'render', on_event=on_event)
+    state = render_shots(manifest, output / 'render', on_event=on_event, retry_shot_id=retry_shot_id)
     result_path = output / 'compose-status.json'
     result = {'status': 'running', 'shots': state['shots'], 'candidate': None}
     write_json(result_path, result)

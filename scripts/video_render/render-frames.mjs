@@ -8,6 +8,9 @@ const require = createRequire(import.meta.url);
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const emit = event => process.stdout.write(`${JSON.stringify(event)}\n`);
 let browser;
+let browserServer;
+let browserLaunch;
+let timeoutReject;
 let watchdog;
 let progress = 0;
 
@@ -24,10 +27,7 @@ async function main() {
   }
   if (!(request.timeout_seconds > 0) || !Number.isFinite(request.timeout_seconds)) throw fail('invalid_input', 'Invalid timeout_seconds');
   if (!Array.isArray(request.fonts) || !request.fonts.length) throw fail('font_missing', 'At least one pinned local font is required');
-  watchdog = setTimeout(() => {
-    emit({ status: 'failed', code: 'shot_timeout', reason: 'Shot exceeded timeout', progress_frames: progress });
-    process.exit(1);
-  }, request.timeout_seconds * 1000);
+  watchdog = setTimeout(() => timeoutReject(fail('shot_timeout', 'Shot exceeded timeout')), request.timeout_seconds * 1000);
 
   const root = realpathSync(request.assets_dir);
   const htmlPath = realpathSync(request.html);
@@ -50,11 +50,15 @@ async function main() {
   const moduleName = process.env.VIDEO_RENDER_PLAYWRIGHT_MODULE || 'playwright';
   const playwright = require(moduleName);
   emit({ status: 'running', phase: 'browser_launch', progress_frames: 0 });
-  browser = await playwright.chromium.launch({
+  browserLaunch = playwright.chromium.launchServer({
     executablePath: request.browser_executable || undefined,
     headless: true,
+    timeout: request.timeout_seconds * 1000,
     args: ['--disable-gpu', '--force-color-profile=srgb', '--hide-scrollbars'],
   });
+  browserServer = await browserLaunch;
+  emit({ status: 'running', phase: 'browser_owned', browser_pid: browserServer.process().pid });
+  browser = await playwright.chromium.connect(browserServer.wsEndpoint());
   const context = await browser.newContext({
     viewport: { width: request.width, height: request.height }, deviceScaleFactor: 1,
     locale: 'en-US', timezoneId: 'UTC', colorScheme: 'light', serviceWorkers: 'block',
@@ -141,15 +145,21 @@ async function main() {
   }
   const result = { status: 'completed', progress_frames: progress, total_frames: request.frames, browser_version: browser.version(), dependencies: [...dependencies].map(([path, sha256]) => ({ path, sha256 })) };
   writeFileSync(resolve(output, 'render-manifest.json'), `${JSON.stringify(result, null, 2)}\n`);
-  emit(result);
+  return result;
 }
 
+const timeout = new Promise((_, reject) => { timeoutReject = reject; });
+let final;
+process.on('SIGTERM', () => timeoutReject(fail('shot_cancelled', 'Shot cancelled')));
 try {
-  await main();
+  final = await Promise.race([main(), timeout]);
 } catch (error) {
-  emit({ status: 'failed', code: error.code || 'render_failed', reason: error.message, file: error.file ?? null, line: error.line ?? null, progress_frames: progress });
+  final = { status: 'failed', code: error.code || 'render_failed', reason: error.message, file: error.file ?? null, line: error.line ?? null, progress_frames: progress };
   process.exitCode = 1;
 } finally {
   clearTimeout(watchdog);
-  if (browser) await browser.close();
+  // A terminal receipt is emitted only after the browser and its children exit.
+  if (!browserServer && browserLaunch) browserServer = await browserLaunch.catch(() => null);
+  if (browserServer) await browserServer.close();
 }
+emit(final);
