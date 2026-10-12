@@ -262,7 +262,11 @@ def test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported(quali
     backend, project = q["backend"], q["root"] / "render"
     capabilities = backend.describe()["capabilities"]
     if not capabilities["web_refine"]:
-        assert capabilities["undo"] is False and capabilities["read_back"] is False
+        assert capabilities["undo"] is False
+        if capabilities["read_back"]:
+            assert backend.describe()['id']=='otio_kdenlive'
+            assert backend.read_back(project_dir=project)['time_map']==EXPECTED_MAP
+            return
         for method in (backend.open_for_refine, backend.read_back):
             with pytest.raises(BackendError, match="unsupported"):
                 method(project_dir=project)

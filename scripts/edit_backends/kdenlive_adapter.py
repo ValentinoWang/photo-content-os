@@ -13,13 +13,14 @@ class Backend:
     def __init__(self):
         self._application = None
         self._started = set()
+        self._readback = None
 
     def describe(self) -> Description:
         return {"id": "otio_kdenlive", "display_name": "Kdenlive / MLT",
                 "license": "GPL-3.0-only", "capabilities": {
                     "automatic_first_cut": True, "transparent_overlay": True,
                     "chinese_subtitle_burn_in": True, "web_refine": False,
-                    "undo": False, "read_back": False, "export_formats": ["mp4"]}}
+                    "undo": False, "read_back": True, "export_formats": ["mp4"]}}
 
     def probe(self) -> Probe:
         executable = kdenlive_render.melt_executable()
@@ -55,6 +56,9 @@ class Backend:
         # Never overwrite another run's receipt, including on preflight failure.
         if output_dir.exists():
             raise BackendError("output_directory_already_exists")
+        if self._readback and Path(source).resolve()==self._readback['render_kwargs']['source'] and project_id==self._readback['project_id'] and project_revision==self._readback['project_revision']:
+            from .kdenlive_readback import render_saved
+            return render_saved(project_dir=self._readback['directory'],expected_revision=self._readback['engine_revision'],output_dir=output_dir,timeout_seconds=timeout_seconds)
         try:
             return kdenlive_render.render(
                 source=source, suggestions_path=suggestions_path, output_dir=output_dir,
@@ -86,7 +90,10 @@ class Backend:
         return {'editor_backend':'otio_kdenlive','opened':True,'local_only':True}
 
     def read_back(self, *, project_dir: Path) -> dict:
-        raise BackendError("editor_read_back_unsupported:otio_kdenlive")
+        from .kdenlive_readback import read_project
+        result=read_project(project_dir)
+        self._readback={**result,'directory':project_dir.resolve()}
+        return result
 
     def close(self) -> CloseResult:
         from .openfilm_adapter import _stop, _process_table
