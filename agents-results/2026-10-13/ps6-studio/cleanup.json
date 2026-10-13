@@ -1,0 +1,48 @@
+{
+  "removedOwnPaths": [
+    "/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/ps6-tests-d6jldj34",
+    "/Users/vsiyo/Desktop/创业项目/photo-content-os/tests/__pycache__/test_ps6_duration_and_guide.cpython-313-pytest-9.1.1.pyc"
+  ],
+  "ownStudioPids": [
+    68563,
+    71052
+  ],
+  "recordedBrowserPids": [
+    1662,
+    1727,
+    1731,
+    1737,
+    1743,
+    14587,
+    15304,
+    15305,
+    15307,
+    15308,
+    15310,
+    28547,
+    28586,
+    28587,
+    28592,
+    28625,
+    33382,
+    33523,
+    33524,
+    33527,
+    33528,
+    71140,
+    71907,
+    71909,
+    71913,
+    71914,
+    11073,
+    11205,
+    11206,
+    11257,
+    11258,
+    11273
+  ],
+  "ownProcessesRemaining": [],
+  "sharedListeners": "COMMAND     PID  USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\npython3.1 90671 vsiyo    6u  IPv4  0x6285cbc6e9d8f98      0t0  TCP 127.0.0.1:8787 (LISTEN)\nnode      90950 vsiyo   27u  IPv4 0x3c928a8882ac2a8e      0t0  TCP 127.0.0.1:9081 (LISTEN)\n",
+  "occProofStatus": "Previously observed PID-only change is already restored externally; PS6 did not write or reset it.",
+  "disk": "Filesystem        Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s1s1   460Gi    17Gi   9.8Gi    64%    447k  103M    0%   /\n"
+}

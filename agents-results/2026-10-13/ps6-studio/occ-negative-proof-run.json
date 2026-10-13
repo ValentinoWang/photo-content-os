@@ -1,0 +1,11 @@
+{
+  "exit_code": 1,
+  "trace": [
+    {
+      "pid": 75435,
+      "method": "spawn",
+      "executable": "codex",
+      "blocked": true
+    }
+  ]
+}

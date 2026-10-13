@@ -1,0 +1,1129 @@
+{
+  "ok": true,
+  "project": {
+    "account": "",
+    "analysis": {
+      "preview_state": "not_started",
+      "state": "not_started",
+      "tier": "metadata",
+      "transcript_state": "not_started"
+    },
+    "assets": [],
+    "audit": [
+      {
+        "action": "project_created",
+        "actor": "user",
+        "at": "2026-10-12T05:14:15Z",
+        "detail": {
+          "platform": "未指定"
+        },
+        "id": "audit-1dc3552fdf6c560a"
+      }
+    ],
+    "created_at": "2026-10-12T05:14:15Z",
+    "delivery": {
+      "artifacts": [],
+      "consumed_inputs": {},
+      "stale": false,
+      "stale_reason": "",
+      "stale_sources": [],
+      "state": "not_started"
+    },
+    "documents": {
+      "brief": {
+        "authority_bridge": {
+          "authoring_authority": "creative_project_store",
+          "export_state": "pending_export",
+          "exported_at": null,
+          "exported_source_consumer_surface_digest": null,
+          "exported_source_document_version": null,
+          "schema_version": "document_authority_bridge_v1",
+          "source_consumer_surface_digest": "sha256:13d07addfd4243703342fb24f7777ed396517cdff18f1a9250230efd254ada53",
+          "source_document_version": 1,
+          "target_content_digest": null,
+          "target_relative_path": "02_project_brief.md"
+        },
+        "blocks": [
+          {
+            "body": "",
+            "id": "brief-goal",
+            "locked": false,
+            "title": "创作目标"
+          },
+          {
+            "body": "",
+            "id": "brief-audience",
+            "locked": false,
+            "title": "目标受众"
+          },
+          {
+            "body": "",
+            "id": "brief-angle",
+            "locked": false,
+            "title": "核心角度"
+          },
+          {
+            "body": "",
+            "id": "brief-constraints",
+            "locked": false,
+            "title": "平台与边界"
+          }
+        ],
+        "consumed_inputs": {},
+        "history": [
+          {
+            "actor": "system",
+            "blocks": [
+              {
+                "body": "",
+                "id": "brief-goal",
+                "locked": false,
+                "title": "创作目标"
+              },
+              {
+                "body": "",
+                "id": "brief-audience",
+                "locked": false,
+                "title": "目标受众"
+              },
+              {
+                "body": "",
+                "id": "brief-angle",
+                "locked": false,
+                "title": "核心角度"
+              },
+              {
+                "body": "",
+                "id": "brief-constraints",
+                "locked": false,
+                "title": "平台与边界"
+              }
+            ],
+            "consumer_surface_digest": "sha256:13d07addfd4243703342fb24f7777ed396517cdff18f1a9250230efd254ada53",
+            "created_at": "2026-10-12T05:14:15Z",
+            "digest": "sha256:35f578c329aaa3922469ea3ba6301b1e471cfe8a7aa0562d04d5c361ce1f2b34",
+            "reason": "project_created",
+            "version": 1
+          }
+        ],
+        "label": "创作 Brief",
+        "name": "brief",
+        "stale": false,
+        "stale_reason": "",
+        "stale_sources": [],
+        "state": "draft",
+        "version": 1
+      },
+      "edl": {
+        "blocks": [
+          {
+            "body": "",
+            "id": "edl-plan",
+            "locked": false,
+            "title": "剪辑顺序"
+          },
+          {
+            "body": "",
+            "id": "edl-captions",
+            "locked": false,
+            "title": "字幕与声音"
+          },
+          {
+            "body": "",
+            "id": "edl-notes",
+            "locked": false,
+            "title": "人工精剪提示"
+          }
+        ],
+        "consumed_inputs": {},
+        "history": [
+          {
+            "actor": "system",
+            "blocks": [
+              {
+                "body": "",
+                "id": "edl-plan",
+                "locked": false,
+                "title": "剪辑顺序"
+              },
+              {
+                "body": "",
+                "id": "edl-captions",
+                "locked": false,
+                "title": "字幕与声音"
+              },
+              {
+                "body": "",
+                "id": "edl-notes",
+                "locked": false,
+                "title": "人工精剪提示"
+              }
+            ],
+            "consumer_surface_digest": "sha256:74714366809694fbb4656d22a799ad98feef86b3ec3758628ef533e0b1fde063",
+            "created_at": "2026-10-12T05:14:15Z",
+            "digest": "sha256:3baf826fa9fbaa2a36f147f19b361b317dd4f8b8a7094223b1f1cdf108d41b52",
+            "reason": "project_created",
+            "version": 1
+          }
+        ],
+        "label": "剪辑方案",
+        "name": "edl",
+        "stale": false,
+        "stale_reason": "",
+        "stale_sources": [],
+        "state": "draft",
+        "version": 1
+      },
+      "script": {
+        "authority_bridge": {
+          "authoring_authority": "creative_project_store",
+          "export_state": "pending_export",
+          "exported_at": null,
+          "exported_source_consumer_surface_digest": null,
+          "exported_source_document_version": null,
+          "schema_version": "document_authority_bridge_v1",
+          "source_consumer_surface_digest": "sha256:3a78a05b2e436cb76c08871ed5279ecf9a03de6490091bec95672250661b7867",
+          "source_document_version": 1,
+          "target_content_digest": null,
+          "target_relative_path": "04_script.md"
+        },
+        "blocks": [
+          {
+            "body": "",
+            "id": "script-hook",
+            "locked": false,
+            "title": "开头钩子"
+          },
+          {
+            "body": "",
+            "id": "script-body",
+            "locked": false,
+            "title": "主体推进"
+          },
+          {
+            "body": "",
+            "id": "script-ending",
+            "locked": false,
+            "title": "结尾与行动"
+          }
+        ],
+        "consumed_inputs": {},
+        "history": [
+          {
+            "actor": "system",
+            "blocks": [
+              {
+                "body": "",
+                "id": "script-hook",
+                "locked": false,
+                "title": "开头钩子"
+              },
+              {
+                "body": "",
+                "id": "script-body",
+                "locked": false,
+                "title": "主体推进"
+              },
+              {
+                "body": "",
+                "id": "script-ending",
+                "locked": false,
+                "title": "结尾与行动"
+              }
+            ],
+            "consumer_surface_digest": "sha256:3a78a05b2e436cb76c08871ed5279ecf9a03de6490091bec95672250661b7867",
+            "created_at": "2026-10-12T05:14:15Z",
+            "digest": "sha256:9e9fda3b236b42b727f2d3d7700d79f4a1706b2969e1c3481e989adfe2a01c47",
+            "reason": "project_created",
+            "version": 1
+          }
+        ],
+        "label": "脚本",
+        "name": "script",
+        "stale": false,
+        "stale_reason": "",
+        "stale_sources": [],
+        "state": "draft",
+        "version": 1
+      },
+      "storyboard": {
+        "blocks": [
+          {
+            "body": "",
+            "id": "storyboard-opening",
+            "locked": false,
+            "title": "开场镜头"
+          },
+          {
+            "body": "",
+            "id": "storyboard-development",
+            "locked": false,
+            "title": "展开镜头"
+          },
+          {
+            "body": "",
+            "id": "storyboard-ending",
+            "locked": false,
+            "title": "收束镜头"
+          }
+        ],
+        "consumed_inputs": {},
+        "history": [
+          {
+            "actor": "system",
+            "blocks": [
+              {
+                "body": "",
+                "id": "storyboard-opening",
+                "locked": false,
+                "title": "开场镜头"
+              },
+              {
+                "body": "",
+                "id": "storyboard-development",
+                "locked": false,
+                "title": "展开镜头"
+              },
+              {
+                "body": "",
+                "id": "storyboard-ending",
+                "locked": false,
+                "title": "收束镜头"
+              }
+            ],
+            "consumer_surface_digest": "sha256:2554f85cc02a29c89f7c8fee0cf520bbc28d4e9d58b3fb6e316544120c9a7fb8",
+            "created_at": "2026-10-12T05:14:15Z",
+            "digest": "sha256:ea40d1e564fe632cf123086f04395125adc0713a296c074596fdc6da734ad843",
+            "reason": "project_created",
+            "version": 1
+          }
+        ],
+        "label": "分镜",
+        "name": "storyboard",
+        "stale": false,
+        "stale_reason": "",
+        "stale_sources": [],
+        "state": "draft",
+        "version": 1
+      }
+    },
+    "id": "p3-504ca70e6f",
+    "inbox_confirmations": [],
+    "local_workspace": {
+      "workspace_id": "workspace-6391668a675f775d",
+      "label": "spoken",
+      "path_digest": "sha256:9ca744d2f642e0a4e6eb19c058aef0bc35dad784625bb7debbb1aae453ad385f",
+      "connected": true,
+      "kind": "local_directory",
+      "privacy": "local_only"
+    },
+    "platform": "未指定",
+    "publishing": {
+      "links": [],
+      "metrics": {},
+      "published_at": null,
+      "state": "not_published"
+    },
+    "publishing_history": [],
+    "references": [],
+    "revision": 1,
+    "schema_version": "creative_project_v1",
+    "status": "planning",
+    "title": "P3 合成口播实践：平均速度",
+    "updated_at": "2026-10-12T05:14:15Z"
+  },
+  "videoHandoff": {
+    "state": "returned",
+    "scriptAlignment": {
+      "mode": "script",
+      "notice": "已按稿对齐",
+      "reason": "exact_ordered_sentences",
+      "threshold": 0.8,
+      "alignment_rate": 1.0,
+      "work_id": "variant_0dcf754f355e4268b353073ed69cc916",
+      "work_revision": 4,
+      "script_version": 4,
+      "version_basis": "documentRef.revision",
+      "script_sha256": "6f024a0875fa5c31d53e9918ad4a802dfe5406547d26235aed5421d530fa4fb2",
+      "sentences": [
+        {
+          "sentence_index": 0,
+          "text": "我们用一个生活中的例子，讲清楚怎样计算一段旅程的平均速度。",
+          "status": "matched",
+          "start": 0.12,
+          "end": 4.48
+        },
+        {
+          "sentence_index": 1,
+          "text": "平均速度等于总路程除以总时间。",
+          "status": "matched",
+          "start": 9.35,
+          "end": 11.91
+        },
+        {
+          "sentence_index": 2,
+          "text": "假设你骑车去公园，去的时候道路平坦，骑得比较快，回来的时候遇到上坡，骑得比较慢，两段路的距离完全相同。",
+          "status": "matched",
+          "start": 12.11,
+          "end": 21.55
+        },
+        {
+          "sentence_index": 3,
+          "text": "很多人会把去程速度和回程速度加起来，再除以二，但这种算法忽略了两段路分别花了多少时间。",
+          "status": "matched",
+          "start": 21.75,
+          "end": 29.11
+        },
+        {
+          "sentence_index": 4,
+          "text": "慢的那一段会占用更多时间，所以真正的平均速度会更接近慢的那一个数值，而不是两个速度的简单平均。",
+          "status": "matched",
+          "start": 29.31,
+          "end": 37.54
+        },
+        {
+          "sentence_index": 5,
+          "text": "计算总时间的时候，要先用去程距离除以去程速度，再用回程距离除以回程速度，把两个时间相加。",
+          "status": "matched",
+          "start": 41.32,
+          "end": 50.2
+        },
+        {
+          "sentence_index": 6,
+          "text": "接着把去程和回程的路程相加，再除以刚才算出的总时间，就得到整个旅程的平均速度。",
+          "status": "matched",
+          "start": 50.4,
+          "end": 57.04
+        },
+        {
+          "sentence_index": 7,
+          "text": "我们可以用一个更简单的方法检查结果，只要慢的那一段占用更多时间，最后的平均速度就应当向慢的速度靠近。",
+          "status": "matched",
+          "start": 57.16,
+          "end": 65.68
+        },
+        {
+          "sentence_index": 8,
+          "text": "这个方法也适用于跑步和开车，先记录完整路程和完整用时，再做一次除法，就不会被几个局部速度误导。",
+          "status": "matched",
+          "start": 65.84,
+          "end": 73.9
+        }
+      ],
+      "missing_sentences": []
+    },
+    "mediaUrl": null,
+    "title": "P3 合成口播实践：平均速度",
+    "sourceDuration": 73.966667,
+    "materials": [
+      {
+        "role": "original",
+        "name": "source.mp4"
+      },
+      {
+        "role": "transcript",
+        "characters": 389,
+        "precision": "word"
+      }
+    ],
+    "animations": [],
+    "suggestions": [
+      {
+        "type": "silence",
+        "start": 4.48,
+        "end": 6.521333,
+        "id": 0,
+        "basis": "silence",
+        "text": "速度。",
+        "animationId": null,
+        "automatic": true
+      },
+      {
+        "type": "repetition",
+        "start": 6.59,
+        "end": 9.15,
+        "id": 1,
+        "basis": "script",
+        "text": "平均速度等于总路程除以总时间",
+        "animationId": null,
+        "automatic": true
+      },
+      {
+        "type": "silence",
+        "start": 37.54,
+        "end": 39.615583,
+        "id": 2,
+        "basis": "silence",
+        "text": "平均。",
+        "animationId": null,
+        "automatic": true
+      },
+      {
+        "type": "repetition",
+        "start": 39.64,
+        "end": 41.12,
+        "id": 3,
+        "basis": "script",
+        "text": "计算总时间的时候",
+        "animationId": null,
+        "automatic": true
+      }
+    ],
+    "shots": [
+      {
+        "shotId": "01",
+        "start": 0
+      }
+    ],
+    "waveformPeaks": [
+      0.279815673828125,
+      0.25201416015625,
+      0.282470703125,
+      0.278961181640625,
+      0.286163330078125,
+      0.247039794921875,
+      0.225830078125,
+      0.17974853515625,
+      0.299774169921875,
+      0.002655029296875,
+      0.1243896484375,
+      0.09503173828125,
+      0.11962890625,
+      0.13385009765625,
+      0.15875244140625,
+      0.225799560546875,
+      0.212554931640625,
+      0.182769775390625,
+      0.115631103515625,
+      0.1331787109375,
+      0.11529541015625,
+      0.144378662109375,
+      0.20550537109375,
+      0.213348388671875,
+      6.103515625e-05,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0001220703125,
+      0.124755859375,
+      0.14385986328125,
+      0.119598388671875,
+      0.13995361328125,
+      0.17852783203125,
+      0.232452392578125,
+      0.174591064453125,
+      0.254119873046875,
+      0.242767333984375,
+      0.201507568359375,
+      0.1654052734375,
+      0.2354736328125,
+      0.143585205078125,
+      0.348175048828125,
+      0.18646240234375,
+      0.142974853515625,
+      0.127410888671875,
+      0.118011474609375,
+      0.140594482421875,
+      0.22857666015625,
+      0.196685791015625,
+      0.25335693359375,
+      0.154388427734375,
+      0.242828369140625,
+      0.19854736328125,
+      0.165679931640625,
+      0.237884521484375,
+      0.142425537109375,
+      0.348297119140625,
+      0.059967041015625,
+      0.265167236328125,
+      0.125244140625,
+      0.363037109375,
+      0.214691162109375,
+      0.169036865234375,
+      0.34820556640625,
+      0.31768798828125,
+      0.326416015625,
+      0.31756591796875,
+      0.30572509765625,
+      0.02215576171875,
+      0.15142822265625,
+      0.229339599609375,
+      0.198333740234375,
+      0.295745849609375,
+      0.454803466796875,
+      0.271942138671875,
+      0.212982177734375,
+      0.322174072265625,
+      0.302490234375,
+      0.015960693359375,
+      0.346527099609375,
+      0.3292236328125,
+      0.30523681640625,
+      0.467864990234375,
+      0.02142333984375,
+      0.1678466796875,
+      0.47845458984375,
+      0.345245361328125,
+      0.3409423828125,
+      0.3524169921875,
+      0.413726806640625,
+      0.40216064453125,
+      0.356964111328125,
+      0.09796142578125,
+      0.116058349609375,
+      0.339141845703125,
+      0.175323486328125,
+      0.4290771484375,
+      0.0076904296875,
+      0.010650634765625,
+      0.31671142578125,
+      0.401123046875,
+      0.47454833984375,
+      0.354888916015625,
+      0.1939697265625,
+      0.385162353515625,
+      0.353485107421875,
+      0.29998779296875,
+      0.255615234375,
+      0.20849609375,
+      0.189544677734375,
+      0.22247314453125,
+      0.27838134765625,
+      0.27978515625,
+      0.44122314453125,
+      0.1552734375,
+      0.134033203125,
+      0.159637451171875,
+      0.225616455078125,
+      0.1795654296875,
+      0.2403564453125,
+      0.158294677734375,
+      0.163177490234375,
+      0.224578857421875,
+      0.33856201171875,
+      0.199127197265625,
+      0.1575927734375,
+      0.020416259765625,
+      0.27532958984375,
+      0.2098388671875,
+      0.34295654296875,
+      0.1055908203125,
+      0.00018310546875,
+      0.000732421875,
+      0.2379150390625,
+      0.27740478515625,
+      0.25482177734375,
+      0.3116455078125,
+      0.172119140625,
+      0.295654296875,
+      0.19384765625,
+      0.228179931640625,
+      0.200927734375,
+      0.02557373046875,
+      0.190185546875,
+      0.259185791015625,
+      0.440338134765625,
+      0.202484130859375,
+      0.202484130859375,
+      0.078338623046875,
+      0.219940185546875,
+      0.093017578125,
+      0.290374755859375,
+      0.277099609375,
+      0.25714111328125,
+      0.37554931640625,
+      0.22467041015625,
+      0.269622802734375,
+      0.225433349609375,
+      0.19342041015625,
+      0.158447265625,
+      0.19140625,
+      0.191131591796875,
+      0.000152587890625,
+      0.000152587890625,
+      0.261444091796875,
+      0.312744140625,
+      0.021575927734375,
+      0.186126708984375,
+      0.219268798828125,
+      0.24139404296875,
+      0.086181640625,
+      0.140899658203125,
+      0.210235595703125,
+      0.306549072265625,
+      0.201202392578125,
+      0.244049072265625,
+      0.256103515625,
+      0.408935546875,
+      0.221221923828125,
+      0.15869140625,
+      0.14373779296875,
+      0.143798828125,
+      0.160369873046875,
+      0.002593994140625,
+      0.008453369140625,
+      0.264007568359375,
+      0.217559814453125,
+      0.1539306640625,
+      0.08392333984375,
+      0.15338134765625,
+      0.201385498046875,
+      0.176116943359375,
+      0.286163330078125,
+      0.088470458984375,
+      0.10400390625,
+      0.09698486328125,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.000152587890625,
+      0.1607666015625,
+      0.312255859375,
+      0.20709228515625,
+      0.126708984375,
+      0.329315185546875,
+      0.228790283203125,
+      0.161865234375,
+      0.25494384765625,
+      0.003082275390625,
+      0.14727783203125,
+      0.305816650390625,
+      0.248382568359375,
+      0.2242431640625,
+      0.15753173828125,
+      0.31231689453125,
+      0.283294677734375,
+      0.309661865234375,
+      0.369842529296875,
+      0.0201416015625,
+      0.191070556640625,
+      0.2196044921875,
+      0.231781005859375,
+      0.169525146484375,
+      0.14752197265625,
+      0.157318115234375,
+      0.13140869140625,
+      0.175994873046875,
+      0.009796142578125,
+      0.054412841796875,
+      0.209503173828125,
+      0.105926513671875,
+      0.209259033203125,
+      0.184539794921875,
+      0.251007080078125,
+      0.20147705078125,
+      0.0235595703125,
+      0.17596435546875,
+      0.1656494140625,
+      0.2261962890625,
+      0.2198486328125,
+      0.125518798828125,
+      0.193206787109375,
+      0.152801513671875,
+      0.18817138671875,
+      0.218048095703125,
+      0.165283203125,
+      0.2528076171875,
+      0.227294921875,
+      0.008087158203125,
+      0.00830078125,
+      0.193206787109375,
+      0.14215087890625,
+      0.11724853515625,
+      0.275115966796875,
+      0.24627685546875,
+      0.252593994140625,
+      0.475006103515625,
+      0.066375732421875,
+      0.300537109375,
+      0.4449462890625,
+      0.417449951171875,
+      0.362518310546875,
+      0.30511474609375,
+      0.324493408203125,
+      0.45916748046875,
+      0.40692138671875,
+      0.344329833984375,
+      0.18017578125,
+      0.312103271484375,
+      0.455841064453125,
+      0.441192626953125,
+      0.011260986328125,
+      0.36309814453125,
+      0.328704833984375,
+      0.319366455078125,
+      0.4537353515625,
+      0.37579345703125,
+      0.325103759765625,
+      0.33013916015625,
+      0.311279296875,
+      0.240509033203125,
+      0.3575439453125,
+      0.25921630859375,
+      0.00531005859375,
+      0.274688720703125,
+      0.4609375,
+      0.518463134765625,
+      0.289276123046875,
+      0.352294921875,
+      0.190277099609375,
+      0.277130126953125,
+      0.171478271484375,
+      0.2454833984375,
+      0.348785400390625,
+      0.25103759765625,
+      0.2435302734375,
+      0.229888916015625,
+      0.247711181640625,
+      0.338897705078125,
+      0.254638671875,
+      0.314605712890625,
+      0.240753173828125,
+      0.315826416015625,
+      0.310455322265625,
+      0.31329345703125,
+      0.239105224609375,
+      0.239501953125,
+      0.375030517578125,
+      0.279541015625,
+      0.0103759765625,
+      0.0418701171875,
+      0.43499755859375,
+      0.500335693359375,
+      0.285430908203125,
+      0.280242919921875,
+      0.408538818359375,
+      0.249847412109375,
+      0.23358154296875,
+      0.249298095703125,
+      0.13995361328125,
+      0.248443603515625,
+      0.14453125,
+      0.006256103515625,
+      0.330230712890625,
+      0.335845947265625,
+      0.134613037109375,
+      0.130767822265625,
+      0.131317138671875,
+      0.195281982421875,
+      0.26226806640625,
+      0.013031005859375,
+      0.27471923828125,
+      0.221221923828125,
+      0.316436767578125,
+      0.17352294921875,
+      0.314788818359375,
+      0.247711181640625,
+      0.18218994140625,
+      0.235809326171875,
+      0.2354736328125,
+      0.19024658203125,
+      0.343902587890625,
+      0.34967041015625,
+      0.40643310546875,
+      0.526611328125,
+      0.34368896484375,
+      0.15692138671875,
+      0.374267578125,
+      0.257171630859375,
+      0.195648193359375,
+      0.24176025390625,
+      0.2115478515625,
+      0.2711181640625,
+      0.30633544921875,
+      0.202972412109375,
+      0.00970458984375,
+      0.264129638671875,
+      0.212677001953125,
+      0.326263427734375,
+      0.35205078125,
+      0.35137939453125,
+      0.26715087890625,
+      0.247894287109375,
+      0.201751708984375,
+      0.2657470703125,
+      0.188690185546875,
+      0.18701171875,
+      0.143585205078125,
+      0.12957763671875,
+      0.22802734375,
+      0.25048828125,
+      0.186370849609375,
+      0.168792724609375,
+      0.278839111328125,
+      0.266357421875,
+      0.007598876953125,
+      0.261444091796875,
+      0.25189208984375,
+      0.26934814453125,
+      0.147552490234375,
+      0.219635009765625,
+      0.155303955078125,
+      0.230224609375,
+      0.205963134765625,
+      0.205169677734375,
+      0.21148681640625
+    ],
+    "tools": {
+      "chatcut": {
+        "installed": true,
+        "version": "0.6.9",
+        "login": null,
+        "handshake": false,
+        "projectRef": null,
+        "projectUrl": null
+      },
+      "kdenlive": {
+        "installed": true,
+        "version": "26.04"
+      }
+    },
+    "precutCount": null,
+    "exported": false,
+    "animationCount": 0,
+    "candidate": {
+      "status": "candidate",
+      "durationSeconds": 65.8,
+      "frameCount": 1974,
+      "returnedAt": "2026-10-13T03:45:11.149688Z",
+      "checks": {
+        "playable": "pass",
+        "avSync": "pass",
+        "frameCount": "pass",
+        "sourceUnchanged": "pass",
+        "avOffsetSeconds": 0.01300000000000523,
+        "avOffsetLimitSeconds": 0.1,
+        "actualFrames": 1974,
+        "expectedFrames": 1974
+      }
+    },
+    "editorName": "剪映",
+    "choice": {
+      "editor": "otio_kdenlive",
+      "method": "guide",
+      "revision": 3
+    },
+    "uploaded": false,
+    "editors": [
+      {
+        "id": "otio_kdenlive",
+        "display_name": "Kdenlive / MLT",
+        "license": "GPL-3.0-only",
+        "capabilities": {
+          "automatic_first_cut": true,
+          "transparent_overlay": true,
+          "chinese_subtitle_burn_in": true,
+          "web_refine": false,
+          "undo": false,
+          "read_back": true,
+          "export_formats": [
+            "mp4"
+          ]
+        },
+        "probe": {
+          "id": "otio_kdenlive",
+          "installed": true,
+          "version": "melt 7.39.0",
+          "runnable": true,
+          "status": "online",
+          "reason": null
+        }
+      },
+      {
+        "id": "openfilm",
+        "display_name": "openfilm",
+        "license": "MIT",
+        "capabilities": {
+          "automatic_first_cut": true,
+          "transparent_overlay": true,
+          "chinese_subtitle_burn_in": true,
+          "web_refine": true,
+          "undo": true,
+          "read_back": true,
+          "export_formats": [
+            "mp4",
+            "srt"
+          ]
+        },
+        "probe": {
+          "id": "openfilm",
+          "installed": false,
+          "version": null,
+          "runnable": false,
+          "status": "unavailable",
+          "reason": "openfilm_runtime_unavailable"
+        }
+      },
+      {
+        "id": "openchatcut",
+        "display_name": "OpenChatCut",
+        "license": "AGPL-3.0-or-later",
+        "capabilities": {
+          "automatic_first_cut": true,
+          "transparent_overlay": true,
+          "chinese_subtitle_burn_in": true,
+          "web_refine": true,
+          "undo": true,
+          "read_back": true,
+          "export_formats": [
+            "mp4"
+          ]
+        },
+        "probe": {
+          "id": "openchatcut",
+          "installed": true,
+          "version": null,
+          "runnable": false,
+          "status": "unavailable",
+          "reason": "openchatcut_runtime_missing"
+        }
+      },
+      {
+        "id": "chatcut",
+        "display_name": "ChatCut",
+        "license": "闭源",
+        "capability_notes": {
+          "automatic_first_cut": "登录后",
+          "transparent_overlay": "待验证",
+          "chinese_subtitle_burn_in": "待验证",
+          "undo": "软件内"
+        },
+        "capabilities": {
+          "automatic_first_cut": true,
+          "transparent_overlay": false,
+          "chinese_subtitle_burn_in": false,
+          "web_refine": false,
+          "undo": false,
+          "read_back": false,
+          "export_formats": [
+            "mp4"
+          ]
+        },
+        "probe": {
+          "id": "chatcut",
+          "installed": true,
+          "version": "0.6.9",
+          "runnable": false,
+          "status": "unavailable",
+          "reason": "chatcut_handshake_required",
+          "login": null
+        }
+      }
+    ],
+    "selectedEditing": {
+      "method": "jianying_guidance",
+      "editor": {
+        "toolId": "jianying",
+        "displayName": "剪映"
+      }
+    },
+    "availableEditors": {
+      "otherCount": 1,
+      "displayName": [
+        "Kdenlive / MLT"
+      ]
+    },
+    "studioUrl": "http://127.0.0.1:8765/",
+    "identity": {
+      "catalogDigest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
+      "confirmationRef": "confirm_633a27a83ec5437fb81b5c8d0a5629ec",
+      "confirmedContentDigest": "sha256:18b0b0f3aef2d424490a1ad7a168b91dbe67365b2e0f5d4aace34c2df79e251d",
+      "jobId": "job_4b8d01c9733c4443a2a00c0e044c6005",
+      "photoProjectId": "p3-504ca70e6f",
+      "photoProjectRevision": 1,
+      "publicContentId": "content_f223b473d1364951a77d617783743718",
+      "publicTenantId": "ten_ea973d2e85db339bb9809356732ca497",
+      "publicVariantId": "variant_0dcf754f355e4268b353073ed69cc916",
+      "workRevision": 4
+    },
+    "projectRevision": 1,
+    "candidates": [
+      {
+        "status": "candidate",
+        "durationSeconds": 65.8,
+        "frameCount": 1974,
+        "editingMethod": "jianying_guidance",
+        "provenance": "manual_export",
+        "editorName": "剪映",
+        "previewUrl": "/api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab"
+      }
+    ],
+    "subtitleAvailable": true,
+    "sourceName": "source.mp4",
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "sourceFps": 30.0,
+    "subtitleCues": [
+      {
+        "start": 0.0,
+        "end": 4.44,
+        "text": "我们用一个生活中的例子，讲清楚怎样计算一段旅程的平均速度。"
+      },
+      {
+        "start": 6.44,
+        "end": 9.185,
+        "text": "平均速度等于总路程除以总时间。"
+      },
+      {
+        "start": 9.185,
+        "end": 11.93,
+        "text": "平均速度等于总路程除以总时间。"
+      },
+      {
+        "start": 11.93,
+        "end": 21.623,
+        "text": "假设你骑车去公园，去的时候道路平坦，骑得比较快，回来的时候遇到上坡，骑得比较慢，两段路的距离完全相同。"
+      },
+      {
+        "start": 21.623,
+        "end": 29.164,
+        "text": "很多人会把去程速度和回程速度加起来，再除以二，但这种算法忽略了两段路分别花了多少时间。"
+      },
+      {
+        "start": 29.164,
+        "end": 37.52,
+        "text": "慢的那一段会占用更多时间，所以真正的平均速度会更接近慢的那一个数值，而不是两个速度的简单平均。"
+      },
+      {
+        "start": 39.52,
+        "end": 41.137,
+        "text": "计算总时间的时候，"
+      },
+      {
+        "start": 41.137,
+        "end": 50.236,
+        "text": "计算总时间的时候，要先用去程距离除以去程速度，再用回程距离除以回程速度，把两个时间相加。"
+      },
+      {
+        "start": 50.236,
+        "end": 57.051,
+        "text": "接着把去程和回程的路程相加，再除以刚才算出的总时间，就得到整个旅程的平均速度。"
+      },
+      {
+        "start": 57.051,
+        "end": 65.689,
+        "text": "我们可以用一个更简单的方法检查结果，只要慢的那一段占用更多时间，最后的平均速度就应当向慢的速度靠近。"
+      },
+      {
+        "start": 65.689,
+        "end": 73.966,
+        "text": "这个方法也适用于跑步和开车，先记录完整路程和完整用时，再做一次除法，就不会被几个局部速度误导。"
+      }
+    ]
+  }
+}

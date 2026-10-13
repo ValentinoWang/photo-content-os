@@ -1,0 +1,2067 @@
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57834)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 54] Connection reset by peer
+----------------------------------------
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57837)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57833)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57907)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57910)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57906)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57942)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57941)
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57969)
+Traceback (most recent call last):
+----------------------------------------
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+Exception occurred during processing of request from ('127.0.0.1', 57970)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57991)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57990)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58012)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58011)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58039)
+Traceback (most recent call last):
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58038)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58062)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58061)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58084)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58085)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58110)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58109)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58138)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58139)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58159)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58158)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58183)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58182)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58202)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58203)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58248)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58247)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58279)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58278)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53081)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53080)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53104)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53103)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53142)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53141)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53181)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53180)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53215)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53216)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53248)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53247)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Traceback (most recent call last):
+----------------------------------------
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53266)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53267)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53289)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53290)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /app/project/p3-504ca70e6f HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53318)
+Traceback (most recent call last):
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53319)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+studio: "GET /styles.css HTTP/1.1" 200 -
+studio: "GET /workflow.css HTTP/1.1" 200 -
+studio: "GET /app.js HTTP/1.1" 200 -
+studio: "GET /video-actions.js HTTP/1.1" 200 -
+studio: "GET /handoff.js HTTP/1.1" 200 -
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "GET /api/settings HTTP/1.1" 200 -
+studio: "GET /api/settings/analysis-budget HTTP/1.1" 200 -
+studio: "GET /api/diagnostics HTTP/1.1" 200 -
+studio: "GET /api/setup/state HTTP/1.1" 200 -
+studio: "GET /api/upstream/tasks HTTP/1.1" 200 -
+studio: "GET /api/assets HTTP/1.1" 200 -
+studio: "GET /api/assets/statistics HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f HTTP/1.1" 200 -
+studio: "POST /api/projects/p3-504ca70e6f/inbox-plan HTTP/1.1" 400 -
+studio: "POST /api/projects/p3-504ca70e6f/media-delete/recommendations HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+studio: "GET /api/projects/p3-504ca70e6f/video-preview/candidate_05089a257e35680895dc09a4e91d80ab HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53338)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53337)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 770, in do_GET
+    self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/studio/server.py", line 629, in _send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Photo Content OS Studio: http://127.0.0.1:8765/
+Local state: /Users/vsiyo/.photo-content-os/studio
+
+Studio stopped.
