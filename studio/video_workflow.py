@@ -112,7 +112,7 @@ class VideoWorkflow:
         data['selectedEditing']={'method':method,'editor':{'toolId':'jianying' if method=='jianying_guidance' else chosen,'displayName':'剪映' if method=='jianying_guidance' else selected['display_name']}}
         names=[r['display_name'] for r in rows if r['id']!=('jianying' if method=='jianying_guidance' else chosen) and r['probe']['runnable']]
         data['availableEditors']={'otherCount':len(names),'displayName':names}
-        data['studioUrl']=self.origin
+        data['studioUrl']=self.origin.rstrip('/')+'/' if self.origin else None
         data['identity'] = ctx['identity']
         data['projectRevision'] = self.app.store.get_project(project_id)['revision']
         session = self._session(ctx)

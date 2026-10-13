@@ -50,6 +50,14 @@ class StudioHandoffTests(unittest.TestCase):
         self.write(path, {'editor':editor})
         os.environ['OPENCLAW_MEDIA_VIDEO_TOOLS_REPORT']=str(path)
 
+    def test_studio_url_always_identifies_the_root(self):
+        for origin in ('http://127.0.0.1:8765', 'http://127.0.0.1:8765/', 'http://localhost:8765'):
+            with self.subTest(origin=origin):
+                self.app.video_workflow.origin = origin
+                self.assertEqual(self.projection()['studioUrl'], origin.rstrip('/') + '/')
+        self.app.video_workflow.origin = None
+        self.assertIsNone(self.projection()['studioUrl'])
+
     def test_installation_does_not_prove_login_or_handshake(self):
         data=self.projection()
         self.assertIsNone(data['tools']['chatcut']['login'])
