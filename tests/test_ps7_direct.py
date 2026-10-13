@@ -5,10 +5,16 @@ from pathlib import Path
 import tempfile
 import unittest
 import sys
+import os
+import hashlib
+import subprocess
+from unittest.mock import patch
 
 from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from video_candidate import failed_shot_progress
+from studio.project_store import ProjectStore, ProjectStoreError
+from studio.server import StudioApplication
 
 
 class DirectReceiptTests(unittest.TestCase):
@@ -44,7 +50,7 @@ class DirectReceiptTests(unittest.TestCase):
 
     def test_missing_diagnostics_are_unknown_and_retry_filters_unaffected_shot(self):
         descriptor = {**self.descriptor, 'retryShotId': '02'}
-        for line, asset in [(None, None), (True, 'bad\nname.svg'), (-1, '..'), (14.2, 'image.svg?secret=x')]:
+        for line, asset in [(None, None), (True, 'bad\nname.svg'), (-1, '..'), (14.2, 'image.svg?secret=x'), (2147483648, 'a' * 121)]:
             with self.subTest(line=line, asset=asset):
                 self.native['shots'][1].update(line=line, file=asset)
                 result = failed_shot_progress(self.native, descriptor, 30, output_dir=self.root, workspace=self.root)
@@ -54,3 +60,87 @@ class DirectReceiptTests(unittest.TestCase):
         self.native['shots'][1].update(line=14, file=r'C:\private\figure.svg')
         result = failed_shot_progress(self.native, descriptor, 30)
         self.assertEqual(result['shotProgress'][0]['missingAsset'], 'figure.svg')
+
+
+class DirectStudioTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='ps7-studio-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.media = self.root / 'media'
+        self.media.mkdir()
+        self.app = StudioApplication(ProjectStore(self.root / 'state'))
+        self.project = self.app.store.create_project(title='直出测试', local_workspace=str(self.media))
+        self.identity = {'jobId': 'ps7_direct', 'photoProjectId': self.project['id'], 'photoProjectRevision': 1}
+        self.run = self.media / 'runs' / hashlib.sha256(b'ps7_direct').hexdigest()[:32]
+        self.run.mkdir(parents=True)
+        self.binding = self.root / 'binding.json'
+        self.write(self.root / 'creative.json', {'projects': [self.project]})
+        self.write(self.binding, {'identity': {'project_id': self.project['id'], 'project_revision': 1, 'job_id': 'ps7_direct'},
+            'project_root': str(self.media), 'creative_store': str(self.root / 'creative.json'), 'source_refs': [],
+            'steps': [{'action': 'compose', 'kwargs': {}}]})
+        self.write(self.media / 'video.json', {'scope': 'video_handoff_v1', 'identity': self.identity, 'shots': [], 'animations': []})
+        self.payload = {'candidate': {'identity': self.identity, 'publicCandidateId': 'candidate_ps7', 'status': 'candidate',
+            'durationSeconds': 50.233333, 'sourceDurationSeconds': 50.233333, 'frameCount': 1507, 'cutCount': 0}, 'preview_ref': 'preview.mp4'}
+        self.write(self.run / 'handoff_manifest.json', self.payload)
+        (self.media / 'preview.mp4').write_bytes(b'bounded preview fixture')
+        self.env = patch.dict(os.environ, {'LOCAL_MEDIA_ROOT': str(self.media), 'PHOTO_STUDIO_VIDEO_WORKSPACE': str(self.media),
+            'PHOTO_STUDIO_VIDEO_BINDING': str(self.binding), 'OPENCLAW_MEDIA_VIDEO_TOOLS_REPORT': ''})
+        self.env.start()
+        self.addCleanup(self.env.stop)
+
+    @staticmethod
+    def write(path, data):
+        path.write_text(json.dumps(data))
+
+    def test_bound_direct_candidate_uses_existing_preview_without_editor_probe(self):
+        before = (self.run / 'handoff_manifest.json').read_bytes()
+        with patch.object(self.app.video_workflow, 'editors', side_effect=AssertionError('direct must not probe editors')):
+            data = self.app.video_handoff_projection(self.project['id'])
+        self.assertEqual(data['line'], 'direct')
+        self.assertEqual(data['editorName'], '本机逐帧渲染')
+        self.assertEqual(len(data['candidates']), 1)
+        self.assertEqual(data['candidates'][0]['previewUrl'], f'/api/projects/{self.project["id"]}/video-preview/candidate_ps7')
+        self.assertEqual(self.app.video_workflow.preview(self.project['id'], 'candidate_ps7'), (self.media / 'preview.mp4').resolve())
+        self.assertEqual((self.run / 'handoff_manifest.json').read_bytes(), before)
+        self.assertFalse((self.run / 'studio-candidates.json').exists())
+        self.assertNotIn('selectedEditing', data)
+
+    def test_preview_rejects_other_identity_outside_workspace_and_missing_file(self):
+        for change in ['identity', 'outside', 'missing']:
+            with self.subTest(change=change):
+                payload = copy.deepcopy(self.payload)
+                if change == 'identity':
+                    payload['candidate']['identity']['jobId'] = 'stale_job'
+                else:
+                    payload['preview_ref'] = '../secret.mp4' if change == 'outside' else 'missing.mp4'
+                    (self.root / 'secret.mp4').write_bytes(b'private')
+                self.write(self.run / 'handoff_manifest.json', payload)
+                data = self.app.video_handoff_projection(self.project['id'])
+                self.assertFalse(any(c['previewUrl'] for c in data['candidates']))
+                with self.assertRaises(ProjectStoreError):
+                    self.app.video_workflow.preview(self.project['id'], 'candidate_ps7')
+
+    def test_real_renderer_omits_editing_controls_for_direct_candidates(self):
+        module = (Path(__file__).resolve().parents[1] / 'studio/static/handoff.js').as_uri()
+        data = self.app.video_handoff_projection(self.project['id'])
+        code = r'''
+import assert from 'node:assert/strict';
+const {renderHandoff}=await import(MODULE);
+globalThis.location={origin:'http://127.0.0.1:8765'};
+globalThis.window={addEventListener(){},removeEventListener(){}};
+const target={querySelector(){return null},querySelectorAll(){return []}};
+const data=DATA;
+for(const state of ['returned','check-failed']){
+ data.state=state;
+ if(state==='check-failed'){data.candidate.checks={playable:'fail'};data.candidates=[];}
+ renderHandoff(target,data,{photoOrigin:location.origin});
+ assert(target.innerHTML.includes('脚本直出'));
+ assert(target.innerHTML.includes('本机逐帧渲染'));
+ for(const forbidden of ['data-method=','Kdenlive','0 处预剪','剪辑建议','return-input','software-disclosure'])assert(!target.innerHTML.includes(forbidden),forbidden);
+ if(state==='returned')assert(target.innerHTML.includes('/video-preview/candidate_ps7'));
+ else assert(target.innerHTML.includes('检查失败，这一版不能采用'));
+}
+'''.replace('MODULE', json.dumps(module)).replace('DATA', json.dumps(data))
+        result = subprocess.run(['node', '--input-type=module', '-e', code], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)

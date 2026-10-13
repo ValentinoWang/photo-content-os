@@ -424,6 +424,7 @@ class StudioApplication:
         if images:
             assets.append({"role": "images", "count": len(images), "pending": sum(i.get("rightsStatus") != "confirmed" for i in images)})
         return {"state": "check-failed" if candidate and candidate_failed(candidate) else "returned" if candidate else "connected" if handshake else "offline", "scriptAlignment": suggestions.get("script_alignment", {}), "mediaUrl": descriptor.get("mediaUrl") if isinstance(descriptor.get("mediaUrl"), str) and urllib.parse.urlparse(descriptor["mediaUrl"]).scheme in {"http", "https"} else None, "title": project["title"],
+                "line": "direct" if any(step.get("action") == "compose" for step in binding.get("steps", [])) else None,
                 "sourceDuration": number(duration), "materials": assets, "animations": animations,
                 "suggestions": cuts, "shots": shots, "waveformPeaks": peaks,
                 "tools": {"chatcut": {"installed": installed["installed"], "version": installed["version"],

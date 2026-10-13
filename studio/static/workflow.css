@@ -285,6 +285,7 @@
 .handoff .workflow-head .eyebrow{display:none}
 .handoff .workflow-head h2{margin:0 0 6px;font-size:22px}
 .handoff .mode-body{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;margin:0 24px 24px;align-items:start}
+.handoff[data-production-line="direct"] .mode-body{grid-template-columns:minmax(0,1fr);margin-top:20px}
 .handoff .mode-main{min-width:0}
 .handoff .mode-main>.card,.handoff .mode-main>.return-zone,.handoff .mode-main>.software-disclosure,.handoff .mode-main>.attn{margin:0 0 18px}
 .handoff .mode-summary{position:sticky;top:16px;padding:16px 18px;border:1px solid var(--rule);border-radius:12px;background:var(--panel)}

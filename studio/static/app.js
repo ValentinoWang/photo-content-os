@@ -96,7 +96,7 @@ function renderProject() {
     document.querySelector('.main').dataset.designId = `studio-${state.videoHandoff.state}`;
     $('#screen-title').textContent = '剪这件作品';
     $('#screen-sub').setAttribute('data-design-data','project.title/sourceDuration');
-    $('#screen-sub').textContent = `${project.title}${Number.isFinite(state.videoHandoff.sourceDuration) ? ` · 原片 ${formatDuration(state.videoHandoff.sourceDuration)}` : ''} · 来自 MediaClaw 作品`;
+    $('#screen-sub').textContent = `${project.title}${Number.isFinite(state.videoHandoff.sourceDuration) ? ` · ${state.videoHandoff.line === 'direct' ? '配音' : '原片'} ${formatDuration(state.videoHandoff.sourceDuration)}` : ''} · 来自 MediaClaw 作品`;
     }
     renderHandoff(target, state.videoHandoff, videoActions({projectId:project.id,csrf:state.csrf,getData:()=>state.videoHandoff}));
     return;

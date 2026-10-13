@@ -95,10 +95,46 @@ class VideoWorkflow:
         suggestions = run / 'native-suggest.json'
         if not suggestions.is_file(): suggestions = root / 'ai-analysis/edit_suggestions.json'
         return {'data': data, 'root': root, 'run': run, 'workspace': workspace, 'descriptor': descriptor,
-                'identity': identity, 'key': key, 'source': source, 'subtitles': subs, 'suggestions_path': suggestions}
+                'identity': identity, 'key': key, 'source': source, 'subtitles': subs, 'suggestions_path': suggestions, 'binding': binding}
+
+    def candidate_records(self, ctx):
+        records = copy.deepcopy(self.app._video_json(ctx['run'], 'studio-candidates.json'))
+        entries = records.setdefault('candidates', [])
+        previews = records.setdefault('previews', {})
+        payload = (self.app._video_json(ctx['run'], 'studio-candidate.json')
+                   or self.app._video_json(ctx['root'], ctx.get('binding', {}).get('candidate_ref', 'candidate.json'))
+                   or self.app._video_json(ctx['run'], 'handoff_manifest.json'))
+        candidate = payload.get('candidate', {})
+        cid = candidate.get('publicCandidateId')
+        if candidate.get('identity') == ctx['identity'] and cid:
+            if not any(c.get('publicCandidateId') == cid for c in entries):
+                entries.append(candidate)
+            if payload.get('preview_ref'):
+                previews.setdefault(cid, payload['preview_ref'])
+        return records
+
+    def public_candidates(self, project_id, ctx, *, direct=False):
+        records = self.candidate_records(ctx)
+        rows = []
+        for candidate in records['candidates']:
+            if candidate.get('identity') != ctx['identity']:
+                continue
+            cid = candidate.get('publicCandidateId')
+            ref = records['previews'].get(cid)
+            path = (ctx['workspace'] / ref).resolve() if ref else None
+            available = path is not None and path.is_relative_to(ctx['workspace']) and path.is_file() and path.stat().st_size <= 20*1024**2
+            rows.append({**{k: candidate[k] for k in ('status', 'durationSeconds', 'frameCount', 'cutCount', 'editingMethod', 'provenance') if k in candidate},
+                         'editorName': '本机逐帧渲染' if direct else candidate.get('editor', {}).get('displayName'),
+                         'previewUrl': f'/api/projects/{project_id}/video-preview/{cid}' if available else None})
+        return rows
 
     def projection(self, project_id, data):
         ctx = self.context(project_id)
+        if data.get('line') == 'direct':
+            data.update(identity=ctx['identity'], projectRevision=self.app.store.get_project(project_id)['revision'],
+                        studioUrl=self.origin.rstrip('/')+'/' if self.origin else None,
+                        editorName='本机逐帧渲染', candidates=self.public_candidates(project_id, ctx, direct=True))
+            return data
         rows = self.editors()
         for row in rows:
             if row['id'] == 'chatcut':
@@ -133,8 +169,7 @@ class VideoWorkflow:
             data['state']='connected' if selected['probe']['runnable'] else 'connected-unavailable'
         if candidate_failed(data.get('candidate', {})) and not data['state'].startswith('self'):
             data['state'] = 'check-failed'
-        records=self.app._video_json(ctx['run'],'studio-candidates.json').get('candidates',[])
-        data['candidates']=[{**{k:c[k] for k in ('status','durationSeconds','frameCount','cutCount','editingMethod','provenance') if k in c},'editorName':c.get('editor',{}).get('displayName'),'previewUrl':f"/api/projects/{project_id}/video-preview/{c['publicCandidateId']}" if c.get('publicCandidateId') else None} for c in records if c.get('identity')==ctx['identity']]
+        data['candidates'] = self.public_candidates(project_id, ctx)
         if ctx['suggestions_path'].is_file() and data.get('sourceDuration'):
             from edit_backends.kdenlive_render import plan_ranges, remap_span
             raw=self.app._video_json(ctx['suggestions_path'].parent,ctx['suggestions_path'].name)
@@ -565,7 +600,7 @@ class VideoWorkflow:
 
     def preview(self, project_id, candidate_id):
         ctx=self.context(project_id)
-        records=self.app._video_json(ctx['run'],'studio-candidates.json')
+        records=self.candidate_records(ctx)
         if not any(c.get('publicCandidateId')==candidate_id and c.get('identity')==ctx['identity'] for c in records.get('candidates',[])):
             raise ProjectStoreError('video_preview_missing','候选预览不可用')
         ref=records.get('previews',{}).get(candidate_id,'')

@@ -162,12 +162,12 @@ def failed_shot_progress(native: dict, descriptor: dict, fps: float, *,
                          'failureCode': code, 'lineNumber': None, 'assetName': None, 'timeoutSeconds': None, 'codeExcerpt': None})
         if shot['status'] == 'failed':
             line = shot.get('line')
-            if type(line) is int and line > 0:
+            if type(line) is int and 1 <= line <= 2147483647:
                 progress[-1]['failedLine'] = line
             asset = shot.get('file')
             if isinstance(asset, str):
                 name = asset.replace('\\', '/').rsplit('/', 1)[-1]
-                if name not in {'', '.', '..'} and len(name) <= 255 and not any(ord(c) < 32 or ord(c) == 127 or c in ':?#' for c in name):
+                if name not in {'', '.', '..'} and len(name) <= 120 and not any(ord(c) < 32 or ord(c) == 127 or c in ':?#' for c in name):
                     progress[-1]['missingAsset'] = name
         elif output_dir is not None and workspace is not None:
             progress[-1].update(shot_poster(shot, output_dir, workspace))
