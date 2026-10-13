@@ -136,8 +136,18 @@ def cut_projection(plan: dict, source_duration: float) -> list[dict]:
     return cuts
 
 
-def failed_shot_progress(native: dict, descriptor: dict, fps: float) -> dict:
-    """Bound real failed-render counters without exposing native diagnostics."""
+def shot_poster(shot: dict, output_dir: Path, workspace: Path) -> dict:
+    from video_derivatives import jpeg_frame
+    poster = output_dir / ('poster-' + shot['id'] + '.jpg')
+    measured = jpeg_frame(Path(shot['frames_dir']) / 'frame-000000.png', poster)
+    return {'poster_ref': str(poster.resolve().relative_to(workspace.resolve())),
+            'poster_width': measured['width'], 'poster_height': measured['height'],
+            'poster_short_edge': measured['shortEdge']}
+
+
+def failed_shot_progress(native: dict, descriptor: dict, fps: float, *,
+                         output_dir: Path | None = None, workspace: Path | None = None) -> dict:
+    """Project measured counters, a bounded line number and only an asset basename."""
     known = {row['shot']['shotId'] for row in descriptor['shots']}
     selected = {descriptor['retryShotId']} if descriptor.get('retryShotId') else set(descriptor.get('renderShotIds', known))
     progress = []
@@ -150,6 +160,17 @@ def failed_shot_progress(native: dict, descriptor: dict, fps: float) -> dict:
         progress.append({'shotId': shot['id'], 'status': shot['status'], 'renderedFrames': shot.get('progress_frames', 0),
                          'totalFrames': shot['total_frames'], 'durationSeconds': shot['total_frames'] / fps,
                          'failureCode': code, 'lineNumber': None, 'assetName': None, 'timeoutSeconds': None, 'codeExcerpt': None})
+        if shot['status'] == 'failed':
+            line = shot.get('line')
+            if type(line) is int and line > 0:
+                progress[-1]['failedLine'] = line
+            asset = shot.get('file')
+            if isinstance(asset, str):
+                name = asset.replace('\\', '/').rsplit('/', 1)[-1]
+                if name not in {'', '.', '..'} and len(name) <= 255 and not any(ord(c) < 32 or ord(c) == 127 or c in ':?#' for c in name):
+                    progress[-1]['missingAsset'] = name
+        elif output_dir is not None and workspace is not None:
+            progress[-1].update(shot_poster(shot, output_dir, workspace))
     failed = [shot['shotId'] for shot in progress if shot['status'] == 'failed']
     return {'shotProgress': progress, 'failedShotId': failed[0] if len(failed) == 1 else None}
 
@@ -284,11 +305,7 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
                                         'durationSeconds': shot['total_frames'] / shot_fps, 'failureCode': None,
                                         'lineNumber': None, 'assetName': None, 'timeoutSeconds': None, 'codeExcerpt': None})
         if not plan and shot['status'] == 'completed':
-            from video_derivatives import jpeg_frame
-            poster = output_dir / ('poster-' + shot['id'] + '.jpg')
-            measured = jpeg_frame(Path(shot['frames_dir']) / 'frame-000000.png', poster)
-            progress['shotProgress'][-1].update(poster_ref=str(poster.resolve().relative_to(workspace.resolve())),
-                poster_width=measured['width'], poster_height=measured['height'], poster_short_edge=measured['shortEdge'])
+            progress['shotProgress'][-1].update(shot_poster(shot, output_dir, workspace))
     payload = {'candidate': candidate, 'preview_ref': str(preview_path.resolve().relative_to(workspace.resolve())), 'progress': progress}
     encoded = json.dumps(payload, ensure_ascii=True, allow_nan=False)
     if len(encoded.encode()) > 1_000_000:

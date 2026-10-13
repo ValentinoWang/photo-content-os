@@ -330,7 +330,8 @@ class PhotoNodeRegistry:
                     if native_path.is_file() and manifest_path.is_file():
                         failed = json.loads(native_path.read_text())
                         if failed.get('status') == 'failed':
-                            facts = failed_shot_progress(failed, full_descriptor, json.loads(manifest_path.read_text())['fps'])
+                            facts = failed_shot_progress(failed, full_descriptor, json.loads(manifest_path.read_text())['fps'],
+                                **({'output_dir': output_root, 'workspace': workspace} if action == 'compose' else {}))
                             candidate.update(progress={'shotProgress': facts['shotProgress']}, failedShotId=facts['failedShotId'])
             # This is a local artifact in the existing durable runtime. A failure
             # receipt is not a succeeded render and never enters the media library.
