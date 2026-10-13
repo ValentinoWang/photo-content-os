@@ -613,10 +613,12 @@ class StudioApplication:
             def log_message(self, fmt: str, *args: Any) -> None:
                 sys.stderr.write("studio: " + fmt % args + "\n")
 
-            def _send(self, status: int, body: bytes, content_type: str) -> None:
+            def _send(self, status: int, body: bytes, content_type: str, headers: dict[str, str] | None = None) -> None:
                 self.send_response(status)
                 self.send_header("Content-Type", content_type)
                 self.send_header("Content-Length", str(len(body)))
+                for name, value in (headers or {}).items():
+                    self.send_header(name, value)
                 self.send_header("Cache-Control", "no-store" if content_type.startswith("application/json") else "no-cache")
                 self.send_header("X-Content-Type-Options", "nosniff")
                 self.send_header("X-Frame-Options", "DENY")
@@ -768,7 +770,32 @@ class StudioApplication:
                         return
                     if len(segments)==5 and segments[:2]==['api','projects'] and segments[3]=='video-preview':
                         preview=app.video_workflow.preview(segments[2],segments[4])
-                        self._send(HTTPStatus.OK,preview.read_bytes(),'video/mp4')
+                        body = preview.read_bytes()
+                        size = len(body)
+                        requested = self.headers.get('Range')
+                        headers = {'Accept-Ranges': 'bytes'}
+                        if requested:
+                            match = re.fullmatch(r'bytes=(\d*)-(\d*)', requested)
+                            start, end = 0, size - 1
+                            valid = bool(match and any(match.groups()) and all(len(part) <= 20 for part in match.groups()))
+                            if valid:
+                                first, last = match.groups()
+                                if first:
+                                    start = int(first)
+                                    end = min(int(last), size - 1) if last else size - 1
+                                else:
+                                    suffix = int(last)
+                                    start = max(0, size - suffix)
+                                    valid = suffix > 0
+                                valid = valid and 0 <= start <= end < size
+                            if not valid:
+                                self._send(HTTPStatus.REQUESTED_RANGE_NOT_SATISFIABLE, b'', 'video/mp4',
+                                           {**headers, 'Content-Range': f'bytes */{size}'})
+                                return
+                            self._send(HTTPStatus.PARTIAL_CONTENT, body[start:end+1], 'video/mp4',
+                                       {**headers, 'Content-Range': f'bytes {start}-{end}/{size}'})
+                        else:
+                            self._send(HTTPStatus.OK, body, 'video/mp4', headers)
                         return
                     if len(segments) == 4 and segments[:2] == ['api', 'projects'] and segments[3] == 'video-subtitles':
                         self._send(HTTPStatus.OK, app.video_workflow.subtitles(segments[2]), 'application/x-subrip; charset=utf-8')

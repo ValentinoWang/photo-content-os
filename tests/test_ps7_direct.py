@@ -9,6 +9,10 @@ import os
 import hashlib
 import subprocess
 from unittest.mock import patch
+from http.server import ThreadingHTTPServer
+import threading
+import urllib.request
+import urllib.error
 
 from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
@@ -144,3 +148,30 @@ for(const state of ['returned','check-failed']){
 '''.replace('MODULE', json.dumps(module)).replace('DATA', json.dumps(data))
         result = subprocess.run(['node', '--input-type=module', '-e', code], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_real_http_preview_serves_byte_ranges_and_rejects_invalid_ranges(self):
+        server = ThreadingHTTPServer(('127.0.0.1', 0), self.app.handler())
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            url = f'http://127.0.0.1:{server.server_port}/api/projects/{self.project["id"]}/video-preview/candidate_ps7'
+            body = (self.media / 'preview.mp4').read_bytes()
+            for value, expected in [(None, body), ('bytes=0-3', body[:4]), ('bytes=5-', body[5:]), ('bytes=-4', body[-4:]), ('bytes=5-999', body[5:])]:
+                with self.subTest(range=value):
+                    request = urllib.request.Request(url, headers={'Range': value} if value else {})
+                    with urllib.request.urlopen(request) as response:
+                        self.assertEqual(response.status, 206 if value else 200)
+                        self.assertEqual(response.headers['Accept-Ranges'], 'bytes')
+                        self.assertEqual(response.read(), expected)
+            for value in ['bytes=999-', 'bytes=5-3', 'bytes=-0', 'bytes=-', 'bytes=0-1,3-4', 'bytes='+'9'*5000+'-']:
+                with self.subTest(range=value):
+                    with self.assertRaises(urllib.error.HTTPError) as error:
+                        urllib.request.urlopen(urllib.request.Request(url, headers={'Range': value}))
+                    self.assertEqual(error.exception.code, 416)
+                    self.assertEqual(error.exception.headers['Content-Range'], f'bytes */{len(body)}')
+                    error.exception.close()
+        finally:
+            server.shutdown()
+            server.server_close()
+            worker.join(timeout=2)
+            self.assertFalse(worker.is_alive())

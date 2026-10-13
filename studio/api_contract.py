@@ -21,7 +21,7 @@ ROUTE_SPECS: tuple[dict[str, object], ...] = (
     {"method": "POST", "path": "/api/projects/{projectId}/inbox-plan/confirm", "operation_id": "confirmInboxPlan", "summary": "Confirm one plan batch and target project", "write": True},
     {"method": "POST", "path": "/api/projects/{projectId}/video-workflow", "operation_id": "editLocalVideoWorkflow", "summary": "Edit the identity-bound local video workflow", "write": True},
     {"method": "POST", "path": "/api/projects/{projectId}/video-return", "operation_id": "returnLocalVideo", "summary": "Stream an exported video for deterministic checks", "write": True, "binary": True},
-    {"method": "GET", "path": "/api/projects/{projectId}/video-preview/{candidateId}", "operation_id": "getLocalVideoPreview", "summary": "Read a checked low-resolution candidate preview", "response_media": "video/mp4"},
+    {"method": "GET", "path": "/api/projects/{projectId}/video-preview/{candidateId}", "operation_id": "getLocalVideoPreview", "summary": "Read a checked low-resolution candidate preview", "response_media": "video/mp4", "byte_ranges": True},
     {"method": "GET", "path": "/api/projects/{projectId}/video-subtitles", "operation_id": "downloadVideoSubtitles", "summary": "Download the bound SRT", "response_media": "application/x-subrip"},
     {"method": "GET", "path": "/api/assets", "operation_id": "listAssets", "summary": "Query the structured asset index"},
     {"method": "GET", "path": "/api/assets/statistics", "operation_id": "getAssetStatistics", "summary": "Read dynamic asset facets"},
@@ -86,6 +86,13 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
     }
     if spec.get('response_media'):
         operation['responses']['200']['content']={str(spec['response_media']):{'schema':{'type':'string','format':'binary'}}}
+    if spec.get('byte_ranges'):
+        operation['parameters'] = [{'name': 'Range', 'in': 'header', 'required': False,
+            'description': 'One bytes=start-end, bytes=start- or bytes=-suffix range.', 'schema': {'type': 'string'}}]
+        for code, description in [('206', 'Requested preview byte range'), ('416', 'Invalid or unsatisfiable preview byte range')]:
+            operation['responses'][code] = {'description': description,
+                'headers': {'Content-Range': {'schema': {'type': 'string'}}, 'Accept-Ranges': {'schema': {'type': 'string'}}},
+                'content': {str(spec['response_media']): {'schema': {'type': 'string', 'format': 'binary'}}}}
     if spec.get("write") is True:
         operation["parameters"] = [
             {"name": "X-Content-OS-CSRF", "in": "header", "required": True, "schema": {"type": "string", "minLength": 1}}
