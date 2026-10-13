@@ -1,0 +1,18 @@
+[
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "-p",
+      "tsconfig.demo.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "-p",
+      "tsconfig.media-u12b.json"
+    ],
+    "exitCode": 0
+  }
+]

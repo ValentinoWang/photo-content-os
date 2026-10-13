@@ -1,0 +1,36 @@
+{
+  "MC11Commit": "0805f7fac",
+  "scope": "Offline readback of real P5 failure; original frames already cleaned by P5, no posters regenerated in this replay. Synthetic first-frame poster tests cover production failure generation.",
+  "progress": {
+    "shotProgress": [
+      {
+        "shotId": "01",
+        "status": "completed",
+        "renderedFrames": 689,
+        "totalFrames": 689,
+        "durationSeconds": 22.966666666666665,
+        "failureCode": null,
+        "lineNumber": null,
+        "assetName": null,
+        "timeoutSeconds": null,
+        "codeExcerpt": null
+      },
+      {
+        "shotId": "02",
+        "status": "failed",
+        "renderedFrames": 0,
+        "totalFrames": 818,
+        "durationSeconds": 27.266666666666666,
+        "failureCode": "missing_asset",
+        "lineNumber": null,
+        "assetName": null,
+        "timeoutSeconds": null,
+        "codeExcerpt": null,
+        "failedLine": 14,
+        "missingAsset": "figure.svg"
+      }
+    ],
+    "failedShotId": "02"
+  },
+  "schemaErrors": []
+}

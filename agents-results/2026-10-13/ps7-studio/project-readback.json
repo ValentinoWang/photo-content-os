@@ -1,0 +1,431 @@
+{
+  "ok": true,
+  "project": {
+    "account": "",
+    "analysis": {
+      "preview_state": "not_started",
+      "state": "not_started",
+      "tier": "metadata",
+      "transcript_state": "not_started"
+    },
+    "assets": [],
+    "audit": [
+      {
+        "action": "project_created",
+        "actor": "user",
+        "at": "2026-10-13T12:24:06Z",
+        "detail": {
+          "platform": "未指定"
+        },
+        "id": "audit-fd060e597ba1e7f5"
+      }
+    ],
+    "created_at": "2026-10-13T12:24:06Z",
+    "delivery": {
+      "artifacts": [],
+      "consumed_inputs": {},
+      "stale": false,
+      "stale_reason": "",
+      "stale_sources": [],
+      "state": "not_started"
+    },
+    "documents": {
+      "brief": {
+        "authority_bridge": {
+          "authoring_authority": "creative_project_store",
+          "export_state": "pending_export",
+          "exported_at": null,
+          "exported_source_consumer_surface_digest": null,
+          "exported_source_document_version": null,
+          "schema_version": "document_authority_bridge_v1",
+          "source_consumer_surface_digest": "sha256:13d07addfd4243703342fb24f7777ed396517cdff18f1a9250230efd254ada53",
+          "source_document_version": 1,
+          "target_content_digest": null,
+          "target_relative_path": "02_project_brief.md"
+        },
+        "blocks": [
+          {
+            "body": "",
+            "id": "brief-goal",
+            "locked": false,
+            "title": "创作目标"
+          },
+          {
+            "body": "",
+            "id": "brief-audience",
+            "locked": false,
+            "title": "目标受众"
+          },
+          {
+            "body": "",
+            "id": "brief-angle",
+            "locked": false,
+            "title": "核心角度"
+          },
+          {
+            "body": "",
+            "id": "brief-constraints",
+            "locked": false,
+            "title": "平台与边界"
+          }
+        ],
+        "consumed_inputs": {},
+        "history": [
+          {
+            "actor": "system",
+            "blocks": [
+              {
+                "body": "",
+                "id": "brief-goal",
+                "locked": false,
+                "title": "创作目标"
+              },
+              {
+                "body": "",
+                "id": "brief-audience",
+                "locked": false,
+                "title": "目标受众"
+              },
+              {
+                "body": "",
+                "id": "brief-angle",
+                "locked": false,
+                "title": "核心角度"
+              },
+              {
+                "body": "",
+                "id": "brief-constraints",
+                "locked": false,
+                "title": "平台与边界"
+              }
+            ],
+            "consumer_surface_digest": "sha256:13d07addfd4243703342fb24f7777ed396517cdff18f1a9250230efd254ada53",
+            "created_at": "2026-10-13T12:24:06Z",
+            "digest": "sha256:35f578c329aaa3922469ea3ba6301b1e471cfe8a7aa0562d04d5c361ce1f2b34",
+            "reason": "project_created",
+            "version": 1
+          }
+        ],
+        "label": "创作 Brief",
+        "name": "brief",
+        "stale": false,
+        "stale_reason": "",
+        "stale_sources": [],
+        "state": "draft",
+        "version": 1
+      },
+      "edl": {
+        "blocks": [
+          {
+            "body": "",
+            "id": "edl-plan",
+            "locked": false,
+            "title": "剪辑顺序"
+          },
+          {
+            "body": "",
+            "id": "edl-captions",
+            "locked": false,
+            "title": "字幕与声音"
+          },
+          {
+            "body": "",
+            "id": "edl-notes",
+            "locked": false,
+            "title": "人工精剪提示"
+          }
+        ],
+        "consumed_inputs": {},
+        "history": [
+          {
+            "actor": "system",
+            "blocks": [
+              {
+                "body": "",
+                "id": "edl-plan",
+                "locked": false,
+                "title": "剪辑顺序"
+              },
+              {
+                "body": "",
+                "id": "edl-captions",
+                "locked": false,
+                "title": "字幕与声音"
+              },
+              {
+                "body": "",
+                "id": "edl-notes",
+                "locked": false,
+                "title": "人工精剪提示"
+              }
+            ],
+            "consumer_surface_digest": "sha256:74714366809694fbb4656d22a799ad98feef86b3ec3758628ef533e0b1fde063",
+            "created_at": "2026-10-13T12:24:06Z",
+            "digest": "sha256:3baf826fa9fbaa2a36f147f19b361b317dd4f8b8a7094223b1f1cdf108d41b52",
+            "reason": "project_created",
+            "version": 1
+          }
+        ],
+        "label": "剪辑方案",
+        "name": "edl",
+        "stale": false,
+        "stale_reason": "",
+        "stale_sources": [],
+        "state": "draft",
+        "version": 1
+      },
+      "script": {
+        "authority_bridge": {
+          "authoring_authority": "creative_project_store",
+          "export_state": "pending_export",
+          "exported_at": null,
+          "exported_source_consumer_surface_digest": null,
+          "exported_source_document_version": null,
+          "schema_version": "document_authority_bridge_v1",
+          "source_consumer_surface_digest": "sha256:3a78a05b2e436cb76c08871ed5279ecf9a03de6490091bec95672250661b7867",
+          "source_document_version": 1,
+          "target_content_digest": null,
+          "target_relative_path": "04_script.md"
+        },
+        "blocks": [
+          {
+            "body": "",
+            "id": "script-hook",
+            "locked": false,
+            "title": "开头钩子"
+          },
+          {
+            "body": "",
+            "id": "script-body",
+            "locked": false,
+            "title": "主体推进"
+          },
+          {
+            "body": "",
+            "id": "script-ending",
+            "locked": false,
+            "title": "结尾与行动"
+          }
+        ],
+        "consumed_inputs": {},
+        "history": [
+          {
+            "actor": "system",
+            "blocks": [
+              {
+                "body": "",
+                "id": "script-hook",
+                "locked": false,
+                "title": "开头钩子"
+              },
+              {
+                "body": "",
+                "id": "script-body",
+                "locked": false,
+                "title": "主体推进"
+              },
+              {
+                "body": "",
+                "id": "script-ending",
+                "locked": false,
+                "title": "结尾与行动"
+              }
+            ],
+            "consumer_surface_digest": "sha256:3a78a05b2e436cb76c08871ed5279ecf9a03de6490091bec95672250661b7867",
+            "created_at": "2026-10-13T12:24:06Z",
+            "digest": "sha256:9e9fda3b236b42b727f2d3d7700d79f4a1706b2969e1c3481e989adfe2a01c47",
+            "reason": "project_created",
+            "version": 1
+          }
+        ],
+        "label": "脚本",
+        "name": "script",
+        "stale": false,
+        "stale_reason": "",
+        "stale_sources": [],
+        "state": "draft",
+        "version": 1
+      },
+      "storyboard": {
+        "blocks": [
+          {
+            "body": "",
+            "id": "storyboard-opening",
+            "locked": false,
+            "title": "开场镜头"
+          },
+          {
+            "body": "",
+            "id": "storyboard-development",
+            "locked": false,
+            "title": "展开镜头"
+          },
+          {
+            "body": "",
+            "id": "storyboard-ending",
+            "locked": false,
+            "title": "收束镜头"
+          }
+        ],
+        "consumed_inputs": {},
+        "history": [
+          {
+            "actor": "system",
+            "blocks": [
+              {
+                "body": "",
+                "id": "storyboard-opening",
+                "locked": false,
+                "title": "开场镜头"
+              },
+              {
+                "body": "",
+                "id": "storyboard-development",
+                "locked": false,
+                "title": "展开镜头"
+              },
+              {
+                "body": "",
+                "id": "storyboard-ending",
+                "locked": false,
+                "title": "收束镜头"
+              }
+            ],
+            "consumer_surface_digest": "sha256:2554f85cc02a29c89f7c8fee0cf520bbc28d4e9d58b3fb6e316544120c9a7fb8",
+            "created_at": "2026-10-13T12:24:06Z",
+            "digest": "sha256:ea40d1e564fe632cf123086f04395125adc0713a296c074596fdc6da734ad843",
+            "reason": "project_created",
+            "version": 1
+          }
+        ],
+        "label": "分镜",
+        "name": "storyboard",
+        "stale": false,
+        "stale_reason": "",
+        "stale_sources": [],
+        "state": "draft",
+        "version": 1
+      }
+    },
+    "id": "p5-f24c41f746",
+    "inbox_confirmations": [],
+    "local_workspace": {
+      "workspace_id": "workspace-5d640b3a2a8372a2",
+      "label": "direct",
+      "path_digest": "sha256:04ee9b08f72c615e8cfef1f60ce810fdff97273ecaf23e13176e48ae1b423b2f",
+      "connected": true,
+      "kind": "local_directory",
+      "privacy": "local_only"
+    },
+    "platform": "未指定",
+    "publishing": {
+      "links": [],
+      "metrics": {},
+      "published_at": null,
+      "state": "not_published"
+    },
+    "publishing_history": [],
+    "references": [],
+    "revision": 1,
+    "schema_version": "creative_project_v1",
+    "status": "planning",
+    "title": "P5 直出实践：平均速度",
+    "updated_at": "2026-10-13T12:24:06Z"
+  },
+  "videoHandoff": {
+    "state": "returned",
+    "scriptAlignment": {},
+    "mediaUrl": null,
+    "title": "P5 直出实践：平均速度",
+    "line": "direct",
+    "sourceDuration": 50.24,
+    "materials": [
+      {
+        "role": "subtitles",
+        "count": 2
+      }
+    ],
+    "animations": [],
+    "suggestions": [],
+    "shots": [
+      {
+        "shotId": "01",
+        "start": 0
+      },
+      {
+        "shotId": "02",
+        "start": 22.966666666666665
+      }
+    ],
+    "waveformPeaks": [],
+    "tools": {
+      "chatcut": {
+        "installed": true,
+        "version": "0.6.9",
+        "login": null,
+        "handshake": false,
+        "projectRef": null,
+        "projectUrl": null
+      },
+      "kdenlive": {
+        "installed": true,
+        "version": "26.04"
+      }
+    },
+    "precutCount": null,
+    "exported": false,
+    "animationCount": 0,
+    "candidate": {
+      "status": "candidate",
+      "durationSeconds": 50.233333,
+      "frameCount": 1507,
+      "cutCount": 0,
+      "removedSeconds": 0,
+      "returnedAt": "2026-10-13T13:10:42.931131Z",
+      "checks": {
+        "playable": "pass",
+        "avSync": "pass",
+        "frameCount": "pass",
+        "sourceUnchanged": "pass",
+        "subtitles": "pass",
+        "blackFrames": "pass",
+        "avOffsetSeconds": 0.0003330000000048017,
+        "avOffsetLimitSeconds": 0.1,
+        "expectedFrames": 1507,
+        "actualFrames": 1507
+      }
+    },
+    "editorName": "本机逐帧渲染",
+    "choice": {
+      "editor": "otio_kdenlive",
+      "method": "external",
+      "revision": 1
+    },
+    "uploaded": true,
+    "identity": {
+      "catalogDigest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
+      "confirmationRef": "confirm_936fb4551a0d4209902cec3f45c56e4c",
+      "confirmedContentDigest": "sha256:60d7403cfa73c082b17956c2288c64bab17211294e1845f9b582214566830c1b",
+      "jobId": "job_b807de35d0824fd5bc48360ebad2d041",
+      "photoProjectId": "p5-f24c41f746",
+      "photoProjectRevision": 1,
+      "publicContentId": "content_d5253cc18da947319d7593f68914a46c",
+      "publicTenantId": "ten_ea973d2e85db339bb9809356732ca497",
+      "publicVariantId": "variant_b22399aabe4b4c9f914684424b768c8e",
+      "workRevision": 3
+    },
+    "projectRevision": 1,
+    "studioUrl": "http://127.0.0.1:8765/",
+    "candidates": [
+      {
+        "status": "candidate",
+        "durationSeconds": 50.233333,
+        "frameCount": 1507,
+        "cutCount": 0,
+        "provenance": "native_readback",
+        "editorName": "本机逐帧渲染",
+        "previewUrl": "/api/projects/p5-f24c41f746/video-preview/candidate_0cf9e388595422d1fb6d73f44bb3799a"
+      }
+    ]
+  }
+}

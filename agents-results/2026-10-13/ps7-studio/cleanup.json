@@ -1,0 +1,32 @@
+{
+  "ownStudioPids": [
+    7630,
+    6144
+  ],
+  "ownBrowserPids": [
+    6316,
+    6939,
+    6940,
+    6961,
+    6962,
+    51314,
+    51802,
+    51804,
+    51805,
+    51806
+  ],
+  "ownRemaining": [],
+  "removedOwnFiles": [
+    "/Users/vsiyo/Desktop/创业项目/photo-content-os/tests/__pycache__/test_ps7_direct.cpython-313-pytest-9.1.1.pyc"
+  ],
+  "pytest": {
+    "exitCode": 0,
+    "temporaryRoot": "/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/ps7-tests-2qylal8k",
+    "temporaryRootRemoved": true,
+    "restoredOnlyOwnTestPid": true,
+    "start": 1791901104.308685,
+    "end": 1791901236.826957
+  },
+  "sharedListeners": "COMMAND     PID  USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\npython3.1 22496 vsiyo    3u  IPv4 0x29da0b43568570c4      0t0  TCP 127.0.0.1:8787 (LISTEN)\nnode      23999 vsiyo   27u  IPv4 0xc1aa55c6a2bbc8d8      0t0  TCP 127.0.0.1:9081 (LISTEN)\n",
+  "disk": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   405Gi    11Gi    98%    4.9M  116M    4%   /System/Volumes/Data\n"
+}
