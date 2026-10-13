@@ -69,9 +69,10 @@
 .handoff .pack .st.w{color:var(--warn)}
 .handoff .pack .st.r{color:var(--ac-soft)}
 .handoff .sug{list-style:none;margin:0;padding:4px 8px}
-.handoff .sug li{display:grid;grid-template-columns:52px 62px minmax(0,1fr) 44px;gap:8px;align-items:center;padding:7px 8px;font-size:13px;border-top:1px solid var(--rule)}
+.handoff .sug li{display:grid;grid-template-columns:52px 62px minmax(0,1fr) max-content;gap:8px;align-items:center;padding:7px 8px;font-size:13px;border-top:1px solid var(--rule)}
 .handoff .sug li:first-child{border-top:0}
 .handoff .sug .t{font:12px var(--f-mo);color:var(--ink-3)}
+.handoff .len{white-space:nowrap}
 .handoff .sug .len{font:12px var(--f-mo);color:var(--ink-3);text-align:right}
 .handoff .sug i{white-space:nowrap;font-style:normal;font-size:11px;padding:0 5px;border-radius:3px;background:var(--cut-bg);color:var(--cut);justify-self:start}
 .handoff .sug i.g{background:var(--raise);color:var(--ink-3)}
@@ -107,8 +108,8 @@
 .handoff .tl{margin:0 16px 16px}
 .handoff .proto{margin:12px 16px}
 .handoff .pack small{overflow-wrap:anywhere}
-.handoff .sug li{grid-template-columns:40px 48px minmax(0,1fr) 36px;gap:6px;padding:8px}
-.handoff .sug .len{grid-column:auto;text-align:right;white-space:nowrap}
+.handoff .sug li{grid-template-columns:40px 48px minmax(0,1fr) max-content;gap:6px;padding:8px}
+.handoff .sug .len{grid-column:auto;text-align:right}
 .handoff .topbar h1{font-size:18px}
 .handoff .topbar .sp{display:none}
 .handoff .cc{gap:14px}
@@ -251,7 +252,7 @@
 .handoff .attn.error{background:var(--cut-bg);border-color:var(--cut);color:var(--cut)}
 .handoff .attn.error b{color:var(--cut)}
 .handoff .attn.error p{margin:0;color:var(--ink-2)}
-.handoff .sug li{grid-template-columns:52px 98px minmax(0,1fr) 44px}
+.handoff .sug li{grid-template-columns:52px 98px minmax(0,1fr) max-content}
 .handoff .first-cut-action .btn:disabled{cursor:not-allowed}
 .handoff [data-design-id="external-software"] .software-grid{grid-template-columns:1fr}
 @media(min-width:1250px){
@@ -296,7 +297,7 @@
 .handoff .step-no{flex:0 0 26px;height:26px;display:grid;place-items:center;border-radius:50%;background:var(--ac-bg);border:1px solid var(--ac-2);color:var(--ac-soft);font:600 13px var(--f-mo)}
 .handoff .mode-main>.guide-step+.guide-step::before{content:"";position:absolute;left:28px;top:-19px;width:2px;height:18px;background:var(--ac-2)}
 .handoff .guide-cuts{gap:0}
-.handoff .guide-cuts li.cut-row{display:grid;grid-template-columns:max-content 104px minmax(0,1fr) 48px;align-items:center;gap:14px;min-height:44px;padding:7px 2px;border-bottom:1px solid var(--rule)}
+.handoff .guide-cuts li.cut-row{display:grid;grid-template-columns:max-content 104px minmax(0,1fr) max-content;align-items:center;gap:14px;min-height:44px;padding:7px 2px;border-bottom:1px solid var(--rule)}
 .handoff .tc{display:inline-flex;align-items:center;gap:2px}
 .handoff .tc code{padding:3px 8px;border-radius:6px;background:var(--panel-2);border:1px solid var(--rule-2);font:13px var(--f-mo);color:var(--ink)}
 .handoff .icon-btn{width:28px;height:28px;display:grid;place-items:center;border-radius:6px;color:var(--ink-3)}
@@ -309,7 +310,7 @@
 .handoff .cut-row .words{color:var(--ink-3)}
 .handoff .cut-row[data-kind=repetition] .words{text-decoration:line-through;text-decoration-color:currentColor;text-decoration-thickness:1px;opacity:.65}
 .handoff .cut-row[data-kind=review] .words{color:var(--ink-2)}
-.handoff .cut-row .len{text-align:right;white-space:nowrap;font:12px var(--f-mo);color:var(--ink-3)}
+.handoff .cut-row .len{text-align:right;font:12px var(--f-mo);color:var(--ink-3)}
 .handoff [data-guide-all]>summary{padding:12px 2px 2px;color:var(--ac-soft);cursor:pointer;font-size:13px}
 .handoff .guide-step .guide-animations{grid-template-columns:150px minmax(0,1fr);gap:12px 16px;align-items:center}
 .handoff .guide-step .guide-animations dt{font-weight:600}
@@ -483,7 +484,7 @@
 .handoff .topbar{flex-wrap:wrap}
 .handoff .topbar>a{margin-left:0}
 .handoff .topbar p{line-height:1.6}
-.handoff .sug li{grid-template-columns:44px 82px minmax(0,1fr) 35px}
+.handoff .sug li{grid-template-columns:44px 82px minmax(0,1fr) max-content}
 .handoff .nle-timeline .edit-clip{padding-left:2px}
 .handoff .topbar>div{flex:1 1 100%}}
 .handoff .portrait{width:191px;height:340px;flex:none;overflow:hidden;display:grid;place-items:center}
