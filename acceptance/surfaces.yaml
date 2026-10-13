@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "surfaces": [
+    {
+      "glob": "studio/static/**",
+      "key": "studio.frontend"
+    },
+    {
+      "glob": "studio/*.py",
+      "key": "studio.backend"
+    },
+    {
+      "glob": "schemas/**",
+      "key": "studio.backend"
+    },
+    {
+      "glob": "scripts/edit_backends/**",
+      "key": "photo.edit-backends"
+    },
+    {
+      "glob": "scripts/video_render/**",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "scripts/video_*.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "scripts/openclaw_video_execution.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "scripts/spoken_edit.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "scripts/transcribe_audio.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "scripts/edl_contract.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "scripts/generate_storyboard_edl.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "scripts/review_output_video.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "studio/video_workflow.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "studio/returned_candidate.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "studio/edl_bridge.py",
+      "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "tests/**",
+      "key": "photo.tests-scripts"
+    },
+    {
+      "glob": "scripts/*",
+      "key": "photo.tests-scripts"
+    },
+    {
+      "glob": "scripts/qa/**",
+      "key": "photo.tests-scripts"
+    },
+    {
+      "glob": "scripts/prompt-templates/**",
+      "key": "photo.tests-scripts"
+    },
+    {
+      "glob": "requirements-dev.txt",
+      "key": "photo.tests-scripts"
+    },
+    {
+      "glob": "docs/**",
+      "key": "photo.documentation"
+    },
+    {
+      "glob": "templates/**",
+      "key": "photo.documentation"
+    },
+    {
+      "glob": "README.md",
+      "key": "photo.documentation"
+    },
+    {
+      "glob": "CONTRIBUTING.md",
+      "key": "photo.documentation"
+    },
+    {
+      "glob": "studio/README.md",
+      "key": "photo.documentation"
+    },
+    {
+      "glob": ".github/**",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": ".harness/**",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": ".agents/**",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": "develop/**",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": ".githooks/**",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": "AGENTS.md",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": ".gitignore",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": "doc-sync-contract.json",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": "review-capabilities.registry.json",
+      "key": "photo.project-tools"
+    },
+    {
+      "glob": "99_System_OpenClaw/**",
+      "key": "photo.legacy-system"
+    },
+    {
+      "glob": "acceptance/**",
+      "key": "acceptance.artifacts"
+    },
+    {
+      "glob": "agents-results/**",
+      "key": "acceptance.evidence"
+    },
+    {
+      "glob": "evidence/**",
+      "key": "acceptance.evidence"
+    }
+  ]
+}
