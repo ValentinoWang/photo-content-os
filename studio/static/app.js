@@ -1,4 +1,4 @@
-import { renderHandoff } from '/handoff.js';
+import { renderHandoff, formatDuration } from '/handoff.js';
 import { videoActions } from '/video-actions.js';
 const state = { csrf: '', projects: [], project: null, settings: null, screen: 'home', wizard: 1, deleteCandidates: [], deleteError: '', selectedDeleteNumbers: [], inboxPlan: null, inboxPlanError: '', selectedBatchId: '', assets: [], assetStatistics: null, assetError: '', selectedAsset: null, libraryView: 'grid', edlView: 'timeline', diagnostics: null, analysisBudget: null, setup: null, upstreamTasks: [], videoHandoff: null };
 const $ = selector => document.querySelector(selector);
@@ -96,7 +96,7 @@ function renderProject() {
     document.querySelector('.main').dataset.designId = `studio-${state.videoHandoff.state}`;
     $('#screen-title').textContent = '剪这件作品';
     $('#screen-sub').setAttribute('data-design-data','project.title/sourceDuration');
-    $('#screen-sub').textContent = `${project.title}${Number.isFinite(state.videoHandoff.sourceDuration) ? ` · 原片 ${Math.floor(state.videoHandoff.sourceDuration/60)}:${String(Math.floor(state.videoHandoff.sourceDuration%60)).padStart(2,'0')}` : ''} · 来自 MediaClaw 作品`;
+    $('#screen-sub').textContent = `${project.title}${Number.isFinite(state.videoHandoff.sourceDuration) ? ` · 原片 ${formatDuration(state.videoHandoff.sourceDuration)}` : ''} · 来自 MediaClaw 作品`;
     }
     renderHandoff(target, state.videoHandoff, videoActions({projectId:project.id,csrf:state.csrf,getData:()=>state.videoHandoff}));
     return;

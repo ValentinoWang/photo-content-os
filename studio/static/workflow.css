@@ -309,7 +309,7 @@
 .handoff .cut-row .words{color:var(--ink-3)}
 .handoff .cut-row[data-kind=repetition] .words{text-decoration:line-through;text-decoration-color:currentColor;text-decoration-thickness:1px;opacity:.65}
 .handoff .cut-row[data-kind=review] .words{color:var(--ink-2)}
-.handoff .cut-row .len{text-align:right;font:12px var(--f-mo);color:var(--ink-3)}
+.handoff .cut-row .len{text-align:right;white-space:nowrap;font:12px var(--f-mo);color:var(--ink-3)}
 .handoff [data-guide-all]>summary{padding:12px 2px 2px;color:var(--ac-soft);cursor:pointer;font-size:13px}
 .handoff .guide-step .guide-animations{grid-template-columns:150px minmax(0,1fr);gap:12px 16px;align-items:center}
 .handoff .guide-step .guide-animations dt{font-weight:600}
