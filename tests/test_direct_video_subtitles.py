@@ -72,6 +72,17 @@ class RenderedSubtitleTests(unittest.TestCase):
                     changed=sum(abs(x-y) for x,y in zip(previous,a))/len(a)
                     self.assertGreater(changed,1,f'{cut}: caption must change on the first frame, not remain blank or old')
 
+    def test_chinese_glyphs_do_not_fall_back_to_identical_missing_glyph_boxes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); source=root/'source.mp4'; output=root/'captioned.mp4'; subtitles=root/'subtitles.srt'
+            self.run_ffmpeg('-f','lavfi','-i','color=white:s=1080x1920:r=30:d=0.4', '-f','lavfi','-i','anullsrc=r=8000:cl=mono',
+                '-shortest','-c:v','libx264','-threads','1','-preset','ultrafast','-c:a','aac',str(source))
+            subtitles.write_text('1\n00:00:00,000 --> 00:00:00,200\n一一一一\n\n2\n00:00:00,200 --> 00:00:00,400\n汉字清晰\n')
+            candidate.burn_subtitles(source,subtitles,output)
+            frames,w,h=self.frames(output,[2,8]);a,b=[f[int(h*.8)*w*3:] for f in frames]
+            changed=sum(abs(x-y) for x,y in zip(a,b))/len(a)
+            self.assertGreater(changed,.5,'Distinct Chinese text rendered as identical missing-glyph boxes')
+
     def test_white_text_has_a_dark_backplate_on_white_and_black(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp); source=root/'source.mp4'; output=root/'captioned.mp4'; subtitles=root/'subtitles.srt'

@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import subprocess
 import tempfile
+import platform
 
 from edit_backends.kdenlive_render import probe_media, review_module
 from openclaw_product_contract import ProductContractError
@@ -159,6 +160,19 @@ def _render_cues(subtitles, rate, total_frames):
     return cues
 
 
+def _caption_font():
+    # Fontconfig can silently resolve an unavailable CJK family to Latin-only
+    # Verdana. Bind a real CJK font file so Chinese never becomes tofu boxes.
+    candidates = ([Path('/System/Library/Fonts/STHeiti Medium.ttc')] if platform.system() == 'Darwin' else []) + [
+        Path('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'),
+        Path('/usr/share/fonts/opentype/noto/NotoSansCJKsc-Regular.otf'),
+        Path('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc')]
+    for path in candidates:
+        if path.is_file():
+            return path
+    _reject()
+
+
 def burn_subtitles(video: Path, subtitles: Path, output: Path) -> float:
     stream = next(s for s in probe_media(video)['streams'] if s['codec_type']=='video')
     width, height = stream['width'], stream['height']; rate = _rate(stream['avg_frame_rate'])
@@ -166,10 +180,11 @@ def burn_subtitles(video: Path, subtitles: Path, output: Path) -> float:
     cues = _render_cues(subtitles, rate, total_frames); style = subtitle_style(width,height)
     with tempfile.TemporaryDirectory(prefix='photo-subtitles-') as directory:
         root = Path(directory); filters = []
+        (root/'caption-font.ttc').symlink_to(_caption_font())
         for index,cue in enumerate(cues):
             textfile = f'cue-{index:04}.txt'
             (root/textfile).write_text('\n'.join(cue['lines']),encoding='utf-8')
-            filters.append(f"drawtext=font='PingFang SC':textfile={textfile}:expansion=none:fontsize={style['fontSize']}:fontcolor=white:"
+            filters.append(f"drawtext=fontfile=caption-font.ttc:textfile={textfile}:expansion=none:fontsize={style['fontSize']}:fontcolor=white:"
                            f"text_align=M+C:box=1:boxcolor=black@{style['boxOpacity']}:boxborderw={style['padding']}:line_spacing={style['lineSpacing']}:"
                            f"x=(w-text_w)/2:y=h*0.9-text_h/2:enable='gte(n,{cue['startFrame']})*lt(n,{cue['endFrame']})'")
         (root/'captions.filters').write_text('[0:v]'+','.join(filters)+'[captioned]', encoding='utf-8')
