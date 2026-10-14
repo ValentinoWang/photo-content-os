@@ -15,6 +15,7 @@ import tempfile
 from edit_backends.kdenlive_render import probe_media, review_module
 from media_common import file_sha256
 from openclaw_product_contract import ProductContractError, video_digest
+from video_subtitles import burn_subtitles, write_direct_subtitles
 
 
 def ffmpeg(args, *, cwd=None):
@@ -56,32 +57,6 @@ def waveform_peaks(source: Path, *, count: int = 400) -> list[float]:
             process.wait()
             process.stdout.close()
     return peaks[:min(count, math.ceil(seen / samples_per_bin))]
-
-
-def burn_subtitles(video: Path, subtitles: Path, output: Path) -> float:
-    cues = review_module().read_srt_cues(subtitles)
-    stream = next(s for s in probe_media(video)['streams'] if s.get('codec_type') == 'video')
-    width, height = stream['width'], stream['height']
-    def stamp(value):
-        cs = round(value * 100)
-        sec, cs = divmod(cs, 100); minute, sec = divmod(sec, 60); hour, minute = divmod(minute, 60)
-        return f'{hour}:{minute:02}:{sec:02}.{cs:02}'
-    def text(value):
-        return value.replace('\\', '\\u005c').replace('{', '\\{').replace('}', '\\}').replace('\n', '\\N')
-    with tempfile.TemporaryDirectory(prefix='pf-subtitles-') as directory:
-        root = Path(directory)
-        lines = ['[Script Info]', 'ScriptType: v4.00+', f'PlayResX: {width}', f'PlayResY: {height}',
-                 '[V4+ Styles]', 'Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV',
-                 f'Style: Default,PingFang SC,{max(12, height // 25)},&H00FFFFFF,&H00000000,1,1,0,2,10,10,0',
-                 '[Events]', 'Format: Layer, Start, End, Style, Text']
-        for start, end, value in cues:
-            override = f'{{\\an5\\pos({width/2},{height*.9})\\clip(0,{round(height*.8)},{width},{height})}}'
-            lines.append(f'Dialogue: 0,{stamp(start)},{stamp(end)},Default,{override}{text(value)}')
-        (root / 'captions.ass').write_text('\n'.join(lines) + '\n', encoding='utf-8')
-        ffmpeg(['-i', str(video), '-vf', 'ass=filename=captions.ass', '-map', '0:v:0', '-map', '0:a:0',
-                '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy',
-                '-map_metadata', '-1', '-movflags', '+faststart', str(output)], cwd=root)
-    return .8
 
 
 def preview_video(video: Path, output: Path) -> dict:
@@ -201,16 +176,7 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
     cuts = cut_projection(plan, source_duration)
     subtitle_path = Path(plan['subtitles']) if plan.get('subtitles') else output_dir / 'subtitles.srt'
     if not plan.get('subtitles'):
-        rows = []
-        for row in descriptor['shots']:
-            text = row['subtitle']
-            if text:
-                from edit_backends.kdenlive_render import srt_timestamp
-                shot = row['shot']
-                rows.append(f"{len(rows)+1}\n{srt_timestamp(shot['startSeconds'])} --> {srt_timestamp(shot['endSeconds'])}\n{text}")
-        if not rows:
-            raise ProductContractError('photo_subtitle_projection_missing')
-        subtitle_path.write_text('\n\n'.join(rows) + '\n', encoding='utf-8')
+        write_direct_subtitles(descriptor, subtitle_path, fps=fps, total_frames=expected)
     subtitle_text = subtitle_path.read_text(encoding='utf-8')
     if re.search(r"(?:^|[\s\"'=(:：])(?:/(?:[\w.-]+/)+[^\s\"']*|[A-Za-z]:[\\/][^\s\"']*)", subtitle_text):
         raise ProductContractError('photo_subtitle_projection_rejected')
