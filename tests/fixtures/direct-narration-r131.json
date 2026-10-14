@@ -1,0 +1,282 @@
+{
+  "script": "清华AI体育博主，断更一年。会写代码，会练体能，就是发不出一条视频。后来我看到一项研究：容易焦虑的人担心的事，百分之九十一没有发生。拦着我的，是脑子里的四句话。今天一句一句，对一对研究。\n第一句：发出去，会被人看低。断了这么久，大家肯定都注意到了。有个经典实验：让学生穿件尴尬的衣服走进教室。穿的人估计，大约一半的人会注意到。实际只有四分之一左右。别人的注意，远比我们以为的少。没有人在等我宣布回归。\n第二句：担心的事，一定会发生。开头那个数就来自这里：把每天的担心记下来，事后逐条对照。大约百分之九十一，没有发生。所以发之前，我先写一行：我担心什么。过两天再补一行：实际怎样。不写下来，就永远不知道它没应验。\n第三句：还没做到最好，再改改。西蒙提过一个说法，叫满意化：够好就停，不用非找到最好。有本书叫《艺术与恐惧》，讲过一个陶艺课的故事。一组按数量打分，一组按质量打分。最好的作品，反而出自数量组。所以我先写下几条标准，满足了就发。\n第四句：反正都断了，再断几天也一样。这叫破戒效应。有研究跟踪了九十多个人，发现偶尔漏掉一次，对养成没有实质影响。养成的中位数是六十六天，快的十八天，慢的两百五十四天。断了，今天接上就行。我只给自己一条规矩：不连着断两次。\n这些道理，我早就懂。可懂了，身体还是怕。旧的预测只在出错时才会改，而不发，它就永远不会错。所以我把动作写成一句：如果晚饭后坐到桌前，就打开草稿箱，发最早剪好的那一条。九十四项研究汇总下来，这样写的人明显更容易做到。\n发布是训练课，不是比赛。发出来的七十分，比没发的九十五分有用。你也有一件存了很久的东西吧？今天写两行字。一行写：如果什么时候，我就做哪个小动作。一行写：我最担心会发生什么。过两天，回来对一对。",
+  "narration": {
+    "sentenceTimings": [
+      {
+        "endSeconds": 2.96,
+        "startSeconds": 0.0,
+        "text": "清华AI体育博主，断更一年。"
+      },
+      {
+        "endSeconds": 7.36,
+        "startSeconds": 2.96,
+        "text": "会写代码，会练体能，就是发不出一条视频。"
+      },
+      {
+        "endSeconds": 12.88,
+        "startSeconds": 7.36,
+        "text": "后来我看到一项研究：容易焦虑的人担心的事，百分之九十一没有发生。"
+      },
+      {
+        "endSeconds": 15.36,
+        "startSeconds": 12.88,
+        "text": "拦着我的，是脑子里的四句话。"
+      },
+      {
+        "endSeconds": 18.0,
+        "startSeconds": 15.36,
+        "text": "今天一句一句，对一对研究。"
+      },
+      {
+        "endSeconds": 20.96,
+        "startSeconds": 18.0,
+        "text": "第一句：发出去，会被人看低。"
+      },
+      {
+        "endSeconds": 23.68,
+        "startSeconds": 20.96,
+        "text": "断了这么久，大家肯定都注意到了。"
+      },
+      {
+        "endSeconds": 27.76,
+        "startSeconds": 23.68,
+        "text": "有个经典实验：让学生穿件尴尬的衣服走进教室。"
+      },
+      {
+        "endSeconds": 30.56,
+        "startSeconds": 27.76,
+        "text": "穿的人估计，大约一半的人会注意到。"
+      },
+      {
+        "endSeconds": 32.48,
+        "startSeconds": 30.56,
+        "text": "实际只有四分之一左右。"
+      },
+      {
+        "endSeconds": 35.36,
+        "startSeconds": 32.48,
+        "text": "别人的注意，远比我们以为的少。"
+      },
+      {
+        "endSeconds": 37.2,
+        "startSeconds": 35.36,
+        "text": "没有人在等我宣布回归。"
+      },
+      {
+        "endSeconds": 40.48,
+        "startSeconds": 37.2,
+        "text": "第二句：担心的事，一定会发生。"
+      },
+      {
+        "endSeconds": 46.16,
+        "startSeconds": 40.48,
+        "text": "开头那个数就来自这里：把每天的担心记下来，事后逐条对照。"
+      },
+      {
+        "endSeconds": 48.4,
+        "startSeconds": 46.16,
+        "text": "大约百分之九十一，没有发生。"
+      },
+      {
+        "endSeconds": 52.0,
+        "startSeconds": 48.4,
+        "text": "所以发之前，我先写一行：我担心什么。"
+      },
+      {
+        "endSeconds": 54.24,
+        "startSeconds": 52.0,
+        "text": "过两天再补一行：实际怎样。"
+      },
+      {
+        "endSeconds": 57.12,
+        "startSeconds": 54.24,
+        "text": "不写下来，就永远不知道它没应验。"
+      },
+      {
+        "endSeconds": 60.24,
+        "startSeconds": 57.12,
+        "text": "第三句：还没做到最好，再改改。"
+      },
+      {
+        "endSeconds": 65.84,
+        "startSeconds": 60.24,
+        "text": "西蒙提过一个说法，叫满意化：够好就停，不用非找到最好。"
+      },
+      {
+        "endSeconds": 70.0,
+        "startSeconds": 65.84,
+        "text": "有本书叫《艺术与恐惧》，讲过一个陶艺课的故事。"
+      },
+      {
+        "endSeconds": 73.28,
+        "startSeconds": 70.0,
+        "text": "一组按数量打分，一组按质量打分。"
+      },
+      {
+        "endSeconds": 76.8,
+        "startSeconds": 73.28,
+        "text": "最好的作品，反而出自数量组。"
+      },
+      {
+        "endSeconds": 80.16,
+        "startSeconds": 76.8,
+        "text": "所以我先写下几条标准，满足了就发。"
+      },
+      {
+        "endSeconds": 84.08,
+        "startSeconds": 80.16,
+        "text": "第四句：反正都断了，再断几天也一样。"
+      },
+      {
+        "endSeconds": 85.68,
+        "startSeconds": 84.08,
+        "text": "这叫破戒效应。"
+      },
+      {
+        "endSeconds": 91.36,
+        "startSeconds": 85.68,
+        "text": "有研究跟踪了九十多个人，发现偶尔漏掉一次，对养成没有实质影响。"
+      },
+      {
+        "endSeconds": 97.28,
+        "startSeconds": 91.36,
+        "text": "养成的中位数是六十六天，快的十八天，慢的两百五十四天。"
+      },
+      {
+        "endSeconds": 99.36,
+        "startSeconds": 97.28,
+        "text": "断了，今天接上就行。"
+      },
+      {
+        "endSeconds": 102.4,
+        "startSeconds": 99.36,
+        "text": "我只给自己一条规矩：不连着断两次。"
+      },
+      {
+        "endSeconds": 104.16,
+        "startSeconds": 102.4,
+        "text": "这些道理，我早就懂。"
+      },
+      {
+        "endSeconds": 106.88,
+        "startSeconds": 104.16,
+        "text": "可懂了，身体还是怕。"
+      },
+      {
+        "endSeconds": 111.52,
+        "startSeconds": 106.88,
+        "text": "旧的预测只在出错时才会改，而不发，它就永远不会错。"
+      },
+      {
+        "endSeconds": 118.64,
+        "startSeconds": 111.52,
+        "text": "所以我把动作写成一句：如果晚饭后坐到桌前，就打开草稿箱，发最早剪好的那一条。"
+      },
+      {
+        "endSeconds": 122.88,
+        "startSeconds": 118.64,
+        "text": "九十四项研究汇总下来，这样写的人明显更容易做到。"
+      },
+      {
+        "endSeconds": 125.6,
+        "startSeconds": 122.88,
+        "text": "发布是训练课，不是比赛。"
+      },
+      {
+        "endSeconds": 128.8,
+        "startSeconds": 125.6,
+        "text": "发出来的七十分，比没发的九十五分有用。"
+      },
+      {
+        "endSeconds": 131.52,
+        "startSeconds": 128.8,
+        "text": "你也有一件存了很久的东西吧？"
+      },
+      {
+        "endSeconds": 133.12,
+        "startSeconds": 131.52,
+        "text": "今天写两行字。"
+      },
+      {
+        "endSeconds": 137.12,
+        "startSeconds": 133.12,
+        "text": "一行写：如果什么时候，我就做哪个小动作。"
+      },
+      {
+        "endSeconds": 140.48,
+        "startSeconds": 137.12,
+        "text": "一行写：我最担心会发生什么。"
+      },
+      {
+        "endSeconds": 142.56,
+        "startSeconds": 140.48,
+        "text": "过两天，回来对一对。"
+      }
+    ]
+  },
+  "shots": [
+    {
+      "shot": {
+        "endSeconds": 18.0,
+        "shotId": "01",
+        "startSeconds": 0
+      },
+      "subtitle": "清华 AI 体育博主，断更一年\n容易焦虑的人担心的事，91% 没有发生"
+    },
+    {
+      "shot": {
+        "endSeconds": 37.2,
+        "shotId": "02",
+        "startSeconds": 18.0
+      },
+      "subtitle": "穿的人估计：约 50% 注意到\n实际：约 25%"
+    },
+    {
+      "shot": {
+        "endSeconds": 57.13333333333333,
+        "shotId": "03",
+        "startSeconds": 37.2
+      },
+      "subtitle": "91% 的担心没有发生\n发之前写担心，两天后写实际"
+    },
+    {
+      "shot": {
+        "endSeconds": 80.16666666666667,
+        "shotId": "04",
+        "startSeconds": 57.13333333333333
+      },
+      "subtitle": "够好就停\n最好的作品出自数量组（书中故事）"
+    },
+    {
+      "shot": {
+        "endSeconds": 102.4,
+        "shotId": "05",
+        "startSeconds": 80.16666666666667
+      },
+      "subtitle": "漏一次，没有实质影响\n中位数 66 天，因人而异 18–254 天"
+    },
+    {
+      "shot": {
+        "endSeconds": 122.86666666666666,
+        "shotId": "06",
+        "startSeconds": 102.4
+      },
+      "subtitle": "不发，预测就永远不会错\n如果……就……"
+    },
+    {
+      "shot": {
+        "endSeconds": 142.53333333333333,
+        "shotId": "07",
+        "startSeconds": 122.86666666666666
+      },
+      "subtitle": "发布是训练课，不是比赛\n今天写两行字"
+    }
+  ],
+  "_provenance": {
+    "source": "R131 normal handoff, original paid narration; Media agents-results/2026-10-15/R131-hiatus-video/acceptance/part2/descriptor.json",
+    "sourceSha256": "61dc53baa3d59d6e9b163785c261a099d973d0769ad97f59cbc53a2963a38457",
+    "expectedCues": 45,
+    "fps": 30,
+    "totalFrames": 4276
+  }
+}

@@ -10,6 +10,7 @@ import re
 import subprocess
 import tempfile
 import platform
+import unicodedata
 
 from edit_backends.kdenlive_render import probe_media, review_module
 from openclaw_product_contract import ProductContractError
@@ -57,11 +58,29 @@ def _chunks(text):
 
 
 def _lines(text):
-    flat = text.replace('\r', '').replace('\n', '')
-    lines = [flat[i:i+14] for i in range(0, len(flat), 14)]
-    if not lines or len(lines) > 2:
+    # Raw cue text is retained separately. Only the burnt display omits these
+    # terminal marks; timing and the returned spoken text must not change.
+    flat = text.replace('\r', '').replace('\n', '').rstrip('。，')
+    forbidden_start = '。，、：；！？」）,.!?;:)]}》】”’'
+    forbidden_end = '（「《【“‘([{'
+    if not flat or flat[0] in forbidden_start:
         _reject()
-    return lines
+    if len(flat) <= 14:
+        return [flat]
+    candidates = []
+    for split in range(max(1, len(flat)-14), min(14, len(flat)-1)+1):
+        first, second = flat[:split], flat[split:]
+        if (abs(len(first)-len(second)) > 4 or second[0] in forbidden_start
+            or first[-1] in forbidden_end
+            or any(sum(not unicodedata.category(ch).startswith('P') and not ch.isspace()
+                       for ch in line) < 4 for line in [first, second])):
+            continue
+        candidates.append((not unicodedata.category(first[-1]).startswith('P'),
+                           abs(len(first)-len(second)), split))
+    if not candidates:
+        _reject()
+    split = min(candidates)[2]
+    return [flat[:split], flat[split:]]
 
 
 def _plan(spans, cuts, rate, total_frames):
@@ -121,7 +140,7 @@ def _srt_stamp(frame, rate):
 
 def write_direct_subtitles(descriptor, path, *, fps, total_frames):
     rate = _rate(fps); cues = build_subtitle_cues(descriptor, fps=fps, total_frames=total_frames)
-    body = '\n\n'.join(f"{i+1}\n{_srt_stamp(c['startFrame'],rate)} --> {_srt_stamp(c['endFrame'],rate)}\n" + '\n'.join(c['lines']) for i,c in enumerate(cues)) + '\n'
+    body = '\n\n'.join(f"{i+1}\n{_srt_stamp(c['startFrame'],rate)} --> {_srt_stamp(c['endFrame'],rate)}\n" + c['text'] for i,c in enumerate(cues)) + '\n'
     path.write_text(body, encoding='utf-8')
     sidecar = {'schemaVersion': 'photo.video.subtitles.frames.v1', 'rate': [rate.numerator, rate.denominator],
                'totalFrames': total_frames, 'subtitleSha256': hashlib.sha256(body.encode()).hexdigest(),
