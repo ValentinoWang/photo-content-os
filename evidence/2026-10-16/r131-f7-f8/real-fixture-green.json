@@ -1,0 +1,48 @@
+{
+  "candidateSource": "candidate_8439d5780216b189646084579179a0b4",
+  "cueCount": 18,
+  "cutFrames": [
+    {
+      "frame": 84,
+      "before": {
+        "startFrame": 0,
+        "endFrame": 84,
+        "text": "断更一年的清华AI体育博主，",
+        "lines": [
+          "断更一年的清华AI体育博主"
+        ]
+      },
+      "after": {
+        "startFrame": 84,
+        "endFrame": 144,
+        "text": "会写代码，会练体能，",
+        "lines": [
+          "会写代码，会练体能"
+        ]
+      }
+    },
+    {
+      "frame": 476,
+      "before": {
+        "startFrame": 355,
+        "endFrame": 476,
+        "text": "我把准备和搭工具当成进展，其实是在躲，",
+        "lines": [
+          "我把准备和搭工具当",
+          "成进展，其实是在躲"
+        ]
+      },
+      "after": {
+        "startFrame": 476,
+        "endFrame": 527,
+        "text": "总觉得一发出去，",
+        "lines": [
+          "总觉得一发出去"
+        ]
+      }
+    }
+  ],
+  "missingSpokenFramesOnQuantizedTimeline": [],
+  "rawSpokenTextUnchanged": true,
+  "candidateRerendered": false
+}

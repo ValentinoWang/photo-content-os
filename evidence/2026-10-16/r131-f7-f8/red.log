@@ -1,0 +1,1884 @@
+.F.FF    [100%]
+=================================== FAILURES ===================================
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=84) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=85) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=86) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=87) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=88) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=89) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=90) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=91) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=92) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=93) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=94) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=95) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=96) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=97) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=98) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=99) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=100) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=101) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=102) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=103) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=104) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=105) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=106) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=107) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=108) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=109) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=110) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=111) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=112) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=113) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=114) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=115) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=116) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=117) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=118) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=119) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=120) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=121) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=122) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=123) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=124) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=125) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=126) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=127) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=128) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=129) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=130) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=131) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=132) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=133) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=134) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=135) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=136) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=137) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=138) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=139) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=140) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=141) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=142) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=143) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=476) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=477) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=478) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=479) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=480) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=481) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=482) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=483) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=484) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=485) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=486) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=487) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=488) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=489) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=490) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=491) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=492) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=493) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=494) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=495) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=496) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=497) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=498) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=499) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=500) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=501) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=502) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=503) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=504) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=505) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=506) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=507) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=508) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=509) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=510) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=511) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=512) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=513) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=514) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=515) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=516) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=517) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=518) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=519) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=520) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=521) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=522) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=523) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=524) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=525) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_every_spoken_frame_of_the_real_full_film_has_a_caption (frame=526) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_every_spoken_frame_of_the_real_full_film_has_a_caption>
+
+    def test_every_spoken_frame_of_the_real_full_film_has_a_caption(self):
+        cues = self.cues()
+        for timing in self.descriptor['narration']['sentenceTimings']:
+            start = round(Fraction(str(timing['startSeconds'])) * 30)
+            end = min(1718, round(Fraction(str(timing['endSeconds'])) * 30))
+            for frame in range(start, end):
+                with self.subTest(frame=frame):
+>                   self.assertEqual(sum(c['startFrame'] <= frame < c['endFrame'] for c in cues), 1)
+E                   AssertionError: 0 != 1
+
+tests/test_direct_video_f7_f8.py:47: AssertionError
+_ CrossShotCaptionTests.test_multiple_cuts_and_punctuation_preserve_spoken_text _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_multiple_cuts_and_punctuation_preserve_spoken_text>
+
+    def test_multiple_cuts_and_punctuation_preserve_spoken_text(self):
+        text = '先写下今天担心的事情，再回来逐条检查结果。'
+        descriptor = {'script': text, 'narration': {'sentenceTimings': [{'text': text, 'startSeconds': 0, 'endSeconds': 3}]},
+                      'shots': [{'shot': {'startSeconds': a, 'endSeconds': b}} for a,b in [(0,.8),(.8,1.6),(1.6,3)]]}
+        cues = subtitles.build_subtitle_cues(descriptor, fps=30, total_frames=91)
+        self.assertEqual(''.join(c['text'] for c in cues), text)
+        for cut in (24,48):
+>           self.assertTrue(any(c['startFrame'] == cut for c in cues))
+E           AssertionError: False is not true
+
+tests/test_direct_video_f7_f8.py:63: AssertionError
+_ CrossShotCaptionTests.test_real_cuts_84_and_476_resume_on_the_first_frame (cut=84) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_real_cuts_84_and_476_resume_on_the_first_frame>
+
+    def test_real_cuts_84_and_476_resume_on_the_first_frame(self):
+        cues = self.cues()
+        for cut in (84, 476):
+            with self.subTest(cut=cut):
+                previous = next(c for c in cues if c['startFrame'] <= cut-1 < c['endFrame'])
+                active = [c for c in cues if c['startFrame'] <= cut < c['endFrame']]
+>               self.assertEqual(len(active), 1, 'spoken cue must continue at cut, not disappear')
+E               AssertionError: 0 != 1 : spoken cue must continue at cut, not disappear
+
+tests/test_direct_video_f7_f8.py:33: AssertionError
+_ CrossShotCaptionTests.test_real_cuts_84_and_476_resume_on_the_first_frame (cut=476) _
+
+self = <test_direct_video_f7_f8.CrossShotCaptionTests testMethod=test_real_cuts_84_and_476_resume_on_the_first_frame>
+
+    def test_real_cuts_84_and_476_resume_on_the_first_frame(self):
+        cues = self.cues()
+        for cut in (84, 476):
+            with self.subTest(cut=cut):
+                previous = next(c for c in cues if c['startFrame'] <= cut-1 < c['endFrame'])
+                active = [c for c in cues if c['startFrame'] <= cut < c['endFrame']]
+>               self.assertEqual(len(active), 1, 'spoken cue must continue at cut, not disappear')
+E               AssertionError: 0 != 1 : spoken cue must continue at cut, not disappear
+
+tests/test_direct_video_f7_f8.py:33: AssertionError
+_ AnimationDurationPreflightTests.test_real_shot_04_is_blocked_before_any_renderer_or_candidate _
+
+self = <test_direct_video_f7_f8.AnimationDurationPreflightTests testMethod=test_real_shot_04_is_blocked_before_any_renderer_or_candidate>
+
+    def test_real_shot_04_is_blocked_before_any_renderer_or_candidate(self):
+        self.save()
+        with patch.object(compositor, 'render_shots', return_value={'status':'failed','shots':[]}) as render:
+>           with self.assertRaises(RenderError) as raised:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: RenderError not raised
+
+tests/test_direct_video_f7_f8.py:88: AssertionError
+_ AnimationDurationPreflightTests.test_undeclared_is_explicitly_skipped_and_equal_threshold_passes _
+
+self = <test_direct_video_f7_f8.AnimationDurationPreflightTests testMethod=test_undeclared_is_explicitly_skipped_and_equal_threshold_passes>
+
+    def test_undeclared_is_explicitly_skipped_and_equal_threshold_passes(self):
+        (self.root/'assets/04.html').write_text('<script>const D = 1;</script>')
+        (self.root/'assets/05.html').write_text('<p>const D = 999;</p><script>// const D = 999;\nconst label = "const D = 999;";</script>')
+        self.manifest.pop('narration_wav')
+        self.manifest['shots']=[{'id':'04','html':'04.html','frames':21,'narration_wav':'voice.wav'},
+                                {'id':'05','html':'05.html','frames':21,'narration_wav':'voice.wav'}]
+        with wave.open(str(self.root/'voice.wav'),'wb') as wav:
+            wav.setnchannels(1);wav.setsampwidth(2);wav.setframerate(3000);wav.writeframes(b'\0\0'*2100)
+        self.save()
+        with patch.object(compositor,'render_shots',return_value={'status':'failed','shots':[]}):
+            compositor.compose(self.path,self.root/'output')
+>       report=json.loads((self.root/'output/animation-duration-checks.json').read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_direct_video_f7_f8.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/r131-f8-f6nedszl/output/animation-duration-checks.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/r131-f8-f6nedszl/output/animation-duration-checks.json'
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+=========================== short test summary info ============================
+SUBFAILED(frame=84) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=85) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=86) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=87) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=88) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=89) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=90) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=91) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=92) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=93) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=94) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=95) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=96) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=97) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=98) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=99) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=100) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=101) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=102) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=103) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=104) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=105) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=106) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=107) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=108) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=109) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=110) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=111) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=112) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=113) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=114) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=115) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=116) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=117) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=118) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=119) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=120) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=121) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=122) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=123) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=124) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=125) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=126) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=127) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=128) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=129) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=130) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=131) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=132) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=133) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=134) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=135) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=136) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=137) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=138) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=139) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=140) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=141) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=142) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=143) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=476) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=477) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=478) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=479) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=480) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=481) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=482) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=483) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=484) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=485) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=486) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=487) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=488) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=489) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=490) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=491) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=492) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=493) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=494) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=495) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=496) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=497) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=498) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=499) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=500) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=501) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=502) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=503) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=504) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=505) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=506) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=507) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=508) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=509) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=510) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=511) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=512) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=513) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=514) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=515) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=516) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=517) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=518) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=519) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=520) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=521) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=522) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=523) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=524) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=525) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+SUBFAILED(frame=526) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_every_spoken_frame_of_the_real_full_film_has_a_caption
+FAILED tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_multiple_cuts_and_punctuation_preserve_spoken_text
+SUBFAILED(cut=84) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_real_cuts_84_and_476_resume_on_the_first_frame
+SUBFAILED(cut=476) tests/test_direct_video_f7_f8.py::CrossShotCaptionTests::test_real_cuts_84_and_476_resume_on_the_first_frame
+FAILED tests/test_direct_video_f7_f8.py::AnimationDurationPreflightTests::test_real_shot_04_is_blocked_before_any_renderer_or_candidate
+FAILED tests/test_direct_video_f7_f8.py::AnimationDurationPreflightTests::test_undeclared_is_explicitly_skipped_and_equal_threshold_passes
+116 failed, 2 passed, 1607 subtests passed in 0.53s

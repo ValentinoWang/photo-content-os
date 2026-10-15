@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_timeout_is_bounded_and_other_shots_continue (test_video_render.BrowserRenderTests.test_timeout_is_bounded_and_other_shots_continue)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/vsiyo/Desktop/创业项目/photo-content-os/tests/test_video_render.py", line 263, in test_timeout_is_bounded_and_other_shots_continue
+    self.assertLess(time.monotonic() - started, 20)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 38.549005415989086 not less than 20
+
+----------------------------------------------------------------------
+Ran 1 test in 39.433s
+
+FAILED (failures=1)

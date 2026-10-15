@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-16T04:07:14.887510+08:00",
+  "candidateId": "candidate_8439d5780216b189646084579179a0b4",
+  "files": [
+    {
+      "file": "/Users/vsiyo/Desktop/照片筛选/testing/video-pipeline-2026-10-12/runs/5814222fe1f6aa78b83f5433fbf33cc0/return/captioned.mp4",
+      "sha256": "8439d5780216b189646084579179a0b40202b83b80370886afd1a69c9baffcb2",
+      "unchanged": true
+    },
+    {
+      "file": "/Users/vsiyo/Desktop/照片筛选/testing/video-pipeline-2026-10-12/runs/5814222fe1f6aa78b83f5433fbf33cc0/compose/candidate.mp4",
+      "sha256": "8efe432d4cf386c6a3cb4478ac3bc7614f104cadf77eb3147010cf9f3ab09523",
+      "unchanged": true
+    },
+    {
+      "file": "/Users/vsiyo/Desktop/照片筛选/testing/video-pipeline-2026-10-12/runs/5814222fe1f6aa78b83f5433fbf33cc0/return/preview.mp4",
+      "sha256": "3a7bf7c193f1f8fb40f1447aa4005791e4b4628be5f2bb0bf4237dce113c842b",
+      "unchanged": true
+    },
+    {
+      "file": "/Users/vsiyo/Desktop/照片筛选/testing/video-pipeline-2026-10-12/runs/5814222fe1f6aa78b83f5433fbf33cc0/return/subtitles.srt",
+      "sha256": "09dbe04ba42d184d9840a7a6c9b0ed392a340ecfdf97cd566222b6851028d9da",
+      "unchanged": true
+    },
+    {
+      "file": "/Users/vsiyo/Desktop/照片筛选/testing/video-pipeline-2026-10-12/runs/5814222fe1f6aa78b83f5433fbf33cc0/return/subtitles.frames.json",
+      "sha256": "adaf9ee7453dd53ce1ef0e5a233c7e223b7296e7be07f684d615daa9c8f822f7",
+      "unchanged": true
+    },
+    {
+      "file": "/Users/vsiyo/Desktop/照片筛选/testing/video-pipeline-2026-10-12/video-inputs/job_1a698965db3f4574a86498e6338b2025/narration.wav",
+      "sha256": "3663829326cc8dd2a7d1deb238fa13179bec0a4f962b67c247d8601985fbfd39",
+      "unchanged": true
+    }
+  ],
+  "listeners": {
+    "8787": "2318",
+    "9081": "2638",
+    "8765": null
+  },
+  "productWritesByThisFix": 0,
+  "narrationRequestsByThisFix": 0,
+  "actualWorkRerendered": false
+}

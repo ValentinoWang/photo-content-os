@@ -1,0 +1,209 @@
+{
+  "script": "断更一年的清华AI体育博主，会写代码，会练体能，却整整一年，发不出一条视频。我不缺道理，缺的是按下发布的那一下。\n\n第一个困惑：怕被看见。我把准备和搭工具当成进展，其实是在躲，总觉得一发出去，所有人都盯着我出丑的样子。\n\n后来看到一次聚光灯实验，参与者以为近一半人注意到自己，实际约四分之一。只是一次实验，但足够让我松口气。\n\n第二个困惑：漏做一次就全盘否定。断一天，我就觉得前面全白费，干脆不做了。一项习惯研究发现，偶尔漏一次，并没让养成过程实质倒退。\n\n偶尔，不等于一直不做。道理懂了，行为不一定跟上，我也还在试。今天一起试个小动作：写下一个担心，再录十秒真实的自己。你最怕被谁看见？",
+  "narration": {
+    "sentenceTimings": [
+      {
+        "endSeconds": 7.6,
+        "startSeconds": 0.0,
+        "text": "断更一年的清华AI体育博主，会写代码，会练体能，却整整一年，发不出一条视频。"
+      },
+      {
+        "endSeconds": 10.8,
+        "startSeconds": 7.6,
+        "text": "我不缺道理，缺的是按下发布的那一下。"
+      },
+      {
+        "endSeconds": 11.84,
+        "startSeconds": 10.8,
+        "text": "第一个困惑：怕被看见。"
+      },
+      {
+        "endSeconds": 20.32,
+        "startSeconds": 11.84,
+        "text": "我把准备和搭工具当成进展，其实是在躲，总觉得一发出去，所有人都盯着我出丑的样子。"
+      },
+      {
+        "endSeconds": 27.2,
+        "startSeconds": 20.32,
+        "text": "后来看到一次聚光灯实验，参与者以为近一半人注意到自己，实际约四分之一。"
+      },
+      {
+        "endSeconds": 30.48,
+        "startSeconds": 27.2,
+        "text": "只是一次实验，但足够让我松口气。"
+      },
+      {
+        "endSeconds": 34.32,
+        "startSeconds": 30.48,
+        "text": "第二个困惑：漏做一次就全盘否定。"
+      },
+      {
+        "endSeconds": 38.56,
+        "startSeconds": 34.32,
+        "text": "断一天，我就觉得前面全白费，干脆不做了。"
+      },
+      {
+        "endSeconds": 44.08,
+        "startSeconds": 38.56,
+        "text": "一项习惯研究发现，偶尔漏一次，并没让养成过程实质倒退。"
+      },
+      {
+        "endSeconds": 46.08,
+        "startSeconds": 44.08,
+        "text": "偶尔，不等于一直不做。"
+      },
+      {
+        "endSeconds": 49.84,
+        "startSeconds": 46.08,
+        "text": "道理懂了，行为不一定跟上，我也还在试。"
+      },
+      {
+        "endSeconds": 55.76,
+        "startSeconds": 49.84,
+        "text": "今天一起试个小动作：写下一个担心，再录十秒真实的自己。"
+      },
+      {
+        "endSeconds": 57.28,
+        "startSeconds": 55.76,
+        "text": "你最怕被谁看见？"
+      }
+    ]
+  },
+  "shots": [
+    {
+      "shot": {
+        "endSeconds": 2.8,
+        "shotId": "01",
+        "startSeconds": 0.0
+      },
+      "dialogue": "断更一年的清华AI体育博主，",
+      "subtitle": "断更一年 / AI / 体育博主"
+    },
+    {
+      "shot": {
+        "endSeconds": 7.6,
+        "shotId": "02",
+        "startSeconds": 2.8
+      },
+      "dialogue": "会写代码，会练体能，却整整一年，发不出一条视频。",
+      "subtitle": "会写代码 ✓ 会练体能 ✓ 视频 0 条"
+    },
+    {
+      "shot": {
+        "endSeconds": 10.8,
+        "shotId": "03",
+        "startSeconds": 7.6
+      },
+      "dialogue": "我不缺道理，缺的是按下发布的那一下。",
+      "subtitle": "一堆道理 · 悬着没按下的「发布」"
+    },
+    {
+      "shot": {
+        "endSeconds": 11.833333333333334,
+        "shotId": "04",
+        "startSeconds": 10.8
+      },
+      "dialogue": "第一个困惑：怕被看见。",
+      "subtitle": "困惑 1：怕被看见"
+    },
+    {
+      "shot": {
+        "endSeconds": 15.866666666666667,
+        "shotId": "05",
+        "startSeconds": 11.833333333333334
+      },
+      "dialogue": "我把准备和搭工具当成进展，其实是在躲，",
+      "subtitle": "待办全打勾，只有「发布」没勾"
+    },
+    {
+      "shot": {
+        "endSeconds": 20.333333333333332,
+        "shotId": "06",
+        "startSeconds": 15.866666666666667
+      },
+      "dialogue": "总觉得一发出去，所有人都盯着我出丑的样子。",
+      "subtitle": "满屏的眼睛朝向视频框"
+    },
+    {
+      "shot": {
+        "endSeconds": 27.2,
+        "shotId": "07",
+        "startSeconds": 20.333333333333332
+      },
+      "dialogue": "后来看到一次聚光灯实验，参与者以为近一半人注意到自己，实际约四分之一。",
+      "subtitle": "以为：近一半　实际：约四分之一"
+    },
+    {
+      "shot": {
+        "endSeconds": 30.466666666666665,
+        "shotId": "08",
+        "startSeconds": 27.2
+      },
+      "dialogue": "只是一次实验，但足够让我松口气。",
+      "subtitle": "只是一次实验，不代表没人在意"
+    },
+    {
+      "shot": {
+        "endSeconds": 34.333333333333336,
+        "shotId": "09",
+        "startSeconds": 30.466666666666665
+      },
+      "dialogue": "第二个困惑：漏做一次就全盘否定。",
+      "subtitle": "困惑 2：漏一次就全盘否定"
+    },
+    {
+      "shot": {
+        "endSeconds": 38.56666666666667,
+        "shotId": "10",
+        "startSeconds": 34.333333333333336
+      },
+      "dialogue": "断一天，我就觉得前面全白费，干脆不做了。",
+      "subtitle": "一格空了，整排变灰，放弃"
+    },
+    {
+      "shot": {
+        "endSeconds": 44.06666666666667,
+        "shotId": "11",
+        "startSeconds": 38.56666666666667
+      },
+      "dialogue": "一项习惯研究发现，偶尔漏一次，并没让养成过程实质倒退。",
+      "subtitle": "偶尔漏一次，曲线只轻微停顿"
+    },
+    {
+      "shot": {
+        "endSeconds": 46.06666666666667,
+        "shotId": "12",
+        "startSeconds": 44.06666666666667
+      },
+      "dialogue": "偶尔，不等于一直不做。",
+      "subtitle": "偶尔 ≠ 一直不做"
+    },
+    {
+      "shot": {
+        "endSeconds": 49.833333333333336,
+        "shotId": "13",
+        "startSeconds": 46.06666666666667
+      },
+      "dialogue": "道理懂了，行为不一定跟上，我也还在试。",
+      "subtitle": "道理 → 行为，箭头还在加载"
+    },
+    {
+      "shot": {
+        "endSeconds": 55.766666666666666,
+        "shotId": "14",
+        "startSeconds": 49.833333333333336
+      },
+      "dialogue": "今天一起试个小动作：写下一个担心，再录十秒真实的自己。",
+      "subtitle": "① 写下一个担心　② 录十秒"
+    },
+    {
+      "shot": {
+        "endSeconds": 57.3,
+        "shotId": "15",
+        "startSeconds": 55.766666666666666
+      },
+      "dialogue": "你最怕被谁看见？",
+      "subtitle": "按下发布，弹出问句"
+    }
+  ]
+}

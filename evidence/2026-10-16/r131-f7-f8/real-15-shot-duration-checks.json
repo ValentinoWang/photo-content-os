@@ -1,0 +1,113 @@
+{
+  "status": "failed",
+  "minimumRatio": 0.7,
+  "shots": [
+    {
+      "shotId": "01",
+      "actualSeconds": 2.8,
+      "declaredSeconds": 2.7,
+      "minimumSeconds": 1.89,
+      "status": "passed"
+    },
+    {
+      "shotId": "02",
+      "actualSeconds": 4.8,
+      "declaredSeconds": 4.7,
+      "minimumSeconds": 3.29,
+      "status": "passed"
+    },
+    {
+      "shotId": "03",
+      "actualSeconds": 3.2,
+      "declaredSeconds": 3.5,
+      "minimumSeconds": 2.45,
+      "status": "passed"
+    },
+    {
+      "shotId": "04",
+      "actualSeconds": 1.0333333333333334,
+      "declaredSeconds": 2.2,
+      "minimumSeconds": 1.54,
+      "status": "failed",
+      "code": "animation_duration_too_short",
+      "reason": "04 镜：实际时长 1.033333 秒 < 0.7·D 1.540000 秒（D=2.200000）；请按实测时长修订动画代码后重试"
+    },
+    {
+      "shotId": "05",
+      "actualSeconds": 4.033333333333333,
+      "declaredSeconds": 3.7,
+      "minimumSeconds": 2.59,
+      "status": "passed"
+    },
+    {
+      "shotId": "06",
+      "actualSeconds": 4.466666666666667,
+      "declaredSeconds": 4.1,
+      "minimumSeconds": 2.87,
+      "status": "passed"
+    },
+    {
+      "shotId": "07",
+      "actualSeconds": 6.866666666666666,
+      "declaredSeconds": 6.9,
+      "minimumSeconds": 4.83,
+      "status": "passed"
+    },
+    {
+      "shotId": "08",
+      "actualSeconds": 3.2666666666666666,
+      "declaredSeconds": 3.1,
+      "minimumSeconds": 2.17,
+      "status": "passed"
+    },
+    {
+      "shotId": "09",
+      "actualSeconds": 3.8666666666666667,
+      "declaredSeconds": 3.1,
+      "minimumSeconds": 2.17,
+      "status": "passed"
+    },
+    {
+      "shotId": "10",
+      "actualSeconds": 4.233333333333333,
+      "declaredSeconds": 3.9,
+      "minimumSeconds": 2.73,
+      "status": "passed"
+    },
+    {
+      "shotId": "11",
+      "actualSeconds": 5.5,
+      "declaredSeconds": 5.3,
+      "minimumSeconds": 3.71,
+      "status": "passed"
+    },
+    {
+      "shotId": "12",
+      "actualSeconds": 2.0,
+      "declaredSeconds": 2.2,
+      "minimumSeconds": 1.54,
+      "status": "passed"
+    },
+    {
+      "shotId": "13",
+      "actualSeconds": 3.7666666666666666,
+      "declaredSeconds": 3.7,
+      "minimumSeconds": 2.59,
+      "status": "passed"
+    },
+    {
+      "shotId": "14",
+      "actualSeconds": 5.933333333333334,
+      "declaredSeconds": 5.3,
+      "minimumSeconds": 3.71,
+      "status": "passed"
+    },
+    {
+      "shotId": "15",
+      "actualSeconds": 1.5333333333333334,
+      "declaredSeconds": 1.6,
+      "minimumSeconds": 1.12,
+      "status": "passed"
+    }
+  ]
+}

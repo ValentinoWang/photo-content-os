@@ -14,6 +14,7 @@ from typing import Any
 
 if __package__ in (None, ''):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from video_render.animation_duration import animation_duration_checks
 from video_render.multi_shot import RenderError, load_manifest, owned_workspace, render_shots, sha256, write_json
 
 
@@ -82,6 +83,11 @@ def compose(manifest_path: Path, output: Path, *, timeout: float = 300, on_event
 
 def _compose(manifest: dict[str, Any], output: Path, *, timeout: float, on_event, retry_shot_id: str | None = None, render_shot_ids: list[str] | None = None) -> dict[str, Any]:
     narration = audio_inputs(manifest)
+    duration_checks = animation_duration_checks(manifest)
+    write_json(output / 'animation-duration-checks.json', duration_checks)
+    failures = [shot for shot in duration_checks['shots'] if shot['status'] == 'failed']
+    if failures:
+        raise RenderError(failures[0]['code'], '; '.join(shot['reason'] for shot in failures))
     audio_hashes = {str(path): sha256(path) for path in narration}
     output = output.resolve()
     state = render_shots(manifest, output / 'render', on_event=on_event, retry_shot_id=retry_shot_id, render_shot_ids=render_shot_ids)

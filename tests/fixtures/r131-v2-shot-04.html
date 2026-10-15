@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>断更一年后，我才发现自己在躲什么 · 04</title>
+<style>
+:root{--bg:#F3F0E8;--card:#FFFFFF;--edge:#E0D9CB;--ink:#1C2A30;--muted:#52616A;
+--pri:#1E5E6A;--pri-soft:#D3E6E6;--acc:#D8552A;--acc-ink:#A63C17;--acc-soft:#F7DDD1;--gray:#CFCBC2;--chip:#E6E1D6}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{position:relative;color:var(--ink);font-family:"STHeiti","Heiti SC",sans-serif}
+body.inv{background:var(--pri);color:#fff}
+*{box-sizing:border-box}
+.abs{position:absolute}
+svg{overflow:visible}
+.hd{position:absolute;left:72px;right:72px;top:92px;height:60px;display:flex;justify-content:space-between;align-items:center}
+.kicker{font-size:44px;color:var(--pri);letter-spacing:4px}
+.page{font-size:44px;color:var(--muted);letter-spacing:2px}
+.inv .kicker,.inv .page{color:#D3E6E6}
+.dots{position:absolute;left:72px;right:72px;top:172px;display:flex;gap:8px}
+.dots i{flex:1;height:10px;border-radius:5px;background:var(--edge)}
+.dots i.on{background:var(--pri)}
+.inv .dots i{background:rgba(255,255,255,.22)}
+.inv .dots i.on{background:#fff}
+.title{position:absolute;left:72px;right:72px;top:224px;font-size:84px;line-height:1.2;white-space:nowrap}
+.card{background:var(--card);border:2px solid var(--edge);border-radius:32px}
+.main{position:absolute;left:72px;width:936px}
+.lab{font-size:44px;color:var(--muted)}
+.src{font-size:40px;color:var(--muted)}
+.chip{display:inline-block;border-radius:24px;padding:14px 32px}
+.take{position:absolute;border-radius:32px;background:var(--pri);color:#fff;font-size:60px;line-height:1.25;padding:24px 44px}
+</style></head>
+<body class="inv">
+<div class="hd"><div class="kicker">困惑 1</div><div class="page">04 / 15</div></div>
+<div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+
+<div class="abs" style="left:72px;right:72px;top:560px;text-align:center;font-size:120px;color:#D3E6E6">困惑 1</div>
+<div class="abs" style="left:40px;right:40px;top:740px;text-align:center;font-size:170px;line-height:1.15;white-space:nowrap" data-t="1.18" data-m="push">怕被看见</div>
+<div data-t="1.18" data-m="push"><svg class="abs" style="left:440px;top:1000px" width="200" height="120" viewBox="-100 -60 200 120">
+  <path d="M-92 0 Q0 -96 92 0 Q0 96 -92 0Z" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>
+  <circle r="26" fill="#fff"/></svg></div>
+<script>
+const D = 2.2;
+
+const CUT = 0.7 * D;
+const at = (s, dur = 0.35) => Math.max(0, Math.min(s, CUT - dur));
+const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(1 - x, 3);
+const P = (t, s, d = 0.35) => ease((t - at(s, d)) / d);
+const $ = id => document.getElementById(id);
+function reveal(t) {
+  for (const el of document.querySelectorAll('[data-t]')) {
+    const p = P(t, +el.dataset.t);
+    const m = el.dataset.m || 'up';
+    el.style.opacity = p;
+    if (m === 'up') el.style.translate = `0 ${Math.round((1 - p) * 30)}px`;
+    else if (m === 'push') el.style.translate = `0 ${Math.round((1 - p) * 160)}px`;
+    else if (m === 'pop') el.style.scale = String(0.6 + 0.4 * p);
+  }
+}
+
+function scene(t) {}
+window.seekFrame = (frame, fps) => {
+  const t = frame / fps;
+  reveal(t);
+  scene(t);
+};
+window.seekFrame(0, 30);
+</script>
+</body></html>

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from fractions import Fraction
+from functools import lru_cache
 import hashlib
 import json
 import math
@@ -83,6 +84,36 @@ def _lines(text):
     return [flat[:split], flat[split:]]
 
 
+def _cut_fragments(text, bounds):
+    """Partition at frame cuts without orphaning punctuation or spoken text."""
+    count = len(bounds)-1
+
+    @lru_cache(None)
+    def partition(index, offset):
+        if index == count-1:
+            try:
+                _lines(text[offset:])
+                return (text[offset:],)
+            except ProductContractError:
+                return None
+        target = len(text)*(bounds[index+1]-bounds[0])/(bounds[-1]-bounds[0])
+        choices = sorted(range(offset+1, len(text)-(count-index-1)+1), key=lambda n: (abs(n-target), n))
+        for end in choices:
+            piece = text[offset:end]
+            try:
+                _lines(piece)
+            except ProductContractError:
+                continue
+            tail = partition(index+1, end)
+            if tail is not None:
+                return (piece, *tail)
+        return None
+
+    # Very short text cannot always be divided into valid display fragments.
+    # Repeat it as a new cue per shot rather than discard speech coverage.
+    return partition(0, 0) or (text,)*count
+
+
 def _plan(spans, cuts, rate, total_frames):
     if type(total_frames) is not int or total_frames < 2:
         _reject()
@@ -99,12 +130,14 @@ def _plan(spans, cuts, rate, total_frames):
             a = _frame(start + (end-start)*cursor/len(text), rate)
             cursor += len(part)
             b = _frame(start + (end-start)*cursor/len(text), rate)
-            # End is exclusive: a previous cue cannot survive a cut's first
-            # frame. The last frame is also an upper bound, never an overrun.
-            b = min([b, total_frames-1, *[cut for cut in cuts if a < cut < b]])
+            b = min(b, total_frames-1)
             if b <= a or (result and a < result[-1]['endFrame']):
                 _reject()
-            result.append({'startFrame': a, 'endFrame': b, 'text': part, 'lines': _lines(part)})
+            bounds = [a, *[cut for cut in cuts if a < cut < b], b]
+            for left, right, fragment in zip(bounds, bounds[1:], _cut_fragments(part, bounds)):
+                # Exclusive ends retire the previous cue at the cut; its
+                # remaining text starts as a new cue on the very next frame.
+                result.append({'startFrame': left, 'endFrame': right, 'text': fragment, 'lines': _lines(fragment)})
         previous_end = end_frame
     if not result:
         _reject()
