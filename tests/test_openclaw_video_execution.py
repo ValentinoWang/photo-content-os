@@ -78,6 +78,50 @@ class VideoExecutionContractTests(unittest.TestCase):
                     with self.subTest(step=step), self.assertRaises(adapter.ProductContractError):
                         registry._invoke(step, root=root, handoff={}, output_root=root)
 
+    def test_candidate_uses_photo_interpreter_when_agent_cannot_import_imaging(self):
+        import builtins
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            (root / 'video_candidate.py').write_text(
+                "from PIL import ImageFont\n"
+                "from pathlib import Path\n"
+                "import sys\n"
+                "def project_candidate(*, native, descriptor, source, original_hashes, output_dir, workspace):\n"
+                "    assert isinstance(source, Path) and source in original_hashes\n"
+                "    assert output_dir == workspace / 'run/return'\n"
+                "    return {'status': 'candidate', 'python': sys.executable, 'imagingAvailable': bool(ImageFont), 'sourceDigest': original_hashes[source]}\n")
+            source = root / 'audio.wav'; source.write_bytes(b'fixture')
+            registry = adapter.PhotoNodeRegistry(SimpleNamespace(), root / 'binding.json')
+            real_import = builtins.__import__
+            def agent_import(name, *args, **kwargs):
+                if name in {'video_candidate', 'PIL'} or name.startswith('PIL.'):
+                    raise ModuleNotFoundError('Agent must not import Photo imaging dependencies')
+                return real_import(name, *args, **kwargs)
+            with patch.object(adapter, 'SCRIPTS', root), patch('builtins.__import__', side_effect=agent_import):
+                result = registry._candidate({'candidate_ref': 'candidate.json'},
+                    {'narration': {}, 'mxHandoff': {'tts_ref': 'audio.wav'}},
+                    root, root, {source: 'fixture-digest'}, {'status': 'completed'}, root / 'run')
+            self.assertEqual(result['status'], 'candidate')
+            self.assertTrue(result['imagingAvailable'])
+            self.assertEqual(Path(result['python']).resolve(), adapter.PHOTO_PYTHON.resolve())
+            self.assertEqual(result['sourceDigest'], 'fixture-digest')
+            self.assertEqual(json.loads((root / 'candidate.json').read_text()), result)
+
+    def test_failed_candidate_subprocess_cannot_reuse_a_stale_projection(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve(); output = root / 'run'; output.mkdir()
+            stale = output / 'native-candidate.json'; stale.write_text('{"status":"candidate"}')
+            source = root / 'audio.wav'; source.write_bytes(b'fixture')
+            registry = adapter.PhotoNodeRegistry(SimpleNamespace(), root / 'binding.json')
+            with patch.object(adapter.subprocess, 'run', return_value=SimpleNamespace(returncode=1, stdout='', stderr='projection failed')):
+                with self.assertRaises(adapter.ProductContractError):
+                    registry._candidate({'candidate_ref': 'candidate.json'},
+                        {'narration': {}, 'mxHandoff': {'tts_ref': 'audio.wav'}}, root, root,
+                        {source: 'fixture-digest'}, {'status': 'completed'}, output)
+            self.assertFalse(stale.exists())
+            self.assertFalse((root / 'candidate.json').exists())
+            self.assertIn('projection failed', (output / 'candidate.log').read_text())
+
     def test_suggest_receives_validated_descriptor_instead_of_binding_script(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

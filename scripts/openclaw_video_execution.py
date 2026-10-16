@@ -56,6 +56,22 @@ Path(request["result_path"]).write_text(json.dumps(result, ensure_ascii=False, a
 """
 
 
+# Candidate projection burns captions and measures fonts, so it shares Photo's
+# interpreter boundary with composition rather than importing into Agent.
+_CANDIDATE_DRIVER = """import json, sys
+from pathlib import Path
+request = json.load(sys.stdin)
+sys.path.insert(0, str(Path(request['scripts_root']).parent))
+sys.path.insert(0, request['scripts_root'])
+from video_candidate import project_candidate
+result = project_candidate(native=request['native'], descriptor=request['descriptor'],
+    source=Path(request['source']),
+    original_hashes={Path(path): digest for path, digest in request['original_hashes'].items()},
+    output_dir=Path(request['output_dir']), workspace=Path(request['workspace']))
+Path(request['result_path']).write_text(json.dumps(result, ensure_ascii=False, allow_nan=False))
+"""
+
+
 def file_sha256(path: Path) -> str:
     with path.open("rb") as stream:
         return hashlib.file_digest(stream, "sha256").hexdigest()
@@ -257,7 +273,6 @@ class PhotoNodeRegistry:
         return descriptor
 
     def _candidate(self, binding, descriptor, root, workspace, before, native, output_root):
-        from video_candidate import project_candidate
         if not isinstance(native, dict):
             raise ProductContractError("photo_candidate_projection_missing")
         if native.get("manifest"):
@@ -269,8 +284,21 @@ class PhotoNodeRegistry:
             source = local_path(workspace, descriptor['mxHandoff']['tts_ref']) if descriptor['narration'] is not None else next((p for p in before if p.suffix.lower() == '.wav'), None)
         if source is None:
             raise ProductContractError("photo_candidate_projection_missing")
-        payload = project_candidate(native=native, descriptor=descriptor, source=source,
-                                    original_hashes=before, output_dir=output_root / "return", workspace=workspace)
+        output_root.mkdir(parents=True, exist_ok=True)
+        result_path = output_root / 'native-candidate.json'
+        result_path.unlink(missing_ok=True)
+        request = {'scripts_root': str(SCRIPTS.resolve()), 'native': native, 'descriptor': descriptor,
+                   'source': str(source), 'original_hashes': {str(path): digest for path, digest in before.items()},
+                   'output_dir': str(output_root / 'return'), 'workspace': str(workspace),
+                   'result_path': str(result_path)}
+        environment = {key: value for key, value in os.environ.items() if key != 'PYTHONPATH'}
+        completed = subprocess.run([str(PHOTO_PYTHON), '-c', _CANDIDATE_DRIVER],
+            input=json.dumps(request, ensure_ascii=False), cwd=root, env=environment,
+            capture_output=True, text=True, timeout=1800, check=False)
+        (output_root / 'candidate.log').write_text(completed.stdout + completed.stderr, encoding='utf-8')
+        if completed.returncode != 0 or not result_path.is_file():
+            raise ProductContractError('photo_execution_failed')
+        payload = json.loads(result_path.read_text())
         destination = local_path(root, binding["candidate_ref"])
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(json.dumps(payload, ensure_ascii=True, allow_nan=False) + "\n")
