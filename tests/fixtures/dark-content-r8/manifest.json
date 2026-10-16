@@ -1,0 +1,27 @@
+{
+  "sourceVideoSha256": "7a9bf583ea2e2e90ef3975bdd8e35f02f79c6e2d3c03844341d7108c647a9b49",
+  "sourceKind": "prior native composition before subtitle burn-in",
+  "fps": 30,
+  "fixtures": [
+    {
+      "frame": 0,
+      "file": "frame-0.png",
+      "sha256": "91d92c7e80fd0b17e0701ef658e177644e9e157ba76276437bcfb583b54dabd0"
+    },
+    {
+      "frame": 610,
+      "file": "frame-610.png",
+      "sha256": "d767bcdad766ca2c0c960ce05a5e458f27f16582533e112997c5bded332016cd"
+    },
+    {
+      "frame": 1068,
+      "file": "frame-1068.png",
+      "sha256": "43c0dc7530617f590622c8c574b5904c8315947c015460c693e16a4abba0210a"
+    },
+    {
+      "frame": 1550,
+      "file": "frame-1550.png",
+      "sha256": "c30fbdf4558cb2ca5fd2ec5d765f5b540514916674e58cc3d9db8184800f2a11"
+    }
+  ]
+}

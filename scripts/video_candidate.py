@@ -208,11 +208,11 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
     av = groups['av_duration'][0]['details'].get('stream_seconds')
     if av is None or len(av) != 2:
         raise ProductContractError('photo_av_projection_missing')
-    black = subprocess.run(['ffmpeg', '-nostdin', '-v', 'info', '-i', str(video), '-vf', 'blackframe=amount=98:threshold=32',
-                            '-an', '-f', 'null', '-'], capture_output=True, text=True, check=True, timeout=1800)
+    from video_black_frames import inspect_black_frames
+    black = inspect_black_frames(video, output_dir / 'black-frame-check.json')
     checks = {'playable': status(['decode', 'tracks']), 'avSync': status(['av_duration']),
               'frameCount': status(['frames']), 'sourceUnchanged': status(['original_integrity']),
-              'subtitles': status(['subtitles']), 'blackFrames': 'fail' if re.search(r'\bpblack:', black.stderr) else 'pass',
+              'subtitles': status(['subtitles']), 'blackFrames': black['status'],
               'avOffsetSeconds': abs(av[0] - av[1]), 'avOffsetLimitSeconds': .1, 'expectedFrames': expected, 'actualFrames': frames}
     successful = all(checks[k] == 'pass' for k in ('playable', 'avSync', 'frameCount', 'sourceUnchanged', 'subtitles', 'blackFrames'))
     # Direct composition's source is the original narration, with no edit cuts.

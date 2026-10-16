@@ -172,6 +172,27 @@ class PreviewAndBlackFrameTests(unittest.TestCase):
             self.assertEqual(payload['candidate']['checks']['blackFrames'],'fail')
             self.assertEqual(payload['candidate']['status'],'check_failed')
 
+    def test_dark_design_with_a_small_white_header_is_not_a_black_frame(self):
+        self._assert_dark_fixture('0x14110D', 'drawbox=x=12:y=12:w=30:h=3:color=white:t=fill', 'pass')
+
+    def test_dark_design_with_a_few_dots_is_not_a_black_frame(self):
+        self._assert_dark_fixture('0x14110D', 'drawbox=x=80:y=70:w=4:h=4:color=white:t=fill,drawbox=x=100:y=70:w=4:h=4:color=white:t=fill', 'pass')
+
+    def test_uniform_deep_gray_has_no_content_and_fails(self):
+        self._assert_dark_fixture('0x303030', None, 'fail')
+
+    def _assert_dark_fixture(self, color, graphic, expected):
+        with tempfile.TemporaryDirectory(prefix='pf-dark-content-') as directory:
+            root=Path(directory);source=root/'source.mp4';native=root/'native.mp4'
+            args=['ffmpeg','-v','error','-y','-f','lavfi','-i',f'color={color}:s=320x180:r=30:d=0.2',
+                '-f','lavfi','-i','sine=duration=0.2:sample_rate=48000']
+            if graphic:args+=['-vf',graphic]
+            run(*args,'-c:v','libx264','-threads','1','-c:a','aac','-pix_fmt','yuv420p',str(source))
+            shutil.copyfile(source,native);desc=descriptor();desc['shots'][0]['shot']['endSeconds']=.2
+            payload=project_candidate(native={'status':'completed','candidate':str(native),'checks':{'frames':6}},
+                descriptor=desc,source=source,original_hashes={source:renderer.sha256_file(source)},output_dir=root/'return',workspace=root)
+            self.assertEqual(payload['candidate']['checks']['blackFrames'],expected)
+
 
 class AnalysisForwardingTests(unittest.TestCase):
     def test_paid_provider_fails_before_any_local_work(self):

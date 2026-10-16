@@ -162,17 +162,31 @@ def build_subtitle_cues(descriptor, *, fps, total_frames):
         spans = [(r['shot']['startSeconds'], r['shot']['endSeconds'], r['subtitle'])
                  for r in descriptor['shots'] if r['subtitle']]
     cues = _plan(spans, cuts, rate, total_frames)
-    if timings and any('englishText' in t for t in timings):
-        if any(not isinstance(t.get('englishText'),str) or not t['englishText'].strip() for t in timings):
-            raise ProductContractError('photo_subtitle_translation_incomplete')
-        for timing in timings:
-            group=[c for c in cues if _frame(timing['startSeconds'],rate)<=c['startFrame']<_frame(timing['endSeconds'],rate)]
-            words=timing['englishText'].split();offset=0
-            for i,cue in enumerate(group):
-                if len(words)<len(group):cue['englishText']=timing['englishText'];continue
-                end=len(words) if i==len(group)-1 else min(len(words)-(len(group)-i-1),max(offset+1,round(len(words)*(cue['endFrame']-group[0]['startFrame'])/(group[-1]['endFrame']-group[0]['startFrame']))))
-                cue['englishText']=' '.join(words[offset:end]);offset=end
+    frozen=narration.get('subtitleCues') if isinstance(narration,dict) else None
+    if frozen is not None:
+        if not isinstance(frozen,list) or len(frozen)!=len(cues):
+            raise ProductContractError('photo_subtitle_translation_plan_stale')
+        for cue,translated in zip(cues,frozen):
+            if not isinstance(translated,dict) or set(translated)!={'text','startFrame','endFrame','englishText'} or any(translated[k]!=cue[k] for k in ('text','startFrame','endFrame')):
+                raise ProductContractError('photo_subtitle_translation_plan_stale')
+            english=translated['englishText']
+            if not isinstance(english,str) or not english.strip() or any(ord(ch)<32 for ch in english) or unicodedata.category(english.strip()[0]).startswith('P'):
+                raise ProductContractError('photo_subtitle_translation_invalid')
+            cue['englishText']=english.strip()
+    elif timings and any('englishText' in t for t in timings):
+        raise ProductContractError('photo_subtitle_translation_plan_required')
     return cues
+
+
+def subtitle_translation_plan(descriptor, *, fps=30, total_frames):
+    """Freeze exactly the Chinese cues that Photo will display, before translating."""
+    import copy
+    clean=copy.deepcopy(descriptor)
+    narration=clean.get('narration') or {}
+    narration.pop('subtitleCues',None)
+    for timing in narration.get('sentenceTimings',[]):timing.pop('englishText',None)
+    cues=build_subtitle_cues(clean,fps=fps,total_frames=total_frames)
+    return {'fps':fps,'totalFrames':total_frames,'cues':[{k:c[k] for k in ('text','startFrame','endFrame')} for c in cues]}
 
 
 def _srt_stamp(frame, rate):
