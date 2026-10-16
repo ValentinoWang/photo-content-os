@@ -15,6 +15,7 @@ import unicodedata
 
 from edit_backends.kdenlive_render import probe_media, review_module
 from openclaw_product_contract import ProductContractError
+from video_subtitle_bilingual import bilingual_layout, caption_text_width
 
 
 def _reject():
@@ -160,7 +161,18 @@ def build_subtitle_cues(descriptor, *, fps, total_frames):
     else:
         spans = [(r['shot']['startSeconds'], r['shot']['endSeconds'], r['subtitle'])
                  for r in descriptor['shots'] if r['subtitle']]
-    return _plan(spans, cuts, rate, total_frames)
+    cues = _plan(spans, cuts, rate, total_frames)
+    if timings and any('englishText' in t for t in timings):
+        if any(not isinstance(t.get('englishText'),str) or not t['englishText'].strip() for t in timings):
+            raise ProductContractError('photo_subtitle_translation_incomplete')
+        for timing in timings:
+            group=[c for c in cues if _frame(timing['startSeconds'],rate)<=c['startFrame']<_frame(timing['endSeconds'],rate)]
+            words=timing['englishText'].split();offset=0
+            for i,cue in enumerate(group):
+                if len(words)<len(group):cue['englishText']=timing['englishText'];continue
+                end=len(words) if i==len(group)-1 else min(len(words)-(len(group)-i-1),max(offset+1,round(len(words)*(cue['endFrame']-group[0]['startFrame'])/(group[-1]['endFrame']-group[0]['startFrame']))))
+                cue['englishText']=' '.join(words[offset:end]);offset=end
+    return cues
 
 
 def _srt_stamp(frame, rate):
@@ -173,7 +185,7 @@ def _srt_stamp(frame, rate):
 
 def write_direct_subtitles(descriptor, path, *, fps, total_frames):
     rate = _rate(fps); cues = build_subtitle_cues(descriptor, fps=fps, total_frames=total_frames)
-    body = '\n\n'.join(f"{i+1}\n{_srt_stamp(c['startFrame'],rate)} --> {_srt_stamp(c['endFrame'],rate)}\n" + c['text'] for i,c in enumerate(cues)) + '\n'
+    body = '\n\n'.join(f"{i+1}\n{_srt_stamp(c['startFrame'],rate)} --> {_srt_stamp(c['endFrame'],rate)}\n" + c['text'] + ('\n'+c['englishText'] if c.get('englishText') else '') for i,c in enumerate(cues)) + '\n'
     path.write_text(body, encoding='utf-8')
     sidecar = {'schemaVersion': 'photo.video.subtitles.frames.v1', 'rate': [rate.numerator, rate.denominator],
                'totalFrames': total_frames, 'subtitleSha256': hashlib.sha256(body.encode()).hexdigest(),
@@ -208,6 +220,8 @@ def _render_cues(subtitles, rate, total_frames):
         if (type(c['startFrame']) is not int or type(c['endFrame']) is not int
             or not previous_end <= c['startFrame'] < c['endFrame'] <= total_frames-1 or c['lines'] != _lines(c['text'])):
             _reject()
+        if 'englishText' in c and (not isinstance(c['englishText'],str) or not c['englishText'].strip() or any(ord(ch)<32 for ch in c['englishText'])):
+            _reject()
         previous_end = c['endFrame']
     return cues
 
@@ -236,6 +250,15 @@ def burn_subtitles(video: Path, subtitles: Path, output: Path) -> float:
         for index,cue in enumerate(cues):
             textfile = f'cue-{index:04}.txt'
             (root/textfile).write_text('\n'.join(cue['lines']),encoding='utf-8')
+            if cue.get('englishText'):
+                layout=bilingual_layout(cue['lines'],cue['englishText'],width,height)
+                style.setdefault('bilingualLayouts',[]).append({'startFrame':cue['startFrame'],'endFrame':cue['endFrame'],**layout})
+                enfile=f'cue-{index:04}-en.txt';(root/enfile).write_text('\n'.join(layout['englishLines']),encoding='utf-8')
+                enabled=f"gte(n,{cue['startFrame']})*lt(n,{cue['endFrame']})"
+                filters.append(f"drawbox=x=(iw-{layout['boxWidth']})/2:y={layout['boxTop']}:w={layout['boxWidth']}:h={layout['boxHeight']}:color=black@{style['boxOpacity']}:t=fill:enable='{enabled}'")
+                filters.append(f"drawtext=fontfile=caption-font.ttc:textfile={textfile}:expansion=none:fontsize={style['fontSize']}:fontcolor=white:text_align=M+C:line_spacing={style['lineSpacing']}:x=(w-text_w)/2:y={layout['chineseTop']}:enable='{enabled}'")
+                filters.append(f"drawtext=fontfile=caption-font.ttc:textfile={enfile}:expansion=none:fontsize={layout['englishFontSize']}:fontcolor={layout['englishColor']}:text_align=M+C:line_spacing={layout['englishLineSpacing']}:x=(w-text_w)/2:y={layout['englishTop']}:enable='{enabled}'")
+                continue
             filters.append(f"drawtext=fontfile=caption-font.ttc:textfile={textfile}:expansion=none:fontsize={style['fontSize']}:fontcolor=white:"
                            f"text_align=M+C:box=1:boxcolor=black@{style['boxOpacity']}:boxborderw={style['padding']}:line_spacing={style['lineSpacing']}:"
                            f"x=(w-text_w)/2:y=h*0.9-text_h/2:enable='gte(n,{cue['startFrame']})*lt(n,{cue['endFrame']})'")
