@@ -1,0 +1,17 @@
+[
+  {
+    "platform": "qishui",
+    "reason": "网络读取失败，已停止重复联网（本地失败缓存，未再次联网）",
+    "network_calls": 0
+  },
+  {
+    "platform": "douyin",
+    "reason": "链接跳转过多，已停止访问（本地失败缓存，未再次联网）",
+    "network_calls": 0
+  },
+  {
+    "platform": "netease",
+    "reason": "这首网易云歌曲暂无可用音源或版权，未入库（本地失败缓存，未再次联网）",
+    "network_calls": 0
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "reason": "网易云限制了你当前所在地区播放这首（你现在的网络不在大陆），需要从大陆网络导入",
+  "diagnostic": {
+    "failure_class": "region_restricted"
+  },
+  "network_calls": 0,
+  "privileges": [
+    {
+      "id": 1331800077,
+      "st": -100,
+      "pl": 0,
+      "dl": 0,
+      "cannotListenReason": 1,
+      "charge_types": [
+        0,
+        1
+      ]
+    }
+  ]
+}

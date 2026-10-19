@@ -1,0 +1,15 @@
+{
+  "network_requests": 0,
+  "key": "75768dfc8def2435fc5d52bd17ea34a748009c1616a1ae6c7282ffab77c61887",
+  "originals_preserved": true,
+  "copies": [
+    {
+      "suffix": ".json",
+      "sha256": "8ee602f7909fddf15df2b49aa80f208b0bb707dd738d38653eb1abe19d9d7081"
+    },
+    {
+      "suffix": ".body",
+      "sha256": "cba25dad4de5406656f7235adabe73c47cf9f5a462bc6231b05f8cb3cba9ccc0"
+    }
+  ]
+}

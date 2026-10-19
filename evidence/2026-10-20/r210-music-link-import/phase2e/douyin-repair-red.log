@@ -1,0 +1,490 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_signature_registration_detail_once_and_cached_replay[note] ________
+
+self = <test_douyin_music_api.test_signature_registration_detail_once_and_cached_replay.<locals>.Opener object at 0x106b52270>
+request = <urllib.request.Request object at 0x1072dc550>, timeout = 30
+
+    def open(self, request, timeout):
+        calls.append(request)
+        if request.full_url == REGISTER:
+            assert not request.has_header('Cookie')
+            return Response({'status_code': 0}, True)
+        from http.cookies import SimpleCookie
+        jar = SimpleCookie(); jar.load(request.get_header('Cookie'))
+        assert jar['ttwid'].value == 'synthetic-anonymous'
+        query = parse_qs(urlsplit(request.full_url).query, keep_blank_values=True)
+>       assert len(query['msToken'][0]) == 184
+E       AssertionError: assert 0 == 184
+E        +  where 0 = len('')
+
+tests/test_douyin_music_api.py:48: AssertionError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-470/test_signature_registration_de0')
+kind = 'note'
+
+    @pytest.mark.parametrize('kind', ['note', 'video', 'music'])
+    def test_signature_registration_detail_once_and_cached_replay(tmp_path, kind):
+        from music_library.platforms import PlatformAdapter
+        from music_library.links import parse_link
+        calls = []
+        music = {'id': 90001, 'title': 'synthetic', 'author': 'synth', 'duration': 180,
+                 'play_url': {'url_list': ['https://cdn.example.test/full.mp3']}}
+        class Opener:
+            def open(self, request, timeout):
+                calls.append(request)
+                if request.full_url == REGISTER:
+                    assert not request.has_header('Cookie')
+                    return Response({'status_code': 0}, True)
+                from http.cookies import SimpleCookie
+                jar = SimpleCookie(); jar.load(request.get_header('Cookie'))
+                assert jar['ttwid'].value == 'synthetic-anonymous'
+                query = parse_qs(urlsplit(request.full_url).query, keep_blank_values=True)
+                assert len(query['msToken'][0]) == 184
+                assert jar['msToken'].value == query['msToken'][0]
+                assert set(jar) == {'ttwid', 'msToken'}
+                assert 'a_bogus' in parse_qs(urlsplit(request.full_url).query)
+                return Response({'music_info': music} if kind == 'music' else
+                                {'aweme_detail': {'aweme_id': '80001', 'music': music}})
+        http = CachedHTTP(tmp_path, opener=Opener(), cookie_reader=lambda _: pytest.fail('must not read browser'))
+        adapter = PlatformAdapter(tmp_path, http=http, browser='chrome')
+        url = f'https://www.douyin.com/{kind}/' + ('90001' if kind == 'music' else '80001')
+>       first = adapter.resolve(parse_link(url))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_douyin_music_api.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/music_library/platforms.py:94: in resolve
+    data = detail(self.http, link.platform_id, music=link.kind == 'music')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/music_library/douyin_api.py:73: in detail
+    _, _, body = http.fetch(request['url'], cookies=True, headers={'User-Agent': request['user_agent'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <music_library.cache.CachedHTTP object at 0x106b52120>
+url = 'https://www.douyin.com/aweme/v1/web/aweme/detail/?device_platform=webapp&aid=6383&channel=channel_pc_web&update_versi...39HMYa9exojL7vHS8jF4/JIeLjy4hbTpcprQcJ81wf984q/25/mfSkKl12so0j53ine6bME0wo-hsAtFqmsv1liORkqw/eFuRsAoee-wHvPjojx2f39gcC'
+data = None, cookies = True
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'Referer': 'https://www.douyin.com/?recommend=1', 'Accept': '*/*', 'Cookie': 'ttwid=synthetic-anonymous'}
+
+    def fetch(self, url, data=None, *, cookies=False, headers=None):
+        supplied_headers = headers or {}
+        for _ in range(6):
+            parsed = urlsplit(url)
+            if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
+                raise MusicError('来源返回了不安全的下载地址')
+            key = request_cache_key(url, data)
+            self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
+            record_path, body_path = self.root / f'{key}.json', self.root / f'{key}.body'
+            if record_path.exists():
+                record = read_json(record_path, '网络缓存')
+                if record.get('state') == 'failed':
+                    message = record.get('reason', '请求失败，原因未确认') + '（本地请求失败缓存，未联网）'
+                    if record.get('failure'):
+                        raise NetworkFailure(message, record['failure'])
+                    raise MusicError(message)
+                if record.get('state') != 'complete':
+                    raise MusicError('这个链接已尝试过且未完成，已停止重复联网；请保留缓存交由维护者检查')
+                try:
+                    body = body_path.read_bytes()
+                except OSError as exc:
+                    raise MusicError('网络缓存内容无法读取；已停止重复联网') from exc
+                if hashlib.sha256(body).hexdigest() != record.get('sha256'):
+                    raise MusicError('网络缓存内容已损坏；已停止重复联网')
+            else:
+                if not self.allow_network:
+                    raise MusicError('本地缓存不足；已禁止重新联网，请汇报缺失请求')
+                headers = {'User-Agent': USER_AGENT, 'Referer': 'https://' + parsed.hostname + '/'}
+                headers.update({k: v for k, v in supplied_headers.items() if k.lower() not in ('cookie', 'authorization')})
+                if cookies and self.cookie_reader:
+                    cookie = self.cookie_reader(url)
+                    if cookie:
+                        headers['Cookie'] = cookie
+                request = urllib.request.Request(url, data=data, headers=headers)
+                if hasattr(self.opener, 'check_request'):
+                    self.opener.check_request(request)
+                write_json(record_path, {'state': 'attempted', 'request_host': parsed.hostname, 'request_path': parsed.path})
+                temporary = body_path.with_suffix('.part')
+                response_info = {}
+                try:
+                    try:
+                        self.network_calls += 1
+                        self.audit.append({'method': request.get_method(), 'host': parsed.hostname, 'path': parsed.path, 'cache_key': key})
+                        response = self.opener.open(request, timeout=30)
+                    except urllib.error.HTTPError as exc:
+                        response = exc
+                    except MusicError:
+                        raise
+                    except Exception as exc:
+>                       raise network_failure(exc, proxy_configured=bool(getattr(self.opener, 'proxy', None))) from exc
+E                       music_library.errors.NetworkFailure: 音乐网络请求失败，具体原因未确认，已停止重复联网
+
+scripts/music_library/cache.py:98: NetworkFailure
+_______ test_signature_registration_detail_once_and_cached_replay[video] _______
+
+self = <test_douyin_music_api.test_signature_registration_detail_once_and_cached_replay.<locals>.Opener object at 0x106b52ba0>
+request = <urllib.request.Request object at 0x10713c8a0>, timeout = 30
+
+    def open(self, request, timeout):
+        calls.append(request)
+        if request.full_url == REGISTER:
+            assert not request.has_header('Cookie')
+            return Response({'status_code': 0}, True)
+        from http.cookies import SimpleCookie
+        jar = SimpleCookie(); jar.load(request.get_header('Cookie'))
+        assert jar['ttwid'].value == 'synthetic-anonymous'
+        query = parse_qs(urlsplit(request.full_url).query, keep_blank_values=True)
+>       assert len(query['msToken'][0]) == 184
+E       AssertionError: assert 0 == 184
+E        +  where 0 = len('')
+
+tests/test_douyin_music_api.py:48: AssertionError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-470/test_signature_registration_de1')
+kind = 'video'
+
+    @pytest.mark.parametrize('kind', ['note', 'video', 'music'])
+    def test_signature_registration_detail_once_and_cached_replay(tmp_path, kind):
+        from music_library.platforms import PlatformAdapter
+        from music_library.links import parse_link
+        calls = []
+        music = {'id': 90001, 'title': 'synthetic', 'author': 'synth', 'duration': 180,
+                 'play_url': {'url_list': ['https://cdn.example.test/full.mp3']}}
+        class Opener:
+            def open(self, request, timeout):
+                calls.append(request)
+                if request.full_url == REGISTER:
+                    assert not request.has_header('Cookie')
+                    return Response({'status_code': 0}, True)
+                from http.cookies import SimpleCookie
+                jar = SimpleCookie(); jar.load(request.get_header('Cookie'))
+                assert jar['ttwid'].value == 'synthetic-anonymous'
+                query = parse_qs(urlsplit(request.full_url).query, keep_blank_values=True)
+                assert len(query['msToken'][0]) == 184
+                assert jar['msToken'].value == query['msToken'][0]
+                assert set(jar) == {'ttwid', 'msToken'}
+                assert 'a_bogus' in parse_qs(urlsplit(request.full_url).query)
+                return Response({'music_info': music} if kind == 'music' else
+                                {'aweme_detail': {'aweme_id': '80001', 'music': music}})
+        http = CachedHTTP(tmp_path, opener=Opener(), cookie_reader=lambda _: pytest.fail('must not read browser'))
+        adapter = PlatformAdapter(tmp_path, http=http, browser='chrome')
+        url = f'https://www.douyin.com/{kind}/' + ('90001' if kind == 'music' else '80001')
+>       first = adapter.resolve(parse_link(url))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_douyin_music_api.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/music_library/platforms.py:94: in resolve
+    data = detail(self.http, link.platform_id, music=link.kind == 'music')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/music_library/douyin_api.py:73: in detail
+    _, _, body = http.fetch(request['url'], cookies=True, headers={'User-Agent': request['user_agent'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <music_library.cache.CachedHTTP object at 0x10691f890>
+url = 'https://www.douyin.com/aweme/v1/web/aweme/detail/?device_platform=webapp&aid=6383&channel=channel_pc_web&update_versi...Tw9exojL7vHCEjF4/JIeSjy4hbYN/DrQAj0pjUHW0NWnQ2m682Kl5Q5I0j53iruyRMJ0WF4kJAFees-Jd3xO0my75Gzbw0AoKn4vIlO6ZCcHgOEisnOtj='
+data = None, cookies = True
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'Referer': 'https://www.douyin.com/?recommend=1', 'Accept': '*/*', 'Cookie': 'ttwid=synthetic-anonymous'}
+
+    def fetch(self, url, data=None, *, cookies=False, headers=None):
+        supplied_headers = headers or {}
+        for _ in range(6):
+            parsed = urlsplit(url)
+            if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
+                raise MusicError('来源返回了不安全的下载地址')
+            key = request_cache_key(url, data)
+            self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
+            record_path, body_path = self.root / f'{key}.json', self.root / f'{key}.body'
+            if record_path.exists():
+                record = read_json(record_path, '网络缓存')
+                if record.get('state') == 'failed':
+                    message = record.get('reason', '请求失败，原因未确认') + '（本地请求失败缓存，未联网）'
+                    if record.get('failure'):
+                        raise NetworkFailure(message, record['failure'])
+                    raise MusicError(message)
+                if record.get('state') != 'complete':
+                    raise MusicError('这个链接已尝试过且未完成，已停止重复联网；请保留缓存交由维护者检查')
+                try:
+                    body = body_path.read_bytes()
+                except OSError as exc:
+                    raise MusicError('网络缓存内容无法读取；已停止重复联网') from exc
+                if hashlib.sha256(body).hexdigest() != record.get('sha256'):
+                    raise MusicError('网络缓存内容已损坏；已停止重复联网')
+            else:
+                if not self.allow_network:
+                    raise MusicError('本地缓存不足；已禁止重新联网，请汇报缺失请求')
+                headers = {'User-Agent': USER_AGENT, 'Referer': 'https://' + parsed.hostname + '/'}
+                headers.update({k: v for k, v in supplied_headers.items() if k.lower() not in ('cookie', 'authorization')})
+                if cookies and self.cookie_reader:
+                    cookie = self.cookie_reader(url)
+                    if cookie:
+                        headers['Cookie'] = cookie
+                request = urllib.request.Request(url, data=data, headers=headers)
+                if hasattr(self.opener, 'check_request'):
+                    self.opener.check_request(request)
+                write_json(record_path, {'state': 'attempted', 'request_host': parsed.hostname, 'request_path': parsed.path})
+                temporary = body_path.with_suffix('.part')
+                response_info = {}
+                try:
+                    try:
+                        self.network_calls += 1
+                        self.audit.append({'method': request.get_method(), 'host': parsed.hostname, 'path': parsed.path, 'cache_key': key})
+                        response = self.opener.open(request, timeout=30)
+                    except urllib.error.HTTPError as exc:
+                        response = exc
+                    except MusicError:
+                        raise
+                    except Exception as exc:
+>                       raise network_failure(exc, proxy_configured=bool(getattr(self.opener, 'proxy', None))) from exc
+E                       music_library.errors.NetworkFailure: 音乐网络请求失败，具体原因未确认，已停止重复联网
+
+scripts/music_library/cache.py:98: NetworkFailure
+_______ test_signature_registration_detail_once_and_cached_replay[music] _______
+
+self = <test_douyin_music_api.test_signature_registration_detail_once_and_cached_replay.<locals>.Opener object at 0x106b527b0>
+request = <urllib.request.Request object at 0x10714a8d0>, timeout = 30
+
+    def open(self, request, timeout):
+        calls.append(request)
+        if request.full_url == REGISTER:
+            assert not request.has_header('Cookie')
+            return Response({'status_code': 0}, True)
+        from http.cookies import SimpleCookie
+        jar = SimpleCookie(); jar.load(request.get_header('Cookie'))
+        assert jar['ttwid'].value == 'synthetic-anonymous'
+        query = parse_qs(urlsplit(request.full_url).query, keep_blank_values=True)
+>       assert len(query['msToken'][0]) == 184
+E       AssertionError: assert 0 == 184
+E        +  where 0 = len('')
+
+tests/test_douyin_music_api.py:48: AssertionError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-470/test_signature_registration_de2')
+kind = 'music'
+
+    @pytest.mark.parametrize('kind', ['note', 'video', 'music'])
+    def test_signature_registration_detail_once_and_cached_replay(tmp_path, kind):
+        from music_library.platforms import PlatformAdapter
+        from music_library.links import parse_link
+        calls = []
+        music = {'id': 90001, 'title': 'synthetic', 'author': 'synth', 'duration': 180,
+                 'play_url': {'url_list': ['https://cdn.example.test/full.mp3']}}
+        class Opener:
+            def open(self, request, timeout):
+                calls.append(request)
+                if request.full_url == REGISTER:
+                    assert not request.has_header('Cookie')
+                    return Response({'status_code': 0}, True)
+                from http.cookies import SimpleCookie
+                jar = SimpleCookie(); jar.load(request.get_header('Cookie'))
+                assert jar['ttwid'].value == 'synthetic-anonymous'
+                query = parse_qs(urlsplit(request.full_url).query, keep_blank_values=True)
+                assert len(query['msToken'][0]) == 184
+                assert jar['msToken'].value == query['msToken'][0]
+                assert set(jar) == {'ttwid', 'msToken'}
+                assert 'a_bogus' in parse_qs(urlsplit(request.full_url).query)
+                return Response({'music_info': music} if kind == 'music' else
+                                {'aweme_detail': {'aweme_id': '80001', 'music': music}})
+        http = CachedHTTP(tmp_path, opener=Opener(), cookie_reader=lambda _: pytest.fail('must not read browser'))
+        adapter = PlatformAdapter(tmp_path, http=http, browser='chrome')
+        url = f'https://www.douyin.com/{kind}/' + ('90001' if kind == 'music' else '80001')
+>       first = adapter.resolve(parse_link(url))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_douyin_music_api.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/music_library/platforms.py:94: in resolve
+    data = detail(self.http, link.platform_id, music=link.kind == 'music')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/music_library/douyin_api.py:73: in detail
+    _, _, body = http.fetch(request['url'], cookies=True, headers={'User-Agent': request['user_agent'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <music_library.cache.CachedHTTP object at 0x1072dd450>
+url = 'https://www.douyin.com/aweme/v1/web/music/detail/?device_platform=webapp&aid=6383&channel=channel_pc_web&update_versi...39HMTe9exojL7vHjWjF4/JIeujy4hbTpKgrQcG8Zwf98vE/2ADsjSkKl5Q5xSSs1X9e6hgJU0Nmkt4tMK2RvZWrOXsqwpHzY8g09oHmhK4bIOwu3GMxj=='
+data = None, cookies = True
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36', 'Referer': 'https://www.douyin.com/?recommend=1', 'Accept': '*/*', 'Cookie': 'ttwid=synthetic-anonymous'}
+
+    def fetch(self, url, data=None, *, cookies=False, headers=None):
+        supplied_headers = headers or {}
+        for _ in range(6):
+            parsed = urlsplit(url)
+            if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
+                raise MusicError('来源返回了不安全的下载地址')
+            key = request_cache_key(url, data)
+            self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
+            record_path, body_path = self.root / f'{key}.json', self.root / f'{key}.body'
+            if record_path.exists():
+                record = read_json(record_path, '网络缓存')
+                if record.get('state') == 'failed':
+                    message = record.get('reason', '请求失败，原因未确认') + '（本地请求失败缓存，未联网）'
+                    if record.get('failure'):
+                        raise NetworkFailure(message, record['failure'])
+                    raise MusicError(message)
+                if record.get('state') != 'complete':
+                    raise MusicError('这个链接已尝试过且未完成，已停止重复联网；请保留缓存交由维护者检查')
+                try:
+                    body = body_path.read_bytes()
+                except OSError as exc:
+                    raise MusicError('网络缓存内容无法读取；已停止重复联网') from exc
+                if hashlib.sha256(body).hexdigest() != record.get('sha256'):
+                    raise MusicError('网络缓存内容已损坏；已停止重复联网')
+            else:
+                if not self.allow_network:
+                    raise MusicError('本地缓存不足；已禁止重新联网，请汇报缺失请求')
+                headers = {'User-Agent': USER_AGENT, 'Referer': 'https://' + parsed.hostname + '/'}
+                headers.update({k: v for k, v in supplied_headers.items() if k.lower() not in ('cookie', 'authorization')})
+                if cookies and self.cookie_reader:
+                    cookie = self.cookie_reader(url)
+                    if cookie:
+                        headers['Cookie'] = cookie
+                request = urllib.request.Request(url, data=data, headers=headers)
+                if hasattr(self.opener, 'check_request'):
+                    self.opener.check_request(request)
+                write_json(record_path, {'state': 'attempted', 'request_host': parsed.hostname, 'request_path': parsed.path})
+                temporary = body_path.with_suffix('.part')
+                response_info = {}
+                try:
+                    try:
+                        self.network_calls += 1
+                        self.audit.append({'method': request.get_method(), 'host': parsed.hostname, 'path': parsed.path, 'cache_key': key})
+                        response = self.opener.open(request, timeout=30)
+                    except urllib.error.HTTPError as exc:
+                        response = exc
+                    except MusicError:
+                        raise
+                    except Exception as exc:
+>                       raise network_failure(exc, proxy_configured=bool(getattr(self.opener, 'proxy', None))) from exc
+E                       music_library.errors.NetworkFailure: 音乐网络请求失败，具体原因未确认，已停止重复联网
+
+scripts/music_library/cache.py:98: NetworkFailure
+___________ test_gateway_timeout_is_server_failure_not_invalid_link ____________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-470/test_gateway_timeout_is_server0')
+
+    def test_gateway_timeout_is_server_failure_not_invalid_link(tmp_path):
+        class Opener:
+            def open(self, *a, **k): return Response(b'<title>504 Gateway Time-out</title>', code=504)
+        from music_library.errors import NetworkFailure
+        http = CachedHTTP(tmp_path, opener=Opener())
+        for _ in range(2):
+            with pytest.raises(NetworkFailure, match='504.*服务端.*未重试') as error:
+>               http.fetch('https://www.douyin.com/aweme/v1/web/aweme/detail/?synthetic=1')
+
+tests/test_music_network.py:272: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <music_library.cache.CachedHTTP object at 0x10713d220>
+url = 'https://www.douyin.com/aweme/v1/web/aweme/detail/?synthetic=1'
+data = None, cookies = False
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/130.0.0.0 Safari/537.36', 'Referer': 'https://www.douyin.com/'}
+
+    def fetch(self, url, data=None, *, cookies=False, headers=None):
+        supplied_headers = headers or {}
+        for _ in range(6):
+            parsed = urlsplit(url)
+            if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
+                raise MusicError('来源返回了不安全的下载地址')
+            key = request_cache_key(url, data)
+            self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
+            record_path, body_path = self.root / f'{key}.json', self.root / f'{key}.body'
+            if record_path.exists():
+                record = read_json(record_path, '网络缓存')
+                if record.get('state') == 'failed':
+                    message = record.get('reason', '请求失败，原因未确认') + '（本地请求失败缓存，未联网）'
+                    if record.get('failure'):
+                        raise NetworkFailure(message, record['failure'])
+                    raise MusicError(message)
+                if record.get('state') != 'complete':
+                    raise MusicError('这个链接已尝试过且未完成，已停止重复联网；请保留缓存交由维护者检查')
+                try:
+                    body = body_path.read_bytes()
+                except OSError as exc:
+                    raise MusicError('网络缓存内容无法读取；已停止重复联网') from exc
+                if hashlib.sha256(body).hexdigest() != record.get('sha256'):
+                    raise MusicError('网络缓存内容已损坏；已停止重复联网')
+            else:
+                if not self.allow_network:
+                    raise MusicError('本地缓存不足；已禁止重新联网，请汇报缺失请求')
+                headers = {'User-Agent': USER_AGENT, 'Referer': 'https://' + parsed.hostname + '/'}
+                headers.update({k: v for k, v in supplied_headers.items() if k.lower() not in ('cookie', 'authorization')})
+                if cookies and self.cookie_reader:
+                    cookie = self.cookie_reader(url)
+                    if cookie:
+                        headers['Cookie'] = cookie
+                request = urllib.request.Request(url, data=data, headers=headers)
+                if hasattr(self.opener, 'check_request'):
+                    self.opener.check_request(request)
+                write_json(record_path, {'state': 'attempted', 'request_host': parsed.hostname, 'request_path': parsed.path})
+                temporary = body_path.with_suffix('.part')
+                response_info = {}
+                try:
+                    try:
+                        self.network_calls += 1
+                        self.audit.append({'method': request.get_method(), 'host': parsed.hostname, 'path': parsed.path, 'cache_key': key})
+                        response = self.opener.open(request, timeout=30)
+                    except urllib.error.HTTPError as exc:
+                        response = exc
+                    except MusicError:
+                        raise
+                    except Exception as exc:
+                        raise network_failure(exc, proxy_configured=bool(getattr(self.opener, 'proxy', None))) from exc
+                    with response:
+                        record = {'state': 'complete', 'status': response.code,
+                                  'request_host': parsed.hostname, 'request_path': parsed.path,
+                                  'content_type': response.headers.get('Content-Type', ''),
+                                  'location': response.headers.get('Location', '')}
+                        response_info = dict(record)
+                        expected = response.headers.get('Content-Length')
+                        length = 0
+                        with temporary.open('wb') as handle:
+                            while True:
+                                try:
+                                    chunk = response.read(1024 * 1024)
+                                except Exception as exc:
+                                    failure = network_failure(exc, proxy_configured=bool(getattr(self.opener, 'proxy', None)))
+                                    failure.diagnostic.update({'expected_bytes': int(expected) if expected else None,
+                                                               'received_bytes': getattr(response, 'bytes_received', length)})
+                                    raise failure from exc
+                                if not chunk:
+                                    break
+                                length += len(chunk)
+                                if length > 512 * 1024 * 1024:
+                                    raise MusicError('文件过大，已停止下载')
+                                handle.write(chunk)
+                            handle.flush()
+                            os.fsync(handle.fileno())
+                        if expected and length != int(expected):
+                            raise NetworkFailure('音频没有下载完整，已停止入库',
+                                                 {'failure_class': 'incomplete_response', 'expected_bytes': int(expected),
+                                                  'received_bytes': length, 'exception_types': ['ContentLengthMismatch']})
+                    temporary.replace(body_path)
+                    body = body_path.read_bytes()
+                    record['sha256'] = hashlib.sha256(body).hexdigest()
+                    write_json(record_path, record)
+                except MusicError as exc:
+                    write_json(record_path, {**response_info, 'state': 'failed', 'reason': str(exc), 'failure': getattr(exc, 'diagnostic', None),
+                                             'request_host': parsed.hostname, 'request_path': parsed.path})
+                    raise
+                except (OSError, ValueError) as exc:
+                    write_json(record_path, {'state': 'failed', 'reason': '本地请求缓存写入失败或响应格式无效',
+                                             'request_host': parsed.hostname, 'request_path': parsed.path})
+                    raise MusicError('本地请求缓存写入失败或响应格式无效') from exc
+                finally:
+                    temporary.unlink(missing_ok=True)
+            if record.get('status', 200) >= 400:
+>               raise MusicError('平台拒绝访问或链接已失效；响应已缓存，已停止重复联网')
+E               music_library.errors.MusicError: 平台拒绝访问或链接已失效；响应已缓存，已停止重复联网
+
+scripts/music_library/cache.py:143: MusicError
+=========================== short test summary info ============================
+FAILED tests/test_douyin_music_api.py::test_signature_registration_detail_once_and_cached_replay[note]
+FAILED tests/test_douyin_music_api.py::test_signature_registration_detail_once_and_cached_replay[video]
+FAILED tests/test_douyin_music_api.py::test_signature_registration_detail_once_and_cached_replay[music]
+FAILED tests/test_music_network.py::test_gateway_timeout_is_server_failure_not_invalid_link
+4 failed, 17 deselected in 0.88s

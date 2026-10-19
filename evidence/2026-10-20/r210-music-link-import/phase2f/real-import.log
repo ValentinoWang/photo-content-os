@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "reason": "无法确认这条抖音视频使用的原声，未下载",
+  "failure": null,
+  "network_requests": 1,
+  "tunnel_starts": 0,
+  "requests": [
+    {
+      "node": "douyin:share-note",
+      "number": 2,
+      "method": "GET",
+      "route": "direct",
+      "cookie_present": false,
+      "user_agent": "iPhone Safari",
+      "follow_redirects": false,
+      "cache_key": "75768dfc8def2435fc5d52bd17ea34a748009c1616a1ae6c7282ffab77c61887",
+      "state": "response",
+      "status": 200
+    }
+  ]
+}

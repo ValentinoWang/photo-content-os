@@ -1,0 +1,71 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________ test_share_page_iphone_anonymous_extracts_exact_work_music __________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-488/test_share_page_iphone_anonymo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108bca2c0>
+
+    def test_share_page_iphone_anonymous_extracts_exact_work_music(tmp_path,monkeypatch):
+        calls=[]
+        class Opener:
+            def open(self,request,timeout):
+                calls.append(request)
+                assert request.full_url=='https://www.iesdouyin.com/share/note/80001/'
+                assert 'iPhone' in request.get_header('User-agent') and 'Safari' in request.get_header('User-agent')
+                assert not request.has_header('Cookie')
+                return Response((FIXTURES/'douyin-share-note.html').read_bytes())
+        monkeypatch.setattr('music_library.douyin_api.detail',lambda *a,**k:pytest.fail('signature path must not run'))
+        http=CachedHTTP(tmp_path,opener=Opener(),cookie_reader=lambda _:pytest.fail('must not read browser'))
+        adapter=PlatformAdapter(tmp_path,http=http,browser='chrome')
+>       result=adapter.resolve(parse_link('https://www.douyin.com/note/80001'))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_douyin_share_page.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/music_library/platforms.py:94: in resolve
+    data = detail(self.http, link.platform_id, music=link.kind == 'music')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<music_library.cache.CachedHTTP object at 0x108bd1e80>, '80001')
+k = {'music': False}
+
+>   monkeypatch.setattr('music_library.douyin_api.detail',lambda *a,**k:pytest.fail('signature path must not run'))
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: signature path must not run
+
+tests/test_douyin_share_page.py:39: Failed
+_______________ test_share_redirect_is_cached_but_never_followed _______________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-488/test_share_redirect_is_cached_0')
+
+    def test_share_redirect_is_cached_but_never_followed(tmp_path):
+        calls=[]
+        class Opener:
+            def open(self,request,timeout):
+                calls.append(request.full_url)
+                return Response(b'',302)
+        http=CachedHTTP(tmp_path,opener=Opener())
+        adapter=PlatformAdapter(tmp_path,http=http)
+        for _ in range(2):
+>           with pytest.raises(MusicError,match='302.*未跟随'):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: Regex pattern did not match.
+E             Expected regex: '302.*未跟随'
+E             Actual message: '链接跳转过多，已停止访问'
+
+tests/test_douyin_share_page.py:59: AssertionError
+____ test_share_parser_rejects_unreadable_wrong_work_and_ambiguous_payload _____
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-488/test_share_parser_rejects_unre0')
+
+    def test_share_parser_rejects_unreadable_wrong_work_and_ambiguous_payload(tmp_path):
+>       from music_library.douyin_share import parse_router_data
+E       ModuleNotFoundError: No module named 'music_library.douyin_share'
+
+tests/test_douyin_share_page.py:66: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_douyin_share_page.py::test_share_page_iphone_anonymous_extracts_exact_work_music
+FAILED tests/test_douyin_share_page.py::test_share_redirect_is_cached_but_never_followed
+FAILED tests/test_douyin_share_page.py::test_share_parser_rejects_unreadable_wrong_work_and_ambiguous_payload
+3 failed in 0.18s

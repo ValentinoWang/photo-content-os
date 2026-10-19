@@ -1,0 +1,36 @@
+{
+  "network_calls": 0,
+  "records": [
+    {
+      "host": "music.douyin.com",
+      "path": "/qishui/share/track",
+      "state": "not_migrated",
+      "legacy_key": "4ee00fe6ed915d879755d54e2849ea24537fe637563e9a48b75f6e2b122a98b8",
+      "exact_key": "d805aa2e1cf8e2406957b262d5f8cae4ce987be7496e4f75e45bdc6ad0b94b12",
+      "reason": "no completed matching HTTP response"
+    },
+    {
+      "host": "www.iesdouyin.com",
+      "path": "/share/note/7694712348003151717/",
+      "state": "copied_and_hash_verified",
+      "legacy_key": "7e7da1152e8633e4b0fb17a90c1a732d3b9c6f101d920613b393cdde7b729ac1",
+      "exact_key": "5091b50ecf570cb15d7b0f7e38b1bf23aac0e00a273c50bf6531c3ba685db751"
+    },
+    {
+      "host": "www.douyin.com",
+      "path": "/note/7694712348003151717",
+      "state": "not_migrated",
+      "legacy_key": "7e7da1152e8633e4b0fb17a90c1a732d3b9c6f101d920613b393cdde7b729ac1",
+      "exact_key": "e9fccaa45c3033085cff58c4254d25483a5f3fc9c5295090604dd4c390011553",
+      "reason": "no completed matching HTTP response"
+    },
+    {
+      "host": "y.music.163.com",
+      "path": "/m/song",
+      "state": "copied_and_hash_verified",
+      "legacy_key": "d8f842160f96fc93c93821b605f468587b6c306e90a72a9a96b80696e01064df",
+      "exact_key": "97f51f7471e63a0afc4d985b5f8c74240427e800ccabaa6fce8298a4126d93a0"
+    }
+  ],
+  "originals_preserved": true
+}

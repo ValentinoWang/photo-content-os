@@ -1,0 +1,3 @@
+qishui 失败 网络读取失败，已停止重复联网 requests= 2
+douyin 失败 链接跳转过多，已停止访问 requests= 2
+netease 失败 这首网易云歌曲暂无可用音源或版权，未入库 requests= 4

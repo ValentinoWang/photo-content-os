@@ -1,0 +1,17 @@
+usage: import_music.py [-h] [--list] [--from-folder [文件夹]] [--login {netease}]
+                       [--browser {chrome,edge}] [--profile PROFILE]
+                       [分享文字或链接 ...]
+
+导入汽水音乐、抖音或网易云单曲；重复输入只读本地缓存
+
+positional arguments:
+  分享文字或链接
+
+options:
+  -h, --help            show this help message and exit
+  --list                列出本地音乐库
+  --from-folder [文件夹]   离线导入客户端下载文件，默认 ~/Music/网易云音乐
+  --login {netease}     用手机扫码登录网易云
+  --browser {chrome,edge}
+                        只读所选浏览器登录态，不保存 Cookie
+  --profile PROFILE     浏览器个人资料名称，默认 Default

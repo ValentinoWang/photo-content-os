@@ -1,0 +1,19 @@
+{
+  "version": "2.14.2",
+  "source": "https://pypi.org/project/musicdl/2.14.2/",
+  "wheel_sha256": "cc373ca485d03271f0960eeb5ff99102c6008121fd670497e2d87589ac583838",
+  "used_source_sha256": {
+    "musicdl/modules/sources/soda.py": "65832be59a77f3d8e56888a9ad245c9eee613ae2e801c297c0bfc16d1db5dc9e",
+    "musicdl/modules/sources/netease.py": "f5d113195cde725cad34fa0b894ddca509bec7b9c0eaeab2c1a8f465a6015f31",
+    "musicdl/modules/sources/base.py": "a4df4c296922547f29a4fe927e00ba693515b3e6874be9696c0815ad6ae0f78a"
+  },
+  "adaptations": [
+    "official single-song only",
+    "standard quality only",
+    "no third-party parsers",
+    "no HEAD/range probes",
+    "no lyrics/cover/tag requests",
+    "cached transport, one attempt",
+    "nonmember refusal before media fetch"
+  ]
+}

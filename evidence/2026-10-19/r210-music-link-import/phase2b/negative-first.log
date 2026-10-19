@@ -1,0 +1,135 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_douyin_share_note_redirect_has_distinct_http_nodes ____________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-423/test_douyin_share_note_redirec0')
+
+    def test_douyin_share_note_redirect_has_distinct_http_nodes(tmp_path):
+        urls = ['https://v.douyin.com/synthetic/',
+                'https://www.iesdouyin.com/share/note/80001/?from_ssr=1',
+                'https://www.douyin.com/note/80001?previous_page=web_code_link']
+        calls = []
+        class Opener:
+            def open(self, request, timeout):
+                calls.append(request.full_url)
+                index = urls.index(request.full_url)
+                return Response(b'final SSR') if index == 2 else Response(code=302, location=urls[index + 1])
+        cache = CachedHTTP(tmp_path, opener=Opener())
+>       assert cache.fetch(urls[0])[2] == b'final SSR'
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_music_network.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <music_library.cache.CachedHTTP object at 0x10ac342f0>
+url = 'https://www.douyin.com/note/80001?previous_page=web_code_link'
+data = None, cookies = False
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/130.0.0.0 Safari/537.36', 'Referer': 'https://www.iesdouyin.com/'}
+
+    def fetch(self, url, data=None, *, cookies=False, headers=None):
+        supplied_headers = headers or {}
+        for _ in range(6):
+            parsed = urlsplit(url)
+            if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
+                raise MusicError('来源返回了不安全的下载地址')
+            canonical = url
+            try:
+                from .links import parse_link
+                link = parse_link(url)
+                if link.platform_id:
+                    canonical = link.key
+            except MusicError:
+                pass
+            key = hashlib.sha256(canonical.encode() + b'\0' + (data or b'')).hexdigest()
+            self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
+            record_path, body_path = self.root / f'{key}.json', self.root / f'{key}.body'
+            if record_path.exists():
+                record = read_json(record_path, '网络缓存')
+                if record.get('state') != 'complete':
+                    raise MusicError('这个链接已尝试过且未完成，已停止重复联网；请保留缓存交由维护者检查')
+                try:
+                    body = body_path.read_bytes()
+                except OSError as exc:
+                    raise MusicError('网络缓存内容无法读取；已停止重复联网') from exc
+                if hashlib.sha256(body).hexdigest() != record.get('sha256'):
+                    raise MusicError('网络缓存内容已损坏；已停止重复联网')
+            else:
+                if not self.allow_network:
+                    raise MusicError('本地缓存不足；已禁止重新联网，请汇报缺失请求')
+                headers = {'User-Agent': USER_AGENT, 'Referer': 'https://' + parsed.hostname + '/'}
+                headers.update({k: v for k, v in supplied_headers.items() if k.lower() not in ('cookie', 'authorization')})
+                if cookies and self.cookie_reader:
+                    cookie = self.cookie_reader(url)
+                    if cookie:
+                        headers['Cookie'] = cookie
+                write_json(record_path, {'state': 'attempted'})
+                temporary = body_path.with_suffix('.part')
+                try:
+                    request = urllib.request.Request(url, data=data, headers=headers)
+                    try:
+                        self.network_calls += 1
+                        self.audit.append({'method': request.get_method(), 'host': parsed.hostname, 'path': parsed.path, 'cache_key': key})
+                        response = self.opener.open(request, timeout=30)
+                    except urllib.error.HTTPError as exc:
+                        response = exc
+                    with response:
+                        record = {'state': 'complete', 'status': response.code,
+                                  'request_host': parsed.hostname, 'request_path': parsed.path,
+                                  'content_type': response.headers.get('Content-Type', ''),
+                                  'location': response.headers.get('Location', '')}
+                        expected = response.headers.get('Content-Length')
+                        length = 0
+                        with temporary.open('wb') as handle:
+                            while chunk := response.read(1024 * 1024):
+                                length += len(chunk)
+                                if length > 512 * 1024 * 1024:
+                                    raise MusicError('文件过大，已停止下载')
+                                handle.write(chunk)
+                            handle.flush()
+                            os.fsync(handle.fileno())
+                        if expected and length != int(expected):
+                            raise MusicError('音频没有下载完整，已停止入库')
+                    temporary.replace(body_path)
+                    body = body_path.read_bytes()
+                    record['sha256'] = hashlib.sha256(body).hexdigest()
+                    write_json(record_path, record)
+                except (OSError, ValueError) as exc:
+                    raise MusicError('网络读取失败，已停止重复联网') from exc
+                finally:
+                    temporary.unlink(missing_ok=True)
+            if record.get('status', 200) >= 400:
+                raise MusicError('平台拒绝访问或链接已失效；响应已缓存，已停止重复联网')
+            if record.get('status') in (301, 302, 303, 307, 308):
+                url = urljoin(url, record['location'])
+                data = None
+                # A redirect must never forward cookies to a CDN or another site.
+                cookies = False
+                continue
+            return url, record['content_type'], body
+>       raise MusicError('链接跳转过多，已停止访问')
+E       music_library.errors.MusicError: 链接跳转过多，已停止访问
+
+scripts/music_library/cache.py:129: MusicError
+_________________ test_region_message_precedes_member_message __________________
+
+    def test_region_message_precedes_member_message():
+>       from music_library.musicdl_engine import check_region
+E       ImportError: cannot import name 'check_region' from 'music_library.musicdl_engine' (/private/tmp/task-worktrees/photo-content-os-r210/scripts/music_library/musicdl_engine.py)
+
+tests/test_music_network.py:56: ImportError
+________________ test_proxy_failure_never_falls_back_to_direct _________________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-423/test_proxy_failure_never_falls0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ac53770>
+
+    def test_proxy_failure_never_falls_back_to_direct(tmp_path, monkeypatch):
+        import requests
+>       from music_library.network import MusicOpener
+E       ModuleNotFoundError: No module named 'music_library.network'
+
+tests/test_music_network.py:68: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_music_network.py::test_douyin_share_note_redirect_has_distinct_http_nodes
+FAILED tests/test_music_network.py::test_region_message_precedes_member_message
+FAILED tests/test_music_network.py::test_proxy_failure_never_falls_back_to_direct
+3 failed in 0.33s

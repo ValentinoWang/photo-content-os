@@ -1,0 +1,4 @@
+task worktree rule violations:
+  /private/tmp/task-worktrees/photo-content-os-r207: uncommitted files, full checkout (2266 MB)
+  /private/tmp/task-worktrees/photo-content-os-r208-a1: uncommitted files
+  /private/tmp/task-worktrees/photo-content-os-r210: uncommitted files

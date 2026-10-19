@@ -1,0 +1,18 @@
+{
+  "final_request_count": 1,
+  "consumed_nodes": [
+    "netease:detail"
+  ],
+  "cached_failure_replay": "网易云单曲详情无法确认，未入库（本地失败缓存，未再次联网）",
+  "failure_replay_requests": 0,
+  "failure_replay_tunnel_starts": 0,
+  "tunnel_processes": [
+    {
+      "pid": 27143,
+      "still_alive": false
+    }
+  ],
+  "partial_files_remaining": [],
+  "ssh_target_in_task_source_or_evidence": false,
+  "staged_task_files": []
+}

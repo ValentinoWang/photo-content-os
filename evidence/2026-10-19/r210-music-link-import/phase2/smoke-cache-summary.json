@@ -1,0 +1,104 @@
+[
+  {
+    "platform": "qishui",
+    "method": "GET",
+    "host": "qishui.douyin.com",
+    "path": "/s/iXGDYc11/",
+    "cache_key": "c3b4ffd4188ba510ec4d74070ad35c8c9b6528c40900e1ceab35b5cfb88e6317",
+    "state": "complete",
+    "status": 302,
+    "body_exists": true
+  },
+  {
+    "platform": "qishui",
+    "method": "GET",
+    "host": "music.douyin.com",
+    "path": "/qishui/share/track",
+    "cache_key": "4ee00fe6ed915d879755d54e2849ea24537fe637563e9a48b75f6e2b122a98b8",
+    "state": "attempted",
+    "status": null,
+    "body_exists": false
+  },
+  {
+    "platform": "douyin",
+    "method": "GET",
+    "host": "v.douyin.com",
+    "path": "/iSj4d8_TFGA/",
+    "cache_key": "742f464377537940f2749f1a3d6871124b6ee57ca2d833f5b60486a1fe67c8a9",
+    "state": "complete",
+    "status": 302,
+    "body_exists": true
+  },
+  {
+    "platform": "douyin",
+    "method": "GET",
+    "host": "www.iesdouyin.com",
+    "path": "/share/note/7694712348003151717/",
+    "cache_key": "7e7da1152e8633e4b0fb17a90c1a732d3b9c6f101d920613b393cdde7b729ac1",
+    "state": "complete",
+    "status": 302,
+    "body_exists": true
+  },
+  {
+    "platform": "netease",
+    "method": "GET",
+    "host": "163cn.tv",
+    "path": "/bi1PoHIY",
+    "cache_key": "cb290e0e2b990fe2d6ffcaa57c6d3230162e9b3be4671de4e2816b0cbb8bca97",
+    "state": "complete",
+    "status": 302,
+    "body_exists": true
+  },
+  {
+    "platform": "netease",
+    "method": "GET",
+    "host": "y.music.163.com",
+    "path": "/m/song",
+    "cache_key": "d8f842160f96fc93c93821b605f468587b6c306e90a72a9a96b80696e01064df",
+    "state": "complete",
+    "status": 200,
+    "body_exists": true
+  },
+  {
+    "platform": "netease",
+    "method": "POST",
+    "host": "interface3.music.163.com",
+    "path": "/api/v3/song/detail",
+    "cache_key": "744c57e7a77fc9f5199d4e417bb5bbeccdfeda114d603df25a116453f4c021bd",
+    "state": "complete",
+    "status": 200,
+    "body_exists": true,
+    "response_code": 200,
+    "songs": [
+      {
+        "id": 1331800077,
+        "name": "Turn Back Time",
+        "fee": 8,
+        "dt": 189923
+      }
+    ]
+  },
+  {
+    "platform": "netease",
+    "method": "POST",
+    "host": "interface3.music.163.com",
+    "path": "/eapi/song/enhance/player/url/v1",
+    "cache_key": "3fc860a20287b37b9aa13184e03abf8397e13631d3d5d6c20c69304b261ef8c9",
+    "state": "complete",
+    "status": 200,
+    "body_exists": true,
+    "response_code": 200,
+    "data": [
+      {
+        "id": 1331800077,
+        "code": 404,
+        "fee": 0,
+        "freeTrialInfo": null,
+        "type": null,
+        "time": 0,
+        "level": null,
+        "has_url": false
+      }
+    ]
+  }
+]

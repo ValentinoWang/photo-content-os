@@ -1,0 +1,16 @@
+Collecting cryptography==46.0.3
+  Downloading cryptography-46.0.3-cp311-abi3-macosx_10_9_universal2.whl.metadata (5.7 kB)
+Collecting qrcode==8.2
+  Downloading qrcode-8.2-py3-none-any.whl.metadata (17 kB)
+Collecting cffi>=2.0.0 (from cryptography==46.0.3)
+  Downloading cffi-2.1.1-cp313-cp313-macosx_11_0_arm64.whl.metadata (2.5 kB)
+Collecting pycparser (from cffi>=2.0.0->cryptography==46.0.3)
+  Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+Downloading cryptography-46.0.3-cp311-abi3-macosx_10_9_universal2.whl (7.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.2/7.2 MB 204.6 kB/s  0:00:36
+Downloading qrcode-8.2-py3-none-any.whl (45 kB)
+Downloading cffi-2.1.1-cp313-cp313-macosx_11_0_arm64.whl (184 kB)
+Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+Installing collected packages: qrcode, pycparser, cffi, cryptography
+
+Successfully installed cffi-2.1.1 cryptography-46.0.3 pycparser-3.11 qrcode-8.2

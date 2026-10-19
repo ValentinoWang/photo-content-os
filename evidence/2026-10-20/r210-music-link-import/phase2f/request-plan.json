@@ -1,0 +1,13 @@
+{
+  "node": "douyin:share-note",
+  "prior_used": 1,
+  "remaining": 1,
+  "historical_cache_migration_is_not_another_request": true,
+  "user_agent": "iPhone Safari",
+  "follow_redirects": false,
+  "cookies": false,
+  "route": "direct",
+  "signed_detail_remaining": 0,
+  "audio_first_request_limit": 1,
+  "offline_tests_passed": 86
+}

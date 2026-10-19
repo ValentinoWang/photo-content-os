@@ -1,0 +1,8 @@
+{
+  "command": ".venv/bin/python -m pytest -q tests/test_music_egress.py",
+  "before_implementation": {
+    "failed": 6,
+    "passed": 1
+  },
+  "reason": "Missing egress module, before tunnel implementation. Full output retained in task transcript."
+}

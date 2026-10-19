@@ -1,0 +1,20 @@
+{
+  "worktree": {
+    "head": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+    "tracked_changes": 1,
+    "untracked_entries": 8,
+    "changed_by_this_task": true
+  },
+  "business-main": {
+    "head": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+    "tracked_changes": 16,
+    "untracked_entries": 43,
+    "changed_by_this_task": false
+  },
+  "harness": {
+    "head": "581e43e5f4146a4e663b46c79bd259dbbe409160",
+    "tracked_changes": 242,
+    "untracked_entries": 4745,
+    "changed_by_this_task": false
+  }
+}

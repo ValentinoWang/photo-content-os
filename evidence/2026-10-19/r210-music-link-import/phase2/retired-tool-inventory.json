@@ -1,0 +1,40 @@
+{
+  "repository": "/Users/vsiyo/Desktop/创业项目/自媒体创作Agent",
+  "delete_in_separate_task_only": [
+    "packages/media/python/selfmedia/ingest/music_resource/browser_cookies.py",
+    "packages/media/python/selfmedia/ingest/music_resource/requirements.txt",
+    "packages/media/python/selfmedia/ingest/music_resource/run_ui.sh",
+    "packages/media/python/selfmedia/ingest/music_resource/__init__.py",
+    "packages/media/python/selfmedia/ingest/music_resource/README.md",
+    "packages/media/python/selfmedia/ingest/music_resource/extract_qishuimusic_mp4.py",
+    "packages/media/python/selfmedia/ingest/music_resource/ui_server.py",
+    "packages/media/python/selfmedia/ingest/music_resource/ui/index.html"
+  ],
+  "references_for_review": [
+    {
+      "path": "docs/architecture.md",
+      "line": 104,
+      "text": "| Music resource extraction | `packages/media/python/selfmedia/ingest/music_resource/` | its package entrypoint | caller-selected tenant output or `source_assets/` |"
+    },
+    {
+      "path": "docs/development/video-pipeline-readiness/VERIFY-REPORT.md",
+      "line": 53,
+      "text": "| `packages/media/python/selfmedia/ingest/music_resource/extract_qishuimusic_mp4.py:496–521,754–763`、`ui_server.py:156–157` | 音乐资源工具的可选 `--ffmpeg` m3u8 下载；本工具 UI 有参数接线。 | 可借资源获取，不是配音合成；本轮未下载。 |"
+    },
+    {
+      "path": "docs/product/topic-radar/reports/collection-account-B1.md",
+      "line": 125,
+      "text": "- `packages/media/python/selfmedia/ingest/music_resource/ui_server.py` 可接收请求 cookie/curl，或调用 `browser_cookies.py` 读取 Chrome/Edge Cookies SQLite（`<profile>/Cookies` 优先于 `<profile>/Network/Cookies`，解密来自 macOS Keychain），用于汽水音乐工具。它没有读 Media DY/XHS JSON；本次只盘点，不擅自取消该独立业务能力，也不执行读取。"
+    },
+    {
+      "path": "docs/production-reconciliation/20260830/duplicate-implementation-inventory.md",
+      "line": 324,
+      "text": "5) services/utils.py:14 LINK_PATTERN 是唯一接受无 scheme 短链（xhslink.com/... 、douyin.com/...）的实现，且只做 bool 判定；若直接换成 extract_urls 会让「用户只贴了 xhslink.com/xxx 不带 http」的消息从「含链接」变成「不含链接」，是最容易被合并掉的行为。 ｜ 核查补充的遗漏实现点：1) openclaw-tag-router/openclaw_app/router/weekly_self_model.py:36 DAILY_JOURNAL_URL_RE + :323 _daily_journal_explicit_urls —— 第 4 份“文本->去重 URL 列表”，正则再变一版（多排除 ()[]{}），尾标点集又多了 》。2) openclaw-tag-router/scripts/cleanup_creation_runs.py:262 extract_urls —— 递归 dict/list 展开版，提交者只列了它的 URL_RE 常量却漏了函数本体，而它才是该脚本真正的抽取入口（:417、:266 使用）。3) openclaw-tag-router/openclaw_app/router/activity_daily.py:1637 _first_hierarchy_url（第 5 份正则+尾标点集）。4) selfmedia/ingest/music_resource/ui_server.py:28 URL_RE + :29 TRAILING_PUNCT 与 extract_qishuimusic_mp4.py:36-37（音频链路自成一套，含 ESCAPED_URL_RE 转义变体）。"
+    },
+    {
+      "path": "docs/production-reconciliation/20260830/duplicate-implementation-inventory.md",
+      "line": 463,
+      "text": "5) 正则排除集合四套，是否排除引号/尖括号/右方括号各不相同。 ｜ 核查补充的遗漏实现点：1) openclaw-tag-router/openclaw_app/services/content_flow_client.py:319 _extract_wechat_article_url（提交者错放在 url-2；它是“首个 host 命中 mp.weixin.qq.com 的 URL”，属于本簇的带谓词变体）。2) selfmedia/ingest/music_resource/ui_server.py:49 _extract_first_url（第 6 份，尾标点用 while 循环剥 TRAILING_PUNCT）。3) openclaw-tag-router/openclaw_app/router/activity_daily.py:1637 _first_hierarchy_url（多值入参、取第一个命中的，尾标点集最长）。4) openclaw-tag-router/openclaw_app/router/document_tools.py:1873 _extract_first_feishu_document_url（本簇的带谓词变体：递归 + 首个飞书 wiki/docx URL，还带 _trim_attached_document_scope_suffix 后处理）。"
+    }
+  ]
+}

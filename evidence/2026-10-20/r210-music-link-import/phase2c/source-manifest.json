@@ -1,0 +1,21 @@
+{
+  "scripts/music_library/egress.py": "6f2f43a60e4daf52286ae0a7ce3beefd870363e1a208c4980891346212a13008",
+  "scripts/music_library/douyin_api.py": "3b1d8698ad6211162bb842b8458b8d2585b8120f3b379c8dca6ee04be335642c",
+  "scripts/music_library/vendor/douyin_abogus.py": "06d1e1a4265688b36949683bb9743902c64c6334e8419a97070a7dfa01b6c254",
+  "scripts/music_library/vendor/douyin_query.py": "54e449044d173bce61a8b5120bce2bd7098bc4a44efa8426bde9bb0b9e936088",
+  "scripts/music_library/platforms.py": "dfe7a09ffbd6825cc5cf99810a317fae7c5b2ff01c92040763697d67fbf13756",
+  "scripts/music_library/library.py": "07c2f652981cb44ab888cac4e2d2a68cbcac173ec812a9303ad8a0d7771b1ef1",
+  "scripts/music_library/cache.py": "462805587e08cad05d2377b2f9e17fcd48f20b46d0e6f57948e51d695cc6974a",
+  "scripts/music_library/network.py": "98330e1498c7ba2a9803fffa4df56c0be227cb02eeb00ebddfae5424e329cef3",
+  "scripts/music_library/audio.py": "b7dc974e23bb03696dadf58720e56beb93b1198296bcdf0963067f12907eb158",
+  "scripts/import_music.py": "eb9b311578980d7206aa231332b2b0561645b62aa7f826e826fc1f84b41c88f0",
+  "tests/test_music_egress.py": "c90fc2903577034b315fe1c4e72a345deac38128e3a27121068a095bed788fef",
+  "tests/test_douyin_music_api.py": "e5e6b8eb9a4cd5659e9380c015f2a9507ace6a5e97b7c3d620440cae8340a55f",
+  "tests/test_music_library.py": "0de1dcef43c525f6ba474ebebcb0a40bc5d41d3cfcb7e308f6ada8c7bcde07ac",
+  "tests/test_music_network.py": "8a2ca67f69a3359a40ee16179e6a5585264993c11b37b2d968cbdd1d735a91c7",
+  "scripts/music_library/README.md": "4c9e376cf64f76d5a826fb3d805881fa9e073ffd5034e7f14e1e3ffb25602c94",
+  "scripts/music_library/THIRD_PARTY_NOTICES.md": "27e36c1da2572c6a53a710f307cbacf1f44349b3ff8e527953d537495a358a76",
+  "scripts/music_library/douyin-downloader.LICENSE": "d4c3afe9b57fa1854827210b501890d45018b90cfe6780cb843f1ea5de41ae41",
+  "scripts/music_library/f2-Apache.LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+  "requirements-dev.txt": "8183aaefc09d04acc2bbabd14bc5c70933a3190388a700f94e45ce4977543a3c"
+}

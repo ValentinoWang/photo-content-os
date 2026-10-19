@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/gebederry/pyncm",
+  "default_branch": "master",
+  "license": {
+    "key": "apache-2.0",
+    "name": "Apache License 2.0",
+    "spdx_id": "Apache-2.0",
+    "url": "https://api.github.com/licenses/apache-2.0",
+    "node_id": "MDc6TGljZW5zZTI="
+  },
+  "license_url": "https://github.com/gebederry/pyncm/blob/master/LICENSE",
+  "license_sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+}

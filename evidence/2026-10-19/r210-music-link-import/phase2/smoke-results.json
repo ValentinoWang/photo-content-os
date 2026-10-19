@@ -1,0 +1,95 @@
+{
+  "started_at": "2026-10-19T15:42:03.773446+00:00",
+  "search_elsewhere": false,
+  "media_root": "/Users/vsiyo/Desktop/照片筛选/library/music",
+  "results": [
+    {
+      "platform": "qishui",
+      "started_at": "2026-10-19T15:42:03.773611+00:00",
+      "status": "失败",
+      "reason": "网络读取失败，已停止重复联网",
+      "error_type": "MusicError",
+      "network_calls": 2,
+      "request_audit": [
+        {
+          "method": "GET",
+          "host": "qishui.douyin.com",
+          "path": "/s/iXGDYc11/",
+          "cache_key": "c3b4ffd4188ba510ec4d74070ad35c8c9b6528c40900e1ceab35b5cfb88e6317"
+        },
+        {
+          "method": "GET",
+          "host": "music.douyin.com",
+          "path": "/qishui/share/track",
+          "cache_key": "4ee00fe6ed915d879755d54e2849ea24537fe637563e9a48b75f6e2b122a98b8"
+        }
+      ]
+    },
+    {
+      "platform": "douyin",
+      "started_at": "2026-10-19T15:42:13.073231+00:00",
+      "status": "失败",
+      "reason": "链接跳转过多，已停止访问",
+      "error_type": "MusicError",
+      "network_calls": 2,
+      "request_audit": [
+        {
+          "method": "GET",
+          "host": "v.douyin.com",
+          "path": "/iSj4d8_TFGA/",
+          "cache_key": "742f464377537940f2749f1a3d6871124b6ee57ca2d833f5b60486a1fe67c8a9"
+        },
+        {
+          "method": "GET",
+          "host": "www.iesdouyin.com",
+          "path": "/share/note/7694712348003151717/",
+          "cache_key": "7e7da1152e8633e4b0fb17a90c1a732d3b9c6f101d920613b393cdde7b729ac1"
+        }
+      ]
+    },
+    {
+      "platform": "netease",
+      "started_at": "2026-10-19T15:42:20.054491+00:00",
+      "status": "失败",
+      "reason": "这首网易云歌曲暂无可用音源或版权，未入库",
+      "error_type": "MusicError",
+      "network_calls": 4,
+      "request_audit": [
+        {
+          "method": "GET",
+          "host": "163cn.tv",
+          "path": "/bi1PoHIY",
+          "cache_key": "cb290e0e2b990fe2d6ffcaa57c6d3230162e9b3be4671de4e2816b0cbb8bca97"
+        },
+        {
+          "method": "GET",
+          "host": "y.music.163.com",
+          "path": "/m/song",
+          "cache_key": "d8f842160f96fc93c93821b605f468587b6c306e90a72a9a96b80696e01064df"
+        },
+        {
+          "method": "POST",
+          "host": "interface3.music.163.com",
+          "path": "/api/v3/song/detail",
+          "cache_key": "744c57e7a77fc9f5199d4e417bb5bbeccdfeda114d603df25a116453f4c021bd"
+        },
+        {
+          "method": "POST",
+          "host": "interface3.music.163.com",
+          "path": "/eapi/song/enhance/player/url/v1",
+          "cache_key": "3fc860a20287b37b9aa13184e03abf8397e13631d3d5d6c20c69304b261ef8c9"
+        }
+      ]
+    }
+  ],
+  "ended_at": "2026-10-19T15:42:39.656730+00:00",
+  "total_network_calls": 8,
+  "network_disabled_for_replay": true,
+  "library_after": [
+    {
+      "title": "CRUSH VIBE",
+      "platform": "local",
+      "file_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256"
+    }
+  ]
+}

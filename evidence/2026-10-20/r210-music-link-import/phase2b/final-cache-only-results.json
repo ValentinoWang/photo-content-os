@@ -1,0 +1,24 @@
+{
+  "network_calls": 0,
+  "results": [
+    {
+      "platform": "douyin",
+      "reason": "分享页没有可解析的歌曲信息，可能需要登录或浏览器验证；未重复抓取（本地失败缓存，未再次联网）"
+    },
+    {
+      "platform": "qishui",
+      "reason": "音频没有下载完整，已停止入库（本地失败缓存，未再次联网）"
+    },
+    {
+      "platform": "netease",
+      "reason": "网易云限制了你当前所在地区播放这首（你现在的网络不在大陆），需要从大陆网络导入（本地失败缓存，未再次联网）"
+    }
+  ],
+  "library_tracks": [
+    {
+      "title": "CRUSH VIBE",
+      "platform": "local",
+      "file_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256"
+    }
+  ]
+}

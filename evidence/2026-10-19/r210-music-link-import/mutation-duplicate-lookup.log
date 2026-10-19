@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_duplicate_id_has_zero_network_calls_after_restart ____________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-408/test_duplicate_id_has_zero_net0')
+synthetic_audio = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-408/test_duplicate_id_has_zero_net0/decoded.mp3')
+
+    def test_duplicate_id_has_zero_network_calls_after_restart(tmp_path, synthetic_audio):
+        adapter = Adapter(synthetic_audio)
+        first = MusicLibrary(tmp_path, adapter=adapter)
+        assert first.import_link('https://music.163.com/song?id=90001')[0] == '已入库'
+        adapter.calls.clear()
+        second = MusicLibrary(tmp_path, adapter=adapter)
+        assert second.import_link('分享 https://music.163.com/#/song?id=90001&userid=1')[0] == '已在库里'
+>       assert adapter.calls == []
+E       AssertionError: assert ['resolve'] == []
+E         
+E         Left contains one more item: 'resolve'
+E         Use -v to get more diff
+
+tests/test_music_library.py:116: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_music_library.py::test_duplicate_id_has_zero_network_calls_after_restart
+1 failed in 0.77s

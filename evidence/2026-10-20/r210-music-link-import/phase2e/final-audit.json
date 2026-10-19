@@ -1,0 +1,57 @@
+{
+  "counts": {
+    "douyin:anonymous-registration": 1,
+    "douyin:detail": 2,
+    "netease:audio": 1,
+    "netease:detail": 2,
+    "netease:player": 1,
+    "qishui:audio": 1,
+    "qishui:page": 1
+  },
+  "douyin_audio_requests": 0,
+  "new_network_requests": 8,
+  "ledger_preserved": true,
+  "quota_negative_checks": [
+    {
+      "case": "third-request",
+      "message": "该节点已用满两次，禁止第三次请求",
+      "network_calls": 0
+    },
+    {
+      "case": "second-without-repair",
+      "message": "第二次请求缺少离线修复和回归证据，未请求",
+      "network_calls": 0
+    }
+  ],
+  "repeat_checks": [
+    {
+      "platform": "netease",
+      "status": "已在库里",
+      "network_requests": 0,
+      "tunnel_starts": 0,
+      "title": "Turn Back Time"
+    },
+    {
+      "platform": "qishui",
+      "status": "已在库里",
+      "network_requests": 0,
+      "tunnel_starts": 0,
+      "title": "Fever Pitch"
+    }
+  ],
+  "tunnels": [
+    {
+      "pid": 27602,
+      "alive": false
+    },
+    {
+      "pid": 29984,
+      "alive": false
+    }
+  ],
+  "partial_cache_files": [],
+  "staged_task_paths": [],
+  "external_config_mode": "600",
+  "private_target_in_source_or_evidence": false,
+  "bounded_runner_sha256": "14f1c1051fccf697e2a4ed612f81d73a6733ccf1d28e5b47878d62dc2fa2ad5c"
+}

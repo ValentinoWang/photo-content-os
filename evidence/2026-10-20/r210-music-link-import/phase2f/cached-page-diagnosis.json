@@ -1,0 +1,46 @@
+{
+  "http_status": 200,
+  "response_bytes": 33574,
+  "response_sha256": "cba25dad4de5406656f7235adabe73c47cf9f5a462bc6231b05f8cb3cba9ccc0",
+  "router_keys": [
+    "loaderData",
+    "errors"
+  ],
+  "loader_keys": [
+    "note_layout",
+    "note_(id)/page"
+  ],
+  "errors": null,
+  "target_page_keys": [
+    "ua",
+    "isSpider",
+    "query",
+    "renderInSSR",
+    "lastPath",
+    "appName",
+    "host",
+    "isNotSupportWebp",
+    "commonContext",
+    "itemId",
+    "openDirectGroup",
+    "isButtonOptimize",
+    "isNoteStyleOptimize",
+    "isShowScrollToast",
+    "isAutoOpenApp",
+    "darkModeAdaptation",
+    "abParams"
+  ],
+  "keyword_occurrences": {
+    "aweme_id": 0,
+    "item_list": 0,
+    "videoInfoRes": 0,
+    "play_url": 0,
+    "music_id": 0,
+    "musicInfo": 0,
+    "music_info": 0,
+    "_ROUTER_DATA": 1
+  },
+  "media_url_candidates": 0,
+  "music_object_available": false,
+  "network_requests_after_inspection": 0
+}

@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.16, pytest-9.1.1, pluggy-1.6.0 -- /Users/vsiyo/Desktop/创业项目/photo-content-os/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /private/tmp/task-worktrees/photo-content-os-r210
+plugins: anyio-4.15.1, platformdirs-4.13.5
+collecting ... collected 1 item
+
+tests/test_musicdl_engine.py::test_musicdl_qishui_single_page_single_audio_and_duplicate_zero_network PASSED [100%]
+
+============================== 1 passed in 1.82s ===============================

@@ -1,0 +1,13 @@
+{
+  "status": "已入库",
+  "source": "/Users/vsiyo/Desktop/自媒体创作/音乐库/CRUSH VIBE.mp4",
+  "source_sha256_before": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+  "source_sha256_after": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+  "destination": "/Users/vsiyo/Desktop/照片筛选/library/music/e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256/audio.mp4",
+  "destination_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+  "license_status": "unknown",
+  "platform": "local",
+  "duration_seconds": 96.0,
+  "sample_rate_hz": 44100,
+  "loudness_lufs": -7.19
+}

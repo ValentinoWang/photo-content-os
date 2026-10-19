@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/jiji262/douyin-downloader",
+  "default_branch": "main",
+  "license": {
+    "key": "mit",
+    "name": "MIT License",
+    "spdx_id": "MIT",
+    "url": "https://api.github.com/licenses/mit",
+    "node_id": "MDc6TGljZW5zZTEz"
+  },
+  "license_url": "https://github.com/jiji262/douyin-downloader/blob/main/LICENSE",
+  "license_sha": "33dca94901b8af585c49f03109e249690cea3a38"
+}

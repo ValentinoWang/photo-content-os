@@ -1,0 +1,5 @@
+Collecting PySocks==1.7.1
+  Downloading PySocks-1.7.1-py3-none-any.whl.metadata (13 kB)
+Downloading PySocks-1.7.1-py3-none-any.whl (16 kB)
+Installing collected packages: PySocks
+Successfully installed PySocks-1.7.1

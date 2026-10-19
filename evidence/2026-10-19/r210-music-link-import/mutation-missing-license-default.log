@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_missing_platform_license_never_defaults_to_publishable __________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-407/test_missing_platform_license_0')
+synthetic_audio = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-407/test_missing_platform_license_0/decoded.mp3')
+
+    def test_missing_platform_license_never_defaults_to_publishable(tmp_path, synthetic_audio):
+        adapter = Adapter(synthetic_audio)
+        resolve = adapter.resolve
+        def missing_license(link):
+            metadata = resolve(link)
+            del metadata['license_status']
+            return metadata
+        adapter.resolve = missing_license
+        library = MusicLibrary(tmp_path, adapter=adapter)
+>       with pytest.raises(MusicError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE MusicError
+
+tests/test_music_library.py:444: Failed
+=========================== short test summary info ============================
+FAILED tests/test_music_library.py::test_missing_platform_license_never_defaults_to_publishable
+1 failed in 0.29s

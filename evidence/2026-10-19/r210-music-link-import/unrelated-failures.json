@@ -1,0 +1,38 @@
+{
+  "source_checks": {
+    "scripts/video_subtitles.py": {
+      "sha256": "fda01b89cf49ad6c535c095208fc65c0a26bd9bcda34205f876fd92dbb13d42b",
+      "same_as_origin_main": true
+    },
+    "scripts/video_candidate.py": {
+      "sha256": "6ba9f27639c801673356354025592b94e9f6970cdd987525133f1ad002427458",
+      "same_as_origin_main": true
+    },
+    "scripts/README.md": {
+      "sha256": "2e143324af7c3c791014ce2b9eebc8d07b819de74db8a17d26644e6202916e0d",
+      "same_as_origin_main": true
+    },
+    "docs/execution-rules.md": {
+      "sha256": "2e6944e061d17395a7fffdd23d6ceb491dc9927bb6ba8392226b1d15f3b9e6e5",
+      "same_as_origin_main": true
+    },
+    "tests/test_bilingual_subtitles_r6.py": {
+      "sha256": "03ce62a8d9be62ed3ab6e1f1e56efaec6bb1ace0c0e4f97562a9588eda9a203f",
+      "same_as_origin_main": true
+    },
+    "tests/test_direct_video_subtitles.py": {
+      "sha256": "b84bc4a3d6718b344c3bd9707c363d6c22b321d0e26b9c6d943d5ed109c3dbca",
+      "same_as_origin_main": true
+    },
+    "tests/test_obsidian_doc_sync.py": {
+      "sha256": "ed78f4b5bb5be7e76da9828d77de24e713301a59e5bffc85ece8f757e3264dc4",
+      "same_as_origin_main": true
+    },
+    "tests/test_pf_video_pipeline.py": {
+      "sha256": "98f336196582e73aa79eb41b1869d2f8d4db9a353e948b84ba2b95bde31c10ef",
+      "same_as_origin_main": true
+    }
+  },
+  "ffmpeg_drawtext_exit": 8,
+  "ffmpeg_drawtext_stderr": "[AVFilterGraph @ 0xbdac24200] No such filter: 'drawtext'\nError opening output file -.\nError opening output files: Filter not found\n"
+}

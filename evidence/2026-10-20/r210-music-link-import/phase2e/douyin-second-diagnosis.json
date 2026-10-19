@@ -1,0 +1,10 @@
+{
+  "http_status": 403,
+  "response_bytes": 46,
+  "response_sha256": "8253547040c98c6c15cdee7c7cb52bfd457ea450b28158d9afe8e55fb7791218",
+  "login_language_present": false,
+  "login_requirement_confirmed": false,
+  "msToken_length": 184,
+  "aid": "6383",
+  "a_bogus_present": true
+}

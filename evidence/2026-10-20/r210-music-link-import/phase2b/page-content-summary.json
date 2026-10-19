@@ -1,0 +1,39 @@
+[
+  {
+    "platform": "douyin",
+    "script_ids": [],
+    "markers": {
+      "_ROUTER_DATA": false,
+      "RENDER_DATA": false,
+      "__NEXT_DATA__": false,
+      "aweme_id": false,
+      "music": false,
+      "trackInfo": false,
+      "audioWithLyricsOption": false
+    },
+    "parse_reason": "分享页没有可解析的歌曲信息，可能需要登录或浏览器验证；未重复抓取"
+  },
+  {
+    "platform": "qishui",
+    "script_ids": [
+      "2075"
+    ],
+    "markers": {
+      "_ROUTER_DATA": true,
+      "RENDER_DATA": false,
+      "__NEXT_DATA__": false,
+      "aweme_id": false,
+      "music": true,
+      "trackInfo": true,
+      "audioWithLyricsOption": true
+    },
+    "embedded_objects": 1053,
+    "track_info": [
+      {
+        "id": "7620290602605611025",
+        "name": "Fever Pitch",
+        "duration": 135484
+      }
+    ]
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "/aweme/v1/web/aweme/detail/": {
+    "http_status": 504,
+    "content_type": "text/html",
+    "response_bytes": 279,
+    "sha256": "bef31c6440ac1b1338568de872b75b57c0236ee003adc67e961cf26064b9071d",
+    "html_title": "504 Gateway Time-out",
+    "timeout_phrase_present": true
+  },
+  "/ttwid/union/register/": {
+    "http_status": 200,
+    "content_type": "application/json",
+    "response_bytes": 205,
+    "sha256": "81f15e0ec25dec424a1fcf92cf9943b0de44a759492f6589dc8ee193f3631887"
+  },
+  "signed_query_shape": {
+    "query_keys": [
+      "a_bogus",
+      "aid",
+      "aweme_id",
+      "browser_language",
+      "browser_name",
+      "browser_online",
+      "browser_platform",
+      "browser_version",
+      "channel",
+      "cookie_enabled",
+      "cpu_core_num",
+      "device_memory",
+      "device_platform",
+      "downlink",
+      "effective_type",
+      "engine_name",
+      "engine_version",
+      "msToken",
+      "os_name",
+      "os_version",
+      "pc_client_type",
+      "pc_libra_divert",
+      "platform",
+      "round_trip_time",
+      "screen_height",
+      "screen_width",
+      "support_dash",
+      "support_h265",
+      "uifid",
+      "update_version_code",
+      "version_code",
+      "version_name"
+    ],
+    "msToken_length": 0,
+    "aid": [
+      "6383"
+    ],
+    "a_bogus_present": true
+  }
+}

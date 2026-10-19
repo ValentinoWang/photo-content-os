@@ -1,0 +1,66 @@
+{
+  "runtime": {
+    "command": [
+      "bash",
+      "scripts/check_runtime_contract.sh"
+    ],
+    "exit_code": 0
+  },
+  "obsidian": {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_obsidian_doc_sync.py"
+    ],
+    "exit_code": 1
+  },
+  "outline": {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_outline_contract.py",
+      "."
+    ],
+    "exit_code": 1
+  },
+  "validate-task-help": {
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_content_os_task.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  "validate-draft-help": {
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_jianying_draft.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  "pip-check": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "exit_code": 0
+  },
+  "full-pytest": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests"
+    ],
+    "exit_code_observation": "Final summary reports failure; parent was interrupted before persisting exit code.",
+    "summary": {
+      "passed": 654,
+      "failed": 10,
+      "errors": 6,
+      "skipped": 32,
+      "subtests_passed": 1982
+    }
+  }
+}

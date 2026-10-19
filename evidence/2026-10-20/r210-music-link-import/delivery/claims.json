@@ -1,0 +1,35 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "music.link-import",
+    "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+    "surfaces": [
+      "photo.tests-scripts",
+      "studio.backend"
+    ],
+    "relations": []
+  },
+  {
+    "item": "H-02",
+    "claim_key": "music.duplicate-import",
+    "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+    "surfaces": [
+      "photo.tests-scripts",
+      "studio.backend"
+    ],
+    "relations": []
+  },
+  {
+    "item": "H-03",
+    "claim_key": "music.membership-boundary",
+    "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+    "surfaces": [
+      "photo.tests-scripts",
+      "studio.backend"
+    ],
+    "relations": [],
+    "request_changes": {
+      "H-03": "按用户阶段 2 的非会员方案显示换歌或汽水同名搜索提示；当前待提供真实会员曲链接，未判通过。"
+    }
+  }
+]

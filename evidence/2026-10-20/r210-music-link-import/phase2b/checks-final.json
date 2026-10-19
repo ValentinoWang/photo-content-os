@@ -1,0 +1,59 @@
+{
+  "full-pytest-final": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests"
+    ],
+    "exit_code": 1
+  },
+  "runtime-final": {
+    "command": [
+      "bash",
+      "scripts/check_runtime_contract.sh"
+    ],
+    "exit_code": 0
+  },
+  "obsidian-final": {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_obsidian_doc_sync.py"
+    ],
+    "exit_code": 1
+  },
+  "outline-final": {
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_outline_contract.py",
+      "."
+    ],
+    "exit_code": 1
+  },
+  "validate-task-help-final": {
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_content_os_task.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  "validate-draft-help-final": {
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_jianying_draft.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  "pip-check-final": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "exit_code": 0
+  }
+}

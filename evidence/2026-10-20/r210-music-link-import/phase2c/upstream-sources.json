@@ -1,0 +1,18 @@
+{
+  "upstream": "https://github.com/jiji262/douyin-downloader",
+  "commit": "ed863617aa52353821aca8fdebcfad4e916ebff5",
+  "files": {
+    "core/api_client.py": "dba72c3bd2b1c87eca94823eb50ab1c70c0e58614d380bbe2fe13913cb7526e6",
+    "utils/abogus.py": "06d1e1a4265688b36949683bb9743902c64c6334e8419a97070a7dfa01b6c254",
+    "LICENSE": "d4c3afe9b57fa1854827210b501890d45018b90cfe6780cb843f1ea5de41ae41"
+  },
+  "f2": {
+    "source": "https://github.com/Johnserf-Seed/f2",
+    "read_date": "2026-10-20",
+    "files": {
+      "utils.py": "c323953a0cbde6de82d35eaf97e7b35b88169db394fb644bf036238ce095447b",
+      "conf.yaml": "93b57efdad683ef75fcecb19e50ac3b1ca3d07c35648a1380c1cc12aeee2c467",
+      "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  }
+}

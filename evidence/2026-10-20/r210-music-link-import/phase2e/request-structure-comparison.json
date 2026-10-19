@@ -1,0 +1,113 @@
+{
+  "historical_evidence_limit": "Raw wire headers were not retained. Header comparison is an offline reconstruction from the used urllib/requests implementations; cached responses are original.",
+  "urllib_prior": {
+    "method": "POST",
+    "header_names": [
+      "content-length",
+      "content-type",
+      "host",
+      "referer",
+      "user-agent"
+    ],
+    "content_type": "application/x-www-form-urlencoded",
+    "cookie_present": false,
+    "body_encoding": "UTF-8 percent-encoded form",
+    "body_bytes": 52,
+    "body_sha256": "b7144b86b2e00f5a2991f376b2b02d44af1c4d7c264a8c5b0b3ca261592c1973",
+    "form_keys": [
+      "c"
+    ],
+    "c_json_shape": [
+      [
+        "id",
+        "v"
+      ]
+    ]
+  },
+  "requests_phase2c": {
+    "method": "POST",
+    "header_names": [
+      "accept-encoding",
+      "content-length",
+      "referer",
+      "user-agent"
+    ],
+    "content_type": null,
+    "cookie_present": false,
+    "body_encoding": "UTF-8 percent-encoded form",
+    "body_bytes": 52,
+    "body_sha256": "b7144b86b2e00f5a2991f376b2b02d44af1c4d7c264a8c5b0b3ca261592c1973",
+    "form_keys": [
+      "c"
+    ],
+    "c_json_shape": [
+      [
+        "id",
+        "v"
+      ]
+    ]
+  },
+  "requests_fixed_egress": {
+    "method": "POST",
+    "header_names": [
+      "accept-encoding",
+      "content-length",
+      "content-type",
+      "referer",
+      "user-agent"
+    ],
+    "content_type": "application/x-www-form-urlencoded",
+    "cookie_present": false,
+    "body_encoding": "UTF-8 percent-encoded form",
+    "body_bytes": 52,
+    "body_sha256": "b7144b86b2e00f5a2991f376b2b02d44af1c4d7c264a8c5b0b3ca261592c1973",
+    "form_keys": [
+      "c"
+    ],
+    "c_json_shape": [
+      [
+        "id",
+        "v"
+      ]
+    ]
+  },
+  "musicdl_native_form": {
+    "method": "POST",
+    "header_names": [
+      "content-length",
+      "content-type"
+    ],
+    "content_type": "application/x-www-form-urlencoded",
+    "cookie_present": false,
+    "body_encoding": "UTF-8 percent-encoded form",
+    "body_bytes": 52,
+    "body_sha256": "b7144b86b2e00f5a2991f376b2b02d44af1c4d7c264a8c5b0b3ca261592c1973",
+    "form_keys": [
+      "c"
+    ],
+    "c_json_shape": [
+      [
+        "id",
+        "v"
+      ]
+    ]
+  },
+  "cached_responses": {
+    "prior_taiwan": {
+      "cache_key": "744c57e7a77fc9f5199d4e417bb5bbeccdfeda114d603df25a116453f4c021bd",
+      "http_status": 200,
+      "platform_code": 200,
+      "response_bytes": 2147,
+      "response_sha256": "a44306cc16ddbe4f182d491af91d74dc9f45739902bac226d2340963e601502f",
+      "contains_songs": true
+    },
+    "phase2c_egress": {
+      "cache_key": "744c57e7a77fc9f5199d4e417bb5bbeccdfeda114d603df25a116453f4c021bd",
+      "http_status": 200,
+      "platform_code": 400,
+      "response_bytes": 33,
+      "response_sha256": "4e21b78b340d4de4201c1c820bee66e4ac052857726491630fee9db237e1517b",
+      "contains_songs": false
+    }
+  }
+}

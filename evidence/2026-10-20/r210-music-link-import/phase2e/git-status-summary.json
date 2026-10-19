@@ -1,0 +1,20 @@
+{
+  "task": {
+    "head": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+    "dirty_entries": 13,
+    "staged_entries": 0,
+    "task_wrote_here": true
+  },
+  "main": {
+    "head": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+    "dirty_entries": 60,
+    "staged_entries": 16,
+    "task_wrote_here": true
+  },
+  "harness": {
+    "head": "581e43e5f4146a4e663b46c79bd259dbbe409160",
+    "dirty_entries": 4987,
+    "staged_entries": 0,
+    "task_wrote_here": false
+  }
+}

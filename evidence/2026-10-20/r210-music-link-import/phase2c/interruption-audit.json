@@ -1,0 +1,25 @@
+{
+  "phase2c_ledger_present": false,
+  "phase2c_egress_cache_present": false,
+  "phase2c_attempt_history_present": false,
+  "douyin_anonymous_cache_present": false,
+  "phase2c_result_present": false,
+  "phase2c_requests_consumed": 0,
+  "phase2c_unissued_nodes": [
+    "netease:detail",
+    "netease:player",
+    "netease:audio",
+    "qishui:page",
+    "qishui:audio",
+    "douyin:anonymous-registration",
+    "douyin:detail",
+    "douyin:audio"
+  ],
+  "previous_phase_requests": "All phase 2/2b nodes remain consumed. Their response caches and ledgers are preserved; no replay over the network.",
+  "process_audit": "No task import, tunnel, or test subprocess remained. Audit uses the current process snapshot and task transcript.",
+  "phase2b_consumed": {
+    "douyin_page": 1,
+    "qishui_page": 1,
+    "qishui_audio": 1
+  }
+}

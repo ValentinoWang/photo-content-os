@@ -1,0 +1,23 @@
+{
+  "requirements-dev.txt": "d925654d0d3ec94355c2ba7268363ae477710d384d9e1523868badf8af2fb27d",
+  "schemas/music-track.schema.json": "07711307d02ec7d9931e8431e89666481d2e72f29f973e84420eee998294d866",
+  "scripts/import_music.py": "f3448fd1537bc38d1db820864f7472136e9c2eccf3052a37980b3f13eb7910b1",
+  "scripts/music_library/README.md": "b0607df2c35b1b7c06ae81abfb9a8a0b5eb7439393d379a7c817861af4d86644",
+  "scripts/music_library/THIRD_PARTY_NOTICES.md": "0ccf3d4c4ef132ce4477251553a8047c6f1dc3db61c6ff4a88d9dfaffd0c0f24",
+  "scripts/music_library/__init__.py": "3dc35c7f7189e805cad90d327793bead936231d7a4d775ac0bbdd908558c7077",
+  "scripts/music_library/api-enhanced.LICENSE": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12",
+  "scripts/music_library/audio.py": "b436a62f27ad2bd938453b770a8c6752e4b1ef0114e8bc2502d0bb9f0e0b38e1",
+  "scripts/music_library/browser_cookies.py": "8cacf12b2ed5877b4b0f5c2463c693d16e872044e5333a95041fefd2b026004f",
+  "scripts/music_library/cache.py": "a7d26189a76523c8c1cb9bfed48361623ae365b7a4c4389762d2d76ec5f8d6cb",
+  "scripts/music_library/client_files.py": "3a0c2146d6e39727418f556935ab5de8bb7c8e90d0360868fa389aa00f9656c7",
+  "scripts/music_library/errors.py": "4fc7362f12c7b1d4bfe1be12fc0be15ee71866e0e44abf366cba80e097640f41",
+  "scripts/music_library/library.py": "fada7c32a46a7060f8ba4506b38583ce3f0dff36e436fa0e1491b402d6ca9647",
+  "scripts/music_library/links.py": "c79e0d620c0028ac209a50814b04aa0d02f0ff6f8df6e5d978058dded1143289",
+  "scripts/music_library/musicdl.LICENSE": "d09c4234d9ac9148d342cd8da9fdf6ead874774aaa12eef41f920d7d52ff1516",
+  "scripts/music_library/musicdl_engine.py": "cec062830327906699620d4f78afb556f5e26302d1fd027cdba76dd75d0c7d49",
+  "scripts/music_library/ncmdump.LICENSE": "a406579cd136771c705c521db86ca7d60a6f3de7c9b5460e6193a2df27861bde",
+  "scripts/music_library/netease.py": "5bcf01a7182d1a76db9df775be83221f5b10ad7364118dc73886ca5f8412ecd4",
+  "scripts/music_library/platforms.py": "3bfcf646cd651da6a82e0081f7f4c7641a0ab85fb406ebefd0057d654067b8b9",
+  "tests/test_music_library.py": "15d9a402be54e5e91534111f96d4c20783fc6a54fcdc761cde1822d46d7cd054",
+  "tests/test_musicdl_engine.py": "6f745490bd428283ef62136da24f8fb5caeb76b93164b111ebbea79da79d1b7d"
+}

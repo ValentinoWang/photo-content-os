@@ -1,0 +1,8 @@
+{
+  "tests/test_bilingual_subtitles_r6.py": true,
+  "tests/test_direct_video_subtitles.py": true,
+  "tests/test_pf_video_pipeline.py": true,
+  "tests/test_obsidian_doc_sync.py": true,
+  "scripts/README.md": true,
+  "docs/execution-rules.md": true
+}

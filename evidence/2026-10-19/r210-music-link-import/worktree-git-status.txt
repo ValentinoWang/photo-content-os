@@ -1,0 +1,8 @@
+ M requirements-dev.txt
+?? .venv
+?? evidence/2026-10-19/
+?? schemas/music-track.schema.json
+?? scripts/import_music.py
+?? scripts/music_library/
+?? tests/fixtures/music-library/
+?? tests/test_music_library.py

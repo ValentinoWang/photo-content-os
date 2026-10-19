@@ -1,0 +1,39 @@
+{
+  "results": [
+    {
+      "platform": "netease",
+      "status": "failed",
+      "reason": "网易云单曲详情无法确认，未入库",
+      "failure": null,
+      "resolved": null
+    }
+  ],
+  "requests": [
+    {
+      "node": "netease:detail",
+      "method": "POST",
+      "route": "ssh-egress",
+      "host": "interface3.music.163.com",
+      "path": "/api/v3/song/detail",
+      "cache_key": "744c57e7a77fc9f5199d4e417bb5bbeccdfeda114d603df25a116453f4c021bd",
+      "state": "response",
+      "status": 200
+    }
+  ],
+  "tunnels": [
+    {
+      "pid": 27143,
+      "starts": 1,
+      "closed": true
+    }
+  ],
+  "stopped_on_failure": true,
+  "library": [
+    {
+      "title": "CRUSH VIBE",
+      "platform": "local",
+      "duration_seconds": 96.0,
+      "file_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256"
+    }
+  ]
+}

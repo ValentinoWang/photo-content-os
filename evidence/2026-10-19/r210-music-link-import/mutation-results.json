@@ -1,0 +1,14 @@
+[
+  {
+    "mutation": "duplicate-lookup",
+    "test": "test_duplicate_id_has_zero_network_calls_after_restart",
+    "exit_code": 1,
+    "expected_failure": true
+  },
+  {
+    "mutation": "missing-license-default",
+    "test": "test_missing_platform_license_never_defaults_to_publishable",
+    "exit_code": 1,
+    "expected_failure": true
+  }
+]

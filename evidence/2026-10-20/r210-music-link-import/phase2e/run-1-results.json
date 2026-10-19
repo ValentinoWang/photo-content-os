@@ -1,0 +1,293 @@
+{
+  "run": 1,
+  "results": [
+    {
+      "platform": "netease",
+      "status": "已入库",
+      "title": "Turn Back Time",
+      "artist": "Rich Edwards / Emelie",
+      "file_sha256": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "duration_seconds": 189.923923,
+      "resolved": {
+        "title": "Turn Back Time",
+        "artist": "Rich Edwards / Emelie",
+        "platform_id": "1331800077",
+        "expected_duration": 189.923
+      },
+      "license_status": "platform_copyrighted",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "duration": "189.923923"
+          }
+        ],
+        "format": {
+          "duration": "189.923923"
+        }
+      },
+      "full_decode_exit_code": 0,
+      "repeat": {
+        "status": "已在库里",
+        "network_requests": 0,
+        "tunnel_starts": 0
+      },
+      "new_requests": 3
+    },
+    {
+      "platform": "qishui",
+      "status": "已入库",
+      "title": "Fever Pitch",
+      "artist": "Richz",
+      "file_sha256": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "duration_seconds": 135.483878,
+      "resolved": {
+        "title": "Fever Pitch",
+        "artist": "Richz",
+        "platform_id": "7620290602605611025",
+        "expected_duration": 135.484
+      },
+      "license_status": "platform_copyrighted",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "aac",
+            "sample_rate": "44100",
+            "duration": "135.483878"
+          }
+        ],
+        "format": {
+          "duration": "135.483878"
+        }
+      },
+      "full_decode_exit_code": 0,
+      "repeat": {
+        "status": "已在库里",
+        "network_requests": 0,
+        "tunnel_starts": 0
+      },
+      "new_requests": 2
+    },
+    {
+      "platform": "douyin",
+      "status": "failed",
+      "reason": "平台拒绝访问或链接已失效；响应已缓存，已停止重复联网",
+      "failure": null,
+      "resolved": null,
+      "new_requests": 2
+    }
+  ],
+  "cumulative_counts": {
+    "douyin:anonymous-registration": 1,
+    "douyin:detail": 1,
+    "netease:audio": 1,
+    "netease:detail": 2,
+    "netease:player": 1,
+    "qishui:audio": 1,
+    "qishui:page": 1
+  },
+  "requests": [
+    {
+      "node": "netease:detail",
+      "method": "POST",
+      "route": "ssh-egress",
+      "host": "interface3.music.163.com",
+      "path": "/api/v3/song/detail",
+      "cache_key": "744c57e7a77fc9f5199d4e417bb5bbeccdfeda114d603df25a116453f4c021bd",
+      "state": "response",
+      "status": 200,
+      "number": 1,
+      "inherited_from": "R210-phase2c"
+    },
+    {
+      "node": "netease:detail",
+      "number": 2,
+      "run": 1,
+      "method": "POST",
+      "route": "ssh-egress",
+      "host": "interface3.music.163.com",
+      "path": "/api/v3/song/detail",
+      "cache_key": "744c57e7a77fc9f5199d4e417bb5bbeccdfeda114d603df25a116453f4c021bd",
+      "state": "response",
+      "request_structure": {
+        "header_names": [
+          "content-type",
+          "referer",
+          "user-agent"
+        ],
+        "content_type": "application/x-www-form-urlencoded",
+        "body_bytes": 52,
+        "cookie_present": false
+      },
+      "status": 200
+    },
+    {
+      "node": "netease:player",
+      "number": 1,
+      "run": 1,
+      "method": "POST",
+      "route": "ssh-egress",
+      "host": "interface3.music.163.com",
+      "path": "/eapi/song/enhance/player/url/v1",
+      "cache_key": "3fc860a20287b37b9aa13184e03abf8397e13631d3d5d6c20c69304b261ef8c9",
+      "state": "response",
+      "request_structure": {
+        "header_names": [
+          "content-type",
+          "referer",
+          "user-agent"
+        ],
+        "content_type": "application/x-www-form-urlencoded",
+        "body_bytes": 583,
+        "cookie_present": false
+      },
+      "status": 200
+    },
+    {
+      "node": "netease:audio",
+      "number": 1,
+      "run": 1,
+      "method": "GET",
+      "route": "ssh-egress",
+      "host": "m801.music.126.net",
+      "path": "[media path redacted]",
+      "cache_key": "bd61592ca30a468ad0018c75a53fba97ac04f2bae1a1fbbb505438d69a12cdc0",
+      "state": "response",
+      "request_structure": {
+        "header_names": [
+          "referer",
+          "user-agent"
+        ],
+        "content_type": null,
+        "body_bytes": 0,
+        "cookie_present": false
+      },
+      "status": 200
+    },
+    {
+      "node": "qishui:page",
+      "number": 1,
+      "run": 1,
+      "method": "GET",
+      "route": "ssh-egress",
+      "host": "music.douyin.com",
+      "path": "/qishui/share/track",
+      "cache_key": "f345f39f7c56f614459db77a6279eb96f09360399de868da099243c8ae4a52ab",
+      "state": "response",
+      "request_structure": {
+        "header_names": [
+          "accept",
+          "referer",
+          "user-agent"
+        ],
+        "content_type": null,
+        "body_bytes": 0,
+        "cookie_present": false
+      },
+      "status": 200
+    },
+    {
+      "node": "qishui:audio",
+      "number": 1,
+      "run": 1,
+      "method": "GET",
+      "route": "ssh-egress",
+      "host": "v26-luna.douyinvod.com",
+      "path": "[media path redacted]",
+      "cache_key": "2832eb1278a7103497061a5ac114bed1a6737fddb5a973eccd12b843eb030e1f",
+      "state": "response",
+      "request_structure": {
+        "header_names": [
+          "referer",
+          "user-agent"
+        ],
+        "content_type": null,
+        "body_bytes": 0,
+        "cookie_present": false
+      },
+      "status": 200
+    },
+    {
+      "node": "douyin:anonymous-registration",
+      "number": 1,
+      "run": 1,
+      "method": "POST",
+      "route": "direct",
+      "host": "ttwid.bytedance.com",
+      "path": "/ttwid/union/register/",
+      "cache_key": "f4ffd99c9580287bbd290bb6005dc5cbd3e9041ce0c9e145b9efb4e5deb4c99d",
+      "state": "response",
+      "request_structure": {
+        "header_names": [
+          "content-type",
+          "referer",
+          "user-agent"
+        ],
+        "content_type": "application/json; charset=utf-8",
+        "body_bytes": 151,
+        "cookie_present": false
+      },
+      "status": 200
+    },
+    {
+      "node": "douyin:detail",
+      "number": 1,
+      "run": 1,
+      "method": "GET",
+      "route": "direct",
+      "host": "www.douyin.com",
+      "path": "/aweme/v1/web/aweme/detail/",
+      "cache_key": "db705f1f53a471072fce468553920467a13a1f48eced076a952d6441f988f08f",
+      "state": "response",
+      "request_structure": {
+        "header_names": [
+          "accept",
+          "cookie",
+          "referer",
+          "user-agent"
+        ],
+        "content_type": null,
+        "body_bytes": 0,
+        "cookie_present": true
+      },
+      "status": 504
+    }
+  ],
+  "tunnels": [
+    {
+      "pid": 27602,
+      "starts": 1,
+      "closed": true
+    },
+    {
+      "pid": 29984,
+      "starts": 1,
+      "closed": true
+    }
+  ],
+  "library": [
+    {
+      "title": "CRUSH VIBE",
+      "platform": "local",
+      "file_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "duration_seconds": 96.0
+    },
+    {
+      "title": "Turn Back Time",
+      "platform": "netease",
+      "file_sha256": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "duration_seconds": 189.923923
+    },
+    {
+      "title": "Fever Pitch",
+      "platform": "qishui",
+      "file_sha256": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "duration_seconds": 135.483878
+    }
+  ]
+}

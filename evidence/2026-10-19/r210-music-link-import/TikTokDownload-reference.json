@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/Johnserf-Seed/TikTokDownload",
+  "default_branch": "main",
+  "license": {
+    "key": "mit",
+    "name": "MIT License",
+    "spdx_id": "MIT",
+    "url": "https://api.github.com/licenses/mit",
+    "node_id": "MDc6TGljZW5zZTEz"
+  },
+  "license_url": "https://github.com/Johnserf-Seed/TikTokDownload/blob/main/LICENSE",
+  "license_sha": "ee42c85089793bcdeddc3e5dceaf3aab2dcc3ba0"
+}

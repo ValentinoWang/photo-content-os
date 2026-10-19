@@ -1,0 +1,16 @@
+{
+  "node": "netease:detail",
+  "route": "ssh-egress",
+  "http_status": 200,
+  "response_bytes": 33,
+  "response_sha256": "4e21b78b340d4de4201c1c820bee66e4ac052857726491630fee9db237e1517b",
+  "platform_code": 400,
+  "platform_message": "参数错误",
+  "keys": [
+    "msg",
+    "code"
+  ],
+  "contains_songs": false,
+  "network_calls_after_failure": 0,
+  "next_action": "Repair must be reviewed offline; verifying changed detail request needs a new explicit network authorization."
+}
