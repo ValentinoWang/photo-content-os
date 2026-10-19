@@ -1,0 +1,30 @@
+openfilm: 当前版本 0.1.5，要求 0.1.5；FileNotFoundError: [Errno 2] No such file or directory: PosixPath('.tools/browser-runtime')；重新安装。
++ /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/lib/node_modules/npm/bin/npm-cli.js ci --no-audit --no-fund
+
+added 2 packages in 469ms
+openchatcut: 当前版本 未知，要求 0.2.16；FileNotFoundError: [Errno 2] No such file or directory: '.tools/openchatcut/package.json'；重新安装。
++ git init /private/tmp/task-worktrees/photo-content-os-r207/.tools/openchatcut
+Initialized empty Git repository in /private/tmp/task-worktrees/photo-content-os-r207/.tools/openchatcut/.git/
++ git remote add origin https://github.com/0xsline/OpenChatCut.git
++ git -c http.version=HTTP/1.1 fetch --depth=1 origin 2e6f4a29b784200cfb32b859b16f2561592bc3e8
+From https://github.com/0xsline/OpenChatCut
+ * branch            2e6f4a29b784200cfb32b859b16f2561592bc3e8 -> FETCH_HEAD
++ git checkout --detach 2e6f4a29b784200cfb32b859b16f2561592bc3e8
+HEAD is now at 2e6f4a2 chore(release): prepare v0.2.16
++ /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/lib/node_modules/npm/bin/npm-cli.js ci --no-audit --no-fund
+npm warn deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated lodash.isequal@4.5.0: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm error code ECONNRESET
+npm error network aborted
+npm error network This is a problem related to network connectivity.
+npm error network In most cases you are behind a proxy or have bad network settings.
+npm error network
+npm error network If you are behind a proxy, please make sure that the
+npm error network 'proxy' config is set properly.  See: 'npm help config'
+npm error A complete log of this run can be found in: /Users/vsiyo/.npm_cache/_logs/2026-10-19T15_06_10_813Z-debug-0.log
+剪辑工具安装失败：Command '['/private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node', '/private/tmp/task-worktrees/photo-content-os-r207/.tools/node/lib/node_modules/npm/bin/npm-cli.js', 'ci', '--no-audit', '--no-fund']' returned non-zero exit status 1.；修复后重跑 python3 scripts/setup_edit_tools.py。未切换版本或后端。

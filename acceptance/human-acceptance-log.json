@@ -1,29 +1,27 @@
 {
-  "blocking_entries": [
+  "blocking_entries": [],
+  "generated_at": "2026-10-19T15:46:12.966550Z",
+  "non_blocking_entries": [
     {
-      "blocking": true,
-      "checklist_path": "acceptance/human/2026-w36/pending-2026-09-02-ocm-z1/checklist.md",
-      "estimated_minutes": 80,
-      "handoff_path": "acceptance/human/2026-w36/pending-2026-09-02-ocm-z1/handoff.json",
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/checklist.md",
+      "estimated_minutes": 8,
+      "handoff_path": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/handoff.json",
       "invalidation_keys": [
-        "checklist.z1"
+        "photo.edit-tools-runtime"
       ],
       "latest_run": null,
-      "loop_name": "八个 Surface 与项目对话框终端验收",
-      "ready_at": "2026-09-02T15:39:45.556603Z",
-      "release_slice": "R8",
+      "loop_name": "剪辑工具安装与候选生成",
+      "ready_at": "2026-10-19T15:46:12.966550Z",
+      "release_slice": "R207",
       "required_role": "产品负责人",
-      "scope_hints": [
-        "eight-surfaces-project-dialog"
-      ],
+      "scope_hints": [],
       "status": "PENDING",
-      "summary": "候选已完成自动 E2E、双视口截图、运行时视觉验证与受保护测试；进入产品负责人终端验收。",
-      "task_id": "OCM-Z1",
-      "workspace": "acceptance/human/2026-w36/2026-09-02-OCM-Z1"
+      "summary": "仓库内工具安装、重复执行、版本漂移修复和双后端真实合成候选验证通过，原需求两项待人工复核。全量回归的既有 FFmpeg 环境失败另列。",
+      "task_id": "2026-10-19-R207-photo-edit-tools-in-repo",
+      "workspace": "acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo"
     }
   ],
-  "generated_at": "2026-09-02T15:39:45.556603Z",
-  "non_blocking_entries": [],
   "schema_version": 1,
-  "source_facts_sha256": "774e6eee9979c38a1e15eeae6d0047296fd90f4782d5c6f6d7f52f7ff3b8c849"
+  "source_facts_sha256": "59b942cc2fc2fa2f3e2ce321e498cde3d59754f3d7b97a61a7324ee3622da1d7"
 }

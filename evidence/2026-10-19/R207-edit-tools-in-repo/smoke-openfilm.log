@@ -1,0 +1,274 @@
+{
+  "openchatcut": {
+    "probe": {
+      "id": "openchatcut",
+      "installed": true,
+      "version": "0.2.16",
+      "runnable": true,
+      "status": "online",
+      "reason": null,
+      "path": "/private/tmp/task-worktrees/photo-content-os-r207/.tools/openchatcut"
+    },
+    "temporary_home": true,
+    "environment_overrides": false,
+    "render": {
+      "status": "candidate",
+      "editor_backend": "openchatcut",
+      "project_id": "spoken-test",
+      "project_revision": 1,
+      "conversions": [],
+      "container_finalization": {
+        "operation": "stream_copy_trim_aac_tail",
+        "native_sha256": "ecd56d615399f55d605a3797cde869b18a995f8e8b0a8e35056404bdc2a7b9fa"
+      },
+      "output": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openchatcut-smoke/candidate.mp4",
+      "manifest": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openchatcut-smoke/candidate.mp4.manifest.json",
+      "duration": 3.0,
+      "frames": 90,
+      "removed_seconds": 1.0,
+      "checks": {
+        "status": "passed",
+        "error_codes": [],
+        "checks": [
+          {
+            "check": "original_integrity",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "original_integrity",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "decode",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "tracks",
+            "status": "passed",
+            "error_codes": [],
+            "details": {
+              "video_tracks": 1,
+              "audio_tracks": 1
+            }
+          },
+          {
+            "check": "track_counts",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "dimensions",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "av_duration",
+            "status": "passed",
+            "error_codes": [],
+            "details": {
+              "stream_seconds": [
+                3.0,
+                3.008
+              ]
+            }
+          },
+          {
+            "check": "frames",
+            "status": "passed",
+            "error_codes": [],
+            "details": {
+              "frames": 90,
+              "fps": 30.0,
+              "duration": 3.008
+            }
+          }
+        ]
+      }
+    },
+    "decoded": true,
+    "artifact": {
+      "path": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openchatcut-smoke/candidate.mp4",
+      "bytes": 1156366,
+      "sha256": "bf5c8e35c0d0d1b161a20bfcc1fdaf9fc962fbd869c7b7202e7b75ec3d82b930"
+    },
+    "cleanup": {
+      "id": "openchatcut",
+      "started_pids": [],
+      "remaining_pids": []
+    }
+  },
+  "openfilm": {
+    "probe": {
+      "id": "openfilm",
+      "installed": true,
+      "version": "0.1.5",
+      "runnable": true,
+      "status": "online",
+      "reason": null,
+      "path": "/private/tmp/task-worktrees/photo-content-os-r207/.tools/openfilm/node_modules/openfilm"
+    },
+    "temporary_home": true,
+    "environment_overrides": false,
+    "render": {
+      "status": "candidate",
+      "editor_backend": "openfilm",
+      "project_id": "spoken-test",
+      "project_revision": 1,
+      "output": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openfilm-smoke/candidate.mp4",
+      "manifest": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openfilm-smoke/candidate.mp4.manifest.json",
+      "duration": 3.0,
+      "frames": 90,
+      "removed_seconds": 1.0,
+      "checks": {
+        "status": "passed",
+        "error_codes": [],
+        "checks": [
+          {
+            "check": "original_integrity",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "original_integrity",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "original_integrity",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "original_integrity",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "original_integrity",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "decode",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "tracks",
+            "status": "passed",
+            "error_codes": [],
+            "details": {
+              "video_tracks": 1,
+              "audio_tracks": 1
+            }
+          },
+          {
+            "check": "track_counts",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "dimensions",
+            "status": "passed",
+            "error_codes": [],
+            "details": {}
+          },
+          {
+            "check": "av_duration",
+            "status": "passed",
+            "error_codes": [],
+            "details": {
+              "stream_seconds": [
+                3.0,
+                3.0
+              ]
+            }
+          },
+          {
+            "check": "frames",
+            "status": "passed",
+            "error_codes": [],
+            "details": {
+              "frames": 90,
+              "fps": 30.0,
+              "duration": 3.0
+            }
+          }
+        ]
+      },
+      "project_dir": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openfilm-smoke/openfilm-project",
+      "conversions": [
+        {
+          "source": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/inputs/source.mp4",
+          "output": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openfilm-smoke/export-inputs/assets/source.mp4",
+          "codec": "h264",
+          "color_space": "bt709",
+          "sha256": "6254addb6f2a7ba80e478442750a7be342a2510581f74ba52762a9503a1f3321",
+          "command": [
+            "ffmpeg",
+            "-v",
+            "error",
+            "-i",
+            "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/inputs/source.mp4",
+            "-map",
+            "0:v:0",
+            "-map",
+            "0:a:0",
+            "-vf",
+            "scale=out_color_matrix=bt709:out_range=tv",
+            "-c:v",
+            "libx264",
+            "-crf",
+            "12",
+            "-pix_fmt",
+            "yuv420p",
+            "-colorspace",
+            "bt709",
+            "-color_primaries",
+            "bt709",
+            "-color_trc",
+            "bt709",
+            "-color_range",
+            "tv",
+            "-c:a",
+            "aac",
+            "-b:a",
+            "192k",
+            "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openfilm-smoke/openfilm-project/assets/source.mp4"
+          ],
+          "origin_output": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openfilm-smoke/openfilm-project/assets/source.mp4",
+          "reused": false
+        }
+      ],
+      "seekable": false,
+      "render_workers": 1,
+      "engine_revision": "e36cc6b0c5878bf5"
+    },
+    "decoded": true,
+    "artifact": {
+      "path": "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/openfilm-smoke/candidate.mp4",
+      "bytes": 239140,
+      "sha256": "36ab90f7c1ad58dd3d2be13e1955b25e3b52968d5704367b25e173f63eacb556"
+    },
+    "cleanup": {
+      "id": "openfilm",
+      "started_pids": [],
+      "remaining_pids": []
+    }
+  }
+}

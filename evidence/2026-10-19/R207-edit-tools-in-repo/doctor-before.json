@@ -1,0 +1,131 @@
+{
+  "schema_version": "content_os_doctor_v2",
+  "repository_root": "/private/tmp/task-worktrees/photo-content-os-r207",
+  "platform": "macos",
+  "runtime_python": "/private/tmp/task-worktrees/photo-content-os-r207/.venv/bin/python",
+  "runtime_exists": true,
+  "creative_provider": "codex_cli",
+  "upstream_openclaw_media_sha": "f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf",
+  "cloud_pairing_supported": true,
+  "local_core_supported": true,
+  "tools": {
+    "chatcut": {
+      "installed": true,
+      "path": "/Applications/ChatCut.app",
+      "version": "0.6.9",
+      "status": "unavailable",
+      "reason": "mcp_not_registered",
+      "mcp_registered": false,
+      "connection_verified": false
+    },
+    "kdenlive": {
+      "installed": true,
+      "path": "/Applications/kdenlive.app",
+      "version": "26.04",
+      "status": "online",
+      "reason": "versions_verified",
+      "executable": "/Applications/kdenlive.app/Contents/MacOS/kdenlive",
+      "melt_path": "/Applications/kdenlive.app/Contents/MacOS/melt",
+      "melt_version": "melt 7.39.0\nCopyright (C) 2002-2026 Meltytech, LLC\n<https://www.mltframework.org/>\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+    },
+    "jianying": {
+      "installed": true,
+      "path": "/Applications/VideoFusion-macOS.app",
+      "version": "11.0.0",
+      "status": "online",
+      "reason": "installation_and_version_only",
+      "scope": "app_and_version_only"
+    }
+  },
+  "edit_tools": {
+    "openchatcut": {
+      "name": "openchatcut",
+      "version": null,
+      "expected_version": "0.2.16",
+      "path": ".tools/openchatcut",
+      "installed": true,
+      "status": "unavailable",
+      "reason": "FileNotFoundError: [Errno 2] No such file or directory: '.tools/openchatcut/package.json'",
+      "action": "python3 scripts/setup_edit_tools.py"
+    },
+    "openfilm": {
+      "name": "openfilm",
+      "version": "0.1.5",
+      "expected_version": "0.1.5",
+      "path": ".tools/openfilm",
+      "installed": true,
+      "status": "unavailable",
+      "reason": "FileNotFoundError: [Errno 2] No such file or directory: PosixPath('.tools/browser-runtime')",
+      "action": "python3 scripts/setup_edit_tools.py"
+    }
+  },
+  "status": "blocked",
+  "local_features_available": true,
+  "upstream_login_required_for_local_features": false,
+  "checks": [
+    {
+      "id": "python_version",
+      "ok": true,
+      "required": true,
+      "summary": "Python 3.13.16（最低 3.11）",
+      "action": "安装 Python 3.11 或更新版本。",
+      "state": "ready"
+    },
+    {
+      "id": "repository_write",
+      "ok": true,
+      "required": true,
+      "summary": "仓库工作目录可写",
+      "action": "检查目录权限。",
+      "state": "ready"
+    },
+    {
+      "id": "ffmpeg",
+      "ok": true,
+      "required": true,
+      "summary": "ffmpeg 可用于关键帧、音频与预览",
+      "action": "安装 ffmpeg 并加入 PATH。",
+      "state": "ready"
+    },
+    {
+      "id": "ffprobe",
+      "ok": true,
+      "required": true,
+      "summary": "ffprobe 可读取媒体元数据",
+      "action": "安装 ffmpeg/ffprobe 并加入 PATH。",
+      "state": "ready"
+    },
+    {
+      "id": "creative_provider",
+      "ok": true,
+      "required": false,
+      "summary": "Codex CLI 可用",
+      "action": "安装 Codex CLI，或切换 OPENCLAW_CREATIVE_PROVIDER=openai_api。",
+      "state": "ready"
+    },
+    {
+      "id": "openclaw_cloud_pairing",
+      "ok": true,
+      "required": false,
+      "summary": "上游 f0460b4ce84c 的设备合同支持：macos",
+      "action": "Windows/Linux 可使用本地桌面与核心流水线；云端配对需上游合同先正式加入对应平台。",
+      "state": "ready"
+    },
+    {
+      "id": "edit_tool_openchatcut",
+      "ok": false,
+      "required": false,
+      "summary": "openchatcut 未知版本 · .tools/openchatcut · FileNotFoundError: [Errno 2] No such file or directory: '.tools/openchatcut/package.json'",
+      "action": "python3 scripts/setup_edit_tools.py",
+      "state": "unavailable"
+    },
+    {
+      "id": "edit_tool_openfilm",
+      "ok": false,
+      "required": false,
+      "summary": "openfilm 0.1.5 · .tools/openfilm · FileNotFoundError: [Errno 2] No such file or directory: PosixPath('.tools/browser-runtime')",
+      "action": "python3 scripts/setup_edit_tools.py",
+      "state": "unavailable"
+    }
+  ]
+}

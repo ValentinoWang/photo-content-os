@@ -1,0 +1,17 @@
+Photo Content OS doctor: blocked
+chatcut: unavailable (mcp_not_registered)
+kdenlive: online (versions_verified)
+jianying: online (installation_and_version_only)
+剪辑工具：
+  openchatcut: online | 版本 0.2.16（要求 0.2.16） | .tools/openchatcut | locked versions verified
+  openfilm: unavailable | 版本 9.0.0（要求 0.1.5） | .tools/openfilm | ValueError: version mismatch
+    安装：python3 scripts/setup_edit_tools.py
+✓ python_version: Python 3.13.16（最低 3.11）
+✓ repository_write: 仓库工作目录可写
+✓ ffmpeg: ffmpeg 可用于关键帧、音频与预览
+✓ ffprobe: ffprobe 可读取媒体元数据
+✓ creative_provider: Codex CLI 可用
+✓ openclaw_cloud_pairing: 上游 f0460b4ce84c 的设备合同支持：macos
+✓ edit_tool_openchatcut: openchatcut 0.2.16 · .tools/openchatcut · locked versions verified
+! edit_tool_openfilm: openfilm 9.0.0 · .tools/openfilm · ValueError: version mismatch
+  处理：python3 scripts/setup_edit_tools.py

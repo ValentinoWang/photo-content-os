@@ -1,0 +1,10 @@
+{
+  "unchanged_against_base": {
+    "tests/test_bilingual_subtitles_r6.py": true,
+    "tests/test_direct_video_subtitles.py": true,
+    "tests/test_pf_video_pipeline.py": true,
+    "scripts/video_subtitles.py": true,
+    "scripts/video_candidate.py": true
+  },
+  "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers"
+}
