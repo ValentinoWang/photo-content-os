@@ -2,28 +2,28 @@
   "blocking_entries": [
     {
       "blocking": true,
-      "checklist_path": "acceptance/human/2026-w36/pending-2026-09-02-ocm-z1/checklist.md",
-      "estimated_minutes": 80,
-      "handoff_path": "acceptance/human/2026-w36/pending-2026-09-02-ocm-z1/handoff.json",
+      "checklist_path": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md",
+      "estimated_minutes": 3,
+      "handoff_path": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/handoff.json",
       "invalidation_keys": [
-        "checklist.z1"
+        "music.import"
       ],
       "latest_run": null,
-      "loop_name": "八个 Surface 与项目对话框终端验收",
-      "ready_at": "2026-09-02T15:39:45.556603Z",
-      "release_slice": "R8",
+      "loop_name": "音乐链接导入并入库",
+      "ready_at": "2026-10-19T17:23:04.701043Z",
+      "release_slice": "R210",
       "required_role": "产品负责人",
       "scope_hints": [
-        "eight-surfaces-project-dialog"
+        "music-link-import"
       ],
       "status": "PENDING",
-      "summary": "候选已完成自动 E2E、双视口截图、运行时视觉验证与受保护测试；进入产品负责人终端验收。",
-      "task_id": "OCM-Z1",
-      "workspace": "acceptance/human/2026-w36/2026-09-02-OCM-Z1"
+      "summary": "部分交付：网易云和汽水已入库；抖音待处理；会员曲待用户提供链接。未判人工通过，不推送。",
+      "task_id": "2026-10-19-R210-photo-music-link-import",
+      "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-09-02T15:39:45.556603Z",
+  "generated_at": "2026-10-19T17:23:04.701043Z",
   "non_blocking_entries": [],
   "schema_version": 1,
-  "source_facts_sha256": "774e6eee9979c38a1e15eeae6d0047296fd90f4782d5c6f6d7f52f7ff3b8c849"
+  "source_facts_sha256": "94c9b7a5a9ffa4ca46dc5fd5dc982ca83d0e8da2e0ffa30e6c65d6fde2fe32e6"
 }

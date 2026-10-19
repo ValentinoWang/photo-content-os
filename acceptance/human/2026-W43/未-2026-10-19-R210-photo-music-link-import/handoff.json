@@ -1,0 +1,84 @@
+{
+  "baseline": {
+    "base": "cd7a30eb35788e83ae5603720d5d3b3f24659d4a",
+    "branch": "detached",
+    "head": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f",
+    "tree": "089175edfb36e7e89ec20644850192ff92af6ae9"
+  },
+  "binding_sha256": "b28389d5632aa7998774a629859970e143291323c427cf66f9c214d85496be50",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "60017d0c114c5198792e752d5582be7d9c1783b4890d1a0ef68372a1aafa9928",
+  "claims": [
+    {
+      "claim_key": "music.link-import",
+      "item": "H-01",
+      "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    },
+    {
+      "claim_key": "music.duplicate-import",
+      "item": "H-02",
+      "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    },
+    {
+      "claim_key": "music.membership-boundary",
+      "item": "H-03",
+      "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+      "relations": [],
+      "request_changes": {
+        "H-03": "按用户阶段 2 的非会员方案显示换歌或汽水同名搜索提示；当前待提供真实会员曲链接，未判通过。"
+      },
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    }
+  ],
+  "contract_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance-contract.md",
+  "contract_sha256": "caa196481bf08abcd7f45eb12f7324ef135f6bf6b5b379c0198db9e1766cd43d",
+  "contract_version": "1",
+  "estimated_minutes": 3,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "music.import"
+  ],
+  "loop_name": "音乐链接导入并入库",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance/machine/integration-contract/runs/20261019T172042Z-local-macos-offline-948a4d/result.md",
+      "result_sha256": "cbc29177d467bb94cf5f1f22294214c75d103089ac3cf7d9a5093e98756f819e",
+      "run_id": "20261019T172042Z-local-macos-offline-948a4d",
+      "source_identity": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-10-19T17:23:04.701043Z",
+  "release_slice": "R210",
+  "request_id": "2026-10-19-R210-photo-music-link-import",
+  "required_role": "产品负责人",
+  "schema_version": 2,
+  "scope_hints": [
+    "music-link-import"
+  ],
+  "source_commit": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f",
+  "summary": "部分交付：网易云和汽水已入库；抖音待处理；会员曲待用户提供链接。未判人工通过，不推送。",
+  "task_id": "2026-10-19-R210-photo-music-link-import"
+}

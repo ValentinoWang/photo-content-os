@@ -1,0 +1,22 @@
+{
+  "focused": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_music_library.py",
+      "tests/test_music_network.py",
+      "tests/test_musicdl_engine.py",
+      "tests/test_music_egress.py",
+      "tests/test_douyin_music_api.py",
+      "tests/test_douyin_share_page.py"
+    ],
+    "exit_code": 0
+  },
+  "cli_repeat_and_list_exit_code": 0,
+  "network_counts": {
+    "requests": 0,
+    "tunnels": 0
+  }
+}
