@@ -1,0 +1,30 @@
+{
+  "unchanged_files": [
+    {
+      "path": "tests/test_bilingual_subtitles_r6.py",
+      "unchanged_from_origin_main": true
+    },
+    {
+      "path": "tests/test_direct_video_subtitles.py",
+      "unchanged_from_origin_main": true
+    },
+    {
+      "path": "tests/test_pf_video_pipeline.py",
+      "unchanged_from_origin_main": true
+    },
+    {
+      "path": "scripts/video_subtitles.py",
+      "unchanged_from_origin_main": true
+    },
+    {
+      "path": "scripts/video_candidate.py",
+      "unchanged_from_origin_main": true
+    },
+    {
+      "path": "tests/test_obsidian_doc_sync.py",
+      "unchanged_from_origin_main": true
+    }
+  ],
+  "drawtext_error_in_prior_and_current_logs": true,
+  "doc_sync": "source doc newer than Obsidian target; checkout mtime check; no protocol text updated in 2g"
+}

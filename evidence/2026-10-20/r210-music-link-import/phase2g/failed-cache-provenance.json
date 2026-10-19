@@ -1,0 +1,7 @@
+{
+  "source": "runtime_paths.local_media_root()/library/music/.attempts/3f6546cfff035a4f83e2cfe8f014cbf080222d757133681aabac162ab926c7ff.json",
+  "sha256": "d6868655ceb2b6775d1515a0cc5895f0fd4fd7050fd98532052048c600e2a214",
+  "fixture": "tests/fixtures/music-library/douyin-failed-attempt.json",
+  "copied_verbatim": true,
+  "network_requests": 0
+}

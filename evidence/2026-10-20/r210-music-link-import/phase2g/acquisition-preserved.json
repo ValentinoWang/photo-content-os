@@ -1,0 +1,27 @@
+[
+  {
+    "path": "scripts/music_library/platforms.py",
+    "sha256": "e1ba33f6de59157457228b038de147163bf3b067f6e917bbea0025f2096620d5",
+    "unchanged_from": "73895b1"
+  },
+  {
+    "path": "scripts/music_library/douyin_api.py",
+    "sha256": "9e0894c2e88a7bc002d31096267b9ff788f58a033d08fffbdc3a528f45cb1e57",
+    "unchanged_from": "73895b1"
+  },
+  {
+    "path": "scripts/music_library/douyin_share.py",
+    "sha256": "7461586609dc6366e5b2ca9499fe05ecc0c714f530a0a92c72ce01cd76cb840f",
+    "unchanged_from": "73895b1"
+  },
+  {
+    "path": "scripts/music_library/cache.py",
+    "sha256": "3d2e431af3250cf27da423c24eda09897bdb6752fcdd42f65d852c059c115b14",
+    "unchanged_from": "73895b1"
+  },
+  {
+    "path": "scripts/music_library/network.py",
+    "sha256": "828fa1587feb8c5e5a76c86ebd1d3210874eb70e13114c387606e4ae05fe66ab",
+    "unchanged_from": "73895b1"
+  }
+]

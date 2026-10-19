@@ -1,0 +1,19 @@
+{
+  "source_commit": "41fd234",
+  "focused": "90 passed",
+  "network_requests": 0,
+  "tunnels": 0,
+  "cookies_read": 0,
+  "acquisition_unchanged": true,
+  "full_suite": "685 passed, 32 skipped, 9 failed, 6 errors, 1982 subtests passed; all remaining failures are unchanged video/ffmpeg/doc-sync baseline",
+  "doc_sync_and_outline": "known checkout mtime failure; no paired protocol content changed",
+  "no_human_pass": true,
+  "sparse_fixture_recheck": "20 passed",
+  "check_delivery_failures": [
+    "G1",
+    "G9"
+  ],
+  "check_delivery_warnings": [
+    "G6"
+  ]
+}

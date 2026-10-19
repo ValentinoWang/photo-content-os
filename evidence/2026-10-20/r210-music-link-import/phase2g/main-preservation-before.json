@@ -1,0 +1,99 @@
+{
+  "head": "6fe9533340fd1e8c2d2fc24b7939eba2cde950f0",
+  "scope": "all tracked dirty files, index and working copy",
+  "dirty_files": [
+    {
+      "path": "docs/direct-video-bilingual-subtitles.md",
+      "status": "MM",
+      "working_sha256": "45fcac232c3cce0807fce46586e6d26ad139d5469e3867c9915ea78730be0b91",
+      "index_sha256": "f4a7c017acb58cc30bd8e71248c8b60997e851b903ee2b13d5344962f14c2246"
+    },
+    {
+      "path": "docs/direct-video-black-frames.md",
+      "status": "D ",
+      "working_sha256": "2b8342194c9f319d432ef99319564ec57b538d60ab9ebccbfc458ac5abf3e76d"
+    },
+    {
+      "path": "docs/tasks/R207-edit-tools-in-repo/TASK.md",
+      "status": " M",
+      "working_sha256": "7bce0dcb90a9a26cf34bfe106125ae76675e570c89a23c728ce97b05756c97a6",
+      "index_sha256": "aa7b3758356268de1ddeb6784a9fd6798603b96c10aab8fed40577fcb98efdc1"
+    },
+    {
+      "path": "scripts/openclaw_video_execution.py",
+      "status": "MM",
+      "working_sha256": "376444eb7e1741443cad45f41ed08a0802b484c8aac895ce337efe89a93edde4",
+      "index_sha256": "3303c52dd5175d66d9478960627a712954980412d473cb51d6414360a63fddc1"
+    },
+    {
+      "path": "scripts/video_black_frames.py",
+      "status": "D ",
+      "working_sha256": "b78f3bc77eb67f52ef26d4e05c88707a8e625b6eaaee17cca9e4de9f1daa50e8"
+    },
+    {
+      "path": "scripts/video_candidate.py",
+      "status": "MM",
+      "working_sha256": "6ba9f27639c801673356354025592b94e9f6970cdd987525133f1ad002427458",
+      "index_sha256": "e71fe60d613e062844008b015cfa29830195b1e07c295f38b573c4126460c683"
+    },
+    {
+      "path": "scripts/video_subtitles.py",
+      "status": "MM",
+      "working_sha256": "fda01b89cf49ad6c535c095208fc65c0a26bd9bcda34205f876fd92dbb13d42b",
+      "index_sha256": "c6c70c2b0ece5c625b60af778f84528bd136f5aa0c032974db284ca41cab9aa0"
+    },
+    {
+      "path": "tests/fixtures/dark-content-r8/frame-0.png",
+      "status": "D ",
+      "working_sha256": "91d92c7e80fd0b17e0701ef658e177644e9e157ba76276437bcfb583b54dabd0"
+    },
+    {
+      "path": "tests/fixtures/dark-content-r8/frame-1068.png",
+      "status": "D ",
+      "working_sha256": "43c0dc7530617f590622c8c574b5904c8315947c015460c693e16a4abba0210a"
+    },
+    {
+      "path": "tests/fixtures/dark-content-r8/frame-1550.png",
+      "status": "D ",
+      "working_sha256": "c30fbdf4558cb2ca5fd2ec5d765f5b540514916674e58cc3d9db8184800f2a11"
+    },
+    {
+      "path": "tests/fixtures/dark-content-r8/frame-610.png",
+      "status": "D ",
+      "working_sha256": "d767bcdad766ca2c0c960ce05a5e458f27f16582533e112997c5bded332016cd"
+    },
+    {
+      "path": "tests/fixtures/dark-content-r8/manifest.json",
+      "status": "D ",
+      "working_sha256": "32a2db4e3b19f10053a521b5d5e7c2aab05c852f2cef8190605495499540ba13"
+    },
+    {
+      "path": "tests/test_bilingual_subtitles_r6.py",
+      "status": "MM",
+      "working_sha256": "03ce62a8d9be62ed3ab6e1f1e56efaec6bb1ace0c0e4f97562a9588eda9a203f",
+      "index_sha256": "7ad4dbd221baab027bc5c6ebea22855c313ca5d386d028b08428276e3aa3d5d3"
+    },
+    {
+      "path": "tests/test_openclaw_video_execution.py",
+      "status": "MM",
+      "working_sha256": "6297dcb5684e256891ff67eeac07fd8bb9050fd6770bc82ef810055aeb688e6e",
+      "index_sha256": "b421fdd43fba626d86cb8f28b7e606f614bc71c08cd53f1276cdd116a5c7d9e3"
+    },
+    {
+      "path": "tests/test_pf_video_pipeline.py",
+      "status": "MM",
+      "working_sha256": "98f336196582e73aa79eb41b1869d2f8d4db9a353e948b84ba2b95bde31c10ef",
+      "index_sha256": "dad4467704dbd9a3fafd291f2ceff7a72a0e41f80e184078ec0259e9bf4b9802"
+    },
+    {
+      "path": "tests/test_subtitle_display_translation_r8.py",
+      "status": "D ",
+      "working_sha256": "e2509eba95ac1cf25c6d6326597c7c0a7ee1d907e573d0abcdf9ff69b9148fc1"
+    },
+    {
+      "path": "tests/test_video_black_frames.py",
+      "status": "D ",
+      "working_sha256": "e7e8dae7507207bffa04658ca54501ec9ab1c24ee48910f5ddea367fa6acadb3"
+    }
+  ]
+}
