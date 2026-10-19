@@ -5,17 +5,20 @@
     "head": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f",
     "tree": "089175edfb36e7e89ec20644850192ff92af6ae9"
   },
-  "binding_sha256": "b28389d5632aa7998774a629859970e143291323c427cf66f9c214d85496be50",
+  "binding_sha256": "385d4a3ced8e86fbb13794d9485706418619e787dace456f158b26c81bd69cc4",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "60017d0c114c5198792e752d5582be7d9c1783b4890d1a0ef68372a1aafa9928",
+  "checklist_sha256": "d5805a8664823ba211e12ca14674355e9d4b2a04542f271a8388fe5f6c64e578",
   "claims": [
     {
       "claim_key": "music.link-import",
       "item": "H-01",
       "open_route": "note:Mac 终端的音乐导入和本地音乐库",
       "relations": [],
+      "request_changes": {
+        "H-01": "沿用三首完整目标，只补充命令行入口和抖音待处理的当前事实，未降低标准。"
+      },
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
@@ -28,6 +31,9 @@
       "item": "H-02",
       "open_route": "note:Mac 终端的音乐导入和本地音乐库",
       "relations": [],
+      "request_changes": {
+        "H-02": "明确重复使用已入库歌曲的原分享文字，保留不重复条目、不重新下载的原标准。"
+      },
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
@@ -70,7 +76,7 @@
     }
   ],
   "open_route": null,
-  "ready_at": "2026-10-19T17:23:04.701043Z",
+  "ready_at": "2026-10-19T17:26:44.366966Z",
   "release_slice": "R210",
   "request_id": "2026-10-19-R210-photo-music-link-import",
   "required_role": "产品负责人",

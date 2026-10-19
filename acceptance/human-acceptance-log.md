@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-10-19T17:23:04.701043Z
-- 来源事实 SHA-256：94c9b7a5a9ffa4ca46dc5fd5dc982ca83d0e8da2e0ffa30e6c65d6fde2fe32e6
+- 事实时间：2026-10-19T17:26:44.366966Z
+- 来源事实 SHA-256：f3f678e6e98b620e9635902b7ff8f4a16fa042dc1d9123e15220cc9375b350e9
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -12,7 +12,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| 2026-10-19T17:23:04.701043Z | 2026-10-19-R210-photo-music-link-import | 音乐链接导入并入库 | 产品负责人 | 3 | acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md | - | - |
+| 2026-10-19T17:26:44.366966Z | 2026-10-19-R210-photo-music-link-import | 音乐链接导入并入库 | 产品负责人 | 3 | acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md | - | - |
 
 ### 已拒绝待修复
 

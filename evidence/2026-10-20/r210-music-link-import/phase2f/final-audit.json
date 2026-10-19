@@ -1,0 +1,61 @@
+{
+  "phase2f_new_platform_requests": 1,
+  "share_requests_cumulative": 2,
+  "signed_detail_requests_cumulative": 2,
+  "douyin_audio_requests": 0,
+  "phase2f_tunnel_starts": 0,
+  "cache_replay": {
+    "failures": [
+      "无法确认这条抖音视频使用的原声，未下载（本地失败缓存，未再次联网）",
+      "无法确认这条抖音作品使用的原声，未下载"
+    ],
+    "requests": 0,
+    "tunnels": 0
+  },
+  "partial_files": [],
+  "library": [
+    {
+      "title": "CRUSH VIBE",
+      "platform": "local",
+      "duration_seconds": 96.0
+    },
+    {
+      "title": "Turn Back Time",
+      "platform": "netease",
+      "duration_seconds": 189.923923
+    },
+    {
+      "title": "Fever Pitch",
+      "platform": "qishui",
+      "duration_seconds": 135.483878
+    }
+  ],
+  "process_audit": [
+    {
+      "pid": 27602,
+      "alive": false
+    },
+    {
+      "pid": 29984,
+      "alive": false
+    }
+  ],
+  "git": {
+    "task": {
+      "head": "0d9cdf43f138adb57f04b36f48afea0e19a9a176",
+      "dirty_entries": 3,
+      "staged_entries": 0
+    },
+    "main": {
+      "head": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+      "dirty_entries": 60,
+      "staged_entries": 16
+    },
+    "harness": {
+      "head": "581e43e5f4146a4e663b46c79bd259dbbe409160",
+      "dirty_entries": 4993,
+      "staged_entries": 0
+    }
+  },
+  "verified_source": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f"
+}

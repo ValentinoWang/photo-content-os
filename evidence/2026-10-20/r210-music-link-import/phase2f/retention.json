@@ -1,0 +1,11 @@
+{
+  "retained": [
+    {
+      "path": "/private/tmp/task-worktrees/photo-content-os-r210",
+      "owner": "Claude / 任务总控",
+      "reason": "阶段 2f 明确不推送；本地提交尚未进入 origin/main，保留供抖音后续处理，不可 finish 删除。",
+      "review_by": "2026-10-27"
+    }
+  ],
+  "task_processes_retained": false
+}

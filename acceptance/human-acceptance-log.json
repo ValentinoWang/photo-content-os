@@ -10,7 +10,7 @@
       ],
       "latest_run": null,
       "loop_name": "音乐链接导入并入库",
-      "ready_at": "2026-10-19T17:23:04.701043Z",
+      "ready_at": "2026-10-19T17:26:44.366966Z",
       "release_slice": "R210",
       "required_role": "产品负责人",
       "scope_hints": [
@@ -22,8 +22,8 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-19T17:23:04.701043Z",
+  "generated_at": "2026-10-19T17:26:44.366966Z",
   "non_blocking_entries": [],
   "schema_version": 1,
-  "source_facts_sha256": "94c9b7a5a9ffa4ca46dc5fd5dc982ca83d0e8da2e0ffa30e6c65d6fde2fe32e6"
+  "source_facts_sha256": "f3f678e6e98b620e9635902b7ff8f4a16fa042dc1d9123e15220cc9375b350e9"
 }
