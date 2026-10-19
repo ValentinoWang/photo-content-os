@@ -4,8 +4,9 @@ import argparse
 import signal
 from pathlib import Path
 
-from music_library.errors import MusicError
+from music_library.errors import MusicError, import_failure_message
 from music_library.library import LICENSE_LABELS, MusicLibrary
+from music_library.links import parse_link
 
 PLATFORMS = {'qishui': '汽水音乐', 'douyin': '抖音', 'netease': '网易云音乐',
              'netease_client': '网易云客户端下载', 'local': '本地文件'}
@@ -46,11 +47,13 @@ def _main(argv=None):
         library.adapter = PlatformAdapter(library.root / '.http-cache', browser=args.browser, profile=args.profile)
     failures = 0
     for number, text in enumerate(args.inputs, 1):
+        platform = None
         try:
+            platform = parse_link(text).platform
             status, track = library.import_link(text, search_elsewhere=args.search_elsewhere)
             print(f'{number}. {status}：{track["title"]} — {track["artist"]}；{LICENSE_LABELS[track["license_status"]]}')
         except MusicError as exc:
-            print(f'{number}. 失败：{exc}')
+            print(f'{number}. 失败：{import_failure_message(platform, exc)}')
             failures += 1
     if args.from_folder is not None:
         directory = Path(args.from_folder).expanduser()
