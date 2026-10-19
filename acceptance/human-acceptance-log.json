@@ -1,6 +1,6 @@
 {
   "blocking_entries": [],
-  "generated_at": "2026-10-19T15:46:12.966550Z",
+  "generated_at": "2026-10-19T16:11:46.979649Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -12,16 +12,16 @@
       ],
       "latest_run": null,
       "loop_name": "剪辑工具安装与候选生成",
-      "ready_at": "2026-10-19T15:46:12.966550Z",
+      "ready_at": "2026-10-19T16:11:46.979649Z",
       "release_slice": "R207",
       "required_role": "产品负责人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "仓库内工具安装、重复执行、版本漂移修复和双后端真实合成候选验证通过，原需求两项待人工复核。全量回归的既有 FFmpeg 环境失败另列。",
+      "summary": "仓库工具重复安装、版本诊断、双后端真实合成候选验证通过；原需求两项待人工复核。全量回归既有 FFmpeg 环境失败另列。",
       "task_id": "2026-10-19-R207-photo-edit-tools-in-repo",
       "workspace": "acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo"
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "59b942cc2fc2fa2f3e2ce321e498cde3d59754f3d7b97a61a7324ee3622da1d7"
+  "source_facts_sha256": "4af0b76d59f8ba2fe4612ab29291773d9372d45168c13f44a8d4fc23a8e477eb"
 }

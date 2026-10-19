@@ -1,0 +1,1 @@
+剪辑工具安装失败：[Errno 2] No such file or directory: '/private/tmp/task-worktrees/photo-content-os-r207/third_party/edit-tools.lock.json'；修复后重跑 python3 scripts/setup_edit_tools.py。未切换版本或后端。

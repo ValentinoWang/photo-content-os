@@ -1,0 +1,14 @@
+{
+  "original_base": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+  "pushed_preparation": "cd7a30eb35788e83ae5603720d5d3b3f24659d4a",
+  "preparation_paths": [
+    "acceptance/surfaces.yaml"
+  ],
+  "commit_replacements": {
+    "190b6efd23247ea1b922341093c2ba6129748ac9": "493cc9aa8621227f4253f082396295c763ef5103",
+    "c68bebba594b0fdb1b00014b1ff053f5fa20fec0": "356d0040b802e5da7bff8beebe396f8996c14fac"
+  },
+  "source_delta_from_original": "Only acceptance/surfaces.yaml evidence/** artifact:true; all implementation and protected tests unchanged.",
+  "sparse_checkout_repair": "git sparse-checkout add third_party; no tracked source change",
+  "harness_changes_by_this_task": []
+}

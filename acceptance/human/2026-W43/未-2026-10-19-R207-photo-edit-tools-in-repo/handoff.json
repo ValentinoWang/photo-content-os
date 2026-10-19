@@ -1,9 +1,9 @@
 {
   "baseline": {
-    "base": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+    "base": "cd7a30eb35788e83ae5603720d5d3b3f24659d4a",
     "branch": "main",
-    "head": "190b6efd23247ea1b922341093c2ba6129748ac9",
-    "tree": "ab3c5dfab62ba8abc6a79eda1457035356471432"
+    "head": "493cc9aa8621227f4253f082396295c763ef5103",
+    "tree": "9901b495afd8f1ee64b7adb00974b7af9b2b4db8"
   },
   "binding_sha256": "80948a266eaba565f742c747cf2a1b2324bcf23eff05d46ce380b195fc2c320d",
   "blocking": false,
@@ -52,20 +52,20 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "evidence/2026-10-19/R207-edit-tools-in-repo/acceptance/machine/integration-contract/runs/20261019T154536Z-local-30b4fa/result.md",
-      "result_sha256": "33bfe52fa35ee18c2aec3eba4f7ffdb6852c0e37fb82eba0d3af3b7757932615",
-      "run_id": "20261019T154536Z-local-30b4fa",
-      "source_identity": "190b6efd23247ea1b922341093c2ba6129748ac9"
+      "result_path": "evidence/2026-10-19/R207-edit-tools-in-repo/acceptance/machine/integration-contract/runs/20261019T161008Z-local-10aa3e/result.md",
+      "result_sha256": "4163b9c667f2f84a188c0560338c89c58585c3c190693a08de23cdb6ebfbcb2a",
+      "run_id": "20261019T161008Z-local-10aa3e",
+      "source_identity": "493cc9aa8621227f4253f082396295c763ef5103"
     }
   ],
   "open_route": null,
-  "ready_at": "2026-10-19T15:46:12.966550Z",
+  "ready_at": "2026-10-19T16:11:46.979649Z",
   "release_slice": "R207",
   "request_id": "2026-10-19-R207-photo-edit-tools-in-repo",
   "required_role": "产品负责人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "190b6efd23247ea1b922341093c2ba6129748ac9",
-  "summary": "仓库内工具安装、重复执行、版本漂移修复和双后端真实合成候选验证通过，原需求两项待人工复核。全量回归的既有 FFmpeg 环境失败另列。",
+  "source_commit": "493cc9aa8621227f4253f082396295c763ef5103",
+  "summary": "仓库工具重复安装、版本诊断、双后端真实合成候选验证通过；原需求两项待人工复核。全量回归既有 FFmpeg 环境失败另列。",
   "task_id": "2026-10-19-R207-photo-edit-tools-in-repo"
 }

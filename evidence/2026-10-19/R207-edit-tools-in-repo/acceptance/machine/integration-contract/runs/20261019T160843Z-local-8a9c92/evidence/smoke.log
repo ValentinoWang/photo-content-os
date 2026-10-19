@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/private/tmp/task-worktrees/photo-content-os-r207/evidence/2026-10-19/R207-edit-tools-in-repo/run_smoke.py", line 38, in <module>
+    assert item['probe']['runnable'], item['probe']
+           ~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: {'id': 'openchatcut', 'installed': True, 'version': None, 'runnable': False, 'status': 'unavailable', 'reason': "openchatcut_probe_failed:[Errno 2] No such file or directory: '/private/tmp/task-worktrees/photo-content-os-r207/third_party/edit-tools.lock.json'; python3 scripts/setup_edit_tools.py", 'path': '/private/tmp/task-worktrees/photo-content-os-r207/.tools/openchatcut'}
