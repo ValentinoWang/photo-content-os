@@ -32,3 +32,15 @@ runtime 的唯一 JSON 回执和项目 `candidate_ref` 使用 `{candidate,previe
 `retry_video_shot(run_ref,shot_id=...,inputs={"workspace_ref":...})` 仅接受完整 descriptor 的同一 `retryShotId`、同一已存在 run 和明确 compose 步骤。保留配音及其他镜头缓存；另一镜 hash/依赖变化时阻断，不能顺便重渲。节点仍记入原 runtime SQLite。运行中、未知或非直出任务不能借这个入口重跑。
 
 机器回归：`tests/test_pf_video_pipeline.py`、`tests/test_pf_agent_runtime.py` 和 `tests/test_video_render.py`。前两类 source-clock/原生 Agent 验证与浏览器资源清零验证均不代表真人精修、云端采用或生产部署。固定 Agent 环境、Playwright 路径与运行命令见 PF-REPORT.md。
+
+## 安装仓库内剪辑工具
+
+先运行 `bash scripts/setup_edit_tools.sh`（Windows：`powershell -ExecutionPolicy Bypass -File scripts/setup_edit_tools.ps1`），再运行 `.venv/bin/python scripts/doctor.py`。也可直接运行 `python3 scripts/setup_edit_tools.py`。
+
+`third_party/edit-tools.lock.json` 锁定 OpenChatCut 0.2.16 的完整 Git 提交、OpenFilm 0.1.5、Node 24.13.0 与 Playwright 1.61.1 的 Chromium。安装器校验 Node 下载摘要，用 `npm ci` 安装锁文件依赖；源码、依赖与浏览器均放在 Git 忽略的 `.tools/`。重复执行保留匹配的工具，发现版本漂移或安装损坏会明确报告并重装。不会安装或升级系统应用。
+
+适配器默认从当前检出根的 `.tools/` 寻址。可继续显式设置 `CONTENT_OS_OPENCHATCUT_ROOT`、`CONTENT_OS_OPENCHATCUT_NODE`、`CONTENT_OS_OPENCHATCUT_BROWSER`、`CONTENT_OS_OPENCHATCUT_REFINE_BROWSER`、`CONTENT_OS_OPENFILM_PACKAGE`；OpenFilm Node 可由 `CONTENT_OS_OPENFILM_NODE` 覆盖，其浏览器目录可由 `PLAYWRIGHT_BROWSERS_PATH` 覆盖。缺失或不支持的版本会阻断所选后端，不会换用其他后端。
+
+浏览器通过 `scripts/qa/with_chromium_slot.sh` 排队；默认共用 `/tmp/openclaw-media-chromium-slots`，保留所有 `MEDIA_CHROMIUM_*` 参数。`CONTENT_OS_CHROMIUM_SLOT`（OpenChatCut）和 `CONTENT_OS_CHROMIUM_SLOT_SCRIPT`（OpenFilm）仍可显式覆盖。Mac 需要系统 `lockf`，Linux 需要 `flock`；Windows 原生浏览器排队尚需提供兼容的 Bash/锁工具，未满足时明确阻断。
+
+命令行若未继承系统的 PAC 代理，请先按本机网络配置设置标准 `HTTPS_PROXY` / `HTTP_PROXY` 再安装；安装器只继承当前命令的网络设置，不修改系统代理。

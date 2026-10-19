@@ -13,11 +13,13 @@ import subprocess
 import tempfile
 import time
 
+from edit_tools_runtime import ROOT, INSTALL, node_path
+
 from .interface import BackendError, CloseResult, Description, Probe
 from .kdenlive_render import (FPS, frames, plan_ranges, probe_media, remap_span,
                               review_module, seconds, sha256_file, write_json)
 
-DEFAULT_PACKAGE = Path('/Users/vsiyo/Desktop/Opensource_Tool/openfilm-oa/runtime/node_modules/openfilm')
+DEFAULT_PACKAGE = ROOT / '.tools/openfilm/node_modules/openfilm'
 BRIDGE = Path(__file__).with_name('openfilm_bridge.mjs')
 
 
@@ -96,23 +98,33 @@ class Backend:
         try:
             package = json.loads((path / 'package.json').read_text())
         except (OSError, ValueError) as exc:
-            raise BackendError('openfilm_runtime_unavailable') from exc
+            raise BackendError('openfilm_runtime_unavailable; ' + INSTALL) from exc
+        if not isinstance(package, dict):
+            raise BackendError('openfilm_runtime_metadata_invalid; ' + INSTALL)
         if package.get('name') != 'openfilm' or package.get('version') != '0.1.5':
-            raise BackendError('openfilm_runtime_version_unsupported')
-        if not shutil.which('node') or not shutil.which('ffmpeg') or not shutil.which('ffprobe'):
-            raise BackendError('openfilm_runtime_dependency_missing')
+            raise BackendError('openfilm_runtime_version_unsupported; ' + INSTALL)
+        if not self._node().is_file() or not shutil.which('ffmpeg') or not shutil.which('ffprobe'):
+            raise BackendError('openfilm_runtime_dependency_missing; ' + INSTALL)
         return path
+
+    def _node(self):
+        return Path(os.environ.get('CONTENT_OS_OPENFILM_NODE', node_path())).expanduser().resolve()
+
+    def _slot(self):
+        return Path(os.environ.get('CONTENT_OS_CHROMIUM_SLOT_SCRIPT', ROOT / 'scripts/qa/with_chromium_slot.sh')).expanduser().resolve()
 
     def _start(self, *, browser=False, persistent=False, log=None):
         package = self._package()
-        command = ['node', str(BRIDGE)]
+        command = [str(self._node()), str(BRIDGE)]
         if browser:
-            slot = os.environ.get('CONTENT_OS_CHROMIUM_SLOT_SCRIPT')
+            slot = str(self._slot())
             if not slot or not Path(slot).is_file():
                 raise BackendError('openfilm_chromium_slot_script_required')
             command = ['bash', slot, '--', *command]
         home = tempfile.TemporaryDirectory(prefix='content-os-openfilm-')
         env = {**os.environ, 'CONTENT_OS_OPENFILM_PACKAGE': str(package),
+               'PLAYWRIGHT_BROWSERS_PATH': os.environ.get('PLAYWRIGHT_BROWSERS_PATH', str(ROOT / '.tools/browsers')),
+               'PATH': str(self._node().parent) + os.pathsep + os.environ.get('PATH', ''),
                'OPENFILM_HOME': home.name, 'OPENFILM_NO_BROWSER': '1', 'OPENFILM_NO_UPDATE_CHECK': '1',
                'OPENFILM_EXPORTS': str(Path(home.name) / 'exports')}
         try:
@@ -175,10 +187,10 @@ class Backend:
 
     def probe(self) -> Probe:
         result = {'id': 'openfilm', 'installed': False, 'version': None,
-                  'runnable': False, 'status': 'unavailable', 'reason': None}
+                  'runnable': False, 'status': 'unavailable', 'reason': None, 'path': str(DEFAULT_PACKAGE)}
         try:
-            self._package()
-            result.update(installed=True, version='0.1.5')
+            package = self._package()
+            result.update(installed=True, version='0.1.5', path=str(package))
             with tempfile.TemporaryDirectory(prefix='openfilm-probe-') as temp:
                 root = Path(temp)
                 (root / 'film.html').write_text('<meta name="viewport" content="width=640,height=360"><section><img src="still.png#t=0,1"></section>')
@@ -188,12 +200,12 @@ class Backend:
                 raise BackendError('openfilm_chromium_unavailable')
             for binary in ('ffmpeg', 'ffprobe'):
                 subprocess.run([binary, '-version'], capture_output=True, check=True, timeout=10)
-            slot = os.environ.get('CONTENT_OS_CHROMIUM_SLOT_SCRIPT')
+            slot = str(self._slot())
             if not slot or not Path(slot).is_file():
                 raise BackendError('openfilm_chromium_slot_script_required')
             result.update(runnable=True, status='online')
         except (OSError, ValueError, KeyError, IndexError, subprocess.SubprocessError) as exc:
-            result['reason'] = str(exc) if isinstance(exc, BackendError) else f'openfilm_probe_failed:{type(exc).__name__}'
+            result['reason'] = (str(exc) if isinstance(exc, BackendError) else f'openfilm_probe_failed:{type(exc).__name__}') + '; ' + INSTALL
         return result
 
     def _compile(self, kwargs, output_dir, deadline):

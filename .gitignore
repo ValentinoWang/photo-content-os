@@ -82,3 +82,5 @@ htmlcov/
 *.[wW][eE][bB][pP]
 
 /evidence/2026-10-12/thread-r/software-residue/
+
+.tools/
