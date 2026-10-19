@@ -1,0 +1,16 @@
+usage: validate_jianying_draft.py [-h] [--plan PLAN] [--result RESULT]
+                                  [--rewritten-json REWRITTEN_JSON]
+                                  [--rewrite-proof REWRITE_PROOF]
+                                  [--validation-output VALIDATION_OUTPUT]
+                                  [--roughcut-review-output ROUGHCUT_REVIEW_OUTPUT]
+
+Validate a generated Jianying roughcut draft against its draft plan.
+
+options:
+  -h, --help            show this help message and exit
+  --plan PLAN
+  --result RESULT
+  --rewritten-json REWRITTEN_JSON
+  --rewrite-proof REWRITE_PROOF
+  --validation-output VALIDATION_OUTPUT
+  --roughcut-review-output ROUGHCUT_REVIEW_OUTPUT

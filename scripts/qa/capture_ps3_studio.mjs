@@ -11,7 +11,7 @@ const design=path.resolve(process.env.PS3_DESIGN_PATH);
 const output=path.resolve(process.env.PS3_SHOTS_DIR);
 const prefix=process.env.PS3_CAPTURE_PREFIX||'ps3';
 await fs.mkdir(output,{recursive:true});
-const collectInventorySource=await fs.readFile('/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/ui-copy-quality/assets/collect_design_inventory.js','utf8');
+const collectInventorySource=await fs.readFile(new URL('./collect_design_inventory.js', import.meta.url),'utf8');
 let browser;
 let context,page,initial,native,accepted,fixture;
 const manifest={scope:'Local synthetic records; backend probes and receipt variants are UI fixtures. Native interactions use the live Photo API and actual openfilm disk readback.',captures:[],nativeActions:[],events:[]};

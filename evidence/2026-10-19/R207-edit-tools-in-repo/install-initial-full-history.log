@@ -1,0 +1,8 @@
+openfilm: 未安装、损坏或锁定版本不一致，安装。
++ /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/lib/node_modules/npm/bin/npm-cli.js ci --no-audit --no-fund
+
+added 2 packages in 8s
+openchatcut: 未安装、损坏或锁定版本不一致，安装。
++ git clone --no-checkout https://github.com/0xsline/OpenChatCut.git /private/tmp/task-worktrees/photo-content-os-r207/.tools/openchatcut
+Cloning into '/private/tmp/task-worktrees/photo-content-os-r207/.tools/openchatcut'...
+fetch-pack: unexpected disconnect while reading sideband packet

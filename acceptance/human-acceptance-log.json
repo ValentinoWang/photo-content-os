@@ -23,7 +23,27 @@
     }
   ],
   "generated_at": "2026-10-19T17:26:44.366966Z",
-  "non_blocking_entries": [],
+  "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/checklist.md",
+      "estimated_minutes": 8,
+      "handoff_path": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/handoff.json",
+      "invalidation_keys": [
+        "photo.edit-tools-runtime"
+      ],
+      "latest_run": null,
+      "loop_name": "剪辑工具安装与候选生成",
+      "ready_at": "2026-10-19T16:11:46.979649Z",
+      "release_slice": "R207",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "仓库工具重复安装、版本诊断、双后端真实合成候选验证通过；原需求两项待人工复核。全量回归既有 FFmpeg 环境失败另列。",
+      "task_id": "2026-10-19-R207-photo-edit-tools-in-repo",
+      "workspace": "acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo"
+    }
+  ],
   "schema_version": 1,
-  "source_facts_sha256": "f3f678e6e98b620e9635902b7ff8f4a16fa042dc1d9123e15220cc9375b350e9"
+  "source_facts_sha256": "983e8850f5b19d8db2bec76b8b9bfec6cbe3e9f103822988a2d5b36c090b0c17"
 }

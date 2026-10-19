@@ -1,0 +1,7 @@
+openfilm: 已安装且版本匹配，跳过。
+openchatcut: 已安装且版本匹配，跳过。
++ /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/lib/node_modules/npm/bin/npm-cli.js ci --no-audit --no-fund
+
+added 3 packages in 1s
++ /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node /private/tmp/task-worktrees/photo-content-os-r207/.tools/browser-runtime/node_modules/playwright/cli.js install chromium
+剪辑工具安装完成。

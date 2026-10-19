@@ -196,3 +196,16 @@ powershell -ExecutionPolicy Bypass `
 ## 协作方式
 
 从 `main` 创建短分支，提交前运行本机 CI，再通过 Pull Request 合并。详细约束见 [CONTRIBUTING.md](CONTRIBUTING.md) 和 [docs/execution-rules.md](docs/execution-rules.md)。
+
+### 剪辑工具
+
+在仓库根运行：
+
+```bash
+bash scripts/setup_edit_tools.sh
+.venv/bin/python scripts/doctor.py
+```
+
+Python 入口为 `python3 scripts/setup_edit_tools.py`；Windows 使用 `powershell -ExecutionPolicy Bypass -File scripts/setup_edit_tools.ps1`。安装器按 `third_party/edit-tools.lock.json` 安装固定版本的 OpenChatCut、OpenFilm、Node 与 Chromium 到 `.tools/`，不会提交第三方源码或改动系统应用。相同版本可重复执行，漂移会报告并重装。环境检查的「剪辑工具」栏列出版本、相对位置和修复命令。浏览器共用并发槽，未安装的后端明确不可用；详细环境覆盖与平台限制见 [视频候选交接](docs/video-pipeline-pf.md#安装仓库内剪辑工具)。
+
+命令行若未继承系统的 PAC 代理，请先按本机网络配置设置标准 `HTTPS_PROXY` / `HTTP_PROXY` 再安装；安装器只继承当前命令的网络设置，不修改系统代理。

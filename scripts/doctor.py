@@ -16,6 +16,7 @@ from dataclasses import asdict, dataclass
 from enum import Enum
 from pathlib import Path
 
+from edit_tools_runtime import tool_status
 from runtime_paths import MINIMUM_PYTHON, platform_contract_name, repository_root, runtime_python, supported_python
 
 _SYSTEM_ROOT = Path(__file__).resolve().parents[1]
@@ -196,6 +197,12 @@ def collect_checks(repo: Path | None = None) -> tuple[list[Check], dict[str, obj
             state=CheckState.READY if upstream_supported else CheckState.UNSUPPORTED,
         )
     )
+    edit_tools = {name: tool_status(name) for name in ('openchatcut', 'openfilm')}
+    for name, tool in edit_tools.items():
+        ready = tool['status'] == 'online'
+        checks.append(Check('edit_tool_' + name, ready, False,
+                            f"{name} {tool['version'] or '未知版本'} · {tool['path']} · {tool['reason']}",
+                            tool['action'], state=CheckState.READY if ready else CheckState.UNAVAILABLE))
     runtime = runtime_python(root)
     metadata = {
         "schema_version": "content_os_doctor_v2",
@@ -208,6 +215,7 @@ def collect_checks(repo: Path | None = None) -> tuple[list[Check], dict[str, obj
         "cloud_pairing_supported": upstream_supported,
         "local_core_supported": platform_name in {"macos", "windows", "linux"},
         "tools": probe_editing_tools(),
+        "edit_tools": edit_tools,
     }
     return checks, metadata
 
@@ -244,6 +252,11 @@ def main() -> int:
         print(f"Photo Content OS doctor: {status}")
         for name, tool in metadata["tools"].items():
             print(f"{name}: {tool['status']} ({tool['reason']})")
+        print('剪辑工具：')
+        for name, tool in metadata['edit_tools'].items():
+            print(f"  {name}: {tool['status']} | 版本 {tool['version'] or '未知'}（要求 {tool['expected_version']}） | {tool['path']} | {tool['reason']}")
+            if tool['status'] != 'online':
+                print(f"    安装：{tool['action']}")
         for check in checks:
             marker = "✓" if check.ok else ("✗" if check.required else "!")
             print(f"{marker} {check.id}: {check.summary}")

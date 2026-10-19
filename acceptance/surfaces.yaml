@@ -153,6 +153,10 @@
       "glob": "evidence/**",
       "key": "acceptance.evidence",
       "artifact": true
+    },
+    {
+      "glob": "third_party/**",
+      "key": "photo.project-tools"
     }
   ]
 }

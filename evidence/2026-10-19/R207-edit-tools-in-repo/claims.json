@@ -1,0 +1,16 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.edit-tools.installation",
+    "open_route": "file:photo-content-os/README.md",
+    "surfaces": [],
+    "relations": []
+  },
+  {
+    "item": "H-02",
+    "claim_key": "photo.edit-tools.openchatcut-candidate",
+    "open_route": "note:Photo Studio 中分镜已确认的项目，点击生成剪辑候选",
+    "surfaces": [],
+    "relations": []
+  }
+]

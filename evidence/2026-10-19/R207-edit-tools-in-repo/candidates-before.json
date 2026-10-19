@@ -1,0 +1,16 @@
+{
+  "base": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+  "candidates": [],
+  "head": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+  "paths": [],
+  "range_head": "c1b4db387e3c0c0aa6cabdb1af283a8e1d0f0594",
+  "surfaces": [],
+  "thresholds": {
+    "duplicate": 0.75,
+    "possible": 0.35
+  },
+  "undeclared_legacy": [
+    "2026-10-19-R207-photo-edit-tools-in-repo"
+  ],
+  "unmapped": []
+}

@@ -1,0 +1,82 @@
+............F......F.....................s.......                      [100%]
+=================================== FAILURES ===================================
+_______________ test_uninstalled_and_corrupt_tools_are_explicit ________________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-431/test_uninstalled_and_corrupt_t0')
+
+    def test_uninstalled_and_corrupt_tools_are_explicit(tmp_path):
+        (tmp_path / 'third_party').mkdir()
+>       (tmp_path / 'third_party/edit-tools.lock.json').write_text(json.dumps(runtime.read_lock()))
+                                                                              ^^^^^^^^^^^^^^^^^^^
+
+tests/test_edit_tools_runtime.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/edit_tools_runtime.py:15: in read_lock
+    value = json.loads((root / 'third_party/edit-tools.lock.json').read_text())
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/tmp/task-worktrees/photo-content-os-r207/third_party/edit-tools.lock.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/task-worktrees/photo-content-os-r207/third_party/edit-tools.lock.json'
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+______________ test_incomplete_installation_cannot_report_online _______________
+
+tmp_path = PosixPath('/private/var/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-431/test_incomplete_installation_c0')
+
+    def test_incomplete_installation_cannot_report_online(tmp_path):
+        (tmp_path / 'third_party').mkdir()
+>       (tmp_path / 'third_party/edit-tools.lock.json').write_text(json.dumps(runtime.read_lock()))
+                                                                              ^^^^^^^^^^^^^^^^^^^
+
+tests/test_edit_tools_runtime.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/edit_tools_runtime.py:15: in read_lock
+    value = json.loads((root / 'third_party/edit-tools.lock.json').read_text())
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/tmp/task-worktrees/photo-content-os-r207/third_party/edit-tools.lock.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/task-worktrees/photo-content-os-r207/third_party/edit-tools.lock.json'
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_edit_tools_runtime.py::test_uninstalled_and_corrupt_tools_are_explicit
+FAILED tests/test_edit_tools_runtime.py::test_incomplete_installation_cannot_report_online
+2 failed, 46 passed, 1 skipped, 2 subtests passed in 1.10s

@@ -1,0 +1,30 @@
+{
+  "source_commit": "190b6efd23247ea1b922341093c2ba6129748ac9",
+  "checks": [
+    {
+      "name": "runtime-contract",
+      "exit_code": 0
+    },
+    {
+      "name": "doc-sync",
+      "exit_code": 0
+    },
+    {
+      "name": "outline",
+      "exit_code": 0
+    },
+    {
+      "name": "task-help",
+      "exit_code": 0
+    },
+    {
+      "name": "draft-help",
+      "exit_code": 0
+    },
+    {
+      "name": "pytest-all",
+      "exit_code": 1,
+      "log": "pytest-committed.log"
+    }
+  ]
+}

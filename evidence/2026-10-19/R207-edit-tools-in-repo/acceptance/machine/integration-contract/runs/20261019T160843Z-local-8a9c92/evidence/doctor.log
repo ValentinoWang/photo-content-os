@@ -1,0 +1,19 @@
+Photo Content OS doctor: ready
+chatcut: unavailable (mcp_not_registered)
+kdenlive: online (versions_verified)
+jianying: online (installation_and_version_only)
+剪辑工具：
+  openchatcut: unavailable | 版本 未知（要求 unknown） | .tools/openchatcut | FileNotFoundError: [Errno 2] No such file or directory: 'third_party/edit-tools.lock.json'
+    安装：python3 scripts/setup_edit_tools.py
+  openfilm: unavailable | 版本 未知（要求 unknown） | .tools/openfilm | FileNotFoundError: [Errno 2] No such file or directory: 'third_party/edit-tools.lock.json'
+    安装：python3 scripts/setup_edit_tools.py
+✓ python_version: Python 3.13.16（最低 3.11）
+✓ repository_write: 仓库工作目录可写
+✓ ffmpeg: ffmpeg 可用于关键帧、音频与预览
+✓ ffprobe: ffprobe 可读取媒体元数据
+✓ creative_provider: Codex CLI 可用
+✓ openclaw_cloud_pairing: 上游 f0460b4ce84c 的设备合同支持：macos
+! edit_tool_openchatcut: openchatcut 未知版本 · .tools/openchatcut · FileNotFoundError: [Errno 2] No such file or directory: 'third_party/edit-tools.lock.json'
+  处理：python3 scripts/setup_edit_tools.py
+! edit_tool_openfilm: openfilm 未知版本 · .tools/openfilm · FileNotFoundError: [Errno 2] No such file or directory: 'third_party/edit-tools.lock.json'
+  处理：python3 scripts/setup_edit_tools.py

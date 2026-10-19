@@ -25,6 +25,8 @@ PROHIBITED_TOP_LEVELS = {
 }
 PROHIBITED_PARTS = {
     ".venv",
+    ".tools",
+    "node_modules",
     "work-cache",
     ANALYSIS_DIR,
     "openclaw",
@@ -124,17 +126,48 @@ def path_violations(root: Path, relative: Path) -> list[str]:
     return violations
 
 
+# Runtime source only: docs and tests/fixtures retain historical/negative examples.
+RUNTIME_SUFFIXES = {'.py', '.sh', '.ps1', '.js', '.mjs', '.cjs', '.ts', '.tsx', '.html', '.css', '.json', '.yaml', '.yml', '.toml'}
+MACHINE_PATH_TOKENS = ('/' + 'Users/', 'Opensource' + '_Tool', '自媒体' + '创作Agent')
+
+
+def is_runtime_source(relative: Path) -> bool:
+    return (bool(relative.parts) and relative.parts[0] in {'scripts', 'studio'}
+            and relative.suffix in RUNTIME_SUFFIXES and 'fixtures' not in relative.parts
+            and not relative.name.startswith('test_'))
+
+
+def source_violations(root: Path, relative: Path) -> list[str]:
+    if not is_runtime_source(relative):
+        return []
+    try:
+        source = (root / relative).read_text(encoding='utf-8')
+    except (OSError, UnicodeError) as exc:
+        return [f'machine-runtime-path: cannot read source ({type(exc).__name__}); restore readable UTF-8 source']
+    return [f'machine-runtime-path:{number}: {token}; use repository paths or explicit environment configuration'
+            for number, line in enumerate(source.splitlines(), 1)
+            for token in MACHINE_PATH_TOKENS if token in line]
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="检查 Git 跟踪文件是否越过协作仓库安全边界")
     parser.add_argument("--root", type=Path, default=repository_root(), help="Git 仓库根目录")
+    parser.add_argument("--runtime-paths-only", action="store_true", help="只检查运行源码中的机器路径")
     args = parser.parse_args()
 
     root = args.root.expanduser().resolve()
     failures: list[str] = []
+    checked_sources = 0
     for relative in tracked_paths(root):
-        for violation in path_violations(root, relative):
+        checked_sources += int(is_runtime_source(relative))
+        violations = source_violations(root, relative)
+        if not args.runtime_paths_only:
+            violations += path_violations(root, relative)
+        for violation in violations:
             failures.append(f"{relative.as_posix()}: {violation}")
 
+    if checked_sources == 0:
+        failures.append("machine-runtime-path: no tracked runtime sources; check --root and Git index")
     if failures:
         print("repository safety check failed:", file=sys.stderr)
         for failure in failures:

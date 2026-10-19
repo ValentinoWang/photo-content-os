@@ -1,0 +1,10 @@
+openfilm: 当前版本 9.0.0，要求 0.1.5；ValueError: version mismatch；重新安装。
++ /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/lib/node_modules/npm/bin/npm-cli.js ci --no-audit --no-fund
+
+added 2 packages in 408ms
+openchatcut: 已安装且版本匹配，跳过。
++ /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/lib/node_modules/npm/bin/npm-cli.js ci --no-audit --no-fund
+
+added 3 packages in 696ms
++ /private/tmp/task-worktrees/photo-content-os-r207/.tools/node/bin/node /private/tmp/task-worktrees/photo-content-os-r207/.tools/browser-runtime/node_modules/playwright/cli.js install chromium
+剪辑工具安装完成。

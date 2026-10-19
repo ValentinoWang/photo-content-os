@@ -1,0 +1,18 @@
+{
+  "command": [
+    "ffmpeg",
+    "-v",
+    "error",
+    "-f",
+    "lavfi",
+    "-i",
+    "color=black:s=320x180:d=1",
+    "-vf",
+    "drawtext=text=test",
+    "-f",
+    "null",
+    "-"
+  ],
+  "returncode": 8,
+  "stderr": "[AVFilterGraph @ 0xb46c24200] No such filter: 'drawtext'\nError opening output file -.\nError opening output files: Filter not found\n"
+}

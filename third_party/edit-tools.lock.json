@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "node": {
+    "version": "24.13.0",
+    "license": "MIT",
+    "url": "https://nodejs.org/dist/v24.13.0/",
+    "artifacts": {
+      "darwin-arm64": {
+        "file": "node-v24.13.0-darwin-arm64.tar.gz",
+        "sha256": "d595961e563fcae057d4a0fb992f175a54d97fcc4a14dc2d474d92ddeea3b9f8"
+      },
+      "darwin-x64": {
+        "file": "node-v24.13.0-darwin-x64.tar.gz",
+        "sha256": "6f03c1b48ddbe1b129a6f8038be08e0899f05f17185b4d3e4350180ab669a7f3"
+      },
+      "linux-arm64": {
+        "file": "node-v24.13.0-linux-arm64.tar.gz",
+        "sha256": "0f6d40b94c6a2eb6b4c240ffc8b9fd3ada7ab044c177dd413c06e1ef9a63f081"
+      },
+      "linux-x64": {
+        "file": "node-v24.13.0-linux-x64.tar.gz",
+        "sha256": "6223aad1a81f9d1e7b682c59d12e2de233f7b4c37475cd40d1c89c42b737ffa8"
+      },
+      "win-arm64": {
+        "file": "node-v24.13.0-win-arm64.zip",
+        "sha256": "92b9f9b0c0c123e11e4afc535f0ec19cd987465eea506427553a49971364158a"
+      },
+      "win-x64": {
+        "file": "node-v24.13.0-win-x64.zip",
+        "sha256": "ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88"
+      }
+    }
+  },
+  "browser": {
+    "package": "playwright",
+    "package_version": "1.61.1",
+    "license": "Apache-2.0",
+    "version": "149.0.7827.55",
+    "revision": "1228",
+    "directory": ".tools/browsers",
+    "install": [
+      "npm ci (third_party/browser-runtime)",
+      "playwright install chromium"
+    ]
+  },
+  "tools": {
+    "openfilm": {
+      "version": "0.1.5",
+      "source_type": "npm",
+      "package": "openfilm",
+      "url": "https://registry.npmjs.org/openfilm/-/openfilm-0.1.5.tgz",
+      "integrity": "sha512-iUuxvtLwcFjZOO+EPKhudGoKkjepkPul7bepvLbPxV8QJHNKdNJzstOQNu9Bf6+VztGG3L3lei0whxN2q1wLVQ==",
+      "license": "MIT",
+      "node_requirement": ">=22.2",
+      "node_version": "24.13.0",
+      "browser_package": "playwright-core@1.61.1",
+      "directory": ".tools/openfilm",
+      "install": [
+        "copy third_party/openfilm/package*.json",
+        "npm ci"
+      ]
+    },
+    "openchatcut": {
+      "version": "0.2.16",
+      "source_type": "git",
+      "url": "https://github.com/0xsline/OpenChatCut.git",
+      "commit": "2e6f4a29b784200cfb32b859b16f2561592bc3e8",
+      "package_lock_sha256": "1ac31512e2487f0f83b6f4d2a3d8a1a53e4a2d7f8e75b5d9428c959c614a942e",
+      "license": "AGPL-3.0-or-later",
+      "node_requirement": ">=24 <25",
+      "node_version": "24.13.0",
+      "browser_package": "playwright@1.61.1",
+      "directory": ".tools/openchatcut",
+      "install": [
+        "git clone",
+        "git checkout --detach (locked commit)",
+        "npm ci",
+        "link repository browser runtime"
+      ]
+    }
+  }
+}

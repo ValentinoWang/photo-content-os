@@ -1,0 +1,109 @@
+{
+  "source_commit": "493cc9aa8621227f4253f082396295c763ef5103",
+  "checks": [
+    {
+      "name": "idempotent",
+      "exit_code": 2,
+      "command": [
+        "bash",
+        "scripts/setup_edit_tools.sh"
+      ]
+    },
+    {
+      "name": "doctor",
+      "exit_code": 0,
+      "command": [
+        ".venv/bin/python",
+        "scripts/doctor.py",
+        "--allow-offline"
+      ]
+    },
+    {
+      "name": "focused",
+      "exit_code": 1,
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_edit_tools_runtime.py",
+        "tests/test_edit_backend_interface.py",
+        "tests/test_openfilm_adapter.py",
+        "tests/test_content_os_doctor.py"
+      ]
+    },
+    {
+      "name": "smoke",
+      "exit_code": 1,
+      "command": [
+        ".venv/bin/python",
+        "evidence/2026-10-19/R207-edit-tools-in-repo/run_smoke.py"
+      ]
+    },
+    {
+      "name": "openfilm-native",
+      "exit_code": 0,
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ps3_openfilm_session.py"
+      ]
+    },
+    {
+      "name": "runtime-contract",
+      "exit_code": 0,
+      "command": [
+        "bash",
+        "scripts/check_runtime_contract.sh"
+      ]
+    },
+    {
+      "name": "doc-sync",
+      "exit_code": 0,
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_obsidian_doc_sync.py"
+      ]
+    },
+    {
+      "name": "outline",
+      "exit_code": 0,
+      "command": [
+        ".venv/bin/python",
+        "scripts/check_outline_contract.py",
+        "."
+      ]
+    },
+    {
+      "name": "task-help",
+      "exit_code": 0,
+      "command": [
+        ".venv/bin/python",
+        "scripts/validate_content_os_task.py",
+        "--help"
+      ]
+    },
+    {
+      "name": "draft-help",
+      "exit_code": 0,
+      "command": [
+        ".venv/bin/python",
+        "scripts/validate_jianying_draft.py",
+        "--help"
+      ]
+    },
+    {
+      "name": "pytest-all",
+      "exit_code": 1,
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests"
+      ]
+    }
+  ]
+}

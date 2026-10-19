@@ -1,0 +1,10 @@
+{
+  "source_commit": "190b6efd23247ea1b922341093c2ba6129748ac9",
+  "focused": "53 passed, 1 skipped, 2 subtests passed",
+  "full_suite": "8 failed, 596 passed, 32 skipped, 6 errors, 1982 subtests passed",
+  "full_suite_failure_cause": "Unchanged subtitle/PF fixtures require drawtext, absent from system FFmpeg 9.0.2; see ffmpeg-baseline.json",
+  "native_openfilm": "2 passed",
+  "smoke": "Both backends candidate+full decode; no remaining PIDs",
+  "guard_negative_proof": "tests/test_edit_tools_runtime.py",
+  "source_doc_timestamp_repair": "Four unmodified docs matched main checkout byte-for-byte; preserved their original mtimes to remove sparse checkout timestamp false positives."
+}

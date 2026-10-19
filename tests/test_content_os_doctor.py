@@ -61,6 +61,7 @@ class ContentOsDoctorTests(unittest.TestCase):
                 with (
                     patch.object(doctor, "platform_contract_name", return_value=platform_name),
                     patch.object(doctor, "supported_python", return_value=True),
+                    patch.object(doctor, "tool_status", side_effect=lambda name: {"name": name, "version": "fixture", "path": ".tools/" + name, "status": "online", "reason": "fixture", "action": ""}),
                     patch.object(doctor.shutil, "which", return_value="/fixture/tool"),
                 ):
                     checks, metadata = doctor.collect_checks(Path(directory))

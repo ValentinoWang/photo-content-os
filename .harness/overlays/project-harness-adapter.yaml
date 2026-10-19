@@ -15,6 +15,9 @@ quality:
     - command: .venv/bin/python -m unittest tests.test_full_checklist_acceptance tests.test_desktop_openapi_route_sync
       failure_class: studio-contract-route-drift
       repair: regenerate studio-openapi.json from studio.api_contract and keep server registration on canonical ROUTE_SPECS
+    - command: .venv/bin/python scripts/check_repository_safety.py --runtime-paths-only
+      failure_class: machine-runtime-path
+      repair: use repository-owned tool paths or explicit environment configuration; see docs/edit-tools-runtime-guard.md
   formatting: []
 qa:
   screenshot:

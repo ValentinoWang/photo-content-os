@@ -14,6 +14,8 @@ import subprocess
 import time
 import urllib.request
 
+from edit_tools_runtime import ROOT, INSTALL, configured_browser, node_path, read_lock
+
 from .interface import BackendError, CloseResult, Description, Probe
 from . import kdenlive_render as planning
 from .otio_kdenlive import FPS, frames, sha256_file, write_json
@@ -163,40 +165,9 @@ try {
 
 class Backend:
     def __init__(self):
-        self.root = (
-            Path(
-                os.environ.get(
-                    "CONTENT_OS_OPENCHATCUT_ROOT",
-                    "/Users/vsiyo/Desktop/Opensource_Tool/OpenChatCut",
-                )
-            )
-            .expanduser()
-            .resolve()
-        )
-        self.node = Path(
-            os.environ.get(
-                "CONTENT_OS_OPENCHATCUT_NODE",
-                "/Users/vsiyo/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
-            )
-        )
-        self.browser = Path(
-            os.environ.get(
-                "CONTENT_OS_OPENCHATCUT_BROWSER",
-                "/Users/vsiyo/Library/Caches/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-mac-arm64/chrome-headless-shell",
-            )
-        )
-        self.slot = Path(
-            os.environ.get(
-                "CONTENT_OS_CHROMIUM_SLOT",
-                "/Users/vsiyo/Desktop/创业项目/自媒体创作Agent/apps/media/web/scripts/qa/withChromiumSlot.sh",
-            )
-        )
-        self.refine_browser = Path(
-            os.environ.get(
-                "CONTENT_OS_OPENCHATCUT_REFINE_BROWSER",
-                "/Users/vsiyo/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
-            )
-        )
+        self.root = Path(os.environ.get('CONTENT_OS_OPENCHATCUT_ROOT', ROOT / '.tools/openchatcut')).expanduser().resolve()
+        self.node = Path(os.environ.get('CONTENT_OS_OPENCHATCUT_NODE', node_path())).expanduser().resolve()
+        self.slot = Path(os.environ.get('CONTENT_OS_CHROMIUM_SLOT', ROOT / 'scripts/qa/with_chromium_slot.sh')).expanduser().resolve()
         self._processes = []
         self._started = []
         self._session = None
@@ -206,6 +177,14 @@ class Backend:
         self._mcp_session = None
         self._closed = None
         self._queue_seconds = 0.0
+
+    @property
+    def browser(self):
+        return configured_browser('CONTENT_OS_OPENCHATCUT_BROWSER')
+
+    @property
+    def refine_browser(self):
+        return configured_browser('CONTENT_OS_OPENCHATCUT_REFINE_BROWSER')
 
     def describe(self) -> Description:
         return {
@@ -231,8 +210,12 @@ class Backend:
             "version": None,
             "runnable": False,
             "status": "unavailable",
-            "reason": "openchatcut_runtime_missing",
+            "reason": "openchatcut_runtime_missing; " + INSTALL,
+            "path": str(self.root),
         }
+        if self.browser.name == 'NOT_INSTALLED':
+            result['reason'] = 'openchatcut_browser_runtime_unreadable; ' + INSTALL
+            return result
         if not all(
             p.is_file()
             for p in (
@@ -254,6 +237,12 @@ class Backend:
             ).stdout.strip()
             if not version.startswith("v24."):
                 raise BackendError("openchatcut_requires_node24")
+            package = json.loads((self.root / "package.json").read_text())
+            if package["version"] != read_lock()["tools"]["openchatcut"]["version"]:
+                raise BackendError("openchatcut_runtime_version_unsupported")
+            commit = subprocess.run(["git", "-C", str(self.root), "rev-parse", "HEAD"], capture_output=True, text=True, check=True).stdout.strip()
+            if commit != read_lock()["tools"]["openchatcut"]["commit"]:
+                raise BackendError("openchatcut_runtime_commit_mismatch")
             command = subprocess.run(
                 [str(self.node), "--import", "tsx", "cli/main.ts", "--help"],
                 cwd=self.root,
@@ -271,8 +260,8 @@ class Backend:
                 status="online",
                 reason=None,
             )
-        except (OSError, ValueError, subprocess.SubprocessError) as exc:
-            result["reason"] = f"openchatcut_probe_failed:{type(exc).__name__}"
+        except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as exc:
+            result["reason"] = f"openchatcut_probe_failed:{exc}; {INSTALL}"
         return result
 
     def _environment(self, library=None, workspace=None):
@@ -282,7 +271,9 @@ class Backend:
             for k in ("HOME", "TMPDIR", "LANG", "LC_ALL")
             if k in os.environ
         }
+        env.update({k: v for k, v in os.environ.items() if k.startswith("MEDIA_CHROMIUM_")})
         env.update(
+            PLAYWRIGHT_BROWSERS_PATH=str(ROOT / ".tools/browsers"),
             PATH=f"{self.node.parent}:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin",
             CC_BROWSER_EXECUTABLE=str(self.browser),
             OPENCHATCUT_FFMPEG=shutil.which("ffmpeg") or "ffmpeg",
@@ -402,6 +393,9 @@ class Backend:
                 raise BackendError("render_project_identity_invalid")
             if not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
                 raise BackendError("render_timeout_invalid")
+            availability = self.probe()
+            if not availability["runnable"]:
+                raise BackendError(availability["reason"])
             source, suggestions_path = (
                 source.expanduser().resolve(),
                 suggestions_path.expanduser().resolve(),

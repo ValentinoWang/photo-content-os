@@ -1,0 +1,8 @@
+{
+  "paused_installer_pid": 64651,
+  "reason": "Let the existing npm ci child complete; prevent a duplicate browser download while independently staged Playwright finishes. Resume after materializing the staged cache.",
+  "resumed": true,
+  "installer_exit_code": 2,
+  "resumed_at": "2026-10-19T15:34:56.150372+00:00",
+  "retry_log": "install-tls12.log"
+}
