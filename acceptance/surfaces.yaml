@@ -151,7 +151,8 @@
     },
     {
       "glob": "evidence/**",
-      "key": "acceptance.evidence"
+      "key": "acceptance.evidence",
+      "artifact": true
     }
   ]
 }
