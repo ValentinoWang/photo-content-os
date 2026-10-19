@@ -1,0 +1,18 @@
+{
+  "decision": "LOCAL_PARTIAL_DELIVERY_NO_PUSH",
+  "verified_source": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f",
+  "delivery_checked_range": "cd7a30eb35788e83ae5603720d5d3b3f24659d4a..5d5d23db0ea8531e7b7828ae5aa9fea365c4c2e1",
+  "failed_gates": [
+    "G1",
+    "G9"
+  ],
+  "warn_gates": [
+    "G6"
+  ],
+  "human_pass_written": false,
+  "platform_requests_in_phase2f": 1,
+  "source_changed_after_verification": false,
+  "worktree_retained": "/private/tmp/task-worktrees/photo-content-os-r210",
+  "reason": "抖音未入库，阶段 2f 要求提交但不推送；保留未合并提交。",
+  "runtime_link_retained": ".venv (borrowed main runtime; never committed)"
+}

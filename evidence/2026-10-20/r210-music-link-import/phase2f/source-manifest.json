@@ -1,0 +1,22 @@
+{
+  "scripts/music_library/browser_cookies.py": "8cacf12b2ed5877b4b0f5c2463c693d16e872044e5333a95041fefd2b026004f",
+  "scripts/music_library/egress.py": "6f2f43a60e4daf52286ae0a7ce3beefd870363e1a208c4980891346212a13008",
+  "scripts/music_library/library.py": "07c2f652981cb44ab888cac4e2d2a68cbcac173ec812a9303ad8a0d7771b1ef1",
+  "scripts/music_library/platforms.py": "e1ba33f6de59157457228b038de147163bf3b067f6e917bbea0025f2096620d5",
+  "scripts/music_library/musicdl_engine.py": "f37b33fd1aa89c50d1c79e06880b04291d24e6adc0d5cb2e9366466c3824791c",
+  "scripts/music_library/douyin_api.py": "9e0894c2e88a7bc002d31096267b9ff788f58a033d08fffbdc3a528f45cb1e57",
+  "scripts/music_library/douyin_share.py": "7461586609dc6366e5b2ca9499fe05ecc0c714f530a0a92c72ce01cd76cb840f",
+  "scripts/music_library/cache.py": "3d2e431af3250cf27da423c24eda09897bdb6752fcdd42f65d852c059c115b14",
+  "scripts/music_library/__init__.py": "3dc35c7f7189e805cad90d327793bead936231d7a4d775ac0bbdd908558c7077",
+  "scripts/music_library/links.py": "c79e0d620c0028ac209a50814b04aa0d02f0ff6f8df6e5d978058dded1143289",
+  "scripts/music_library/client_files.py": "3a0c2146d6e39727418f556935ab5de8bb7c8e90d0360868fa389aa00f9656c7",
+  "scripts/music_library/netease.py": "58d184093778273c0f5150a72095b7849779adfe73ca8f216d60923af895576e",
+  "scripts/music_library/network.py": "828fa1587feb8c5e5a76c86ebd1d3210874eb70e13114c387606e4ae05fe66ab",
+  "scripts/music_library/audio.py": "b7dc974e23bb03696dadf58720e56beb93b1198296bcdf0963067f12907eb158",
+  "scripts/music_library/errors.py": "b33d5a4d08ed51b719c1ea6149e88c4e1cd626b524889841194ebc8a651eedc4",
+  "scripts/music_library/vendor/douyin_abogus.py": "06d1e1a4265688b36949683bb9743902c64c6334e8419a97070a7dfa01b6c254",
+  "scripts/music_library/vendor/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scripts/music_library/vendor/douyin_query.py": "6db546364a3408d5a4c96d70023bfae693e41bde1a465e968a9e1b7bf7217347",
+  "scripts/import_music.py": "eb9b311578980d7206aa231332b2b0561645b62aa7f826e826fc1f84b41c88f0",
+  "tests/test_douyin_share_page.py": "b221d275bc7a7f6bda384e5b2e129a5659d019bf3b6eeea5455d140871939701"
+}
