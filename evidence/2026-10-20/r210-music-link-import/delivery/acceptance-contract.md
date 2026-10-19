@@ -1,11 +1,11 @@
 # Acceptance Contract: 2026-10-19-R210-photo-music-link-import
 
 - Task ID: 2026-10-19-R210-photo-music-link-import
-- Contract version: 1
+- Contract version: 2
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户 2026-10-20 阶段 2f 指令：提交既有成果，抖音待处理及会员样例缺口如实递交；不代签人工通过
+- Approval evidence: 用户 2026-10-20 阶段 2g 指令：「不管抖音了」；按网易云、汽水两平台递交，三项等用户验收，不代签
 - Request source: acceptance/requests/2026-W43/2026-10-19-R210-photo-music-link-import/request.json; evidence/2026-10-20/r210-music-link-import/delivery/scope.md
 - SSOT node: none
 - SSOT path: none
@@ -14,7 +14,7 @@
 - Assumption IDs: none
 - Invalidation keys: music.import
 - AC budget: 3
-- Baseline identity: cd7a30e; 用户阶段 2f 指令
+- Baseline identity: 6fe9533; 用户阶段 2g 指令
 - Product Context refs: none
 - Role Context refs: none
 - Resolved Surface Contract refs: none
@@ -26,19 +26,19 @@
 
 ## User and scenario
 
-本机用户粘贴单曲、视频或图文作品的分享文字，或导入客户端下载的音频。只使用命令行，不增加页面。
+本机用户粘贴网易云、汽水单曲分享文字，或导入客户端下载的音频。只使用命令行，不增加页面。
 
 ## Problem
 
-已有网易云和汽水实际成功；抖音匿名签名作品接口已用满额度，分享页也没有提供作品音乐。失败必须透明保留，不能伪造三首导入成功。
+网易云和汽水已经真实导入并由用户核过；用户取消抖音交付要求。抖音取数代码保留，失败缓存不重试，显示统一的可操作提示，技术原因保留在缓存及证据。
 
 ## Expected outcome
 
-有完整可核验音源时入库并记录元数据、授权和测量；已入库输入不重复联网；不可读或受限响应明确失败，不产生残缺条目。三平台完整目标仍由 H-01 保留，当前抖音待处理。
+有完整可核验音源时入库并记录元数据、授权和测量；已入库输入不重复联网；不可读或受限响应明确失败，不产生残缺条目。H-01 验证网易云、汽水两个平台。
 
 ## Non-goals
 
-不批量抓取、不绕过会员、不读抖音浏览器登录态、不发布作品、不删除另一个仓库的旧工具、不修改真实剪映草稿。
+不再处理抖音导入、不批量抓取、不绕过会员、不读抖音浏览器登录态、不发布作品、不删除另一个仓库的旧工具、不修改真实剪映草稿。
 
 ## Normal path
 
@@ -70,15 +70,15 @@ Given 单首分享输入或本地文件；When 执行导入；Then 查库后按�
 | --- | --- | --- | --- | --- | --- | --- |
 | AC-01 | behavior | machine/integration-contract | 可核验完整音源按元数据和授权入库；缺失作品数据或会员/地区限制明确失败且不留残缺条目 | Integration | Automatic | Yes |
 | AC-02 | behavior | machine/integration-contract | 平台编号及音频哈希去重，重复导入零请求且不启动隧道；本地加密文件原件不动 | Integration | Automatic | Yes |
-| AC-03 | behavior | machine/integration-contract | 匿名手机分享不跟随跳转，缓存重放不联网；代理失败不回直连，退出关闭隧道 | Integration | Automatic | Yes |
+| AC-03 | behavior | machine/integration-contract | 抖音失败缓存重放零请求零隧道且显示共用中文提示；原取数代码不变；代理失败不回直连，退出关闭隧道 | Integration | Automatic | Yes |
 
 ## Human acceptance
 
 | ID | Summary | Checklist path | Required role | Blocking |
 | --- | --- | --- | --- | --- |
-| H-01 | 三平台真实导入体验；当前抖音待处理，不能判通过 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-01 | 产品负责人 | Yes |
+| H-01 | 网易云、汽水两平台导入与播放体验 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-01 | 产品负责人 | Yes |
 | H-02 | 已入库歌曲重复导入体验 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-02 | 产品负责人 | Yes |
-| H-03 | 真实会员曲边界；待用户提供会员曲链接 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-03 | 产品负责人 | Yes |
+| H-03 | 任意网易云会员曲导入的限制提示与无残缺条目 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-03 | 产品负责人 | Yes |
 
 ## Protected acceptance tests
 
@@ -91,20 +91,22 @@ Given 单首分享输入或本地文件；When 执行导入；Then 查库后按�
 | tests/test_douyin_music_api.py | b78aa7e0af9d67513c8001724b9b6c9f09f7552f21b93371e059fddc0760d017 | AC-01, AC-02, AC-03 |
 | tests/test_douyin_share_page.py | b221d275bc7a7f6bda384e5b2e129a5659d019bf3b6eeea5455d140871939701 | AC-01, AC-02, AC-03 |
 
+| tests/test_music_failure_message.py | 8731c14c8d04b120db1922cd76b5db552caec8d05e5156bc7d283c6f882f6799 | AC-01, AC-03 |
+
 ## Requirements-test traceability
 
 | Requirement | Verification | Evidence target | Mode | Blocking |
 | --- | --- | --- | --- | --- |
 | AC-01 | 离线协议与失败隔离测试；已有两首实际音频本地核验 | tests/test_music_library.py; tests/test_musicdl_engine.py; tests/test_douyin_share_page.py | Automatic | Yes |
 | AC-02 | 去重及本地文件测试、真实两首重复验证 | tests/test_music_library.py; tests/test_music_egress.py | Automatic | Yes |
-| AC-03 | 匿名与缓存、跳转及隧道生命周期测试 | tests/test_music_network.py; tests/test_douyin_share_page.py; tests/test_music_egress.py | Automatic | Yes |
-| H-01 | 用户真实体验，当前抖音缺失 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-01 | Human | Yes |
+| AC-03 | 匿名与缓存、跳转及隧道生命周期测试 | tests/test_music_network.py; tests/test_douyin_share_page.py; tests/test_music_egress.py; tests/test_music_failure_message.py | Automatic | Yes |
+| H-01 | 用户体验两平台曲目、元数据与授权显示 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-01 | Human | Yes |
 | H-02 | 用户选择已入库歌曲重复导入 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-02 | Human | Yes |
-| H-03 | 用户提供会员曲后再安排 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-03 | Human | Yes |
+| H-03 | 用户粘贴任意网易云会员曲并核对提示和库条目 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-03 | Human | Yes |
 
 ## Exploratory testing
 
-真实手机分享页仅一次匿名请求并离线检查全部嵌入数据；不得为了探索追加 API 或读取登录态。
+本阶段全程离线回放；不发平台请求，不开隧道，不读 Cookie。已失败的抖音缓存不重试。
 
 ## Production monitoring and rollback
 
@@ -112,4 +114,4 @@ Given 单首分享输入或本地文件；When 执行导入；Then 查库后按�
 
 ## Risks and open decisions
 
-抖音分享页 HTTP 200 只有页面配置，没有音乐。是否使用用户登录态由总控另行询问；本任务不作此决定。不具备完整三平台交付证据，禁止推送；真实会员曲仍无样例。
+真实会员曲未联网验证，机器仅用合成夹具验证限制边界，人工 H-03 可自行选择任意会员曲执行。抖音不属于本次交付平台，保留失败证据及现有取数代码。推送按项目策略执行，人工三项仍待验收。

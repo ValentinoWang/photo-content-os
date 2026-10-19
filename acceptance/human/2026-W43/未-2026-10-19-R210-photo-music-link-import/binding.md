@@ -5,10 +5,10 @@
 - SSOT path: none
 - SSOT node: none
 - Acceptance contract: evidence/2026-10-20/r210-music-link-import/delivery/acceptance-contract.md
-- Contract version: 1
-- Contract SHA-256: caa196481bf08abcd7f45eb12f7324ef135f6bf6b5b379c0198db9e1766cd43d
+- Contract version: 2
+- Contract SHA-256: 04b413fea7114008aa5becf7f3f8bed7f88c9ae11402c201d4befb01718500de
 - Human checklist: acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md
-- Checklist SHA-256: d5805a8664823ba211e12ca14674355e9d4b2a04542f271a8388fe5f6c64e578
+- Checklist SHA-256: fbfb81d8ec702bdaccd2352047ff6952a9c1df33f490cd0b8f3c22d655e98be0
 
 ## Item bindings
 

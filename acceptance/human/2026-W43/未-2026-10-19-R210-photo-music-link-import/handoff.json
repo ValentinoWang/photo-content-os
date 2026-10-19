@@ -1,24 +1,21 @@
 {
   "baseline": {
-    "base": "cd7a30eb35788e83ae5603720d5d3b3f24659d4a",
+    "base": "6fe9533340fd1e8c2d2fc24b7939eba2cde950f0",
     "branch": "detached",
-    "head": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f",
-    "tree": "089175edfb36e7e89ec20644850192ff92af6ae9"
+    "head": "41fd234b422e5c5e64b1536329b64d2d424c905c",
+    "tree": "df45996583fc7105159ffc098de8c3f1b82d3fe6"
   },
-  "binding_sha256": "385d4a3ced8e86fbb13794d9485706418619e787dace456f158b26c81bd69cc4",
+  "binding_sha256": "3b2a744a7bfe46967a55caa29c6044fb4be35840166bc4de8eb2d418f2e4d03e",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "d5805a8664823ba211e12ca14674355e9d4b2a04542f271a8388fe5f6c64e578",
+  "checklist_sha256": "fbfb81d8ec702bdaccd2352047ff6952a9c1df33f490cd0b8f3c22d655e98be0",
   "claims": [
     {
       "claim_key": "music.link-import",
       "item": "H-01",
       "open_route": "note:Mac 终端的音乐导入和本地音乐库",
       "relations": [],
-      "request_changes": {
-        "H-01": "沿用三首完整目标，只补充命令行入口和抖音待处理的当前事实，未降低标准。"
-      },
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
@@ -31,9 +28,6 @@
       "item": "H-02",
       "open_route": "note:Mac 终端的音乐导入和本地音乐库",
       "relations": [],
-      "request_changes": {
-        "H-02": "明确重复使用已入库歌曲的原分享文字，保留不重复条目、不重新下载的原标准。"
-      },
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
@@ -46,9 +40,6 @@
       "item": "H-03",
       "open_route": "note:Mac 终端的音乐导入和本地音乐库",
       "relations": [],
-      "request_changes": {
-        "H-03": "按用户阶段 2 的非会员方案显示换歌或汽水同名搜索提示；当前待提供真实会员曲链接，未判通过。"
-      },
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
@@ -58,25 +49,25 @@
     }
   ],
   "contract_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance-contract.md",
-  "contract_sha256": "caa196481bf08abcd7f45eb12f7324ef135f6bf6b5b379c0198db9e1766cd43d",
-  "contract_version": "1",
+  "contract_sha256": "04b413fea7114008aa5becf7f3f8bed7f88c9ae11402c201d4befb01718500de",
+  "contract_version": "2",
   "estimated_minutes": 3,
   "execution_policy": "terminal-after-machine-green",
   "invalidation_keys": [
     "music.import"
   ],
-  "loop_name": "音乐链接导入并入库",
+  "loop_name": "汽水音乐、网易云音乐链接导入并入库",
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance/machine/integration-contract/runs/20261019T172042Z-local-macos-offline-948a4d/result.md",
-      "result_sha256": "cbc29177d467bb94cf5f1f22294214c75d103089ac3cf7d9a5093e98756f819e",
-      "run_id": "20261019T172042Z-local-macos-offline-948a4d",
-      "source_identity": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f"
+      "result_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance/machine/integration-contract/runs/20261019T234752Z-local-macos-offline-d93f10/result.md",
+      "result_sha256": "18437c0cf16a360bcac2d092540def2434aa9f8d8e9eeb84f437d841c51a3c28",
+      "run_id": "20261019T234752Z-local-macos-offline-d93f10",
+      "source_identity": "41fd234b422e5c5e64b1536329b64d2d424c905c"
     }
   ],
   "open_route": null,
-  "ready_at": "2026-10-19T17:26:44.366966Z",
+  "ready_at": "2026-10-19T23:48:40.995350Z",
   "release_slice": "R210",
   "request_id": "2026-10-19-R210-photo-music-link-import",
   "required_role": "产品负责人",
@@ -84,7 +75,7 @@
   "scope_hints": [
     "music-link-import"
   ],
-  "source_commit": "73895b1b3f4e4d5ccd081e24b8d2de3e8187347f",
-  "summary": "部分交付：网易云和汽水已入库；抖音待处理；会员曲待用户提供链接。未判人工通过，不推送。",
+  "source_commit": "41fd234b422e5c5e64b1536329b64d2d424c905c",
+  "summary": "网易云、汽水两平台已入库并有机器证据；三项等用户验收。抖音已取消交付要求。",
   "task_id": "2026-10-19-R210-photo-music-link-import"
 }

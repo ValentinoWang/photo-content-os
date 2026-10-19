@@ -1,0 +1,51 @@
+{
+  "tracks": [
+    {
+      "title": "Turn Back Time",
+      "platform": "netease",
+      "file_sha256": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "duration_seconds": 189.923923,
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "duration": "189.923923"
+          }
+        ],
+        "format": {
+          "duration": "189.923923"
+        }
+      },
+      "license_status": "platform_copyrighted"
+    },
+    {
+      "title": "Fever Pitch",
+      "platform": "qishui",
+      "file_sha256": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "duration_seconds": 135.483878,
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "aac",
+            "sample_rate": "44100",
+            "duration": "135.483878"
+          }
+        ],
+        "format": {
+          "duration": "135.483878"
+        }
+      },
+      "license_status": "platform_copyrighted"
+    }
+  ],
+  "network_counts": {
+    "requests": 0,
+    "tunnels": 0
+  },
+  "douyin_imported": false
+}

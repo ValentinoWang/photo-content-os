@@ -7,10 +7,7 @@
       "photo.tests-scripts",
       "studio.backend"
     ],
-    "relations": [],
-    "request_changes": {
-      "H-01": "沿用三首完整目标，只补充命令行入口和抖音待处理的当前事实，未降低标准。"
-    }
+    "relations": []
   },
   {
     "item": "H-02",
@@ -20,10 +17,7 @@
       "photo.tests-scripts",
       "studio.backend"
     ],
-    "relations": [],
-    "request_changes": {
-      "H-02": "明确重复使用已入库歌曲的原分享文字，保留不重复条目、不重新下载的原标准。"
-    }
+    "relations": []
   },
   {
     "item": "H-03",
@@ -33,9 +27,6 @@
       "photo.tests-scripts",
       "studio.backend"
     ],
-    "relations": [],
-    "request_changes": {
-      "H-03": "按用户阶段 2 的非会员方案显示换歌或汽水同名搜索提示；当前待提供真实会员曲链接，未判通过。"
-    }
+    "relations": []
   }
 ]
