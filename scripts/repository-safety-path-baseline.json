@@ -1,0 +1,885 @@
+{
+  "schema_version": 1,
+  "source_commit": "cd9e9b4fa7acf1618d8e8dff10dd5e35f6ba7175",
+  "entries": {
+    "docs/tasks/R207-edit-tools-in-repo/TASK.md": {
+      "fe8e331c4b5188d9cc431c84c38d766b6d9193cac88474d305a28009efe1748b": 1,
+      "b94dcff8ab6145baad29a97c6392bc5bacddd362d36c677405b47a45e7fdd5fa": 1,
+      "517f47934fd0cfda6f54415e66536586785fe703630bedf8d68f0125d5fc70b0": 1,
+      "9f95eab0d33a4499a62e40f1faff1360bcfed1aefc99a7649a9f1698c314ef09": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/.ssot/validation-report.json": {
+      "99fa7ad6c9101f942c0af8956ab674c17a3488925fd7ed9fb06d2c3b9ff5e79a": 1,
+      "3fe02689ea8a989c8c467dcd5b15a0fd573ab66bc40922482ee233dbd5f689bb": 1,
+      "08cd4acea1408ac412591d9aa761ea97b3aee58ce0529576fc16cdbe539fa872": 1,
+      "fa80371602c57dbabb54584d6640514e380cb397385755ca5104397ee0c71d74": 9,
+      "14b77db9b58f53b68bbe1fb6c55fcab9be1835180a39c2cc2f659c5aa713fd37": 1,
+      "085ee22abdd854a89b335ae958e8f91f2d51a1c238d0a5918bbeec3fcb0bc7ec": 2,
+      "c414bb7c9cc8fc5098f932ccd1170dd5e1c6d8cdcf3452a607a3825a17ca0f42": 1,
+      "11e8a99a1754022dc0f5b4ce6b0c294ebc594563df0bc727dfc05f111da632ba": 1,
+      "075fb4061f4d25086fba24e636ebf3f2d898ed45cd1501d9a6a1ba2e4a7690f5": 1,
+      "626655abb24870f3899d30de12c116e6794601053a4127129b5a1ef4c64d6357": 1,
+      "a579986339a4063d06216eba10887e808ce9c80916e39a2f02a92948d4762f06": 1,
+      "d2c7567217289812f5fbaddead1a633670995b07640ebd880351dc08fc8dbc3f": 3,
+      "def3bfcaa3eabae265333c865059a8d1e61ffe029a6489739b71069f347fb639": 1,
+      "e1b0f321efb49908eab6503fa8627c5be5dde3e230d97dba4f0ce05cbfb655cc": 1,
+      "03f94d40cc0ac82d9c69521c376635ca9733a0cf5896e37092e739d069cbd853": 1,
+      "cbe723203c79fb06797efbc98d7811d22850acde5fbe9aabaf7c1091f523d449": 1,
+      "726bef27d3a5c2bbf5843fe906ac5abf61ff64e6d44b7ebab2c9d6989a46980d": 1,
+      "a486fcf165a0181c2656c9aa01f6105004b376ab440c0e6b1499b93f8c42822e": 2,
+      "4d0a12cc1e3c871f52a44cebb31924ae02d2c9fe35898e2a3581fb9010d68a0a": 1,
+      "cbe146cc8dfc9f7998496e83beba4caa53db9b7a6d2fe1eb26baef17c77acdcd": 1,
+      "5b2033c9fc40940313abb0d2a795fbfcfc69713f428a5acd9fa1bb35405bed8e": 1,
+      "8beee08a925f706a18e37a2e4c0f41d0d64744a6f40c8a3e1d3e9756f343d13b": 1,
+      "789a57643144cc9c02cb03cc03156def7e8c686eccf473e7e84ff3f52c99a2ae": 1,
+      "301c3acf3bb853388d966da95805c9a7bf7f17a6f82ccdf07fb02a4af193508d": 1,
+      "fa29fa7631ff5f4a64eb72a4705d49154d730b3cb5ca9a8ea203579888d2af1b": 1,
+      "17e70d8832bbe2ceb929af18f268f378521504cd54561597b03b0be57393d8a5": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/B1-media-manifest-contract.validation.sh": {
+      "dd3d4025eeb8575ceb33e35cc2d45c99d34db9a1c44ba9b4f3c98674e3ceb02d": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/C1-edl-structured-bridge.validation.sh": {
+      "dd3d4025eeb8575ceb33e35cc2d45c99d34db9a1c44ba9b4f3c98674e3ceb02d": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/B1-supervisor.log": {
+      "5e01439ed2dd71cae2ad8010ec258173ab99a44d86e2ad799929d0fc2ecabdf7": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/B1/ledger/B1.json": {
+      "3a226f254dfa38ad0f9f980e5f42e2e5c95d2a5ec7cdade00092ce1a5e531ac1": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 2,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 2,
+      "930c0d7e08dbc3c9e14975d1fc40631416c6e7193d03f9746a8da69715edb5b1": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 2,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 2,
+      "cc101e2f7190870bdecef7d8235b919e760e0c55897b8693214c77bcdc1a1663": 1,
+      "4c0d8ba35999a268ceeda29165ce17e126447dfb18eb91d4ca94e7b7c14a4fc7": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 2,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 2,
+      "a5b2d4e7c53384d3a5d7372ca099c9792b36a93caf16ef0a19c86d94afd629ff": 1,
+      "c5afc9ee9a13384a8671c3eae6676201087a197e9b769e98d6a66af0847a7a1d": 1,
+      "2009485618a8ecd08df22c2facd4eec87bec31eed6097a23b31a0d45d7f0ee28": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 2,
+      "15b77277d86d844f894f2516b5007f5d7827399d688f5a4216509c787d5f00d4": 1,
+      "efa3b9a0ab5d3e2764f6daf774ae0c921be91743430a104207047667abcb56cb": 1,
+      "17302971fdd9a66bfe7a5cc9cd45c2ab3bdb20a00486408680fa99585f80ce16": 1,
+      "9a25617e8f81a842debe8aebe1006d361ca26227b52729e2d1ad3ed4f36cf1d6": 1,
+      "d3f73b4c8bff99d34e513ae1c70f45f8253d76a72ce0a62439f376358cd98408": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "ae6db90157ea15b964676298d27ebb39af0659f70cc56d8abefc12d519dcf4e5": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "ab0b5712b2301619368fe4fdb538d863abaf606a3410b829abc4683570d0038a": 1,
+      "81df8c0a32a4e841a6298bc6fa7400cbe04465e0047bf46d84526efe9621ff7f": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/B2-supervisor.log": {
+      "3a1099a514177959ba28b221ea7f416fd913d94c5d1513894f0571830a081f16": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/B2/ledger/B2.json": {
+      "c82e7f22a47fe965927322d17167f45b5f7fb93042ff00a5212d67f91638b268": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 1,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 1,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 1,
+      "6737019fb5329003dec2c2a94327225d2c7ec7f7e254c443def453fdc10e11cf": 1,
+      "5f46103d222c693a78f53476a945da01ee5b23be7ce11a7b83eb3434b8db0525": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 1,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 1,
+      "619be6fd4bffaa779c0dd59b466cb6a8620685af83286d4b157d243485ce13f8": 1,
+      "07993ddd84a3ed50ef47fbdadff5319274fd53a9df0b27b731988843b2adec53": 1,
+      "d75464ed3da95b5d38a9465718c0f5c1c90d8b397ea9290e69a0c217125b0ac9": 1,
+      "7f21d862f90c17e77dacc9e5e8488592cdb85d49482636e95479886fababb59d": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "a51a7498b062e281bb83f39931391827c693f43f412d0f3ce0d70cb06db84098": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "ae704bf10d4469e3fadc5cc2a4def2469103abecf8d6ce1ddb9e5c05157365d7": 1,
+      "3cfccafd6a8184d81ab7c94472267f85c33e00721c08168c3d432fa15f134e0f": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/B2/returns/B2-primary.json": {
+      "c01c4d2b39bdbeb697dc2d0634d9cd43c7cc6a9532afa72189eeec9040f2c99e": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/C1-supervisor.log": {
+      "021c814b431a55afa156209cfae8b0454518677dd868d1ec07761c365c0ff36d": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/C1/ledger/C1.json": {
+      "86eb732e322980a82f24ee8bea3baad623d6714c292cdea3897834ec6f8a8921": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 2,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 2,
+      "930c0d7e08dbc3c9e14975d1fc40631416c6e7193d03f9746a8da69715edb5b1": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 2,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 2,
+      "c666bdafec8b9cbf0acacc31278365198d6498ebd086a0299dc050a32a26fde0": 1,
+      "0b8a3d56379fa82c16700e3da9833d3b0e12b19c557c45da86aa9c1845c2f5db": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 2,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 2,
+      "11cf190631304f747491a8f3b3ed788ff5cabe110b1191dba03d6dfefeb78add": 1,
+      "6147a9ccff1f39bcdffa0e3ac630c1d752f30499d85380c3ab7bb7fa2bd25dc5": 1,
+      "7794c9bb80c6394aa8b9db1b4544c00793f719b93818da25730c93a9dc66d706": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 2,
+      "f8a212cc79329653819a020bea75b754f1cba24da6ae3689c3973ddd97534e15": 1,
+      "a1d19f9d8a8de4a79e6daff086eaa9d6ecea9c78d76eeb28409a1ab01a2503af": 1,
+      "3fa5080ac32563feb5a97246c7e3bb718b5cac4bec060231c8844d8aafe7382a": 1,
+      "97ec916dfa5623d0c644682fd27a2218af349a331d6a6f376dbba49f5865dd3a": 1,
+      "b2285d15cc2ebdd501537f61d0536657ab6f07795d791c398b91e019c7921852": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "c4fa66f901564881998d385d1a8a606bf3a1c4d37fe7f524974655569125ed8d": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "f7ac25a0fec10f24fb374c936300e72d99088d3977586a9508cb52ccbaf66dae": 1,
+      "a4193ae324d9221bc109bf373b4cf7536e35db9ae2b2d20a78a487a9d7b65830": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/D7/ledger/D7-final-local-verification.json": {
+      "17aae10c954dbf2f2a3c7bd40d1ab1272c4d792eca96d7505ea5beb0dc0222f0": 1,
+      "886de4cb8ebaa0f48ea3a6762f59fe1f91d7e067edbf4460c2056dda8492a995": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/D8/ledger/D8-release-decision.json": {
+      "82a44a21073de55fa4e87c855c98f88f25a5d4f187693ac0cfeb90ee267561de": 1,
+      "5b4bf3b25cd10634718fe7d2e1687e3b959f788b4ba8b16f24caf7c9bbd07530": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1-supervisor.log": {
+      "8481f8ee93536a202774f0a6e2e0c0b621df570644296e62fbc0dec74921e95d": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E1/ledger/E1.json": {
+      "2da5f4e1db985e6629467ec63f9aabe48b78eee83c37430be416fecde7cb92d1": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 1,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 1,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 1,
+      "a24fb9c177c8403845920df568e4bdedbbe15cf7c8b83e446937444b43f6815e": 1,
+      "46067601f893bc424b0d089eaec65e6470fdcd74988f41b12de2d1fcf2720580": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 1,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 1,
+      "31695a6a97bf4bacc8b10d63aab4326a651241c258cba6a37a3b5520cfce4709": 1,
+      "8f4a3c087027a2575d46a8d65e25e94588354c62af8f15885b1b65e6f1ca487a": 1,
+      "adc4f6ad271276024710c563b269ccf9d97997343e5092e38ebe6d6dd30d1903": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "4575fb3907c5b5e5af98d650bb7e77b8242da7ddcc69bf47647490013e64e94b": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "88f1819517dcd3a136277aeadf4e7b6b61d39e2e4bd010cfb010533f496e8331": 1,
+      "2cce6fb5ac121dd76357675279a8a2e924857accc3534ff1d40fc538230ffc03": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E2-supervisor.log": {
+      "49a066c01d1b9ead432543f94ab724cd10c98f4f7bfa4f3cc49b559baa05f5be": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E2/ledger/E2.json": {
+      "da86f9629e50ffa8f9f05390d794ea201c6ee545fcbde980469a0457b941636b": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 1,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 1,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 1,
+      "fdb8db0425465895e21e7108b650fea8fb458999eb4d86d45d1c7033364786d3": 1,
+      "a664adfa6adc02c320b7514cc32869e31a154d1c79b8cfaa6b38ff4b9bb420f9": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 1,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 1,
+      "554a54113e46b52036920d2afd3de4d84e28bcd56b42b844775a95fa3c909c47": 1,
+      "58d51d28104b8d967bb9f4dc862e78bfa1d60a6cdf1ba9397da2bc413077d8ab": 1,
+      "4f75676afac8632fda1dd45bd616c13a08c1e48e23db44d814011bd425ad2e0f": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "9509b438e7f1ee2e5854fbeb4c3799a6d829a544b7d5863fe82e8711986594f0": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "dffd802b61415377f2eb51f26adc34d41fdde989b2cf525c23a63bdb41aee5ac": 1,
+      "dca45e2951486070f4193b1640f754dd9d7638f18070d56f6196cf5bae6acd44": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E3-supervisor.log": {
+      "b630264a456c9c849a6894efe7fa5aacda9b9c4f26babcc75faa2914bd06ac9e": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E3/ledger/E3.json": {
+      "826a95619ee45dbd3e96320372518a3ebfbd5f4fd113a54e666229482b2f6ea3": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 1,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 1,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 1,
+      "74da9e36bd3eaddbc257e7c74c1883befc6b1477e83088588d0b6fb7d1f43460": 1,
+      "b4f91877a5015080ac5d749152c540a306b922d1477de312ac27d2fd4f933708": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 1,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 1,
+      "590fade3fbeebdf95adbe085c533b18fef0a2b55b6741b56bb0d3f374fb5d778": 1,
+      "873c454acc1d6e5c531711ae7713af3370285bf2d708c70e4045bb86dac435e5": 1,
+      "80cd83101de344e13f0daf0f5243e0a031584301610c5e5bf302e8a1863fb8fb": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "2c2cfd0c98b7dd03a890c3c9e50f8c0b7fbea130a9d23a9f8afcdc34c031eaf1": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "664451d1f042c12d90d8d9ed087bd6eca7944a77f075fe709b95edb1f94614c4": 1,
+      "f4c4e3c966230fe42abae4477f1a3aea41035e95c0bd2943d2c5889b2b0c595c": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E4-supervisor.log": {
+      "804cf0d4b2c650ac6415ab55803c12e971c433c43e753494128e4195a6b819ab": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E4/ledger/E4.json": {
+      "3d45ac6303904a068e7db988d7815c3dd2a4d6b53ea6dca950b4b56ae0a828bb": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 1,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 2,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 1,
+      "7a0bd1bf4136ff3345b5a7c0c698e9d020b3c744b6ec5b35e44f7a5fa0532e68": 1,
+      "f3771f0f53ad06f65cc37651fcb81641b83f57a6a37e5193d7513f8a6dddeadd": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 1,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 1,
+      "e4fceef5289bee244d5b0eeb145ff3872e3f6af3e5a2a89b10693635d873ab16": 1,
+      "cb93be810b93dc1244d9c9b6b6aedf8e41e1f27cdd2dd0003066250422e4085a": 1,
+      "214f95169ff3e9a18444c17e83ce967289cd6bfcb509b5332c70e2d1ca64a14b": 1,
+      "33e523b67041d747d13b629b537b2cdc44188f4452e6f896d2c418faa7bc14d4": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "4fb934d55efdee774fea1f7f1a732af4a405ed731d57f733fa1a6bf961871fd1": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "3c31b2d5c56c44483a756938e642df5c64d43a3ac7090f24befa002638fd16f6": 1,
+      "5ae2ae2704d851796369bf4b9f539e5b0f05d4596db32b4513c6023ff9830d5d": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E4/returns/E4-primary.json": {
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "8fa96c373561347e2f2e28f9e823abcdf764bd29238c1454627d53592920dbb5": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E5-supervisor.log": {
+      "8ee807c8b629d856cdf1112189b7130e01e7d626dfaa6af6c1f4610a04a84148": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E5/ledger/E5.json": {
+      "8ea563158d548be7568f7a9d997b87bbf7e5aa53604a7402b894f0bc56a0e7ea": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 1,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 1,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 1,
+      "656cc205f6be27d32a0b0750c25403806bc7632308a9f1e0be48f653921a752e": 1,
+      "46f141ac6ebf8c34c3cef252c88a1bdbe63b7264b216e36a749cc8f15beb9eaf": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 1,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 1,
+      "1cb1d06e4e8698f2ae43289b51db0e55a9c409a8f5a298e3e9c3fe4095d77335": 1,
+      "b34316188ef289d4961fc72176264fb6e84ee528b8fcdd2c96d3e1657d1792fb": 1,
+      "0f79d07a69dfa9a8cb124a7c7011271d4a4d87dca9bc8c0119b49fff9af2b163": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "8e74e6109194887a1ff29d9ea5d2ac0409eefd5f7e3b8678c325772f2d3f77ba": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "b5d8646865f961d1fe748d829bc7b21aa165fa9d8dd191eaa4a3422fb90ce14a": 1,
+      "365495497ff75867c7b2a09ca44cb7b72ebaa9419f505cb91b21324527ef86f8": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E6-supervisor.log": {
+      "29e680c4af22ec215b818a03be18fd7528c08a81f3c6dfe3727be6ac20c79422": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E6/ledger/E6.json": {
+      "3a63226b31f0f2a1eb6b1592cfe5439e155a351451d67542464856a22bc744b3": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 1,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 2,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 1,
+      "5f9a3071b4a02dbe5008e0a6c3c7aee39a72d2f8b91b49c4033d57a7309bf2b4": 1,
+      "f1c098b1e2a2f67e510c12b9c6e362c27a9542bb4f90be7c40492eed8cb01d1e": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 1,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 1,
+      "67b36f4bf424b9a88e8abec92ab6d95ca0577daeea208ef5cc2b4e8a793bc75e": 1,
+      "cb93be810b93dc1244d9c9b6b6aedf8e41e1f27cdd2dd0003066250422e4085a": 1,
+      "2a3eaa8481c7eee2fd2cf4a7ac2db34626fc4aec1ab3c618800cda38a78671ce": 1,
+      "80c5aec7257aa4ec0952b9be2dbdb9ad8ba52d16a119c8f40382b8840306ef1d": 1,
+      "7cf27d7328cc1a461379d56144bf6b78ca8ade81cbaecc91a870f40f0c2d1534": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "1cc6de1ae69660bb44cc1f31ed49cac6bcbb4e21c1df835c9330939fa6b714d7": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "b2c51099c19aca030c8a1fe55521709e52392c5a6c8822ef53548250b1109663": 1,
+      "498b974d9c72fe7ce9ae4081e519b9846dac7f7050286ee8a8415f8dd5dfd650": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/E6/returns/E6-primary.json": {
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "8fa96c373561347e2f2e28f9e823abcdf764bd29238c1454627d53592920dbb5": 1,
+      "fa316244a9991aa70968599109629a603f253301335ea4ebfbb5cc1a79f5531d": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/artifacts/wave-e2-e3-e5-e6-launch.json": {
+      "8fa96c373561347e2f2e28f9e823abcdf764bd29238c1454627d53592920dbb5": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1
+    },
+    "evidence/2026-09-01/openclaw-dev-checklist-review-remediation/execution/worker-registry.json": {
+      "e3b7c254939dca72e30ce2faf9fa201ddd883a8c702cbb31a6da1af598d40d9b": 1,
+      "510bd63a3856a399ff81a25e7d746dd86f1a44bbe81285fcd904b7958384fd77": 1,
+      "3491431fe4bf289cb79f16ac0c2ff7fdd7165ca5a085bf03db861c3df5a68a3e": 1,
+      "8e61dd14a5970cf15156e9cc8cc51bf60a7d7dddc6a650185f52893ac39d5c22": 1,
+      "488ffe2e7918fbda28551cf2d6c169ffcc7e1a075f218edbec405e89a236a6af": 1,
+      "41db6b355518c0300dc854ecc72584eb886e6a00ac7a7dd2ed1d392d36a39f11": 1,
+      "5c21825c4c20b9acf22f78fede595c0e15f20f52aaa9e5a03a27da47ce5ecd77": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/.ssot/validation-report.json": {
+      "99fa7ad6c9101f942c0af8956ab674c17a3488925fd7ed9fb06d2c3b9ff5e79a": 1,
+      "3fe02689ea8a989c8c467dcd5b15a0fd573ab66bc40922482ee233dbd5f689bb": 1,
+      "91b88b909fef0a179fdba178080c4dd65b534e50203e92ae01e1716f79807343": 1,
+      "fa80371602c57dbabb54584d6640514e380cb397385755ca5104397ee0c71d74": 12,
+      "14b77db9b58f53b68bbe1fb6c55fcab9be1835180a39c2cc2f659c5aa713fd37": 1,
+      "085ee22abdd854a89b335ae958e8f91f2d51a1c238d0a5918bbeec3fcb0bc7ec": 2,
+      "056ba66f21b5fc8e24830ca8823e23c052bcdf9d6b726c60061cda9b826d8822": 1,
+      "11e8a99a1754022dc0f5b4ce6b0c294ebc594563df0bc727dfc05f111da632ba": 1,
+      "3d4b486b43a5cbbedf086a58a718e81e22bee83bf18d2a9906d2f65bb3bcfe8f": 1,
+      "4c9e20036d2c97101282baba315233d7610c011c9c514f8635cdb46889d63e00": 1,
+      "1c63b04a287e44deead6cbee8d64fe4c73cd022630a203c3384a9913590e7fec": 1,
+      "31331b5e2c5e9c2482c0014518967513a216b762f23402a62148ee8c21c94c23": 5,
+      "a579986339a4063d06216eba10887e808ce9c80916e39a2f02a92948d4762f06": 1,
+      "def3bfcaa3eabae265333c865059a8d1e61ffe029a6489739b71069f347fb639": 1,
+      "86afc362cbb66c698d54f19691f9cea7cd4c9c7edfa750d7c86764fd0be35be0": 1,
+      "42f0bbe8bc36f916e53dce9d2325153983a6c94ceb9837c8e7249c137f255c2d": 1,
+      "356234dd48cc9bbbedf44c3435c3fdd84d1c4bcc7643033e7154da2f0f4868a7": 1,
+      "ba1a42717d8d6bfbca120e4aa6d423516c4915b4f7237bb76a4ed5747e72a463": 1,
+      "d7e0f66f85d77ad0f1c2e8352374cb5e750a6731715c89774212f6227722819c": 1,
+      "03f94d40cc0ac82d9c69521c376635ca9733a0cf5896e37092e739d069cbd853": 1,
+      "8f7cde83204b97930c611ac85cc5d924165f82a70f706751166699791168ed36": 1,
+      "726bef27d3a5c2bbf5843fe906ac5abf61ff64e6d44b7ebab2c9d6989a46980d": 1,
+      "cdf100bcabbcc61d9e0bf496bb6dba9297a33a77eb9edbe76c694a0357ccc14d": 3,
+      "4d0a12cc1e3c871f52a44cebb31924ae02d2c9fe35898e2a3581fb9010d68a0a": 1,
+      "e43ef3b6be0ee61213c8a3053cc0f67a2b2063b16552368ee1a2e4ef422ffd60": 1,
+      "ffbbaf9e1410ed91922b8ae45977367a360053b3770bf4dbf6afa099e1d49379": 1,
+      "8beee08a925f706a18e37a2e4c0f41d0d64744a6f40c8a3e1d3e9756f343d13b": 1,
+      "789a57643144cc9c02cb03cc03156def7e8c686eccf473e7e84ff3f52c99a2ae": 1,
+      "c5743d392fc90e526cc01b463e7212661a3a8b85f42954d13318ff7d17511d3e": 1,
+      "96d591f82c843d4c3f058c9b6c939d3ef7ec71aee133a02368559c2965d5bf6e": 1,
+      "7a8bc2bc21cba2a609a0af0b0b60662cb7ebff9b0ea3fc6990214e38b3a9285a": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs/2026-09-02T-live-main-session/capture-manifest.json": {
+      "744c6346144bdb596340803604b8f270947d45f0a13c9551473a04367b814dd0": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs/2026-09-02T-mobile-topbar-repair/capture-manifest.json": {
+      "744c6346144bdb596340803604b8f270947d45f0a13c9551473a04367b814dd0": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-Z1/acceptance/visual-fidelity/runs/run-20260902-visual-01/capture-manifest.json": {
+      "744c6346144bdb596340803604b8f270947d45f0a13c9551473a04367b814dd0": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance/machine/e2e/runs/20260902T153500Z-local-chromium-73f5b0/evidence/screenshots/capture-manifest.json": {
+      "744c6346144bdb596340803604b8f270947d45f0a13c9551473a04367b814dd0": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/acceptance-design.supervisor.log": {
+      "33cb16bcb6bd5c8eae45cd729f7c0f0011de239fe56be9cee3f5f779d8de806c": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/acceptance-design.task.md": {
+      "0a3d53cae614f3ecc476951dd77435a4bf5db5acd56c7c2574e776307ca8bcf0": 1,
+      "7fe0a7b4467106efeffad7d6282c1c62d7259ec2e6b396f31934808205b28560": 1,
+      "884520b81a516d86606c9141c7d28eae975dedd921823207989b0bc0cba3ead7": 1,
+      "f5862ce8d7ff56af71c26058f7db78f604c195c533d9cc3ef5b0a2f27f9e7045": 1,
+      "250b816d978b44c48b9bac5b77c0163543934d3faac1ce769bd159fa9213b702": 1,
+      "f199dc5c28205d37c40e714430072681461bc1d5daa0e1e35221ca116965e29f": 1,
+      "18205cb453a37695be4c95910d6f3f4e47248ee57e8527dece3f371a08e282b8": 1,
+      "b649a42f6f40bf98452af7f0c8d2ab69913b03eed46c4351f30b332adefc1aa3": 1,
+      "c42a60d9aa26b473f49694b096e5baf1fd8cfd9c40c4774b087a39ebc20f7257": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/acceptance-design.validate.sh": {
+      "9e8e78ed6309568ee7e287317b238ee7bdf36838c1701e787493d8b81aae1ba7": 1,
+      "aeb8181e8f1e0f4d488151ab89343aff77048f13be46dd9cb66b2ec394518187": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/acceptance-design/ledger/OCM-ACCEPTANCE-DESIGN.json": {
+      "a1152c2c1221dfb74b9d435d67da39b6cdba5dfe70be6fab15fb11e96b0a45a2": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 2,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 2,
+      "930c0d7e08dbc3c9e14975d1fc40631416c6e7193d03f9746a8da69715edb5b1": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 2,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 2,
+      "f6b71a3d8aca45921d07e0cb93051a788e615f01c8ca321449ccbda88e7dbf2a": 1,
+      "e9973f532ab5612ecb7009e72226292fbfba11dcd32d755d8d779c3507be37b2": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 2,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 2,
+      "d19efacc541cae773dc8fc3b870be6315ffceca3ddf9e0e9c34d06bb995fc64b": 1,
+      "25ec6aad1b8c47dcbe87d7b6564347c8510d83b030ee21fb676f4194aa4dfee4": 1,
+      "8a3fc5f02d7aee2f2e640a5991f4b2e36be383ea1fc02d596a538e7ee899e8c3": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 2,
+      "73db76ee5541984205a8b6c9dbba267e652f21addb3ab398881b6c9065bd4d07": 1,
+      "c93e8a2290096a03bf8e54101aa1ff206927e8d77f5caa97143d82abebb8470d": 1,
+      "7b53cfe979ac3f75c24aa88bfe92f066667c268b5dfd75a4e03b9ea8b309493d": 1,
+      "fd97ce1e53a124154278ff3b4dfc71753c1657cdfc9adac01153ae90f5d2c9ad": 1,
+      "7c8c91ed893b398c5e1bed5f54560a7d27e3502d8e941405bcc70dd53a8950f1": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "278e9e230beae3589d8ca0f8ceeac4f97b24eb4cc51ac22981d818d73cea8fbe": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "22f5584ab24b6e6ad40aca9bc4807bf088d768b492203592054b6ea8af4c865a": 1,
+      "58c710d718183f247525f1dd5266dee39e57a9791701d5ea168ceff8eb1d5d40": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/acceptance-design/logs/OCM-ACCEPTANCE-DESIGN-primary-retry.log": {
+      "558ed06ef94ef698dcb1859556ca4e2b92066f015854de885c1d3bd3467ab2c7": 1,
+      "40862d43d45376222aeb50f6eeb21c480242254e344148f75ec23bd2f9613aec": 1,
+      "4d9071631e9396d8674487b062b473ed7f55c989655a1f7e486615b0782efea5": 1,
+      "56ff3212752e9a19ae209508aacb88852065f794bef8c116ce3de6e9f3d9feb2": 1,
+      "7b76a9f57e4a191285868472035f2b68db2af2092a5312c296187aea2f7677c4": 1,
+      "a5b46e68482a208d28f341e217c97a706705a4049f502c57b55a8703c8cbf060": 1,
+      "b15ff4728c55802d2dcc9c706eafcd98a5fa5f175f9b241d2596eb7dd17364ef": 1,
+      "0a3d53cae614f3ecc476951dd77435a4bf5db5acd56c7c2574e776307ca8bcf0": 1,
+      "7fe0a7b4467106efeffad7d6282c1c62d7259ec2e6b396f31934808205b28560": 1,
+      "884520b81a516d86606c9141c7d28eae975dedd921823207989b0bc0cba3ead7": 1,
+      "f5862ce8d7ff56af71c26058f7db78f604c195c533d9cc3ef5b0a2f27f9e7045": 1,
+      "250b816d978b44c48b9bac5b77c0163543934d3faac1ce769bd159fa9213b702": 1,
+      "f199dc5c28205d37c40e714430072681461bc1d5daa0e1e35221ca116965e29f": 1,
+      "18205cb453a37695be4c95910d6f3f4e47248ee57e8527dece3f371a08e282b8": 1,
+      "b649a42f6f40bf98452af7f0c8d2ab69913b03eed46c4351f30b332adefc1aa3": 1,
+      "c42a60d9aa26b473f49694b096e5baf1fd8cfd9c40c4774b087a39ebc20f7257": 1,
+      "ca4dade3a887dca43859dc209d05089a11bc6e0011d7b78d0a4ae5c4b589a283": 1,
+      "deebf797e64220b1f8f6f42f75fa31d528dec78724964ee1f6307d2bcbf2eb14": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/acceptance-design/logs/OCM-ACCEPTANCE-DESIGN-primary-retry.validation.log": {
+      "6b3b041660e0d2955a9d783a87d324b1b37a3b30ac7a608a8944909a5598bdd5": 1,
+      "6fcf0cbc1ce94d384fdc4cac69ed9e390b507194e457f95ce1b41fd522128584": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/acceptance-design/logs/OCM-ACCEPTANCE-DESIGN-primary.log": {
+      "558ed06ef94ef698dcb1859556ca4e2b92066f015854de885c1d3bd3467ab2c7": 1,
+      "40862d43d45376222aeb50f6eeb21c480242254e344148f75ec23bd2f9613aec": 1,
+      "4d9071631e9396d8674487b062b473ed7f55c989655a1f7e486615b0782efea5": 1,
+      "56ff3212752e9a19ae209508aacb88852065f794bef8c116ce3de6e9f3d9feb2": 1,
+      "b1262e5ced65faad85131cee809d4b000e6c734895dbe27987446375845dac08": 1,
+      "a5b46e68482a208d28f341e217c97a706705a4049f502c57b55a8703c8cbf060": 1,
+      "0a3d53cae614f3ecc476951dd77435a4bf5db5acd56c7c2574e776307ca8bcf0": 1,
+      "7fe0a7b4467106efeffad7d6282c1c62d7259ec2e6b396f31934808205b28560": 1,
+      "884520b81a516d86606c9141c7d28eae975dedd921823207989b0bc0cba3ead7": 1,
+      "f5862ce8d7ff56af71c26058f7db78f604c195c533d9cc3ef5b0a2f27f9e7045": 1,
+      "250b816d978b44c48b9bac5b77c0163543934d3faac1ce769bd159fa9213b702": 1,
+      "f199dc5c28205d37c40e714430072681461bc1d5daa0e1e35221ca116965e29f": 1,
+      "18205cb453a37695be4c95910d6f3f4e47248ee57e8527dece3f371a08e282b8": 1,
+      "b649a42f6f40bf98452af7f0c8d2ab69913b03eed46c4351f30b332adefc1aa3": 1,
+      "c42a60d9aa26b473f49694b096e5baf1fd8cfd9c40c4774b087a39ebc20f7257": 1,
+      "a25c620e56ed778db0796a646c890e3f322624c4cfe30a3e57c57015f6ddcbfb": 1,
+      "8b1471caec4ae715ed03028a2294e7d4e97008f090e93b4fca95ff5822d1fa39": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/acceptance-design/logs/OCM-ACCEPTANCE-DESIGN-primary.validation.log": {
+      "6b3b041660e0d2955a9d783a87d324b1b37a3b30ac7a608a8944909a5598bdd5": 1,
+      "d02c670e114815d6700a88e48f772c8518a2eb161e778a8f1ed20b2661b791fd": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/ui-contract-workbench.supervisor.log": {
+      "43859a93d5584fdc23cd245e2c2f62b420e53555a018f4cbc1510b02f75f12a7": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/ui-contract-workbench.task.md": {
+      "0a3d53cae614f3ecc476951dd77435a4bf5db5acd56c7c2574e776307ca8bcf0": 1,
+      "e0b489ce8258121e7604b9282f051d8af7bfd71148c28bd4775c6bb7d072774b": 1,
+      "884520b81a516d86606c9141c7d28eae975dedd921823207989b0bc0cba3ead7": 1,
+      "7fe0a7b4467106efeffad7d6282c1c62d7259ec2e6b396f31934808205b28560": 1,
+      "f5862ce8d7ff56af71c26058f7db78f604c195c533d9cc3ef5b0a2f27f9e7045": 1,
+      "d2be6c6999f7bbb354d27ad946c3bee482aab6f0ccf6bd8b12b7e2e972ba8c2a": 1,
+      "a30e4b0720cae15b6d90b2287cde2bcf224271db88355120b4e2a4b84caf6f2d": 1,
+      "576b9aa57b79b2bd44e4ec85dba01d2acf90dda39fb12023294506b5f8ac9a0e": 1,
+      "44cb127d39ba9400d7ed53eb5f2dc09657cce68709c5109f6100c292602e0ed3": 1,
+      "8d8dceb9d160e764067509c97f1cece245be9959b6007570e302913aae4eb6f0": 1,
+      "54f77a36c724be6712548f455349f9f46de33f4ed35408c8e6961824af1b4fb8": 1,
+      "b8171cc7780652ecc0223fc2570eccf71b08fbc7cbcc5188803b7dd71b75bba5": 1,
+      "f8f08e66d394a8a2faafe4dff5098311e0506d5e4f0de961d100f4adfd78c06e": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/ui-contract-workbench.validate.sh": {
+      "9e8e78ed6309568ee7e287317b238ee7bdf36838c1701e787493d8b81aae1ba7": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/ui-contract-workbench/ledger/OCM-UI-CONTRACT-WORKBENCH.json": {
+      "d9937328c654f10abc76643bc5654c1f1c68eff53498d30a5f680f16df3b6102": 1,
+      "ed5811a778ee3aaea5954f407fa84c957e44ba5fda686aa1685fc6fd21042482": 2,
+      "326b13f38f11c3de16250d0b546fe6bf73d6e51e72cd792f4ad231bb137165dd": 2,
+      "930c0d7e08dbc3c9e14975d1fc40631416c6e7193d03f9746a8da69715edb5b1": 1,
+      "ec360f9cedf4d9a35ab5086e9197233352aff0eae3edcf0e204c671484324158": 2,
+      "98b34be3c9566db2894d94e0a83dddf9d91ca9b326586c3aa64b97b74ca300da": 2,
+      "f488ca8ad6b63b3594d9ff2c678f53eddec8dcc6413224fb58bb03b0215c5bef": 1,
+      "454a6aafbee0a19615efab6a0aa084c9fcb8557e35ff5891dd1cc1c69aa1f33e": 1,
+      "d581b8f8c74deeddd3ffc39f4b2bc4b7e23658696ecc3e76a4d801e5bf077f9d": 2,
+      "01d027b970012bb1afe36d11db2ad8f3093d7bada8222420c7d678adbde2e083": 2,
+      "126e0c5ac902aafa2351560fc65352e11d3bb653bb2d2b5b143944a67098abf1": 1,
+      "24a61266fcf8c8f7e1524715a09d050a76bb453f224a01fb43e732e8843e2beb": 1,
+      "dbc2dd55d67b0a3d9aecbb54de9c25a41965c2db41513516e2fa4d1a1b8438e5": 1,
+      "bf215a4409b0d13cf4e5ee7e3681fe87e78f885e5810a5db26aaea3e483bf445": 2,
+      "b08f6858f003904d0065d03b09da914c89bc19c4af2dd1cdac0e0b290ba96b0e": 1,
+      "3a75c292ade54f240510c349d187abc9779d69845ce1bf87853ff5544d3ab018": 1,
+      "2482d447e45a15e201ddcfd7b3829f7544be0cbf22761e918fa9aec144305fe3": 1,
+      "cad1166a26a25e63161fa5b9f51e88c73d842cce9001d597a1e0c9d354c8997f": 1,
+      "a4fcb91e750c8d65e0677c511b13ea4eec9cdad2a81ac62e0e8efd877690ea2d": 1,
+      "898be8cc3e2e7c5dc771eb9dffbff791d2221d2da627fcff6b10eb2022ff98b8": 1,
+      "15bb82f6ae51e1c204afde79ac93bb1b249007aa2b23d5230d0c247d84779ce5": 1,
+      "96d4afeb582b059f60a6f73a65c8ef487ebb37aa9185c4d9a10c189d66cf156d": 1,
+      "0666bfba6fd2fe048d14abd2ce9f1b335ef86a9ded5793542a99a49e79bda6f2": 1,
+      "f683583630567e9bd27e991799a5018bb560f5d5ac63b3bf58e90dae1fc480ca": 1,
+      "26bb437abc3f410c3366198a4b26da90a560413a48ef83d4788f6375bd03a765": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/ui-contract-workbench/logs/OCM-UI-CONTRACT-WORKBENCH-primary-retry.log": {
+      "558ed06ef94ef698dcb1859556ca4e2b92066f015854de885c1d3bd3467ab2c7": 1,
+      "40862d43d45376222aeb50f6eeb21c480242254e344148f75ec23bd2f9613aec": 1,
+      "4d9071631e9396d8674487b062b473ed7f55c989655a1f7e486615b0782efea5": 1,
+      "56ff3212752e9a19ae209508aacb88852065f794bef8c116ce3de6e9f3d9feb2": 1,
+      "d64c2ea551f2d709a560f9290c51c15394ee2423dab59ce0863eba964f362146": 1,
+      "6ca9990e30e6f3cb22a804f3d390a586a976212973831a9995fb26ea6329f76e": 1,
+      "c2c8c4a670d2ad2dbdac619128b6b0ed3692bb1686c781831c5a8b72e93fea50": 1,
+      "0a3d53cae614f3ecc476951dd77435a4bf5db5acd56c7c2574e776307ca8bcf0": 1,
+      "e0b489ce8258121e7604b9282f051d8af7bfd71148c28bd4775c6bb7d072774b": 1,
+      "884520b81a516d86606c9141c7d28eae975dedd921823207989b0bc0cba3ead7": 1,
+      "7fe0a7b4467106efeffad7d6282c1c62d7259ec2e6b396f31934808205b28560": 1,
+      "f5862ce8d7ff56af71c26058f7db78f604c195c533d9cc3ef5b0a2f27f9e7045": 1,
+      "d2be6c6999f7bbb354d27ad946c3bee482aab6f0ccf6bd8b12b7e2e972ba8c2a": 1,
+      "a30e4b0720cae15b6d90b2287cde2bcf224271db88355120b4e2a4b84caf6f2d": 1,
+      "576b9aa57b79b2bd44e4ec85dba01d2acf90dda39fb12023294506b5f8ac9a0e": 1,
+      "44cb127d39ba9400d7ed53eb5f2dc09657cce68709c5109f6100c292602e0ed3": 1,
+      "8d8dceb9d160e764067509c97f1cece245be9959b6007570e302913aae4eb6f0": 1,
+      "54f77a36c724be6712548f455349f9f46de33f4ed35408c8e6961824af1b4fb8": 1,
+      "b8171cc7780652ecc0223fc2570eccf71b08fbc7cbcc5188803b7dd71b75bba5": 1,
+      "f8f08e66d394a8a2faafe4dff5098311e0506d5e4f0de961d100f4adfd78c06e": 1,
+      "602e40b16a1f075659507dc483092d24df20c8fff580172fcb826f44aab5bbf4": 1,
+      "5f49ad331a83a49e38fd1cdd39689f10fcab9feacbb8161d1c4fad431d78d328": 1
+    },
+    "evidence/2026-09-02/openclaw-media-full-checklist-implementation/execution-orchestration/wave1/ui-contract-workbench/logs/OCM-UI-CONTRACT-WORKBENCH-primary.log": {
+      "558ed06ef94ef698dcb1859556ca4e2b92066f015854de885c1d3bd3467ab2c7": 1,
+      "40862d43d45376222aeb50f6eeb21c480242254e344148f75ec23bd2f9613aec": 1,
+      "4d9071631e9396d8674487b062b473ed7f55c989655a1f7e486615b0782efea5": 1,
+      "56ff3212752e9a19ae209508aacb88852065f794bef8c116ce3de6e9f3d9feb2": 1,
+      "b67f81b7ee282d21d34bd20cc6b86c6f030a2ff1622752095056a26cbf14d25b": 1,
+      "6ca9990e30e6f3cb22a804f3d390a586a976212973831a9995fb26ea6329f76e": 1,
+      "0a3d53cae614f3ecc476951dd77435a4bf5db5acd56c7c2574e776307ca8bcf0": 1,
+      "e0b489ce8258121e7604b9282f051d8af7bfd71148c28bd4775c6bb7d072774b": 1,
+      "884520b81a516d86606c9141c7d28eae975dedd921823207989b0bc0cba3ead7": 1,
+      "7fe0a7b4467106efeffad7d6282c1c62d7259ec2e6b396f31934808205b28560": 1,
+      "f5862ce8d7ff56af71c26058f7db78f604c195c533d9cc3ef5b0a2f27f9e7045": 1,
+      "d2be6c6999f7bbb354d27ad946c3bee482aab6f0ccf6bd8b12b7e2e972ba8c2a": 1,
+      "a30e4b0720cae15b6d90b2287cde2bcf224271db88355120b4e2a4b84caf6f2d": 1,
+      "576b9aa57b79b2bd44e4ec85dba01d2acf90dda39fb12023294506b5f8ac9a0e": 1,
+      "44cb127d39ba9400d7ed53eb5f2dc09657cce68709c5109f6100c292602e0ed3": 1,
+      "8d8dceb9d160e764067509c97f1cece245be9959b6007570e302913aae4eb6f0": 1,
+      "54f77a36c724be6712548f455349f9f46de33f4ed35408c8e6961824af1b4fb8": 1,
+      "b8171cc7780652ecc0223fc2570eccf71b08fbc7cbcc5188803b7dd71b75bba5": 1,
+      "f8f08e66d394a8a2faafe4dff5098311e0506d5e4f0de961d100f4adfd78c06e": 1,
+      "83ced0ae292c100bd80a39dc710a1af0a5646a8f560dae52331680078a303faa": 1,
+      "c99b4e7db90602a0eca14b911655c68219b22663e28c452756f61fcec6d11a48": 1
+    },
+    "evidence/2026-10-12/EI/qualification.json": {
+      "c6f0fe607753406ee01180dffe87060b14309b90d5b473564704529c6da10458": 1,
+      "127e296f435498195ad6bed2da4fccdd0cf29f22d466212b40461312bf6eb70f": 1
+    },
+    "evidence/2026-10-12/OA/qualification.json": {
+      "81714448ef6c6179e105884147c652fda52b452a16beed11fc7feee87e42e102": 1,
+      "64ddd7a5eba9fe99b8e498e1a6164b2c0869e8e3311a3389c8a061e84850f3a5": 1,
+      "fc28203cb7817d2628ab9b4359fae3f73a42edd586e0cc5f37e6892580859c6b": 1,
+      "634163139b33c305d826d9ef64aa298d0995c9db7cf5d68cb28cba98e3efa497": 1,
+      "f873fb09797db3d3a614d17c672c4f0d2c0600a43759769354c6debc61bd109a": 1,
+      "e5378fb570ed28c9a9a49711afa598a47134fbd627a71086ba67174a51095da6": 1,
+      "d3caef466764eacb52504e1acb9e91146345d77d0d456261ec6a1452bb24fcd4": 1,
+      "7905ed1b0b48625a4bfc0cc51e26016504597d983b49f0a17d0e16794cdeb201": 1,
+      "ddf193ed141e5573208527ec9c30441906468bbc3953b62fdd13c042aa3568af": 1,
+      "140edde0d2bf0d2143883b42f314f94405a55c9ba294c9130e930a393cb23b7e": 1,
+      "2794625d914ca9e0bab976fc432045eea3e85518b5e5734340a1c971527e4d82": 1,
+      "adda104bc091c2b98b43db0bad37a3c6ebf551e7ff1a6e37adc20dbc05decd0a": 1,
+      "bcf021a4f236de5acaa13c40fb91648bc8ed3008c7e13abced4c5300c142571d": 1
+    },
+    "evidence/2026-10-12/OA/timeout-in-flight.log": {
+      "4efed6c1894d4e109f7aae6f17aafed628f0bc27a3a059a112b60aab0c80c59f": 1
+    },
+    "evidence/2026-10-12/OA/timeout-in-flight.py": {
+      "a4659c4f9c27464ea0ec0aec80b27f04aaa871a55ccb8dc857e1547c8eb3e79c": 1
+    },
+    "evidence/2026-10-12/OCC/bridge-create-failure.log": {
+      "16da1fbefbf84051f55e56fb59f3b945f51e40af4a5f4317fdc9e5b82c294db7": 1,
+      "3b2ecb7e8a0ad5dbb67e4ee0b3050456d41dd15826b8313742b1f11c61e7f78a": 1
+    },
+    "evidence/2026-10-12/OCC/final-tests.log": {
+      "1567218c7ec9cd9b20921a38587deb216ab1fb3bb28369ca0e11a9a3732fcbd2": 1,
+      "b81320fcb1808ee2484f1d8a7960eb7915e5e6b2d1e320ecf4a53a6ee90d5b95": 1
+    },
+    "evidence/2026-10-12/OCC/final/qualification.json": {
+      "ddf193ed141e5573208527ec9c30441906468bbc3953b62fdd13c042aa3568af": 1,
+      "b85675b299ae06aa17df92b5ec94c152bacc2e1d93d0090c25385f2184b8d972": 1,
+      "00480a489eb3facce8286247e835902545c7fdf0e15ddfe63e904c72aba552c4": 1,
+      "b3755a08258146ccac85d8f691ec97ae6e06d36c1f0ecb86c37c3560370386f3": 1
+    },
+    "evidence/2026-10-12/OCC/final2-tests.log": {
+      "c440e71a03dda9025f4dc102c8388e326ae2f44353badaa856f2fa3ecfd12742": 1
+    },
+    "evidence/2026-10-12/OCC/final2/qualification.json": {
+      "ddf193ed141e5573208527ec9c30441906468bbc3953b62fdd13c042aa3568af": 1,
+      "402010b4935e3a6bd6a28aeee1a92b58ac93d7094b40c497b8cc8cb8ebcd4a1b": 1,
+      "7684b0606603c483e3c3600f845b84343494f7446406e412dd63e9d8c21e9bbf": 1,
+      "56c445c282bbe8642d7c50b56effb5074097f54ea41e228f6c5225e910d50201": 1
+    },
+    "evidence/2026-10-12/OCC/final3/qualification.json": {
+      "ddf193ed141e5573208527ec9c30441906468bbc3953b62fdd13c042aa3568af": 1,
+      "75f2f83ce8625751906a5649fd0a42c6c4168ee3228c14dbd6165d5183b423f9": 1,
+      "a41f4099459b3b937b7ffdb9de027ed834c328aec02c3230725392db851c03fe": 1,
+      "58744216486b1bab8c0a389b9350f056362b44820dc33570b43079696cfbeed3": 1
+    },
+    "evidence/2026-10-12/OCC/native-tail-failure.json": {
+      "7f91275a95dc427ba2159122b780ca6a2e9f72e481f93a2c4920ab7116ebf450": 1,
+      "ddfa3738d6755e8c5885820bc6eaa19967599c0f6d67cb391cd7f025546acc27": 1
+    },
+    "evidence/2026-10-12/OCC/round2.log": {
+      "c3f4955625b1333563a928ff0b1753fc945ce7fe342af5dfa8cd94a7faf7463e": 3
+    },
+    "evidence/2026-10-12/OCC/round2/qualification.json": {
+      "2359a4b7b7da92f1aedecf0f7234d167d12502f338cb8b39bcf7c61a51724739": 1,
+      "5939a16a91fb149675cd7c50a1e94f70671910e4829707df8c200a2debf7a42c": 1
+    },
+    "evidence/2026-10-12/OCC/round3.log": {
+      "44299eafc8a4f45c3783f296dbab4c7ded81b5699884812b40a2f89acfa75d4e": 2
+    },
+    "evidence/2026-10-12/OCC/round3/qualification.json": {
+      "ddf193ed141e5573208527ec9c30441906468bbc3953b62fdd13c042aa3568af": 1,
+      "fdb948de932a4a6be979330fa632cd39edf543b743fa54d2dea96eedc84a066e": 1,
+      "19be556c1021711a52f0bd91c618e2ff0c657f0e8296542dedc4ed211f414018": 1,
+      "604d58c74446f780b834e84b3b8ff1ff92da0b9b81b8ad54ff78629c7ff0f7a1": 1
+    },
+    "evidence/2026-10-12/OCC/round4.log": {
+      "c672053b17d3e11bb822c31ecd4250e18cd80ac73ae1cfb8f7c713660a449fbf": 1
+    },
+    "evidence/2026-10-12/OCC/round4/qualification.json": {
+      "ddf193ed141e5573208527ec9c30441906468bbc3953b62fdd13c042aa3568af": 1,
+      "04570f19376265c768b854b7bb468aa584bda65fac50e3faf1e3fca82707bb9d": 1,
+      "ec70f20e770d14033c52226b36d0d6cd14880a48c4f700624ec41ac80cdb3de6": 1,
+      "9359321da0f688cb6de9bec5e4cef69d01763a725393a0132edd7a542e160204": 1
+    },
+    "evidence/2026-10-16/r131-f7-f8/existing-candidate-unchanged.json": {
+      "29ec12f4006ee15ae8b056a3487274939336a7e15c93cb56df6fcc90ed7838aa": 1,
+      "b1233d4a469f4e7d0c5d849ed2d08fb3fb7ac3828c6dddd32ddf72c1dee9d4ba": 1,
+      "376b43930ee925c0b2fb792fd9c56d56846042e68f8bc546a36dad1b2edb98e1": 1,
+      "4b7d50d41bea09dfa5addb4f17bbf4acce81b867c60f9f9d6dec521cc62fc237": 1,
+      "04f86bbaff29e2bc439b2f47a500267b79d5c905dd5f0e97325d829f39a6bea9": 1,
+      "fd9197023b8f75eb040d89c780275a09a7d5b142cde9306b9d72badabcfa6515": 1
+    },
+    "evidence/2026-10-16/r131-f7-f8/local-ci-first-wallclock-failure.log": {
+      "7b74e59704c767964de0a2bbb7d7bd9a265bbbad07c37ce269079280c0cfabf0": 1,
+      "1c365b83c42f9ee1902a3a7fdc93f87fd8c3b572746bc19b385424433c56a409": 1,
+      "c560e4cd2e336ae2a58657328c543e3ee8df8a2d29f67689009f43c453350110": 1,
+      "bf0c2570299ea8e1308a85241154b4bd54ffaa721fe71093d8119a7c4e26a91f": 1,
+      "32faa0eb274e849d1c636ada24b856c6008e64af03031302aff3db9561568cb8": 1,
+      "4a44360ca5a91622797bde63339d0a41638af0be6a54bb1a1b7186ebff24ac2e": 1,
+      "18350b2e719ee3254a7908cc26b20a0b8661bfab2ad02add43c6b01b8752eed8": 1,
+      "69b95de9178430340a35a15b99252e316dc2756210285c80af93e6953d9bdd4d": 1,
+      "f64a7d8307189b31457224b4745c5c773a9577662a3a3b1f51199812ab7dbeb4": 1,
+      "729fa4b4f4829864ed028c177ebe1290997b7d6d84f17942f6a1f25b8f9d5867": 1,
+      "777f0168a8a32083e56b7da9679e90b679b04debb2c9f4494b4e2fc588a5cb4e": 1
+    },
+    "evidence/2026-10-16/r131-f7-f8/local-ci.log": {
+      "7ed93d1d1540d85b1907ce6cce386202f9cfbae464a7852adc211f205abdabdc": 1,
+      "a855265852306bdb9660a5f496bc788df50d09193028220f8f9f811c86235b66": 1,
+      "dab3fdedbeb130f338658aebc1093742dfe04f1fcee3673ee1d4a9b134a98647": 1,
+      "7ddd7ca8c17d7ab8c9fc73d0dff5f85a54f45170be10f5a78fa5e887fdf1f3ec": 1,
+      "10ade3afba807bfcc0757c1f62e2a6b43b99ae77d623c9ed3225e2b45e5fb133": 1,
+      "1913f61e461f5cc1520a60f44ba61eefb6dcf901ceb6400d30bd9cfef39693e4": 1,
+      "ec4420ababa420cc9231dafbea83a370153eaca86534c32ad763e479b83039cf": 1,
+      "9a2f30354faa04f731b40d35793d19d9766bc7841313269de7fa93da416e829d": 1,
+      "f0a37752e00e1e768637aaaf0ab8f64ee4d7cb6be4ee180633b0b429dfc01113": 1,
+      "598c9008619d0975ac7b2b2dd7707f4c08f66937474b4f53eba43fe8558692c9": 1,
+      "206c2bd77fe5b5c7ab8b2c0d02d62ab3698e6dc5fbead779980d9d3f256060e0": 1,
+      "bc1117b21a9def6375285fcf9d297815db5c65e96e4e21a779bccf023910aff5": 1,
+      "e61135809b2de08afe89487eb3358217668191973836fd17b3274ee2a71cfaf9": 1,
+      "2c66a59c10fdc6120836ff917ab3232fc95c73a377183ea1ffaa967b542a6969": 1,
+      "9270b07db81fb7c3a3e91d22a430edac1dcd538265b9d972c637bcfbfc81b8e7": 1
+    },
+    "evidence/2026-10-16/r131-f7-f8/timeout-isolated.log": {
+      "777f0168a8a32083e56b7da9679e90b679b04debb2c9f4494b4e2fc588a5cb4e": 1
+    },
+    "evidence/2026-10-16/r131-f7-f8/verification.md": {
+      "24b4c0042fdddcae42c26c0abb9086c74a7ab84111bc754a8dd5eee32ae4ba39": 1,
+      "a79c3a91bbc0ef179dc3d667d7becd8c8e2994fc9a2945d0496314ec3f35e6b1": 1
+    },
+    "evidence/2026-10-19/R207-edit-tools-in-repo/acceptance/machine/integration-contract/runs/20261019T160843Z-local-8a9c92/evidence/focused.log": {
+      "757a4298c937cd64e20e433343f831de3aca2d992d278bd516615d4952bd3f2d": 1,
+      "3db536e9593293bfddfd508d1afdf32a13c7daa1c7209f58028825286bbbb421": 1
+    },
+    "evidence/2026-10-19/R207-edit-tools-in-repo/install-final.log": {
+      "6a4dc8072348696dc208e2ce26b878a5faea25efa411890d361a0db7e1db791d": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/full-pytest.log": {
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/input-binding.json": {
+      "7fa1aa6ef0fc14fcaa59438254d3ccb509aaf1f4583f3670ad40da4fe999c749": 1,
+      "6926c72ea3851a19752063f7c8fafd08edc23857352ddaf86d698313af5fb4be": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/local-copy.json": {
+      "37471f8846f924d08e968fa0ed6b2818359813ac1a487872f035d5072a022e9f": 1,
+      "ade819f0e30f187b6c5e2c8d0291074a3e76c0925f0fb594f230a56c6428e444": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/mutation-duplicate-lookup.log": {
+      "03d5c0c69ffce4aac51a892b6382cf1b5af8968e3edd835222b98710533776c3": 1,
+      "dc53ded38588cae64c5d590f46ab5ad90b33985c008dbd8edaacccbb33574ceb": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/mutation-missing-license-default.log": {
+      "548d0cf1e9633d3f29859ebd8ef2d31d3e2d59fa8ffce0fc47c20b7f46361c1f": 1,
+      "0001297a8ab57f13dd11e37390f9ec64edce7f528789b341b8a379535928fce5": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/obsidian-sync.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/outline-contract.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1,
+      "996cfab58ee2fa24b248a53a8a00bd2fe5d228b63f9bec0fd153a0aeff5e8981": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2/full-pytest.log": {
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2/input-binding.json": {
+      "eba5be575585180ccd8ad761183204557f1da190945b60aa9f5ddd90a61baab6": 1,
+      "6926c72ea3851a19752063f7c8fafd08edc23857352ddaf86d698313af5fb4be": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2/install-musicdl.log": {
+      "e836d80fb1bd18e7171d0c89bdde7a15d0d66669bd021e973280ed8c3752f9de": 1,
+      "9e81a18fff8cee37662c81d71d1978377e8fbda5ea9065cd32e5e744a37e21e6": 1,
+      "68b3a8d9243766f6739ae25439ef09da324676b19b54ee7abdbfc4cd07e2ff62": 1,
+      "872ed7ed02fdb505e7fc95c14733410013977fddf00511519b7588dbd1fe2c6c": 1,
+      "048451422db79c96531cc3e477b53d22df9749817f3ca1177be2ee910a223476": 1,
+      "c73119dcf663e7fed80c405e339ae82f71151bfdc4443bbb67680ecf979300d9": 1,
+      "1b5269d2daa920e4a3c296fde20c2613e778fcdfac731a8738b6a9a499cb8f3d": 1,
+      "dac8363fbe186c5d2d6534f94f07fa3b87033c2a6496f51bcf3151f773ab2d65": 1,
+      "1fc6bda308a234c79011d41b55485fcf6d4458718f0eaa27659f006f4570254e": 1,
+      "ca0dbe6543a51e93b873ac934d914b7c246fab062dc2f99947e40a749b37c1ea": 1,
+      "0496d015292e60c368fe85f28af49e156a6efe648f00072d652118df1e1e43de": 1,
+      "aae9a58e44c23a3857aa72d84117a881f4bdf4a08796daf00d743002cbdc1ead": 1,
+      "0bb1fb4da4420bb3e874fcb9a5a712c282fbe91cb37b8cfe5c6d01321c676bd2": 1,
+      "97b1a564faaf7eb011736356eb73c8e87993b5d15275f37ba05ced834a8cff79": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2/obsidian.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2/outline.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1,
+      "996cfab58ee2fa24b248a53a8a00bd2fe5d228b63f9bec0fd153a0aeff5e8981": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2/retired-tool-inventory.json": {
+      "2f750db6e0f5f1a5a66db199b67a6248659a63d959412b1d63e19a553a94c20e": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2/single-debug.log": {
+      "89795c6c659d178ac15eca85e8cc4fcb8dadc8a921f108597fd5d5d630ae30e9": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2/smoke-results.json": {
+      "f8fed02cbc5ab2006bb12622d96df0c8a005bf68740d03bb02f3de9ba161bec4": 1
+    },
+    "evidence/2026-10-19/r210-music-link-import/phase2b/negative-first.log": {
+      "9d3214b06134adcedd7cff103731d0e82cd98bfd937d9bc99a86e4e3a8c6c058": 1,
+      "06085be352f70c2aefec36b2a3125ace23a48f53d324a82cec4aa8035be3a774": 1
+    },
+    "evidence/2026-10-20/R220/delivery/acceptance/machine/integration-contract/runs/20261020T030209Z-local-macos-real-media-c54e6a/evidence/full-pytest.log": {
+      "7efa6fe819deaf7fd415a23e5a9675dacc2fd82350ff5cc195dec09d7631c951": 1,
+      "f2ed0660104fecf18d9b456a27d3c8cf1d755d3f87130fd0f1b22c4c8297ff56": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2b/full-pytest-final.log": {
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2b/full-pytest.log": {
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2b/input-binding.json": {
+      "94509ae3845b11cf7c9cf8a330dc92e0e39a3bac4941b3611b47c11fb667d801": 1,
+      "6926c72ea3851a19752063f7c8fafd08edc23857352ddaf86d698313af5fb4be": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2b/obsidian-final.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2b/obsidian.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2b/outline-final.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1,
+      "996cfab58ee2fa24b248a53a8a00bd2fe5d228b63f9bec0fd153a0aeff5e8981": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2b/outline.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1,
+      "996cfab58ee2fa24b248a53a8a00bd2fe5d228b63f9bec0fd153a0aeff5e8981": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2c/full-pytest.log": {
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2c/obsidian.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2c/outline.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1,
+      "996cfab58ee2fa24b248a53a8a00bd2fe5d228b63f9bec0fd153a0aeff5e8981": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2e/douyin-repair-red.log": {
+      "b751142ad8018f4ad1308df7e6d8b896256aa30facd54ae03836d0e49b81a626": 1,
+      "16f390f935751697780b90d877ae663343a2e360a50f5f1d8a97a62ed55772b7": 1,
+      "99c364584e5a2ce8aa7be7f21817e12cd5683ae7cbf6ab4037a69c7b5b92635d": 1,
+      "d38bf9a6a9b36a8b7aa5b859f36e2fd51d1686fab7f41a129c40c9c372576a23": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2e/full-pytest.log": {
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2e/header-red.log": {
+      "9790847436c9eb892ce21f849edfb65002b53e81d1cad94c3db63e2f9877447a": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2e/obsidian.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2e/outline.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1,
+      "996cfab58ee2fa24b248a53a8a00bd2fe5d228b63f9bec0fd153a0aeff5e8981": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2f/full-pytest.log": {
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2f/obsidian.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2f/outline.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1,
+      "996cfab58ee2fa24b248a53a8a00bd2fe5d228b63f9bec0fd153a0aeff5e8981": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2f/share-red.log": {
+      "39d554e2225b1957bb38e4df92f0ccc9e2513d0f651ba8fd1491256e2daa3335": 1,
+      "c94aa65a76361aee0780753acc720f59e89f1a09a81020f67d0c49251814b486": 1,
+      "48cd2d02da7a3640814a04fdaf0be6e578e5ccb9f1dced9430e96fcb4a1fbf78": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2g/full-pytest-initial.log": {
+      "f8933d362074d47691fe5b6318a2cb7b80e61cce14ed165640c7f0441026ae4d": 1,
+      "34542670b63e51afa9f1db4073043ef4173fcad2f3790d9e7a30ffeb87809f9d": 1,
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2g/full-pytest.log": {
+      "ab4e98e86654a7a669430236ecbe56179cefc75fdf4cd29645607ea41e7ce376": 1,
+      "c5b7979a7d12071fc65d7ff0adf5486d572c5147b74aed142f2d082e7e1a952c": 1,
+      "e9f4329d5907992d5a19284cbba83f65e6f559087cd60d884278a692df5ca86e": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2g/obsidian.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1
+    },
+    "evidence/2026-10-20/r210-music-link-import/phase2g/outline.log": {
+      "92d74d23f942d61c916fa13fc0656dd592ea01695ad483378772d131ca896181": 1,
+      "fe5dce5c4d0fa4c0138a8704d9a5c4a1c9f5e428d6e71f7c9fdfb8b3afea847a": 1,
+      "a0253a9d06c8d6a52787bedc2c7c01507dc68f8643bb9674940dbf4c069b2399": 1,
+      "996cfab58ee2fa24b248a53a8a00bd2fe5d228b63f9bec0fd153a0aeff5e8981": 1
+    }
+  }
+}

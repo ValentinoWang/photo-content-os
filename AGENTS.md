@@ -54,6 +54,7 @@ Run from the software root:
 
 ```bash
 bash scripts/check_runtime_contract.sh
+.venv/bin/python scripts/check_repository_safety.py --base origin/main
 .venv/bin/python scripts/check_obsidian_doc_sync.py
 .venv/bin/python scripts/check_outline_contract.py .
 .venv/bin/python -m pytest -q tests
@@ -63,6 +64,8 @@ bash scripts/check_runtime_contract.sh
 
 Set `OBSIDIAN_ROOT` explicitly for document synchronization. Use the fixed
 `.venv` for OTIO/Kdenlive execution.
+
+证据里的图片、视频和音频放在仓库外 `~/.photo-content-os/evidence/<任务>/`，避免私人媒体随 Git 推送泄露；证据文本使用相对素材根的路径。
 
 ## Document synchronization
 

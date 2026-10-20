@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "files": {
+    "tests/fixtures/dark-content-r8/frame-0.png": {
+      "reason": "无人像的原生排版合成帧，用于暗内容与黑帧区分回归；非私人素材",
+      "sha256": "91d92c7e80fd0b17e0701ef658e177644e9e157ba76276437bcfb583b54dabd0"
+    },
+    "tests/fixtures/dark-content-r8/frame-1068.png": {
+      "reason": "无人像的原生排版合成帧，用于暗内容与黑帧区分回归；非私人素材",
+      "sha256": "43c0dc7530617f590622c8c574b5904c8315947c015460c693e16a4abba0210a"
+    },
+    "tests/fixtures/dark-content-r8/frame-1550.png": {
+      "reason": "无人像的原生排版合成帧，用于暗内容与黑帧区分回归；非私人素材",
+      "sha256": "c30fbdf4558cb2ca5fd2ec5d765f5b540514916674e58cc3d9db8184800f2a11"
+    },
+    "tests/fixtures/dark-content-r8/frame-610.png": {
+      "reason": "无人像的原生排版合成帧，用于暗内容与黑帧区分回归；非私人素材",
+      "sha256": "d767bcdad766ca2c0c960ce05a5e458f27f16582533e112997c5bded332016cd"
+    }
+  }
+}
