@@ -5,7 +5,7 @@ import signal
 from pathlib import Path
 
 from music_library.errors import MusicError, import_failure_message
-from music_library.library import LICENSE_LABELS, MusicLibrary
+from music_library.library import MusicLibrary
 from music_library.links import parse_link
 
 PLATFORMS = {'qishui': '汽水音乐', 'douyin': '抖音', 'netease': '网易云音乐',
@@ -33,7 +33,7 @@ def import_folder(library, directory):
     for path in files:
         try:
             status, track = library.import_client_file(path)
-            results.append({'status': status, 'title': track['title'], 'license_status': track['license_status']})
+            results.append({'status': status, 'title': track['title']})
         except MusicError as exc:
             results.append({'reason': str(exc)})
     return results
@@ -65,7 +65,7 @@ def _main(argv=None):
         try:
             platform = parse_link(text).platform
             status, track = library.import_link(text, search_elsewhere=args.search_elsewhere)
-            print(f'{number}. {status}：{track["title"]} — {track["artist"]}；{LICENSE_LABELS[track["license_status"]]}')
+            print(f'{number}. {status}：{track["title"]} — {track["artist"]}')
         except MusicError as exc:
             print(f'{number}. 失败：{import_failure_message(platform, exc)}')
             failures += 1
@@ -84,7 +84,7 @@ def _main(argv=None):
                         print(f"文件 {number}. 失败：{result['reason']}")
                         failures += 1
                     else:
-                        print(f"文件 {number}. {result['status']}：{result['title']}；{LICENSE_LABELS[result['license_status']]}")
+                        print(f"文件 {number}. {result['status']}：{result['title']}")
             except OSError:
                 print('失败：客户端下载文件夹无法读取')
                 failures += 1
@@ -95,7 +95,7 @@ def _main(argv=None):
                 print('音乐库暂无曲目')
             for track in tracks:
                 print(f'{track["title"]} — {track["artist"]} | {PLATFORMS[track["platform"]]} | '
-                      f'{track["duration_seconds"]:.1f} 秒 | {LICENSE_LABELS[track["license_status"]]}')
+                      f'{track["duration_seconds"]:.1f} 秒')
         except MusicError as exc:
             print(f'失败：{exc}')
             failures += 1

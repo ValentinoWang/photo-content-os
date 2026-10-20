@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>音乐库节拍图 · 设计稿</title>
+<link rel="stylesheet" href="../../../../studio/static/styles.css">
+<link rel="stylesheet" href="../../../../studio/static/workflow.css">
+<link rel="stylesheet" href="../../../../studio/static/review.css">
+<style>
+/* R223 新增：节拍图。实现时并入 studio/static/review.css，令牌沿用 styles.css。 */
+:root{--sec-quiet:#33464A;--sec-build:#2E6E75;--sec-peak:#4FB3BD}
+.bm-overview{position:relative;cursor:pointer}
+.bm-overview .bars{height:56px}
+.bm-band{position:relative;height:8px;margin-top:6px}
+.bm-band i{position:absolute;top:0;bottom:0;border-radius:2px;background:var(--sec-quiet)}
+.bm-band i.b{background:var(--sec-build)}.bm-band i.p{background:var(--sec-peak)}
+.bm-head{position:absolute;top:-4px;bottom:-3px;width:2px;margin-left:-1px;background:var(--ink);border-radius:1px;pointer-events:none}
+.bm-legend{display:flex;align-items:center;gap:12px;margin-top:10px;font-size:11px;color:var(--ink-3)}
+.bm-legend span{display:inline-flex;align-items:center;gap:5px}
+.bm-legend .sw{width:9px;height:9px;border-radius:2px;display:inline-block}
+.sw--quiet{background:var(--sec-quiet)}.sw--build{background:var(--sec-build)}.sw--peak{background:var(--sec-peak)}
+.bm-transport{display:flex;align-items:center;gap:10px;margin-top:12px}
+.bm-transport>button{width:32px;height:32px;flex:0 0 32px;border-radius:50%;border:0;background:var(--ac);color:var(--bg)}
+.bm-transport #ptime{font-size:11.5px;color:var(--ink-3)}
+.bm-where{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-2)}
+.bm-kind{border-radius:4px;padding:2px 7px;font-size:11px;color:var(--ink)}
+.bm-kind--quiet{background:var(--sec-quiet)}.bm-kind--build{background:var(--sec-build)}.bm-kind--peak{background:var(--sec-peak);color:#071719}
+.bm-lane{position:relative;height:66px;margin-top:10px;overflow:hidden;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.bm-lane .bl{position:absolute;top:0;bottom:0;width:1px;background:var(--rule-2)}
+.bm-lane .bn{position:absolute;top:2px;margin-left:4px;font:9.5px var(--f-mo);color:var(--ink-4)}
+.bm-lane .bc{position:absolute;bottom:4px;width:4px;margin-left:-2px;border-radius:1px;background:var(--sec-quiet)}
+.bm-lane .bc.b{background:var(--sec-build)}.bm-lane .bc.p{background:var(--sec-peak)}
+.bm-lane .bc.down{width:6px;margin-left:-3px}
+.bm-lane .bc.hit{background:var(--ink)}
+.bm-lane .ph{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--ink)}
+.bm-lane .none{position:absolute;inset:0;display:grid;place-items:center;font-size:11.5px;color:var(--ink-4)}
+.bm-lane .edge{position:absolute;top:0;bottom:0;background:var(--bg);opacity:.0}
+.bm-status{margin-top:12px;font-size:12.5px;color:var(--ink-2);display:flex;flex-direction:column;gap:8px}
+.bm-status .lbar{display:block;height:3px;border-radius:2px;background:var(--rule-2);overflow:hidden;position:relative}
+.bm-status .lbar i{position:absolute;top:0;bottom:0;width:35%;background:var(--ac);border-radius:2px;animation:bm-slide 1.4s ease-in-out infinite}
+@keyframes bm-slide{0%{left:-35%}100%{left:100%}}
+.bm-attn{margin-top:12px;flex-direction:column;align-items:flex-start;gap:10px}
+.bm-attn code{font:11px var(--f-mo);color:var(--ink-3)}
+.bm-speed{white-space:nowrap}
+.bm-speed b{font-weight:500;color:var(--ink-2)}
+.bm-state{display:inline-flex;align-items:center;gap:6px;color:var(--ink-4);white-space:nowrap}
+.bm-state--warn{color:var(--warn)}
+.bm-spin{width:10px;height:10px;border:1.5px solid var(--rule-2);border-top-color:var(--ac);border-radius:50%;display:inline-block;animation:bm-rot .9s linear infinite}
+@keyframes bm-rot{to{transform:rotate(360deg)}}
+/* 列表列：歌名 来源 时长 速度 导入时间；窄屏隐藏规则沿用 review.css（≤1180 藏第 6 列，≤520 藏第 3、5、6 列） */
+.trow{grid-template-columns:34px minmax(0,1fr) 96px 52px 72px 84px}
+@media(max-width:1180px){.trow{grid-template-columns:34px minmax(0,1fr) 88px 48px 72px}}
+@media(max-width:520px){.trow{grid-template-columns:34px minmax(0,1fr) 44px}}
+@media (prefers-reduced-motion:reduce){.bm-spin,.bm-status .lbar i{animation:none}}
+/* AI 标签 */
+.tag{font-style:normal;display:inline-flex;align-items:center;border:1px solid var(--rule-2);border-radius:10px;padding:1px 8px;font-size:11px;color:var(--ink-2);white-space:nowrap}
+.trow .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.trow .tags .tag{font-size:10.5px;color:var(--ink-3)}
+.trow .tg-fail{color:var(--warn)}
+.tagfilters{grid-column:1/-1;display:flex;align-items:center;gap:6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;margin-top:-8px}
+.tagfilters::-webkit-scrollbar{display:none}
+.tagfilters .tf-label{font-size:11px;color:var(--ink-4);margin-left:10px}
+.tagfilters .tf-label:first-child{margin-left:0}
+.tagfilters .pill{min-width:0;flex:0 0 auto}
+.tg{margin-top:14px}
+.tg-head{font-size:11px;color:var(--ink-4);padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.tg-row{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--rule);font-size:12px;align-items:baseline}
+.tg-row>span{flex:0 0 32px;color:var(--ink-3)}
+.tg-row>div{display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-width:0}
+.tg-row small{display:inline;margin-left:4px;font-size:11px;color:var(--ink-4)}
+.tg-row em{font-style:normal;font-size:11.5px;color:var(--ink-4)}
+.tg .bm-attn{margin-top:8px}
+.tg-none{padding:22px 16px;font-size:12.5px;color:var(--ink-3);display:flex;gap:14px;align-items:center}
+#mockbar{position:fixed;left:12px;bottom:12px;z-index:99;display:flex;flex-wrap:wrap;gap:6px;max-width:560px;background:#000c;border:1px solid var(--rule-2);border-radius:8px;padding:8px;font:11px var(--f-mo)}
+#mockbar a{color:var(--ac-soft);text-decoration:none;border:1px solid var(--rule-2);border-radius:4px;padding:3px 6px}
+#mockbar a[aria-current=true]{background:var(--ac-bg)}
+</style>
+</head>
+<body>
+<div id="app" class="app">
+<aside class="side" data-design-id="R208-NAV"><div class="brand"><span class="brand-mark">P</span><div><b>Photo Content OS</b><small>本地创作工作台</small></div></div><nav class="nav" aria-label="主导航" data-design-id="R208-NAV"><button data-nav="home" aria-label="工作台"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8h-6v8M3 10l9-8 9 8v11H3z"/></svg></span>工作台<i class="badge" data-design-data>2</i></button><button data-nav="inbox" aria-label="整理台"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h6l2 3h4l2-3h6M2 12l4-8h12l4 8v8H2z"/></svg></span>整理台</button><button data-nav="projects" aria-label="项目"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 20V3h7l4 3h9v14z"/></svg></span>项目</button><button data-nav="library" aria-label="素材库"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m6 21 10-10 5 5"/></svg></span>素材库</button><button data-nav="music" aria-label="音乐库" aria-current="true"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>音乐库</button><button data-nav="settings" aria-label="设置与诊断"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span>设置与诊断</button></nav><footer class="side-foot"><div><i class="dot dot--ok"></i>本机可用</div></footer></aside>
+<main class="main">
+<header class="topbar" data-design-id="R208-MUSIC-import"><div><h1>音乐库</h1><p>配乐卡点从这里选歌</p></div><div class="topbar-actions"><button class="btn">从文件夹导入</button></div></header>
+<section class="review-screen" id="review-screen"></section>
+</main>
+</div>
+<audio id="music-player" preload="none"></audio>
+<nav id="mockbar"></nav>
+<script src="beat-data.js"></script>
+<script src="registry.js"></script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const source={qishui:'汽水音乐',netease:'网易云音乐',netease_client:'网易云音乐',local:'本机文件'};
+// 段落、标签的名字和取舍规则只读仓库根目录的 music-analysis.registry.json（registry.js 是它的快照）
+const REG=window.MUSIC_REGISTRY,CAT=Object.fromEntries(REG.tag_categories.map(c=>[c.id,c]));
+const KIND=Object.fromEntries(REG.sections.kinds.map(k=>[k.id,k.name])),K1={quiet:'q',build:'b',peak:'p'};
+const NAME=Object.fromEntries(REG.tag_categories.flatMap(c=>c.tags.map(t=>[t.id,t.name])));
+const GROUPS=REG.display.filter_order.map(g=>[g,CAT[g].name]);
+// 按清单规则从模型原始分数现算要显示的标签；接口实现照同一套规则
+function derive(sc){
+ const pick=(c,pairs)=>pairs.filter(([l,v])=>v>=c.rules.min_score).map(([l])=>c.tags.find(t=>t.source_label===l)).filter(t=>t&&t.status==='active').slice(0,c.rules.max_tags).map(t=>t.id);
+ const g=CAT.genre,agg={};sc.genre.forEach(([l,v])=>{const k=l.split('---')[0];agg[k]=(agg[k]||0)+v;});
+ const top=g.tags.find(t=>t.source_label===Object.keys(agg).sort((a,b)=>agg[b]-agg[a])[0]);
+ const v=[...sc.voice].sort((a,b)=>b[1]-a[1])[0];
+ return {genre:top&&top.status==='active'?[top.id]:[],style:sc.genre[0][1]>=g.rules.style_passthrough.min_score?sc.genre[0][0].split('---')[1]:null,
+  mood:pick(CAT.mood,sc.moodtheme),scene:pick(CAT.scene,sc.moodtheme),instrument:pick(CAT.instrument,sc.instrument),
+  voice:v[1]>=CAT.voice.rules.sure_score?[CAT.voice.tags.find(t=>t.source_label===v[0]).id]:'uncertain'};}
+TRACKS.forEach(m=>{if(m.scores)m.tags=derive(m.scores);});
+const WINDOW=8; // 放大区显示播放位置前后各 4 秒
+const mmss=n=>{const t=Math.round(n||0);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0');};
+const fmt=(iso,time)=>new Date(iso).toLocaleString('zh-CN',{year:'numeric',month:'numeric',day:'numeric',...(time?{hour:'2-digit',minute:'2-digit',hour12:false}:{})});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function waveHeights(peaks){const positive=peaks.filter(p=>p>.02),lo=positive.length?Math.min(...positive):0,hi=Math.max(0,...peaks);return peaks.map(p=>Math.round(6+(p<=.02?0:Math.pow(Math.max(0,(p-lo)/(hi-lo||1)),1.6))*94));}
+
+// 设计用的新导入曲目（只出现在「新导入正在分析」状态）
+const NEW={id:'new-summer',title:'夏日漱石',artist:'橘子海',platform:'qishui',dur:252,imported:'2026-10-21T01:12:00+08:00',peaks:TRACKS[2].peaks};
+const REASON={
+ retry:{text:'分析到一半出错了，可以再试一次。',retry:true},
+ unreadable:{text:'这首的音频文件读不出来，再分析也一样。换一个文件，用右上角「从文件夹导入」重新导入。',retry:false},
+ unknown:{text:'没认出是什么原因，可以再试一次。',retry:true,code:'beat_worker_exit_9'}
+};
+// 每个设计状态：各曲目的分析状态、选中哪首、播放位置
+const SCEN={
+ 'music':{label:'正常·未播放',status:{},sel:'Turn Back Time',t:0},
+ 'music-playing':{label:'正常·播放中',state:'music',status:{},sel:'Turn Back Time',t:88.4,playing:true},
+ 'music-intro':{label:'正常·前奏没拍子',state:'music',status:{},sel:'CRUSH VIBE',t:2.0},
+ 'music-end':{label:'正常·快到结尾',state:'music',status:{},sel:'Fever Pitch',t:133.0},
+ 'music-beats-queued':{label:'最差首屏：刚开始补分析',status:{'CRUSH VIBE':'analyzing','Turn Back Time':'queued','Fever Pitch':'queued'},sel:'Turn Back Time',t:0},
+ 'music-beats-analyzing':{label:'新导入正在分析',status:{'夏日漱石':'analyzing'},extra:true,sel:'夏日漱石',t:0},
+ 'music-beats-failed':{label:'失败·可重试',status:{'CRUSH VIBE':'failed'},reason:'retry',sel:'CRUSH VIBE',t:0},
+ 'music-beats-failed-unreadable':{label:'失败·音频读不出',status:{'CRUSH VIBE':'failed'},reason:'unreadable',sel:'CRUSH VIBE',t:0},
+ 'music-beats-failed-unknown':{label:'失败·原因不明',status:{'CRUSH VIBE':'failed'},reason:'unknown',sel:'CRUSH VIBE',t:0},
+ 'music-tags-failed':{label:'标签没标出来',tagStatus:{'Fever Pitch':'failed'},sel:'Fever Pitch',t:0},
+ 'music-filtered':{label:'筛选「夏日」+「有人声」',state:'music',tags:['scene.summer','voice.voice'],sel:'Turn Back Time',t:0},
+ 'music-filter-empty':{label:'筛选后没有歌',src:'local',tags:['scene.summer'],sel:'Turn Back Time',t:0},
+};
+const q=new URLSearchParams(location.search),KEY=SCEN[q.get('state')]?q.get('state'):'music',S=SCEN[KEY];
+const tracks=[...TRACKS,...(S.extra?[NEW]:[])];
+const statusOf=m=>(S.status||{})[m.title]||(m.beats?'done':'analyzing');
+// 标签和节拍在同一个分析任务里出结果，但成败分开记
+const tagStatusOf=m=>(S.tagStatus||{})[m.title]||(['queued','analyzing'].includes(statusOf(m))?statusOf(m):(m.tags?'done':'analyzing'));
+let src=S.src||'all',fsel=new Set(S.tags||[]);
+const tagsIn=(m,g)=>tagStatusOf(m)!=='done'?[]:g==='voice'&&m.tags.voice==='uncertain'?[]:m.tags[g];
+const hasTag=(m,id)=>tagsIn(m,id.split('.')[0]).includes(id);
+// 分面筛选：同一组内满足任意一个，不同组之间同时满足
+const srcOK=m=>src==='all'||(m.platform==='netease_client'?'netease':m.platform)===src;
+const groupOK=(m,g)=>{const ids=[...fsel].filter(id=>id.startsWith(g+'.'));return !ids.length||ids.some(id=>hasTag(m,id));};
+const visible=m=>srcOK(m)&&GROUPS.every(([g])=>groupOK(m,g));
+let sel=tracks.find(m=>m.title===S.sel)||tracks[0],t=S.t,playing=!!S.playing,clock=null;
+const open=q.get('open')==='1';
+
+// 公式：速度 = round(60 / 相邻拍间隔的中位数)
+function bpmOf(m){const d=m.beats.slice(1).map((b,i)=>b-m.beats[i]).sort((a,b)=>a-b);return Math.round(60/d[Math.floor(d.length/2)]);}
+// 公式：第 K 小节 = 不晚于当前时间的小节开头个数；为 0（还没到第一小节）时不显示
+function barAt(m,x){return m.downbeats.filter(d=>d<=x+1e-6).length;}
+const secAt=(m,x)=>m.sections.find(s=>x>=s.start&&x<s.end)||m.sections[m.sections.length-1];
+// 公式：前面还有 N 首 = 列表中排在它前面、状态为分析中或排队中的曲目数
+function ahead(m){const i=tracks.indexOf(m);return tracks.slice(0,i).filter(x=>['analyzing','queued'].includes(statusOf(x))).length;}
+
+function speedCell(m){const s=statusOf(m);
+ if(s==='done')return `<span class="bm-speed"><b data-design-data>${bpmOf(m)}</b> BPM</span>`;
+ if(s==='queued')return '<span class="bm-state">排队中</span>';
+ if(s==='analyzing')return '<span class="bm-state"><i class="bm-spin" aria-hidden="true"></i>分析中</span>';
+ return '<span class="bm-state bm-state--warn">没分析出来</span>';}
+function speedMeta(m){const s=statusOf(m);return s==='done'?`<span data-design-data>${bpmOf(m)}</span> BPM`:{queued:'排队中',analyzing:'分析中',failed:'没分析出来'}[s];}
+
+// 公式：列表里的标签按清单 display.row：[风格大类] + [第一个场景，没有就第一个情绪] + [人声，拿不准时不显示]
+function rowTags(m){const st=tagStatusOf(m);
+ if(st==='failed')return '<small class="tg-fail">标签没标出来</small>';
+ if(st!=='done')return '';
+ const c=REG.display.row.map(e=>(tagsIn(m,e.category)[0])||(e.fallback?tagsIn(m,e.fallback)[0]:null)).filter(Boolean);
+ return `<span class="tags" data-design-id="R223-TAG-row">${c.map(id=>`<i class="tag">${NAME[id]}</i>`).join('')}</span>`;}
+// 公式：标签计数 = 满足来源筛选和「其他各组」已选条件、并且标了这个标签的曲目数（标准分面计数）；只列出计数大于 0 的标签和已选中的标签
+function tagFilters(){
+ const groups=GROUPS.map(([g,label])=>{const base=tracks.filter(m=>srcOK(m)&&GROUPS.every(([o])=>o===g||groupOK(m,o)));
+  const keys=[...new Set(base.flatMap(m=>tagsIn(m,g)))];[...fsel].filter(id=>id.startsWith(g+'.')&&!keys.includes(id)).forEach(id=>keys.push(id));
+  const pills=keys.map(k=>({k,n:base.filter(m=>tagsIn(m,g).includes(k)).length})).sort((a,b)=>b.n-a.n).map(({k,n})=>`<button class="pill" data-tag="${k}" aria-pressed="${fsel.has(k)}">${NAME[k]}<i data-design-data>${n}</i></button>`).join('');
+  return pills?`<span class="tf-label">${label}</span>${pills}`:'';}).join('');
+ return groups?`<div class="tagfilters full" data-design-id="R223-TAG-filters">${groups}</div>`:'';}
+function list(){
+ const counts=k=>k==='all'?tracks.length:tracks.filter(x=>x.platform===k).length;
+ const pills=[['all','全部'],['qishui','汽水音乐'],['netease','网易云音乐'],['local','本机文件']].map(([k,l])=>counts(k)||k==='all'?`<button class="pill" data-src="${k}" aria-pressed="${k===src}">${l}<i data-design-data>${counts(k)}</i></button>`:'').join('');
+ const shown=tracks.filter(visible);
+ const rows=shown.length?shown.map(m=>`<button class="trow" data-track="${m.id}" aria-selected="${m===sel}"><span class="play" aria-label="播放">▶</span><span class="t"><b data-design-data>${esc(m.title)}</b><small data-design-data>${esc(m.artist)}</small><small class="meta">${source[m.platform]} · ${speedMeta(m)}</small>${rowTags(m)}</span><span>${source[m.platform]}</span><span data-design-data>${mmss(m.dur)}</span><span>${speedCell(m)}</span><span data-design-data>${fmt(m.imported)}</span></button>`).join(''):'<div class="tg-none" data-design-id="R223-TAG-noresult">这样筛选没有歌。<button class="btn" data-clear>清除标签筛选</button></div>';
+ return `<form class="import" data-design-id="R208-MUSIC-import"><label for="paste">粘贴分享链接导入</label><div class="import-row"><input id="paste" placeholder="粘贴汽水音乐或网易云音乐的分享文字"><button class="btn btn--pri" type="button">导入</button></div><small>每首只下载一次，之后都用本机这份。</small></form><div class="subfilters full" data-design-id="R208-MUSIC-filters">${pills}</div>${tagFilters()}<div class="music-tracks" data-design-id="R208-MUSIC-list"><div class="trow head"><span></span><span>歌名</span><span>来源</span><span>时长</span><span>速度</span><span>导入时间</span></div>${rows}</div>`;
+}
+function overview(m,done){
+ const h=waveHeights(m.peaks||[]),n=h.length;
+ const bars=h.map((v,i)=>`<i class="${(i+.5)/n*m.dur<t?'on':''}" style="height:${v}%"></i>`).join('');
+ // 段落色带：每段一块，段与段之间留 2px
+ const band=done?`<div class="bm-band">${m.sections.map(s=>`<i class="${K1[s.kind]}" style="left:calc(${s.start/m.dur*100}% + 1px);width:calc(${(s.end-s.start)/m.dur*100}% - 2px)" title="${KIND[s.kind]} ${mmss(s.start)}–${mmss(s.end)}"></i>`).join('')}</div>`:'';
+ return `<div class="bm-overview" data-design-id="R223-BEAT-overview"><div class="bars" id="bars">${bars}</div>${band}${done&&t>0?`<i class="bm-head" style="left:${t/m.dur*100}%"></i>`:''}</div>`;
+}
+function lane(m){
+ // 放大区窗口 = 8 秒；中段播放线固定在中间，开头和结尾窗口贴边、播放线自己移动
+ const a=Math.min(Math.max(0,t-WINDOW/2),Math.max(0,m.dur-WINDOW)),pos=x=>((x-a)/WINDOW*100).toFixed(2)+'%',inWin=x=>x>=a&&x<=a+WINDOW;
+ const lines=m.downbeats.map((d,i)=>inWin(d)?`<i class="bl" style="left:${pos(d)}"></i><span class="bn" style="left:${pos(d)}" data-design-data>${i+1}</span>`:'').join('');
+ const cols=m.beats.map((b,i)=>inWin(b)?`<i class="bc ${K1[secAt(m,b).kind]}${m.downbeats.includes(b)?' down':''}${playing&&Math.abs(b-t)<.09?' hit':''}" style="left:${pos(b)};height:${Math.round(10+40*(m.energy[i]??0))}px"></i>`:'').join('');
+ return `<div class="bm-lane" data-design-id="R223-BEAT-lane" aria-label="播放位置前后 8 秒的拍子">${lines}${cols}${cols?'':'<span class="none">这一段没有测到拍子</span>'}<i class="ph" style="left:${pos(t)}"></i></div>`;
+}
+function transport(m,done){
+ const s=done?secAt(m,t):null;
+ return `<div class="bm-transport" data-design-id="R223-BEAT-transport"><button data-toggle aria-label="${playing?'暂停':'播放'}">${playing?'❚❚':'▶'}</button><span id="ptime" data-design-data>${mmss(t)} / ${mmss(m.dur)}</span>${done?`<span class="bm-where">${barAt(m,t)?`第 <span data-design-data>${barAt(m,t)}</span> 小节`:''}<span class="bm-kind bm-kind--${s.kind}">${KIND[s.kind]}</span></span>`:''}</div>`;
+}
+function aiBlock(m){const st=tagStatusOf(m);
+ if(st==='failed')return `<div class="tg"><div class="tg-head">${REG.display.panel_title}</div><div class="attention bm-attn" role="alert" data-design-id="R223-TAG-failed"><div><strong>标签没标出来</strong><p>分析到一半出错了，可以再试一次。</p></div><button class="btn" data-retry-tags>重新标注</button></div></div>`;
+ if(st!=='done')return '';
+ // 公式：右侧五行按清单 display.panel_order；没有标签时显示该类的 empty_text，人声拿不准时显示 uncertain_text
+ const T=m.tags,chips=ids=>ids.map(id=>`<i class="tag">${NAME[id]}</i>`).join('');
+ const body=g=>g==='voice'&&T.voice==='uncertain'?`<em>${CAT.voice.uncertain_text}</em>`:T[g].length?chips(T[g])+(g==='genre'&&T.style?`<small data-design-data>${esc(T.style)}</small>`:''):`<em>${CAT[g].empty_text||''}</em>`;
+ return `<div class="tg" data-design-id="R223-TAG-panel"><div class="tg-head">${REG.display.panel_title}</div>${REG.display.panel_order.map(g=>`<div class="tg-row"><span>${CAT[g].name}</span><div>${body(g)}</div></div>`).join('')}</div>`;}
+function rail(m){
+ const st=statusOf(m),done=st==='done';let mid='';
+ if(done)mid=`<div class="bm-legend" data-design-id="R223-BEAT-legend"><span><i class="sw sw--quiet"></i>安静</span><span><i class="sw sw--build"></i>推进</span><span><i class="sw sw--peak"></i>高潮</span></div>${transport(m,true)}${lane(m)}`;
+ else if(st==='queued')mid=`<div class="bm-status" data-design-id="R223-BEAT-status"><span>排队等分析，前面还有 <span data-design-data>${ahead(m)}</span> 首。</span></div>${transport(m,false)}`;
+ else if(st==='analyzing')mid=`<div class="bm-status" data-design-id="R223-BEAT-status"><span>正在分析节拍和标签</span><span class="lbar"><i></i></span></div>${transport(m,false)}`;
+ else {const r=REASON[S.reason];mid=`<div class="attention bm-attn" role="alert" data-design-id="R223-BEAT-failed"><div><strong>节拍没分析出来</strong><p>${r.text}${r.code?` <code data-design-data>${r.code}</code>`:''}</p></div>${r.retry?'<button class="btn" data-retry>重新分析</button>':''}</div>${transport(m,false)}`;}
+ return `<button class="rail-close" aria-label="关闭">×</button><div class="wave">${overview(m,done)}${mid}</div><div class="rail-body"><h3 data-design-data>${esc(m.title)}</h3><p class="where" data-design-data>${esc(m.artist)}</p>${aiBlock(m)}<div class="kv"><span>来源</span><strong>${source[m.platform]}${m.url?'<small><a class="link" href="#">打开原页面</a></small>':''}</strong></div><div class="kv"><span>时长</span><strong data-design-data>${mmss(m.dur)}</strong></div>${done?`<div class="kv" data-design-id="R223-BEAT-speed"><span>速度</span><strong><span data-design-data>${bpmOf(m)}</span> BPM<small>每小节 <span data-design-data>${m.meter}</span> 拍</small></strong></div>`:''}<div class="kv"><span>导入时间</span><strong data-design-data>${fmt(m.imported,true)}</strong></div></div>`;
+}
+function paint(){
+ $('.main').dataset.designState=S.state||KEY;
+ const any=tracks.some(visible);if(any&&!visible(sel))sel=tracks.find(visible);
+ $('#review-screen').className='review-screen'+(any?'':' single');
+ $('#review-screen').innerHTML=list()+(any?`<aside class="review-rail ${open?'open':''}" id="rail" data-design-id="R208-MUSIC-rail">${rail(sel)}</aside>`:'');
+ bind();
+}
+function repaintRail(){const r=$('#rail');if(r){r.innerHTML=rail(sel);bind();}}
+const player=$('#music-player');
+function bind(){
+ $$('[data-track]').forEach(b=>b.onclick=()=>{sel=tracks.find(x=>x.id===b.dataset.track);stop();t=0;paint();});
+ const tg=$('[data-toggle]');if(tg)tg.onclick=()=>playing?stop():start();
+ const ov=$('.bm-overview');if(ov)ov.onclick=e=>{const r=ov.getBoundingClientRect();t=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width))*sel.dur;if(player.src)player.currentTime=t;repaintRail();};
+ const rt=$('[data-retry]');if(rt)rt.onclick=()=>{S.status[sel.title]='analyzing';paint();};
+ const rg=$('[data-retry-tags]');if(rg)rg.onclick=()=>{(S.tagStatus||={})[sel.title]='analyzing';paint();};
+ $$('[data-src]').forEach(b=>b.onclick=()=>{src=b.dataset.src;paint();});
+ $$('[data-tag]').forEach(b=>b.onclick=()=>{const id=b.dataset.tag;fsel.has(id)?fsel.delete(id):fsel.add(id);paint();});
+ const cl=$('[data-clear]');if(cl)cl.onclick=()=>{fsel.clear();paint();};
+}
+// 播放：优先用本机 Studio 的音频；Studio 没开时用计时器模拟，画面照样走
+function start(){
+ if(!sel.beats)return;playing=true;
+ const url=`http://127.0.0.1:8765/api/review/music/${sel.id}/audio`;
+ if(player.dataset.id!==sel.id){player.src=url;player.dataset.id=sel.id;}
+ player.currentTime=t;player.play().catch(()=>{});
+ const t0=performance.now(),base=t;
+ const tick=()=>{if(!playing)return;t=!player.paused&&player.currentTime>0?player.currentTime:base+(performance.now()-t0)/1000;if(t>=sel.dur){stop();t=0;}repaintRail();clock=requestAnimationFrame(tick);};
+ repaintRail();clock=requestAnimationFrame(tick);
+}
+function stop(){playing=false;cancelAnimationFrame(clock);player.pause();repaintRail();}
+$('#mockbar').innerHTML='设计状态：'+Object.entries(SCEN).map(([k,v])=>`<a href="?state=${k}${open?'&open=1':''}" aria-current="${k===KEY}">${v.label}</a>`).join('');
+paint();
+</script>
+</body>
+</html>

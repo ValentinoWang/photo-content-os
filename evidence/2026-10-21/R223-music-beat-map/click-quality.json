@@ -1,0 +1,15 @@
+{
+  "bpm": 120,
+  "bpm_error": 0,
+  "shift_max_error_seconds": 0.0,
+  "shift_tolerance_seconds": 0.04,
+  "boundary_excluded_seconds": 4,
+  "beats": 64,
+  "downbeats": 32,
+  "score_counts": {
+    "genre": 400,
+    "moodtheme": 56,
+    "instrument": 40,
+    "voice": 2
+  }
+}

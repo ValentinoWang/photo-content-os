@@ -1,0 +1,5 @@
+repository safety check failed:
+- 暂存区: docs/tasks/R210-music-link-import/TASK.md: repository-local-path: 新增本机绝对路径会泄露本机信息；路径改成相对素材根，截图和帧图放 ~/.photo-content-os/evidence/<任务>/
+- 暂存区: docs/tasks/R223-music-beat-map/TASK.md: repository-local-path: 新增本机绝对路径会泄露本机信息；路径改成相对素材根，截图和帧图放 ~/.photo-content-os/evidence/<任务>/
+- 工作区: docs/tasks/R210-music-link-import/TASK.md: repository-local-path: 新增本机绝对路径会泄露本机信息；路径改成相对素材根，截图和帧图放 ~/.photo-content-os/evidence/<任务>/
+- 工作区: docs/tasks/R223-music-beat-map/TASK.md: repository-local-path: 新增本机绝对路径会泄露本机信息；路径改成相对素材根，截图和帧图放 ~/.photo-content-os/evidence/<任务>/

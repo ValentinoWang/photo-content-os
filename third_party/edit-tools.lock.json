@@ -78,5 +78,51 @@
         "link repository browser runtime"
       ]
     }
+  },
+  "music_analysis": {
+    "directory": ".tools/music-analysis",
+    "python": "3.12",
+    "packages": {
+      "beat-this": "1.1.0",
+      "librosa": "1.0.0",
+      "essentia-tensorflow": "2.1b6.dev1389",
+      "torch": "2.8.0",
+      "torchaudio": "2.8.0"
+    },
+    "beat_checkpoint": {
+      "id": "beat-this-final0",
+      "file": "beat-this-final0.ckpt",
+      "url": "https://cloud.cp.jku.at/public.php/dav/files/7ik4RrBKTS273gp/final0.ckpt",
+      "sha256": "8c328b45f59d8dd3dff219253ff6a8d6482be57d0133a29140e2febbf8eb8331",
+      "license": "MIT"
+    },
+    "heads": {
+      "genre": "genre_discogs400-discogs-effnet-1",
+      "moodtheme": "mtg_jamendo_moodtheme-discogs-effnet-1",
+      "instrument": "mtg_jamendo_instrument-discogs-effnet-1",
+      "voice": "voice_instrumental-discogs-effnet-1"
+    },
+    "metadata": {
+      "voice_instrumental-discogs-effnet-1": {
+        "file": "voice_instrumental-discogs-effnet-1.json",
+        "sha256": "43ac2c3b055dfaed20f6232e0f10636c287f1c5a6e5bd02c5585860031964c8f",
+        "url": "https://essentia.upf.edu/models/classification-heads/voice_instrumental/voice_instrumental-discogs-effnet-1.json"
+      },
+      "mtg_jamendo_moodtheme-discogs-effnet-1": {
+        "file": "mtg_jamendo_moodtheme-discogs-effnet-1.json",
+        "sha256": "d62cd90263e4d613fa7fcce7a831e339450394794af63685f96e065c1a896ab0",
+        "url": "https://essentia.upf.edu/models/classification-heads/mtg_jamendo_moodtheme/mtg_jamendo_moodtheme-discogs-effnet-1.json"
+      },
+      "genre_discogs400-discogs-effnet-1": {
+        "file": "genre_discogs400-discogs-effnet-1.json",
+        "sha256": "2d367319d9b782ffa10f69abf0e805b3ac4e10899025e5bdbaceda3919b243e0",
+        "url": "https://essentia.upf.edu/models/classification-heads/genre_discogs400/genre_discogs400-discogs-effnet-1.json"
+      },
+      "mtg_jamendo_instrument-discogs-effnet-1": {
+        "file": "mtg_jamendo_instrument-discogs-effnet-1.json",
+        "sha256": "7d02204c6451b5615e2968ec6364bbae3b915c886e608f05f00d3a38dc5177c4",
+        "url": "https://essentia.upf.edu/models/classification-heads/mtg_jamendo_instrument/mtg_jamendo_instrument-discogs-effnet-1.json"
+      }
+    }
   }
 }

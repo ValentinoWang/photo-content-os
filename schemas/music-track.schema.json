@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": 1
+      "const": 2
     },
     "title": {
       "type": "string",
@@ -51,20 +51,6 @@
     "audio_file": {
       "type": "string",
       "pattern": "^audio\\.(mp3|m4a|mp4|flac|wav|ogg|aac)$"
-    },
-    "license_status": {
-      "enum": [
-        "platform_copyrighted",
-        "cc0",
-        "cc_by",
-        "unknown"
-      ]
-    },
-    "attribution": {
-      "type": [
-        "string",
-        "null"
-      ]
     },
     "sources": {
       "type": "array",
@@ -134,15 +120,6 @@
         "measured",
         "silence"
       ]
-    },
-    "bpm": {
-      "type": "null"
-    },
-    "beats": {
-      "type": "null"
-    },
-    "sections": {
-      "type": "null"
     }
   },
   "required": [
@@ -156,35 +133,13 @@
     "imported_at",
     "file_sha256",
     "audio_file",
-    "license_status",
-    "attribution",
     "sources",
     "duration_seconds",
     "sample_rate_hz",
     "loudness_lufs",
-    "loudness_status",
-    "bpm",
-    "beats",
-    "sections"
+    "loudness_status"
   ],
   "allOf": [
-    {
-      "if": {
-        "properties": {
-          "license_status": {
-            "const": "cc_by"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "attribution": {
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      }
-    },
     {
       "if": {
         "properties": {

@@ -98,7 +98,7 @@ class Adapter:
     def resolve(self, link):
         self.calls.append('resolve')
         return {'platform_id': link.platform_id, 'title': '合成测试曲', 'artist': '合成歌手',
-                'extension': '.mp3', 'license_status': 'platform_copyrighted'}
+                'extension': '.mp3'}
     def download(self, metadata, target):
         self.calls.append('download')
         target.write_bytes(self.audio.read_bytes())
@@ -151,25 +151,20 @@ def test_failed_index_commit_rolls_back_files(tmp_path, synthetic_audio, monkeyp
     assert not list(library.root.glob('*/track.json'))
 
 
-def test_license_and_measurements(tmp_path, synthetic_audio):
-    from music_library.library import validate_track, LICENSE_LABELS
+def test_track_integrity_and_measurements(tmp_path, synthetic_audio):
+    from music_library.library import validate_track
     library = MusicLibrary(tmp_path)
     original = synthetic_audio.read_bytes()
     status, track = library.import_local(synthetic_audio)
     assert status == '已入库' and synthetic_audio.read_bytes() == original
-    assert track['license_status'] == 'unknown'
-    assert '发布前要确认' in LICENSE_LABELS['unknown']
     assert 2.9 < track['duration_seconds'] < 3.2
     assert track['sample_rate_hz'] == 44100
     assert track['loudness_lufs'] < 0
-    assert track['bpm'] is track['beats'] is track['sections'] is None
-    for field in ('license_status', 'duration_seconds', 'file_sha256'):
+    for field in ('duration_seconds', 'file_sha256'):
         bad = dict(track)
         del bad[field]
         with pytest.raises(MusicError):
             validate_track(bad)
-    with pytest.raises(MusicError):
-        validate_track({**track, 'license_status': 'cc_by', 'attribution': None})
 
 
 def test_client_ncm_offline_then_direct_link_dedup(tmp_path):
@@ -364,20 +359,6 @@ def test_browser_cookie_decrypt_cbc_and_host_binding():
         decrypt_cookie(encrypted, b'synthetic', '.other.test', 24)
     with pytest.raises(MusicError, match='暂不支持'):
         decrypt_cookie(b'v99garbage', b'synthetic', host, 24)
-
-
-def test_missing_platform_license_never_defaults_to_publishable(tmp_path, synthetic_audio):
-    adapter = Adapter(synthetic_audio)
-    resolve = adapter.resolve
-    def missing_license(link):
-        metadata = resolve(link)
-        del metadata['license_status']
-        return metadata
-    adapter.resolve = missing_license
-    library = MusicLibrary(tmp_path, adapter=adapter)
-    with pytest.raises(MusicError):
-        library.import_link('https://music.163.com/song?id=90001')
-    assert library.list_tracks() == []
 
 
 def test_shortlinks_use_cached_redirect_identity_without_refetch(tmp_path, monkeypatch):

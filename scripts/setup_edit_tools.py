@@ -152,9 +152,15 @@ def install(root=ROOT):
 
 
 def main():
-    argparse.ArgumentParser(description=__doc__).parse_args()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--music-analysis', action='store_true', help='install only the isolated music analysis runtime')
+    args = parser.parse_args()
     try:
-        install()
+        if args.music_analysis:
+            from music_analysis.install import install as install_music
+            install_music(ROOT)
+        else:
+            install()
     except (OSError, ValueError, KeyError, subprocess.SubprocessError) as exc:
         print(f'剪辑工具安装失败：{exc}；修复后重跑 python3 scripts/setup_edit_tools.py。未切换版本或后端。', file=sys.stderr)
         return 2

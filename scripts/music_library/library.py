@@ -3,6 +3,7 @@ import hashlib
 import json
 import shutil
 import tempfile
+from functools import wraps
 from contextlib import contextmanager, nullcontext
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,12 +17,6 @@ from .errors import MusicError, MemberRequired
 from .links import parse_link
 
 
-LICENSE_LABELS = {
-    'platform_copyrighted': '平台版权曲：只用来定切点和本地预览，发布时在剪映或平台曲库里换用同一首',
-    'cc0': 'CC0：可商用',
-    'cc_by': 'CC BY：发布时须按署名文字署名',
-    'unknown': '授权未知，发布前要确认',
-}
 SCHEMA = Path(__file__).resolve().parents[2] / 'schemas/music-track.schema.json'
 
 
@@ -35,10 +30,22 @@ def file_hash(path):
 
 
 def validate_track(track):
+    if isinstance(track, dict) and track.get('schema_version') == 1:
+        raise MusicError('曲库是 v1，请先运行迁移：scripts/migrate_music_library_v2.py')
     try:
         Draft202012Validator(read_json(SCHEMA, '曲目规范'), format_checker=FormatChecker()).validate(track)
     except Exception as exc:
-        raise MusicError('曲目信息不符合规范，授权等必填信息不得缺失') from exc
+        raise MusicError('曲目信息不符合 v2 规范，请检查必填信息') from exc
+
+
+def notify_import(fn):
+    @wraps(fn)
+    def wrapped(self, *args, **kwargs):
+        result = fn(self, *args, **kwargs)
+        if self.on_import is not None:
+            self.on_import(result[1])
+        return result
+    return wrapped
 
 
 class MusicLibrary:
@@ -46,6 +53,7 @@ class MusicLibrary:
         self.root = local_media_root(media_root) / 'library/music'
         self.adapter = adapter
         self.measure = measure
+        self.on_import = None
 
     @contextmanager
     def locked(self):
@@ -61,7 +69,9 @@ class MusicLibrary:
                 raise MusicError('音乐库索引缺失，请维护者从曲目文件修复索引')
             return []
         index = read_json(index_path, '音乐库索引')
-        if not isinstance(index, dict) or index.get('schema_version') != 1 or not isinstance(index.get('tracks'), list):
+        if isinstance(index, dict) and index.get('schema_version') == 1:
+            raise MusicError('曲库是 v1，请先运行迁移：scripts/migrate_music_library_v2.py')
+        if not isinstance(index, dict) or index.get('schema_version') != 2 or not isinstance(index.get('tracks'), list):
             raise MusicError('音乐库索引格式损坏，请维护者修复')
         tracks = index['tracks']
         seen = set()
@@ -83,7 +93,7 @@ class MusicLibrary:
             return self._tracks()
 
     def _write_index(self, tracks):
-        write_json(self.root / 'index.json', {'schema_version': 1, 'tracks': tracks})
+        write_json(self.root / 'index.json', {'schema_version': 2, 'tracks': tracks})
 
     @staticmethod
     def _find(tracks, platform, identity, kind):
@@ -91,6 +101,7 @@ class MusicLibrary:
         return next((track for track in tracks for source in track['sources']
                      if family(source['platform']) == family(platform) and source['platform_id'] == identity and source['kind'] == kind), None)
 
+    @notify_import
     def import_link(self, text, *, search_elsewhere=False):
         link = parse_link(text)
         with self.locked():
@@ -164,7 +175,6 @@ class MusicLibrary:
         existing = next((t for t in tracks if t['file_sha256'] == digest), None)
         if existing:
             updated = {**existing, 'sources': [*existing['sources'], source]}
-            # Hash deduplication never upgrades an unknown authorization to publishable.
             validate_track(updated)
             track_path = self.root / digest / 'track.json'
             write_json(track_path, updated)
@@ -177,13 +187,11 @@ class MusicLibrary:
         measurements = self.measure(audio)
         if metadata.get('expected_duration') and abs(measurements['duration_seconds'] - metadata['expected_duration']) > 2:
             raise MusicError('下载音频时长与完整歌曲不符，可能是试听片段，未入库')
-        track = {'schema_version': 1, 'title': metadata['title'], 'artist': metadata['artist'],
+        track = {'schema_version': 2, 'title': metadata['title'], 'artist': metadata['artist'],
                  'album': metadata.get('album'), 'platform': source['platform'],
                  'platform_id': source['platform_id'], 'original_url': source['original_url'],
                  'imported_at': source['imported_at'], 'file_sha256': digest,
-                 'audio_file': 'audio' + audio.suffix.lower(), 'license_status': metadata['license_status'],
-                 'attribution': metadata.get('attribution'), 'sources': [source],
-                 'bpm': None, 'beats': None, 'sections': None, **measurements}
+                 'audio_file': 'audio' + audio.suffix.lower(), 'sources': [source], **measurements}
         validate_track(track)
         directory = self.root / digest
         if directory.exists():
@@ -201,6 +209,7 @@ class MusicLibrary:
                 raise
         return '已入库', track
 
+    @notify_import
     def import_local(self, path):
         path = Path(path).expanduser().resolve()
         if not path.is_file():
@@ -215,8 +224,9 @@ class MusicLibrary:
                 return '已在库里', existing
             source = {'platform': 'local', 'platform_id': digest, 'kind': 'file',
                       'original_url': path.as_uri(), 'imported_at': now()}
-            return self._store(path, {'title': path.stem, 'artist': '未知歌手', 'license_status': 'unknown'}, source, tracks)
+            return self._store(path, {'title': path.stem, 'artist': '未知歌手'}, source, tracks)
 
+    @notify_import
     def import_client_file(self, path):
         from .client_files import decode_ncm, read_client_metadata
         path = Path(path).expanduser().resolve()

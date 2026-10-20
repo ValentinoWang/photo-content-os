@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "route": "/#view=music",
+  "viewport": {
+    "width": 1440,
+    "height": 960
+  },
+  "action": "click real waveform",
+  "observed_audio_time_seconds": 11.612903
+}

@@ -54,6 +54,7 @@ Run from the software root:
 
 ```bash
 bash scripts/check_runtime_contract.sh
+.venv/bin/python scripts/validate_music_analysis_registry.py
 .venv/bin/python scripts/check_repository_safety.py --base origin/main
 .venv/bin/python scripts/check_obsidian_doc_sync.py
 .venv/bin/python scripts/check_outline_contract.py .
@@ -61,6 +62,8 @@ bash scripts/check_runtime_contract.sh
 .venv/bin/python scripts/validate_content_os_task.py --help
 .venv/bin/python scripts/validate_jianying_draft.py --help
 ```
+
+Set `UI_COPY_QUALITY_CHECKER` to the Core ui-copy-quality checker. Registry failures and repair: `docs/music-analysis-registry-guard.md`.
 
 Set `OBSIDIAN_ROOT` explicitly for document synchronization. Use the fixed
 `.venv` for OTIO/Kdenlive execution.

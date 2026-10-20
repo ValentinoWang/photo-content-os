@@ -1,0 +1,44 @@
+[
+  {
+    "route": "/#view=music",
+    "base_url": "http://127.0.0.1:56062",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollWidth": 1440
+    },
+    "state": "three synthetic tracks; detail open; playback advanced and paused",
+    "file": "music-1440.png",
+    "captured_at": "2026-10-20T18:29:46.716Z",
+    "sha256": "ef902b5cdb07bfceeed281d520d6ab16fdc07f2995f3dfc14e2c9b3d0aa23ca7",
+    "errors": [],
+    "personally_inspected": true,
+    "findings": "授权列/标签/说明已删除；列表、相邻导入区和完整详情对齐；无横向溢出；播放可用。节拍占位按阶段 A 保留，阶段 B 替换。",
+    "scroll_coverage": "页面及详情底部均可见，无额外滚动内容；完整渲染 960px 高。",
+    "output_dimensions": [
+      1440,
+      960
+    ]
+  },
+  {
+    "route": "/#view=music",
+    "base_url": "http://127.0.0.1:56062",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollWidth": 430
+    },
+    "state": "three synthetic tracks; detail open; playback advanced and paused",
+    "file": "music-430.png",
+    "captured_at": "2026-10-20T18:29:47.649Z",
+    "sha256": "799a2725f63f7a21e667db750a0ee6fb06f324bdad0d39c927963144b0bba25b",
+    "errors": [],
+    "personally_inspected": true,
+    "findings": "授权列/标签/说明已删除；列表、相邻导入区和完整详情对齐；无横向溢出；播放可用。节拍占位按阶段 A 保留，阶段 B 替换。",
+    "scroll_coverage": "页面及详情底部均可见，无额外滚动内容；完整渲染 960px 高。",
+    "output_dimensions": [
+      430,
+      960
+    ]
+  }
+]

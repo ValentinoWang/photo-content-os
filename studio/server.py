@@ -783,7 +783,7 @@ class StudioApplication:
                         if parsed.path == '/api/review/catalog':
                             self._json(200, {'ok': True, **review.catalog()})
                         elif parsed.path == '/api/review/music':
-                            self._json(200, {'ok': True, 'tracks': review.tracks()})
+                            self._json(200, {'ok': True, **review.music_payload()})
                         elif parsed.path == '/api/review/music-settings':
                             self._json(200, {'ok': True, **app.review_jobs.music_settings()})
                         elif len(segments) == 4 and segments[2] == 'imports':
@@ -989,6 +989,10 @@ class StudioApplication:
                         value = self._body()
                         if parsed.path == '/api/review/music/import':
                             result = {'job': app.review_jobs.import_music(value)}
+                        elif len(segments) == 5 and segments[2] == 'music' and segments[4] == 'reanalyze':
+                            if value.get('part') not in ('beat', 'tags'):
+                                raise MusicError('分析部分必须是 beat 或 tags')
+                            result = app.media_review.analysis_queue.enqueue(segments[3], value['part'])
                         elif len(segments) == 5 and segments[2] == 'pieces' and segments[4] == 'decisions':
                             result = app.media_review.decide(segments[3], value)
                         elif len(segments) == 5 and segments[2] == 'pieces' and segments[4] == 'jobs':
@@ -1442,6 +1446,7 @@ def serve(
         upstream_task_reader=upstream_task_reader,
     )
     server = ThreadingHTTPServer((host, port), application.handler())
+    application.media_review.analysis_queue.start(server)
     actual_host, actual_port = server.server_address[:2]
     url_host = "127.0.0.1" if actual_host in {"0.0.0.0", "::"} else actual_host
     url = f"http://{url_host}:{actual_port}/"

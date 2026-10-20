@@ -94,7 +94,7 @@ def normalize_metadata(value, fallback):
     return {'platform_id': str(identity) if identity else None,
             'title': value.get('musicName') or value.get('title') or fallback,
             'artist': artist or value.get('artist_text') or '未知歌手',
-            'album': value.get('album'), 'license_status': 'platform_copyrighted'}
+            'album': value.get('album')}
 
 
 def read_client_metadata(path: Path):

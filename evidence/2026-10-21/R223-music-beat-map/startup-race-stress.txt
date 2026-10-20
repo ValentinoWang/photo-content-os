@@ -1,0 +1,3 @@
+Fast offline synthetic failure worker; one prequeued track per fresh temporary library; start + backfill + wait_idle + close.
+50/50 runs invoked the worker exactly once.
+Full-suite red proof retained in pre-startup-race-full.log; assertion was not weakened.

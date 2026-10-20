@@ -12,6 +12,9 @@ design:
     - studio/static/app.js
 quality:
   static_guards:
+    - command: .venv/bin/python scripts/validate_music_analysis_registry.py
+      failure_class: music-analysis-registry
+      repair: repair schema, published IDs, version, changelog or UI copy; see docs/music-analysis-registry-guard.md
     - command: .venv/bin/python scripts/check_repository_safety.py --base origin/main
       failure_class: repository-private-media/repository-local-path/repository-path-baseline-stale
       repair: move media outside Git, use paths relative to the media root, and shrink stale baseline entries; see docs/repository-privacy-guard.md

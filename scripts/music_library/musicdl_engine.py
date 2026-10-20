@@ -189,7 +189,7 @@ class MusicDLEngine:
                 raise MusicError('musicdl 未返回完整曲目信息，未入库')
             return {'platform_id': str(song.identifier), 'title': song.song_name, 'artist': song.singers,
                     'album': song.album, 'extension': '.' + song.ext.lstrip('.'), 'url': song.download_url,
-                    'expected_duration': float(song.duration_s), 'license_status': 'platform_copyrighted',
+                    'expected_duration': float(song.duration_s),
                     '_musicdl_song': song, '_musicdl_client': client}
         except MusicError:
             raise

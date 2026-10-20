@@ -144,7 +144,7 @@ class PlatformAdapter:
         url = urls[0]
         return {'platform_id': str(music.get('id') or music['mid']), 'title': music['title'],
                 'artist': music.get('author') or '未知歌手', 'album': None, 'url': url,
-                'extension': media_extension(url), 'license_status': 'platform_copyrighted',
+                'extension': media_extension(url),
                 'expected_duration': self.douyin_duration(music)}
 
     @staticmethod

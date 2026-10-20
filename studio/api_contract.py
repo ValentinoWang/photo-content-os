@@ -16,6 +16,7 @@ ROUTE_SPECS: tuple[dict[str, object], ...] = (
     {'method': 'GET', 'path': '/api/review/music', 'operation_id': 'getMusicLibrary', 'summary': 'getMusicLibrary'},
     {'method': 'GET', 'path': '/api/review/music/{trackId}/audio', 'operation_id': 'getMusicAudio', 'summary': 'getMusicAudio', 'response_media': 'audio/mpeg', 'byte_ranges': True},
     {'method': 'GET', 'path': '/api/review/music-settings', 'operation_id': 'getMusicSettings', 'summary': 'getMusicSettings'},
+    {'method': 'POST', 'path': '/api/review/music/{trackId}/reanalyze', 'operation_id': 'reanalyzeMusic', 'summary': 'Reanalyze beat or tags', 'write': True},
     {'method': 'POST', 'path': '/api/review/music/import', 'operation_id': 'importMusic', 'summary': 'importMusic', 'write': True},
     {'method': 'GET', 'path': '/api/review/imports/{jobId}', 'operation_id': 'getMusicImport', 'summary': 'getMusicImport'},
     {"method": "GET", "path": "/api/bootstrap", "operation_id": "getBootstrap", "summary": "Read studio bootstrap state"},

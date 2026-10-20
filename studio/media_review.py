@@ -105,6 +105,9 @@ class MediaReview:
     def __init__(self, store):
         self.store = store
         self.music = MusicLibrary()
+        from studio.music_analysis import AnalysisQueue
+        self.analysis_queue = AnalysisQueue(self.music)
+        self.music.on_import = self.queue_imported_music
         self._evidence_cache = {}
         self._evidence_lock = threading.RLock()
 
@@ -276,11 +279,32 @@ class MediaReview:
             group.update(count=len(group['pieces']), pending=sum(p['pending'] for p in group['pieces']), produced=sum(p['versions'] > 0 for p in group['pieces']))
         return dict(pieces=pieces, groups=sorted(groups.values(), key=lambda g: g['id'] == 'other'))
 
-    def tracks(self):
+    def queue_imported_music(self, track):
+        self.analysis_queue.enqueue_if_missing(track)
+
+    def music_payload(self):
+        from studio.music_analysis import registry, taxonomy
+        reg = registry()
+        return dict(tracks=self.tracks(reg), registry_version=reg['registry_version'], taxonomy=taxonomy(reg))
+
+    def tracks(self, reg=None):
+        from studio.music_analysis import registry, read_analysis, derive, beat_metrics, failure
+        reg = registry() if reg is None else reg
+        def analysis(track):
+            data = read_analysis(self.music.root / track['file_sha256'], track)
+            projected = {}
+            for part in ('beat', 'tags'):
+                value = dict(data[part]) if data else failure('analysis_missing')
+                if value['status'] == 'done':
+                    value = {**value, **beat_metrics(value)} if part == 'beat' else dict(status='done', **derive(value['scores'], reg))
+                projected[part] = value
+            projected.update(self.analysis_queue.state(track['file_sha256']))
+            return projected
         return [{**{k: v for k, v in track.items() if k not in ('sources', 'original_url', 'audio_file')},
                  'original_url': track['original_url'] if track['original_url'].startswith(('https://', 'http://')) else None,
                  'audio': f'/api/review/music/{track["file_sha256"]}/audio',
-                 'peaks': read_json(self.music.root / track['file_sha256'] / 'peaks.json', optional=True)}
+                 'peaks': read_json(self.music.root / track['file_sha256'] / 'peaks.json', optional=True),
+                 **analysis(track)}
                 for track in self.music.list_tracks()]
 
     def prepare_peaks(self):
