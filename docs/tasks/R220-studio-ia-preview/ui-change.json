@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.2.0",
+  "ui_change_id": "r220-studio-ia-preview",
+  "kind": "navigation-change",
+  "user_visible": true,
+  "source_authority_mode": "strict",
+  "source_requirements_ref": {
+    "path": "docs/tasks/R220-studio-ia-preview/source-requirements.json",
+    "entity_id": "r220-sources",
+    "canonical_digest": "42ec50e1c3f47073b52e9966e08716b6798480a8b65bc7c2b8eeaa5c529d5934"
+  },
+  "affected_surfaces": [
+    {
+      "surface_id": "studio",
+      "resolved_surface_contract_ref": {
+        "path": "docs/tasks/R220-studio-ia-preview/resolved-surface-contract.json",
+        "entity_id": "r220-studio-surface",
+        "canonical_digest": "28358e453dd57c8f77ec6b11dff80a116b250ccd1c20a738da0fbc7a01a77d81"
+      }
+    }
+  ],
+  "product_context_ref": {
+    "path": "docs/tasks/R220-studio-ia-preview/acceptance-context.json",
+    "entity_id": "r220-studio-context",
+    "canonical_digest": "0221f8587fb1eef6aa9b08537a5b4a74e19823d3970c9e540e3a34ae9d9c6fa9"
+  },
+  "role_context_refs": [
+    {
+      "path": "docs/tasks/R220-studio-ia-preview/acceptance-context.json",
+      "entity_id": "local-creator",
+      "canonical_digest": "0221f8587fb1eef6aa9b08537a5b4a74e19823d3970c9e540e3a34ae9d9c6fa9"
+    }
+  ],
+  "screen_contract_ref": {
+    "path": "docs/tasks/R220-studio-ia-preview/acceptance-context.json",
+    "entity_id": "r220-screen",
+    "canonical_digest": "0221f8587fb1eef6aa9b08537a5b4a74e19823d3970c9e540e3a34ae9d9c6fa9"
+  },
+  "visual_contract_ref": {
+    "path": "docs/tasks/R220-studio-ia-preview/design-contract.json",
+    "entity_id": "r220-visual",
+    "canonical_digest": "e0a794913886d29061bc12e7524ab8029808c00358303b2800620db058171ecc"
+  },
+  "affected_entity_digests": [
+    {
+      "path": "docs/tasks/R220-studio-ia-preview/resolved-surface-contract.json",
+      "entity_id": "r220-studio-surface",
+      "canonical_digest": "28358e453dd57c8f77ec6b11dff80a116b250ccd1c20a738da0fbc7a01a77d81"
+    }
+  ],
+  "execution_mode": "incremental",
+  "reference_prototypes": [
+    {
+      "path": "external-local:approved-r208-review-html",
+      "sha256": "4c7efbe0e38dd9ff5b1041950b6199218a1a767825ff8e9c045490011a89b07c",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "capture_matrix": {
+    "routes": [
+      "/#view=home",
+      "/#view=projects",
+      "/#view=piece",
+      "/#view=library",
+      "/#view=music",
+      "/#view=settings"
+    ],
+    "locales": [
+      "zh-CN"
+    ],
+    "themes": [
+      "studio-dark"
+    ],
+    "viewports": [
+      "1440x960",
+      "1180x960",
+      "900x960",
+      "430x960"
+    ],
+    "helper_modes": [
+      "real-data",
+      "real-media-state-fixture"
+    ]
+  },
+  "interaction_matrix_ref": {
+    "path": "docs/tasks/R220-studio-ia-preview/resolved-surface-contract.json",
+    "entity_id": "r220-interactions",
+    "canonical_digest": "28358e453dd57c8f77ec6b11dff80a116b250ccd1c20a738da0fbc7a01a77d81"
+  },
+  "visual_evidence_types": [
+    "dom-structure",
+    "computed-style",
+    "fixed-browser-screenshot",
+    "interaction-trace"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "r220-studio-context",
+  "authority": "docs/tasks/R220-studio-ia-preview/TASK.md",
+  "product": {
+    "purpose": "本机创作者整理素材、挑选镜头、预览成片和音乐",
+    "privacy": "原始媒体不经 HTTP API 返回；预览只读派生文件"
+  },
+  "role": {
+    "id": "local-creator",
+    "label": "本机创作者",
+    "scope": "本机作品与媒体",
+    "authority": "用户 TASK 与 request.json"
+  },
+  "screen_contract": {
+    "navigation": [
+      "工作台",
+      "整理台",
+      "项目",
+      "素材库",
+      "音乐库",
+      "设置与诊断"
+    ],
+    "states_ref": "docs/tasks/R220-studio-ia-preview/design-contract.json",
+    "interaction_requirements": [
+      "H-01",
+      "H-02",
+      "H-03"
+    ],
+    "round_3": [
+      "封面时长三分之一",
+      "预览精选播放图标",
+      "剪辑软件和诊断问题点",
+      "刷新和创作链路同行"
+    ]
+  }
+}

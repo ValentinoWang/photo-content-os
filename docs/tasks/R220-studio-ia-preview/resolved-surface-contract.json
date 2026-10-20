@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "id": "r220-studio-surface",
+  "generated_from": [
+    "acceptance/requests/2026-W43/2026-10-20-R220-photo-studio-ia-preview/request.json",
+    "docs/tasks/R220-studio-ia-preview/TASK.md"
+  ],
+  "role": "local-creator",
+  "surface": "studio",
+  "requirements": [
+    {
+      "id": "H-01",
+      "steps": [
+        "打开 Photo Studio，依次点击侧栏六项。",
+        "进入设置与诊断，查看上游账号和安装向导。"
+      ],
+      "expected": "每一项都打开对应页面且有内容或明确的空状态；上游账号、安装向导、网页中台都能在设置与诊断里找到。"
+    },
+    {
+      "id": "H-02",
+      "steps": [
+        "进入项目，点开「2026年重回兰州大学」里的「奔赴与校运会」。",
+        "点击播放器的播放，看完几个镜头；把其中一个改成「可用」，刷新页面。"
+      ],
+      "expected": "精选按顺序连着播放；改过的镜头刷新后仍是「可用」，精选数量少一个。"
+    },
+    {
+      "id": "H-03",
+      "steps": [
+        "进入项目，点击作品卡片上的「看成片」。",
+        "进入音乐库，点击一首歌的播放。"
+      ],
+      "expected": "已出的成片能直接播放；音乐能试听，写着来源平台和授权。"
+    }
+  ],
+  "invariants": [
+    "本机派生媒体通过 ID 读取",
+    "镜头决定 CAS 并原子写入",
+    "不改变真实决定以制作验收截图"
+  ],
+  "out_of_scope": [
+    "配乐卡点、出草稿（R208 阶段 B）",
+    "抖音音乐导入",
+    "整理台的分批和删除逻辑不改"
+  ]
+}

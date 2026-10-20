@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "path": "external-local:approved-r208-review-html",
+      "sha256": "4c7efbe0e38dd9ff5b1041950b6199218a1a767825ff8e9c045490011a89b07c",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    },
+    {
+      "path": "docs/tasks/R220-studio-ia-preview/TASK.md",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "privacy": "The approved private HTML stays outside Git. Its public copy/ID export is design-contract.json. Private rendered evidence is stored in the local evidence archive."
+}
