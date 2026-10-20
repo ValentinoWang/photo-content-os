@@ -1,0 +1,365 @@
+{
+  "protected_files": 83,
+  "protected_hashes_and_mtimes_unchanged": true,
+  "no_added_or_removed_files": true,
+  "changed_files": [
+    "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256/analysis.json",
+    "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af/analysis.json",
+    "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b/analysis.json"
+  ],
+  "tracks": [
+    {
+      "title": "Turn Back Time",
+      "file_sha256": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "beat": "done",
+      "tags": "done",
+      "labels_match": true,
+      "bar_energy_std": 0.243160161589613,
+      "smoothed_bar_energy_std": 0.1934759588756132,
+      "peak_mean_energy": 0.8217530449533377,
+      "quiet_mean_energy": 0.49852868833276753,
+      "longest_duration_ratio": 0.16482348566483643,
+      "sections": [
+        {
+          "start": 0.0,
+          "end": 20.88,
+          "kind": "quiet",
+          "bars": 10,
+          "mean_energy": 0.27042694266239165,
+          "mean_smoothed_energy": 0.2675409803608715
+        },
+        {
+          "start": 20.88,
+          "end": 37.56,
+          "kind": "build",
+          "bars": 8,
+          "mean_energy": 0.8149818228613257,
+          "mean_smoothed_energy": 0.7701753443216374
+        },
+        {
+          "start": 37.56,
+          "end": 54.28,
+          "kind": "quiet",
+          "bars": 8,
+          "mean_energy": 0.511477847509719,
+          "mean_smoothed_energy": 0.5485832493681679
+        },
+        {
+          "start": 54.28,
+          "end": 70.96,
+          "kind": "peak",
+          "bars": 8,
+          "mean_energy": 0.8601332703918106,
+          "mean_smoothed_energy": 0.825842281395153
+        },
+        {
+          "start": 70.96,
+          "end": 89.74,
+          "kind": "build",
+          "bars": 9,
+          "mean_energy": 0.7836402176631156,
+          "mean_smoothed_energy": 0.7838530424762966
+        },
+        {
+          "start": 89.74,
+          "end": 106.42,
+          "kind": "peak",
+          "bars": 8,
+          "mean_energy": 0.7975466765201423,
+          "mean_smoothed_energy": 0.8136271332207271
+        },
+        {
+          "start": 106.42,
+          "end": 121.06,
+          "kind": "quiet",
+          "bars": 7,
+          "mean_energy": 0.5530424481687185,
+          "mean_smoothed_energy": 0.5721027547427483
+        },
+        {
+          "start": 121.06,
+          "end": 137.74,
+          "kind": "peak",
+          "bars": 8,
+          "mean_energy": 0.8624141165609674,
+          "mean_smoothed_energy": 0.832257533609601
+        },
+        {
+          "start": 137.74,
+          "end": 158.62,
+          "kind": "quiet",
+          "bars": 10,
+          "mean_energy": 0.6781114747764168,
+          "mean_smoothed_energy": 0.6686076664531975
+        },
+        {
+          "start": 158.62,
+          "end": 189.923923,
+          "kind": "peak",
+          "bars": 18,
+          "mean_energy": 0.7973819655698231,
+          "mean_smoothed_energy": 0.824633461884161
+        }
+      ],
+      "display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": "Tropical House",
+        "mood": [
+          "mood.deep",
+          "mood.happy"
+        ],
+        "scene": [
+          "scene.summer"
+        ],
+        "instrument": [
+          "instrument.bass",
+          "instrument.synthesizer",
+          "instrument.keyboard"
+        ],
+        "voice": [
+          "voice.voice"
+        ],
+        "voice_uncertain": false
+      },
+      "bpm": 115,
+      "meter": 4,
+      "export": "~/.photo-content-os/r223/beat-maps/2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af.json",
+      "export_sha256": "4bcd768d6cd46a4e81590d5e53629bebf1713152e93d51d1b372ceb5a839c28d",
+      "analysis_sha256": "577063c01f0f230cb8cdcec7f63f45687f427d732a95b101e3cb5a3674e35eff"
+    },
+    {
+      "title": "Fever Pitch",
+      "file_sha256": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "beat": "done",
+      "tags": "done",
+      "labels_match": true,
+      "bar_energy_std": 0.3337479534799548,
+      "smoothed_bar_energy_std": 0.286274613313179,
+      "peak_mean_energy": 0.8649870120819056,
+      "quiet_mean_energy": 0.2903228762164689,
+      "longest_duration_ratio": 0.18570475226580102,
+      "sections": [
+        {
+          "start": 0.0,
+          "end": 21.3,
+          "kind": "quiet",
+          "bars": 11,
+          "mean_energy": 0.44995659049244785,
+          "mean_smoothed_energy": 0.42123640183414685
+        },
+        {
+          "start": 21.3,
+          "end": 29.04,
+          "kind": "peak",
+          "bars": 4,
+          "mean_energy": 0.9063963868572837,
+          "mean_smoothed_energy": 0.9130715311251497
+        },
+        {
+          "start": 29.04,
+          "end": 36.8,
+          "kind": "build",
+          "bars": 4,
+          "mean_energy": 0.8043564505130408,
+          "mean_smoothed_energy": 0.8003410165775833
+        },
+        {
+          "start": 36.8,
+          "end": 48.4,
+          "kind": "peak",
+          "bars": 6,
+          "mean_energy": 0.8496162001729212,
+          "mean_smoothed_energy": 0.8482438760048749
+        },
+        {
+          "start": 48.4,
+          "end": 71.64,
+          "kind": "quiet",
+          "bars": 12,
+          "mean_energy": 0.23604826988506888,
+          "mean_smoothed_energy": 0.2611187515163565
+        },
+        {
+          "start": 71.64,
+          "end": 83.24,
+          "kind": "build",
+          "bars": 6,
+          "mean_energy": 0.6008303679185837,
+          "mean_smoothed_energy": 0.5527466130600195
+        },
+        {
+          "start": 83.24,
+          "end": 108.4,
+          "kind": "peak",
+          "bars": 13,
+          "mean_energy": 0.8784275920886361,
+          "mean_smoothed_energy": 0.8776065251288121
+        },
+        {
+          "start": 108.4,
+          "end": 116.14,
+          "kind": "build",
+          "bars": 4,
+          "mean_energy": 0.7217588985828521,
+          "mean_smoothed_energy": 0.7294486772638819
+        },
+        {
+          "start": 116.14,
+          "end": 127.76,
+          "kind": "peak",
+          "bars": 6,
+          "mean_energy": 0.8236303174593891,
+          "mean_smoothed_energy": 0.8308096286146321
+        },
+        {
+          "start": 127.76,
+          "end": 135.483878,
+          "kind": "quiet",
+          "bars": 5,
+          "mean_energy": 0.06938776000467509,
+          "mean_smoothed_energy": 0.14839626871422867
+        }
+      ],
+      "display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": "House",
+        "mood": [
+          "mood.deep"
+        ],
+        "scene": [
+          "scene.summer"
+        ],
+        "instrument": [
+          "instrument.bass",
+          "instrument.synthesizer",
+          "instrument.keyboard"
+        ],
+        "voice": [],
+        "voice_uncertain": true
+      },
+      "bpm": 125,
+      "meter": 4,
+      "export": "~/.photo-content-os/r223/beat-maps/891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b.json",
+      "export_sha256": "26f3b6c6228829ddc57b811f89f88eaaebc6f4feceeeed44e4a458098406bf90",
+      "analysis_sha256": "d6d62b11cef677a5aa44679c919cefb3e0592d6db0cff737b12080d97bc27040"
+    },
+    {
+      "title": "CRUSH VIBE",
+      "file_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "beat": "done",
+      "tags": "done",
+      "labels_match": true,
+      "bar_energy_std": 0.3147488238023023,
+      "smoothed_bar_energy_std": 0.27354237329971953,
+      "peak_mean_energy": 0.8513473161178039,
+      "quiet_mean_energy": 0.30674209800305413,
+      "longest_duration_ratio": 0.17208333333333334,
+      "sections": [
+        {
+          "start": 0.0,
+          "end": 16.52,
+          "kind": "quiet",
+          "bars": 11,
+          "mean_energy": 0.22224553889696913,
+          "mean_smoothed_energy": 0.19121300939681915
+        },
+        {
+          "start": 16.52,
+          "end": 29.76,
+          "kind": "peak",
+          "bars": 9,
+          "mean_energy": 0.8385079669203874,
+          "mean_smoothed_energy": 0.8352702423416498
+        },
+        {
+          "start": 29.76,
+          "end": 44.64,
+          "kind": "build",
+          "bars": 9,
+          "mean_energy": 0.760666360314283,
+          "mean_smoothed_energy": 0.7656277044293496
+        },
+        {
+          "start": 44.64,
+          "end": 56.22,
+          "kind": "peak",
+          "bars": 8,
+          "mean_energy": 0.8585244024788681,
+          "mean_smoothed_energy": 0.8573064168109354
+        },
+        {
+          "start": 56.22,
+          "end": 62.84,
+          "kind": "build",
+          "bars": 4,
+          "mean_energy": 0.8224859791002881,
+          "mean_smoothed_energy": 0.8123477967472111
+        },
+        {
+          "start": 62.84,
+          "end": 69.46,
+          "kind": "quiet",
+          "bars": 4,
+          "mean_energy": 0.6078418321179224,
+          "mean_smoothed_energy": 0.6168564638085351
+        },
+        {
+          "start": 69.46,
+          "end": 76.08,
+          "kind": "peak",
+          "bars": 4,
+          "mean_energy": 0.8658816790898625,
+          "mean_smoothed_energy": 0.8466661851040822
+        },
+        {
+          "start": 76.08,
+          "end": 89.34,
+          "kind": "build",
+          "bars": 8,
+          "mean_energy": 0.7825414875241828,
+          "mean_smoothed_energy": 0.7913772658343783
+        },
+        {
+          "start": 89.34,
+          "end": 96.0,
+          "kind": "quiet",
+          "bars": 4,
+          "mean_energy": 0.23800790142991962,
+          "mean_smoothed_energy": 0.3324558682360565
+        }
+      ],
+      "display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": null,
+        "mood": [
+          "mood.melodic",
+          "mood.space",
+          "mood.dark"
+        ],
+        "scene": [],
+        "instrument": [
+          "instrument.synthesizer",
+          "instrument.sampler"
+        ],
+        "voice": [
+          "voice.instrumental"
+        ],
+        "voice_uncertain": false
+      },
+      "bpm": 143,
+      "meter": 4,
+      "export": "~/.photo-content-os/r223/beat-maps/e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256.json",
+      "export_sha256": "f9053c639219774ea606cb971c36d6f4ae6b7f4783b7e53fe056514cff2da0c6",
+      "analysis_sha256": "b2aad9566752112927cc2d2315f2035d2d5d1221bbb78f28a37bc3d05d8be5e4"
+    }
+  ]
+}

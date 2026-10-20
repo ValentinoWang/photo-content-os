@@ -199,11 +199,21 @@
             "min_bars": {
               "type": "integer",
               "minimum": 1
+            },
+            "smooth_bars": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "merge": {
+              "type": "string",
+              "minLength": 1
             }
           },
           "required": [
             "levels",
-            "min_bars"
+            "smooth_bars",
+            "min_bars",
+            "merge"
           ],
           "additionalProperties": false
         }

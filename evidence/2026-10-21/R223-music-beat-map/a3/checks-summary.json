@@ -1,0 +1,50 @@
+[
+  {
+    "name": "runtime",
+    "command": "bash scripts/check_runtime_contract.sh",
+    "exit_code": 0,
+    "output": "Repository safety check passed.\npython=3.13.16\ncompileall=ok\npackages=ok\nencoding_contract=ok\nRuntime contract check passed.\n"
+  },
+  {
+    "name": "registry",
+    "command": ".venv/bin/python scripts/validate_music_analysis_registry.py",
+    "exit_code": 0,
+    "output": "music-analysis-registry OK: 126 ids; 121 copy entries\n"
+  },
+  {
+    "name": "safety",
+    "command": ".venv/bin/python scripts/check_repository_safety.py --base origin/main",
+    "exit_code": 0,
+    "output": "Repository safety check passed.\n"
+  },
+  {
+    "name": "doc-sync",
+    "command": ".venv/bin/python scripts/check_obsidian_doc_sync.py",
+    "exit_code": 1,
+    "output": "Obsidian 文档同步检查失败：\n- local_execution_to_obsidian_collaboration_v2: source doc is newer than Obsidian target; sync required (newest source: $WORKTREE/scripts/README.md, oldest target: $HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/06_技术栈与自动化/腾讯云OpenClaw与MAC_OpenClaw本地素材协同流转规范.md)\n- local_execution_to_obsidian_editing_handoff_v2: source doc is newer than Obsidian target; sync required (newest source: $WORKTREE/scripts/README.md, oldest target: $HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/剪辑交接与可编辑时间线.md)\n- historical_jianying_evidence_is_not_production: source doc is newer than Obsidian target; sync required (newest source: $WORKTREE/docs/execution-rules.md, oldest target: $HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/Jianying_Roughcut_Draft_Pipeline.md)\n"
+  },
+  {
+    "name": "outline",
+    "command": ".venv/bin/python scripts/check_outline_contract.py .",
+    "exit_code": 1,
+    "output": "Obsidian 文档同步检查失败：\n- local_execution_to_obsidian_collaboration_v2: source doc is newer than Obsidian target; sync required (newest source: $WORKTREE/scripts/README.md, oldest target: $HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/06_技术栈与自动化/腾讯云OpenClaw与MAC_OpenClaw本地素材协同流转规范.md)\n- local_execution_to_obsidian_editing_handoff_v2: source doc is newer than Obsidian target; sync required (newest source: $WORKTREE/scripts/README.md, oldest target: $HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/剪辑交接与可编辑时间线.md)\n- historical_jianying_evidence_is_not_production: source doc is newer than Obsidian target; sync required (newest source: $WORKTREE/docs/execution-rules.md, oldest target: $HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/Jianying_Roughcut_Draft_Pipeline.md)\nTraceback (most recent call last):\n  File \"$WORKTREE/scripts/check_outline_contract.py\", line 196, in <module>\n    main()\n    ~~~~^^\n  File \"$WORKTREE/scripts/check_outline_contract.py\", line 187, in main\n    subprocess.run(\n    ~~~~~~~~~~~~~~^\n        [sys.executable, str(obsidian_sync_script), \"--local-root\", str(root)],\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        check=True,\n        ^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py\", line 578, in run\n    raise CalledProcessError(retcode, process.args,\n                             output=stdout, stderr=stderr)\nsubprocess.CalledProcessError: Command '['$HOME/Desktop/创业项目/photo-content-os/.venv/bin/python', '$WORKTREE/scripts/check_obsidian_doc_sync.py', '--local-root', '$WORKTREE']' returned non-zero exit status 1.\n"
+  },
+  {
+    "name": "task-help",
+    "command": ".venv/bin/python scripts/validate_content_os_task.py --help",
+    "exit_code": 0,
+    "output": "usage: validate_content_os_task.py [-h] --task TASK --vault-root VAULT_ROOT\n                                   --capabilities CAPABILITIES\n                                   [--blocked-result-out BLOCKED_RESULT_OUT]\n\nValidate a Content OS v0.2 task before the Mac runner executes it. The\nvalidator deliberately reads the project overview and, for revision work, the\ncanonical change request. A ready queue file is therefore only an instruction:\nit cannot make an old project revision or an unconfirmed idea executable on\nits own.\n\noptions:\n  -h, --help            show this help message and exit\n  --task TASK\n  --vault-root VAULT_ROOT\n  --capabilities CAPABILITIES\n  --blocked-result-out BLOCKED_RESULT_OUT\n"
+  },
+  {
+    "name": "draft-help",
+    "command": ".venv/bin/python scripts/validate_jianying_draft.py --help",
+    "exit_code": 0,
+    "output": "usage: validate_jianying_draft.py [-h] [--plan PLAN] [--result RESULT]\n                                  [--rewritten-json REWRITTEN_JSON]\n                                  [--rewrite-proof REWRITE_PROOF]\n                                  [--validation-output VALIDATION_OUTPUT]\n                                  [--roughcut-review-output ROUGHCUT_REVIEW_OUTPUT]\n\nValidate a generated Jianying roughcut draft against its draft plan.\n\noptions:\n  -h, --help            show this help message and exit\n  --plan PLAN\n  --result RESULT\n  --rewritten-json REWRITTEN_JSON\n  --rewrite-proof REWRITE_PROOF\n  --validation-output VALIDATION_OUTPUT\n  --roughcut-review-output ROUGHCUT_REVIEW_OUTPUT\n"
+  },
+  {
+    "name": "scoped",
+    "command": ".venv/bin/python -m pytest -q tests/test_r223_music_analysis.py tests/test_p1_openclaw_bridge.py tests/test_desktop_openapi_route_sync.py",
+    "exit_code": 0,
+    "output": "...............................................................      [100%]\n63 passed, 4 subtests passed in 9.60s\n"
+  }
+]

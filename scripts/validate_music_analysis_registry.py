@@ -33,6 +33,10 @@ def validate(registry, previous=None):
     errors = [f'{e.json_path}: {e.message}' for e in Draft202012Validator(schema).iter_errors(registry)]
     if errors:
         return errors
+    for key in ('smooth_bars', 'min_bars'):
+        value = registry['sections']['rules'][key]
+        if type(value) is not int or value <= 0:
+            errors.append(f'sections.rules.{key}: must be a positive integer')
     ids = identities(registry)
     if len(ids) != len(set(ids)):
         errors.append('duplicate id')

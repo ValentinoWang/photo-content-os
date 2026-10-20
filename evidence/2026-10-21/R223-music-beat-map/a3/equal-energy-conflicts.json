@@ -1,0 +1,35 @@
+{
+  "four_constant_regions": {
+    "lower_tertile": 0.5,
+    "upper_tertile": 0.9,
+    "raw_std": 0.33166247903554,
+    "smoothed_std": 0.3191174352804936,
+    "strict_peak_bars": 0,
+    "sections": [
+      {
+        "start": 0,
+        "end": 16,
+        "kind": "quiet"
+      },
+      {
+        "start": 16,
+        "end": 64,
+        "kind": "build"
+      }
+    ]
+  },
+  "exact_alternation": {
+    "lower_tertile": 0.5,
+    "upper_tertile": 0.5,
+    "raw_std": 0.30000000000000004,
+    "smoothed_std": 0.01767766952966369,
+    "strict_peak_bars": 1,
+    "sections": [
+      {
+        "start": 0,
+        "end": 64,
+        "kind": "build"
+      }
+    ]
+  }
+}

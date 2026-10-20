@@ -1,0 +1,6 @@
+$ .venv/bin/python /tmp/r223-a3-publish-once.py
+exit 0
+Turn Back Time sections=10 peak_mean=0.821753 quiet_mean=0.498529 longest_ratio=0.164823
+Fever Pitch sections=10 peak_mean=0.864987 quiet_mean=0.290323 longest_ratio=0.185705
+CRUSH VIBE sections=9 peak_mean=0.851347 quiet_mean=0.306742 longest_ratio=0.172083
+3/3 beat+tags done; labels match; exported shape verified; 83 protected hashes+mtimes unchanged; only 3 analysis.json overwritten

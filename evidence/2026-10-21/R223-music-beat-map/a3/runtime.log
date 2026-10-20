@@ -1,0 +1,8 @@
+$ bash scripts/check_runtime_contract.sh
+exit 0
+Repository safety check passed.
+python=3.13.16
+compileall=ok
+packages=ok
+encoding_contract=ok
+Runtime contract check passed.

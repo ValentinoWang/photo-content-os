@@ -1,0 +1,54 @@
+$ .venv/bin/python -m pytest -q tests/test_r223_sections.py
+exit 1
+FF....................                                                   [100%]
+=================================== FAILURES ===================================
+______________ test_synthetic_audio_preserves_four_energy_regions ______________
+
+tmp_path = PosixPath('$TEMP')
+
+    def test_synthetic_audio_preserves_four_energy_regions(tmp_path):
+        sr = 8000
+        bars = [.1] * 16 + [.9] * 16 + [.5] * 16 + [.9] * 16
+        bar_seconds = 2
+        samples = np.concatenate([amplitude * np.sin(2 * np.pi * 440 * np.arange(sr * bar_seconds) / sr)
+                                  for amplitude in bars])
+        path = tmp_path / 'quiet-peak-build-peak.wav'
+        with wave.open(str(path), 'wb') as audio:
+            audio.setparams((1, 2, sr, 0, 'NONE', 'not compressed'))
+            audio.writeframes((samples * 32767).astype('<i2').tobytes())
+        with wave.open(str(path), 'rb') as audio:
+            decoded = np.frombuffer(audio.readframes(audio.getnframes()), dtype='<i2').astype(float) / 32768
+        rms = np.sqrt(np.mean(decoded.reshape(-1, sr // 2) ** 2, axis=1))
+        low, high = np.quantile(rms, [.05, .95])
+        energy = np.clip((rms - low) / (high - low), 0, 1).tolist()
+        duration = len(bars) * bar_seconds
+        beats = np.arange(0, duration, .5).tolist()
+        downbeats = np.arange(0, duration, bar_seconds).tolist()
+        sections = section_map(beats, downbeats, energy, duration, RULES)
+        assert_coverage(sections, downbeats, duration)
+>       assert [s['kind'] for s in sections] == ['quiet', 'peak', 'build', 'peak']
+E       AssertionError: assert ['quiet', 'build'] == ['quiet', 'pe...uild', 'peak']
+E         
+E         At index 1 diff: 'build' != 'peak'
+E         Right contains 2 more items, first extra item: 'build'
+E         Use -v to get more diff
+
+tests/test_r223_sections.py:53: AssertionError
+________ test_alternating_bars_do_not_snowball_into_a_dominant_section _________
+
+    def test_alternating_bars_do_not_snowball_into_a_dominant_section():
+        energy = [.2, .8] * 32
+        beats = [float(i) for i in range(len(energy))]
+        downbeats = list(beats)
+        sections = section_map(beats, downbeats, energy, float(len(energy)), RULES)
+        assert_coverage(sections, downbeats, len(energy))
+>       assert max(s['end'] - s['start'] for s in sections) <= .6 * len(energy)
+E       assert 64.0 <= (0.6 * 64)
+E        +  where 64.0 = max(<generator object test_alternating_bars_do_not_snowball_into_a_dominant_section.<locals>.<genexpr> at 0x10a5842b0>)
+E        +  and   64 = len([0.2, 0.8, 0.2, 0.8, 0.2, 0.8, ...])
+
+tests/test_r223_sections.py:65: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_r223_sections.py::test_synthetic_audio_preserves_four_energy_regions
+FAILED tests/test_r223_sections.py::test_alternating_bars_do_not_snowball_into_a_dominant_section
+2 failed, 20 passed in 2.52s

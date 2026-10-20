@@ -32,38 +32,74 @@ def versions(*packages):
     return {p: importlib.metadata.version(p) for p in packages}
 
 
-def section_map(beats, downs, energy, duration, rules):
+def section_bars(beats, downs, energy, duration, rules):
     import numpy as np
-    boundaries = sorted(set([0.0, *downs, duration]))
-    bars = []
-    for start, end in zip(boundaries, boundaries[1:]):
-        values = [e for t, e in zip(beats, energy) if start <= t < end]
-        bars.append({'start': start, 'end': end, 'energy': float(np.mean(values)) if values else 0.0})
-    low, high = np.quantile([b['energy'] for b in bars], [1/3, 2/3])
-    runs = []
-    for bar in bars:
-        kind = 'quiet' if bar['energy'] <= low else 'peak' if bar['energy'] > high else 'build'
-        if runs and runs[-1]['kind'] == kind:
-            runs[-1]['end'] = bar['end']; runs[-1]['bars'] += 1
+    window = rules['smooth_bars']
+    if type(window) is not int or window <= 0:
+        raise ValueError('smooth_bars must be a positive integer')
+    starts = list(downs)
+    if not starts:
+        starts = [0.0]
+    elif starts[0] > 0:
+        if any(0 <= beat < starts[0] for beat in beats):
+            starts.insert(0, 0.0)
         else:
-            runs.append(dict(start=bar['start'], end=bar['end'], kind=kind, bars=1))
+            starts[0] = 0.0
+    bars = []
+    for start, end in zip(starts, [*starts[1:], duration]):
+        values = [value for beat, value in zip(beats, energy) if start <= beat < end]
+        bars.append(dict(start=start, end=end, energy=float(np.mean(values)) if values else 0.0))
+    # For an even window, the extra neighbor is before the current bar.
+    left = window // 2
+    right = window - left - 1
+    for i, bar in enumerate(bars):
+        bar['smoothed_energy'] = float(np.mean([b['energy'] for b in bars[max(0, i-left):min(len(bars), i+right+1)]]))
+    return bars
+
+
+def merge_short_sections(runs, minimum):
+    if type(minimum) is not int or minimum <= 0:
+        raise ValueError('min_bars must be a positive integer')
     while len(runs) > 1:
-        short = next((i for i, r in enumerate(runs) if r['bars'] < rules['min_bars']), None)
-        if short is None:
+        short = [i for i, run in enumerate(runs) if run['bars'] < minimum]
+        if not short:
             break
-        i = short
-        neighbor = i - 1 if i > 0 and (i == len(runs) - 1 or runs[i-1]['bars'] >= runs[i+1]['bars']) else i + 1
-        left, right = sorted([i, neighbor])
-        merged = dict(start=runs[left]['start'], end=runs[right]['end'], kind=runs[neighbor]['kind'], bars=runs[left]['bars'] + runs[right]['bars'])
+        i = min(short, key=lambda index: (runs[index]['bars'], index))
+        mean = runs[i]['energy_sum'] / runs[i]['bars']
+        neighbors = [j for j in (i-1, i+1) if 0 <= j < len(runs)]
+        neighbor = min(neighbors, key=lambda j: (abs(mean - runs[j]['energy_sum'] / runs[j]['bars']), -runs[j]['bars'], j))
+        left, right = sorted((i, neighbor))
+        merged = dict(start=runs[left]['start'], end=runs[right]['end'], kind=runs[neighbor]['kind'],
+                      bars=runs[left]['bars']+runs[right]['bars'], energy_sum=runs[left]['energy_sum']+runs[right]['energy_sum'])
         runs[left:right+1] = [merged]
-        # Coalesce adjacent equal kinds after merging a short run.
         j = 1
         while j < len(runs):
             if runs[j-1]['kind'] == runs[j]['kind']:
-                runs[j-1]['end'] = runs[j]['end']; runs[j-1]['bars'] += runs[j]['bars']; runs.pop(j)
+                runs[j-1]['end'] = runs[j]['end']
+                runs[j-1]['bars'] += runs[j]['bars']
+                runs[j-1]['energy_sum'] += runs[j]['energy_sum']
+                runs.pop(j)
             else:
                 j += 1
-    return [{k: v for k, v in run.items() if k != 'bars'} for run in runs]
+    return runs
+
+
+def section_map(beats, downs, energy, duration, rules):
+    import numpy as np
+    bars = section_bars(beats, downs, energy, duration, rules)
+    low, high = np.quantile([bar['smoothed_energy'] for bar in bars], [1/3, 2/3])
+    runs = []
+    for bar in bars:
+        value = bar['smoothed_energy']
+        kind = 'quiet' if value < low else 'peak' if value > high else 'build'
+        if runs and runs[-1]['kind'] == kind:
+            runs[-1]['end'] = bar['end']
+            runs[-1]['bars'] += 1
+            runs[-1]['energy_sum'] += value
+        else:
+            runs.append(dict(start=bar['start'], end=bar['end'], kind=kind, bars=1, energy_sum=value))
+    runs = merge_short_sections(runs, rules['min_bars'])
+    return [{key: run[key] for key in ('start', 'end', 'kind')} for run in runs]
 
 
 def analyze_beat(audio, sr, duration, reg, lock):

@@ -1,0 +1,6 @@
+$ .venv/bin/python /tmp/r223-a3-analyze-once.py
+exit 0
+Turn Back Time beat=done tags=done labels_match=True elapsed=76.91
+Fever Pitch beat=done tags=done labels_match=True elapsed=64.45
+CRUSH VIBE beat=done tags=done labels_match=True elapsed=40.81
+86 library files unchanged; results staged outside library
