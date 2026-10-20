@@ -14,6 +14,7 @@ import mimetypes
 import os
 import re
 import shutil
+import sys
 import subprocess
 import tempfile
 from pathlib import Path
@@ -413,6 +414,9 @@ def generate_text_with_codex_cli(
     except ValueError as exc:
         raise LLMError("OPENCLAW_CODEX_TIMEOUT_SEC must be an integer") from exc
     prompt = codex_prompt(system_prompt, user_prompt)
+    child_env = os.environ.copy()
+    # env-python wrappers must use this running, supported Python runtime.
+    child_env['PATH'] = str(Path(sys.executable).parent) + os.pathsep + child_env.get('PATH','')
 
     with tempfile.NamedTemporaryFile("w+", encoding="utf-8", suffix=".codex-output.txt", delete=False) as handle:
         output_path = Path(handle.name)
@@ -442,6 +446,7 @@ def generate_text_with_codex_cli(
         completed = subprocess.run(
             args,
             input=prompt,
+            env=child_env,
             text=True,
             encoding="utf-8",
             errors="replace",

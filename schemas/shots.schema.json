@@ -1,0 +1,675 @@
+{
+  "type": "object",
+  "required": [
+    "schema_version",
+    "created_at",
+    "project_relative_path",
+    "config",
+    "run_status",
+    "elapsed_seconds",
+    "source_counts",
+    "sample",
+    "blur_project_median",
+    "aesthetic_model",
+    "shots",
+    "sheets",
+    "hook_candidates",
+    "model_calls",
+    "distributions",
+    "aesthetic_comparison"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "shots_v1"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "project_relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?![A-Za-z]:).+$"
+    },
+    "config": {
+      "type": "object"
+    },
+    "run_status": {
+      "enum": [
+        "local_analysis",
+        "model_selection",
+        "failed",
+        "local_only",
+        "complete"
+      ]
+    },
+    "elapsed_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "source_counts": {
+      "type": "object"
+    },
+    "sample": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "path",
+          "size_bytes",
+          "mtime_ns"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "video",
+              "photo"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?![A-Za-z]:).+$"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "mtime_ns": {
+            "type": "integer"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "blur_project_median": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "aesthetic_model": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "shots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "source_relative_path",
+          "scene",
+          "start_sec",
+          "end_sec",
+          "duration_sec",
+          "frames",
+          "frame_measurements",
+          "metrics",
+          "aesthetic",
+          "score_parts",
+          "total_score",
+          "duplicate_group",
+          "duplicate_of",
+          "unknown_reasons",
+          "rejection_reasons",
+          "model_decision",
+          "model_reason",
+          "status",
+          "quality_flags",
+          "quality_penalty",
+          "visual_flags"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^S[0-9a-f]{10}(-[0-9]{3})?$"
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "photo"
+            ]
+          },
+          "source_relative_path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?![A-Za-z]:).+$"
+          },
+          "scene": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?![A-Za-z]:).+$"
+          },
+          "start_sec": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "end_sec": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "duration_sec": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "frames": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?![A-Za-z]:).+$"
+            },
+            "maxItems": 3
+          },
+          "frame_measurements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "time_sec",
+                "path",
+                "status",
+                "blur_variance",
+                "overexposed_fraction",
+                "underexposed_fraction"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "time_sec": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "path": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?![A-Za-z]:).+$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "ok",
+                    "unknown"
+                  ]
+                },
+                "blur_variance": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "overexposed_fraction": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "underexposed_fraction": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "whole_frame_variance": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "tile_variances": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 16,
+                  "maxItems": 16
+                }
+              }
+            },
+            "maxItems": 3
+          },
+          "metrics": {
+            "type": "object",
+            "required": [
+              "blur_variance",
+              "blur_project_ratio",
+              "overexposed_fraction",
+              "underexposed_fraction",
+              "shake_high_frequency",
+              "tracking_fraction",
+              "motion_mean",
+              "motion_peak",
+              "motion_peak_time_sec"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "blur_variance": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "blur_project_ratio": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "overexposed_fraction": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "underexposed_fraction": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "shake_high_frequency": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "tracking_fraction": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "motion_mean": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "motion_peak": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "motion_peak_time_sec": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "sharpest_frame_variance": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "least_overexposed_fraction": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "least_underexposed_fraction": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          },
+          "aesthetic": {
+            "type": "object",
+            "required": [
+              "model",
+              "score",
+              "frame_scores",
+              "frame_seconds"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "model": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "score": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "frame_scores": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "frame_seconds": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "score_parts": {
+            "type": "object",
+            "required": [
+              "aesthetic",
+              "motion_match",
+              "narrative_match"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "aesthetic": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "motion_match": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "narrative_match": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          },
+          "total_score": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "duplicate_group": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "duplicate_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "unknown_reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rejection_reasons": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "blur",
+                "all_black",
+                "all_white",
+                "extreme_shake",
+                "too_short"
+              ]
+            }
+          },
+          "model_decision": {
+            "enum": [
+              null,
+              "精选",
+              "可用",
+              "不用"
+            ]
+          },
+          "model_reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "selected",
+              "usable",
+              "unused",
+              "rejected",
+              "unknown"
+            ]
+          },
+          "quality_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "quality_penalty": {
+            "type": "number",
+            "minimum": 0
+          },
+          "visual_flags": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "has_title_or_sticker",
+              "has_watermark",
+              "has_occlusion"
+            ],
+            "properties": {
+              "has_title_or_sticker": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "has_watermark": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "has_occlusion": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "selected"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "unknown_reasons": {
+                  "maxItems": 0
+                },
+                "rejection_reasons": {
+                  "maxItems": 0
+                },
+                "model_decision": {
+                  "const": "精选"
+                },
+                "visual_flags": {
+                  "properties": {
+                    "has_title_or_sticker": {
+                      "const": false
+                    },
+                    "has_watermark": {
+                      "const": false
+                    },
+                    "has_occlusion": {
+                      "const": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "photo"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "start_sec": {
+                  "type": "null"
+                },
+                "end_sec": {
+                  "type": "null"
+                },
+                "duration_sec": {
+                  "type": "null"
+                },
+                "metrics": {
+                  "properties": {
+                    "shake_high_frequency": {
+                      "type": "null"
+                    },
+                    "tracking_fraction": {
+                      "type": "null"
+                    },
+                    "motion_mean": {
+                      "type": "null"
+                    },
+                    "motion_peak": {
+                      "type": "null"
+                    },
+                    "motion_peak_time_sec": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "minItems": 1
+    },
+    "sheets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "scene",
+          "path",
+          "ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "scene": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?![A-Za-z]:).+$"
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "detail_paths": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "string",
+              "pattern": "^(?!/)(?!.*\\.\\.)"
+            }
+          }
+        }
+      }
+    },
+    "audit_sheets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?![A-Za-z]:).+$"
+      }
+    },
+    "hook_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "reason"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "maxItems": 5
+    },
+    "model_calls": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "distributions": {
+      "type": "object"
+    },
+    "aesthetic_comparison": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reusable shot selection evidence v1"
+}
