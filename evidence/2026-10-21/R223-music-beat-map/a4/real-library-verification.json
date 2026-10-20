@@ -1,0 +1,421 @@
+{
+  "protected_files": 85,
+  "protected_hashes_and_mtimes_unchanged": true,
+  "no_added_or_removed_files": true,
+  "changed_analysis": [
+    "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af/analysis.json"
+  ],
+  "tracks": [
+    {
+      "title": "Turn Back Time",
+      "file_sha256": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "sections_changed": true,
+      "analysis_written": true,
+      "export_written": true,
+      "old_sections": [
+        {
+          "start": 0.0,
+          "end": 20.88,
+          "kind": "quiet"
+        },
+        {
+          "start": 20.88,
+          "end": 37.56,
+          "kind": "build"
+        },
+        {
+          "start": 37.56,
+          "end": 54.28,
+          "kind": "quiet"
+        },
+        {
+          "start": 54.28,
+          "end": 70.96,
+          "kind": "peak"
+        },
+        {
+          "start": 70.96,
+          "end": 89.74,
+          "kind": "build"
+        },
+        {
+          "start": 89.74,
+          "end": 106.42,
+          "kind": "peak"
+        },
+        {
+          "start": 106.42,
+          "end": 121.06,
+          "kind": "quiet"
+        },
+        {
+          "start": 121.06,
+          "end": 137.74,
+          "kind": "peak"
+        },
+        {
+          "start": 137.74,
+          "end": 158.62,
+          "kind": "quiet"
+        },
+        {
+          "start": 158.62,
+          "end": 189.923923,
+          "kind": "peak"
+        }
+      ],
+      "sections": [
+        {
+          "start": 0.0,
+          "end": 22.96,
+          "kind": "quiet",
+          "bars": 11,
+          "mean_energy": 0.3296005662448643
+        },
+        {
+          "start": 22.96,
+          "end": 37.56,
+          "kind": "build",
+          "bars": 7,
+          "mean_energy": 0.7997882544030022
+        },
+        {
+          "start": 37.56,
+          "end": 54.28,
+          "kind": "quiet",
+          "bars": 8,
+          "mean_energy": 0.511477847509719
+        },
+        {
+          "start": 54.28,
+          "end": 70.96,
+          "kind": "peak",
+          "bars": 8,
+          "mean_energy": 0.8601332703918106
+        },
+        {
+          "start": 70.96,
+          "end": 89.74,
+          "kind": "build",
+          "bars": 9,
+          "mean_energy": 0.7836402176631156
+        },
+        {
+          "start": 89.74,
+          "end": 106.42,
+          "kind": "peak",
+          "bars": 8,
+          "mean_energy": 0.7975466765201423
+        },
+        {
+          "start": 106.42,
+          "end": 121.06,
+          "kind": "quiet",
+          "bars": 7,
+          "mean_energy": 0.5530424481687185
+        },
+        {
+          "start": 121.06,
+          "end": 137.74,
+          "kind": "peak",
+          "bars": 8,
+          "mean_energy": 0.8624141165609674
+        },
+        {
+          "start": 137.74,
+          "end": 158.62,
+          "kind": "quiet",
+          "bars": 10,
+          "mean_energy": 0.6781114747764168
+        },
+        {
+          "start": 158.62,
+          "end": 189.923923,
+          "kind": "peak",
+          "bars": 18,
+          "mean_energy": 0.7973819655698231
+        }
+      ],
+      "bar_energy_std": 0.243160161589613,
+      "peak_mean_energy": 0.8217530449533377,
+      "quiet_mean_energy": 0.5102733581587905,
+      "longest_duration_ratio": 0.16482348566483643,
+      "beat_except_sections_unchanged": true,
+      "tags_unchanged": true,
+      "bpm": 115,
+      "meter": 4,
+      "export": "~/.photo-content-os/r223/beat-maps/2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af.json",
+      "export_sha256": "a663c17e1835ac16e048780ec18b46d0e82435570a323c149571ec3d56238f3e"
+    },
+    {
+      "title": "Fever Pitch",
+      "file_sha256": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "sections_changed": false,
+      "analysis_written": false,
+      "export_written": false,
+      "old_sections": [
+        {
+          "start": 0.0,
+          "end": 21.3,
+          "kind": "quiet"
+        },
+        {
+          "start": 21.3,
+          "end": 29.04,
+          "kind": "peak"
+        },
+        {
+          "start": 29.04,
+          "end": 36.8,
+          "kind": "build"
+        },
+        {
+          "start": 36.8,
+          "end": 48.4,
+          "kind": "peak"
+        },
+        {
+          "start": 48.4,
+          "end": 71.64,
+          "kind": "quiet"
+        },
+        {
+          "start": 71.64,
+          "end": 83.24,
+          "kind": "build"
+        },
+        {
+          "start": 83.24,
+          "end": 108.4,
+          "kind": "peak"
+        },
+        {
+          "start": 108.4,
+          "end": 116.14,
+          "kind": "build"
+        },
+        {
+          "start": 116.14,
+          "end": 127.76,
+          "kind": "peak"
+        },
+        {
+          "start": 127.76,
+          "end": 135.483878,
+          "kind": "quiet"
+        }
+      ],
+      "sections": [
+        {
+          "start": 0.0,
+          "end": 21.3,
+          "kind": "quiet",
+          "bars": 11,
+          "mean_energy": 0.44995659049244785
+        },
+        {
+          "start": 21.3,
+          "end": 29.04,
+          "kind": "peak",
+          "bars": 4,
+          "mean_energy": 0.9063963868572837
+        },
+        {
+          "start": 29.04,
+          "end": 36.8,
+          "kind": "build",
+          "bars": 4,
+          "mean_energy": 0.8043564505130408
+        },
+        {
+          "start": 36.8,
+          "end": 48.4,
+          "kind": "peak",
+          "bars": 6,
+          "mean_energy": 0.8496162001729212
+        },
+        {
+          "start": 48.4,
+          "end": 71.64,
+          "kind": "quiet",
+          "bars": 12,
+          "mean_energy": 0.23604826988506888
+        },
+        {
+          "start": 71.64,
+          "end": 83.24,
+          "kind": "build",
+          "bars": 6,
+          "mean_energy": 0.6008303679185837
+        },
+        {
+          "start": 83.24,
+          "end": 108.4,
+          "kind": "peak",
+          "bars": 13,
+          "mean_energy": 0.8784275920886361
+        },
+        {
+          "start": 108.4,
+          "end": 116.14,
+          "kind": "build",
+          "bars": 4,
+          "mean_energy": 0.7217588985828521
+        },
+        {
+          "start": 116.14,
+          "end": 127.76,
+          "kind": "peak",
+          "bars": 6,
+          "mean_energy": 0.8236303174593891
+        },
+        {
+          "start": 127.76,
+          "end": 135.483878,
+          "kind": "quiet",
+          "bars": 5,
+          "mean_energy": 0.06938776000467509
+        }
+      ],
+      "bar_energy_std": 0.3337479534799548,
+      "peak_mean_energy": 0.8649870120819056,
+      "quiet_mean_energy": 0.2903228762164689,
+      "longest_duration_ratio": 0.18570475226580102,
+      "beat_except_sections_unchanged": true,
+      "tags_unchanged": true,
+      "bpm": 125,
+      "meter": 4,
+      "export": "~/.photo-content-os/r223/beat-maps/891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b.json",
+      "export_sha256": "26f3b6c6228829ddc57b811f89f88eaaebc6f4feceeeed44e4a458098406bf90"
+    },
+    {
+      "title": "CRUSH VIBE",
+      "file_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "sections_changed": false,
+      "analysis_written": false,
+      "export_written": false,
+      "old_sections": [
+        {
+          "start": 0.0,
+          "end": 16.52,
+          "kind": "quiet"
+        },
+        {
+          "start": 16.52,
+          "end": 29.76,
+          "kind": "peak"
+        },
+        {
+          "start": 29.76,
+          "end": 44.64,
+          "kind": "build"
+        },
+        {
+          "start": 44.64,
+          "end": 56.22,
+          "kind": "peak"
+        },
+        {
+          "start": 56.22,
+          "end": 62.84,
+          "kind": "build"
+        },
+        {
+          "start": 62.84,
+          "end": 69.46,
+          "kind": "quiet"
+        },
+        {
+          "start": 69.46,
+          "end": 76.08,
+          "kind": "peak"
+        },
+        {
+          "start": 76.08,
+          "end": 89.34,
+          "kind": "build"
+        },
+        {
+          "start": 89.34,
+          "end": 96.0,
+          "kind": "quiet"
+        }
+      ],
+      "sections": [
+        {
+          "start": 0.0,
+          "end": 16.52,
+          "kind": "quiet",
+          "bars": 11,
+          "mean_energy": 0.22224553889696913
+        },
+        {
+          "start": 16.52,
+          "end": 29.76,
+          "kind": "peak",
+          "bars": 9,
+          "mean_energy": 0.8385079669203874
+        },
+        {
+          "start": 29.76,
+          "end": 44.64,
+          "kind": "build",
+          "bars": 9,
+          "mean_energy": 0.760666360314283
+        },
+        {
+          "start": 44.64,
+          "end": 56.22,
+          "kind": "peak",
+          "bars": 8,
+          "mean_energy": 0.8585244024788681
+        },
+        {
+          "start": 56.22,
+          "end": 62.84,
+          "kind": "build",
+          "bars": 4,
+          "mean_energy": 0.8224859791002881
+        },
+        {
+          "start": 62.84,
+          "end": 69.46,
+          "kind": "quiet",
+          "bars": 4,
+          "mean_energy": 0.6078418321179224
+        },
+        {
+          "start": 69.46,
+          "end": 76.08,
+          "kind": "peak",
+          "bars": 4,
+          "mean_energy": 0.8658816790898625
+        },
+        {
+          "start": 76.08,
+          "end": 89.34,
+          "kind": "build",
+          "bars": 8,
+          "mean_energy": 0.7825414875241828
+        },
+        {
+          "start": 89.34,
+          "end": 96.0,
+          "kind": "quiet",
+          "bars": 4,
+          "mean_energy": 0.23800790142991962
+        }
+      ],
+      "bar_energy_std": 0.3147488238023023,
+      "peak_mean_energy": 0.8513473161178039,
+      "quiet_mean_energy": 0.30674209800305413,
+      "longest_duration_ratio": 0.17208333333333334,
+      "beat_except_sections_unchanged": true,
+      "tags_unchanged": true,
+      "bpm": 143,
+      "meter": 4,
+      "export": "~/.photo-content-os/r223/beat-maps/e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256.json",
+      "export_sha256": "f9053c639219774ea606cb971c36d6f4ae6b7f4783b7e53fe056514cff2da0c6"
+    }
+  ]
+}

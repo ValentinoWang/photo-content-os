@@ -1,0 +1,3 @@
+$ .venv/bin/python scripts/validate_music_analysis_registry.py
+exit 0
+music-analysis-registry OK: 126 ids; 121 copy entries

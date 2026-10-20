@@ -1,0 +1,18 @@
+$ .venv/bin/python scripts/validate_content_os_task.py --help
+exit 0
+usage: validate_content_os_task.py [-h] --task TASK --vault-root VAULT_ROOT
+                                   --capabilities CAPABILITIES
+                                   [--blocked-result-out BLOCKED_RESULT_OUT]
+
+Validate a Content OS v0.2 task before the Mac runner executes it. The
+validator deliberately reads the project overview and, for revision work, the
+canonical change request. A ready queue file is therefore only an instruction:
+it cannot make an old project revision or an unconfirmed idea executable on
+its own.
+
+options:
+  -h, --help            show this help message and exit
+  --task TASK
+  --vault-root VAULT_ROOT
+  --capabilities CAPABILITIES
+  --blocked-result-out BLOCKED_RESULT_OUT

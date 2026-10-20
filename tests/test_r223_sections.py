@@ -1,6 +1,7 @@
 """Section boundaries and short-run merging, using deterministic synthetic audio."""
 import copy
 import json
+import runpy
 from pathlib import Path
 import sys
 import wave
@@ -14,7 +15,7 @@ from music_analysis.worker import merge_short_sections, section_bars, section_ma
 from validate_music_analysis_registry import validate
 
 RULES = {
-    'levels': '按平滑后的小节能量在本曲内三等分',
+    'levels': '按平滑后的小节能量在本曲内三等分：不高于下分位为安静，不低于上分位为高潮，其余为推进；上下分位相同时全曲为推进',
     'smooth_bars': 4,
     'min_bars': 4,
     'merge': '先并最短的段，并入能量更接近的相邻段',
@@ -30,13 +31,13 @@ def assert_coverage(sections, downbeats, duration):
     assert all(s['end'] == duration or s['end'] in downbeats for s in sections)
 
 
-def test_synthetic_audio_preserves_four_energy_regions(tmp_path):
+def test_synthetic_audio_preserves_three_energy_regions(tmp_path):
     sr = 8000
-    bars = [.1] * 16 + [.9] * 16 + [.5] * 16 + [.9] * 16
+    bars = [.1] * 16 + [.9] * 16 + [.5] * 16
     bar_seconds = 2
     samples = np.concatenate([amplitude * np.sin(2 * np.pi * 440 * np.arange(sr * bar_seconds) / sr)
                               for amplitude in bars])
-    path = tmp_path / 'quiet-peak-build-peak.wav'
+    path = tmp_path / 'quiet-peak-build.wav'
     with wave.open(str(path), 'wb') as audio:
         audio.setparams((1, 2, sr, 0, 'NONE', 'not compressed'))
         audio.writeframes((samples * 32767).astype('<i2').tobytes())
@@ -50,19 +51,59 @@ def test_synthetic_audio_preserves_four_energy_regions(tmp_path):
     downbeats = np.arange(0, duration, bar_seconds).tolist()
     sections = section_map(beats, downbeats, energy, duration, RULES)
     assert_coverage(sections, downbeats, duration)
-    assert [s['kind'] for s in sections] == ['quiet', 'peak', 'build', 'peak']
-    assert len(sections) == 4
+    assert [s['kind'] for s in sections] == ['quiet', 'peak', 'build']
+    assert len(sections) == 3
     assert all(abs(section['start'] - target) <= bar_seconds
-               for section, target in zip(sections[1:], [32, 64, 96]))
+               for section, target in zip(sections[1:], [32, 64]))
 
 
-def test_alternating_bars_do_not_snowball_into_a_dominant_section():
+def test_values_equal_to_tertiles_use_inclusive_levels():
+    energy = [.1] * 8 + [.5] * 4 + [.9] * 8
+    beats = [float(i) for i in range(len(energy))]
+    sections = section_map(beats, beats, energy, len(energy), dict(RULES, smooth_bars=1, min_bars=1))
+    assert_coverage(sections, beats, len(energy))
+    assert [s['kind'] for s in sections] == ['quiet', 'build', 'peak']
+
+
+@pytest.mark.parametrize('level', [.1, .5, .9])
+def test_constant_energy_is_one_build_section(level):
+    beats = [float(i) for i in range(64)]
+    sections = section_map(beats, beats, [level] * 64, 64, RULES)
+    assert_coverage(sections, beats, 64)
+    assert sections == [dict(start=0, end=64, kind='build')]
+
+
+def test_nearly_equal_tertiles_are_one_build_section():
+    beats = [float(i) for i in range(64)]
+    sections = section_map(beats, beats, [.5, .5+1e-10] * 32, 64, dict(RULES, smooth_bars=1, min_bars=1))
+    assert_coverage(sections, beats, 64)
+    assert sections == [dict(start=0, end=64, kind='build')]
+
+
+def test_alternating_bars_smooth_to_one_build_section():
     energy = [.2, .8] * 32
     beats = [float(i) for i in range(len(energy))]
-    downbeats = list(beats)
-    sections = section_map(beats, downbeats, energy, float(len(energy)), RULES)
-    assert_coverage(sections, downbeats, len(energy))
-    assert max(s['end'] - s['start'] for s in sections) <= .6 * len(energy)
+    bars = section_bars(beats, beats, energy, len(energy), RULES)
+    assert [b['smoothed_energy'] for b in bars[2:-2]] == pytest.approx([.5] * 60)
+    sections = section_map(beats, beats, energy, float(len(energy)), RULES)
+    assert_coverage(sections, beats, len(energy))
+    assert sections == [dict(start=0, end=len(energy), kind='build')]
+
+
+def test_structured_jitter_does_not_snowball_and_rejects_a2_algorithm():
+    rng = np.random.default_rng(20261021)
+    energy = (np.repeat([.15, .85, .5, .85], 20) + rng.uniform(-.1, .1, 80)).tolist()
+    beats = [float(i) for i in range(len(energy))]
+    duration = len(energy)
+    sections = section_map(beats, beats, energy, duration, RULES)
+    assert_coverage(sections, beats, duration)
+    assert max(s['end'] - s['start'] for s in sections) <= .4 * duration
+    assert sections[0]['kind'] == 'quiet'
+    assert sum(s['kind'] == 'peak' for s in sections) >= 2
+    old_section_map = runpy.run_path(str(ROOT / 'tests/fixtures/r223/section_map_a2.py'))['section_map']
+    old_sections = old_section_map(beats, beats, energy, duration, RULES)
+    assert_coverage(old_sections, beats, duration)
+    assert max(s['end'] - s['start'] for s in old_sections) > .4 * duration
 
 
 @pytest.mark.parametrize('key', ['smooth_bars', 'min_bars'])

@@ -91,7 +91,7 @@ def section_map(beats, downs, energy, duration, rules):
     runs = []
     for bar in bars:
         value = bar['smoothed_energy']
-        kind = 'quiet' if value < low else 'peak' if value > high else 'build'
+        kind = 'build' if high-low < 1e-9 else 'quiet' if value <= low else 'peak' if value >= high else 'build'
         if runs and runs[-1]['kind'] == kind:
             runs[-1]['end'] = bar['end']
             runs[-1]['bars'] += 1

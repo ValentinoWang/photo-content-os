@@ -1,0 +1,6 @@
+{
+  "scripts/music_analysis/worker.py": "fc1be2a3a6029870b496c630cf0026754bdacb5d57a717c10098a69e4bfd3b7c",
+  "music-analysis.registry.json": "2e0a834802e32a5053e2876f249a317a48a97b393990a68453f73af12779ed57",
+  "tests/test_r223_sections.py": "8d1241bdc92b558632581c64acc4b0c8f7acb683928062f75440886eb7393a75",
+  "tests/fixtures/r223/section_map_a2.py": "bf04cf97d23e6c1c1c82d330d7871cae86fd82819be5a39b8aa8e33be735ee14"
+}

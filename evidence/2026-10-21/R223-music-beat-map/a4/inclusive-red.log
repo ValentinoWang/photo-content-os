@@ -1,0 +1,5 @@
+$ .venv/bin/python -m pytest -q tests/test_r223_sections.py -k values_equal
+exit 1
+FAILED tests/test_r223_sections.py::test_values_equal_to_tertiles_use_inclusive_levels
+AssertionError: assert ['build'] == ['quiet', 'build', 'peak']
+1 failed, 27 deselected in 0.53s

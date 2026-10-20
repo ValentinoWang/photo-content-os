@@ -1,0 +1,77 @@
+{
+  "a2": {
+    "sections": [
+      {
+        "start": 0.0,
+        "end": 21,
+        "kind": "quiet"
+      },
+      {
+        "start": 21,
+        "end": 54,
+        "kind": "peak"
+      },
+      {
+        "start": 54,
+        "end": 60,
+        "kind": "build"
+      },
+      {
+        "start": 60,
+        "end": 80,
+        "kind": "peak"
+      }
+    ],
+    "longest_ratio": 0.4125,
+    "peak_sections": 2
+  },
+  "a4": {
+    "sections": [
+      {
+        "start": 0,
+        "end": 20,
+        "kind": "quiet"
+      },
+      {
+        "start": 20,
+        "end": 42,
+        "kind": "peak"
+      },
+      {
+        "start": 42,
+        "end": 46,
+        "kind": "quiet"
+      },
+      {
+        "start": 46,
+        "end": 62,
+        "kind": "build"
+      },
+      {
+        "start": 62,
+        "end": 68,
+        "kind": "peak"
+      },
+      {
+        "start": 68,
+        "end": 75,
+        "kind": "build"
+      },
+      {
+        "start": 75,
+        "end": 80,
+        "kind": "peak"
+      }
+    ],
+    "longest_ratio": 0.275,
+    "peak_sections": 3
+  },
+  "seed": 20261021,
+  "jitter_range": [
+    -0.1,
+    0.1
+  ],
+  "a2_commit": "02a960625a10879e522e1fc81357991f140c030d",
+  "a2_fixture_sha256": "bf04cf97d23e6c1c1c82d330d7871cae86fd82819be5a39b8aa8e33be735ee14",
+  "fixture_matches_original_function": true
+}

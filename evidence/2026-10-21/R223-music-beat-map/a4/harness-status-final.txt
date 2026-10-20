@@ -1,0 +1,33 @@
+ M AGENTS.md
+ M Core/harnesses/INDEX.md
+ M Core/harnesses/ai-coding-error-lessons.md
+ M acceptance/human-acceptance-log.json
+ M acceptance/human-acceptance-log.md
+ M registry.yaml
+ M tools/console/generated/console-data/athlete-os.json
+ M tools/console/generated/console-data/athlete-os/capabilities.json
+ M tools/console/generated/console-data/capabilities.json
+ M tools/console/generated/console-data/cutover.json
+ M tools/console/generated/console-data/harness-engineering.json
+ M tools/console/generated/console-data/harness-engineering/capabilities.json
+ M tools/console/generated/console-data/index.json
+ M tools/console/generated/console-data/matharc.json
+ M tools/console/generated/console-data/matharc/capabilities.json
+ M tools/console/generated/console-data/personal-growth.json
+ M tools/console/generated/console-data/personal-growth/acceptance.json
+ M tools/console/generated/console-data/personal-growth/capabilities.json
+ M tools/console/generated/console-data/personal-growth/requests.json
+ M tools/console/generated/console-data/personal-growth/tasks.json
+ M tools/console/generated/console-data/photo-content-os.json
+ M tools/console/generated/console-data/photo-content-os/capabilities.json
+ M tools/console/generated/console-data/photo-content-os/requests.json
+ M tools/console/generated/console-data/photo-content-os/tasks.json
+ M tools/console/generated/console-data/skills-index.json
+ M tools/console/generated/manifest.json
+ M tools/console/generated/projects.json
+ M tools/console/generated/version.json
+?? Core/harnesses/evidence-retention-guard-card.md
+?? Core/scripts/quality/check_evidence_retention.py
+?? photo-content-os/
+?? scripts/quality/check_evidence_retention.py
+?? tools/tests/test_evidence_retention.py

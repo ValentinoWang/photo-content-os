@@ -1,0 +1,6 @@
+$ .venv/bin/python /tmp/r223-a4-recompute-sections.py
+exit 0
+Turn Back Time sections_changed=True sections=10 analysis_written=True export_written=True
+Fever Pitch sections_changed=False sections=10 analysis_written=False export_written=False
+CRUSH VIBE sections_changed=False sections=9 analysis_written=False export_written=False
+No model rerun; beat data and tags unchanged; protected hashes+mtimes unchanged: 85
