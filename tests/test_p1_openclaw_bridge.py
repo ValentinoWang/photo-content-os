@@ -4,6 +4,8 @@ import ast
 import json
 import hashlib
 import sys
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -15,24 +17,63 @@ sys.path.insert(0, str(SCRIPTS))
 import openclaw_product_contract as contract  # noqa: E402
 
 
+def direct_media_imports(repository_root: Path) -> list[str]:
+    paths = subprocess.run(['git', 'ls-files', '-t', '-z', '--', '*.py'], cwd=repository_root,
+                           check=True, capture_output=True, text=True).stdout.split('\0')
+    paths = [(record[0], repository_root / record[2:]) for record in paths if record]
+    if not paths:
+        raise AssertionError('no Git-tracked Python sources')
+    direct_imports = []
+    for state, path in paths:
+        try:
+            source = path.read_text(encoding='utf-8')
+        except FileNotFoundError:
+            if state != 'S':
+                raise
+            # Sparse checkout omits tracked files; inspect their real index content instead.
+            source = subprocess.run(['git', 'show', ':' + path.relative_to(repository_root).as_posix()],
+                                    cwd=repository_root, check=True, capture_output=True, text=True).stdout
+        tree = ast.parse(source, filename=str(path))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                names = [alias.name for alias in node.names]
+            elif isinstance(node, ast.ImportFrom):
+                names = [node.module or ""]
+            else:
+                continue
+            if any(name == "openclaw_media" or name.startswith("openclaw_media.") for name in names):
+                direct_imports.append(str(path.relative_to(repository_root)))
+    return direct_imports
+
+
 class OpenClawBridgeTests(unittest.TestCase):
     def test_core_has_no_mandatory_openclaw_media_dependency(self):
         requirements = (REPOSITORY_ROOT / "requirements-dev.txt").read_text(encoding="utf-8").lower()
         self.assertNotIn("openclaw-media", requirements)
 
-        direct_imports: list[str] = []
-        for path in (REPOSITORY_ROOT).rglob("*.py"):
-            tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-            for node in ast.walk(tree):
-                if isinstance(node, ast.Import):
-                    names = [alias.name for alias in node.names]
-                elif isinstance(node, ast.ImportFrom):
-                    names = [node.module or ""]
-                else:
-                    continue
-                if any(name == "openclaw_media" or name.startswith("openclaw_media.") for name in names):
-                    direct_imports.append(str(path.relative_to(REPOSITORY_ROOT)))
+        direct_imports = direct_media_imports(REPOSITORY_ROOT)
         self.assertEqual(direct_imports, [])
+
+    def test_untracked_python2_file_is_not_core_source(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            subprocess.run(['git', 'init', '-q', str(root)], check=True)
+            tracked = root / 'core.py'
+            tracked.write_text('import json\n', encoding='utf-8')
+            subprocess.run(['git', 'add', '--', 'core.py'], cwd=root, check=True)
+            vendor = root / '.tools/music-analysis/vendor.py'
+            vendor.parent.mkdir(parents=True)
+            vendor.write_text('print "Python 2 vendor code"\n', encoding='utf-8')
+            with self.assertRaises(SyntaxError):
+                ast.parse(vendor.read_text(encoding='utf-8'))
+            self.assertEqual(direct_media_imports(root), [])
+            # The same guard still detects a prohibited import in tracked project code.
+            tracked.write_text('import openclaw_media\n', encoding='utf-8')
+            self.assertEqual(direct_media_imports(root), ['core.py'])
+            subprocess.run(['git', 'add', '--', 'core.py'], cwd=root, check=True)
+            subprocess.run(['git', 'update-index', '--skip-worktree', 'core.py'], cwd=root, check=True)
+            tracked.unlink()
+            self.assertEqual(direct_media_imports(root), ['core.py'])
 
     def test_missing_optional_package_is_reported_without_breaking_core(self):
         with patch.object(contract, "_installed_catalog", return_value=(None, None)):

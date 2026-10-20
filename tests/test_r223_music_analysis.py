@@ -16,7 +16,7 @@ from music_library.errors import MusicError
 from music_library.cache import write_json
 from migrate_music_library_v2 import migrate
 from validate_music_analysis_registry import validate, check_copy, published_registry
-from studio.music_analysis import AnalysisQueue, derive, registry, failure, read_analysis, validate_analysis, read_rhythm, run_worker
+from studio.music_analysis import AnalysisQueue, derive, registry, failure, read_analysis, validate_analysis, load_beat_map, run_worker
 from studio.media_review import MediaReview
 
 CHECKER = Path(os.environ.get('UI_COPY_QUALITY_CHECKER', '/nonexistent'))
@@ -176,7 +176,7 @@ def test_projection_status_and_unknown_codes(library,part,code):
     if part:assert row[part]['failure']==dict(code=code,retryable=code!='audio_unreadable')
     else:
         assert row['beat']['bpm']==120 and row['beat']['meter']==4
-        assert read_rhythm(library,track['file_sha256'])['bars']==data['beat']['downbeats']
+        assert load_beat_map(track['file_sha256'], media_root=library.root.parents[1])['downbeats']==data['beat']['downbeats']
 
 
 def test_invalid_sidecars_fail_loudly(library):
@@ -288,3 +288,96 @@ def test_queue_reports_position_ahead_and_continues_after_crash(library,tmp_path
     queue.start();assert queue.wait_idle(10);assert len(calls)==3
     assert read_analysis(library.root/tracks[2]['file_sha256'],tracks[2])['beat']['status']=='done'
     queue.close()
+
+
+def test_load_beat_map_shape_precision_read_only_and_no_old_alias(library,monkeypatch):
+    import studio.music_analysis as analysis
+    track=library.list_tracks()[0];data=done(track);folder=library.root/track['file_sha256']
+    data['duration_seconds']=24.123456
+    data['beat']['sections']=[dict(start=0,end=8.234567,kind='quiet'),dict(start=8.234567,end=24.123456,kind='peak')]
+    track['duration_seconds']=24.123456;write_json(folder/'track.json',track)
+    data['tags']={'status':'failed','failure':{'code':'worker_error','retryable':True}}
+    write_json(folder/'analysis.json',data)
+    def no_analysis(*args,**kwargs):raise AssertionError('read must not invoke analysis or library writes')
+    monkeypatch.setattr(analysis,'run_worker',no_analysis)
+    monkeypatch.setattr(analysis.AnalysisQueue,'__init__',no_analysis)
+    monkeypatch.setattr(analysis.AnalysisQueue,'enqueue',no_analysis)
+    monkeypatch.setattr(MusicLibrary,'locked',no_analysis)
+    before={p:(p.read_bytes(),p.stat().st_mtime_ns) for p in library.root.rglob('*') if p.is_file()}
+    monkeypatch.setenv('LOCAL_MEDIA_ROOT',str(library.root.parents[1]))
+    result=load_beat_map(track['file_sha256'])
+    assert set(result)=={'track_id','title','duration_seconds','bpm','meter','beats','downbeats','beat_energy','sections','registry_version'}
+    assert result['track_id']==track['file_sha256'] and result['title']==track['title']
+    assert result['duration_seconds']==24.123 and result['bpm']==120 and result['meter']==4
+    assert result['sections']==[dict(start=0.0,end=8.235,kind='quiet'),dict(start=8.235,end=24.123,kind='peak')]
+    assert result['beat_energy']==data['beat']['beat_energy']
+    assert set(result['downbeats'])<=set(result['beats']) and len(result['beat_energy'])==len(result['beats'])
+    assert not hasattr(analysis,'read_rhythm')
+    assert before=={p:(p.read_bytes(),p.stat().st_mtime_ns) for p in library.root.rglob('*') if p.is_file()}
+
+
+@pytest.mark.parametrize('state', ['queued','analyzing'])
+def test_load_beat_map_queue_states(library,state):
+    from studio.music_analysis import BeatMapUnavailable
+    track=library.list_tracks()[0];folder=library.root/track['file_sha256']
+    queue=AnalysisQueue(library);queue.enqueue(track['file_sha256'],'beat')
+    if state=='analyzing':
+        with queue.condition:queue.active=queue.pending.popleft()
+    # An old finished result must not be returned during a queued/running reanalysis.
+    write_json(folder/'analysis.json',done(track))
+    with pytest.raises(BeatMapUnavailable) as exc:load_beat_map(track['file_sha256'],media_root=library.root.parents[1])
+    assert (exc.value.code,exc.value.track_id,exc.value.failure_code)==(state,track['file_sha256'],None)
+
+
+def test_load_beat_map_absent_analysis_is_queued_and_unknown_track(library):
+    from studio.music_analysis import BeatMapUnavailable
+    track=library.list_tracks()[0]
+    for identity,expected in [(track['file_sha256'],'queued'),('a'*64,'unknown_track'),('../escape','unknown_track')]:
+        with pytest.raises(BeatMapUnavailable) as exc:load_beat_map(identity,media_root=library.root.parents[1])
+        assert (exc.value.code,exc.value.track_id,exc.value.failure_code)==(expected,identity,None)
+
+
+@pytest.mark.parametrize('code',['audio_unreadable','worker_error','timeout','unrecognized_future_code'])
+def test_load_beat_map_preserves_failure_code(library,code):
+    from studio.music_analysis import BeatMapUnavailable
+    track=library.list_tracks()[0];data=done(track);data['beat']=failure(code)
+    write_json(library.root/track['file_sha256']/'analysis.json',data)
+    with pytest.raises(BeatMapUnavailable) as exc:load_beat_map(track['file_sha256'],media_root=library.root.parents[1])
+    assert (exc.value.code,exc.value.track_id,exc.value.failure_code)==('beat_failed',track['file_sha256'],code)
+
+
+@pytest.mark.parametrize('damage',[
+    lambda d:d['beat'].pop('beat_energy'),
+    lambda d:d['beat'].update(beats=[]),
+    lambda d:d['beat'].update(downbeats=[]),
+    lambda d:d['beat'].update(downbeats=[0.0]),
+    lambda d:d['beat'].update(downbeats=[0.123,2.0]),
+    lambda d:d['beat'].update(beat_energy=[.5]),
+    lambda d:d['beat']['beat_energy'].__setitem__(0,1.01),
+    lambda d:d['beat']['beats'].__setitem__(1,0),
+    lambda d:d['beat']['beats'].__setitem__(1,99),
+    lambda d:d['beat']['sections'][0].update(start=.1),
+    lambda d:d['beat']['sections'][0].update(end=23.9),
+    lambda d:d['beat']['sections'][0].update(start=float('nan')),
+    lambda d:d['beat'].update(sections=[dict(start=0,end=10,kind='quiet'),dict(start=10.1,end=24,kind='peak')]),
+    lambda d:d['beat']['beats'].__setitem__(1,.0001),
+    lambda d:d.update(file_sha256='a'*64),
+    lambda d:d.pop('registry_version'),
+])
+def test_load_beat_map_rejects_partial_or_invalid_results(library,damage):
+    from studio.music_analysis import BeatMapUnavailable
+    track=library.list_tracks()[0];data=done(track);damage(data)
+    path=library.root/track['file_sha256']/'analysis.json'
+    # NaN is intentionally a malformed fixture outside the atomic JSON writer.
+    path.write_text(json.dumps(data))
+    with pytest.raises(BeatMapUnavailable) as exc:load_beat_map(track['file_sha256'],media_root=library.root.parents[1])
+    assert (exc.value.code,exc.value.track_id,exc.value.failure_code)==('result_unreadable',track['file_sha256'],None)
+
+
+@pytest.mark.parametrize('contents',['{','[]','null','{"beat":{"status":"done"}}'])
+def test_load_beat_map_unparseable_results(library,contents):
+    from studio.music_analysis import BeatMapUnavailable
+    track=library.list_tracks()[0]
+    (library.root/track['file_sha256']/'analysis.json').write_text(contents)
+    with pytest.raises(BeatMapUnavailable) as exc:load_beat_map(track['file_sha256'],media_root=library.root.parents[1])
+    assert exc.value.code=='result_unreadable'

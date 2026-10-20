@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "scope": "main checkout; real .tools directory; Git-tracked Python only",
+  "tracked_python_files": 267,
+  "mandatory_imports": []
+}

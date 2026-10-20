@@ -1,0 +1,6 @@
+{
+  "docs/tasks/R223-music-beat-map/DESIGN.md": "7392ddcfecd2a2a1adf74c002bba43767c54c55b05a378da40a94b48895d9571",
+  "docs/tasks/R223-music-beat-map/TASK.md": "0e10605454583776b66b66680ebd62ffbc51071720e8863927e10c966e1f8c04",
+  "music-analysis.registry.json": "35f482f2fba9adc7c89dd66106c23146078183c42e799ee1c1391aceb4931d90",
+  "scripts/music_analysis/worker.py": "7e38bb5904bbddf6c2b697febbd70879f1323ae8ce126870a38d25dd3735a6cb"
+}

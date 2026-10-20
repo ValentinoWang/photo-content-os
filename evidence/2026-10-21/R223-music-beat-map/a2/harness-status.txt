@@ -1,0 +1,11 @@
+ M AGENTS.md
+ M Core/harnesses/INDEX.md
+ M Core/harnesses/ai-coding-error-lessons.md
+ M acceptance/human-acceptance-log.json
+ M acceptance/human-acceptance-log.md
+ M registry.yaml
+?? Core/harnesses/evidence-retention-guard-card.md
+?? Core/scripts/quality/check_evidence_retention.py
+?? photo-content-os/
+?? scripts/quality/check_evidence_retention.py
+?? tools/tests/test_evidence_retention.py

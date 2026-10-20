@@ -4,17 +4,22 @@ from __future__ import annotations
 import copy
 import json
 import math
+import re
 import statistics
 import subprocess
 import threading
+import weakref
 from collections import Counter, deque
 from pathlib import Path
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, ValidationError
 from music_library.cache import read_json, write_json
 from music_library.errors import MusicError
+from runtime_paths import local_media_root
 
 ROOT = Path(__file__).resolve().parents[1]
+_analysis_queues = weakref.WeakSet()
+_analysis_queues_lock = threading.Lock()
 
 
 def registry(path=None):
@@ -107,18 +112,105 @@ def beat_metrics(beat):
                 meter=Counter(counts).most_common(1)[0][0] if counts else None)
 
 
-def read_rhythm(library, identifier):
-    """R226 read-only contract. It never enqueues or starts an analyzer."""
-    track = next((t for t in library.list_tracks() if t['file_sha256'] == identifier), None)
-    if track is None:
-        raise MusicError('曲目不存在')
-    data = read_analysis(library.root / identifier, track)
-    if data is None:
-        raise MusicError('曲目还没有分析结果')
-    beat = copy.deepcopy(data['beat'])
-    if beat['status'] == 'done':
-        beat.update(beat_metrics(beat), bars=beat['downbeats'])
-    return beat
+class BeatMapUnavailable(Exception):
+    code: str
+    track_id: str
+    failure_code: str | None
+
+    def __init__(self, code: str, track_id: str, failure_code: str | None = None):
+        if code not in ('unknown_track', 'queued', 'analyzing', 'beat_failed', 'result_unreadable'):
+            raise ValueError('invalid beat map availability code')
+        self.code = code
+        self.track_id = track_id
+        self.failure_code = failure_code
+        super().__init__(f'beat map unavailable: {code} ({track_id})')
+
+
+def _check_beat_map_shape(beat_map):
+    duration = beat_map['duration_seconds']
+    beats, downbeats = beat_map['beats'], beat_map['downbeats']
+    if not math.isfinite(duration) or duration <= 0 or len(beats) < 2 or len(downbeats) < 2:
+        raise ValueError('incomplete rhythm')
+    for times in (beats, downbeats):
+        if any(not math.isfinite(t) or not 0 <= t <= duration for t in times) or any(a >= b for a, b in zip(times, times[1:])):
+            raise ValueError('invalid beat timestamps')
+    if not set(downbeats) <= set(beats):
+        raise ValueError('downbeats must be a subset of beats')
+    energy = beat_map['beat_energy']
+    if len(energy) != len(beats) or any(not math.isfinite(e) or not 0 <= e <= 1 for e in energy):
+        raise ValueError('invalid beat energy')
+    sections = beat_map['sections']
+    if not sections or sections[0]['start'] != 0 or sections[-1]['end'] != duration:
+        raise ValueError('incomplete sections')
+    if any(not math.isfinite(s['start']) or not math.isfinite(s['end']) or not 0 <= s['start'] < s['end'] <= duration for s in sections):
+        raise ValueError('invalid section interval')
+    if any(a['end'] != b['start'] for a, b in zip(sections, sections[1:])):
+        raise ValueError('sections must join without gaps')
+
+
+def load_beat_map(track_id: str, *, media_root: Path | None = None) -> dict:
+    """Read the complete R226 beat contract without writing or starting analysis."""
+    if not isinstance(track_id, str) or not re.fullmatch(r'[a-f0-9]{64}', track_id):
+        raise BeatMapUnavailable('unknown_track', track_id)
+    library_root = local_media_root(media_root) / 'library/music'
+    folder = library_root / track_id
+    try:
+        metadata = json.loads((folder / 'track.json').read_text(encoding='utf-8'))
+    except FileNotFoundError as exc:
+        if (folder / 'track.json').is_symlink():
+            raise BeatMapUnavailable('result_unreadable', track_id) from exc
+        raise BeatMapUnavailable('unknown_track', track_id) from exc
+    except (OSError, ValueError) as exc:
+        raise BeatMapUnavailable('result_unreadable', track_id) from exc
+    try:
+        if metadata['file_sha256'] != track_id or not isinstance(metadata['title'], str) or not metadata['title'].strip():
+            raise ValueError('invalid track identity or title')
+        if isinstance(metadata['duration_seconds'], bool) or not math.isfinite(metadata['duration_seconds']) or metadata['duration_seconds'] <= 0:
+            raise ValueError('invalid track duration')
+        with _analysis_queues_lock:
+            queues = list(_analysis_queues)
+        for queue in queues:
+            if queue.library.root == library_root:
+                beat_state = queue.state(track_id).get('beat', {})
+                if beat_state.get('status') in ('queued', 'analyzing'):
+                    raise BeatMapUnavailable(beat_state['status'], track_id)
+                if beat_state.get('status') == 'failed':
+                    raise BeatMapUnavailable('beat_failed', track_id, beat_state['failure']['code'])
+        path = folder / 'analysis.json'
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+        except FileNotFoundError as exc:
+            if path.is_symlink():
+                raise BeatMapUnavailable('result_unreadable', track_id) from exc
+            raise BeatMapUnavailable('queued', track_id) from exc
+        if data['file_sha256'] != track_id or data['duration_seconds'] != metadata['duration_seconds']:
+            raise ValueError('analysis does not match track')
+        beat = data['beat']
+        status = beat['status']
+        if status in ('queued', 'analyzing'):
+            raise BeatMapUnavailable(status, track_id)
+        if status == 'failed':
+            code = beat['failure']['code']
+            if not isinstance(code, str) or not code:
+                raise ValueError('missing beat failure code')
+            raise BeatMapUnavailable('beat_failed', track_id, code)
+        # Tags are deliberately outside this read contract; their failure cannot hide a good beat map.
+        schema = read_json(ROOT / 'schemas/music-analysis.schema.json', '分析结果规范')['properties']
+        required = ('schema_version', 'file_sha256', 'duration_seconds', 'registry_version', 'beat')
+        Draft202012Validator({'type': 'object', 'required': list(required),
+                             'properties': {k: schema[k] for k in required}}).validate(data)
+        _check_beat_map_shape(dict(duration_seconds=data['duration_seconds'], **beat))
+        result = dict(track_id=track_id, title=metadata['title'], duration_seconds=round(data['duration_seconds'], 3),
+                      **beat_metrics(beat), beats=[round(t, 3) for t in beat['beats']],
+                      downbeats=[round(t, 3) for t in beat['downbeats']], beat_energy=list(beat['beat_energy']),
+                      sections=[dict(start=round(section['start'], 3), end=round(section['end'], 3), kind=section['kind']) for section in beat['sections']],
+                      registry_version=data['registry_version'])
+        _check_beat_map_shape(result)
+        return result
+    except BeatMapUnavailable:
+        raise
+    except (OSError, ValueError, TypeError, KeyError, IndexError, MusicError, ValidationError) as exc:
+        raise BeatMapUnavailable('result_unreadable', track_id) from exc
 
 
 def failure(code):
@@ -149,6 +241,8 @@ class AnalysisQueue:
         self.errors = {}
         self.thread = None
         self.stopping = False
+        with _analysis_queues_lock:
+            _analysis_queues.add(self)
 
     def start(self, server=None):
         with self.condition:

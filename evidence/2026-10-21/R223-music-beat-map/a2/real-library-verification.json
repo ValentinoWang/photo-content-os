@@ -1,0 +1,325 @@
+{
+  "tracks": [
+    {
+      "title": "Turn Back Time",
+      "file_sha256": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "beat": "done",
+      "tags": "done",
+      "display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": "Tropical House",
+        "mood": [
+          "mood.deep",
+          "mood.happy"
+        ],
+        "scene": [
+          "scene.summer"
+        ],
+        "instrument": [
+          "instrument.bass",
+          "instrument.synthesizer",
+          "instrument.keyboard"
+        ],
+        "voice": [
+          "voice.voice"
+        ],
+        "voice_uncertain": false
+      },
+      "fixture_display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": "Tropical House",
+        "mood": [
+          "mood.deep",
+          "mood.happy"
+        ],
+        "scene": [
+          "scene.summer"
+        ],
+        "instrument": [
+          "instrument.bass",
+          "instrument.synthesizer",
+          "instrument.keyboard"
+        ],
+        "voice": [
+          "voice.voice"
+        ],
+        "voice_uncertain": false
+      },
+      "labels_match": true,
+      "score_differences": {
+        "genre": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.006003609180450453
+        },
+        "moodtheme": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.003641025781631474
+        },
+        "instrument": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.009050652742385867
+        },
+        "voice": {
+          "compared_fixture_labels": 2,
+          "max_abs_difference": 0.00405078727006912
+        }
+      },
+      "elapsed_seconds": 17.43,
+      "analysis_sha256": "ba67db0c04d453dbe9593711c80b31099568691e2e2ab24c9d10822499fe2787",
+      "bpm": 115,
+      "meter": 4,
+      "sections": 2,
+      "beats": 369,
+      "downbeats": 94,
+      "duration_seconds": 189.924,
+      "display_names": {
+        "genre": [
+          "电子"
+        ],
+        "mood": [
+          "深沉",
+          "欢快"
+        ],
+        "scene": [
+          "夏日"
+        ],
+        "voice": [
+          "有人声"
+        ],
+        "instrument": [
+          "贝斯",
+          "合成器",
+          "键盘"
+        ]
+      },
+      "export": "~/.photo-content-os/r223/beat-maps/2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af.json",
+      "export_sha256": "850ffa02e3b090b39bbbc83bb9293fbc6dbcf256f1dc7e5850fe1f611459180b",
+      "export_bytes": 13901,
+      "shape_verified": true,
+      "score_counts": {
+        "genre": 400,
+        "moodtheme": 56,
+        "instrument": 40,
+        "voice": 2
+      }
+    },
+    {
+      "title": "Fever Pitch",
+      "file_sha256": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "beat": "done",
+      "tags": "done",
+      "display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": "House",
+        "mood": [
+          "mood.deep"
+        ],
+        "scene": [
+          "scene.summer"
+        ],
+        "instrument": [
+          "instrument.bass",
+          "instrument.synthesizer",
+          "instrument.keyboard"
+        ],
+        "voice": [],
+        "voice_uncertain": true
+      },
+      "fixture_display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": "House",
+        "mood": [
+          "mood.deep"
+        ],
+        "scene": [
+          "scene.summer"
+        ],
+        "instrument": [
+          "instrument.bass",
+          "instrument.synthesizer",
+          "instrument.keyboard"
+        ],
+        "voice": [],
+        "voice_uncertain": true
+      },
+      "labels_match": true,
+      "score_differences": {
+        "genre": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.009484561443328876
+        },
+        "moodtheme": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.004008811950683588
+        },
+        "instrument": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.015237040042877181
+        },
+        "voice": {
+          "compared_fixture_labels": 2,
+          "max_abs_difference": 0.00963930606842045
+        }
+      },
+      "elapsed_seconds": 19.1,
+      "analysis_sha256": "8ff143072361596d3d6fb122f73a2f456c007e7ca07c7b771aae6aa3d0de7978",
+      "bpm": 125,
+      "meter": 4,
+      "sections": 6,
+      "beats": 280,
+      "downbeats": 71,
+      "duration_seconds": 135.484,
+      "display_names": {
+        "genre": [
+          "电子"
+        ],
+        "mood": [
+          "深沉"
+        ],
+        "scene": [
+          "夏日"
+        ],
+        "voice": [],
+        "instrument": [
+          "贝斯",
+          "合成器",
+          "键盘"
+        ]
+      },
+      "export": "~/.photo-content-os/r223/beat-maps/891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b.json",
+      "export_sha256": "70ffc3ceae02f183122e19ea76fa35b2eb3d30e81fa404e050a8d1bf01df085c",
+      "export_bytes": 10932,
+      "shape_verified": true,
+      "score_counts": {
+        "genre": 400,
+        "moodtheme": 56,
+        "instrument": 40,
+        "voice": 2
+      }
+    },
+    {
+      "title": "CRUSH VIBE",
+      "file_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "beat": "done",
+      "tags": "done",
+      "display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": null,
+        "mood": [
+          "mood.melodic",
+          "mood.space",
+          "mood.dark"
+        ],
+        "scene": [],
+        "instrument": [
+          "instrument.synthesizer",
+          "instrument.sampler"
+        ],
+        "voice": [
+          "voice.instrumental"
+        ],
+        "voice_uncertain": false
+      },
+      "fixture_display": {
+        "registry_version": 1,
+        "genre": [
+          "genre.electronic"
+        ],
+        "style": null,
+        "mood": [
+          "mood.melodic",
+          "mood.space",
+          "mood.dark"
+        ],
+        "scene": [],
+        "instrument": [
+          "instrument.synthesizer",
+          "instrument.sampler"
+        ],
+        "voice": [
+          "voice.instrumental"
+        ],
+        "voice_uncertain": false
+      },
+      "labels_match": true,
+      "score_differences": {
+        "genre": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.0030170236229896535
+        },
+        "moodtheme": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.003999800920486463
+        },
+        "instrument": {
+          "compared_fixture_labels": 8,
+          "max_abs_difference": 0.002658022403717042
+        },
+        "voice": {
+          "compared_fixture_labels": 2,
+          "max_abs_difference": 0.005142156124114949
+        }
+      },
+      "elapsed_seconds": 16.19,
+      "analysis_sha256": "f103ea44c57964f5572483b94d18e5fcd8e1846a172af572e1fa4c9be4e2b175",
+      "bpm": 143,
+      "meter": 4,
+      "sections": 4,
+      "beats": 239,
+      "downbeats": 61,
+      "duration_seconds": 96.0,
+      "display_names": {
+        "genre": [
+          "电子"
+        ],
+        "mood": [
+          "旋律优美",
+          "太空感",
+          "暗黑"
+        ],
+        "scene": [],
+        "voice": [
+          "纯音乐"
+        ],
+        "instrument": [
+          "合成器",
+          "采样器"
+        ]
+      },
+      "export": "~/.photo-content-os/r223/beat-maps/e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256.json",
+      "export_sha256": "fb1d05cf3a2464089e94f56bba16ac1bc61398d9c585caf7f60de5c23ab6d7b9",
+      "export_bytes": 9169,
+      "shape_verified": true,
+      "score_counts": {
+        "genre": 400,
+        "moodtheme": 56,
+        "instrument": 40,
+        "voice": 2
+      }
+    }
+  ],
+  "existing_file_count": 83,
+  "existing_files_unchanged": true,
+  "new_files": [
+    "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af/analysis.json",
+    "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b/analysis.json",
+    "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256/analysis.json"
+  ],
+  "export_shape_verified": true,
+  "worker_source_unchanged": true
+}

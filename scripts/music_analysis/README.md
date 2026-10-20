@@ -14,6 +14,19 @@
 
 `POST /api/review/music/<trackId>/reanalyze` 的 JSON 请求体为 `{"part":"beat"}` 或 `{"part":"tags"}`，沿用 Studio 的 Origin 与 CSRF 保护。同一部分重复点击合并；只重跑请求的部分。队列位置从 0 起，表示前面还有多少首。
 
-R226 调用 `studio.music_analysis.read_rhythm(library, track_id)`，只读结果，返回实测 `beats`、`downbeats`、`bars`（重拍时间）、`sections`、BPM、拍号与状态；不会自动启动模型。BPM 用相邻拍间隔中位数，拍号用相邻重拍之间拍数的众数。
+R226 的后端只读接口严格遵循 `docs/tasks/R223-music-beat-map/DESIGN.md` 第 10.1 节：
+
+```python
+def load_beat_map(track_id: str, *, media_root: Path | None = None) -> dict: ...
+class BeatMapUnavailable(Exception):
+    code: str          # unknown_track | queued | analyzing | beat_failed | result_unreadable
+    track_id: str
+    failure_code: str | None   # code == "beat_failed" 时是分析记下的失败码，原样给出
+```
+
+返回字段为 `track_id`、`title`、`duration_seconds`、`bpm`、`meter`、`beats`、`downbeats`、`beat_energy`、`sections`、`registry_version`，不带标签、状态、包信息或额外字段。时间是歌曲自身的秒数，保留 3 位小数；能量取值为 0–1。第 k 小节从 `downbeats[k-1]` 开始；重拍是拍点子集；能量长度等于拍点长度；段落首尾相接，从 0 覆盖到曲长。BPM 用相邻拍间隔中位数，拍号用相邻重拍之间拍数的众数。
+
+函数只读取曲目身份/标题/时长和分析文件，并观察进程内已有队列状态；不创建目录或写锁、不排队、不启动 worker。缺失分析结果报 `queued`，已有队列处理中报 `analyzing`，分析记录的节拍失败报 `beat_failed` 并原样带出 `failure_code`。未知曲目报 `unknown_track`；文件无法解析、字段不全、没有足够重拍、时间形状损坏或取 3 位小数后形状失效报 `result_unreadable`。不会返回空数组或缺字段的半成品；标签失败不阻碍读取完整节拍。
+
 
 验证：普通回归运行 `tests/test_r223_music_analysis.py`；安装模型后用 `R223_RUNTIME_TESTS=1 .venv/bin/python -m pytest -q tests/test_r223_music_analysis_runtime.py` 验证真实点击音轨。完整 HTTP 路径用 `.venv/bin/python scripts/music_analysis/verify_runtime.py --evidence-dir evidence/<日期>/<任务>`，只生成和读取自己的合成音频，服务端口自动分配，不使用 8765。
