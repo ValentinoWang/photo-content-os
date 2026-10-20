@@ -1,0 +1,10 @@
+{
+  "copy": "PASS",
+  "design_ids": "PASS",
+  "number_formulas": "PASS",
+  "number_groups": 33,
+  "capture_errors": 0,
+  "copy_quality": "PASS: 6 files, 0 warnings",
+  "browser_walkthrough": "PASS: 26 checks",
+  "source_identity": "b7ceabebe01700198270de058d7f8de833300dc7"
+}

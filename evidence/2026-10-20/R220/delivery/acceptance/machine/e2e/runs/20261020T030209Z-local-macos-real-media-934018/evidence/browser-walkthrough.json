@@ -1,0 +1,30 @@
+{
+  "checks": [
+    "Real H.264 shot preview decodes and advances",
+    "Sound switch reaches media element",
+    "Duration-weighted segment jumps to the selected clip",
+    "Alternative card plays its own loop in the main viewer",
+    "Per-piece tab choice and hash survive reload",
+    "Real music-library audio plays",
+    "Music title-width regression: four widths and a failing narrow-title fixture",
+    "Waveform seeks the measured audio",
+    "Real exported H.264 output plays in the versions dialog",
+    "New-work dialog opens and cancels without mutation",
+    "Account settings opens the existing pairing surface",
+    "No page JavaScript exceptions during the walkthrough",
+    "A delayed workbench response cannot replace a newer navigation",
+    "Workbench: shared attention count, five capabilities, compact empty works, no commands",
+    "Workbench reel button includes the approved play triangle",
+    "Workbench reel uses the approved title and one-decimal duration subtitle",
+    "Other works last; no empty project collage",
+    "Script refresh shares the creative-chain heading row",
+    "Script tab keeps refresh, one shared six-step flow, and translated delivery state",
+    "New metadata avoids legacy monospace; unknown music license uses its tag",
+    "Tool and diagnostic settings tabs expose amber issue dots",
+    "Doctor excludes optional items from ring and reruns real checks",
+    "Doctor copies the actual repair command",
+    "Phone settings tabs retain compact widths; add-model retains the existing behavior",
+    "Missing music egress has the approved value and actionable explanation",
+    "Denied browser storage keeps the piece usable"
+  ]
+}

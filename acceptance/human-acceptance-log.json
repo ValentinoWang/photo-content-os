@@ -2,6 +2,27 @@
   "blocking_entries": [
     {
       "blocking": true,
+      "checklist_path": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/checklist.md",
+      "estimated_minutes": 8,
+      "handoff_path": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/handoff.json",
+      "invalidation_keys": [
+        "studio.media-preview",
+        "studio.navigation",
+        "studio.shot-review"
+      ],
+      "latest_run": null,
+      "loop_name": "Studio 导航、镜头过目和媒体预览",
+      "ready_at": "2026-10-20T03:05:49.552522Z",
+      "release_slice": "R220",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "第 2 轮已获 Claude 看图通过，四处小修自核及局部机器验证通过；三项产品体验等待用户验收。",
+      "task_id": "2026-10-20-R220-photo-studio-ia-preview",
+      "workspace": "acceptance/human/2026-W43/2026-10-20-R220-photo-studio-ia-preview"
+    },
+    {
+      "blocking": true,
       "checklist_path": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md",
       "estimated_minutes": 3,
       "handoff_path": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/handoff.json",
@@ -22,7 +43,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-19T23:48:40.995350Z",
+  "generated_at": "2026-10-20T03:05:49.552522Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -45,5 +66,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "933b5253f21e7d3f66a5375dd8accdf3b5b4eecdcd28f58169dd56aef8784e6c"
+  "source_facts_sha256": "837ed906c6bc7c134b481af16e70d5c775afcda4e361bcddaf0f74301dada59f"
 }

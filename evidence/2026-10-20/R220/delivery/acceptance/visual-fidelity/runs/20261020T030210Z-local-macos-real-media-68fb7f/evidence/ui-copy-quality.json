@@ -1,0 +1,16 @@
+{
+  "guard": "ui-copy-quality",
+  "status": "PASS",
+  "lexicon": "local-user-path",
+  "targets": [
+    "studio/static/app.js",
+    "studio/static/review-view.js",
+    "studio/static/review-shots.js",
+    "studio/static/review-music.js",
+    "studio/static/review-common.js",
+    "studio/static/index.html"
+  ],
+  "error_count": 0,
+  "warning_count": 0,
+  "findings": []
+}

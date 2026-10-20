@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "source_identity": "b7ceabebe01700198270de058d7f8de833300dc7",
+  "runtime_identity": "local-macos-real-media",
+  "review": {
+    "status": "PASS",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-10-20T03:05:28.032484+00:00",
+    "conclusion": "Four final affected desktop/phone states reopened and reviewed to bottom; scoped findings in visual lane. Private image files are deliberately untracked and archived externally."
+  },
+  "screenshots": [
+    {
+      "path": "evidence/screenshots/projects-1440.png",
+      "sha256": "9c0814e1b6cfe8c1ad0d0f23515511d00706dd3b51a001e514ce2a5a5ece64f2",
+      "page_id": "projects",
+      "browser": "Chrome",
+      "viewport": {
+        "width": 1440,
+        "height": 960
+      },
+      "captured_at": "2026-10-20T03:02:25.108Z"
+    },
+    {
+      "path": "evidence/screenshots/home-430.png",
+      "sha256": "a4d57695684d3b89b95232bbd9f29b31122658d59c4022da6d7fa3b98a75fbd9",
+      "page_id": "home",
+      "browser": "Chrome",
+      "viewport": {
+        "width": 430,
+        "height": 960
+      },
+      "captured_at": "2026-10-20T03:02:22.771Z"
+    },
+    {
+      "path": "evidence/screenshots/settings-doctor-430.png",
+      "sha256": "806985d594d2fa5b9fef7ef0100ca867e739009dc825ab47d8b6adcbcd0c6afc",
+      "page_id": "settings-doctor",
+      "browser": "Chrome",
+      "viewport": {
+        "width": 430,
+        "height": 960
+      },
+      "captured_at": "2026-10-20T03:03:14.275Z"
+    },
+    {
+      "path": "evidence/screenshots/piece-script-430.png",
+      "sha256": "629160c828849170c29e1fb67bf2a0bd3718bb6bad2b7078a90779898c90f82f",
+      "page_id": "piece-script",
+      "browser": "Chrome",
+      "viewport": {
+        "width": 430,
+        "height": 960
+      },
+      "captured_at": "2026-10-20T03:02:46.753Z"
+    }
+  ]
+}

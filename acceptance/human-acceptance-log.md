@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-10-19T23:48:40.995350Z
-- 来源事实 SHA-256：933b5253f21e7d3f66a5375dd8accdf3b5b4eecdcd28f58169dd56aef8784e6c
+- 事实时间：2026-10-20T03:05:49.552522Z
+- 来源事实 SHA-256：837ed906c6bc7c134b481af16e70d5c775afcda4e361bcddaf0f74301dada59f
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -12,6 +12,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-10-20T03:05:49.552522Z | 2026-10-20-R220-photo-studio-ia-preview | Studio 导航、镜头过目和媒体预览 | 产品负责人 | 8 | acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/checklist.md | - | - |
 | 2026-10-19T23:48:40.995350Z | 2026-10-19-R210-photo-music-link-import | 汽水音乐、网易云音乐链接导入并入库 | 产品负责人 | 3 | acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md | - | - |
 
 ### 已拒绝待修复
