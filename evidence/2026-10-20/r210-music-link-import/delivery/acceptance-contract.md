@@ -1,11 +1,11 @@
 # Acceptance Contract: 2026-10-19-R210-photo-music-link-import
 
 - Task ID: 2026-10-19-R210-photo-music-link-import
-- Contract version: 2
+- Contract version: 3
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户 2026-10-20 阶段 2g 指令：「不管抖音了」；按网易云、汽水两平台递交，三项等用户验收，不代签
+- Approval evidence: 用户阶段 C 指令同意按已取消曲目授权标准重新基线；保留本卡其余责任。原依据：用户 2026-10-20 阶段 2g 指令：「不管抖音了」；按网易云、汽水两平台递交，三项等用户验收，不代签
 - Request source: acceptance/requests/2026-W43/2026-10-19-R210-photo-music-link-import/request.json; evidence/2026-10-20/r210-music-link-import/delivery/scope.md
 - SSOT node: none
 - SSOT path: none
@@ -34,7 +34,7 @@
 
 ## Expected outcome
 
-有完整可核验音源时入库并记录元数据、授权和测量；已入库输入不重复联网；不可读或受限响应明确失败，不产生残缺条目。H-01 验证网易云、汽水两个平台。
+有完整可核验音源时入库并记录元数据和测量；已入库输入不重复联网；不可读或受限响应明确失败，不产生残缺条目。H-01 验证网易云、汽水两个平台。
 
 ## Non-goals
 
@@ -42,7 +42,7 @@
 
 ## Normal path
 
-Given 单首分享输入或本地文件；When 执行导入；Then 查库后按授权节点取数，完整性和授权校验通过再原子写入库，重复输入直接返回已在库里。
+Given 单首分享输入或本地文件；When 执行导入；Then 查库后按允许节点取数，完整性校验通过再原子写入库，重复输入直接返回已在库里。
 
 ## Exception paths
 
@@ -50,7 +50,7 @@ Given 单首分享输入或本地文件；When 执行导入；Then 查库后按�
 
 ## Invariants
 
-素材根只从 runtime_paths 获取；原文件不动；平台曲为 platform_copyrighted；未知授权不可发布；来源与索引一致；重复不打开隧道；匿名抖音分享不带 Cookie、不跟随跳转。
+素材根只从 runtime_paths 获取；原文件不动；来源与索引一致；重复不打开隧道；匿名抖音分享不带 Cookie、不跟随跳转。
 
 ## Data impact
 
@@ -68,7 +68,7 @@ Given 单首分享输入或本地文件；When 执行导入；Then 查库后按�
 
 | ID | Class | Lane | Requirement | Verification layer | Mode | Blocking |
 | --- | --- | --- | --- | --- | --- | --- |
-| AC-01 | behavior | machine/integration-contract | 可核验完整音源按元数据和授权入库；缺失作品数据或会员/地区限制明确失败且不留残缺条目 | Integration | Automatic | Yes |
+| AC-01 | behavior | machine/integration-contract | 可核验完整音源按元数据入库；缺失作品数据或会员/地区限制明确失败且不留残缺条目 | Integration | Automatic | Yes |
 | AC-02 | behavior | machine/integration-contract | 平台编号及音频哈希去重，重复导入零请求且不启动隧道；本地加密文件原件不动 | Integration | Automatic | Yes |
 | AC-03 | behavior | machine/integration-contract | 抖音失败缓存重放零请求零隧道且显示共用中文提示；原取数代码不变；代理失败不回直连，退出关闭隧道 | Integration | Automatic | Yes |
 
@@ -84,7 +84,7 @@ Given 单首分享输入或本地文件；When 执行导入；Then 查库后按�
 
 | Path | SHA-256 | Covers |
 | --- | --- | --- |
-| tests/test_music_library.py | 5ca163c44c0b30b61e3ab7b023d43dc961bfd1bae0746d7077ecaa533ff2df1e | AC-01, AC-02, AC-03 |
+| tests/test_music_library.py | 13151f4b3465cec5a13e9edbc58497c96dc935ce35d5169c23de2a7708d10a2a | AC-01, AC-02, AC-03 |
 | tests/test_music_network.py | 6c7b0dfd9ada9c8d518c776be90ffd9d676db6593b1062c99760419ca322eafe | AC-01, AC-02, AC-03 |
 | tests/test_musicdl_engine.py | 3002c872f10f9ca590dc91932564e03db7e6cd938c1294a8a5b0bc29eea6d85d | AC-01, AC-02, AC-03 |
 | tests/test_music_egress.py | c90fc2903577034b315fe1c4e72a345deac38128e3a27121068a095bed788fef | AC-01, AC-02, AC-03 |
@@ -100,7 +100,7 @@ Given 单首分享输入或本地文件；When 执行导入；Then 查库后按�
 | AC-01 | 离线协议与失败隔离测试；已有两首实际音频本地核验 | tests/test_music_library.py; tests/test_musicdl_engine.py; tests/test_douyin_share_page.py | Automatic | Yes |
 | AC-02 | 去重及本地文件测试、真实两首重复验证 | tests/test_music_library.py; tests/test_music_egress.py | Automatic | Yes |
 | AC-03 | 匿名与缓存、跳转及隧道生命周期测试 | tests/test_music_network.py; tests/test_douyin_share_page.py; tests/test_music_egress.py; tests/test_music_failure_message.py | Automatic | Yes |
-| H-01 | 用户体验两平台曲目、元数据与授权显示 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-01 | Human | Yes |
+| H-01 | 用户体验两平台曲目、元数据与来源显示 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-01 | Human | Yes |
 | H-02 | 用户选择已入库歌曲重复导入 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-02 | Human | Yes |
 | H-03 | 用户粘贴任意网易云会员曲并核对提示和库条目 | acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import/checklist.md#h-03 | Human | Yes |
 
@@ -110,7 +110,7 @@ Given 单首分享输入或本地文件；When 执行导入；Then 查库后按�
 
 ## Production monitoring and rollback
 
-本任务无部署。CLI 失败提示和私有缓存保留；发现残缺条目或来源/授权错误立即停止后续导入，维护者先离线检查。回滚软件提交不删除用户音乐或原始文件。
+本任务无部署。CLI 失败提示和私有缓存保留；发现残缺条目或来源错误立即停止后续导入，维护者先离线检查。回滚软件提交不删除用户音乐或原始文件。
 
 ## Risks and open decisions
 

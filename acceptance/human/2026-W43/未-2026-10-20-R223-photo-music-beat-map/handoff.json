@@ -1,0 +1,183 @@
+{
+  "baseline": {
+    "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
+    "branch": "detached",
+    "head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+    "tree": "d9124c98421dcd3c660fbeba7ab5fd26bcf34d54"
+  },
+  "binding_sha256": "443040f36372650572f09c4ee99ce2f3aacf9e0fe0a55cd4a017e8e20deb55a0",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "bypasses": [
+    {
+      "not_verified": "诊断与配置异常：缺工具和缺出口使用明确夹具，实际安装状态另有原始失败记录；重查仍请求真实服务。",
+      "path": "agents-results/2026-10-21/r223-delivery/verification-sources/r220-browser-absent-tools.mjs",
+      "reason": "隔离验证明确的显示和错误分支；不改产品入口与旧断言。",
+      "replaces": "缺编辑工具诊断、缺出口与受限存储夹具"
+    },
+    {
+      "not_verified": "异常页面：部分完成、停止、失败、导入限制和空页使用状态夹具，不代表平台或模型曾真实产生这些异常。",
+      "path": "agents-results/2026-10-21/r223-delivery/verification-sources/capture_r220.mjs",
+      "reason": "隔离验证明确的显示和错误分支；不改产品入口与旧断言。",
+      "replaces": "导航和镜头及导入异常状态接口夹具"
+    },
+    {
+      "not_verified": "失败恢复与标签改名：使用接口投影和延迟失败夹具；真实播放及实际模型另有独立验证。",
+      "path": "agents-results/2026-10-21/r223-delivery/verification-sources/verify_r223_interactions.mjs",
+      "reason": "隔离验证明确的显示和错误分支；不改产品入口与旧断言。",
+      "replaces": "失败状态及延迟响应和标签改名夹具"
+    },
+    {
+      "not_verified": "多首节拍图：切点、换歌和淡出在独立宿主夹具中核验，没有生成真实成片。",
+      "path": "agents-results/2026-10-21/r223-delivery/verification-sources/test_r223_beat_map.mjs",
+      "reason": "隔离验证明确的显示和错误分支；不改产品入口与旧断言。",
+      "replaces": "多首音乐共享组件宿主夹具"
+    }
+  ],
+  "checklist_sha256": "f6765e02a9c6d0017421508493549ec6854e3e4323b9f7d434efba5825597b31",
+  "claims": [
+    {
+      "claim_key": "music.ai-tags-beat-map",
+      "item": "H-01",
+      "open_route": "note:本机 Photo Studio 的音乐库",
+      "protected_test_overlap": [
+        {
+          "decision": "rebaseline",
+          "reason": "曲目授权字段删除影响导入断言；旧卡的两平台、重复和会员验收仍独立保留，按全范围重新基线。",
+          "target": "2026-10-19-R210-photo-music-link-import"
+        },
+        {
+          "decision": "rebaseline",
+          "reason": "音乐数据和公式测试已更新；导航、挑镜头与成片播放仍须在旧卡验收，按全范围重新基线。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview"
+        }
+      ],
+      "relations": [
+        {
+          "reason": "本卡验 AI 标签、节拍与自动分析；旧卡仍验真实平台导入、重复下载与会员边界。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "本卡验音乐分析与听感；旧卡仍验导航设置、镜头决定持久化和成片播放。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "本卡不替代工具安装和两种编辑后端生成候选的验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "music.beat-playback",
+      "item": "H-02",
+      "open_route": "note:本机 Photo Studio 的音乐库",
+      "relations": [
+        {
+          "reason": "本卡验 AI 标签、节拍与自动分析；旧卡仍验真实平台导入、重复下载与会员边界。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "本卡验音乐分析与听感；旧卡仍验导航设置、镜头决定持久化和成片播放。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "本卡不替代工具安装和两种编辑后端生成候选的验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "music.auto-analysis-facets",
+      "item": "H-03",
+      "open_route": "note:本机 Photo Studio 的音乐库",
+      "relations": [
+        {
+          "reason": "本卡验 AI 标签、节拍与自动分析；旧卡仍验真实平台导入、重复下载与会员边界。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "本卡验音乐分析与听感；旧卡仍验导航设置、镜头决定持久化和成片播放。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "本卡不替代工具安装和两种编辑后端生成候选的验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-10-21/r223-delivery/acceptance-contract.md",
+  "contract_sha256": "5a2024bd9387f15a666635fbafe1fb7147500aedcfeef23772096ec4cc985d42",
+  "contract_version": "1",
+  "estimated_minutes": 6,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "music.analysis",
+    "music.beat-map",
+    "music.tags"
+  ],
+  "loop_name": "音乐库：AI 给每首歌打标签，并显示节拍图",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-10-21/r223-delivery/acceptance/machine/integration-contract/runs/20261020T210549Z-macos-isolated-c-619246/result.md",
+      "result_sha256": "c0b2d3496e241d3069444fad129ba9c775b6b8959fa5744da7e55621b9afdc4a",
+      "run_id": "20261020T210549Z-macos-isolated-c-619246",
+      "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83"
+    },
+    {
+      "layer": "machine/e2e",
+      "result_path": "agents-results/2026-10-21/r223-delivery/acceptance/machine/e2e/runs/20261020T210549Z-macos-isolated-c-036516/result.md",
+      "result_sha256": "b9fd79495864e1adfe225a4fe035386e9f2ff324ff55b0c52b8ad04f338e08ec",
+      "run_id": "20261020T210549Z-macos-isolated-c-036516",
+      "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-10-20T21:08:20.633838Z",
+  "release_slice": "R223",
+  "request_id": "2026-10-20-R223-photo-music-beat-map",
+  "required_role": "产品负责人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "summary": "标签、分面筛选和节拍图已完成，A/B 经 Claude 复核；三项原样待用户验收。",
+  "task_id": "2026-10-20-R223-photo-music-beat-map"
+}

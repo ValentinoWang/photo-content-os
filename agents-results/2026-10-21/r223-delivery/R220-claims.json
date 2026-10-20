@@ -1,0 +1,92 @@
+[
+  {
+    "claim_key": "studio.navigation-settings",
+    "item": "H-01",
+    "open_route": "note:本机 Photo Studio 的侧栏和设置与诊断",
+    "relations": [
+      {
+        "reason": "本卡检查已有音频的页面试听和来源展示；旧卡检查真实平台链接导入、重复下载与会员边界，保留旧卡单独验收。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "本卡只检查导航和诊断呈现，不替代旧卡的实际安装、版本位置与生成候选视频验收。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.shot-review-playback",
+    "item": "H-02",
+    "open_route": "note:本机 Photo Studio 项目里的挑镜头页面",
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧导入卡仍独立验两平台导入、重复与会员限制；本卡不替代这些责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "工具卡独立验安装与两个编辑后端生成候选；本卡只消费已有运行时，不替代该验收。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.outputs-music-playback",
+    "item": "H-03",
+    "open_route": "note:本机 Photo Studio 的成片弹层和音乐库",
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧导入卡仍独立验两平台导入、重复与会员限制；本卡不替代这些责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "工具卡独立验安装与两个编辑后端生成候选；本卡只消费已有运行时，不替代该验收。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "studio.backend",
+      "studio.frontend"
+    ],
+    "request_changes": {
+      "H-03": "按当前需求卡删除曲目授权显示要求，其余步骤和预期保留。"
+    }
+  }
+]

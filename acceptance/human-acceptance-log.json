@@ -2,6 +2,27 @@
   "blocking_entries": [
     {
       "blocking": true,
+      "checklist_path": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/checklist.md",
+      "estimated_minutes": 6,
+      "handoff_path": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/handoff.json",
+      "invalidation_keys": [
+        "music.analysis",
+        "music.beat-map",
+        "music.tags"
+      ],
+      "latest_run": null,
+      "loop_name": "音乐库：AI 给每首歌打标签，并显示节拍图",
+      "ready_at": "2026-10-20T21:08:20.633838Z",
+      "release_slice": "R223",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "标签、分面筛选和节拍图已完成，A/B 经 Claude 复核；三项原样待用户验收。",
+      "task_id": "2026-10-20-R223-photo-music-beat-map",
+      "workspace": "acceptance/human/2026-W43/2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "blocking": true,
       "checklist_path": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/checklist.md",
       "estimated_minutes": 8,
       "handoff_path": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/handoff.json",
@@ -12,12 +33,12 @@
       ],
       "latest_run": null,
       "loop_name": "Studio 导航、镜头过目和媒体预览",
-      "ready_at": "2026-10-20T03:05:49.552522Z",
+      "ready_at": "2026-10-20T21:08:19.490324Z",
       "release_slice": "R220",
       "required_role": "产品负责人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "第 2 轮已获 Claude 看图通过，四处小修自核及局部机器验证通过；三项产品体验等待用户验收。",
+      "summary": "本轮重新基线及完整机器范围复验；原三项仍待用户验收，未代签。",
       "task_id": "2026-10-20-R220-photo-studio-ia-preview",
       "workspace": "acceptance/human/2026-W43/2026-10-20-R220-photo-studio-ia-preview"
     },
@@ -31,19 +52,19 @@
       ],
       "latest_run": null,
       "loop_name": "汽水音乐、网易云音乐链接导入并入库",
-      "ready_at": "2026-10-19T23:48:40.995350Z",
+      "ready_at": "2026-10-20T21:08:17.642017Z",
       "release_slice": "R210",
       "required_role": "产品负责人",
       "scope_hints": [
         "music-link-import"
       ],
       "status": "PENDING",
-      "summary": "网易云、汽水两平台已入库并有机器证据；三项等用户验收。抖音已取消交付要求。",
+      "summary": "本轮重新基线及完整机器范围复验；原三项仍待用户验收，未代签。",
       "task_id": "2026-10-19-R210-photo-music-link-import",
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-20T03:05:49.552522Z",
+  "generated_at": "2026-10-20T21:08:20.633838Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -66,5 +87,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "837ed906c6bc7c134b481af16e70d5c775afcda4e361bcddaf0f74301dada59f"
+  "source_facts_sha256": "c8bb0ea6a2649c3559626b983c49b2e3684bf6a3ed685b9ad8a4712a8a0221ab"
 }

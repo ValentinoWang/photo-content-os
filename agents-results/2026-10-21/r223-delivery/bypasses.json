@@ -1,0 +1,26 @@
+[
+  {
+    "path": "agents-results/2026-10-21/r223-delivery/verification-sources/r220-browser-absent-tools.mjs",
+    "replaces": "缺编辑工具诊断、缺出口与受限存储夹具",
+    "reason": "隔离验证明确的显示和错误分支；不改产品入口与旧断言。",
+    "not_verified": "诊断与配置异常：缺工具和缺出口使用明确夹具，实际安装状态另有原始失败记录；重查仍请求真实服务。"
+  },
+  {
+    "path": "agents-results/2026-10-21/r223-delivery/verification-sources/capture_r220.mjs",
+    "replaces": "导航和镜头及导入异常状态接口夹具",
+    "reason": "隔离验证明确的显示和错误分支；不改产品入口与旧断言。",
+    "not_verified": "异常页面：部分完成、停止、失败、导入限制和空页使用状态夹具，不代表平台或模型曾真实产生这些异常。"
+  },
+  {
+    "path": "agents-results/2026-10-21/r223-delivery/verification-sources/verify_r223_interactions.mjs",
+    "replaces": "失败状态及延迟响应和标签改名夹具",
+    "reason": "隔离验证明确的显示和错误分支；不改产品入口与旧断言。",
+    "not_verified": "失败恢复与标签改名：使用接口投影和延迟失败夹具；真实播放及实际模型另有独立验证。"
+  },
+  {
+    "path": "agents-results/2026-10-21/r223-delivery/verification-sources/test_r223_beat_map.mjs",
+    "replaces": "多首音乐共享组件宿主夹具",
+    "reason": "隔离验证明确的显示和错误分支；不改产品入口与旧断言。",
+    "not_verified": "多首节拍图：切点、换歌和淡出在独立宿主夹具中核验，没有生成真实成片。"
+  }
+]

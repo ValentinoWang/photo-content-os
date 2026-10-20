@@ -1,0 +1,20 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-10-20-R223-photo-music-beat-map",
+  "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
+  "head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "range_head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "reason": "音乐页取消授权并接入拍点标签，保留导航、镜头决定、成片和音乐播放的原验收责任。",
+  "prepared_at": "2026-10-20T21:05:49.484878Z",
+  "previous_ready_at": "2026-10-20T03:05:49.552522Z",
+  "previous_binding_sha256": "0bbd6d533986df20bb995645227477d944f55a0420c10ee40d8f17f21edce325",
+  "checklist_sha256": "99f6382e7d375c99ac1dbbe68fbee0dcd655041c5d6afd1ba0fe55ba009200ea",
+  "tests": [
+    {
+      "path": "tests/test_r220_number_formulas.mjs",
+      "old_sha256": "a3666ecefe1226f47f457caf845d79be557ea9ed1fedadd660d4e5787dcbdee4",
+      "new_sha256": "be773417e61820cfcb62fe8fccf0039fa61a598671941fa2891b0a8018769c3d"
+    }
+  ],
+  "replays": "0a278f7211dca78db9d8bd2e6678e4483875d02d6b46288125057db8744ddf87"
+}

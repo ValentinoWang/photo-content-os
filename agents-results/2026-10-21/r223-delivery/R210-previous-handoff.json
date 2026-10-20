@@ -1,0 +1,81 @@
+{
+  "baseline": {
+    "base": "6fe9533340fd1e8c2d2fc24b7939eba2cde950f0",
+    "branch": "detached",
+    "head": "41fd234b422e5c5e64b1536329b64d2d424c905c",
+    "tree": "df45996583fc7105159ffc098de8c3f1b82d3fe6"
+  },
+  "binding_sha256": "3b2a744a7bfe46967a55caa29c6044fb4be35840166bc4de8eb2d418f2e4d03e",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "fbfb81d8ec702bdaccd2352047ff6952a9c1df33f490cd0b8f3c22d655e98be0",
+  "claims": [
+    {
+      "claim_key": "music.link-import",
+      "item": "H-01",
+      "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    },
+    {
+      "claim_key": "music.duplicate-import",
+      "item": "H-02",
+      "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    },
+    {
+      "claim_key": "music.membership-boundary",
+      "item": "H-03",
+      "open_route": "note:Mac 终端的音乐导入和本地音乐库",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    }
+  ],
+  "contract_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance-contract.md",
+  "contract_sha256": "04b413fea7114008aa5becf7f3f8bed7f88c9ae11402c201d4befb01718500de",
+  "contract_version": "2",
+  "estimated_minutes": 3,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "music.import"
+  ],
+  "loop_name": "汽水音乐、网易云音乐链接导入并入库",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance/machine/integration-contract/runs/20261019T234752Z-local-macos-offline-d93f10/result.md",
+      "result_sha256": "18437c0cf16a360bcac2d092540def2434aa9f8d8e9eeb84f437d841c51a3c28",
+      "run_id": "20261019T234752Z-local-macos-offline-d93f10",
+      "source_identity": "41fd234b422e5c5e64b1536329b64d2d424c905c"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-10-19T23:48:40.995350Z",
+  "release_slice": "R210",
+  "request_id": "2026-10-19-R210-photo-music-link-import",
+  "required_role": "产品负责人",
+  "schema_version": 2,
+  "scope_hints": [
+    "music-link-import"
+  ],
+  "source_commit": "41fd234b422e5c5e64b1536329b64d2d424c905c",
+  "summary": "网易云、汽水两平台已入库并有机器证据；三项等用户验收。抖音已取消交付要求。",
+  "task_id": "2026-10-19-R210-photo-music-link-import"
+}

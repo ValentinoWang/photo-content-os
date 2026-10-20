@@ -1,0 +1,20 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-10-20-R223-photo-music-beat-map",
+  "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
+  "head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "range_head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "reason": "取消曲目授权字段和对应断言，保留两平台导入、去重、会员边界及失败隔离的原验收责任。",
+  "prepared_at": "2026-10-20T21:05:48.924450Z",
+  "previous_ready_at": "2026-10-19T23:48:40.995350Z",
+  "previous_binding_sha256": "3b2a744a7bfe46967a55caa29c6044fb4be35840166bc4de8eb2d418f2e4d03e",
+  "checklist_sha256": "e77cf14a252574f4dfc769583f9a41f32b2b6a2df1543a7452cef7a4f26bfa08",
+  "tests": [
+    {
+      "path": "tests/test_music_library.py",
+      "old_sha256": "5ca163c44c0b30b61e3ab7b023d43dc961bfd1bae0746d7077ecaa533ff2df1e",
+      "new_sha256": "13151f4b3465cec5a13e9edbc58497c96dc935ce35d5169c23de2a7708d10a2a"
+    }
+  ],
+  "replays": "020aa00f8d0cae6db48773273f8a4d30900bf76b71e8155e07288b6d6f9ff47b"
+}

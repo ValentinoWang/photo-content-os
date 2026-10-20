@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "checks": [
+    {
+      "title": "CRUSH VIBE",
+      "hash_matches": true,
+      "duration_matches": true
+    },
+    {
+      "title": "Turn Back Time",
+      "hash_matches": true,
+      "duration_matches": true
+    },
+    {
+      "title": "Fever Pitch",
+      "hash_matches": true,
+      "duration_matches": true
+    },
+    {
+      "title": "Turn Back Time",
+      "cli_duplicate": "已在库里",
+      "network": "denied"
+    },
+    {
+      "title": "Fever Pitch",
+      "cli_duplicate": "已在库里",
+      "network": "denied"
+    }
+  ]
+}

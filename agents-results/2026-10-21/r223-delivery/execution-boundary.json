@@ -1,0 +1,13 @@
+{
+  "first_legacy_http_run": {
+    "isolation_environment_missing": true,
+    "effect": "v1 index read and existing lock opened; queue start rejected before analysis or migration; no track/index/analysis writes",
+    "result": "11 failed, 49 passed, 7 subtests passed in 5.18s"
+  },
+  "later_runs": "LOCAL_MEDIA_ROOT explicitly points to phase-C external copy",
+  "real_library_migration": false,
+  "real_library_model_analysis": false,
+  "port_8765_contacted": false,
+  "initial_r220_diagnostic_assertion": "1 != 2; real environment 10/11; original assertion preserved",
+  "synthetic_progress_fixture_repaired": "completed=3,total=2 changed to valid total=6; assertions unchanged"
+}

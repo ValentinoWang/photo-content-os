@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "checks": [
+    "beat optimistic list+rail; delayed HTTP failure restores state; correct part",
+    "tags optimistic list+rail; delayed HTTP failure restores state; correct part",
+    "simultaneous beat/tags retry: one failure cannot clear the other optimistic state",
+    "real copied audio plays; RAF keeps overview node; current beat becomes white; band seeks",
+    "queued → analyzing → done without reload; ~1s non-overlapping polling stops when complete",
+    "facet order: descending count; equal counts follow taxonomy order",
+    "taxonomy panel title, group names, section names and order reach the mounted page"
+  ]
+}

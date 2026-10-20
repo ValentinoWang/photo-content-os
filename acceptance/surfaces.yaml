@@ -157,6 +157,18 @@
     {
       "glob": "third_party/**",
       "key": "photo.project-tools"
+    },
+    {
+      "glob": "music-analysis.registry.json",
+      "key": "studio.backend"
+    },
+    {
+      "glob": "scripts/music_analysis/**",
+      "key": "photo.tests-scripts"
+    },
+    {
+      "glob": "scripts/music_library/**",
+      "key": "photo.tests-scripts"
     }
   ]
 }

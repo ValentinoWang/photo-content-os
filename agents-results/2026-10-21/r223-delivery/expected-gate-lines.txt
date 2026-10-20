@@ -1,0 +1,18 @@
+  G1 有卡  FAIL  2026-10-19-R210-photo-music-link-import 阻塞卡未获当前人工通过; 2026-10-20-R220-photo-studio-ia-preview 阻塞卡未获当前人工通过; 2026-10-20-R223-photo-music-beat-map 阻塞卡未获当前人工通过 → 为非豁免提交创建交付验收卡；阻塞卡需用户通过，并遵守切片额度 → python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py handoff <任务根> --project-root . --replace --baseline <基准文件> --claims <声明文件> <原递交参数>；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py repair retired <不可恢复的未通过卡目录> --project-root . --actor <执行者> --reason <原因>
+  G2 基准一致  PASS  
+  G3 机器先绿  PASS  
+  G4 看得懂  PASS  
+  G5 有入口  PASS  
+  G6 去重已声明  PASS  
+  G7 失效传播  PASS  
+  G8 坏一条不连累  PASS  
+  G9 页面可见  FAIL  2026-10-20-R223-photo-music-beat-map 没有出现在 ready/ACTIVE 投影中 → 重新生成调度台并确认新卡 ready/ACTIVE → python3 tools/console/generate_console.py；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py check-project --project-root .
+  G10 不自证  PASS  
+  G11 有需求卡  PASS  
+  G12 验收覆盖需求  PASS  
+  G13 沿用已有卡  PASS  
+  G14 已通过不可变  PASS  
+  G15 自动替代完整  PASS  
+  G16 不连累前面的卡  PASS  
+  G17 真实链路没被替换  FAIL  2026-10-19-R210-photo-music-link-import: gate-unreadable: result_path must be agents-results/<date>/<task>/acceptance/…; 2026-10-20-R220-photo-studio-ia-preview: gate-unreadable: result_path must be agents-results/<date>/<task>/acceptance/…; 诊断与配置异常：缺工具和缺出口使用明确夹具，实际安装状态另有原始失败记录；重查仍请求真实服务。; 异常页面：部分完成、停止、失败、导入限制和空页使用状态夹具，不代表平台或模型曾真实产生这些异常。; 失败恢复与标签改名：使用接口投影和延迟失败夹具；真实播放及实际模型另有独立验证。; 多首节拍图：切点、换歌和淡出在独立宿主夹具中核验，没有生成真实成片。 → 在 handoff 声明 bypasses 并写清没实测的部分，或改为走产品自己的回执续跑路径 → python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py handoff <任务根> --project-root . --bypasses <声明.json> --replace <原递交参数>；python3 Core/skills/acceptance-handoff/scripts/check_delivery.py --project-root . --range <base>..<head> --read-only
+结果：FAIL（本命令如实返回门禁状态；推送策略由调用方应用）

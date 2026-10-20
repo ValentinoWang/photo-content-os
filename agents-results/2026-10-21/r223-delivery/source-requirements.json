@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "path": "docs/tasks/R223-music-beat-map/mock/beat-map.html",
+      "sha256": "62511ed2ecca1de7a58d086a8274097fc64f32f148c42b4e924860a977abbf67",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ]
+}

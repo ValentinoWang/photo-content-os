@@ -1,0 +1,18 @@
+{
+  "copy": "PASS",
+  "design_ids": "PASS",
+  "number_formulas": "PASS",
+  "number_groups": 33,
+  "capture_errors": 0,
+  "states": 29,
+  "viewports": [
+    1440,
+    1180,
+    900,
+    430
+  ],
+  "browser_walkthrough": "PASS: 26 checks; absent-tools UI fixture; real media decode and backend refresh",
+  "real_environment_diagnostic_assertion": "FAIL: old expected 2 issues; installed tools reduce issues; original test not changed",
+  "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "unchanged_matrix_revalidation": "visual-revalidation.json"
+}

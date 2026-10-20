@@ -1,15 +1,15 @@
 {
   "baseline": {
-    "base": "7c1c0416a144e965100080d078dd30d59f3c56c2",
-    "branch": "codex/r220-clean",
-    "head": "b7ceabebe01700198270de058d7f8de833300dc7",
-    "tree": "04e4115e4b66d420d8f122b5eefa73113fc79a33"
+    "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
+    "branch": "detached",
+    "head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+    "tree": "d9124c98421dcd3c660fbeba7ab5fd26bcf34d54"
   },
-  "binding_sha256": "0bbd6d533986df20bb995645227477d944f55a0420c10ee40d8f17f21edce325",
+  "binding_sha256": "34c8ff1078a6ad6d8933d423313ee950e5a1bbbfe33386e3fdea0c2bb612da23",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "b665e15aab3cec7b0acd8892260d4a26f116a4961c8f302e6137365269ed4eb4",
+  "checklist_sha256": "99f6382e7d375c99ac1dbbe68fbee0dcd655041c5d6afd1ba0fe55ba009200ea",
   "claims": [
     {
       "claim_key": "studio.navigation-settings",
@@ -17,7 +17,7 @@
       "open_route": "note:本机 Photo Studio 的侧栏和设置与诊断",
       "relations": [
         {
-          "reason": "本卡检查已有音频的页面试听、来源和授权展示；旧卡检查真实平台链接导入、重复下载与会员边界，保留旧卡单独验收。",
+          "reason": "本卡检查已有音频的页面试听和来源展示；旧卡检查真实平台链接导入、重复下载与会员边界，保留旧卡单独验收。",
           "target": "2026-10-19-R210-photo-music-link-import",
           "type": "independent"
         },
@@ -25,11 +25,18 @@
           "reason": "本卡只检查导航和诊断呈现，不替代旧卡的实际安装、版本位置与生成候选视频验收。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo",
           "type": "independent"
+        },
+        {
+          "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
         }
       ],
       "surfaces": [
         "acceptance.artifacts",
+        "acceptance.evidence",
         "photo.documentation",
+        "photo.project-tools",
         "photo.tests-scripts",
         "studio.backend",
         "studio.frontend"
@@ -39,10 +46,28 @@
       "claim_key": "studio.shot-review-playback",
       "item": "H-02",
       "open_route": "note:本机 Photo Studio 项目里的挑镜头页面",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "旧导入卡仍独立验两平台导入、重复与会员限制；本卡不替代这些责任。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "工具卡独立验安装与两个编辑后端生成候选；本卡只消费已有运行时，不替代该验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        }
+      ],
       "surfaces": [
         "acceptance.artifacts",
+        "acceptance.evidence",
         "photo.documentation",
+        "photo.project-tools",
         "photo.tests-scripts",
         "studio.backend",
         "studio.frontend"
@@ -52,10 +77,31 @@
       "claim_key": "studio.outputs-music-playback",
       "item": "H-03",
       "open_route": "note:本机 Photo Studio 的成片弹层和音乐库",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "旧导入卡仍独立验两平台导入、重复与会员限制；本卡不替代这些责任。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "工具卡独立验安装与两个编辑后端生成候选；本卡只消费已有运行时，不替代该验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        }
+      ],
+      "request_changes": {
+        "H-03": "按当前需求卡删除曲目授权显示要求，其余步骤和预期保留。"
+      },
       "surfaces": [
         "acceptance.artifacts",
+        "acceptance.evidence",
         "photo.documentation",
+        "photo.project-tools",
         "photo.tests-scripts",
         "studio.backend",
         "studio.frontend"
@@ -63,8 +109,8 @@
     }
   ],
   "contract_path": "evidence/2026-10-20/R220/delivery/acceptance-contract.md",
-  "contract_sha256": "0cafe30ca310cda382b32b61b3e87a55c951b9765e64efcf4f7a3e18fe20fbf9",
-  "contract_version": "1",
+  "contract_sha256": "f77604f0429d1e76203f71aefa694ba773d8ca192650e63010938302e196685c",
+  "contract_version": "2",
   "estimated_minutes": 8,
   "execution_policy": "terminal-after-machine-green",
   "invalidation_keys": [
@@ -76,39 +122,68 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "evidence/2026-10-20/R220/delivery/acceptance/machine/integration-contract/runs/20261020T030209Z-local-macos-real-media-c54e6a/result.md",
-      "result_sha256": "03fdfb95fb8664740ac2a2e915bb79e70a685e677df349fa90ab3f87f19b3ba2",
-      "run_id": "20261020T030209Z-local-macos-real-media-c54e6a",
-      "source_identity": "b7ceabebe01700198270de058d7f8de833300dc7",
-      "surfaces": [
-        "photo.documentation",
-        "photo.tests-scripts",
-        "studio.backend",
-        "studio.frontend"
-      ]
+      "result_path": "evidence/2026-10-20/R220/delivery/acceptance/machine/integration-contract/runs/20261020T210550Z-macos-isolated-c-4e5b26/result.md",
+      "result_sha256": "3a37a5cad18b7f760527c64367ca2adbafc6a8f68f889836c62c283f7670ffd4",
+      "run_id": "20261020T210550Z-macos-isolated-c-4e5b26",
+      "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83"
     },
     {
       "layer": "machine/e2e",
-      "result_path": "evidence/2026-10-20/R220/delivery/acceptance/machine/e2e/runs/20261020T030209Z-local-macos-real-media-934018/result.md",
-      "result_sha256": "31b14dd3f29cda09ce99acca723cbd1c9d3cbbba7f937436621aeb0479052dc0",
-      "run_id": "20261020T030209Z-local-macos-real-media-934018",
-      "source_identity": "b7ceabebe01700198270de058d7f8de833300dc7",
-      "surfaces": [
-        "photo.documentation",
-        "photo.tests-scripts",
-        "studio.backend",
-        "studio.frontend"
-      ]
+      "result_path": "evidence/2026-10-20/R220/delivery/acceptance/machine/e2e/runs/20261020T210550Z-macos-isolated-c-7d4341/result.md",
+      "result_sha256": "a9c6479791edb021f99dcea1df62294bb1787e037bdf9d2e2cfb59b909f2b4c4",
+      "run_id": "20261020T210550Z-macos-isolated-c-7d4341",
+      "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83"
     }
   ],
   "open_route": null,
-  "ready_at": "2026-10-20T03:05:49.552522Z",
+  "protected_test_rebaselines": [
+    {
+      "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
+      "checklist_sha256": "99f6382e7d375c99ac1dbbe68fbee0dcd655041c5d6afd1ba0fe55ba009200ea",
+      "head": "69ecf5550997a57a84c11eb5467356ed12d1ccd0",
+      "phase": "completed",
+      "prepared_at": "2026-10-20T20:42:08.755006Z",
+      "previous_binding_sha256": "0bbd6d533986df20bb995645227477d944f55a0420c10ee40d8f17f21edce325",
+      "previous_ready_at": "2026-10-20T03:05:49.552522Z",
+      "range_head": "69ecf5550997a57a84c11eb5467356ed12d1ccd0",
+      "reason": "音乐页取消授权并接入拍点标签，保留导航、镜头决定、成片和音乐播放的原验收责任。",
+      "tests": [
+        {
+          "new_sha256": "be773417e61820cfcb62fe8fccf0039fa61a598671941fa2891b0a8018769c3d",
+          "old_sha256": "a3666ecefe1226f47f457caf845d79be557ea9ed1fedadd660d4e5787dcbdee4",
+          "path": "tests/test_r220_number_formulas.mjs"
+        }
+      ],
+      "trigger_card": "2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
+      "checklist_sha256": "99f6382e7d375c99ac1dbbe68fbee0dcd655041c5d6afd1ba0fe55ba009200ea",
+      "head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+      "phase": "completed",
+      "prepared_at": "2026-10-20T21:05:49.484878Z",
+      "previous_binding_sha256": "0bbd6d533986df20bb995645227477d944f55a0420c10ee40d8f17f21edce325",
+      "previous_ready_at": "2026-10-20T03:05:49.552522Z",
+      "range_head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+      "reason": "音乐页取消授权并接入拍点标签，保留导航、镜头决定、成片和音乐播放的原验收责任。",
+      "replays": "0a278f7211dca78db9d8bd2e6678e4483875d02d6b46288125057db8744ddf87",
+      "tests": [
+        {
+          "new_sha256": "be773417e61820cfcb62fe8fccf0039fa61a598671941fa2891b0a8018769c3d",
+          "old_sha256": "a3666ecefe1226f47f457caf845d79be557ea9ed1fedadd660d4e5787dcbdee4",
+          "path": "tests/test_r220_number_formulas.mjs"
+        }
+      ],
+      "trigger_card": "2026-10-20-R223-photo-music-beat-map"
+    }
+  ],
+  "ready_at": "2026-10-20T21:08:19.490324Z",
   "release_slice": "R220",
   "request_id": "2026-10-20-R220-photo-studio-ia-preview",
   "required_role": "产品负责人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "b7ceabebe01700198270de058d7f8de833300dc7",
-  "summary": "第 2 轮已获 Claude 看图通过，四处小修自核及局部机器验证通过；三项产品体验等待用户验收。",
+  "source_commit": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "summary": "本轮重新基线及完整机器范围复验；原三项仍待用户验收，未代签。",
   "task_id": "2026-10-20-R220-photo-studio-ia-preview"
 }

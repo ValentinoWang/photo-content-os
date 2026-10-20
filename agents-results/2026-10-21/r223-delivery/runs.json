@@ -1,0 +1,7 @@
+{
+  "r223-integration": "agents-results/2026-10-21/r223-delivery/acceptance/machine/integration-contract/runs/20261020T210549Z-macos-isolated-c-619246/result.md",
+  "r223-e2e": "agents-results/2026-10-21/r223-delivery/acceptance/machine/e2e/runs/20261020T210549Z-macos-isolated-c-036516/result.md",
+  "r210-integration": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance/machine/integration-contract/runs/20261020T210550Z-macos-isolated-c-0ac359/result.md",
+  "r220-integration": "evidence/2026-10-20/R220/delivery/acceptance/machine/integration-contract/runs/20261020T210550Z-macos-isolated-c-4e5b26/result.md",
+  "r220-e2e": "evidence/2026-10-20/R220/delivery/acceptance/machine/e2e/runs/20261020T210550Z-macos-isolated-c-7d4341/result.md"
+}

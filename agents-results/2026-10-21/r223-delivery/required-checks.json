@@ -1,0 +1,44 @@
+[
+  {
+    "name": "runtime",
+    "command": "bash scripts/check_runtime_contract.sh",
+    "exit_code": 0,
+    "result": "Runtime contract check passed."
+  },
+  {
+    "name": "safety",
+    "command": ".venv/bin/python scripts/check_repository_safety.py --base origin/main",
+    "exit_code": 0,
+    "result": "Repository safety check passed."
+  },
+  {
+    "name": "obsidian",
+    "command": ".venv/bin/python scripts/check_obsidian_doc_sync.py",
+    "exit_code": 1,
+    "result": "- historical_jianying_evidence_is_not_production: source doc is newer than Obsidian target; sync required (newest source: $WORKTREE/docs/execution-rules.md, oldest target: $HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/Jianying_Roughcut_Draft_Pipeline.md)"
+  },
+  {
+    "name": "outline",
+    "command": ".venv/bin/python scripts/check_outline_contract.py .",
+    "exit_code": 1,
+    "result": "subprocess.CalledProcessError: Command '['$HOME/Desktop/创业项目/photo-content-os/.venv/bin/python', '$WORKTREE/scripts/check_obsidian_doc_sync.py', '--local-root', '$WORKTREE']' returned non-zero exit status 1."
+  },
+  {
+    "name": "full-tests",
+    "command": ".venv/bin/python -m pytest -q tests",
+    "exit_code": 1,
+    "result": "10 failed, 834 passed, 33 skipped, 6 errors, 2003 subtests passed in 146.05s (0:02:26)"
+  },
+  {
+    "name": "task-help",
+    "command": ".venv/bin/python scripts/validate_content_os_task.py --help",
+    "exit_code": 0,
+    "result": "  --blocked-result-out BLOCKED_RESULT_OUT"
+  },
+  {
+    "name": "draft-help",
+    "command": ".venv/bin/python scripts/validate_jianying_draft.py --help",
+    "exit_code": 0,
+    "result": "  --roughcut-review-output ROUGHCUT_REVIEW_OUTPUT"
+  }
+]

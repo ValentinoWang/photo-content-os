@@ -1,0 +1,2398 @@
+[
+  {
+    "name": "home",
+    "route": "http://127.0.0.1:65285/#view=home",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:49:32.188Z",
+    "file": "home-1440.png",
+    "sha256": "27560e404f889fc1069e3fb9ff6d29748ff235842b81f87fe1eedc4ddd59aa1c",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "home",
+    "route": "http://127.0.0.1:65285/#view=home",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:49:32.504Z",
+    "file": "home-1180.png",
+    "sha256": "f1bb38b4442b3445daeb7e0b4c2849d26c7651c760385b799762a5e7a2e13ffc",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "home",
+    "route": "http://127.0.0.1:65285/#view=home",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 1126,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:49:32.788Z",
+    "file": "home-900.png",
+    "sha256": "20d1c204ee9a21544ee0e8b9434ce97d9866788131b99600b89d59e50c5be25a",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1126
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "home",
+    "route": "http://127.0.0.1:65285/#view=home",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1134,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:49:33.070Z",
+    "file": "home-430.png",
+    "sha256": "b5dc9eafb16661658049084293fedac30687ca6f7cdd7f71970396da7da84618",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1134
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "inbox",
+    "route": "http://127.0.0.1:65285/#view=inbox",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:49:35.389Z",
+    "file": "inbox-1440.png",
+    "sha256": "0fda46f1f4ccb01b80f94e0e668806e2be26e7102c2423e5ee3338d0f9de6195",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "inbox",
+    "route": "http://127.0.0.1:65285/#view=inbox",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:49:35.702Z",
+    "file": "inbox-1180.png",
+    "sha256": "0a624b4341faede597edf4e032eaf31bcfffbad70c97c0251f41898c8ff9ca8c",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "inbox",
+    "route": "http://127.0.0.1:65285/#view=inbox",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:49:35.979Z",
+    "file": "inbox-900.png",
+    "sha256": "63852a3e935a712138a8fbb98a6190f1c69ad4b82713533b4564b5ec51dda201",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "inbox",
+    "route": "http://127.0.0.1:65285/#view=inbox",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:49:36.261Z",
+    "file": "inbox-430.png",
+    "sha256": "41f0d1f551869d4885e0aabc0aa62314f3ca2e6208e77220b39c0eab617ee96e",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "projects",
+    "route": "http://127.0.0.1:65285/#view=projects",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:49:41.173Z",
+    "file": "projects-1440.png",
+    "sha256": "9d3efe9527c19f289d245c8de34459d0fde9207adf278d5022abcdb9b95d0c07",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "projects",
+    "route": "http://127.0.0.1:65285/#view=projects",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:49:41.532Z",
+    "file": "projects-1180.png",
+    "sha256": "7f062ca32cd8aa5aad0204d641fde84ac2eadba8929b93317f3dd82e7dd69157",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "projects",
+    "route": "http://127.0.0.1:65285/#view=projects",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:49:41.807Z",
+    "file": "projects-900.png",
+    "sha256": "d6edfa6f5e203d0916c5884b568b68c576f8bc9e26bf0679e67087cad19dd87c",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "projects",
+    "route": "http://127.0.0.1:65285/#view=projects",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:49:42.105Z",
+    "file": "projects-430.png",
+    "sha256": "74b2743778f508685d314556784d597e64ece627725b110767a4ac86c6a31b68",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-empty",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:00.553Z",
+    "file": "piece-empty-1440.png",
+    "sha256": "510c9c36617954bf3ec7706b88c0fab226370f8c8085509566fefb64d615025c",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-empty",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:00.864Z",
+    "file": "piece-empty-1180.png",
+    "sha256": "d6f5d9bd668f8e677843f17fb2e731773adf7b740f90872320682728fa2b1cf4",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-empty",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:01.209Z",
+    "file": "piece-empty-900.png",
+    "sha256": "6f7a9970be3f29af9c6cd34d9142927a67aeb705fc22e695d1d56fb1acbe9adb",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-empty",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:01.836Z",
+    "file": "piece-empty-430.png",
+    "sha256": "7b71281db36a5de53cee2f9103ba9105e0a4e49b52dcc0cbc8348da87e883fde",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-not-started",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:04.263Z",
+    "file": "piece-not-started-1440.png",
+    "sha256": "83fa521cb358dffc9789e994170774f6cba9f907566fb758d4f13530eccc1920",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-not-started",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:04.568Z",
+    "file": "piece-not-started-1180.png",
+    "sha256": "5c3059847c49fa73296e692b4cdb6cf316c819ddc34c44407591d02f844758d5",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-not-started",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:04.873Z",
+    "file": "piece-not-started-900.png",
+    "sha256": "f3db7aa9a4929e06c02c1e4ca2be24f98593cb0f8b25f909329b882c9f486a6b",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-not-started",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:05.170Z",
+    "file": "piece-not-started-430.png",
+    "sha256": "8b8f4dcafbe39a2f5d22ab408a58beae643a4990ea66fb0f3bb18d486d7a9fe4",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-not-started-photos",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-04e9db3760&ptab=vlog",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:07.363Z",
+    "file": "piece-not-started-photos-1440.png",
+    "sha256": "5c4e312500824c3e14a2b079f033ee20a398514ec79a5add65eedd7b6784e051",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-not-started-photos",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-04e9db3760&ptab=vlog",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:07.681Z",
+    "file": "piece-not-started-photos-1180.png",
+    "sha256": "dbf309b7442a262ea1a739fe11159d24ea99d2461b002eacab48e5c7fdbe5b8f",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-not-started-photos",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-04e9db3760&ptab=vlog",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:07.974Z",
+    "file": "piece-not-started-photos-900.png",
+    "sha256": "4736778a8827104544ed6ee67b42054e51c66a54acc6cebbe738e0804fb14811",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-not-started-photos",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-04e9db3760&ptab=vlog",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:08.225Z",
+    "file": "piece-not-started-photos-430.png",
+    "sha256": "ec760f8e190c29dba5ec5f6b748e7a228ecb0a84ad814f1138943cc0ba86ee2c",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-script",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=script",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:10.704Z",
+    "file": "piece-script-1440.png",
+    "sha256": "f0a44a283db96abef08cb0fa56d11d8f3960f68a9789c4dfb49f8f7ae7704b8c",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-script",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=script",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:11.025Z",
+    "file": "piece-script-1180.png",
+    "sha256": "374625e2632970b42b6769d4c6a3b1dad1b7dba88f43c93b5e13d7aaa3cd95d4",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-script",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=script",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:11.323Z",
+    "file": "piece-script-900.png",
+    "sha256": "92c8c9c6fc12d673e62206d18d7dd2498c029bcfc093616c612f7a9b5833bc3b",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-script",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=script",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1208,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:11.849Z",
+    "file": "piece-script-430.png",
+    "sha256": "530786120a6fbf7b44cb847c1a01cd97bd75a55db4bc4a0d5bdfd13806a048fe",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1208
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "player-reel",
+    "route": "http://127.0.0.1:65285/#view=home",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:13.983Z",
+    "file": "player-reel-1440.png",
+    "sha256": "5396ba005a76413af2f5ded70ad99b077fdd56364a7d971643a1aa29265fb122",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "player-reel",
+    "route": "http://127.0.0.1:65285/#view=home",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:14.293Z",
+    "file": "player-reel-1180.png",
+    "sha256": "e47bf415322e17b4eac0d91aeb63798e5d7504de78e9610ecba47ee4b7f3cc2a",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "player-reel",
+    "route": "http://127.0.0.1:65285/#view=home",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 1126,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:14.705Z",
+    "file": "player-reel-900.png",
+    "sha256": "4c178f6a6b8c56ca419c264e1ca5fe2e3e8b67202e101ce1c79edb9cabfca885",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1126
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "player-reel",
+    "route": "http://127.0.0.1:65285/#view=home",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1134,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:15.005Z",
+    "file": "player-reel-430.png",
+    "sha256": "cc876a62f460afd92d1ac93dcf12e4b9ab5c217d68c686458573f1ae6ef762cc",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1134
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "library",
+    "route": "http://127.0.0.1:65285/#view=library",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:20.384Z",
+    "file": "library-1440.png",
+    "sha256": "0694f3b8496709b69587ad808421c7dbcbde39d1e65aa979763987c7455bba9a",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "library",
+    "route": "http://127.0.0.1:65285/#view=library",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:20.688Z",
+    "file": "library-1180.png",
+    "sha256": "23f518bbdf0ac323f67249a14190d566e58de0dbbb59c05de8526e9a9cffc52f",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "library",
+    "route": "http://127.0.0.1:65285/#view=library",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:20.976Z",
+    "file": "library-900.png",
+    "sha256": "8cd79726f63fcf6882c1269381ee69c3dfba34a0e90e3b0ab97191ca08cf00d3",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "library",
+    "route": "http://127.0.0.1:65285/#view=library",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:21.232Z",
+    "file": "library-430.png",
+    "sha256": "8711541bd1631cb7737b5bf364aa75fbf8287004835c555c1a0eb87e53fbf3e4",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "library-empty",
+    "route": "http://127.0.0.1:65285/#view=library",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:23.233Z",
+    "file": "library-empty-1440.png",
+    "sha256": "5c1ef192892904dd3f2863bfe8fc8fb5cfd60dc8a8d61f551ecfb7a8641f25a3",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "library-empty",
+    "route": "http://127.0.0.1:65285/#view=library",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:23.489Z",
+    "file": "library-empty-1180.png",
+    "sha256": "17a39fad3805e24e19ced4403c0e3757f0300cd4ae9d2974dcc43c5540c83ddb",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "library-empty",
+    "route": "http://127.0.0.1:65285/#view=library",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:23.764Z",
+    "file": "library-empty-900.png",
+    "sha256": "7339327bc1f685671b93281a9f15a3c8eeebda8ee2ea0a0b75b43cdf54ab577c",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "library-empty",
+    "route": "http://127.0.0.1:65285/#view=library",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:24.054Z",
+    "file": "library-empty-430.png",
+    "sha256": "53307d19064335f12168deb1cc4e1591a89d826aa73535924664ca4017e92900",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:25.711Z",
+    "file": "music-1440.png",
+    "sha256": "ce4de66ce7cd7671fda54914cdab4ff767fb77a2fe83f2057e8a66d749378d16",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1066
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:26.065Z",
+    "file": "music-1180.png",
+    "sha256": "9aec1b8e635c328476e3c76ab02adebfafad523c2fd1a768c157abb65dfec1ff",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1066
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:26.372Z",
+    "file": "music-900.png",
+    "sha256": "0a55c8e57513a24cd1c61a6f9cbcdd546349cfaf569cb96203e0f0cc769ce813",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:26.677Z",
+    "file": "music-430.png",
+    "sha256": "35353bb93fd68636cd53091c51b731570dc46834c0524625559bb0889d5b51ee",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-empty",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:28.318Z",
+    "file": "music-empty-1440.png",
+    "sha256": "9320e982419f7709eff3c6230dde9371aac4d2b97490546200b987e7bc322a6b",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-empty",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:28.624Z",
+    "file": "music-empty-1180.png",
+    "sha256": "fa737ae683f49251fc74664f0fe51bd010288a65a534deac3927a87a5a331934",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-empty",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:28.936Z",
+    "file": "music-empty-900.png",
+    "sha256": "b56112a7b131402f271e7b0d2e383ca40e53c93c87eabd5e322baa04a1ae10f4",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-empty",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:29.254Z",
+    "file": "music-empty-430.png",
+    "sha256": "bbdb933f113e6c314165e7b45501dafffcac20de4821ec5586cd125f963425c9",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-importing",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:31.654Z",
+    "file": "music-importing-1440.png",
+    "sha256": "7591d6cda8659dc49777f87e05413d70b2fd8ae4e09a55b6bc9199de11da3f64",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1066
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-importing",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:32.062Z",
+    "file": "music-importing-1180.png",
+    "sha256": "f5c198e72645036ae2bc6923c24a6f74c754f328479bc14a17da6af25093a0fb",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1066
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-importing",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:32.570Z",
+    "file": "music-importing-900.png",
+    "sha256": "1cdeb12072c51073f00f74442562ec4c44961b97349854fd3499a138032b9632",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-importing",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:32.920Z",
+    "file": "music-importing-430.png",
+    "sha256": "e4c07dbdcfc4b86ed03f055f713018c4384a91eeba8564320c1b7abc6aa4fe22",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-dup",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1134,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:34.736Z",
+    "file": "music-dup-1440.png",
+    "sha256": "6080589d7f40f4417c9410d127634166f4e2ee639f058bb502c368d3f53e69df",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1134
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-dup",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1134,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:35.145Z",
+    "file": "music-dup-1180.png",
+    "sha256": "1e45bd07ab9a3a19436c8071ef5d4cda7e638d70df7ca35ac1e257615dac2bfa",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1134
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-dup",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:35.433Z",
+    "file": "music-dup-900.png",
+    "sha256": "5cdfc4f6b551f82e4a676d6dddc2aea1fb9f89c5543571328130e80163c90364",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-dup",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:35.765Z",
+    "file": "music-dup-430.png",
+    "sha256": "bb444f5dd0befadbc15b0f4ac27dfb930fa80a6599b338d02a835650fce7a7f6",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-vip",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1158,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:38.036Z",
+    "file": "music-vip-1440.png",
+    "sha256": "b5cf1f72ab9d63ba41241d6aa927f16ecda2140997eb11ed58dfbd550b91e569",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1158
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-vip",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1158,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:38.519Z",
+    "file": "music-vip-1180.png",
+    "sha256": "b9382f084dbed493a66230937634351c09a9251ab40145da241cb1e16e21e9e4",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1158
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-vip",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:38.829Z",
+    "file": "music-vip-900.png",
+    "sha256": "c8077104ade509a929a9d7fa19ee31e1fc9b5294f6dff3f0c7a4ff0f582415ac",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-vip",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:39.151Z",
+    "file": "music-vip-430.png",
+    "sha256": "34feece927412b753eb2c028b10ec3b281c039f1aae36782abaf8015e862cc3e",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-douyin",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1158,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:41.725Z",
+    "file": "music-douyin-1440.png",
+    "sha256": "34f4a20d3a60eb5222b25c0326e7df820dfe9785e089e77d989fc9579a874c48",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1158
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-douyin",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1158,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:42.251Z",
+    "file": "music-douyin-1180.png",
+    "sha256": "f453ef820035cb4b55bdce0fa2e433c0510fc36bb5ee30cc904e3bcf85a64038",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1158
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-douyin",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:42.746Z",
+    "file": "music-douyin-900.png",
+    "sha256": "8372aa88569756cb295c2acbf889bb071ecaa7652ecf98a36b6cd03cf55eded8",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "music-douyin",
+    "route": "http://127.0.0.1:65285/#view=music",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:43.115Z",
+    "file": "music-douyin-430.png",
+    "sha256": "da41feeae92fb22b230dd17939d8c60a49d208664065ea1cd82eaf13b7cf548b",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-places",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=places",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:45.967Z",
+    "file": "settings-places-1440.png",
+    "sha256": "e84eeb223b1ba4e04e1da4c5cdddbb844cb81c6ca190b6c9afaeb9c7390e06c9",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-places",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=places",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:46.263Z",
+    "file": "settings-places-1180.png",
+    "sha256": "85ad02d7867c9c64c5c80d9ebf3a3b610b10bc8e164a1025c1ad6dcc7ad78a71",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-places",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=places",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:46.530Z",
+    "file": "settings-places-900.png",
+    "sha256": "eba7540e876baf72e4555302a1173dc6cc1a460262435f58847c13e286515a9f",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-places",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=places",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:46.787Z",
+    "file": "settings-places-430.png",
+    "sha256": "3a081e3f1b77f634f00e27dfbd9f537b78b029804adda24be08c2eb8a88a524e",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-tools",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=tools",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:49.026Z",
+    "file": "settings-tools-1440.png",
+    "sha256": "b425935b09aa2997eeb40f9d89c8b539a4b82ad991333c0f78ba0cea369b0c0a",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-tools",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=tools",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:49.328Z",
+    "file": "settings-tools-1180.png",
+    "sha256": "8ccd582eb859a5bd35a9f28c5aaf35631d2e1adfc8ffabf3331a3eac6e620880",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-tools",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=tools",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:49.765Z",
+    "file": "settings-tools-900.png",
+    "sha256": "b14a2909c7d8caf137d6879804f2689e3e3c3fe7abaf008becedd1027d1e2792",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-tools",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=tools",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:50.585Z",
+    "file": "settings-tools-430.png",
+    "sha256": "374c6d2b3c3330233c26ccf5d30f6ccc2c06cce0a4618e0dd5ac1d8805c4eff4",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-models",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=models",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:54.012Z",
+    "file": "settings-models-1440.png",
+    "sha256": "d5223c5b2236d4d8057b788f5266c950b842783f0aecc8a84ca01da1b49a55f7",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-models",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=models",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:54.661Z",
+    "file": "settings-models-1180.png",
+    "sha256": "5b8e2a15d02c962a4eff22135c23d3e4763fe0e673730a71af37e299a163d282",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-models",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=models",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:54.996Z",
+    "file": "settings-models-900.png",
+    "sha256": "ab30a65edd13963d473b1e69001edfbc5f9eb701967927005853e150b33099dc",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-models",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=models",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1013,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:55.255Z",
+    "file": "settings-models-430.png",
+    "sha256": "b124a1980f220e9b2f6d9718d02c91f048dbdee27746ab362601070074c57082",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1013
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-music",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=music",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:57.091Z",
+    "file": "settings-music-1440.png",
+    "sha256": "b0c0636e4ede5bdbcdb217e75839b1c37ca8328c4679d676dcc10e18eff40861",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-music",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=music",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:57.388Z",
+    "file": "settings-music-1180.png",
+    "sha256": "ccd3b1635c39093c47ef6ae72590109ba9145d22c0b0dd8f1a40fd89e62cf8d4",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-music",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=music",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:50:57.646Z",
+    "file": "settings-music-900.png",
+    "sha256": "a46b29552f191976ef538386112987973e71ac5e9b27b4e4871503a5a128021b",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-music",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=music",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:50:57.911Z",
+    "file": "settings-music-430.png",
+    "sha256": "7c26cbef35fc4b4115e71d2bf91cf993d03bf178d56e414490ed9f57187c14e2",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-account",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=account",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:50:59.631Z",
+    "file": "settings-account-1440.png",
+    "sha256": "b2d7e30d5584bedd387e9f0e7ae0f1de407e5f137f8679f4b9c94cf17bee74d2",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-account",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=account",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:50:59.966Z",
+    "file": "settings-account-1180.png",
+    "sha256": "559593f351f95b101f283b0c20a4c113898ae304b1cd329262a62672b30eda96",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-account",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=account",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:51:00.219Z",
+    "file": "settings-account-900.png",
+    "sha256": "f6fd7ca22af4a24d126639b83b50a9c9c766197189816fdd2e6985f586e4cfeb",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-account",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=account",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:51:00.547Z",
+    "file": "settings-account-430.png",
+    "sha256": "7bb0341e8774ab3860a12a4df173ddbd3ebaac141bd0e053f550e4bfe0ee9284",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-doctor",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=doctor",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1399,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:51:02.954Z",
+    "file": "settings-doctor-1440.png",
+    "sha256": "199250bf8cc7d4e565546413214afdec28bc5d9a3b1a02ad0dd47be19423c633",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1399
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-doctor",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=doctor",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1399,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:51:03.392Z",
+    "file": "settings-doctor-1180.png",
+    "sha256": "721c5aba2b5cad1f53622b0e792fb3b3e3a979099e0ef888d9dea681d8b417c8",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1399
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-doctor",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=doctor",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 1432,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:51:03.708Z",
+    "file": "settings-doctor-900.png",
+    "sha256": "2e6ddfef739490968ee6d127c0ee2d1d3e0cde88e90e01cc5c3f7855f438166a",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1432
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "settings-doctor",
+    "route": "http://127.0.0.1:65285/#view=settings&tab=doctor",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1445,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:51:04.009Z",
+    "file": "settings-doctor-430.png",
+    "sha256": "54123e718b34a0cc086a3ead39bcfc27e22dde61c3609de5d4c4210e35d5ba17",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1445
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "project",
+    "route": "http://127.0.0.1:65285/#view=project&project=5a02851f419ef30cb41a",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:54:05.044Z",
+    "file": "project-1440.png",
+    "sha256": "93d6693b1b0d49c5acf1dd110072b5d0a9c39ed028183bb4773e66f9e949f7c7",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "project",
+    "route": "http://127.0.0.1:65285/#view=project&project=5a02851f419ef30cb41a",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:54:05.306Z",
+    "file": "project-1180.png",
+    "sha256": "607b964ab805b95eef76d486394fb76cda8ce990fea35e092f6f74b261f5819d",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "project",
+    "route": "http://127.0.0.1:65285/#view=project&project=5a02851f419ef30cb41a",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:54:05.595Z",
+    "file": "project-900.png",
+    "sha256": "477ab15f4de8621fc8fe868dd0c99532723f43db4a74553febd1fdc759d33113",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "project",
+    "route": "http://127.0.0.1:65285/#view=project&project=5a02851f419ef30cb41a",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:54:05.828Z",
+    "file": "project-430.png",
+    "sha256": "6ee8c6bb6c062bdcfefb407f6eeee0ccd4ffb34e9928d7e55b9e05faf04df3f8",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1581,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:54:08.221Z",
+    "file": "piece-review-1440.png",
+    "sha256": "15a3dab5e6a579c9f3882cf2534c43fcf6dddb66456d1e76e93942330fb8e4d6",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1581
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1528,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:54:08.562Z",
+    "file": "piece-review-1180.png",
+    "sha256": "ff5fa7e02093d146e52f44edb89985bda79aaab39ae6ad9c26da6213f33201af",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1528
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 1886,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:54:09.049Z",
+    "file": "piece-review-900.png",
+    "sha256": "82f25b3e3d26deda5df3bf295b557735f6055c866f3d6b2dffcf9229a66049b0",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1886
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1777,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:54:09.370Z",
+    "file": "piece-review-430.png",
+    "sha256": "e3d2e49c2a9414a10c430221e0093fcc1a352536ebbc2891f409f7c28a6dc1fc",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1777
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review-alt",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1581,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:54:12.331Z",
+    "file": "piece-review-alt-1440.png",
+    "sha256": "6fdad10d46b830591677b9b013ac652729c743a8247a57698323c43846903ee1",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1581
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review-alt",
+    "part": 1,
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1581,
+      "scrollWidth": 1440
+    },
+    "file": "piece-review-alt-1440-inspector-part-1.png",
+    "source": "real-data",
+    "captured_at": "2026-10-20T20:54:12.422Z",
+    "scroll_coverage": [
+      0,
+      393
+    ],
+    "sha256": "7b53f46421420002a2fa95c9783a97ed3dd0a6ae2a7bb316dd3b5629789b085d",
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review-alt",
+    "part": 2,
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1581,
+      "scrollWidth": 1440
+    },
+    "file": "piece-review-alt-1440-inspector-part-2.png",
+    "source": "real-data",
+    "captured_at": "2026-10-20T20:54:12.522Z",
+    "scroll_coverage": [
+      76,
+      469
+    ],
+    "sha256": "0940f65eb5f915ed2d3e1965f385d8fd7b47ca41e6b61169bfbf938ce93b8b61",
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review-alt",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1528,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:54:12.872Z",
+    "file": "piece-review-alt-1180.png",
+    "sha256": "d85c672e9c234a94e1c7944053532bc101aa21d2a0a929bd14c5980bf41cf33c",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1528
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review-alt",
+    "part": 1,
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1528,
+      "scrollWidth": 1180
+    },
+    "file": "piece-review-alt-1180-inspector-part-1.png",
+    "source": "real-data",
+    "captured_at": "2026-10-20T20:54:12.982Z",
+    "scroll_coverage": [
+      0,
+      337
+    ],
+    "sha256": "349d206908c8f06626fa849faedfd9846fa15abc4983a1f7477fadd6dde2be2b",
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review-alt",
+    "part": 2,
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1528,
+      "scrollWidth": 1180
+    },
+    "file": "piece-review-alt-1180-inspector-part-2.png",
+    "source": "real-data",
+    "captured_at": "2026-10-20T20:54:13.071Z",
+    "scroll_coverage": [
+      132,
+      469
+    ],
+    "sha256": "15941edc5420c251ba65535c5e553bf3cda53bbfee1da3a6ed4c74a2de01040b",
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review-alt",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 2083,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:54:13.502Z",
+    "file": "piece-review-alt-900.png",
+    "sha256": "296aab09f9e9b29661b0ddd92749edbeba3ed3fa5a15e63370e3916d3606df7b",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      2083
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-review-alt",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1974,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:54:13.954Z",
+    "file": "piece-review-alt-430.png",
+    "sha256": "57d318c952ac215ef8f65f1118b570aea12b565ee041acc33b2386e633db9bd0",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1974
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-confirmed",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1561,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:54:16.221Z",
+    "file": "piece-confirmed-1440.png",
+    "sha256": "7f2e172f751e6ddcac465cbd6f7e21c1f2a72c8fb9ad45d5cfeed24aa83afb94",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1561
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-confirmed",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1508,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:54:16.521Z",
+    "file": "piece-confirmed-1180.png",
+    "sha256": "e2c5b98bedff4077eab0d8bde81f6ac239c9fd63c869801f784224f660771449",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1508
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-confirmed",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 1814,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:54:16.821Z",
+    "file": "piece-confirmed-900.png",
+    "sha256": "a894d2cda22ea545d4f99cbf7cadb8daf13d4f495f5d8613f84043eb36662246",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1814
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-confirmed",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1756,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:54:17.128Z",
+    "file": "piece-confirmed-430.png",
+    "sha256": "a43b360161b54d947df014161c979d00d19cba46a30ff9844ab887d585e9deb4",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1756
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-partial",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1333,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:54:19.060Z",
+    "file": "piece-partial-1440.png",
+    "sha256": "2d9c153f91f72483065015ab1072b6146838cbcd4dd2b97c184598893263901e",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1333
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-partial",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 1278,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:54:19.420Z",
+    "file": "piece-partial-1180.png",
+    "sha256": "58fede05d1203e2bdab0ee68acee3bad2ee3ccc338646f6abb2cffedf3027160",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1278
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-partial",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 1602,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:54:19.822Z",
+    "file": "piece-partial-900.png",
+    "sha256": "7fbbc1efbbb9fef4a52bd801fa56b41ef96c1807dba5603d6eaaa9fd79896245",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1602
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-partial",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 1601,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:54:20.146Z",
+    "file": "piece-partial-430.png",
+    "sha256": "0dd4712368a3e35e002373423e6dbd04c746ce85eb3e3a18c75d3f94ddef4801",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      1601
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-running",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:54:21.841Z",
+    "file": "piece-running-1440.png",
+    "sha256": "113e1dc93fa2c9cff27e04e2646bd8e54703a62708278fa9aab74b46d8c1dfbd",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-running",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:54:22.145Z",
+    "file": "piece-running-1180.png",
+    "sha256": "9c8df8093d9e1e866b57486c8bde38bd8021aea7579dc0ce8caaf3d948de1851",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-running",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:54:22.424Z",
+    "file": "piece-running-900.png",
+    "sha256": "2e7fc70679cb044dd2dc1e38cec429533f54f3b5e4dba6624dc1ddc91b4e9f25",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "piece-running",
+    "route": "http://127.0.0.1:65285/#view=piece&piece=project-84aad658ff&ptab=vlog",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:54:22.687Z",
+    "file": "piece-running-430.png",
+    "sha256": "48c9555b1de09524ca59179801ca4fb510c8b708bc75f5f0ef4158289c95d9c9",
+    "source": "real-media-state-fixture",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "player-versions",
+    "route": "http://127.0.0.1:65285/#view=project&project=5a02851f419ef30cb41a",
+    "viewport": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    },
+    "captured_at": "2026-10-20T20:54:24.803Z",
+    "file": "player-versions-1440.png",
+    "sha256": "2d7d658364bb10edbf4c3dfceb6774ea0053c72b6d1962735fdb01270ed765f6",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "player-versions",
+    "route": "http://127.0.0.1:65285/#view=project&project=5a02851f419ef30cb41a",
+    "viewport": {
+      "width": 1180,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1180
+    },
+    "captured_at": "2026-10-20T20:54:25.088Z",
+    "file": "player-versions-1180.png",
+    "sha256": "726b488dbdf87cc21003e8ac0d051bce2291014b75676ac2af6b117a2465079a",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "player-versions",
+    "route": "http://127.0.0.1:65285/#view=project&project=5a02851f419ef30cb41a",
+    "viewport": {
+      "width": 900,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 900
+    },
+    "captured_at": "2026-10-20T20:54:25.449Z",
+    "file": "player-versions-900.png",
+    "sha256": "a32f3631280e6237a1e941ccbfc4216de7a4496dfbf93ab5bc2385813b8e1299",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  },
+  {
+    "name": "player-versions",
+    "route": "http://127.0.0.1:65285/#view=project&project=5a02851f419ef30cb41a",
+    "viewport": {
+      "width": 430,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 430
+    },
+    "captured_at": "2026-10-20T20:54:25.776Z",
+    "file": "player-versions-430.png",
+    "sha256": "9f2f6bc2d55c0aeee2dce0bd7ad7935b7554f7b7ee16bdc379f4d9e75a8bbd1f",
+    "source": "real-data",
+    "font_mode": "fallback-local",
+    "scroll_coverage": [
+      0,
+      960
+    ],
+    "review_result": "UNREVIEWED"
+  }
+]

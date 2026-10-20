@@ -1,56 +1,116 @@
 {
   "baseline": {
-    "base": "6fe9533340fd1e8c2d2fc24b7939eba2cde950f0",
+    "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
     "branch": "detached",
-    "head": "41fd234b422e5c5e64b1536329b64d2d424c905c",
-    "tree": "df45996583fc7105159ffc098de8c3f1b82d3fe6"
+    "head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+    "tree": "d9124c98421dcd3c660fbeba7ab5fd26bcf34d54"
   },
-  "binding_sha256": "3b2a744a7bfe46967a55caa29c6044fb4be35840166bc4de8eb2d418f2e4d03e",
+  "binding_sha256": "ef55ee14b184f32a9b67abebb193419b7439d0522ac7792a80d65305820340f1",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "fbfb81d8ec702bdaccd2352047ff6952a9c1df33f490cd0b8f3c22d655e98be0",
+  "checklist_sha256": "e77cf14a252574f4dfc769583f9a41f32b2b6a2df1543a7452cef7a4f26bfa08",
   "claims": [
     {
       "claim_key": "music.link-import",
       "item": "H-01",
       "open_route": "note:Mac 终端的音乐导入和本地音乐库",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "旧导航预览卡仍独立验导航设置、镜头决定和成片播放；本卡不替代这些责任。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "工具卡独立验安装与两个编辑后端生成候选；本卡只消费已有运行时，不替代该验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        }
+      ],
+      "request_changes": {
+        "H-01": "按当前需求卡删除曲目授权显示要求，其余步骤和预期保留。"
+      },
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
         "photo.tests-scripts",
-        "studio.backend"
+        "studio.backend",
+        "studio.frontend"
       ]
     },
     {
       "claim_key": "music.duplicate-import",
       "item": "H-02",
       "open_route": "note:Mac 终端的音乐导入和本地音乐库",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "旧导航预览卡仍独立验导航设置、镜头决定和成片播放；本卡不替代这些责任。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "工具卡独立验安装与两个编辑后端生成候选；本卡只消费已有运行时，不替代该验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        }
+      ],
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
         "photo.tests-scripts",
-        "studio.backend"
+        "studio.backend",
+        "studio.frontend"
       ]
     },
     {
       "claim_key": "music.membership-boundary",
       "item": "H-03",
       "open_route": "note:Mac 终端的音乐导入和本地音乐库",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "旧导航预览卡仍独立验导航设置、镜头决定和成片播放；本卡不替代这些责任。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "音乐分析卡新增标签、分面和节拍听感；本卡原有导入或导航播放责任仍须单独验。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "工具卡独立验安装与两个编辑后端生成候选；本卡只消费已有运行时，不替代该验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        }
+      ],
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
         "photo.tests-scripts",
-        "studio.backend"
+        "studio.backend",
+        "studio.frontend"
       ]
     }
   ],
   "contract_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance-contract.md",
-  "contract_sha256": "04b413fea7114008aa5becf7f3f8bed7f88c9ae11402c201d4befb01718500de",
-  "contract_version": "2",
+  "contract_sha256": "df5810569bd7306524a29c4e5f24a450aa183bffbe9e81ad7a2a4d7034fc29bc",
+  "contract_version": "3",
   "estimated_minutes": 3,
   "execution_policy": "terminal-after-machine-green",
   "invalidation_keys": [
@@ -60,14 +120,55 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance/machine/integration-contract/runs/20261019T234752Z-local-macos-offline-d93f10/result.md",
-      "result_sha256": "18437c0cf16a360bcac2d092540def2434aa9f8d8e9eeb84f437d841c51a3c28",
-      "run_id": "20261019T234752Z-local-macos-offline-d93f10",
-      "source_identity": "41fd234b422e5c5e64b1536329b64d2d424c905c"
+      "result_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance/machine/integration-contract/runs/20261020T210550Z-macos-isolated-c-0ac359/result.md",
+      "result_sha256": "2aef78618ea8df658e111f8a9c8dce0628a9df946f3bce45bafef50fc333fa9f",
+      "run_id": "20261020T210550Z-macos-isolated-c-0ac359",
+      "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83"
     }
   ],
   "open_route": null,
-  "ready_at": "2026-10-19T23:48:40.995350Z",
+  "protected_test_rebaselines": [
+    {
+      "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
+      "checklist_sha256": "e77cf14a252574f4dfc769583f9a41f32b2b6a2df1543a7452cef7a4f26bfa08",
+      "head": "69ecf5550997a57a84c11eb5467356ed12d1ccd0",
+      "phase": "completed",
+      "prepared_at": "2026-10-20T20:42:08.390333Z",
+      "previous_binding_sha256": "3b2a744a7bfe46967a55caa29c6044fb4be35840166bc4de8eb2d418f2e4d03e",
+      "previous_ready_at": "2026-10-19T23:48:40.995350Z",
+      "range_head": "69ecf5550997a57a84c11eb5467356ed12d1ccd0",
+      "reason": "取消曲目授权字段和对应断言，保留两平台导入、去重、会员边界及失败隔离的原验收责任。",
+      "tests": [
+        {
+          "new_sha256": "13151f4b3465cec5a13e9edbc58497c96dc935ce35d5169c23de2a7708d10a2a",
+          "old_sha256": "5ca163c44c0b30b61e3ab7b023d43dc961bfd1bae0746d7077ecaa533ff2df1e",
+          "path": "tests/test_music_library.py"
+        }
+      ],
+      "trigger_card": "2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "base": "9d1204447716a14285f1c4bd7f8e80f0e1f385cd",
+      "checklist_sha256": "e77cf14a252574f4dfc769583f9a41f32b2b6a2df1543a7452cef7a4f26bfa08",
+      "head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+      "phase": "completed",
+      "prepared_at": "2026-10-20T21:05:48.924450Z",
+      "previous_binding_sha256": "3b2a744a7bfe46967a55caa29c6044fb4be35840166bc4de8eb2d418f2e4d03e",
+      "previous_ready_at": "2026-10-19T23:48:40.995350Z",
+      "range_head": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+      "reason": "取消曲目授权字段和对应断言，保留两平台导入、去重、会员边界及失败隔离的原验收责任。",
+      "replays": "020aa00f8d0cae6db48773273f8a4d30900bf76b71e8155e07288b6d6f9ff47b",
+      "tests": [
+        {
+          "new_sha256": "13151f4b3465cec5a13e9edbc58497c96dc935ce35d5169c23de2a7708d10a2a",
+          "old_sha256": "5ca163c44c0b30b61e3ab7b023d43dc961bfd1bae0746d7077ecaa533ff2df1e",
+          "path": "tests/test_music_library.py"
+        }
+      ],
+      "trigger_card": "2026-10-20-R223-photo-music-beat-map"
+    }
+  ],
+  "ready_at": "2026-10-20T21:08:17.642017Z",
   "release_slice": "R210",
   "request_id": "2026-10-19-R210-photo-music-link-import",
   "required_role": "产品负责人",
@@ -75,7 +176,7 @@
   "scope_hints": [
     "music-link-import"
   ],
-  "source_commit": "41fd234b422e5c5e64b1536329b64d2d424c905c",
-  "summary": "网易云、汽水两平台已入库并有机器证据；三项等用户验收。抖音已取消交付要求。",
+  "source_commit": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "summary": "本轮重新基线及完整机器范围复验；原三项仍待用户验收，未代签。",
   "task_id": "2026-10-19-R210-photo-music-link-import"
 }

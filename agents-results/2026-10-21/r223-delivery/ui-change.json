@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.2.0",
+  "ui_change_id": "r223-music-beat-map",
+  "kind": "incremental",
+  "user_visible": true,
+  "source_authority_mode": "strict",
+  "source_requirements_ref": {
+    "path": "agents-results/2026-10-21/r223-delivery/source-requirements.json",
+    "entity_id": "r223-authority",
+    "canonical_digest": "137c9bb1a14015714686ec54d6550fb00d6bc3148a2c6036a9108c22c2c8cc0e"
+  },
+  "affected_surfaces": [
+    {
+      "surface_id": "studio",
+      "resolved_surface_contract_ref": {
+        "path": "docs/tasks/R220-studio-ia-preview/resolved-surface-contract.json",
+        "entity_id": "r220-studio-surface",
+        "canonical_digest": "28358e453dd57c8f77ec6b11dff80a116b250ccd1c20a738da0fbc7a01a77d81"
+      }
+    }
+  ],
+  "product_context_ref": {
+    "path": "docs/tasks/R220-studio-ia-preview/acceptance-context.json",
+    "entity_id": "r220-studio-context",
+    "canonical_digest": "0221f8587fb1eef6aa9b08537a5b4a74e19823d3970c9e540e3a34ae9d9c6fa9"
+  },
+  "role_context_refs": [
+    {
+      "path": "docs/tasks/R220-studio-ia-preview/acceptance-context.json",
+      "entity_id": "local-creator",
+      "canonical_digest": "0221f8587fb1eef6aa9b08537a5b4a74e19823d3970c9e540e3a34ae9d9c6fa9"
+    }
+  ],
+  "screen_contract_ref": {
+    "path": "docs/tasks/R220-studio-ia-preview/acceptance-context.json",
+    "entity_id": "r220-screen",
+    "canonical_digest": "0221f8587fb1eef6aa9b08537a5b4a74e19823d3970c9e540e3a34ae9d9c6fa9"
+  },
+  "visual_contract_ref": {
+    "path": "docs/tasks/R223-music-beat-map/mock/design-contract.json",
+    "entity_id": "r223-music-visual",
+    "canonical_digest": "ddd51a5e1cbfe06d1024b0588e7fd2b0bb7c988b4c2def3177234312c59a6f3a"
+  },
+  "affected_entity_digests": [
+    {
+      "path": "docs/tasks/R220-studio-ia-preview/resolved-surface-contract.json",
+      "entity_id": "r220-studio-surface",
+      "canonical_digest": "28358e453dd57c8f77ec6b11dff80a116b250ccd1c20a738da0fbc7a01a77d81"
+    }
+  ],
+  "execution_mode": "incremental",
+  "reference_prototypes": [
+    {
+      "path": "docs/tasks/R223-music-beat-map/mock/beat-map.html",
+      "sha256": "62511ed2ecca1de7a58d086a8274097fc64f32f148c42b4e924860a977abbf67",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "capture_matrix": {
+    "routes": [
+      "/#view=music"
+    ],
+    "locales": [
+      "zh-CN"
+    ],
+    "themes": [
+      "studio-dark"
+    ],
+    "viewports": [
+      "1440x960",
+      "1180x860",
+      "430x932"
+    ],
+    "helper_modes": [
+      "real-data",
+      "real-media-state-fixture"
+    ]
+  },
+  "interaction_matrix_ref": {
+    "path": "docs/tasks/R220-studio-ia-preview/resolved-surface-contract.json",
+    "entity_id": "r220-interactions",
+    "canonical_digest": "28358e453dd57c8f77ec6b11dff80a116b250ccd1c20a738da0fbc7a01a77d81"
+  },
+  "visual_evidence_types": [
+    "dom-structure",
+    "computed-style",
+    "fixed-browser-screenshot",
+    "interaction-trace"
+  ]
+}

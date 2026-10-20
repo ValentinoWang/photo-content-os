@@ -5,10 +5,10 @@
 - SSOT path: none
 - SSOT node: none
 - Acceptance contract: evidence/2026-10-20/R220/delivery/acceptance-contract.md
-- Contract version: 1
-- Contract SHA-256: 0cafe30ca310cda382b32b61b3e87a55c951b9765e64efcf4f7a3e18fe20fbf9
+- Contract version: 2
+- Contract SHA-256: f77604f0429d1e76203f71aefa694ba773d8ca192650e63010938302e196685c
 - Human checklist: acceptance/human/2026-W43/2026-10-20-R220-photo-studio-ia-preview/checklist.md
-- Checklist SHA-256: b665e15aab3cec7b0acd8892260d4a26f116a4961c8f302e6137365269ed4eb4
+- Checklist SHA-256: 99f6382e7d375c99ac1dbbe68fbee0dcd655041c5d6afd1ba0fe55ba009200ea
 
 ## Item bindings
 

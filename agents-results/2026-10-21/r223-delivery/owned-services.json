@@ -1,0 +1,6 @@
+{
+  "own_port_stopped": 65285,
+  "launcher_verified_before_signal": true,
+  "listener_after_stop": false,
+  "port_8765_contacted": false
+}

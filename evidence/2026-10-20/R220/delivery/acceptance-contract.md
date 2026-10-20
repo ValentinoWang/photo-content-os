@@ -1,11 +1,11 @@
 # Acceptance Contract: 2026-10-20-R220-photo-studio-ia-preview
 
 - Task ID: 2026-10-20-R220-photo-studio-ia-preview
-- Contract version: 1
+- Contract version: 2
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户第 3 轮指令「第 2 轮通过；做完 4 处小修并自核截图，然后按收尾顺序完成提交、验收卡、check-delivery、推送和 finish」；需求卡 H-01 至 H-03 原样递交
+- Approval evidence: 用户阶段 C 指令同意按已取消曲目授权标准重新基线；保留本卡其余责任。原依据：用户第 3 轮指令「第 2 轮通过；做完 4 处小修并自核截图，然后按收尾顺序完成提交、验收卡、check-delivery、推送和 finish」；需求卡 H-01 至 H-03 原样递交
 - Request source: acceptance/requests/2026-W43/2026-10-20-R220-photo-studio-ia-preview/request.json; docs/tasks/R220-studio-ia-preview/TASK.md
 - SSOT node: none
 - SSOT path: none
@@ -85,7 +85,7 @@ Given 本机作品与派生媒体；When 导航、预览或修改镜头结论；
 | --- | --- | --- |
 | tests/test_studio_review.py | aa1f02edf4592017801af3238a9867596c9d86c01ced504aa93a30d5d70f548d | AC-01, AC-02, AC-03 |
 | tests/test_r220_number_formulas.py | dae2208fea72e2454c7acbaeef496c53505eef73f85fa1f9219754a481859006 | AC-01, AC-02, AC-03 |
-| tests/test_r220_number_formulas.mjs | a3666ecefe1226f47f457caf845d79be557ea9ed1fedadd660d4e5787dcbdee4 | AC-01, AC-02, AC-03 |
+| tests/test_r220_number_formulas.mjs | be773417e61820cfcb62fe8fccf0039fa61a598671941fa2891b0a8018769c3d | AC-01, AC-02, AC-03 |
 
 ## Requirements-test traceability
 

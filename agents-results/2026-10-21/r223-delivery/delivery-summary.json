@@ -1,0 +1,15 @@
+{
+  "exit_code": 1,
+  "G16": "PASS",
+  "failed": [
+    "G1",
+    "G9",
+    "G17"
+  ],
+  "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "report_gate_lines_match_actual_output": true,
+  "pushed": false,
+  "main_directory_synced": false,
+  "real_music_migrated": false,
+  "studio_8765_restarted": false
+}

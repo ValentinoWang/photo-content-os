@@ -1,0 +1,104 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "music.ai-tags-beat-map",
+    "open_route": "note:本机 Photo Studio 的音乐库",
+    "surfaces": [
+      "studio.frontend",
+      "studio.backend",
+      "photo.tests-scripts",
+      "photo.documentation",
+      "acceptance.evidence",
+      "acceptance.artifacts"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "本卡验 AI 标签、节拍与自动分析；旧卡仍验真实平台导入、重复下载与会员边界。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "本卡验音乐分析与听感；旧卡仍验导航设置、镜头决定持久化和成片播放。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "本卡不替代工具安装和两种编辑后端生成候选的验收。"
+      }
+    ],
+    "protected_test_overlap": [
+      {
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "decision": "rebaseline",
+        "reason": "曲目授权字段删除影响导入断言；旧卡的两平台、重复和会员验收仍独立保留，按全范围重新基线。"
+      },
+      {
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "decision": "rebaseline",
+        "reason": "音乐数据和公式测试已更新；导航、挑镜头与成片播放仍须在旧卡验收，按全范围重新基线。"
+      }
+    ]
+  },
+  {
+    "item": "H-02",
+    "claim_key": "music.beat-playback",
+    "open_route": "note:本机 Photo Studio 的音乐库",
+    "surfaces": [
+      "studio.frontend",
+      "studio.backend",
+      "photo.tests-scripts",
+      "photo.documentation",
+      "acceptance.evidence",
+      "acceptance.artifacts"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "本卡验 AI 标签、节拍与自动分析；旧卡仍验真实平台导入、重复下载与会员边界。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "本卡验音乐分析与听感；旧卡仍验导航设置、镜头决定持久化和成片播放。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "本卡不替代工具安装和两种编辑后端生成候选的验收。"
+      }
+    ]
+  },
+  {
+    "item": "H-03",
+    "claim_key": "music.auto-analysis-facets",
+    "open_route": "note:本机 Photo Studio 的音乐库",
+    "surfaces": [
+      "studio.frontend",
+      "studio.backend",
+      "photo.tests-scripts",
+      "photo.documentation",
+      "acceptance.evidence",
+      "acceptance.artifacts"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "本卡验 AI 标签、节拍与自动分析；旧卡仍验真实平台导入、重复下载与会员边界。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "本卡验音乐分析与听感；旧卡仍验导航设置、镜头决定持久化和成片播放。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "本卡不替代工具安装和两种编辑后端生成候选的验收。"
+      }
+    ]
+  }
+]

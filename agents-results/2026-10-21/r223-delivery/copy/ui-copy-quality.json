@@ -1,0 +1,12 @@
+{
+  "guard": "ui-copy-quality",
+  "status": "PASS",
+  "lexicon": "$HOME/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/ui-copy-quality/assets/ui-copy-lexicon.default.json",
+  "targets": [
+    "studio/static/review-music.js",
+    "studio/static/beat-map.js"
+  ],
+  "error_count": 0,
+  "warning_count": 0,
+  "findings": []
+}

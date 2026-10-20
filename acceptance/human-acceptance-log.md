@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-10-20T03:05:49.552522Z
-- 来源事实 SHA-256：837ed906c6bc7c134b481af16e70d5c775afcda4e361bcddaf0f74301dada59f
+- 事实时间：2026-10-20T21:08:20.633838Z
+- 来源事实 SHA-256：c8bb0ea6a2649c3559626b983c49b2e3684bf6a3ed685b9ad8a4712a8a0221ab
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -12,8 +12,9 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| 2026-10-20T03:05:49.552522Z | 2026-10-20-R220-photo-studio-ia-preview | Studio 导航、镜头过目和媒体预览 | 产品负责人 | 8 | acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/checklist.md | - | - |
-| 2026-10-19T23:48:40.995350Z | 2026-10-19-R210-photo-music-link-import | 汽水音乐、网易云音乐链接导入并入库 | 产品负责人 | 3 | acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md | - | - |
+| 2026-10-20T21:08:20.633838Z | 2026-10-20-R223-photo-music-beat-map | 音乐库：AI 给每首歌打标签，并显示节拍图 | 产品负责人 | 6 | acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/checklist.md | - | - |
+| 2026-10-20T21:08:19.490324Z | 2026-10-20-R220-photo-studio-ia-preview | Studio 导航、镜头过目和媒体预览 | 产品负责人 | 8 | acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/checklist.md | - | - |
+| 2026-10-20T21:08:17.642017Z | 2026-10-19-R210-photo-music-link-import | 汽水音乐、网易云音乐链接导入并入库 | 产品负责人 | 3 | acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md | - | - |
 
 ### 已拒绝待修复
 

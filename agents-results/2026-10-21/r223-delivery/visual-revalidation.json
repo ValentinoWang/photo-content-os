@@ -1,0 +1,13 @@
+{
+  "result": "PASS",
+  "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+  "prior_full_matrix_source": "69ecf5550997a57a84c11eb5467356ed12d1ccd0",
+  "changed_paths": [
+    "docs/tasks/R223-music-beat-map/REPORT-C.md"
+  ],
+  "reused_unchanged_visual_files_rehashed": 120,
+  "matrix_states": 29,
+  "number_groups": 33,
+  "capture_errors": 0,
+  "review_scope": "5 states at desktop+phone sampled; approved music B renders independently rehashed"
+}
