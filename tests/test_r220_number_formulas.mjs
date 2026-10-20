@@ -15,3 +15,9 @@ assert.equal(expectedShots(data).duration,7.2);assert.equal(expectedShots(data).
 assert.deepEqual(compareNumbers({selected:2},{selected:2}),[]);
 assert.equal(compareNumbers({selected:3},{selected:2}).length,1);
 console.log('PASS numeric formulas: positive and negative assertions');
+
+const beat=await import('data:text/javascript;base64,'+Buffer.from(fs.readFileSync(new URL('../studio/static/beat-map.js',import.meta.url))).toString('base64'));
+assert.deepEqual(beat.beatMetrics({beats:[0,.5,1,1.5,2,2.5,3,3.5,4],downbeats:[0,2,4]}),{bpm:120,meter:4});
+assert.equal(beat.barAt({downbeats:[2,4,6]},1),0);assert.equal(beat.barAt({downbeats:[2,4,6]},4),2);
+assert.equal(beat.laneStart(88,190),84);assert.equal(beat.laneStart(133,135),127);
+console.log('PASS R220 music numeric regression: median BPM, meter, bar counts, clamped window');

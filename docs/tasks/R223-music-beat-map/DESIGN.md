@@ -254,6 +254,25 @@ options = {
 - 换歌竖线、歌名行和「换歌」标签只在 `songs.length > 1` 时画。
 - 每首歌的小节按它自己的 `downbeats` 从 1 起编号。`lane: false` 时只画小节线，不显示小节号。
 - `setTime(t)` 只移动播放线和放大区，不重画整条，播放时每帧调用不卡顿。
+**重新分析接口**（R226 的「重新分析」按钮也调这个，不另做队列）：
+
+- `POST /api/review/music/{trackId}/reanalyze`，`trackId` 是曲目的 `file_sha256`。
+- 请求头：`Content-Type: application/json`；`X-Content-OS-CSRF` 带页面已有的安全令牌，和其他写操作一样；`Origin` 只许本机。
+- 请求体：`{"part": "beat"}` 或 `{"part": "tags"}`。只重跑这一部分，另一部分的结果保留。
+- 成功返回 `200`：`{"ok": true, "beat": {"status": "queued" | "analyzing", "queue_position": 2}}`。
+  - 只带正在排队或正在分析的那部分，`tags` 同理；
+  - 重复点击会合并成一次，返回同样的状态；
+  - 完成后，`GET /api/review/music` 的 `beat.status` 变成 `done` 或 `failed`，`load_beat_map` 也不再抛 `queued` / `analyzing`。
+- 失败：
+
+  | 状态码 | 错误码 | 什么时候 |
+  |---|---|---|
+  | 400 | `music_part_invalid` | `part` 不是 `beat` 或 `tags` |
+  | 404 | `music_track_not_found` | 没有这首歌 |
+  | 403 | `csrf_invalid` / `origin_forbidden` | 令牌不对、不是本机页面 |
+
+  - 返回体：`{"ok": false, "error": {"code": "...", "message": "中文说明"}}`。
+
 - 音乐库页的调用是：`songs: [{id, title, start: 0, end: 时长, offset: 0, beatMap, peaks}]`、`lane: true`、`onSeek` 接播放器跳转。
 
 ## 11. 体验评审（设计稿上做的第 2、3 层）

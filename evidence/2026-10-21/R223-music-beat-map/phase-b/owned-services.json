@@ -1,0 +1,9 @@
+{
+  "stopped_own_ports": [
+    62738,
+    64306
+  ],
+  "matched_launcher_before_signal": true,
+  "listeners_after_stop": [],
+  "port_8765_contacted": false
+}

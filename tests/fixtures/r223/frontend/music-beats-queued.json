@@ -1,0 +1,1383 @@
+{
+  "ok": true,
+  "tracks": [
+    {
+      "schema_version": 2,
+      "title": "CRUSH VIBE",
+      "artist": "未知歌手",
+      "album": null,
+      "platform": "local",
+      "platform_id": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "imported_at": "2026-10-19T15:23:46.199121+00:00",
+      "file_sha256": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "duration_seconds": 96.0,
+      "sample_rate_hz": 44100,
+      "loudness_lufs": -7.19,
+      "loudness_status": "measured",
+      "original_url": null,
+      "audio": "/api/review/music/e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256/audio",
+      "peaks": [
+        0.08131827136655358,
+        0.1194314271192224,
+        0.1486581091747056,
+        0.17659712342945227,
+        0.20033213448301546,
+        0.2505990384246173,
+        0.308482746011744,
+        0.3005244692488341,
+        0.28803914955787696,
+        0.3240366473627176,
+        0.3412685497029044,
+        0.32511518283491686,
+        0.26439943399814103,
+        0.2528708476025482,
+        0.20420142258127677,
+        0.2660165551898143,
+        0.30461253548506406,
+        0.24162792503865377,
+        0.2959752162912227,
+        0.3543311589978966,
+        0.26173125517237267,
+        0.28695493199355243,
+        0.27566165317663877,
+        0.15038711787791928,
+        0.5436277995331038,
+        0.7469525062331235,
+        0.7399508820357876,
+        0.8544294870455461,
+        0.851685576710205,
+        0.8215436774256394,
+        0.7941832968337857,
+        0.9194324006412751,
+        0.7995191109914009,
+        0.7723411012732474,
+        0.8638888837400446,
+        0.8248952073714579,
+        0.7313467386697841,
+        0.6909949214698766,
+        0.952825167946405,
+        0.6961439314887025,
+        0.7690901711569026,
+        0.9231040513972609,
+        0.748541471532274,
+        0.7983516153057537,
+        0.8284039656941677,
+        0.9476918438108771,
+        0.8243422373760213,
+        0.8584410384600899,
+        0.856167697605784,
+        0.8690960164768122,
+        0.6912733401956603,
+        0.7358971785923953,
+        0.8824362741769354,
+        0.77750905052311,
+        0.7958662148936413,
+        0.9830234927468926,
+        0.78715344820384,
+        0.82999095247712,
+        0.9430640254100615,
+        0.8233249944933275,
+        0.7256266013595538,
+        0.7445832689708518,
+        0.8438553393876559,
+        0.7324525948338539,
+        0.7510598839128964,
+        0.8060905922479387,
+        0.8949631809623886,
+        0.8724245952857462,
+        0.8379161117237924,
+        0.9203109795338874,
+        0.707492952601312,
+        0.8385307357599011,
+        0.8589481876011166,
+        0.6686537994031823,
+        0.6608665993862914,
+        0.34117789804329934,
+        0.5825240302468024,
+        0.7296013405147161,
+        0.7769731876978312,
+        0.806466408911776,
+        0.8302315586342713,
+        0.7773742550706506,
+        0.7733599318971228,
+        0.9104926732725959,
+        0.7381900882580144,
+        0.760663310632572,
+        0.9456997047057822,
+        0.7447457925752827,
+        0.7327705312759186,
+        0.8067035812784313,
+        0.9008391800830464,
+        0.8660042511746947,
+        0.9104231016685553,
+        0.9007981866465739,
+        0.8507821862833117,
+        0.9260411513736311,
+        0.8738961143549834,
+        0.9038384344101347,
+        0.8402434043699777,
+        0.8517661397091667,
+        0.9136217031921963,
+        0.7367527733660347,
+        0.7724838225398676,
+        0.8311974228077903,
+        0.7947668110355554,
+        0.7350334371490158,
+        0.9081282862903296,
+        0.9405658491176419,
+        0.8126806641055283,
+        0.7742197123578618,
+        0.8238808544733754,
+        0.8492726363117638,
+        0.735195397067377,
+        0.7284991197540232,
+        0.9108341759435203,
+        0.714244191296876,
+        0.7784777849029422,
+        0.8616502684399472,
+        0.7581782006507758,
+        0.7838556486809485,
+        0.746882719592758,
+        0.28186519828074286,
+        0.23014326236111954,
+        0.23647931267463,
+        0.7948523452145895,
+        0.9043615131943952,
+        0.6989684449588509,
+        0.7259106196034434,
+        0.9119226521822361,
+        0.6933656713935917,
+        0.8111551881602886,
+        0.9391262202518303,
+        0.8339784987410593,
+        0.8285897830963274,
+        0.884102689010883,
+        0.9087531329480303,
+        0.8265662031659456,
+        0.8159613752952681,
+        0.8881323685855814,
+        0.7821205639037924,
+        0.7969576897101993,
+        0.7818272273514785,
+        1.0,
+        0.7271601720606133,
+        0.7157382561601928,
+        0.9115518669739165,
+        0.7773915727492906,
+        0.7521278340000331,
+        0.7713832910579307,
+        0.7870735657093503,
+        0.7256027630039462,
+        0.7151702694713835,
+        0.8408700844631318,
+        0.7295452002034949,
+        0.7577432287287633,
+        0.7897823188322775,
+        0.8671268019876583,
+        0.78262691681746,
+        0.7901795861716205,
+        0.8627996258598335,
+        0.7846775832273171,
+        0.7206351132041348,
+        0.839286316544086,
+        0.810875972662215,
+        0.8229893071252147,
+        0.7437344227379257,
+        0.856880567303034,
+        0.7587031981808028,
+        0.7829023974826538,
+        0.8612417942300227,
+        0.8008772540020526,
+        0.17918137861076414,
+        0.2091418799495332,
+        0.1839223276339638,
+        0.07529858862043155,
+        0.0332746439708182,
+        0.013755433116664745,
+        0.006286238973514153,
+        0.003010270657499111,
+        0.0012892030124624708
+      ],
+      "beat": {
+        "status": "analyzing",
+        "queue_position": 0
+      },
+      "tags": {
+        "status": "analyzing",
+        "queue_position": 0
+      }
+    },
+    {
+      "schema_version": 2,
+      "title": "Turn Back Time",
+      "artist": "Rich Edwards / Emelie",
+      "album": "Turn Back Time",
+      "platform": "netease",
+      "platform_id": "1331800077",
+      "imported_at": "2026-10-19T16:52:30.266441+00:00",
+      "file_sha256": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "duration_seconds": 189.923923,
+      "sample_rate_hz": 44100,
+      "loudness_lufs": -7.85,
+      "loudness_status": "measured",
+      "original_url": "https://163cn.tv/bi1PoHIY",
+      "audio": "/api/review/music/2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af/audio",
+      "peaks": [
+        0.059463219117989796,
+        0.10653977272669075,
+        0.10820425689770231,
+        0.3444900846866334,
+        0.6449497449742532,
+        0.5975562695709704,
+        0.3029964317253526,
+        0.3256719301357084,
+        0.6067810795214681,
+        0.5998276570424156,
+        0.293654834454879,
+        0.4029602581633953,
+        0.7015544132104368,
+        0.6506970957123817,
+        0.3930742092728788,
+        0.46830102423026904,
+        0.6708468957085121,
+        0.6197680013344321,
+        0.3831235151127461,
+        0.7681400640006799,
+        0.8845878492293977,
+        0.8666313678034108,
+        0.8260103786093949,
+        0.7306304591774215,
+        0.8065345470756882,
+        0.7999960227693379,
+        0.7863925780791847,
+        0.7903755549530189,
+        0.8677890262802848,
+        0.810935124381641,
+        0.7744743213905166,
+        0.8379185373961645,
+        0.7025421910382975,
+        0.8219043028194696,
+        0.8514028539589256,
+        0.6451740202248056,
+        0.6633688738589488,
+        0.5463742842273259,
+        0.684554061874517,
+        0.5931038886787936,
+        0.6378797396329462,
+        0.5735599157902563,
+        0.6209824280982185,
+        0.5918689688225814,
+        0.6980686498139823,
+        0.5352397468470039,
+        0.6072734055431818,
+        0.6273436301987607,
+        0.6702635669770052,
+        0.5412592490828603,
+        0.6354803769689319,
+        0.8423161686075157,
+        0.8710181741253108,
+        0.8298616448497965,
+        0.9019875815559315,
+        0.8356513594925908,
+        0.8094026635538708,
+        0.7839351161994912,
+        0.8002215053001809,
+        0.7612255824376214,
+        0.8424325578128412,
+        0.8063566060872244,
+        0.8521573502272354,
+        0.8559316117808092,
+        0.8176857979499823,
+        0.8219892722830359,
+        0.7967152682992182,
+        0.8007819802894064,
+        0.8027793509443002,
+        0.6965632403291144,
+        0.74980156835768,
+        0.7670255908995455,
+        0.8818522886768716,
+        0.7827243343157304,
+        0.7122383566191991,
+        0.8092721930527919,
+        0.7962427563830139,
+        0.7554069162129219,
+        0.8246398781622865,
+        0.7836951866074068,
+        0.8573764313020824,
+        0.7912692423865607,
+        0.7583031850170686,
+        0.8209265137758115,
+        0.8419099209902304,
+        0.7841768277614845,
+        0.8645549680979038,
+        0.8115985203256996,
+        0.8983788043035428,
+        0.8260120820033826,
+        0.8105314331501234,
+        0.8552788730406522,
+        0.8279668649424751,
+        0.7599851346245637,
+        0.8647244104735832,
+        0.8050516364122697,
+        0.8515754084453349,
+        0.8122648231226638,
+        0.7078666380782239,
+        0.5607155807961739,
+        0.5999176591202754,
+        0.6474921301586588,
+        0.6828339922574924,
+        0.6434320344028343,
+        0.5785190992240372,
+        0.63238459198331,
+        0.6436086202263869,
+        0.6967233001698863,
+        0.6301553349550086,
+        0.6642195020394089,
+        0.661111524200662,
+        0.6095532002570808,
+        0.6151458631506559,
+        0.5310247561059388,
+        0.8226457081494308,
+        0.8482937015858101,
+        0.8278635802879397,
+        0.8703009690841678,
+        0.8746069865498134,
+        0.7904234340133087,
+        0.8513109473780871,
+        0.8188762404059555,
+        0.7800187853804449,
+        0.8242359722944673,
+        0.8096645316946137,
+        0.8714357598152225,
+        0.8644769404719054,
+        0.8264673988295684,
+        0.8078526428771462,
+        0.8184869926848231,
+        0.7497506357457276,
+        0.8782186939992577,
+        0.7399821318423973,
+        0.4288677832694458,
+        0.7052369776618231,
+        0.7974920663524416,
+        0.7385736749669195,
+        0.41884326744199096,
+        0.8034627925413889,
+        1.0,
+        0.8309206928970883,
+        0.5910921717424261,
+        0.7187348178842298,
+        0.7979643534102251,
+        0.5673314987982178,
+        0.3847697944062669,
+        0.8414513075537372,
+        0.8674789548726108,
+        0.84759292354829,
+        0.8995138179223608,
+        0.8126361480358592,
+        0.8427440671199938,
+        0.8159037520318436,
+        0.7816009639026624,
+        0.7954189507716467,
+        0.8582674071271853,
+        0.8090389891452399,
+        0.8723266347633291,
+        0.839405333013584,
+        0.8498581657121482,
+        0.8334037699935478,
+        0.8238541337810706,
+        0.8446417935218049,
+        0.8467580800089028,
+        0.8380298081516713,
+        0.8640695056201979,
+        0.8132695551796342,
+        0.8219408940694536,
+        0.7957998046912746,
+        0.804151846147016,
+        0.8064657140894119,
+        0.8517113829273626,
+        0.8338050959488487,
+        0.867045051635091,
+        0.8169668213711552,
+        0.8530741447464044,
+        0.5290825207460976,
+        0.6545279445926752,
+        0.27361414017762853,
+        0.001035802431405548
+      ],
+      "beat": {
+        "status": "queued",
+        "queue_position": 1
+      },
+      "tags": {
+        "status": "queued",
+        "queue_position": 1
+      }
+    },
+    {
+      "schema_version": 2,
+      "title": "Fever Pitch",
+      "artist": "Richz",
+      "album": "Fever Pitch",
+      "platform": "qishui",
+      "platform_id": "7620290602605611025",
+      "imported_at": "2026-10-19T16:53:50.703179+00:00",
+      "file_sha256": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "duration_seconds": 135.483878,
+      "sample_rate_hz": 44100,
+      "loudness_lufs": -8.04,
+      "loudness_status": "measured",
+      "original_url": "https://qishui.douyin.com/s/iXGDYc11/",
+      "audio": "/api/review/music/891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b/audio",
+      "peaks": [
+        0.013444822740886923,
+        0.0352615446870693,
+        0.42851333309429723,
+        0.44340666192600836,
+        0.4304403226715817,
+        0.4036308465912412,
+        0.4768432183479302,
+        0.5182277596336464,
+        0.37570783777871997,
+        0.38602774144514695,
+        0.5117926179655606,
+        0.5245458658975525,
+        0.46701366650586423,
+        0.5358819735887005,
+        0.5616976948420911,
+        0.5067141033737351,
+        0.5242744563613999,
+        0.5265665154238596,
+        0.6240839530291734,
+        0.47366747916887153,
+        0.5230527782013005,
+        0.20873709368033685,
+        0.35607080141129166,
+        0.9104642032421844,
+        0.8249390072701807,
+        0.8644836722390828,
+        0.8000176443260306,
+        0.9559480618505578,
+        0.8670944704085908,
+        0.8959882504896258,
+        0.9021890982498252,
+        0.7758499292271942,
+        1.0,
+        0.81636170655584,
+        0.9094146857475612,
+        0.7504160580730196,
+        0.9588417897278856,
+        0.8657996985394639,
+        0.8718013956312464,
+        0.9412874156794159,
+        0.8246022611573226,
+        0.7615902149068935,
+        0.4257038543894357,
+        0.6870894906873092,
+        0.8074024335512812,
+        0.921821214312772,
+        0.8266958113711903,
+        0.8954616877040741,
+        0.9006922778600162,
+        0.8611797487020906,
+        0.966969894530059,
+        0.7874691506241618,
+        0.9068806943780823,
+        0.8291050904510374,
+        0.8807715564020301,
+        0.8409841962515299,
+        0.8339240913315901,
+        0.9087515582858872,
+        0.8085319577094822,
+        0.8763443662842682,
+        0.8833447908327661,
+        0.9505771392020361,
+        0.7777948278370206,
+        0.3364567086130617,
+        0.3569039934890664,
+        0.2553492762888829,
+        0.29164435431023317,
+        0.23737158298345984,
+        0.16481985908693594,
+        0.29728524087515834,
+        0.24979935110877916,
+        0.2790897606254706,
+        0.26827111588693386,
+        0.2333835181736726,
+        0.33792196808544905,
+        0.384260101718372,
+        0.41035490732811836,
+        0.19932455198573798,
+        0.28432184273859135,
+        0.33818031002204924,
+        0.3673455546284026,
+        0.32737570887584205,
+        0.31636392041186945,
+        0.21931960204283557,
+        0.29147747392696527,
+        0.5752024564974512,
+        0.4015782550480334,
+        0.5146845177327554,
+        0.5083238966023113,
+        0.42415732634542447,
+        0.5506526002630325,
+        0.4688364583340697,
+        0.44323960149442215,
+        0.5247222336109498,
+        0.44774343117037974,
+        0.6048476267845325,
+        0.5319893966791718,
+        0.5887722777400742,
+        0.5458010787050989,
+        0.5176725239730507,
+        0.5711989859744774,
+        0.5620585944441528,
+        0.6610487590374704,
+        0.24411032827002174,
+        0.2878242260395953,
+        0.7546030764859766,
+        0.9242569136986813,
+        0.7520204299699357,
+        0.901634360248933,
+        0.9556190279560457,
+        0.9161317366887023,
+        0.926833514180219,
+        0.8968297680514801,
+        0.9478841575893754,
+        0.8323082961848255,
+        0.9789831356158779,
+        0.7399726397164983,
+        0.9131858800753498,
+        0.8229839657172393,
+        0.8895064711969142,
+        0.8920753416375263,
+        0.8641531922459549,
+        0.942198241667194,
+        0.7970842440216199,
+        0.4721818883060977,
+        0.3464430312920412,
+        0.9599629079817706,
+        0.8758466608510237,
+        0.8374517751097704,
+        0.9053251687848368,
+        0.871654285248023,
+        0.9160506707849848,
+        0.8149965800638103,
+        0.9242982873549852,
+        0.7662169294494543,
+        0.8940451809998591,
+        0.8336140169232465,
+        0.8611401310074862,
+        0.8298709635873696,
+        0.8540779049346907,
+        0.9018861730303952,
+        0.803926546570226,
+        0.95255719412458,
+        0.808436072259278,
+        0.9246967571391834,
+        0.8397885291746698,
+        0.6399919618446925,
+        0.3306439634114579,
+        0.3261830093327852,
+        0.8274776317771736,
+        0.8311937359211787,
+        0.924920389440017,
+        0.7368924154201565,
+        0.9358167942737108,
+        0.7671062151973282,
+        0.9272534885529705,
+        0.9170608139582465,
+        0.7991910851891537,
+        0.9364566431550007,
+        0.7290336596643349,
+        0.939644164890646,
+        0.8154717970031401,
+        0.8444908711972736,
+        0.8655808770941219,
+        0.8580054266742733,
+        0.8565545559144265,
+        0.849773846866869,
+        0.6286734783037913,
+        0.567151243572339,
+        0.5024101934140236,
+        0.3647764646426281,
+        0.38059028276464507,
+        0.25817363671032223,
+        0.22662785360265644,
+        0.17891823798187229,
+        0.1075019531143298,
+        0.0928400103363704,
+        0.05082846071925332,
+        0.03358082724401305,
+        0.010721592587556951
+      ],
+      "beat": {
+        "status": "queued",
+        "queue_position": 2
+      },
+      "tags": {
+        "status": "queued",
+        "queue_position": 2
+      }
+    }
+  ],
+  "registry_version": 1,
+  "taxonomy": {
+    "sections": [
+      {
+        "id": "quiet",
+        "name": "安静"
+      },
+      {
+        "id": "build",
+        "name": "推进"
+      },
+      {
+        "id": "peak",
+        "name": "高潮"
+      }
+    ],
+    "tag_categories": [
+      {
+        "id": "genre",
+        "name": "风格",
+        "tags": [
+          {
+            "id": "genre.blues",
+            "source_label": "Blues",
+            "name": "布鲁斯",
+            "status": "active"
+          },
+          {
+            "id": "genre.brass_military",
+            "source_label": "Brass & Military",
+            "name": "铜管与军乐",
+            "status": "active"
+          },
+          {
+            "id": "genre.children_s",
+            "source_label": "Children's",
+            "name": "儿歌",
+            "status": "active"
+          },
+          {
+            "id": "genre.classical",
+            "source_label": "Classical",
+            "name": "古典",
+            "status": "active"
+          },
+          {
+            "id": "genre.electronic",
+            "source_label": "Electronic",
+            "name": "电子",
+            "status": "active"
+          },
+          {
+            "id": "genre.folk_world_country",
+            "source_label": "Folk, World, & Country",
+            "name": "民谣与乡村",
+            "status": "active"
+          },
+          {
+            "id": "genre.funk_soul",
+            "source_label": "Funk / Soul",
+            "name": "放克与灵魂乐",
+            "status": "active"
+          },
+          {
+            "id": "genre.hip_hop",
+            "source_label": "Hip Hop",
+            "name": "嘻哈",
+            "status": "active"
+          },
+          {
+            "id": "genre.jazz",
+            "source_label": "Jazz",
+            "name": "爵士",
+            "status": "active"
+          },
+          {
+            "id": "genre.latin",
+            "source_label": "Latin",
+            "name": "拉丁",
+            "status": "active"
+          },
+          {
+            "id": "genre.non_music",
+            "source_label": "Non-Music",
+            "name": null,
+            "status": "hidden"
+          },
+          {
+            "id": "genre.pop",
+            "source_label": "Pop",
+            "name": "流行",
+            "status": "active"
+          },
+          {
+            "id": "genre.reggae",
+            "source_label": "Reggae",
+            "name": "雷鬼",
+            "status": "active"
+          },
+          {
+            "id": "genre.rock",
+            "source_label": "Rock",
+            "name": "摇滚",
+            "status": "active"
+          },
+          {
+            "id": "genre.stage_screen",
+            "source_label": "Stage & Screen",
+            "name": "影视原声",
+            "status": "active"
+          }
+        ]
+      },
+      {
+        "id": "mood",
+        "name": "情绪",
+        "empty_text": "没有明显的情绪",
+        "tags": [
+          {
+            "id": "mood.ballad",
+            "source_label": "ballad",
+            "name": "抒情",
+            "status": "active"
+          },
+          {
+            "id": "mood.calm",
+            "source_label": "calm",
+            "name": "平静",
+            "status": "active"
+          },
+          {
+            "id": "mood.cool",
+            "source_label": "cool",
+            "name": "酷",
+            "status": "active"
+          },
+          {
+            "id": "mood.dark",
+            "source_label": "dark",
+            "name": "暗黑",
+            "status": "active"
+          },
+          {
+            "id": "mood.deep",
+            "source_label": "deep",
+            "name": "深沉",
+            "status": "active"
+          },
+          {
+            "id": "mood.drama",
+            "source_label": "drama",
+            "name": "剧情感",
+            "status": "active"
+          },
+          {
+            "id": "mood.dramatic",
+            "source_label": "dramatic",
+            "name": "戏剧感",
+            "status": "active"
+          },
+          {
+            "id": "mood.dream",
+            "source_label": "dream",
+            "name": "梦幻",
+            "status": "active"
+          },
+          {
+            "id": "mood.emotional",
+            "source_label": "emotional",
+            "name": "动情",
+            "status": "active"
+          },
+          {
+            "id": "mood.energetic",
+            "source_label": "energetic",
+            "name": "有活力",
+            "status": "active"
+          },
+          {
+            "id": "mood.epic",
+            "source_label": "epic",
+            "name": "史诗感",
+            "status": "active"
+          },
+          {
+            "id": "mood.fast",
+            "source_label": "fast",
+            "name": "快节奏",
+            "status": "active"
+          },
+          {
+            "id": "mood.fun",
+            "source_label": "fun",
+            "name": "有趣",
+            "status": "active"
+          },
+          {
+            "id": "mood.funny",
+            "source_label": "funny",
+            "name": "俏皮",
+            "status": "active"
+          },
+          {
+            "id": "mood.groovy",
+            "source_label": "groovy",
+            "name": "律动",
+            "status": "active"
+          },
+          {
+            "id": "mood.happy",
+            "source_label": "happy",
+            "name": "欢快",
+            "status": "active"
+          },
+          {
+            "id": "mood.heavy",
+            "source_label": "heavy",
+            "name": "厚重",
+            "status": "active"
+          },
+          {
+            "id": "mood.hopeful",
+            "source_label": "hopeful",
+            "name": "有希望",
+            "status": "active"
+          },
+          {
+            "id": "mood.inspiring",
+            "source_label": "inspiring",
+            "name": "励志",
+            "status": "active"
+          },
+          {
+            "id": "mood.love",
+            "source_label": "love",
+            "name": "爱情",
+            "status": "active"
+          },
+          {
+            "id": "mood.meditative",
+            "source_label": "meditative",
+            "name": "冥想",
+            "status": "active"
+          },
+          {
+            "id": "mood.melancholic",
+            "source_label": "melancholic",
+            "name": "忧郁",
+            "status": "active"
+          },
+          {
+            "id": "mood.melodic",
+            "source_label": "melodic",
+            "name": "旋律优美",
+            "status": "active"
+          },
+          {
+            "id": "mood.motivational",
+            "source_label": "motivational",
+            "name": "激励",
+            "status": "active"
+          },
+          {
+            "id": "mood.positive",
+            "source_label": "positive",
+            "name": "积极",
+            "status": "active"
+          },
+          {
+            "id": "mood.powerful",
+            "source_label": "powerful",
+            "name": "有力量",
+            "status": "active"
+          },
+          {
+            "id": "mood.relaxing",
+            "source_label": "relaxing",
+            "name": "放松",
+            "status": "active"
+          },
+          {
+            "id": "mood.retro",
+            "source_label": "retro",
+            "name": "复古",
+            "status": "active"
+          },
+          {
+            "id": "mood.romantic",
+            "source_label": "romantic",
+            "name": "浪漫",
+            "status": "active"
+          },
+          {
+            "id": "mood.sad",
+            "source_label": "sad",
+            "name": "伤感",
+            "status": "active"
+          },
+          {
+            "id": "mood.sexy",
+            "source_label": "sexy",
+            "name": "性感",
+            "status": "active"
+          },
+          {
+            "id": "mood.slow",
+            "source_label": "slow",
+            "name": "舒缓",
+            "status": "active"
+          },
+          {
+            "id": "mood.soft",
+            "source_label": "soft",
+            "name": "柔和",
+            "status": "active"
+          },
+          {
+            "id": "mood.space",
+            "source_label": "space",
+            "name": "太空感",
+            "status": "active"
+          },
+          {
+            "id": "mood.upbeat",
+            "source_label": "upbeat",
+            "name": "轻快",
+            "status": "active"
+          },
+          {
+            "id": "mood.uplifting",
+            "source_label": "uplifting",
+            "name": "振奋",
+            "status": "active"
+          }
+        ]
+      },
+      {
+        "id": "scene",
+        "name": "场景",
+        "empty_text": "没有特别贴合的场景",
+        "tags": [
+          {
+            "id": "scene.action",
+            "source_label": "action",
+            "name": "动作",
+            "status": "active"
+          },
+          {
+            "id": "scene.adventure",
+            "source_label": "adventure",
+            "name": "冒险",
+            "status": "active"
+          },
+          {
+            "id": "scene.advertising",
+            "source_label": "advertising",
+            "name": "广告",
+            "status": "active"
+          },
+          {
+            "id": "scene.background",
+            "source_label": "background",
+            "name": "背景音乐",
+            "status": "active"
+          },
+          {
+            "id": "scene.children",
+            "source_label": "children",
+            "name": "儿童",
+            "status": "active"
+          },
+          {
+            "id": "scene.christmas",
+            "source_label": "christmas",
+            "name": "圣诞",
+            "status": "active"
+          },
+          {
+            "id": "scene.commercial",
+            "source_label": "commercial",
+            "name": "商业宣传",
+            "status": "active"
+          },
+          {
+            "id": "scene.corporate",
+            "source_label": "corporate",
+            "name": "企业宣传",
+            "status": "active"
+          },
+          {
+            "id": "scene.documentary",
+            "source_label": "documentary",
+            "name": "纪录片",
+            "status": "active"
+          },
+          {
+            "id": "scene.film",
+            "source_label": "film",
+            "name": "电影",
+            "status": "active"
+          },
+          {
+            "id": "scene.game",
+            "source_label": "game",
+            "name": "游戏",
+            "status": "active"
+          },
+          {
+            "id": "scene.holiday",
+            "source_label": "holiday",
+            "name": "假日",
+            "status": "active"
+          },
+          {
+            "id": "scene.movie",
+            "source_label": "movie",
+            "name": "电影",
+            "status": "active"
+          },
+          {
+            "id": "scene.nature",
+            "source_label": "nature",
+            "name": "自然",
+            "status": "active"
+          },
+          {
+            "id": "scene.party",
+            "source_label": "party",
+            "name": "派对",
+            "status": "active"
+          },
+          {
+            "id": "scene.soundscape",
+            "source_label": "soundscape",
+            "name": "环境声",
+            "status": "active"
+          },
+          {
+            "id": "scene.sport",
+            "source_label": "sport",
+            "name": "运动",
+            "status": "active"
+          },
+          {
+            "id": "scene.summer",
+            "source_label": "summer",
+            "name": "夏日",
+            "status": "active"
+          },
+          {
+            "id": "scene.trailer",
+            "source_label": "trailer",
+            "name": "预告片",
+            "status": "active"
+          },
+          {
+            "id": "scene.travel",
+            "source_label": "travel",
+            "name": "旅行",
+            "status": "active"
+          }
+        ]
+      },
+      {
+        "id": "voice",
+        "name": "人声",
+        "uncertain_text": "拿不准，用之前听一下",
+        "tags": [
+          {
+            "id": "voice.voice",
+            "source_label": "voice",
+            "name": "有人声",
+            "status": "active"
+          },
+          {
+            "id": "voice.instrumental",
+            "source_label": "instrumental",
+            "name": "纯音乐",
+            "status": "active"
+          }
+        ]
+      },
+      {
+        "id": "instrument",
+        "name": "乐器",
+        "empty_text": "没认出主要乐器",
+        "tags": [
+          {
+            "id": "instrument.accordion",
+            "source_label": "accordion",
+            "name": "手风琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.acousticbassguitar",
+            "source_label": "acousticbassguitar",
+            "name": "原声贝斯",
+            "status": "active"
+          },
+          {
+            "id": "instrument.acousticguitar",
+            "source_label": "acousticguitar",
+            "name": "木吉他",
+            "status": "active"
+          },
+          {
+            "id": "instrument.bass",
+            "source_label": "bass",
+            "name": "贝斯",
+            "status": "active"
+          },
+          {
+            "id": "instrument.beat",
+            "source_label": "beat",
+            "name": null,
+            "status": "hidden"
+          },
+          {
+            "id": "instrument.bell",
+            "source_label": "bell",
+            "name": "铃",
+            "status": "active"
+          },
+          {
+            "id": "instrument.bongo",
+            "source_label": "bongo",
+            "name": "邦戈鼓",
+            "status": "active"
+          },
+          {
+            "id": "instrument.brass",
+            "source_label": "brass",
+            "name": "铜管",
+            "status": "active"
+          },
+          {
+            "id": "instrument.cello",
+            "source_label": "cello",
+            "name": "大提琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.clarinet",
+            "source_label": "clarinet",
+            "name": "单簧管",
+            "status": "active"
+          },
+          {
+            "id": "instrument.classicalguitar",
+            "source_label": "classicalguitar",
+            "name": "古典吉他",
+            "status": "active"
+          },
+          {
+            "id": "instrument.computer",
+            "source_label": "computer",
+            "name": null,
+            "status": "hidden"
+          },
+          {
+            "id": "instrument.doublebass",
+            "source_label": "doublebass",
+            "name": "低音提琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.drummachine",
+            "source_label": "drummachine",
+            "name": "鼓机",
+            "status": "active"
+          },
+          {
+            "id": "instrument.drums",
+            "source_label": "drums",
+            "name": "鼓",
+            "status": "active"
+          },
+          {
+            "id": "instrument.electricguitar",
+            "source_label": "electricguitar",
+            "name": "电吉他",
+            "status": "active"
+          },
+          {
+            "id": "instrument.electricpiano",
+            "source_label": "electricpiano",
+            "name": "电钢琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.flute",
+            "source_label": "flute",
+            "name": "长笛",
+            "status": "active"
+          },
+          {
+            "id": "instrument.guitar",
+            "source_label": "guitar",
+            "name": "吉他",
+            "status": "active"
+          },
+          {
+            "id": "instrument.harmonica",
+            "source_label": "harmonica",
+            "name": "口琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.harp",
+            "source_label": "harp",
+            "name": "竖琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.horn",
+            "source_label": "horn",
+            "name": "圆号",
+            "status": "active"
+          },
+          {
+            "id": "instrument.keyboard",
+            "source_label": "keyboard",
+            "name": "键盘",
+            "status": "active"
+          },
+          {
+            "id": "instrument.oboe",
+            "source_label": "oboe",
+            "name": "双簧管",
+            "status": "active"
+          },
+          {
+            "id": "instrument.orchestra",
+            "source_label": "orchestra",
+            "name": "管弦乐",
+            "status": "active"
+          },
+          {
+            "id": "instrument.organ",
+            "source_label": "organ",
+            "name": "风琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.pad",
+            "source_label": "pad",
+            "name": null,
+            "status": "hidden"
+          },
+          {
+            "id": "instrument.percussion",
+            "source_label": "percussion",
+            "name": "打击乐",
+            "status": "active"
+          },
+          {
+            "id": "instrument.piano",
+            "source_label": "piano",
+            "name": "钢琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.pipeorgan",
+            "source_label": "pipeorgan",
+            "name": "管风琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.rhodes",
+            "source_label": "rhodes",
+            "name": "罗兹电钢琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.sampler",
+            "source_label": "sampler",
+            "name": "采样器",
+            "status": "active"
+          },
+          {
+            "id": "instrument.saxophone",
+            "source_label": "saxophone",
+            "name": "萨克斯",
+            "status": "active"
+          },
+          {
+            "id": "instrument.strings",
+            "source_label": "strings",
+            "name": "弦乐",
+            "status": "active"
+          },
+          {
+            "id": "instrument.synthesizer",
+            "source_label": "synthesizer",
+            "name": "合成器",
+            "status": "active"
+          },
+          {
+            "id": "instrument.trombone",
+            "source_label": "trombone",
+            "name": "长号",
+            "status": "active"
+          },
+          {
+            "id": "instrument.trumpet",
+            "source_label": "trumpet",
+            "name": "小号",
+            "status": "active"
+          },
+          {
+            "id": "instrument.viola",
+            "source_label": "viola",
+            "name": "中提琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.violin",
+            "source_label": "violin",
+            "name": "小提琴",
+            "status": "active"
+          },
+          {
+            "id": "instrument.voice",
+            "source_label": "voice",
+            "name": null,
+            "status": "hidden"
+          }
+        ]
+      }
+    ],
+    "display": {
+      "panel_title": "AI 标注",
+      "panel_order": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "filter_order": [
+        "scene",
+        "mood",
+        "voice",
+        "genre"
+      ],
+      "row": [
+        {
+          "category": "genre"
+        },
+        {
+          "category": "scene",
+          "fallback": "mood"
+        },
+        {
+          "category": "voice",
+          "skip_uncertain": true
+        }
+      ]
+    }
+  }
+}

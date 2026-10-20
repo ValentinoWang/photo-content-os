@@ -1,0 +1,778 @@
+{
+  "states": {
+    "music": {
+      "texts": [
+        {
+          "text": "音乐库",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "从文件夹导入",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "粘贴分享链接导入",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "导入",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "每首只下载一次，之后都用本机这份。",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "全部",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "3",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "汽水音乐",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "网易云音乐",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "本机文件",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "场景",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "夏日",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "2",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "情绪",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "深沉",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "2",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "暗黑",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "欢快",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "旋律优美",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "太空感",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "人声",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "有人声",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "纯音乐",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "风格",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "电子",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "3",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-filters"
+        },
+        {
+          "text": "▶",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "CRUSH VIBE",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "未知歌手",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "本机文件 ·",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "144",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "BPM",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "电子",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-row"
+        },
+        {
+          "text": "旋律优美",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-row"
+        },
+        {
+          "text": "纯音乐",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-row"
+        },
+        {
+          "text": "1:36",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "❚❚",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "Turn Back Time",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "Rich Edwards / Emelie",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "网易云音乐 ·",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "117",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "BPM",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "电子",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-row"
+        },
+        {
+          "text": "夏日",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-row"
+        },
+        {
+          "text": "有人声",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-row"
+        },
+        {
+          "text": "3:10",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "▶",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "Fever Pitch",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "Richz",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "汽水音乐 ·",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "123",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "BPM",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "电子",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-row"
+        },
+        {
+          "text": "夏日",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-row"
+        },
+        {
+          "text": "2:15",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "×",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "安静",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-legend"
+        },
+        {
+          "text": "推进",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-legend"
+        },
+        {
+          "text": "高潮",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-legend"
+        },
+        {
+          "text": "❚❚",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "1:28 / 3:10",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "第",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "40",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "小节",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "高潮",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "39",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-lane"
+        },
+        {
+          "text": "40",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-lane"
+        },
+        {
+          "text": "41",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-lane"
+        },
+        {
+          "text": "42",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-lane"
+        },
+        {
+          "text": "Turn Back Time",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "Rich Edwards / Emelie",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "AI 标注",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "风格",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "电子",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "Tropical House",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "情绪",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "深沉",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "欢快",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "场景",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "夏日",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "人声",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "有人声",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "乐器",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "贝斯",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "合成器",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "键盘",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-TAG-panel"
+        },
+        {
+          "text": "来源",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "网易云音乐",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "打开原页面",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "时长",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "3:10",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "速度",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-speed"
+        },
+        {
+          "text": "117",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-speed"
+        },
+        {
+          "text": "BPM",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-speed"
+        },
+        {
+          "text": "每小节",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-speed"
+        },
+        {
+          "text": "4",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-speed"
+        },
+        {
+          "text": "拍",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-speed"
+        },
+        {
+          "text": "导入时间",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "2026/10/20 00:52",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "粘贴汽水音乐或网易云音乐的分享文字",
+          "kind": "placeholder",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "关闭",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "安静 0:00–0:24",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "高潮 0:24–0:35",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "推进 0:35–0:56",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "高潮 0:56–1:12",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "推进 1:12–1:25",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "高潮 1:25–1:43",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "推进 1:43–2:04",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "高潮 2:04–2:19",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "推进 2:19–2:35",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "高潮 2:35–3:10",
+          "kind": "title",
+          "data": true,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "暂停",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "播放位置前后 8 秒的拍子",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R223-BEAT-lane"
+        }
+      ],
+      "ids": [
+        "R208-MUSIC-filters",
+        "R208-MUSIC-import",
+        "R208-MUSIC-list",
+        "R208-MUSIC-rail",
+        "R223-BEAT-lane",
+        "R223-BEAT-legend",
+        "R223-BEAT-overview",
+        "R223-BEAT-speed",
+        "R223-BEAT-transport",
+        "R223-TAG-filters",
+        "R223-TAG-panel",
+        "R223-TAG-row"
+      ]
+    }
+  }
+}

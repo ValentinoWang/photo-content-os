@@ -1,0 +1,3502 @@
+[
+  {
+    "name": "music",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度117 BPM每小节 4 拍",
+      "bar": "",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 4.18,
+          "energy": 0.521,
+          "height": 30.84
+        },
+        {
+          "t": 4.714,
+          "energy": 0.345,
+          "height": 23.8
+        },
+        {
+          "t": 5.224,
+          "energy": 0.379,
+          "height": 25.16
+        },
+        {
+          "t": 5.712,
+          "energy": 0.448,
+          "height": 27.92
+        },
+        {
+          "t": 6.223,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 6.757,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.268,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.802,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 71.4
+        },
+        {
+          "n": 2,
+          "left": 97.525
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 24.497,
+          "width": "calc(12.8983% - 2px)"
+        },
+        {
+          "start": 24.497,
+          "end": 34.969,
+          "width": "calc(5.51379% - 2px)"
+        },
+        {
+          "start": 34.969,
+          "end": 55.565,
+          "width": "calc(10.8443% - 2px)"
+        },
+        {
+          "start": 55.565,
+          "end": 72.005,
+          "width": "calc(8.6561% - 2px)"
+        },
+        {
+          "start": 72.005,
+          "end": 84.521,
+          "width": "calc(6.59001% - 2px)"
+        },
+        {
+          "start": 84.521,
+          "end": 103.306,
+          "width": "calc(9.8908% - 2px)"
+        },
+        {
+          "start": 103.306,
+          "end": 123.925,
+          "width": "calc(10.8565% - 2px)"
+        },
+        {
+          "start": 123.925,
+          "end": 138.553,
+          "width": "calc(7.70203% - 2px)"
+        },
+        {
+          "start": 138.553,
+          "end": 155.225,
+          "width": "calc(8.77825% - 2px)"
+        },
+        {
+          "start": 155.225,
+          "end": 189.923923,
+          "width": "calc(18.2699% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度144 BPM每小节 4 拍",
+      "bar": "",
+      "kind": "推进",
+      "windowStart": 0,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [
+        {
+          "start": 0,
+          "end": 16.602,
+          "width": "calc(17.2937% - 2px)"
+        },
+        {
+          "start": 16.602,
+          "end": 38.104,
+          "width": "calc(22.3979% - 2px)"
+        },
+        {
+          "start": 38.104,
+          "end": 44.722,
+          "width": "calc(6.89375% - 2px)"
+        },
+        {
+          "start": 44.722,
+          "end": 62.949,
+          "width": "calc(18.9865% - 2px)"
+        },
+        {
+          "start": 62.949,
+          "end": 69.567,
+          "width": "calc(6.89375% - 2px)"
+        },
+        {
+          "start": 69.567,
+          "end": 96,
+          "width": "calc(27.5344% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度123 BPM每小节 4 拍",
+      "bar": "第 68 小节",
+      "kind": "安静",
+      "windowStart": 127.483878,
+      "columns": [
+        {
+          "t": 127.779,
+          "energy": 0.235,
+          "height": 19.4
+        },
+        {
+          "t": 128.267,
+          "energy": 0.295,
+          "height": 21.8
+        },
+        {
+          "t": 128.755,
+          "energy": 0.223,
+          "height": 18.92
+        },
+        {
+          "t": 129.219,
+          "energy": 0.141,
+          "height": 15.64
+        },
+        {
+          "t": 129.707,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 130.194,
+          "energy": 0.029,
+          "height": 11.16
+        },
+        {
+          "t": 130.682,
+          "energy": 0.001,
+          "height": 10.04
+        },
+        {
+          "t": 131.17,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 131.657,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 132.122,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 132.609,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 133.097,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 133.584,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 134.072,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 66,
+          "left": 3.68902
+        },
+        {
+          "n": 67,
+          "left": 27.789
+        },
+        {
+          "n": 68,
+          "left": 52.164
+        },
+        {
+          "n": 69,
+          "left": 76.2515
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 15.534,
+          "width": "calc(11.4656% - 2px)"
+        },
+        {
+          "start": 15.534,
+          "end": 48.298,
+          "width": "calc(24.183% - 2px)"
+        },
+        {
+          "start": 48.298,
+          "end": 69.706,
+          "width": "calc(15.8011% - 2px)"
+        },
+        {
+          "start": 69.706,
+          "end": 81.316,
+          "width": "calc(8.56929% - 2px)"
+        },
+        {
+          "start": 81.316,
+          "end": 127.779,
+          "width": "calc(34.2941% - 2px)"
+        },
+        {
+          "start": 127.779,
+          "end": 135.483878,
+          "width": "calc(5.68693% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {},
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "分析中",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "排队中",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "排队中"
+      },
+      "queue": "排队等分析，前面还有 1 首。",
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": []
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "没分析出来",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "没分析出来",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "没分析出来",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 1,
+        "mood.dark": 1,
+        "mood.deep": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 2
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度123 BPM每小节 4 拍",
+      "bar": "",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 1.974,
+          "energy": 0.521,
+          "height": 30.84
+        },
+        {
+          "t": 2.461,
+          "energy": 0.317,
+          "height": 22.68
+        },
+        {
+          "t": 2.949,
+          "energy": 0.246,
+          "height": 19.84
+        },
+        {
+          "t": 3.437,
+          "energy": 0.341,
+          "height": 23.64
+        },
+        {
+          "t": 3.924,
+          "energy": 0.258,
+          "height": 20.32
+        },
+        {
+          "t": 4.389,
+          "energy": 0.323,
+          "height": 22.92
+        },
+        {
+          "t": 4.876,
+          "energy": 0.437,
+          "height": 27.48
+        },
+        {
+          "t": 5.364,
+          "energy": 0.387,
+          "height": 25.48
+        },
+        {
+          "t": 5.851,
+          "energy": 0.425,
+          "height": 27
+        },
+        {
+          "t": 6.339,
+          "energy": 0.161,
+          "height": 16.44
+        },
+        {
+          "t": 6.827,
+          "energy": 0.224,
+          "height": 18.96
+        },
+        {
+          "t": 7.291,
+          "energy": 0.338,
+          "height": 23.52
+        },
+        {
+          "t": 7.779,
+          "energy": 0.456,
+          "height": 28.24
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 24.675
+        },
+        {
+          "n": 2,
+          "left": 49.05
+        },
+        {
+          "n": 3,
+          "left": 73.1375
+        },
+        {
+          "n": 4,
+          "left": 97.2375
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 15.534,
+          "width": "calc(11.4656% - 2px)"
+        },
+        {
+          "start": 15.534,
+          "end": 48.298,
+          "width": "calc(24.183% - 2px)"
+        },
+        {
+          "start": 48.298,
+          "end": 69.706,
+          "width": "calc(15.8011% - 2px)"
+        },
+        {
+          "start": 69.706,
+          "end": 81.316,
+          "width": "calc(8.56929% - 2px)"
+        },
+        {
+          "start": 81.316,
+          "end": 127.779,
+          "width": "calc(34.2941% - 2px)"
+        },
+        {
+          "start": 127.779,
+          "end": 135.483878,
+          "width": "calc(5.68693% - 2px)"
+        }
+      ],
+      "panelOrder": [],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": []
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af"
+      ],
+      "src": "all",
+      "tags": [
+        "scene.summer",
+        "voice.voice"
+      ],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 1,
+        "mood.deep": 1,
+        "mood.happy": 1,
+        "voice.voice": 1,
+        "genre.electronic": 1
+      },
+      "listSpeeds": {
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM"
+      },
+      "speed": "速度117 BPM每小节 4 拍",
+      "bar": "",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 4.18,
+          "energy": 0.521,
+          "height": 30.84
+        },
+        {
+          "t": 4.714,
+          "energy": 0.345,
+          "height": 23.8
+        },
+        {
+          "t": 5.224,
+          "energy": 0.379,
+          "height": 25.16
+        },
+        {
+          "t": 5.712,
+          "energy": 0.448,
+          "height": 27.92
+        },
+        {
+          "t": 6.223,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 6.757,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.268,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.802,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 71.4
+        },
+        {
+          "n": 2,
+          "left": 97.525
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 24.497,
+          "width": "calc(12.8983% - 2px)"
+        },
+        {
+          "start": 24.497,
+          "end": 34.969,
+          "width": "calc(5.51379% - 2px)"
+        },
+        {
+          "start": 34.969,
+          "end": 55.565,
+          "width": "calc(10.8443% - 2px)"
+        },
+        {
+          "start": 55.565,
+          "end": 72.005,
+          "width": "calc(8.6561% - 2px)"
+        },
+        {
+          "start": 72.005,
+          "end": 84.521,
+          "width": "calc(6.59001% - 2px)"
+        },
+        {
+          "start": 84.521,
+          "end": 103.306,
+          "width": "calc(9.8908% - 2px)"
+        },
+        {
+          "start": 103.306,
+          "end": 123.925,
+          "width": "calc(10.8565% - 2px)"
+        },
+        {
+          "start": 123.925,
+          "end": 138.553,
+          "width": "calc(7.70203% - 2px)"
+        },
+        {
+          "start": 138.553,
+          "end": 155.225,
+          "width": "calc(8.77825% - 2px)"
+        },
+        {
+          "start": 155.225,
+          "end": 189.923923,
+          "width": "calc(18.2699% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-filter-empty",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "shown": [],
+      "src": "local",
+      "tags": [
+        "scene.summer"
+      ],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 0
+      },
+      "listSpeeds": {},
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [],
+      "rowTags": {}
+    }
+  },
+  {
+    "name": "real-normal",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "143 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "115 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "125 BPM"
+      },
+      "speed": "速度115 BPM每小节 4 拍",
+      "bar": "第 1 小节",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 0,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 0.52,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 1.06,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 1.58,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 2.1,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 2.64,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 3.14,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 3.64,
+          "energy": 0.15035624555626453,
+          "height": 16.0142
+        },
+        {
+          "t": 4.18,
+          "energy": 0.5911929694904424,
+          "height": 33.6477
+        },
+        {
+          "t": 4.7,
+          "energy": 0.4524457923337552,
+          "height": 28.0978
+        },
+        {
+          "t": 5.22,
+          "energy": 0.4839146701869703,
+          "height": 29.3566
+        },
+        {
+          "t": 5.74,
+          "energy": 0.5315179919585747,
+          "height": 31.2607
+        },
+        {
+          "t": 6.24,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 6.76,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.28,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.78,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 0
+        },
+        {
+          "n": 2,
+          "left": 26.25
+        },
+        {
+          "n": 3,
+          "left": 52.25
+        },
+        {
+          "n": 4,
+          "left": 78
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 22.96,
+          "width": "calc(12.0891% - 2px)"
+        },
+        {
+          "start": 22.96,
+          "end": 37.56,
+          "width": "calc(7.68729% - 2px)"
+        },
+        {
+          "start": 37.56,
+          "end": 54.28,
+          "width": "calc(8.80352% - 2px)"
+        },
+        {
+          "start": 54.28,
+          "end": 70.96,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 70.96,
+          "end": 89.74,
+          "width": "calc(9.88817% - 2px)"
+        },
+        {
+          "start": 89.74,
+          "end": 106.42,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 106.42,
+          "end": 121.06,
+          "width": "calc(7.70835% - 2px)"
+        },
+        {
+          "start": 121.06,
+          "end": 137.74,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 137.74,
+          "end": 158.62,
+          "width": "calc(10.9939% - 2px)"
+        },
+        {
+          "start": 158.62,
+          "end": 189.923923,
+          "width": "calc(16.4823% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "7eaf824ad78e6fdf0648a087a17dff12f3fc7d31a753d4466395efb4f74ebefe",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+        "7eaf824ad78e6fdf0648a087a17dff12f3fc7d31a753d4466395efb4f74ebefe"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 4,
+        "qishui": 2,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM",
+        "7eaf824ad78e6fdf0648a087a17dff12f3fc7d31a753d4466395efb4f74ebefe": "分析中"
+      },
+      "queue": "正在分析节拍和标签",
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ],
+        "7eaf824ad78e6fdf0648a087a17dff12f3fc7d31a753d4466395efb4f74ebefe": []
+      }
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {},
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "分析中",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "排队中",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "排队中"
+      },
+      "queue": "排队等分析，前面还有 1 首。",
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": []
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "143 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "115 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "125 BPM"
+      },
+      "speed": "速度115 BPM每小节 4 拍",
+      "bar": "第 1 小节",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 0,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 0.52,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 1.06,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 1.58,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 2.1,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 2.64,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 3.14,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 3.64,
+          "energy": 0.15035624555626453,
+          "height": 16.0142
+        },
+        {
+          "t": 4.18,
+          "energy": 0.5911929694904424,
+          "height": 33.6477
+        },
+        {
+          "t": 4.7,
+          "energy": 0.4524457923337552,
+          "height": 28.0978
+        },
+        {
+          "t": 5.22,
+          "energy": 0.4839146701869703,
+          "height": 29.3566
+        },
+        {
+          "t": 5.74,
+          "energy": 0.5315179919585747,
+          "height": 31.2607
+        },
+        {
+          "t": 6.24,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 6.76,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.28,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.78,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 0
+        },
+        {
+          "n": 2,
+          "left": 26.25
+        },
+        {
+          "n": 3,
+          "left": 52.25
+        },
+        {
+          "n": 4,
+          "left": 78
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 22.96,
+          "width": "calc(12.0891% - 2px)"
+        },
+        {
+          "start": 22.96,
+          "end": 37.56,
+          "width": "calc(7.68729% - 2px)"
+        },
+        {
+          "start": 37.56,
+          "end": 54.28,
+          "width": "calc(8.80352% - 2px)"
+        },
+        {
+          "start": 54.28,
+          "end": 70.96,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 70.96,
+          "end": 89.74,
+          "width": "calc(9.88817% - 2px)"
+        },
+        {
+          "start": 89.74,
+          "end": 106.42,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 106.42,
+          "end": 121.06,
+          "width": "calc(7.70835% - 2px)"
+        },
+        {
+          "start": 121.06,
+          "end": 137.74,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 137.74,
+          "end": 158.62,
+          "width": "calc(10.9939% - 2px)"
+        },
+        {
+          "start": 158.62,
+          "end": 189.923923,
+          "width": "calc(16.4823% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度117 BPM每小节 4 拍",
+      "bar": "",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 4.18,
+          "energy": 0.521,
+          "height": 30.84
+        },
+        {
+          "t": 4.714,
+          "energy": 0.345,
+          "height": 23.8
+        },
+        {
+          "t": 5.224,
+          "energy": 0.379,
+          "height": 25.16
+        },
+        {
+          "t": 5.712,
+          "energy": 0.448,
+          "height": 27.92
+        },
+        {
+          "t": 6.223,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 6.757,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.268,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.802,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 71.4
+        },
+        {
+          "n": 2,
+          "left": 97.525
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 24.497,
+          "width": "calc(12.8983% - 2px)"
+        },
+        {
+          "start": 24.497,
+          "end": 34.969,
+          "width": "calc(5.51379% - 2px)"
+        },
+        {
+          "start": 34.969,
+          "end": 55.565,
+          "width": "calc(10.8443% - 2px)"
+        },
+        {
+          "start": 55.565,
+          "end": 72.005,
+          "width": "calc(8.6561% - 2px)"
+        },
+        {
+          "start": 72.005,
+          "end": 84.521,
+          "width": "calc(6.59001% - 2px)"
+        },
+        {
+          "start": 84.521,
+          "end": 103.306,
+          "width": "calc(9.8908% - 2px)"
+        },
+        {
+          "start": 103.306,
+          "end": 123.925,
+          "width": "calc(10.8565% - 2px)"
+        },
+        {
+          "start": 123.925,
+          "end": 138.553,
+          "width": "calc(7.70203% - 2px)"
+        },
+        {
+          "start": 138.553,
+          "end": 155.225,
+          "width": "calc(8.77825% - 2px)"
+        },
+        {
+          "start": 155.225,
+          "end": 189.923923,
+          "width": "calc(18.2699% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度144 BPM每小节 4 拍",
+      "bar": "",
+      "kind": "推进",
+      "windowStart": 0,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [
+        {
+          "start": 0,
+          "end": 16.602,
+          "width": "calc(17.2937% - 2px)"
+        },
+        {
+          "start": 16.602,
+          "end": 38.104,
+          "width": "calc(22.3979% - 2px)"
+        },
+        {
+          "start": 38.104,
+          "end": 44.722,
+          "width": "calc(6.89375% - 2px)"
+        },
+        {
+          "start": 44.722,
+          "end": 62.949,
+          "width": "calc(18.9865% - 2px)"
+        },
+        {
+          "start": 62.949,
+          "end": 69.567,
+          "width": "calc(6.89375% - 2px)"
+        },
+        {
+          "start": 69.567,
+          "end": 96,
+          "width": "calc(27.5344% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度123 BPM每小节 4 拍",
+      "bar": "第 68 小节",
+      "kind": "安静",
+      "windowStart": 127.483878,
+      "columns": [
+        {
+          "t": 127.779,
+          "energy": 0.235,
+          "height": 19.4
+        },
+        {
+          "t": 128.267,
+          "energy": 0.295,
+          "height": 21.8
+        },
+        {
+          "t": 128.755,
+          "energy": 0.223,
+          "height": 18.92
+        },
+        {
+          "t": 129.219,
+          "energy": 0.141,
+          "height": 15.64
+        },
+        {
+          "t": 129.707,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 130.194,
+          "energy": 0.029,
+          "height": 11.16
+        },
+        {
+          "t": 130.682,
+          "energy": 0.001,
+          "height": 10.04
+        },
+        {
+          "t": 131.17,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 131.657,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 132.122,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 132.609,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 133.097,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 133.584,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 134.072,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 66,
+          "left": 3.68902
+        },
+        {
+          "n": 67,
+          "left": 27.789
+        },
+        {
+          "n": 68,
+          "left": 52.164
+        },
+        {
+          "n": 69,
+          "left": 76.2515
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 15.534,
+          "width": "calc(11.4656% - 2px)"
+        },
+        {
+          "start": 15.534,
+          "end": 48.298,
+          "width": "calc(24.183% - 2px)"
+        },
+        {
+          "start": 48.298,
+          "end": 69.706,
+          "width": "calc(15.8011% - 2px)"
+        },
+        {
+          "start": 69.706,
+          "end": 81.316,
+          "width": "calc(8.56929% - 2px)"
+        },
+        {
+          "start": 81.316,
+          "end": 127.779,
+          "width": "calc(34.2941% - 2px)"
+        },
+        {
+          "start": 127.779,
+          "end": 135.483878,
+          "width": "calc(5.68693% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {},
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "分析中",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "排队中",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "排队中"
+      },
+      "queue": "排队等分析，前面还有 1 首。",
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": []
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "7eaf824ad78e6fdf0648a087a17dff12f3fc7d31a753d4466395efb4f74ebefe",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+        "7eaf824ad78e6fdf0648a087a17dff12f3fc7d31a753d4466395efb4f74ebefe"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 4,
+        "qishui": 2,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM",
+        "7eaf824ad78e6fdf0648a087a17dff12f3fc7d31a753d4466395efb4f74ebefe": "分析中"
+      },
+      "queue": "正在分析节拍和标签",
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ],
+        "7eaf824ad78e6fdf0648a087a17dff12f3fc7d31a753d4466395efb4f74ebefe": []
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "没分析出来",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "没分析出来",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "没分析出来",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 1,
+        "mood.dark": 1,
+        "mood.deep": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 2
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度123 BPM每小节 4 拍",
+      "bar": "",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 1.974,
+          "energy": 0.521,
+          "height": 30.84
+        },
+        {
+          "t": 2.461,
+          "energy": 0.317,
+          "height": 22.68
+        },
+        {
+          "t": 2.949,
+          "energy": 0.246,
+          "height": 19.84
+        },
+        {
+          "t": 3.437,
+          "energy": 0.341,
+          "height": 23.64
+        },
+        {
+          "t": 3.924,
+          "energy": 0.258,
+          "height": 20.32
+        },
+        {
+          "t": 4.389,
+          "energy": 0.323,
+          "height": 22.92
+        },
+        {
+          "t": 4.876,
+          "energy": 0.437,
+          "height": 27.48
+        },
+        {
+          "t": 5.364,
+          "energy": 0.387,
+          "height": 25.48
+        },
+        {
+          "t": 5.851,
+          "energy": 0.425,
+          "height": 27
+        },
+        {
+          "t": 6.339,
+          "energy": 0.161,
+          "height": 16.44
+        },
+        {
+          "t": 6.827,
+          "energy": 0.224,
+          "height": 18.96
+        },
+        {
+          "t": 7.291,
+          "energy": 0.338,
+          "height": 23.52
+        },
+        {
+          "t": 7.779,
+          "energy": 0.456,
+          "height": 28.24
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 24.675
+        },
+        {
+          "n": 2,
+          "left": 49.05
+        },
+        {
+          "n": 3,
+          "left": 73.1375
+        },
+        {
+          "n": 4,
+          "left": 97.2375
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 15.534,
+          "width": "calc(11.4656% - 2px)"
+        },
+        {
+          "start": 15.534,
+          "end": 48.298,
+          "width": "calc(24.183% - 2px)"
+        },
+        {
+          "start": 48.298,
+          "end": 69.706,
+          "width": "calc(15.8011% - 2px)"
+        },
+        {
+          "start": 69.706,
+          "end": 81.316,
+          "width": "calc(8.56929% - 2px)"
+        },
+        {
+          "start": 81.316,
+          "end": 127.779,
+          "width": "calc(34.2941% - 2px)"
+        },
+        {
+          "start": 127.779,
+          "end": 135.483878,
+          "width": "calc(5.68693% - 2px)"
+        }
+      ],
+      "panelOrder": [],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": []
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af"
+      ],
+      "src": "all",
+      "tags": [
+        "scene.summer",
+        "voice.voice"
+      ],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 1,
+        "mood.deep": 1,
+        "mood.happy": 1,
+        "voice.voice": 1,
+        "genre.electronic": 1
+      },
+      "listSpeeds": {
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM"
+      },
+      "speed": "速度117 BPM每小节 4 拍",
+      "bar": "",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 4.18,
+          "energy": 0.521,
+          "height": 30.84
+        },
+        {
+          "t": 4.714,
+          "energy": 0.345,
+          "height": 23.8
+        },
+        {
+          "t": 5.224,
+          "energy": 0.379,
+          "height": 25.16
+        },
+        {
+          "t": 5.712,
+          "energy": 0.448,
+          "height": 27.92
+        },
+        {
+          "t": 6.223,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 6.757,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.268,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.802,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 71.4
+        },
+        {
+          "n": 2,
+          "left": 97.525
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 24.497,
+          "width": "calc(12.8983% - 2px)"
+        },
+        {
+          "start": 24.497,
+          "end": 34.969,
+          "width": "calc(5.51379% - 2px)"
+        },
+        {
+          "start": 34.969,
+          "end": 55.565,
+          "width": "calc(10.8443% - 2px)"
+        },
+        {
+          "start": 55.565,
+          "end": 72.005,
+          "width": "calc(8.6561% - 2px)"
+        },
+        {
+          "start": 72.005,
+          "end": 84.521,
+          "width": "calc(6.59001% - 2px)"
+        },
+        {
+          "start": 84.521,
+          "end": 103.306,
+          "width": "calc(9.8908% - 2px)"
+        },
+        {
+          "start": 103.306,
+          "end": 123.925,
+          "width": "calc(10.8565% - 2px)"
+        },
+        {
+          "start": 123.925,
+          "end": 138.553,
+          "width": "calc(7.70203% - 2px)"
+        },
+        {
+          "start": 138.553,
+          "end": 155.225,
+          "width": "calc(8.77825% - 2px)"
+        },
+        {
+          "start": 155.225,
+          "end": 189.923923,
+          "width": "calc(18.2699% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-filter-empty",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "shown": [],
+      "src": "local",
+      "tags": [
+        "scene.summer"
+      ],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 0
+      },
+      "listSpeeds": {},
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [],
+      "rowTags": {}
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {},
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "分析中",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "排队中",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "排队中"
+      },
+      "queue": "排队等分析，前面还有 1 首。",
+      "windowStart": null,
+      "columns": [],
+      "barNumbers": [],
+      "bands": [],
+      "panelOrder": [],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": []
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "143 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "115 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "125 BPM"
+      },
+      "speed": "速度115 BPM每小节 4 拍",
+      "bar": "第 1 小节",
+      "kind": "安静",
+      "windowStart": 0,
+      "columns": [
+        {
+          "t": 0,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 0.52,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 1.06,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 1.58,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 2.1,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 2.64,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 3.14,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 3.64,
+          "energy": 0.15035624555626453,
+          "height": 16.0142
+        },
+        {
+          "t": 4.18,
+          "energy": 0.5911929694904424,
+          "height": 33.6477
+        },
+        {
+          "t": 4.7,
+          "energy": 0.4524457923337552,
+          "height": 28.0978
+        },
+        {
+          "t": 5.22,
+          "energy": 0.4839146701869703,
+          "height": 29.3566
+        },
+        {
+          "t": 5.74,
+          "energy": 0.5315179919585747,
+          "height": 31.2607
+        },
+        {
+          "t": 6.24,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 6.76,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.28,
+          "energy": 0,
+          "height": 10
+        },
+        {
+          "t": 7.78,
+          "energy": 0,
+          "height": 10
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 1,
+          "left": 0
+        },
+        {
+          "n": 2,
+          "left": 26.25
+        },
+        {
+          "n": 3,
+          "left": 52.25
+        },
+        {
+          "n": 4,
+          "left": 78
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 22.96,
+          "width": "calc(12.0891% - 2px)"
+        },
+        {
+          "start": 22.96,
+          "end": 37.56,
+          "width": "calc(7.68729% - 2px)"
+        },
+        {
+          "start": 37.56,
+          "end": 54.28,
+          "width": "calc(8.80352% - 2px)"
+        },
+        {
+          "start": 54.28,
+          "end": 70.96,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 70.96,
+          "end": 89.74,
+          "width": "calc(9.88817% - 2px)"
+        },
+        {
+          "start": 89.74,
+          "end": 106.42,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 106.42,
+          "end": 121.06,
+          "width": "calc(7.70835% - 2px)"
+        },
+        {
+          "start": 121.06,
+          "end": 137.74,
+          "width": "calc(8.78246% - 2px)"
+        },
+        {
+          "start": 137.74,
+          "end": 158.62,
+          "width": "calc(10.9939% - 2px)"
+        },
+        {
+          "start": 158.62,
+          "end": 189.923923,
+          "width": "calc(16.4823% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "result": "PASS",
+    "checked": [
+      "BPM",
+      "meter",
+      "current bar",
+      "lane bar ordinal",
+      "section name",
+      "ahead count",
+      "8s window",
+      "energy height",
+      "section width",
+      "source counts",
+      "facet counts",
+      "derived tags"
+    ],
+    "observed": {
+      "selected": "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+      "shown": [
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b"
+      ],
+      "src": "all",
+      "tags": [],
+      "sourceCounts": {
+        "all": 3,
+        "qishui": 1,
+        "netease": 1,
+        "local": 1
+      },
+      "tagCounts": {
+        "scene.summer": 2,
+        "mood.deep": 2,
+        "mood.dark": 1,
+        "mood.happy": 1,
+        "mood.melodic": 1,
+        "mood.space": 1,
+        "voice.voice": 1,
+        "voice.instrumental": 1,
+        "genre.electronic": 3
+      },
+      "listSpeeds": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": "144 BPM",
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": "117 BPM",
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": "123 BPM"
+      },
+      "speed": "速度117 BPM每小节 4 拍",
+      "bar": "第 40 小节",
+      "kind": "高潮",
+      "windowStart": 84.4,
+      "columns": [
+        {
+          "t": 84.521,
+          "energy": 0.9,
+          "height": 46
+        },
+        {
+          "t": 85.055,
+          "energy": 0.735,
+          "height": 39.4
+        },
+        {
+          "t": 85.566,
+          "energy": 0.446,
+          "height": 27.84
+        },
+        {
+          "t": 86.1,
+          "energy": 0.915,
+          "height": 46.6
+        },
+        {
+          "t": 86.61,
+          "energy": 0.467,
+          "height": 28.68
+        },
+        {
+          "t": 87.121,
+          "energy": 0.695,
+          "height": 37.8
+        },
+        {
+          "t": 87.655,
+          "energy": 0.734,
+          "height": 39.36
+        },
+        {
+          "t": 88.189,
+          "energy": 0.824,
+          "height": 42.96
+        },
+        {
+          "t": 88.7,
+          "energy": 0.814,
+          "height": 42.56
+        },
+        {
+          "t": 89.234,
+          "energy": 0.839,
+          "height": 43.56
+        },
+        {
+          "t": 89.745,
+          "energy": 0.634,
+          "height": 35.36
+        },
+        {
+          "t": 90.256,
+          "energy": 0.781,
+          "height": 41.24
+        },
+        {
+          "t": 90.79,
+          "energy": 0.972,
+          "height": 48.88
+        },
+        {
+          "t": 91.301,
+          "energy": 0.844,
+          "height": 43.76
+        },
+        {
+          "t": 91.835,
+          "energy": 0.91,
+          "height": 46.4
+        },
+        {
+          "t": 92.346,
+          "energy": 0.561,
+          "height": 32.44
+        }
+      ],
+      "barNumbers": [
+        {
+          "n": 39,
+          "left": 1.5125
+        },
+        {
+          "n": 40,
+          "left": 27.625
+        },
+        {
+          "n": 41,
+          "left": 53.75
+        },
+        {
+          "n": 42,
+          "left": 79.875
+        }
+      ],
+      "bands": [
+        {
+          "start": 0,
+          "end": 24.497,
+          "width": "calc(12.8983% - 2px)"
+        },
+        {
+          "start": 24.497,
+          "end": 34.969,
+          "width": "calc(5.51379% - 2px)"
+        },
+        {
+          "start": 34.969,
+          "end": 55.565,
+          "width": "calc(10.8443% - 2px)"
+        },
+        {
+          "start": 55.565,
+          "end": 72.005,
+          "width": "calc(8.6561% - 2px)"
+        },
+        {
+          "start": 72.005,
+          "end": 84.521,
+          "width": "calc(6.59001% - 2px)"
+        },
+        {
+          "start": 84.521,
+          "end": 103.306,
+          "width": "calc(9.8908% - 2px)"
+        },
+        {
+          "start": 103.306,
+          "end": 123.925,
+          "width": "calc(10.8565% - 2px)"
+        },
+        {
+          "start": 123.925,
+          "end": 138.553,
+          "width": "calc(7.70203% - 2px)"
+        },
+        {
+          "start": 138.553,
+          "end": 155.225,
+          "width": "calc(8.77825% - 2px)"
+        },
+        {
+          "start": 155.225,
+          "end": 189.923923,
+          "width": "calc(18.2699% - 2px)"
+        }
+      ],
+      "panelOrder": [
+        "genre",
+        "mood",
+        "scene",
+        "voice",
+        "instrument"
+      ],
+      "rowTags": {
+        "e60863568554f0fe6feec9ce1d9c8999dfd10ed8d2b0662d32d872fecd277256": [
+          "电子",
+          "旋律优美",
+          "纯音乐"
+        ],
+        "2bdff650a03a4e1f25ee07b00d034474aaa9c48c45834dd6f8ff306b4e1128af": [
+          "电子",
+          "夏日",
+          "有人声"
+        ],
+        "891759d6a9fc3c501f15c643026d272c602b4d1878daada6f0e5bf74ad061d0b": [
+          "电子",
+          "夏日"
+        ]
+      }
+    }
+  }
+]

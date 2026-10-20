@@ -1,0 +1,4 @@
+$ node tests/test_r220_number_formulas.mjs
+exit 0
+PASS numeric formulas: positive and negative assertions
+PASS R220 music numeric regression: median BPM, meter, bar counts, clamped window

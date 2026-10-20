@@ -1,0 +1,3 @@
+$ python3 "$HARNESS_CORE_ROOT/skills/ui-copy-quality/scripts/check_ui_copy_quality.py" studio/static/review-music.js studio/static/beat-map.js --project-root . --evidence-dir evidence/2026-10-21/R223-music-beat-map/phase-b/copy
+exit 0
+ui-copy-quality: PASS (2 file(s), 0 warning(s); lexical checks only, not a review of meaning)

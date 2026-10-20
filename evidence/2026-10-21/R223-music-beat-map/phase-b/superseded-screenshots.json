@@ -1,0 +1,202 @@
+[
+  {
+    "name": "real-queued",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-1440.png",
+    "sha256": "4481d3e3a1bbef1c1920baf0dc037c275483b237140fbf7beb738189e2eee9d3",
+    "captured_at": "2026-10-20T19:44:23.334Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    },
+    "review_result": "SUPERSEDED",
+    "reason": "before final responsive fix; replaced by live-final frames"
+  },
+  {
+    "name": "real-queued",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-1180.png",
+    "sha256": "1b68c70bd3c5d1f41cec979921fe17d0e41dd7deb3b25eec33c9f0e81165117c",
+    "captured_at": "2026-10-20T19:44:23.527Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    },
+    "review_result": "SUPERSEDED",
+    "reason": "before final responsive fix; replaced by live-final frames"
+  },
+  {
+    "name": "real-queued",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-430.png",
+    "sha256": "63c8f123968a879de1a6bab44a4c93d160810c1776bac6caa40c1aab4abec7ba",
+    "captured_at": "2026-10-20T19:44:23.643Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    },
+    "review_result": "SUPERSEDED",
+    "reason": "before final responsive fix; replaced by live-final frames"
+  },
+  {
+    "name": "real-queued",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-real-queued-430-open.png",
+    "sha256": "cd9096a8a401740c1526befc99ee6792879082e0b970444fba476783348aad92",
+    "captured_at": "2026-10-20T19:44:23.850Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    },
+    "review_result": "SUPERSEDED",
+    "reason": "before final responsive fix; replaced by live-final frames"
+  },
+  {
+    "name": "real-normal",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-1440.png",
+    "sha256": "ee86ca72252f635be5e034b4095cba9b3001204c264abfc99f346e6213e233a1",
+    "captured_at": "2026-10-20T19:46:17.005Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    },
+    "review_result": "SUPERSEDED",
+    "reason": "before final responsive fix; replaced by live-final frames"
+  },
+  {
+    "name": "real-normal",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-1180.png",
+    "sha256": "61e0b7cd0e06b029ed10eb5c269c9e7c4d85a3162c1e472e7ff2ce2f5c8d8768",
+    "captured_at": "2026-10-20T19:46:17.115Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    },
+    "review_result": "SUPERSEDED",
+    "reason": "before final responsive fix; replaced by live-final frames"
+  },
+  {
+    "name": "real-normal",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-430.png",
+    "sha256": "4fd3fbe0218958a100502454d7339dde60000fec89a7fd6820e7158296effcd8",
+    "captured_at": "2026-10-20T19:46:17.189Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    },
+    "review_result": "SUPERSEDED",
+    "reason": "before final responsive fix; replaced by live-final frames"
+  },
+  {
+    "name": "real-normal",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-real-normal-430-open.png",
+    "sha256": "e35c8ae5b6752141d8fdb983f61659dec242083f777d7103530bff736d70d8be",
+    "captured_at": "2026-10-20T19:46:17.340Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    },
+    "review_result": "SUPERSEDED",
+    "reason": "before final responsive fix; replaced by live-final frames"
+  }
+]

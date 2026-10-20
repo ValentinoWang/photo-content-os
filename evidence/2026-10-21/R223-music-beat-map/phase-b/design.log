@@ -1,0 +1,4 @@
+$ .venv/bin/python scripts/check_r223_design.py
+exit 0
+Inventories: 58 failing: 0
+[]

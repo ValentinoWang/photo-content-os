@@ -1,0 +1,28 @@
+[
+  {
+    "case": "copy",
+    "exit_code": 1,
+    "rules": [
+      "copy.unapproved-text"
+    ]
+  },
+  {
+    "case": "unapproved-id",
+    "exit_code": 1,
+    "rules": [
+      "design.unapproved-element"
+    ]
+  },
+  {
+    "case": "missing-id",
+    "exit_code": 1,
+    "rules": [
+      "design.missing-element"
+    ]
+  },
+  {
+    "case": "zero-inventory",
+    "exit_code": 1,
+    "output": "design.matrix.incomplete: expected 47 mock, 8 copied-library and 3 optimistic inventories"
+  }
+]

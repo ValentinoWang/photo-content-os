@@ -1,0 +1,15 @@
+{
+  "role": "local-creator; incremental R220 music surface under approved R223 design",
+  "files": {
+    "docs/tasks/R223-music-beat-map/TASK.md": "d7a32949d1515e24746fdbefa8897dbb903d8097b236921ef2d67137bdd2723d",
+    "docs/tasks/R223-music-beat-map/DESIGN.md": "08eaa83f87b79420811e266822b12238284993ae964ff1769d50aed99f364ec4",
+    "docs/tasks/R223-music-beat-map/mock/beat-map.html": "62511ed2ecca1de7a58d086a8274097fc64f32f148c42b4e924860a977abbf67",
+    "docs/tasks/R223-music-beat-map/mock/registry.js": "2bd1378403f9a96044a9bc5a9b478a3726709a9fcdc41376924c6ce8d0cad469",
+    "docs/tasks/R223-music-beat-map/mock/design-contract.json": "548a44b2e342363b57285ff322411ded3fc905fa9a6d893683c40226f0ee4af1",
+    "music-analysis.registry.json": "2e0a834802e32a5053e2876f249a317a48a97b393990a68453f73af12779ed57",
+    "studio/static/beat-map.js": "428957a932bc898c17a6c54ba55fb4a522bdf64103b3d5fdb7858c9d561afa33",
+    "studio/static/review-music.js": "0e8097b84b6a5935feabc307a5f40237e7d31ec5b6dbc9462d4d1aeccf0b6209",
+    "studio/static/review.css": "6d04212a1fc4413855fc1d6da2861097751bf50c0bed15e68476e2b0f4ec5d49"
+  },
+  "backend_production_changed": false
+}

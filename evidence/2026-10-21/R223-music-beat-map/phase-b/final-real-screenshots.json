@@ -1,0 +1,93 @@
+[
+  {
+    "name": "real-start",
+    "kind": "implementation",
+    "file": "real-start-rail-2x.png",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "route": "#view=music",
+    "captured_at": "2026-10-20T20:28:51.039Z",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "sha256": "976efb98e68b31a16ad1e6952f6a40b0945d26479a460bc6b0dbdfe528c7bc21"
+  },
+  {
+    "name": "real-playing",
+    "kind": "implementation",
+    "file": "real-playing-rail-2x.png",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "route": "#view=music",
+    "captured_at": "2026-10-20T20:28:51.656Z",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "sha256": "c3c8b0bcc735ba56a09ebfd0eff1c1a028cfe317d42d8e4fafdae07e6b5f8599"
+  },
+  {
+    "name": "real-intro",
+    "kind": "implementation",
+    "file": "real-intro-rail-2x.png",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "route": "#view=music",
+    "captured_at": "2026-10-20T20:28:52.086Z",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "sha256": "418f6fff35563dad4c5d1386f0f543335bbb4bf4759e7726b0a51e8c81ecea55"
+  },
+  {
+    "name": "real-end",
+    "kind": "implementation",
+    "file": "real-end-rail-2x.png",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "route": "#view=music",
+    "captured_at": "2026-10-20T20:28:52.511Z",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "sha256": "29fbf1b8cef8d2ff653e8b3bb6a3c2510e5b844d60ea43270ff9feb9809418ff"
+  },
+  {
+    "name": "final-real",
+    "kind": "implementation",
+    "file": "final-real-1440.png",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "route": "#view=music",
+    "captured_at": "2026-10-20T20:28:52.862Z",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "sha256": "ee86ca72252f635be5e034b4095cba9b3001204c264abfc99f346e6213e233a1"
+  },
+  {
+    "name": "final-real",
+    "kind": "implementation",
+    "file": "final-real-430.png",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "route": "#view=music",
+    "captured_at": "2026-10-20T20:28:52.915Z",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "sha256": "307c674e5d4c5f9b3c577739dffd874f3a153b9c2e30ac28f89694908576cc6e"
+  },
+  {
+    "name": "final-real",
+    "kind": "implementation",
+    "file": "final-real-430-open.png",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "route": "#view=music",
+    "captured_at": "2026-10-20T20:28:53.007Z",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "sha256": "49b7f33de6621949b373b10a3b4832121a55b1465d5c768604ddbd77c3b73b4f"
+  }
+]

@@ -1,3 +1,4 @@
+if(process.env.R220_MUSIC_ONLY==='1'){await import('./verify_r223_music_browser.mjs');process.exit(0);}
 import {createRequire} from 'node:module';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';

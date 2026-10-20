@@ -202,14 +202,74 @@ rg -n "license_status|LICENSE_LABELS|平台版权曲|来源不明|licenseTag|lic
 4. 真实曲库迁移和补分析的执行步骤：备份位置、命令、怎么回退。等 Claude 安排，不要执行。
 5. 「越界需求」「需要新文案」「需要拍板」三节，没有写「无」。
 
-## 3. 阶段 B：前端照稿实现（等 Claude 开）
+## 3. 阶段 B：前端照稿实现
 
-阶段 A 汇报通过后，Claude 会补上阶段 B 的细则。范围先写在这里，让你知道 A 要给 B 留什么：
+阶段 A、A2 已由 Claude 复核通过。阶段 B 只做前端和前端门禁，后端接口不再改；确实要改，写进「越界需求」后停下。
 
-- 照 `mock/beat-map.html` 实现：右侧节拍图、AI 标注区、速度行、列表的速度列和标签行、分面筛选、筛选后没有歌、全部失败和排队状态。
-- 名字和顺序全部从接口的 `taxonomy` 读，前端不写死。
-- 共用节拍图模块 `studio/static/beat-map.js`：`mountBeatMap` 的签名照 `DESIGN.md` 第 10.1 节，不改；R226 的入口（切点、淡出、多首歌、关掉放大区、`onSeek`、`onSwapClick`、`selectedSwap`）都要实现并有测试；「换歌」标签用 `button.bm-swap`，选中态用 `aria-pressed="true"`。
-- 四道检查都要跑：文案表比对、设计编号比对、数字公式（`DESIGN.md` 第 6 节）、人话与观感。
-  - 文案表：`mock/design-contract.json`，加上清单里的全部中文。
-  - 状态：设计稿每个状态都有夹具，再加真实数据的最差首屏。
-- 截图：1440、1180、430 三种宽度。汇报第一节是「和设计稿哪里不一样」，逐个状态并排对照。
+### B1 实现
+
+- 照 `mock/beat-map.html` 实现，以 `DESIGN.md` 第 3–6 节为准：
+  - 音乐库页：列表的速度列和标签行、来源筛选下面的分面标签筛选、筛选后没有歌；
+  - 右侧栏：节拍图、播放行、AI 标注区、速度行；
+  - `DESIGN.md` 第 4 节的全部状态。
+- `mark()` 的状态名一律用 `DESIGN.md` 第 4 节表里的名字。
+- 所有名字、顺序、空值文字都从接口的 `taxonomy` 读，前端不写死任何段落名、标签名、组名、`empty_text`、`uncertain_text`、`panel_title`。
+- 共用模块 `studio/static/beat-map.js`：签名照 `DESIGN.md` 第 10.1 节，一字不改。
+  - R226 的入口要实现，并有测试：`cuts`、`fadeOut`、多首歌、`lane:false`、`onSeek`、`onSwapClick`、`selectedSwap`。
+  - 「换歌」标签用 `button.bm-swap`，选中态 `aria-pressed="true"`。
+- 播放：
+  - 用 requestAnimationFrame 每帧调 `setTime(t)`，只动播放线和放大区，不重画整页；
+  - 播放线经过的那一拍变白；
+  - 点波形或色带跳转。
+- 状态更新：
+  - 有曲目在排队或分析中时，按不长于 1 秒的间隔刷新状态，不刷新页面；都完成后停止刷新。
+  - 「重新分析」「重新标注」点下去立刻把这首改成「分析中」（列表和右侧栏一起改），再发请求；请求失败要恢复原状并提示。
+- 样式：
+  - 新规则只加在 `review.css` 的音乐页和 `.bm-*`、`.tag`、`.tagfilters`、`.tg*`、`.trow` 里；
+  - 令牌用阶段 A 已加的 `--sec-*`；
+  - 不用 `!important`，不靠拼选择器特异性去压旧样式。
+
+### B2 四道检查（每轮必跑，失败不交）
+
+1. **文案表比对**：用 `check_design_contract.py check`，把实现页面各状态的可见文字和 `mock/design-contract.json` 比对。
+   - 清单里的全部中文（类别名、标签名、`empty_text`、`uncertain_text`、`panel_title`、段落名）算已批准文案。
+   - 写一个小脚本从清单生成批准清单，不许手抄。
+2. **设计编号比对**：`data-design-id`、`data-design-state` 和稿一致；不许有稿外的块，也不许漏块。
+3. **数字公式**：`DESIGN.md` 第 6 节每一行都写成断言，在真实页面上核对，包括分面计数和「前面还有 N 首」。
+4. **人话与观感**：跑 `check_ui_copy_quality.py`；页面上不许出现机器标识、失败码以外的英文字段名。
+
+### B3 数据和截图
+
+- **夹具**：设计稿的每个状态都要有一个夹具，形状和接口真实返回一样，用阶段 A 的接口投影生成，不手写。
+- **真实数据**：
+  - 把真实曲库整份复制到临时目录，只在复制品上跑迁移；
+  - 新 Studio 起在非 8765 端口，`LOCAL_MEDIA_ROOT` 指向复制品；
+  - 先删掉复制品里的 `analysis.json`，拍**最差首屏**：3 首都在补分析；
+  - 等分析完，再拍正常状态。
+  - 真实曲库本身不许动。
+- **截图**：
+  - 每个状态拍 1440×960、1180×860、430×932 三档；430 那档另拍一张右侧栏展开的；
+  - 再拍右侧栏 2 倍图：停在开头、播放到 1:28、CRUSH VIBE 前奏、Fever Pitch 结尾；
+  - 截图放仓库外 `~/.photo-content-os/evidence/R223-music-beat-map/phase-b/`；
+  - 设计稿截图在 `~/.photo-content-os/evidence/R223-music-beat-map/mockshots/`，同名同尺寸，用来并排对照。
+- 旧的 R220 浏览器检查（`scripts/verify_r220_browser.mjs`）和数字公式测试（`tests/test_r220_number_formulas.mjs`），要和新音乐页保持一致、保持绿。音乐页的部分以 R223 为准。
+
+### B4 要跑的
+
+- 阶段 A 的全部检查，加上 B2 的四道检查、`node --check`、新模块测试；
+- 全量 `pytest`：本机 ffmpeg 没有 drawtext，这类失败照旧只列出。
+
+### B 阶段汇报（写完停下）
+
+写进 `REPORT-B.md`，同时作为最后一条消息输出。第一节固定为**「和设计稿哪里不一样」**：
+
+- 逐个状态、逐个宽度一行；
+- 附上并排对照图的路径（左边设计稿，右边实现）；
+- 写清楚哪里不一样、为什么。
+
+其后依次写：
+
+- 四道检查的命令和结果原样；
+- 改了哪些文件；
+- 越界需求、需要新文案、稿外元素、需要拍板，没有的写「无」；
+- 在 worktree 里提交，不推送。

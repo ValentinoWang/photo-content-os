@@ -1,0 +1,234 @@
+[
+  {
+    "key": "music-1440",
+    "state": "music"
+  },
+  {
+    "key": "music-1180",
+    "state": "music"
+  },
+  {
+    "key": "music-intro-1440",
+    "state": "music"
+  },
+  {
+    "key": "music-intro-1180",
+    "state": "music"
+  },
+  {
+    "key": "music-end-1440",
+    "state": "music"
+  },
+  {
+    "key": "music-end-1180",
+    "state": "music"
+  },
+  {
+    "key": "music-beats-queued-1440",
+    "state": "music-beats-queued"
+  },
+  {
+    "key": "music-beats-queued-1180",
+    "state": "music-beats-queued"
+  },
+  {
+    "key": "music-beats-failed-1440",
+    "state": "music-beats-failed"
+  },
+  {
+    "key": "music-beats-failed-1180",
+    "state": "music-beats-failed"
+  },
+  {
+    "key": "music-beats-failed-unreadable-1440",
+    "state": "music-beats-failed-unreadable"
+  },
+  {
+    "key": "music-beats-failed-unreadable-1180",
+    "state": "music-beats-failed-unreadable"
+  },
+  {
+    "key": "music-beats-failed-unknown-1440",
+    "state": "music-beats-failed-unknown"
+  },
+  {
+    "key": "music-beats-failed-unknown-1180",
+    "state": "music-beats-failed-unknown"
+  },
+  {
+    "key": "music-tags-failed-1440",
+    "state": "music-tags-failed"
+  },
+  {
+    "key": "music-tags-failed-1180",
+    "state": "music-tags-failed"
+  },
+  {
+    "key": "music-filtered-1440",
+    "state": "music"
+  },
+  {
+    "key": "music-filtered-1180",
+    "state": "music"
+  },
+  {
+    "key": "music-filter-empty-1440",
+    "state": "music-filter-empty"
+  },
+  {
+    "key": "music-filter-empty-1180",
+    "state": "music-filter-empty"
+  },
+  {
+    "key": "music-beats-analyzing-1440",
+    "state": "music-beats-analyzing"
+  },
+  {
+    "key": "music-beats-analyzing-1180",
+    "state": "music-beats-analyzing"
+  },
+  {
+    "key": "real-queued-projection-1440",
+    "state": "music-beats-queued"
+  },
+  {
+    "key": "real-queued-projection-1180",
+    "state": "music-beats-queued"
+  },
+  {
+    "key": "real-normal-projection-1440",
+    "state": "music"
+  },
+  {
+    "key": "real-normal-projection-1180",
+    "state": "music"
+  },
+  {
+    "key": "music-430",
+    "state": "music"
+  },
+  {
+    "key": "music-430-open",
+    "state": "music"
+  },
+  {
+    "key": "music-intro-430",
+    "state": "music"
+  },
+  {
+    "key": "music-intro-430-open",
+    "state": "music"
+  },
+  {
+    "key": "music-end-430",
+    "state": "music"
+  },
+  {
+    "key": "music-end-430-open",
+    "state": "music"
+  },
+  {
+    "key": "music-beats-queued-430",
+    "state": "music-beats-queued"
+  },
+  {
+    "key": "music-beats-queued-430-open",
+    "state": "music-beats-queued"
+  },
+  {
+    "key": "music-beats-analyzing-430",
+    "state": "music-beats-analyzing"
+  },
+  {
+    "key": "music-beats-analyzing-430-open",
+    "state": "music-beats-analyzing"
+  },
+  {
+    "key": "music-beats-failed-430",
+    "state": "music-beats-failed"
+  },
+  {
+    "key": "music-beats-failed-430-open",
+    "state": "music-beats-failed"
+  },
+  {
+    "key": "music-beats-failed-unreadable-430",
+    "state": "music-beats-failed-unreadable"
+  },
+  {
+    "key": "music-beats-failed-unreadable-430-open",
+    "state": "music-beats-failed-unreadable"
+  },
+  {
+    "key": "music-beats-failed-unknown-430",
+    "state": "music-beats-failed-unknown"
+  },
+  {
+    "key": "music-beats-failed-unknown-430-open",
+    "state": "music-beats-failed-unknown"
+  },
+  {
+    "key": "music-tags-failed-430",
+    "state": "music-tags-failed"
+  },
+  {
+    "key": "music-tags-failed-430-open",
+    "state": "music-tags-failed"
+  },
+  {
+    "key": "music-filtered-430",
+    "state": "music"
+  },
+  {
+    "key": "music-filtered-430-open",
+    "state": "music"
+  },
+  {
+    "key": "music-filter-empty-430",
+    "state": "music-filter-empty"
+  },
+  {
+    "key": "real-queued-projection-430",
+    "state": "music-beats-queued"
+  },
+  {
+    "key": "real-queued-projection-430-open",
+    "state": "music-beats-queued"
+  },
+  {
+    "key": "real-normal-projection-430",
+    "state": "music"
+  },
+  {
+    "key": "real-normal-projection-430-open",
+    "state": "music"
+  },
+  {
+    "key": "music-playing-1440",
+    "state": "music"
+  },
+  {
+    "key": "music-playing-1180",
+    "state": "music"
+  },
+  {
+    "key": "music-playing-430",
+    "state": "music"
+  },
+  {
+    "key": "music-playing-430-open",
+    "state": "music"
+  },
+  {
+    "key": "optimistic-beat",
+    "state": "music-beats-analyzing"
+  },
+  {
+    "key": "optimistic-tags",
+    "state": "music"
+  },
+  {
+    "key": "optimistic-concurrent",
+    "state": "music-beats-failed"
+  }
+]

@@ -1,0 +1,2962 @@
+[
+  {
+    "name": "real-queued",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-1440.png",
+    "sha256": "4481d3e3a1bbef1c1920baf0dc037c275483b237140fbf7beb738189e2eee9d3",
+    "captured_at": "2026-10-20T19:44:23.334Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "real-queued",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-1180.png",
+    "sha256": "1b68c70bd3c5d1f41cec979921fe17d0e41dd7deb3b25eec33c9f0e81165117c",
+    "captured_at": "2026-10-20T19:44:23.527Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "real-queued",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-430.png",
+    "sha256": "63c8f123968a879de1a6bab44a4c93d160810c1776bac6caa40c1aab4abec7ba",
+    "captured_at": "2026-10-20T19:44:23.643Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "real-queued",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-real-queued-430-open.png",
+    "sha256": "cd9096a8a401740c1526befc99ee6792879082e0b970444fba476783348aad92",
+    "captured_at": "2026-10-20T19:44:23.850Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "music",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-1440.png",
+    "sha256": "b4d03153b59c0d9cc6bb37a25dc3723aab8ba7df1c8a670f38ead591989a9014",
+    "captured_at": "2026-10-20T19:44:26.052Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-1440.png",
+    "sha256": "930e561519aff7a80b273d339760a2d9318a3ac357141640025c3e78bddeaff7",
+    "captured_at": "2026-10-20T19:44:26.291Z",
+    "route": "mock/beat-map.html?state=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-1180.png",
+    "sha256": "06ccedfea03b48d52794b7213fbdafae80d494501921843d4ab4c6d3c3071d46",
+    "captured_at": "2026-10-20T19:44:26.624Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-1180.png",
+    "sha256": "00779308a654dd9fe7f8475073bcbeefe2d7c90828e8dc93786773c76b13d846",
+    "captured_at": "2026-10-20T19:44:26.716Z",
+    "route": "mock/beat-map.html?state=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music",
+    "kind": "implementation",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "file": "implementation-music-rail-2x.png",
+    "sha256": "83f9347f999a429c1ba3d5525872848c943a3a3c125e8a89726b26d9c8299ab7",
+    "captured_at": "2026-10-20T19:44:28.775Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local"
+  },
+  {
+    "name": "music",
+    "kind": "mock",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "file": "mock-music-rail-2x.png",
+    "sha256": "038130ba2eba9c9d315abc6f9943e7d9801d347f03382def648dac3a5ce42c23",
+    "captured_at": "2026-10-20T19:44:29.014Z",
+    "route": "mock/beat-map.html?state=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local"
+  },
+  {
+    "name": "music-intro",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-intro-1440.png",
+    "sha256": "d955b8fff5be97a5c9c3598f7b7bbf94aaa86197bbb087153dfdf822eb3e49aa",
+    "captured_at": "2026-10-20T19:44:40.111Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1044,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 689,
+        "scrollHeight": 689
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-intro-1440.png",
+    "sha256": "feb506742621d6883ed0cbce59fefc7f3863b8dd0297e61e85cdd44a456d97cc",
+    "captured_at": "2026-10-20T19:44:40.321Z",
+    "route": "mock/beat-map.html?state=music-intro",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1044,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 689,
+        "scrollHeight": 689
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-intro-1180.png",
+    "sha256": "fc776b63c834e7e11a269d9cef8d6a023ed4216a5e44814d8edfb222d3061a5a",
+    "captured_at": "2026-10-20T19:44:40.722Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1044,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 689,
+        "scrollHeight": 689
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-intro-1180.png",
+    "sha256": "fd0c2fd6f1be9b56a0e1520676c9274be0e7f79a7a5fb2ef569242b3c96d9c12",
+    "captured_at": "2026-10-20T19:44:40.877Z",
+    "route": "mock/beat-map.html?state=music-intro",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1044,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 689,
+        "scrollHeight": 689
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "kind": "implementation",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "file": "implementation-music-intro-rail-2x.png",
+    "sha256": "a853db448a078656385c86970f7838a368a9f138ce3ca679b82f325861bc177c",
+    "captured_at": "2026-10-20T19:44:43.317Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local"
+  },
+  {
+    "name": "music-intro",
+    "kind": "mock",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "file": "mock-music-intro-rail-2x.png",
+    "sha256": "641960e211d39ac2c4495ab9b6aa31ea94d693db1128894811ca15ad235cf29e",
+    "captured_at": "2026-10-20T19:44:43.505Z",
+    "route": "mock/beat-map.html?state=music-intro",
+    "browser": "Chrome",
+    "font_mode": "fallback-local"
+  },
+  {
+    "name": "music-end",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-end-1440.png",
+    "sha256": "663502585610d1a2251b8f5ab22d881c907a8fefddc04936e4686271113acf0a",
+    "captured_at": "2026-10-20T19:44:45.540Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1063,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 708,
+        "scrollHeight": 708
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-end-1440.png",
+    "sha256": "cb4091f4a5fe7d305aeb6a5bd774bd8a9c7f1a5fdd25123008f3d39fbb8af249",
+    "captured_at": "2026-10-20T19:44:45.660Z",
+    "route": "mock/beat-map.html?state=music-end",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1063,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 708,
+        "scrollHeight": 708
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-end-1180.png",
+    "sha256": "c03ab5403b916c957e4fd403e7c59071f41c23a232e6992b53837f89e8f37148",
+    "captured_at": "2026-10-20T19:44:45.955Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1063,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 708,
+        "scrollHeight": 708
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-end-1180.png",
+    "sha256": "bf64db0b0ee81e3ee93e44e8868f85d07e0d7ce613e0b84280fa0b8396e24590",
+    "captured_at": "2026-10-20T19:44:46.085Z",
+    "route": "mock/beat-map.html?state=music-end",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1063,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 708,
+        "scrollHeight": 708
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "kind": "implementation",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "file": "implementation-music-end-rail-2x.png",
+    "sha256": "13bab51c472144b85fae30533e85c475286efc3cbaf1876877be3b0f0544e5c1",
+    "captured_at": "2026-10-20T19:44:48.220Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local"
+  },
+  {
+    "name": "music-end",
+    "kind": "mock",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "file": "mock-music-end-rail-2x.png",
+    "sha256": "82cf6061be5288dd90e61458d9daf6aaa879319be1c7f84d1050d3b7829105a6",
+    "captured_at": "2026-10-20T19:44:48.395Z",
+    "route": "mock/beat-map.html?state=music-end",
+    "browser": "Chrome",
+    "font_mode": "fallback-local"
+  },
+  {
+    "name": "music-beats-queued",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-queued-1440.png",
+    "sha256": "2e4ca27ebae8f5f360218ff53f3e960c8ce7ff4f9743653b54fa78080a2a2c4e",
+    "captured_at": "2026-10-20T19:44:50.214Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-queued-1440.png",
+    "sha256": "bcd31aba8efcb562bc931676b0b48e4c2f5daf0bf7458b4509ea18505ed345fd",
+    "captured_at": "2026-10-20T19:44:50.343Z",
+    "route": "mock/beat-map.html?state=music-beats-queued",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-queued-1180.png",
+    "sha256": "3cb4446730e110391caeb7f9a569893575c655ba18afdbf3489846d9543e9033",
+    "captured_at": "2026-10-20T19:44:50.527Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-queued-1180.png",
+    "sha256": "b8bf47f6c266e6141958a0e2ac7f00cd34a73fcc2b40ed9400eabfb9a05a39ac",
+    "captured_at": "2026-10-20T19:44:50.609Z",
+    "route": "mock/beat-map.html?state=music-beats-queued",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-1440.png",
+    "sha256": "d750f81ec37ccdb1e0c563e1d3cb18d45c6ab0cc64d46fba1bfc5ce53f90ea2c",
+    "captured_at": "2026-10-20T19:44:55.050Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1005,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 650,
+        "scrollHeight": 650
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-1440.png",
+    "sha256": "6eabd9bca178e515ae55258613781ba30e9be55534dd324634cd9666dd66c98e",
+    "captured_at": "2026-10-20T19:44:55.149Z",
+    "route": "mock/beat-map.html?state=music-beats-failed",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1005,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 650,
+        "scrollHeight": 650
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-1180.png",
+    "sha256": "abba9bd75f4de9a4f927aef611d5fcbfcbfcf0f2dfab9fe8553c6c9518ae30b7",
+    "captured_at": "2026-10-20T19:44:55.274Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1005,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 650,
+        "scrollHeight": 650
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-1180.png",
+    "sha256": "486ff100a1f67a1ff819393a1389c2882055092f0cd512ffd9292236c945e297",
+    "captured_at": "2026-10-20T19:44:55.355Z",
+    "route": "mock/beat-map.html?state=music-beats-failed",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1005,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 650,
+        "scrollHeight": 650
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-unreadable-1440.png",
+    "sha256": "054583573ffe7b5d0c66e3452803a6f0c16baa9ff5889e36a2b92fde6bad59d1",
+    "captured_at": "2026-10-20T19:44:56.760Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 980,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 625,
+        "scrollHeight": 625
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-unreadable-1440.png",
+    "sha256": "b9fec0d6ac0c3ba78ed7262906018422db22e48a39e7e78f8da6a82f9827e52d",
+    "captured_at": "2026-10-20T19:44:56.854Z",
+    "route": "mock/beat-map.html?state=music-beats-failed-unreadable",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 980,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 625,
+        "scrollHeight": 625
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-unreadable-1180.png",
+    "sha256": "2d73eef666327d3a7ad745c5c032b3f07300d13fc8f28d27afceb44a13aefffc",
+    "captured_at": "2026-10-20T19:44:56.974Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1000,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 645,
+        "scrollHeight": 645
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-unreadable-1180.png",
+    "sha256": "1a4702e5b5dc481082f5f4a21a2ccf33dd90a44d348944b4784c1870ead1bd34",
+    "captured_at": "2026-10-20T19:44:57.033Z",
+    "route": "mock/beat-map.html?state=music-beats-failed-unreadable",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1000,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 645,
+        "scrollHeight": 645
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-unknown-1440.png",
+    "sha256": "e1debbc14d9bad453aea90a7da193ef78614aeecbead4874065720fd6e8063e4",
+    "captured_at": "2026-10-20T19:44:58.410Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1025,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 670,
+        "scrollHeight": 670
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-unknown-1440.png",
+    "sha256": "8f71c2bd8e3e70d9e3757c898536b615ded4d3833fdadceaebd8fb02dc9fcde6",
+    "captured_at": "2026-10-20T19:44:58.519Z",
+    "route": "mock/beat-map.html?state=music-beats-failed-unknown",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1025,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 670,
+        "scrollHeight": 670
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-unknown-1180.png",
+    "sha256": "3de372f04285997a66d5932194f3716c6f6da6f8b18e8a6b5cf82520b8644f6e",
+    "captured_at": "2026-10-20T19:44:58.641Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1025,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 670,
+        "scrollHeight": 670
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-unknown-1180.png",
+    "sha256": "e4ae3ae3f81a84de401b915fbd1a541b40f9cbed2f6e983e345e099f723e8837",
+    "captured_at": "2026-10-20T19:44:58.705Z",
+    "route": "mock/beat-map.html?state=music-beats-failed-unknown",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1025,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 670,
+        "scrollHeight": 670
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-tags-failed-1440.png",
+    "sha256": "dcbd95fec711dd7682ea8fa2c6c87daae17d59e499e9243d674759f3c54fa8c9",
+    "captured_at": "2026-10-20T19:45:00.375Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1018,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 663,
+        "scrollHeight": 663
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-tags-failed-1440.png",
+    "sha256": "3a99ea899b4ec980e49863547cbc26d4211778da52965c658ae6d36250daf98b",
+    "captured_at": "2026-10-20T19:45:00.464Z",
+    "route": "mock/beat-map.html?state=music-tags-failed",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1018,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 663,
+        "scrollHeight": 663
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-tags-failed-1180.png",
+    "sha256": "13e602dddb68ff6451b261b0ce3a2099189e6b1e5e2921d2fb2ad207b806d9ca",
+    "captured_at": "2026-10-20T19:45:00.595Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1018,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 663,
+        "scrollHeight": 663
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-tags-failed-1180.png",
+    "sha256": "64f345bf9b03735b296934a4ced3c89c5d6a505a8c55b13c9949de4dc10160ab",
+    "captured_at": "2026-10-20T19:45:00.658Z",
+    "route": "mock/beat-map.html?state=music-tags-failed",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1018,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 663,
+        "scrollHeight": 663
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-filtered-1440.png",
+    "sha256": "1a0296712ff8594b222d383fdc17d1fcc31fd7ede455264bba9c92dcba35eb97",
+    "captured_at": "2026-10-20T19:45:02.258Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-filtered-1440.png",
+    "sha256": "fc47933f2600e936609511b4d86f3e8c254df773b118d3b615db40b68d76346d",
+    "captured_at": "2026-10-20T19:45:02.368Z",
+    "route": "mock/beat-map.html?state=music-filtered",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-filtered-1180.png",
+    "sha256": "bfe76e5b85b7f1c6bac29cb40cb185fff4c7f7a2a719ecd44142bdaf21a86955",
+    "captured_at": "2026-10-20T19:45:02.525Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-filtered-1180.png",
+    "sha256": "c961da5bab7586d62cae19b0e83eeaf136f6e28fe6dc189245416f408268efab",
+    "captured_at": "2026-10-20T19:45:02.603Z",
+    "route": "mock/beat-map.html?state=music-filtered",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-filter-empty",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-filter-empty-1440.png",
+    "sha256": "f71eac9fb5da75fca82d0d363d00698e836b687b9c38c68341562e4e328ac580",
+    "captured_at": "2026-10-20T19:45:04.419Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": null
+    }
+  },
+  {
+    "name": "music-filter-empty",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-filter-empty-1440.png",
+    "sha256": "306e6340133e8210e8219554f4b4e07de40532838ccb53282f9e1db064190da7",
+    "captured_at": "2026-10-20T19:45:04.541Z",
+    "route": "mock/beat-map.html?state=music-filter-empty",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": null
+    }
+  },
+  {
+    "name": "music-filter-empty",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-filter-empty-1180.png",
+    "sha256": "1613730cf1b2da3ee3c1832c9b72ed69d5da51846ab2e1a2bb3c2a5f0301f294",
+    "captured_at": "2026-10-20T19:45:04.751Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": null
+    }
+  },
+  {
+    "name": "music-filter-empty",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-filter-empty-1180.png",
+    "sha256": "384a513d847122b125a8fc57bdd656474b11ce57f49b02989d19f6f26e569076",
+    "captured_at": "2026-10-20T19:45:04.839Z",
+    "route": "mock/beat-map.html?state=music-filter-empty",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": null
+    }
+  },
+  {
+    "name": "real-normal",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-1440.png",
+    "sha256": "ee86ca72252f635be5e034b4095cba9b3001204c264abfc99f346e6213e233a1",
+    "captured_at": "2026-10-20T19:46:17.005Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "real-normal",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-1180.png",
+    "sha256": "61e0b7cd0e06b029ed10eb5c269c9e7c4d85a3162c1e472e7ff2ce2f5c8d8768",
+    "captured_at": "2026-10-20T19:46:17.115Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "real-normal",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-430.png",
+    "sha256": "4fd3fbe0218958a100502454d7339dde60000fec89a7fd6820e7158296effcd8",
+    "captured_at": "2026-10-20T19:46:17.189Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "real-normal",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-real-normal-430-open.png",
+    "sha256": "e35c8ae5b6752141d8fdb983f61659dec242083f777d7103530bff736d70d8be",
+    "captured_at": "2026-10-20T19:46:17.340Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-analyzing-1440.png",
+    "sha256": "80b283bc965fb8f82a9bba9cdb3af9c44924b1ae6fe3f709d9e271fffd29a94b",
+    "captured_at": "2026-10-20T19:47:09.958Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 350,
+        "scrollHeight": 350
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-analyzing-1440.png",
+    "sha256": "aecc7b4d40738b3685eec6dbd8acd17409b4d162f4678922cd2c716d465e8576",
+    "captured_at": "2026-10-20T19:47:10.119Z",
+    "route": "mock/beat-map.html?state=music-beats-analyzing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 350,
+        "scrollHeight": 350
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-analyzing-1180.png",
+    "sha256": "c3a568c926065b98127da7bd3d79c58cd65fd56ec2e3cd5631d65f0a17b8ac76",
+    "captured_at": "2026-10-20T19:47:10.264Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 350,
+        "scrollHeight": 350
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-analyzing-1180.png",
+    "sha256": "7908541ee0c47bf0b7c8f588a33524c601cccc7f05ddc99020822fd04e6e487e",
+    "captured_at": "2026-10-20T19:47:10.372Z",
+    "route": "mock/beat-map.html?state=music-beats-analyzing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 350,
+        "scrollHeight": 350
+      }
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-projection-1440.png",
+    "sha256": "bf5bc1263199df4eda286214698fb1a0d10fa1d4b25f0d796a306996e1b61652",
+    "captured_at": "2026-10-20T19:49:17.708Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-real-queued-projection-1440.png",
+    "sha256": "4de7dfa98c9836db9d46edcfdb0b0cd09a3248807485d7ff6243aa6c76730a58",
+    "captured_at": "2026-10-20T19:49:17.987Z",
+    "route": "mock/beat-map.html?state=real-queued-projection",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-projection-1180.png",
+    "sha256": "11fc09786ad8a4f3a2c7856ce7f96d40a5f1f67e1d111ae191380da277524748",
+    "captured_at": "2026-10-20T19:49:18.129Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-real-queued-projection-1180.png",
+    "sha256": "b650353aad2247692653590cc0ebeff6c7dddce6041afb0982db909366d3e4a9",
+    "captured_at": "2026-10-20T19:49:18.214Z",
+    "route": "mock/beat-map.html?state=real-queued-projection",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-projection-1440.png",
+    "sha256": "ee86ca72252f635be5e034b4095cba9b3001204c264abfc99f346e6213e233a1",
+    "captured_at": "2026-10-20T19:49:20.306Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-real-normal-projection-1440.png",
+    "sha256": "930e561519aff7a80b273d339760a2d9318a3ac357141640025c3e78bddeaff7",
+    "captured_at": "2026-10-20T19:49:20.533Z",
+    "route": "mock/beat-map.html?state=real-normal-projection",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-projection-1180.png",
+    "sha256": "324bcdee7164c81239a28fdf7603f16098a34899d30c215d6d20b2e67c20761d",
+    "captured_at": "2026-10-20T19:49:20.800Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-real-normal-projection-1180.png",
+    "sha256": "4c87f6f230949c9fe298932204eabdfaa990d0879131b1a822e388d5241a6590",
+    "captured_at": "2026-10-20T19:49:20.970Z",
+    "route": "mock/beat-map.html?state=real-normal-projection",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-430.png",
+    "sha256": "d3074aa2907dd44cf972352c629e4a5faf56a1f97db137420626656a925fa8c1",
+    "captured_at": "2026-10-20T19:53:14.881Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-430.png",
+    "sha256": "26bd6e778791525e0f2f693b7f3d20e4ecff6afefa5b5c6a323cbbd838b52b9a",
+    "captured_at": "2026-10-20T19:53:15.129Z",
+    "route": "mock/beat-map.html?state=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-430-open.png",
+    "sha256": "939cb363a19ddab3f0478693aebe4f40c7dbf28f3db649d8ea521cb4198c8178",
+    "captured_at": "2026-10-20T19:53:15.670Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-430-open.png",
+    "sha256": "5fd112843cf0b84b02a1b2065c2dfb7e4a47cb0bf04417f104ef4594f0bf60ee",
+    "captured_at": "2026-10-20T19:53:15.826Z",
+    "route": "mock/beat-map.html?state=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-intro-430.png",
+    "sha256": "ce8bc51d62a6e734827a6ee2e564c5ae33d9e592bcb3bbf1dbbed5da2563280d",
+    "captured_at": "2026-10-20T19:53:35.693Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-intro-430.png",
+    "sha256": "5f3ca631189b37c0084fe23ecad3e64350abf90ae1607a5b7b80d6c7ed011fbb",
+    "captured_at": "2026-10-20T19:53:35.906Z",
+    "route": "mock/beat-map.html?state=music-intro",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-intro-430-open.png",
+    "sha256": "e4ed8eea8b4c401148327528637df5ce7904c8013737a381c11ef6c43c1fbb2a",
+    "captured_at": "2026-10-20T19:53:36.635Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 689,
+        "scrollHeight": 689
+      }
+    }
+  },
+  {
+    "name": "music-intro",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-intro-430-open.png",
+    "sha256": "ada53255bc571adc95046d08c0acf2a88db1fb6f231e9bae56e8f912783df16e",
+    "captured_at": "2026-10-20T19:53:36.704Z",
+    "route": "mock/beat-map.html?state=music-intro",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 689,
+        "scrollHeight": 689
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-end-430.png",
+    "sha256": "e93a3f15276990d80771c5f21fab72ecb0c4a83d2533aca1a1bb82149d1ccf9e",
+    "captured_at": "2026-10-20T19:53:44.933Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-end-430.png",
+    "sha256": "9559d78fa01b6ede4b290c1fcde5a720b62e83b7053613c994497ae0286a8da4",
+    "captured_at": "2026-10-20T19:53:45.288Z",
+    "route": "mock/beat-map.html?state=music-end",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-end-430-open.png",
+    "sha256": "d090a85a21bebbbc7bfe4d0915e7f7f8feb4da6fc6e4545bc2cb1ab860cc0d3a",
+    "captured_at": "2026-10-20T19:53:45.703Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 708,
+        "scrollHeight": 708
+      }
+    }
+  },
+  {
+    "name": "music-end",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-end-430-open.png",
+    "sha256": "83eb83d707a9906a345f48b98858fdaad9106e2601a57806f66cebda92615fd3",
+    "captured_at": "2026-10-20T19:53:45.808Z",
+    "route": "mock/beat-map.html?state=music-end",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 708,
+        "scrollHeight": 708
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-queued-430.png",
+    "sha256": "3713738d26c4af77a23bd08290126568df8bdd2bc1ea6fecb3844a71dbed9f9b",
+    "captured_at": "2026-10-20T19:53:50.601Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-queued-430.png",
+    "sha256": "3277769cffee95cdbda5d019f84c07faa394b9873d0f1bbf57359e8f851d4b1d",
+    "captured_at": "2026-10-20T19:53:50.832Z",
+    "route": "mock/beat-map.html?state=music-beats-queued",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-beats-queued-430-open.png",
+    "sha256": "6a8f459260d88c5b082d499f9e13cc2b75fa9d71b23b3a45ba1bd71b407cd704",
+    "captured_at": "2026-10-20T19:53:51.107Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "music-beats-queued",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-beats-queued-430-open.png",
+    "sha256": "23515772c32ba2f542b69958f3e06f0345b8cfec3d452166073c4183276c0160",
+    "captured_at": "2026-10-20T19:53:51.241Z",
+    "route": "mock/beat-map.html?state=music-beats-queued",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-analyzing-430.png",
+    "sha256": "cbb14e5f59e1be564fa8caf38419562b85aa5ec090a7c8fbf1237d5d8e0bd5dd",
+    "captured_at": "2026-10-20T19:53:57.019Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-analyzing-430.png",
+    "sha256": "f98121ddb91988cd72f366d7d7d567ae1dfe27e88f046105d9bd567e50243ba4",
+    "captured_at": "2026-10-20T19:53:57.246Z",
+    "route": "mock/beat-map.html?state=music-beats-analyzing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-beats-analyzing-430-open.png",
+    "sha256": "12145bf918a3ef1f40d9f05d2f14f15e84c3506e9cab3d7bdedd093798bfb6f5",
+    "captured_at": "2026-10-20T19:53:58.304Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 350,
+        "scrollHeight": 350
+      }
+    }
+  },
+  {
+    "name": "music-beats-analyzing",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-beats-analyzing-430-open.png",
+    "sha256": "18ce979d8509b8e2ab3c281e63cdd0532dd73f648dcb075e1607143a1010b028",
+    "captured_at": "2026-10-20T19:53:58.843Z",
+    "route": "mock/beat-map.html?state=music-beats-analyzing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 350,
+        "scrollHeight": 350
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-430.png",
+    "sha256": "56179e83b5b1013f9181b47605e8fad1337bb161c6fec4522d98764fdccea796",
+    "captured_at": "2026-10-20T19:54:06.136Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-430.png",
+    "sha256": "6bbe82318dd98e970edeff2de82c7533bf29c0d114027b119a66dd2cc8877b48",
+    "captured_at": "2026-10-20T19:54:06.238Z",
+    "route": "mock/beat-map.html?state=music-beats-failed",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-430-open.png",
+    "sha256": "050f0c8e23d2d574588f34e114994924fd79f44a8175254db78e9f65db887e67",
+    "captured_at": "2026-10-20T19:54:06.517Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 650,
+        "scrollHeight": 650
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-430-open.png",
+    "sha256": "2bced4bdb936056ce9f7cd6992abf2b7a826f4a91822ab2384a5601b4906fa95",
+    "captured_at": "2026-10-20T19:54:06.640Z",
+    "route": "mock/beat-map.html?state=music-beats-failed",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 650,
+        "scrollHeight": 650
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-unreadable-430.png",
+    "sha256": "56179e83b5b1013f9181b47605e8fad1337bb161c6fec4522d98764fdccea796",
+    "captured_at": "2026-10-20T19:54:17.441Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-unreadable-430.png",
+    "sha256": "6bbe82318dd98e970edeff2de82c7533bf29c0d114027b119a66dd2cc8877b48",
+    "captured_at": "2026-10-20T19:54:17.832Z",
+    "route": "mock/beat-map.html?state=music-beats-failed-unreadable",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-unreadable-430-open.png",
+    "sha256": "11c59fa47a087539482c8c29c7f4aff609c5da656551a900215e4fb3d7fc59b9",
+    "captured_at": "2026-10-20T19:54:18.012Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 625,
+        "scrollHeight": 625
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unreadable",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-unreadable-430-open.png",
+    "sha256": "35cd28a2e8122255182bdf1e285a2b9c55cd3c482a347247968454fe117745a0",
+    "captured_at": "2026-10-20T19:54:18.325Z",
+    "route": "mock/beat-map.html?state=music-beats-failed-unreadable",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 625,
+        "scrollHeight": 625
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-unknown-430.png",
+    "sha256": "56179e83b5b1013f9181b47605e8fad1337bb161c6fec4522d98764fdccea796",
+    "captured_at": "2026-10-20T19:54:26.365Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-unknown-430.png",
+    "sha256": "6bbe82318dd98e970edeff2de82c7533bf29c0d114027b119a66dd2cc8877b48",
+    "captured_at": "2026-10-20T19:54:26.476Z",
+    "route": "mock/beat-map.html?state=music-beats-failed-unknown",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-beats-failed-unknown-430-open.png",
+    "sha256": "6218c62dd9844b4e122ff98541c238188eafb0bd58674752e1b4eb0822dbd81c",
+    "captured_at": "2026-10-20T19:54:26.747Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 650,
+        "scrollHeight": 650
+      }
+    }
+  },
+  {
+    "name": "music-beats-failed-unknown",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-beats-failed-unknown-430-open.png",
+    "sha256": "bad2cfae025433336d43a77b12cd03511d57c78e0c4552f2e8df7fead5d79749",
+    "captured_at": "2026-10-20T19:54:26.975Z",
+    "route": "mock/beat-map.html?state=music-beats-failed-unknown",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 650,
+        "scrollHeight": 650
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-tags-failed-430.png",
+    "sha256": "81fceb1661aeccd71961e8ffeabe298c071fa860b8f1588f7dca1d71256cb1a6",
+    "captured_at": "2026-10-20T19:54:34.087Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-tags-failed-430.png",
+    "sha256": "41d62bfaf3c56037e6e4fd6b49019b3bce44ec2f833f9f77c6ca790de254f201",
+    "captured_at": "2026-10-20T19:54:34.279Z",
+    "route": "mock/beat-map.html?state=music-tags-failed",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-tags-failed-430-open.png",
+    "sha256": "a086b344e907cd42dfb1f95e383559bfbecc65f76528c33673883ae292aea47b",
+    "captured_at": "2026-10-20T19:54:34.571Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 663,
+        "scrollHeight": 663
+      }
+    }
+  },
+  {
+    "name": "music-tags-failed",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-tags-failed-430-open.png",
+    "sha256": "de944c4bf25d90c41c0007f10065a7ae1cab20f060411d03d64a0ac66210d5cc",
+    "captured_at": "2026-10-20T19:54:34.772Z",
+    "route": "mock/beat-map.html?state=music-tags-failed",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 663,
+        "scrollHeight": 663
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-filtered-430.png",
+    "sha256": "86043d9a2df312511968f606146e260ab263177cf6835398e0d7e79ff18392e2",
+    "captured_at": "2026-10-20T19:54:39.365Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-filtered-430.png",
+    "sha256": "90c8eeec988acbcf6bba223c72d79dbda85f2603e3119923d4aea2cbb09777cb",
+    "captured_at": "2026-10-20T19:54:39.589Z",
+    "route": "mock/beat-map.html?state=music-filtered",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-filtered-430-open.png",
+    "sha256": "939cb363a19ddab3f0478693aebe4f40c7dbf28f3db649d8ea521cb4198c8178",
+    "captured_at": "2026-10-20T19:54:40.436Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-filtered",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-filtered-430-open.png",
+    "sha256": "5fd112843cf0b84b02a1b2065c2dfb7e4a47cb0bf04417f104ef4594f0bf60ee",
+    "captured_at": "2026-10-20T19:54:40.771Z",
+    "route": "mock/beat-map.html?state=music-filtered",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-filter-empty",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-filter-empty-430.png",
+    "sha256": "6b5d81864fed303751e7a0c89d39fe72fbebfb19811ce262b44967eafccb9288",
+    "captured_at": "2026-10-20T19:54:48.646Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": null
+    }
+  },
+  {
+    "name": "music-filter-empty",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-filter-empty-430.png",
+    "sha256": "eaf81c457b23fc6f270d7171430173fb72009be1df35111afc509e3449505a6c",
+    "captured_at": "2026-10-20T19:54:48.837Z",
+    "route": "mock/beat-map.html?state=music-filter-empty",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": null
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-queued-projection-430.png",
+    "sha256": "3713738d26c4af77a23bd08290126568df8bdd2bc1ea6fecb3844a71dbed9f9b",
+    "captured_at": "2026-10-20T19:54:53.336Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-real-queued-projection-430.png",
+    "sha256": "3277769cffee95cdbda5d019f84c07faa394b9873d0f1bbf57359e8f851d4b1d",
+    "captured_at": "2026-10-20T19:54:53.520Z",
+    "route": "mock/beat-map.html?state=real-queued-projection",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-real-queued-projection-430-open.png",
+    "sha256": "6a8f459260d88c5b082d499f9e13cc2b75fa9d71b23b3a45ba1bd71b407cd704",
+    "captured_at": "2026-10-20T19:54:53.959Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "real-queued-projection",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-real-queued-projection-430-open.png",
+    "sha256": "23515772c32ba2f542b69958f3e06f0345b8cfec3d452166073c4183276c0160",
+    "captured_at": "2026-10-20T19:54:54.094Z",
+    "route": "mock/beat-map.html?state=real-queued-projection",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 358,
+        "scrollHeight": 358
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-real-normal-projection-430.png",
+    "sha256": "307c674e5d4c5f9b3c577739dffd874f3a153b9c2e30ac28f89694908576cc6e",
+    "captured_at": "2026-10-20T19:54:57.395Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-real-normal-projection-430.png",
+    "sha256": "26bd6e778791525e0f2f693b7f3d20e4ecff6afefa5b5c6a323cbbd838b52b9a",
+    "captured_at": "2026-10-20T19:54:57.528Z",
+    "route": "mock/beat-map.html?state=real-normal-projection",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-real-normal-projection-430-open.png",
+    "sha256": "49b7f33de6621949b373b10a3b4832121a55b1465d5c768604ddbd77c3b73b4f",
+    "captured_at": "2026-10-20T19:54:57.772Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "real-normal-projection",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-real-normal-projection-430-open.png",
+    "sha256": "5fd112843cf0b84b02a1b2065c2dfb7e4a47cb0bf04417f104ef4594f0bf60ee",
+    "captured_at": "2026-10-20T19:54:57.892Z",
+    "route": "mock/beat-map.html?state=real-normal-projection",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-playing-1440.png",
+    "sha256": "02786f3c37bd5351e695207d72d5fba13c51f394f9e7f8dadd312cacb937de7a",
+    "captured_at": "2026-10-20T19:59:42.732Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "animation_clock": "frozen playback sample at 88.4s",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-playing-1440.png",
+    "sha256": "b8de65664dec1ce5e0fc62089a4008557d57e7a32da5c1d4e480737d91d7e29d",
+    "captured_at": "2026-10-20T19:59:42.913Z",
+    "route": "mock/beat-map.html?state=music-playing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "animation_clock": "frozen playback sample at 88.4s",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-playing-1180.png",
+    "sha256": "8a4d4952ee69a5559b719844bf2ff81d526db3bda1fa3b1ff6fb2e5b31eae2c6",
+    "captured_at": "2026-10-20T19:59:43.085Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "animation_clock": "frozen playback sample at 88.4s",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-playing-1180.png",
+    "sha256": "9b7271edbeb7294660c8b9ea92d9250e048c76059d2e410b85705ff7a7e648c7",
+    "captured_at": "2026-10-20T19:59:43.236Z",
+    "route": "mock/beat-map.html?state=music-playing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "animation_clock": "frozen playback sample at 88.4s",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-music-playing-430.png",
+    "sha256": "5bcb3f32ed708ec6158a6a9cc34aac59c3a83d2fb0edd691dff12320c745ecdd",
+    "captured_at": "2026-10-20T19:59:43.432Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "animation_clock": "frozen playback sample at 88.4s",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "mock",
+    "file": "mock-music-playing-430.png",
+    "sha256": "26bd6e778791525e0f2f693b7f3d20e4ecff6afefa5b5c6a323cbbd838b52b9a",
+    "captured_at": "2026-10-20T19:59:43.527Z",
+    "route": "mock/beat-map.html?state=music-playing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "animation_clock": "frozen playback sample at 88.4s",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 0,
+        "scrollHeight": 0
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-music-playing-430-open.png",
+    "sha256": "4e7bb57ef9b09a712ac285c3770d041114a78b4bb5356afac8552e41188d96d0",
+    "captured_at": "2026-10-20T19:59:43.838Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "animation_clock": "frozen playback sample at 88.4s",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "mock",
+    "file": "mock-music-playing-430-open.png",
+    "sha256": "83e4fe31abc81b49ec97e8861154e0c9ebd676ab8f27291bef8a3d577f199d25",
+    "captured_at": "2026-10-20T19:59:43.911Z",
+    "route": "mock/beat-map.html?state=music-playing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "animation_clock": "frozen playback sample at 88.4s",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430,
+      "rail": {
+        "height": 711,
+        "scrollHeight": 711
+      }
+    }
+  },
+  {
+    "name": "music-playing",
+    "kind": "implementation",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "file": "implementation-music-playing-rail-2x.png",
+    "sha256": "2d88ffb69a2b515aa74f0e30e909a67714fc740f73c1d5e4c20829d86f93833e",
+    "captured_at": "2026-10-20T19:59:45.868Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local"
+  },
+  {
+    "name": "music-playing",
+    "kind": "mock",
+    "width": 1440,
+    "height": 960,
+    "deviceScaleFactor": 2,
+    "file": "mock-music-playing-rail-2x.png",
+    "sha256": "85c23e17222e2cbd216451176fe313e367024db9ceab60d33fac07008c53978e",
+    "captured_at": "2026-10-20T19:59:46.038Z",
+    "route": "mock/beat-map.html?state=music-playing",
+    "browser": "Chrome",
+    "font_mode": "fallback-local"
+  },
+  {
+    "name": "live-final-queued",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-live-final-queued-1440.png",
+    "sha256": "5aada71b9e0b880d3dbafd0ff7eacc5e8adfcc00216993a4d85c67f20dcee0fe",
+    "captured_at": "2026-10-20T20:18:35.950Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 960,
+      "scrollWidth": 1440
+    }
+  },
+  {
+    "name": "live-final-queued",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-live-final-queued-1180.png",
+    "sha256": "2edbd0cea1ded5505292cbc99f905820055bfb0956033914e5cb5c22da61b5bd",
+    "captured_at": "2026-10-20T20:18:36.146Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 860,
+      "scrollWidth": 1180
+    }
+  },
+  {
+    "name": "live-final-queued",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-live-final-queued-430.png",
+    "sha256": "3713738d26c4af77a23bd08290126568df8bdd2bc1ea6fecb3844a71dbed9f9b",
+    "captured_at": "2026-10-20T20:18:36.325Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430
+    }
+  },
+  {
+    "name": "live-final-queued",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-live-final-queued-430-open.png",
+    "sha256": "9d8b78d1d3761681fce31e503e3387a373f6c79020dcd7f6c11b709454b8d154",
+    "captured_at": "2026-10-20T20:18:36.495Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430
+    }
+  },
+  {
+    "name": "live-final-normal",
+    "width": 1440,
+    "height": 960,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-live-final-normal-1440.png",
+    "sha256": "ee86ca72252f635be5e034b4095cba9b3001204c264abfc99f346e6213e233a1",
+    "captured_at": "2026-10-20T20:29:00.268Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1440,
+      "height": 960,
+      "scrollHeight": 1066,
+      "scrollWidth": 1440
+    }
+  },
+  {
+    "name": "live-final-normal",
+    "width": 1180,
+    "height": 860,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-live-final-normal-1180.png",
+    "sha256": "324bcdee7164c81239a28fdf7603f16098a34899d30c215d6d20b2e67c20761d",
+    "captured_at": "2026-10-20T20:29:00.353Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 1180,
+      "height": 860,
+      "scrollHeight": 1066,
+      "scrollWidth": 1180
+    }
+  },
+  {
+    "name": "live-final-normal",
+    "width": 430,
+    "height": 932,
+    "open": false,
+    "kind": "implementation",
+    "file": "implementation-live-final-normal-430.png",
+    "sha256": "307c674e5d4c5f9b3c577739dffd874f3a153b9c2e30ac28f89694908576cc6e",
+    "captured_at": "2026-10-20T20:29:00.422Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430
+    }
+  },
+  {
+    "name": "live-final-normal",
+    "width": 430,
+    "height": 932,
+    "open": true,
+    "kind": "implementation",
+    "file": "implementation-live-final-normal-430-open.png",
+    "sha256": "49b7f33de6621949b373b10a3b4832121a55b1465d5c768604ddbd77c3b73b4f",
+    "captured_at": "2026-10-20T20:29:00.547Z",
+    "route": "#view=music",
+    "browser": "Chrome",
+    "font_mode": "fallback-local",
+    "measure": {
+      "width": 430,
+      "height": 932,
+      "scrollHeight": 932,
+      "scrollWidth": 430
+    }
+  }
+]

@@ -1,0 +1,317 @@
+{
+  "states": {
+    "music-beats-queued": {
+      "texts": [
+        {
+          "text": "音乐库",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "从文件夹导入",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "粘贴分享链接导入",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "导入",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "每首只下载一次，之后都用本机这份。",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "全部",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "3",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "汽水音乐",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "网易云音乐",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "本机文件",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-filters"
+        },
+        {
+          "text": "▶",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "CRUSH VIBE",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "未知歌手",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "本机文件 · 分析中",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "1:36",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "▶",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "Turn Back Time",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "Rich Edwards / Emelie",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "网易云音乐 · 排队中",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "3:10",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "▶",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "Fever Pitch",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "Richz",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "汽水音乐 · 排队中",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "2:15",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "×",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "排队等分析，前面还有",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-status"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-status"
+        },
+        {
+          "text": "首。",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-status"
+        },
+        {
+          "text": "▶",
+          "kind": "text",
+          "data": false,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "0:00 / 3:10",
+          "kind": "text",
+          "data": true,
+          "design_id": "R223-BEAT-transport"
+        },
+        {
+          "text": "Turn Back Time",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "Rich Edwards / Emelie",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "来源",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "网易云音乐",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "打开原页面",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "时长",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "3:10",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "导入时间",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "2026/10/20 00:52",
+          "kind": "text",
+          "data": true,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "粘贴汽水音乐或网易云音乐的分享文字",
+          "kind": "placeholder",
+          "data": false,
+          "design_id": "R208-MUSIC-import"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-MUSIC-list"
+        },
+        {
+          "text": "关闭",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-MUSIC-rail"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R223-BEAT-overview"
+        },
+        {
+          "text": "播放",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R223-BEAT-transport"
+        }
+      ],
+      "ids": [
+        "R208-MUSIC-filters",
+        "R208-MUSIC-import",
+        "R208-MUSIC-list",
+        "R208-MUSIC-rail",
+        "R223-BEAT-overview",
+        "R223-BEAT-status",
+        "R223-BEAT-transport"
+      ]
+    }
+  }
+}

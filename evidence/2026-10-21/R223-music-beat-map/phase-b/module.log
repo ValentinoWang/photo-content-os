@@ -1,0 +1,3 @@
+$ node tests/test_r223_beat_map.mjs
+exit 0
+PASS beat map: signature lifecycle, cuts, fade, offsets, multi-song swap, lane:false, seek, stable overview, formulas, visible swap, no overflow

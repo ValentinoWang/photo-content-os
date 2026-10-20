@@ -1,0 +1,53 @@
+{
+  "result": "PASS",
+  "port": 64306,
+  "all_three_reanalyzed": true,
+  "states": [
+    "music-beats-queued",
+    "music-beats-analyzing",
+    "music"
+  ],
+  "queue_start": [
+    {
+      "title": "CRUSH VIBE",
+      "beat": "analyzing",
+      "tags": "analyzing"
+    },
+    {
+      "title": "Turn Back Time",
+      "beat": "queued",
+      "tags": "queued"
+    },
+    {
+      "title": "Fever Pitch",
+      "beat": "queued",
+      "tags": "queued"
+    }
+  ],
+  "done": [
+    {
+      "title": "CRUSH VIBE",
+      "beat": "done",
+      "tags": "done",
+      "bpm": 143,
+      "meter": 4,
+      "sections": 9
+    },
+    {
+      "title": "Turn Back Time",
+      "beat": "done",
+      "tags": "done",
+      "bpm": 115,
+      "meter": 4,
+      "sections": 10
+    },
+    {
+      "title": "Fever Pitch",
+      "beat": "done",
+      "tags": "done",
+      "bpm": 125,
+      "meter": 4,
+      "sections": 10
+    }
+  ]
+}

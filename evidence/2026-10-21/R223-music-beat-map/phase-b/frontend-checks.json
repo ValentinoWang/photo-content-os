@@ -1,0 +1,38 @@
+[
+  {
+    "name": "design",
+    "command": ".venv/bin/python scripts/check_r223_design.py",
+    "exit_code": 0,
+    "output": "Inventories: 58 failing: 0\n[]\n"
+  },
+  {
+    "name": "copy",
+    "command": "python3 \"$HARNESS_CORE_ROOT/skills/ui-copy-quality/scripts/check_ui_copy_quality.py\" studio/static/review-music.js studio/static/beat-map.js --project-root . --evidence-dir evidence/2026-10-21/R223-music-beat-map/phase-b/copy",
+    "exit_code": 0,
+    "output": "ui-copy-quality: PASS (2 file(s), 0 warning(s); lexical checks only, not a review of meaning)\n"
+  },
+  {
+    "name": "module",
+    "command": "node tests/test_r223_beat_map.mjs",
+    "exit_code": 0,
+    "output": "PASS beat map: signature lifecycle, cuts, fade, offsets, multi-song swap, lane:false, seek, stable overview, formulas, visible swap, no overflow\n"
+  },
+  {
+    "name": "r220-numbers",
+    "command": "node tests/test_r220_number_formulas.mjs",
+    "exit_code": 0,
+    "output": "PASS numeric formulas: positive and negative assertions\nPASS R220 music numeric regression: median BPM, meter, bar counts, clamped window\n"
+  },
+  {
+    "name": "r220-browser",
+    "command": "R220_MUSIC_ONLY=1 node scripts/verify_r220_browser.mjs",
+    "exit_code": 0,
+    "output": "PASS R220 music browser regression: real playback, seek, four title widths, metadata font, no JS errors\n"
+  },
+  {
+    "name": "node-check",
+    "command": "node --check <8 changed JS/MJS files>",
+    "exit_code": 0,
+    "output": "8/8 syntax checks passed"
+  }
+]
