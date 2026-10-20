@@ -991,8 +991,13 @@ class StudioApplication:
                             result = {'job': app.review_jobs.import_music(value)}
                         elif len(segments) == 5 and segments[2] == 'music' and segments[4] == 'reanalyze':
                             if value.get('part') not in ('beat', 'tags'):
-                                raise MusicError('分析部分必须是 beat 或 tags')
-                            result = app.media_review.analysis_queue.enqueue(segments[3], value['part'])
+                                self._json(HTTPStatus.BAD_REQUEST, _error('music_part_invalid', '分析部分必须是 beat 或 tags'))
+                                return
+                            queue = app.media_review.analysis_queue
+                            if not any(track['file_sha256'] == segments[3] for track in queue.library.list_tracks()):
+                                self._json(HTTPStatus.NOT_FOUND, _error('music_track_not_found', '曲目不存在'))
+                                return
+                            result = queue.enqueue(segments[3], value['part'])
                         elif len(segments) == 5 and segments[2] == 'pieces' and segments[4] == 'decisions':
                             result = app.media_review.decide(segments[3], value)
                         elif len(segments) == 5 and segments[2] == 'pieces' and segments[4] == 'jobs':

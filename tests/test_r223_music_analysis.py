@@ -381,3 +381,54 @@ def test_load_beat_map_unparseable_results(library,contents):
     (library.root/track['file_sha256']/'analysis.json').write_text(contents)
     with pytest.raises(BeatMapUnavailable) as exc:load_beat_map(track['file_sha256'],media_root=library.root.parents[1])
     assert exc.value.code=='result_unreadable'
+
+
+@pytest.mark.parametrize('part,track_exists,token_valid,origin_valid,status,code', [
+    ('other', True, True, True, 400, 'music_part_invalid'),
+    (None, True, True, True, 400, 'music_part_invalid'),
+    ([], True, True, True, 400, 'music_part_invalid'),
+    ('beat', False, True, True, 404, 'music_track_not_found'),
+    ('tags', True, False, True, 403, 'csrf_invalid'),
+    ('beat', True, True, False, 403, 'origin_forbidden'),
+])
+def test_reanalyze_error_contract(library, tmp_path, monkeypatch, part, track_exists,
+                                 token_valid, origin_valid, status, code):
+    from http.server import ThreadingHTTPServer
+    import urllib.error
+    import urllib.request
+    from studio.server import StudioApplication
+    from studio.project_store import ProjectStore
+    from studio.api_contract import build_openapi
+    from jsonschema import validate as validate_schema
+
+    monkeypatch.setenv('LOCAL_MEDIA_ROOT', str(tmp_path))
+    app = StudioApplication(ProjectStore(tmp_path / 'state'))
+    app.media_review = review_for(library)
+    server = ThreadingHTTPServer(('127.0.0.1', 0), app.handler())
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    base = f'http://127.0.0.1:{server.server_address[1]}'
+    identifier = library.list_tracks()[0]['file_sha256'] if track_exists else '0' * 64
+    request = urllib.request.Request(base + f'/api/review/music/{identifier}/reanalyze',
+        data=json.dumps({'part': part}).encode(), headers={
+            'Content-Type': 'application/json',
+            'X-Content-OS-CSRF': app.csrf_token if token_valid else 'invalid-token',
+            'Origin': base if origin_valid else 'https://untrusted.example',
+        })
+    try:
+        with pytest.raises(urllib.error.HTTPError) as exc:
+            urllib.request.urlopen(request)
+        assert exc.value.code == status
+        payload = json.load(exc.value)
+        assert set(payload) == {'ok', 'error'}
+        assert payload['ok'] is False
+        assert set(payload['error']) == {'code', 'message'}
+        assert payload['error']['code'] == code
+        assert payload['error']['message']
+        operation = build_openapi()['paths']['/api/review/music/{trackId}/reanalyze']['post']
+        validate_schema(payload, operation['responses'][str(status)]['content']['application/json']['schema'])
+        assert not app.media_review.analysis_queue.pending
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(5)

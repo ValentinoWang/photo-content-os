@@ -39,7 +39,7 @@
   "visual_contract_ref": {
     "path": "docs/tasks/R220-studio-ia-preview/design-contract.json",
     "entity_id": "r220-visual",
-    "canonical_digest": "e0a794913886d29061bc12e7524ab8029808c00358303b2800620db058171ecc"
+    "canonical_digest": "178e4bb71d9ac6a9f1323ede1ffba4fa5f4a49e1ef5f6ce1499f0a4a33c762f8"
   },
   "affected_entity_digests": [
     {

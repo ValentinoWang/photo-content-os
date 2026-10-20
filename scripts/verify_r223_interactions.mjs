@@ -29,7 +29,11 @@ try{
  }
  {
   const payload=fixture('music'),display=payload.taxonomy.display;display.panel_order.reverse();display.filter_order.reverse();display.panel_title='临时测试标题';payload.taxonomy.sections[0].name='临时测试段名';payload.taxonomy.tag_categories.find(c=>c.id==='genre').name='临时测试组名';
-  const {c,page}=await pageWith(payload);assert.equal(await page.locator('.tg-head').innerText(),display.panel_title);assert.deepEqual(await page.locator('.tg-row').evaluateAll(ns=>ns.map(n=>n.dataset.category)),display.panel_order);assert((await page.locator('.bm-legend').innerText()).includes('临时测试段名'));assert((await page.locator('.tg').innerText()).includes('临时测试组名'));checks.push('taxonomy panel title, group names, section names and order reach the mounted page');await c.close();
+  const {c,page}=await pageWith(payload);
+  const actualOrder=await page.locator('[data-tag]').evaluateAll(ns=>ns.map(n=>n.dataset.tag));
+  const expectedOrder=display.filter_order.flatMap(g=>payload.taxonomy.tag_categories.find(c=>c.id===g).tags.filter(t=>t.status==='active').map(t=>({id:t.id,n:payload.tracks.filter(m=>m.tags.status==='done'&&(m.tags[g]||[]).includes(t.id)).length})).filter(t=>t.n).sort((a,b)=>b.n-a.n).map(t=>t.id));
+  assert.deepEqual(actualOrder,expectedOrder);checks.push('facet order: descending count; equal counts follow taxonomy order');
+  assert.equal(await page.locator('.tg-head').innerText(),display.panel_title);assert.deepEqual(await page.locator('.tg-row').evaluateAll(ns=>ns.map(n=>n.dataset.category)),display.panel_order);assert((await page.locator('.bm-legend').innerText()).includes('临时测试段名'));assert((await page.locator('.tg').innerText()).includes('临时测试组名'));checks.push('taxonomy panel title, group names, section names and order reach the mounted page');await c.close();
  }
  console.log('PASS',checks.length,'music interaction checks');
  if(process.env.R223_EVIDENCE)fs.writeFileSync(process.env.R223_EVIDENCE+'/interactions.json',JSON.stringify({result:'PASS',checks},null,2));

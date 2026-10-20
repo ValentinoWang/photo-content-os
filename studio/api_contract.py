@@ -116,6 +116,27 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
             operation['requestBody'] = {'required': True, 'content': {'video/mp4': {'schema': {'type': 'string', 'format': 'binary'}}}}
             operation['parameters'].append({'name': 'X-Video-Identity', 'in': 'header', 'required': True, 'schema': {'type': 'string'}})
         operation["responses"]["409"] = _response("Revision conflict")
+    if spec['operation_id'] == 'reanalyzeMusic':
+        operation['requestBody']['content']['application/json']['schema'] = {
+            'type': 'object', 'required': ['part'],
+            'properties': {'part': {'type': 'string', 'enum': ['beat', 'tags']}},
+        }
+        operation['responses'].pop('409', None)
+        for status, codes in [('400', ['music_part_invalid']),
+                              ('404', ['music_track_not_found']),
+                              ('403', ['csrf_invalid', 'origin_forbidden'])]:
+            operation['responses'][status] = {
+                'description': 'Music reanalysis error',
+                'content': {'application/json': {'schema': {
+                    'type': 'object', 'required': ['ok', 'error'],
+                    'properties': {
+                        'ok': {'const': False},
+                        'error': {'type': 'object', 'required': ['code', 'message'],
+                                  'properties': {'code': {'type': 'string', 'enum': codes},
+                                                 'message': {'type': 'string'}}},
+                    },
+                }}},
+            }
     return operation
 
 

@@ -1,1867 +1,453 @@
 {
-  "openapi": "3.1.0",
   "info": {
+    "description": "Loopback-only, CSRF-protected studio contract. Upstream login is optional.",
     "title": "Photo Content OS Desktop API",
-    "version": "1.0.0",
-    "description": "Loopback-only, CSRF-protected studio contract. Upstream login is optional."
+    "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "http://127.0.0.1:8765"
-    }
-  ],
+  "openapi": "3.1.0",
   "paths": {
-    "/api/review/assets/{assetId}/preview": {
-      "parameters": [
-        {
-          "name": "assetId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "getAssetPreview",
-        "summary": "Read a derived asset preview",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "206": {
-            "description": "Requested preview byte range",
-            "headers": {
-              "Content-Range": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Accept-Ranges": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "416": {
-            "description": "Invalid or unsatisfiable preview byte range",
-            "headers": {
-              "Content-Range": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Accept-Ranges": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "Range",
-            "in": "header",
-            "required": false,
-            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/review/catalog": {
-      "get": {
-        "operationId": "getReviewCatalog",
-        "summary": "getReviewCatalog",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/review/pieces/{pieceId}/shots": {
-      "parameters": [
-        {
-          "name": "pieceId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "getReviewShots",
-        "summary": "getReviewShots",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/review/pieces/{pieceId}/decisions": {
-      "parameters": [
-        {
-          "name": "pieceId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "saveReviewDecision",
-        "summary": "saveReviewDecision",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/review/pieces/{pieceId}/jobs": {
-      "parameters": [
-        {
-          "name": "pieceId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "runShotSelection",
-        "summary": "runShotSelection",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/review/pieces/{pieceId}/media/{kind}/{mediaId}": {
-      "parameters": [
-        {
-          "name": "pieceId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "kind",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "mediaId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "getReviewMedia",
-        "summary": "getReviewMedia",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "206": {
-            "description": "Requested preview byte range",
-            "headers": {
-              "Content-Range": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Accept-Ranges": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "416": {
-            "description": "Invalid or unsatisfiable preview byte range",
-            "headers": {
-              "Content-Range": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Accept-Ranges": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "Range",
-            "in": "header",
-            "required": false,
-            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/review/music": {
-      "get": {
-        "operationId": "getMusicLibrary",
-        "summary": "getMusicLibrary",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/review/music/{trackId}/audio": {
-      "parameters": [
-        {
-          "name": "trackId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "getMusicAudio",
-        "summary": "getMusicAudio",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "audio/mpeg": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "206": {
-            "description": "Requested preview byte range",
-            "headers": {
-              "Content-Range": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Accept-Ranges": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "audio/mpeg": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "416": {
-            "description": "Invalid or unsatisfiable preview byte range",
-            "headers": {
-              "Content-Range": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Accept-Ranges": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "audio/mpeg": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "Range",
-            "in": "header",
-            "required": false,
-            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/review/music-settings": {
-      "get": {
-        "operationId": "getMusicSettings",
-        "summary": "getMusicSettings",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/review/music/{trackId}/reanalyze": {
-      "parameters": [
-        {
-          "name": "trackId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "reanalyzeMusic",
-        "summary": "Reanalyze beat or tags",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/review/music/import": {
-      "post": {
-        "operationId": "importMusic",
-        "summary": "importMusic",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/review/imports/{jobId}": {
-      "parameters": [
-        {
-          "name": "jobId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "getMusicImport",
-        "summary": "getMusicImport",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/bootstrap": {
-      "get": {
-        "operationId": "getBootstrap",
-        "summary": "Read studio bootstrap state",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/health": {
-      "get": {
-        "operationId": "getHealth",
-        "summary": "Read loopback service health",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/diagnostics": {
-      "get": {
-        "operationId": "getDiagnostics",
-        "summary": "Read cached diagnostics or explicitly rerun the local checks",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "refresh",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "1"
-              ]
-            }
-          }
-        ]
-      }
-    },
-    "/api/settings": {
-      "get": {
-        "operationId": "getSettings",
-        "summary": "Read redacted studio settings",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/settings/analysis-budget": {
-      "get": {
-        "operationId": "getAnalysisBudget",
-        "summary": "Read the effective analysis budget",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "updateAnalysisBudget",
-        "summary": "Update the analysis budget with CAS",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects": {
-      "get": {
-        "operationId": "listProjects",
-        "summary": "List local projects",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "createProject",
-        "summary": "Create a local project",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "getProject",
-        "summary": "Read a project",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "operationId": "updateProject",
-        "summary": "Update a project with CAS",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/inbox-plan": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "previewInboxPlan",
-        "summary": "Preview deterministic inbox batches",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/inbox-plan/confirm": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "confirmInboxPlan",
-        "summary": "Confirm one plan batch and target project",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/video-workflow": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "editLocalVideoWorkflow",
-        "summary": "Edit the identity-bound local video workflow",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/video-return": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "returnLocalVideo",
-        "summary": "Stream an exported video for deterministic checks",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          {
-            "name": "X-Video-Identity",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "video/mp4": {
-              "schema": {
-                "type": "string",
-                "format": "binary"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/video-preview/{candidateId}": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "candidateId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "getLocalVideoPreview",
-        "summary": "Read a checked low-resolution candidate preview",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "206": {
-            "description": "Requested preview byte range",
-            "headers": {
-              "Content-Range": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Accept-Ranges": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "416": {
-            "description": "Invalid or unsatisfiable preview byte range",
-            "headers": {
-              "Content-Range": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Accept-Ranges": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "video/mp4": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "Range",
-            "in": "header",
-            "required": false,
-            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/projects/{projectId}/video-subtitles": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "downloadVideoSubtitles",
-        "summary": "Download the bound SRT",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/x-subrip": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/assets": {
       "get": {
         "operationId": "listAssets",
-        "summary": "Query the structured asset index",
         "responses": {
           "200": {
-            "description": "Successful local response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Successful local response"
           },
           "400": {
-            "description": "Invalid request",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Invalid request"
           }
-        }
+        },
+        "summary": "Query the structured asset index"
       }
     },
     "/api/assets/statistics": {
       "get": {
         "operationId": "getAssetStatistics",
-        "summary": "Read dynamic asset facets",
         "responses": {
           "200": {
-            "description": "Successful local response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Successful local response"
           },
           "400": {
-            "description": "Invalid request",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Invalid request"
           }
-        }
+        },
+        "summary": "Read dynamic asset facets"
       }
     },
     "/api/assets/{assetId}": {
+      "get": {
+        "operationId": "getAsset",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read one structured asset"
+      },
       "parameters": [
         {
-          "name": "assetId",
           "in": "path",
+          "name": "assetId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/bootstrap": {
+      "get": {
+        "operationId": "getBootstrap",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read studio bootstrap state"
+      }
+    },
+    "/api/diagnostics": {
+      "get": {
+        "operationId": "getDiagnostics",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "refresh",
+            "required": false,
+            "schema": {
+              "enum": [
+                "1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read cached diagnostics or explicitly rerun the local checks"
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read loopback service health"
+      }
+    },
+    "/api/projects": {
+      "get": {
+        "operationId": "listProjects",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "List local projects"
+      },
+      "post": {
+        "operationId": "createProject",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Create a local project"
+      }
+    },
+    "/api/projects/{projectId}": {
+      "get": {
+        "operationId": "getProject",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read a project"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
           "required": true,
           "schema": {
             "type": "string"
           }
         }
       ],
-      "get": {
-        "operationId": "getAsset",
-        "summary": "Read one structured asset",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
+      "patch": {
+        "operationId": "updateProject",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
               }
             }
           },
-          "400": {
-            "description": "Invalid request",
+          "required": true
+        },
+        "responses": {
+          "200": {
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
           }
-        }
+        },
+        "summary": "Update a project with CAS"
       }
     },
     "/api/projects/{projectId}/assets": {
       "parameters": [
         {
-          "name": "projectId",
           "in": "path",
+          "name": "projectId",
           "required": true,
           "schema": {
             "type": "string"
@@ -1870,504 +456,144 @@
       ],
       "post": {
         "operationId": "addProjectAsset",
-        "summary": "Add an indexed asset reference to a project",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
-          }
-        }
-      }
-    },
-    "/api/setup/state": {
-      "get": {
-        "operationId": "getSetupState",
-        "summary": "Read resumable four-step setup state",
+          },
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "Successful local response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Successful local response"
           },
           "400": {
-            "description": "Invalid request",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
           }
-        }
+        },
+        "summary": "Add an indexed asset reference to a project"
+      }
+    },
+    "/api/projects/{projectId}/documents/{documentName}/diff": {
+      "get": {
+        "operationId": "getProjectDocumentDiff",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read a document version diff"
       },
-      "post": {
-        "operationId": "updateSetupState",
-        "summary": "Persist one setup transition with CAS",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/upstream/tasks": {
-      "get": {
-        "operationId": "getUpstreamTasks",
-        "summary": "Read optional upstream task projections",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/media-delete/recommendations": {
       "parameters": [
         {
-          "name": "projectId",
           "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "documentName",
           "required": true,
           "schema": {
             "type": "string"
           }
         }
-      ],
-      "post": {
-        "operationId": "recommendMediaDeletion",
-        "summary": "Build explainable deletion recommendations",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/media-delete/confirm": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "confirmMediaDeletion",
-        "summary": "Move selected media to the system recycle bin",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/media-delete/restore": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "operationId": "restoreMediaDeletion",
-        "summary": "Restore one recycle-bin receipt",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/media-delete/receipts": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "listMediaDeletionReceipts",
-        "summary": "Read recycle-bin receipts",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
+      ]
     },
     "/api/projects/{projectId}/documents/{documentName}/{action}": {
       "parameters": [
         {
+          "in": "path",
           "name": "projectId",
-          "in": "path",
           "required": true,
           "schema": {
             "type": "string"
           }
         },
         {
+          "in": "path",
           "name": "documentName",
-          "in": "path",
           "required": true,
           "schema": {
             "type": "string"
           }
         },
         {
-          "name": "action",
           "in": "path",
+          "name": "action",
           "required": true,
           "schema": {
             "type": "string"
@@ -2376,172 +602,120 @@
       ],
       "post": {
         "operationId": "mutateProjectDocument",
-        "summary": "Patch, lock, unlock, roll back, or AI-patch a project document",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/documents/{documentName}/diff": {
-      "parameters": [
-        {
-          "name": "projectId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
+          },
+          "required": true
         },
-        {
-          "name": "documentName",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "operationId": "getProjectDocumentDiff",
-        "summary": "Read a document version diff",
         "responses": {
           "200": {
-            "description": "Successful local response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Successful local response"
           },
           "400": {
-            "description": "Invalid request",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
           }
-        }
+        },
+        "summary": "Patch, lock, unlock, roll back, or AI-patch a project document"
       }
     },
     "/api/projects/{projectId}/edl-bridge": {
+      "get": {
+        "operationId": "getEdlBridge",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read the structured EDL bridge"
+      },
       "parameters": [
         {
-          "name": "projectId",
           "in": "path",
+          "name": "projectId",
           "required": true,
           "schema": {
             "type": "string"
           }
         }
-      ],
-      "get": {
-        "operationId": "getEdlBridge",
-        "summary": "Read the structured EDL bridge",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
+      ]
     },
-    "/api/projects/{projectId}/workspace": {
+    "/api/projects/{projectId}/inbox-plan": {
       "parameters": [
         {
-          "name": "projectId",
           "in": "path",
+          "name": "projectId",
           "required": true,
           "schema": {
             "type": "string"
@@ -2549,77 +723,433 @@
         }
       ],
       "post": {
-        "operationId": "connectProjectWorkspace",
-        "summary": "Connect a local project workspace",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
+        "operationId": "previewInboxPlan",
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Preview deterministic inbox batches"
+      }
+    },
+    "/api/projects/{projectId}/inbox-plan/confirm": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
           }
         }
+      ],
+      "post": {
+        "operationId": "confirmInboxPlan",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Confirm one plan batch and target project"
+      }
+    },
+    "/api/projects/{projectId}/media-delete/confirm": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "confirmMediaDeletion",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Move selected media to the system recycle bin"
+      }
+    },
+    "/api/projects/{projectId}/media-delete/receipts": {
+      "get": {
+        "operationId": "listMediaDeletionReceipts",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read recycle-bin receipts"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/media-delete/recommendations": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "recommendMediaDeletion",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Build explainable deletion recommendations"
+      }
+    },
+    "/api/projects/{projectId}/media-delete/restore": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "restoreMediaDeletion",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Restore one recycle-bin receipt"
       }
     },
     "/api/projects/{projectId}/publishing": {
       "parameters": [
         {
-          "name": "projectId",
           "in": "path",
+          "name": "projectId",
           "required": true,
           "schema": {
             "type": "string"
@@ -2628,76 +1158,76 @@
       ],
       "post": {
         "operationId": "recordPublishing",
-        "summary": "Record publishing and review evidence",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
           }
-        }
+        },
+        "summary": "Record publishing and review evidence"
       }
     },
     "/api/projects/{projectId}/references": {
       "parameters": [
         {
-          "name": "projectId",
           "in": "path",
+          "name": "projectId",
           "required": true,
           "schema": {
             "type": "string"
@@ -2706,144 +1236,1845 @@
       ],
       "post": {
         "operationId": "addProjectReference",
-        "summary": "Add a non-editing reference",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Add a non-editing reference"
+      }
+    },
+    "/api/projects/{projectId}/video-preview/{candidateId}": {
+      "get": {
+        "operationId": "getLocalVideoPreview",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read a checked low-resolution candidate preview"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "candidateId",
+          "required": true,
+          "schema": {
+            "type": "string"
           }
         }
+      ]
+    },
+    "/api/projects/{projectId}/video-return": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "returnLocalVideo",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-Video-Identity",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "video/mp4": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Stream an exported video for deterministic checks"
+      }
+    },
+    "/api/projects/{projectId}/video-subtitles": {
+      "get": {
+        "operationId": "downloadVideoSubtitles",
+        "responses": {
+          "200": {
+            "content": {
+              "application/x-subrip": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Download the bound SRT"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/video-workflow": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "editLocalVideoWorkflow",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Edit the identity-bound local video workflow"
+      }
+    },
+    "/api/projects/{projectId}/workspace": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "connectProjectWorkspace",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Connect a local project workspace"
+      }
+    },
+    "/api/review/assets/{assetId}/preview": {
+      "get": {
+        "operationId": "getAssetPreview",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read a derived asset preview"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "assetId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/review/catalog": {
+      "get": {
+        "operationId": "getReviewCatalog",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "getReviewCatalog"
+      }
+    },
+    "/api/review/imports/{jobId}": {
+      "get": {
+        "operationId": "getMusicImport",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "getMusicImport"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/review/music": {
+      "get": {
+        "operationId": "getMusicLibrary",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "getMusicLibrary"
+      }
+    },
+    "/api/review/music-settings": {
+      "get": {
+        "operationId": "getMusicSettings",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "getMusicSettings"
+      }
+    },
+    "/api/review/music/import": {
+      "post": {
+        "operationId": "importMusic",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "importMusic"
+      }
+    },
+    "/api/review/music/{trackId}/audio": {
+      "get": {
+        "operationId": "getMusicAudio",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "416": {
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "getMusicAudio"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "trackId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/review/music/{trackId}/reanalyze": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "trackId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "reanalyzeMusic",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "part": {
+                    "enum": [
+                      "beat",
+                      "tags"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "part"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "enum": [
+                            "music_part_invalid"
+                          ],
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    },
+                    "ok": {
+                      "const": false
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Music reanalysis error"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "enum": [
+                            "csrf_invalid",
+                            "origin_forbidden"
+                          ],
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    },
+                    "ok": {
+                      "const": false
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Music reanalysis error"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "properties": {
+                        "code": {
+                          "enum": [
+                            "music_track_not_found"
+                          ],
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    },
+                    "ok": {
+                      "const": false
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Music reanalysis error"
+          }
+        },
+        "summary": "Reanalyze beat or tags"
+      }
+    },
+    "/api/review/pieces/{pieceId}/decisions": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "pieceId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "saveReviewDecision",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "saveReviewDecision"
+      }
+    },
+    "/api/review/pieces/{pieceId}/jobs": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "pieceId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "runShotSelection",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "runShotSelection"
+      }
+    },
+    "/api/review/pieces/{pieceId}/media/{kind}/{mediaId}": {
+      "get": {
+        "operationId": "getReviewMedia",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "getReviewMedia"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "pieceId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "kind",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "mediaId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/review/pieces/{pieceId}/shots": {
+      "get": {
+        "operationId": "getReviewShots",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "getReviewShots"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "pieceId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/settings": {
+      "get": {
+        "operationId": "getSettings",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read redacted studio settings"
+      }
+    },
+    "/api/settings/analysis-budget": {
+      "get": {
+        "operationId": "getAnalysisBudget",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read the effective analysis budget"
+      },
+      "post": {
+        "operationId": "updateAnalysisBudget",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Update the analysis budget with CAS"
+      }
+    },
+    "/api/settings/archive/lifecycle": {
+      "post": {
+        "operationId": "saveArchiveLifecycle",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Save the two-state archive lifecycle"
+      }
+    },
+    "/api/settings/archive/locations": {
+      "post": {
+        "operationId": "addArchiveLocation",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Register one physical archive location"
+      }
+    },
+    "/api/settings/chatcut/confirm": {
+      "post": {
+        "operationId": "confirmChatCut",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Confirm a detected local ChatCut MCP"
+      }
+    },
+    "/api/settings/chatcut/probe": {
+      "post": {
+        "operationId": "probeChatCut",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Probe the local ChatCut MCP"
       }
     },
     "/api/settings/model-providers": {
       "post": {
         "operationId": "saveModelProvider",
-        "summary": "Save a redacted model provider configuration",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
           }
-        }
+        },
+        "summary": "Save a redacted model provider configuration"
       }
     },
     "/api/settings/model-providers/{providerId}/probe": {
       "parameters": [
         {
-          "name": "providerId",
           "in": "path",
+          "name": "providerId",
           "required": true,
           "schema": {
             "type": "string"
@@ -2852,546 +3083,413 @@
       ],
       "post": {
         "operationId": "probeModelProvider",
-        "summary": "Probe one configured model provider",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
-          }
-        }
-      }
-    },
-    "/api/settings/archive/lifecycle": {
-      "post": {
-        "operationId": "saveArchiveLifecycle",
-        "summary": "Save the two-state archive lifecycle",
+          },
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "Successful local response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Successful local response"
           },
           "400": {
-            "description": "Invalid request",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Invalid request"
           },
           "409": {
-            "description": "Revision conflict",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "required": [
                     "ok"
-                  ]
+                  ],
+                  "type": "object"
                 }
               }
-            }
+            },
+            "description": "Revision conflict"
           }
         },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/settings/archive/locations": {
-      "post": {
-        "operationId": "addArchiveLocation",
-        "summary": "Register one physical archive location",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/settings/upstream/pair": {
-      "post": {
-        "operationId": "pairUpstream",
-        "summary": "Pair the optional upstream identity",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/settings/upstream/refresh": {
-      "post": {
-        "operationId": "refreshUpstream",
-        "summary": "Refresh the optional upstream identity",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Content-OS-CSRF",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        }
+        "summary": "Probe one configured model provider"
       }
     },
     "/api/settings/upstream/logout": {
       "post": {
         "operationId": "logoutUpstream",
-        "summary": "Clear the optional upstream identity",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
           }
-        }
+        },
+        "summary": "Clear the optional upstream identity"
       }
     },
-    "/api/settings/chatcut/probe": {
+    "/api/settings/upstream/pair": {
       "post": {
-        "operationId": "probeChatCut",
-        "summary": "Probe the local ChatCut MCP",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
+        "operationId": "pairUpstream",
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
           }
-        }
+        },
+        "summary": "Pair the optional upstream identity"
       }
     },
-    "/api/settings/chatcut/confirm": {
+    "/api/settings/upstream/refresh": {
       "post": {
-        "operationId": "confirmChatCut",
-        "summary": "Confirm a detected local ChatCut MCP",
-        "responses": {
-          "200": {
-            "description": "Successful local response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Revision conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "ok"
-                  ]
-                }
-              }
-            }
-          }
-        },
+        "operationId": "refreshUpstream",
         "parameters": [
           {
-            "name": "X-Content-OS-CSRF",
             "in": "header",
+            "name": "X-Content-OS-CSRF",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
           }
-        }
+        },
+        "summary": "Refresh the optional upstream identity"
+      }
+    },
+    "/api/setup/state": {
+      "get": {
+        "operationId": "getSetupState",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read resumable four-step setup state"
+      },
+      "post": {
+        "operationId": "updateSetupState",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Persist one setup transition with CAS"
+      }
+    },
+    "/api/upstream/tasks": {
+      "get": {
+        "operationId": "getUpstreamTasks",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read optional upstream task projections"
       }
     }
-  }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8765"
+    }
+  ]
 }
