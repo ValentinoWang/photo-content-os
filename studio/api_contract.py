@@ -7,9 +7,20 @@ from typing import Any
 
 
 ROUTE_SPECS: tuple[dict[str, object], ...] = (
+    {"method": "GET", "path": "/api/review/assets/{assetId}/preview", "operation_id": "getAssetPreview", "summary": "Read a derived asset preview", "response_media": "video/mp4", "byte_ranges": True},
+    {'method': 'GET', 'path': '/api/review/catalog', 'operation_id': 'getReviewCatalog', 'summary': 'getReviewCatalog'},
+    {'method': 'GET', 'path': '/api/review/pieces/{pieceId}/shots', 'operation_id': 'getReviewShots', 'summary': 'getReviewShots'},
+    {'method': 'POST', 'path': '/api/review/pieces/{pieceId}/decisions', 'operation_id': 'saveReviewDecision', 'summary': 'saveReviewDecision', 'write': True},
+    {'method': 'POST', 'path': '/api/review/pieces/{pieceId}/jobs', 'operation_id': 'runShotSelection', 'summary': 'runShotSelection', 'write': True},
+    {'method': 'GET', 'path': '/api/review/pieces/{pieceId}/media/{kind}/{mediaId}', 'operation_id': 'getReviewMedia', 'summary': 'getReviewMedia', 'response_media': 'video/mp4', 'byte_ranges': True},
+    {'method': 'GET', 'path': '/api/review/music', 'operation_id': 'getMusicLibrary', 'summary': 'getMusicLibrary'},
+    {'method': 'GET', 'path': '/api/review/music/{trackId}/audio', 'operation_id': 'getMusicAudio', 'summary': 'getMusicAudio', 'response_media': 'audio/mpeg', 'byte_ranges': True},
+    {'method': 'GET', 'path': '/api/review/music-settings', 'operation_id': 'getMusicSettings', 'summary': 'getMusicSettings'},
+    {'method': 'POST', 'path': '/api/review/music/import', 'operation_id': 'importMusic', 'summary': 'importMusic', 'write': True},
+    {'method': 'GET', 'path': '/api/review/imports/{jobId}', 'operation_id': 'getMusicImport', 'summary': 'getMusicImport'},
     {"method": "GET", "path": "/api/bootstrap", "operation_id": "getBootstrap", "summary": "Read studio bootstrap state"},
     {"method": "GET", "path": "/api/health", "operation_id": "getHealth", "summary": "Read loopback service health"},
-    {"method": "GET", "path": "/api/diagnostics", "operation_id": "getDiagnostics", "summary": "Run dynamic local diagnostics"},
+    {"method": "GET", "path": "/api/diagnostics", "operation_id": "getDiagnostics", "summary": "Read cached diagnostics or explicitly rerun the local checks", "query_parameters": [{"name": "refresh", "in": "query", "required": False, "schema": {"type": "string", "enum": ["1"]}}]},
     {"method": "GET", "path": "/api/settings", "operation_id": "getSettings", "summary": "Read redacted studio settings"},
     {"method": "GET", "path": "/api/settings/analysis-budget", "operation_id": "getAnalysisBudget", "summary": "Read the effective analysis budget"},
     {"method": "POST", "path": "/api/settings/analysis-budget", "operation_id": "updateAnalysisBudget", "summary": "Update the analysis budget with CAS", "write": True},
@@ -86,6 +97,8 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
     }
     if spec.get('response_media'):
         operation['responses']['200']['content']={str(spec['response_media']):{'schema':{'type':'string','format':'binary'}}}
+    if spec.get('query_parameters'):
+        operation['parameters'] = spec['query_parameters']
     if spec.get('byte_ranges'):
         operation['parameters'] = [{'name': 'Range', 'in': 'header', 'required': False,
             'description': 'One bytes=start-end, bytes=start- or bytes=-suffix range.', 'schema': {'type': 'string'}}]

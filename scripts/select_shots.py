@@ -9,6 +9,8 @@ import hashlib
 import html
 import json
 import math
+import os
+import tempfile
 from pathlib import Path
 import statistics
 import subprocess
@@ -60,7 +62,42 @@ def load_config(path: Path | None) -> dict:
 
 
 def write_json(path: Path, data):
-    path.write_text(json.dumps(data,ensure_ascii=False,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+    fd, staging = tempfile.mkstemp(dir=path.parent, suffix='.json')
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as handle:
+            json.dump(data, handle, ensure_ascii=False, indent=2, allow_nan=False)
+            handle.write('\n')
+        os.replace(staging, path)
+    finally:
+        Path(staging).unlink(missing_ok=True)
+
+
+def progress(output, phase, completed, total):
+    target = output / 'progress.json'
+    fd, temporary = tempfile.mkstemp(dir=output, suffix='.json')
+    with os.fdopen(fd, 'w') as handle:
+        current = json.loads(target.read_text()) if target.exists() else {}
+        current.update(status='running', phase=phase, completed=completed, total=total)
+        json.dump(current, handle)
+    os.replace(temporary, target)
+
+
+def resume_selection(project, *, model=None, provider=None):
+    project = resolve_project(Path(project))
+    output = analysis_dir(project) / 'shots'
+    document = json.loads((output / 'shots.json').read_text())
+    if not document.get('sheets'):
+        raise ValueError('没有已完成的本地体检，无法继续看图')
+    document['run_status'] = 'model_selection'
+    try:
+        model_selection(document, project, output, document['config'], model, provider)
+        document['run_status'] = 'complete'
+        from shot_previews import generate_previews
+        generate_previews(project, document)
+    finally:
+        write_json(output / 'shots.json', document)
+    validate_document(document)
+    return document
 
 
 def resolve_project(value: Path) -> Path:
@@ -453,6 +490,10 @@ def model_selection(document,project,output,config,model,provider):
         raise ValueError('没有可送模型终选的候选；本地证据已保留')
     for i,sheet in enumerate(sheets,1):
         allowed=set(sheet['ids'])
+        if all(by_id[identifier].get('model_decision') for identifier in sheet['ids']):
+            progress(output, 'model', i, len(sheets))
+            continue
+        progress(output, 'model', i - 1, len(sheets))
         prompt=selection_prompt(project,[by_id[identifier] for identifier in sheet['ids']])
         value=call_model(document,project,output,[sheet['path'],*sheet['detail_paths']],prompt,f'select-{i:03d}',allowed,model,provider)
         try:
@@ -465,6 +506,7 @@ def model_selection(document,project,output,config,model,provider):
             row=by_id[decision['id']]
             apply_model_decision(row,decision)
         write_json(output/'shots.json',document)
+    progress(output, 'hooks', 0, 1)
     allowed={identifier for sheet in sheets for identifier in sheet['ids'] if by_id[identifier]['status'] in {'selected','usable'} and not any(by_id[identifier]['visual_flags'].values()) and by_id[identifier]['duplicate_of'] is None}
     if not allowed:
         return
@@ -483,6 +525,7 @@ def model_selection(document,project,output,config,model,provider):
             raise ValueError('开场钩子重复或理由为空')
         found.add(item['id'])
     document['hook_candidates']=value['hooks']
+    progress(output, 'hooks', 1, 1)
 
 
 def score_aesthetics(rows,project,output,name,device='auto'):
@@ -577,7 +620,8 @@ def run_selection(project,*,limit_videos=None,limit_photos=None,skip_llm=False,a
               'hook_candidates':[],'model_calls':[],'distributions':{},'aesthetic_comparison':[]}
     try:
         cv2.setNumThreads(1)
-        for kind,source in selected:
+        progress(output, 'local', 0, len(selected))
+        for completed,(kind,source) in enumerate(selected,1):
             relative=source.relative_to(project).as_posix()
             identifier='S'+hashlib.sha256(relative.encode()).hexdigest()[:10]
             print(f'分析 {kind}: {relative}',flush=True)
@@ -592,6 +636,7 @@ def run_selection(project,*,limit_videos=None,limit_photos=None,skip_llm=False,a
                 add_frame(row,read_photo(source),None,project,output,config)
                 aggregate_frames(row)
                 document['shots'].append(row)
+            progress(output, 'local', completed, len(selected))
         rows=document['shots']
         known=[r['metrics']['blur_variance'] for r in rows if r['metrics']['blur_variance'] is not None]
         median=statistics.median(known) if known else None
@@ -611,7 +656,10 @@ def run_selection(project,*,limit_videos=None,limit_photos=None,skip_llm=False,a
         document['audit_sheets']=make_audit_sheets(rows,project,output)
         if not skip_llm:
             document['run_status']='model_selection'
+            write_json(output/'shots.json',document)
             model_selection(document,project,output,config,model,provider)
+        from shot_previews import generate_previews
+        generate_previews(project, document)
         document['run_status']='local_only' if skip_llm else 'complete'
     except Exception:
         document['run_status']='failed'
@@ -658,7 +706,17 @@ def main():
     parser.add_argument('--config',type=Path)
     parser.add_argument('--model')
     parser.add_argument('--provider')
+    parser.add_argument('--previews-only', action='store_true', help='只补浏览器样片，不重新挑选')
+    parser.add_argument('--resume', action='store_true', help='复用本地体检继续看图')
     args=parser.parse_args()
+    if args.previews_only:
+        from shot_previews import generate_previews
+        project=resolve_project(args.project_dir)
+        generate_previews(project,json.loads((analysis_dir(project)/'shots/shots.json').read_text()))
+        return
+    if args.resume:
+        resume_selection(args.project_dir,model=args.model,provider=args.provider)
+        return
     if any(value is not None and value<0 for value in [args.limit_videos,args.limit_photos]):
         parser.error('抽样上限不能为负数')
     document=run_selection(args.project_dir,limit_videos=args.limit_videos,limit_photos=args.limit_photos,

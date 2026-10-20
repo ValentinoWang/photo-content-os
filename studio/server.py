@@ -30,6 +30,10 @@ if str(SYSTEM_ROOT) not in sys.path:
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
+from studio.media_review import MediaReview
+from studio.review_jobs import ReviewJobs
+from music_library.errors import MusicError
+
 from studio.ai_patch import AIPatchError, generate_patch  # type: ignore  # noqa: E402
 from studio.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore  # type: ignore  # noqa: E402
 from studio.api_contract import is_registered_route, route_inventory  # type: ignore  # noqa: E402
@@ -179,6 +183,11 @@ class StudioApplication:
         upstream_task_reader: CollectionCallable[[], list[Mapping[str, object]]] | None = None,
     ) -> None:
         self.store = store
+        self.media_review = MediaReview(store)
+        self.review_jobs = ReviewJobs(self.media_review)
+        self.doctor_checks = []
+        self.doctor_checked_at = None
+        self.doctor_thread = None
         self.csrf_token = csrf_token or secrets.token_urlsafe(32)
         self.settings_dir = self.store.state_dir / SETTINGS_DIRNAME
         self.settings_dir.mkdir(parents=True, exist_ok=True)
@@ -495,7 +504,36 @@ class StudioApplication:
             "uses": index["uses"],
         }
 
-    def diagnostics_projection(self) -> dict[str, Any]:
+    def refresh_doctor(self):
+        if self.doctor_thread and self.doctor_thread.is_alive():
+            return
+        def run():
+            from doctor import collect_checks
+            checks, metadata = collect_checks()
+            labels = {'openchatcut': 'OpenChatCut', 'openfilm': 'OpenFilm'}
+            public = []
+            for check in checks:
+                if check.id == 'openclaw_cloud_pairing':
+                    continue
+                if check.id.startswith('edit_tool_'):
+                    tool = check.id.removeprefix('edit_tool_')
+                    summary = labels[tool] + ' · ' + (metadata['edit_tools'][tool]['version'] or '未知版本')
+                else:
+                    summary = check.summary
+                public.append(dict(id=check.id, status='ready' if check.ok else check.state, summary=summary,
+                                   repair=check.action if not check.ok else None))
+            for name, title in [('chatcut', 'ChatCut Desktop'), ('jianying', '剪映'), ('kdenlive', 'Kdenlive')]:
+                tool = metadata['tools'][name]
+                ready = tool['status'] == 'online'
+                public.append(dict(id='chatcut_mcp' if name=='chatcut' else name, status='ready' if ready else tool['status'],
+                                   summary=title + (' · ' + str(tool['version']) if ready else ' 还没连上本机'),
+                                   repair=None if ready else '还没连上本机。在 ChatCut 里开启本机连接后，点「重新检查」。' if name=='chatcut' else title + '：' + tool['reason']))
+            self.doctor_checks = public
+            self.doctor_checked_at = datetime.now(timezone.utc).isoformat()
+        self.doctor_thread = threading.Thread(target=run, daemon=True)
+        self.doctor_thread.start()
+
+    def diagnostics_projection(self, *, refresh=False) -> dict[str, Any]:
         checks = [
             {
                 "id": "project_store",
@@ -528,10 +566,15 @@ class StudioApplication:
                 "repair": None,
             }
         )
+        checks.extend(self.doctor_checks)
+        if refresh or not self.doctor_checks:
+            self.refresh_doctor()
         canonical = json.dumps(checks, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         return {
             "schemaVersion": "photo_content_os_diagnostics_v1",
             "checks": checks,
+            "checked_at": self.doctor_checked_at,
+            "checking": bool(self.doctor_thread and self.doctor_thread.is_alive()),
             "reportDigest": "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest(),
         }
 
@@ -614,22 +657,61 @@ class StudioApplication:
                 sys.stderr.write("studio: " + fmt % args + "\n")
 
             def _send(self, status: int, body: bytes, content_type: str, headers: dict[str, str] | None = None) -> None:
+                self._send_headers(status, len(body), content_type, headers)
+                self.wfile.write(body)
+
+            def _send_headers(self, status, length, content_type, headers=None):
                 self.send_response(status)
                 self.send_header("Content-Type", content_type)
-                self.send_header("Content-Length", str(len(body)))
+                self.send_header("Content-Length", str(length))
                 for name, value in (headers or {}).items():
                     self.send_header(name, value)
                 self.send_header("Cache-Control", "no-store" if content_type.startswith("application/json") else "no-cache")
                 self.send_header("X-Content-Type-Options", "nosniff")
                 self.send_header("X-Frame-Options", "DENY")
                 self.send_header("Referrer-Policy", "no-referrer")
-                self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'")
+                self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; media-src 'self'; frame-ancestors 'none'")
                 origin = self.headers.get('Origin')
                 if app.video_workflow.allowed_origin(origin) or (origin and getattr(self, '_validated_response_origin', None) == origin):
                     self.send_header('Access-Control-Allow-Origin', origin)
                     self.send_header('Vary', 'Origin')
                 self.end_headers()
-                self.wfile.write(body)
+
+            def _media(self, path):
+                if path is None:
+                    self._json(404, _error('media_not_found', '预览不存在'))
+                    return
+                size = path.stat().st_size
+                start, end = 0, size - 1
+                requested = self.headers.get('Range')
+                headers = {'Accept-Ranges': 'bytes'}
+                content_type = mimetypes.guess_type(path.name)[0] or 'application/octet-stream'
+                if requested:
+                    match = re.fullmatch(r'bytes=(\d{0,20})-(\d{0,20})', requested)
+                    valid = bool(match and any(match.groups()))
+                    if valid:
+                        first, last = match.groups()
+                        if first:
+                            start = int(first)
+                            end = min(int(last), end) if last else end
+                        else:
+                            start = max(0, size - int(last))
+                            valid = int(last) > 0
+                        valid = valid and 0 <= start <= end < size
+                    if not valid:
+                        self._send(416, b'', content_type, {**headers, 'Content-Range': f'bytes */{size}'})
+                        return
+                    headers['Content-Range'] = f'bytes {start}-{end}/{size}'
+                length = end - start + 1
+                self._send_headers(206 if requested else 200, length, content_type, headers)
+                with path.open('rb') as source:
+                    source.seek(start)
+                    while length:
+                        data = source.read(min(length, 256 * 1024))
+                        if not data:
+                            break
+                        self.wfile.write(data)
+                        length -= len(data)
 
             def _json(self, status: int, value: Any) -> None:
                 self._send(status, _json_bytes(value), "application/json; charset=utf-8")
@@ -693,6 +775,38 @@ class StudioApplication:
                     if parsed.path.startswith("/api/") and not is_registered_route("GET", parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                         return
+                    if parsed.path.startswith('/api/review/'):
+                        if parsed.query:
+                            self._json(404, _error('media_not_found', '预览不存在'))
+                            return
+                        review = app.media_review
+                        if parsed.path == '/api/review/catalog':
+                            self._json(200, {'ok': True, **review.catalog()})
+                        elif parsed.path == '/api/review/music':
+                            self._json(200, {'ok': True, 'tracks': review.tracks()})
+                        elif parsed.path == '/api/review/music-settings':
+                            self._json(200, {'ok': True, **app.review_jobs.music_settings()})
+                        elif len(segments) == 4 and segments[2] == 'imports':
+                            job = app.review_jobs.import_status(segments[3])
+                            self._json(200 if job else 404, {'ok': bool(job), 'job': job})
+                        elif len(segments) == 5 and segments[2] == 'pieces' and segments[4] == 'shots':
+                            self._json(200, {'ok': True, **review.shots(segments[3])})
+                        elif len(segments) == 7 and segments[2] == 'pieces' and segments[4] == 'media':
+                            try:
+                                path = review.media(segments[3], segments[5], segments[6])
+                            except ProjectStoreError as exc:
+                                if exc.code not in ('project_not_found', 'workspace_not_connected', 'workspace_not_found'):
+                                    raise
+                                path = None
+                            self._media(path)
+                        elif len(segments) == 5 and segments[2] == 'assets' and segments[4] == 'preview':
+                            asset = get_asset(app.load_asset_index(), segments[3])
+                            self._media(review.asset_preview(asset) if asset else None)
+                        elif len(segments) == 5 and segments[2] == 'music' and segments[4] == 'audio':
+                            self._media(review.music_audio(segments[3]))
+                        else:
+                            self._json(404, _error('route_not_found', '接口不存在'))
+                        return
                     if parsed.path == "/api/bootstrap":
                         self._json(
                             HTTPStatus.OK,
@@ -709,7 +823,7 @@ class StudioApplication:
                         self._json(HTTPStatus.OK, {"ok": True, "status": "ready", "localOnly": True})
                         return
                     if parsed.path == "/api/diagnostics":
-                        self._json(HTTPStatus.OK, {"ok": True, "diagnostics": app.diagnostics_projection()})
+                        self._json(HTTPStatus.OK, {"ok": True, "diagnostics": app.diagnostics_projection(refresh=parsed.query == 'refresh=1')})
                         return
                     if parsed.path == "/api/settings":
                         self._json(HTTPStatus.OK, {"ok": True, "settings": app.settings_projection()})
@@ -850,7 +964,7 @@ class StudioApplication:
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                         return
                     self._static(parsed.path)
-                except (ProjectStoreError, ValueError) as exc:
+                except (ProjectStoreError, ValueError, MusicError) as exc:
                     self._handle_error(exc)
 
             def do_POST(self) -> None:  # noqa: N802
@@ -870,6 +984,19 @@ class StudioApplication:
                     segments = self._segments(parsed.path)
                     if not is_registered_route(method, parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
+                        return
+                    if parsed.path.startswith('/api/review/'):
+                        value = self._body()
+                        if parsed.path == '/api/review/music/import':
+                            result = {'job': app.review_jobs.import_music(value)}
+                        elif len(segments) == 5 and segments[2] == 'pieces' and segments[4] == 'decisions':
+                            result = app.media_review.decide(segments[3], value)
+                        elif len(segments) == 5 and segments[2] == 'pieces' and segments[4] == 'jobs':
+                            result = app.review_jobs.shots(segments[3], value.get('action'))
+                        else:
+                            self._json(404, _error('route_not_found', '接口不存在'))
+                            return
+                        self._json(200, {'ok': True, **result})
                         return
                     segments = self._segments(urllib.parse.urlparse(self.path).path)
                     if method == 'POST' and len(segments) == 4 and segments[:2] == ['api', 'projects'] and segments[3] == 'video-return':
@@ -1248,6 +1375,7 @@ class StudioApplication:
                     ModelProviderConfigError,
                     OnboardingStateError,
                     ProjectStoreError,
+                    MusicError,
                     TypeError,
                     UpstreamIdentityContractError,
                     UpstreamSessionContractError,
@@ -1284,6 +1412,7 @@ def serve(
     *,
     state_dir: Path,
     host: str = "127.0.0.1",
+    prepare_caches: bool = False,
     port: int = 8765,
     on_ready: Callable[[str], None] | None = None,
     model_provider_store: ModelProviderConfigStore | None = None,
@@ -1319,11 +1448,14 @@ def serve(
     application.video_workflow.origin = url.rstrip('/')
     original_close = server.server_close
     def close_owned_sessions():
+        application.review_jobs.close()
         try:
             application.video_workflow.close()
         finally:
             original_close()
     server.server_close = close_owned_sessions
+    if prepare_caches:
+        application.review_jobs.prepare()
     if on_ready:
         on_ready(url)
     return server

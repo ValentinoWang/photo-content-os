@@ -29,7 +29,7 @@ def main() -> int:
         if not args.no_browser:
             webbrowser.open(url)
 
-    server = serve(state_dir=args.state_dir, host=args.host, port=args.port, on_ready=ready)
+    server = serve(state_dir=args.state_dir, host=args.host, port=args.port, on_ready=ready, prepare_caches=True)
     try:
         server.serve_forever(poll_interval=0.25)
     except KeyboardInterrupt:

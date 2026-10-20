@@ -25,6 +25,20 @@ def parser():
     return cli
 
 
+def import_folder(library, directory):
+    """Offline folder import shared by CLI and Studio."""
+    files = sorted(p for p in Path(directory).iterdir() if p.is_file() and p.suffix.lower() in
+                   ('.ncm', '.mp3', '.flac', '.m4a', '.mp4', '.wav', '.ogg', '.aac'))
+    results = []
+    for path in files:
+        try:
+            status, track = library.import_client_file(path)
+            results.append({'status': status, 'title': track['title'], 'license_status': track['license_status']})
+        except MusicError as exc:
+            results.append({'reason': str(exc)})
+    return results
+
+
 def _main(argv=None):
     cli = parser()
     args = cli.parse_args(argv)
@@ -62,17 +76,15 @@ def _main(argv=None):
             failures += 1
         else:
             try:
-                files = sorted(p for p in directory.iterdir() if p.is_file() and p.suffix.lower() in
-                               ('.ncm', '.mp3', '.flac', '.m4a', '.mp4', '.wav', '.ogg', '.aac'))
-                if not files:
+                results = import_folder(library, directory)
+                if not results:
                     print('文件夹里没有可导入的音频')
-                for number, path in enumerate(files, 1):
-                    try:
-                        status, track = library.import_client_file(path)
-                        print(f'文件 {number}. {status}：{track["title"]}；{LICENSE_LABELS[track["license_status"]]}')
-                    except MusicError as exc:
-                        print(f'文件 {number}. 失败：{exc}')
+                for number, result in enumerate(results, 1):
+                    if result.get('reason'):
+                        print(f"文件 {number}. 失败：{result['reason']}")
                         failures += 1
+                    else:
+                        print(f"文件 {number}. {result['status']}：{result['title']}；{LICENSE_LABELS[result['license_status']]}")
             except OSError:
                 print('失败：客户端下载文件夹无法读取')
                 failures += 1
