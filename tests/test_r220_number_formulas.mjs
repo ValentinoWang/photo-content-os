@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {expectedShots,compareNumbers} from '../scripts/r220_number_formulas.mjs';
+import fs from 'node:fs';
+const common=await import('data:text/javascript;base64,'+Buffer.from(fs.readFileSync(new URL('../studio/static/review-common.js',import.meta.url))).toString('base64'));
+const checks=[{id:'asset_library',status:'not_configured'},{id:'creative_model',status:'not_configured'},{id:'upstream_identity',status:'optional'},{id:'creative_provider',status:'ready'},{id:'chatcut_mcp',status:'unavailable'},{id:'edit_tool_openchatcut',status:'unavailable',repair:'install a'},{id:'edit_tool_openfilm',status:'unavailable',repair:'install b'}];
+const groups=common.diagnosticGroups(checks);
+assert.equal(groups.issues.length,2);assert.equal(groups.optional.length,3);assert.equal(groups.good.length,1);
+assert.deepEqual(groups.issues[1].commands,['install a','install b']);
+assert.equal(common.mediaSummary({videos:0,photos:224}),'224 张照片');assert.equal(common.mediaSummary({videos:0,photos:0}),'还没有素材');
+assert.equal(common.sec(4.735),'4.7');assert.equal(common.sec(0),'0.0');
+assert.equal(common.deliveryLabel('not_started'),'还没开始');assert.equal(common.deliveryLabel('delivered'),'已交付');
+const warnings=[];assert.equal(common.deliveryLabel('unknown',x=>warnings.push(x)),'状态未知');assert.equal(warnings.length,1);
+const data={shots:[{status:'selected',kind:'photo'},{status:'selected',kind:'video',duration_sec:4.7},{status:null,kind:'video'},{status:'rejected',kind:'video'}]};
+assert.equal(expectedShots(data).duration,7.2);assert.equal(expectedShots(data).concluded,3);
+assert.deepEqual(compareNumbers({selected:2},{selected:2}),[]);
+assert.equal(compareNumbers({selected:3},{selected:2}).length,1);
+console.log('PASS numeric formulas: positive and negative assertions');

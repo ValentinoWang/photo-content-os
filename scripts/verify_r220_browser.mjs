@@ -1,0 +1,57 @@
+import {createRequire} from 'node:module';
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const require=createRequire(process.env.PW_REQ),{chromium}=require('playwright');
+const base=process.env.STUDIO_URL||'http://127.0.0.1:8870',out=process.env.R220_EVIDENCE||'evidence/2026-10-20/R220/round-3';
+const browser=await chromium.launch({channel:'chrome'}),checks=[];
+try{
+ const context=await browser.newContext({viewport:{width:1440,height:960},locale:'zh-CN',timezoneId:'Asia/Taipei'});
+ await context.route('**/*',r=>new URL(r.request().url()).origin===base?r.continue():r.abort());
+ const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const catalog=await (await fetch(base+'/api/review/catalog')).json(),p=catalog.pieces.find(p=>p.pending);
+ await page.goto(base+'/#'+new URLSearchParams({view:'piece',piece:p.id,ptab:'vlog'}));
+ await page.waitForSelector('#hero-v');
+ await page.locator('.big-play').click();await page.waitForFunction(()=>{const v=document.querySelector('#hero-v');return v?.videoWidth>0&&v.currentTime>.1;});checks.push('Real H.264 shot preview decodes and advances');
+ await page.locator('#hero-mute').click();assert.equal(await page.locator('#hero-v').evaluate(v=>v.muted),true);checks.push('Sound switch reaches media element');
+ await page.locator('#hero-prog [data-hero="1"]').click();await page.waitForFunction(()=>document.querySelector('#hero-pos').textContent.includes('2 /'));checks.push('Duration-weighted segment jumps to the selected clip');
+ await page.locator('[data-shot]').first().click();await page.waitForFunction(()=>document.querySelector('#hero-v')?.currentTime>.1);assert.equal(await page.locator('#hero-v').evaluate(v=>v.loop),true);checks.push('Alternative card plays its own loop in the main viewer');
+ await page.locator('[data-ptab="script"]').click();await page.waitForSelector('[data-design-id="R208-PIECE-script"]');
+ await page.goto(base+'/#'+new URLSearchParams({view:'piece',piece:p.id}));await page.waitForSelector('[data-ptab="script"][aria-selected="true"]');await page.reload();await page.waitForSelector('[data-ptab="script"][aria-selected="true"]');checks.push('Per-piece tab choice and hash survive reload');
+ await page.goto(base+'/#view=music');await page.waitForSelector('[data-track]');await page.locator('[data-play]').first().click();await page.waitForFunction(()=>document.querySelector('#music-player').currentTime>.1);checks.push('Real music-library audio plays');
+ for(const width of [1440,1180,900,430]){
+  await page.setViewportSize({width,height:960});
+  const widths=await page.locator('.music-tracks .t').evaluateAll(ns=>ns.map(n=>n.getBoundingClientRect().width));
+  assert(widths.every(n=>n>=100),'Music titles must retain usable reading width at '+width);
+ }
+ const title=page.locator('.music-tracks .t').first();await title.evaluate(n=>n.style.width='34px');
+ assert((await title.evaluate(n=>n.getBoundingClientRect().width))<100,'Negative title-width fixture must be rejected');
+ await title.evaluate(n=>n.style.width='');await page.setViewportSize({width:1440,height:960});
+ checks.push('Music title-width regression: four widths and a failing narrow-title fixture');
+ await page.locator('#bars').click({position:{x:150,y:30}});await page.waitForFunction(()=>document.querySelector('#music-player').currentTime>5);checks.push('Waveform seeks the measured audio');
+ await page.goto(base+'/#view=project&project='+p.group_id);await page.waitForSelector('[data-versions]');await page.locator('[data-versions]').first().click();await page.waitForFunction(()=>{const v=document.querySelector('#pl-stage video');return v?.videoWidth>0&&v.currentTime>.1;});checks.push('Real exported H.264 output plays in the versions dialog');
+ await page.keyboard.press('Escape');await page.waitForSelector('#ov[hidden]',{state:'attached'});
+ await page.goto(base+'/#view=projects');await page.waitForSelector('[data-new]');await page.locator('[data-new]').click();await page.waitForSelector('#project-dialog[open]');assert.equal(await page.locator('#project-dialog h2').innerText(),'新建作品');await page.locator('#project-dialog [data-cancel-project]').last().click();checks.push('New-work dialog opens and cancels without mutation');
+ await page.goto(base+'/#view=settings&tab=account');await page.waitForSelector('[data-pair]');await page.locator('[data-pair]').click();await page.waitForSelector('[data-surface-panel="login"]:not([hidden])');await page.locator('[data-close-surface]').first().click();checks.push('Account settings opens the existing pairing surface');
+ assert.deepEqual(errors,[]);checks.push('No page JavaScript exceptions during the walkthrough');
+ const racing=await context.newPage();
+ await racing.route('**/api/review/pieces/*/shots',async r=>{await new Promise(resolve=>setTimeout(resolve,700));await r.continue();});
+ const pending=racing.waitForRequest(r=>r.url().endsWith('/shots'));
+ await racing.goto(base+'/#view=home');await pending;
+ await racing.goto(base+'/#view=projects');await racing.waitForSelector('[data-design-id="R208-PROJECTS"]');
+ await racing.waitForTimeout(900);assert.equal(await racing.locator('.main').getAttribute('data-design-state'),'projects');assert.equal(await racing.locator('[data-design-id="R208-PROJECTS"]').count()>0,true);
+ checks.push('A delayed workbench response cannot replace a newer navigation');
+ await page.goto(base+'/#view=home');await page.waitForSelector('.todo .task');
+ assert.equal(await page.locator('.cap-row').count(),5);assert.equal(Number(await page.locator('#home-count').innerText()),await page.locator('.todo .task').count());assert.equal(await page.locator('.piece--compact .cover').count(),0);assert.equal(await page.locator('.piece--compact .chip').count(),0);assert.equal((await page.locator('.todo').innerText()).includes('python'),false);checks.push('Workbench: shared attention count, five capabilities, compact empty works, no commands');
+ assert((await page.locator('[data-reel]').evaluate(n=>getComputedStyle(n,'::before').content)).includes('▶'));checks.push('Workbench reel button includes the approved play triangle');await page.locator('[data-reel]').click();await page.waitForSelector('#ov:not([hidden])');assert.equal(await page.locator('#pl-title').innerText(),'预览精选');assert.match(await page.locator('#pl-sub').innerText(),/ · \d+\.\d 秒$/);await page.keyboard.press('Escape');checks.push('Workbench reel uses the approved title and one-decimal duration subtitle');
+ await page.goto(base+'/#view=projects');await page.waitForSelector('.proj');assert.equal(await page.locator('.proj h2').last().innerText(),'其他作品');assert.equal(await page.locator('.proj--compact .collage').count(),0);checks.push('Other works last; no empty project collage');
+ await page.goto(base+'/#'+new URLSearchParams({view:'piece',piece:p.id,ptab:'script'}));await page.waitForSelector('#project-refresh');assert.equal(await page.locator('[data-screen-panel="project"] .screen-head').count(),0);const heading=await page.locator('.project-chain-head h3').boundingBox(),refresh=await page.locator('#project-refresh').boundingBox();assert(Math.abs(heading.y+heading.height/2-refresh.y-refresh.height/2)<8);assert(refresh.x>heading.x);checks.push('Script refresh shares the creative-chain heading row');assert.equal(await page.locator('[data-screen-panel="project"] .flow .fstep').count(),6);assert.equal((await page.locator('[data-screen-panel="project"]').innerText()).includes('not_started'),false);await page.locator('#project-refresh').click();await page.waitForSelector('#project-refresh');checks.push('Script tab keeps refresh, one shared six-step flow, and translated delivery state');
+ await page.goto(base+'/#view=music');await page.waitForSelector('[data-design-id="R208-MUSIC-list"]');await page.waitForSelector('#review-screen .kv strong');const font=await page.locator('#review-screen .kv strong').first().evaluate(n=>({size:parseFloat(getComputedStyle(n).fontSize),family:getComputedStyle(n).fontFamily}));assert(font.size>=12);assert(!font.family.includes('mono'));assert.equal(await page.locator('.license--unknown').count()>0,true);checks.push('New metadata avoids legacy monospace; unknown music license uses its tag');
+ await page.goto(base+'/#view=settings&tab=doctor');await page.waitForSelector('.dx-ring');assert.equal(await page.locator('.set-nav button .dot--warn').count(),2);assert.equal(await page.locator('.set-nav [data-set="tools"] .dot--warn').count(),1);assert.equal(await page.locator('.set-nav [data-set="doctor"] .dot--warn').count(),1);checks.push('Tool and diagnostic settings tabs expose amber issue dots');assert.equal(await page.locator('.dx-optional li').count(),3);assert.equal(await page.locator('.dx-issue').count(),2);assert.equal(await page.locator('.dx-ring b').innerText(),'8/10');assert.match(await page.locator('.dx-hero-t p').innerText(),/今天 \d{2}:\d{2}/);const before=await (await fetch(base+'/api/diagnostics')).json();await page.locator('[data-recheck]').first().click();await page.waitForFunction(async old=>{const d=(await (await fetch('/api/diagnostics')).json()).diagnostics;return !d.checking&&d.checked_at!==old;},before.diagnostics.checked_at);checks.push('Doctor excludes optional items from ring and reruns real checks');
+ await context.grantPermissions(['clipboard-read','clipboard-write']);await page.locator('[data-copy-command]').first().click();assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),await page.locator('.command code').first().innerText());checks.push('Doctor copies the actual repair command');
+ await page.setViewportSize({width:430,height:960});const tabs=await page.locator('.set-nav button').evaluateAll(ns=>ns.map(n=>n.getBoundingClientRect().width));assert(tabs.every(w=>w<180));await page.locator('[data-set="models"]').last().click();await page.waitForSelector('[data-add-provider]');await page.locator('[data-add-provider]').click();assert.equal(await page.locator('#toast').innerText(),'模型配置需要提供方、模型、端点和本机密钥引用。');checks.push('Phone settings tabs retain compact widths; add-model retains the existing behavior');await page.setViewportSize({width:1440,height:960});
+ await page.route('**/api/review/music-settings',r=>r.fulfill({json:{ok:true,egress:{state:'absent'},account:{state:'absent'}}}));await page.goto(base+'/#view=settings&tab=music');await page.waitForFunction(()=>document.querySelector('.set-main')?.textContent.includes('先配置出口'));assert.equal(await page.locator('.setrow .val').first().innerText(),'没配置');checks.push('Missing music egress has the approved value and actionable explanation');
+ await context.close();
+ const blockedStorage=await browser.newContext();await blockedStorage.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw Error('Storage denied');}}));
+ const storagePage=await blockedStorage.newPage();await storagePage.goto(base+'/#'+new URLSearchParams({view:'piece',piece:p.id}));await storagePage.waitForSelector('[data-ptab="vlog"][aria-selected="true"]');checks.push('Denied browser storage keeps the piece usable');await blockedStorage.close();
+}finally{await browser.close();fs.writeFileSync(out+'/browser-walkthrough.json',JSON.stringify({checks},null,2));}
+console.log('PASS',checks.length,checks);
