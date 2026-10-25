@@ -337,7 +337,9 @@ def test_busy_job_and_projection(tmp_path):
     job['shots'][0]['checks']['warnings'].append({'code': 'note', 'message': str(tmp_path / 'secret/file'), 'privatePath': str(tmp_path)})
     result = projection(job)
     assert str(tmp_path) not in json.dumps(result)
-    assert set(result['shots'][0]) == {'shotId', 'dialogue', 'mainAction', 'estimatedSeconds', 'measuredSeconds', 'timingSource', 'status', 'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt', 'renderedAt', 'codeChars', 'posterRevision', 'checks'}
+    assert set(result['shots'][0]) == {'shotId', 'dialogue', 'mainAction', 'estimatedSeconds', 'measuredSeconds', 'timingSource', 'status', 'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt', 'renderedAt', 'codeChars', 'posterRevision', 'checks',
+                                      # R277 adds per-shot versions, boxes, look and sample.
+                                      'currentVersion', 'versions', 'boxes', 'look', 'sample'}
 
 
 def test_default_gateway_with_fake_executable_generates_job(tmp_path, monkeypatch, fake_claude):

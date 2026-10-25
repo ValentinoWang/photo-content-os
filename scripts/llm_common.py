@@ -486,8 +486,7 @@ def generate_text_with_claude_cli(
     claude_path = shutil.which(claude_bin)
     if not claude_path:
         raise LLMError("claude CLI is required when OPENCLAW_CREATIVE_PROVIDER=claude_cli")
-    if image_paths:
-        raise LLMError("claude CLI image input is unsupported")
+    images = validated_image_paths(image_paths)
     try:
         timeout = int(os.getenv("OPENCLAW_CLAUDE_TIMEOUT_SEC", str(DEFAULT_CLAUDE_TIMEOUT_SEC)))
     except ValueError as exc:
@@ -507,6 +506,19 @@ def generate_text_with_claude_cli(
         "--no-session-persistence",
     ]
     prompt = codex_prompt(system_prompt, user_prompt)
+    if images:
+        args[args.index("json")] = "stream-json"
+        args.extend(["--input-format", "stream-json", "--verbose"])
+        content = []
+        for path in images:
+            content.append({"type": "image", "source": {
+                "type": "base64", "media_type": mimetypes.guess_type(path.name)[0],
+                "data": base64.b64encode(path.read_bytes()).decode("ascii"),
+            }})
+        content.append({"type": "text", "text": prompt})
+        prompt = json.dumps({"type": "user", "message": {
+            "role": "user", "content": content,
+        }}, ensure_ascii=False) + "\n"
     with tempfile.TemporaryDirectory(prefix="photo-claude-") as directory:
         try:
             completed = subprocess.run(
@@ -521,7 +533,12 @@ def generate_text_with_claude_cli(
     if completed.returncode != 0:
         raise LLMError(f"claude CLI generation failed ({completed.returncode})")
     try:
-        payload = json.loads(completed.stdout)
+        if images:
+            events = [json.loads(line) for line in completed.stdout.splitlines() if line.strip()]
+            payload = next((event for event in reversed(events)
+                            if isinstance(event, dict) and event.get("type") == "result"), None)
+        else:
+            payload = json.loads(completed.stdout)
     except (ValueError, TypeError) as exc:
         raise LLMError("claude CLI output is invalid JSON") from exc
     if not isinstance(payload, dict) or payload.get("is_error"):

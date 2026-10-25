@@ -207,6 +207,40 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "boxes": {
+                  "items": {
+                    "properties": {
+                      "h": {
+                        "type": "number"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "w": {
+                        "type": "number"
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "x",
+                      "y",
+                      "w",
+                      "h"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
                 "checks": {
                   "properties": {
                     "errors": {
@@ -271,6 +305,11 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "currentVersion": {
+                  "description": "Zero before the first written version. A version whose rendering failed retains its code without a poster.",
+                  "minimum": 0,
+                  "type": "integer"
+                },
                 "dialogue": {
                   "type": "string"
                 },
@@ -288,6 +327,65 @@
                     "string",
                     "null"
                   ]
+                },
+                "look": {
+                  "properties": {
+                    "failureCode": {
+                      "enum": [
+                        null,
+                        "look_failed"
+                      ]
+                    },
+                    "findings": {
+                      "items": {
+                        "properties": {
+                          "boxId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "kind": {
+                            "type": "string"
+                          },
+                          "suggest": {
+                            "enum": [
+                              "main",
+                              "dim",
+                              "del",
+                              "short"
+                            ]
+                          },
+                          "text": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "boxId",
+                          "kind",
+                          "text",
+                          "suggest"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 5,
+                      "type": "array"
+                    },
+                    "status": {
+                      "enum": [
+                        "none",
+                        "running",
+                        "done",
+                        "failed"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "failureCode",
+                    "findings"
+                  ],
+                  "type": "object"
                 },
                 "mainAction": {
                   "type": [
@@ -311,6 +409,9 @@
                     "null"
                   ]
                 },
+                "sample": {
+                  "type": "boolean"
+                },
                 "shotId": {
                   "type": "string"
                 },
@@ -331,6 +432,166 @@
                     "narration",
                     "proportional"
                   ]
+                },
+                "versions": {
+                  "items": {
+                    "properties": {
+                      "baseVersion": {
+                        "description": "Current version before revision or narration rerender. Null for the first version or unavailable pre-field provenance.",
+                        "minimum": 1,
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      },
+                      "codeChars": {
+                        "type": "integer"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "posterRevision": {
+                        "type": "integer"
+                      },
+                      "request": {
+                        "anyOf": [
+                          {
+                            "description": "Each line is nonblank. Combined text length is 1–200 Unicode characters. boxId must identify a current visible box.",
+                            "properties": {
+                              "lines": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "oneOf": [
+                                    {
+                                      "required": [
+                                        "boxId",
+                                        "action"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "issue"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "own"
+                                      ]
+                                    }
+                                  ],
+                                  "properties": {
+                                    "action": {
+                                      "enum": [
+                                        "main",
+                                        "dim",
+                                        "del",
+                                        "short"
+                                      ]
+                                    },
+                                    "boxId": {
+                                      "type": "string"
+                                    },
+                                    "issue": {
+                                      "enum": [
+                                        "space",
+                                        "color",
+                                        "sync"
+                                      ]
+                                    },
+                                    "own": {
+                                      "const": true
+                                    },
+                                    "text": {
+                                      "maxLength": 200,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "text"
+                                  ],
+                                  "type": "object"
+                                },
+                                "maxItems": 200,
+                                "minItems": 1,
+                                "type": "array"
+                              }
+                            },
+                            "required": [
+                              "lines"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "verify": {
+                        "properties": {
+                          "failureCode": {
+                            "const": "verify_failed"
+                          },
+                          "items": {
+                            "items": {
+                              "properties": {
+                                "index": {
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "reason": {
+                                  "type": "string"
+                                },
+                                "result": {
+                                  "enum": [
+                                    "done",
+                                    "missed"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "index",
+                                "result",
+                                "reason"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "status": {
+                            "enum": [
+                              "running",
+                              "done",
+                              "failed"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "status",
+                          "items"
+                        ],
+                        "type": [
+                          "object",
+                          "null"
+                        ]
+                      },
+                      "version": {
+                        "minimum": 1,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "version",
+                      "baseVersion",
+                      "createdAt",
+                      "posterRevision",
+                      "codeChars",
+                      "request",
+                      "verify"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
                 },
                 "writingStartedAt": {
                   "description": "Latest model-writing start, including retries; retained after writing. Null before first write or when an older job did not record it.",
@@ -363,7 +624,12 @@
                 "renderedAt",
                 "codeChars",
                 "posterRevision",
-                "checks"
+                "checks",
+                "currentVersion",
+                "versions",
+                "boxes",
+                "look",
+                "sample"
               ],
               "type": "object"
             },
@@ -599,6 +865,297 @@
           }
         },
         "summary": "Read cached diagnostics or explicitly rerun the local checks"
+      }
+    },
+    "/api/direct/revision-log": {
+      "get": {
+        "operationId": "getDirectRevisionLog",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "categories": {
+                      "type": "array"
+                    },
+                    "ok": {
+                      "const": true
+                    },
+                    "rulesRevision": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "categories",
+                    "rulesRevision"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Sample or proposal not found"
+          },
+          "409": {
+            "description": "Proposal is not pending"
+          }
+        },
+        "summary": "getDirectRevisionLog"
+      }
+    },
+    "/api/direct/rules/proposals/{proposalId}/adopt": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "proposalId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "adoptDirectRuleProposal",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "ok": {
+                      "const": true
+                    },
+                    "proposal": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "proposal"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Sample or proposal not found"
+          },
+          "409": {
+            "description": "Proposal is not pending"
+          }
+        },
+        "summary": "adoptDirectRuleProposal"
+      }
+    },
+    "/api/direct/rules/proposals/{proposalId}/reject": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "proposalId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "rejectDirectRuleProposal",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "ok": {
+                      "const": true
+                    },
+                    "proposal": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "proposal"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Sample or proposal not found"
+          },
+          "409": {
+            "description": "Proposal is not pending"
+          }
+        },
+        "summary": "rejectDirectRuleProposal"
+      }
+    },
+    "/api/direct/samples": {
+      "get": {
+        "operationId": "getDirectSamples",
+        "parameters": [
+          {
+            "description": "Sample ID. When present returns the copied image/jpeg instead of the list.",
+            "in": "query",
+            "name": "poster",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "ok": {
+                      "const": true
+                    },
+                    "samples": {
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "samples"
+                  ],
+                  "type": "object"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Sample or proposal not found"
+          },
+          "409": {
+            "description": "Proposal is not pending"
+          }
+        },
+        "summary": "getDirectSamples"
       }
     },
     "/api/health": {
@@ -1648,6 +2205,18 @@
     "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/code": {
       "get": {
         "operationId": "getDirectShotCode",
+        "parameters": [
+          {
+            "description": "Read a retained version, independent of the current selection.",
+            "in": "query",
+            "name": "version",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -1703,9 +2272,288 @@
         }
       ]
     },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/current": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "selectDirectShotVersion",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "version": {
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "version"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "selectDirectShotVersion"
+      }
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/look": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "lookDirectShot",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "lookDirectShot"
+      }
+    },
     "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/poster.jpg": {
       "get": {
         "operationId": "getDirectPoster",
+        "parameters": [
+          {
+            "description": "Read a retained version, independent of the current selection.",
+            "in": "query",
+            "name": "version",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -1760,6 +2608,199 @@
           }
         }
       ]
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/revise": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "reviseDirectShot",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "Each line is nonblank. Combined text length is 1–200 Unicode characters. boxId must identify a current visible box.",
+                "properties": {
+                  "lines": {
+                    "items": {
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "required": [
+                            "boxId",
+                            "action"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "issue"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "own"
+                          ]
+                        }
+                      ],
+                      "properties": {
+                        "action": {
+                          "enum": [
+                            "main",
+                            "dim",
+                            "del",
+                            "short"
+                          ]
+                        },
+                        "boxId": {
+                          "type": "string"
+                        },
+                        "issue": {
+                          "enum": [
+                            "space",
+                            "color",
+                            "sync"
+                          ]
+                        },
+                        "own": {
+                          "const": true
+                        },
+                        "text": {
+                          "maxLength": 200,
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "text"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 200,
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "lines"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "reviseDirectShot"
+      }
     },
     "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/rewrite": {
       "parameters": [
@@ -1899,6 +2940,236 @@
           }
         },
         "summary": "rewriteDirectShot"
+      }
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/sample": {
+      "delete": {
+        "operationId": "removeDirectSample",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "removeDirectSample"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "operationId": "saveDirectSample",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "saveDirectSample"
       }
     },
     "/api/projects/{projectId}/documents/{documentName}/diff": {

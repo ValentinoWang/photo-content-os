@@ -74,7 +74,18 @@ class LocalMedia:
             pending.replace(poster)
         finally:
             pending.unlink(missing_ok=True)
+        frame_root = source.parent
+        boxes = json.loads((frame_root / 'boxes.json').read_text())
+        atomic_bytes(root / 'boxes' / (sid + '.json'), json.dumps(boxes, ensure_ascii=False).encode())
+        for fraction in (.3, .6, .9):
+            frame = frame_root / f'frame-{min(frames - 1, int(fraction * frames)):06d}.png'
+            destination = root / 'review-frames' / sid / f'{int(fraction * 10)}.jpg'
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            jpeg_frame(frame, destination)
         return inspect_layout(poster)
+
+    def review_frames(self, root: Path, shot: dict) -> list[Path]:
+        return [root / 'review-frames' / shot['shotId'] / f'{n}.jpg' for n in (3, 6, 9)]
 
     def transcribe(self, path: Path) -> dict:
         from transcribe_audio import DEFAULT_FUNASR_MODEL, FunASRProvider

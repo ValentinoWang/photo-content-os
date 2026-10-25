@@ -1,0 +1,117 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________________ test_legacy_job_upgrade_retains_original_files ________________
+
+ready_image = (<direct_video.generate.Generator object at 0x1099e9940>, {'jobId': 'dv_3a4ed5bd8fa8400d8c55fb3d', 'projectId': 'proje...r/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-238/test_legacy_job_upgrade_retain0/calls.jsonl'))
+
+    def test_legacy_job_upgrade_retains_original_files(ready_image):
+        gen, job, media, calls = ready_image
+        root = gen.path('project1', job['jobId'])
+        original_code = (root / 'shots/01.html').read_bytes()
+        original_poster = (root / 'posters/01.jpg').read_bytes()
+        for shot in job['shots']:
+            for key in ('versions', 'currentVersion', 'boxes', 'look', 'sample', '_cacheVersion'):
+                shot.pop(key, None)
+        shutil.rmtree(root / 'versions')
+        gen.save(root, job)
+        updated_at = job['updatedAt']
+        restored = gen.read('project1', job['jobId'])
+>       assert restored['updatedAt'] == updated_at
+E       AssertionError: assert '2026-10-25T20:24:13.557350Z' == '2026-10-25T20:24:13.523192Z'
+E         
+E         - 2026-10-25T20:24:13.523192Z
+E         ?                      ^ ^^^
+E         + 2026-10-25T20:24:13.557350Z
+E         ?                      ^^ ^^
+
+tests/test_r277_revisions.py:345: AssertionError
+___________ test_metadata_actions_preserve_output_timestamp[success] ___________
+
+ready_image = (<direct_video.generate.Generator object at 0x109924cd0>, {'jobId': 'dv_7dc036f5abfe4586ae3cbdcb', 'projectId': 'proje...r/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-238/test_metadata_actions_preserve0/calls.jsonl'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109ab62c0>
+review_mode = 'success'
+
+    @pytest.mark.parametrize('review_mode', ['success', 'failed', 'rebuild-frames'])
+    def test_metadata_actions_preserve_output_timestamp(ready_image, monkeypatch, review_mode):
+        gen, job, _, _ = ready_image
+        jid = job['jobId']
+        gen.request_compose('project1', jid)
+        composed = wait(gen, job)
+        updated_at = composed['updatedAt']
+        output = copy.deepcopy(composed['output'])
+        if review_mode == 'failed':
+            monkeypatch.setenv('R277_FAIL_LOOK', '1')
+        elif review_mode == 'rebuild-frames':
+            shutil.rmtree(gen.path('project1', jid) / 'review-frames')
+        accepted = gen.look('project1', jid, '01')
+>       assert accepted['updatedAt'] == updated_at
+E       AssertionError: assert '2026-10-25T20:24:16.696435Z' == '2026-10-25T20:24:16.687762Z'
+E         
+E         - 2026-10-25T20:24:16.687762Z
+E         ?                      ^^^ ^
+E         + 2026-10-25T20:24:16.696435Z
+E         ?                      ^ ^^^
+
+tests/test_r277_revisions.py:462: AssertionError
+___________ test_metadata_actions_preserve_output_timestamp[failed] ____________
+
+ready_image = (<direct_video.generate.Generator object at 0x109925bd0>, {'jobId': 'dv_c2475182a3ac43d5a7e93cfc', 'projectId': 'proje...r/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-238/test_metadata_actions_preserve1/calls.jsonl'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10990e7b0>
+review_mode = 'failed'
+
+    @pytest.mark.parametrize('review_mode', ['success', 'failed', 'rebuild-frames'])
+    def test_metadata_actions_preserve_output_timestamp(ready_image, monkeypatch, review_mode):
+        gen, job, _, _ = ready_image
+        jid = job['jobId']
+        gen.request_compose('project1', jid)
+        composed = wait(gen, job)
+        updated_at = composed['updatedAt']
+        output = copy.deepcopy(composed['output'])
+        if review_mode == 'failed':
+            monkeypatch.setenv('R277_FAIL_LOOK', '1')
+        elif review_mode == 'rebuild-frames':
+            shutil.rmtree(gen.path('project1', jid) / 'review-frames')
+        accepted = gen.look('project1', jid, '01')
+>       assert accepted['updatedAt'] == updated_at
+E       AssertionError: assert '2026-10-25T20:24:19.782245Z' == '2026-10-25T20:24:19.775307Z'
+E         
+E         - 2026-10-25T20:24:19.775307Z
+E         ?                      ^ ---
+E         + 2026-10-25T20:24:19.782245Z
+E         ?                      ^^^^
+
+tests/test_r277_revisions.py:462: AssertionError
+_______ test_metadata_actions_preserve_output_timestamp[rebuild-frames] ________
+
+ready_image = (<direct_video.generate.Generator object at 0x10999b820>, {'jobId': 'dv_963b288206174de8a5a3ccf8', 'projectId': 'proje...r/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-238/test_metadata_actions_preserve2/calls.jsonl'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098a9bf0>
+review_mode = 'rebuild-frames'
+
+    @pytest.mark.parametrize('review_mode', ['success', 'failed', 'rebuild-frames'])
+    def test_metadata_actions_preserve_output_timestamp(ready_image, monkeypatch, review_mode):
+        gen, job, _, _ = ready_image
+        jid = job['jobId']
+        gen.request_compose('project1', jid)
+        composed = wait(gen, job)
+        updated_at = composed['updatedAt']
+        output = copy.deepcopy(composed['output'])
+        if review_mode == 'failed':
+            monkeypatch.setenv('R277_FAIL_LOOK', '1')
+        elif review_mode == 'rebuild-frames':
+            shutil.rmtree(gen.path('project1', jid) / 'review-frames')
+        accepted = gen.look('project1', jid, '01')
+>       assert accepted['updatedAt'] == updated_at
+E       AssertionError: assert '2026-10-25T20:24:22.673158Z' == '2026-10-25T20:24:22.657798Z'
+E         
+E         - 2026-10-25T20:24:22.657798Z
+E         ?                       ---
+E         + 2026-10-25T20:24:22.673158Z
+E         ?                      +++
+
+tests/test_r277_revisions.py:462: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_r277_revisions.py::test_legacy_job_upgrade_retains_original_files
+FAILED tests/test_r277_revisions.py::test_metadata_actions_preserve_output_timestamp[success]
+FAILED tests/test_r277_revisions.py::test_metadata_actions_preserve_output_timestamp[failed]
+FAILED tests/test_r277_revisions.py::test_metadata_actions_preserve_output_timestamp[rebuild-frames]
+4 failed in 13.87s

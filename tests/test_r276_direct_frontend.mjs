@@ -87,17 +87,17 @@ export async function testDetail(page,job){
     const next={...options,job:structuredClone(job),shot:structuredClone(options.shot)};next.shot.posterRevision++;renderShotDetail(container,next);input=container.querySelector('input');
     const preserved=input.value==='保留意见'&&document.activeElement===input&&input.selectionStart===2&&input.selectionEnd===3;
     const other={...next,shot:job.shots[1]};renderShotDetail(container,other);renderShotDetail(container,next);const restored=container.querySelector('input').value==='保留意见';
-    const block={...next,shot:{...next.shot,status:'writing'}};renderShotDetail(container,block);const disabled=container.querySelector('input').disabled&&container.querySelector('[data-rewrite]').disabled;
+    const block={...next,shot:{...next.shot,status:'writing'}};renderShotDetail(container,block);const disabled=container.querySelector('input').disabled&&container.querySelector('[data-revise]').disabled;
     const matrix=[];
     for(const status of ['failed','interrupted','rendered']){
       renderShotDetail(container,{...next,shot:{...next.shot,status}});const box=container.querySelector('input');box.value='';box.dispatchEvent(new Event('input'));
-      matrix.push({status,emptyEnabled:!container.querySelector('[data-rewrite]').disabled,label:container.querySelector('[data-rewrite]').textContent});
-      box.value='数字再大一点';box.dispatchEvent(new Event('input'));if(container.querySelector('[data-rewrite]').disabled)throw new Error('valid instruction disabled');
-      if(container.querySelector('[data-rewrite]').textContent!=='让 Opus 重写这一镜')throw new Error('rewrite label mismatch');
+      matrix.push({status,emptyEnabled:!container.querySelector('[data-revise]').disabled,label:container.querySelector('[data-revise]').textContent});
+      box.value='数字再大一点';box.dispatchEvent(new Event('input'));if(container.querySelector('[data-revise]').disabled)throw new Error('valid instruction disabled');
+      if(container.querySelector('[data-revise]').textContent!=='重写这一镜')throw new Error('rewrite label mismatch');
     }
     container.remove();return {same,preserved,restored,disabled,matrix,exports:Object.keys(await import('/direct-shot-detail.js'))};
   },job);
-  assert.deepEqual(result,{same:true,preserved:true,restored:true,disabled:true,matrix:[{status:'failed',emptyEnabled:true,label:'重试这一镜'},{status:'interrupted',emptyEnabled:true,label:'重试这一镜'},{status:'rendered',emptyEnabled:false,label:'让 Opus 重写这一镜'}],exports:['renderShotDetail']});
+  assert.deepEqual(result,{same:true,preserved:true,restored:true,disabled:true,matrix:[{status:'failed',emptyEnabled:true,label:'重试这一镜'},{status:'interrupted',emptyEnabled:true,label:'重试这一镜'},{status:'rendered',emptyEnabled:false,label:'重写这一镜'}],exports:['renderShotDetail']});
   await testWrittenDurationCards(page,job);
 }
 

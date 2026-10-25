@@ -1,0 +1,23 @@
+ M schemas/studio-openapi.json
+ M scripts/direct_video/generate.py
+ M scripts/direct_video/media.py
+ M scripts/llm_common.py
+ M scripts/video_render/render-frames.mjs
+ M studio/api_contract.py
+ M studio/direct_video.py
+ M studio/server.py
+ M studio/static/direct-shot-detail.css
+ M studio/static/direct-shot-detail.js
+ M studio/static/direct-view.js
+ M tests/test_r276_direct_video.py
+?? .venv
+?? acceptance/requests/2026-W44/2026-10-26-R277-photo-shot-visual-revision/
+?? docs/tasks/R277-shot-visual-revision/
+?? evidence/2026-10-26/R277-shot-visual-revision/
+?? scripts/direct_video/revision_library.py
+?? scripts/direct_video/revisions.py
+?? studio/direct_revision_contract.py
+?? studio/static/direct-revision-log.js
+?? tests/test_r277_api.py
+?? tests/test_r277_boxes.py
+?? tests/test_r277_revisions.py

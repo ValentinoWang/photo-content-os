@@ -2,7 +2,7 @@ import { renderShotDetail } from './direct-shot-detail.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const D = value => `<span data-design-data>${esc(value)}</span>`;
-const btn = (text, attrs='', primary=false) => `<button class="btn${primary?' btn--pri':''}" ${attrs}>${text}</button>`;
+const btn = (text, attrs='', primary=false) => (attrs==='data-voice'?'<button class="btn rv-go-log" data-revision-log>画面问题记录</button>':'')+`<button class="btn${primary?' btn--pri':''}" ${attrs}>${text}</button>`;
 export const FAILURE_COPY = Object.freeze({
   claude_cli_unavailable:'本机的 Claude 调不通，现在用不了 Opus',
   model_timeout:'Opus 这一镜写了太久没写完，可以重试',
@@ -175,7 +175,7 @@ export function createDirectView(ctx) {
     const token=generation,input=document.createElement('input');input.type='file';input.accept=accept;
     input.onchange=async()=>{if(!input.files[0]||!active(token))return;try{await handler(input.files[0]);}catch{if(active(token)){actionError=failureMessage(accept.includes('wav')?'narration_invalid':null);paintMessage();}}};input.click();
   }
-  function bindVoice(){find('[data-voice]')?.addEventListener('click',()=>pickFile('.wav,audio/wav',async file=>{if(job)await mutate('/narration',file,true);else {pendingVoice=file;find('.dv-voice-name').textContent=safeText(file.name);}}));}
+  function bindVoice(){find('[data-revision-log]')?.addEventListener('click',async()=>{stop();const token=generation,saved=document.createDocumentFragment();while(root().firstChild)saved.append(root().firstChild);const {renderRevisionLog}=await import('./direct-revision-log.js');if(!active(token))return;renderRevisionLog(root(),{api:ctx.api,onBack:()=>{if(!active(token))return;root().replaceChildren(saved);refresh(generation);}});});find('[data-voice]')?.addEventListener('click',()=>pickFile('.wav,audio/wav',async file=>{if(job)await mutate('/narration',file,true);else {pendingVoice=file;find('.dv-voice-name').textContent=safeText(file.name);}}));}
   async function generate(){
     const token=generation;busy=true;updateForm();
     try{const result=await request(jobUrl(project.id),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({script:splitScript(formScript).join('\n'),style:formStyle})});if(!active(token))return;job=result.job;selected=undefined;userSelected=false;paint();if(pendingVoice){const file=pendingVoice;pendingVoice=null;await mutate('/narration',file,true);}schedule(token);}

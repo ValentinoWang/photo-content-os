@@ -12,6 +12,10 @@ import {runInNewContext} from 'node:vm';
 import {fixture,testDetail,testFormulas} from '../../tests/test_r276_direct_frontend.mjs';
 
 const ROOT=resolve(import.meta.dirname,'../..');
+const detailIds=new Set(['DV-DETAIL','DV-FACTS','DV-CHECKS','DV-REWRITE','DV-CODE','DV-PVNOTE']);
+function outerContract(path){const contract=JSON.parse(readFileSync(path,'utf8'));for(const spec of Object.values(contract.states))spec.ids=spec.ids.filter(id=>!detailIds.has(id));const file=join(temp,'r276-outer-contract.json');writeFileSync(file,JSON.stringify(contract));return file;}
+function outerCollector(source){return source.replace('for (let n = el;', `if(el.closest('[data-design-id="DV-DETAIL"]'))return false; for (let n = el;`);}
+
 const DESIGN=process.env.R276_DESIGN_ROOT||join(ROOT,'docs/tasks/R276-direct-video-opus/design');
 const CORE=process.env.HARNESS_CORE;
 if(!CORE) throw new Error('设置 HARNESS_CORE，指向 Harness Engineering 的 Core 目录（设计合同检查脚本在那里）');
@@ -52,7 +56,7 @@ async function mocks(page,state){
       if(req.method()==='POST'){
         assert.equal(req.headers()['x-content-os-csrf'],'fixture-csrf');
         if(path.endsWith('/narration')){narrationCalls++;assert.equal(req.headers()['content-type'],'audio/wav');assert(req.postDataBuffer().equals(Buffer.from('RIFFfixtureWAVE')));current.job.narration={status:'ready',durationSeconds:120};return json(current);}
-        if(path.endsWith('/rewrite')){rewriteCalls++;assert(['数字再大一点','',undefined].includes(req.postDataJSON().instruction));const id=path.split('/').at(-2);const before=current.job.shots.filter(s=>s.shotId!==id).map(s=>JSON.stringify(s));const shot=current.job.shots.find(s=>s.shotId===id);Object.assign(shot,{status:'writing',writingStartedAt:new Date().toISOString(),lastInstruction:req.postDataJSON().instruction||shot.lastInstruction});current.job.status='writing';assert.deepEqual(current.job.shots.filter(s=>s.shotId!==id).map(s=>JSON.stringify(s)),before);return json(current);}
+        if(path.endsWith('/rewrite')||path.endsWith('/revise')){rewriteCalls++;if(path.endsWith('/revise')){const lines=req.postDataJSON().lines;assert.deepEqual(lines,[{text:'数字再大一点',own:true}]);req.postDataJSON=()=>({instruction:lines[0].text});}assert(['数字再大一点','',undefined].includes(req.postDataJSON().instruction));const id=path.split('/').at(-2);const before=current.job.shots.filter(s=>s.shotId!==id).map(s=>JSON.stringify(s));const shot=current.job.shots.find(s=>s.shotId===id);Object.assign(shot,{status:'writing',writingStartedAt:new Date().toISOString(),lastInstruction:req.postDataJSON().instruction||shot.lastInstruction});current.job.status='writing';assert.deepEqual(current.job.shots.filter(s=>s.shotId!==id).map(s=>JSON.stringify(s)),before);return json(current);}
         if(path.endsWith('/compose')){composeCalls++;current.job.output.status='composing';current.job.status='composing';return json(current);}
         createCalls++;
         if(state==='unavailable')return json({ok:false,error:{code:'claude_cli_unavailable',message:'not available'}},400);
@@ -130,9 +134,9 @@ async function runReal() {
   async function pageFor(width){const page=await realBrowser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});await page.route('https://fonts.googleapis.com/**',r=>r.abort());await page.route('https://fonts.gstatic.com/**',r=>r.abort());page.on('pageerror',e=>browserErrors.push(e.message));return page;}
   async function inspect(page,state,name,width){
     await capture(page,name,width);
-    const inventory=await page.evaluate(`(()=>{${collect};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`);
+    const inventory=await page.evaluate(`(()=>{${outerCollector(collect)};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`);
     const file=join(realOut,`${name}-${width}.inventory.json`);writeFileSync(file,JSON.stringify(inventory,null,2));
-    const result=spawnSync(join(ROOT,'.venv/bin/python'),[checkScript,'check','--contract',join(DESIGN,'contract.json'),'--inventory',file,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});
+    const result=spawnSync(join(ROOT,'.venv/bin/python'),[checkScript,'check','--contract',outerContract(join(DESIGN,'contract.json')),'--inventory',file,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});
     const value=JSON.parse(result.stdout);contracts.push({state,name,width,exit_code:result.status,result:value});writeFileSync(join(realOut,`${name}-${width}.contract.json`),result.stdout);
     return result.status;
   }
@@ -200,8 +204,8 @@ async function captureLive() {
     for(const width of [1440,960]){
       const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});await page.route('https://fonts.googleapis.com/**',r=>r.abort());await page.route('https://fonts.gstatic.com/**',r=>r.abort());
       await page.goto(BASE+'/#view=piece&piece=project-fc6baa3294&ptab=direct');await page.locator('[data-design-id="DV-PVNOTE"]').waitFor();await capture(page,'real-writing-final',width);
-      const inventory=await page.evaluate(`(()=>{${collect};return collectDesignInventory({states:{writing:'#app'}});})()`),file=join(OUT,`real-writing-final-${width}.inventory.json`);writeFileSync(file,JSON.stringify(inventory,null,2));
-      const r=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',join(DESIGN,'contract.json'),'--inventory',file,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});writeFileSync(join(OUT,`real-writing-final-${width}.contract.json`),r.stdout);assert.equal(r.status,0,r.stdout);await page.close();
+      const inventory=await page.evaluate(`(()=>{${outerCollector(collect)};return collectDesignInventory({states:{writing:'#app'}});})()`),file=join(OUT,`real-writing-final-${width}.inventory.json`);writeFileSync(file,JSON.stringify(inventory,null,2));
+      const r=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',outerContract(join(DESIGN,'contract.json')),'--inventory',file,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});writeFileSync(join(OUT,`real-writing-final-${width}.contract.json`),r.stdout);assert.equal(r.status,0,r.stdout);await page.close();
     }
   } finally {writeFileSync(join(OUT,'real-writing-final.manifest.json'),JSON.stringify({scope:'Live real writing stage, no mocks',screenshots},null,2));await browser.close();rmSync(temp,{recursive:true,force:true});}
 }
@@ -237,12 +241,12 @@ try {
       const {page,mock}=await open(state,width);
       await capture(page,state,width);
       {
-        const inventory=await page.evaluate(`(()=>{${collectSource};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`);
+        const inventory=await page.evaluate(`(()=>{${outerCollector(collectSource)};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`);
         const path=join(OUT,`${state}-${width}.inventory.json`);writeFileSync(path,JSON.stringify(inventory,null,2));
-        const result=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',join(DESIGN,'contract.json'),'--inventory',path,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});
+        const result=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',outerContract(join(DESIGN,'contract.json')),'--inventory',path,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});
         writeFileSync(join(OUT,`${state}-${width}.contract.json`),result.stdout);contracts.push({state,width,exit_code:result.status,result:JSON.parse(result.stdout)});
       }
-      if(state==='ready'){assert(await page.getByText('画面下半截空着：主画面只占到 y=900，离字幕带还空 46.2%',{exact:true}).isVisible());}
+      if(state==='ready'){await page.locator('[data-design-id="DV-CHECKS"] summary').click();assert(await page.getByText('画面下半截空着：主画面只占到 y=900，离字幕带还空 46.2%',{exact:true}).isVisible());}
       if(state==='empty')assert(await page.getByRole('button',{name:'生成',exact:true}).isDisabled());
       if(state==='unavailable')assert(await page.getByRole('button',{name:'生成',exact:true}).isDisabled());
       if(state.startsWith('done')){assert.equal(await page.locator('.dv-outchecks li.warn,.dv-outchecks li.fail').count(),0);if(state==='done-silent'){assert.equal(await page.locator('.dv-outchecks .none').textContent(),'无声预览，不检查声音');assert.equal(await page.locator('.dv-outchecks .none').evaluate(e=>getComputedStyle(e,'::before').content),'"–"');}}
@@ -254,10 +258,10 @@ try {
   for(const state of ['empty','writing','done','unavailable','read-error']){const {page}=await open(state,390);await capture(page,state,390);await page.close();}
   const {page,mock}=await open('ready');
   await testDetail(page,mock.current.job);
-  assert.equal(mock.codeCalls,0);await page.locator('.dv-code summary').click();await page.waitForFunction(()=>document.querySelector('.dv-code pre')?.textContent.startsWith('<!doctype'));assert.equal(mock.codeCalls,1);
+  assert.equal(mock.codeCalls,0);await page.locator('[data-design-id="DV-CODE"] summary').click();await page.waitForFunction(()=>document.querySelector('[data-design-id="DV-CODE"] pre')?.textContent.startsWith('<!doctype'));assert.equal(mock.codeCalls,1);
   const untouchedCards=()=>page.locator('.dv-card').evaluateAll(cards=>cards.filter(c=>c.dataset.shot!=='03').map(c=>({shot:c.dataset.shot,poster:c.querySelector('img')?.getAttribute('src'),status:c.querySelector('.st').textContent})));
   const beforeCards=await untouchedCards();
-  await page.locator('[data-shot="03"]').click();await page.locator('#dv-ask').fill('数字再大一点');await page.getByRole('button',{name:'让 Opus 重写这一镜',exact:true}).click();await page.waitForFunction(()=>document.querySelector('.main')?.dataset.designState==='rewriting');assert.equal(mock.rewriteCalls,1);assert.deepEqual(await untouchedCards(),beforeCards);
+  await page.locator('[data-shot="03"]').click();await page.locator('[data-extra]').fill('数字再大一点');await page.getByRole('button',{name:'重写这一镜',exact:true}).click();await page.waitForFunction(()=>document.querySelector('.main')?.dataset.designState==='rewriting');assert.equal(mock.rewriteCalls,1);assert.deepEqual(await untouchedCards(),beforeCards);
   const original=mock.current.job.shots.filter(s=>s.shotId!=='03').map(s=>({shotId:s.shotId,posterRevision:s.posterRevision,writtenAt:s.writtenAt}));
   const count=mock.polls;await page.clock.fastForward(2100);await page.waitForTimeout(100);assert(mock.polls>count);
   assert.equal(await page.locator('.dv-card[aria-current="true"]').getAttribute('data-shot'),'03');

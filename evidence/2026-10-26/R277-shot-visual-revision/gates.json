@@ -1,0 +1,101 @@
+[
+  {
+    "name": "runtime",
+    "command": [
+      "bash",
+      "scripts/check_runtime_contract.sh"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 0.269
+  },
+  {
+    "name": "repository-safety",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_repository_safety.py",
+      "--base",
+      "origin/main"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 0.947
+  },
+  {
+    "name": "music-registry",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_music_analysis_registry.py"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 0.946
+  },
+  {
+    "name": "doc-sync",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_obsidian_doc_sync.py"
+    ],
+    "returncode": 1,
+    "elapsedSeconds": 0.945
+  },
+  {
+    "name": "outline",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_outline_contract.py",
+      "."
+    ],
+    "returncode": 1,
+    "elapsedSeconds": 0.944
+  },
+  {
+    "name": "validate-task-help",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_content_os_task.py",
+      "--help"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 0.943
+  },
+  {
+    "name": "validate-draft-help",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_jianying_draft.py",
+      "--help"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 0.942
+  },
+  {
+    "name": "r276-node",
+    "command": [
+      "node",
+      "tests/test_r276_direct_frontend.mjs"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 0.938
+  },
+  {
+    "name": "ai-egress",
+    "command": [
+      ".venv/bin/python",
+      "~/Desktop/Opensource_Tool/Harness_Engineering/Core/scripts/quality/check_ai_egress_ownership.py",
+      "--runtime-root",
+      "scripts",
+      "--gateway",
+      "scripts/llm_common.py"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 0.935,
+    "initialMisconfiguredCommand": [
+      ".venv/bin/python",
+      "~/Desktop/Opensource_Tool/Harness_Engineering/Core/scripts/quality/check_ai_egress_ownership.py",
+      "--runtime-root",
+      "scripts",
+      "--gateway",
+      "scripts/llm_common.py"
+    ],
+    "finalLog": "ai-egress-scripts.log"
+  }
+]

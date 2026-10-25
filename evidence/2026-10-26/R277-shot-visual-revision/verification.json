@@ -1,0 +1,35 @@
+{
+  "scope": "R277 A backend only",
+  "base": "90875babb53d0c47813513cf954ec99e0e92f32a",
+  "frontendDiff": false,
+  "r276TestsEdited": false,
+  "report": "docs/tasks/R277-shot-visual-revision/REPORT-A.md",
+  "tests": {
+    "full": {
+      "name": "pytest",
+      "errors": "6",
+      "failures": "10",
+      "skipped": "25",
+      "tests": "3054",
+      "time": "232.927",
+      "timestamp": "2026-10-26T03:27:40.571986+08:00",
+      "hostname": "15-M3-MacBook-Air.local",
+      "r277Count": 40
+    },
+    "focused": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "1",
+      "skipped": "0",
+      "tests": "178",
+      "time": "78.639",
+      "timestamp": "2026-10-26T03:31:25.248121+08:00",
+      "hostname": "15-M3-MacBook-Air.local",
+      "r277Count": 50
+    }
+  },
+  "unresolved": [
+    "R276 exact projection field-set test conflicts with the approved five additive fields",
+    "existing ffmpeg filter capabilities and document-sync timestamps"
+  ]
+}

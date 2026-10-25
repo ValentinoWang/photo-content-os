@@ -139,6 +139,42 @@ async function main() {
       throw errors[0] || error;
     }
     if (errors.length) throw errors[0];
+    if (frame === Math.min(request.frames - 1, Math.floor(.8 * request.frames))) {
+      const boxes = await page.evaluate(() => {
+        const visible = element => {
+          const rect = element.getBoundingClientRect();
+          if (!rect.width || !rect.height || rect.right <= 0 || rect.bottom <= 0 || rect.left >= 1080 || rect.top >= 1920) return false;
+          for (let node = element; node; node = node.parentElement) {
+            const style = getComputedStyle(node);
+            if (style.display === 'none' || style.visibility === 'hidden' || style.visibility === 'collapse' || Number(style.opacity) === 0) return false;
+          }
+          return true;
+        };
+        const text = element => (element.textContent || '').replace(/\s+/g, ' ').trim();
+        const quote = value => `「${Array.from(value).slice(0, 12).join('')}」`;
+        const used = new Set();
+        return [...document.querySelectorAll('[id],[data-s]')].filter(visible).map((element, index) => {
+          const rect = element.getBoundingClientRect();
+          let id = element.id || element.getAttribute('data-s');
+          if (!id || used.has(id)) id = `box-${index + 1}`;
+          while (used.has(id)) id += '-';
+          used.add(id);
+          let name = text(element) ? quote(text(element)) : null;
+          if (!name && ['rect', 'circle', 'ellipse', 'path', 'line', 'polygon', 'polyline'].includes(element.localName)) {
+            const scope = element.closest('svg') || element.parentElement;
+            const labels = [...scope.querySelectorAll('text')].filter(node => visible(node) && text(node));
+            labels.sort((a, b) => {
+              const above = node => { const r = node.getBoundingClientRect(); return r.bottom <= rect.top + 10 && r.right >= rect.left && r.left <= rect.right ? 0 : 1; };
+              const distance = node => { const r = node.getBoundingClientRect(); return Math.hypot(r.x + r.width / 2 - rect.x - rect.width / 2, r.y + r.height / 2 - rect.y - rect.height / 2); };
+              return above(a) - above(b) || distance(a) - distance(b);
+            });
+            if (labels.length) name = quote(text(labels[0])) + (element.localName === 'rect' ? '柱子' : '图形');
+          }
+          return {id, name: name || `第 ${index + 1} 块`, x: rect.x, y: rect.y, w: rect.width, h: rect.height};
+        });
+      });
+      writeFileSync(resolve(output, 'boxes.json'), `${JSON.stringify(boxes, null, 2)}\n`);
+    }
     await page.screenshot({ path: resolve(output, `frame-${String(frame).padStart(6, '0')}.png`), omitBackground: Boolean(request.transparent), animations: 'allow', caret: 'hide', timeout: request.timeout_seconds * 1000 });
     if (errors.length) throw errors[0];
     progress = frame + 1;

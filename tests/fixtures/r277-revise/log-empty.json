@@ -1,0 +1,442 @@
+{
+  "ok": true,
+  "job": {
+    "jobId": "dv_frontend_fixture",
+    "projectId": "fixture-piece",
+    "model": "claude-opus-5-5",
+    "status": "ready",
+    "createdAt": "2026-10-25T19:36:12.555Z",
+    "updatedAt": "2026-10-25T19:47:32.555Z",
+    "failureCode": null,
+    "design": {
+      "status": "done",
+      "palette": {
+        "background": "#F3F0E8",
+        "primary": "#1E5E6A",
+        "accent": "#D8552A",
+        "neutral": "#52616A"
+      },
+      "typeScale": [
+        84,
+        52,
+        44
+      ],
+      "motionRules": "一镜一个主动作，图解跟着口播一步步长出来",
+      "banned": [
+        "光晕霓虹",
+        "紫蓝渐变",
+        "三张卡片并排",
+        "全部同时淡入"
+      ]
+    },
+    "shots": [
+      {
+        "shotId": "01",
+        "dialogue": "清华AI体育博主，断更一年。会写代码，会练体能，就是发不出一条视频。后来我看到一项研究：容易焦虑的人担心的事，百分之九十一没有发生。拦着我的，是脑子里的四句话。今天一句一句，对一对研究。",
+        "mainAction": "「91%」大字落地",
+        "estimatedSeconds": 18.2,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 1,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:37:52.555Z",
+        "writtenAt": "2026-10-25T19:39:53.555Z",
+        "renderedAt": "2026-10-25T19:47:32.555Z",
+        "codeChars": 4635,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": []
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "posterRevision": 1,
+            "codeChars": 4635,
+            "createdAt": "2026-10-25T19:39:53.555Z",
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": []
+        },
+        "sample": false
+      },
+      {
+        "shotId": "02",
+        "dialogue": "第一句：发出去，会被人看低。断了这么久，大家肯定都注意到了。有个经典实验：让学生穿件尴尬的衣服走进教室。穿的人估计，大约一半的人会注意到。实际只有四分之一左右。别人的注意，远比我们以为的少。没有人在等我宣布回归。",
+        "mainAction": "两根柱子一高一低",
+        "estimatedSeconds": 20.8,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 1,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:37:52.555Z",
+        "writtenAt": "2026-10-25T19:40:17.555Z",
+        "renderedAt": "2026-10-25T19:47:32.555Z",
+        "codeChars": 4320,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面上的「50%」口播里写的是「约一半」"
+            }
+          ]
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "posterRevision": 1,
+            "codeChars": 4320,
+            "createdAt": "2026-10-25T19:40:17.555Z",
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [
+          {
+            "id": "2",
+            "name": "「断了这么久，大家肯定都注」",
+            "x": 72,
+            "y": 330,
+            "w": 936,
+            "h": 64.796875
+          },
+          {
+            "id": "3",
+            "name": "「经典实验：穿件尴尬的衣服」",
+            "x": 72,
+            "y": 420,
+            "w": 936,
+            "h": 800
+          },
+          {
+            "id": "b1",
+            "name": "「约 50%」柱子",
+            "x": 224,
+            "y": 872,
+            "w": 280,
+            "h": 230
+          },
+          {
+            "id": "b2",
+            "name": "「约 25%」柱子",
+            "x": 590,
+            "y": 987,
+            "w": 280,
+            "h": 115
+          },
+          {
+            "id": "v1",
+            "name": "「约 50%」",
+            "x": 238.6796875,
+            "y": 775,
+            "w": 250.640625,
+            "h": 80
+          },
+          {
+            "id": "v2",
+            "name": "「约 25%」",
+            "x": 604.6796875,
+            "y": 890,
+            "w": 250.640625,
+            "h": 80
+          },
+          {
+            "id": "l1",
+            "name": "「穿的人估计」",
+            "x": 244,
+            "y": 1129,
+            "w": 240,
+            "h": 48
+          },
+          {
+            "id": "l2",
+            "name": "「实际注意到」",
+            "x": 610,
+            "y": 1129,
+            "w": 240,
+            "h": 48
+          },
+          {
+            "id": "8",
+            "name": "「没有人在等我宣布回归」",
+            "x": 72,
+            "y": 1260,
+            "w": 936,
+            "h": 128
+          }
+        ],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": [
+            {
+              "boxId": "b2",
+              "kind": "主次",
+              "text": "和「约 50%」一样大、一样醒目，看不出这一镜要记住哪个数。",
+              "suggest": "dim"
+            },
+            {
+              "boxId": "2",
+              "kind": "字太多",
+              "text": "和字幕说的是同一句。这一屏一共有 7 处字。",
+              "suggest": "del"
+            },
+            {
+              "boxId": "3",
+              "kind": "多余",
+              "text": "这一镜不用读刻度，多了一条线和一处字。",
+              "suggest": "del"
+            }
+          ]
+        },
+        "sample": false
+      },
+      {
+        "shotId": "03",
+        "dialogue": "第二句：担心的事，一定会发生。开头那个数就来自这里：把每天的担心记下来，事后逐条对照。大约百分之九十一，没有发生。所以发之前，我先写一行：我担心什么。过两天再补一行：实际怎样。不写下来，就永远不知道它没应验。",
+        "mainAction": "方格逐个亮起再褪去",
+        "estimatedSeconds": 20.4,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 1,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:37:52.555Z",
+        "writtenAt": "2026-10-25T19:41:34.555Z",
+        "renderedAt": "2026-10-25T19:47:32.555Z",
+        "codeChars": 4833,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": []
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "posterRevision": 1,
+            "codeChars": 4833,
+            "createdAt": "2026-10-25T19:41:34.555Z",
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": []
+        },
+        "sample": false
+      },
+      {
+        "shotId": "04",
+        "dialogue": "第三句：还没做到最好，再改改。西蒙提过一个说法，叫满意化：够好就停，不用非找到最好。有本书叫《艺术与恐惧》，讲过一个陶艺课的故事。一组按数量打分，一组按质量打分。最好的作品，反而出自数量组。所以我先写下几条标准，满足了就发。",
+        "mainAction": "进度条停在「够好 · 发」",
+        "estimatedSeconds": 22,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 1,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:37:52.555Z",
+        "writtenAt": "2026-10-25T19:44:42.555Z",
+        "renderedAt": "2026-10-25T19:47:32.555Z",
+        "codeChars": 5857,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": []
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "posterRevision": 1,
+            "codeChars": 5857,
+            "createdAt": "2026-10-25T19:44:42.555Z",
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": []
+        },
+        "sample": false
+      },
+      {
+        "shotId": "05",
+        "dialogue": "第四句：反正都断了，再断几天也一样。这叫破戒效应。有研究跟踪了九十多个人，发现偶尔漏掉一次，对养成没有实质影响。养成的中位数是六十六天，快的十八天，慢的两百五十四天。断了，今天接上就行。我只给自己一条规矩：不连着断两次。",
+        "mainAction": "习惯曲线断一下又接上",
+        "estimatedSeconds": 21.6,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 1,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:37:52.555Z",
+        "writtenAt": "2026-10-25T19:45:24.555Z",
+        "renderedAt": "2026-10-25T19:47:32.555Z",
+        "codeChars": 5897,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": []
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "posterRevision": 1,
+            "codeChars": 5897,
+            "createdAt": "2026-10-25T19:45:24.555Z",
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": []
+        },
+        "sample": false
+      },
+      {
+        "shotId": "06",
+        "dialogue": "这些道理，我早就懂。可懂了，身体还是怕。旧的预测只在出错时才会改，而不发，它就永远不会错。所以我把动作写成一句：如果晚饭后坐到桌前，就打开草稿箱，发最早剪好的那一条。九十四项研究汇总下来，这样写的人明显更容易做到。",
+        "mainAction": "三个节点转成一个圈",
+        "estimatedSeconds": 21,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 2,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:37:52.555Z",
+        "writtenAt": "2026-10-25T19:46:59.555Z",
+        "renderedAt": "2026-10-25T19:47:32.555Z",
+        "codeChars": 5021,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "stagnant",
+              "message": "3.2–6.6 秒画面没有变化，停了 3.4 秒"
+            }
+          ]
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "posterRevision": 1,
+            "codeChars": 5021,
+            "createdAt": "2026-10-25T19:46:59.555Z",
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": []
+        },
+        "sample": false
+      },
+      {
+        "shotId": "07",
+        "dialogue": "发布是训练课，不是比赛。发出来的七十分，比没发的九十五分有用。你也有一件存了很久的东西吧？今天写两行字。一行写：如果什么时候，我就做哪个小动作。一行写：我最担心会发生什么。过两天，回来对一对。",
+        "mainAction": "两条横条一长一短",
+        "estimatedSeconds": 18.8,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 1,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:37:52.555Z",
+        "writtenAt": "2026-10-25T19:47:32.555Z",
+        "renderedAt": "2026-10-25T19:47:32.555Z",
+        "codeChars": 4346,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": []
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "posterRevision": 1,
+            "codeChars": 4346,
+            "createdAt": "2026-10-25T19:47:32.555Z",
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": []
+        },
+        "sample": false
+      }
+    ],
+    "narration": {
+      "status": "none",
+      "durationSeconds": null
+    },
+    "output": {
+      "status": "none",
+      "kind": "silent",
+      "durationSeconds": null,
+      "frames": null,
+      "revision": 0,
+      "checks": {
+        "playable": "unknown",
+        "avOffsetSeconds": null,
+        "blackFrames": null
+      }
+    }
+  },
+  "revisionLog": {
+    "ok": true,
+    "rulesRevision": 3,
+    "categories": []
+  },
+  "samples": {
+    "ok": true,
+    "samples": []
+  }
+}

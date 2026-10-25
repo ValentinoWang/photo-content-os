@@ -1,0 +1,62 @@
+[
+  {
+    "filter": "drawtext",
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-f",
+      "lavfi",
+      "-i",
+      "color=s=16x16:d=0.1",
+      "-vf",
+      "drawtext=text=test",
+      "-f",
+      "null",
+      "-"
+    ],
+    "returncode": 8,
+    "stderr": "[AVFilterGraph @ 0xc84c28200] No such filter: 'drawtext'\nError opening output file -.\nError opening output files: Filter not found\n"
+  },
+  {
+    "filter": "subtitles",
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-f",
+      "lavfi",
+      "-i",
+      "color=s=16x16:d=0.1",
+      "-vf",
+      "subtitles=absent.srt",
+      "-f",
+      "null",
+      "-"
+    ],
+    "returncode": 234,
+    "stderr": "[AVFilterGraph @ 0x793018200] No option name near 'absent.srt'\n[AVFilterGraph @ 0x793018200] Error parsing a filter description around: \n[AVFilterGraph @ 0x793018200] Error parsing filterchain 'subtitles=absent.srt' around: \nError opening output file -.\nError opening output files: Invalid argument\n"
+  },
+  {
+    "filter": "ass",
+    "command": [
+      "ffmpeg",
+      "-hide_banner",
+      "-v",
+      "error",
+      "-f",
+      "lavfi",
+      "-i",
+      "color=s=16x16:d=0.1",
+      "-vf",
+      "ass=absent.ass",
+      "-f",
+      "null",
+      "-"
+    ],
+    "returncode": 234,
+    "stderr": "[AVFilterGraph @ 0xac0c28200] No option name near 'absent.ass'\n[AVFilterGraph @ 0xac0c28200] Error parsing a filter description around: \n[AVFilterGraph @ 0xac0c28200] Error parsing filterchain 'ass=absent.ass' around: \nError opening output file -.\nError opening output files: Invalid argument\n"
+  }
+]

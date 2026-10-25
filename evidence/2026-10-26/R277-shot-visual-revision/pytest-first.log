@@ -1,0 +1,31 @@
+..................................F..................................... [ 63%]
+..........................................                               [100%]
+=================================== FAILURES ===================================
+_________________________ test_busy_job_and_projection _________________________
+
+tmp_path = PosixPath('$TMPDIR/pytest-of-vsiyo/pytest-202/test_busy_job_and_projection0')
+
+    def test_busy_job_and_projection(tmp_path):
+        gen, job, _, _ = ready(tmp_path)
+        gen.active.add(('project1', job['jobId']))
+        with pytest.raises(DirectVideoError, match='job_busy'):
+            gen.rewrite('project1', job['jobId'], '01', '修改')
+        job['privatePath'] = str(tmp_path)
+        job['shots'][0]['checks']['warnings'].append({'code': 'note', 'message': str(tmp_path / 'secret/file'), 'privatePath': str(tmp_path)})
+        result = projection(job)
+        assert str(tmp_path) not in json.dumps(result)
+>       assert set(result['shots'][0]) == {'shotId', 'dialogue', 'mainAction', 'estimatedSeconds', 'measuredSeconds', 'timingSource', 'status', 'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt', 'renderedAt', 'codeChars', 'posterRevision', 'checks'}
+E       AssertionError: assert {'attempts', ...ialogue', ...} == {'attempts', ...ureCode', ...}
+E         
+E         Extra items in the left set:
+E         'versions'
+E         'currentVersion'
+E         'boxes'
+E         'look'
+E         'sample'
+E         Use -v to get more diff
+
+tests/test_r276_direct_video.py:340: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_r276_direct_video.py::test_busy_job_and_projection - Assert...
+1 failed, 113 passed in 11.36s

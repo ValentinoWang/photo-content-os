@@ -778,6 +778,13 @@ class StudioApplication:
                     if parsed.path.startswith("/api/") and not is_registered_route("GET", parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                         return
+                    if segments[:2] == ['api', 'direct']:
+                        query = urllib.parse.parse_qs(parsed.query)
+                        if segments[2] == 'samples' and 'poster' in query:
+                            self._media(app.direct_video.generator.library.poster(query['poster'][0]))
+                        else:
+                            self._json(200, {'ok': True, **app.direct_video.library(segments[2])})
+                        return
                     if len(segments) >= 6 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'jobs']:
                         project_id, job_id = segments[2], segments[5]
                         if len(segments) == 6:
@@ -785,7 +792,8 @@ class StudioApplication:
                         elif len(segments) == 7 and segments[6] == 'output.mp4':
                             self._media(app.direct_video.artifact(project_id, job_id, 'output.mp4'))
                         elif len(segments) == 9 and segments[6] == 'shots':
-                            path = app.direct_video.artifact(project_id, job_id, segments[8], segments[7])
+                            version = urllib.parse.parse_qs(parsed.query).get('version', [None])[0]
+                            path = app.direct_video.artifact(project_id, job_id, segments[8], segments[7], version)
                             if segments[8] == 'code':
                                 self._send(200, path.read_bytes(), 'text/plain; charset=utf-8')
                             else:
@@ -989,6 +997,12 @@ class StudioApplication:
             def do_PATCH(self) -> None:  # noqa: N802
                 self._write_request("PATCH")
 
+            def do_PUT(self) -> None:  # noqa: N802
+                self._write_request('PUT')
+
+            def do_DELETE(self) -> None:  # noqa: N802
+                self._write_request('DELETE')
+
             def _write_request(self, method: str) -> None:
                 try:
                     self._assert_write()
@@ -1001,7 +1015,12 @@ class StudioApplication:
                     if not is_registered_route(method, parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                         return
-                    if method == 'POST' and len(segments) >= 5 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'jobs']:
+                    if segments[:2] == ['api', 'direct']:
+                        self._assert_direct_origin()
+                        self._body()
+                        self._json(200, {'ok': True, **app.direct_video.library('decision', segments[4], segments[5] == 'adopt')})
+                        return
+                    if method in {'POST', 'PUT', 'DELETE'} and len(segments) >= 5 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'jobs']:
                         self._assert_direct_origin()
                         project_id = segments[2]
                         if len(segments) == 7 and segments[6] == 'narration':
@@ -1017,7 +1036,8 @@ class StudioApplication:
                             elif len(segments) == 7:
                                 job = app.direct_video.command(project_id, segments[5], 'compose', body)
                             else:
-                                job = app.direct_video.command(project_id, segments[5], 'rewrite', body, sid=segments[7])
+                                action = 'unsample' if method == 'DELETE' else segments[8]
+                                job = app.direct_video.command(project_id, segments[5], action, body, sid=segments[7])
                         self._json(201 if len(segments) == 5 else 200, {'ok': True, 'job': job})
                         return
                     if parsed.path.startswith('/api/review/'):
@@ -1443,7 +1463,7 @@ class StudioApplication:
             def _handle_error(self, exc: Exception) -> None:
                 if isinstance(exc, DirectVideoError):
                     code = exc.code
-                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready'} else 400
+                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready'} else 400
                     self._json(status, _error(code, '直出任务暂时无法执行，请检查输入或任务状态后重试。'))
                     return
                 code = getattr(exc, "code", "request_invalid")

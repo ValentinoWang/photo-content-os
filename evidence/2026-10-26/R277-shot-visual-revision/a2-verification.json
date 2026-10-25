@@ -1,0 +1,15 @@
+{
+  "backendAndOpenapi": {
+    "passed": 174,
+    "failed": 0,
+    "seconds": 143.02
+  },
+  "supplementalMigration": {
+    "passed": 1,
+    "seconds": 5.5
+  },
+  "coordinatorStrictSetTestUnchanged": true,
+  "apiExamplesRegenerated": true,
+  "committed": false,
+  "pushed": false
+}

@@ -1,0 +1,90 @@
+{
+  "copy": {
+    "review": [
+      "Opus 正在看这一镜的画面",
+      "重试这一镜"
+    ],
+    "review-failed": [
+      "这一镜还没有可以点的块。",
+      "让 Opus 看一遍",
+      "这一镜还没有可以点的块"
+    ],
+    "select": [],
+    "picked": [
+      "要改的超过 200 字了，删短一点再重写。",
+      "这一版找不到了，刷新一下再选。"
+    ],
+    "rewriting2": [
+      "正在重写这一镜"
+    ],
+    "compare": [
+      "正在核对",
+      "没做到",
+      "Opus 这次没核对成，两版照样可以比。"
+    ],
+    "kept-prev": [],
+    "saved": [
+      "这个样例已经不在了，刷新一下。"
+    ],
+    "log": [
+      "正在起草规则",
+      "这次没起草成，再攒 3 次会重新起草。",
+      "还没有改过画面。改过的问题会记在这里。",
+      "还没有存样例。在一镜上点「♡ 这镜好」就会存到这里。",
+      "已写进规则",
+      "这条草稿已经处理过，刷新一下。"
+    ]
+  },
+  "ids": {
+    "review": [
+      "DV-PVNOTE"
+    ],
+    "review-failed": [
+      "DV-PVNOTE"
+    ],
+    "select": [
+      "DV-PVNOTE"
+    ],
+    "picked": [
+      "DV-PVNOTE"
+    ],
+    "rewriting2": [
+      "DV-PVNOTE"
+    ],
+    "kept-prev": [
+      "DV-PVNOTE"
+    ],
+    "saved": [
+      "DV-PVNOTE"
+    ]
+  },
+  "optional_ids": {
+    "review": [
+      "DV-SCRUB"
+    ],
+    "review-failed": [
+      "DV-SCRUB"
+    ],
+    "select": [
+      "DV-SCRUB"
+    ],
+    "picked": [
+      "DV-SCRUB"
+    ],
+    "rewriting2": [
+      "DV-SCRUB"
+    ],
+    "kept-prev": [
+      "DV-SCRUB"
+    ],
+    "saved": [
+      "DV-SCRUB"
+    ],
+    "compare": [
+      "DV-SCRUB"
+    ],
+    "log": [
+      "RV-PROPOSAL"
+    ]
+  }
+}

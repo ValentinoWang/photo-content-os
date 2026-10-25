@@ -1,0 +1,154 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+______________ test_revision_routes_artifacts_samples_and_privacy ______________
+
+api = (<function api.<locals>.request at 0x109b61b20>, {'X-Content-OS-CSRF': 'mUO_FuMSmRyDrDPnVzLZYiwkb5U_TNuE7l7g0l8pbW0'}, 'project-d432ae2344', <studio.server.StudioApplication object at 0x109ad8ec0>, '127.0.0.1:56084')
+image_claude = PosixPath('$TMPDIR/pytest-of-vsiyo/pytest-206/test_revision_routes_artifacts0/calls.jsonl')
+
+    def test_revision_routes_artifacts_samples_and_privacy(api, image_claude):
+        request, csrf, pid, app, host = api
+        app.direct_video.generator.model_call = llm_common.generate_text
+        app.direct_video.generator.media = ImageMedia()
+        base, job = create(api)
+        shot = base + '/shots/01/'
+        for method, suffix, body in [('POST', 'revise', {'lines': [{'text': '变灰', 'boxId': 'b3', 'action': 'dim'}]}),
+                                     ('POST', 'current', {'version': 1}), ('POST', 'look', {}),
+                                     ('PUT', 'sample', {}), ('DELETE', 'sample', {})]:
+            assert request(shot + suffix, method, body)[0] == 403
+            assert request(shot + suffix, method, body, {**csrf, 'Origin': 'http://127.0.0.1:1'})[0] == 403
+        assert request(shot + 'revise', 'POST', {'lines': [{'text': '变灰', 'boxId': 'b3', 'action': 'dim'}]}, csrf)[0] == 200
+        idle(app)
+        status, _, payload = request(base)
+        assert status == 200 and payload['job']['shots'][0]['currentVersion'] == 2
+        assert payload['job']['shots'][0]['versions'][1]['verify']['status'] == 'done'
+        assert request(shot + 'poster.jpg?version=1')[0] == 200
+        assert request(shot + 'poster.jpg?version=2')[2] != request(shot + 'poster.jpg?version=1')[2]
+        old = request(shot + 'code?version=1')[2]
+        assert request(shot + 'current', 'POST', {'version': 1}, csrf)[2]['job']['shots'][0]['currentVersion'] == 1
+        assert request(shot + 'code')[2] == old
+        assert request(shot + 'poster.jpg?version=999')[0] == 404
+        assert request(shot + 'current', 'POST', {'version': True}, csrf)[0] == 404
+        assert request(shot + 'current', 'POST', {'version': 999}, csrf)[2]['error']['code'] == 'version_not_found'
+        assert request(shot + 'revise', 'POST', {'lines': [{'text': '字'*201, 'own': True}]}, csrf)[2]['error']['code'] == 'instruction_too_long'
+        assert request(shot + 'look', 'POST', {}, csrf)[0] == 200
+        idle(app)
+        assert request(shot + 'sample', 'PUT', {}, csrf)[2]['job']['shots'][0]['sample']
+        status, _, samples = request('/api/direct/samples')
+        assert status == 200 and samples['samples'][0]['projectTitle'] == '合成测试'
+>       assert request(samples['samples'][0]['posterUrl'])[0] == 200
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_r277_api.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_r276_direct_api.py:33: in request
+    connection.request(method, path, data, final_headers)
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1386: in request
+    self._send_request(method, url, body, headers, encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1397: in _send_request
+    self.putrequest(method, url, **skips)
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1235: in putrequest
+    self._output(self._encode_request(request))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.client.HTTPConnection object at 0x109b0bba0>
+request = 'GET ［本机路径］ HTTP/1.1'
+
+    def _encode_request(self, request):
+        # ASCII also helps prevent CVE-2019-9740.
+>       return request.encode('ascii')
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       UnicodeEncodeError: 'ascii' codec can't encode characters in position 4-9: ordinal not in range(128)
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1315: UnicodeEncodeError
+---------------------------- Captured stderr setup -----------------------------
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+----------------------------- Captured stderr call -----------------------------
+studio: "POST /api/projects/project-d432ae2344/direct/jobs HTTP/1.1" 201 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/revise HTTP/1.1" 403 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/revise HTTP/1.1" 403 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/current HTTP/1.1" 403 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/current HTTP/1.1" 403 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/look HTTP/1.1" 403 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/look HTTP/1.1" 403 -
+studio: "PUT /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/sample HTTP/1.1" 403 -
+studio: "PUT /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/sample HTTP/1.1" 403 -
+studio: "DELETE /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/sample HTTP/1.1" 403 -
+studio: "DELETE /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/sample HTTP/1.1" 403 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/revise HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/poster.jpg?version=1 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/poster.jpg?version=2 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/poster.jpg?version=1 HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/code?version=1 HTTP/1.1" 200 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/current HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/code HTTP/1.1" 200 -
+studio: "GET /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/poster.jpg?version=999 HTTP/1.1" 404 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/current HTTP/1.1" 404 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/current HTTP/1.1" 404 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/revise HTTP/1.1" 400 -
+studio: "POST /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/look HTTP/1.1" 200 -
+studio: "PUT /api/projects/project-d432ae2344/direct/jobs/dv_b1d848ff675048999e25b1f3/shots/01/sample HTTP/1.1" 200 -
+studio: "GET /api/direct/samples HTTP/1.1" 200 -
+=========================== short test summary info ============================
+FAILED tests/test_r277_api.py::test_revision_routes_artifacts_samples_and_privacy
+1 failed, 3 passed in 27.89s

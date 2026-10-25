@@ -5,8 +5,9 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from studio.direct_revision_contract import SHOT_PROPERTIES, operation_contract, routes
 
-ROUTE_SPECS: tuple[dict[str, object], ...] = (
+ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + (
     {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs', 'operation_id': 'createDirectJob', 'summary': 'createDirectJob', 'write': True},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/latest', 'operation_id': 'getLatestDirectJob', 'summary': 'getLatestDirectJob'},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}', 'operation_id': 'getDirectJob', 'summary': 'getDirectJob'},
@@ -117,6 +118,7 @@ def _direct_job_schema() -> dict[str, Any]:
                                  'description': 'Latest model-writing start, including retries; retained after writing. Null before first write or when an older job did not record it.'},
             'writtenAt': text, 'renderedAt': text, 'codeChars': {'type': 'integer', 'minimum': 0},
             'posterRevision': {'type': 'integer', 'minimum': 0}, 'checks': checks}
+    shot.update(SHOT_PROPERTIES)
     design = {'status': {'enum': ['pending', 'writing', 'done', 'failed']},
               'palette': {'type': ['object', 'null'], 'required': ['background', 'primary', 'accent', 'neutral'],
                           'properties': {k: {'type': 'string', 'pattern': '^#[0-9a-fA-F]{6}$'}
@@ -220,6 +222,7 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
                     },
                 }}},
             }
+    operation_contract(operation, spec)
     return operation
 
 

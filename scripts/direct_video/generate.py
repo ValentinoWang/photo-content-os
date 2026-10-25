@@ -13,6 +13,7 @@ import math
 import os
 from pathlib import Path
 import re
+import shutil
 import threading
 import time
 import uuid
@@ -21,6 +22,8 @@ import wave
 import llm_common
 from direct_video.lint import declared_seconds, lint
 from direct_video.media import FPS, LocalMedia, OutputCheckError, atomic_bytes, wav_seconds
+from direct_video.revisions import RevisionMixin, empty_look
+from direct_video.revision_library import RevisionLibrary, read_json
 
 MODEL = 'claude-opus-5-5'
 RULES = Path(__file__).with_name('rules') / 'shots.md'
@@ -175,7 +178,7 @@ def failure_code(exc: Exception, default='generation_failed') -> str:
     return default
 
 
-class Generator:
+class Generator(RevisionMixin):
     def __init__(self, state_dir: Path, *, workers: int | None = None, model_call=None, media=None):
         self.root = state_dir / 'direct-jobs'
         self.root.mkdir(parents=True, exist_ok=True)
@@ -188,6 +191,7 @@ class Generator:
         self.active = set()
         self.model_call = model_call or llm_common.generate_text
         self.media = media or LocalMedia()
+        self.library = RevisionLibrary(state_dir)
         self.recover()
 
     def path(self, project_id: str, job_id: str) -> Path:
@@ -201,12 +205,17 @@ class Generator:
     def read(self, project_id: str, job_id: str) -> dict:
         with self.lock:
             try:
-                return json.loads((self.path(project_id, job_id) / 'job.json').read_text())
+                root = self.path(project_id, job_id)
+                job = json.loads((root / 'job.json').read_text())
             except FileNotFoundError as exc:
                 raise DirectVideoError('job_not_found') from exc
+            if self.upgrade_versions(root, job):
+                self.save(root, job, touch_updated_at=False)
+            return job
 
-    def save(self, root: Path, job: dict) -> None:
-        job['updatedAt'] = now()
+    def save(self, root: Path, job: dict, *, touch_updated_at=True) -> None:
+        if touch_updated_at:
+            job['updatedAt'] = now()
         dump(root / 'job.json', job)
 
     def recover(self) -> None:
@@ -215,7 +224,9 @@ class Generator:
             owner = job.get('_workerPid')
             if process_alive(owner):
                 continue
-            if job['status'] in {'designing', 'writing', 'rendering', 'composing'} or job['narration']['status'] == 'aligning':
+            interrupted_work = job['status'] in {'designing', 'writing', 'rendering', 'composing'} or job['narration']['status'] == 'aligning'
+            if (interrupted_work
+                    or any(s.get('look', {}).get('status') == 'running' for s in job['shots'])):
                 if owner is not None:
                     # Only reclaim renderer locks belonging to this job after
                     # its recorded worker process is proven to have exited.
@@ -226,15 +237,23 @@ class Generator:
                 for shot in job['shots']:
                     if shot['status'] in {'queued', 'writing', 'written', 'rendering'}:
                         shot.update(status='interrupted', failureCode='process_interrupted')
+                    if shot.get('look', {}).get('status') == 'running':
+                        shot['look'].update(status='failed', failureCode='look_failed')
+                    for version in shot.get('versions', []):
+                        if (version.get('look') or {}).get('status') == 'running':
+                            version['look'].update(status='failed', failureCode='look_failed')
+                        if (version.get('verify') or {}).get('status') == 'running':
+                            version['verify'].update(status='failed', failureCode='verify_failed')
                 if job['design']['status'] == 'writing':
                     job['design']['status'] = 'failed'
                 if job['narration']['status'] == 'aligning':
                     job['narration']['status'] = 'invalid'
                 if job['output']['status'] == 'composing':
                     job['output'].update(status='failed', composedAt=None)
-                job.update(status='failed', failureCode='process_interrupted')
+                if interrupted_work:
+                    job.update(status='failed', failureCode='process_interrupted')
                 job.pop('_workerPid', None)
-                self.save(path.parent, job)
+                self.save(path.parent, job, touch_updated_at=interrupted_work)
 
     def latest(self, project_id: str) -> dict | None:
         if not SAFE_ID.fullmatch(project_id):
@@ -242,16 +261,17 @@ class Generator:
         with self.lock:
             paths = list((self.root / project_id).glob('dv_*/job.json'))
             jobs = [json.loads(p.read_text()) for p in paths]
-            return max(jobs, key=lambda j: j['createdAt']) if jobs else None
+            latest = max(jobs, key=lambda j: j['createdAt']) if jobs else None
+            return self.read(project_id, latest['jobId']) if latest else None
 
-    def start(self, project_id: str, job_id: str, action, *args) -> None:
+    def start(self, project_id: str, job_id: str, action, *args, touch_updated_at=True) -> None:
         key = (project_id, job_id)
         with self.lock:
             job = self.read(project_id, job_id)
             if key in self.active or process_alive(job.get('_workerPid')):
                 raise DirectVideoError('job_busy')
             job['_workerPid'] = os.getpid()
-            self.save(self.path(project_id, job_id), job)
+            self.save(self.path(project_id, job_id), job, touch_updated_at=touch_updated_at)
             self.active.add(key)
         def run():
             root = self.path(project_id, job_id)
@@ -267,12 +287,12 @@ class Generator:
                         job['narration']['status'] = 'invalid'
                     if job['output']['status'] == 'composing':
                         job['output'].update(status='failed', composedAt=None)
-                    self.save(root, job)
+                    self.save(root, job, touch_updated_at=touch_updated_at)
             finally:
                 with self.lock:
                     job = self.read(project_id, job_id)
                     job.pop('_workerPid', None)
-                    self.save(root, job)
+                    self.save(root, job, touch_updated_at=touch_updated_at)
                     self.active.discard(key)
         threading.Thread(target=run, daemon=True, name='direct-video-job').start()
 
@@ -287,7 +307,8 @@ class Generator:
                'shots': [{**row, 'mainAction': None, 'estimatedSeconds': round(len(row['dialogue']) / 5.1, 1),
                           'measuredSeconds': None, 'timingSource': 'estimate', 'status': 'queued', 'failureCode': None,
                           'attempts': 0, 'lastInstruction': None, 'writingStartedAt': None, 'writtenAt': None, 'renderedAt': None,
-                          'codeChars': 0, 'posterRevision': 0, 'checks': {'errors': [], 'warnings': []}} for row in rows],
+                          'codeChars': 0, 'posterRevision': 0, 'checks': {'errors': [], 'warnings': []},
+                          'currentVersion': 0, 'versions': [], 'boxes': [], 'look': empty_look(), 'sample': False} for row in rows],
                'narration': {'status': 'none', 'durationSeconds': None},
                'output': {'status': 'none', 'composedAt': None, 'kind': 'silent', 'durationSeconds': None, 'frames': None, 'revision': 0,
                           'checks': {'playable': 'unknown', 'avOffsetSeconds': None, 'blackFrames': None}}}
@@ -297,9 +318,10 @@ class Generator:
             self.start(project_id, job_id, self.generate)
         return copy.deepcopy(job)
 
-    def call(self, system: str, user: dict):
+    def call(self, system: str, user: dict, *, image_paths=None):
+        options = {'image_paths': image_paths} if image_paths else {}
         text = self.model_call(provider='claude_cli', model=MODEL, system_prompt=system,
-                               user_prompt=json.dumps(user, ensure_ascii=False))
+                               user_prompt=json.dumps(user, ensure_ascii=False), **options)
         try:
             return llm_common.parse_json_response(text, require=dict)
         except ValueError as exc:
@@ -313,11 +335,11 @@ class Generator:
             events.append({'phase': phase, 'recordedAt': now(), **details})
             dump(path, events)
 
-    def timed_call(self, root: Path, phase: str, system: str, user: dict, **details):
+    def timed_call(self, root: Path, phase: str, system: str, user: dict, *, image_paths=None, **details):
         started = time.perf_counter()
         status, code = 'passed', None
         try:
-            return self.call(system, user)
+            return self.call(system, user, image_paths=image_paths)
         except Exception as exc:
             status, code = 'failed', failure_code(exc)
             raise
@@ -355,7 +377,7 @@ class Generator:
             self.save(root, job)
         design = validate_design(self.timed_call(root, 'design',
             '为竖屏口播设计全片视觉系统。只输出 JSON，包含 palette（background、primary、accent、neutral 的六位十六进制颜色），'
-            'typeScale（三档从大到小整数），motionRules（一句话），banned（3–6 条），perShot（shotId、唯一主动作 mainAction、观众读到的 takeaway）。\n' + RULES.read_text(),
+            'typeScale（三档从大到小整数），motionRules（一句话），banned（3–6 条），perShot（shotId、唯一主动作 mainAction、观众读到的 takeaway）。\n' + self.library.rules(RULES),
             {'shots': [{'shotId': s['shotId'], 'dialogue': s['dialogue']} for s in job['shots']], 'style': job['style']}), job['shots'])
         dump(root / 'design.json', design)
         with self.lock:
@@ -394,6 +416,18 @@ class Generator:
                            'previousDialogue': job['shots'][index - 1]['dialogue'] if index else None,
                            'nextDialogue': job['shots'][index + 1]['dialogue'] if index + 1 < len(job['shots']) else None,
                            'instruction': instruction}
+                with self.lock:
+                    samples = self.library.closest(shot)
+                    sample_images = []
+                    for row in samples:
+                        image = root / 'sample-context' / sid / (uuid.uuid4().hex + '.jpg')
+                        atomic_bytes(image, self.library.poster(row['sampleId']).read_bytes())
+                        sample_images.append(image)
+                    if samples:
+                        context['samples'] = samples
+                if shot.get('_revisionRequest'):
+                    context['request'] = shot['_revisionRequest']
+                    context['boxes'] = shot['boxes']
                 if retry_errors is not None:
                     context['errors'] = retry_errors
                 if (instruction or retry_errors is not None) and (root / 'shots' / (sid + '.html')).exists():
@@ -406,7 +440,8 @@ class Generator:
                         self.save(root, current)
                     value = {}
                     try:
-                        value = self.timed_call(root, 'write', '只输出 JSON {"code": "完整 HTML"}。严格遵守以下镜头规则，不改口播。\n' + RULES.read_text(), context,
+                        value = self.timed_call(root, 'write', '只输出 JSON {"code": "完整 HTML"}。严格遵守以下镜头规则，不改口播。\n' + self.library.rules(RULES), context,
+                                                image_paths=sample_images,
                                                 shotId=sid, attempt=attempt + 1, instructionKind='retry' if retry_errors is not None else 'requested' if instruction else 'initial')
                         if isinstance(value.get('code'), str):
                             atomic_bytes(root / 'checks' / 'code-attempts' / f'{sid}-{uuid.uuid4().hex}.html', value['code'].encode())
@@ -426,6 +461,10 @@ class Generator:
                 with self.lock:
                     current = self.read(project_id, job_id)
                     current['shots'][index].update(status='written', writtenAt=now(), codeChars=len(code), checks=checks)
+                    target = current['shots'][index]
+                    target.update(boxes=[], look=empty_look())
+                    request = target.pop('_revisionRequest', None)
+                    self.snapshot_version(root, target, request, include_poster=False)
                     self.save(root, current)
                     current['shots'][index]['status'] = 'rendering'
                     current['status'] = 'rendering'
@@ -436,15 +475,26 @@ class Generator:
                     current = self.read(project_id, job_id)
                     target = current['shots'][index]
                     self.record_layout(root, target, layout)
-                    target.update(status='rendered', renderedAt=now(), posterRevision=target['posterRevision'] + 1)
+                    revision = max([target['posterRevision'], *[v['posterRevision'] for v in target['versions']]]) + 1
+                    target.update(status='rendered', renderedAt=now(), posterRevision=revision)
+                    target['boxes'] = read_json(root / 'boxes' / (sid + '.json'), [])
+                    target['look'] = empty_look()
+                    shutil.copyfile(root / 'posters' / (sid + '.jpg'),
+                                    self.version_dir(root, sid, target['currentVersion']) / 'poster.jpg')
+                    self.save_version(root, target)
                     self.save(root, current)
+                self.review_shot(project_id, job_id, sid, bool(request))
             except Exception as exc:
                 with self.lock:
                     current = self.read(project_id, job_id)
                     current['shots'][index].update(status='failed', failureCode=failure_code(exc, 'render_failed' if phase == 'rendering' else 'generation_failed'), checks=checks)
+                    if phase == 'rendering':
+                        self.save_version(root, current['shots'][index])
                     self.save(root, current)
 
     def rewrite(self, project_id: str, job_id: str, sid: str, instruction: str | None = None) -> dict:
+        if isinstance(instruction, str) and instruction.strip() and len(instruction) <= 200:
+            return self.revise(project_id, job_id, sid, [{'text': instruction, 'own': True}])
         with self.lock:
             job = self.read(project_id, job_id)
             target = next((s for s in job['shots'] if s['shotId'] == sid), None)
@@ -458,9 +508,11 @@ class Generator:
                 raise DirectVideoError('instruction_invalid')
             retry_errors = copy.deepcopy(target['checks']['errors']) if retrying else None
             effective = opinion or target.get('lastInstruction')
+            if effective:
+                target['_revisionRequest'] = {'lines': [{'text': effective, 'own': True}]}
             if job['design']['status'] != 'done':
                 raise DirectVideoError('design_not_ready')
-            if (project_id, job_id) in self.active or process_alive(job.get('_workerPid')):
+            if (project_id, job_id) in self.active or process_alive(job.get('_workerPid')) or job['output']['status'] == 'composing':
                 raise DirectVideoError('job_busy')
             job['status'] = 'writing'
             target.update(status='writing', lastInstruction=effective, writingStartedAt=now())
@@ -547,7 +599,11 @@ class Generator:
                         target = next(s for s in current['shots'] if s['shotId'] == shot['shotId'])
                         self.record_layout(root, target, layout)
                         target.update(status='rendered', renderedAt=now(), posterRevision=target['posterRevision'] + 1)
+                        target['boxes'] = read_json(root / 'boxes' / (shot['shotId'] + '.json'), [])
+                        target['look'] = empty_look()
+                        self.snapshot_version(root, target, None)
                         self.save(root, current)
+                    self.review_shot(project_id, job_id, shot['shotId'])
                 except Exception:
                     with self.lock:
                         current = self.read(project_id, job_id)
@@ -582,6 +638,10 @@ class Generator:
             self.save(root, job)
         started = time.perf_counter()
         try:
+            for shot in job['shots']:
+                if shot.get('_cacheVersion') != shot.get('currentVersion'):
+                    self.render(root, shot)
+                    shot['_cacheVersion'] = shot['currentVersion']
             result = self.media.compose(root, job)
             self.record(root, 'compose', status='passed', elapsedSeconds=round(time.perf_counter() - started, 3))
             with self.lock:

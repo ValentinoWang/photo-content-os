@@ -1,0 +1,1080 @@
+{
+  "initial": {
+    "jobId": "dv_e26da8ba83784f94950d4da1",
+    "projectId": "project-30dc61ce7f",
+    "model": "claude-opus-5-5",
+    "status": "ready",
+    "createdAt": "2026-10-25T19:43:57.154328Z",
+    "updatedAt": "2026-10-25T19:43:59.328043Z",
+    "failureCode": null,
+    "design": {
+      "status": "done",
+      "palette": {
+        "background": "#ffffff",
+        "primary": "#111111",
+        "accent": "#ef5825",
+        "neutral": "#777777"
+      },
+      "typeScale": [
+        132,
+        72,
+        44
+      ],
+      "motionRules": "跟随口播逐步呈现",
+      "banned": [
+        "霓虹",
+        "毛玻璃",
+        "胶囊"
+      ]
+    },
+    "shots": [
+      {
+        "shotId": "01",
+        "dialogue": "第一句。",
+        "mainAction": "画出因果",
+        "estimatedSeconds": 0.8,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 1,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:43:58.135631Z",
+        "writtenAt": "2026-10-25T19:43:58.778078Z",
+        "renderedAt": "2026-10-25T19:43:58.818835Z",
+        "codeChars": 332,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": []
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "createdAt": "2026-10-25T19:43:58.779394Z",
+            "posterRevision": 1,
+            "codeChars": 332,
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b3",
+            "name": "「约 25%」柱子",
+            "x": 580,
+            "y": 886,
+            "w": 300,
+            "h": 316
+          }
+        ],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": [
+            {
+              "boxId": "b3",
+              "kind": "主次",
+              "text": "次要柱子抢眼",
+              "suggest": "dim"
+            }
+          ]
+        },
+        "sample": false
+      },
+      {
+        "shotId": "02",
+        "dialogue": "第二句。",
+        "mainAction": "画出因果",
+        "estimatedSeconds": 0.8,
+        "measuredSeconds": null,
+        "timingSource": "estimate",
+        "status": "rendered",
+        "failureCode": null,
+        "attempts": 1,
+        "lastInstruction": null,
+        "writingStartedAt": "2026-10-25T19:43:58.144432Z",
+        "writtenAt": "2026-10-25T19:43:58.836930Z",
+        "renderedAt": "2026-10-25T19:43:58.846027Z",
+        "codeChars": 332,
+        "posterRevision": 1,
+        "checks": {
+          "errors": [],
+          "warnings": []
+        },
+        "currentVersion": 1,
+        "versions": [
+          {
+            "version": 1,
+            "baseVersion": null,
+            "createdAt": "2026-10-25T19:43:58.838167Z",
+            "posterRevision": 1,
+            "codeChars": 332,
+            "request": null,
+            "verify": null
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b3",
+            "name": "「约 25%」柱子",
+            "x": 580,
+            "y": 886,
+            "w": 300,
+            "h": 316
+          }
+        ],
+        "look": {
+          "status": "done",
+          "failureCode": null,
+          "findings": [
+            {
+              "boxId": "b3",
+              "kind": "主次",
+              "text": "次要柱子抢眼",
+              "suggest": "dim"
+            }
+          ]
+        },
+        "sample": false
+      }
+    ],
+    "narration": {
+      "status": "none",
+      "durationSeconds": null
+    },
+    "output": {
+      "status": "none",
+      "kind": "silent",
+      "durationSeconds": null,
+      "frames": null,
+      "revision": 0,
+      "checks": {
+        "playable": "unknown",
+        "avOffsetSeconds": null,
+        "blackFrames": null
+      }
+    }
+  },
+  "reviseAccepted": {
+    "ok": true,
+    "job": {
+      "jobId": "dv_e26da8ba83784f94950d4da1",
+      "projectId": "project-30dc61ce7f",
+      "model": "claude-opus-5-5",
+      "status": "writing",
+      "createdAt": "2026-10-25T19:43:57.154328Z",
+      "updatedAt": "2026-10-25T19:43:59.345857Z",
+      "failureCode": null,
+      "design": {
+        "status": "done",
+        "palette": {
+          "background": "#ffffff",
+          "primary": "#111111",
+          "accent": "#ef5825",
+          "neutral": "#777777"
+        },
+        "typeScale": [
+          132,
+          72,
+          44
+        ],
+        "motionRules": "跟随口播逐步呈现",
+        "banned": [
+          "霓虹",
+          "毛玻璃",
+          "胶囊"
+        ]
+      },
+      "shots": [
+        {
+          "shotId": "01",
+          "dialogue": "第一句。",
+          "mainAction": "画出因果",
+          "estimatedSeconds": 0.8,
+          "measuredSeconds": null,
+          "timingSource": "estimate",
+          "status": "writing",
+          "failureCode": null,
+          "attempts": 1,
+          "lastInstruction": "柱子变灰\n柱子变灰\n柱子变灰\n底色不动",
+          "writingStartedAt": "2026-10-25T19:43:59.345707Z",
+          "writtenAt": "2026-10-25T19:43:58.778078Z",
+          "renderedAt": "2026-10-25T19:43:58.818835Z",
+          "codeChars": 332,
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          },
+          "currentVersion": 1,
+          "versions": [
+            {
+              "version": 1,
+              "baseVersion": null,
+              "createdAt": "2026-10-25T19:43:58.779394Z",
+              "posterRevision": 1,
+              "codeChars": 332,
+              "request": null,
+              "verify": null
+            }
+          ],
+          "boxes": [
+            {
+              "id": "b3",
+              "name": "「约 25%」柱子",
+              "x": 580,
+              "y": 886,
+              "w": 300,
+              "h": 316
+            }
+          ],
+          "look": {
+            "status": "done",
+            "failureCode": null,
+            "findings": [
+              {
+                "boxId": "b3",
+                "kind": "主次",
+                "text": "次要柱子抢眼",
+                "suggest": "dim"
+              }
+            ]
+          },
+          "sample": false
+        },
+        {
+          "shotId": "02",
+          "dialogue": "第二句。",
+          "mainAction": "画出因果",
+          "estimatedSeconds": 0.8,
+          "measuredSeconds": null,
+          "timingSource": "estimate",
+          "status": "rendered",
+          "failureCode": null,
+          "attempts": 1,
+          "lastInstruction": null,
+          "writingStartedAt": "2026-10-25T19:43:58.144432Z",
+          "writtenAt": "2026-10-25T19:43:58.836930Z",
+          "renderedAt": "2026-10-25T19:43:58.846027Z",
+          "codeChars": 332,
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          },
+          "currentVersion": 1,
+          "versions": [
+            {
+              "version": 1,
+              "baseVersion": null,
+              "createdAt": "2026-10-25T19:43:58.838167Z",
+              "posterRevision": 1,
+              "codeChars": 332,
+              "request": null,
+              "verify": null
+            }
+          ],
+          "boxes": [
+            {
+              "id": "b3",
+              "name": "「约 25%」柱子",
+              "x": 580,
+              "y": 886,
+              "w": 300,
+              "h": 316
+            }
+          ],
+          "look": {
+            "status": "done",
+            "failureCode": null,
+            "findings": [
+              {
+                "boxId": "b3",
+                "kind": "主次",
+                "text": "次要柱子抢眼",
+                "suggest": "dim"
+              }
+            ]
+          },
+          "sample": false
+        }
+      ],
+      "narration": {
+        "status": "none",
+        "durationSeconds": null
+      },
+      "output": {
+        "status": "none",
+        "kind": "silent",
+        "durationSeconds": null,
+        "frames": null,
+        "revision": 0,
+        "checks": {
+          "playable": "unknown",
+          "avOffsetSeconds": null,
+          "blackFrames": null
+        }
+      }
+    }
+  },
+  "revised": {
+    "ok": true,
+    "job": {
+      "jobId": "dv_e26da8ba83784f94950d4da1",
+      "projectId": "project-30dc61ce7f",
+      "model": "claude-opus-5-5",
+      "status": "ready",
+      "createdAt": "2026-10-25T19:43:57.154328Z",
+      "updatedAt": "2026-10-25T19:44:01.110426Z",
+      "failureCode": null,
+      "design": {
+        "status": "done",
+        "palette": {
+          "background": "#ffffff",
+          "primary": "#111111",
+          "accent": "#ef5825",
+          "neutral": "#777777"
+        },
+        "typeScale": [
+          132,
+          72,
+          44
+        ],
+        "motionRules": "跟随口播逐步呈现",
+        "banned": [
+          "霓虹",
+          "毛玻璃",
+          "胶囊"
+        ]
+      },
+      "shots": [
+        {
+          "shotId": "01",
+          "dialogue": "第一句。",
+          "mainAction": "画出因果",
+          "estimatedSeconds": 0.8,
+          "measuredSeconds": null,
+          "timingSource": "estimate",
+          "status": "rendered",
+          "failureCode": null,
+          "attempts": 2,
+          "lastInstruction": "柱子变灰\n柱子变灰\n柱子变灰\n底色不动",
+          "writingStartedAt": "2026-10-25T19:43:59.353131Z",
+          "writtenAt": "2026-10-25T19:43:59.865737Z",
+          "renderedAt": "2026-10-25T19:43:59.876605Z",
+          "codeChars": 348,
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          },
+          "currentVersion": 2,
+          "versions": [
+            {
+              "version": 1,
+              "baseVersion": null,
+              "createdAt": "2026-10-25T19:43:58.779394Z",
+              "posterRevision": 1,
+              "codeChars": 332,
+              "request": null,
+              "verify": null
+            },
+            {
+              "version": 2,
+              "baseVersion": 1,
+              "createdAt": "2026-10-25T19:43:59.866623Z",
+              "posterRevision": 2,
+              "codeChars": 348,
+              "request": {
+                "lines": [
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "底色不动",
+                    "own": true
+                  }
+                ]
+              },
+              "verify": {
+                "status": "done",
+                "items": [
+                  {
+                    "index": 0,
+                    "result": "done",
+                    "reason": ""
+                  },
+                  {
+                    "index": 1,
+                    "result": "missed",
+                    "reason": "柱子仍然太大"
+                  },
+                  {
+                    "index": 2,
+                    "result": "done",
+                    "reason": ""
+                  },
+                  {
+                    "index": 3,
+                    "result": "missed",
+                    "reason": "柱子仍然太大"
+                  }
+                ]
+              }
+            }
+          ],
+          "boxes": [
+            {
+              "id": "b3",
+              "name": "「约 25%」柱子",
+              "x": 580,
+              "y": 886,
+              "w": 300,
+              "h": 316
+            }
+          ],
+          "look": {
+            "status": "done",
+            "failureCode": null,
+            "findings": [
+              {
+                "boxId": "b3",
+                "kind": "主次",
+                "text": "次要柱子抢眼",
+                "suggest": "dim"
+              }
+            ]
+          },
+          "sample": false
+        },
+        {
+          "shotId": "02",
+          "dialogue": "第二句。",
+          "mainAction": "画出因果",
+          "estimatedSeconds": 0.8,
+          "measuredSeconds": null,
+          "timingSource": "estimate",
+          "status": "rendered",
+          "failureCode": null,
+          "attempts": 1,
+          "lastInstruction": null,
+          "writingStartedAt": "2026-10-25T19:43:58.144432Z",
+          "writtenAt": "2026-10-25T19:43:58.836930Z",
+          "renderedAt": "2026-10-25T19:43:58.846027Z",
+          "codeChars": 332,
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          },
+          "currentVersion": 1,
+          "versions": [
+            {
+              "version": 1,
+              "baseVersion": null,
+              "createdAt": "2026-10-25T19:43:58.838167Z",
+              "posterRevision": 1,
+              "codeChars": 332,
+              "request": null,
+              "verify": null
+            }
+          ],
+          "boxes": [
+            {
+              "id": "b3",
+              "name": "「约 25%」柱子",
+              "x": 580,
+              "y": 886,
+              "w": 300,
+              "h": 316
+            }
+          ],
+          "look": {
+            "status": "done",
+            "failureCode": null,
+            "findings": [
+              {
+                "boxId": "b3",
+                "kind": "主次",
+                "text": "次要柱子抢眼",
+                "suggest": "dim"
+              }
+            ]
+          },
+          "sample": false
+        }
+      ],
+      "narration": {
+        "status": "none",
+        "durationSeconds": null
+      },
+      "output": {
+        "status": "none",
+        "kind": "silent",
+        "durationSeconds": null,
+        "frames": null,
+        "revision": 0,
+        "checks": {
+          "playable": "unknown",
+          "avOffsetSeconds": null,
+          "blackFrames": null
+        }
+      }
+    }
+  },
+  "logPending": {
+    "ok": true,
+    "rulesRevision": 0,
+    "categories": [
+      {
+        "category": "主次不清",
+        "count": 3,
+        "sources": [
+          {
+            "category": "主次不清",
+            "text": "柱子变灰",
+            "projectId": "project-30dc61ce7f",
+            "projectTitle": "合成测试",
+            "jobId": "dv_e26da8ba83784f94950d4da1",
+            "shotId": "01",
+            "submittedAt": "2026-10-25T19:43:59.347915Z"
+          },
+          {
+            "category": "主次不清",
+            "text": "柱子变灰",
+            "projectId": "project-30dc61ce7f",
+            "projectTitle": "合成测试",
+            "jobId": "dv_e26da8ba83784f94950d4da1",
+            "shotId": "01",
+            "submittedAt": "2026-10-25T19:43:59.347915Z"
+          },
+          {
+            "category": "主次不清",
+            "text": "柱子变灰",
+            "projectId": "project-30dc61ce7f",
+            "projectTitle": "合成测试",
+            "jobId": "dv_e26da8ba83784f94950d4da1",
+            "shotId": "01",
+            "submittedAt": "2026-10-25T19:43:59.347915Z"
+          }
+        ],
+        "proposals": [
+          {
+            "proposalId": "proposal_98080eee1b5949d294dee71d",
+            "category": "主次不清",
+            "throughCount": 3,
+            "status": "pending",
+            "text": "让主要图形和次要信息有明确的大小区别。",
+            "failureCode": null
+          }
+        ]
+      },
+      {
+        "category": "字太多",
+        "count": 0,
+        "sources": [],
+        "proposals": []
+      },
+      {
+        "category": "太空或挤在上面",
+        "count": 0,
+        "sources": [],
+        "proposals": []
+      },
+      {
+        "category": "颜色乱",
+        "count": 0,
+        "sources": [],
+        "proposals": []
+      },
+      {
+        "category": "跟口播对不上",
+        "count": 0,
+        "sources": [],
+        "proposals": []
+      }
+    ]
+  },
+  "adopted": {
+    "ok": true,
+    "proposal": {
+      "proposalId": "proposal_98080eee1b5949d294dee71d",
+      "category": "主次不清",
+      "throughCount": 3,
+      "status": "adopted",
+      "text": "让主要图形和次要信息有明确的大小区别。",
+      "failureCode": null
+    }
+  },
+  "reverted": {
+    "ok": true,
+    "job": {
+      "jobId": "dv_e26da8ba83784f94950d4da1",
+      "projectId": "project-30dc61ce7f",
+      "model": "claude-opus-5-5",
+      "status": "ready",
+      "createdAt": "2026-10-25T19:43:57.154328Z",
+      "updatedAt": "2026-10-25T19:44:01.134917Z",
+      "failureCode": null,
+      "design": {
+        "status": "done",
+        "palette": {
+          "background": "#ffffff",
+          "primary": "#111111",
+          "accent": "#ef5825",
+          "neutral": "#777777"
+        },
+        "typeScale": [
+          132,
+          72,
+          44
+        ],
+        "motionRules": "跟随口播逐步呈现",
+        "banned": [
+          "霓虹",
+          "毛玻璃",
+          "胶囊"
+        ]
+      },
+      "shots": [
+        {
+          "shotId": "01",
+          "dialogue": "第一句。",
+          "mainAction": "画出因果",
+          "estimatedSeconds": 0.8,
+          "measuredSeconds": null,
+          "timingSource": "estimate",
+          "status": "rendered",
+          "failureCode": null,
+          "attempts": 1,
+          "lastInstruction": null,
+          "writingStartedAt": "2026-10-25T19:43:58.135631Z",
+          "writtenAt": "2026-10-25T19:43:58.778078Z",
+          "renderedAt": "2026-10-25T19:43:58.818835Z",
+          "codeChars": 332,
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          },
+          "currentVersion": 1,
+          "versions": [
+            {
+              "version": 1,
+              "baseVersion": null,
+              "createdAt": "2026-10-25T19:43:58.779394Z",
+              "posterRevision": 1,
+              "codeChars": 332,
+              "request": null,
+              "verify": null
+            },
+            {
+              "version": 2,
+              "baseVersion": 1,
+              "createdAt": "2026-10-25T19:43:59.866623Z",
+              "posterRevision": 2,
+              "codeChars": 348,
+              "request": {
+                "lines": [
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "底色不动",
+                    "own": true
+                  }
+                ]
+              },
+              "verify": {
+                "status": "done",
+                "items": [
+                  {
+                    "index": 0,
+                    "result": "done",
+                    "reason": ""
+                  },
+                  {
+                    "index": 1,
+                    "result": "missed",
+                    "reason": "柱子仍然太大"
+                  },
+                  {
+                    "index": 2,
+                    "result": "done",
+                    "reason": ""
+                  },
+                  {
+                    "index": 3,
+                    "result": "missed",
+                    "reason": "柱子仍然太大"
+                  }
+                ]
+              }
+            }
+          ],
+          "boxes": [
+            {
+              "id": "b3",
+              "name": "「约 25%」柱子",
+              "x": 580,
+              "y": 886,
+              "w": 300,
+              "h": 316
+            }
+          ],
+          "look": {
+            "status": "done",
+            "failureCode": null,
+            "findings": [
+              {
+                "boxId": "b3",
+                "kind": "主次",
+                "text": "次要柱子抢眼",
+                "suggest": "dim"
+              }
+            ]
+          },
+          "sample": false
+        },
+        {
+          "shotId": "02",
+          "dialogue": "第二句。",
+          "mainAction": "画出因果",
+          "estimatedSeconds": 0.8,
+          "measuredSeconds": null,
+          "timingSource": "estimate",
+          "status": "rendered",
+          "failureCode": null,
+          "attempts": 1,
+          "lastInstruction": null,
+          "writingStartedAt": "2026-10-25T19:43:58.144432Z",
+          "writtenAt": "2026-10-25T19:43:58.836930Z",
+          "renderedAt": "2026-10-25T19:43:58.846027Z",
+          "codeChars": 332,
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          },
+          "currentVersion": 1,
+          "versions": [
+            {
+              "version": 1,
+              "baseVersion": null,
+              "createdAt": "2026-10-25T19:43:58.838167Z",
+              "posterRevision": 1,
+              "codeChars": 332,
+              "request": null,
+              "verify": null
+            }
+          ],
+          "boxes": [
+            {
+              "id": "b3",
+              "name": "「约 25%」柱子",
+              "x": 580,
+              "y": 886,
+              "w": 300,
+              "h": 316
+            }
+          ],
+          "look": {
+            "status": "done",
+            "failureCode": null,
+            "findings": [
+              {
+                "boxId": "b3",
+                "kind": "主次",
+                "text": "次要柱子抢眼",
+                "suggest": "dim"
+              }
+            ]
+          },
+          "sample": false
+        }
+      ],
+      "narration": {
+        "status": "none",
+        "durationSeconds": null
+      },
+      "output": {
+        "status": "none",
+        "kind": "silent",
+        "durationSeconds": null,
+        "frames": null,
+        "revision": 0,
+        "checks": {
+          "playable": "unknown",
+          "avOffsetSeconds": null,
+          "blackFrames": null
+        }
+      }
+    }
+  },
+  "sampleSaved": {
+    "ok": true,
+    "job": {
+      "jobId": "dv_e26da8ba83784f94950d4da1",
+      "projectId": "project-30dc61ce7f",
+      "model": "claude-opus-5-5",
+      "status": "ready",
+      "createdAt": "2026-10-25T19:43:57.154328Z",
+      "updatedAt": "2026-10-25T19:44:01.140857Z",
+      "failureCode": null,
+      "design": {
+        "status": "done",
+        "palette": {
+          "background": "#ffffff",
+          "primary": "#111111",
+          "accent": "#ef5825",
+          "neutral": "#777777"
+        },
+        "typeScale": [
+          132,
+          72,
+          44
+        ],
+        "motionRules": "跟随口播逐步呈现",
+        "banned": [
+          "霓虹",
+          "毛玻璃",
+          "胶囊"
+        ]
+      },
+      "shots": [
+        {
+          "shotId": "01",
+          "dialogue": "第一句。",
+          "mainAction": "画出因果",
+          "estimatedSeconds": 0.8,
+          "measuredSeconds": null,
+          "timingSource": "estimate",
+          "status": "rendered",
+          "failureCode": null,
+          "attempts": 1,
+          "lastInstruction": null,
+          "writingStartedAt": "2026-10-25T19:43:58.135631Z",
+          "writtenAt": "2026-10-25T19:43:58.778078Z",
+          "renderedAt": "2026-10-25T19:43:58.818835Z",
+          "codeChars": 332,
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          },
+          "currentVersion": 1,
+          "versions": [
+            {
+              "version": 1,
+              "baseVersion": null,
+              "createdAt": "2026-10-25T19:43:58.779394Z",
+              "posterRevision": 1,
+              "codeChars": 332,
+              "request": null,
+              "verify": null
+            },
+            {
+              "version": 2,
+              "baseVersion": 1,
+              "createdAt": "2026-10-25T19:43:59.866623Z",
+              "posterRevision": 2,
+              "codeChars": 348,
+              "request": {
+                "lines": [
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "柱子变灰",
+                    "boxId": "b3",
+                    "action": "dim"
+                  },
+                  {
+                    "text": "底色不动",
+                    "own": true
+                  }
+                ]
+              },
+              "verify": {
+                "status": "done",
+                "items": [
+                  {
+                    "index": 0,
+                    "result": "done",
+                    "reason": ""
+                  },
+                  {
+                    "index": 1,
+                    "result": "missed",
+                    "reason": "柱子仍然太大"
+                  },
+                  {
+                    "index": 2,
+                    "result": "done",
+                    "reason": ""
+                  },
+                  {
+                    "index": 3,
+                    "result": "missed",
+                    "reason": "柱子仍然太大"
+                  }
+                ]
+              }
+            }
+          ],
+          "boxes": [
+            {
+              "id": "b3",
+              "name": "「约 25%」柱子",
+              "x": 580,
+              "y": 886,
+              "w": 300,
+              "h": 316
+            }
+          ],
+          "look": {
+            "status": "done",
+            "failureCode": null,
+            "findings": [
+              {
+                "boxId": "b3",
+                "kind": "主次",
+                "text": "次要柱子抢眼",
+                "suggest": "dim"
+              }
+            ]
+          },
+          "sample": true
+        },
+        {
+          "shotId": "02",
+          "dialogue": "第二句。",
+          "mainAction": "画出因果",
+          "estimatedSeconds": 0.8,
+          "measuredSeconds": null,
+          "timingSource": "estimate",
+          "status": "rendered",
+          "failureCode": null,
+          "attempts": 1,
+          "lastInstruction": null,
+          "writingStartedAt": "2026-10-25T19:43:58.144432Z",
+          "writtenAt": "2026-10-25T19:43:58.836930Z",
+          "renderedAt": "2026-10-25T19:43:58.846027Z",
+          "codeChars": 332,
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          },
+          "currentVersion": 1,
+          "versions": [
+            {
+              "version": 1,
+              "baseVersion": null,
+              "createdAt": "2026-10-25T19:43:58.838167Z",
+              "posterRevision": 1,
+              "codeChars": 332,
+              "request": null,
+              "verify": null
+            }
+          ],
+          "boxes": [
+            {
+              "id": "b3",
+              "name": "「约 25%」柱子",
+              "x": 580,
+              "y": 886,
+              "w": 300,
+              "h": 316
+            }
+          ],
+          "look": {
+            "status": "done",
+            "failureCode": null,
+            "findings": [
+              {
+                "boxId": "b3",
+                "kind": "主次",
+                "text": "次要柱子抢眼",
+                "suggest": "dim"
+              }
+            ]
+          },
+          "sample": false
+        }
+      ],
+      "narration": {
+        "status": "none",
+        "durationSeconds": null
+      },
+      "output": {
+        "status": "none",
+        "kind": "silent",
+        "durationSeconds": null,
+        "frames": null,
+        "revision": 0,
+        "checks": {
+          "playable": "unknown",
+          "avOffsetSeconds": null,
+          "blackFrames": null
+        }
+      }
+    }
+  },
+  "samples": {
+    "ok": true,
+    "samples": [
+      {
+        "projectId": "project-30dc61ce7f",
+        "jobId": "dv_e26da8ba83784f94950d4da1",
+        "shotId": "01",
+        "version": 1,
+        "sampleId": "sample_067090b1e4f842da807b9b34",
+        "projectTitle": "合成测试",
+        "savedAt": "2026-10-25T19:44:01.138766Z",
+        "dialogue": "第一句。",
+        "mainAction": "画出因果",
+        "posterUrl": "/api/direct/samples?poster=sample_067090b1e4f842da807b9b34"
+      }
+    ]
+  },
+  "sampleImage": {
+    "status": 200,
+    "contentType": "image/jpeg",
+    "sha256": "b34552ba4016d639da0c8d2cf445cfc896eb19e280ff8ec1f8c13f163f31e6a3"
+  }
+}
