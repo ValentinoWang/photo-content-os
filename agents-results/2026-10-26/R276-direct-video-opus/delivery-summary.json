@@ -1,7 +1,7 @@
 {
   "state": "fail",
   "verifiedHead": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
-  "rangeHead": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
+  "rangeHead": "9637bd9cb1ae52efbf300197134216b512fc8234",
   "sourceTree": "6673f1ff467d7a821a04359f882a54ddb0d8dfc7",
   "gates": [
     {
@@ -98,7 +98,8 @@
       "id": "G16",
       "label": "不连累前面的卡",
       "state": "pass",
-      "detail": ""
+      "detail": "",
+      "hard": true
     },
     {
       "id": "G17",
@@ -110,5 +111,5 @@
   "exitCode": 1,
   "G16": "PASS; no protected-test intersections; no old card rewritten",
   "G17": "PASS; no executable scripts inside this evidence root; fixture boundary explicitly disclosed",
-  "scope": "precommit gate snapshot; final artifact-only commit check will be recorded separately"
+  "scope": "Post-artifact-commit check, source identity remains d095d10; report receipt changes artifacts only."
 }

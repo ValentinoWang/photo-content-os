@@ -1,0 +1,13 @@
+{
+  "artifactCommit": "9637bd9cb1ae52efbf300197134216b512fc8234",
+  "parent": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
+  "productPathsUnchanged": true,
+  "newHumanResults": [],
+  "venvUnchanged": true,
+  "originalFeatureCommit": "90875ba",
+  "originalFixCommit": "d095d10",
+  "acceptanceOnly": true,
+  "harnessFilesEdited": false,
+  "pushed": false,
+  "evidenceOnlyCommitPreservesVerifiedHead": true
+}
