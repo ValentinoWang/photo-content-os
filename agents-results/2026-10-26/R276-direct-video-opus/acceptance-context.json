@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "r276-studio-context",
+  "authority": [
+    "acceptance/requests/2026-W44/2026-10-26-R276-photo-direct-video-opus/request.json",
+    "docs/tasks/R276-direct-video-opus/TASK.md",
+    "docs/tasks/R276-direct-video-opus/design/contract.json"
+  ],
+  "inherited_context": "docs/tasks/R220-studio-ia-preview/acceptance-context.json",
+  "product": {
+    "purpose": "本机创作者按口播稿生成逐镜动画并合成竖屏成片",
+    "privacy": "媒体和运行状态留在本机，不把媒体放入仓库"
+  },
+  "role": {
+    "id": "local-creator",
+    "label": "本机创作者",
+    "scope": "本机作品与直出任务"
+  },
+  "screen_contract": {
+    "route": "/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "states_ref": "docs/tasks/R276-direct-video-opus/design/contract.json",
+    "interaction_requirements": [
+      "H-01",
+      "H-02",
+      "H-03"
+    ],
+    "invariants": [
+      "失败和中断能仅重试一镜",
+      "字幕未烧录时不宣称已烧录",
+      "耗时只取成功合成时间，无值不编造"
+    ]
+  }
+}

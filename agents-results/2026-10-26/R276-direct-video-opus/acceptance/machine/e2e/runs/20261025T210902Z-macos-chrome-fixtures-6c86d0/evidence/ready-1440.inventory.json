@@ -1,0 +1,667 @@
+{
+  "states": {
+    "ready": {
+      "texts": [
+        {
+          "text": "P",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "Photo Content OS",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "本地创作工作台",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "工作台",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "整理台",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "项目",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "素材库",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "音乐库",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "设置与诊断",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "本机可用",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "上游中台未连接",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "项目",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TOPBAR"
+        },
+        {
+          "text": "·",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TOPBAR"
+        },
+        {
+          "text": "其他作品",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-TOPBAR"
+        },
+        {
+          "text": "断更一年，我拆了四句话",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-TOPBAR"
+        },
+        {
+          "text": "Opus 5.5 · 本机 Claude",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-MODEL"
+        },
+        {
+          "text": "按素材剪 vlog",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TABS"
+        },
+        {
+          "text": "按脚本做视频",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TABS"
+        },
+        {
+          "text": "脚本直出",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TABS"
+        },
+        {
+          "text": "✓",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "口播稿",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "7 镜 · 约 2:23",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "2",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "Opus 写每一镜",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "7 镜都写好了",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "3",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "成片",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "还没合成",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "脚本直出",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HEAD"
+        },
+        {
+          "text": "7 镜都写好了",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-HEAD"
+        },
+        {
+          "text": "用时 11:20 · 3 条提醒，看过觉得没问题就可以合成。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-HEAD"
+        },
+        {
+          "text": "上传配音…",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HEAD"
+        },
+        {
+          "text": "先合成无声预览",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HEAD"
+        },
+        {
+          "text": "全片设计",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "背景",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "主色",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "强调色",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "中性",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "字号 84 / 52 / 44",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "一镜一个主动作，图解跟着口播一步步长出来",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "光晕霓虹",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "紫蓝渐变",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "三张卡片并排",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "全部同时淡入",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DESIGN"
+        },
+        {
+          "text": "01",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "18.2 秒",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "清华AI体育博主，断更一年。会写代码，会练体能，就是发不出一条视频。后来我看到一项研究：容易焦虑的人担心的事，百分之九十一没有发生。拦着我的，是脑子里的四句话。今天一句一句，对一对研究。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "写好 · 3:41",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "有提醒",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "02",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "20.8 秒",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "第一句：发出去，会被人看低。断了这么久，大家肯定都注意到了。有个经典实验：让学生穿件尴尬的衣服走进教室。穿的人估计，大约一半的人会注意到。实际只有四分之一左右。别人的注意，远比我们以为的少。没有人在等我宣布回归。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "写好 · 4:05",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "有提醒",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "03",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "20.4 秒",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "第二句：担心的事，一定会发生。开头那个数就来自这里：把每天的担心记下来，事后逐条对照。大约百分之九十一，没有发生。所以发之前，我先写一行：我担心什么。过两天再补一行：实际怎样。不写下来，就永远不知道它没应验。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "写好 · 5:22",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "04",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "22.0 秒",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "第三句：还没做到最好，再改改。西蒙提过一个说法，叫满意化：够好就停，不用非找到最好。有本书叫《艺术与恐惧》，讲过一个陶艺课的故事。一组按数量打分，一组按质量打分。最好的作品，反而出自数量组。所以我先写下几条标准，满足了就发。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "写好 · 8:30",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "05",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "21.6 秒",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "第四句：反正都断了，再断几天也一样。这叫破戒效应。有研究跟踪了九十多个人，发现偶尔漏掉一次，对养成没有实质影响。养成的中位数是六十六天，快的十八天，慢的两百五十四天。断了，今天接上就行。我只给自己一条规矩：不连着断两次。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "写好 · 9:12",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "06",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "21.0 秒",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "这些道理，我早就懂。可懂了，身体还是怕。旧的预测只在出错时才会改，而不发，它就永远不会错。所以我把动作写成一句：如果晚饭后坐到桌前，就打开草稿箱，发最早剪好的那一条。九十四项研究汇总下来，这样写的人明显更容易做到。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "写好 · 10:47",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "有提醒",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "07",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "18.8 秒",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "发布是训练课，不是比赛。发出来的七十分，比没发的九十五分有用。你也有一件存了很久的东西吧？今天写两行字。一行写：如果什么时候，我就做哪个小动作。一行写：我最担心会发生什么。过两天，回来对一对。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "写好 · 11:20",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-SHOT"
+        },
+        {
+          "text": "关键帧 · 这一镜 18.2 秒处的 80%",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-PVNOTE"
+        },
+        {
+          "text": "第 01 镜",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DETAIL"
+        },
+        {
+          "text": "写好于 3:41",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DETAIL"
+        },
+        {
+          "text": "清华AI体育博主，断更一年。会写代码，会练体能，就是发不出一条视频。后来我看到一项研究：容易焦虑的人担心的事，百分之九十一没有发生。拦着我的，是脑子里的四句话。今天一句一句，对一对研究。",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-DETAIL"
+        },
+        {
+          "text": "时长",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-FACTS"
+        },
+        {
+          "text": "按字数估 18.2 秒",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-FACTS"
+        },
+        {
+          "text": "写了几次",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-FACTS"
+        },
+        {
+          "text": "1 次",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-FACTS"
+        },
+        {
+          "text": "主动作",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-FACTS"
+        },
+        {
+          "text": "「91%」大字落地",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-FACTS"
+        },
+        {
+          "text": "代码",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-FACTS"
+        },
+        {
+          "text": "4,635 字",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-FACTS"
+        },
+        {
+          "text": "画面下半截空着：主画面只占到 y=900，离字幕带还空 46.2%",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-CHECKS"
+        },
+        {
+          "text": "动画在这一镜时长内做完",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-CHECKS"
+        },
+        {
+          "text": "页眉标好了",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-CHECKS"
+        },
+        {
+          "text": "字幕带里没放字",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-CHECKS"
+        },
+        {
+          "text": "不读网络和外部文件",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-CHECKS"
+        },
+        {
+          "text": "不用定时器和随机数",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-CHECKS"
+        },
+        {
+          "text": "写一句修改意见，让 Opus 只重写这一镜",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-REWRITE"
+        },
+        {
+          "text": "让 Opus 重写这一镜",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-REWRITE"
+        },
+        {
+          "text": "只重写、只重渲这一镜；其他镜的画面和写好的时间都不变。",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-REWRITE"
+        },
+        {
+          "text": "看代码",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-CODE"
+        },
+        {
+          "text": "4,635 字 · 上限 100,000",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-CODE"
+        },
+        {
+          "text": "主导航",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "工作台",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "整理台",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "项目",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "素材库",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "音乐库",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "设置与诊断",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "这件作品的步骤",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "例：数字再大一点，底色不动",
+          "kind": "placeholder",
+          "data": false,
+          "design_id": "DV-REWRITE"
+        }
+      ],
+      "ids": [
+        "DV-CHECKS",
+        "DV-CODE",
+        "DV-DESIGN",
+        "DV-DETAIL",
+        "DV-FACTS",
+        "DV-FILM",
+        "DV-HEAD",
+        "DV-MODEL",
+        "DV-PVNOTE",
+        "DV-REWRITE",
+        "DV-SHOT",
+        "DV-STEPS",
+        "DV-TABS",
+        "DV-TOPBAR",
+        "R208-NAV"
+      ]
+    }
+  }
+}

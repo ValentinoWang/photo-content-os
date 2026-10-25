@@ -1,0 +1,16 @@
+{
+  "verifiedHead": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
+  "models": "deterministic tests use fake Claude; no paid calls in this task",
+  "frontend": "real isolated Studio at 8767; API responses intercepted by repository-owned frontend_gate; no test scripts copied into evidence root",
+  "media": "real renderer test runs local HTML/Chromium/FFmpeg; output/user media remain external",
+  "humanAcceptance": "PENDING, no human runs created",
+  "doNotTouch": [
+    "studio/",
+    "scripts/",
+    ".venv",
+    "8765",
+    "8766"
+  ],
+  "priorEvidence": "REPORT-B and b-h03-proof retained read-only; media hashes verified",
+  "sparseHydration": "Added only task evidence directory and existing R223 delivery dependency so old-card contracts are readable; no tracked old evidence modified"
+}

@@ -169,6 +169,10 @@
     {
       "glob": "scripts/music_library/**",
       "key": "photo.tests-scripts"
+    },
+    {
+      "glob": "scripts/direct_video/**",
+      "key": "photo.video-pipeline"
     }
   ]
 }

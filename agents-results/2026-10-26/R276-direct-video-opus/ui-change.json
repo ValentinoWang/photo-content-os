@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.2.0",
+  "ui_change_id": "r276-direct-video",
+  "kind": "incremental",
+  "user_visible": true,
+  "source_authority_mode": "strict",
+  "source_requirements_ref": {
+    "path": "agents-results/2026-10-26/R276-direct-video-opus/source-requirements.json",
+    "entity_id": "r276-design-authority",
+    "canonical_digest": "06e2e2ea2f52efdbdf46edafe79425a5e7eb59d01666e776283fdd785ae3ba77"
+  },
+  "affected_surfaces": [
+    {
+      "surface_id": "studio.direct-video",
+      "resolved_surface_contract_ref": {
+        "path": "agents-results/2026-10-26/R276-direct-video-opus/resolved-surface-contract.json",
+        "entity_id": "r276-direct-surface",
+        "canonical_digest": "680182339fc4f93acfdfa217859f0d0b8c71af4cc1f9be68607325f43222e622"
+      }
+    }
+  ],
+  "product_context_ref": {
+    "path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json",
+    "entity_id": "r276-studio-context",
+    "canonical_digest": "aca143003fa0b3de09a4616c4298333cffa6aee6fdf596049637cfd486a991cb"
+  },
+  "role_context_refs": [
+    {
+      "path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json",
+      "entity_id": "local-creator",
+      "canonical_digest": "aca143003fa0b3de09a4616c4298333cffa6aee6fdf596049637cfd486a991cb"
+    }
+  ],
+  "screen_contract_ref": {
+    "path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json",
+    "entity_id": "r276-direct-screen",
+    "canonical_digest": "aca143003fa0b3de09a4616c4298333cffa6aee6fdf596049637cfd486a991cb"
+  },
+  "visual_contract_ref": {
+    "path": "docs/tasks/R276-direct-video-opus/design/contract.json",
+    "entity_id": "r276-visual",
+    "canonical_digest": "9a62d214b303e91462f66df44a31ab40fe81fc32da3f771d3c932e6a9542c4b5"
+  },
+  "reference_prototypes": [
+    {
+      "path": "docs/tasks/R276-direct-video-opus/design/direct.html",
+      "sha256": "f148da8c1db1a3878f65cd2db11ef765e0ba7974471752d349a3cd3a4e2cba27",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "capture_matrix": {
+    "routes": [
+      "/#view=piece&piece=fixture-piece&ptab=direct"
+    ],
+    "locales": [
+      "zh-CN"
+    ],
+    "themes": [
+      "studio-dark"
+    ],
+    "viewports": [
+      "1440x900",
+      "960x900",
+      "390x900"
+    ],
+    "helper_modes": [
+      "intercepted-projection-fixtures"
+    ]
+  },
+  "interaction_matrix_ref": {
+    "path": "agents-results/2026-10-26/R276-direct-video-opus/resolved-surface-contract.json",
+    "entity_id": "r276-interactions",
+    "canonical_digest": "680182339fc4f93acfdfa217859f0d0b8c71af4cc1f9be68607325f43222e622"
+  },
+  "visual_evidence_types": [
+    "dom-structure",
+    "computed-style",
+    "fixed-browser-screenshot",
+    "interaction-trace"
+  ]
+}

@@ -1,0 +1,10 @@
+PASS R276: split, Unicode, measured/estimated duration, totals, counts, elapsed/written time, polling, failures, selection, jumps, cache URLs
+file://scripts/direct_video/frontend_gate.mjs:218
+  browser=await chromium.launch({channel:'chrome',headless:true});
+                         ^
+
+TypeError: Cannot read properties of undefined (reading 'launch')
+    at file://scripts/direct_video/frontend_gate.mjs:218:26
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+Node.js v22.22.2

@@ -1,0 +1,27 @@
+{
+  "reviewer": "Codex",
+  "authority": "Original request criteria and old checklists/contracts reviewed; no acceptance semantics changed",
+  "decisions": [
+    {
+      "type": "independent",
+      "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+      "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。"
+    },
+    {
+      "type": "independent",
+      "target": "2026-10-19-R210-photo-music-link-import",
+      "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。"
+    },
+    {
+      "type": "independent",
+      "target": "2026-10-20-R220-photo-studio-ia-preview",
+      "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。"
+    },
+    {
+      "type": "independent",
+      "target": "2026-10-20-R223-photo-music-beat-map",
+      "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。"
+    }
+  ],
+  "g16": "All current pending handed-off old cards have empty changed-protected-test intersection. No supersede or rebaseline fabricated. Legacy OCM-Z1 is outside the current ISO-week queue."
+}

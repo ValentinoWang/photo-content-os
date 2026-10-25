@@ -1,0 +1,19 @@
+check-delivery  origin/main..HEAD  (2 commits, tree 6673f1f)
+  G1 有卡  FAIL  非豁免提交没有对应卡片; 提交 90875ba 没有卡片覆盖; 提交 d095d10 没有卡片覆盖 → 为非豁免提交创建交付验收卡；阻塞卡需用户通过，并遵守切片额度 → python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py handoff <任务根> --project-root . --replace --baseline <基准文件> --claims <声明文件> <原递交参数>；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py repair retired <不可恢复的未通过卡目录> --project-root . --actor <执行者> --reason <原因>
+  G2 基准一致  PASS
+  G3 机器先绿  PASS
+  G4 看得懂  PASS
+  G5 有入口  PASS
+  G6 去重已声明  WARN  unmapped: scripts/direct_video/__init__.py, scripts/direct_video/frontend_gate.mjs, scripts/direct_video/generate.py, scripts/direct_video/layout.py, scripts/direct_video/lint.py, scripts/direct_video/media.py, scripts/direct_video/rules/shots.md → 补充 surfaces.yaml 映射
+  G7 失效传播  PASS
+  G8 坏一条不连累  PASS
+  G9 页面可见  PASS
+  G10 不自证  PASS
+  G11 有需求卡  FAIL  d095d10 尾行需要 Request: <id>[, <id>] 和 Verify: <id>/H-NN → 先建需求卡，记录用户对话确认，再提交；尾行写 Request 编号和 Verify 项 → python3 tools/harnessctl.py acceptance request list --project .；python3 tools/harnessctl.py acceptance request new --help
+  G12 验收覆盖需求  FAIL  d095d10 尾行需要非空且唯一的 Verify 项; 2026-10-26-R276-photo-direct-video-opus 缺少同编号的需求卡或验收卡 → Verify 属于所列需求；未覆盖及增删改标准在 claims.request_changes 逐项解释 → python3 tools/harnessctl.py acceptance request list --project .；python3 tools/harnessctl.py acceptance request new --help
+  G13 沿用已有卡  PASS
+  G14 已通过不可变  PASS
+  G15 自动替代完整  PASS
+  G16 不连累前面的卡  FAIL  2026-10-20-R223-photo-music-beat-map: 无法读取待验收合同/绑定/受保护测试：[Errno 2] No such file or directory: 'agents-results/2026-10-21/r223-delivery/acceptance-contract.md'; 2026-10-26-R276-photo-direct-video-opus: 无法读取待验收合同/绑定/受保护测试：[Errno 2] No such file or directory: 'acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/binding.md' → python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py rebaseline <旧卡目录> --project-root . --base <基底> --head <验证提交> --trigger-card <本项目新卡> --reason <原因>；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py rebaseline <旧卡目录> --project-root . --base <真实基底> --head <验证提交> --range-head <合同所在范围head> --trigger-card <本项目触发卡> --reason <原因> --from-approved-contract；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py rebaseline <旧卡目录> --project-root . --base <新基底> --head <新验证提交> --trigger-card <原触发卡> --reason <原原因> --replay-prepared <原准备审计的SHA256>；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py handoff <任务根> --project-root . --replace <原递交参数>
+  G17 真实链路没被替换  PASS
+结果：FAIL（本命令如实返回门禁状态；推送策略由调用方应用）

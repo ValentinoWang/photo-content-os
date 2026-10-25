@@ -1,0 +1,110 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "studio.direct-video.generate",
+    "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。"
+      }
+    ]
+  },
+  {
+    "item": "H-02",
+    "claim_key": "studio.direct-video.compose",
+    "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。"
+      }
+    ]
+  },
+  {
+    "item": "H-03",
+    "claim_key": "studio.direct-video.single-rewrite",
+    "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。"
+      }
+    ]
+  }
+]

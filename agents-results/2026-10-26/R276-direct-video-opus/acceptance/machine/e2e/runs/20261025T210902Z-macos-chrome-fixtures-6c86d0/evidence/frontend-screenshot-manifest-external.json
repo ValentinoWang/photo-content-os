@@ -1,0 +1,961 @@
+{
+  "scope": "F2 local Studio 8767, intercepted projection fixtures; no backend generation claim",
+  "screenshots": [
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:26.331Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/empty-1440.png",
+      "sha256": "748856a82e3c83772739d06b6af52f5dc2181e6af4b2b6f3f017a298cb2324f3",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:27.476Z",
+      "scroll_coverage": [
+        0,
+        1112
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1112
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/empty-960.png",
+      "sha256": "d3e292463186d5701f45bd1428773f49a02de7c7ed1a94a3f64a53d05f5c1434",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:29.343Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/read-error-1440.png",
+      "sha256": "b1ccc3990e34c3af3a6ade99dece033c4429856778ebd9eba1952bed764fde86",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:30.507Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/read-error-960.png",
+      "sha256": "d408f53863d2f0ce3936110574071c9aae4bd61c6181d92cc5ef4d9873a162de",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "filled",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:31.907Z",
+      "scroll_coverage": [
+        0,
+        917
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 917
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/filled-1440.png",
+      "sha256": "82406501f63fc5be6485314a5947178f9f8ab4a0329267fc41467d9a4933ad74",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "filled",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:33.432Z",
+      "scroll_coverage": [
+        0,
+        1306
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1306
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/filled-960.png",
+      "sha256": "27358dc6a19670cc6d3600ee8f74257dfdcb2ff9fd2c814e6a1b3e76d8b53f44",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:35.063Z",
+      "scroll_coverage": [
+        0,
+        1009
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1009
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/unavailable-1440.png",
+      "sha256": "220181a51da57bdfd1134585912be45ea067fab8062a437a84e900416e954423",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:36.769Z",
+      "scroll_coverage": [
+        0,
+        1434
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1434
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/unavailable-960.png",
+      "sha256": "4dd20bc48aeac42ac4e5bea2f5557c555474a9a3a7e30c64d8eaa00c0a261888",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "designing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:38.344Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/designing-1440.png",
+      "sha256": "481b4783b6cb47a971e98e099e261fbeb4678a703adffd5dce02cef61cfcdcf7",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "designing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:40.514Z",
+      "scroll_coverage": [
+        0,
+        1257
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1257
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/designing-960.png",
+      "sha256": "c8d1209c1929770265201709dc40c67668e364e051db269bea37d78aa921745e",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:42.680Z",
+      "scroll_coverage": [
+        0,
+        1381
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1381
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/writing-1440.png",
+      "sha256": "0e326217c578caa7ee6bdd51f316ab105fc2d0d8e38f90018937858f6b277179",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:44.573Z",
+      "scroll_coverage": [
+        0,
+        2239
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2239
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/writing-960.png",
+      "sha256": "0a7565943411a1999a26665cec0be134c056a6cd21b44c9537526ecefbdddcb4",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "failed-shot",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:45.953Z",
+      "scroll_coverage": [
+        0,
+        1387
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1387
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/failed-shot-1440.png",
+      "sha256": "5174ebe424602e26f3082029b052d50b13c95b38e7d3ffcf4cf646d6e61df225",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "failed-shot",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:48.183Z",
+      "scroll_coverage": [
+        0,
+        2320
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2320
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/failed-shot-960.png",
+      "sha256": "81ae3bec5275863a644b886b566011f843059f9c9f7813be1094de9e0adda1fc",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "ready",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:49.623Z",
+      "scroll_coverage": [
+        0,
+        1346
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1346
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/ready-1440.png",
+      "sha256": "01689b1f14d8e924ebd5b5321eee3c8aa56f681eae825f24bab866edfeb85889",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "ready",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:51.151Z",
+      "scroll_coverage": [
+        0,
+        2308
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2308
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/ready-960.png",
+      "sha256": "cad643bf8bdcbcde020553f1e33a04fd5753ae1cc60609d4dc09c0a4d916983b",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "rewriting",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:52.548Z",
+      "scroll_coverage": [
+        0,
+        1346
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1346
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/rewriting-1440.png",
+      "sha256": "7bffe3f5347e594f58defe7ab46a19d3e6ddb17afcc35731da4e16160b4c77ce",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "rewriting",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:54.068Z",
+      "scroll_coverage": [
+        0,
+        2184
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2184
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/rewriting-960.png",
+      "sha256": "c36b1849b5d48da6607fb0b829b54e4cead30edbb11bddcab19db5cffd8c7dea",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "composing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:55.543Z",
+      "scroll_coverage": [
+        0,
+        910
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 910
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/composing-1440.png",
+      "sha256": "1d69b186e59a2b6f29729a22f4f1711c4d93290505277a40babaaf8a6810f811",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "composing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:56.775Z",
+      "scroll_coverage": [
+        0,
+        1344
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1344
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/composing-960.png",
+      "sha256": "86ecf0f2557bf7bad6adbb03f44642cb8032dc9f03fbd6bd9512fbc836e1869a",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "composing-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:57.796Z",
+      "scroll_coverage": [
+        0,
+        910
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 910
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/composing-silent-1440.png",
+      "sha256": "458e23e599d8732c0b67efaf5dcabe8b42b432311216a5ab425f801b2624f675",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "composing-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:07:58.853Z",
+      "scroll_coverage": [
+        0,
+        1344
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1344
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/composing-silent-960.png",
+      "sha256": "b9f6e0452827d188e3cf05becd185c78989326d9bd8469be3774322a2a4a9d74",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:00.036Z",
+      "scroll_coverage": [
+        0,
+        1412
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1412
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/done-1440.png",
+      "sha256": "710d65001791dbbeefa3f9b3804f23573ad315b40c89e7c97ec3610a335068f5",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:01.273Z",
+      "scroll_coverage": [
+        0,
+        2176
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2176
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/done-960.png",
+      "sha256": "c8a418414c3f8a73fba130820e4cdae88bc5feb313aa0e0b816ef2fe1ed3ebe1",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "done-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:02.492Z",
+      "scroll_coverage": [
+        0,
+        1412
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1412
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/done-silent-1440.png",
+      "sha256": "95b82b9bbdfc510643246ee5523efc7c049cfbd78899feacc66f962412d569f5",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "done-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:04.075Z",
+      "scroll_coverage": [
+        0,
+        2176
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2176
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/done-silent-960.png",
+      "sha256": "b795ddf8a33175267db949583b3c5033e5777f6067a99eac13d7c1e89a37c037",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:05.131Z",
+      "scroll_coverage": [
+        0,
+        1283
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 1283
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/empty-390.png",
+      "sha256": "3c20e65c362025ddbb4ffabb54e73ec427e3c611750229531c0d2e141f82a5e3",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:06.219Z",
+      "scroll_coverage": [
+        0,
+        2591
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 2591
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/writing-390.png",
+      "sha256": "5c9db471cd5004338dedd7d2b89a2841c4c699cd3ff4180643ec60bfcf3d80a4",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:07.358Z",
+      "scroll_coverage": [
+        0,
+        2354
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 2354
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/done-390.png",
+      "sha256": "0fcee0daec1671bf9b10bfbb9495d29fed5a357aacc63a05cbd65c5f5eaced29",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:08.475Z",
+      "scroll_coverage": [
+        0,
+        1642
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 1642
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/unavailable-390.png",
+      "sha256": "d7bbca44dad1b31e433b51ccc4124760e6252fcffd2261b78330ac0108398aaa",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T21:08:09.284Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-frontend-final/read-error-390.png",
+      "sha256": "eff583a2007517af32894c24582e189887e9eacf2c45a5beede4ab3b8d95c932",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed the 31-image contact sheets for hierarchy, clipping, state and bottom coverage; done desktop and unavailable phone also opened individually. Bounded page layout/state review only; fixture clock-shift makes done header 0:00 and does not verify composed duration (separate Node positive/null regression does)."
+    }
+  ],
+  "contracts": [
+    {
+      "state": "empty",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "empty",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "read-error",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "read-error",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "filled",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "filled",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "unavailable",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "unavailable",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "designing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "designing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "writing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "writing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "failed-shot",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "failed-shot",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "ready",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "ready",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "rewriting",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "rewriting",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing-silent",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing-silent",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done-silent",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done-silent",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    }
+  ],
+  "browser_errors": [],
+  "review": {
+    "reviewer": "Codex",
+    "status": "PASS",
+    "scope": "31-image contact sheets plus full done-1440 and unavailable-390; deterministic all31 width/overflow/full-page/hash checks and all26 design comparisons passed; no production/media judgment",
+    "reviewed_at": "2026-10-25T21:12:06.649187+00:00"
+  }
+}

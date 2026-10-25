@@ -1,0 +1,160 @@
+{
+  "baseline": {
+    "base": "2263a04272eca5dc6d80590a066025ecf9c12f2b",
+    "branch": "detached",
+    "head": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
+    "tree": "6673f1ff467d7a821a04359f882a54ddb0d8dfc7"
+  },
+  "binding_sha256": "fa219b2b4ad8372a3f51eb62d4256e76b440d65c7049e5a45ef47f6d802d236e",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "ad794dee079ef222439b34e44a9135cae1f6c9b0d818d3b6b78c43479eade758",
+  "claims": [
+    {
+      "claim_key": "studio.direct-video.generate",
+      "item": "H-01",
+      "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "studio.direct-video.compose",
+      "item": "H-02",
+      "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "studio.direct-video.single-rewrite",
+      "item": "H-03",
+      "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance-contract.md",
+  "contract_sha256": "9eadb40e931645d02285777ff09fae656dd313bf0ca93afd2010af6c37c182ec",
+  "contract_version": "1",
+  "estimated_minutes": 10,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "studio.direct-generation",
+    "studio.direct-output",
+    "studio.direct-single-rewrite"
+  ],
+  "loop_name": "Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261025T210902Z-macos-isolated-1d8fa8/result.md",
+      "result_sha256": "f720424803c83348af6ce0f6ff14c305462fcff220292747d5976365c4663c11",
+      "run_id": "20261025T210902Z-macos-isolated-1d8fa8",
+      "source_identity": "d095d101c445bb6a349208ce6c5af8be3afbf10c"
+    },
+    {
+      "layer": "machine/e2e",
+      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261025T210902Z-macos-chrome-fixtures-6c86d0/result.md",
+      "result_sha256": "a488ea68df739b0e6dddc8674d3ac0f7fe2aa07081839bc870d9c6bbfd15f663",
+      "run_id": "20261025T210902Z-macos-chrome-fixtures-6c86d0",
+      "source_identity": "d095d101c445bb6a349208ce6c5af8be3afbf10c"
+    }
+  ],
+  "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+  "ready_at": "2026-10-25T21:14:04.485776Z",
+  "release_slice": "R276",
+  "request_id": "2026-10-26-R276-photo-direct-video-opus",
+  "required_role": "产品负责人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
+  "summary": "原样三项待人工验收；成片、联系表和第三镜对照图在本机 Photo Content OS 证据文件夹内的 R276-direct-video-opus 子目录，详见证据位置清单。",
+  "task_id": "2026-10-26-R276-photo-direct-video-opus"
+}

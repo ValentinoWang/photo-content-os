@@ -1,0 +1,392 @@
+{
+  "states": {
+    "empty": {
+      "texts": [
+        {
+          "text": "P",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "Photo Content OS",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "本地创作工作台",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "工作台",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "整理台",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "项目",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "素材库",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "音乐库",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "设置与诊断",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "本机可用",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "上游中台未连接",
+          "kind": "text",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "项目",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TOPBAR"
+        },
+        {
+          "text": "·",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TOPBAR"
+        },
+        {
+          "text": "其他作品",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-TOPBAR"
+        },
+        {
+          "text": "断更一年，我拆了四句话",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-TOPBAR"
+        },
+        {
+          "text": "Opus 5.5 · 本机 Claude",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-MODEL"
+        },
+        {
+          "text": "按素材剪 vlog",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TABS"
+        },
+        {
+          "text": "按脚本做视频",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TABS"
+        },
+        {
+          "text": "脚本直出",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-TABS"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "口播稿",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "还没粘贴",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "2",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "Opus 写每一镜",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "等口播稿",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "3",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "成片",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "还没合成",
+          "kind": "text",
+          "data": true,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "脚本直出",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HEAD"
+        },
+        {
+          "text": "把口播稿直接做成视频",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HEAD"
+        },
+        {
+          "text": "粘贴口播稿，Opus 给每一镜写一段动画代码，在这台电脑上逐帧渲染成画面，再合成一条竖屏成片。不用素材，也不用剪辑软件。",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HEAD"
+        },
+        {
+          "text": "口播稿",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-START"
+        },
+        {
+          "text": "一行是一镜",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-START"
+        },
+        {
+          "text": "还没有口播稿。也可以导入上游中台导出的分镜文件。",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-START"
+        },
+        {
+          "text": "导入分镜文件",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-START"
+        },
+        {
+          "text": "生成",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-START"
+        },
+        {
+          "text": "点「生成」以后",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "1",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "Opus 先定全片设计：底色、主色、强调色、字号和动作规矩",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "约 1 分钟",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "2",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "每一镜写一段动画代码，三镜同时写；写完自查，不过关的自动重写一次",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "每镜约 1–3 分钟",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "3",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "写好一镜就在本机逐帧渲染一镜，页面上马上能看",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "可以离开这一页，不会中断",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-HOW"
+        },
+        {
+          "text": "风格说明（可不填）",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STYLE"
+        },
+        {
+          "text": "想模仿哪种画面，写一句给 Opus。",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-STYLE"
+        },
+        {
+          "text": "配音（可以之后再加）",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-VOICE"
+        },
+        {
+          "text": "没有配音先出无声预览。上传配音以后，按配音实测每一镜的时长，动画比配音长的镜会自动改短。",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-VOICE"
+        },
+        {
+          "text": "上传配音…",
+          "kind": "text",
+          "data": false,
+          "design_id": "DV-VOICE"
+        },
+        {
+          "text": "主导航",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "工作台",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "整理台",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "项目",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "素材库",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "音乐库",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "设置与诊断",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "R208-NAV"
+        },
+        {
+          "text": "这件作品的步骤",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "DV-STEPS"
+        },
+        {
+          "text": "把口播稿粘贴进来，一行是一镜。例如： 清华 AI 体育博主，断更一年。会写代码，会练体能，就是发不出一条视频。 第一句：发出去，会被人看低。",
+          "kind": "placeholder",
+          "data": false,
+          "design_id": "DV-START"
+        },
+        {
+          "text": "口播稿",
+          "kind": "aria-label",
+          "data": false,
+          "design_id": "DV-START"
+        },
+        {
+          "text": "例：浅米色底，一个深青主色，结论只用橙色",
+          "kind": "placeholder",
+          "data": false,
+          "design_id": "DV-STYLE"
+        }
+      ],
+      "ids": [
+        "DV-HEAD",
+        "DV-HOW",
+        "DV-MODEL",
+        "DV-START",
+        "DV-STEPS",
+        "DV-STYLE",
+        "DV-TABS",
+        "DV-TOPBAR",
+        "DV-VOICE",
+        "R208-NAV"
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "path": "docs/tasks/R276-direct-video-opus/design/direct.html",
+      "sha256": "f148da8c1db1a3878f65cd2db11ef765e0ba7974471752d349a3cd3a4e2cba27",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ]
+}

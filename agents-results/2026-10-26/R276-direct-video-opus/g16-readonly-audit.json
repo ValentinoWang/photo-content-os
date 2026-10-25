@@ -1,0 +1,87 @@
+{
+  "range": "origin/main..d095d10",
+  "cards": [
+    {
+      "card": "2026-10-19-R207-photo-edit-tools-in-repo",
+      "bindingStatus": "ACTIVE",
+      "pending": true,
+      "contract": "evidence/2026-10-19/R207-edit-tools-in-repo/acceptance-contract.md",
+      "contractReadable": true,
+      "contractSHA256": "9052c4533ef123a8791f1a8787839d4454e223515062246d13c05eee0b2b9590",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "tests/test_edit_tools_runtime.py"
+      ],
+      "currentQueueEligible": true
+    },
+    {
+      "card": "2026-10-20-R220-photo-studio-ia-preview",
+      "bindingStatus": "ACTIVE",
+      "pending": true,
+      "contract": "evidence/2026-10-20/R220/delivery/acceptance-contract.md",
+      "contractReadable": true,
+      "contractSHA256": "f77604f0429d1e76203f71aefa694ba773d8ca192650e63010938302e196685c",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "tests/test_studio_review.py",
+        "tests/test_r220_number_formulas.py",
+        "tests/test_r220_number_formulas.mjs"
+      ],
+      "currentQueueEligible": true
+    },
+    {
+      "card": "2026-10-20-R223-photo-music-beat-map",
+      "bindingStatus": "ACTIVE",
+      "pending": true,
+      "contract": "agents-results/2026-10-21/r223-delivery/acceptance-contract.md",
+      "contractReadable": true,
+      "contractSHA256": "5a2024bd9387f15a666635fbafe1fb7147500aedcfeef23772096ec4cc985d42",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "tests/test_r223_music_analysis.py",
+        "tests/test_r223_sections.py",
+        "tests/test_r223_music_analysis_runtime.py",
+        "tests/test_r223_beat_map.mjs",
+        "scripts/verify_r223_interactions.mjs",
+        "scripts/check_r223_design.py"
+      ],
+      "currentQueueEligible": true
+    },
+    {
+      "card": "2026-10-19-R210-photo-music-link-import",
+      "bindingStatus": "ACTIVE",
+      "pending": true,
+      "contract": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance-contract.md",
+      "contractReadable": true,
+      "contractSHA256": "df5810569bd7306524a29c4e5f24a450aa183bffbe9e81ad7a2a4d7034fc29bc",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "tests/test_music_library.py",
+        "tests/test_music_network.py",
+        "tests/test_musicdl_engine.py",
+        "tests/test_music_egress.py",
+        "tests/test_douyin_music_api.py",
+        "tests/test_douyin_share_page.py",
+        "tests/test_music_failure_message.py"
+      ],
+      "currentQueueEligible": true
+    },
+    {
+      "card": "OCM-Z1",
+      "bindingStatus": "ACTIVE",
+      "pending": true,
+      "contract": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/ocm-z1/acceptance-contract.md",
+      "contractReadable": true,
+      "contractSHA256": "6039f9de5d4a62b9a3c0c62d85b053b6fed05a6fce45d6682534b273a4746c01",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "99_System_OpenClaw/tests/test_full_checklist_acceptance.py",
+        "99_System_OpenClaw/tests/test_desktop_openapi_route_sync.py",
+        "99_System_OpenClaw/tests/test_media_delete_recommendations.py"
+      ],
+      "currentQueueEligible": false,
+      "excludedReason": "Legacy non-ISO-week workspace; excluded from current queue."
+    }
+  ],
+  "scope": "Only current ACTIVE handed-off PENDING cards; no protected test overlap decision needed when intersection empty; this read-only inventory is not a substitute for G16."
+}

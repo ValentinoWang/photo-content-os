@@ -2,6 +2,27 @@
   "blocking_entries": [
     {
       "blocking": true,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/checklist.md",
+      "estimated_minutes": 10,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/handoff.json",
+      "invalidation_keys": [
+        "studio.direct-generation",
+        "studio.direct-output",
+        "studio.direct-single-rewrite"
+      ],
+      "latest_run": null,
+      "loop_name": "Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片",
+      "ready_at": "2026-10-25T21:14:04.485776Z",
+      "release_slice": "R276",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "原样三项待人工验收；成片、联系表和第三镜对照图在本机 Photo Content OS 证据文件夹内的 R276-direct-video-opus 子目录，详见证据位置清单。",
+      "task_id": "2026-10-26-R276-photo-direct-video-opus",
+      "workspace": "acceptance/human/2026-W44/2026-10-26-R276-photo-direct-video-opus"
+    },
+    {
+      "blocking": true,
       "checklist_path": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/checklist.md",
       "estimated_minutes": 6,
       "handoff_path": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/handoff.json",
@@ -64,7 +85,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-20T21:08:20.633838Z",
+  "generated_at": "2026-10-25T21:14:04.485776Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -87,5 +108,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "c8bb0ea6a2649c3559626b983c49b2e3684bf6a3ed685b9ad8a4712a8a0221ab"
+  "source_facts_sha256": "2f93429a1ed1abf0a88a22d810bc5df1d18bd4d8451a3c4dd07d4cd88d21d8fc"
 }
