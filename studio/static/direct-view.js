@@ -24,7 +24,11 @@ export function mmss(value) { const n=Number.isFinite(value)?Math.max(0,Math.rou
 export function elapsed(createdAt, now=Date.now()) { const start=Date.parse(createdAt);return Number.isFinite(start)?Math.max(0,(now-start)/1000):0; }
 export function writingSeconds(shot,now=Date.now()) { return Number.isFinite(Date.parse(shot.writingStartedAt))?elapsed(shot.writingStartedAt,now):null; }
 export function canRewrite(shot,instruction) { const text=String(instruction??'');return Array.from(text).length<=200 && (['failed','interrupted'].includes(shot.status)||text.trim().length>0); }
-export function writtenSeconds(job,shot) { return elapsed(job.createdAt,Date.parse(shot.writtenAt)); }
+export function writtenSeconds(shot) {
+  const start=Date.parse(shot.writingStartedAt),end=Date.parse(shot.writtenAt);
+  return Number.isFinite(start)&&Number.isFinite(end)&&end>=start?(end-start)/1000:null;
+}
+export function writtenLabel(shot) { const seconds=writtenSeconds(shot);return seconds===null?'写好':`写好 · 用时 ${mmss(seconds)}`; }
 export function totalSeconds(shots) { return shots.reduce((sum,s)=>sum+shotSeconds(s),0); }
 export function writtenCount(shots) { return shots.filter(s=>['written','rendering','rendered'].includes(s.status)).length; }
 export function shouldPoll(job) {
@@ -92,7 +96,7 @@ export function createDirectView(ctx) {
   function card(s){
     const writing=s.status==='writing',failed=s.status==='failed',interrupted=s.status==='interrupted',rewriting=writing&&!!s.lastInstruction,auto=writing&&!rewriting&&s.attempts>1;
     const good=['written','rendering','rendered'].includes(s.status);
-    const label=good?`写好 · ${mmss(writtenSeconds(job,s))}`:rewriting?'按你的意见重写':auto?'自查没过，正在重写':writing?'正在写':failed?(s.failureCode==='lint_failed_after_retry'?'写了两次都没过':failureMessage(s.failureCode)):interrupted?'中断了':s.status==='queued'?'等着写':failureMessage(s.failureCode);
+    const label=good?writtenLabel(s):rewriting?'按你的意见重写':auto?'自查没过，正在重写':writing?'正在写':failed?(s.failureCode==='lint_failed_after_retry'?'写了两次都没过':failureMessage(s.failureCode)):interrupted?'中断了':s.status==='queued'?'等着写':failureMessage(s.failureCode);
     let poster=s.posterRevision?`<img src="${posterUrl(project.id,job,s)}" alt="">`:'';
     if(!poster||writing)poster+=`<div class="dv-veil ${failed?'dv-veil--fail':writing?'dv-veil--writing'+(s.posterRevision?' dv-veil--dim':''):'dv-veil--queued'}"><b>${failed?'没写成':rewriting?'按你的意见重写':auto?'自查没过，正在重写':writing?'Opus 正在写':interrupted?'中断了':'等着写'}</b>${writing&&writingSeconds(s)!=null?`<span class="mono" data-design-data>已写 ${mmss(writingSeconds(s))}</span>`:''}</div>`;
     return `<article tabindex="0" class="dv-card ${failed?'is-bad':''}" data-shot="${esc(s.shotId)}" aria-current="${selected===s.shotId}" data-design-id="DV-SHOT"><div class="dv-poster">${poster}</div><div class="dv-card-b"><header><b data-design-data>${esc(s.shotId)}</b><span data-design-data>${shotSeconds(s).toFixed(1)} 秒</span></header><p data-design-data>${esc(safeText(s.dialogue))}</p><div class="dv-tags">${interrupted?`<button class="st st--off" data-retry-shot="${esc(s.shotId)}">中断了 · 重试</button>`:`<span class="st ${failed?'st--bad':auto?'st--wait':writing?'st--run':good?'':'st--off'}" data-design-data>${esc(label)}</span>`}${good&&s.checks.warnings.length?'<span class="st st--wait">有提醒</span>':''}</div></div></article>`;

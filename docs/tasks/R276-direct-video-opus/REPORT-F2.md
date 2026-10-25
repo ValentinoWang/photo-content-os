@@ -95,3 +95,28 @@ Core collect_design_inventory.js + check_design_contract.py 使用主目录新 c
 Harness SSOT git：本轮未修改；仓库仍有其他会话的 acceptance/requests、tools/console 等未提交改动。[完整状态](~/.photo-content-os/evidence/R276-direct-video-opus/frontend-f2/harness-git-status.txt)
 
 开场读取的人验日志里，R220 的 studio.navigation / studio.shot-review PENDING 仍与入口相交，未代改其状态；R276 H-01–H-03 留给总控/用户验收。按文件白名单未写额外 handoff 或签署文件。本汇报和截图是普通报告/证据，不创建 SSOT 包或 Obsidian 快照。到此停止，不开始下一段。
+
+## F3
+
+已修正镜卡和单镜详情的计时含义。两处共用「写好 · 用时 m:ss」，用时为该镜 `writtenAt − writingStartedAt`；任一字段缺失、不可解析或时间倒置时只显示「写好」，不回退到任务创建时间。详情重画判据同时包含这两个时间字段，避免仅时间变化时仍显示旧值；输入意见、焦点和选区保留逻辑不变。
+
+仅修改 `studio/static/direct-view.js`、`studio/static/direct-shot-detail.js`、`tests/test_r276_direct_frontend.mjs`，以及按要求追加本节。没有修改夹具、合同、截图脚本或后端。
+
+回归覆盖正常写镜（3:41）、缺少 writingStartedAt / writtenAt、隔数小时重写（03:40:00 到 03:44:19，仅显示本次 4:19）。浏览器测试挂载实际页面模块，检查镜卡和详情两处文字；只更新一镜的两个时间字段，不改 posterRevision，也能刷新详情；其余六镜的卡片文字逐项保持不变。原有单镜重写后其他六镜 poster/time 不变、输入保留等交互检查继续通过。
+
+| 指定检查 | F3 结果 |
+| --- | --- |
+| `node tests/test_r276_direct_frontend.mjs` | PASS。 |
+| `HARNESS_CORE=~/Desktop/Opensource_Tool/Harness_Engineering/Core R276_FRONTEND_EVIDENCE=~/.photo-content-os/evidence/R276-direct-video-opus/frontend-f3 node scripts/direct_video/frontend_gate.mjs` | PASS：26 次设计合同比对、31 张完整页面截图、公式和浏览器交互；pageerror 为 0。仅使用 8767 临时 Studio 和接口夹具，没有运行真实生成任务。 |
+| `.venv/bin/python -m pytest -q tests/test_r276_direct_frontend.py` | 6 passed。 |
+| `git diff --check` | PASS。 |
+
+**合同文案结果：** 本次「写好 · 用时」未被判为稿外文字，两处沿用既有 data-design-data 数据区。没有修改 contract.json、approved-extras 或清点规则；合同通过不代表设计稿已同步改成新公式，文案与公式依据本轮明确指令。
+
+F3 证据独立放在 [frontend-f3 清单](~/.photo-content-os/evidence/R276-direct-video-opus/frontend-f3/screenshot-manifest.json)，未覆盖 F2 证据。亲自看了最终 [ready 1440](~/.photo-content-os/evidence/R276-direct-video-opus/frontend-f3/ready-1440.png)、[ready 960](~/.photo-content-os/evidence/R276-direct-video-opus/frontend-f3/ready-960.png)、[writing 390](~/.photo-content-os/evidence/R276-direct-video-opus/frontend-f3/writing-390.png)、[done 390](~/.photo-content-os/evidence/R276-direct-video-opus/frontend-f3/done-390.png) 的完整页面及底部：镜卡新文字可读，详情右上角与镜卡用时一致；手机状态自然换行，没有溢出、裁切或遮挡。其余截图为本次矩阵机器检查，不宣称全部重新人工审图。实际 viewport 为 1440×900、960×900、390×900，路由是本地 fixture-piece 的脚本直出页；逐图时间、完整滚动覆盖、尺寸与哈希见清单。日志为同目录 formulas.log、frontend-gate.log、pytest.log。
+
+业务 git HEAD 仍为 `b04e0387ea81fe629116073cb74a68b7c06d7a42`，没有提交、暂存、重写历史或修改前面的 90875ba / d095d10 / 9637bd9。工作区仅有上述四个已授权文件的改动，开场已有的未跟踪 `.venv` 链接保持原样。Harness SSOT 本轮未修改，其他会话已有改动保留。R276 人验 PENDING 保持原状，不代签或改验收文件。
+
+8767 已由截图脚本停止，临时状态目录已清理，lsof 确认无监听。未操作 8765、8766、8768，未停止总控给用户开的 Studio。到此停止，交由总控提交。
+
+F3 补充：为配合 R277 整块替换详情，已移除 R276 测试中全部详情「写好」文案断言（含 normal、missingStart、missingEnd、refreshedDetail、rewrittenDetail），镜卡断言全部保留，详情实现未回退；`node tests/test_r276_direct_frontend.mjs` 和设置 HARNESS_CORE 指向 Core 的 `node scripts/direct_video/frontend_gate.mjs` 重跑均通过（26 次合同检查、31 张完整截图及浏览器交互），新日志位于 `~/.photo-content-os/evidence/R276-direct-video-opus/frontend-f3-card-only/`，8767 已停止并清理临时状态，未提交、未操作 8766，本次仅修改测试和追加本句，业务项目保留既有 F3 未提交改动，Harness SSOT 未修改。

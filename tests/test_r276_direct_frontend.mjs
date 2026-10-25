@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
 import { pathToFileURL } from 'node:url';
-import {splitScript,shotSeconds,totalSeconds,writtenCount,elapsed,writtenSeconds,mmss,shouldPoll,failureMessage,FAILURE_COPY,defaultShot,shotStart,safeText,posterUrl,writingSeconds,canRewrite} from '../studio/static/direct-view.js';
+import {splitScript,shotSeconds,totalSeconds,writtenCount,elapsed,writtenSeconds,writtenLabel,mmss,shouldPoll,failureMessage,FAILURE_COPY,defaultShot,shotStart,safeText,posterUrl,writingSeconds,canRewrite} from '../studio/static/direct-view.js';
 
 // Build the endpoint-shaped fixtures stored in tests/fixtures/r276-direct/.
 export function fixture(state,source) {
@@ -44,7 +44,16 @@ export function testFormulas(){
   const statuses=['queued','writing','written','rendering','rendered','failed','interrupted'];
   assert.equal(writtenCount(statuses.map(status=>({status}))),3);
   assert.equal(elapsed('2026-10-26T00:00:00Z',Date.parse('2026-10-26T00:01:12Z')),72);
-  assert.equal(writtenSeconds({createdAt:'2026-10-26T00:00:00Z'},{writtenAt:'2026-10-26T00:03:41Z'}),221);
+  const completed={writingStartedAt:'2026-10-26T00:00:00Z',writtenAt:'2026-10-26T00:03:41Z'};
+  assert.equal(writtenSeconds(completed),221);
+  assert.equal(writtenLabel(completed),'写好 · 用时 3:41');
+  for(const missing of [{...completed,writingStartedAt:null},{...completed,writingStartedAt:undefined},{...completed,writtenAt:null},{...completed,writtenAt:undefined},{...completed,writingStartedAt:'invalid'}]){
+    assert.equal(writtenSeconds(missing),null);assert.equal(writtenLabel(missing),'写好');
+  }
+  const before=Array.from({length:7},()=>({...completed})),after=structuredClone(before);
+  after[4].writingStartedAt='2026-10-26T03:40:00Z';after[4].writtenAt='2026-10-26T03:44:19Z';
+  assert.equal(writtenSeconds(after[4]),259);assert.equal(writtenLabel(after[4]),'写好 · 用时 4:19');
+  assert.deepEqual(after.filter((_,i)=>i!==4).map(writtenLabel),before.filter((_,i)=>i!==4).map(writtenLabel));
   assert.equal(writingSeconds({writingStartedAt:'2026-10-26T00:00:00Z'},Date.parse('2026-10-26T00:01:12Z')),72);
   assert.equal(writingSeconds({writingStartedAt:null}),null);
   for(const status of ['failed','interrupted']){assert(canRewrite({status},''));assert(canRewrite({status},'  '));assert(canRewrite({status},'改大'));assert(!canRewrite({status},'字'.repeat(201)));}
@@ -89,5 +98,28 @@ export async function testDetail(page,job){
     container.remove();return {same,preserved,restored,disabled,matrix,exports:Object.keys(await import('/direct-shot-detail.js'))};
   },job);
   assert.deepEqual(result,{same:true,preserved:true,restored:true,disabled:true,matrix:[{status:'failed',emptyEnabled:true,label:'重试这一镜'},{status:'interrupted',emptyEnabled:true,label:'重试这一镜'},{status:'rendered',emptyEnabled:false,label:'让 Opus 重写这一镜'}],exports:['renderShotDetail']});
+  await testWrittenDurationCards(page,job);
+}
+
+async function testWrittenDurationCards(page,job){
+  const result=await page.evaluate(async source=>{
+    const {createDirectView}=await import('/direct-view.js');
+    const root=document.createElement('div');document.body.append(root);
+    const job=structuredClone(source),piece={id:job.projectId,title:'耗时回归'};
+    job.createdAt='2026-10-26T00:00:00Z';
+    Object.assign(job.shots[0],{writingStartedAt:'2026-10-26T00:00:00Z',writtenAt:'2026-10-26T00:03:41Z'});
+    job.shots[1].writingStartedAt=null;job.shots[2].writtenAt=null;
+    const view=createDirectView({root:()=>root,active:()=>true,mark:()=>{},api:async()=>({job:structuredClone(job)})});
+    const labels=()=>[...root.querySelectorAll('.dv-card .dv-tags .st:first-child')].map(e=>e.textContent);
+    try{
+      await view.render(piece,'');const before=labels();
+      Object.assign(job.shots[0],{writingStartedAt:'2026-10-26T03:40:00Z',writtenAt:'2026-10-26T03:44:19Z'});
+      await view.render(piece,'');
+      return {before,after:labels()};
+    }finally{view.stop();root.remove();}
+  },job);
+  assert.deepEqual(result.before.slice(0,3),['写好 · 用时 3:41','写好','写好']);
+  assert.equal(result.after[0],'写好 · 用时 4:19');
+  assert.deepEqual(result.after.slice(1),result.before.slice(1));
 }
 if(process.argv[1] && import.meta.url===pathToFileURL(process.argv[1]).href)testFormulas();
