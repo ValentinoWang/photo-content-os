@@ -1,0 +1,136 @@
+{
+  "checks": 26,
+  "passed": 26,
+  "states": [
+    {
+      "state": "empty",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "empty",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "read-error",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "read-error",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "filled",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "filled",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "unavailable",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "unavailable",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "designing",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "designing",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "writing",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "writing",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "failed-shot",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "failed-shot",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "ready",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "ready",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "rewriting",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "rewriting",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "composing",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "composing",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "composing-silent",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "composing-silent",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "done",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "done",
+      "viewportWidth": 960,
+      "exitCode": 0
+    },
+    {
+      "state": "done-silent",
+      "viewportWidth": 1440,
+      "exitCode": 0
+    },
+    {
+      "state": "done-silent",
+      "viewportWidth": 960,
+      "exitCode": 0
+    }
+  ]
+}

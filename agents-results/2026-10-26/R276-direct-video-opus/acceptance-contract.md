@@ -1,11 +1,11 @@
 # Acceptance Contract: 2026-10-26-R276-photo-direct-video-opus
 
 - Task ID: 2026-10-26-R276-photo-direct-video-opus
-- Contract version: 1
+- Contract version: 2
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户交付准备指令要求沿用需求卡 H-01、H-02、H-03；前三段及前端 F1/F2 已由总控通过，本合同不增加或放宽行为标准
+- Approval evidence: 用户第二次 handoff 指令要求在 c39b465 重新冻结；H-01、H-02、H-03 及受保护后端测试原样沿用，仅更新源码绑定
 - Request source: acceptance/requests/2026-W44/2026-10-26-R276-photo-direct-video-opus/request.json; docs/tasks/R276-direct-video-opus/TASK.md
 - SSOT node: none
 - SSOT path: none
@@ -14,7 +14,7 @@
 - Assumption IDs: none
 - Invalidation keys: studio.direct-generation, studio.direct-output, studio.direct-single-rewrite
 - AC budget: 3
-- Baseline identity: d095d101c445bb6a349208ce6c5af8be3afbf10c，冻结 base/head/tree 见 baseline.json
+- Baseline identity: c39b465f696856babc835ea6893196240d9198e9，冻结 base/head/tree 见 baseline.json
 - Product Context refs: agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json
 - Role Context refs: agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json
 - Resolved Surface Contract refs: agents-results/2026-10-26/R276-direct-video-opus/resolved-surface-contract.json

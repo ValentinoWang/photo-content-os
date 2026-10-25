@@ -1,0 +1,961 @@
+{
+  "scope": "F2 local Studio 8767, intercepted projection fixtures; no backend generation claim",
+  "screenshots": [
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:51.722Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/empty-1440.png",
+      "sha256": "748856a82e3c83772739d06b6af52f5dc2181e6af4b2b6f3f017a298cb2324f3",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:52.131Z",
+      "scroll_coverage": [
+        0,
+        1112
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1112
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/empty-960.png",
+      "sha256": "d3e292463186d5701f45bd1428773f49a02de7c7ed1a94a3f64a53d05f5c1434",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:52.487Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/read-error-1440.png",
+      "sha256": "b1ccc3990e34c3af3a6ade99dece033c4429856778ebd9eba1952bed764fde86",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:52.798Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/read-error-960.png",
+      "sha256": "d408f53863d2f0ce3936110574071c9aae4bd61c6181d92cc5ef4d9873a162de",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "filled",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:53.187Z",
+      "scroll_coverage": [
+        0,
+        917
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 917
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/filled-1440.png",
+      "sha256": "82406501f63fc5be6485314a5947178f9f8ab4a0329267fc41467d9a4933ad74",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "filled",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:53.558Z",
+      "scroll_coverage": [
+        0,
+        1306
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1306
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/filled-960.png",
+      "sha256": "27358dc6a19670cc6d3600ee8f74257dfdcb2ff9fd2c814e6a1b3e76d8b53f44",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:54.043Z",
+      "scroll_coverage": [
+        0,
+        1009
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1009
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/unavailable-1440.png",
+      "sha256": "220181a51da57bdfd1134585912be45ea067fab8062a437a84e900416e954423",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:54.550Z",
+      "scroll_coverage": [
+        0,
+        1434
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1434
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/unavailable-960.png",
+      "sha256": "4dd20bc48aeac42ac4e5bea2f5557c555474a9a3a7e30c64d8eaa00c0a261888",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "designing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:54.888Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/designing-1440.png",
+      "sha256": "481b4783b6cb47a971e98e099e261fbeb4678a703adffd5dce02cef61cfcdcf7",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "designing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:55.242Z",
+      "scroll_coverage": [
+        0,
+        1257
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1257
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/designing-960.png",
+      "sha256": "4014fdfdafec5bcc9619edd6c2f93063bc2c500d8ec5b4a46e22e35323f4a129",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:55.671Z",
+      "scroll_coverage": [
+        0,
+        1403
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1403
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/writing-1440.png",
+      "sha256": "0b68b489b5d5e1bd95cfe3e37e57262a9072f50e1215278cf4cf5e964adcbdb3",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:56.196Z",
+      "scroll_coverage": [
+        0,
+        2239
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2239
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/writing-960.png",
+      "sha256": "c5d804c4ee2215e320390f5acec0fdbbac91be52d7952c11018385487e6b85a3",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "failed-shot",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:56.674Z",
+      "scroll_coverage": [
+        0,
+        1409
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1409
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/failed-shot-1440.png",
+      "sha256": "308da5985fa4a28b547ec07979d56c97c6cf4c61e949bd63a19326470d66382b",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "failed-shot",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:57.105Z",
+      "scroll_coverage": [
+        0,
+        2320
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2320
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/failed-shot-960.png",
+      "sha256": "acb61611621136fc70444eb8674f0dccbf23f604316b7d66cb6ca755b202db2c",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "ready",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:57.521Z",
+      "scroll_coverage": [
+        0,
+        1368
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1368
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/ready-1440.png",
+      "sha256": "0317fe5021940fcae705b07168872fa9cc4ba5efbf6831932921f8030e118e96",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "ready",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:58.031Z",
+      "scroll_coverage": [
+        0,
+        2308
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2308
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/ready-960.png",
+      "sha256": "b42cd383f87b84b3c0a84b159bd1f598827a1835b4a2583e8674a9d348268daa",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "rewriting",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:58.480Z",
+      "scroll_coverage": [
+        0,
+        1368
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1368
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/rewriting-1440.png",
+      "sha256": "a92b6bd2d5ec6677642f1f5af46639aad00715c1bcd758d4f9e4c7a7f9772408",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "rewriting",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:58.951Z",
+      "scroll_coverage": [
+        0,
+        2184
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2184
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/rewriting-960.png",
+      "sha256": "dcbada54ade5c95c8f323a56f480f46751ae27d88b736a1ae2e882fad4a0cfc9",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "composing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:59.411Z",
+      "scroll_coverage": [
+        0,
+        932
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 932
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/composing-1440.png",
+      "sha256": "3126ef0cdae65ea2af60abc1795263a4044991f723ee0129f87ac338d15ee708",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "composing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:23:59.862Z",
+      "scroll_coverage": [
+        0,
+        1344
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1344
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/composing-960.png",
+      "sha256": "d554aac53f80b4d93078f05b3f1768bee9d6e34606622eb5f36d5abbea5a7eb0",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "composing-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:00.276Z",
+      "scroll_coverage": [
+        0,
+        932
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 932
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/composing-silent-1440.png",
+      "sha256": "db7d238b6676fcbbd33b8a4269863ed5d32d9ba73a0d9b47be7a7b7a0c89c2da",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "composing-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:00.666Z",
+      "scroll_coverage": [
+        0,
+        1344
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1344
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/composing-silent-960.png",
+      "sha256": "4fc575d4829eaea67aa1480fd72112f119e800973aeacc70d1ae371c370cad9f",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:01.088Z",
+      "scroll_coverage": [
+        0,
+        1434
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1434
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/done-1440.png",
+      "sha256": "06adb48d87e45350885e7f4ef72b5f8f37ab5749ccdc48293bee29e534200298",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:01.518Z",
+      "scroll_coverage": [
+        0,
+        2176
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2176
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/done-960.png",
+      "sha256": "f190ee57bdc804307904e32d79b37c848bbf4a091aa3fec61de155ce5ffc0cce",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "done-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:01.906Z",
+      "scroll_coverage": [
+        0,
+        1434
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1434
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/done-silent-1440.png",
+      "sha256": "18efc8b961a2a306fa0e807dd533520c3ac95c2adfa4a297348e35d95f2ed68c",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "done-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:02.349Z",
+      "scroll_coverage": [
+        0,
+        2176
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2176
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/done-silent-960.png",
+      "sha256": "94ec7c32d76408d5c41d27f6852b2f608aa148db47011ca03ba8d0741d2a9bed",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:02.725Z",
+      "scroll_coverage": [
+        0,
+        1283
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 1283
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/empty-390.png",
+      "sha256": "3c20e65c362025ddbb4ffabb54e73ec427e3c611750229531c0d2e141f82a5e3",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:03.280Z",
+      "scroll_coverage": [
+        0,
+        2607
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 2607
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/writing-390.png",
+      "sha256": "15b778085f81a705cccd7c17f4ad2802d491bac6d0b57a7b94df2ed91f5f71ce",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:03.765Z",
+      "scroll_coverage": [
+        0,
+        2370
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 2370
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/done-390.png",
+      "sha256": "7a4f380cd22f4be5a7f8347689b0aa60c4d5f37d85106190077e8c1316772f5b",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:04.248Z",
+      "scroll_coverage": [
+        0,
+        1642
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 1642
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/unavailable-390.png",
+      "sha256": "d7bbca44dad1b31e433b51ccc4124760e6252fcffd2261b78330ac0108398aaa",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-25T23:24:04.537Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 900
+      },
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/read-error-390.png",
+      "sha256": "0549ca424cdf32549fb90e9fd487e4ea0dc56b3ff424e9f6ad25e503207e2875",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex reviewed all 31 captures in four contact sheets and separately opened full ready-1440 and writing-390, including bottom. Latest-write duration labels readable in both sampled viewports; no horizontal overflow. Layout/state fixture review only, no real generation or audio-sync claim."
+    }
+  ],
+  "contracts": [
+    {
+      "state": "empty",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "empty",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "read-error",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "read-error",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "filled",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "filled",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "unavailable",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "unavailable",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "designing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "designing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "writing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "writing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "failed-shot",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "failed-shot",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "ready",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "ready",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "rewriting",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "rewriting",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing-silent",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing-silent",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done-silent",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done-silent",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    }
+  ],
+  "browser_errors": [],
+  "review": {
+    "reviewer": "Codex",
+    "reviewed_at": "2026-10-25T23:26:21.509731+00:00",
+    "status": "PASS",
+    "scope": "31-image contact sheets plus full ready desktop and writing phone; all 31 coverage/hash checks and 26 design comparisons pass; not a strict visual-fidelity archive pass"
+  }
+}

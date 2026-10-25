@@ -1,8 +1,8 @@
 {
   "state": "fail",
-  "verifiedHead": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
-  "rangeHead": "9637bd9cb1ae52efbf300197134216b512fc8234",
-  "sourceTree": "6673f1ff467d7a821a04359f882a54ddb0d8dfc7",
+  "verifiedHead": "c39b465f696856babc835ea6893196240d9198e9",
+  "rangeHead": "c39b465f696856babc835ea6893196240d9198e9",
+  "sourceTree": "a4b1d6867fdc0af33a642ce22720b2b46b465ac8",
   "gates": [
     {
       "id": "G1",
@@ -109,7 +109,7 @@
     }
   ],
   "exitCode": 1,
-  "G16": "PASS; no protected-test intersections; no old card rewritten",
-  "G17": "PASS; no executable scripts inside this evidence root; fixture boundary explicitly disclosed",
-  "scope": "Post-artifact-commit check, source identity remains d095d10; report receipt changes artifacts only."
+  "G16": "PASS; four independent old cards, empty protected-test intersections, no supersede/rebaseline",
+  "G17": "PASS; evidence root has no executable scripts; API/model fixture boundary remains explicit",
+  "scope": "Second handoff at c39b465. Thirteen pass/four expected fail; no product changes in later artifact commits."
 }

@@ -2,14 +2,14 @@
   "baseline": {
     "base": "2263a04272eca5dc6d80590a066025ecf9c12f2b",
     "branch": "detached",
-    "head": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
-    "tree": "6673f1ff467d7a821a04359f882a54ddb0d8dfc7"
+    "head": "c39b465f696856babc835ea6893196240d9198e9",
+    "tree": "a4b1d6867fdc0af33a642ce22720b2b46b465ac8"
   },
-  "binding_sha256": "fa219b2b4ad8372a3f51eb62d4256e76b440d65c7049e5a45ef47f6d802d236e",
+  "binding_sha256": "0aec3bcfd6762ef3a7ae888bcbe0ddb9b4586a6d6254dc9507443100cd332e8a",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "ad794dee079ef222439b34e44a9135cae1f6c9b0d818d3b6b78c43479eade758",
+  "checklist_sha256": "06961a51136a70d478465352b16893be5f08ac99030c7b32030cc7d941232430",
   "claims": [
     {
       "claim_key": "studio.direct-video.generate",
@@ -121,8 +121,8 @@
     }
   ],
   "contract_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance-contract.md",
-  "contract_sha256": "9eadb40e931645d02285777ff09fae656dd313bf0ca93afd2010af6c37c182ec",
-  "contract_version": "1",
+  "contract_sha256": "f62a10c6c6038f7ce122bc243bce4a301bcb954bfe95912e4c0672a34dab21fc",
+  "contract_version": "2",
   "estimated_minutes": 10,
   "execution_policy": "terminal-after-machine-green",
   "invalidation_keys": [
@@ -134,27 +134,27 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261025T210902Z-macos-isolated-1d8fa8/result.md",
-      "result_sha256": "f720424803c83348af6ce0f6ff14c305462fcff220292747d5976365c4663c11",
-      "run_id": "20261025T210902Z-macos-isolated-1d8fa8",
-      "source_identity": "d095d101c445bb6a349208ce6c5af8be3afbf10c"
+      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261025T232446Z-macos-isolated-c39-84ee66/result.md",
+      "result_sha256": "64f452a33cff88970263906fceab6f6872fcbeda457f8ad35d2c7acb08fbbd34",
+      "run_id": "20261025T232446Z-macos-isolated-c39-84ee66",
+      "source_identity": "c39b465f696856babc835ea6893196240d9198e9"
     },
     {
       "layer": "machine/e2e",
-      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261025T210902Z-macos-chrome-fixtures-6c86d0/result.md",
-      "result_sha256": "a488ea68df739b0e6dddc8674d3ac0f7fe2aa07081839bc870d9c6bbfd15f663",
-      "run_id": "20261025T210902Z-macos-chrome-fixtures-6c86d0",
-      "source_identity": "d095d101c445bb6a349208ce6c5af8be3afbf10c"
+      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261025T232446Z-macos-chrome-c39-1da705/result.md",
+      "result_sha256": "09fb0b6a509e75858c2cb4dd9416e63f00b66d0791e4a01989a7819af42230bd",
+      "run_id": "20261025T232446Z-macos-chrome-c39-1da705",
+      "source_identity": "c39b465f696856babc835ea6893196240d9198e9"
     }
   ],
   "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
-  "ready_at": "2026-10-25T21:14:04.485776Z",
+  "ready_at": "2026-10-25T23:26:21.559418+00:00",
   "release_slice": "R276",
   "request_id": "2026-10-26-R276-photo-direct-video-opus",
   "required_role": "产品负责人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "d095d101c445bb6a349208ce6c5af8be3afbf10c",
-  "summary": "原样三项待人工验收；成片、联系表和第三镜对照图在本机 Photo Content OS 证据文件夹内的 R276-direct-video-opus 子目录，详见证据位置清单。",
+  "source_commit": "c39b465f696856babc835ea6893196240d9198e9",
+  "summary": "在 c39b465 重新验证并递交，原样三项待人工验收；成片和联系表仍在本机 Photo Content OS 证据文件夹的 R276-direct-video-opus 子目录。",
   "task_id": "2026-10-26-R276-photo-direct-video-opus"
 }

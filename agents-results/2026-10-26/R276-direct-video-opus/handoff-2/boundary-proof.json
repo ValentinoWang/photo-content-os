@@ -1,0 +1,35 @@
+{
+  "source": "c39b465f696856babc835ea6893196240d9198e9",
+  "tree": "a4b1d6867fdc0af33a642ce22720b2b46b465ac8",
+  "productAndTestFilesUnchanged": true,
+  "venvInodeTargetMtimeUnchanged": true,
+  "humanCriteriaBodyUnchanged": true,
+  "humanStatus": "PENDING",
+  "newHumanRuns": [],
+  "protectedTestsUnchanged": true,
+  "currentMachineRuns": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261025T232446Z-macos-isolated-c39-84ee66/result.md",
+      "result_sha256": "64f452a33cff88970263906fceab6f6872fcbeda457f8ad35d2c7acb08fbbd34",
+      "run_id": "20261025T232446Z-macos-isolated-c39-84ee66",
+      "source_identity": "c39b465f696856babc835ea6893196240d9198e9"
+    },
+    {
+      "layer": "machine/e2e",
+      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261025T232446Z-macos-chrome-c39-1da705/result.md",
+      "result_sha256": "09fb0b6a509e75858c2cb4dd9416e63f00b66d0791e4a01989a7819af42230bd",
+      "run_id": "20261025T232446Z-macos-chrome-c39-1da705",
+      "source_identity": "c39b465f696856babc835ea6893196240d9198e9"
+    }
+  ],
+  "previousCommitsUnchanged": [
+    "90875ba",
+    "d095d10",
+    "9637bd9",
+    "b04e038",
+    "c39b465"
+  ],
+  "H03FrontendDOMProtected": false,
+  "pushed": false
+}

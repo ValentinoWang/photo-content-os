@@ -1,0 +1,7 @@
+{
+  "humanCriteriaUnchanged": true,
+  "onlyChecklistMetadataChange": "contract version 1 -> 2",
+  "checklistOldSHA256": "ad794dee079ef222439b34e44a9135cae1f6c9b0d818d3b6b78c43479eade758",
+  "checklistNewSHA256": "06961a51136a70d478465352b16893be5f08ac99030c7b32030cc7d941232430",
+  "H03FrontendDetailDOMProtected": false
+}

@@ -1,5 +1,5 @@
 {
-  "backend": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261025T210902Z-macos-isolated-1d8fa8/result.md",
-  "e2e": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261025T210902Z-macos-chrome-fixtures-6c86d0/result.md",
-  "visual": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/visual-fidelity/runs/20261025T210903Z-macos-chrome-fixtures-7010a4/result.md"
+  "backend": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261025T232446Z-macos-isolated-c39-84ee66/result.md",
+  "e2e": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261025T232446Z-macos-chrome-c39-1da705/result.md",
+  "previousVisual": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/visual-fidelity/runs/20261025T210903Z-macos-chrome-fixtures-7010a4/result.md"
 }

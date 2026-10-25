@@ -1,0 +1,69 @@
+{
+  "verifiedHead": "c39b465f696856babc835ea6893196240d9198e9",
+  "range": "origin/main..HEAD",
+  "excludedSelf": "2026-10-26-R276-photo-direct-video-opus",
+  "cards": [
+    {
+      "card": "2026-10-19-R207-photo-edit-tools-in-repo",
+      "contract": "evidence/2026-10-19/R207-edit-tools-in-repo/acceptance-contract.md",
+      "bindingStatus": "ACTIVE",
+      "status": "PENDING",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "tests/test_edit_tools_runtime.py"
+      ],
+      "decision": "independent; no overlap action",
+      "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。"
+    },
+    {
+      "card": "2026-10-20-R220-photo-studio-ia-preview",
+      "contract": "evidence/2026-10-20/R220/delivery/acceptance-contract.md",
+      "bindingStatus": "ACTIVE",
+      "status": "PENDING",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "tests/test_studio_review.py",
+        "tests/test_r220_number_formulas.py",
+        "tests/test_r220_number_formulas.mjs"
+      ],
+      "decision": "independent; no overlap action",
+      "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。"
+    },
+    {
+      "card": "2026-10-20-R223-photo-music-beat-map",
+      "contract": "agents-results/2026-10-21/r223-delivery/acceptance-contract.md",
+      "bindingStatus": "ACTIVE",
+      "status": "PENDING",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "tests/test_r223_music_analysis.py",
+        "tests/test_r223_sections.py",
+        "tests/test_r223_music_analysis_runtime.py",
+        "tests/test_r223_beat_map.mjs",
+        "scripts/verify_r223_interactions.mjs",
+        "scripts/check_r223_design.py"
+      ],
+      "decision": "independent; no overlap action",
+      "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。"
+    },
+    {
+      "card": "2026-10-19-R210-photo-music-link-import",
+      "contract": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance-contract.md",
+      "bindingStatus": "ACTIVE",
+      "status": "PENDING",
+      "changedProtectedTests": [],
+      "protectedTests": [
+        "tests/test_music_library.py",
+        "tests/test_music_network.py",
+        "tests/test_musicdl_engine.py",
+        "tests/test_music_egress.py",
+        "tests/test_douyin_music_api.py",
+        "tests/test_douyin_share_page.py",
+        "tests/test_music_failure_message.py"
+      ],
+      "decision": "independent; no overlap action",
+      "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。"
+    }
+  ],
+  "noSupersedeOrRebaseline": true
+}
