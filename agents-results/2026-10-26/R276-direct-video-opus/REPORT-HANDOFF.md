@@ -94,3 +94,70 @@ H-03 只保护 `tests/test_r276_direct_video.py` 中 `test_rewrite_only_one_shot
 只新增/更新 `acceptance/**` 与本任务 `agents-results/**` 验收物。未改 `studio/`、`scripts/`、`tests/`、`schemas/`；未改两个原提交，R277 的基底可继续使用。8765、8766 未访问、未停启；临时 8767 已由检查脚本收尾。`.venv` 是开工前已有链接，未删除、重建或修改。未安装钩子，未推送。
 
 Harness SSOT 仓库没有本线程编辑；既有其他线程修改原样保留，状态只读记录于 `frozen-source-proof.json`。没有声明 SSOT 开发包，不触发 Obsidian 审计快照。已清理本次创建的未跟踪 delivery 缓存；业务 worktree 最终只保留原有未跟踪 `.venv`，报告回执提交后停止。
+
+
+## 第二次 handoff（c39b465）
+
+日期：2026-10-26。本次验收物提交为 **`e38d09c0c29cc271c568b85cce312f1e2096a2af`**（`chore(acceptance): re-handoff R276 at c39b465`），仅包含验收物；本节另作只含本报告的本地回执提交。已有 `90875ba → d095d10 → 9637bd9 → b04e038 → c39b465` 五个提交原样保留，没有 amend、rebase、推送或改写。
+
+本次 verified head 为 `c39b465f696856babc835ea6893196240d9198e9`，tree 为 `a4b1d6867fdc0af33a642ce22720b2b46b465ac8`，base 仍为 `2263a04272eca5dc6d80590a066025ecf9c12f2b`。新 baseline 与两个机器 PASS run 均绑定该身份，不沿用 d095d10 的机器结果冒充新跑。
+
+### 卡片与受保护摘要
+
+合同元数据更新为第 2 版，只更新源码绑定及本次委托依据；受保护测试表的字节、路径和五个 SHA-256 全部不变。开工时逐一重算五个后端 `.py` 文件，均与原锁定值相同，因此没有刷新摘要，也没有触发异常后自行继续修订。完整比对在 `handoff-2/protected-tests.json`。
+
+H-01～H-03 的步骤与预期逐字不变；清单只更新内部合同版本元数据。管理器重新 bind-human、handoff --replace，并更新 ready_at、claims、baseline、runs 和生成日志。卡片仍为 **PENDING、Blocking Yes、保留“未-”前缀**，没有新增人工结果或反馈。H-03 仍只保护后端单镜不变性测试并引用 REPORT-B 真跑，不保护前端详情 DOM。
+
+卡片与合同位置沿用第一节；新机器 run 路径见 `handoff-2/runs.json`，当前 handoff 只引用新的两个 PASS run。第一次结果留在 Git 历史和原 run 中，不再充当当前 handoff 的源码证明。
+
+### 每条机器验证
+
+| 验证 | 本次结果 | 证据 |
+| --- | --- | --- |
+| `.venv/bin/python -m pytest -q tests/test_r276_*.py` | **134 passed，21.68 秒** | `handoff-2/pytest-r276.log` |
+| `node tests/test_r276_direct_frontend.mjs` | **PASS** | `handoff-2/frontend-node.log` |
+| `node scripts/direct_video/frontend_gate.mjs` | **PASS：26 次设计合同比较、31 张整页截图、公式及浏览器交互** | `handoff-2/frontend-gate.log` |
+| `.venv/bin/python -m pytest -q tests/test_r276_direct_video.py::test_rewrite_only_one_shot_and_invalidate_output` | **1 passed，0.48 秒** | `handoff-2/h03-backend-invariance.log` |
+| `.venv/bin/python scripts/check_repository_safety.py --base origin/main` | **PASS**，执行及暂存验收物后均通过 | `handoff-2/repository-safety.log` |
+| 合同、binding 校验 / check-project | **PASS** | `handoff-2/check-contract.log`、`check-project.log` |
+| 受保护摘要与清单正文保持 | **5/5 不变**，三个人工项正文不变 | `handoff-2/protected-tests.json`、`checklist-preservation.json` |
+
+后端渲染按任务单配置 `VIDEO_RENDER_PLAYWRIGHT_MODULE` 和 `VIDEO_RENDER_BROWSER`；浏览器门禁使用同一 Playwright 安装的 ESM `index.mjs`，`HARNESS_CORE` 指 Core。独立临时 Studio 只用 8767，检查后已关闭。没有调用真实付费模型，没有新生成作品或改运行中的作品。
+
+本轮图片在 `~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-frontend/`，未入仓库。31 张实际视口和整页覆盖、哈希均复核；查看了四张联系表，并单独打开 ready 桌面 1440×900、writing 手机 390×900 的原始整页图（含底部），新“写好 · 用时”文字和相邻区域可读，没有横向溢出。此为明确范围的夹具布局检查，不冒称对全部原图逐张放大审阅或真实模型/音画同步验收。
+
+### 召回与 G16
+
+重新执行 `candidates.py --range origin/main..HEAD`，除同编号本卡外仍只有 R207、R210、R220、R223 四张相关旧卡；四张均沿用 independent 的具体理由。没有 unmapped。对当前 ACTIVE、有 handoff 且 PENDING 的旧卡只读核对后，受保护测试与实际改动交集均为空。没有重新基线、替代或改写任何旧卡，**G16 PASS**；详见 `handoff-2/candidates.json`、`g16-readonly-audit.json`。
+
+### 交付检查逐项结果
+
+执行 `check_delivery.py --project-root <本 worktree> --range origin/main..HEAD --json --read-only`，返回 **exit 1、FAIL；13 项通过，只有任务单预期的 4 项失败**。门禁复算 verified head/tree 与上面一致；原始 JSON 在 `handoff-2/check-delivery.json`，本次摘要在 `handoff-2/delivery-summary.json`。
+
+| 门禁 | 结果 | 原因或边界 |
+| --- | --- | --- |
+| G1 有卡 | **FAIL** | 阻塞卡还没有用户亲自签署当前版本 |
+| G2 基准一致 | PASS | 新基准及源码身份一致 |
+| G3 机器先绿 | PASS | 引用的是 c39b465 的新 PASS run |
+| G4 看得懂 | PASS | 原样中文三项 |
+| G5 有入口 | PASS | 原有逐项入口保留，没有访问 8766 |
+| G6 去重已声明 | PASS | 四张旧卡关系与范围声明有效 |
+| G7 失效传播 | PASS | 未篡改旧的通过结论 |
+| G8 逐条隔离 | PASS | Core 只读生成健康检查通过 |
+| G9 页面可见 | **FAIL** | 总控调度台快照尚未发布这张卡的 ready/ACTIVE 条目 |
+| G10 不自证 | PASS | 无人工结果、反馈或去掉“未-” |
+| G11 有需求卡 | **FAIL** | d095d10 有 Request、缺 Verify；按总控决定保留历史，不改写 |
+| G12 覆盖需求 | **FAIL** | 同一旧提交缺 Verify；本卡 H 项本身仍完整 |
+| G13 沿用已有卡 | PASS | 没有新开相同验收责任的卡 |
+| G14 已通过不可变 | PASS | 没有修改已通过卡 |
+| G15 自动替代完整 | PASS | 未虚构替代或遗漏退役 |
+| G16 不连累旧卡 | **PASS** | 四张旧卡受保护测试交集为空 |
+| G17 真实链路未替换 | **PASS** | 证据根没有执行脚本；仓库测试的夹具边界明确披露 |
+
+没有其他 G1～G17 门禁失败。另行重跑管理器 `check <任务根>` 仍因原有截图外置与 run 内实体截图要求冲突而 FAIL，见 `handoff-2/check-task.log`；这不是新产品失败，也未被伪装成已修复。全仓既有失败没有在本段重跑或改写。
+
+### 推送前仍缺什么与收尾
+
+当前不能报告 READY。仍需用户验收 H-01～H-03、由总控发布调度台快照，并由总控处理保留历史前提下 d095d10 的 Verify 门禁；严格截图归档冲突也仍需协调。普通失败在默认 warn 策略下不属于 G16 的硬拒绝，enforce 时阻止推送；本任务无条件不推送。
+
+只追加验收物提交，随后回执提交只含本报告。本段没有修改 `studio/`、`scripts/`、`tests/` 或其他产品路径；文件 SHA-256 与开工快照一致。`.venv` 的链接目标、inode、mtime 均未变化。8765、8766 未访问、未停启；Harness 仓库无本线程修改，其已有其他线程状态保留。核验记录在 `handoff-2/boundary-proof.json`、`before.json`。未安装钩子，未代签人工通过。回执提交后停止。
