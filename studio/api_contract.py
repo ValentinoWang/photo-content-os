@@ -7,6 +7,15 @@ from typing import Any
 
 
 ROUTE_SPECS: tuple[dict[str, object], ...] = (
+    {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs', 'operation_id': 'createDirectJob', 'summary': 'createDirectJob', 'write': True},
+    {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/latest', 'operation_id': 'getLatestDirectJob', 'summary': 'getLatestDirectJob'},
+    {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}', 'operation_id': 'getDirectJob', 'summary': 'getDirectJob'},
+    {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/rewrite', 'operation_id': 'rewriteDirectShot', 'summary': 'rewriteDirectShot', 'write': True},
+    {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}/narration', 'operation_id': 'uploadDirectNarration', 'summary': 'uploadDirectNarration', 'write': True},
+    {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}/compose', 'operation_id': 'composeDirectVideo', 'summary': 'composeDirectVideo', 'write': True},
+    {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/poster.jpg', 'operation_id': 'getDirectPoster', 'summary': 'getDirectPoster', 'response_media': 'image/jpeg'},
+    {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/code', 'operation_id': 'getDirectShotCode', 'summary': 'getDirectShotCode', 'response_media': 'text/plain; charset=utf-8'},
+    {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}/output.mp4', 'operation_id': 'getDirectOutput', 'summary': 'getDirectOutput', 'response_media': 'video/mp4', 'byte_ranges': True},
     {"method": "GET", "path": "/api/review/assets/{assetId}/preview", "operation_id": "getAssetPreview", "summary": "Read a derived asset preview", "response_media": "video/mp4", "byte_ranges": True},
     {'method': 'GET', 'path': '/api/review/catalog', 'operation_id': 'getReviewCatalog', 'summary': 'getReviewCatalog'},
     {'method': 'GET', 'path': '/api/review/pieces/{pieceId}/shots', 'operation_id': 'getReviewShots', 'summary': 'getReviewShots'},
@@ -90,6 +99,48 @@ def _response(description: str = "Successful local response") -> dict[str, Any]:
     }
 
 
+def _direct_job_schema() -> dict[str, Any]:
+    text = {'type': ['string', 'null']}
+    seconds = {'type': ['number', 'null']}
+    check_item = {'type': 'object', 'required': ['code', 'message'], 'properties': {
+        'code': {'type': 'string'}, 'message': {'type': 'string'}, 'atSeconds': {'type': 'number'}}}
+    checks = {'type': 'object', 'required': ['errors', 'warnings'], 'properties': {
+        name: {'type': 'array', 'items': check_item} for name in ('errors', 'warnings')}}
+    checks['properties']['warnings']['description'] = 'Nonblocking reminders. layout_bottom_gap marks >30% empty space below visible content in y=200..1500, using the rendered keyframe and edge-sampled background; it never triggers automatic rewriting.'
+    checks['properties']['warnings']['examples'] = [[{'code': 'layout_bottom_gap', 'message': '画面下半截空着：主画面只占到 y=900，离字幕带还空 46.2%'}]]
+    shot = {'shotId': {'type': 'string'}, 'dialogue': {'type': 'string'}, 'mainAction': text,
+            'estimatedSeconds': {'type': 'number'}, 'measuredSeconds': seconds,
+            'timingSource': {'enum': ['estimate', 'narration', 'proportional']},
+            'status': {'enum': ['queued', 'writing', 'written', 'rendering', 'rendered', 'failed', 'interrupted']},
+            'failureCode': text, 'attempts': {'type': 'integer', 'minimum': 0}, 'lastInstruction': text,
+            'writingStartedAt': {'type': ['string', 'null'], 'format': 'date-time',
+                                 'description': 'Latest model-writing start, including retries; retained after writing. Null before first write or when an older job did not record it.'},
+            'writtenAt': text, 'renderedAt': text, 'codeChars': {'type': 'integer', 'minimum': 0},
+            'posterRevision': {'type': 'integer', 'minimum': 0}, 'checks': checks}
+    design = {'status': {'enum': ['pending', 'writing', 'done', 'failed']},
+              'palette': {'type': ['object', 'null'], 'required': ['background', 'primary', 'accent', 'neutral'],
+                          'properties': {k: {'type': 'string', 'pattern': '^#[0-9a-fA-F]{6}$'}
+                                         for k in ('background', 'primary', 'accent', 'neutral')}},
+              'typeScale': {'type': ['array', 'null'], 'minItems': 3, 'maxItems': 3, 'items': {'type': 'integer'}},
+              'motionRules': text, 'banned': {'type': 'array', 'items': {'type': 'string'}}}
+    output = {'status': {'enum': ['none', 'composing', 'ready', 'failed']},
+              'kind': {'enum': ['silent', 'narrated']}, 'durationSeconds': seconds,
+              'frames': {'type': ['integer', 'null']}, 'revision': {'type': 'integer', 'minimum': 0},
+              'checks': {'type': 'object', 'required': ['playable', 'avOffsetSeconds', 'blackFrames'], 'properties': {
+                  'playable': {'enum': ['pass', 'fail', 'unknown']}, 'avOffsetSeconds': seconds,
+                  'blackFrames': {'enum': ['pass', 'fail', None]}}}}
+    properties = {'jobId': {'type': 'string'}, 'projectId': {'type': 'string'},
+                  'model': {'const': 'claude-opus-5-5'},
+                  'status': {'enum': ['designing', 'writing', 'rendering', 'ready', 'composing', 'done', 'failed']},
+                  'createdAt': {'type': 'string'}, 'updatedAt': {'type': 'string'}, 'failureCode': text,
+                  'design': {'type': 'object', 'required': list(design), 'properties': design},
+                  'shots': {'type': 'array', 'items': {'type': 'object', 'required': list(shot), 'properties': shot}},
+                  'narration': {'type': 'object', 'required': ['status', 'durationSeconds'], 'properties': {
+                      'status': {'enum': ['none', 'aligning', 'ready', 'invalid']}, 'durationSeconds': seconds}},
+                  'output': {'type': 'object', 'required': list(output), 'properties': output}}
+    return {'type': 'object', 'required': list(properties), 'properties': properties, 'additionalProperties': False}
+
+
 def _operation(spec: dict[str, object]) -> dict[str, Any]:
     operation: dict[str, Any] = {
         "operationId": spec["operation_id"],
@@ -116,6 +167,36 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
             operation['requestBody'] = {'required': True, 'content': {'video/mp4': {'schema': {'type': 'string', 'format': 'binary'}}}}
             operation['parameters'].append({'name': 'X-Video-Identity', 'in': 'header', 'required': True, 'schema': {'type': 'string'}})
         operation["responses"]["409"] = _response("Revision conflict")
+    if '/direct/jobs' in str(spec['path']) and not spec.get('response_media'):
+        job_schema = {'$ref': '#/components/schemas/DirectJob'}
+        if spec['operation_id'] == 'getLatestDirectJob':
+            job_schema = {'anyOf': [job_schema, {'type': 'null'}]}
+        operation['responses']['200']['content']['application/json']['schema'] = {
+            'type': 'object', 'required': ['ok', 'job'],
+            'properties': {'ok': {'const': True}, 'job': job_schema}}
+        if spec['operation_id'] == 'createDirectJob':
+            operation['responses']['201'] = operation['responses'].pop('200')
+        operation['responses']['403'] = _response('Same-origin or CSRF check failed')
+        operation['responses']['404'] = _response('Project, job, shot or artifact not found')
+        operation['responses']['409'] = _response('Task busy or required artifacts not ready')
+    if spec['operation_id'] == 'uploadDirectNarration':
+        operation['requestBody'] = {'required': True, 'content': {'audio/wav': {'schema': {'type': 'string', 'format': 'binary', 'maxLength': 104857600}}}}
+    if spec['operation_id'] == 'createDirectJob':
+        operation['requestBody']['content']['application/json']['schema'] = {
+            'type': 'object', 'oneOf': [{'required': ['script']}, {'required': ['storyboard']}],
+            'properties': {'script': {'type': 'string', 'maxLength': 20000},
+                           'storyboard': {'type': 'object', 'required': ['shots'], 'properties': {'shots': {
+                               'type': 'array', 'minItems': 1, 'maxItems': 99, 'items': {
+                                   'type': 'object', 'required': ['shotId', 'dialogue'], 'properties': {
+                                       'shotId': {'type': 'string', 'pattern': '^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$'},
+                                       'dialogue': {'type': 'string', 'minLength': 1, 'maxLength': 2000}}}}}},
+                           'style': {'type': 'string', 'maxLength': 4000}, 'model': {'type': 'string', 'enum': ['claude-opus-5-5']}}}
+    if spec['operation_id'] == 'rewriteDirectShot':
+        operation['description'] = 'For interrupted or failed shots, omitted, null or blank instruction retries the prior writing intent and includes prior check errors. Every other state requires 1–200 characters after trimming.'
+        operation['requestBody']['required'] = False
+        operation['requestBody']['content']['application/json']['schema'] = {
+            'type': 'object', 'properties': {'instruction': {'type': ['string', 'null'], 'maxLength': 200,
+                'description': 'May be empty only when the current shot is interrupted or failed; otherwise a nonblank instruction is required.'}}}
     if spec['operation_id'] == 'reanalyzeMusic':
         operation['requestBody']['content']['application/json']['schema'] = {
             'type': 'object', 'required': ['part'],
@@ -165,6 +246,7 @@ def build_openapi() -> dict[str, Any]:
         },
         "servers": [{"url": "http://127.0.0.1:8765"}],
         "paths": paths,
+        "components": {"schemas": {"DirectJob": _direct_job_schema()}},
     }
 
 

@@ -1,0 +1,22 @@
+{
+  "studio/static/app.js": "0687eeda9aa313abcfdda8dbd5f91219edbdcaee8c5906410c5da7811d5d70bf",
+  "studio/static/beat-map.js": "428957a932bc898c17a6c54ba55fb4a522bdf64103b3d5fdb7858c9d561afa33",
+  "studio/static/direct-shot-detail.css": "40561ea2077a47a54507d26ce697681feb043188de83022212cb09283bd87b05",
+  "studio/static/direct-shot-detail.js": "40b730cbb133320acd230a67ff9d4c14419db37057940defc7c50208d7942078",
+  "studio/static/direct-view.js": "62326ddaf2c8113845ce618de8fdc49378ef7b3ac76ff317acfbc80dc4fdc6ba",
+  "studio/static/direct.css": "c44256c5c2fce7f1592a5f2043c6d86769ac2bedd32d329ae8b73f40378133d3",
+  "studio/static/handoff.js": "646de064228c1fa960fe58cccaa0639881117ee3da8d226cc9a30e8d1c6b7ff5",
+  "studio/static/index.html": "1eea6e220893b5f9ea6867e3df6525d808495110500f28d05b705627a073424e",
+  "studio/static/review-common.js": "1e51f9d1214fa74113828b92d77fe1e14fc2147d603755b42e14c417cbdec650",
+  "studio/static/review-music.js": "0e8097b84b6a5935feabc307a5f40237e7d31ec5b6dbc9462d4d1aeccf0b6209",
+  "studio/static/review-shots.js": "7b3447d144a33c3ed61962b32ff0f41f94416eb63e1e30bfec57d79fae534e60",
+  "studio/static/review-view.js": "6c8da388bde74413756d90740f67b7ba60aaf5279a5b0f6b56e2b86772273e7b",
+  "studio/static/review.css": "6d04212a1fc4413855fc1d6da2861097751bf50c0bed15e68476e2b0f4ec5d49",
+  "studio/static/scene-names.json": "ad8b4213b5631848172dd5a3e83bcb59d763d73612102912f64edccb6729cb62",
+  "studio/static/studio-host.js": "e2adb79d1ec3c0e5be31da5edc48dcd4fd6adc06f8e538a0e3fa203e7c4bcc65",
+  "studio/static/styles.css": "62f0a0eb2ffe1ba9eea104461d4426effaec230598eff03abf6057679f049e54",
+  "studio/static/video-actions.js": "7bfcb28099bf6fc5a29b0cb3ccd53e84cf3141ad832802f49553f8d1623698b3",
+  "studio/static/workflow.css": "e3e613da9d9c191b477bf80cd3b0ffa6ccc770ceb51eeb5bc3ad37288c1ab57b",
+  "tests/test_r276_direct_frontend.mjs": "81db184252d8e8101e13f56017b4feae87f7ecd16d53a11ec5336f82016d900d",
+  "tests/test_r276_direct_frontend.py": "069a71cffd47e488e400d6fa3a2012a5737e51343a1e0fa07e871890940c2718"
+}

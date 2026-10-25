@@ -28,6 +28,8 @@ DEFAULT_CREATIVE_MODEL = REQUIRED_CREATIVE_MODEL
 DEFAULT_REASONING_EFFORT = REQUIRED_CREATIVE_REASONING
 DEFAULT_CREATIVE_PROVIDER = "codex_cli"
 DEFAULT_CODEX_TIMEOUT_SEC = 1800
+DEFAULT_CLAUDE_MODEL = "claude-opus-5-5"
+DEFAULT_CLAUDE_TIMEOUT_SEC = 300
 MAX_PROMPT_SUMMARY_CHARS = 2500
 MAX_IMAGE_BYTES = 20 * 1024 * 1024
 SUPPORTED_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
@@ -471,6 +473,65 @@ def generate_text_with_codex_cli(
             pass
 
 
+def generate_text_with_claude_cli(
+    *,
+    system_prompt: str,
+    user_prompt: str,
+    image_paths: list[Path] | None = None,
+    model: str | None = None,
+    reasoning_effort: str | None = None,
+) -> str:
+    """Run an isolated, tool-free Claude print request using inherited auth."""
+    claude_bin = os.getenv("OPENCLAW_CLAUDE_BIN") or "claude"
+    claude_path = shutil.which(claude_bin)
+    if not claude_path:
+        raise LLMError("claude CLI is required when OPENCLAW_CREATIVE_PROVIDER=claude_cli")
+    if image_paths:
+        raise LLMError("claude CLI image input is unsupported")
+    try:
+        timeout = int(os.getenv("OPENCLAW_CLAUDE_TIMEOUT_SEC", str(DEFAULT_CLAUDE_TIMEOUT_SEC)))
+    except ValueError as exc:
+        raise LLMError("OPENCLAW_CLAUDE_TIMEOUT_SEC must be a positive integer") from exc
+    if timeout <= 0:
+        raise LLMError("OPENCLAW_CLAUDE_TIMEOUT_SEC must be a positive integer")
+    child_env = os.environ.copy()
+    # A product request is an independent child, not a nested interactive session.
+    child_env.pop("CLAUDECODE", None)
+    if os.getenv("OPENCLAW_CLAUDE_CONFIG_DIR"):
+        child_env["CLAUDE_CONFIG_DIR"] = os.environ["OPENCLAW_CLAUDE_CONFIG_DIR"]
+    args = [
+        claude_path, "-p", "--output-format", "json",
+        "--model", model or DEFAULT_CLAUDE_MODEL,
+        "--safe-mode", "--setting-sources", "",
+        "--tools", "", "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
+        "--no-session-persistence",
+    ]
+    prompt = codex_prompt(system_prompt, user_prompt)
+    with tempfile.TemporaryDirectory(prefix="photo-claude-") as directory:
+        try:
+            completed = subprocess.run(
+                args, input=prompt, cwd=directory, env=child_env,
+                text=True, encoding="utf-8", errors="replace", capture_output=True,
+                timeout=timeout, check=False,
+            )
+        except subprocess.TimeoutExpired as exc:
+            raise LLMError(f"claude CLI generation timed out after {timeout}s") from exc
+        except OSError as exc:
+            raise LLMError("claude CLI could not start") from exc
+    if completed.returncode != 0:
+        raise LLMError(f"claude CLI generation failed ({completed.returncode})")
+    try:
+        payload = json.loads(completed.stdout)
+    except (ValueError, TypeError) as exc:
+        raise LLMError("claude CLI output is invalid JSON") from exc
+    if not isinstance(payload, dict) or payload.get("is_error"):
+        raise LLMError("claude CLI generation failed")
+    result = payload.get("result")
+    if not isinstance(result, str) or not result.strip():
+        raise LLMError("claude CLI did not write output text")
+    return result.strip()
+
+
 def generate_text(
     *,
     system_prompt: str,
@@ -481,6 +542,14 @@ def generate_text(
     provider: str | None = None,
 ) -> str:
     resolved_provider = configured_provider(provider)
+    if resolved_provider in {"claude", "claude_cli", "claude-cli"}:
+        return generate_text_with_claude_cli(
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            image_paths=image_paths,
+            model=model,
+            reasoning_effort=reasoning_effort,
+        )
     if resolved_provider in {"codex", "codex_cli", "codex-cli"}:
         return generate_text_with_codex_cli(
             system_prompt=system_prompt,

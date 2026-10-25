@@ -1,0 +1,69 @@
+{
+  "timingSource": "proportional",
+  "cuts": [
+    {
+      "shotId": "01",
+      "scheduledEndSeconds": 7.3,
+      "referenceSentenceEndSeconds": 7.12,
+      "offsetSeconds": 0.18
+    },
+    {
+      "shotId": "02",
+      "scheduledEndSeconds": 13.533333,
+      "referenceSentenceEndSeconds": 13.76,
+      "offsetSeconds": -0.226667
+    },
+    {
+      "shotId": "03",
+      "scheduledEndSeconds": 20.2,
+      "referenceSentenceEndSeconds": 20.32,
+      "offsetSeconds": -0.12
+    },
+    {
+      "shotId": "04",
+      "scheduledEndSeconds": 24.966667,
+      "referenceSentenceEndSeconds": 25.68,
+      "offsetSeconds": -0.713333
+    },
+    {
+      "shotId": "05",
+      "scheduledEndSeconds": 31.433333,
+      "referenceSentenceEndSeconds": 31.84,
+      "offsetSeconds": -0.406667
+    },
+    {
+      "shotId": "06",
+      "scheduledEndSeconds": 40.166667,
+      "referenceSentenceEndSeconds": 40.4,
+      "offsetSeconds": -0.233333
+    },
+    {
+      "shotId": "07",
+      "scheduledEndSeconds": 45.8,
+      "referenceSentenceEndSeconds": 45.36,
+      "offsetSeconds": 0.44
+    },
+    {
+      "shotId": "08",
+      "scheduledEndSeconds": 48.933333,
+      "referenceSentenceEndSeconds": 48.16,
+      "offsetSeconds": 0.773333
+    },
+    {
+      "shotId": "09",
+      "scheduledEndSeconds": 52.666667,
+      "referenceSentenceEndSeconds": 51.68,
+      "offsetSeconds": 0.986667
+    },
+    {
+      "shotId": "10",
+      "scheduledEndSeconds": 61.833333,
+      "referenceSentenceEndSeconds": 61.84,
+      "offsetSeconds": -0.006667
+    }
+  ],
+  "maxInteriorCutOffsetSeconds": 0.986667,
+  "verbatimScript": true,
+  "sourceAudioSha256": "dd4b9a5cb63bf9671faa21e2d7c805989f4c02ebd0f8172560a498011d982da6",
+  "uploadedAudioSha256": "dd4b9a5cb63bf9671faa21e2d7c805989f4c02ebd0f8172560a498011d982da6"
+}

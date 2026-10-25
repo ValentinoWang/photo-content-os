@@ -56,6 +56,7 @@ from studio.onboarding_state import (  # type: ignore  # noqa: E402
 from studio.project_store import DOCUMENT_NAMES, ProjectStore, ProjectStoreError  # type: ignore  # noqa: E402
 from studio.upstream_session import UpstreamSessionConsumer, UpstreamSessionContractError  # type: ignore  # noqa: E402
 from llm_common import LLMError, load_creator_context  # type: ignore  # noqa: E402
+from direct_video.generate import DirectVideoError  # noqa: E402
 from media_delete_recommendations import (  # type: ignore  # noqa: E402
     DeleteRecommendationError,
     confirm_delete_selection,
@@ -206,6 +207,8 @@ class StudioApplication:
         self.video_choice_lock = threading.Lock()
         from studio.video_workflow import VideoWorkflow
         self.video_workflow = VideoWorkflow(self)
+        from studio.direct_video import DirectVideo
+        self.direct_video = DirectVideo(self.store)
 
     @staticmethod
     def _default_trash_backend(platform_name: str, registry_path: Path) -> object:
@@ -775,6 +778,19 @@ class StudioApplication:
                     if parsed.path.startswith("/api/") and not is_registered_route("GET", parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                         return
+                    if len(segments) >= 6 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'jobs']:
+                        project_id, job_id = segments[2], segments[5]
+                        if len(segments) == 6:
+                            self._json(200, {'ok': True, 'job': app.direct_video.get(project_id, job_id)})
+                        elif len(segments) == 7 and segments[6] == 'output.mp4':
+                            self._media(app.direct_video.artifact(project_id, job_id, 'output.mp4'))
+                        elif len(segments) == 9 and segments[6] == 'shots':
+                            path = app.direct_video.artifact(project_id, job_id, segments[8], segments[7])
+                            if segments[8] == 'code':
+                                self._send(200, path.read_bytes(), 'text/plain; charset=utf-8')
+                            else:
+                                self._media(path)
+                        return
                     if parsed.path.startswith('/api/review/'):
                         if parsed.query:
                             self._json(404, _error('media_not_found', '预览不存在'))
@@ -964,7 +980,7 @@ class StudioApplication:
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                         return
                     self._static(parsed.path)
-                except (ProjectStoreError, ValueError, MusicError) as exc:
+                except (ProjectStoreError, DirectVideoError, ValueError, MusicError) as exc:
                     self._handle_error(exc)
 
             def do_POST(self) -> None:  # noqa: N802
@@ -984,6 +1000,25 @@ class StudioApplication:
                     segments = self._segments(parsed.path)
                     if not is_registered_route(method, parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
+                        return
+                    if method == 'POST' and len(segments) >= 5 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'jobs']:
+                        self._assert_direct_origin()
+                        project_id = segments[2]
+                        if len(segments) == 7 and segments[6] == 'narration':
+                            try:
+                                length = int(self.headers.get('Content-Length', '0'))
+                            except ValueError as exc:
+                                raise DirectVideoError('narration_invalid') from exc
+                            job = app.direct_video.narration(project_id, segments[5], self.rfile, length, self.headers.get('Content-Type', ''))
+                        else:
+                            body = self._body()
+                            if len(segments) == 5:
+                                job = app.direct_video.create(project_id, body)
+                            elif len(segments) == 7:
+                                job = app.direct_video.command(project_id, segments[5], 'compose', body)
+                            else:
+                                job = app.direct_video.command(project_id, segments[5], 'rewrite', body, sid=segments[7])
+                        self._json(201 if len(segments) == 5 else 200, {'ok': True, 'job': job})
                         return
                     if parsed.path.startswith('/api/review/'):
                         value = self._body()
@@ -1377,6 +1412,7 @@ class StudioApplication:
                         return
                     self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                 except (
+                    DirectVideoError,
                     ArchiveLocationConfigError,
                     AnalysisBudgetError,
                     DeleteRecommendationError,
@@ -1392,7 +1428,24 @@ class StudioApplication:
                 ) as exc:
                     self._handle_error(exc)
 
+            def _assert_direct_origin(self) -> None:
+                origin = self.headers.get('Origin')
+                if not origin:
+                    return
+                parsed = urllib.parse.urlparse(origin)
+                try:
+                    valid = parsed.scheme == 'http' and parsed.netloc.lower() == (self.headers.get('Host') or '').lower() and parsed.path in {'', '/'} and not parsed.query and not parsed.fragment and not parsed.username
+                except ValueError:
+                    valid = False
+                if not valid:
+                    raise ProjectStoreError('origin_forbidden', '只允许同一工作台页面提交修改')
+
             def _handle_error(self, exc: Exception) -> None:
+                if isinstance(exc, DirectVideoError):
+                    code = exc.code
+                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready'} else 400
+                    self._json(status, _error(code, '直出任务暂时无法执行，请检查输入或任务状态后重试。'))
+                    return
                 code = getattr(exc, "code", "request_invalid")
                 message = getattr(exc, "message", str(exc) or "请求失败")
                 status = HTTPStatus.CONFLICT if code == "revision_conflict" else HTTPStatus.FORBIDDEN if code in {"csrf_invalid", "origin_forbidden", "host_forbidden"} else HTTPStatus.BAD_REQUEST

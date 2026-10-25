@@ -1,0 +1,18 @@
+{
+  "stage": "A",
+  "stageBStarted": false,
+  "liveProviderProbe": {"passed": true, "elapsedSeconds": 7.004, "response": "ok"},
+  "newTests": {"passed": 46, "skipped": 1, "exitCode": 0},
+  "relatedTests": {"passed": 39, "skipped": 8, "subtestsPassed": 20, "exitCode": 0},
+  "fullTests": {"passed": 881, "failed": 9, "skipped": 34, "errors": 6, "subtestsPassed": 2003, "exitCode": 1},
+  "runtimeContract": "pass",
+  "repositorySafety": "pass",
+  "musicRegistry": "pass",
+  "obsidianDocSync": "failed_existing_checkout_timestamp_difference",
+  "outlineContract": "blocked_by_doc_sync",
+  "taskHelp": "pass",
+  "jianyingHelp": "pass",
+  "browserRendering": "not_verified_missing_pinned_playwright",
+  "actualNarrationASR": "not_verified",
+  "humanAcceptance": "not_performed"
+}

@@ -278,3 +278,28 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
         raise ProductContractError('video_candidate_size_rejected')
     (output_dir / 'candidate.json').write_text(encoded + '\n')
     return payload
+
+
+def check_direct_output(video: Path, *, frames: int, fps: int, narrated: bool, diagnostic: Path) -> dict:
+    """Apply existing decode/frame/black-frame checks to a local direct preview."""
+    from video_black_frames import inspect_black_frames
+    measured = review_module().check_output_video(video, expected_duration=frames / fps,
+                                                  expected_frames=frames, expected_fps=fps)
+    groups = {}
+    for check in measured['checks']:
+        groups.setdefault(check['check'], []).append(check)
+    metadata = probe_media(video)
+    videos = [s for s in metadata['streams'] if s.get('codec_type') == 'video']
+    audios = [s for s in metadata['streams'] if s.get('codec_type') == 'audio']
+    tracks_ok = len(videos) == 1 and len(audios) == int(narrated)
+    def passed(name):
+        return bool(groups.get(name)) and all(c['status'] == 'passed' for c in groups[name])
+    offset = abs(float(videos[0]['duration']) - float(audios[0]['duration'])) if narrated and tracks_ok else None
+    diagnostic.parent.mkdir(parents=True, exist_ok=True)
+    black = inspect_black_frames(video, diagnostic.with_name('black-frames.json'))
+    result = {'playable': 'pass' if tracks_ok and passed('decode') else 'fail',
+              'frameCount': 'pass' if passed('frames') else 'fail',
+              'avOffsetSeconds': offset, 'blackFrames': black['status']}
+    from video_render.multi_shot import write_json
+    write_json(diagnostic, {'checks': result, 'review': measured})
+    return result

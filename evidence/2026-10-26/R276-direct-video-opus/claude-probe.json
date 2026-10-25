@@ -1,0 +1,11 @@
+{
+  "provider": "claude_cli",
+  "model": "claude-opus-5-5",
+  "configDirectory": "~/.claude-account3",
+  "executable": "~/Desktop/Opensource_Tool/npm-global/bin/claude",
+  "stdinIsTTY": false,
+  "stdoutIsTTY": false,
+  "success": true,
+  "response": "ok",
+  "elapsedSeconds": 7.004
+}

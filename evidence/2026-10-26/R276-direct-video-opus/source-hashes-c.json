@@ -1,0 +1,10 @@
+{
+  "schemas/studio-openapi.json": "4481e44891f8ba19929d61013ece464bceb05e498279988d7f7d5307d1e2f4a5",
+  "scripts/direct_video/generate.py": "87724b4450757e19346f4a0c883a5227aaabd62f1518a4b3b9857e0b42784079",
+  "scripts/direct_video/layout.py": "64830861338c9ea3ccdf7d4feab27640257e10d08def97ef8ac62c7ff6d0eb92",
+  "scripts/direct_video/media.py": "0ffe33907cabca8f735349f9fca785cd29f8b3b069a81079d2532c9f3fe63c6a",
+  "studio/api_contract.py": "bfc038306124abbd2f7f26d612b50fad78d1b26f6e45ef6b22b022840e3ce63a",
+  "studio/direct_video.py": "43f1f8d8e9773974bc84c46b1153a9f6da83912be515f27e7fcebd207577a1d6",
+  "tests/test_r276_direct_c.py": "88fdd5e2a0f05e2459d527ce23984fe1fc6366f06de3aa48fcc095cbcd1b1d90",
+  "tests/test_r276_direct_video.py": "e14bb66d4425c469a6fe820278e508e411a10f3502cfccf9bfeca1ed44bca57e"
+}

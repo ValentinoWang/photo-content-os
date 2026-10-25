@@ -1,0 +1,487 @@
+{
+  "rule": "content area y=200..1500; subtitles start1536, safety36; empty=(1500-contentBottom)/1300 >0.30",
+  "samples": 17,
+  "warningCount": 0,
+  "unmeasurableCount": 0,
+  "requestedMinimumWarnings": 10,
+  "minimumMet": false,
+  "rows": [
+    {
+      "run": "b1",
+      "shotId": "01",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/01.jpg",
+      "sha256": "e5b58c467863ef48cff7a9c397b0f0395cf862fcba9184128811d89f33cf42e9",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1443.0,
+        "bottomGapRatio": 0.043846,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "02",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/02.jpg",
+      "sha256": "9f3e77fea2ea3c75017b885a78964b8ea1bb4a9cc175fbf8a64ca8ff521c6b27",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1434.0,
+        "bottomGapRatio": 0.050769,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "03",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/03.jpg",
+      "sha256": "f3484f4c0fafceb2113f77c82e5a5095ff26897b4e0850075bbeaedd6bb0b87e",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1434.0,
+        "bottomGapRatio": 0.050769,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "04",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/04.jpg",
+      "sha256": "be5ce6617cda318bcf64cb10532748c3b15bb1c3b7cc235556904c4b56fd1d72",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1500,
+        "bottomGapRatio": 0.0,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "05",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/05.jpg",
+      "sha256": "e95c416f1aced765ad29b211c6daddadf84e8f1a1506b6ee8eb3644e181d5e66",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1443.0,
+        "bottomGapRatio": 0.043846,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "06",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/06.jpg",
+      "sha256": "9379fb28b1f19edb5cdc5d77a970bc9bb06c1b6ac1420cefb7556cc96f9ac0e1",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1476.0,
+        "bottomGapRatio": 0.018462,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "07",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/07.jpg",
+      "sha256": "2447f8bbfb920ea1930c4208bdca13a4c25a97713f85797687b621a955900ac5",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1485.0,
+        "bottomGapRatio": 0.011538,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "08",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/08.jpg",
+      "sha256": "679db20a9af26b7962cff7f8c9546b8be244f9ae4b1685338a55aa866616c5a3",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1482.0,
+        "bottomGapRatio": 0.013846,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "09",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/09.jpg",
+      "sha256": "259485362c4f3a1ca314031f973cfe6beb34196421b53c83223ca606be122993",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1209.0,
+        "bottomGapRatio": 0.223846,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b1",
+      "shotId": "10",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0d6e5d7cd39741d6abeadb19/posters/10.jpg",
+      "sha256": "4c0d509c6a72c30b10fb35190111222bf3acfeee99b9518faf8d09aa375a697f",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          20,
+          24,
+          27
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1398.0,
+        "bottomGapRatio": 0.078462,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b2",
+      "shotId": "01",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0e184e961bd14ac084c67411/posters/01.jpg",
+      "sha256": "5e3f917c3220778da90ede01f6c6dde8264d269c071aef0dd376d982b46b0917",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          19,
+          23,
+          26
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1500,
+        "bottomGapRatio": 0.0,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b2",
+      "shotId": "02",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0e184e961bd14ac084c67411/posters/02.jpg",
+      "sha256": "8717c6930e21da7c24a5fe72895279523acb7433495ca1b8cb6447089bbc4af9",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          19,
+          23,
+          26
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1500,
+        "bottomGapRatio": 0.0,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b2",
+      "shotId": "03",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0e184e961bd14ac084c67411/posters/03.jpg",
+      "sha256": "3f370f9fce8e61c6b1ab56ff60ce7e7bbd23545c9baceecca9e2c20c2df6e986",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          19,
+          23,
+          26
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1500,
+        "bottomGapRatio": 0.0,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b2",
+      "shotId": "04",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0e184e961bd14ac084c67411/posters/04.jpg",
+      "sha256": "9885f5d4cd5da85e8f24c6c5011a9fb3f077702856d6b0ac8fa9ec88b8a9d8a2",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          19,
+          23,
+          26
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1500,
+        "bottomGapRatio": 0.0,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b2",
+      "shotId": "05",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0e184e961bd14ac084c67411/posters/05.jpg",
+      "sha256": "f5795d2e64c07dd89beb6e4fcf3018517ae51f7d0d85f0b73d16bb39da14967b",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          19,
+          23,
+          26
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1500,
+        "bottomGapRatio": 0.0,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b2",
+      "shotId": "06",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0e184e961bd14ac084c67411/posters/06.jpg",
+      "sha256": "540a1d9340c6dfdcd25079c08a6147d0c4b4e32d18b60a28bcb2edbb5c09efdb",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          19,
+          23,
+          26
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1485.0,
+        "bottomGapRatio": 0.011538,
+        "warnings": []
+      }
+    },
+    {
+      "run": "b2",
+      "shotId": "07",
+      "posterRelativeToState": "direct-jobs/project-fc6baa3294/dv_0e184e961bd14ac084c67411/posters/07.jpg",
+      "sha256": "2c9c9201f1a1c43860fbbeaae02fe1de2a25c5f10b240f9c5455a5aef70fbcb7",
+      "originalUnchanged": true,
+      "measurement": {
+        "imageWidth": 360,
+        "imageHeight": 640,
+        "backgroundRgb": [
+          19,
+          23,
+          26
+        ],
+        "edgeNoise95": 0,
+        "contentTop": 200,
+        "contentBottomLimit": 1500,
+        "subtitleTop": 1536,
+        "bottomGapLimit": 0.3,
+        "status": "measured",
+        "contrastThreshold": 18,
+        "minPixelsPerRow": 4,
+        "contentFound": true,
+        "contentBottom": 1410.0,
+        "bottomGapRatio": 0.069231,
+        "warnings": []
+      }
+    }
+  ],
+  "literal1536GapUpperBound": 0.24476
+}

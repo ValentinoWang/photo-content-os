@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>脚本直出设计稿</title>
+<link rel="stylesheet" href="base.css">
+<style>
+body{background:var(--bg)}
+.w{max-width:1240px;margin:0 auto;padding:34px 28px 120px}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:20px}
+.hero h1{font-size:25px}
+.hero p{color:var(--ink-2);font:14px/1.75 var(--f-tx);margin-top:10px;max-width:780px}
+.hero .meta{color:var(--ink-4);font:11.5px var(--f-mo);margin-top:8px}
+.toc{display:flex;gap:6px 14px;flex-wrap:wrap;margin-top:14px}
+.toc a{color:var(--ac-soft);font-size:12.5px;text-decoration:none}
+.sec{margin-top:44px}
+.sec>h2{font-size:18px;display:flex;gap:10px;align-items:baseline}
+.sec>h2 i{font:500 12px var(--f-mo);font-style:normal;color:var(--ac)}
+.sec>p.lede{color:var(--ink-3);font:13px/1.75 var(--f-tx);margin:8px 0 14px;max-width:880px}
+.sec h3{font-size:14px;margin:20px 0 8px}
+ul.plain{margin:0;padding-left:18px;color:var(--ink-2);font:13px/1.85 var(--f-tx)}
+ul.plain b{color:var(--ink)}
+code{font:12px var(--f-mo);color:var(--ac-soft);background:#0A1415;border-radius:3px;padding:1px 5px}
+.tbl{width:100%;border-collapse:collapse;border:1px solid var(--rule);font:12.5px/1.6 var(--f-tx)}
+.tbl th{background:var(--panel-2);color:var(--ink-3);font-weight:500;text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);white-space:nowrap}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top}
+.cmp{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--rule);border-radius:10px;background:var(--panel);overflow:hidden}
+.cmp>div{padding:14px 16px;min-width:0}
+.cmp>div+div{border-left:1px solid var(--rule)}
+.cmp small{font:600 11px var(--f-ui);letter-spacing:.06em;color:var(--ink-3);margin-bottom:8px}
+.cmp .after small{color:var(--ok)}
+.cmp ul{margin:10px 0 0;padding-left:18px;font:12.5px/1.75 var(--f-tx);color:var(--ink-2)}
+.shot{position:relative;width:100%;aspect-ratio:1440/900;border:1px solid var(--rule-2);border-radius:6px;overflow:hidden;background:#070C0D}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top}
+.shot iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0;pointer-events:none}
+.shot a{position:absolute;inset:0}
+.after .shot{border-color:#2b4733}
+.gal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.gal figure{margin:0}
+.gal figcaption{display:flex;justify-content:space-between;margin-top:6px;font:12.5px var(--f-tx);color:var(--ink-2)}
+.gal figcaption a{color:var(--ac-soft);text-decoration:none;font-size:12px}
+.gen{color:var(--ink-4);font:12px var(--f-tx)}
+@media(max-width:900px){.cmp,.gal{grid-template-columns:1fr}.cmp>div+div{border-left:0;border-top:1px solid var(--rule)}}
+</style>
+</head>
+<body><div class="w">
+<header class="hero"><div>
+  <h1>脚本直出：Opus 按口播稿写每一镜动画，本机渲染出成片</h1>
+  <p>作品页加第三个分页「脚本直出」。粘贴口播稿 → Opus 先定全片设计，再给每一镜写一段动画代码（三镜同时写）→ 写好一镜就在这台电脑上逐帧渲染一镜 → 合成一条竖屏成片在页面里播放。哪一镜不满意，写一句意见让 Opus 只重写那一镜。</p>
+  <div class="meta">需求卡：Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片 · 待确认（2026-10-26-R276-photo-direct-video-opus） · 设计稿，未实现</div>
+  <nav class="toc"><a href="#rules">1 交互规则</a><a href="#cmp">2 逐处对比</a><a href="#states">3 各状态整页</a><a href="#ids">4 设计编号和接口字段</a><a href="#copy">5 文案表</a><a href="#nums">6 数字公式</a><a href="#gates">7 门禁</a><a href="#how">8 画法说明</a></nav>
+</div><a class="btn btn--pri" href="direct.html#s=writing" style="text-decoration:none">打开可以点的稿</a></header>
+
+<section class="sec" id="rules"><h2><i>1</i>交互规则</h2>
+<ul class="plain">
+  <li><b>入口</b>：作品页分页「按素材剪 vlog · 按脚本做视频 · 脚本直出」，网址 <code>#view=piece&amp;piece=&lt;作品&gt;&amp;ptab=direct</code>。这件作品有过直出任务时，进来直接显示最近一个任务的样子；没有就是粘贴口播稿的第一屏。</li>
+  <li><b>步骤条三步</b>：口播稿 → Opus 写每一镜 → 成片。只显示，不能点（三步都在这一页里）。</li>
+  <li><b>粘贴口播稿</b>：一行一镜，空行忽略。粘贴后下面马上列出分好的镜和每镜估算时长；没有内容时「生成」灰掉。「导入分镜文件」读上游中台导出的 <code>storyboard.json</code>，按每镜口播填进文本框。</li>
+  <li><b>模型</b>：右上角写「Opus 5.5 · 本机 Claude」。本机 Claude 调不通时变黄点，页面出提醒块（「本机 Claude 调不通」状态），「生成」和「重写」都灰掉。</li>
+  <li><b>生成以后</b>：先出「全片设计」一行（四个颜色、字号、动作规矩、不用的套路），再出七镜胶片。每张卡的状态：等着写 → 正在写（显示已写多久）→ 写好（显示从点生成起第几分钟写好）；自查没过时显示「自查没过，正在重写」，第二次还不过显示「写了两次都没过」，页面顶部出红色提醒块。</li>
+  <li><b>轮询</b>：任务没结束时每 2 秒取一次任务；全部结束（写好、失败或成片出来）就停。页面离开再回来，从任务接着显示，不重新开始。</li>
+  <li><b>选中一镜</b>：点卡片，下面展开这一镜：大关键帧（后端渲染的 JPEG；Studio 的安全策略不允许在页面里运行 Opus 写的代码，所以不做拖帧和播放）、口播原文、时长、写了几次、主动作、代码字数、检查结果、修改意见、看代码。默认选中第一张需要你看的卡（失败的 → 正在重写的 → 第 01 镜）。</li>
+  <li><b>重写一镜</b>：写一句修改意见（1–200 字）点「让 Opus 重写这一镜」。只这一张卡变成「按你的意见重写」，其他卡的画面和写好时间一个字都不变；重写期间这一镜的输入框和按钮灰掉。</li>
+  <li><b>配音</b>：「上传配音…」选 WAV。上传后按配音实测每镜时长，动画比配音长的镜自动重写一次。没有配音时合成按钮叫「先合成无声预览」，有配音叫「合成成片」。</li>
+  <li><b>成片</b>：页面里播放（竖屏 288×512），下面七镜缩略条，点哪镜跳到哪镜；右边写时长、镜数、带不带配音、四项检查。「在访达中显示」打开成片所在文件夹。</li>
+  <li><b>2026-10-26 F1 后的改动（总控定）</b>：加「读不到任务」「合成无声预览」「无声预览出来了」三个状态；占位例句改成「清华 AI 体育博主」；去掉没有接口的「停下来」「在访达中显示」和编造的合成帧数、剩余时间；无声预览的声音检查写「无声预览，不检查声音」。</li>
+  <li><b>减少动画</b>：系统设置「减少动态效果」时，「正在写」卡片的流光不动，只留文字。</li>
+</ul></section>
+
+<section class="sec" id="cmp"><h2><i>2</i>逐处对比</h2>
+<p class="lede">只改作品页：分页多一个「脚本直出」，点进去是新页面。其他页面不动。</p>
+<div class="cmp"><div><small>现在 · 作品页「按脚本做视频」</small><div class="shot"><img src="img/before-script.png" alt="现在的按脚本做视频页"></div><ul><li>只有「按素材剪 vlog」「按脚本做视频」两个分页；「按脚本做视频」是占位页，没有让 Opus 写画面的入口。</li><li>Opus 写镜头代码现在只能在 Claude Code 会话里做，再用脚本推进上游中台。</li></ul></div>
+<div class="after"><small>改后 · 新分页「脚本直出」</small><div class="shot"><iframe data-src="direct.html#s=empty&amp;chrome=0" title="改后"></iframe><a href="direct.html#s=empty"></a></div><ul><li>粘贴口播稿就能生成；右边写清点了以后会发生什么、要多久。</li><li>风格说明、配音都可以不填，之后再加。</li></ul></div></div>
+</section>
+
+<section class="sec" id="states"><h2><i>3</i>各状态整页</h2>
+<p class="lede">七镜画面是 R131「断更一年，我拆了四句话」实跑时 Opus 写的真代码，在页面里逐帧跑出来的；时间、耗时、检查结果是按接口字段编的设计数据。点图打开可以点的稿。</p>
+<div class="gal" id="gal"></div></section>
+
+<section class="sec" id="ids"><h2><i>4</i>设计编号和接口字段</h2>
+<p class="lede">每个可见块带 <code>data-design-id</code>，实现时原样带上。字段名来自后端任务单第 2.3 节的任务投影。</p>
+<table class="tbl"><thead><tr><th>编号</th><th>是什么、要求</th><th>读哪个字段</th></tr></thead><tbody>
+<tr><td><code>DV-TABS</code></td><td>作品分页加「脚本直出」，放在「按脚本做视频」后面</td><td>—</td></tr>
+<tr><td><code>DV-STEPS</code></td><td>三步：口播稿（N 镜 · 约 m:ss）/ Opus 写每一镜（x / N 镜写好）/ 成片（还没合成、正在合成、带配音或无声 · m:ss）</td><td><code>shots[].estimatedSeconds</code>、<code>shots[].status</code>、<code>output</code></td></tr>
+<tr><td><code>DV-MODEL</code></td><td>顶栏右侧「Opus 5.5 · 本机 Claude」，调不通时黄点加「调不通」</td><td>任务 <code>model</code>；调不通看 <code>failureCode = claude_cli_unavailable</code></td></tr>
+<tr><td><code>DV-START</code> <code>DV-LINES</code></td><td>口播稿输入、分好的镜、合计时长；没内容时「生成」灰掉</td><td>前端按行切分；提交 <code>{script}</code></td></tr>
+<tr><td><code>DV-HOW</code> <code>DV-STYLE</code> <code>DV-VOICE</code></td><td>右栏：点生成以后三步、风格说明、配音</td><td>提交 <code>style</code>；配音走 narration 接口</td></tr>
+<tr><td><code>DV-UNAVAILABLE</code></td><td>黄色提醒块：本机 Claude 调不通，带「去设置看看」「重试」</td><td><code>failureCode</code></td></tr>
+<tr><td><code>DV-DESIGN</code></td><td>全片设计一行：四个颜色、字号、动作规矩、不用的套路；定之前是虚线框一句话</td><td><code>design.*</code></td></tr>
+<tr><td><code>DV-PROGRESS</code></td><td>x / N 镜写好、进度条、已用时间、「三镜同时写」</td><td><code>shots[].status</code>、<code>createdAt</code></td></tr>
+<tr><td><code>DV-FILM</code> <code>DV-SHOT</code></td><td>七镜一排（1180 以下四列、960 以下三列）；卡片 9:16 关键帧、镜号、时长、两行口播、状态</td><td><code>shots[]</code>、<code>poster.jpg?v=posterRevision</code></td></tr>
+<tr><td><code>DV-DETAIL</code> <code>DV-PVNOTE</code> <code>DV-FACTS</code> <code>DV-CHECKS</code></td><td>选中这一镜：大关键帧和一行说明、口播、时长/写了几次/主动作/代码字数、检查结果。<b>整块单独放在 <code>studio/static/direct-shot-detail.js</code></b>，以后 R277 整块替换</td><td><code>shots[i].*</code>、<code>poster.jpg</code>、<code>checks</code></td></tr>
+<tr><td><code>DV-REWRITE</code> <code>DV-CODE</code></td><td>修改意见输入和按钮；「看代码」折叠，展开后等宽显示，带字数和上限</td><td>rewrite 接口；<code>code</code> 接口、<code>codeChars</code></td></tr>
+<tr><td><code>DV-SHOTFAIL</code></td><td>红色提醒块：第 n 镜写了两次都没过，写清卡在哪条，带「写意见重写」</td><td><code>status = failed</code>、<code>checks.errors</code></td></tr>
+<tr><td><code>DV-COMPOSE</code></td><td>合成进度：已拼帧数 / 总帧数、配音时长、预计还要多久</td><td><code>output.status = composing</code></td></tr>
+<tr><td><code>DV-OUTPUT</code> <code>DV-SCRUB</code> <code>DV-OUTCHECKS</code> <code>DV-STRIP</code></td><td>成片播放器（真的 <code>&lt;video&gt;</code>，播放钮和进度条照稿）、信息、四项检查、七镜缩略条（点哪镜跳到那镜开始的秒数）</td><td><code>output.*</code>、<code>output.mp4?v=revision</code></td></tr>
+</tbody></table></section>
+
+<section class="sec" id="copy"><h2><i>5</i>文案表</h2>
+<p class="lede">由 <code>export_states.py</code> 从可以点的稿逐状态导出，生成 <code>contract.json</code>。实现页上出现表外文字要先进 <code>approved-extras.json</code>。失败代码翻成中文的对照表也在这里。</p>
+<table class="tbl"><thead><tr><th>后端 failureCode</th><th>页面上写</th></tr></thead><tbody>
+<tr><td><code>claude_cli_unavailable</code></td><td>本机的 Claude 调不通，现在用不了 Opus</td></tr>
+<tr><td><code>model_timeout</code></td><td>Opus 这一镜写了太久没写完，可以重试</td></tr>
+<tr><td><code>code_invalid</code></td><td>Opus 写出来的不是一段完整的动画代码，可以重试</td></tr>
+<tr><td><code>lint_failed_after_retry</code></td><td>写了两次都没过自查（下面写卡在哪条）</td></tr>
+<tr><td><code>render_failed</code></td><td>这一镜没渲染出来，可以只重试这一镜</td></tr>
+<tr><td><code>narration_invalid</code></td><td>配音文件读不出来，换一个 WAV 再传</td></tr>
+<tr><td>其他、读不到</td><td>读不到这一镜的状态，点重试（不写成「还没开始」）</td></tr>
+</tbody></table>
+<!-- COPY:START --><p class="gen">逐状态文字见 contract.json。</p><!-- COPY:END -->
+</section>
+
+<section class="sec" id="nums"><h2><i>6</i>数字公式</h2>
+<table class="tbl"><thead><tr><th>数字</th><th>怎么算</th></tr></thead><tbody>
+<tr><td>每镜估算时长</td><td>口播字数（含标点）÷ 5.1，一位小数；上传配音后换成实测（<code>measuredSeconds</code>）</td></tr>
+<tr><td>合计时长 m:ss</td><td>各镜时长相加，四舍五入到秒</td></tr>
+<tr><td>x / N 镜写好</td><td>状态是「写好」「正在渲染」「渲染好」的镜数 / 总镜数</td></tr>
+<tr><td>已用时间</td><td>现在 − 任务 <code>createdAt</code>；卡片上「写好 · m:ss」= <code>writtenAt − createdAt</code>，重写后只这一镜变</td></tr>
+<tr><td>正在写 · 已写 m:ss</td><td>现在 − 这一镜开始写的时间</td></tr>
+<tr><td>关键帧</td><td>这一镜 0.8 × 时长那一帧，短边不超过 360</td></tr>
+<tr><td>合成进度</td><td>已拼帧数 / 总帧数；总帧数 = 合计时长 × 30</td></tr>
+<tr><td>七镜一排的宽度</td><td>1440 宽：(1440 − 210 − 48 − 6 × 10) ÷ 7 ≈ 160，关键帧 160 × 284；口播两行，每行约 11 字</td></tr>
+</tbody></table></section>
+
+<section class="sec" id="gates"><h2><i>7</i>门禁（先写好，在现在的代码上会失败）</h2>
+<ul class="plain">
+  <li>作品页有「脚本直出」分页，网址 <code>ptab=direct</code> 打开它。</li>
+  <li>没有口播稿时「生成」是灰的；本机 Claude 调不通时「生成」「重写」都是灰的，页面上有 <code>DV-UNAVAILABLE</code>。</li>
+  <li>任务没结束时每 2 秒取一次；结束后不再取（门禁数一分钟内的请求次数）。</li>
+  <li>重写第 03 镜以后，其他六张卡的关键帧地址（含 <code>v=</code>）和「写好 · m:ss」不变。</li>
+  <li>页面上不出现英文失败代码和本机绝对路径；读取失败写「读不到」，不写成「还没开始」。</li>
+  <li>不写内联 <code>style=</code>（Studio 的安全策略会拦）：进度条宽度、关键帧缩放用 CSS 变量或脚本设置元素样式。</li>
+  <li>真实首屏截图：用这件作品真实跑一次的任务，截「写到一半」「七镜写好」「成片出来」三屏，每屏 1440 和 960 两个宽度，逐张交给总控看。</li>
+  <li>文案比对：<code>check_design_contract.py check</code> 对 <code>contract.json</code> 通过。</li>
+</ul></section>
+
+<section class="sec" id="how"><h2><i>8</i>画法说明</h2>
+<ul class="plain">
+  <li>外壳、步骤条、提醒块、按钮照 Studio 现有样式（<code>base.css</code> 是 <code>studio/static/styles.css</code> 的令牌快照），新组件类名都以 <code>.dv-</code> 开头，写在 <code>direct.html</code> 头部，实现时并入 <code>studio/static/review.css</code>。</li>
+  <li>七镜画面：<code>build_shots.py</code> 把上游仓库 R131 那次 Opus 写的七镜 HTML 打包成 <code>shots-data.js</code>，稿里用 iframe 逐帧调用它的 <code>seekFrame</code> 显示。<b>实现时一律用后端渲染出的关键帧 JPEG</b>，不在 Studio 页面里运行生成的代码；成片用 <code>output.mp4</code>。</li>
+  <li>受影响截图：作品页 · 按脚本做视频（<code>img/before-script.png</code>，2026-10-25 本机 8765 截图，含私人画面，不提交）。</li>
+</ul></section>
+</div>
+<script>
+const S=[['empty','还没生成（第一屏）'],['read-error','读不到任务'],['filled','粘贴了口播稿'],['unavailable','本机 Claude 调不通'],['designing','Opus 定全片设计'],['writing','Opus 写到第 4 镜'],['failed-shot','第 05 镜没写成'],['ready','七镜都写好'],['rewriting','重写第 03 镜'],['composing','正在合成成片'],['composing-silent','正在合成无声预览'],['done','成片出来了'],['done-silent','无声预览出来了']];
+document.getElementById('gal').innerHTML=S.map(([k,l])=>`<figure><div class="shot"><iframe data-src="direct.html#s=${k}&chrome=0" title="${l}"></iframe><a href="direct.html#s=${k}" aria-label="打开${l}"></a></div><figcaption><span>${l}</span><a href="direct.html#s=${k}">打开 ›</a></figcaption></figure>`).join('');
+const fit=()=>document.querySelectorAll('.shot iframe').forEach(f=>f.style.transform=`scale(${f.parentElement.clientWidth/1440})`);
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!e.target.src){e.target.src=e.target.dataset.src;io.unobserve(e.target);}}),{rootMargin:'300px'});
+document.querySelectorAll('.shot iframe').forEach(f=>io.observe(f));fit();addEventListener('resize',fit);
+</script>
+</body></html>

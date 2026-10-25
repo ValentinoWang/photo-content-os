@@ -1,0 +1,17 @@
+{
+  "schemas/studio-openapi.json": "6eff351e0bc5d6d67120078f0550305a39089dc457ba98ee4010cb1eb3230fcc",
+  "scripts/direct_video/__init__.py": "0cac5f2fc63b5ff8bd497e998c51ee817edea486f74d77f4cde90e64eaa1a727",
+  "scripts/direct_video/generate.py": "62975ef1dd360833c1895ff9e9462e7d4e96f03e83a52a987c26d9aed445756a",
+  "scripts/direct_video/lint.py": "73ea3ec7e6202e0d1054efbcf78af68248b28e4b65b70fae7c9870f3342fd347",
+  "scripts/direct_video/media.py": "c33819a97e36c477ea6e8e3abb476bbf18e9da9b81edb84cc091d27ef9d2408e",
+  "scripts/direct_video/rules/shots.md": "49c72ad17941048a34164114724bb0c0fc3b800d31665229d278a8dc5375427b",
+  "scripts/llm_common.py": "59130f23c76f7507d68e721bb530b50eedf147d536881a1e2f8d474157fcdda1",
+  "scripts/video_candidate.py": "7238f977c69b02d96da995726b8fefa12123ec6b9d93fa6843cef0ada316ee61",
+  "scripts/video_render/compose.py": "3925e0b72b2c71ce0cc449ab8e60df66979dfb0fe7a516ad97be415068ea58a4",
+  "studio/api_contract.py": "a722b5c898d1567fc23df9708991bf0974cb7bac0c4f5f194d3b6d3b03e1c550",
+  "studio/direct_video.py": "d1a92de187d643026a85c588517b4a880f7c523956cdbe435e531260d404a869",
+  "studio/server.py": "5eb0d9ce9b7c1012735d13ae03b2dc38aadf06ec576678f92243f15f06ec1fee",
+  "tests/test_r276_direct_api.py": "94b03c8a331ed3342e395800d34e6fac579c5672898af660eeca16db2f37154a",
+  "tests/test_r276_direct_media.py": "d74658695d78ebc24f9869c88adb938c510517129d4ba655322115bad5eaec9e",
+  "tests/test_r276_direct_video.py": "c4952bde7a8c2465df65e317bb02cde78ca47c4a07d7053f44e4031e3cc10db1"
+}

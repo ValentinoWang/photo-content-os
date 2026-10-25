@@ -28,6 +28,17 @@ def run_ffmpeg(arguments: list[str], timeout: float = 300) -> None:
         raise RenderError('encode_failed', error.stderr[-4000:]) from error
 
 
+def concat_schedule(shots: list[dict[str, Any]], fps: int) -> str:
+    """Override MP4 header durations with contiguous frame-grid boundaries."""
+    lines, cursor, previous_us = [], 0, 0
+    for shot in shots:
+        cursor += shot['frames']
+        end_us = round(cursor * 1_000_000 / fps)
+        lines.extend([f"file '{shot['id']}.mp4'", f'duration {(end_us - previous_us) / 1_000_000:.6f}'])
+        previous_us = end_us
+    return '\n'.join(lines) + '\n'
+
+
 def audio_inputs(manifest: dict[str, Any]) -> list[Path]:
     shots = manifest['shots']
     if 'narration_wav' in manifest:
@@ -122,7 +133,7 @@ def _compose(manifest: dict[str, Any], output: Path, *, timeout: float, on_event
                 entry.update(status='failed', code=getattr(error, 'code', 'encode_failed'), reason=str(error), phase='encode')
                 raise
             write_json(receipt_path, {'key': key, 'sha256': sha256(segment)})
-        concat_file.write_text(''.join(f"file '{shot['id']}.mp4'\n" for shot in manifest['shots']), encoding='utf-8')
+        concat_file.write_text(concat_schedule(manifest['shots'], manifest['fps']), encoding='utf-8')
         inputs = ['-f', 'concat', '-safe', '1', '-i', str(concat_file)]
         for audio in narration:
             inputs.extend(['-i', str(audio)])

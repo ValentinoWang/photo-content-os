@@ -1,4 +1,5 @@
 import { createShotView, seconds } from '/review-shots.js';
+import { createDirectView } from '/direct-view.js';
 import { createMusicView } from '/review-music.js';
 import {mediaSummary, diagnosticGroups, checkedTime, sec} from '/review-common.js';
 const $ = s => document.querySelector(s);
@@ -25,7 +26,7 @@ export const icon = key => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="tru
 export function createStudio(ctx) {
  const {state,api,notice,openProjectDialog,openSurface,renderProject,renderInbox,loadLibrary,loadInboxPlan,loadDeleteRecommendations}=ctx;
  let route={view:'home'}, catalog={groups:[],pieces:[]}, request=0;
- let shots, music, assetCategory='', musicSettings;
+ let shots, music, direct, assetCategory='', musicSettings;
  const root=()=>$('#review-screen');
  const piece=id=>catalog.pieces.find(p=>p.id===id);
  const issues=()=>diagnosticGroups(state.diagnostics?.checks||[]).issues;
@@ -89,13 +90,14 @@ export function createStudio(ctx) {
   const data=await api(`/api/projects/${encodeURIComponent(p.id)}`);if(route.view!=='piece'||route.piece!==p.id)return; state.project=data.project;state.videoHandoff=data.videoHandoff||null;
   let tab=route.ptab;
   if(!tab){try{tab=localStorage.getItem('studio-piece-tab:'+p.id);}catch{ /* Storage is optional. */ }}
-  tab=['vlog','script'].includes(tab)?tab:state.videoHandoff?'script':'vlog';
+  tab=['vlog','script','direct'].includes(tab)?tab:state.videoHandoff?'script':'vlog';
   route.ptab=tab;
   top(D(p.title),p.date?D(p.date):'',p.versions?button('看已出的成片 '+D(p.outputs.map(o=>o.version).filter((v,i,a)=>a.indexOf(v)===i).join(' · ')),`data-versions="${esc(p.id)}"`):'',`<button data-go="projects">项目</button>›<button data-go-project="${esc(p.group_id)}" data-design-data>${esc(catalog.groups.find(g=>g.id===p.group_id)?.title)}</button>`);
   $('#crumb').parentElement.dataset.designId='R208-REV-topbar';
-  const tabs=`<nav class="ptabs" role="tablist" aria-label="做法" data-design-id="R208-PIECE-tabs">${[['vlog','按素材剪 vlog'],['script','按脚本做视频']].map(([key,label])=>`<button role="tab" data-ptab="${key}" aria-selected="${tab===key}">${label}</button>`).join('')}</nav>`;
+  const tabs=`<nav class="ptabs" role="tablist" aria-label="做法" data-design-id="R208-PIECE-tabs">${[['vlog','按素材剪 vlog'],['script','按脚本做视频'],['direct','脚本直出']].map(([key,label])=>`<button role="tab" data-ptab="${key}" aria-selected="${tab===key}">${label}</button>`).join('')}</nav>`;
   root().classList.add('single');root().innerHTML=tabs;
   if(tab==='script') {mark('piece-script');root().classList.add('single');$('[data-screen-panel="project"]').hidden=false;renderProject();$('[data-screen-panel="project"]').dataset.designId='R208-PIECE-script';}
+  else if(tab==='direct') {await direct.render(p,tabs);}
   else {await shots.render(p,tabs);}
   $$('[data-ptab]').forEach(b=>b.onclick=()=>{try{localStorage.setItem('studio-piece-tab:'+p.id,b.dataset.ptab);}catch{}go({...route,ptab:b.dataset.ptab});});common();
  }
@@ -171,7 +173,7 @@ export function createStudio(ctx) {
  function openVersions(p) {if(!p?.outputs.length)return;openPlayer({title:p.title,mode:'versions',items:p.outputs.map(o=>({kind:'video',src:`/api/review/pieces/${p.id}/media/output/${o.id}`,thumb:`/api/review/pieces/${p.id}/media/poster/${o.id}`,title:o.name,label:o.version}))});}
  function openReel(p,data){const items=data.shots.filter(s=>s.status==='selected').map(s=>({kind:s.kind,src:s.preview,thumb:frame(s),title:s.name,duration:s.duration}));if(items.length)openPlayer({title:'预览精选',mode:'reel',items});}
  async function render() {
-  const generation=++request;shots.stop();music.stopPolling();$('#music-player').pause();
+  const generation=++request;shots.stop();music.stopPolling();direct.stop();$('#music-player').pause();
   state.screen=route.view==='piece'?'project':route.view;
   $$('[data-screen-panel]').forEach(p=>p.hidden=true);delete $('#crumb').parentElement.dataset.designId;
   root().hidden=false;root().innerHTML='';nav();
@@ -184,6 +186,7 @@ export function createStudio(ctx) {
  function go(value){const hash=new URLSearchParams(value).toString();route=value;if(location.hash.slice(1)===hash)render();else location.hash=hash;}
  function restore(){const params=new URLSearchParams(location.hash.slice(1));route=Object.fromEntries(params);if(!route.view){const path=location.pathname;route=path.startsWith('/app/project/')?{view:'piece',piece:decodeURIComponent(path.slice(13))}:{view:({'/app/inbox':'inbox','/app/library':'library','/app/settings':'settings'})[path]||'home'};}render();}
  shots=createShotView({state,api,notice,root,mark,route:()=>route,refreshCatalog,render,common,D,esc,button});
+ direct=createDirectView({api,root,mark,active:id=>route.view==='piece'&&route.ptab==='direct'&&route.piece===id,go});
  music=createMusicView({api,notice,root,top,mark,D,esc,button,active:()=>route.view==='music'});
  window.addEventListener('hashchange',restore);
  $$('.nav [data-nav]').forEach(b=>b.onclick=()=>go({view:b.dataset.nav}));

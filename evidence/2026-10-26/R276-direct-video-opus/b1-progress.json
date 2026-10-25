@@ -1,0 +1,215 @@
+{
+  "run": "b1",
+  "projectId": "project-fc6baa3294",
+  "startedAtEpoch": 1792949205.14946,
+  "stage": "finished",
+  "originalShotCount": 11,
+  "requestedShotCount": 10,
+  "mapping": "Original v4 shots 06+07 merged; full script equals final-video.json verbatim",
+  "jobId": "dv_0d6e5d7cd39741d6abeadb19",
+  "elapsedSeconds": 1506.899,
+  "status": "done",
+  "shots": [
+    {
+      "shotId": "01",
+      "status": "rendered",
+      "attempts": 4,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:49:50.875572Z",
+      "renderedAt": "2026-10-25T17:50:15.673989Z",
+      "posterRevision": 3,
+      "checks": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "shotId": "02",
+      "status": "rendered",
+      "attempts": 1,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:27:59.077636Z",
+      "renderedAt": "2026-10-25T17:38:56.897482Z",
+      "posterRevision": 2,
+      "checks": {
+        "errors": [],
+        "warnings": [
+          {
+            "code": "number_unspoken",
+            "message": "画面数字 9% 未出现在本镜口播，请核对出处和数量。"
+          }
+        ]
+      }
+    },
+    {
+      "shotId": "03",
+      "status": "rendered",
+      "attempts": 1,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:29:14.712030Z",
+      "renderedAt": "2026-10-25T17:39:12.562278Z",
+      "posterRevision": 2,
+      "checks": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "shotId": "04",
+      "status": "rendered",
+      "attempts": 3,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:37:54.722767Z",
+      "renderedAt": "2026-10-25T17:39:25.312629Z",
+      "posterRevision": 2,
+      "checks": {
+        "errors": [],
+        "warnings": [
+          {
+            "code": "number_unspoken",
+            "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+          },
+          {
+            "code": "number_unspoken",
+            "message": "画面数字 100% 未出现在本镜口播，请核对出处和数量。"
+          }
+        ]
+      }
+    },
+    {
+      "shotId": "05",
+      "status": "rendered",
+      "attempts": 2,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:50:49.778869Z",
+      "renderedAt": "2026-10-25T17:51:12.202704Z",
+      "posterRevision": 3,
+      "checks": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "shotId": "06",
+      "status": "rendered",
+      "attempts": 1,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:30:30.166189Z",
+      "renderedAt": "2026-10-25T17:40:01.379028Z",
+      "posterRevision": 2,
+      "checks": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "shotId": "07",
+      "status": "rendered",
+      "attempts": 2,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:32:06.996913Z",
+      "renderedAt": "2026-10-25T17:40:20.798470Z",
+      "posterRevision": 2,
+      "checks": {
+        "errors": [],
+        "warnings": [
+          {
+            "code": "number_unspoken",
+            "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+          }
+        ]
+      }
+    },
+    {
+      "shotId": "08",
+      "status": "rendered",
+      "attempts": 1,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:31:53.153666Z",
+      "renderedAt": "2026-10-25T17:40:32.006317Z",
+      "posterRevision": 2,
+      "checks": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "shotId": "09",
+      "status": "rendered",
+      "attempts": 1,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:32:05.092507Z",
+      "renderedAt": "2026-10-25T17:40:43.906831Z",
+      "posterRevision": 2,
+      "checks": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "shotId": "10",
+      "status": "rendered",
+      "attempts": 1,
+      "failureCode": null,
+      "writtenAt": "2026-10-25T17:33:40.079079Z",
+      "renderedAt": "2026-10-25T17:41:02.737156Z",
+      "posterRevision": 2,
+      "checks": {
+        "errors": [],
+        "warnings": []
+      }
+    }
+  ],
+  "generationSeconds": 684.72,
+  "repairs": [
+    {
+      "shotId": "01",
+      "elapsedSeconds": 78.576,
+      "result": "rendered"
+    },
+    {
+      "shotId": "04",
+      "elapsedSeconds": 108.602,
+      "result": "rendered"
+    }
+  ],
+  "alignmentAndRetimingSeconds": 174.254,
+  "timingSources": {
+    "01": "proportional",
+    "02": "proportional",
+    "03": "proportional",
+    "04": "proportional",
+    "05": "proportional",
+    "06": "proportional",
+    "07": "proportional",
+    "08": "proportional",
+    "09": "proportional",
+    "10": "proportional"
+  },
+  "composeSeconds": 22.08,
+  "totalSeconds": 1506.901,
+  "output": {
+    "status": "ready",
+    "kind": "narrated",
+    "durationSeconds": 61.833333333333336,
+    "frames": 1855,
+    "revision": 1,
+    "checks": {
+      "playable": "pass",
+      "avOffsetSeconds": 0.0,
+      "blackFrames": "pass"
+    }
+  },
+  "composeRetrySeconds": 18.086,
+  "blackFrameRepairs": [
+    {
+      "shotId": "01",
+      "elapsedSeconds": 53.563
+    },
+    {
+      "shotId": "05",
+      "elapsedSeconds": 56.373
+    }
+  ],
+  "finalComposeSeconds": 38.175
+}

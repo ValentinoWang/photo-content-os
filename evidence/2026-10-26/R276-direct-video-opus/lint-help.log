@@ -1,0 +1,13 @@
+usage: lint.py [-h] [--storyboard STORYBOARD] [--durations DURATIONS]
+               shots_dir
+
+来源：用户技能 direct-video-shots/scripts/lint_shots.py。 规则部分借自 HeyGen
+HyperFrames（Apache-2.0）。静态检查不代替视觉审片。
+
+positional arguments:
+  shots_dir
+
+options:
+  -h, --help            show this help message and exit
+  --storyboard STORYBOARD
+  --durations DURATIONS

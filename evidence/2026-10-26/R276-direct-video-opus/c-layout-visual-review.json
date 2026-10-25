@@ -1,0 +1,29 @@
+{
+  "inspectedAt": "2026-10-25T18:35:53.427281+00:00",
+  "images": [
+    {
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/c-layout-b1.png",
+      "sha256": "4b2c74351730146d407d150ee02e0e2019bc851267c3a44bd6710859c3833869",
+      "dimensions": [
+        1470,
+        1130
+      ],
+      "personallyInspected": true
+    },
+    {
+      "path": "~/.photo-content-os/evidence/R276-direct-video-opus/c-layout-b2.png",
+      "sha256": "676b2e7b6cac3350f5ea435b2425cd5f61fd91bc7ce3dd7487318ffb8a77f56a",
+      "dimensions": [
+        1180,
+        1130
+      ],
+      "personallyInspected": true
+    }
+  ],
+  "findings": [
+    "已逐张查看全部17张标线关键帧。",
+    "青线表示y=200和y=1500；橙线表示采样背景后检出的最下方非背景像素行。",
+    "来源小字、引导语和细线被纳入可见内容，导致下沿延伸到1209–1500。",
+    "图像展示供核对主体定义；不据此宣告所有样本视觉构图通过。"
+  ]
+}

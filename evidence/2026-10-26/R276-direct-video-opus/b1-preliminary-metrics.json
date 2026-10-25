@@ -1,0 +1,202 @@
+[
+  {
+    "phase": "design",
+    "recordedAt": "2026-10-25T17:21:28.218183Z",
+    "elapsedSeconds": 28.757,
+    "status": "passed",
+    "failureCode": null
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:50.664544Z",
+    "elapsedSeconds": 82.44,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "02",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:22:50.667803Z",
+    "shotId": "02",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:53.994983Z",
+    "elapsedSeconds": 85.772,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "01",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:22:53.996866Z",
+    "shotId": "01",
+    "attempt": 1,
+    "checks": {
+      "errors": [
+        {
+          "code": "external_resource",
+          "message": "请移除外部资源，使用单文件内联图形。"
+        },
+        {
+          "code": "punctuation_unboxed",
+          "message": "问号和感叹号请放在全角居中的文字框中。"
+        }
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:54.000942Z",
+    "elapsedSeconds": 0.003,
+    "status": "failed",
+    "failureCode": "claude_cli_unavailable",
+    "shotId": "01",
+    "attempt": 2,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:54.004927Z",
+    "elapsedSeconds": 0.0,
+    "status": "failed",
+    "failureCode": "claude_cli_unavailable",
+    "shotId": "04",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:54.007039Z",
+    "elapsedSeconds": 0.0,
+    "status": "failed",
+    "failureCode": "claude_cli_unavailable",
+    "shotId": "05",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:54.015181Z",
+    "elapsedSeconds": 0.001,
+    "status": "failed",
+    "failureCode": "claude_cli_unavailable",
+    "shotId": "06",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:54.017923Z",
+    "elapsedSeconds": 0.0,
+    "status": "failed",
+    "failureCode": "claude_cli_unavailable",
+    "shotId": "07",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:54.030997Z",
+    "elapsedSeconds": 0.0,
+    "status": "failed",
+    "failureCode": "claude_cli_unavailable",
+    "shotId": "08",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:54.040538Z",
+    "elapsedSeconds": 0.0,
+    "status": "failed",
+    "failureCode": "claude_cli_unavailable",
+    "shotId": "09",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:22:54.050325Z",
+    "elapsedSeconds": 0.001,
+    "status": "failed",
+    "failureCode": "claude_cli_unavailable",
+    "shotId": "10",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:23:00.899016Z",
+    "elapsedSeconds": 92.671,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "03",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:23:00.902318Z",
+    "shotId": "03",
+    "attempt": 1,
+    "checks": {
+      "errors": [
+        {
+          "code": "external_resource",
+          "message": "请移除外部资源，使用单文件内联图形。"
+        }
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:23:14.037953Z",
+    "shotId": "02",
+    "status": "passed",
+    "elapsedSeconds": 23.364
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:23:35.701662Z",
+    "elapsedSeconds": 34.797,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "03",
+    "attempt": 2,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:23:35.703359Z",
+    "shotId": "03",
+    "attempt": 2,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:24:06.856455Z",
+    "shotId": "03",
+    "status": "passed",
+    "elapsedSeconds": 31.151
+  }
+]

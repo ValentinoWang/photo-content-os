@@ -1,0 +1,261 @@
+[
+  {
+    "phase": "design",
+    "recordedAt": "2026-10-25T17:52:14.935162Z",
+    "elapsedSeconds": 22.766,
+    "status": "passed",
+    "failureCode": null
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:53:38.203082Z",
+    "elapsedSeconds": 83.252,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "03",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:53:38.207908Z",
+    "shotId": "03",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:53:48.135549Z",
+    "elapsedSeconds": 93.193,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "01",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:53:48.142508Z",
+    "shotId": "01",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:54:09.274303Z",
+    "elapsedSeconds": 114.33,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "02",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:54:09.285440Z",
+    "shotId": "02",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+        },
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:54:46.599591Z",
+    "shotId": "01",
+    "status": "passed",
+    "elapsedSeconds": 58.449
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:54:53.726524Z",
+    "shotId": "03",
+    "status": "passed",
+    "elapsedSeconds": 75.512
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:55:08.436656Z",
+    "shotId": "02",
+    "status": "passed",
+    "elapsedSeconds": 59.08
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:56:49.292394Z",
+    "elapsedSeconds": 122.683,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "04",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:56:49.295064Z",
+    "shotId": "04",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:57:31.913244Z",
+    "elapsedSeconds": 158.178,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "05",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:57:31.926591Z",
+    "shotId": "05",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 254 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:57:34.804176Z",
+    "elapsedSeconds": 146.349,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "06",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:57:34.808981Z",
+    "shotId": "06",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:57:37.620326Z",
+    "shotId": "04",
+    "status": "passed",
+    "elapsedSeconds": 48.312
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:58:30.140621Z",
+    "shotId": "05",
+    "status": "passed",
+    "elapsedSeconds": 58.156
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:58:30.142797Z",
+    "shotId": "06",
+    "status": "passed",
+    "elapsedSeconds": 55.326
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:59:24.866870Z",
+    "elapsedSeconds": 107.186,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "07",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:59:24.921797Z",
+    "shotId": "07",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T18:00:07.587816Z",
+    "shotId": "07",
+    "status": "passed",
+    "elapsedSeconds": 42.664
+  },
+  {
+    "phase": "compose",
+    "recordedAt": "2026-10-25T18:01:41.875051Z",
+    "status": "passed",
+    "elapsedSeconds": 93.812
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T18:02:28.756035Z",
+    "elapsedSeconds": 31.104,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "03",
+    "attempt": 1,
+    "instructionKind": "requested"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T18:02:28.759225Z",
+    "shotId": "03",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T18:03:07.619169Z",
+    "shotId": "03",
+    "status": "passed",
+    "elapsedSeconds": 38.856
+  },
+  {
+    "phase": "compose",
+    "recordedAt": "2026-10-25T18:04:36.721736Z",
+    "status": "passed",
+    "elapsedSeconds": 88.47
+  }
+]

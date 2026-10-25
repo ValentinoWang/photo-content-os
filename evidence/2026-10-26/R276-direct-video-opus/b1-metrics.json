@@ -1,0 +1,596 @@
+[
+  {
+    "phase": "design",
+    "recordedAt": "2026-10-25T17:27:13.650034Z",
+    "elapsedSeconds": 28.487,
+    "status": "passed",
+    "failureCode": null
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:27:59.073685Z",
+    "elapsedSeconds": 45.417,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "02",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:27:59.076884Z",
+    "shotId": "02",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 9% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:28:19.149811Z",
+    "shotId": "02",
+    "status": "passed",
+    "elapsedSeconds": 20.069
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:28:22.801155Z",
+    "elapsedSeconds": 69.141,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "01",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:28:22.803284Z",
+    "shotId": "01",
+    "attempt": 1,
+    "checks": {
+      "errors": [
+        {
+          "code": "punctuation_unboxed",
+          "message": "问号和感叹号请放在全角居中的文字框中。"
+        }
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:28:43.897540Z",
+    "elapsedSeconds": 21.093,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "01",
+    "attempt": 2,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:28:43.901321Z",
+    "shotId": "01",
+    "attempt": 2,
+    "checks": {
+      "errors": [
+        {
+          "code": "punctuation_unboxed",
+          "message": "问号和感叹号请放在全角居中的文字框中。"
+        }
+      ],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:29:14.707271Z",
+    "elapsedSeconds": 121.044,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "03",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:29:14.710899Z",
+    "shotId": "03",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:29:29.442400Z",
+    "shotId": "03",
+    "status": "passed",
+    "elapsedSeconds": 14.728
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:29:32.453573Z",
+    "elapsedSeconds": 73.3,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "04",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:29:32.457163Z",
+    "shotId": "04",
+    "attempt": 1,
+    "checks": {
+      "errors": [
+        {
+          "code": "half_width_punctuation",
+          "message": "中文相邻标点请使用全角。"
+        }
+      ],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 100% 未出现在本镜口播，请核对出处和数量。"
+        },
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:30:01.643337Z",
+    "elapsedSeconds": 29.183,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "04",
+    "attempt": 2,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:30:01.648225Z",
+    "shotId": "04",
+    "attempt": 2,
+    "checks": {
+      "errors": [
+        {
+          "code": "punctuation_unboxed",
+          "message": "问号和感叹号请放在全角居中的文字框中。"
+        }
+      ],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 100% 未出现在本镜口播，请核对出处和数量。"
+        },
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:30:29.069438Z",
+    "elapsedSeconds": 105.165,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "05",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:30:29.074508Z",
+    "shotId": "05",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:30:30.164024Z",
+    "elapsedSeconds": 60.719,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "06",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:30:30.165559Z",
+    "shotId": "06",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:30:44.741338Z",
+    "shotId": "05",
+    "status": "passed",
+    "elapsedSeconds": 15.663
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:30:47.403860Z",
+    "shotId": "06",
+    "status": "passed",
+    "elapsedSeconds": 17.236
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:31:39.828794Z",
+    "elapsedSeconds": 98.174,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "07",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:31:39.831248Z",
+    "shotId": "07",
+    "attempt": 1,
+    "checks": {
+      "errors": [
+        {
+          "code": "half_width_punctuation",
+          "message": "中文相邻标点请使用全角。"
+        }
+      ],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:31:53.148665Z",
+    "elapsedSeconds": 68.404,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "08",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:31:53.152235Z",
+    "shotId": "08",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:32:03.668591Z",
+    "shotId": "08",
+    "status": "passed",
+    "elapsedSeconds": 10.513
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:32:05.088595Z",
+    "elapsedSeconds": 77.681,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "09",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:32:05.091473Z",
+    "shotId": "09",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:32:06.994185Z",
+    "elapsedSeconds": 27.161,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "07",
+    "attempt": 2,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:32:06.996209Z",
+    "shotId": "07",
+    "attempt": 2,
+    "checks": {
+      "errors": [],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:32:16.749367Z",
+    "shotId": "09",
+    "status": "passed",
+    "elapsedSeconds": 11.655
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:32:21.238366Z",
+    "shotId": "07",
+    "status": "passed",
+    "elapsedSeconds": 14.24
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:33:40.074376Z",
+    "elapsedSeconds": 96.402,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "10",
+    "attempt": 1,
+    "instructionKind": "initial"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:33:40.077720Z",
+    "shotId": "10",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:33:57.430997Z",
+    "shotId": "10",
+    "status": "passed",
+    "elapsedSeconds": 17.35
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:36:02.518477Z",
+    "elapsedSeconds": 59.822,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "01",
+    "attempt": 1,
+    "instructionKind": "requested"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:36:02.521474Z",
+    "shotId": "01",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:36:19.305913Z",
+    "shotId": "01",
+    "status": "passed",
+    "elapsedSeconds": 16.782
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:37:54.715505Z",
+    "elapsedSeconds": 93.441,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "04",
+    "attempt": 1,
+    "instructionKind": "requested"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:37:54.720976Z",
+    "shotId": "04",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": [
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+        },
+        {
+          "code": "number_unspoken",
+          "message": "画面数字 100% 未出现在本镜口播，请核对出处和数量。"
+        }
+      ]
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:38:08.002843Z",
+    "shotId": "04",
+    "status": "passed",
+    "elapsedSeconds": 13.279
+  },
+  {
+    "phase": "alignment",
+    "recordedAt": "2026-10-25T17:38:24.009976Z",
+    "timingSource": "proportional",
+    "elapsedSeconds": 14.132
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:38:41.661436Z",
+    "shotId": "01",
+    "status": "passed",
+    "elapsedSeconds": 17.647
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:38:56.896588Z",
+    "shotId": "02",
+    "status": "passed",
+    "elapsedSeconds": 15.233
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:39:12.560903Z",
+    "shotId": "03",
+    "status": "passed",
+    "elapsedSeconds": 15.661
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:39:25.311947Z",
+    "shotId": "04",
+    "status": "passed",
+    "elapsedSeconds": 12.749
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:39:40.708708Z",
+    "shotId": "05",
+    "status": "passed",
+    "elapsedSeconds": 15.395
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:40:01.367568Z",
+    "shotId": "06",
+    "status": "passed",
+    "elapsedSeconds": 20.651
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:40:20.797406Z",
+    "shotId": "07",
+    "status": "passed",
+    "elapsedSeconds": 19.416
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:40:32.004884Z",
+    "shotId": "08",
+    "status": "passed",
+    "elapsedSeconds": 11.204
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:40:43.905437Z",
+    "shotId": "09",
+    "status": "passed",
+    "elapsedSeconds": 11.898
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:41:02.720246Z",
+    "shotId": "10",
+    "status": "passed",
+    "elapsedSeconds": 18.808
+  },
+  {
+    "phase": "compose",
+    "recordedAt": "2026-10-25T17:41:24.423165Z",
+    "status": "failed",
+    "elapsedSeconds": 20.291,
+    "failureCode": "compose_failed"
+  },
+  {
+    "phase": "compose",
+    "recordedAt": "2026-10-25T17:46:56.771176Z",
+    "status": "failed",
+    "elapsedSeconds": 17.142,
+    "failureCode": "compose_failed"
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:49:50.870885Z",
+    "elapsedSeconds": 26.923,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "01",
+    "attempt": 1,
+    "instructionKind": "requested"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:49:50.874559Z",
+    "shotId": "01",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:50:15.673167Z",
+    "shotId": "01",
+    "status": "passed",
+    "elapsedSeconds": 24.796
+  },
+  {
+    "phase": "write",
+    "recordedAt": "2026-10-25T17:50:49.752557Z",
+    "elapsedSeconds": 32.241,
+    "status": "passed",
+    "failureCode": null,
+    "shotId": "05",
+    "attempt": 1,
+    "instructionKind": "requested"
+  },
+  {
+    "phase": "lint",
+    "recordedAt": "2026-10-25T17:50:49.777630Z",
+    "shotId": "05",
+    "attempt": 1,
+    "checks": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  {
+    "phase": "render",
+    "recordedAt": "2026-10-25T17:51:12.184876Z",
+    "shotId": "05",
+    "status": "passed",
+    "elapsedSeconds": 22.404
+  },
+  {
+    "phase": "compose",
+    "recordedAt": "2026-10-25T17:51:50.882388Z",
+    "status": "passed",
+    "elapsedSeconds": 36.999
+  }
+]

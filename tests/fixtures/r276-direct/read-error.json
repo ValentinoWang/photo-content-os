@@ -1,0 +1,7 @@
+{
+  "ok": false,
+  "error": {
+    "code": "fixture_read_failed",
+    "message": "read failed"
+  }
+}

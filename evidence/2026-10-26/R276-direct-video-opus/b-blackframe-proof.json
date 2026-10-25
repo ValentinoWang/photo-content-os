@@ -1,0 +1,41 @@
+{
+  "before": {
+    "status": "fail",
+    "framesInspected": 1855,
+    "emptyFrames": [
+      0,
+      749
+    ],
+    "analysisSize": [
+      320,
+      569
+    ],
+    "criteria": {
+      "maxMeanChannel": 64,
+      "maxLumaStddev": 3,
+      "minEdgePixelsForContent": 8,
+      "medianNoiseFilter": 3,
+      "edgeThreshold": 16
+    }
+  },
+  "affectedShots": [
+    "01",
+    "05"
+  ],
+  "after": {
+    "status": "pass",
+    "framesInspected": 1855,
+    "emptyFrames": [],
+    "analysisSize": [
+      320,
+      569
+    ],
+    "criteria": {
+      "maxMeanChannel": 64,
+      "maxLumaStddev": 3,
+      "minEdgePixelsForContent": 8,
+      "medianNoiseFilter": 3,
+      "edgeThreshold": 16
+    }
+  }
+}

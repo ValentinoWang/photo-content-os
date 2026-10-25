@@ -1,0 +1,23 @@
+{
+  "ownedTaskFiles": "passed",
+  "parallelFilesWithPrivatePathFindings": [
+    {
+      "path": "docs/tasks/R276-direct-video-opus/REPORT-F1.md",
+      "lineNumbers": [
+        9,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        49
+      ]
+    }
+  ],
+  "foreignFilesModified": false
+}

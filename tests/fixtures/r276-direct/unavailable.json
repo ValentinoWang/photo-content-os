@@ -1,0 +1,7 @@
+{
+  "ok": false,
+  "error": {
+    "code": "claude_cli_unavailable",
+    "message": "直出任务暂时无法执行，请检查输入或任务状态后重试。"
+  }
+}

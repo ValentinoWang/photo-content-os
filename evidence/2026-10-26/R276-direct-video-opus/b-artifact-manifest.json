@@ -1,0 +1,44 @@
+[
+  {
+    "path": "~/.photo-content-os/evidence/R276-direct-video-opus/b1.mp4",
+    "bytes": 2956671,
+    "sha256": "c3c29822c7199fe8b23e529146df36bfdfb965a110ec5bcce6740949f3724f73"
+  },
+  {
+    "path": "~/.photo-content-os/evidence/R276-direct-video-opus/b2.mp4",
+    "bytes": 2693408,
+    "sha256": "b8e480a15dd4228e09ae4c6973521d293f8ea27c659d9584152b58bb92680949"
+  },
+  {
+    "path": "~/.photo-content-os/evidence/R276-direct-video-opus/b1-contact-sheet.png",
+    "bytes": 410462,
+    "sha256": "da658cec701355a0e2ed2a1f7a93fc2071af7b93cde53e574ce92e49f58754b9",
+    "dimensions": [
+      1422,
+      1126
+    ]
+  },
+  {
+    "path": "~/.photo-content-os/evidence/R276-direct-video-opus/b2-contact-sheet.png",
+    "bytes": 384583,
+    "sha256": "675ce2ec5d1ff2aef8e0a98d4f40a4bb91b6ee57f69bf3eb41b564a14dc7f6c8",
+    "dimensions": [
+      1140,
+      1126
+    ]
+  },
+  {
+    "path": "~/.photo-content-os/evidence/R276-direct-video-opus/shot03-comparison.png",
+    "bytes": 108067,
+    "sha256": "3f7fb6821a28c441f3cebef17ba11e835f91e5ce7ead4ed3ac609a5dd2bb2ca8",
+    "dimensions": [
+      576,
+      530
+    ]
+  },
+  {
+    "path": "~/.photo-content-os/evidence/R276-direct-video-opus/b2-before-rewrite.mp4",
+    "bytes": 2647027,
+    "sha256": "6c7e7931d0f343392792fd57f7f6f063d49a13faed13c5bed654046d9c2506c9"
+  }
+]

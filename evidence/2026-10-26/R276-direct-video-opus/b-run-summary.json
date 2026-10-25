@@ -1,0 +1,878 @@
+{
+  "b1": {
+    "jobId": "dv_0d6e5d7cd39741d6abeadb19",
+    "projectId": "project-fc6baa3294",
+    "wallClock": {
+      "run": "b1",
+      "projectId": "project-fc6baa3294",
+      "startedAtEpoch": 1792949205.14946,
+      "stage": "finished",
+      "originalShotCount": 11,
+      "requestedShotCount": 10,
+      "mapping": "Original v4 shots 06+07 merged; full script equals final-video.json verbatim",
+      "jobId": "dv_0d6e5d7cd39741d6abeadb19",
+      "elapsedSeconds": 1506.899,
+      "status": "done",
+      "shots": [
+        {
+          "shotId": "01",
+          "status": "rendered",
+          "attempts": 4,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:49:50.875572Z",
+          "renderedAt": "2026-10-25T17:50:15.673989Z",
+          "posterRevision": 3,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "02",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:27:59.077636Z",
+          "renderedAt": "2026-10-25T17:38:56.897482Z",
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": [
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 9% 未出现在本镜口播，请核对出处和数量。"
+              }
+            ]
+          }
+        },
+        {
+          "shotId": "03",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:29:14.712030Z",
+          "renderedAt": "2026-10-25T17:39:12.562278Z",
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "04",
+          "status": "rendered",
+          "attempts": 3,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:37:54.722767Z",
+          "renderedAt": "2026-10-25T17:39:25.312629Z",
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": [
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+              },
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 100% 未出现在本镜口播，请核对出处和数量。"
+              }
+            ]
+          }
+        },
+        {
+          "shotId": "05",
+          "status": "rendered",
+          "attempts": 2,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:50:49.778869Z",
+          "renderedAt": "2026-10-25T17:51:12.202704Z",
+          "posterRevision": 3,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "06",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:30:30.166189Z",
+          "renderedAt": "2026-10-25T17:40:01.379028Z",
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "07",
+          "status": "rendered",
+          "attempts": 2,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:32:06.996913Z",
+          "renderedAt": "2026-10-25T17:40:20.798470Z",
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": [
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+              }
+            ]
+          }
+        },
+        {
+          "shotId": "08",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:31:53.153666Z",
+          "renderedAt": "2026-10-25T17:40:32.006317Z",
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "09",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:32:05.092507Z",
+          "renderedAt": "2026-10-25T17:40:43.906831Z",
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "10",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:33:40.079079Z",
+          "renderedAt": "2026-10-25T17:41:02.737156Z",
+          "posterRevision": 2,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        }
+      ],
+      "generationSeconds": 684.72,
+      "repairs": [
+        {
+          "shotId": "01",
+          "elapsedSeconds": 78.576,
+          "result": "rendered"
+        },
+        {
+          "shotId": "04",
+          "elapsedSeconds": 108.602,
+          "result": "rendered"
+        }
+      ],
+      "alignmentAndRetimingSeconds": 174.254,
+      "timingSources": {
+        "01": "proportional",
+        "02": "proportional",
+        "03": "proportional",
+        "04": "proportional",
+        "05": "proportional",
+        "06": "proportional",
+        "07": "proportional",
+        "08": "proportional",
+        "09": "proportional",
+        "10": "proportional"
+      },
+      "composeSeconds": 22.08,
+      "totalSeconds": 1506.901,
+      "output": {
+        "status": "ready",
+        "kind": "narrated",
+        "durationSeconds": 61.833333333333336,
+        "frames": 1855,
+        "revision": 1,
+        "checks": {
+          "playable": "pass",
+          "avOffsetSeconds": 0.0,
+          "blackFrames": "pass"
+        }
+      },
+      "composeRetrySeconds": 18.086,
+      "blackFrameRepairs": [
+        {
+          "shotId": "01",
+          "elapsedSeconds": 53.563
+        },
+        {
+          "shotId": "05",
+          "elapsedSeconds": 56.373
+        }
+      ],
+      "finalComposeSeconds": 38.175
+    },
+    "designSeconds": 28.487,
+    "shots": [
+      {
+        "shotId": "01",
+        "modelSeconds": [
+          69.141,
+          21.093,
+          59.822,
+          26.923
+        ],
+        "renderSeconds": [
+          16.782,
+          17.647,
+          24.796
+        ],
+        "automaticRewrites": 1,
+        "requestedRewrites": 2,
+        "historicalErrorCodes": [
+          "punctuation_unboxed"
+        ],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 6.9,
+        "measuredSeconds": 7.3
+      },
+      {
+        "shotId": "02",
+        "modelSeconds": [
+          45.417
+        ],
+        "renderSeconds": [
+          20.069,
+          15.233
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 9% 未出现在本镜口播，请核对出处和数量。"
+            }
+          ]
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 5.9,
+        "measuredSeconds": 6.233333333333333
+      },
+      {
+        "shotId": "03",
+        "modelSeconds": [
+          121.044
+        ],
+        "renderSeconds": [
+          14.728,
+          15.661
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 6.3,
+        "measuredSeconds": 6.666666666666667
+      },
+      {
+        "shotId": "04",
+        "modelSeconds": [
+          73.3,
+          29.183,
+          93.441
+        ],
+        "renderSeconds": [
+          13.279,
+          12.749
+        ],
+        "automaticRewrites": 1,
+        "requestedRewrites": 1,
+        "historicalErrorCodes": [
+          "half_width_punctuation",
+          "punctuation_unboxed"
+        ],
+        "finalChecks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+            },
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 100% 未出现在本镜口播，请核对出处和数量。"
+            }
+          ]
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 4.5,
+        "measuredSeconds": 4.766666666666667
+      },
+      {
+        "shotId": "05",
+        "modelSeconds": [
+          105.165,
+          32.241
+        ],
+        "renderSeconds": [
+          15.663,
+          15.395,
+          22.404
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 1,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 6.1,
+        "measuredSeconds": 6.466666666666667
+      },
+      {
+        "shotId": "06",
+        "modelSeconds": [
+          60.719
+        ],
+        "renderSeconds": [
+          17.236,
+          20.651
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 8.2,
+        "measuredSeconds": 8.733333333333333
+      },
+      {
+        "shotId": "07",
+        "modelSeconds": [
+          98.174,
+          27.161
+        ],
+        "renderSeconds": [
+          14.24,
+          19.416
+        ],
+        "automaticRewrites": 1,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [
+          "half_width_punctuation"
+        ],
+        "finalChecks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+            }
+          ]
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 5.3,
+        "measuredSeconds": 5.633333333333334
+      },
+      {
+        "shotId": "08",
+        "modelSeconds": [
+          68.404
+        ],
+        "renderSeconds": [
+          10.513,
+          11.204
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 2.9,
+        "measuredSeconds": 3.1333333333333333
+      },
+      {
+        "shotId": "09",
+        "modelSeconds": [
+          77.681
+        ],
+        "renderSeconds": [
+          11.655,
+          11.898
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 3.5,
+        "measuredSeconds": 3.7333333333333334
+      },
+      {
+        "shotId": "10",
+        "modelSeconds": [
+          96.402
+        ],
+        "renderSeconds": [
+          17.35,
+          18.808
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "proportional",
+        "estimatedSeconds": 8.6,
+        "measuredSeconds": 9.166666666666666
+      }
+    ],
+    "composeAttempts": [
+      {
+        "phase": "compose",
+        "recordedAt": "2026-10-25T17:41:24.423165Z",
+        "status": "failed",
+        "elapsedSeconds": 20.291,
+        "failureCode": "compose_failed"
+      },
+      {
+        "phase": "compose",
+        "recordedAt": "2026-10-25T17:46:56.771176Z",
+        "status": "failed",
+        "elapsedSeconds": 17.142,
+        "failureCode": "compose_failed"
+      },
+      {
+        "phase": "compose",
+        "recordedAt": "2026-10-25T17:51:50.882388Z",
+        "status": "passed",
+        "elapsedSeconds": 36.999
+      }
+    ],
+    "output": {
+      "status": "ready",
+      "kind": "narrated",
+      "durationSeconds": 61.833333333333336,
+      "frames": 1855,
+      "revision": 1,
+      "checks": {
+        "playable": "pass",
+        "frameCount": "pass",
+        "avOffsetSeconds": 0.0,
+        "blackFrames": "pass"
+      }
+    },
+    "outputChecks": {
+      "playable": "pass",
+      "frameCount": "pass",
+      "avOffsetSeconds": 0.0,
+      "blackFrames": "pass"
+    },
+    "streams": [
+      {
+        "codec_type": "video",
+        "codec_name": "h264",
+        "width": 1080,
+        "height": 1920,
+        "avg_frame_rate": "30/1",
+        "duration": "61.833333",
+        "nb_read_frames": "1855"
+      },
+      {
+        "codec_type": "audio",
+        "codec_name": "aac",
+        "width": null,
+        "height": null,
+        "avg_frame_rate": "0/0",
+        "duration": "61.833333",
+        "nb_read_frames": "2899"
+      }
+    ],
+    "allCompositionShotsCached": true,
+    "finalJobElapsedSeconds": 1505.76
+  },
+  "b2": {
+    "jobId": "dv_0e184e961bd14ac084c67411",
+    "projectId": "project-fc6baa3294",
+    "wallClock": {
+      "run": "b2",
+      "projectId": "project-fc6baa3294",
+      "jobId": "dv_0e184e961bd14ac084c67411",
+      "startedAtEpoch": 1792950712.154057,
+      "stage": "finished",
+      "elapsedSeconds": 591.515,
+      "status": "done",
+      "shots": [
+        {
+          "shotId": "01",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:53:48.147448Z",
+          "renderedAt": "2026-10-25T17:54:46.601034Z",
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "02",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:54:09.288910Z",
+          "renderedAt": "2026-10-25T17:55:08.440865Z",
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": [
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+              },
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+              }
+            ]
+          }
+        },
+        {
+          "shotId": "03",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:53:38.211742Z",
+          "renderedAt": "2026-10-25T17:54:53.729582Z",
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": [
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+              }
+            ]
+          }
+        },
+        {
+          "shotId": "04",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:56:49.301081Z",
+          "renderedAt": "2026-10-25T17:57:37.625243Z",
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "05",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:57:31.935371Z",
+          "renderedAt": "2026-10-25T17:58:30.144751Z",
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": [
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 254 未出现在本镜口播，请核对出处和数量。"
+              }
+            ]
+          }
+        },
+        {
+          "shotId": "06",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:57:34.811383Z",
+          "renderedAt": "2026-10-25T17:58:30.143398Z",
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        {
+          "shotId": "07",
+          "status": "rendered",
+          "attempts": 1,
+          "failureCode": null,
+          "writtenAt": "2026-10-25T17:59:24.922651Z",
+          "renderedAt": "2026-10-25T18:00:07.589482Z",
+          "posterRevision": 1,
+          "checks": {
+            "errors": [],
+            "warnings": []
+          }
+        }
+      ],
+      "generationSeconds": 495.902,
+      "composeSeconds": 95.613,
+      "totalSeconds": 591.515,
+      "output": {
+        "status": "ready",
+        "kind": "silent",
+        "durationSeconds": 142.8,
+        "frames": 4284,
+        "revision": 1,
+        "checks": {
+          "playable": "pass",
+          "avOffsetSeconds": null,
+          "blackFrames": "pass"
+        }
+      },
+      "afterRewriteComposeSeconds": 88.64,
+      "outputAfterRewrite": {
+        "status": "ready",
+        "kind": "silent",
+        "durationSeconds": 142.8,
+        "frames": 4284,
+        "revision": 2,
+        "checks": {
+          "playable": "pass",
+          "avOffsetSeconds": null,
+          "blackFrames": "pass"
+        }
+      }
+    },
+    "designSeconds": 22.766,
+    "shots": [
+      {
+        "shotId": "01",
+        "modelSeconds": [
+          93.193
+        ],
+        "renderSeconds": [
+          58.449
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "estimate",
+        "estimatedSeconds": 18.2,
+        "measuredSeconds": null
+      },
+      {
+        "shotId": "02",
+        "modelSeconds": [
+          114.33
+        ],
+        "renderSeconds": [
+          59.08
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+            },
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 50% 未出现在本镜口播，请核对出处和数量。"
+            }
+          ]
+        },
+        "timingSource": "estimate",
+        "estimatedSeconds": 20.8,
+        "measuredSeconds": null
+      },
+      {
+        "shotId": "03",
+        "modelSeconds": [
+          83.252,
+          31.104
+        ],
+        "renderSeconds": [
+          75.512,
+          38.856
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 1,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+            }
+          ]
+        },
+        "timingSource": "estimate",
+        "estimatedSeconds": 20.4,
+        "measuredSeconds": null
+      },
+      {
+        "shotId": "04",
+        "modelSeconds": [
+          122.683
+        ],
+        "renderSeconds": [
+          48.312
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "estimate",
+        "estimatedSeconds": 22.0,
+        "measuredSeconds": null
+      },
+      {
+        "shotId": "05",
+        "modelSeconds": [
+          158.178
+        ],
+        "renderSeconds": [
+          58.156
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 254 未出现在本镜口播，请核对出处和数量。"
+            }
+          ]
+        },
+        "timingSource": "estimate",
+        "estimatedSeconds": 21.6,
+        "measuredSeconds": null
+      },
+      {
+        "shotId": "06",
+        "modelSeconds": [
+          146.349
+        ],
+        "renderSeconds": [
+          55.326
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "estimate",
+        "estimatedSeconds": 21.0,
+        "measuredSeconds": null
+      },
+      {
+        "shotId": "07",
+        "modelSeconds": [
+          107.186
+        ],
+        "renderSeconds": [
+          42.664
+        ],
+        "automaticRewrites": 0,
+        "requestedRewrites": 0,
+        "historicalErrorCodes": [],
+        "finalChecks": {
+          "errors": [],
+          "warnings": []
+        },
+        "timingSource": "estimate",
+        "estimatedSeconds": 18.8,
+        "measuredSeconds": null
+      }
+    ],
+    "composeAttempts": [
+      {
+        "phase": "compose",
+        "recordedAt": "2026-10-25T18:01:41.875051Z",
+        "status": "passed",
+        "elapsedSeconds": 93.812
+      },
+      {
+        "phase": "compose",
+        "recordedAt": "2026-10-25T18:04:36.721736Z",
+        "status": "passed",
+        "elapsedSeconds": 88.47
+      }
+    ],
+    "output": {
+      "status": "ready",
+      "kind": "silent",
+      "durationSeconds": 142.8,
+      "frames": 4284,
+      "revision": 2,
+      "checks": {
+        "playable": "pass",
+        "frameCount": "pass",
+        "avOffsetSeconds": null,
+        "blackFrames": "pass"
+      }
+    },
+    "outputChecks": {
+      "playable": "pass",
+      "frameCount": "pass",
+      "avOffsetSeconds": null,
+      "blackFrames": "pass"
+    },
+    "streams": [
+      {
+        "codec_type": "video",
+        "codec_name": "h264",
+        "width": 1080,
+        "height": 1920,
+        "avg_frame_rate": "30/1",
+        "duration": "142.800000",
+        "nb_read_frames": "4284"
+      }
+    ],
+    "dialogueMatchesSource": true,
+    "finalJobElapsedSeconds": 764.57
+  }
+}

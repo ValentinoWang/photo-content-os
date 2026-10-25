@@ -1,0 +1,30 @@
+{
+  "status": "partial",
+  "writingStartedAt": "implemented_and_tested",
+  "emptyRetry": "implemented_and_tested",
+  "layoutWarningPipeline": "implemented_and_synthetic_tested",
+  "realB17": {
+    "measured": 17,
+    "warnings": 0,
+    "minimumRequired": 10,
+    "accepted": false,
+    "exitCode": 1
+  },
+  "newTests": {
+    "passed": 127,
+    "exitCode": 0
+  },
+  "relatedTests": {
+    "passed": 47,
+    "subtestsPassed": 20,
+    "exitCode": 0
+  },
+  "runtimeContract": "passed",
+  "trackedRepositorySafety": "passed",
+  "ownNewFileSafety": "passed",
+  "frontendUnchanged": true,
+  "originalBMediaUnchanged": true,
+  "temporaryVenvRemoved": true,
+  "touched8765": false,
+  "report": "docs/tasks/R276-direct-video-opus/REPORT-C.md"
+}

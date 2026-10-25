@@ -1,4 +1,397 @@
 {
+  "components": {
+    "schemas": {
+      "DirectJob": {
+        "additionalProperties": false,
+        "properties": {
+          "createdAt": {
+            "type": "string"
+          },
+          "design": {
+            "properties": {
+              "banned": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "motionRules": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "palette": {
+                "properties": {
+                  "accent": {
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "type": "string"
+                  },
+                  "background": {
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "type": "string"
+                  },
+                  "neutral": {
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "type": "string"
+                  },
+                  "primary": {
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "background",
+                  "primary",
+                  "accent",
+                  "neutral"
+                ],
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "writing",
+                  "done",
+                  "failed"
+                ]
+              },
+              "typeScale": {
+                "items": {
+                  "type": "integer"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": [
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "status",
+              "palette",
+              "typeScale",
+              "motionRules",
+              "banned"
+            ],
+            "type": "object"
+          },
+          "failureCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "jobId": {
+            "type": "string"
+          },
+          "model": {
+            "const": "claude-opus-5-5"
+          },
+          "narration": {
+            "properties": {
+              "durationSeconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "none",
+                  "aligning",
+                  "ready",
+                  "invalid"
+                ]
+              }
+            },
+            "required": [
+              "status",
+              "durationSeconds"
+            ],
+            "type": "object"
+          },
+          "output": {
+            "properties": {
+              "checks": {
+                "properties": {
+                  "avOffsetSeconds": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "blackFrames": {
+                    "enum": [
+                      "pass",
+                      "fail",
+                      null
+                    ]
+                  },
+                  "playable": {
+                    "enum": [
+                      "pass",
+                      "fail",
+                      "unknown"
+                    ]
+                  }
+                },
+                "required": [
+                  "playable",
+                  "avOffsetSeconds",
+                  "blackFrames"
+                ],
+                "type": "object"
+              },
+              "durationSeconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "frames": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "kind": {
+                "enum": [
+                  "silent",
+                  "narrated"
+                ]
+              },
+              "revision": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "status": {
+                "enum": [
+                  "none",
+                  "composing",
+                  "ready",
+                  "failed"
+                ]
+              }
+            },
+            "required": [
+              "status",
+              "kind",
+              "durationSeconds",
+              "frames",
+              "revision",
+              "checks"
+            ],
+            "type": "object"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "shots": {
+            "items": {
+              "properties": {
+                "attempts": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "checks": {
+                  "properties": {
+                    "errors": {
+                      "items": {
+                        "properties": {
+                          "atSeconds": {
+                            "type": "number"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "warnings": {
+                      "description": "Nonblocking reminders. layout_bottom_gap marks >30% empty space below visible content in y=200..1500, using the rendered keyframe and edge-sampled background; it never triggers automatic rewriting.",
+                      "examples": [
+                        [
+                          {
+                            "code": "layout_bottom_gap",
+                            "message": "画面下半截空着：主画面只占到 y=900，离字幕带还空 46.2%"
+                          }
+                        ]
+                      ],
+                      "items": {
+                        "properties": {
+                          "atSeconds": {
+                            "type": "number"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "code",
+                          "message"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "errors",
+                    "warnings"
+                  ],
+                  "type": "object"
+                },
+                "codeChars": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "dialogue": {
+                  "type": "string"
+                },
+                "estimatedSeconds": {
+                  "type": "number"
+                },
+                "failureCode": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lastInstruction": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "mainAction": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "measuredSeconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "posterRevision": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "renderedAt": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "shotId": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "queued",
+                    "writing",
+                    "written",
+                    "rendering",
+                    "rendered",
+                    "failed",
+                    "interrupted"
+                  ]
+                },
+                "timingSource": {
+                  "enum": [
+                    "estimate",
+                    "narration",
+                    "proportional"
+                  ]
+                },
+                "writingStartedAt": {
+                  "description": "Latest model-writing start, including retries; retained after writing. Null before first write or when an older job did not record it.",
+                  "format": "date-time",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "writtenAt": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "shotId",
+                "dialogue",
+                "mainAction",
+                "estimatedSeconds",
+                "measuredSeconds",
+                "timingSource",
+                "status",
+                "failureCode",
+                "attempts",
+                "lastInstruction",
+                "writingStartedAt",
+                "writtenAt",
+                "renderedAt",
+                "codeChars",
+                "posterRevision",
+                "checks"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "designing",
+              "writing",
+              "rendering",
+              "ready",
+              "composing",
+              "done",
+              "failed"
+            ]
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "jobId",
+          "projectId",
+          "model",
+          "status",
+          "createdAt",
+          "updatedAt",
+          "failureCode",
+          "design",
+          "shots",
+          "narration",
+          "output"
+        ],
+        "type": "object"
+      }
+    }
+  },
   "info": {
     "description": "Loopback-only, CSRF-protected studio contract. Upstream login is optional.",
     "title": "Photo Content OS Desktop API",
@@ -519,6 +912,984 @@
           }
         },
         "summary": "Add an indexed asset reference to a project"
+      }
+    },
+    "/api/projects/{projectId}/direct/jobs": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "createDirectJob",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "required": [
+                      "script"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "storyboard"
+                    ]
+                  }
+                ],
+                "properties": {
+                  "model": {
+                    "enum": [
+                      "claude-opus-5-5"
+                    ],
+                    "type": "string"
+                  },
+                  "script": {
+                    "maxLength": 20000,
+                    "type": "string"
+                  },
+                  "storyboard": {
+                    "properties": {
+                      "shots": {
+                        "items": {
+                          "properties": {
+                            "dialogue": {
+                              "maxLength": 2000,
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "shotId": {
+                              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "shotId",
+                            "dialogue"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 99,
+                        "minItems": 1,
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "shots"
+                    ],
+                    "type": "object"
+                  },
+                  "style": {
+                    "maxLength": 4000,
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "createDirectJob"
+      }
+    },
+    "/api/projects/{projectId}/direct/jobs/latest": {
+      "get": {
+        "operationId": "getLatestDirectJob",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/DirectJob"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "getLatestDirectJob"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}": {
+      "get": {
+        "operationId": "getDirectJob",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "getDirectJob"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/compose": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "composeDirectVideo",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "composeDirectVideo"
+      }
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/narration": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "uploadDirectNarration",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "audio/wav": {
+              "schema": {
+                "format": "binary",
+                "maxLength": 104857600,
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "uploadDirectNarration"
+      }
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/output.mp4": {
+      "get": {
+        "operationId": "getDirectOutput",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "getDirectOutput"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/code": {
+      "get": {
+        "operationId": "getDirectShotCode",
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain; charset=utf-8": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "getDirectShotCode"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/poster.jpg": {
+      "get": {
+        "operationId": "getDirectPoster",
+        "responses": {
+          "200": {
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "getDirectPoster"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/rewrite": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "description": "For interrupted or failed shots, omitted, null or blank instruction retries the prior writing intent and includes prior check errors. Every other state requires 1–200 characters after trimming.",
+        "operationId": "rewriteDirectShot",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "instruction": {
+                    "description": "May be empty only when the current shot is interrupted or failed; otherwise a nonblank instruction is required.",
+                    "maxLength": 200,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "job": {
+                      "$ref": "#/components/schemas/DirectJob"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "job"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project, job, shot or artifact not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Task busy or required artifacts not ready"
+          }
+        },
+        "summary": "rewriteDirectShot"
       }
     },
     "/api/projects/{projectId}/documents/{documentName}/diff": {

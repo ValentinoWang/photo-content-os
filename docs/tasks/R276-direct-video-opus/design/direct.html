@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>脚本直出设计稿</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* ---- R276 新增：脚本直出页。实现时并入 studio/static/review.css，类名前缀 .dv- ---- */
+/* 令牌全部来自 base.css（studio/static/styles.css 现值），不新增颜色。 */
+.ptabs .ptab-new::after{content:"新";margin-left:6px;font:600 10px var(--f-tx);color:var(--ac);vertical-align:2px}
+.flow .fstep{cursor:default}
+
+/* 页头 */
+.dv-model{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule-2);border-radius:16px;padding:5px 12px 5px 10px;font:12px var(--f-tx);color:var(--ink-2)}
+.dv-model .dot{margin:0}
+
+/* 第一屏：粘贴口播稿 */
+.dv-start{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+.dv-form{border:1px solid var(--rule);border-radius:8px;background:var(--panel);display:flex;flex-direction:column}
+.dv-form header{display:flex;justify-content:space-between;align-items:baseline;padding:12px 16px;border-bottom:1px solid var(--rule)}
+.dv-form header h3{font-size:14px}
+.dv-form header span{font:11.5px var(--f-tx);color:var(--ink-3)}
+.dv-form textarea{display:block;width:100%;min-height:220px;resize:vertical;border:0;border-bottom:1px solid var(--rule);background:var(--panel-2);color:var(--ink);padding:14px 16px;font:13.5px/1.9 var(--f-tx)}
+.dv-form textarea::placeholder{color:var(--ink-4)}
+.dv-form textarea:focus{outline:none;box-shadow:inset 0 0 0 1px var(--ac-2)}
+.dv-lines{list-style:none;margin:0;padding:6px 0;max-height:260px;overflow:auto}
+.dv-lines li{display:grid;grid-template-columns:34px minmax(0,1fr) 64px;gap:10px;align-items:baseline;padding:6px 16px;font-size:12.5px}
+.dv-lines li b{font:500 11.5px var(--f-mo);color:var(--ink-3)}
+.dv-lines li span{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dv-lines li i{font:11.5px var(--f-mo);font-style:normal;color:var(--ink-3);text-align:right}
+.dv-form footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;flex-wrap:wrap}
+.dv-form footer p{font:12px/1.5 var(--f-tx);color:var(--ink-3)}
+.dv-form footer p b{color:var(--ink-2);font-weight:500;font-family:var(--f-mo)}
+.dv-opts{display:flex;flex-direction:column;gap:12px}
+.dv-opt{border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:12px 14px}
+.dv-opt h4{margin:0 0 4px;font-size:13px}
+.dv-opt p{font:12px/1.6 var(--f-tx);color:var(--ink-3)}
+.dv-opt .row{margin-top:10px}
+.dv-opt input[type=text]{flex:1;min-width:0;border:1px solid var(--rule-2);border-radius:6px;padding:7px 10px;background:var(--panel-2);color:var(--ink);font:12.5px var(--f-tx)}
+.dv-opt input::placeholder{color:var(--ink-4)}
+.dv-how{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.dv-how li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;font:12px/1.55 var(--f-tx);color:var(--ink-2)}
+.dv-how li b{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--ac-bg);color:var(--ac-soft);font:600 10.5px var(--f-mo)}
+.dv-how li small{font-size:11.5px;margin-top:1px}
+
+/* 全片设计 */
+.dv-design{grid-column:1/-1;border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:12px 16px;display:flex;align-items:center;gap:10px 22px;flex-wrap:wrap}
+.dv-design>b{font-size:13px}
+.dv-design .muted{font:12px var(--f-tx);color:var(--ink-3)}
+.dv-sw{display:inline-flex;align-items:center;gap:6px;font:12px var(--f-tx);color:var(--ink-2)}
+.dv-sw i{width:14px;height:14px;border-radius:3px;border:1px solid #ffffff22}
+.dv-design .dv-ban{display:inline-flex;gap:5px;flex-wrap:wrap}
+.dv-design .dv-ban span{font:11px var(--f-tx);color:var(--ink-3);border:1px solid var(--rule-2);border-radius:4px;padding:1px 6px;text-decoration:line-through;text-decoration-color:var(--ink-5)}
+.dv-design--pending{border-style:dashed;color:var(--ink-3);font:12.5px var(--f-tx)}
+.dv-design--pending b{color:var(--ink-2)}
+
+/* 进度 */
+.dv-progress{grid-column:1/-1;display:flex;align-items:center;gap:14px;font:12.5px var(--f-tx);color:var(--ink-2)}
+.dv-progress .meter{flex:1;max-width:360px;height:4px;background:var(--rule-2);border-radius:2px;overflow:hidden}
+.dv-progress .meter i{display:block;height:100%;background:var(--ac)}
+.dv-progress .mono{font-family:var(--f-mo);color:var(--ink-3);font-size:11.5px}
+
+/* 七镜胶片 */
+.dv-film{grid-column:1/-1;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.dv-card{border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:0;text-align:left;color:inherit;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.dv-card:hover{border-color:var(--ac-2)}
+.dv-card[aria-current="true"]{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.dv-card.is-bad{border-color:#5a2b25}
+.dv-poster{position:relative;aspect-ratio:9/16;background:#050909;overflow:hidden}
+.dv-poster iframe{position:absolute;left:0;top:0;width:1080px;height:1920px;border:0;transform-origin:0 0;pointer-events:none}
+.dv-poster .dv-veil{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:6px;text-align:center;padding:10px;font:12px/1.5 var(--f-tx);color:var(--ink-3)}
+.dv-veil--queued{border:1px dashed var(--rule-2);border-radius:7px 7px 0 0;background:var(--panel-2)}
+.dv-veil--writing{background:linear-gradient(110deg,#10292C 30%,#163538 50%,#10292C 70%);background-size:300% 100%;animation:dv-sheen 1.6s linear infinite;color:var(--ac-soft)}
+.dv-veil--writing.dv-veil--dim{background:#0d1d1f88;animation:none}
+.dv-veil--fail{background:var(--cut-bg);color:var(--cut)}
+@keyframes dv-sheen{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.dv-veil--writing{animation:none}}
+.dv-veil b{font:600 13px var(--f-ui);color:inherit}
+.dv-veil .mono{font:11px var(--f-mo)}
+.dv-card-b{padding:8px 10px 10px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.dv-card-b header{display:flex;justify-content:space-between;align-items:baseline}
+.dv-card-b header b{font:600 12px var(--f-mo)}
+.dv-card-b header span{font:11px var(--f-mo);color:var(--ink-3)}
+.dv-card-b p{font:11.5px/1.5 var(--f-tx);color:var(--ink-3);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:34px}
+.st{display:inline-flex;align-self:flex-start;align-items:center;border-radius:4px;padding:1px 6px;font:11px var(--f-tx);white-space:nowrap;background:var(--ok-bg);color:var(--ok)}
+.st--run{background:var(--ac-bg);color:var(--ac-soft)}
+.st--wait{background:#2A2018;color:var(--warn)}
+.st--bad{background:var(--cut-bg);color:var(--cut)}
+.st--off{background:#1A2425;color:var(--ink-3)}
+
+/* 选中这一镜 */
+.dv-detail{grid-column:1/-1;border:1px solid var(--rule);border-radius:8px;background:var(--panel);display:grid;grid-template-columns:auto minmax(0,1fr)}
+.dv-pv{padding:16px;border-right:1px solid var(--rule);background:#0B1213;display:flex;flex-direction:column;gap:10px}
+.dv-stage{position:relative;width:252px;height:448px;border-radius:6px;overflow:hidden;background:#050909;border:1px solid var(--rule-2)}
+.dv-stage iframe{position:absolute;left:0;top:0;width:1080px;height:1920px;border:0;transform:scale(.23333);transform-origin:0 0;pointer-events:none}
+.dv-pvnote{width:252px;font:11.5px var(--f-tx);color:var(--ink-4);text-align:center}
+.dv-scrub{display:flex;align-items:center;gap:8px;width:252px}
+.dv-scrub input{flex:1;accent-color:var(--ac)}
+.dv-scrub span{font:11px var(--f-mo);color:var(--ink-3);white-space:nowrap}
+.dv-scrub .btn{width:30px;padding:5px 0;text-align:center}
+.dv-info{padding:14px 18px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.dv-info>header{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.dv-info>header h3{font-size:15px}
+.dv-info>header span{font:11.5px var(--f-mo);color:var(--ink-3)}
+.dv-say{font:13px/1.75 var(--f-tx);color:var(--ink-2);border-left:2px solid var(--ac-2);padding:2px 0 2px 12px}
+.dv-kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rule);border-radius:6px}
+.dv-kv>div{padding:9px 12px;border-right:1px solid var(--rule)}
+.dv-kv>div:last-child{border-right:0}
+.dv-kv small{font-size:11px}
+.dv-kv b{display:block;margin-top:3px;font:500 12.5px var(--f-tx);color:var(--ink)}
+.dv-checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.dv-checks li{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:8px;font:12.5px/1.55 var(--f-tx);color:var(--ink-2)}
+.dv-checks li::before{content:"✓";color:var(--ok);font:600 12px var(--f-mo)}
+.dv-checks li.warn::before{content:"!";color:var(--warn)}
+.dv-checks li.fail::before{content:"✕";color:var(--cut)}
+.dv-checks li.none::before{content:"–";color:var(--ink-4)}
+.dv-checks li.none{color:var(--ink-3)}
+.dv-checks li span{font:11px var(--f-mo);color:var(--ink-4)}
+.dv-ask label{display:block;font:600 12px var(--f-ui);color:var(--ink-2);margin-bottom:8px}
+.dv-ask .row input{flex:1;min-width:0;border:1px solid var(--rule-2);border-radius:6px;padding:8px 10px;background:var(--panel-2);color:var(--ink);font:12.5px var(--f-tx)}
+.dv-ask .row input::placeholder{color:var(--ink-4)}
+.dv-ask small{margin-top:6px;font-size:11.5px}
+.dv-code summary{cursor:pointer;font:12.5px var(--f-tx);color:var(--ac-soft);list-style:none}
+.dv-code summary::-webkit-details-marker{display:none}
+.dv-code summary::before{content:"▸ ";color:var(--ink-4)}
+.dv-code[open] summary::before{content:"▾ "}
+.dv-code summary span{color:var(--ink-4);font-family:var(--f-mo);font-size:11px;margin-left:6px}
+.dv-code pre{margin:8px 0 0;max-height:300px;overflow:auto;border:1px solid var(--rule);border-radius:6px;background:#0A1112;padding:10px 12px;font:11px/1.6 var(--f-mo);color:var(--ink-2);white-space:pre}
+
+/* 成片 */
+.dv-out{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr);border:1px solid var(--rule);border-radius:8px;background:var(--panel);overflow:hidden}
+.dv-player{padding:16px;background:#050909;display:flex;flex-direction:column;gap:10px;align-items:center}
+.dv-player .dv-stage{width:288px;height:512px}
+.dv-player .dv-stage iframe{transform:scale(.26667)}
+.dv-bigplay{position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;border:0;background:var(--ac);color:#071719;font-size:22px;display:grid;place-items:center;box-shadow:0 6px 24px #0008}
+.dv-bigplay[hidden]{display:none}
+.dv-player .dv-scrub{width:288px}
+.dv-outinfo{padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.dv-outinfo h3{font-size:16px}
+.dv-outinfo p{font:12.5px/1.65 var(--f-tx);color:var(--ink-3)}
+.dv-strip{display:flex;gap:6px}
+.dv-strip span{position:relative;flex:1;aspect-ratio:9/16;max-width:64px;border-radius:4px;overflow:hidden;background:#050909;border:1px solid var(--rule)}
+.dv-strip span.on{border-color:var(--ac)}
+.dv-strip iframe{position:absolute;left:0;top:0;width:1080px;height:1920px;border:0;transform:scale(.05926);transform-origin:0 0;pointer-events:none}
+.dv-strip b{position:absolute;left:3px;bottom:2px;font:9.5px var(--f-mo);color:var(--ink);background:#000a;border-radius:2px;padding:0 3px}
+.dv-layer{position:absolute;inset:0}
+.dv-tags{display:flex;gap:4px;flex-wrap:wrap}
+.dv-compose{grid-column:1/-1;border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:14px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.dv-compose>div{flex:1 1 300px}
+.dv-compose b{font-size:13px}
+.dv-compose p{font:12px/1.6 var(--f-tx);color:var(--ink-3);margin-top:3px}
+
+.attention .actions{flex-wrap:nowrap}
+.attention--cut{border-color:#5a2b25;background:var(--cut-bg)}
+.attention--cut strong{color:var(--cut)}
+.attention--cut .btn{border-color:#5a2b25;color:var(--cut)}
+.attention .btn.btn--pri{background:var(--ac);border-color:var(--ac);color:#08191B}
+.btn--sm{padding:5px 10px;font-size:12px}
+.row{display:flex;gap:8px;align-items:center}
+
+@media(max-width:1180px){.dv-film{grid-template-columns:repeat(4,minmax(0,1fr))}.dv-start{grid-template-columns:minmax(0,1fr) 300px}}
+@media(max-width:960px){.dv-start,.dv-detail,.dv-out{grid-template-columns:1fr}.dv-pv{border-right:0;border-bottom:1px solid var(--rule);align-items:center}.dv-kv{grid-template-columns:repeat(2,minmax(0,1fr))}.dv-kv>div:nth-child(2){border-right:0}}
+@media(max-width:620px){.dv-film{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="side">
+    <div class="brand"><span class="brand-mark">P</span><div><b>Photo Content OS</b><small>本地创作工作台</small></div></div>
+    <nav class="nav" aria-label="主导航" data-design-id="R208-NAV">
+      <button><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>工作台</button>
+      <button><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span>整理台</button>
+      <button aria-current="true"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span>项目</button>
+      <button><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span>素材库</button>
+      <button><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>音乐库</button>
+      <button><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span>设置与诊断</button>
+    </nav>
+    <footer class="side-foot"><div><i class="dot dot--ok"></i>本机可用</div><div><i class="dot"></i>上游中台未连接</div></footer>
+  </aside>
+  <div class="main">
+    <header class="topbar" data-design-id="DV-TOPBAR"><div><div class="crumb"><button>项目</button>·<span data-design-data>其他作品</span></div><h1 data-design-data>断更一年，我拆了四句话</h1></div><div class="actions" id="top-actions"></div></header>
+    <main class="screen single" id="screen"></main>
+  </div>
+</div>
+<div class="mockbar" id="mockbar"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="shots-data.js"></script>
+<script>
+// 设计稿：七镜代码是 R131 实跑时 Opus 写的真代码（shots-data.js，由 build_shots.py 生成）。
+// 时间、耗时、检查结果是按 R276 后端任务单的接口字段编的设计数据，不是实测。
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const D=v=>`<span data-design-data>${esc(v)}</span>`;
+const mmss=t=>{t=Math.max(0,Math.round(t));return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};
+const FPS=30;
+const R=window.R131||{shots:[]};
+// 估算时长：口播字数（含标点）÷ 5.1，一位小数
+const est=t=>Math.round([...t].length/5.1*10)/10;
+// 每镜唯一主动作：取自 R131 的 AUTHOR-NOTES（Opus 写代码前定的画面设计）
+const ACT=['「91%」大字落地','两根柱子一高一低','方格逐个亮起再褪去','进度条停在「够好 · 发」','习惯曲线断一下又接上','三个节点转成一个圈','两条横条一长一短'];
+const SHOTS=R.shots.map((s,i)=>({...s,est:est(s.dialogue),act:ACT[i]||''}));
+// 时长：合成前按字数估，合成后按配音实测（代码里的 D）
+const dur=i=>['composing','done'].includes(st)?SHOTS[i].D:SHOTS[i].est;
+const TOT=()=>SHOTS.reduce((a,_,i)=>a+dur(i),0);
+const TOTAL_EST=SHOTS.reduce((a,s)=>a+s.est,0);
+const TOTAL_REAL=SHOTS.reduce((a,s)=>a+s.D,0);
+const DESIGN={palette:[['背景','#F3F0E8'],['主色','#1E5E6A'],['强调色','#D8552A'],['中性','#52616A']],type:'字号 84 / 52 / 44',motion:'一镜一个主动作，图解跟着口播一步步长出来',banned:['光晕霓虹','紫蓝渐变','三张卡片并排','全部同时淡入']};
+const STATES=[['empty','还没生成'],['read-error','读不到任务'],['filled','粘贴了口播稿'],['unavailable','本机 Claude 调不通'],['designing','Opus 定全片设计'],['writing','Opus 写到第 4 镜'],['failed-shot','第 05 镜没写成'],['ready','七镜都写好'],['rewriting','重写第 03 镜'],['composing','正在合成'],['composing-silent','合成无声预览'],['done','成片出来了'],['done-silent','无声预览出来了']];
+let st=(new URLSearchParams(location.hash.slice(1)).get('s'))||'empty';
+let sel=0, playing=null;
+
+// ---------- 预览：iframe 里跑 Opus 写的真代码，父页面用 postMessage 让它跳到某一帧 ----------
+const bridge=`<script>addEventListener('message',e=>{if(e.data&&e.data.seek!=null&&window.seekFrame)window.seekFrame(e.data.seek,${FPS});});<\/script>`;
+const frameOf=(i,ratio=.8)=>Math.round(dur(i)*ratio*FPS);
+const ifr=(i,frame,cls='')=>`<iframe class="${cls}" data-frame="${frame}" srcdoc="${esc(SHOTS[i].html.replace('</body>',bridge+'</body>'))}" title="第 ${SHOTS[i].shotId} 镜" tabindex="-1" aria-hidden="true"></iframe>`;
+function seekAll(root=document){$$('iframe[data-frame]').forEach(f=>{const go=()=>{try{f.contentWindow.postMessage({seek:+f.dataset.frame},'*')}catch(e){}};f.addEventListener('load',go);go();});}
+function fitPosters(){$$('.dv-poster iframe').forEach(f=>{f.style.transform=`scale(${f.parentElement.clientWidth/1080})`;});}
+
+// ---------- 每个状态下七镜的样子 ----------
+// 返回 [状态, 说明]：queued 等着写 / writing 正在写 / auto 自动重写 / rendered 写好了 / fail 没写成 / rewriting 正在重写
+function shotState(i){
+  if(st==='designing') return ['queued'];
+  if(st==='writing') return i<3?['rendered']:i===3?['writing','1:12']:i===4?['writing','0:38']:i===5?['auto']:['queued'];
+  if(st==='failed-shot') return i===4?['fail']:['rendered'];
+  if(st==='rewriting') return i===2?['rewriting']:['rendered'];
+  return ['rendered'];
+}
+const STATUS={queued:['等着写','off'],writing:['正在写','run'],auto:['自查没过，正在重写','wait'],rendered:['写好了',''],fail:['写了两次都没过','bad'],rewriting:['正在重写','run']};
+// 写好的时间：从点「生成」起算的分钟数（设计数据），重写只改第 03 镜
+const WRITTEN=['3:41','4:05','5:22','8:30','9:12','10:47','11:20'];
+const WARN={1:['画面上的「50%」口播里写的是「约一半」'],5:['3.2–6.6 秒画面没有变化，停了 3.4 秒']};
+
+function card(i){
+  const s=SHOTS[i],[k,extra]=shotState(i),[txt,kind]=STATUS[k];
+  let poster='';
+  if(k==='queued') poster=`<div class="dv-veil dv-veil--queued"><span>等着写</span></div>`;
+  else if(k==='writing') poster=`<div class="dv-veil dv-veil--writing"><b>Opus 正在写</b><span class="mono" data-design-data>已写 ${extra}</span></div>`;
+  else if(k==='auto') poster=`${ifr(i,frameOf(i))}<div class="dv-veil dv-veil--writing dv-veil--dim"><b>自动重写</b><span class="mono">第 2 次</span></div>`;
+  else if(k==='fail') poster=`<div class="dv-veil dv-veil--fail"><b>没写成</b><span>字放进了字幕带</span></div>`;
+  else if(k==='rewriting') poster=`${ifr(i,frameOf(i))}<div class="dv-veil dv-veil--writing dv-veil--dim"><b>按你的意见重写</b><span class="mono" data-design-data>已写 0:51</span></div>`;
+  else poster=ifr(i,frameOf(i));
+  const label=k==='rendered'?`写好 · ${WRITTEN[i]}`:txt;
+  const warn=k==='rendered'&&WARN[i]?C.st('有提醒','wait'):'';
+  return `<button class="dv-card ${k==='fail'?'is-bad':''}" data-shot="${i}" aria-current="${sel===i}" data-design-id="DV-SHOT"><div class="dv-poster">${poster}</div><div class="dv-card-b"><header><b>${s.shotId}</b><span data-design-data>${(st==='done'?s.D:s.est).toFixed(1)} 秒</span></header><p data-design-data>${esc(s.dialogue)}</p><div class="dv-tags">${k==='rendered'?`<span class="st" data-design-data>${label}</span>`:C.st(label,kind)}${warn}</div></div></button>`;
+}
+
+// ---------- 小组件 ----------
+const C={
+  st:(t,k='')=>`<span class="st ${k?'st--'+k:''}">${t}</span>`,
+  btn:(t,o={})=>`<button class="btn ${o.pri?'btn--pri':''} ${o.cls||''}" ${o.go?`data-go="${o.go}"`:''} ${o.toast?`data-toast="${esc(o.toast)}"`:''} ${o.disabled?'disabled':''}>${t}</button>`,
+};
+const head=(title,lede,actions='')=>`<div class="stephead full" data-design-id="DV-HEAD"><div><p class="eyebrow">脚本直出</p><h2>${title}</h2>${lede?`<p>${lede}</p>`:''}</div>${actions?`<div class="actions">${actions}</div>`:''}</div>`;
+const attn=(title,text,actions,tone='',id='DV-ATTN')=>`<div class="attention ${tone==='cut'?'attention--cut':''}" role="alert" data-design-id="${id}"><div><strong>${title}</strong><p>${text}</p></div><div class="actions">${actions}</div></div>`;
+const modelChip=(ok=true)=>`<span class="dv-model" data-design-id="DV-MODEL"><i class="dot ${ok?'dot--ok':'dot--warn'}"></i>Opus 5.5 · 本机 Claude${ok?'':' · 调不通'}</span>`;
+function flow(){
+  const writtenN=SHOTS.filter((_,i)=>['rendered'].includes(shotState(i)[0])).length;
+  const steps=[
+    ['口播稿',st==='read-error'?'读不到':st==='empty'||st==='unavailable'?'还没粘贴':`${SHOTS.length} 镜 · 约 ${mmss(TOTAL_EST)}`],
+    ['Opus 写每一镜',['empty','filled','unavailable','read-error'].includes(st)?'等口播稿':st==='designing'?'正在定全片设计':['writing','failed-shot','rewriting'].includes(st)?`${writtenN} / ${SHOTS.length} 镜写好`:`${SHOTS.length} 镜都写好了`],
+    ['成片',st.startsWith('composing')?'正在合成':st==='done'?`带配音 · ${mmss(TOTAL_REAL)}`:st==='done-silent'?`无声预览 · ${mmss(TOTAL_EST)}`:'还没合成'],
+  ];
+  const cur=['empty','filled','unavailable','read-error'].includes(st)?0:st.startsWith('composing')||st.startsWith('done')?2:1;
+  const fin=st.startsWith('done');
+  return `<nav class="flow full" aria-label="这件作品的步骤" data-design-id="DV-STEPS">${steps.map(([t,n],i)=>`<div class="fstep ${i<cur||(i===2&&fin)?'done':''} ${i===cur&&!fin?'cur':''}" ${i===cur?'aria-current="step"':''}><b>${i<cur||(i===2&&fin)?'✓':i+1}</b><span><strong>${t}</strong><small data-design-data>${n}</small></span></div>`).join('')}</nav>`;
+}
+const ptabs=()=>`<div class="ptabs full" role="tablist" data-design-id="DV-TABS"><button role="tab" aria-selected="false">按素材剪 vlog</button><button role="tab" aria-selected="false">按脚本做视频</button><button role="tab" class="ptab-new" aria-selected="true">脚本直出</button></div>`;
+const designRow=()=>st==='designing'
+  ? `<div class="dv-design dv-design--pending" data-design-id="DV-DESIGN"><b>全片设计</b><span>Opus 正在定：底色、主色、强调色、字号和动作规矩。定好以后七镜都照它写。</span></div>`
+  : `<div class="dv-design" data-design-id="DV-DESIGN"><b>全片设计</b>${DESIGN.palette.map(([n,c])=>`<span class="dv-sw"><i style="background:${c}"></i>${n}</span>`).join('')}<span class="muted" data-design-data>${DESIGN.type}</span><span class="muted" data-design-data>${DESIGN.motion}</span><span class="dv-ban">${DESIGN.banned.map(b=>`<span data-design-data>${b}</span>`).join('')}</span></div>`;
+const film=()=>`<div class="dv-film" data-design-id="DV-FILM">${SHOTS.map((_,i)=>card(i)).join('')}</div>`;
+
+// ---------- 选中这一镜 ----------
+function detail(){
+  const i=sel,s=SHOTS[i],[k]=shotState(i);
+  if(k==='queued'||k==='writing') return '';
+  const checks=k==='fail'
+    ? `<li class="fail">字放进了字幕带：画面最下面五分之一要留给烧录字幕<span>第 1、2 次</span></li><li>页眉标好了</li><li>不读网络和外部文件</li><li>不用定时器和随机数</li>`
+    : `${(WARN[i]||[]).map(w=>`<li class="warn">${w}</li>`).join('')}<li>动画在这一镜时长内做完</li><li>页眉标好了</li><li>字幕带里没放字</li><li>不读网络和外部文件</li><li>不用定时器和随机数</li>`;
+  const pending=k==='rewriting'||k==='auto';
+  return `<section class="dv-detail" data-design-id="DV-DETAIL">
+    <div class="dv-pv"><div class="dv-stage">${k==='fail'?`<div class="dv-poster" style="position:absolute;inset:0;aspect-ratio:auto"><div class="dv-veil dv-veil--fail"><b>这一镜还没有画面</b></div></div>`:ifr(i,frameOf(i))}</div>
+      ${k==='fail'?'':`<p class="dv-pvnote" data-design-id="DV-PVNOTE">关键帧 · 这一镜 ${dur(i).toFixed(1)} 秒处的 80%</p>`}</div>
+    <div class="dv-info"><header><h3>第 ${s.shotId} 镜</h3><span data-design-data>${pending?'正在重写':k==='fail'?'没写成':`写好于 ${WRITTEN[i]}`}</span></header>
+      <p class="dv-say" data-design-data>${esc(s.dialogue)}</p>
+      <div class="dv-kv" data-design-id="DV-FACTS"><div><small>时长</small><b data-design-data>${st==='done'?`配音实测 ${s.D.toFixed(1)} 秒`:`按字数估 ${s.est.toFixed(1)} 秒`}</b></div><div><small>写了几次</small><b data-design-data>${k==='fail'?'2 次':i===2&&st==='rewriting'?'第 2 次':i===5?'2 次（自动重写 1 次）':'1 次'}</b></div><div><small>主动作</small><b data-design-data>${esc(s.act)}</b></div><div><small>代码</small><b data-design-data>${s.html.length.toLocaleString()} 字</b></div></div>
+      <ul class="dv-checks" data-design-id="DV-CHECKS">${checks}</ul>
+      <div class="dv-ask" data-design-id="DV-REWRITE"><label for="dv-ask">写一句修改意见，让 Opus 只重写这一镜</label><div class="row"><input id="dv-ask" type="text" maxlength="200" placeholder="例：数字再大一点，底色不动" ${pending?'disabled':''} value="${st==='rewriting'&&i===2?'数字再大一点':''}"><button class="btn" data-toast="只重写第 ${s.shotId} 镜，其他六镜不动" ${pending?'disabled':''}>让 Opus 重写这一镜</button></div><small>只重写、只重渲这一镜；其他镜的画面和写好的时间都不变。</small></div>
+      <details class="dv-code" data-design-id="DV-CODE"><summary>看代码<span>${s.html.length.toLocaleString()} 字 · 上限 100,000</span></summary><pre>${esc(s.html)}</pre></details>
+    </div></section>`;
+}
+
+// ---------- 页面 ----------
+const SAMPLE=SHOTS.map(s=>s.dialogue).join('\n');
+function startForm(filled,disabled){
+  const lines=filled?`<ul class="dv-lines" data-design-id="DV-LINES">${SHOTS.map(s=>`<li><b>${s.shotId}</b><span data-design-data>${esc(s.dialogue)}</span><i data-design-data>${s.est.toFixed(1)} 秒</i></li>`).join('')}</ul>`:'';
+  return `<div class="dv-start" data-design-id="DV-START"><section class="dv-form"><header><h3>口播稿</h3><span>一行是一镜</span></header>
+    <textarea aria-label="口播稿" placeholder="把口播稿粘贴进来，一行是一镜。例如：&#10;清华 AI 体育博主，断更一年。会写代码，会练体能，就是发不出一条视频。&#10;第一句：发出去，会被人看低。">${filled?esc(SAMPLE):''}</textarea>${lines}
+    <footer><p>${filled?`<b>${SHOTS.length}</b> 镜 · 按字数估约 <b>${mmss(TOTAL_EST)}</b> · 每秒按 5.1 字算`:'还没有口播稿。也可以导入上游中台导出的分镜文件。'}</p><div class="actions">${C.btn('导入分镜文件',{toast:'选择 storyboard.json：按里面每镜的口播填进来'})}${C.btn('生成',{pri:true,disabled:!filled||disabled,toast:'Opus 开始写：先定全片设计，再逐镜写'})}</div></footer></section>
+    <aside class="dv-opts"><div class="dv-opt" data-design-id="DV-HOW"><h4>点「生成」以后</h4><ol class="dv-how"><li><b>1</b><span>Opus 先定全片设计：底色、主色、强调色、字号和动作规矩<small>约 1 分钟</small></span></li><li><b>2</b><span>每一镜写一段动画代码，三镜同时写；写完自查，不过关的自动重写一次<small>每镜约 1–3 分钟</small></span></li><li><b>3</b><span>写好一镜就在本机逐帧渲染一镜，页面上马上能看<small>可以离开这一页，不会中断</small></span></li></ol></div>
+      <div class="dv-opt" data-design-id="DV-STYLE"><h4>风格说明（可不填）</h4><p>想模仿哪种画面，写一句给 Opus。</p><div class="row"><input type="text" placeholder="例：浅米色底，一个深青主色，结论只用橙色"></div></div>
+      <div class="dv-opt" data-design-id="DV-VOICE"><h4>配音（可以之后再加）</h4><p>没有配音先出无声预览。上传配音以后，按配音实测每一镜的时长，动画比配音长的镜会自动改短。</p><div class="row">${C.btn('上传配音…',{cls:'btn--sm',toast:'选择一个 WAV 文件'})}</div></div></aside></div>`;
+}
+function render(){
+  $('#top-actions').innerHTML=modelChip(st!=='unavailable');
+  let body='';
+  const writtenN=SHOTS.filter((_,i)=>shotState(i)[0]==='rendered').length;
+  if(st==='empty') body=head('把口播稿直接做成视频','粘贴口播稿，Opus 给每一镜写一段动画代码，在这台电脑上逐帧渲染成画面，再合成一条竖屏成片。不用素材，也不用剪辑软件。')+startForm(false);
+  else if(st==='filled') body=head('7 镜口播稿，可以生成了','检查一下分镜：一行是一镜。时长先按字数估，上传配音后按实测。')+startForm(true);
+  else if(st==='unavailable') body=head('把口播稿直接做成视频','粘贴口播稿，Opus 给每一镜写一段动画代码，在这台电脑上逐帧渲染成画面，再合成一条竖屏成片。')+attn('本机的 Claude 调不通，现在用不了 Opus','Studio 在后台调用这台电脑上的 Claude 没有回应，多半是登录过期。在终端里运行一次 claude 确认能用，再回来点重试。',C.btn('去设置看看',{toast:'打开 设置与诊断 › 模型'})+C.btn('重试',{pri:true,toast:'重新检查本机 Claude'}),'warn','DV-UNAVAILABLE')+startForm(true,true);
+  else if(st==='designing') body=head('Opus 正在定全片设计','定好以后七镜三镜一组同时写。可以离开这一页，回来接着看进度。')+designRow()+`<div class="dv-progress" data-design-id="DV-PROGRESS"><span>0 / ${SHOTS.length} 镜写好</span><div class="meter"><i style="width:2%"></i></div><span class="mono" data-design-data>已用 0:48</span></div>`+film();
+  else if(st==='writing') body=head(`Opus 写好了 ${writtenN} 镜，正在写第 04、05 镜`,'写好一镜就渲染一镜。第 06 镜自查没过，正在自动重写一次。')+designRow()+`<div class="dv-progress" data-design-id="DV-PROGRESS"><span data-design-data>${writtenN} / ${SHOTS.length} 镜写好</span><div class="meter"><i style="width:${writtenN/SHOTS.length*100}%"></i></div><span class="mono" data-design-data>已用 8:30 · 三镜同时写</span></div>`+film()+detail();
+  else if(st==='failed-shot') body=head('6 镜写好了，第 05 镜没写成','')+attn('第 05 镜写了两次，都没过自查','两次都把字放进了画面最下面五分之一，那里要留给烧录的字幕。写一句意见让 Opus 再写一次，例如「图挪到上半屏」。',C.btn('写意见重写',{pri:true,toast:'光标放到下面的修改意见框'}),'cut','DV-SHOTFAIL')+designRow()+film()+detail();
+  else if(st==='ready'||st==='rewriting') body=head(st==='rewriting'?'正在按你的意见重写第 03 镜':`${SHOTS.length} 镜都写好了`,st==='rewriting'?'只重写、只重渲这一镜；其他六镜不动。':`用时 11:20 · 2 条提醒，看过觉得没问题就可以合成。`,st==='rewriting'?'':C.btn('上传配音…',{toast:'选择一个 WAV 文件；上传后按配音实测每镜时长'})+C.btn('先合成无声预览',{pri:true,toast:'用七镜画面先合成一条没有声音的预览'}))+designRow()+film()+detail();
+  else if(st==='composing'||st==='composing-silent'){const silent=st==='composing-silent';body=head(silent?'正在合成无声预览':'正在合成成片',silent?'七镜画面逐帧拼起来，再检查一遍。':'七镜画面按配音逐帧拼起来，再检查一遍。')+`<div class="dv-compose" data-design-id="DV-COMPOSE"><div><b>合成中</b><p data-design-data>${silent?`${SHOTS.length} 镜 · 无声预览 · 约 ${mmss(TOTAL_EST)}`:`${SHOTS.length} 镜 · 配音 ${mmss(TOTAL_REAL)}`}</p></div></div>`+designRow()+film();}
+  else if(st==='read-error') body=attn('读不到这件作品的直出任务','Studio 读这件作品的直出记录时出错。没有显示成「还没生成」，免得你重复生成一遍。点重试再读一次。',C.btn('重试',{pri:true,toast:'重新读取这件作品的直出任务'}),'warn','DV-READERROR');
+  else if(st==='done') body=head('成片出来了','从点「生成」到出片用了 14:05。看一遍，有哪一镜不满意，点那一镜写意见重写，重写后重新合成。',C.btn('重新合成',{toast:'按现在的七镜重新合成'}))+outBlock()+designRow()+film();
+  else if(st==='done-silent') body=head('无声预览出来了','从点「生成」到出片用了 9:51。上传配音以后按配音重排时长，再合成带声成片。',C.btn('上传配音…',{toast:'选择一个 WAV 文件'})+C.btn('重新合成',{toast:'按现在的七镜重新合成'}))+outBlock(true)+designRow()+film();
+  $('#screen').innerHTML=ptabs()+flow()+body;
+  bind();
+}
+function outBlock(silent=false){
+  return `<section class="dv-out" data-design-id="DV-OUTPUT"><div class="dv-player"><div class="dv-stage" id="player">${SHOTS.map((s,i)=>`<div class="dv-layer" data-layer="${i}" ${i?'hidden':''}>${ifr(i,i===0?frameOf(0,.35):0)}</div>`).join('')}<button class="dv-bigplay" data-bigplay aria-label="播放成片">▶</button></div>
+    <div class="dv-scrub" data-design-id="DV-SCRUB"><input type="range" min="0" max="${Math.round(TOT()*FPS)}" value="${frameOf(0,.35)}" data-outscrub aria-label="拖到成片哪里"><span data-outreadout>${mmss(dur(0)*.35)} / ${mmss(TOT())}</span></div></div>
+    <div class="dv-outinfo"><h3>断更一年，我拆了四句话</h3><p data-design-data>竖屏 1080×1920 · ${SHOTS.length} 镜 · ${silent?`无声预览 ${mmss(TOTAL_EST)}`:`带配音 ${mmss(TOT())}`}</p>
+      <ul class="dv-checks" data-design-id="DV-OUTCHECKS">${silent?`<li>能从头放到尾<span data-design-data>4,284 帧</span></li><li class="none">无声预览，不检查声音</li><li>帧数和各镜时长一致<span data-design-data>${mmss(TOTAL_EST)}</span></li><li>没有黑帧<span data-design-data>0 处</span></li>`:`<li>能从头放到尾<span data-design-data>3,852 帧</span></li><li>声音和画面对得上<span data-design-data>差 0.01 秒</span></li><li>帧数和配音时长一致<span data-design-data>${mmss(TOT())}</span></li><li>没有黑帧<span data-design-data>0 处</span></li>`}</ul>
+      <div class="dv-strip" data-design-id="DV-STRIP">${SHOTS.map((s,i)=>`<span data-jump="${i}" class="${i===0?'on':''}">${ifr(i,frameOf(i))}<b>${s.shotId}</b></span>`).join('')}</div></div></section>`;
+}
+
+// ---------- 交互 ----------
+function bind(){
+  seekAll(); fitPosters();
+  $$('[data-shot]').forEach(b=>b.onclick=()=>{sel=+b.dataset.shot;render();});
+  $$('[data-toast]').forEach(b=>b.addEventListener('click',()=>toast(b.dataset.toast)));
+  const sc=$('[data-scrub]'),ro=$('[data-readout]'),stage=$('.dv-pv iframe');
+  const set=f=>{if(!sc)return;sc.value=f;ro.textContent=`${(f/FPS).toFixed(1)} / ${dur(sel).toFixed(1)} 秒`;try{stage.contentWindow.postMessage({seek:f},'*')}catch(e){}};
+  sc&&sc.addEventListener('input',()=>set(+sc.value));
+  const pb=$('[data-play]');
+  pb&&(pb.onclick=()=>{if(playing){clearInterval(playing);playing=null;pb.textContent='▶';return;}pb.textContent='❚❚';let f=+sc.value>=+sc.max?0:+sc.value;playing=setInterval(()=>{f+=1;if(f>+sc.max){clearInterval(playing);playing=null;pb.textContent='▶';return;}set(f);},1000/FPS);});
+  // 成片：七镜按时长首尾相接，滑块跨镜时切换图层
+  const os=$('[data-outscrub]');
+  if(os){
+    const starts=[];let acc=0;SHOTS.forEach((s,k)=>{starts.push(acc);acc+=dur(k);});
+    const at=f=>{const t=f/FPS;let i=starts.findIndex((s0,k)=>t>=s0&&t<s0+dur(k));if(i<0)i=SHOTS.length-1;return [i,Math.round((t-starts[i])*FPS)];};
+    const show=f=>{const [i,lf]=at(f);$$('[data-layer]').forEach(l=>l.hidden=+l.dataset.layer!==i);const fr=$(`[data-layer="${i}"] iframe`);try{fr.contentWindow.postMessage({seek:lf},'*')}catch(e){}os.value=f;$('[data-outreadout]').textContent=`${mmss(f/FPS)} / ${mmss(TOT())}`;$$('[data-jump]').forEach(j=>j.classList.toggle('on',+j.dataset.jump===i));};
+    os.addEventListener('input',()=>show(+os.value));
+    $$('[data-jump]').forEach(j=>j.onclick=()=>show(Math.round(starts[+j.dataset.jump]*FPS)+1));
+    const bp=$('[data-bigplay]');bp.onclick=()=>{bp.hidden=true;let f=+os.value;playing=setInterval(()=>{f+=1;if(f>+os.max){clearInterval(playing);playing=null;bp.hidden=false;return;}show(f);},1000/FPS);};
+  }
+}
+let tt;function toast(t){const n=$('#toast');n.textContent=t;n.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>n.classList.remove('show'),2200);}
+function mock(){
+  const q=new URLSearchParams(location.hash.slice(1));
+  const mb=$('#mockbar');if(!mb)return;
+  if(q.get('chrome')==='0'){mb.remove();return;}
+  $('#mockbar').innerHTML='<b>状态</b>'+STATES.map(([k,l])=>`<button data-s="${k}" aria-pressed="${k===st}">${l}</button>`).join('');
+  $$('#mockbar [data-s]').forEach(b=>b.onclick=()=>{const q2=new URLSearchParams(location.hash.slice(1));q2.set('s',b.dataset.s);location.hash=q2.toString();});
+}
+function go(){const q=new URLSearchParams(location.hash.slice(1));st=q.get('s')||'empty';if(!STATES.some(([k])=>k===st))st='empty';if(playing){clearInterval(playing);playing=null;}sel=st==='failed-shot'?4:st==='rewriting'?2:0;render();mock();}
+addEventListener('hashchange',go);addEventListener('resize',fitPosters);go();
+</script>
+</body>
+</html>

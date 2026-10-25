@@ -1,0 +1,102 @@
+{
+  "expectedFrames": 1855,
+  "expectedSeconds": 61.833333333333336,
+  "before": [
+    {
+      "codec_type": "video",
+      "duration": "61.832357",
+      "nb_read_frames": "1855",
+      "avg_frame_rate": "5698560/189949",
+      "time_base": "1/15360",
+      "start_time": "0.000000"
+    },
+    {
+      "codec_type": "audio",
+      "duration": "61.833333",
+      "nb_read_frames": "2899",
+      "avg_frame_rate": "0/0",
+      "time_base": "1/48000",
+      "start_time": "0.000000"
+    }
+  ],
+  "segments": [
+    {
+      "id": "01",
+      "frames": 219,
+      "expectedSeconds": 7.3,
+      "formatSeconds": "7.300000"
+    },
+    {
+      "id": "02",
+      "frames": 187,
+      "expectedSeconds": 6.233333333333333,
+      "formatSeconds": "6.233333"
+    },
+    {
+      "id": "03",
+      "frames": 200,
+      "expectedSeconds": 6.666666666666667,
+      "formatSeconds": "6.666667"
+    },
+    {
+      "id": "04",
+      "frames": 143,
+      "expectedSeconds": 4.766666666666667,
+      "formatSeconds": "4.766016"
+    },
+    {
+      "id": "05",
+      "frames": 194,
+      "expectedSeconds": 6.466666666666667,
+      "formatSeconds": "6.466667"
+    },
+    {
+      "id": "06",
+      "frames": 262,
+      "expectedSeconds": 8.733333333333333,
+      "formatSeconds": "8.733333"
+    },
+    {
+      "id": "07",
+      "frames": 169,
+      "expectedSeconds": 5.633333333333334,
+      "formatSeconds": "5.633333"
+    },
+    {
+      "id": "08",
+      "frames": 94,
+      "expectedSeconds": 3.1333333333333333,
+      "formatSeconds": "3.133008"
+    },
+    {
+      "id": "09",
+      "frames": 112,
+      "expectedSeconds": 3.7333333333333334,
+      "formatSeconds": "3.733333"
+    },
+    {
+      "id": "10",
+      "frames": 275,
+      "expectedSeconds": 9.166666666666666,
+      "formatSeconds": "9.166667"
+    }
+  ],
+  "after": [
+    {
+      "codec_type": "video",
+      "duration": "61.833333",
+      "nb_read_frames": "1855",
+      "avg_frame_rate": "30/1",
+      "time_base": "1/15360",
+      "start_time": "0.000000"
+    },
+    {
+      "codec_type": "audio",
+      "duration": "61.833333",
+      "nb_read_frames": "2899",
+      "avg_frame_rate": "0/0",
+      "time_base": "1/48000",
+      "start_time": "0.000000"
+    }
+  ]
+}
