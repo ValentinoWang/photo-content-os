@@ -145,8 +145,8 @@ export function createDirectView(ctx) {
     else if(st==='failed-shot'){title=D(failed?`${count} 镜写好了，第 ${failed.shotId} 镜没写成`:failureMessage(job.failureCode));}
     else if(st==='rewriting'){title=D(`正在按你的意见重写第 ${writing.find(s=>s.lastInstruction)?.shotId} 镜`);lede=D(`只重写、只重渲这一镜；其他 ${n-1} 镜不动。`);}
     else if(st.startsWith('composing')){title=st==='composing-silent'?'正在合成无声预览':'正在合成成片';lede=st==='composing-silent'?'七镜画面逐帧拼起来，再检查一遍。':'七镜画面按配音逐帧拼起来，再检查一遍。';}
-    else if(st==='done-silent'){title='无声预览出来了';lede=D(`从点「生成」到出片用了 ${mmss(elapsed(job.createdAt,Date.parse(job.updatedAt)))}。上传配音以后按配音重排时长，再合成带声成片。`);actions=btn('上传配音…','data-voice')+btn('重新合成','data-compose');}
-    else if(st==='done'){title='成片出来了';lede=D(`从点「生成」到出片用了 ${mmss(elapsed(job.createdAt,Date.parse(job.updatedAt)))}。看一遍，有哪一镜不满意，点那一镜写意见重写，重写后重新合成。`);actions=btn('重新合成','data-compose');}
+    else if(st==='done-silent'){title='无声预览出来了';lede=D(`${job.output.composedAt?`从点「生成」到出片用了 ${mmss(elapsed(job.createdAt,Date.parse(job.output.composedAt)))}。`:""}上传配音以后按配音重排时长，再合成带声成片。`);actions=btn('上传配音…','data-voice')+btn('重新合成','data-compose');}
+    else if(st==='done'){title='成片出来了';lede=D(`${job.output.composedAt?`从点「生成」到出片用了 ${mmss(elapsed(job.createdAt,Date.parse(job.output.composedAt)))}。`:""}看一遍，有哪一镜不满意，点那一镜写意见重写，重写后重新合成。`);actions=btn('重新合成','data-compose');}
     else {title=D(`${n} 镜都写好了`);lede=D(`用时 ${mmss(elapsed(job.createdAt))} · ${job.shots.reduce((sum,s)=>sum+s.checks.warnings.length,0)} 条提醒，看过觉得没问题就可以合成。`);actions=btn('上传配音…','data-voice')+btn(job.narration.status==='ready'?'合成成片':'先合成无声预览','data-compose',true);}
     const body=find('[data-body]'),designSlot=find('[data-design]');
     if(st.startsWith('done'))body.insertBefore(find('[data-output]'),designSlot);

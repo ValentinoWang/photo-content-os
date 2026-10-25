@@ -231,7 +231,7 @@ class Generator:
                 if job['narration']['status'] == 'aligning':
                     job['narration']['status'] = 'invalid'
                 if job['output']['status'] == 'composing':
-                    job['output']['status'] = 'failed'
+                    job['output'].update(status='failed', composedAt=None)
                 job.update(status='failed', failureCode='process_interrupted')
                 job.pop('_workerPid', None)
                 self.save(path.parent, job)
@@ -266,7 +266,7 @@ class Generator:
                     if job['narration']['status'] == 'aligning':
                         job['narration']['status'] = 'invalid'
                     if job['output']['status'] == 'composing':
-                        job['output']['status'] = 'failed'
+                        job['output'].update(status='failed', composedAt=None)
                     self.save(root, job)
             finally:
                 with self.lock:
@@ -289,7 +289,7 @@ class Generator:
                           'attempts': 0, 'lastInstruction': None, 'writingStartedAt': None, 'writtenAt': None, 'renderedAt': None,
                           'codeChars': 0, 'posterRevision': 0, 'checks': {'errors': [], 'warnings': []}} for row in rows],
                'narration': {'status': 'none', 'durationSeconds': None},
-               'output': {'status': 'none', 'kind': 'silent', 'durationSeconds': None, 'frames': None, 'revision': 0,
+               'output': {'status': 'none', 'composedAt': None, 'kind': 'silent', 'durationSeconds': None, 'frames': None, 'revision': 0,
                           'checks': {'playable': 'unknown', 'avOffsetSeconds': None, 'blackFrames': None}}}
         with self.lock:
             self.save(root, job)
@@ -468,7 +468,9 @@ class Generator:
             self.start(project_id, job_id, self._rewrite, sid, effective, retry_errors)
             return job
 
-    def invalidate_output(self, root, job):
+    def invalidate_output(self, root, job, *, preserve_composed_at=False):
+        if not preserve_composed_at:
+            job['output']['composedAt'] = None
         job['output'].update(status='none', durationSeconds=None, frames=None,
                              checks={'playable': 'unknown', 'avOffsetSeconds': None, 'blackFrames': None})
         self.save(root, job)
@@ -508,7 +510,7 @@ class Generator:
             finally:
                 pending.unlink(missing_ok=True)
             job['narration'] = {'status': 'aligning', 'durationSeconds': duration}
-            self.invalidate_output(root, job)
+            self.invalidate_output(root, job, preserve_composed_at=True)
             self.start(project_id, job_id, self._align)
             return job
 
@@ -566,7 +568,7 @@ class Generator:
             if (project_id, job_id) in self.active or process_alive(job.get('_workerPid')):
                 raise DirectVideoError('job_busy')
             job['status'] = 'composing'
-            job['output'].update(status='composing', kind='narrated' if job['narration']['status'] == 'ready' else 'silent')
+            job['output'].update(status='composing', composedAt=None, kind='narrated' if job['narration']['status'] == 'ready' else 'silent')
             self.save(self.path(project_id, job_id), job)
             self.start(project_id, job_id, self._compose)
             return job
@@ -576,20 +578,20 @@ class Generator:
         with self.lock:
             job = self.read(project_id, job_id)
             job['status'] = 'composing'
-            job['output'].update(status='composing', kind='narrated' if job['narration']['status'] == 'ready' else 'silent')
+            job['output'].update(status='composing', composedAt=None, kind='narrated' if job['narration']['status'] == 'ready' else 'silent')
             self.save(root, job)
         started = time.perf_counter()
         try:
             result = self.media.compose(root, job)
             self.record(root, 'compose', status='passed', elapsedSeconds=round(time.perf_counter() - started, 3))
             with self.lock:
-                job['output'].update(result, status='ready', kind='narrated' if job['narration']['status'] == 'ready' else 'silent', revision=job['output']['revision'] + 1)
+                job['output'].update(result, status='ready', composedAt=now(), kind='narrated' if job['narration']['status'] == 'ready' else 'silent', revision=job['output']['revision'] + 1)
                 job.update(status='done', failureCode=None)
                 self.save(root, job)
         except Exception as exc:
             self.record(root, 'compose', status='failed', elapsedSeconds=round(time.perf_counter() - started, 3), failureCode=failure_code(exc, 'compose_failed'))
             with self.lock:
-                job['output']['status'] = 'failed'
+                job['output'].update(status='failed', composedAt=None)
                 if isinstance(exc, OutputCheckError):
                     job['output']['checks'] = exc.checks
                 job.update(status='failed', failureCode=failure_code(exc, 'compose_failed'))

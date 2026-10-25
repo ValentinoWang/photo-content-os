@@ -118,3 +118,29 @@
 业务项目保留 A/B/C 未提交内容及前端线程自己的改动，没有提交、推送。Harness SSOT 本次未改，其既有其他会话改动保持原样。
 
 本阶段停止。未关闭项仅为第 3 项真实样本至少 10 条提醒的验证条件；其测量定义需总控确认。
+
+
+## D 段
+
+日期：2026-10-26；基于总控合并提交 `90875ba`，本段仅修复页头出片耗时，未提交或推送。
+
+`output.composedAt` 已加入持久化与公开投影、`api_contract.py` 及重新生成的 `schemas/studio-openapi.json`。成功合成后记录 ISO 时间，每次成功合成刷新；首次未合成、合成中、合成失败（包括进程中断恢复）以及用户单镜重写撤下成片时为 null。上传配音以及其后的时长重排、必要的配音后重写保留此前时间，直到重新合成。旧任务没有记录时公开投影为 null，不从 `updatedAt` 推算。
+
+`studio/static/direct-view.js` 仅第 148、149 行的两种完成态页头耗时句改用 `composedAt − createdAt`；`composedAt` 为 null 或缺省时整句不显示，后续提示保留。按钮代码逐字比对未变，其他静态文件未改。
+
+后端新增 6 项测试，覆盖未合成、成功及再次成功、单镜重写清空、配音上传保留（短配音重写／长配音仅重渲两条路径）、合成失败清空和旧任务缺字段。前端 Node 测试从实际页头分支执行正反例，两种完成态都验证：夹具 `updatedAt − createdAt = 135:17` 时仍显示 `composedAt − createdAt = 3:41`；空值夹具完全不显示耗时句。现有任务夹具补齐字段，新增 `done-no-composed-time.json`。
+
+| 验证 | 结果 |
+| --- | --- |
+| `.venv/bin/python -m pytest -q tests/test_r276_*.py`（配置本机 Playwright 和浏览器，含真实 HTML 渲染测试） | **134 passed，43.49 秒** |
+| `node tests/test_r276_direct_frontend.mjs` | **PASS**，包含新增正例和反例 |
+| `.venv/bin/python scripts/check_repository_safety.py --base origin/main` | **PASS** |
+| OpenAPI 与 `build_openapi()` 相等；字段 required、nullable、date-time 检查 | **PASS** |
+| `git diff --check` | **PASS** |
+| 实际 `createDirectView` 和共享样式的桌面、手机渲染 | 4 张整页截图逐张查看；1440×900 与 390×900，正例／空值反例；无横向溢出，页头和按钮正常 |
+
+截图使用独立静态服务随机端口 59631、合成接口夹具；未访问运行中的 Studio。查看范围是页头、相邻区域及完整页面排版；夹具不供媒体字节，缩略图空缺与播放区域不作为本段媒体验收。临时静态服务与浏览器已关闭。
+
+文本证据：`evidence/2026-10-26/R276-direct-video-opus/tests-d-r276.log`、`verification-d.json`、`d-screenshot-manifest.json`。截图与同名清单位于仓库外 `~/.photo-content-os/evidence/R276-direct-video-opus/d-composed-at/`。
+
+本段请求均已完成；没有重新执行或改写 C 段的构图判定。业务工作区保留本段未提交修改；已有未跟踪 `.venv` 链接原样保留。Harness SSOT 未改，检查时其工作区有 57 项已有或其他线程修改。未操作 8765、8766，未修改总控正在使用的 Studio 状态。

@@ -27,7 +27,7 @@ def projection(job: dict | None) -> dict | None:
         shot['checks'] = {level: [{k: item[k] for k in ('code', 'message', 'atSeconds') if k in item}
                                  for item in shot['checks'].get(level, [])] for level in ('errors', 'warnings')}
     result['narration'] = {k: result['narration'].get(k) for k in ('status', 'durationSeconds')}
-    result['output'] = {k: result['output'].get(k) for k in ('status', 'kind', 'durationSeconds', 'frames', 'revision', 'checks')}
+    result['output'] = {k: result['output'].get(k) for k in ('status', 'kind', 'composedAt', 'durationSeconds', 'frames', 'revision', 'checks')}
     result['output']['checks'] = {k: result['output']['checks'].get(k) for k in ('playable', 'avOffsetSeconds', 'blackFrames')}
     def redact(value):
         if isinstance(value, str):

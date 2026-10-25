@@ -6,7 +6,7 @@
     "model": "claude-opus-5-5",
     "status": "done",
     "createdAt": "2026-10-25T18:35:43.193Z",
-    "updatedAt": "2026-10-25T18:47:03.193Z",
+    "updatedAt": "2026-10-25T20:51:00.193Z",
     "failureCode": null,
     "design": {
       "status": "done",
@@ -202,7 +202,8 @@
         "playable": "pass",
         "avOffsetSeconds": null,
         "blackFrames": "pass"
-      }
+      },
+      "composedAt": "2026-10-25T18:39:24.193Z"
     }
   }
 }

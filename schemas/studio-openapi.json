@@ -147,6 +147,14 @@
                 ],
                 "type": "object"
               },
+              "composedAt": {
+                "description": "Latest successful composition time. Null before composition, during composition, after failure or shot rewrite, or for older jobs without a recorded time. Narration upload preserves it until recomposition.",
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
               "durationSeconds": {
                 "type": [
                   "number",
@@ -180,6 +188,7 @@
             },
             "required": [
               "status",
+              "composedAt",
               "kind",
               "durationSeconds",
               "frames",

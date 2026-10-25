@@ -178,7 +178,8 @@
         "playable": "unknown",
         "avOffsetSeconds": null,
         "blackFrames": null
-      }
+      },
+      "composedAt": null
     }
   }
 }

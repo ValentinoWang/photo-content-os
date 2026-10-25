@@ -1,0 +1,106 @@
+[
+  {
+    "state": "done",
+    "route": "http://127.0.0.1:59631",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "capture_time": "2026-10-25T20:27:56.814Z",
+    "scroll_coverage": [
+      0,
+      1391
+    ],
+    "output_dimensions": {
+      "width": 1440,
+      "height": 1391
+    },
+    "path": "d-composed-at/done-1440.png",
+    "sha256": "5d684bea4e8ed2c78b58474fc4e5e844ffecf6514c029d2c67b7d9c8f56c98e8",
+    "browser": "149.0.7827.55",
+    "font_mode": "fallback-local",
+    "header": "脚本直出\n\n成片出来了\n\n从点「生成」到出片用了 3:41。看一遍，有哪一镜不满意，点那一镜写意见重写，重写后重新合成。\n\n重新合成",
+    "review_result": "PASS",
+    "scope": "Real createDirectView renderer and shared styles, synthetic API response in isolated static shell; no Studio server accessed.",
+    "reviewer": "Codex",
+    "review_note": "Personally inspected complete desktop and phone captures, including bottom. Header shows 3:41 for composedAt, hides entire duration sentence for null, remains readable and does not overflow; compose button retained. Scope excludes media playback and thumbnail content; isolated shell deliberately supplies no media bytes."
+  },
+  {
+    "state": "done-no-composed-time",
+    "route": "http://127.0.0.1:59631",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "capture_time": "2026-10-25T20:27:58.015Z",
+    "scroll_coverage": [
+      0,
+      1391
+    ],
+    "output_dimensions": {
+      "width": 1440,
+      "height": 1391
+    },
+    "path": "d-composed-at/done-no-composed-time-1440.png",
+    "sha256": "148f7ab17b9c8aa1a4217c783f379cfd0f61a0913c2460ed1dbe667980cd34f2",
+    "browser": "149.0.7827.55",
+    "font_mode": "fallback-local",
+    "header": "脚本直出\n\n成片出来了\n\n看一遍，有哪一镜不满意，点那一镜写意见重写，重写后重新合成。\n\n重新合成",
+    "review_result": "PASS",
+    "scope": "Real createDirectView renderer and shared styles, synthetic API response in isolated static shell; no Studio server accessed.",
+    "reviewer": "Codex",
+    "review_note": "Personally inspected complete desktop and phone captures, including bottom. Header shows 3:41 for composedAt, hides entire duration sentence for null, remains readable and does not overflow; compose button retained. Scope excludes media playback and thumbnail content; isolated shell deliberately supplies no media bytes."
+  },
+  {
+    "state": "done",
+    "route": "http://127.0.0.1:59631",
+    "viewport": {
+      "width": 390,
+      "height": 900
+    },
+    "capture_time": "2026-10-25T20:27:59.216Z",
+    "scroll_coverage": [
+      0,
+      2302
+    ],
+    "output_dimensions": {
+      "width": 390,
+      "height": 2270
+    },
+    "path": "d-composed-at/done-390.png",
+    "sha256": "84b9fbd0f15a95f4154d59dc6aa954f8dcabf07917d35d47006ea72a259b9dba",
+    "browser": "149.0.7827.55",
+    "font_mode": "fallback-local",
+    "header": "脚本直出\n\n成片出来了\n\n从点「生成」到出片用了 3:41。看一遍，有哪一镜不满意，点那一镜写意见重写，重写后重新合成。\n\n重新合成",
+    "review_result": "PASS",
+    "scope": "Real createDirectView renderer and shared styles, synthetic API response in isolated static shell; no Studio server accessed.",
+    "reviewer": "Codex",
+    "review_note": "Personally inspected complete desktop and phone captures, including bottom. Header shows 3:41 for composedAt, hides entire duration sentence for null, remains readable and does not overflow; compose button retained. Scope excludes media playback and thumbnail content; isolated shell deliberately supplies no media bytes."
+  },
+  {
+    "state": "done-no-composed-time",
+    "route": "http://127.0.0.1:59631",
+    "viewport": {
+      "width": 390,
+      "height": 900
+    },
+    "capture_time": "2026-10-25T20:28:00.424Z",
+    "scroll_coverage": [
+      0,
+      2302
+    ],
+    "output_dimensions": {
+      "width": 390,
+      "height": 2270
+    },
+    "path": "d-composed-at/done-no-composed-time-390.png",
+    "sha256": "5c9217f4749c934b304a6e5c2e0fce3168b252b6be3591fd2dc42fcdcdcf39e8",
+    "browser": "149.0.7827.55",
+    "font_mode": "fallback-local",
+    "header": "脚本直出\n\n成片出来了\n\n看一遍，有哪一镜不满意，点那一镜写意见重写，重写后重新合成。\n\n重新合成",
+    "review_result": "PASS",
+    "scope": "Real createDirectView renderer and shared styles, synthetic API response in isolated static shell; no Studio server accessed.",
+    "reviewer": "Codex",
+    "review_note": "Personally inspected complete desktop and phone captures, including bottom. Header shows 3:41 for composedAt, hides entire duration sentence for null, remains readable and does not overflow; compose button retained. Scope excludes media playback and thumbnail content; isolated shell deliberately supplies no media bytes."
+  }
+]

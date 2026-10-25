@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {runInNewContext} from 'node:vm';
 import { pathToFileURL } from 'node:url';
 import {splitScript,shotSeconds,totalSeconds,writtenCount,elapsed,writtenSeconds,mmss,shouldPoll,failureMessage,FAILURE_COPY,defaultShot,shotStart,safeText,posterUrl,writingSeconds,canRewrite} from '../studio/static/direct-view.js';
 
@@ -8,7 +10,7 @@ export function fixture(state,source) {
   const now=Date.now(),createdAt=new Date(now-680000).toISOString();
   const shots=source.map((s,i)=>({shotId:String(i+1).padStart(2,'0'),dialogue:s.dialogue,mainAction:['「91%」大字落地','两根柱子一高一低','方格逐个亮起再褪去','进度条停在「够好 · 发」','习惯曲线断一下又接上','三个节点转成一个圈','两条横条一长一短'][i],estimatedSeconds:shotSeconds(s),measuredSeconds:['composing','done'].includes(state)?s.D:null,timingSource:['composing','done'].includes(state)?'narration':'estimate',status:'rendered',failureCode:null,attempts:i===5?2:1,lastInstruction:null,writingStartedAt:new Date(Date.parse(createdAt)+100000).toISOString(),writtenAt:new Date(Date.parse(createdAt)+[221,245,322,510,552,647,680][i]*1000).toISOString(),renderedAt:new Date(now).toISOString(),codeChars:s.html?.length||1500,posterRevision:1,checks:{errors:[],warnings:i===1?[{code:'number_unspoken',message:'画面上的「50%」口播里写的是「约一半」'}]:i===5?[{code:'stagnant',message:'3.2–6.6 秒画面没有变化，停了 3.4 秒'}]:[]}}));
   const done=state.startsWith('done'),composing=state.startsWith('composing');
-  const job={jobId:'dv_frontend_fixture',projectId:'fixture-piece',model:'claude-opus-5-5',status:done?'done':composing?'composing':({designing:'designing',writing:'writing','failed-shot':'failed',rewriting:'writing'})[state]||'ready',createdAt,updatedAt:new Date(now).toISOString(),failureCode:null,design:{status:'done',palette:{background:'#F3F0E8',primary:'#1E5E6A',accent:'#D8552A',neutral:'#52616A'},typeScale:[84,52,44],motionRules:'一镜一个主动作，图解跟着口播一步步长出来',banned:['光晕霓虹','紫蓝渐变','三张卡片并排','全部同时淡入']},shots,narration:{status:['composing','done'].includes(state)?'ready':'none',durationSeconds:['composing','done'].includes(state)?totalSeconds(shots):null},output:{status:done?'ready':composing?'composing':'none',kind:['done','composing'].includes(state)?'narrated':'silent',durationSeconds:done?totalSeconds(shots):null,frames:done?Math.round(totalSeconds(shots)*30):null,revision:done?1:0,checks:{playable:done?'pass':'unknown',avOffsetSeconds:state==='done'?.01:null,blackFrames:done?'pass':null}}};
+  const job={jobId:'dv_frontend_fixture',projectId:'fixture-piece',model:'claude-opus-5-5',status:done?'done':composing?'composing':({designing:'designing',writing:'writing','failed-shot':'failed',rewriting:'writing'})[state]||'ready',createdAt,updatedAt:new Date(now).toISOString(),failureCode:null,design:{status:'done',palette:{background:'#F3F0E8',primary:'#1E5E6A',accent:'#D8552A',neutral:'#52616A'},typeScale:[84,52,44],motionRules:'一镜一个主动作，图解跟着口播一步步长出来',banned:['光晕霓虹','紫蓝渐变','三张卡片并排','全部同时淡入']},shots,narration:{status:['composing','done'].includes(state)?'ready':'none',durationSeconds:['composing','done'].includes(state)?totalSeconds(shots):null},output:{status:done?'ready':composing?'composing':'none',composedAt:done?new Date(now).toISOString():null,kind:['done','composing'].includes(state)?'narrated':'silent',durationSeconds:done?totalSeconds(shots):null,frames:done?Math.round(totalSeconds(shots)*30):null,revision:done?1:0,checks:{playable:done?'pass':'unknown',avOffsetSeconds:state==='done'?.01:null,blackFrames:done?'pass':null}}};
   if(state==='ready')shots[0].checks.warnings.push({code:'layout_bottom_gap',message:'画面下半截空着：主画面只占到 y=900，离字幕带还空 46.2%'});
   if(state==='designing'){job.design={status:'writing',palette:null,typeScale:null,motionRules:null,banned:[]};shots.forEach(s=>Object.assign(s,{status:'queued',attempts:0,codeChars:0,posterRevision:0,writingStartedAt:null,writtenAt:null,renderedAt:null,checks:{errors:[],warnings:[]}}));}
   if(state==='writing')shots.slice(3).forEach((s,i)=>Object.assign(s,{status:i===3?'queued':'writing',writingStartedAt:i===3?null:new Date(now-(72-i*20)*1000).toISOString(),attempts:i===2?2:i===3?0:1,posterRevision:i===2?1:0,writtenAt:null,renderedAt:null}));
@@ -16,7 +18,22 @@ export function fixture(state,source) {
   if(state==='rewriting')Object.assign(shots[2],{status:'writing',writingStartedAt:new Date(now-51000).toISOString(),attempts:1,lastInstruction:'数字再大一点'});
   return {ok:true,job};
 }
+// Execute the actual header branches so these assertions guard the rendered copy.
+export function testCompositionHeader(){
+  const view=readFileSync(new URL('../studio/static/direct-view.js',import.meta.url),'utf8');
+  const positive=JSON.parse(readFileSync(new URL('./fixtures/r276-direct/done.json',import.meta.url),'utf8')).job;
+  const negative=JSON.parse(readFileSync(new URL('./fixtures/r276-direct/done-no-composed-time.json',import.meta.url),'utf8')).job;
+  for(const state of ['done','done-silent']){
+    const branch=view.split('\n').find(line=>line.includes(`else if(st==='${state}')`)).trim().replace(/^else /,'');
+    const render=job=>runInNewContext(`let title='',lede='',actions='';${branch};lede`,{st:state,job,D:x=>x,mmss,elapsed,btn:()=>''});
+    assert.match(render(positive),/从点「生成」到出片用了 3:41。/);
+    assert(!render(positive).includes('135:17'));
+    assert(!render(negative).includes('从点「生成」到出片用了'));
+    assert(!render(negative).includes('135:17'));
+  }
+}
 export function testFormulas(){
+  testCompositionHeader();
   assert.deepEqual(splitScript('  第一镜。\r\n\n 第二镜！ \n  '),['第一镜。','第二镜！']);
   assert.equal(shotSeconds({dialogue:'你好吗？'}),.8);
   assert.equal(shotSeconds({dialogue:'😀'}),.2);

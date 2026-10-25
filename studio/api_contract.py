@@ -124,6 +124,8 @@ def _direct_job_schema() -> dict[str, Any]:
               'typeScale': {'type': ['array', 'null'], 'minItems': 3, 'maxItems': 3, 'items': {'type': 'integer'}},
               'motionRules': text, 'banned': {'type': 'array', 'items': {'type': 'string'}}}
     output = {'status': {'enum': ['none', 'composing', 'ready', 'failed']},
+              'composedAt': {'type': ['string', 'null'], 'format': 'date-time',
+                             'description': 'Latest successful composition time. Null before composition, during composition, after failure or shot rewrite, or for older jobs without a recorded time. Narration upload preserves it until recomposition.'},
               'kind': {'enum': ['silent', 'narrated']}, 'durationSeconds': seconds,
               'frames': {'type': ['integer', 'null']}, 'revision': {'type': 'integer', 'minimum': 0},
               'checks': {'type': 'object', 'required': ['playable', 'avOffsetSeconds', 'blackFrames'], 'properties': {
