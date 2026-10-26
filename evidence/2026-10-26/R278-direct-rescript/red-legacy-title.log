@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_inherited_source_uses_current_project_title_for_legacy_job ________
+
+api = (<function api.<locals>.request at 0x10c485080>, {'X-Content-OS-CSRF': 'oKL2EwafhVo8iEati22CFUTOf7d3aXbm3Twd_rM8FDA'}, 'project-a35dedf310', <studio.server.StudioApplication object at 0x10ba7b4d0>, '127.0.0.1:59113')
+
+    def test_inherited_source_uses_current_project_title_for_legacy_job(api):
+        request, csrf, pid, app, host = api
+        gen = app.direct_video.generator
+        gen.model_call = Model()
+        source = generate(gen, pid=pid)
+        source.pop('_projectTitle', None)
+        gen.save(gen.path(pid, source['jobId']), source)
+        status, _, result = request(f'/api/projects/{pid}/direct/jobs', 'POST', {'script': '新版本。',
+            'styleBase': {'kind': 'job', 'projectId': pid, 'jobId': source['jobId']}}, csrf)
+        assert status == 201
+>       assert result['job']['design']['source']['title'] == '合成测试'
+E       AssertionError: assert 'project-a35dedf310' == '合成测试'
+E         
+E         - 合成测试
+E         + project-a35dedf310
+
+tests/test_r278_style_base.py:359: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+----------------------------- Captured stderr call -----------------------------
+studio: "POST /api/projects/project-a35dedf310/direct/jobs HTTP/1.1" 201 -
+=========================== short test summary info ============================
+FAILED tests/test_r278_style_base.py::test_inherited_source_uses_current_project_title_for_legacy_job
+1 failed in 0.74s

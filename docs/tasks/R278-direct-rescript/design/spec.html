@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>R278 实现说明</title>
+<!-- Studio 现行样式（107b56e 原样复制）+ 浅色主题（R280 设计稿）。新块只用本页头部「R278 新增」那段规则。 -->
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/workflow.css">
+<link rel="stylesheet" href="css/review.css">
+<link rel="stylesheet" href="css/direct.css">
+<link rel="stylesheet" href="css/direct-shot-detail.css">
+<link rel="stylesheet" href="../../R280-studio-light/design/light.css">
+<link rel="stylesheet" href="draft.css">
+</head>
+<body>
+<div class="doc">
+<h1>R278 实现说明（给 Codex）</h1>
+<p class="lead">需求卡「脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成 · 待确认（R278）」的实现细节：交互规则、所有状态（逐块，文案合同从这里取）、设计编号、文案表、数字公式和接口、门禁。给用户看的改前改后和演示在 <a href="index.html">index.html</a>。标「R282」的部分属于另一张卡「中台交过来的分镜和配音直接进脚本直出」，在 R278 之后做。</p>
+
+<h2 class="sec">1 交互规则</h2>
+<ol class="rules">
+<li><b>版式</b>：第一屏和改分镜脚本一屏自上而下都是整行：<b>分镜脚本</b> → <b>视频风格</b> → 「点「生成」以后」和「配音」并排两张卡 → <b>生成条</b>（最底下）。原来的右栏 340 不要了；「生成」从分镜脚本框的底部挪到生成条，框底部只留说明和「导入分镜文件」。≤960 宽时视频风格的左右两半、下面两张卡都上下排，分镜脚本表横向滚动。</li>
+<li><b>分镜脚本表</b>（和中台「分镜脚本」同一张表，列名一字不差）：标题「分镜脚本」+ 一句「每镜写台词，就是配音要念的话；画面、字幕、景别 · 运镜不写，由 Opus 定。」，右边「〈n〉 镜 · 约 m:ss」（时长按中台配音时不写「约」）。六列：
+  <ul>
+  <li><b>镜头</b>：镜号 + 起止时间「0:00–0:18」，不能改。有中台配音且台词没改过时按配音时间；否则按台词每秒 5.1 字从 0 往后累加。</li>
+  <li><b>画面</b>：左边画面图 72×128（9:16），右边来源小标签 + 画面说明（空着时浅灰占位「写这一镜画什么（可不填）」，点进去就能写）。画面图三种：中台交过来带的图（标签照中台：代码渲染 / 参考关键帧 / AI 示意 · 非实拍 / 原片截帧 m:ss，版权待确认的后面接「· 待确认」并用警示色）；生成过的这一镜动画（改分镜脚本时显示；不标来源，因为这一屏的画面都来自现在这条，用户 2026-10-27 定去掉原来的「这一版」标签）：和成片里这一镜同一段画面，静音、循环、自动播放，没有播放按钮；只播在屏幕里的镜，滚出去就停；系统设了减少动态效果时停在关键帧不播；读屏不报；片段读不到时换成关键帧；都没有时虚线框「还没有画面」。<b>点画面图放大</b>（静图、动画都能点，「还没有画面」不能点）：在画面图右边弹出 270×480 的浮层接着循环播放，上面写「第 NN 镜 m:ss–m:ss」和「关闭」；按 Esc、点浮层外面、点「关闭」、滚动页面都会关上，关上后焦点回到那张画面图；点另一镜的画面直接换成那一镜；减少动态效果时浮层里不自动播，带播放控件。中台交过来的只有静图（交接包里没有动画），生成过以后才是动画。</li>
+  <li><b>台词</b>：必填，配音要念的话，时长按它算。</li>
+  <li><b>字幕 / 花字</b>、<b>景别 · 运镜</b>：可不填；写了 Opus 照着做（字幕 / 花字是画面上要出现的字，景别 · 运镜是构图和动法），颜色、字号仍以全片设计为准。</li>
+  <li><b>音乐 / 音效</b>：可不填，表头小字「暂不进成片」；这一轮只保存、随任务带着，成片里没有音乐音效。</li>
+  </ul>
+  每格直接改（随字数自动长高，不出滚动条），空格子显示「—」。台词里按回车＝从光标处拆成两镜，画面图、画面说明和其他列留在前一镜，新一镜别的列空着（输入法正在组字时的回车不算）；光标在台词开头按退格＝并到上一镜，各列文字用「；」连起来，画面图用前一镜的；粘贴带换行的台词按行拆成多镜、空行丢掉。别的列里回车只是换行。台词空着的那镜生成时不发出去。底部一句「台词里按回车拆成两镜，台词开头按退格并到上一镜 · 时长按中台的配音 / 按台词每秒 5.1 字估」+「导入分镜文件」。还没有内容时没有表，只有一个粘贴框（高 220，占位例句），底部「还没有分镜脚本。可以粘贴台词、导入分镜文件，或从中台交过来。」</li>
+<li><b>从中台交过来</b>（R282）：这件作品在中台点了「交给我的电脑」或「合成配音并交给本机渲染」、交接包已经落到这台电脑（和「按脚本做视频」读的是同一份），而且这件作品还没生成过时，第一屏直接按交过来的分镜填好六列和画面图，表头下一条浅色横条「从中台交过来：「〈作品名〉」第 〈n〉 版 · 〈时间〉 · 带配音（〈音色〉 · m:ss）。在这里改只存在本机，不会改中台的分镜。」（没带配音就不写括号那段）。带了配音时，「配音」卡变成「配音（从中台带过来）」「〈音色〉 · m:ss。生成时按这条配音实测每一镜的时长，动画比配音长的镜会自动改短。」+「换一个配音…」，生成时直接用这条配音，不用再上传。页头说明「中台交过来的分镜和配音都已带上。检查一下，改完就能生成。」</li>
+<li><b>中台又交过来新版本</b>（R282）：已经生成过、中台后来又交过来更新的版本时，改分镜脚本一屏的表头下一条横条「中台又交过来新的分镜：第 〈n〉 版 · 〈时间〉。」+ 文字按钮「换成中台这版」：点了整张表和配音换成中台那版（在这里改过的字会被替换），不点就照旧用这条的分镜。</li>
+<li><b>改名</b>：「脚本直出」页里所有「口播稿」都改成「分镜脚本」（步骤条第一格、入口「改分镜脚本」、页头、空状态），见第 4 节；每镜的那句话按中台叫「台词」。不改：镜详情里的「口播「…」」（R277）和剪辑交接页（真人口播的工作流）。</li>
+<li><b>入口</b>：有任务、而且任务已经停下来时（同轮询的结束条件，再加 R277 的看图和改镜没在跑），步骤条第一格「分镜脚本」整格是一个按钮，右边写「改分镜脚本」；Tab 能聚焦，读屏名称「改分镜脚本」。任务在跑时这一格不可点，右边灰字：在合成写「合成完才能改」，其他写「写完才能改」。</li>
+<li><b>改分镜脚本一屏</b>：分镜脚本表预先填好这次的每一镜（台词、画面说明、字幕 / 花字、景别 · 运镜、音乐 / 音效照任务里存的，老任务只有台词），画面是这一版每镜的动画（循环播放），滚到最上面，光标在第 01 镜开头。步骤条第一格是当前步，第二格「生成后从头写」，第三格「生成后重新合成」。页头「改分镜脚本，重新生成」，一句说明，右边「回到现在这条」（不发请求，原样回去）。视频风格默认沿用这条。</li>
+<li><b>视频风格 · 头部</b>：标题「视频风格」，一句「Opus 在这个风格上写每一镜。先定好风格，才能生成。」，右边分段按钮「选现成的风格」「从头定风格」（原「沿用一条成片的风格」改名，因为现成的风格以后还有风格库）。切换时两边各自写的字都保留。</li>
+<li><b>选现成的风格</b>：左半边上面一组「这台电脑上做过的」，把 <code>GET /api/direct/styles</code> 的每条都排成卡片（首镜关键帧 45×80、作品名、时间、四个色块），点哪张选哪张；当前任务那张时间前写「这条 · 」。下面「在这个风格上改哪里（可不填）」多行框。右半边是选中那条的大预览：首镜关键帧 180×320、四色（带名字）、字号、动作规矩（短白话）、「不用」小标签。</li>
+<li><b>风格库（R283）</b>：「这台电脑上做过的」下面再一组「风格库」，小字「样张都是同一段台词」，九张卡片顺序固定：扁平插画、数学动画、极简发布会、手绘白板、赛博故障、水墨国风、数据可视化、8-bit 像素、代码录屏。卡片和做过的一样（样张最后一帧 45×80、名字、四个色块），没有时间那一行。点一张就选中，和做过的成片同一组单选（两组里只能选中一张）。右半边：样张动画 180×320（静音、循环、自动播放，和分镜脚本表的画面同一套播放规则），下面「样张 · 同一段台词」，旁边标题「风格库 · 〈名字〉」+ 四色、字号、动作规矩、不用。「在这个风格上改哪里」对风格库同样有效。生成条写「风格：风格库「〈名字〉」」，写了改哪里再接「，改：〈改哪里〉」。生成后全片设计一行写「用风格库「〈名字〉」的风格」。</li>
+<li><b>从头定</b>：左半边「风格说明」多行框（6 行，可拉高），下面一排提示「可以照这几项写：」+ 六个小按钮「底色和主色」「强调色」「字的感觉」「画面怎么动」「参考什么」「不要什么」，点一个就在说明末尾另起一行写上「〈项名〉：」并把光标放过去。再下面「先定风格」+ 一句说明。右半边先是虚线框「样张会出现在这里」。</li>
+<li><b>样张</b>：点「先定风格」（没写说明或分镜脚本还空着时灰掉），Opus 定全片设计，再写出第 01 镜、本机渲染关键帧，约 2–3 分钟；右半边是流光「正在定风格 · 已用 m:ss」，说明框变只读。出来后右半边是样张 180×320（下面「样张 · 第 01 镜」）和四色、字号、动作规矩、不用，下面「就用这个」；左半边多出「再改一句（可不填）」多行框和「改」，Opus 在这套设计上按这句改并重写样张（流光写「正在改样张」）。点「就用这个」后右半边标「已选用」，按钮换成「重新定」（回到写说明，说明保留）。没定成写「没定成：〈原因〉」+「重试」。</li>
+<li><b>生成条</b>：左边一句说明现在用哪个风格：沿用写「风格：沿用「〈作品名〉」〈时间〉」，写了改哪里再接「，改：〈改哪里〉」；从头定已选用写「风格：刚定好的风格（从头定）」；从头定还没选用写「风格还没定好：先点「先定风格」，满意了点「就用这个」」（警示色）。右边「生成」主按钮：分镜脚本至少一镜有字、本机 Claude 可用、风格已定（沿用有选中；从头定已「就用这个」）才可点。</li>
+<li><b>「点「生成」以后」第一步跟着风格变</b>：沿用不改「全片设计沿用选中的风格 / 不用等」；沿用并改「Opus 先按你写的改全片设计 / 约 1 分钟」；从头定没选用「先在下面定好风格、看过样张 / 点「先定风格」，约 2–3 分钟」；从头定已选用「全片设计用刚定好的风格，第 01 镜直接用样张 / 不用等」。</li>
+<li><b>生成之后</b>：沿用不改 → 不出现「Opus 正在定全片设计」，直接写镜；沿用并改 → 页头「Opus 正在按你的话改全片设计」，虚线框「在「〈作品名〉」的风格上改：〈改哪里〉。改好以后七镜都照它写。」；从头定 → 用样张那套设计，第 01 镜的字和写样张时一字不差就直接用样张当第 01 镜。全片设计一行紧跟「全片设计」写来源：「沿用「〈作品名〉」的风格」「在「〈作品名〉」的风格上改过」「这次从头定的风格」。</li>
+<li><b>全片设计一行和风格预览的写法</b>：去掉现在那行没标题的长句和带删除线的小块，改成两行带标题的短白话：「动作规矩」一句（≤30 字，不出现坐标、百分比、毫秒），「不用」一排小标签（每条 ≤12 字，最多 8 条），不划删除线。这两样是 Opus 定设计时<b>另外写给人看的</b>（<code>motionSummary</code>、<code>bannedShort</code>）；带参数的原话（<code>motionRules</code>、<code>banned</code>）照旧只给 Opus 写镜用，页面上不再显示。老任务没有短白话时，「动作规矩」显示原话最多两行，「不用」显示原话每条一个标签、单条最宽 260 超出省略、悬停看全文。</li>
+<li><b>其他</b>：这台电脑上没有做过的成片时——R278 单独上线时：「选现成的风格」灰掉，默认从头定，左半边写「还没有可以沿用的成片」；R283 上线后：「选现成的风格」照常可点并默认选中，「这台电脑上做过的」一组换成一句「这台电脑上还没有做过的成片，先从风格库里挑一个。」，风格库一张都不预选，右半边虚线框「还没选风格 / 在左边选一个」，生成条警示色「风格还没选：在下面选一个现成的风格，或者从头定」，「生成」灰。同一作品里切分页再回来，写的字和样张都在；刷新会丢（样张文件留在本机）。生成失败留在这一屏，字都不丢；本机 Claude 调不通照现有做法出 <code>DV-UNAVAILABLE</code>。</li>
+</ol>
+
+
+<h2 class="sec">2 所有状态</h2>
+<p class="lead">每台是 1440 宽浏览器里作品页的主栏（1231 宽），浅色。顶栏和成片区是套了浅色令牌的真实页面截图；其余按现行样式画。每个状态按块标 <code>data-design-state</code>（<code>-steps -head -script -style -opts -gen -design</code>）。最后一台可以点。</p>
+<div data-frames></div>
+
+<h2 class="sec">3 设计编号</h2>
+<table class="t">
+<tr><th>编号</th><th>要求和数值</th><th>代码依据</th></tr>
+<tr><td><code>DV-STEPS</code>（改）</td><td>任务已停下：第一格换成 <code>&lt;button class="fstep done dv-fstep-btn" data-rescript aria-label="改分镜脚本"&gt;</code>，末尾 <code>&lt;em class="dv-step-edit" data-design-id="DV-RESCRIPT-ENTRY"&gt;</code>（12px，<code>--ac-soft</code>，悬停 <code>--ac</code>，整格悬停 <code>--raise</code>，焦点 2px <code>--ac</code> 内描边）。任务在跑：末尾 <code>&lt;em class="dv-step-lock" data-design-id="DV-RESCRIPT-LOCKED"&gt;</code>（11px <code>--ink-5</code>）。用 <code>em</code> 是为了不被 ≤620 宽的 <code>.fstep:not(.cur)&gt;span{display:none}</code> 藏掉。</td><td><code>flow()</code>；<code>.fstep</code>；<code>.link</code></td></tr>
+<tr><td><code>DV-HEAD</code>（改分镜脚本）</td><td>沿用 <code>head()</code>；右边普通按钮 <code>data-rescript-back</code>「回到现在这条」。</td><td><code>head()</code></td></tr>
+<tr><td><code>DV-SCRIPT</code>（重做，替换 <code>DV-LINES</code>）</td><td><code>section.dv-form</code> 整行（<code>grid-column:1/-1</code>，1182 宽）。头部左边标题 14 + 一句说明 12px <code>--ink-3</code>（不折行），右边合计。<code>DV-SB-SOURCE</code> 横条：<code>--ac-bg</code> 底，内边距 8/16，12.5px <code>--ink-2</code>，按钮用 <code>.link</code>。<code>DV-SB-TABLE</code>：<code>table-layout:fixed</code>，最小宽 1100，外面一层横向滚动；列宽 镜头 76 / 画面 352 / 台词 自适应（约 352）/ 字幕 / 花字 150 / 景别 · 运镜 132 / 音乐 / 音效 120；表头 <code>--panel-2</code> 底 12px/500 <code>--ink-3</code>，「暂不进成片」11px <code>--ink-4</code>；行间、列间 1px <code>--rule</code>，单元格顶对齐。镜头列：镜号 12.5/600 等宽 <code>--ink</code>（这一行在编辑时变 <code>--ac-soft</code>），时间 11px 等宽 <code>--ink-3</code>。<code>DV-SB-PIC</code> 72×128 圆角 4，<code>--rule-2</code> 描边，图 <code>object-fit:cover</code>；没有图时虚线框 11px <code>--ink-4</code>。动画用 <code>&lt;video muted loop playsinline preload="metadata" aria-hidden="true"&gt;</code>，<code>poster</code> 是这一镜关键帧，同样 <code>object-fit:cover</code>，无控件；<code>IntersectionObserver</code> 进屏播放、出屏暂停；<code>prefers-reduced-motion: reduce</code> 时不播；<code>error</code> 时换成关键帧 <code>&lt;img&gt;</code>。有图时画面图是 <code>button</code>（<code>cursor:zoom-in</code>，聚焦描边 2px <code>--ac</code>）。<code>DV-SB-ZOOM</code> 浮层：<code>position:fixed</code>，左边贴画面图右边 8、超出视口时往左收，上边对齐画面图上 8、上下夹在视口内留 8；宽 288，内边距 8，<code>--panel</code> 底，<code>--rule-2</code> 描边，圆角 8，阴影 <code>0 12px 32px</code> 黑 18%；头部 13px：「第 NN 镜」600 <code>--ink</code> + 起止时间 12px 等宽 <code>--ink-3</code> + 右边 <code>.link</code>「关闭」；画面 270×480 圆角 4，<code>object-fit:cover</code>；<code>role="dialog"</code>，打开时焦点到「关闭」。来源标签 11px，<code>--ac-bg</code> 底 <code>--ac-soft</code> 字，待确认用 <code>--warn-bg</code>/<code>--warn</code>。格内多行框：透明无描边，内边距 4/6，圆角 6；台词 13px 行高 1.7 <code>--ink</code>，其余 12.5px 行高 1.6 <code>--ink-2</code>，占位「—」<code>--ink-5</code>（画面说明一格的占位是「写这一镜画什么（可不填）」，同色）；悬停 <code>--panel-2</code>；聚焦 <code>--panel</code> 底 + <code>--ac</code> 描边 + 2px <code>--ac-bg</code> 外圈；<code>maxlength</code> 2000。高度用脚本设 <code>el.style.height = scrollHeight</code>（CSSOM，CSP 允许；不许写 <code>style=</code> 属性）。空状态粘贴框高 220，<code>--panel-2</code> 底，<code>--rule-2</code> 描边。读屏：每个框 <code>aria-label="第 NN 镜〈列名〉"</code>，底部说明 <code>aria-live="polite"</code>。</td><td>中台 <code>CreationVideoPanel</code> 的 <code>sb-table</code>（列名、镜头列写法、画面列的图和来源标签）；<code>.dv-form</code></td></tr>
+<tr><td><code>DV-START</code>（改）</td><td>网格不变（<code>minmax(0,1fr) 340px</code>），但四块都 <code>grid-column:1/-1</code>：<code>DV-SCRIPT</code> → <code>DV-STYLE</code> → <code>.dv-opts</code>（两列 <code>repeat(2,minmax(0,1fr))</code>，间距 16，≤960 一列）→ <code>DV-GENBAR</code>。</td><td><code>startForm()</code></td></tr>
+<tr><td><code>DV-VOICE</code>（加一种，R282）</td><td>中台带了配音时：标题「配音（从中台带过来）」，一句音色和时长，按钮「换一个配音…」（走现有上传）。</td><td><code>DV-VOICE</code></td></tr>
+<tr><td><code>DV-STYLE</code>（重做）</td><td><code>section.dv-style-wide</code>：<code>--panel</code> 底、<code>--rule</code> 描边、圆角 8。头部 12/16 内边距，下边线；分段按钮用现有 <code>.seg</code>，宽 320，两列，<code>role="radiogroup"</code> + <code>role="radio"</code>/<code>aria-checked</code>。主体两列 <code>minmax(0,1fr) 480px</code>，中间 <code>--rule</code> 竖线；≤960 上下排。</td><td><code>.seg</code>；<code>.dv-opt</code> 的面板写法</td></tr>
+<tr><td><code>DV-STYLE-CARDS</code></td><td>网格 <code>repeat(auto-fill,minmax(200px,1fr))</code>（1440 宽一排三张），间距 8。卡片：关键帧 45×80、作品名 12.5/500 单行、时间 11.5 <code>--ink-3</code>、四个 12×12 色块（<code>--swatch</code> 用 <code>style.setProperty</code>）。选中 <code>aria-pressed="true"</code>：<code>--ac</code> 描边 + 1px 内描边、<code>--ac-bg</code> 底。</td><td>新</td></tr>
+<tr><td><code>DV-STYLE-PREVIEW</code></td><td>右半边两列 180px / 自适应，间距 16。关键帧或样张 180×320 圆角 6（<code>.dv-poster</code>）；等待用 <code>.dv-veil--writing</code>（减少动态效果时不动）；空状态虚线框。右列：标题 13/600、四色 2×2（色块+名字，同全片设计一行的 <code>.dv-sw</code>）、<code>dl</code> 字号 / 动作规矩 / 不用（<code>.dv-nots</code> 小标签）。</td><td><code>.dv-poster</code>、<code>.dv-sw</code></td></tr>
+<tr><td><code>DV-STYLE-EDIT</code></td><td>左半边多行框：<code>--panel-2</code> 底、<code>--rule-2</code> 描边、圆角 6、13px 行高 1.75、可上下拉；聚焦 <code>--ac</code> 描边 + 2px <code>--ac-bg</code> 外圈。说明框 6 行，改哪里 / 再改一句 3 行。提示小按钮用现有 <code>.pill</code>（去掉最小宽度）。</td><td><code>.pill</code></td></tr>
+<tr><td><code>DV-GENBAR</code></td><td>整行面板，左文字 12.5px（风格未定时 <code>--warn</code>），右「生成」<code>.btn--pri</code>。</td><td>新</td></tr>
+<tr><td><code>DV-DESIGN</code>（改）</td><td>第一行：「全片设计」+ 来源 <code>span.dv-design-src</code>（12px <code>--ink-3</code>）+ 四色 + 字号。下面两行 <code>p.dv-design-line</code>（占满一行）：左边 56 宽 12px <code>--ink-3</code> 的标题「动作规矩」「不用」，右边内容 12.5px <code>--ink</code>。「不用」用 <code>.dv-nots</code> 小标签：11.5px <code>--ink-2</code>，<code>--panel-2</code> 底，<code>--rule-2</code> 描边，圆角 4，不划线。去掉现有的 <code>.dv-ban</code> 删除线写法。</td><td><code>design()</code>；<code>.dv-ban</code></td></tr>
+<tr><td><code>DV-STYLE-LIB</code>（R283）</td><td>和 <code>DV-STYLE-CARDS</code> 同一个卡片组件、同一个网格，只是没有时间那一行；组名用 <code>.dv-sw-label</code>。右半边样张用 <code>&lt;video muted loop playsinline preload="metadata" aria-hidden="true"&gt;</code>，<code>poster</code> 是样张最后一帧，<code>object-fit:cover</code>，放在现有 <code>.dv-poster</code> 180×320 里；进屏播放、出屏暂停、减少动态效果时不播，和 <code>DV-SB-PIC</code> 同一个函数。</td><td><code>.dv-sw-card</code>、<code>.dv-poster</code></td></tr>
+</table>
+
+<h2 class="sec">4 文案表</h2>
+<table class="t">
+<tr><th>位置</th><th>文字</th><th>变化</th></tr>
+<tr><td>分镜脚本 · 改名（R276 现有的字）</td><td>口播稿 → 分镜脚本（步骤条第一格、框标题） ／ 把口播稿直接做成视频 → 把分镜脚本直接做成视频 ／ 粘贴口播稿，Opus 给每一镜写一段动画代码…（两句）→ 粘贴分镜脚本，Opus 给每一镜写一段动画代码… ／ 〈n〉 镜口播稿，可以生成了 → 分镜脚本共 〈n〉 镜，可以生成了 ／ 检查一下分镜：一行是一镜。… → 检查一下分镜：一格是一镜。… ／ 等口播稿 → 等分镜脚本 ／ 还没有口播稿。也可以导入上游中台导出的分镜文件。→ 还没有分镜脚本。可以粘贴台词、导入分镜文件，或从中台交过来。 ／ 占位「把口播稿粘贴进来，一行是一镜。例如：…」→「把台词粘贴进来，每一行会变成一镜。例如：…」（例句不变）</td><td>改字；删掉「一行是一镜」和逐镜列表</td></tr>
+<tr><td>分镜脚本 · 表</td><td>每镜写台词，就是配音要念的话；画面、字幕、景别 · 运镜不写，由 Opus 定。 ／ 〈n〉 镜 · 约 m:ss ／ 镜头 ／ 画面 ／ 台词 ／ 字幕 / 花字 ／ 景别 · 运镜 ／ 音乐 / 音效 ／ 暂不进成片 ／ 还没有画面 ／ 代码渲染 ／ 参考关键帧 ／ AI 示意 · 非实拍 ／ 原片截帧 m:ss ／ · 待确认 ／ — ／ 台词里按回车拆成两镜，台词开头按退格并到上一镜 · 时长按中台的配音 / 时长按台词每秒 5.1 字估 ／ 读屏：第 〈NN〉 镜〈列名〉 ／ 画面说明空着时的占位：写这一镜画什么（可不填）（其他列空着仍是「—」，用户 2026-10-27 定） ／ 读屏：放大第 〈NN〉 镜画面 ／ 放大浮层：第 〈NN〉 镜 ／ m:ss–m:ss ／ 关闭 ／ 浮层读屏：第 〈NN〉 镜画面 ／ 生成条：分镜脚本还空着：先在上面粘贴或导入</td><td>新增（列名和来源标签与中台一字不差）</td></tr>
+<tr><td>分镜脚本 · 从中台交过来（R282）</td><td>从中台交过来：「〈作品名〉」第 〈n〉 版 · 〈时间〉 · 带配音（〈音色〉 · m:ss）。 ／ 在这里改只存在本机，不会改中台的分镜。 ／ 中台又交过来新的分镜：第 〈n〉 版 · 〈时间〉。 ／ 换成中台这版 ／ 页头：中台交过来的分镜和配音都已带上。检查一下，改完就能生成。 ／ 配音（从中台带过来） ／ 〈音色〉 · m:ss。生成时按这条配音实测每一镜的时长，动画比配音长的镜会自动改短。 ／ 换一个配音…</td><td>新增</td></tr>
+<tr><td>步骤条第一格</td><td>改分镜脚本 ／ 写完才能改 ／ 合成完才能改</td><td>新增</td></tr>
+<tr><td>改分镜脚本 · 步骤条</td><td>生成后从头写 ／ 生成后重新合成</td><td>新增</td></tr>
+<tr><td>改分镜脚本 · 页头</td><td>改分镜脚本，重新生成 ／ 点「生成」后 Opus 从头写每一镜，配音要重新上传。现在这条留在本机，页面只显示新的那条。 ／ 回到现在这条</td><td>新增</td></tr>
+<tr><td>视频风格 · 头部</td><td>视频风格 ／ Opus 在这个风格上写每一镜。先定好风格，才能生成。 ／ 选现成的风格 ／ 从头定风格</td><td>替换右栏「风格说明（可不填）」整块</td></tr>
+<tr><td>视频风格 · 选现成的</td><td>这台电脑上做过的 ／ 这条 · 〈时间〉 ／ 在这个风格上改哪里 ／ （可不填） ／ 占位：例：强调色换成暖黄，其余不动；数字再大一些 ／ 首镜关键帧 ／ 背景 主色 强调色 中性 ／ 字号 ／ 动作规矩 ／ 不用</td><td>新增</td></tr>
+<tr><td>视频风格 · 从头定</td><td>风格说明 ／ 越具体越好 ／ 占位（多行）：例：浅米色底，深青做主色，结论只用橙色。标题要粗，数字特别大。每句只动一个东西，动完就停。不要渐变，不要一屏堆很多卡片。 ／ 可以照这几项写： ／ 底色和主色 ／ 强调色 ／ 字的感觉 ／ 画面怎么动 ／ 参考什么 ／ 不要什么 ／ 先定风格 ／ Opus 先定全片设计，再把第 01 镜写出来当样张，约 2–3 分钟。 ／ 先粘贴分镜脚本：样张就是第 01 镜。</td><td>新增</td></tr>
+<tr><td>视频风格 · 样张</td><td>样张会出现在这里 ／ 先写出第 01 镜 ／ 正在定风格 ／ 正在改样张 ／ 已用 m:ss ／ 样张 · 第 01 镜 ／ 再改一句 ／ 占位：例：主色再深一点，标题再大一号 ／ 改 ／ 就用这个 ／ 满意了点「就用这个」，才能生成。 ／ 已选用 ／ 重新定 ／ 没定成：〈原因〉 ／ 重试</td><td>新增</td></tr>
+<tr><td>视频风格 · 没有可沿用的</td><td>还没有可以沿用的成片</td><td>新增（R278 单独上线时；R283 上线后不用）</td></tr>
+<tr><td>视频风格 · 风格库（R283）</td><td>风格库 ／ 样张都是同一段台词 ／ 扁平插画 ／ 数学动画 ／ 极简发布会 ／ 手绘白板 ／ 赛博故障 ／ 水墨国风 ／ 数据可视化 ／ 8-bit 像素 ／ 代码录屏 ／ 风格库 · 〈名字〉 ／ 样张 · 同一段台词 ／ 还没选风格 ／ 在左边选一个 ／ 选好以后这里放它的样张，和色板、字号、动作规矩、不用的套路。 ／ 这台电脑上还没有做过的成片，先从风格库里挑一个。 ／ 生成条：风格：风格库「〈名字〉」（，改：〈改哪里〉） ／ 风格还没选：在下面选一个现成的风格，或者从头定 ／ 点「生成」以后：先在下面选一个风格 ／ 选好就能生成 ／ 全片设计：用风格库「〈名字〉」的风格 ／ 每种的动作规矩和不用照 <code>samples/&lt;id&gt;.json</code> 的 <code>motionSummary</code> / <code>bannedShort</code></td><td>新增（R283）</td></tr>
+<tr><td>生成条</td><td>风格：沿用「〈作品名〉」〈时间〉 ／ ，改：〈改哪里〉 ／ 风格：刚定好的风格（从头定） ／ 风格还没定好：先点「先定风格」，满意了点「就用这个」 ／ 生成</td><td>新增（「生成」挪位置）</td></tr>
+<tr><td>点「生成」以后 · 第一步</td><td>全片设计沿用选中的风格 ／ 不用等 ／ Opus 先按你写的改全片设计 ／ 约 1 分钟 ／ 先在下面定好风格、看过样张 ／ 点「先定风格」，约 2–3 分钟 ／ 全片设计用刚定好的风格，第 01 镜直接用样张</td><td>替换原第一步</td></tr>
+<tr><td>定设计中 · 页头 / 虚线框</td><td>Opus 正在按你的话改全片设计 ／ 在「〈作品名〉」的风格上改：〈改哪里〉。改好以后七镜都照它写。</td><td>新增</td></tr>
+<tr><td>全片设计一行 · 风格预览</td><td>动作规矩 ／ 不用（替换预览里的「不用的套路」）</td><td>新增标题；内容改成 Opus 写的短白话</td></tr>
+<tr><td>全片设计 · 来源</td><td>沿用「〈作品名〉」的风格 ／ 在「〈作品名〉」的风格上改过 ／ 这次从头定的风格</td><td>新增</td></tr>
+</table>
+
+<h2 class="sec">5 数字公式和接口</h2>
+<table class="t">
+<tr><th>值或接口</th><th>定义</th></tr>
+<tr><td>预填分镜脚本</td><td>改分镜脚本：<code>job.shots</code> 的 <code>dialogue / visual / subtitle / camera / audio</code>（没有为空），画面用这一镜的小片段（见接口「每镜小片段」），关键帧当封面；第一次且有中台交接：<code>GET …/direct/handoff</code> 的 <code>shots</code>，画面图用交接带的图</td></tr>
+<tr><td>镜头列时间</td><td>有中台配音且台词都没改过：用交接里的 <code>startSeconds–endSeconds</code>；否则第 i 镜 = 前面各镜（台词字数 ÷ 5.1）之和 到 再加这一镜；按 m:ss。台词空的镜写「—」、不占时间</td></tr>
+<tr><td>合计</td><td>n = 台词非空的镜数；时长 = 最后一镜的结束时间；按配音时不写「约」</td></tr>
+<tr><td>发出的分镜</td><td>前端改发 <code>storyboard</code>（R276 已有的那条路）：<code>{shots: rows.filter(r =&gt; r.dialogue.trim()).map((r, i) =&gt; ({shotId: String(i+1).padStart(2,'0'), dialogue, visual?, subtitle?, camera?, audio?}))}</code>，空的字段不带；不再发 <code>script</code>（接口照旧收，兼容）。用中台交接时另带 <code>handoff: {jobId, revision}</code></td></tr>
+<tr><td><code>storyboard.shots[]</code> 新的可选字段</td><td><code>visual</code>、<code>subtitle</code>、<code>camera</code>、<code>audio</code>：字符串，去空白后 1–2000 字，空则当没有；超长或不是字符串 400 <code>script_invalid</code>。存进任务的 <code>shots[]</code>（没有为 <code>null</code>），任务投影带出。定全片设计的提示里列出每镜的画面、字幕 / 花字、景别 · 运镜，<code>perShot.mainAction</code> 照画面定；写这一镜代码的提示里带「编导写的画面 / 画面上要出现的字 / 景别 · 运镜（照着做；颜色、字号以全片设计为准）」；R277 重写这一镜同样带上。<code>audio</code> 只保存，不进提示、不进成片。</td></tr>
+<tr><td><code>GET /api/projects/{id}/direct/handoff</code>（新，R282）</td><td>读这件作品已经落到本机的中台交接包（和「按脚本做视频」<code>video_handoff_projection</code> 同一份、同样的身份校验：<code>scope=video_handoff_v1</code>、作品和版本对得上）。<code>{handoff: null | {jobId, revision, title, handedAt, shots:[{shotId, startSeconds, endSeconds, dialogue, visual, subtitle, camera, audio, image: null | {source, rightsStatus, sourceTimeSeconds, url}}], narration: null | {voice, durationSeconds}}}</code>。<code>image.url</code> 只有交接里的图已经在本机时才有（<code>…/direct/handoff/images/{shotId}?v=</code>）。读不到或校验不过一律 <code>null</code>，不报错。</td></tr>
+<tr><td><code>POST …/direct/jobs</code> 的 <code>handoff</code>（新，可选，R282）</td><td><code>{jobId, revision}</code> 必须等于当前交接包；不等 409 <code>handoff_changed</code>。交接带了配音：把那条配音当作这次的配音（同上传配音的处理：转写、按配音实测每镜时长、比配音长的镜自动改短），成片是带配音的。</td></tr>
+<tr><td>「中台又交过来新版本」（R282）</td><td>任务的 <code>handoff.revision</code> 小于当前交接包的 <code>revision</code>（或任务不是从交接来的，但交接包的 <code>handedAt</code> 晚于任务的 <code>createdAt</code>）</td></tr>
+<tr><td>时间</td><td><code>createdAt</code> 按本机时区写「M 月 D 日 HH:mm」</td></tr>
+<tr><td>入口可点</td><td><code>job &amp;&amp; !readError &amp;&amp; !shouldPoll(job)</code> 且 R277 让「重写这一镜」灰掉的条件不成立</td></tr>
+<tr><td>「先定风格」可点</td><td>说明去空白后非空 &amp;&amp; 分镜脚本至少一镜有字 &amp;&amp; 本机 Claude 可用 &amp;&amp; 没有样张在写</td></tr>
+<tr><td>「生成」可点</td><td>分镜脚本至少一镜有字 &amp;&amp; 本机 Claude 可用 &amp;&amp; 不在提交中 &amp;&amp;（沿用：选中的那条读得到；从头定：样张 ready 且点过「就用这个」）</td></tr>
+<tr><td>样张「已用 m:ss」</td><td>现在 − 这次定风格或改样张开始的时间，每 2 秒随轮询刷新</td></tr>
+<tr><td>第 01 镜直接用样张</td><td>生成时第 01 镜的台词、画面、字幕 / 花字、景别 · 运镜都和 <code>draft.shot</code> 一字不差</td></tr>
+<tr><td><code>GET /api/projects/{id}/direct/jobs/{jobId}/shots/{shotId}/clip.mp4?v={posterRevision}</code>（新）</td><td>每镜小片段：360×640，H.264 <code>crf 28</code>，30 帧，无音轨，<code>+faststart</code>，长度 = 这一镜时长。在这一镜帧渲染完、出关键帧的同一步，用 ffmpeg 从这一镜当前版本的帧压出来，存 <code>clips/&lt;镜&gt;.mp4</code>；换版本（<code>posterRevision</code> 变）时重压。实测 18.2 秒一镜约 55 KB、压 1.1 秒（216 宽的 GIF 每秒 10 帧就有 140 KB，所以不用 GIF）。表格里 72 宽和放大后 270 宽用同一个文件。老任务没有片段：第一次请求时现压（帧还在）；帧也没了返回 404，前端换成关键帧。</td></tr>
+<tr><td><code>GET /api/direct/styles</code>（新）</td><td><code>{styles:[{projectId, jobId, title, createdAt, design:{palette,typeScale,motionRules,banned}, posterUrl}]}</code>：所有作品下 <code>design.status==='done'</code> 的生成，新到旧，设计内容相同只留最新；<code>posterUrl</code> 取最小镜号有关键帧的一镜，没有为空。</td></tr>
+<tr><td><code>POST /api/projects/{id}/direct/style-drafts</code>（新）</td><td><code>{text, shot}</code>（<code>shot</code> 是第 01 镜，字段同 <code>storyboard.shots[]</code>） → 202 <code>{draft}</code>；后台定全片设计（现有校验）→ 用 <code>dialogue</code> 写一镜（现有自查，不过关自动重写一次）→ 本机渲染关键帧</td></tr>
+<tr><td><code>GET …/style-drafts/{draftId}</code>、<code>…/poster.jpg?v=</code>（新）</td><td><code>{draft:{draftId, status:'designing'|'writing'|'ready'|'failed', text, dialogue, design, sample:{posterRevision, codeChars, checks}, failureCode, startedAt, revisions:[{instruction, at}]}}</code></td></tr>
+<tr><td><code>POST …/style-drafts/{draftId}/revise</code>（新）</td><td><code>{instruction}</code>（1–1000 字）→ 202；在写时 409 <code>draft_busy</code></td></tr>
+<tr><td><code>POST …/direct/jobs</code>（改）</td><td>可选 <code>styleBase</code>：<code>{kind:'job', projectId, jobId}</code>（<code>style</code> 是改哪里，可空；空则 <code>design</code> 原样复制、跳过定设计；不空则 Opus 在原设计上按这句改）或 <code>{kind:'draft', projectId, draftId}</code>（样张须 ready，否则 409 <code>draft_not_ready</code>；设计原样复制；第 01 镜按上条直接用样张）。不带 <code>styleBase</code> 时 <code>style</code> 必填，否则 400 <code>style_required</code>；读不到 404 <code>style_base_not_found</code>。<code>style</code> 上限从 4000 字不变。</td></tr>
+<tr><td>全片设计加两个字段</td><td>定设计（从头定、沿用并改、样张）时 Opus 在同一次回复里多写 <code>motionSummary</code>（一句，≤30 字，不含数字加单位、坐标、百分比）和 <code>bannedShort</code>（数组，1–8 条，每条 ≤12 字）；后端照现有设计校验一起校验，不合格当作定设计失败、照现有规则重试一次。沿用不改时原样复制。<code>/api/direct/styles</code>、任务投影、样张投影都带上这两个字段；老设计没有时为 <code>null</code>，前端按第 1 节的老任务写法显示。</td></tr>
+<tr><td>任务投影（加字段）</td><td><code>design.source: null | {kind:'inherited'|'adjusted'|'drafted', projectId, jobId|draftId, title, instruction}</code>；第 01 镜用了样张时 <code>fromDraft: true</code></td></tr>
+<tr><td>分镜脚本宽度</td><td>表 1180 宽：76 + 352 + 台词 + 150 + 132 + 120 → 台词 350；台词框可用 350 − 8 − 12 = 330，13px 一行约 25 字，现有一镜 93–120 字 → 4–5 行（约 110 高）；画面说明可用 352 − 8 − 6 − 72 − 4 − 12 = 250，12.5px 一行约 20 字，中台最长 123 字 → 7 行（约 140 高），和画面图 128 高差不多。≤1100 宽横向滚动</td></tr>
+<tr><td>宽度</td><td>视频风格左半边 1182−480=702 宽，说明框一行约 50 字；右半边 480：样张 180 + 间距 16 + 说明 252</td></tr>
+<tr><td>风格库文件（R283，新）</td><td><code>scripts/direct_video/styles/</code>：每种风格四个文件 <code>&lt;id&gt;.json</code>（字段照 <code>docs/tasks/R283-direct-style-library/samples/&lt;id&gt;.json</code>）、<code>&lt;id&gt;.html</code>（样张代码）、<code>&lt;id&gt;.jpg</code>（最后一帧 360×640）、<code>&lt;id&gt;.mp4</code>（360×640 无声）；顺序写在 <code>styles/index.json</code>。从 <code>docs/tasks/R283-direct-style-library/</code> 原样拷过去，<code>render_sample.sh</code> 能重出。配方来源写在 <code>styles/README.md</code>：「改写自 Moessif/code-video-showcase 的风格配方（MIT）」，附原仓库 LICENSE 全文。</td></tr>
+<tr><td><code>GET /api/direct/styles</code>（R283 加字段）</td><td>多一个 <code>library:[{id, name, design:{palette, typeScale, motionRules, banned, motionSummary, bannedShort}, posterUrl, clipUrl}]</code>，顺序照 <code>index.json</code>；<code>GET /api/direct/styles/library/{id}/poster.jpg</code>、<code>…/clip.mp4</code> 送文件，未知 id 404。</td></tr>
+<tr><td><code>POST …/direct/jobs</code>（R283 加一种 <code>styleBase</code>）</td><td><code>{kind:'library', id}</code>：<code>style</code> 空 → 全片设计照 <code>&lt;id&gt;.json</code> 原样复制（palette、typeScale、motionRules、banned、motionSummary、bannedShort），不调模型定设计；不空 → Opus 只在这套上按这句改，和沿用并改同一条路。写每一镜时提示里多两样：<code>visualGrammar</code> 当作 <code>form_profile.visual_grammar</code>（所以 <code>shots.md</code>「默认禁用」里和这一风格冲突的条目按它来），<code>&lt;id&gt;.html</code> 当「同一风格的一镜样例，内容不同，只照画法」。未知 id 404 <code>style_base_not_found</code>。</td></tr>
+<tr><td>任务投影（R283）</td><td><code>design.source.kind</code> 多一个 <code>'library'</code>：<code>{kind:'library', id, name, instruction}</code>。</td></tr>
+</table>
+
+<h2 class="sec">6 门禁（先写，在现在的代码上会失败）</h2>
+<ol class="rules">
+<li>后端每镜小片段：出关键帧时同时有 <code>clips/&lt;镜&gt;.mp4</code>，360×640、无音轨、帧数等于这一镜帧数；换版本后重压；老任务第一次请求现压；没有帧时 404。</li>
+<li>R283 后端 <code>tests/test_r283_style_library.py</code>：<code>styles/index.json</code> 列 9 种、每种四个文件都在、<code>&lt;id&gt;.json</code> 字段齐全且 <code>motionSummary</code> ≤30 字、<code>bannedShort</code> 1–8 条每条 ≤12 字；九份样张代码过 <code>lint.py</code> 无 ERROR；<code>/api/direct/styles</code> 带 <code>library</code>；<code>styleBase.kind=library</code> 不改 → 没调模型定设计、设计逐字段等于 json、<code>source.kind=library</code>；带 <code>style</code> → 只调一次模型、提示里带原设计和那句话；写镜提示里带 <code>visualGrammar</code> 和样张代码；未知 id 404。</li>
+<li>R283 前端（并进 <code>tests/test_r278_direct_rescript.mjs</code> 或单独文件）：风格库一组 9 张、名字顺序对；点一张后右边是 <code>video</code>（poster 是样张图）、标题「风格库 · 〈名字〉」；和做过的成片同组单选；生成条文案；没做过成片时只有风格库、一张都没选、「生成」灰；发出的请求体是 <code>{kind:'library', id}</code>。</li>
+<li>后端 <code>tests/test_r278_style_base.py</code>：沿用不改 → 设计逐字段相同、<code>source.kind=='inherited'</code>、没调模型；沿用并改 → 只调一次模型定设计，提示里带原设计和那句话；样张：建、轮询到 ready、改一次、在写时再改 409；用样张建任务 → 设计相同、第 01 镜代码和关键帧字节与样张相同、第一行改过时重写；样张未 ready 409；定设计的回复缺 <code>motionSummary</code>/<code>bannedShort</code> 或超长时按设计不合格处理；沿用时两字段原样复制；不带 <code>styleBase</code> 且 <code>style</code> 空 400；<code>/api/direct/styles</code> 去重、排序、跨作品；<code>storyboard.shots[]</code> 的 <code>visual / subtitle / camera / audio</code> 存进任务、前三个出现在定设计和写这一镜（含 R277 重写）的提示里、<code>audio</code> 不进提示、空白当没有、超 2000 字 400；样张带整镜、任一列变了不复用样张；（R282）<code>/direct/handoff</code> 用和 <code>video_handoff_projection</code> 相同的身份校验（换作品、换版本、scope 不对都返回 <code>null</code>）、图只在本机有时给 url；建任务带 <code>handoff</code> 时用交接的配音、版本不对 409；OpenAPI 同步。</li>
+<li>前端 <code>tests/test_r278_direct_rescript.mjs</code>：入口可点 / 两种灰字；改分镜脚本预填、默认沿用这条、「回到现在这条」不发请求；视频风格卡片点选、切换保留两边的字；提示小按钮在说明末尾加「〈项名〉：」；从头定没写说明时「先定风格」灰；样张没「就用这个」时「生成」灰、生成条写警示句；「再改一句」发 revise；发出的建任务请求体正确；列表为空默认从头定；「生成」不在分镜脚本框里、在生成条里；分镜脚本表：六列列名与中台一致、改分镜脚本时画面列是 <code>video[muted][loop][playsinline]</code>（poster 是关键帧、无控件、进屏播出屏停、减少动态效果时不播、出错换成关键帧）、点画面图弹出放大浮层（静图也能放大，「还没有画面」不能点；Esc / 点外面 / 「关闭」/ 滚动都关上，焦点回到画面图；点另一镜直接换；减少动态效果时浮层带控件、不自动播）、每镜的字在页面上只出现一次（没有 <code>.dv-lines</code>）、镜头列时间按公式（按配音 / 按字数）、台词回车拆两镜且其他列和画面图留在前一镜、台词开头退格并镜且各列用「；」连、带换行的粘贴拆成多镜、输入法组字时的回车不拆、台词空的镜不发出去、发出的是带新字段的 <code>storyboard</code>、导入分镜文件把 <code>visual / subtitle / camera / audio</code> 放进对应列、改分镜脚本预填各列和这一版关键帧、画面旁边没有来源标签；（R282）有交接包时第一屏按交接填好、横条和配音卡对、建任务带 <code>handoff</code>；交接版本比任务新时出横条，点「换成中台这版」整表替换；<code>studio/static/direct-view.js</code> 里不再有「口播稿」；全片设计一行有「动作规矩」「不用」两个标题、没有 <code>line-through</code>、显示的是短白话，老任务（两字段为 <code>null</code>）显示原话且不超两行。</li>
+<li>设计合同：本稿 <code>contract.json</code> 每个状态按块分开（<code>-steps -head -script -style -opts -gen -design</code>），实现页用 <code>collect_design_inventory.js</code> 的 <code>options.states</code> 指到真实页面的对应块，<code>check_design_contract.py check</code> 全部通过。</li>
+<li>R276：<code>frontend_gate.mjs</code> 的 empty / filled / unavailable 版式变了（分镜脚本框、视频风格、生成条）、各任务状态步骤条多了字、全片设计一行换了写法（<code>DV-DESIGN</code> 的文字和删除线），更新 R276 的 approved-extras 和夹具截图；R276 后端测试里建任务不带风格的用例要补 <code>style</code> 或 <code>styleBase</code>，改到 R276 受保护测试 → 按 G16 对 R276 卡 rebaseline。</li>
+<li>新代码没有 <code>style=</code> 内联样式；颜色只用令牌（浅色卡落地后自动变浅）。</li>
+</ol>
+
+<h2 class="sec">7 受影响截图</h2>
+<ul class="rules">
+<li>R276 <code>frontend_gate.mjs</code>：empty、filled、unavailable（版式）；ready、failed-shot、done、done-silent（入口）；designing、writing、rewriting、composing、composing-silent（灰字）。R277 门禁里带步骤条的截图。</li>
+</ul>
+
+<h2 class="sec">8 画法说明</h2>
+<ul class="rules">
+<li>风格库（R283）的九张样张图和样张动画是 <code>docs/tasks/R283-direct-style-library/samples/&lt;id&gt;.html</code> 用 R276 本机渲染器（<code>scripts/video_render/multi_shot.py</code>，1080×1920，30 帧，360 帧）真渲染的，脚本 <code>render_sample.sh</code>；卡片数据由 <code>build_lib_data.py</code> 生成到 <code>lib-data.js</code>。</li>
+<li><code>css/</code> 是 <code>107b56e</code> 的 <code>studio/static/</code> 原样复制，再叠 R280 的 <code>light.css</code>；新块只用本页头部规则。</li>
+<li>顶栏 <code>img/light-topbar.png</code> 和成片区 <code>img/light-done-below.png</code>：临时 Studio（8767，这台电脑数据的克隆）打开「断更一年，我拆了四句话」，注入 <code>light.css</code> 后截的真实页面。三套风格的色板、字号、动作规矩、不用的套路和首镜关键帧都是这台电脑上三次真实生成的数据。<code>img/</code> 不进仓库。</li>
+<li>index.html 第 1 节「改前」是现在的深色界面截图；分镜脚本框那张是用户截的上一版稿子（和 R276 现在的版式一样）。</li>
+<li>分镜脚本表照中台 <code>apps/media/web/src/media/creation-workbench/CreationVideoPanel.tsx</code> 的 <code>sb-table</code>（截图 <code>docs/development/video-pipeline-build/mock-shots/mk5-supp-video-storyboard-saved-1440.png</code>）：列名、镜头列「镜号 + 起止时间」、画面列「来源标签 + 图 + 说明」照搬，图挪到说明左边。「中台交过来」那一台的六列文字和时长是上游 <code>docs/development/video-practice-hiatus/storyboard.json</code> 的真数据，画面图是同目录 <code>previews/sheet_0N.png</code> 每镜最后一帧；改分镜脚本时的画面是这台电脑上这条成片七镜的无声分段（任务目录 <code>silent/0N.mp4</code>）缩到 360×640 的小片段，封面是七张关键帧。交接包的版本号、时间是示例。</li>
+</ul>
+</div>
+</div>
+<script src="lib-data.js"></script>
+<script src="draft.js"></script>
+<script>
+document.querySelector('[data-frames]').innerHTML=STATES.map(([st,name,o])=>`<div class="frame-wrap"><div class="frame-cap"><b>${name}</b><span>${st}</span></div>${frame(st,o)}</div>`).join('')
+ +`<div class="frame-wrap"><div class="frame-cap"><b>可点演示</b><span>demo</span></div><div data-demo></div></div>`;
+growAll(document);playClips(document);addEventListener('load',()=>growAll(document));
+renderDemo();
+</script>
+</body>
+</html>

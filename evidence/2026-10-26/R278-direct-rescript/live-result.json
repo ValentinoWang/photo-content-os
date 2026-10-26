@@ -1,0 +1,221 @@
+{
+  "state": "live-5z2bi1gp",
+  "transport": "llm_common.generate_text / claude_cli / claude-opus-5-5",
+  "account": "~/.claude-account3",
+  "scope": "service-level, no HTTP server or UI browser",
+  "steps": [
+    {
+      "step": "initial",
+      "elapsedSeconds": 215.621,
+      "status": "ready",
+      "failureCode": null,
+      "modelCalls": 2,
+      "events": [
+        {
+          "phase": "design",
+          "recordedAt": "2026-10-26T13:20:15.282901Z",
+          "elapsedSeconds": 20.359,
+          "status": "passed",
+          "failureCode": null
+        },
+        {
+          "phase": "write",
+          "recordedAt": "2026-10-26T13:22:56.093047Z",
+          "elapsedSeconds": 160.806,
+          "status": "passed",
+          "failureCode": null,
+          "shotId": "01",
+          "attempt": 1,
+          "instructionKind": "initial"
+        },
+        {
+          "phase": "lint",
+          "recordedAt": "2026-10-26T13:22:56.096148Z",
+          "shotId": "01",
+          "attempt": 1,
+          "checks": {
+            "errors": [],
+            "warnings": [
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "render",
+          "recordedAt": "2026-10-26T13:23:30.047593Z",
+          "shotId": "01",
+          "status": "passed",
+          "elapsedSeconds": 33.949
+        }
+      ],
+      "poster.jpg": {
+        "bytes": 48780,
+        "sha256": "d271dba49e226a0ea91265275cacd2cc6c69c79de8a216114e0f52a08abc795b",
+        "externalEvidenceRelative": "live-5z2bi1gp/inspected-artifacts/initial-poster.jpg"
+      },
+      "clip.mp4": {
+        "bytes": 130272,
+        "sha256": "2964421b9566eab8715ecf3e6cecbb165861c219e5c13e13d1992a226eaa4688",
+        "externalEvidenceRelative": "live-5z2bi1gp/inspected-artifacts/initial-clip.mp4"
+      },
+      "sample": {
+        "posterRevision": 1,
+        "codeChars": 6255,
+        "checks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+            }
+          ]
+        }
+      },
+      "design": {
+        "status": "done",
+        "palette": {
+          "background": "#F3EBDD",
+          "primary": "#0E5A63",
+          "accent": "#D9620F",
+          "neutral": "#2A2622"
+        },
+        "typeScale": [
+          220,
+          96,
+          48
+        ],
+        "motionRules": "每句只让一个元素做主动作，跳动或画入后立即停住，次要元素幅度减半、稍晚开始，其余全部静止；橙色只出现在结论和关键数字上。",
+        "banned": [
+          "衬线大标题、斜体强调词和「01 / 02」编号",
+          "除结论与关键数字外使用橙色，或引入第二个彩色",
+          "所有元素同时淡入或全部从下往上滑入",
+          "光晕、粒子、渐变、毛玻璃等装饰效果",
+          "三卡并排、要点列表或整句口播上屏",
+          "文字在被读时仍在移动"
+        ],
+        "motionSummary": "每句只动一个东西，动完就停，橙色只给结论",
+        "bannedShort": [
+          "不用衬线和斜体",
+          "橙色只标结论",
+          "不同时淡入",
+          "不加光晕粒子",
+          "不堆要点列表",
+          "字读时不动"
+        ],
+        "source": null
+      }
+    },
+    {
+      "step": "revised",
+      "elapsedSeconds": 168.813,
+      "status": "ready",
+      "failureCode": null,
+      "modelCalls": 2,
+      "events": [
+        {
+          "phase": "design",
+          "recordedAt": "2026-10-26T13:23:40.916701Z",
+          "elapsedSeconds": 10.352,
+          "status": "passed",
+          "failureCode": null
+        },
+        {
+          "phase": "write",
+          "recordedAt": "2026-10-26T13:25:45.899171Z",
+          "elapsedSeconds": 124.978,
+          "status": "passed",
+          "failureCode": null,
+          "shotId": "01",
+          "attempt": 1,
+          "instructionKind": "initial"
+        },
+        {
+          "phase": "lint",
+          "recordedAt": "2026-10-26T13:25:45.902503Z",
+          "shotId": "01",
+          "attempt": 1,
+          "checks": {
+            "errors": [],
+            "warnings": [
+              {
+                "code": "number_unspoken",
+                "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "render",
+          "recordedAt": "2026-10-26T13:26:19.011743Z",
+          "shotId": "01",
+          "status": "passed",
+          "elapsedSeconds": 33.106
+        }
+      ],
+      "poster.jpg": {
+        "bytes": 55597,
+        "sha256": "a2e6813c079e397e5caebfb5958f4c36970894b2efce9d33602a84181463e066",
+        "externalEvidenceRelative": "live-5z2bi1gp/inspected-artifacts/revised-poster.jpg"
+      },
+      "clip.mp4": {
+        "bytes": 93629,
+        "sha256": "c867c9fa98cbb8898b6557901dde50b0ddaf0e9e42abc4ab8fb38707b7847f5e",
+        "externalEvidenceRelative": "live-5z2bi1gp/inspected-artifacts/revised-clip.mp4"
+      },
+      "sample": {
+        "posterRevision": 2,
+        "codeChars": 5523,
+        "checks": {
+          "errors": [],
+          "warnings": [
+            {
+              "code": "number_unspoken",
+              "message": "画面数字 0% 未出现在本镜口播，请核对出处和数量。"
+            }
+          ]
+        }
+      },
+      "design": {
+        "status": "done",
+        "palette": {
+          "background": "#F3EBDD",
+          "primary": "#08424A",
+          "accent": "#D9620F",
+          "neutral": "#2A2622"
+        },
+        "typeScale": [
+          220,
+          96,
+          48
+        ],
+        "motionRules": "每句只让一个元素做主动作，跳动或画入后立即停住，次要元素幅度减半、稍晚开始，其余全部静止；橙色只出现在结论和关键数字上。",
+        "banned": [
+          "衬线大标题、斜体强调词和「01 / 02」编号",
+          "除结论与关键数字外使用橙色，或引入第二个彩色",
+          "所有元素同时淡入或全部从下往上滑入",
+          "光晕、粒子、渐变、毛玻璃等装饰效果",
+          "三卡并排、要点列表或整句口播上屏",
+          "文字在被读时仍在移动"
+        ],
+        "motionSummary": "每句只动一个东西，动完就停，橙色只给结论",
+        "bannedShort": [
+          "不用衬线和斜体",
+          "橙色只标结论",
+          "不同时淡入",
+          "不加光晕粒子",
+          "不堆要点列表",
+          "字读时不动"
+        ],
+        "source": null
+      }
+    }
+  ],
+  "recordedEvents": 8,
+  "passed": true,
+  "remainingFrameFiles": 0,
+  "totalModelCalls": 4,
+  "processComplete": true
+}

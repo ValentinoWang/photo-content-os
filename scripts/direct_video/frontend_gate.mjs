@@ -9,20 +9,22 @@ import {resolve,join} from 'node:path';
 import {spawn,spawnSync} from 'node:child_process';
 import {pathToFileURL} from 'node:url';
 import {runInNewContext} from 'node:vm';
+import {composeLegacyContract} from './rescript_frontend_gate.mjs';
 import {fixture,testDetail,testFormulas} from '../../tests/test_r276_direct_frontend.mjs';
 
 const ROOT=resolve(import.meta.dirname,'../..');
 const detailIds=new Set(['DV-DETAIL','DV-FACTS','DV-CHECKS','DV-REWRITE','DV-CODE','DV-PVNOTE']);
-function outerContract(path){const contract=JSON.parse(readFileSync(path,'utf8'));for(const spec of Object.values(contract.states))spec.ids=spec.ids.filter(id=>!detailIds.has(id));const file=join(temp,'r276-outer-contract.json');writeFileSync(file,JSON.stringify(contract));return file;}
+function outerContract(path){const contract=composeLegacyContract(JSON.parse(readFileSync(path,'utf8')),JSON.parse(readFileSync(join(process.env.R278_DESIGN_ROOT||join(ROOT,'docs/tasks/R278-direct-rescript/design'),'contract.json'),'utf8')),state=>JSON.parse(readFileSync(join(ROOT,'tests/fixtures/r276-direct',state+'.json'),'utf8')));for(const spec of Object.values(contract.states))spec.ids=spec.ids.filter(id=>!detailIds.has(id));const file=join(temp,'r276-outer-contract.json');writeFileSync(file,JSON.stringify(contract));return file;}
 function outerCollector(source){return source.replace('for (let n = el;', `if(el.closest('[data-design-id="DV-DETAIL"]'))return false; for (let n = el;`);}
 
 const DESIGN=process.env.R276_DESIGN_ROOT||join(ROOT,'docs/tasks/R276-direct-video-opus/design');
 const CORE=process.env.HARNESS_CORE;
 if(!CORE) throw new Error('设置 HARNESS_CORE，指向 Harness Engineering 的 Core 目录（设计合同检查脚本在那里）');
 const OUT=process.env.R276_FRONTEND_EVIDENCE||join(homedir(),'.photo-content-os/evidence/R276-direct-video-opus/frontend-f2');
-const BASE='http://127.0.0.1:8767';
+const PORT=Number(process.env.DIRECT_GATE_PORT||8767);
+const BASE=`http://127.0.0.1:${PORT}`;
 const STATES=['empty','read-error','filled','unavailable','designing','writing','failed-shot','ready','rewriting','composing','composing-silent','done','done-silent'];
-const pw=process.env.PLAYWRIGHT_MODULE||join(homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
+const pw=process.env.VIDEO_RENDER_PLAYWRIGHT_MODULE?.replace(/index\.js$/,'index.mjs')||process.env.PLAYWRIGHT_MODULE||join(homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const {chromium}=await import(pathToFileURL(pw));
 const sandbox={window:{}};runInNewContext(readFileSync(join(DESIGN,'shots-data.js'),'utf8'),sandbox);
 const source=JSON.parse(JSON.stringify(sandbox.window.R131.shots));
@@ -50,6 +52,7 @@ async function mocks(page,state){
       if(range){const start=Number(range[1]),end=range[2]?Math.min(Number(range[2]),body.length-1):body.length-1;return route.fulfill({status:206,contentType:'video/mp4',headers:{'Content-Range':`bytes ${start}-${end}/${body.length}`,'Accept-Ranges':'bytes'},body:body.subarray(start,end+1)});}
       return route.fulfill({contentType:'video/mp4',headers:{'Accept-Ranges':'bytes'},body});
     }
+    if(path==='/api/direct/styles')return json(JSON.parse(readFileSync(join(ROOT,'tests/fixtures/r278-direct/first.json'),'utf8')).styles);
     if(path.endsWith('/code')){codeCalls++;return route.fulfill({contentType:'text/plain; charset=utf-8',body:source[0].html});}
     if(path.includes('/direct/jobs')){
       if(state==='read-error')return json({ok:false,error:{code:'fixture_read_failed',message:'read failed'}},500);
@@ -60,7 +63,7 @@ async function mocks(page,state){
         if(path.endsWith('/compose')){composeCalls++;current.job.output.status='composing';current.job.status='composing';return json(current);}
         createCalls++;
         if(state==='unavailable')return json({ok:false,error:{code:'claude_cli_unavailable',message:'not available'}},400);
-        assert.equal(req.postDataJSON().script,script);assert.equal(req.postDataJSON().style,'浅米色底');current=fixture('designing',source);return json(current,201);
+        assert.deepEqual(req.postDataJSON().storyboard.shots,source.map((s,i)=>({shotId:String(i+1).padStart(2,'0'),dialogue:s.dialogue})));assert.equal(req.postDataJSON().styleBase.kind,'job');assert.equal(req.postDataJSON().style,'浅米色底');current=fixture('designing',source);return json(current,201);
       }
       polls++;return json(current);
     }
@@ -89,8 +92,8 @@ async function open(state,width=1440){
   await page.locator('[data-design-id="DV-MODEL"]').waitFor();
   if(state==='read-error')await page.getByText('读不到这件作品的直出任务',{exact:true}).waitFor();
   else if(['filled','unavailable'].includes(state)){
-    await page.getByRole('textbox',{name:'口播稿',exact:true}).fill(script);
-    await page.locator('[data-style]').fill('浅米色底');
+    await page.getByRole('textbox',{name:'台词',exact:true}).fill(script);
+    await page.locator('[data-adjust]').fill('浅米色底');
     if(state==='unavailable'){await page.getByRole('button',{name:'生成',exact:true}).click();await page.locator('[data-design-id="DV-UNAVAILABLE"]').waitFor();}
   }else await page.locator(`[data-design-id="${state==='empty'?'DV-START':'DV-FILM'}"]`).waitFor();
   return {page,mock};
@@ -103,6 +106,7 @@ async function capture(page,state,width){
   if(state==='read-error')assert.equal(await page.locator('.dv-start:visible').count(),0);
   const film=page.locator('.dv-film');if(await film.count()){const columns=await film.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length);assert.equal(columns,width<=620?3:width<=1180?4:7);}
   assert.equal(metrics.width,width);assert(metrics.scrollWidth<=width,`${state}/${width} overflows: ${metrics.scrollWidth}`);
+  if(process.argv.includes('--checks-only'))return;
   const filename=`${state}-${width}.png`,path=join(OUT,filename);
   await page.screenshot({path,fullPage:true});
   const buffer=readFileSync(path);const imageWidth=buffer.readUInt32BE(16),imageHeight=buffer.readUInt32BE(20);
@@ -125,8 +129,8 @@ async function runReal() {
   const before=sourceHashes();writeFileSync(join(realOut,'source-state-hashes-before.json'),JSON.stringify(before,null,2));
   const copy=target=>{const r=spawnSync('/bin/cp',['-cR',sourceState,target],{encoding:'utf8'});assert.equal(r.status,0,r.stderr);};
   async function start(state){
-    assert(!await fetch(BASE).catch(()=>null),'8767 already in use');
-    processServer=spawn(join(ROOT,'.venv/bin/python'),['-u','-c','from pathlib import Path; import sys; from studio.server import serve; serve(state_dir=Path(sys.argv[1]),port=8767).serve_forever()',state],{cwd:ROOT,env:process.env,stdio:['ignore','pipe','pipe']});
+    assert(!await fetch(BASE).catch(()=>null),'Gate port already in use');
+    processServer=spawn(join(ROOT,'.venv/bin/python'),['-u','-c','from pathlib import Path; import sys; from studio.server import serve; serve(state_dir=Path(sys.argv[1]),port=int(sys.argv[2])).serve_forever()',state,String(PORT)],{cwd:ROOT,env:process.env,stdio:['ignore','pipe','pipe']});
     processServer.stdout.on('data',d=>writeFileSync(join(realOut,'server.stdout.log'),d,{flag:'a'}));processServer.stderr.on('data',d=>writeFileSync(join(realOut,'server.stderr.log'),d,{flag:'a'}));
     for(let i=0;i<200;i++){if(await fetch(BASE).then(r=>r.ok).catch(()=>false))return;await new Promise(r=>setTimeout(r,100));}throw new Error('real Studio failed to start');
   }
@@ -154,13 +158,13 @@ async function runReal() {
   }
   try {
     assert(process.env.VIDEO_RENDER_PLAYWRIGHT_MODULE&&existsSync(process.env.VIDEO_RENDER_PLAYWRIGHT_MODULE));assert(process.env.VIDEO_RENDER_BROWSER&&existsSync(process.env.VIDEO_RENDER_BROWSER));
-    copy(first);await start(first);realBrowser=await chromium.launch({channel:'chrome',headless:true});
+    copy(first);await start(first);realBrowser=await chromium.launch({headless:true,...(process.env.VIDEO_RENDER_BROWSER?{executablePath:process.env.VIDEO_RENDER_BROWSER}:{channel:'chrome'})});
     await outputScreens('done-silent','real-done-silent');console.log('REAL silent output captured and played at both widths');await stopServer();
     copy(second);rmSync(join(second,'direct-jobs',projectId,'dv_0e184e961bd14ac084c67411'),{recursive:true});
     await start(second);await outputScreens('done','real-done');console.log('REAL narrated output captured and played at both widths');
     if(process.env.R276_REAL_OUTPUTS_ONLY){assert(contracts.length===8&&contracts.every(c=>c.exit_code===0));console.log('PASS REAL refreshed output and playback inventories');return;}
     const token=(await jsonFetch('/api/bootstrap')).csrfToken;
-    const created=await jsonFetch(baseJob,{method:'POST',headers:{'Content-Type':'application/json','X-Content-OS-CSRF':token,Origin:BASE},body:JSON.stringify({script,style:''})});
+    const created=await jsonFetch(baseJob,{method:'POST',headers:{'Content-Type':'application/json','X-Content-OS-CSRF':token,Origin:BASE},body:JSON.stringify({script,style:'浅米色底，一个深青主色，结论只用橙色'})});
     writeFileSync(join(realOut,'new-job-created.projection.json'),JSON.stringify(created,null,2));console.log('REAL new seven-shot job started',created.job.jobId);
     const live=new Map();for(const width of [1440,960]){const page=await pageFor(width);await page.goto(url);live.set(width,page);}
     let halfway=false,ready=false,attempts=0;const startTime=Date.now(),timeline=[];
@@ -195,7 +199,7 @@ async function runReal() {
 }
 
 async function captureLive() {
-  browser=await chromium.launch({channel:'chrome',headless:true});
+  browser=await chromium.launch({headless:true,...(process.env.VIDEO_RENDER_BROWSER?{executablePath:process.env.VIDEO_RENDER_BROWSER}:{channel:'chrome'})});
   try {
     const projection=await fetch(BASE+'/api/projects/project-fc6baa3294/direct/jobs/latest').then(r=>r.json());
     assert(projection.job.jobId===process.env.R276_REAL_JOB_ID);assert(projection.job.shots.some(s=>s.status==='rendered'));assert(projection.job.shots.some(s=>s.status==='writing'));
@@ -214,18 +218,18 @@ if(process.argv.includes('--capture-live')){await captureLive();}else if(process
 try {
   testFormulas();
   if(!process.env.R276_EXTERNAL_SERVER){
-  const probe=await fetch(BASE).catch(()=>null);assert(!probe,'8767 is already in use; refusing to reuse or stop another process');
-  server=spawn(join(ROOT,'.venv/bin/python'),['-u','-c','from pathlib import Path; import sys; from studio.server import serve; s=serve(state_dir=Path(sys.argv[1]),port=8767); s.serve_forever()',temp],{cwd:ROOT,env:{...process.env,LOCAL_MEDIA_ROOT:join(temp,'media')},stdio:['ignore','pipe','pipe']});
+  const probe=await fetch(BASE).catch(()=>null);assert(!probe,'Gate port is already in use; refusing to reuse or stop another process');
+  server=spawn(join(ROOT,'.venv/bin/python'),['-u','-c','from pathlib import Path; import sys; from studio.server import serve; s=serve(state_dir=Path(sys.argv[1]),port=int(sys.argv[2])); s.serve_forever()',temp,String(PORT)],{cwd:ROOT,env:{...process.env,LOCAL_MEDIA_ROOT:join(temp,'media')},stdio:['ignore','pipe','pipe']});
   server.stdout.on('data',d=>writeFileSync(join(OUT,'server.stdout.log'),d,{flag:'a'}));server.stderr.on('data',d=>writeFileSync(join(OUT,'server.stderr.log'),d,{flag:'a'}));
-  let serverReady=false;for(let i=0;i<100;i++){if(await fetch(BASE).then(r=>r.ok).catch(()=>false)){serverReady=true;break;}await new Promise(r=>setTimeout(r,100));}assert(serverReady,'Studio 8767 did not start');
+  let serverReady=false;for(let i=0;i<100;i++){if(await fetch(BASE).then(r=>r.ok).catch(()=>false)){serverReady=true;break;}await new Promise(r=>setTimeout(r,100));}assert(serverReady,'Studio gate port did not start');
   }
-  browser=await chromium.launch({channel:'chrome',headless:true});
+  browser=await chromium.launch({headless:true,...(process.env.VIDEO_RENDER_BROWSER?{executablePath:process.env.VIDEO_RENDER_BROWSER}:{channel:'chrome'})});
   const reference=await browser.newPage({viewport:{width:1440,height:900}});
   await reference.goto(pathToFileURL(join(DESIGN,'direct.html')).href+'#s=ready&chrome=0');
   await reference.locator('.dv-card').first().waitFor();
   await reference.waitForTimeout(700);
   for(let i=0;i<7;i++)await reference.locator('.dv-poster').nth(i).screenshot({path:join(OUT,`poster-${String(i+1).padStart(2,'0')}.jpg`),type:'jpeg'});
-  for(const state of STATES)for(const width of [1440,960]){
+  if(!process.argv.includes('--checks-only'))for(const state of STATES)for(const width of [1440,960]){
     await reference.setViewportSize({width,height:900});
     await reference.goto(pathToFileURL(join(DESIGN,'direct.html')).href+`#s=${state}&chrome=0`);
     await reference.waitForTimeout(150);
@@ -270,13 +274,13 @@ try {
   const retry=await open('failed-shot');assert(await retry.page.getByRole('button',{name:'重试这一镜',exact:true}).isEnabled());await retry.page.getByRole('button',{name:'重试这一镜',exact:true}).click();await retry.page.waitForFunction(()=>document.querySelector('.main')?.dataset.designState==='writing');assert.equal(retry.mock.rewriteCalls,1);await retry.page.close();
   const interrupted=await open('ready');const interruptedData=structuredClone(interrupted.mock.current);interruptedData.job.status='failed';interruptedData.job.shots[0].status='interrupted';interrupted.mock.set(interruptedData);await interrupted.page.reload();await interrupted.page.locator('[data-retry-shot]').click();await interrupted.page.waitForFunction(()=>document.querySelector('.main')?.dataset.designState==='writing');assert.equal(interrupted.mock.rewriteCalls,1);await interrupted.page.close();
   const ready=await open('ready');const terminalCount=ready.mock.polls;await ready.page.clock.fastForward(61000);assert.equal(ready.mock.polls,terminalCount);await ready.page.close();
-  const form=await open('empty');const chooser=form.page.waitForEvent('filechooser');await form.page.getByRole('button',{name:'导入分镜文件',exact:true}).click();await (await chooser).setFiles({name:'storyboard.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({shots:source.map(s=>({dialogue:s.dialogue}))}))});await form.page.waitForFunction(()=>document.querySelector('textarea')?.value.length>20);assert.equal(await form.page.locator('textarea').inputValue(),script);await form.page.locator('[data-style]').fill('浅米色底');
+  const form=await open('empty');const chooser=form.page.waitForEvent('filechooser');await form.page.getByRole('button',{name:'导入分镜文件',exact:true}).click();await (await chooser).setFiles({name:'storyboard.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({shots:source.map(s=>({dialogue:s.dialogue}))}))});await form.page.waitForFunction(()=>document.querySelector('[data-f=dialogue]')?.value.length>20);assert.deepEqual(await form.page.locator('[data-f=dialogue]').evaluateAll(es=>es.map(e=>e.value)),source.map(s=>s.dialogue));await form.page.locator('[data-adjust]').fill('浅米色底');
   const voice=form.page.waitForEvent('filechooser');await form.page.getByRole('button',{name:'上传配音…',exact:true}).click();await (await voice).setFiles({name:'fixture.wav',mimeType:'audio/wav',buffer:Buffer.from('RIFFfixtureWAVE')});await form.page.getByText('fixture.wav',{exact:true}).waitFor();await form.page.getByRole('button',{name:'生成',exact:true}).click();await form.page.waitForFunction(()=>document.querySelector('[data-design-id="DV-FILM"]'));await form.page.waitForTimeout(100);assert.equal(form.mock.createCalls,1);assert.equal(form.mock.narrationCalls,1);await form.page.close();
-  const out=await open('done');await out.page.locator('video').evaluate(v=>v.readyState>=1?null:new Promise(r=>v.addEventListener('loadedmetadata',r,{once:true})));await out.page.locator('[data-jump="2"]').click();const time=await out.page.locator('video').evaluate(v=>v.currentTime);assert(Math.abs(time-source[0].D-source[1].D)<.05,JSON.stringify({actual:time,expected:source[0].D+source[1].D}));await out.page.getByRole('button',{name:'重新合成',exact:true}).click();await out.page.locator('[data-design-id="DV-COMPOSE"]').waitFor();assert.equal(out.mock.composeCalls,1);await out.page.close();
+  const out=await open('done');await out.page.locator('video').evaluate(v=>v.readyState>=1?null:new Promise(r=>v.addEventListener('loadedmetadata',r,{once:true})));await out.page.locator('[data-jump="2"]').click();const time=await out.page.locator('video').evaluate(v=>v.currentTime);assert(Math.abs(time-source[0].D-source[1].D)<.05,JSON.stringify({actual:time,expected:source[0].D+source[1].D}));const oldVideo=await out.page.locator('video').elementHandle();await out.page.getByRole('button',{name:'重新合成',exact:true}).click();await out.page.locator('[data-design-id="DV-COMPOSE"]').waitFor();assert.equal(out.mock.composeCalls,1);await oldVideo.evaluate(v=>v.ontimeupdate());await oldVideo.dispose();await out.page.close();
   assert.deepEqual(browserErrors,[]);
   const failures=contracts.filter(c=>c.exit_code!==0);writeFileSync(join(OUT,'contracts.json'),JSON.stringify(contracts,null,2));assert.equal(failures.length,0,JSON.stringify(failures.slice(0,3),null,2));
   console.log(`PASS ${contracts.length} design comparisons, ${screenshots.length} complete-page captures, formulas and browser interactions`);
 } finally {
-  writeFileSync(join(OUT,'screenshot-manifest.json'),JSON.stringify({scope:'F2 local Studio 8767, intercepted projection fixtures; no backend generation claim',screenshots,contracts,browser_errors:browserErrors},null,2));
+  writeFileSync(join(OUT,'screenshot-manifest.json'),JSON.stringify({scope:'F2 local Studio on configured gate port, intercepted projection fixtures; no backend generation claim',screenshots,contracts,browser_errors:browserErrors},null,2));
   await browser?.close();if(server){server.kill('SIGTERM');await new Promise(r=>server.once('exit',r));}rmSync(temp,{recursive:true,force:true});
 }

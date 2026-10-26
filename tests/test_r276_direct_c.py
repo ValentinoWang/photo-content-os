@@ -29,7 +29,7 @@ def test_writing_clock_updates_on_each_model_attempt_and_survives_restart(tmp_pa
                 time.sleep(.002)
             return super().__call__(**kwargs)
     gen = Generator(tmp_path, model_call=ObservingModel(bad=bad), media=FakeMedia())
-    job = gen.create('project1', {'script': '一句话。'}, background=False)
+    job = gen.create('project1', {'script': '一句话。', 'style': '浅底图解'}, background=False)
     assert job['shots'][0]['writingStartedAt'] is None
     gen.generate('project1', job['jobId'])
     current = gen.read('project1', job['jobId'])

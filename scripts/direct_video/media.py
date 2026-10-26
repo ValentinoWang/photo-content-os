@@ -82,7 +82,26 @@ class LocalMedia:
             destination = root / 'review-frames' / sid / f'{int(fraction * 10)}.jpg'
             destination.parent.mkdir(parents=True, exist_ok=True)
             jpeg_frame(frame, destination)
+        self.encode_clip(root, shot)
         return inspect_layout(poster)
+
+    def encode_clip(self, root: Path, shot: dict) -> Path:
+        sid = shot['shotId']
+        count = max(1, round((shot['measuredSeconds'] or shot['estimatedSeconds']) * FPS))
+        frames = root / 'cache' / sid / sid / 'frames'
+        if any(not (frames / f'frame-{index:06d}.png').is_file() for index in range(count)):
+            raise FileNotFoundError('clip_frames_unavailable')
+        target = root / 'clips' / (sid + '.mp4')
+        target.parent.mkdir(parents=True, exist_ok=True)
+        pending = target.with_suffix('.pending.mp4')
+        try:
+            run_ffmpeg(['-framerate', str(FPS), '-start_number', '0', '-i', str(frames / 'frame-%06d.png'),
+                        '-frames:v', str(count), '-vf', 'scale=360:640', '-an', '-c:v', 'libx264',
+                        '-threads', '1', '-crf', '28', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(pending)])
+            pending.replace(target)
+        finally:
+            pending.unlink(missing_ok=True)
+        return target
 
     def review_frames(self, root: Path, shot: dict) -> list[Path]:
         return [root / 'review-frames' / shot['shotId'] / f'{n}.jpg' for n in (3, 6, 9)]

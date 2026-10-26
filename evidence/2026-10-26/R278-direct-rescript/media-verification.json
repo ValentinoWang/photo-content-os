@@ -1,0 +1,38 @@
+[
+  {
+    "step": "initial",
+    "posterSize": [
+      360,
+      640
+    ],
+    "posterReadable": true,
+    "clipDecoded": true,
+    "width": 360,
+    "height": 640,
+    "fps": 30,
+    "frames": 546,
+    "durationSeconds": 18.2,
+    "streams": 1,
+    "codec": "h264",
+    "faststart": true,
+    "hashesMatch": true
+  },
+  {
+    "step": "revised",
+    "posterSize": [
+      360,
+      640
+    ],
+    "posterReadable": true,
+    "clipDecoded": true,
+    "width": 360,
+    "height": 640,
+    "fps": 30,
+    "frames": 546,
+    "durationSeconds": 18.2,
+    "streams": 1,
+    "codec": "h264",
+    "faststart": true,
+    "hashesMatch": true
+  }
+]

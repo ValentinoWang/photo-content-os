@@ -52,7 +52,7 @@ def api(tmp_path):
 def create(api):
     request, csrf, pid, app, _ = api
     base = f'/api/projects/{pid}/direct/jobs'
-    status, _, result = request(base, 'POST', {'script': '第一句。\n第二句。'}, csrf)
+    status, _, result = request(base, 'POST', {'script': '第一句。\n第二句。', 'style': '浅底图解'}, csrf)
     assert status == 201
     job_id = result['job']['jobId']
     deadline = time.monotonic() + 5

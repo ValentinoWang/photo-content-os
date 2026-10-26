@@ -184,6 +184,11 @@ class RevisionMixin:
             root = self.path(project_id, job_id)
             atomic_bytes(root / 'shots' / (sid + '.html'), code)
             atomic_bytes(root / 'posters' / (sid + '.jpg'), poster)
+            clip = root / 'clips' / (sid + '.mp4')
+            if (source / 'clip.mp4').is_file():
+                atomic_bytes(clip, (source / 'clip.mp4').read_bytes())
+            else:
+                clip.unlink(missing_ok=True)
             for key in VERSION_FIELDS:
                 shot[key] = copy.deepcopy(record[key])
             shot['currentVersion'] = version

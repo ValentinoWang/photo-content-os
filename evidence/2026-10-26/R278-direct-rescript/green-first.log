@@ -1,0 +1,192 @@
+....................................................FF...                [100%]
+=================================== FAILURES ===================================
+_________ test_style_http_draft_lifecycle_security_errors_and_contract _________
+
+api = (<function api.<locals>.request at 0x10c02a840>, {'X-Content-OS-CSRF': 'f0icirHLaeuZy8eVZZg-p84wPYd_8ChzFDLFc9b4n1A'}, 'project-e650906e9d', <studio.server.StudioApplication object at 0x10b5cb4d0>, '127.0.0.1:58146')
+
+    def test_style_http_draft_lifecycle_security_errors_and_contract(api):
+        request, csrf, pid, app, host = api
+        gen = app.direct_video.generator
+        gen.model_call = Model()
+        base = f'/api/projects/{pid}/direct/style-drafts'
+        body = {'text': '浅底深青', 'shot': SHOT}
+        assert request(base, 'POST', body)[0] == 403
+        assert request(base, 'POST', body, {**csrf, 'Origin': 'https://evil.example'})[0] == 403
+        status, _, result = request(base, 'POST', body, csrf)
+        assert status == 202
+        did = result['draft']['draftId']
+        idle(gen)
+        path = base + '/' + did
+        payload = request(path)[2]['draft']
+        assert payload['status'] == 'ready' and payload['shot'] == SHOT
+        assert request(path + '/poster.jpg?v=1')[0] == 200
+        for instruction in ['', '字' * 1001, 1]:
+            assert request(path + '/revise', 'POST', {'instruction': instruction}, csrf)[0] == 400
+        assert request(path + '/revise', 'POST', {'instruction': '深一点'})[0] == 403
+        assert request(path + '/revise', 'POST', {'instruction': '深一点'}, csrf)[0] == 202
+        idle(gen)
+        jobs = f'/api/projects/{pid}/direct/jobs'
+        assert request(jobs, 'POST', {'script': '话'}, csrf)[2]['error']['code'] == 'style_required'
+        for kind, ident in [('job', 'jobId'), ('draft', 'draftId')]:
+            res = request(jobs, 'POST', {'script': '话', 'styleBase': {'kind': kind, 'projectId': pid, ident: 'missing'}}, csrf)
+            assert res[0] == 404 and res[2]['error']['code'] == 'style_base_not_found'
+        current = gen.read_draft(pid, did)
+        current['status'] = 'failed'
+        gen.save(gen.path(pid, did), current)
+        assert request(jobs, 'POST', {'script': '话', 'styleBase': {'kind': 'draft', 'projectId': pid, 'draftId': did}}, csrf)[0] == 409
+        for key in ('visual', 'subtitle', 'camera', 'audio'):
+            res = request(jobs, 'POST', {'style': '浅底', 'storyboard': {'shots': [{**SHOT, key: '字' * 2001}]}}, csrf)
+            assert res[0] == 400 and res[2]['error']['code'] == 'script_invalid'
+        from studio.api_contract import build_openapi, route_inventory
+        import jsonschema
+        spec = build_openapi()
+>       jsonschema.validate(payload, spec['components']['schemas']['DirectStyleDraft'])
+
+tests/test_r278_style_base.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+instance = {'draftId': 'ds_558dc60867a24af58184f6af', 'status': 'ready', 'text': '浅底深青', 'dialogue': '第一句话。', ...}
+schema = {'type': 'object', 'required': ['draftId', 'status', 'text', 'dialogue', 'shot', 'design', ...], 'properties': {'draft..., 'ready', 'failed']}, 'text': {'type': 'string'}, 'dialogue': {'type': 'string'}, ...}, 'additionalProperties': False}
+cls = <class 'jsonschema.validators.Draft202012Validator'>, args = ()
+kwargs = {}
+
+    def validate(instance, schema, cls=None, *args, **kwargs):  # noqa: D417
+        """
+        Validate an instance under the given schema.
+    
+            >>> validate([2, 3, 4], {"maxItems": 2})
+            Traceback (most recent call last):
+                ...
+            ValidationError: [2, 3, 4] is too long
+    
+        :func:`~jsonschema.validators.validate` will first verify that the
+        provided schema is itself valid, since not doing so can lead to less
+        obvious error messages and fail in less obvious or consistent ways.
+    
+        If you know you have a valid schema already, especially
+        if you intend to validate multiple instances with
+        the same schema, you likely would prefer using the
+        `jsonschema.protocols.Validator.validate` method directly on a
+        specific validator (e.g. ``Draft202012Validator.validate``).
+    
+    
+        Arguments:
+    
+            instance:
+    
+                The instance to validate
+    
+            schema:
+    
+                The schema to validate with
+    
+            cls (jsonschema.protocols.Validator):
+    
+                The class that will be used to validate the instance.
+    
+        If the ``cls`` argument is not provided, two things will happen
+        in accordance with the specification. First, if the schema has a
+        :kw:`$schema` keyword containing a known meta-schema [#]_ then the
+        proper validator will be used. The specification recommends that
+        all schemas contain :kw:`$schema` properties for this reason. If no
+        :kw:`$schema` property is found, the default validator class is the
+        latest released draft.
+    
+        Any other provided positional and keyword arguments will be passed
+        on when instantiating the ``cls``.
+    
+        Raises:
+    
+            `jsonschema.exceptions.ValidationError`:
+    
+                if the instance is invalid
+    
+            `jsonschema.exceptions.SchemaError`:
+    
+                if the schema itself is invalid
+    
+        .. rubric:: Footnotes
+        .. [#] known by a validator registered with
+            `jsonschema.validators.validates`
+    
+        """
+        if cls is None:
+            cls = validator_for(schema)
+    
+        cls.check_schema(schema)
+        validator = cls(schema, *args, **kwargs)
+        error = exceptions.best_match(validator.iter_errors(instance))
+        if error is not None:
+>           raise error
+E           jsonschema.exceptions.ValidationError: None is valid under each of {'required': ['draftId']}, {'required': ['jobId']}
+E           
+E           Failed validating 'oneOf' in schema['properties']['design']['properties']['source']:
+E               {'type': ['object', 'null'],
+E                'required': ['kind', 'projectId', 'title', 'instruction'],
+E                'oneOf': [{'required': ['jobId']}, {'required': ['draftId']}],
+E                'properties': {'kind': {'enum': ['inherited', 'adjusted', 'drafted']},
+E                               'projectId': {'type': 'string'},
+E                               'jobId': {'type': 'string'},
+E                               'draftId': {'type': 'string'},
+E                               'title': {'type': 'string'},
+E                               'instruction': {'type': 'string'}}}
+E           
+E           On instance['design']['source']:
+E               None
+
+~/Desktop/创业项目/photo-content-os/.venv/lib/python3.13/site-packages/jsonschema/validators.py:1332: ValidationError
+---------------------------- Captured stderr setup -----------------------------
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+----------------------------- Captured stderr call -----------------------------
+studio: "POST /api/projects/project-e650906e9d/direct/style-drafts HTTP/1.1" 403 -
+studio: "POST /api/projects/project-e650906e9d/direct/style-drafts HTTP/1.1" 403 -
+studio: "POST /api/projects/project-e650906e9d/direct/style-drafts HTTP/1.1" 202 -
+studio: "GET /api/projects/project-e650906e9d/direct/style-drafts/ds_558dc60867a24af58184f6af HTTP/1.1" 200 -
+studio: "GET /api/projects/project-e650906e9d/direct/style-drafts/ds_558dc60867a24af58184f6af/poster.jpg?v=1 HTTP/1.1" 200 -
+studio: "POST /api/projects/project-e650906e9d/direct/style-drafts/ds_558dc60867a24af58184f6af/revise HTTP/1.1" 400 -
+studio: "POST /api/projects/project-e650906e9d/direct/style-drafts/ds_558dc60867a24af58184f6af/revise HTTP/1.1" 400 -
+studio: "POST /api/projects/project-e650906e9d/direct/style-drafts/ds_558dc60867a24af58184f6af/revise HTTP/1.1" 400 -
+studio: "POST /api/projects/project-e650906e9d/direct/style-drafts/ds_558dc60867a24af58184f6af/revise HTTP/1.1" 403 -
+studio: "POST /api/projects/project-e650906e9d/direct/style-drafts/ds_558dc60867a24af58184f6af/revise HTTP/1.1" 202 -
+studio: "POST /api/projects/project-e650906e9d/direct/jobs HTTP/1.1" 400 -
+studio: "POST /api/projects/project-e650906e9d/direct/jobs HTTP/1.1" 404 -
+studio: "POST /api/projects/project-e650906e9d/direct/jobs HTTP/1.1" 404 -
+studio: "POST /api/projects/project-e650906e9d/direct/jobs HTTP/1.1" 409 -
+studio: "POST /api/projects/project-e650906e9d/direct/jobs HTTP/1.1" 400 -
+studio: "POST /api/projects/project-e650906e9d/direct/jobs HTTP/1.1" 400 -
+studio: "POST /api/projects/project-e650906e9d/direct/jobs HTTP/1.1" 400 -
+studio: "POST /api/projects/project-e650906e9d/direct/jobs HTTP/1.1" 400 -
+___________ test_styles_cross_project_sort_dedup_and_smallest_poster ___________
+
+api = (<function api.<locals>.request at 0x10c2b8fe0>, {'X-Content-OS-CSRF': 'MGzI1ZErtyvbkG_eoLeQq6apBp6AwuRFhtpY-1rk3ac'}, 'project-41e7362a67', <studio.server.StudioApplication object at 0x10c114b90>, '127.0.0.1:58169')
+
+    def test_styles_cross_project_sort_dedup_and_smallest_poster(api):
+        request, csrf, pid, app, host = api
+        gen = app.direct_video.generator
+        gen.model_call = Model()
+        other = request('/api/projects', 'POST', {'title': '另一作品'}, csrf)[2]['project']['id']
+        first = generate(gen, pid=pid)
+        second = generate(gen, {'script': '第二次。', 'style': '深青'}, pid=other)
+        root = gen.path(other, second['jobId'])
+        (root / 'posters/01.jpg').rename(root / 'posters/02.jpg')
+        second['shots'].append({**copy.deepcopy(second['shots'][0]), 'shotId': '02', 'currentVersion': 0})
+        gen.save(root, second)
+        result = request('/api/direct/styles')
+        assert result[0] == 200
+        rows = result[2]['styles']
+        assert len(rows) == 1 and rows[0]['projectId'] == other and rows[0]['title'] == '另一作品'
+>       assert '/shots/02/poster.jpg' in rows[0]['posterUrl']
+E       AssertionError: assert '/shots/02/poster.jpg' in '［本机路径］'
+
+tests/test_r278_style_base.py:287: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+----------------------------- Captured stderr call -----------------------------
+studio: "POST /api/projects HTTP/1.1" 201 -
+studio: "GET /api/direct/styles HTTP/1.1" 200 -
+=========================== short test summary info ============================
+FAILED tests/test_r278_style_base.py::test_style_http_draft_lifecycle_security_errors_and_contract
+FAILED tests/test_r278_style_base.py::test_styles_cross_project_sort_dedup_and_smallest_poster
+2 failed, 55 passed in 3.99s

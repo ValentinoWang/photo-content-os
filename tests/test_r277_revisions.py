@@ -87,7 +87,7 @@ class ImageMedia(FakeMedia):
 def ready_image(tmp_path, image_claude):
     media = ImageMedia()
     gen = Generator(tmp_path / 'state', media=media)
-    job = gen.create('project1', {'script': '第一句。\n第二句。'}, background=False)
+    job = gen.create('project1', {'script': '第一句。\n第二句。', 'style': '浅底图解'}, background=False)
     gen.generate('project1', job['jobId'])
     return gen, gen.read('project1', job['jobId']), media, image_claude
 
@@ -237,10 +237,10 @@ def test_samples_copy_survives_job_deletion_and_two_prompt_examples(ready_image)
     poster = gen.library.poster(sample['sampleId']).read_bytes()
     shutil.rmtree(gen.path('project1', job['jobId']))
     assert gen.library.poster(sample['sampleId']).read_bytes() == poster
-    other = gen.create('project2', {'script': '第一句。'}, background=False)
+    other = gen.create('project2', {'script': '第一句。', 'style': '浅底图解'}, background=False)
     gen.generate('project2', other['jobId'])
     gen.set_sample('project2', other['jobId'], '01', True, '作品乙')
-    third = gen.create('project3', {'script': '第一句。'}, background=False)
+    third = gen.create('project3', {'script': '第一句。', 'style': '浅底图解'}, background=False)
     gen.generate('project3', third['jobId'])
     writing = [c['context'] for c in records(calls) if 'D' in c['context']]
     assert len(writing[-1]['samples']) == 2 and 'code' in writing[-1]['samples'][0]
@@ -301,7 +301,7 @@ def test_unreadable_library_is_not_empty(ready_image):
 def test_legacy_projection_fields_and_privacy(ready_image):
     gen, job, _, _ = ready_image
     result = projection(job)
-    new = {'currentVersion', 'versions', 'boxes', 'look', 'sample'}
+    new = {'currentVersion', 'versions', 'boxes', 'look', 'sample', 'visual', 'subtitle', 'camera', 'audio', 'fromDraft'}
     old = {'shotId', 'dialogue', 'mainAction', 'estimatedSeconds', 'measuredSeconds', 'timingSource', 'status',
            'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt', 'renderedAt', 'codeChars', 'posterRevision', 'checks'}
     for original, projected in zip(job['shots'], result['shots']):

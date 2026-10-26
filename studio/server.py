@@ -782,8 +782,18 @@ class StudioApplication:
                         query = urllib.parse.parse_qs(parsed.query)
                         if segments[2] == 'samples' and 'poster' in query:
                             self._media(app.direct_video.generator.library.poster(query['poster'][0]))
+                        elif segments[2] == 'styles':
+                            self._json(200, {'ok': True, **app.direct_video.styles()})
                         else:
                             self._json(200, {'ok': True, **app.direct_video.library(segments[2])})
+                        return
+                    if len(segments) >= 6 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'style-drafts']:
+                        project_id, draft_id = segments[2], segments[5]
+                        if len(segments) == 6:
+                            self._json(200, {'ok': True, 'draft': app.direct_video.draft(project_id, draft_id)})
+                        else:
+                            app.direct_video.generator.read_draft(project_id, draft_id)
+                            self._media(app.direct_video.artifact(project_id, draft_id, segments[6], '01'))
                         return
                     if len(segments) >= 6 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'jobs']:
                         project_id, job_id = segments[2], segments[5]
@@ -1019,6 +1029,12 @@ class StudioApplication:
                         self._assert_direct_origin()
                         self._body()
                         self._json(200, {'ok': True, **app.direct_video.library('decision', segments[4], segments[5] == 'adopt')})
+                        return
+                    if method == 'POST' and len(segments) >= 5 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'style-drafts']:
+                        self._assert_direct_origin()
+                        draft = app.direct_video.draft(segments[2], segments[5] if len(segments) > 5 else None,
+                                                       self._body(), revise=len(segments) > 5)
+                        self._json(202, {'ok': True, 'draft': draft})
                         return
                     if method in {'POST', 'PUT', 'DELETE'} and len(segments) >= 5 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'jobs']:
                         self._assert_direct_origin()
@@ -1463,7 +1479,7 @@ class StudioApplication:
             def _handle_error(self, exc: Exception) -> None:
                 if isinstance(exc, DirectVideoError):
                     code = exc.code
-                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready'} else 400
+                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found', 'style_base_not_found', 'draft_not_found'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready', 'draft_not_ready', 'draft_busy'} else 400
                     self._json(status, _error(code, '直出任务暂时无法执行，请检查输入或任务状态后重试。'))
                     return
                 code = getattr(exc, "code", "request_invalid")

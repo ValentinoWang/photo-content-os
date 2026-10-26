@@ -2,16 +2,18 @@
 from __future__ import annotations
 
 import copy
+import json
 from pathlib import Path
 import re
 
 from direct_video.generate import DirectVideoError, Generator
+from studio.project_store import ProjectStoreError
 
 JOB_FIELDS = ('jobId', 'projectId', 'model', 'status', 'createdAt', 'updatedAt', 'failureCode',
               'design', 'shots', 'narration', 'output')
 SHOT_FIELDS = ('shotId', 'dialogue', 'mainAction', 'estimatedSeconds', 'measuredSeconds', 'timingSource',
                'status', 'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt', 'renderedAt',
-               'codeChars', 'posterRevision', 'checks', 'currentVersion', 'versions', 'boxes', 'look', 'sample')
+               'codeChars', 'posterRevision', 'checks', 'visual', 'subtitle', 'camera', 'audio', 'fromDraft', 'currentVersion', 'versions', 'boxes', 'look', 'sample')
 PATH_TEXT = re.compile(r'(?:[A-Za-z]:[\\/][^\s"<>]+|/(?:[^\s/"<>]+/)+[^\s"<>]*)')
 
 
@@ -29,8 +31,8 @@ def projection(job: dict | None) -> dict | None:
     if job is None:
         return None
     result = {k: copy.deepcopy(job[k]) for k in JOB_FIELDS}
-    result['shots'] = [{k: copy.deepcopy(shot.get(k) if k == 'writingStartedAt' else shot[k]) for k in SHOT_FIELDS} for shot in job['shots']]
-    result['design'] = {k: result['design'].get(k) for k in ('status', 'palette', 'typeScale', 'motionRules', 'banned')}
+    result['shots'] = [{k: copy.deepcopy(shot.get(k, False if k == 'fromDraft' else None) if k in ('writingStartedAt', 'visual', 'subtitle', 'camera', 'audio', 'fromDraft') else shot[k]) for k in SHOT_FIELDS} for shot in job['shots']]
+    result['design'] = {k: result['design'].get(k) for k in ('status', 'palette', 'typeScale', 'motionRules', 'banned', 'motionSummary', 'bannedShort', 'source')}
     # Persisted private diagnostics must not become fields through a future
     # renderer change. Projection recursively strips unknown nested fields.
     for shot in result['shots']:
@@ -66,8 +68,63 @@ class DirectVideo:
         return projection(job)
 
     def create(self, project_id, body):
-        self.store.get_project(project_id)
-        return projection(self.generator.create(project_id, body))
+        title = self.store.get_project(project_id)['title']
+        body = {**body, '_projectTitle': title, '_styleBaseTitle': None}
+        source = body.get('styleBase')
+        if isinstance(source, dict) and isinstance(source.get('projectId'), str):
+            try:
+                body['_styleBaseTitle'] = self.store.get_project(source['projectId'])['title']
+            except ProjectStoreError as exc:
+                raise DirectVideoError('style_base_not_found') from exc
+        job = self.generator.create(project_id, body)
+        return projection(job)
+
+    def draft(self, project_id, draft_id=None, body=None, *, revise=False):
+        title = self.store.get_project(project_id)['title']
+        if draft_id is None:
+            job = self.generator.create_draft(project_id, {**body, '_projectTitle': title})
+        elif revise:
+            job = self.generator.revise_draft(project_id, draft_id, body.get('instruction'))
+        else:
+            job = self.generator.read_draft(project_id, draft_id)
+        public = projection(job)
+        shot = public['shots'][0]
+        return {'draftId': job['jobId'], 'status': 'writing' if job['status'] == 'rendering' else job['status'],
+                'text': redact(job['text']), 'dialogue': shot['dialogue'],
+                'shot': {key: shot[key] for key in ('shotId', 'dialogue', 'visual', 'subtitle', 'camera', 'audio')},
+                'design': public['design'], 'sample': {key: shot[key] for key in ('posterRevision', 'codeChars', 'checks')},
+                'failureCode': job['failureCode'], 'startedAt': job['startedAt'], 'revisions': redact(job['revisions'])}
+
+    def styles(self):
+        from direct_video.styles import DESIGN_FIELDS
+        projects = {row['id']: row['title'] for row in self.store.list_projects()}
+        rows = []
+        with self.generator.lock:
+            for path in self.generator.root.glob('*/*/job.json'):
+                job = json.loads(path.read_text())
+                if job['projectId'] in projects and job['design']['status'] == 'done':
+                    rows.append(job)
+            rows.sort(key=lambda row: (row['createdAt'], row['jobId']), reverse=True)
+            result, seen = [], set()
+            for job in rows:
+                design = {key: copy.deepcopy(job['design'].get(key)) for key in DESIGN_FIELDS}
+                identity = json.dumps(design, sort_keys=True, ensure_ascii=False)
+                if identity in seen:
+                    continue
+                seen.add(identity)
+                pid, jid = job['projectId'], job['jobId']
+                poster = None
+                for shot in sorted(job['shots'], key=lambda s: (0, int(s['shotId'])) if s['shotId'].isdigit() else (1, s['shotId'])):
+                    sid = shot['shotId']
+                    root = self.generator.path(pid, jid)
+                    path = (self.generator.version_dir(root, sid, shot['currentVersion']) / 'poster.jpg'
+                            if shot.get('currentVersion') else root / 'posters' / (sid + '.jpg'))
+                    if path.is_file():
+                        poster = f'/api/projects/{pid}/direct/jobs/{jid}/shots/{sid}/poster.jpg?v={shot["posterRevision"]}'
+                        break
+                result.append({'projectId': pid, 'jobId': jid, 'title': redact(projects[pid]), 'createdAt': job['createdAt'],
+                               'design': redact(design), 'posterUrl': poster})
+        return {'styles': result}
 
     def command(self, project_id, job_id, action, body, *, sid=None):
         self.store.get_project(project_id)
@@ -110,6 +167,8 @@ class DirectVideo:
 
     def artifact(self, project_id: str, job_id: str, kind: str, sid: str | None = None, version=None) -> Path:
         self.store.get_project(project_id)
+        if kind == 'clip.mp4':
+            return self.generator.clip(project_id, job_id, sid)
         job = self.generator.read(project_id, job_id)
         root = self.generator.path(project_id, job_id)
         if kind == 'output.mp4':

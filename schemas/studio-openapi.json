@@ -15,7 +15,27 @@
                 },
                 "type": "array"
               },
+              "bannedShort": {
+                "items": {
+                  "maxLength": 12,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 8,
+                "minItems": 1,
+                "type": [
+                  "array",
+                  "null"
+                ]
+              },
               "motionRules": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "motionSummary": {
+                "maxLength": 30,
                 "type": [
                   "string",
                   "null"
@@ -51,6 +71,59 @@
                   "null"
                 ]
               },
+              "source": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "required": [
+                      "jobId"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "required": [
+                      "draftId"
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "properties": {
+                  "draftId": {
+                    "type": "string"
+                  },
+                  "instruction": {
+                    "type": "string"
+                  },
+                  "jobId": {
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "inherited",
+                      "adjusted",
+                      "drafted"
+                    ]
+                  },
+                  "projectId": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "projectId",
+                  "title",
+                  "instruction"
+                ],
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
               "status": {
                 "enum": [
                   "pending",
@@ -76,7 +149,10 @@
               "palette",
               "typeScale",
               "motionRules",
-              "banned"
+              "banned",
+              "motionSummary",
+              "bannedShort",
+              "source"
             ],
             "type": "object"
           },
@@ -207,6 +283,12 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "audio": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
                 "boxes": {
                   "items": {
                     "properties": {
@@ -240,6 +322,12 @@
                     "type": "object"
                   },
                   "type": "array"
+                },
+                "camera": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "checks": {
                   "properties": {
@@ -321,6 +409,9 @@
                     "string",
                     "null"
                   ]
+                },
+                "fromDraft": {
+                  "type": "boolean"
                 },
                 "lastInstruction": {
                   "type": [
@@ -424,6 +515,12 @@
                     "rendered",
                     "failed",
                     "interrupted"
+                  ]
+                },
+                "subtitle": {
+                  "type": [
+                    "string",
+                    "null"
                   ]
                 },
                 "timingSource": {
@@ -593,6 +690,12 @@
                   },
                   "type": "array"
                 },
+                "visual": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
                 "writingStartedAt": {
                   "description": "Latest model-writing start, including retries; retained after writing. Null before first write or when an older job did not record it.",
                   "format": "date-time",
@@ -629,7 +732,12 @@
                 "versions",
                 "boxes",
                 "look",
-                "sample"
+                "sample",
+                "visual",
+                "subtitle",
+                "camera",
+                "audio",
+                "fromDraft"
               ],
               "type": "object"
             },
@@ -662,6 +770,340 @@
           "shots",
           "narration",
           "output"
+        ],
+        "type": "object"
+      },
+      "DirectStyleDraft": {
+        "additionalProperties": false,
+        "properties": {
+          "design": {
+            "properties": {
+              "banned": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "bannedShort": {
+                "items": {
+                  "maxLength": 12,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 8,
+                "minItems": 1,
+                "type": [
+                  "array",
+                  "null"
+                ]
+              },
+              "motionRules": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "motionSummary": {
+                "maxLength": 30,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "palette": {
+                "properties": {
+                  "accent": {
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "type": "string"
+                  },
+                  "background": {
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "type": "string"
+                  },
+                  "neutral": {
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "type": "string"
+                  },
+                  "primary": {
+                    "pattern": "^#[0-9a-fA-F]{6}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "background",
+                  "primary",
+                  "accent",
+                  "neutral"
+                ],
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "source": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "required": [
+                      "jobId"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "required": [
+                      "draftId"
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "properties": {
+                  "draftId": {
+                    "type": "string"
+                  },
+                  "instruction": {
+                    "type": "string"
+                  },
+                  "jobId": {
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "inherited",
+                      "adjusted",
+                      "drafted"
+                    ]
+                  },
+                  "projectId": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "projectId",
+                  "title",
+                  "instruction"
+                ],
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "writing",
+                  "done",
+                  "failed"
+                ]
+              },
+              "typeScale": {
+                "items": {
+                  "type": "integer"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": [
+                  "array",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "status",
+              "palette",
+              "typeScale",
+              "motionRules",
+              "banned",
+              "motionSummary",
+              "bannedShort",
+              "source"
+            ],
+            "type": "object"
+          },
+          "dialogue": {
+            "type": "string"
+          },
+          "draftId": {
+            "type": "string"
+          },
+          "failureCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "revisions": {
+            "items": {
+              "properties": {
+                "at": {
+                  "type": "string"
+                },
+                "instruction": {
+                  "maxLength": 1000,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "instruction",
+                "at"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "sample": {
+            "properties": {
+              "checks": {
+                "properties": {
+                  "errors": {
+                    "items": {
+                      "properties": {
+                        "atSeconds": {
+                          "type": "number"
+                        },
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "warnings": {
+                    "description": "Nonblocking reminders. layout_bottom_gap marks >30% empty space below visible content in y=200..1500, using the rendered keyframe and edge-sampled background; it never triggers automatic rewriting.",
+                    "examples": [
+                      [
+                        {
+                          "code": "layout_bottom_gap",
+                          "message": "画面下半截空着：主画面只占到 y=900，离字幕带还空 46.2%"
+                        }
+                      ]
+                    ],
+                    "items": {
+                      "properties": {
+                        "atSeconds": {
+                          "type": "number"
+                        },
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "errors",
+                  "warnings"
+                ],
+                "type": "object"
+              },
+              "codeChars": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "posterRevision": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "posterRevision",
+              "codeChars",
+              "checks"
+            ],
+            "type": "object"
+          },
+          "shot": {
+            "properties": {
+              "audio": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "camera": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "dialogue": {
+                "type": "string"
+              },
+              "shotId": {
+                "type": "string"
+              },
+              "subtitle": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "visual": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "shotId",
+              "dialogue",
+              "visual",
+              "subtitle",
+              "camera",
+              "audio"
+            ],
+            "type": "object"
+          },
+          "startedAt": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "designing",
+              "writing",
+              "ready",
+              "failed"
+            ]
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "draftId",
+          "status",
+          "text",
+          "dialogue",
+          "shot",
+          "design",
+          "sample",
+          "failureCode",
+          "startedAt",
+          "revisions"
         ],
         "type": "object"
       }
@@ -1158,6 +1600,175 @@
         "summary": "getDirectSamples"
       }
     },
+    "/api/direct/styles": {
+      "get": {
+        "operationId": "getDirectStyles",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "ok": {
+                      "const": true
+                    },
+                    "styles": {
+                      "items": {
+                        "properties": {
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "design": {
+                            "properties": {
+                              "banned": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "bannedShort": {
+                                "items": {
+                                  "maxLength": 12,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 8,
+                                "minItems": 1,
+                                "type": [
+                                  "array",
+                                  "null"
+                                ]
+                              },
+                              "motionRules": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "motionSummary": {
+                                "maxLength": 30,
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "palette": {
+                                "properties": {
+                                  "accent": {
+                                    "pattern": "^#[0-9a-fA-F]{6}$",
+                                    "type": "string"
+                                  },
+                                  "background": {
+                                    "pattern": "^#[0-9a-fA-F]{6}$",
+                                    "type": "string"
+                                  },
+                                  "neutral": {
+                                    "pattern": "^#[0-9a-fA-F]{6}$",
+                                    "type": "string"
+                                  },
+                                  "primary": {
+                                    "pattern": "^#[0-9a-fA-F]{6}$",
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "background",
+                                  "primary",
+                                  "accent",
+                                  "neutral"
+                                ],
+                                "type": [
+                                  "object",
+                                  "null"
+                                ]
+                              },
+                              "typeScale": {
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "maxItems": 3,
+                                "minItems": 3,
+                                "type": [
+                                  "array",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "palette",
+                              "typeScale",
+                              "motionRules",
+                              "banned",
+                              "motionSummary",
+                              "bannedShort"
+                            ],
+                            "type": "object"
+                          },
+                          "jobId": {
+                            "type": "string"
+                          },
+                          "posterUrl": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "projectId": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "projectId",
+                          "jobId",
+                          "title",
+                          "createdAt",
+                          "posterUrl",
+                          "design"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "styles"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Sample or proposal not found"
+          },
+          "409": {
+            "description": "Proposal is not pending"
+          }
+        },
+        "summary": "List distinct completed designs across projects"
+      }
+    },
     "/api/health": {
       "get": {
         "operationId": "getHealth",
@@ -1492,6 +2103,7 @@
         }
       ],
       "post": {
+        "description": "Without styleBase a nonblank style is required (style_required). Missing sources: 404 style_base_not_found; unready drafts: 409 draft_not_ready. Unchanged sources skip design generation.",
         "operationId": "createDirectJob",
         "parameters": [
           {
@@ -1508,6 +2120,23 @@
           "content": {
             "application/json": {
               "schema": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "styleBase"
+                    ]
+                  },
+                  {
+                    "properties": {
+                      "style": {
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "style"
+                    ]
+                  }
+                ],
                 "oneOf": [
                   {
                     "required": [
@@ -1536,6 +2165,16 @@
                       "shots": {
                         "items": {
                           "properties": {
+                            "audio": {
+                              "description": "Trimmed; blank means absent.",
+                              "maxLength": 2000,
+                              "type": "string"
+                            },
+                            "camera": {
+                              "description": "Trimmed; blank means absent.",
+                              "maxLength": 2000,
+                              "type": "string"
+                            },
                             "dialogue": {
                               "maxLength": 2000,
                               "minLength": 1,
@@ -1543,6 +2182,16 @@
                             },
                             "shotId": {
                               "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$",
+                              "type": "string"
+                            },
+                            "subtitle": {
+                              "description": "Trimmed; blank means absent.",
+                              "maxLength": 2000,
+                              "type": "string"
+                            },
+                            "visual": {
+                              "description": "Trimmed; blank means absent.",
+                              "maxLength": 2000,
                               "type": "string"
                             }
                           },
@@ -1565,6 +2214,50 @@
                   "style": {
                     "maxLength": 4000,
                     "type": "string"
+                  },
+                  "styleBase": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "jobId": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "job"
+                          },
+                          "projectId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "projectId",
+                          "jobId"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "draftId": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "draft"
+                          },
+                          "projectId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "projectId",
+                          "draftId"
+                        ],
+                        "type": "object"
+                      }
+                    ]
                   }
                 },
                 "type": "object"
@@ -2195,6 +2888,140 @@
         {
           "in": "path",
           "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/jobs/{jobId}/shots/{shotId}/clip.mp4": {
+      "get": {
+        "operationId": "getDirectShotClip",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current posterRevision cache key; media always follows the current selection.",
+            "in": "query",
+            "name": "v",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Project, draft or current frames not found"
+          },
+          "409": {
+            "description": "Draft is busy or not ready"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read the current shot clip"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
           "required": true,
           "schema": {
             "type": "string"
@@ -3170,6 +3997,508 @@
           }
         },
         "summary": "saveDirectSample"
+      }
+    },
+    "/api/projects/{projectId}/direct/style-drafts": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "description": "Loopback, same-origin and CSRF protected. Trimmed text must be nonblank. Busy drafts return 409 draft_busy.",
+        "operationId": "createDirectStyleDraft",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "shot": {
+                    "properties": {
+                      "audio": {
+                        "description": "Trimmed; blank means absent.",
+                        "maxLength": 2000,
+                        "type": "string"
+                      },
+                      "camera": {
+                        "description": "Trimmed; blank means absent.",
+                        "maxLength": 2000,
+                        "type": "string"
+                      },
+                      "dialogue": {
+                        "maxLength": 2000,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "shotId": {
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$",
+                        "type": "string"
+                      },
+                      "subtitle": {
+                        "description": "Trimmed; blank means absent.",
+                        "maxLength": 2000,
+                        "type": "string"
+                      },
+                      "visual": {
+                        "description": "Trimmed; blank means absent.",
+                        "maxLength": 2000,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "shotId",
+                      "dialogue"
+                    ],
+                    "type": "object"
+                  },
+                  "text": {
+                    "maxLength": 4000,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "shot"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "draft": {
+                      "$ref": "#/components/schemas/DirectStyleDraft"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "draft"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Project, draft or current frames not found"
+          },
+          "409": {
+            "description": "Draft is busy or not ready"
+          }
+        },
+        "summary": "Generate a persisted style sample"
+      }
+    },
+    "/api/projects/{projectId}/direct/style-drafts/{draftId}": {
+      "get": {
+        "operationId": "getDirectStyleDraft",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "draft": {
+                      "$ref": "#/components/schemas/DirectStyleDraft"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "draft"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Project, draft or current frames not found"
+          },
+          "409": {
+            "description": "Draft is busy or not ready"
+          }
+        },
+        "summary": "Read a style sample"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "draftId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/style-drafts/{draftId}/clip.mp4": {
+      "get": {
+        "operationId": "getDirectStyleDraftClip",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current posterRevision cache key; media always follows the current selection.",
+            "in": "query",
+            "name": "v",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Project, draft or current frames not found"
+          },
+          "409": {
+            "description": "Draft is busy or not ready"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read the sample clip"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "draftId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/style-drafts/{draftId}/poster.jpg": {
+      "get": {
+        "operationId": "getDirectStyleDraftPoster",
+        "parameters": [
+          {
+            "description": "Current posterRevision cache key; media always follows the current selection.",
+            "in": "query",
+            "name": "v",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Project, draft or current frames not found"
+          },
+          "409": {
+            "description": "Draft is busy or not ready"
+          }
+        },
+        "summary": "Read the sample keyframe"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "draftId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/style-drafts/{draftId}/revise": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "draftId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "description": "Loopback, same-origin and CSRF protected. Trimmed text must be nonblank. Busy drafts return 409 draft_busy.",
+        "operationId": "reviseDirectStyleDraft",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "instruction": {
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "instruction"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "draft": {
+                      "$ref": "#/components/schemas/DirectStyleDraft"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "draft"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Project, draft or current frames not found"
+          },
+          "409": {
+            "description": "Draft is busy or not ready"
+          }
+        },
+        "summary": "Revise a style sample"
       }
     },
     "/api/projects/{projectId}/documents/{documentName}/diff": {

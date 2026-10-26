@@ -1,0 +1,147 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_render_outputs_poster_and_clip_same_step _________________
+
+tmp_path = PosixPath('$TEMP/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-353/test_render_outputs_poster_and0')
+
+    def test_render_outputs_poster_and_clip_same_step(tmp_path):
+        shot = {'shotId': '01', 'estimatedSeconds': .2, 'measuredSeconds': None}
+        (tmp_path / 'shots').mkdir()
+        (tmp_path / 'shots/01.html').write_text('synthetic')
+        count = frames(tmp_path, shot)
+        with patch('direct_video.media.render_shots', return_value={'status': 'completed'}):
+            LocalMedia().render(tmp_path, shot)
+        assert (tmp_path / 'posters/01.jpg').is_file()
+        clip = tmp_path / 'clips/01.mp4'
+>       info = probe(clip)
+               ^^^^^^^^^^^
+
+tests/test_r278_clips.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_r278_clips.py:28: in probe
+    return json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-count_frames', '-show_streams', '-show_format', '-of', 'json', str(path)]))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:473: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['ffprobe', '-v', 'error', '-count_frames', '-show_streams', '-show_format', ...],)
+kwargs = {'stdout': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffprobe', '-v', 'error', '-count_frames', '-show_streams', '-show_format', '-of', 'json', '$TEMP/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-353/test_render_outputs_poster_and0/clips/01.mp4']' returned non-zero exit status 1.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+$TEMP/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-353/test_render_outputs_poster_and0/clips/01.mp4: No such file or directory
+______ test_clips_follow_rewrite_rollback_lazy_request_and_missing_frames ______
+
+api = (<function api.<locals>.request at 0x107c66340>, {'X-Content-OS-CSRF': 'PXRnAvV8x9-8zPIh3TMe7eV4eh6BJXn-4TbMigs4f2c'}, 'project-208988acdd', <studio.server.StudioApplication object at 0x107b55940>, '127.0.0.1:57631')
+
+    def test_clips_follow_rewrite_rollback_lazy_request_and_missing_frames(api):
+        request, csrf, pid, app, host = api
+        gen = app.direct_video.generator
+        gen.model_call, gen.media = Model(), FrameMedia()
+        job = generate(gen, {'script': '甲', 'style': '浅底'}, pid)
+        jid = job['jobId']
+        root = gen.path(pid, jid)
+        path = f'/api/projects/{pid}/direct/jobs/{jid}/shots/01/clip.mp4'
+        first = request(path + '?v=1')
+>       assert first[0] == 200
+E       assert 404 == 200
+
+tests/test_r278_clips.py:67: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+studio: "GET /api/bootstrap HTTP/1.1" 200 -
+studio: "POST /api/projects HTTP/1.1" 201 -
+----------------------------- Captured stderr call -----------------------------
+studio: "GET /api/projects/project-208988acdd/direct/jobs/dv_5d82fc9cf63940c0ba2626e6/shots/01/clip.mp4?v=1 HTTP/1.1" 404 -
+_______ test_encoding_command_has_crf_faststart_no_audio_and_frame_count _______
+
+tmp_path = PosixPath('$TEMP/folders/w0/td0lhml95j374vr26ypgjzfh0000gn/T/pytest-of-vsiyo/pytest-353/test_encoding_command_has_crf_0')
+
+    def test_encoding_command_has_crf_faststart_no_audio_and_frame_count(tmp_path):
+        shot = {'shotId': '01', 'estimatedSeconds': .2, 'measuredSeconds': None}
+        frames(tmp_path, shot)
+        media = LocalMedia()
+        with patch('direct_video.media.run_ffmpeg') as run:
+            def encoded(args):
+                Path(args[-1]).write_bytes(b'encoded')
+            run.side_effect = encoded
+>           media.encode_clip(tmp_path, shot)
+            ^^^^^^^^^^^^^^^^^
+E           AttributeError: 'LocalMedia' object has no attribute 'encode_clip'
+
+tests/test_r278_clips.py:103: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_r278_clips.py::test_render_outputs_poster_and_clip_same_step
+FAILED tests/test_r278_clips.py::test_clips_follow_rewrite_rollback_lazy_request_and_missing_frames
+FAILED tests/test_r278_clips.py::test_encoding_command_has_crf_faststart_no_audio_and_frame_count
+3 failed in 1.65s

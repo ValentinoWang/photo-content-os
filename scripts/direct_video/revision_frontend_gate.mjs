@@ -9,18 +9,23 @@ import {spawn,spawnSync} from 'node:child_process';
 import {pathToFileURL} from 'node:url';
 import {createServer} from 'node:net';
 import {testFixtures,testRevisionDetail,testRevisionLog,testPollingOwnership,testB2Layout,testLookRunningState,testMarkerGeometry,testMarkerPlacementEdges,measureFixtureBoxes,testMarkerAvoidance} from '../../tests/test_r277_frontend.mjs';
+import {composeLegacyContract} from './rescript_frontend_gate.mjs';
 import {testDetail} from '../../tests/test_r276_direct_frontend.mjs';
 
 const ROOT=resolve(import.meta.dirname,'../..'),CORE=process.env.HARNESS_CORE;
 assert(CORE,'Set HARNESS_CORE to the Harness Engineering Core directory');
 const DESIGN=join(ROOT,'docs/tasks/R277-shot-visual-revision/design'),OUT=process.env.R277_FRONTEND_EVIDENCE||join(homedir(),'.photo-content-os/evidence/R277-shot-visual-revision/frontend');
-const BASE='http://127.0.0.1:8768',SOURCE=join(homedir(),'.photo-content-os/studio-r276');
+const PORT=Number(process.env.DIRECT_GATE_PORT||8768);
+const BASE=`http://127.0.0.1:${PORT}`,SOURCE=process.env.R277_SOURCE_STATE||join(homedir(),'.photo-content-os/studio-r276');
 const TEMP=mkdtempSync(join(tmpdir(),'r277-frontend-')),STATE=join(TEMP,'state');
 const load=name=>JSON.parse(readFileSync(join(ROOT,'tests/fixtures/r277-revise',name+'.json'),'utf8'));
 const screenshots=[],contracts=[],errors=[],checks=[],layoutChecks=[],markerChecks=[];let markerEdgeCases=[];let server,browser;
 const sha=buffer=>createHash('sha256').update(buffer).digest('hex');
 mkdirSync(OUT,{recursive:true});
 const project={id:'fixture-piece',title:'断更一年，我拆了四句话',revision:1,documents:{},workspace_key:'fixture-piece'},piece={...project,group_id:'fixture-group',videos:0,photos:0,versions:0,outputs:[]},group={id:'fixture-group',title:'其他作品',pieces:[piece],count:1,pending:0,produced:0};
+const legacyContract=JSON.parse(readFileSync(join(DESIGN,'contract.json'),'utf8'));
+const r278Contract=JSON.parse(readFileSync(join(process.env.R278_DESIGN_ROOT||join(ROOT,'docs/tasks/R278-direct-rescript/design'),'contract.json'),'utf8'));
+const composedPath=join(TEMP,'r277-r278-contract.json');
 const collector=readFileSync(join(CORE,'skills/ui-copy-quality/assets/collect_design_inventory.js'),'utf8');
 const clockTime=new Date('2026-10-26T01:10:00Z');
 function sourceHashes(){const code='from pathlib import Path; import hashlib,json,sys; r=Path(sys.argv[1]); print(json.dumps({str(p.relative_to(r)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(r.rglob("*")) if p.is_file()},sort_keys=True))';const r=spawnSync(join(ROOT,'.venv/bin/python'),['-c',code,SOURCE],{encoding:'utf8',maxBuffer:30*1024*1024});assert.equal(r.status,0,r.stderr);return JSON.parse(r.stdout);}
@@ -35,10 +40,17 @@ async function capture(page,name,width,{viewportOnly=false}={}){
   await page.locator('img').evaluateAll(async images=>{await Promise.all(images.map(img=>img.complete?null:new Promise(r=>{img.onload=img.onerror=r;})));});
   const metrics=await page.evaluate(()=>({width:innerWidth,height:innerHeight,scrollHeight:document.documentElement.scrollHeight,scrollWidth:document.documentElement.scrollWidth,scrollY}));
   assert.equal(metrics.width,width);if(metrics.scrollWidth>width){await page.screenshot({path:join(OUT,`${name}-${width}-overflow.png`),fullPage:true});writeFileSync(join(OUT,`${name}-${width}-overflow.json`),JSON.stringify(await page.locator('#app *').evaluateAll(es=>es.map(e=>({tag:e.tagName,cls:e.className,rect:e.getBoundingClientRect().toJSON()})).filter(e=>e.rect.right>innerWidth+1)),null,2));}assert(metrics.scrollWidth<=width,`${name}/${width} overflow ${metrics.scrollWidth}`);
+  if(process.argv.includes('--checks-only'))return;
   const file=join(OUT,`${name}-${width}.png`);await page.screenshot({path:file,fullPage:!viewportOnly});const buffer=readFileSync(file);const dims={width:buffer.readUInt32BE(16),height:buffer.readUInt32BE(20)};assert.equal(dims.width,width);if(!viewportOnly)assert(dims.height>=metrics.scrollHeight);
   screenshots.push({state:name,route:page.url(),viewport:{width,height:900},capture_time:new Date().toISOString(),scroll_coverage:viewportOnly?[metrics.scrollY,metrics.scrollY+900]:[0,metrics.scrollHeight],capture_kind:viewportOnly?'first-screen':'complete-page',output_dimensions:dims,path:file,sha256:sha(buffer),browser:browser.version(),font_mode:'fallback-local',review_result:'PENDING',review_note:'Awaiting personal inspection of this image.'});
 }
-async function contract(page,state,name,width){const inventory=await page.evaluate(`(()=>{${collector};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`),path=join(OUT,`${name}-${width}.inventory.json`);writeFileSync(path,JSON.stringify(inventory,null,2));const r=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',join(DESIGN,'contract.json'),'--approved-extras',join(DESIGN,'approved-extras.json'),'--inventory',path,'--json'],{encoding:'utf8'});assert(r.stdout,r.stderr);writeFileSync(join(OUT,`${name}-${width}.contract.json`),r.stdout);contracts.push({state,name,width,exit_code:r.status,result:JSON.parse(r.stdout)});}
+async function contract(page,state,name,width,payload){
+  // Variants share R277 detail states, but their outer R278 step lock depends
+  // on the actual projection after the scenario's clicks (including revise).
+  assert(payload?.job,'Contract composition requires the current scenario projection');
+  const composed=composeLegacyContract({...legacyContract,states:{[state]:structuredClone(legacyContract.states[state])}},r278Contract,()=>payload);
+  writeFileSync(composedPath,JSON.stringify(composed));
+  const inventory=await page.evaluate(`(()=>{${collector};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`),path=join(OUT,`${name}-${width}.inventory.json`);writeFileSync(path,JSON.stringify(inventory,null,2));const r=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',composedPath,'--approved-extras',join(DESIGN,'approved-extras.json'),'--inventory',path,'--json'],{encoding:'utf8'});assert(r.stdout,r.stderr);writeFileSync(join(OUT,`${name}-${width}.contract.json`),r.stdout);contracts.push({state,name,width,exit_code:r.status,result:JSON.parse(r.stdout)});}
 async function mocks(page,name){let payload=load(name);const requests=[];let codeCalls=0;
   const anchor=Date.parse(payload.job.updatedAt),shift=clockTime.getTime()-anchor;
   for(const entry of [payload.job,...payload.job.shots])for(const key of ['createdAt','updatedAt','writingStartedAt','writtenAt','renderedAt'])if(entry[key])entry[key]=new Date(Date.parse(entry[key])+shift).toISOString();
@@ -114,11 +126,11 @@ async function replayRealMarkers(){
   writeFileSync(join(OUT,'real-marker-replay.json'),JSON.stringify({scope:'Retained real projections/posters rendered in current Studio; no fresh model call',inputs,source_unchanged:true,business_mutations:mutations},null,2));
 }
 try{
-  testFixtures();await new Promise((resolve,reject)=>{const probe=createServer();probe.once('error',reject);probe.listen(8768,'127.0.0.1',()=>probe.close(resolve));});
+  testFixtures();await new Promise((resolve,reject)=>{const probe=createServer();probe.once('error',reject);probe.listen(PORT,'127.0.0.1',()=>probe.close(resolve));});
   const copied=spawnSync('/bin/cp',['-cR',SOURCE,STATE],{encoding:'utf8'});assert.equal(copied.status,0,copied.stderr);
-  server=spawn(join(ROOT,'.venv/bin/python'),['-u','-c','from pathlib import Path; import sys; from studio.server import serve; serve(state_dir=Path(sys.argv[1]),port=8768).serve_forever()',STATE],{cwd:ROOT,env:process.env,stdio:['ignore','pipe','pipe']});server.stdout.on('data',d=>writeFileSync(join(OUT,'server.stdout.log'),d,{flag:'a'}));server.stderr.on('data',d=>writeFileSync(join(OUT,'server.stderr.log'),d,{flag:'a'}));
+  server=spawn(join(ROOT,'.venv/bin/python'),['-u','-c','from pathlib import Path; import sys; from studio.server import serve; serve(state_dir=Path(sys.argv[1]),port=int(sys.argv[2])).serve_forever()',STATE,String(PORT)],{cwd:ROOT,env:process.env,stdio:['ignore','pipe','pipe']});server.stdout.on('data',d=>writeFileSync(join(OUT,'server.stdout.log'),d,{flag:'a'}));server.stderr.on('data',d=>writeFileSync(join(OUT,'server.stderr.log'),d,{flag:'a'}));
   let ready=false;for(let i=0;i<100;i++){if(server.exitCode!==null)throw new Error('Temporary Studio exited during startup');if(await fetch(BASE).then(r=>r.ok).catch(()=>false)){ready=true;break;}await new Promise(r=>setTimeout(r,100));}assert(ready,'Studio 8768 startup failed');
-  const pw=process.env.PLAYWRIGHT_MODULE||join(homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');const {chromium}=await import(pathToFileURL(pw));browser=await chromium.launch({channel:'chrome',headless:true});
+  const pw=process.env.VIDEO_RENDER_PLAYWRIGHT_MODULE?.replace(/index\.js$/,'index.mjs')||process.env.PLAYWRIGHT_MODULE||join(homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');const {chromium}=await import(pathToFileURL(pw));browser=await chromium.launch({headless:true,...(process.env.VIDEO_RENDER_BROWSER?{executablePath:process.env.VIDEO_RENDER_BROWSER}:{channel:'chrome'})});
   // Real first screen: copied state, no synthetic projection or generated media.
   for(const width of [1440,960,390]){
     const page=await newPage(width);await page.goto(BASE+'/#view=piece&piece=project-fc6baa3294&ptab=direct');await page.locator('[data-shot="02"]').waitFor();await page.locator('[data-shot="02"]').click();await page.getByRole('button',{name:'让 Opus 看一遍',exact:true}).waitFor();assert.equal(await page.locator('.rv-hs').count(),0);
@@ -133,16 +145,16 @@ try{
   await reference.goto(pathToFileURL(join(DESIGN,'revise.html')).href+'#s=compare&chrome=0');await reference.locator('.rv-pair .new .rv-stage').waitFor();const afterCode=await reference.evaluate(()=>({html:SHOTS[1].html,D:SHOTS[1].D}));const afterBoxes=await raster(afterCode.html,afterCode.D,'poster-02-after.jpg');
   const fixtureGeometry=[];for(const name of ['review','select','picked','rewriting2','compare','kept-prev','saved','review-failed','log','look-running','no-boxes','no-boxes-look-running','verify-running','verify-missed','verify-failed','log-empty','proposal-running'])for(const shot of load(name).job.shots){if(!shot.boxes.length)continue;const expected=shot.shotId==='02'&&shot.currentVersion===2?afterBoxes:measured[Number(shot.shotId)-1];assert.deepEqual(shot.boxes,expected,`${name}/${shot.shotId}: fixture boxes drifted from renderer measurement; regenerate at 0.8*D`);fixtureGeometry.push({name,shotId:shot.shotId,boxes:expected});}
   writeFileSync(join(OUT,'fixture-geometry.json'),JSON.stringify({collector:'scripts/video_render/render-frames.mjs',frame:'floor(0.8 * D * 30)',source_sha256:sha(readFileSync(join(ROOT,'scripts/video_render/render-frames.mjs'))),fixtures:fixtureGeometry},null,2));
-  for(const state of ['review','select','picked','compare','log']){await reference.goto(pathToFileURL(join(DESIGN,'revise.html')).href+`#s=${state}&chrome=0`);await reference.waitForTimeout(100);await reference.screenshot({path:join(OUT,`reference-${state}.png`),fullPage:true});}await reference.close();
+  if(!process.argv.includes('--checks-only'))for(const state of ['review','select','picked','compare','log']){await reference.goto(pathToFileURL(join(DESIGN,'revise.html')).href+`#s=${state}&chrome=0`);await reference.waitForTimeout(100);await reference.screenshot({path:join(OUT,`reference-${state}.png`),fullPage:true});}await reference.close();
   const matrix={review:'review',select:'select',picked:'picked',rewriting2:'rewriting2',compare:'compare','kept-prev':'kept-prev',saved:'saved','review-failed':'review-failed',log:'log','look-running':'review','no-boxes':'review-failed','no-boxes-look-running':'review','verify-running':'compare','verify-missed':'compare','verify-failed':'compare','log-empty':'log','proposal-running':'log'};
-  for(const [name,state] of Object.entries(matrix))for(const width of [1440,960]){const {page,mock}=await open(name,width);await capture(page,name,width);await contract(page,state,name,width);
-    if(name==='review'){assert.equal(mock.codeCalls,0);await page.locator('[data-design-id="DV-CODE"] summary').click();await page.waitForFunction(()=>document.querySelector('[data-design-id="DV-CODE"] pre')?.textContent.startsWith('<!doctype'));assert.equal(mock.codeCalls,1);await page.locator('.rv-more details').evaluateAll(es=>es.forEach(e=>e.open=true));await capture(page,'review-expanded',width);await contract(page,'review','review-expanded',width);}
+  for(const [name,state] of Object.entries(matrix))for(const width of [1440,960]){const {page,mock}=await open(name,width);await capture(page,name,width);await contract(page,state,name,width,mock.payload);
+    if(name==='review'){assert.equal(mock.codeCalls,0);await page.locator('[data-design-id="DV-CODE"] summary').click();await page.waitForFunction(()=>document.querySelector('[data-design-id="DV-CODE"] pre')?.textContent.startsWith('<!doctype'));assert.equal(mock.codeCalls,1);await page.locator('.rv-more details').evaluateAll(es=>es.forEach(e=>e.open=true));await capture(page,'review-expanded',width);await contract(page,'review','review-expanded',width,mock.payload);}
     if(name==='no-boxes'){assert.equal(await page.locator('.rv-chip:enabled').count(),3);await page.locator('[data-extra]').fill('底色不动');assert(await page.locator('[data-revise]').isEnabled());}
     if(name==='verify-missed')assert(await page.getByText('柱子仍然和主角一样醒目。',{exact:true}).isVisible());
     if(name==='log'){await page.getByRole('button',{name:'采用',exact:true}).click();await page.getByText('已写进规则',{exact:true}).waitFor();assert.equal(mock.payload.revisionLog.rulesRevision,4);await page.getByRole('button',{name:'回到作品',exact:true}).click();await page.locator('[data-box="b2"]').waitFor();}
-    await page.close();console.log(`captured ${name}/${width}`);
+    await page.close();console.log(`${process.argv.includes('--checks-only')?'checked':'captured'} ${name}/${width}`);
   }
-  for(const name of ['review','picked','compare','kept-prev','no-boxes','log']){const {page}=await open(name,390);await capture(page,name,390);await contract(page,matrix[name],name,390);await page.close();}
+  for(const name of ['review','picked','compare','kept-prev','no-boxes','log']){const {page,mock}=await open(name,390);await capture(page,name,390);await contract(page,matrix[name],name,390,mock.payload);await page.close();}
   const detail=await open('review',1440);await testDetail(detail.page,detail.mock.payload.job);await testRevisionDetail(detail.page,detail.mock.payload.job);await testRevisionLog(detail.page);await testPollingOwnership(detail.page,detail.mock.payload.job);markerEdgeCases=await testMarkerPlacementEdges(detail.page,detail.mock.payload.job);markerEdgeCases.push(...await testMarkerAvoidance(detail.page,detail.mock.payload.job));await detail.page.close();checks.push('R276 detail intent + R277 detail/log behavior');
   // Real clicks prove that revert and sample actions send the scoped request.
   const compare=await open('compare',1440);await compare.page.locator('[data-previous]').click();await compare.page.getByText('已退回第 1 版。第 2 版留着，你点的问题已经记下。',{exact:true}).waitFor();assert.deepEqual(compare.mock.requests[0].body,{version:1});assert.equal(compare.mock.payload.job.shots[1].versions.length,2);await compare.page.locator('[data-sample]').click();await compare.page.getByRole('button',{name:'♥ 已存为样例',exact:true}).waitFor();await compare.page.locator('[data-sample]').click();await compare.page.getByRole('button',{name:'♡ 这镜好',exact:true}).waitFor();assert.deepEqual(compare.mock.requests.slice(1).map(r=>r.method),['PUT','DELETE']);await compare.page.close();checks.push('revert retains both versions; sample PUT/DELETE; proposal adopt and back navigation');

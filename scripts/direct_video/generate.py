@@ -23,6 +23,7 @@ import llm_common
 from direct_video.lint import declared_seconds, lint
 from direct_video.media import FPS, LocalMedia, OutputCheckError, atomic_bytes, wav_seconds
 from direct_video.revisions import RevisionMixin, empty_look
+from direct_video.styles import StyleMixin, shot_context
 from direct_video.revision_library import RevisionLibrary, read_json
 
 MODEL = 'claude-opus-5-5'
@@ -69,6 +70,11 @@ def validate_design(value: dict, shots: list[dict]) -> dict:
              and all(isinstance(b, str) and 0 < len(b.strip()) <= 500 for b in banned)
              and isinstance(value.get('motionRules'), str) and 0 < len(value['motionRules'].strip()) <= 1000
              and isinstance(rows, list) and len(rows) == len(shots))
+    summary, short = value.get('motionSummary'), value.get('bannedShort')
+    valid = (valid and isinstance(summary, str) and 0 < len(summary.strip()) <= 30
+             and not re.search(r'\d+(?:\.\d+)?\s*(?:%|％|px|em|rem|秒|毫秒|帧|像素|厘米|毫米|米|度|倍|s\b|ms\b)|[（(]\s*\d+\s*[,，]\s*\d+|[xyXY]\s*[=:：]\s*\d+', summary)
+             and isinstance(short, list) and 1 <= len(short) <= 8
+             and all(isinstance(b, str) and 0 < len(b.strip()) <= 12 for b in short))
     if not valid:
         raise DirectVideoError('design_invalid')
     for row, shot in zip(rows, shots):
@@ -76,7 +82,8 @@ def validate_design(value: dict, shots: list[dict]) -> dict:
             not isinstance(row.get(k), str) or not 0 < len(row[k].strip()) <= 1000 for k in ('mainAction', 'takeaway')
         ):
             raise DirectVideoError('design_invalid')
-    return {k: value[k] for k in ('palette', 'typeScale', 'motionRules', 'banned', 'perShot')}
+    return {**{k: value[k] for k in ('palette', 'typeScale', 'motionRules', 'banned', 'perShot')},
+            'motionSummary': summary.strip(), 'bannedShort': [item.strip() for item in short]}
 
 
 def validate_code(value) -> str:
@@ -111,7 +118,12 @@ def parse_shots(body: dict) -> list[dict]:
         if not isinstance(sid, str) or not SAFE_ID.fullmatch(sid) or sid in ids or not isinstance(dialogue, str) or not 0 < len(dialogue.strip()) <= 2000:
             raise DirectVideoError('script_invalid')
         ids.add(sid)
-        result.append({'shotId': sid, 'dialogue': dialogue})
+        columns = {}
+        for key in ('visual', 'subtitle', 'camera', 'audio'):
+            if key in row and (not isinstance(row[key], str) or len(row[key].strip()) > 2000):
+                raise DirectVideoError('script_invalid')
+            columns[key] = row[key].strip() or None if key in row else None
+        result.append({'shotId': sid, 'dialogue': dialogue, **columns})
     if sum(len(s['dialogue']) for s in result) > 20000:
         raise DirectVideoError('script_invalid')
     return result
@@ -178,10 +190,11 @@ def failure_code(exc: Exception, default='generation_failed') -> str:
     return default
 
 
-class Generator(RevisionMixin):
+class Generator(StyleMixin, RevisionMixin):
     def __init__(self, state_dir: Path, *, workers: int | None = None, model_call=None, media=None):
         self.root = state_dir / 'direct-jobs'
         self.root.mkdir(parents=True, exist_ok=True)
+        self.draft_root = state_dir / 'direct-style-drafts'
         workers = workers if workers is not None else int(os.environ.get('DIRECT_VIDEO_WORKERS', '3'))
         if type(workers) is not int or not 1 <= workers <= 3:
             raise ValueError('DIRECT_VIDEO_WORKERS must be between 1 and 3')
@@ -195,10 +208,11 @@ class Generator(RevisionMixin):
         self.recover()
 
     def path(self, project_id: str, job_id: str) -> Path:
-        if not SAFE_ID.fullmatch(project_id) or not re.fullmatch(r'dv_[a-f0-9]{24}', job_id):
+        if not isinstance(project_id, str) or not SAFE_ID.fullmatch(project_id) or not isinstance(job_id, str) or not re.fullmatch(r'(?:dv|ds)_[a-f0-9]{24}', job_id):
             raise DirectVideoError('job_not_found')
-        path = self.root / project_id / job_id
-        if not path.resolve().is_relative_to(self.root.resolve()):
+        base = self.draft_root if job_id.startswith('ds_') else self.root
+        path = base / project_id / job_id
+        if not path.resolve().is_relative_to(base.resolve()):
             raise DirectVideoError('job_not_found')
         return path
 
@@ -219,7 +233,7 @@ class Generator(RevisionMixin):
         dump(root / 'job.json', job)
 
     def recover(self) -> None:
-        for path in self.root.glob('*/*/job.json'):
+        for path in (*self.root.glob('*/*/job.json'), *self.draft_root.glob('*/*/job.json')):
             job = json.loads(path.read_text())
             owner = job.get('_workerPid')
             if process_alive(owner):
@@ -296,22 +310,30 @@ class Generator(RevisionMixin):
                     self.active.discard(key)
         threading.Thread(target=run, daemon=True, name='direct-video-job').start()
 
-    def create(self, project_id: str, body: dict, *, background=True) -> dict:
+    def create(self, project_id: str, body: dict, *, background=True, draft=False) -> dict:
         rows = parse_shots(body)
-        job_id = 'dv_' + uuid.uuid4().hex[:24]
+        base = self.resolve_style_base(body)
+        if base is None and not body.get('style', '').strip():
+            raise DirectVideoError('style_required')
+        job_id = ('ds_' if draft else 'dv_') + uuid.uuid4().hex[:24]
         root = self.path(project_id, job_id)
         timestamp = now()
-        job = {'jobId': job_id, 'projectId': project_id, 'model': MODEL, 'style': body.get('style', ''),
+        job = {'jobId': job_id, 'projectId': project_id, 'model': MODEL, 'style': body.get('style', ''), '_projectTitle': body.get('_projectTitle', project_id),
                'status': 'designing', 'createdAt': timestamp, 'updatedAt': timestamp, 'failureCode': None,
                'design': {'status': 'pending', 'palette': None, 'typeScale': None, 'motionRules': None, 'banned': []},
                'shots': [{**row, 'mainAction': None, 'estimatedSeconds': round(len(row['dialogue']) / 5.1, 1),
                           'measuredSeconds': None, 'timingSource': 'estimate', 'status': 'queued', 'failureCode': None,
                           'attempts': 0, 'lastInstruction': None, 'writingStartedAt': None, 'writtenAt': None, 'renderedAt': None,
                           'codeChars': 0, 'posterRevision': 0, 'checks': {'errors': [], 'warnings': []},
-                          'currentVersion': 0, 'versions': [], 'boxes': [], 'look': empty_look(), 'sample': False} for row in rows],
+                          'currentVersion': 0, 'versions': [], 'boxes': [], 'look': empty_look(), 'sample': False, 'fromDraft': False} for row in rows],
                'narration': {'status': 'none', 'durationSeconds': None},
                'output': {'status': 'none', 'composedAt': None, 'kind': 'silent', 'durationSeconds': None, 'frames': None, 'revision': 0,
                           'checks': {'playable': 'unknown', 'avOffsetSeconds': None, 'blackFrames': None}}}
+        job['design']['source'] = None
+        if draft:
+            job.update(_isDraft=True, text=body['style'], startedAt=timestamp, revisions=[])
+        if base is not None:
+            self.bind_style_base(root, job, base, body)
         with self.lock:
             self.save(root, job)
         if background:
@@ -375,19 +397,19 @@ class Generator(RevisionMixin):
             job = self.read(project_id, job_id)
             job['design']['status'] = 'writing'
             self.save(root, job)
-        design = validate_design(self.timed_call(root, 'design',
-            '为竖屏口播设计全片视觉系统。只输出 JSON，包含 palette（background、primary、accent、neutral 的六位十六进制颜色），'
-            'typeScale（三档从大到小整数），motionRules（一句话），banned（3–6 条），perShot（shotId、唯一主动作 mainAction、观众读到的 takeaway）。\n' + self.library.rules(RULES),
-            {'shots': [{'shotId': s['shotId'], 'dialogue': s['dialogue']} for s in job['shots']], 'style': job['style']}), job['shots'])
+        design = (copy.deepcopy(job['_baseDesign']) if job.get('_baseDesign') is not None and not job['style'].strip()
+                  else self.make_design(root, job))
         dump(root / 'design.json', design)
         with self.lock:
-            job['design'] = {'status': 'done', **{k: v for k, v in design.items() if k != 'perShot'}}
-            for shot, row in zip(job['shots'], design['perShot']):
-                shot['mainAction'] = row['mainAction']
+            source = job['design'].get('source')
+            job['design'] = {'status': 'done', **{k: v for k, v in design.items() if k != 'perShot'}, 'source': source}
+            for index, shot in enumerate(job['shots']):
+                rows = design.get('perShot', [])
+                shot['mainAction'] = rows[index]['mainAction'] if index < len(rows) else shot.get('visual') or shot['dialogue']
             job['status'] = 'writing'
             self.save(root, job)
         with ThreadPoolExecutor(max_workers=self.workers) as pool:
-            list(pool.map(lambda sid: self.write_shot(project_id, job_id, sid), [s['shotId'] for s in job['shots']]))
+            list(pool.map(lambda sid: self.write_shot(project_id, job_id, sid), [s['shotId'] for s in job['shots'] if not s.get('fromDraft')]))
         self.finish_shots(project_id, job_id)
 
     def finish_shots(self, project_id, job_id):
@@ -415,7 +437,7 @@ class Generator(RevisionMixin):
                            'shotId': sid, 'shotNumber': index + 1, 'totalShots': len(job['shots']),
                            'previousDialogue': job['shots'][index - 1]['dialogue'] if index else None,
                            'nextDialogue': job['shots'][index + 1]['dialogue'] if index + 1 < len(job['shots']) else None,
-                           'instruction': instruction}
+                           'instruction': instruction, **shot_context(shot)}
                 with self.lock:
                     samples = self.library.closest(shot)
                     sample_images = []
@@ -440,7 +462,8 @@ class Generator(RevisionMixin):
                         self.save(root, current)
                     value = {}
                     try:
-                        value = self.timed_call(root, 'write', '只输出 JSON {"code": "完整 HTML"}。严格遵守以下镜头规则，不改口播。\n' + self.library.rules(RULES), context,
+                        value = self.timed_call(root, 'write', '只输出 JSON {"code": "完整 HTML"}。严格遵守以下镜头规则，不改口播。'
+                                                'visual 是编导写的画面；subtitle 是画面上要出现的字；camera 是景别 · 运镜（照着做；颜色、字号以全片设计为准）。\n' + self.library.rules(RULES), context,
                                                 image_paths=sample_images,
                                                 shotId=sid, attempt=attempt + 1, instructionKind='retry' if retry_errors is not None else 'requested' if instruction else 'initial')
                         if isinstance(value.get('code'), str):
@@ -476,14 +499,16 @@ class Generator(RevisionMixin):
                     target = current['shots'][index]
                     self.record_layout(root, target, layout)
                     revision = max([target['posterRevision'], *[v['posterRevision'] for v in target['versions']]]) + 1
-                    target.update(status='rendered', renderedAt=now(), posterRevision=revision)
+                    target.update(status='rendered', renderedAt=now(), posterRevision=revision, fromDraft=False)
                     target['boxes'] = read_json(root / 'boxes' / (sid + '.json'), [])
                     target['look'] = empty_look()
                     shutil.copyfile(root / 'posters' / (sid + '.jpg'),
                                     self.version_dir(root, sid, target['currentVersion']) / 'poster.jpg')
                     self.save_version(root, target)
+                    self.retain_clip(root, target)
                     self.save(root, current)
-                self.review_shot(project_id, job_id, sid, bool(request))
+                if not current.get('_isDraft'):
+                    self.review_shot(project_id, job_id, sid, bool(request))
             except Exception as exc:
                 with self.lock:
                     current = self.read(project_id, job_id)
@@ -602,6 +627,7 @@ class Generator(RevisionMixin):
                         target['boxes'] = read_json(root / 'boxes' / (shot['shotId'] + '.json'), [])
                         target['look'] = empty_look()
                         self.snapshot_version(root, target, None)
+                        self.retain_clip(root, target)
                         self.save(root, current)
                     self.review_shot(project_id, job_id, shot['shotId'])
                 except Exception:

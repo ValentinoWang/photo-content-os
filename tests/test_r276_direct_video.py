@@ -35,6 +35,7 @@ html,body{{margin:0;width:1080px;height:1920px;overflow:hidden;background:#fffff
 def design(rows):
     return {'palette': {'background': '#ffffff', 'primary': '#111111', 'accent': '#ef5825', 'neutral': '#777777'},
             'typeScale': [132, 72, 44], 'motionRules': '跟随口播逐步呈现', 'banned': ['霓虹', '毛玻璃', '胶囊'],
+            'motionSummary': '逐步呈现，动完就停', 'bannedShort': ['霓虹', '毛玻璃', '胶囊'],
             'perShot': [{'shotId': row['shotId'], 'mainAction': '画出因果', 'takeaway': '逐步看懂'} for row in rows]}
 
 
@@ -92,7 +93,7 @@ class FakeMedia:
 def ready(tmp_path, *, model=None, media=None, script='第一句。\n第二句。'):
     model, media = model or FakeModel(), media or FakeMedia()
     gen = Generator(tmp_path, model_call=model, media=media)
-    job = gen.create('project1', {'script': script}, background=False)
+    job = gen.create('project1', {'script': script, 'style': '浅底图解'}, background=False)
     gen.generate('project1', job['jobId'])
     return gen, gen.read('project1', job['jobId']), model, media
 
@@ -339,7 +340,8 @@ def test_busy_job_and_projection(tmp_path):
     assert str(tmp_path) not in json.dumps(result)
     assert set(result['shots'][0]) == {'shotId', 'dialogue', 'mainAction', 'estimatedSeconds', 'measuredSeconds', 'timingSource', 'status', 'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt', 'renderedAt', 'codeChars', 'posterRevision', 'checks',
                                       # R277 adds per-shot versions, boxes, look and sample.
-                                      'currentVersion', 'versions', 'boxes', 'look', 'sample'}
+                                      'currentVersion', 'versions', 'boxes', 'look', 'sample',
+                                      'visual', 'subtitle', 'camera', 'audio', 'fromDraft'}
 
 
 def test_default_gateway_with_fake_executable_generates_job(tmp_path, monkeypatch, fake_claude):
@@ -349,7 +351,7 @@ def test_default_gateway_with_fake_executable_generates_job(tmp_path, monkeypatc
     monkeypatch.setenv('FAKE_MODE', 'queue')
     monkeypatch.setenv('FAKE_QUEUE', str(queue))
     gen = Generator(tmp_path / 'state', workers=1, media=FakeMedia())
-    job = gen.create('project1', {'storyboard': {'shots': rows}}, background=False)
+    job = gen.create('project1', {'storyboard': {'shots': rows}, 'style': '浅底图解'}, background=False)
     gen.generate('project1', job['jobId'])
     assert gen.read('project1', job['jobId'])['status'] == 'ready'
     assert json.loads(queue.read_text()) == []
@@ -392,7 +394,7 @@ def test_recover_reclaims_only_dead_worker_locks(tmp_path):
 
 def test_failed_design_and_model_timeout_are_bounded(tmp_path):
     gen = Generator(tmp_path, model_call=lambda **kwargs: '{}', media=FakeMedia())
-    job = gen.create('project1', {'script': '一句话。'})
+    job = gen.create('project1', {'script': '一句话。', 'style': '浅底图解'})
     result = wait(gen, job)
     assert result['status'] == 'failed' and result['failureCode'] == 'design_invalid'
     assert result['design']['status'] == 'failed'
@@ -401,7 +403,7 @@ def test_failed_design_and_model_timeout_are_bounded(tmp_path):
             return json.dumps(design([{'shotId': '01'}]))
         raise llm_common.LLMError('claude CLI generation timed out after 300s')
     gen = Generator(tmp_path / 'timeout', model_call=timeout, media=FakeMedia())
-    job = gen.create('project1', {'script': '一句话。'})
+    job = gen.create('project1', {'script': '一句话。', 'style': '浅底图解'})
     result = wait(gen, job)
     assert result['status'] == 'failed' and result['shots'][0]['failureCode'] == 'model_timeout'
     assert result['shots'][0]['attempts'] == 1

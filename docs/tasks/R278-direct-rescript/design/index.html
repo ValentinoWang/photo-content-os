@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>视频风格与改分镜脚本</title>
+<!-- Studio 现行样式（107b56e 原样复制）+ 浅色主题（R280 设计稿）。新块只用本页头部「R278 新增」那段规则。 -->
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/workflow.css">
+<link rel="stylesheet" href="css/review.css">
+<link rel="stylesheet" href="css/direct.css">
+<link rel="stylesheet" href="css/direct-shot-detail.css">
+<link rel="stylesheet" href="../../R280-studio-light/design/light.css">
+<link rel="stylesheet" href="draft.css">
+</head>
+<body>
+<div class="doc">
+<h1>脚本直出：回去改分镜脚本，先定视频风格</h1>
+<p class="lead">需求卡 R278。生成过一次以后，能回到分镜脚本改了重新生成；生成之前，先把视频风格定下来。一共改五处：</p>
+<ol class="toc"><li><b>1</b>步骤条第一格能点</li><li><b>2</b>口播稿换成分镜脚本表</li><li><b>3</b>视频风格先定好</li><li><b>4</b>「生成」挪到最底下</li><li><b>5</b>全片设计改成人话</li></ol>
+<p class="note">页面换成浅色是另一张卡 R280，这里的图都按浅色画。中台交过来的分镜自动填进表里是另一张卡 R282（第 4 节），风格库是另一张卡 R283（第 5 节），都在这张之后做。给 Codex 的实现细节在 <a href="spec.html">spec.html</a>，你不用看。</p>
+
+<h2 class="sec">1 改前 → 改后</h2>
+<div data-cmps></div>
+
+<h2 class="sec">2 改好后的页面（可以直接点）</h2>
+<p class="lead">这是生成过以后，点步骤条「分镜脚本」进来的那一屏。可以试：</p>
+<ul class="try">
+<li>点表格里的画面，放大看动画；</li>
+<li>在台词里按回车，拆成两镜；在台词开头按退格，并回上一镜；</li>
+<li>在「视频风格」里点「从头定风格」，点一个提示小按钮写几句，再点「先定风格」「就用这个」「生成」；</li>
+<li>点右上角「回到现在这条」，回到生成过的页面。</li>
+</ul>
+<div class="frame-wrap"><div data-demo></div></div>
+
+<h2 class="sec">3 「从头定风格」的三步</h2>
+<p class="lead">只画「视频风格」和最底下的生成条，分镜脚本表和上面一样。</p>
+<div data-flow></div>
+
+<h2 class="sec">4 之后做（R282）：中台交过来的分镜</h2>
+<p class="lead">在中台点「交给我的电脑」以后，这张表自动填好六列和画面图，配音也一起带过来；表上面一条写清是中台第几版、什么时候交的。</p>
+<div data-hand></div>
+
+<h2 class="sec">5 之后做（R283）：风格库</h2>
+<p class="lead">「视频风格」里多一组现成风格，一条成片都没做过也能直接挑。九种风格改写自开源仓库 Moessif/code-video-showcase（MIT）的风格配方；扁平插画、数学动画两张是用我们自己的渲染器、同一段台词真画出来的样张；其余七张先用它的颜色占位，落地时一样真画。</p>
+<div class="lib-grid" data-lib></div>
+<p class="lead">在「视频风格」里点「选现成的风格」，下面多一组「风格库」。点一张（下面选的是「扁平插画」），右边放它的样张动画、色板、字号、动作规矩和不用的套路；也可以写一句「在这个风格上改哪里」。</p>
+<div data-libpick></div>
+</div>
+<script src="lib-data.js"></script>
+<script src="draft.js"></script>
+<script>
+const CMPS=[
+ ['步骤条第一格能点','生成过以后，步骤条三格都只是打钩，点了没反应，看不出能回去改。','<img src="img/now-steps.png" alt="">','第一格整格能点，右边写「改分镜脚本」；正在写或正在合成时不能点，灰字写原因。',()=>shrink(STEPS.entry+'<div style="height:10px"></div>'+STEPS.writing)],
+ ['口播稿换成分镜脚本表','叫「口播稿」；同样的字上面大框里一遍，下面逐镜又列一遍。','<img class="x2" src="img/now-script.png" alt="">','换成和中台一样的分镜脚本表，一镜一行：镜头（时间）｜画面｜台词｜字幕 / 花字｜景别 · 运镜｜音乐 / 音效。字只出现一次，直接在格子里改。生成过的镜，画面是这一镜的动画，点开放大。',()=>shrink(form({...B0,limit:3}))],
+ ['视频风格先定好','右边窄栏里一行「风格说明（可不填）」，写不下；不填时每次生成的风格都不一样。','<img src="img/now-style.png" alt="">','占整行。两种定法：沿用一条做过的成片的风格（可以写一句改哪里）；或者从头写说明，先看第 01 镜样张。风格定好了才能生成。',()=>shrink(styleWide(B0))],
+ ['「生成」挪到最底下','「生成」在分镜脚本框底部，风格在右边窄栏，看不出要先定风格。','','挪到最底下一条，左边写清这次用哪个风格；风格没定好时写原因，按钮是灰的。',()=>shrink(genbar({...B0,adjust:'强调色换成暖黄，其余不动'})+'<div style="height:10px"></div>'+genbar({mode:'new',text:DESC}))],
+ ['全片设计改成人话','一长句没有标题，下面一排划掉的小块；夹着「y≥1536」「150 毫秒」这种参数，也看不出风格从哪来。','<img src="img/now-design-row.png" alt="">','两个标题「动作规矩」「不用」，内容是短白话，不划线；前面写这套风格从哪来。',()=>shrink(designRow('inherited'))],
+];
+document.querySelector('[data-cmps]').innerHTML=CMPS.map(([t,now,img,fix,after],i)=>`<div class="cmp"><div class="cmp-hd"><span class="tag">${i+1}</span>${t}</div><div class="now"><div class="cmp-lab">改前</div><p>${now}</p>${img?`<div class="shot">${img}</div>`:''}</div><div class="after"><div class="cmp-lab">改后</div><p class="fix">${fix}</p><div class="shot">${after()}</div></div></div>`).join('');
+const FLOW=[
+ ['写风格说明','写好以后「先定风格」能点；这时「生成」还是灰的',{mode:'new',text:DESC}],
+ ['样张出来了','Opus 先定全片设计，再写出第 01 镜当样张，约 2–3 分钟；不满意就在「再改一句」里写，点「改」',{mode:'new',text:DESC,draft:'ready',revise:'主色再深一点，标题再大一号'}],
+ ['就用这个','「生成」能点了；生成时第 01 镜直接用样张',{mode:'new',text:DESC,draft:'accepted',revised:true}],
+];
+document.querySelector('[data-flow]').innerHTML=FLOW.map(([t,n,o],i)=>`<p class="flowcap"><i>${i+1}</i>${t}<span>${n}</span></p>`+shrink(styleWide(o)+'<div style="height:10px"></div>'+genbar(o))).join('');
+document.querySelector('[data-hand]').innerHTML=shrink(form({mode:'base',base:STYLES[0],src:'handoff',limit:3}));
+document.querySelector('[data-lib]').innerHTML=LIB.length?LIB.map(x=>`<figure>${x.clip?`<video src="${x.clip}" poster="${x.img}" muted loop playsinline preload="metadata" aria-hidden="true"></video>`:phTile(x)}<figcaption>${esc(x.name)}${x.clip?'':'<i class="todo">样张待画</i>'}<span>${esc(x.sum)}</span><span class="sw4">${x.pal.map(c=>`<i style="--swatch:${c}"></i>`).join('')}</span></figcaption></figure>`).join(''):'<p class="note">样张还在渲染。</p>';
+document.querySelector('[data-libpick]').innerHTML=LIB.length?shrink(styleWide({mode:'base',base:LIBX('flat'),lib:true})):'';
+growAll(document);playClips(document);fitCmps();addEventListener('load',()=>{growAll(document);fitCmps();});addEventListener('resize',fitCmps);
+demo.view='rescript';demo.o.rows=rowsOf(demo.o);renderDemo();
+</script>
+</body>
+</html>

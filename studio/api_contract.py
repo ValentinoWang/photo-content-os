@@ -6,8 +6,9 @@ import re
 from typing import Any
 
 from studio.direct_revision_contract import SHOT_PROPERTIES, operation_contract, routes
+from studio import direct_style_contract
 
-ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + (
+ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.routes() + (
     {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs', 'operation_id': 'createDirectJob', 'summary': 'createDirectJob', 'write': True},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/latest', 'operation_id': 'getLatestDirectJob', 'summary': 'getLatestDirectJob'},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}', 'operation_id': 'getDirectJob', 'summary': 'getDirectJob'},
@@ -119,12 +120,15 @@ def _direct_job_schema() -> dict[str, Any]:
             'writtenAt': text, 'renderedAt': text, 'codeChars': {'type': 'integer', 'minimum': 0},
             'posterRevision': {'type': 'integer', 'minimum': 0}, 'checks': checks}
     shot.update(SHOT_PROPERTIES)
+    shot.update({key: {'type': ['string', 'null']} for key in direct_style_contract.COLUMN_FIELDS})
+    shot['fromDraft'] = {'type': 'boolean'}
     design = {'status': {'enum': ['pending', 'writing', 'done', 'failed']},
               'palette': {'type': ['object', 'null'], 'required': ['background', 'primary', 'accent', 'neutral'],
                           'properties': {k: {'type': 'string', 'pattern': '^#[0-9a-fA-F]{6}$'}
                                          for k in ('background', 'primary', 'accent', 'neutral')}},
               'typeScale': {'type': ['array', 'null'], 'minItems': 3, 'maxItems': 3, 'items': {'type': 'integer'}},
               'motionRules': text, 'banned': {'type': 'array', 'items': {'type': 'string'}}}
+    design.update(direct_style_contract.SHORT_FIELDS)
     output = {'status': {'enum': ['none', 'composing', 'ready', 'failed']},
               'composedAt': {'type': ['string', 'null'], 'format': 'date-time',
                              'description': 'Latest successful composition time. Null before composition, during composition, after failure or shot rewrite, or for older jobs without a recorded time. Narration upload preserves it until recomposition.'},
@@ -223,6 +227,7 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
                 }}},
             }
     operation_contract(operation, spec)
+    direct_style_contract.operation_contract(operation, spec)
     return operation
 
 
@@ -251,7 +256,7 @@ def build_openapi() -> dict[str, Any]:
         },
         "servers": [{"url": "http://127.0.0.1:8765"}],
         "paths": paths,
-        "components": {"schemas": {"DirectJob": _direct_job_schema()}},
+        "components": {"schemas": {"DirectJob": _direct_job_schema(), "DirectStyleDraft": direct_style_contract.draft_schema(_direct_job_schema())}},
     }
 
 
