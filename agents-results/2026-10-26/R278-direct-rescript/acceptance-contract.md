@@ -1,11 +1,11 @@
 # Acceptance Contract: 2026-10-26-R278-photo-direct-rescript
 
 - Task ID: 2026-10-26-R278-photo-direct-rescript
-- Contract version: 1
+- Contract version: 2
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户2026-10-27第二次交付指令：在fc072d9上重新装配并原样保留三项；用户另批准去来源标签及画面说明占位文案；不代表人工PASS
+- Approval evidence: 用户2026-10-27第四次交付要求7d0ab00上R283触发的新批准合同入口；仅更新两份已批准R283测试摘要、版本及来源，原AC/H、保护路径和阻塞判据不变；不代表人工PASS
 - Request source: acceptance/requests/2026-W44/2026-10-26-R278-photo-direct-rescript/request.json; docs/tasks/R278-direct-rescript/TASK.md
 - SSOT node: none
 - SSOT path: none
@@ -14,7 +14,7 @@
 - Assumption IDs: none
 - Invalidation keys: studio.direct-rescript, studio.direct-style-base, studio.direct-style-draft
 - AC budget: 3
-- Baseline identity: fc072d9694a6c807f2eafd4a4104c8e803d89b2a，冻结 base/head/tree 见 baseline.json
+- Baseline identity: 7d0ab0046ef286a5bac8c468d86ebc10ccf557cd，输入见handoff-r283/baseline.json
 - Product Context refs: agents-results/2026-10-26/R278-direct-rescript/acceptance-context.json
 - Role Context refs: agents-results/2026-10-26/R278-direct-rescript/acceptance-context.json
 - Resolved Surface Contract refs: agents-results/2026-10-26/R278-direct-rescript/resolved-surface-contract.json
@@ -86,8 +86,8 @@ H-03卡上三分钟标准原字保留。实测首次215.621秒（约3分36秒）
 | tests/test_r278_clips.py | 5fd045560a32e2768d33527ac54331542eea1135ad2a967145134f2a94b343cf | AC-01, AC-02, AC-03 |
 | tests/test_r278_direct_frontend.py | 5353332357e17696a420e77e2df0a7cdff88c3df2810857db24f29185a01ec83 | AC-01, AC-02, AC-03 |
 | tests/test_r278_style_base.py | 329e483a28fa46c3ff465e0b79602b6ae07e8c03368a4ee77c46f1d14125e21f | AC-01, AC-02, AC-03 |
-| tests/test_r278_direct_rescript.mjs | 734701b1224ffce564e7988b45490bc7b8956f9a1e8eebeb6f728d0c4dee661e | AC-01, AC-02, AC-03 |
-| scripts/direct_video/rescript_frontend_gate.mjs | 1656090287a72e335d1bba60f7ec155ed8d31ad41ecc6cae9bcc2a2f2336a9cd | AC-01, AC-02, AC-03 |
+| tests/test_r278_direct_rescript.mjs | 98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0 | AC-01, AC-02, AC-03 |
+| scripts/direct_video/rescript_frontend_gate.mjs | a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed | AC-01, AC-02, AC-03 |
 
 ## Requirements-test traceability
 

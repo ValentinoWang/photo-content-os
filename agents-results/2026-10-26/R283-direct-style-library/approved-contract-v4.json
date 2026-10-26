@@ -1,0 +1,22 @@
+{
+  "authority": "用户2026-10-27第四次交付准备；不代签",
+  "range_base": "130c931c8250368205165ef8c59d19b2796d55d4",
+  "verified_head": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+  "R278_version": {
+    "old": 1,
+    "new": 2
+  },
+  "protected_hash_changes": [
+    {
+      "path": "tests/test_r278_direct_rescript.mjs",
+      "old_sha256": "734701b1224ffce564e7988b45490bc7b8956f9a1e8eebeb6f728d0c4dee661e",
+      "new_sha256": "98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0"
+    },
+    {
+      "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+      "old_sha256": "1656090287a72e335d1bba60f7ec155ed8d31ad41ecc6cae9bcc2a2f2336a9cd",
+      "new_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed"
+    }
+  ],
+  "criteria_steps_paths_blockers_unchanged": true
+}
