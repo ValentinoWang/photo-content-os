@@ -2,6 +2,27 @@
   "blocking_entries": [
     {
       "blocking": true,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision/checklist.md",
+      "estimated_minutes": 10,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision/handoff.json",
+      "invalidation_keys": [
+        "studio.direct-revision-log",
+        "studio.direct-shot-revision",
+        "studio.direct-shot-versions"
+      ],
+      "latest_run": null,
+      "loop_name": "脚本直出里改一镜的画面：在画面上点着改、看两版对比、攒好样例，让画面规则越用越准",
+      "ready_at": "2026-10-26T03:41:10.522621Z",
+      "release_slice": "R277",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "277cd1c 上204项专项、42次合同与交互验证通过；三项原文待用户验收，真实画面措辞差异见合同。",
+      "task_id": "2026-10-26-R277-photo-shot-visual-revision",
+      "workspace": "acceptance/human/2026-W44/2026-10-26-R277-photo-shot-visual-revision"
+    },
+    {
+      "blocking": true,
       "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/checklist.md",
       "estimated_minutes": 10,
       "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/handoff.json",
@@ -12,12 +33,12 @@
       ],
       "latest_run": null,
       "loop_name": "Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片",
-      "ready_at": "2026-10-25T23:26:21.559418+00:00",
+      "ready_at": "2026-10-26T03:41:09.533714Z",
       "release_slice": "R276",
       "required_role": "产品负责人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "在 c39b465 重新验证并递交，原样三项待人工验收；成片和联系表仍在本机 Photo Content OS 证据文件夹的 R276-direct-video-opus 子目录。",
+      "summary": "277cd1c 上原合同完整机器范围重新验证并完成受保护测试重定基准；原样三项待用户验收。",
       "task_id": "2026-10-26-R276-photo-direct-video-opus",
       "workspace": "acceptance/human/2026-W44/2026-10-26-R276-photo-direct-video-opus"
     },
@@ -85,7 +106,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-25T23:26:21.559418+00:00",
+  "generated_at": "2026-10-26T03:41:10.522621Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -108,5 +129,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "bb3ff76628f40386721e9189f42b1d75c4f3815672524eae086d2f5fa9478a5b"
+  "source_facts_sha256": "af9bf614e047599bd9082b74369b367f34b36fde5bd90e7856fa03545a35849e"
 }

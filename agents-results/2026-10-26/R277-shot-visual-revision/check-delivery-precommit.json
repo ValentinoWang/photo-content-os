@@ -1,0 +1,116 @@
+{
+  "state": "fail",
+  "checked_at": "2026-10-26T03:37:15.854561Z",
+  "head": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
+  "base": "4c1fc220b32a1cd67a30adb323affca8724b47e1",
+  "tree": "363864e01b731310a35f698fda7e8b21aa488f5f",
+  "results": [
+    {
+      "id": "G1",
+      "label": "有卡",
+      "state": "fail",
+      "detail": "2026-10-26-R276-photo-direct-video-opus 阻塞卡未获当前人工通过; 2026-10-26-R277-photo-shot-visual-revision 阻塞卡未获当前人工通过 → 为非豁免提交创建交付验收卡；阻塞卡需用户通过，并遵守切片额度 → python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py handoff <任务根> --project-root . --replace --baseline <基准文件> --claims <声明文件> <原递交参数>；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py repair retired <不可恢复的未通过卡目录> --project-root . --actor <执行者> --reason <原因>"
+    },
+    {
+      "id": "G2",
+      "label": "基准一致",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G3",
+      "label": "机器先绿",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G4",
+      "label": "看得懂",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G5",
+      "label": "有入口",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G6",
+      "label": "去重已声明",
+      "state": "fail",
+      "detail": "未声明与 2026-10-26-R277-photo-shot-visual-revision/H-01 的关系; 未声明与 2026-10-26-R277-photo-shot-visual-revision/H-02 的关系; 未声明与 2026-10-26-R277-photo-shot-visual-revision/H-03 的关系 → 为召回候选逐条声明关系；高分无关需 Acceptance-Override → python3 tools/harnessctl.py acceptance candidates --range <基底>..<提交> --project .；python3 tools/harnessctl.py acceptance dedupe --project . --pairs --json"
+    },
+    {
+      "id": "G7",
+      "label": "失效传播",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G8",
+      "label": "坏一条不连累",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G9",
+      "label": "页面可见",
+      "state": "fail",
+      "detail": "2026-10-26-R276-photo-direct-video-opus 没有出现在 ready/ACTIVE 投影中; 2026-10-26-R277-photo-shot-visual-revision 没有出现在 ready/ACTIVE 投影中 → 重新生成调度台并确认新卡 ready/ACTIVE → python3 tools/console/generate_console.py；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py check-project --project-root ."
+    },
+    {
+      "id": "G10",
+      "label": "不自证",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G11",
+      "label": "有需求卡",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G12",
+      "label": "验收覆盖需求",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G13",
+      "label": "沿用已有卡",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G14",
+      "label": "已通过不可变",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G15",
+      "label": "自动替代完整",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G16",
+      "label": "不连累前面的卡",
+      "state": "pass",
+      "detail": "",
+      "hard": true
+    },
+    {
+      "id": "G17",
+      "label": "真实链路没被替换",
+      "state": "pass",
+      "detail": "2026-10-26-R276-photo-direct-video-opus: 证据里没有脚本; 2026-10-26-R277-photo-shot-visual-revision: 证据里没有脚本"
+    }
+  ],
+  "verified_head": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
+  "verified_tree": "363864e01b731310a35f698fda7e8b21aa488f5f",
+  "metadata_only_cards": [],
+  "exempt": []
+}

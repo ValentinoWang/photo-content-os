@@ -1,0 +1,22 @@
+{
+  "protectedTest": "tests/test_r276_direct_video.py::test_rewrite_only_one_shot_and_invalidate_output",
+  "protectedFileSHA256": "95dd1530a9573600e502c4fae680befb6dbcbc96c3c3c29bf2a21568ac74011a",
+  "currentRunLog": "handoff-3/h03-backend-invariance.log",
+  "priorRealReport": "docs/tasks/R276-direct-video-opus/REPORT-B.md",
+  "priorRealProof": "evidence/2026-10-26/R276-direct-video-opus/b-h03-proof.json",
+  "priorRealProofSHA256": "42cf935dd0230f59f112512f2f151cadb981866e7e7ed94122083a6af0521662",
+  "changedShots": [
+    "03"
+  ],
+  "unchangedShots": [
+    "01",
+    "02",
+    "04",
+    "05",
+    "06",
+    "07"
+  ],
+  "unaffectedAfterComposition": true,
+  "frontendDetailDOMProtected": false,
+  "sourceCommit": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b"
+}

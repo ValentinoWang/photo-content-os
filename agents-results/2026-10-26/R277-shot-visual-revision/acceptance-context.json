@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "r277-studio-context",
+  "authority": [
+    "acceptance/requests/2026-W44/2026-10-26-R277-photo-shot-visual-revision/request.json",
+    "docs/tasks/R277-shot-visual-revision/TASK.md",
+    "docs/tasks/R277-shot-visual-revision/design/contract.json"
+  ],
+  "inherited_context": "agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json",
+  "product": {
+    "purpose": "本机创作者在单镜画面上选改法、比较版本、存样例，积累需人工采用的规则草稿",
+    "privacy": "媒体和运行状态留在本机，不把媒体放入仓库"
+  },
+  "role": {
+    "id": "local-creator",
+    "label": "本机创作者",
+    "scope": "本机作品与直出任务"
+  },
+  "screen_contract": {
+    "route": "/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "states_ref": "docs/tasks/R277-shot-visual-revision/design/contract.json",
+    "interaction_requirements": [
+      "H-01",
+      "H-02",
+      "H-03"
+    ],
+    "invariants": [
+      "只重写选中镜，其他镜画面和时间不变",
+      "退回保留所有版本",
+      "未采用前规则不变"
+    ]
+  }
+}

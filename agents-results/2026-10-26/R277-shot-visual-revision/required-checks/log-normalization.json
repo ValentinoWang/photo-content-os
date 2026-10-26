@@ -1,0 +1,8 @@
+{
+  "source_identity": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
+  "original_log": "/Users/vsiyo/.photo-content-os/evidence/R277-shot-visual-revision/handoff-validation-277/full-pytest.raw.log",
+  "original_sha256": "a673fbeabbc888c8defa4f79eebca629c4229a688b1018188be093c7ef6abcb0",
+  "repository_log": "agents-results/2026-10-26/R277-shot-visual-revision/required-checks/full-pytest.log",
+  "repository_sha256": "eb89c0e8d13a8f9d7af64dc8380eb604ff5bbe9ad7043ede54025597bd3fac00",
+  "transform": "仅去除每行末尾空白，原始完整字节保存在仓库外；不改失败、断言、堆栈或结果"
+}

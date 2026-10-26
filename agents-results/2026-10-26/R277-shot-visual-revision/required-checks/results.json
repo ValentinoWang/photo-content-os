@@ -1,0 +1,45 @@
+[
+  {
+    "name": "registry",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_music_analysis_registry.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "obsidian",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_obsidian_doc_sync.py"
+    ],
+    "exit_code": 1
+  },
+  {
+    "name": "outline",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_outline_contract.py",
+      "."
+    ],
+    "exit_code": 1
+  },
+  {
+    "name": "task-help",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_content_os_task.py",
+      "--help"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "draft-help",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_jianying_draft.py",
+      "--help"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.2.0",
+  "ui_change_id": "r277-shot-visual-revision",
+  "kind": "incremental",
+  "user_visible": true,
+  "source_authority_mode": "strict",
+  "source_requirements_ref": {
+    "path": "agents-results/2026-10-26/R277-shot-visual-revision/source-requirements.json",
+    "entity_id": "r277-design-authority",
+    "canonical_digest": "e87abebfe03bbc36dbc4e8fe15528dc8557565ce7e0a055b73eb0abd34ad5721"
+  },
+  "affected_surfaces": [
+    {
+      "surface_id": "studio.direct-shot-revision",
+      "resolved_surface_contract_ref": {
+        "path": "agents-results/2026-10-26/R277-shot-visual-revision/resolved-surface-contract.json",
+        "entity_id": "r277-shot-revision-surface",
+        "canonical_digest": "2a9c32454fadeddb26dbb8aa31d6d12216a4ef9675c5c947e633d8cca94ed79b"
+      }
+    }
+  ],
+  "product_context_ref": {
+    "path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance-context.json",
+    "entity_id": "r277-studio-context",
+    "canonical_digest": "d9d0eff0d0334100aedc203b4966f3ab15c087935081e4564bc7bebf36e58fc4"
+  },
+  "role_context_refs": [
+    {
+      "path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance-context.json",
+      "entity_id": "local-creator",
+      "canonical_digest": "d9d0eff0d0334100aedc203b4966f3ab15c087935081e4564bc7bebf36e58fc4"
+    }
+  ],
+  "screen_contract_ref": {
+    "path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance-context.json",
+    "entity_id": "r277-direct-screen",
+    "canonical_digest": "d9d0eff0d0334100aedc203b4966f3ab15c087935081e4564bc7bebf36e58fc4"
+  },
+  "visual_contract_ref": {
+    "path": "docs/tasks/R277-shot-visual-revision/design/contract.json",
+    "entity_id": "r277-visual",
+    "canonical_digest": "6f4daf1b5dcd857ef2ca6f0dcc08ab3ec13f798f819e0475a1ddd5c3d1e48897"
+  },
+  "reference_prototypes": [
+    {
+      "path": "docs/tasks/R277-shot-visual-revision/design/revise.html",
+      "sha256": "bee747432c8055ab3817b35361a23ffb22f2755dcf9fee8c11aab3297a99c71d",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "capture_matrix": {
+    "routes": [
+      "/#view=piece&piece=fixture-piece&ptab=direct"
+    ],
+    "locales": [
+      "zh-CN"
+    ],
+    "themes": [
+      "studio-dark"
+    ],
+    "viewports": [
+      "1440x900",
+      "960x900",
+      "390x900"
+    ],
+    "helper_modes": [
+      "intercepted-projection-fixtures"
+    ]
+  },
+  "interaction_matrix_ref": {
+    "path": "agents-results/2026-10-26/R277-shot-visual-revision/resolved-surface-contract.json",
+    "entity_id": "r277-interactions",
+    "canonical_digest": "2a9c32454fadeddb26dbb8aa31d6d12216a4ef9675c5c947e633d8cca94ed79b"
+  },
+  "visual_evidence_types": [
+    "dom-structure",
+    "computed-style",
+    "fixed-browser-screenshot",
+    "interaction-trace"
+  ]
+}

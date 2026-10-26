@@ -32,6 +32,11 @@
         "type": "independent",
         "target": "2026-10-20-R223-photo-music-beat-map",
         "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "reason": "本卡仍独立验七镜生成、上传配音合成及单镜重写不影响其余镜；R277 验同页单镜热区详情、版本核对、样例和问题记录，新增交互未承接本卡生成与合成责任，H-03 仍用后端不变性测试和 REPORT-B 证明。"
       }
     ]
   },
@@ -68,6 +73,11 @@
         "type": "independent",
         "target": "2026-10-20-R223-photo-music-beat-map",
         "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "reason": "本卡仍独立验七镜生成、上传配音合成及单镜重写不影响其余镜；R277 验同页单镜热区详情、版本核对、样例和问题记录，新增交互未承接本卡生成与合成责任，H-03 仍用后端不变性测试和 REPORT-B 证明。"
       }
     ]
   },
@@ -104,6 +114,11 @@
         "type": "independent",
         "target": "2026-10-20-R223-photo-music-beat-map",
         "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "reason": "本卡仍独立验七镜生成、上传配音合成及单镜重写不影响其余镜；R277 验同页单镜热区详情、版本核对、样例和问题记录，新增交互未承接本卡生成与合成责任，H-03 仍用后端不变性测试和 REPORT-B 证明。"
       }
     ]
   }

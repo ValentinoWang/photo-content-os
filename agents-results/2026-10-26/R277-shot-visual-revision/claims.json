@@ -1,0 +1,132 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "studio.direct-shot-revision",
+    "open_route": "note:Studio 作品「断更一年」的脚本直出页，点第 02 镜",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "旧卡验工具在仓库内安装、诊断和剪辑候选；本卡验脚本直出单镜选块修改、版本、样例和规则草稿，不承接工具安装与候选验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧卡验汽水和网易云导入、去重及会员失败边界；本卡验动画单镜画面修改，不改平台账户、音乐导入与入库结果。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "旧卡验六项导航、作品分组、精选连续播放与决定保存及成片音乐预览；本卡验脚本直出选中一镜后的热区详情、版本和画面问题记录，共用 Studio 但不承接原导航、精选与预览验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "旧卡验音乐 AI 标签、分面筛选、节拍试听和自动分析；本卡验动画单镜修改与待采用的画面规则草稿，不改音乐分析和节拍。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "reason": "旧卡验生成、配音、合成及单镜重写不影响其余镜；本卡验同一页面选中一镜后的热区详情、两版核对、样例和画面问题记录，不承接生成与合成。旧 H-03 仍由后端单镜不变性测试和 REPORT-B 真跑证明。"
+      }
+    ],
+    "protected_test_overlap": [
+      {
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "decision": "rebaseline",
+        "reason": "经 R276 总控同意及第二段任务授权：R277 单镜投影增加 currentVersion、versions、boxes、look、sample 五个字段，test_busy_job_and_projection 严格相等字段集合随之扩大；其余四个保护文件不变，原 H-01 至 H-03 语义不变，H-03 仍由 test_rewrite_only_one_shot_and_invalidate_output 与 R276 REPORT-B 真跑证明。详情按钮由「让 Opus 重写这一镜」改为「重写这一镜」，原卡不改，由 R276 总控告知用户对应关系。 非保护测试重叠另有：tests/test_r276_direct_frontend.mjs 与 scripts/direct_video/frontend_gate.mjs 改到 R277 详情元素，按钮用「重写这一镜」，合同比对跳过 DV-DETAIL；tests/fixtures/r276-direct/approved-extras.json 的13个状态增加「画面问题记录」。"
+      }
+    ]
+  },
+  {
+    "item": "H-02",
+    "claim_key": "studio.direct-shot-versions-sample",
+    "open_route": "note:Studio 作品「断更一年」的脚本直出页，退回第 1 版后点第 01 镜",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "旧卡验工具在仓库内安装、诊断和剪辑候选；本卡验脚本直出单镜选块修改、版本、样例和规则草稿，不承接工具安装与候选验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧卡验汽水和网易云导入、去重及会员失败边界；本卡验动画单镜画面修改，不改平台账户、音乐导入与入库结果。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "旧卡验六项导航、作品分组、精选连续播放与决定保存及成片音乐预览；本卡验脚本直出选中一镜后的热区详情、版本和画面问题记录，共用 Studio 但不承接原导航、精选与预览验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "旧卡验音乐 AI 标签、分面筛选、节拍试听和自动分析；本卡验动画单镜修改与待采用的画面规则草稿，不改音乐分析和节拍。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "reason": "旧卡验生成、配音、合成及单镜重写不影响其余镜；本卡验同一页面选中一镜后的热区详情、两版核对、样例和画面问题记录，不承接生成与合成。旧 H-03 仍由后端单镜不变性测试和 REPORT-B 真跑证明。"
+      }
+    ]
+  },
+  {
+    "item": "H-03",
+    "claim_key": "studio.direct-revision-log",
+    "open_route": "note:Studio 作品「断更一年」的脚本直出页，打开「画面问题记录」",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "旧卡验工具在仓库内安装、诊断和剪辑候选；本卡验脚本直出单镜选块修改、版本、样例和规则草稿，不承接工具安装与候选验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧卡验汽水和网易云导入、去重及会员失败边界；本卡验动画单镜画面修改，不改平台账户、音乐导入与入库结果。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "旧卡验六项导航、作品分组、精选连续播放与决定保存及成片音乐预览；本卡验脚本直出选中一镜后的热区详情、版本和画面问题记录，共用 Studio 但不承接原导航、精选与预览验收。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "旧卡验音乐 AI 标签、分面筛选、节拍试听和自动分析；本卡验动画单镜修改与待采用的画面规则草稿，不改音乐分析和节拍。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "reason": "旧卡验生成、配音、合成及单镜重写不影响其余镜；本卡验同一页面选中一镜后的热区详情、两版核对、样例和画面问题记录，不承接生成与合成。旧 H-03 仍由后端单镜不变性测试和 REPORT-B 真跑证明。"
+      }
+    ]
+  }
+]

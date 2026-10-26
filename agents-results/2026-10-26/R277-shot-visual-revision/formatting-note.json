@@ -1,0 +1,6 @@
+{
+  "change": "仅去除本轮新合同与机器结果文件末尾多余空行；重新计算绑定与证据摘要",
+  "source_unchanged": true,
+  "acceptance_semantics_unchanged": true,
+  "human_checklist_unchanged": true
+}

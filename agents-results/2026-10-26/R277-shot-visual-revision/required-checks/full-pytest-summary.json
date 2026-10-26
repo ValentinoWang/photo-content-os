@@ -1,0 +1,10 @@
+{
+  "source_identity": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
+  "passed": 1039,
+  "failed": 9,
+  "errors": 6,
+  "skipped": 25,
+  "subtests_passed": 2003,
+  "seconds": 195.65,
+  "exit_code": 1
+}

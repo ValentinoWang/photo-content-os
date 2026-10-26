@@ -1,0 +1,107 @@
+{
+  "jobId": "dv_0e184e961bd14ac084c67411",
+  "elapsedSeconds": 70.604,
+  "instruction": "数字再大一点",
+  "before": {
+    "01": {
+      "codeSha256": "fa4a603df7003937a5b4ceb8f0d5546eb3ced2782050eca577054f1eef520809",
+      "posterSha256": "5e3f917c3220778da90ede01f6c6dde8264d269c071aef0dd376d982b46b0917",
+      "writtenAt": "2026-10-25T17:53:48.147448Z",
+      "posterRevision": 1
+    },
+    "02": {
+      "codeSha256": "820aefb5e2aad3a8d16ccef4e06388628ba4115381030d145069cee209b4bfd7",
+      "posterSha256": "8717c6930e21da7c24a5fe72895279523acb7433495ca1b8cb6447089bbc4af9",
+      "writtenAt": "2026-10-25T17:54:09.288910Z",
+      "posterRevision": 1
+    },
+    "03": {
+      "codeSha256": "7b7ea73540b37c3770446facd958b4d9fe7ca02c2a399688a8e8ff0e0a927467",
+      "posterSha256": "321d0013b60d6ddfc9165b8aa71a6bd69c18cde86997f1db86fcf9b35969d5f8",
+      "writtenAt": "2026-10-25T17:53:38.211742Z",
+      "posterRevision": 1
+    },
+    "04": {
+      "codeSha256": "1a84c1619c47b04ade3ee35a9b1e85624fb0e6a77836339787dcfb8979dd32a7",
+      "posterSha256": "9885f5d4cd5da85e8f24c6c5011a9fb3f077702856d6b0ac8fa9ec88b8a9d8a2",
+      "writtenAt": "2026-10-25T17:56:49.301081Z",
+      "posterRevision": 1
+    },
+    "05": {
+      "codeSha256": "45e2da017e5b73ec16134d469976ae9a7e82d4ab63fc18923da71073980bc380",
+      "posterSha256": "f5795d2e64c07dd89beb6e4fcf3018517ae51f7d0d85f0b73d16bb39da14967b",
+      "writtenAt": "2026-10-25T17:57:31.935371Z",
+      "posterRevision": 1
+    },
+    "06": {
+      "codeSha256": "73ebab727bc5f82ef9930068a44f932c5f5b0b60d0c84f2113501f5a1cda0d89",
+      "posterSha256": "540a1d9340c6dfdcd25079c08a6147d0c4b4e32d18b60a28bcb2edbb5c09efdb",
+      "writtenAt": "2026-10-25T17:57:34.811383Z",
+      "posterRevision": 1
+    },
+    "07": {
+      "codeSha256": "5c41b0a14dd55c93582ead3992153d2ee2b1fc18ae7ad33b6e12d60187a9071f",
+      "posterSha256": "2c9c9201f1a1c43860fbbeaae02fe1de2a25c5f10b240f9c5455a5aef70fbcb7",
+      "writtenAt": "2026-10-25T17:59:24.922651Z",
+      "posterRevision": 1
+    }
+  },
+  "after": {
+    "01": {
+      "codeSha256": "fa4a603df7003937a5b4ceb8f0d5546eb3ced2782050eca577054f1eef520809",
+      "posterSha256": "5e3f917c3220778da90ede01f6c6dde8264d269c071aef0dd376d982b46b0917",
+      "writtenAt": "2026-10-25T17:53:48.147448Z",
+      "posterRevision": 1
+    },
+    "02": {
+      "codeSha256": "820aefb5e2aad3a8d16ccef4e06388628ba4115381030d145069cee209b4bfd7",
+      "posterSha256": "8717c6930e21da7c24a5fe72895279523acb7433495ca1b8cb6447089bbc4af9",
+      "writtenAt": "2026-10-25T17:54:09.288910Z",
+      "posterRevision": 1
+    },
+    "03": {
+      "codeSha256": "b7cf194d81725c97474465707dd5740ea341c6e99cc3ee1e71931892e1c2657a",
+      "posterSha256": "3f370f9fce8e61c6b1ab56ff60ce7e7bbd23545c9baceecca9e2c20c2df6e986",
+      "writtenAt": "2026-10-25T18:02:28.760644Z",
+      "posterRevision": 2
+    },
+    "04": {
+      "codeSha256": "1a84c1619c47b04ade3ee35a9b1e85624fb0e6a77836339787dcfb8979dd32a7",
+      "posterSha256": "9885f5d4cd5da85e8f24c6c5011a9fb3f077702856d6b0ac8fa9ec88b8a9d8a2",
+      "writtenAt": "2026-10-25T17:56:49.301081Z",
+      "posterRevision": 1
+    },
+    "05": {
+      "codeSha256": "45e2da017e5b73ec16134d469976ae9a7e82d4ab63fc18923da71073980bc380",
+      "posterSha256": "f5795d2e64c07dd89beb6e4fcf3018517ae51f7d0d85f0b73d16bb39da14967b",
+      "writtenAt": "2026-10-25T17:57:31.935371Z",
+      "posterRevision": 1
+    },
+    "06": {
+      "codeSha256": "73ebab727bc5f82ef9930068a44f932c5f5b0b60d0c84f2113501f5a1cda0d89",
+      "posterSha256": "540a1d9340c6dfdcd25079c08a6147d0c4b4e32d18b60a28bcb2edbb5c09efdb",
+      "writtenAt": "2026-10-25T17:57:34.811383Z",
+      "posterRevision": 1
+    },
+    "07": {
+      "codeSha256": "5c41b0a14dd55c93582ead3992153d2ee2b1fc18ae7ad33b6e12d60187a9071f",
+      "posterSha256": "2c9c9201f1a1c43860fbbeaae02fe1de2a25c5f10b240f9c5455a5aef70fbcb7",
+      "writtenAt": "2026-10-25T17:59:24.922651Z",
+      "posterRevision": 1
+    }
+  },
+  "unchangedShots": [
+    "01",
+    "02",
+    "04",
+    "05",
+    "06",
+    "07"
+  ],
+  "changedShots": [
+    "03"
+  ],
+  "status": "ready",
+  "passed": true,
+  "unaffectedAfterComposition": true
+}

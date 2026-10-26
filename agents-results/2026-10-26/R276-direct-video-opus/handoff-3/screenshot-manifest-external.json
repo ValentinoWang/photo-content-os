@@ -1,0 +1,955 @@
+{
+  "scope": "F2 local Studio 8767, intercepted projection fixtures; no backend generation claim",
+  "screenshots": [
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:32:59.464Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "empty-1440.png",
+      "sha256": "f4ad30360b4f7ec9feef12a0d5f77e3322a2d743a6f95ed2d870244786df91be",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:32:59.838Z",
+      "scroll_coverage": [
+        0,
+        1112
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1112
+      },
+      "path": "empty-960.png",
+      "sha256": "8782e1f6fd1ef19e96fc25e56de5ee8e1b824d50f2f43da2859c98741160a05b",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:00.205Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "read-error-1440.png",
+      "sha256": "b1ccc3990e34c3af3a6ade99dece033c4429856778ebd9eba1952bed764fde86",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:00.599Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 900
+      },
+      "path": "read-error-960.png",
+      "sha256": "d408f53863d2f0ce3936110574071c9aae4bd61c6181d92cc5ef4d9873a162de",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "filled",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:01.040Z",
+      "scroll_coverage": [
+        0,
+        917
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 917
+      },
+      "path": "filled-1440.png",
+      "sha256": "a8e8106af8ab1df625cb076dbbbdbd7fac08cad740217f5a5f37ec88464f509d",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "filled",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:01.443Z",
+      "scroll_coverage": [
+        0,
+        1306
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1306
+      },
+      "path": "filled-960.png",
+      "sha256": "c829ea6dc41ee7f7d3aed864d1c8e52938f7eea3e10402fdca5b3f44beed3b3a",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:01.965Z",
+      "scroll_coverage": [
+        0,
+        1009
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1009
+      },
+      "path": "unavailable-1440.png",
+      "sha256": "7de0224cae15031e0cc9650b84c6216de9c031a3de44afffce84217508b9b3f1",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:02.512Z",
+      "scroll_coverage": [
+        0,
+        1434
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1434
+      },
+      "path": "unavailable-960.png",
+      "sha256": "66ef60399c89cf341d529d517eab2fa8a40b02091bbefcc5ab2740fe3063c521",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "designing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:02.903Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "designing-1440.png",
+      "sha256": "481b4783b6cb47a971e98e099e261fbeb4678a703adffd5dce02cef61cfcdcf7",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "designing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:03.384Z",
+      "scroll_coverage": [
+        0,
+        1257
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1257
+      },
+      "path": "designing-960.png",
+      "sha256": "c8d1209c1929770265201709dc40c67668e364e051db269bea37d78aa921745e",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:03.904Z",
+      "scroll_coverage": [
+        0,
+        1606
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1606
+      },
+      "path": "writing-1440.png",
+      "sha256": "c4cb301a17d58464e3fe2648063b14634ed9339cea5fa7db6ddd0f12175f6cf6",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:04.452Z",
+      "scroll_coverage": [
+        0,
+        2017
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2017
+      },
+      "path": "writing-960.png",
+      "sha256": "c6ea55f928f112821293058e0274d3dc270dd376dff8082733beb7291056cc23",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "failed-shot",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:04.906Z",
+      "scroll_coverage": [
+        0,
+        1637
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1637
+      },
+      "path": "failed-shot-1440.png",
+      "sha256": "705d5b38afb977b4ada1d3a06397ca338ad5467a23079704aad8350f59449e5c",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "failed-shot",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:05.427Z",
+      "scroll_coverage": [
+        0,
+        2048
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2048
+      },
+      "path": "failed-shot-960.png",
+      "sha256": "1f208856a70bdc616a4a28b32319dce257f6b1d1f1371c924a4c27face133e94",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "ready",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:05.936Z",
+      "scroll_coverage": [
+        0,
+        1571
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1571
+      },
+      "path": "ready-1440.png",
+      "sha256": "86191739b66d41bdf9cfdf804314962db064689673371945174025e0151ea014",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "本轮本人查看完整原图至底部：镜卡、单镜详情、两版核对、按钮及折叠项可读；无新增溢出。仅抽样四图，不声称全部图逐张审阅。"
+    },
+    {
+      "state": "ready",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:06.457Z",
+      "scroll_coverage": [
+        0,
+        1982
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1982
+      },
+      "path": "ready-960.png",
+      "sha256": "04b77b1887533402591e45c1045d883e885967704444e22224772352892120de",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "rewriting",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:07.013Z",
+      "scroll_coverage": [
+        0,
+        1571
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1571
+      },
+      "path": "rewriting-1440.png",
+      "sha256": "658518b97b24ef00746f358252a175f340c3bff6c31da2a4da8dca15edca0848",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "rewriting",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:07.588Z",
+      "scroll_coverage": [
+        0,
+        1982
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1982
+      },
+      "path": "rewriting-960.png",
+      "sha256": "f4c63ae059a52e1985e2c267e594fe32b9c95f47b222d90b3c95a9b9a95367f8",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "composing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:08.059Z",
+      "scroll_coverage": [
+        0,
+        932
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 932
+      },
+      "path": "composing-1440.png",
+      "sha256": "3126ef0cdae65ea2af60abc1795263a4044991f723ee0129f87ac338d15ee708",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "composing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:08.597Z",
+      "scroll_coverage": [
+        0,
+        1344
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1344
+      },
+      "path": "composing-960.png",
+      "sha256": "d554aac53f80b4d93078f05b3f1768bee9d6e34606622eb5f36d5abbea5a7eb0",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "composing-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:09.069Z",
+      "scroll_coverage": [
+        0,
+        932
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 932
+      },
+      "path": "composing-silent-1440.png",
+      "sha256": "db7d238b6676fcbbd33b8a4269863ed5d32d9ba73a0d9b47be7a7b7a0c89c2da",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "composing-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:09.617Z",
+      "scroll_coverage": [
+        0,
+        1344
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 1344
+      },
+      "path": "composing-silent-960.png",
+      "sha256": "4fc575d4829eaea67aa1480fd72112f119e800973aeacc70d1ae371c370cad9f",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:10.187Z",
+      "scroll_coverage": [
+        0,
+        1434
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1434
+      },
+      "path": "done-1440.png",
+      "sha256": "06adb48d87e45350885e7f4ef72b5f8f37ab5749ccdc48293bee29e534200298",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:10.822Z",
+      "scroll_coverage": [
+        0,
+        2176
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2176
+      },
+      "path": "done-960.png",
+      "sha256": "f190ee57bdc804307904e32d79b37c848bbf4a091aa3fec61de155ce5ffc0cce",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "done-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:11.375Z",
+      "scroll_coverage": [
+        0,
+        1434
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1434
+      },
+      "path": "done-silent-1440.png",
+      "sha256": "318014dda764b959850fd79b4fac94a6c4e48e204a83907fc8f2177232afe8a2",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "done-silent",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:11.935Z",
+      "scroll_coverage": [
+        0,
+        2227
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2227
+      },
+      "path": "done-silent-960.png",
+      "sha256": "9caada2b83be5e982b41e559d8832dbaf8e3f6fa9e115408be75b79056f09228",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "empty",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:12.369Z",
+      "scroll_coverage": [
+        0,
+        1283
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 1283
+      },
+      "path": "empty-390.png",
+      "sha256": "0b629ac011cf51f71ce17c7de3726f96d0bc9af3077e77b725f7d7d30bdb0c13",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:12.846Z",
+      "scroll_coverage": [
+        0,
+        2713
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 2713
+      },
+      "path": "writing-390.png",
+      "sha256": "8f8bf7d78eba2ff0d6730860546330b7efeb254c2f4ee5a22fef9dc764131f77",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "本轮本人查看完整原图至底部：镜卡、单镜详情、两版核对、按钮及折叠项可读；无新增溢出。仅抽样四图，不声称全部图逐张审阅。"
+    },
+    {
+      "state": "done",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:13.326Z",
+      "scroll_coverage": [
+        0,
+        2370
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 2370
+      },
+      "path": "done-390.png",
+      "sha256": "5653647e4eda769485ffe66bbaeb0b06856e6e70f8856930257c782c672fadb7",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "unavailable",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:13.860Z",
+      "scroll_coverage": [
+        0,
+        1642
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 1642
+      },
+      "path": "unavailable-390.png",
+      "sha256": "421d7f5a915af0ee0072b2e18f6eed660bb26ab235954ac13b2f1d51bea97319",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    },
+    {
+      "state": "read-error",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:14.217Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 900
+      },
+      "path": "read-error-390.png",
+      "sha256": "0549ca424cdf32549fb90e9fd487e4ea0dc56b3ff424e9f6ad25e503207e2875",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PENDING",
+      "review_note": "Captured; awaiting personal image inspection."
+    }
+  ],
+  "contracts": [
+    {
+      "state": "empty",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "empty",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "read-error",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "read-error",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "filled",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "filled",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "unavailable",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "unavailable",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "designing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "designing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "writing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "writing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "failed-shot",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "failed-shot",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "ready",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "ready",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "rewriting",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "rewriting",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing-silent",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "composing-silent",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done-silent",
+      "width": 1440,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    },
+    {
+      "state": "done-silent",
+      "width": 960,
+      "exit_code": 0,
+      "result": {
+        "failures": [],
+        "result": "PASS"
+      }
+    }
+  ],
+  "browser_errors": []
+}

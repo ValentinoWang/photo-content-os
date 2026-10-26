@@ -5,7 +5,7 @@
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户第二次 handoff 指令要求在 c39b465 重新冻结；H-01、H-02、H-03 及受保护后端测试原样沿用，仅更新源码绑定
+- Approval evidence: 用户第二段交付指令及 R276 总控同意 rebaseline；H-01 至 H-03 原文不变，只扩大单镜投影字段严格相等集合，审计见 protected-test-rebaseline.json
 - Request source: acceptance/requests/2026-W44/2026-10-26-R276-photo-direct-video-opus/request.json; docs/tasks/R276-direct-video-opus/TASK.md
 - SSOT node: none
 - SSOT path: none
@@ -14,7 +14,7 @@
 - Assumption IDs: none
 - Invalidation keys: studio.direct-generation, studio.direct-output, studio.direct-single-rewrite
 - AC budget: 3
-- Baseline identity: c39b465f696856babc835ea6893196240d9198e9，冻结 base/head/tree 见 baseline.json
+- Baseline identity: 277cd1c6ca730f77bd653a31a8b7ca22ea90277b，冻结 base/head/tree 见 baseline.json
 - Product Context refs: agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json
 - Role Context refs: agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json
 - Resolved Surface Contract refs: agents-results/2026-10-26/R276-direct-video-opus/resolved-surface-contract.json
@@ -83,7 +83,7 @@ H-01 从生成到七镜写好不超过十五分钟；B2 实跑 495.902 秒，F2 
 
 | Path | SHA-256 | Covers |
 | --- | --- | --- |
-| tests/test_r276_direct_video.py | e14bb66d4425c469a6fe820278e508e411a10f3502cfccf9bfeca1ed44bca57e | AC-01, AC-02, AC-03 |
+| tests/test_r276_direct_video.py | 95dd1530a9573600e502c4fae680befb6dbcbc96c3c3c29bf2a21568ac74011a | AC-01, AC-02, AC-03 |
 | tests/test_r276_direct_api.py | 94b03c8a331ed3342e395800d34e6fac579c5672898af660eeca16db2f37154a | AC-01, AC-02 |
 | tests/test_r276_direct_media.py | d74658695d78ebc24f9869c88adb938c510517129d4ba655322115bad5eaec9e | AC-01, AC-02 |
 | tests/test_r276_direct_c.py | 88fdd5e2a0f05e2459d527ce23984fe1fc6366f06de3aa48fcc095cbcd1b1d90 | AC-01, AC-02 |

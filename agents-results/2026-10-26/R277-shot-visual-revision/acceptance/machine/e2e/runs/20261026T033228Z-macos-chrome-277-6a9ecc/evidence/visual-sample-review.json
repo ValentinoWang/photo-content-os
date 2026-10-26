@@ -1,0 +1,100 @@
+{
+  "scope": "本轮独立本地 Studio，四张完整图抽样；非生产或全站验收",
+  "verified_image_hash_count": 103,
+  "reviews": [
+    {
+      "state": "compare",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:34:02.303Z",
+      "scroll_coverage": [
+        0,
+        1506
+      ],
+      "capture_kind": "complete-page",
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1506
+      },
+      "path": "/Users/vsiyo/.photo-content-os/evidence/R277-shot-visual-revision/handoff/compare-1440.png",
+      "sha256": "00912c6185fd0fa2f04b9b702b21e7f4e56b5da9ce769fcaa24b38a217330738",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "本轮本人查看完整原图至底部：镜卡、单镜详情、两版核对、按钮及折叠项可读；无新增溢出。仅抽样四图，不声称全部图逐张审阅。"
+    },
+    {
+      "state": "compare",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:34:16.992Z",
+      "scroll_coverage": [
+        0,
+        2448
+      ],
+      "capture_kind": "complete-page",
+      "output_dimensions": {
+        "width": 390,
+        "height": 2448
+      },
+      "path": "/Users/vsiyo/.photo-content-os/evidence/R277-shot-visual-revision/handoff/compare-390.png",
+      "sha256": "ae45054873da741564c14d23a355a46d95542c57dd7f909c612ace49976c51e4",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "本轮本人查看完整原图至底部：镜卡、单镜详情、两版核对、按钮及折叠项可读；无新增溢出。仅抽样四图，不声称全部图逐张审阅。"
+    },
+    {
+      "state": "ready",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:05.936Z",
+      "scroll_coverage": [
+        0,
+        1571
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1571
+      },
+      "path": "/Users/vsiyo/.photo-content-os/evidence/R276-direct-video-opus/handoff-3-277-frontend/ready-1440.png",
+      "sha256": "86191739b66d41bdf9cfdf804314962db064689673371945174025e0151ea014",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "本轮本人查看完整原图至底部：镜卡、单镜详情、两版核对、按钮及折叠项可读；无新增溢出。仅抽样四图，不声称全部图逐张审阅。"
+    },
+    {
+      "state": "writing",
+      "route": "http://127.0.0.1:8767/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T03:33:12.846Z",
+      "scroll_coverage": [
+        0,
+        2713
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 2713
+      },
+      "path": "/Users/vsiyo/.photo-content-os/evidence/R276-direct-video-opus/handoff-3-277-frontend/writing-390.png",
+      "sha256": "8f8bf7d78eba2ff0d6730860546330b7efeb254c2f4ee5a22fef9dc764131f77",
+      "browser": "155.0.8059.86",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "本轮本人查看完整原图至底部：镜卡、单镜详情、两版核对、按钮及折叠项可读；无新增溢出。仅抽样四图，不声称全部图逐张审阅。"
+    }
+  ]
+}

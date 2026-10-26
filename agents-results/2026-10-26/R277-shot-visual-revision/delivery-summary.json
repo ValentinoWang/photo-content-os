@@ -1,0 +1,15 @@
+{
+  "status": "PENDING_HUMAN_AND_CONSOLE",
+  "ready": false,
+  "verified_head": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
+  "verified_tree": "363864e01b731310a35f698fda7e8b21aa488f5f",
+  "g16": "PASS",
+  "g17": "PASS",
+  "failures": [
+    "G1",
+    "G9"
+  ],
+  "r276_rebaseline": "completed",
+  "r277_handoff": "created",
+  "validation_logs": "newly executed at 277cd1c; no previous attempt logs reused"
+}

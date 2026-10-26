@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "path": "docs/tasks/R277-shot-visual-revision/design/revise.html",
+      "sha256": "bee747432c8055ab3817b35361a23ffb22f2755dcf9fee8c11aab3297a99c71d",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ]
+}

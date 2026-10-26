@@ -1,0 +1,12 @@
+[
+  {
+    "task": "r277",
+    "exit_code": 1,
+    "log": "agents-results/2026-10-26/R277-shot-visual-revision/check-task-r277.log"
+  },
+  {
+    "task": "r276",
+    "exit_code": 1,
+    "log": "agents-results/2026-10-26/R277-shot-visual-revision/check-task-r276.log"
+  }
+]

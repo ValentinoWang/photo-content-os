@@ -1,0 +1,19 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-10-26-R277-photo-shot-visual-revision",
+  "base": "4c1fc220b32a1cd67a30adb323affca8724b47e1",
+  "head": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
+  "range_head": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
+  "reason": "经 R276 总控同意及第二段任务授权：R277 单镜投影增加 currentVersion、versions、boxes、look、sample 五个字段，test_busy_job_and_projection 严格相等字段集合随之扩大；其余四个保护文件不变，原 H-01 至 H-03 语义不变，H-03 仍由 test_rewrite_only_one_shot_and_invalidate_output 与 R276 REPORT-B 真跑证明。详情按钮由「让 Opus 重写这一镜」改为「重写这一镜」，原卡不改，由 R276 总控告知用户对应关系。",
+  "prepared_at": "2026-10-26T03:30:15.683858Z",
+  "previous_ready_at": "2026-10-25T23:26:21.559418+00:00",
+  "previous_binding_sha256": "0aec3bcfd6762ef3a7ae888bcbe0ddb9b4586a6d6254dc9507443100cd332e8a",
+  "checklist_sha256": "06961a51136a70d478465352b16893be5f08ac99030c7b32030cc7d941232430",
+  "tests": [
+    {
+      "path": "tests/test_r276_direct_video.py",
+      "old_sha256": "e14bb66d4425c469a6fe820278e508e411a10f3502cfccf9bfeca1ed44bca57e",
+      "new_sha256": "95dd1530a9573600e502c4fae680befb6dbcbc96c3c3c29bf2a21568ac74011a"
+    }
+  ]
+}
