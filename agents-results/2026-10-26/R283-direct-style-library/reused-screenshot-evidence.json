@@ -1,0 +1,377 @@
+{
+  "root": "~/.photo-content-os/evidence/R283-direct-style-library/frontend",
+  "manifest_sha256": "d5b1705bc9a6eed536f7e69a81c445f2fc66e84083aeaf362e8f3a5420eb9860",
+  "gallery_sha256": "73a281f3685c402bd616e7857a416339925824de7e32d8697bc812c1ad6348bc",
+  "gallery_targets_checked": 16,
+  "scope": "S/F prior final-render evidence reused; no fresh screenshots from this handoff",
+  "screenshots": [
+    {
+      "state": "first-lib",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:19.446Z",
+      "scroll_coverage": [
+        0,
+        2575
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2575
+      },
+      "path": "first-lib-1440.png",
+      "sha256": "0a03222d3442ed55d8f234322c8c7b5af42d8ffee9e56ba6d5e18124e47071b7",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 库首卡单独高亮，右侧扁平插画真实样张、色板、字号、动作规矩和不用完整；生成条为库名称。 1440 视口：两组同款卡片与右侧预览对齐，图文层级清楚。"
+    },
+    {
+      "state": "first-lib",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:20.597Z",
+      "scroll_coverage": [
+        0,
+        3149
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 3149
+      },
+      "path": "first-lib-960.png",
+      "sha256": "80170bf09a43783f7d3ae712de31f3764d9196b60852c637c74da8ce4ab791d6",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 库首卡单独高亮，右侧扁平插画真实样张、色板、字号、动作规矩和不用完整；生成条为库名称。 960 视口：风格编辑与预览上下排、表格内部横滚，页面无横向溢出。"
+    },
+    {
+      "state": "first-none",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:21.424Z",
+      "scroll_coverage": [
+        0,
+        2472
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2472
+      },
+      "path": "first-none-1440.png",
+      "sha256": "bf8883ddd99d093f4adf24af2d5949692cfed70099c26b94e81c3e171a7e1e79",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 无最近成片卡，九张库卡均未选；虚线预览、选风格说明与警示生成条清楚，生成按钮禁用。 1440 视口：两组同款卡片与右侧预览对齐，图文层级清楚。"
+    },
+    {
+      "state": "first-none",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:22.409Z",
+      "scroll_coverage": [
+        0,
+        3030
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 3030
+      },
+      "path": "first-none-960.png",
+      "sha256": "28caa319cccc056bbe1e5a7c784c8428bf094f053cb4cacd4a69f75cefe721d2",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 无最近成片卡，九张库卡均未选；虚线预览、选风格说明与警示生成条清楚，生成按钮禁用。 960 视口：风格编辑与预览上下排、表格内部横滚，页面无横向溢出。"
+    },
+    {
+      "state": "library",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:23.437Z",
+      "scroll_coverage": [
+        0,
+        1667
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1667
+      },
+      "path": "library-1440.png",
+      "sha256": "a29f30b75d907a2badef02ed8912afd605a055decb5b7f8e6ce311cba238bc36",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 全片设计来源为用风格库「扁平插画」的风格；四色、动作规矩和不用与库一致；相邻进度、镜头列表及详情到底部完整。 1440 视口：两组同款卡片与右侧预览对齐，图文层级清楚。"
+    },
+    {
+      "state": "library",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:24.437Z",
+      "scroll_coverage": [
+        0,
+        2103
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2103
+      },
+      "path": "library-960.png",
+      "sha256": "c70cd53b9e83da3a4bc42c70c513015fbee7b585ab0787276001aa890206f018",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 全片设计来源为用风格库「扁平插画」的风格；四色、动作规矩和不用与库一致；相邻进度、镜头列表及详情到底部完整。 960 视口：风格编辑与预览上下排、表格内部横滚，页面无横向溢出。"
+    },
+    {
+      "state": "rescript",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:26.624Z",
+      "scroll_coverage": [
+        0,
+        2575
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2575
+      },
+      "path": "rescript-1440.png",
+      "sha256": "598856e45b54c0e8206540506925b8f5298acc5fa24e24d65aa36f13803b0cf2",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 当前成片卡高亮，下面九张库卡始终可见且未选；分镜无来源标签，原预览与页底完整。 1440 视口：两组同款卡片与右侧预览对齐，图文层级清楚。"
+    },
+    {
+      "state": "rescript",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:30.325Z",
+      "scroll_coverage": [
+        0,
+        3149
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 3149
+      },
+      "path": "rescript-960.png",
+      "sha256": "69271ec905bd14779393f024767c2c34281da408f94ac31aa50384ea6459d786",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 当前成片卡高亮，下面九张库卡始终可见且未选；分镜无来源标签，原预览与页底完整。 960 视口：风格编辑与预览上下排、表格内部横滚，页面无横向溢出。"
+    },
+    {
+      "state": "rescript-adjust",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:34.466Z",
+      "scroll_coverage": [
+        0,
+        2575
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2575
+      },
+      "path": "rescript-adjust-1440.png",
+      "sha256": "fee130ae54d9e27db64e622769933924a4b2ee85c382be47526654e4d380f04b",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 九张库卡始终可见；当前成片选择、调整文字、步骤解释和生成条一致，分镜及页底完整。 1440 视口：两组同款卡片与右侧预览对齐，图文层级清楚。"
+    },
+    {
+      "state": "rescript-adjust",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:37.286Z",
+      "scroll_coverage": [
+        0,
+        3149
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 3149
+      },
+      "path": "rescript-adjust-960.png",
+      "sha256": "3e8c03f4a260ce5c948e49b7b3223b3a4e1217bbf24cf99591b993948d37692f",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 九张库卡始终可见；当前成片选择、调整文字、步骤解释和生成条一致，分镜及页底完整。 960 视口：风格编辑与预览上下排、表格内部横滚，页面无横向溢出。"
+    },
+    {
+      "state": "rescript-other",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:39.609Z",
+      "scroll_coverage": [
+        0,
+        2575
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2575
+      },
+      "path": "rescript-other-1440.png",
+      "sha256": "764507fc07cbd9f1d1392f003db9840ae64b33db853114653255308685ad5396",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 另一条成片卡单独高亮、预览与生成条同步；九张库卡仍显示且均未选，分镜与页底完整。 1440 视口：两组同款卡片与右侧预览对齐，图文层级清楚。"
+    },
+    {
+      "state": "rescript-other",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:41.714Z",
+      "scroll_coverage": [
+        0,
+        3149
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 3149
+      },
+      "path": "rescript-other-960.png",
+      "sha256": "36598e862da312a86f79ee5e38ea8d255214b1df3398cd755f259fdf717ad68b",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 另一条成片卡单独高亮、预览与生成条同步；九张库卡仍显示且均未选，分镜与页底完整。 960 视口：风格编辑与预览上下排、表格内部横滚，页面无横向溢出。"
+    },
+    {
+      "state": "first",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:43.244Z",
+      "scroll_coverage": [
+        0,
+        2575
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2575
+      },
+      "path": "first-1440.png",
+      "sha256": "c802799df0619c6a63e1abcabdad869001e19a5dbdf826393a8e21eae7c96f40",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 最近成片默认选中，九张库卡常驻；无图分镜、新画面占位、风格区和底部生成条完整。 1440 视口：两组同款卡片与右侧预览对齐，图文层级清楚。"
+    },
+    {
+      "state": "first",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:45.163Z",
+      "scroll_coverage": [
+        0,
+        3149
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 3149
+      },
+      "path": "first-960.png",
+      "sha256": "64969129e21a5a6f4a6ab9ce112fada551362cba69ee1d18beca19f01ee58edd",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 最近成片默认选中，九张库卡常驻；无图分镜、新画面占位、风格区和底部生成条完整。 960 视口：风格编辑与预览上下排、表格内部横滚，页面无横向溢出。"
+    },
+    {
+      "state": "first-lib",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:56.477Z",
+      "scroll_coverage": [
+        0,
+        4482
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 4482
+      },
+      "path": "first-lib-390.png",
+      "sha256": "a8d518cc520da76b22c3036e22ac761efc6237794ee894eec6605659aa79885b",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 库首卡单独高亮，右侧扁平插画真实样张、色板、字号、动作规矩和不用完整；生成条为库名称。 390 实际手机视口：卡片单列，预览与元数据上下排列，元数据没有溢出；长表格在自身内部横向滚动。"
+    },
+    {
+      "state": "first-none",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:57.615Z",
+      "scroll_coverage": [
+        0,
+        3991
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 3991
+      },
+      "path": "first-none-390.png",
+      "sha256": "4c8eb6404f99deb036ea3dbbea214247d03ee0e793387322b7ff088d9e89014d",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 无最近成片卡，九张库卡均未选；虚线预览、选风格说明与警示生成条清楚，生成按钮禁用。 390 实际手机视口：卡片单列，预览与元数据上下排列，元数据没有溢出；长表格在自身内部横向滚动。"
+    }
+  ]
+}

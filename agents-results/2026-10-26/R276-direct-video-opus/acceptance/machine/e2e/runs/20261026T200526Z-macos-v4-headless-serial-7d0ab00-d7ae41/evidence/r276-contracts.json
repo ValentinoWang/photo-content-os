@@ -1,0 +1,236 @@
+[
+  {
+    "state": "empty",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "empty",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "read-error",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "read-error",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "filled",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "filled",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "unavailable",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "unavailable",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "designing",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "designing",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "writing",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "writing",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "failed-shot",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "failed-shot",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "ready",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "ready",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rewriting",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rewriting",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "composing",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "composing",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "composing-silent",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "composing-silent",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "done",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "done",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "done-silent",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "done-silent",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  }
+]

@@ -1,0 +1,122 @@
+{
+  "scope": "Verify hashes of prior S rendering and contact sheets, no new render/decode",
+  "styles": [
+    {
+      "id": "flat",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "cea200e6f993574d6f11cd7c7f79942287b5ba24b5a8aa74648974c016f2b28c",
+      "last_sha256": "d20c6c6ab9f0f1388cfcf5f8d49efcc0d9d26ee545f78c13dbe033bdd8d6cb00",
+      "prior_capture_time": "2026-10-26T18:04:00.918055+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    },
+    {
+      "id": "math",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "812f8b4fc676b88eb31368db67494241c434afbb28fad8db525006b8e2b14711",
+      "last_sha256": "3552de401fb390cc7dda3945307e5c553345833a9ad82f8797a211ac163af502",
+      "prior_capture_time": "2026-10-26T17:53:15.854310+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    },
+    {
+      "id": "launch",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "36b5cdb705aef6638efe7f0da380b671b5556ef78f0bb392fd2560d6080e012e",
+      "last_sha256": "6e6d7f56ffcea2a37b2acb7463216f0d16129b14623ce0bc45f8807e1cd94733",
+      "prior_capture_time": "2026-10-26T17:56:02.217788+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    },
+    {
+      "id": "whiteboard",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "2cb0dd6ff714d01408d44ce6a350a6cdb537dee3ed8b74a92891c033aef8ae26",
+      "last_sha256": "b6401731f32573132076b0fe37baa4cbee838daa8faa560ee782be1b586c6b0e",
+      "prior_capture_time": "2026-10-26T18:01:50.110274+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    },
+    {
+      "id": "cyber",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "cee284e911d5ef7b431f0f6c8719b43aad458f52084b856e9ed1faafd05a30ff",
+      "last_sha256": "0d5f2109980aa1bd98929bf7b0322c039edc16da99bccbd3548e70d6ee3ea378",
+      "prior_capture_time": "2026-10-26T18:04:43.082749+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    },
+    {
+      "id": "ink",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "4399e36d0a7bb21b2a497e5a38007a63a9da2c4bfe1aa2b0ad244c654e597b99",
+      "last_sha256": "be438e2ad577731e3302966fe609d52a3024a355f56f9a415f9bd6bb3952a9cf",
+      "prior_capture_time": "2026-10-26T18:07:56.347723+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    },
+    {
+      "id": "dataviz",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "741ee5947a5e9670fe0f7694d16d7989a885ba805f2dbd3472a8eeab7be4525f",
+      "last_sha256": "4f8c540b8516c457717525597d21d4190083a61e7d4b709526cae9eea3816059",
+      "prior_capture_time": "2026-10-26T18:09:36.439331+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    },
+    {
+      "id": "pixel",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "be787503994e88cff43c6fd0e15bba3fa13c3eb6d28099ad59b9acae4fbde19d",
+      "last_sha256": "587e53d5febaf6edd622dbc02b9341a623ac77666724264043139e66c6883a79",
+      "prior_capture_time": "2026-10-26T18:10:06.967958+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    },
+    {
+      "id": "code",
+      "source_and_media_hashes_match": true,
+      "sheet_sha256": "ba6abe5b384d14452aebe8ac64ce36a6994df0187b018f423b82ee3af61bc0bb",
+      "last_sha256": "d4916eef1b544673ef1d0537305afa03aed8e76d06ab61ef3eff6f85b400868c",
+      "prior_capture_time": "2026-10-26T18:10:36.187143+00:00",
+      "prior_full_decode": true,
+      "prior_duration": 12,
+      "prior_dimensions": [
+        360,
+        640
+      ]
+    }
+  ]
+}

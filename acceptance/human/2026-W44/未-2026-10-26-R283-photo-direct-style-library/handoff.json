@@ -1,0 +1,209 @@
+{
+  "baseline": {
+    "base": "130c931c8250368205165ef8c59d19b2796d55d4",
+    "branch": "detached",
+    "head": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+    "tree": "b32e8bc0b6e36b9aee0957b3367b2f689e29054d"
+  },
+  "binding_sha256": "d6080576c1c913f5259d054785d8826bede98b1540af251a749821fbbfb02b30",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "eadf6896c0477b40bc15156d5c0ea55387e023e4696c617a1195f78e9b564b8d",
+  "claims": [
+    {
+      "claim_key": "studio.direct-style-library",
+      "item": "H-01",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-28aaf4f527&ptab=direct",
+      "protected_test_overlap": [
+        {
+          "decision": "rebaseline",
+          "reason": "用户第四次交付授权：R283使风格库常驻、first-none替代旧空态，更新R278 Node和共用门禁两份受保护文件；保留全部拆并镜、输入法、导入、样张及媒体断言；新源码完整重验和重新递交，人工三项不变。",
+          "target": "2026-10-26-R278-photo-direct-rescript"
+        }
+      ],
+      "relations": [
+        {
+          "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验固定风格库、样张及库来源生成，不承接工具安装或剪辑候选责任。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验汽水和网易云导入、去重及会员失败；本卡九种视觉风格没有音乐和音效，不改导入与入库。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验导航、项目分组、精选播放和决定保存及既有成片音乐预览；本卡只验脚本直出的九库卡与风格生成，不承接原导航精选预览。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、节拍试听及自动分析；本卡验视觉样张、画法和库设计来源，不生成音乐或改变分析。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留选块改画面、版本核对、样例和规则草稿；本卡验九种库及库画法传递，不承接单镜详情交互责任。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "studio.direct-library-generation",
+      "item": "H-02",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-28aaf4f527&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验固定风格库、样张及库来源生成，不承接工具安装或剪辑候选责任。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验汽水和网易云导入、去重及会员失败；本卡九种视觉风格没有音乐和音效，不改导入与入库。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验导航、项目分组、精选播放和决定保存及既有成片音乐预览；本卡只验脚本直出的九库卡与风格生成，不承接原导航精选预览。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、节拍试听及自动分析；本卡验视觉样张、画法和库设计来源，不生成音乐或改变分析。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留选块改画面、版本核对、样例和规则草稿；本卡验九种库及库画法传递，不承接单镜详情交互责任。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "studio.direct-library-adjustment",
+      "item": "H-03",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-4c886fc28b&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验固定风格库、样张及库来源生成，不承接工具安装或剪辑候选责任。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验汽水和网易云导入、去重及会员失败；本卡九种视觉风格没有音乐和音效，不改导入与入库。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验导航、项目分组、精选播放和决定保存及既有成片音乐预览；本卡只验脚本直出的九库卡与风格生成，不承接原导航精选预览。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、节拍试听及自动分析；本卡验视觉样张、画法和库设计来源，不生成音乐或改变分析。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留选块改画面、版本核对、样例和规则草稿；本卡验九种库及库画法传递，不承接单镜详情交互责任。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
+  "contract_sha256": "839e69bc7b5d1cf8a8a51d804293d08e559dfe7ab4b2e2509ed7da4dd9da8cfe",
+  "contract_version": "1",
+  "estimated_minutes": 10,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "studio.direct-library-adjustment",
+    "studio.direct-library-generation",
+    "studio.direct-style-library"
+  ],
+  "loop_name": "脚本直出的视频风格加风格库：九种现成风格直接挑",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/integration-contract/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-19857b/result.md",
+      "result_sha256": "1c4a85b1843bf6d34bc8af71b60c4a801e9bae71fc1fcc99a6215b8e4ee55cae",
+      "run_id": "20261026T200526Z-macos-v4-headless-serial-7d0ab00-19857b",
+      "source_identity": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd"
+    },
+    {
+      "layer": "machine/e2e",
+      "result_path": "agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/e2e/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-ac0b6f/result.md",
+      "result_sha256": "ffa45c589d78bb6891318d773c5ac0687511b66a9d9e5af38e846abd2b0f2780",
+      "run_id": "20261026T200526Z-macos-v4-headless-serial-7d0ab00-ac0b6f",
+      "source_identity": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd"
+    }
+  ],
+  "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-28aaf4f527&ptab=direct",
+  "ready_at": "2026-10-26T20:10:59.688065Z",
+  "release_slice": "R283",
+  "request_id": "2026-10-26-R283-photo-direct-style-library",
+  "required_role": "产品负责人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+  "summary": "第四次交付，R283触发的新源码7d0ab00验证；299项专项、Node及完整前端门禁通过，人工三项PENDING。",
+  "task_id": "2026-10-26-R283-photo-direct-style-library"
+}

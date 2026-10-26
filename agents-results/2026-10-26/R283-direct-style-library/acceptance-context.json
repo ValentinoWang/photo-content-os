@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "r283-studio-context",
+  "authority": [
+    "acceptance/requests/2026-W44/2026-10-26-R283-photo-direct-style-library/request.json",
+    "docs/tasks/R283-direct-style-library/TASK.md",
+    "docs/tasks/R278-direct-rescript/design/contract.json"
+  ],
+  "inherited_context": "agents-results/2026-10-26/R278-direct-rescript/acceptance-context.json",
+  "product": {
+    "purpose": "本机创作者从九种固定风格挑选，预览样张并沿用或调整全片风格",
+    "privacy": "媒体和状态留在本机，样张不入仓库"
+  },
+  "role": {
+    "id": "local-creator",
+    "label": "本机创作者",
+    "scope": "本机作品与脚本直出"
+  },
+  "screen_contract": {
+    "route": "/#view=piece&piece=project-28aaf4f527&ptab=direct",
+    "states_ref": "docs/tasks/R278-direct-rescript/design/contract.json",
+    "interaction_requirements": [
+      "H-01",
+      "H-02",
+      "H-03"
+    ],
+    "invariants": [
+      "现成成片和风格库合计单选",
+      "不改设计时不调用定设计模型",
+      "写镜和重写均携带画法与样张",
+      "无成片也不预选库风格",
+      "用户人工验收未签署"
+    ]
+  }
+}

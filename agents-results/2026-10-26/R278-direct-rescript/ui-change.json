@@ -7,7 +7,7 @@
   "source_requirements_ref": {
     "path": "agents-results/2026-10-26/R278-direct-rescript/source-requirements.json",
     "entity_id": "r278-design-authority",
-    "canonical_digest": "b66d94c0eb9b1ee1207564157923fbbcf0538759b64d51afe077c7697ed18b8f"
+    "canonical_digest": "4a1aac55e054d23931e6fd47df44033dbfb3a809cf1bd7363fc9863ff3cc9c19"
   },
   "affected_surfaces": [
     {
@@ -39,12 +39,12 @@
   "visual_contract_ref": {
     "path": "docs/tasks/R278-direct-rescript/design/contract.json",
     "entity_id": "r278-visual",
-    "canonical_digest": "4cc579811fc135b8835b15a6cb3398d3b201380cea997605a3aa98fe62a8089f"
+    "canonical_digest": "f9dc4ae2a74c24b372a79d45414c456d892293324b7ae3bd5d0ecb9aa7e957ce"
   },
   "reference_prototypes": [
     {
       "path": "docs/tasks/R278-direct-rescript/design/index.html",
-      "sha256": "e8da41b555f29153a3319047642e82855ab7bc3bd45aee08fd90c9051160978d",
+      "sha256": "f712ae485c925695829f2fb5aace1548995a4f7fb8aa0c46af337e43fb27556f",
       "media_type": "text/html",
       "authority_by_dimension": {
         "information_architecture": "normative",

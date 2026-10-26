@@ -1,0 +1,18 @@
+{
+  "R276-direct-video-opus": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-photo-content-os-r278-direct-rescript/agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-178a71/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-photo-content-os-r278-direct-rescript/agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-d7ae41/result.md"
+  },
+  "R277-shot-visual-revision": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-photo-content-os-r278-direct-rescript/agents-results/2026-10-26/R277-shot-visual-revision/acceptance/machine/integration-contract/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-ee0df1/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-photo-content-os-r278-direct-rescript/agents-results/2026-10-26/R277-shot-visual-revision/acceptance/machine/e2e/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-bad49d/result.md"
+  },
+  "R278-direct-rescript": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-photo-content-os-r278-direct-rescript/agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-43a173/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-photo-content-os-r278-direct-rescript/agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-5b5129/result.md"
+  },
+  "R283-direct-style-library": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-photo-content-os-r278-direct-rescript/agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/integration-contract/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-19857b/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-photo-content-os-r278-direct-rescript/agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/e2e/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-ac0b6f/result.md"
+  }
+}

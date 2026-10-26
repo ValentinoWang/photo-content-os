@@ -1,0 +1,25 @@
+{
+  "range": "130c931..7d0ab00",
+  "current_trigger_card": "2026-10-26-R283-photo-direct-style-library",
+  "active_protected_overlap": [
+    "2026-10-26-R278-photo-direct-rescript"
+  ],
+  "R278_previous_batch_declarations": [
+    {
+      "item": "H-01",
+      "declarations": [
+        {
+          "decision": "rebaseline",
+          "reason": "任务单授权；三个受保护 Python 文件补合法 style、motionSummary/bannedShort，严格投影增加 visual/subtitle/camera/audio/fromDraft。门禁更新端口参数、台词/分镜表及风格请求和批准的步骤条/设计区合同；原生成配音合成、失败安全及 H-03 单镜不变性断言保留。逐处见 REPORT-A 第4节和 REPORT-F1 第6节，完成准备后重跑原机器范围并重新递交，原三项仍待验。 第二次交付另保留旧视频移除后的回调回归；合同只组合R278批准的分支文案，原断言不降级。",
+          "target": "2026-10-26-R276-photo-direct-video-opus"
+        },
+        {
+          "decision": "rebaseline",
+          "reason": "任务单授权；test_r277_revisions.py 补合法 style 并严格容纳 visual/subtitle/camera/audio/fromDraft，保留版本、样例和隐私断言；revision_frontend_gate.mjs 接入 R278 批准步骤条和设计标题、端口与无头浏览器参数，镜详情、标记、对比、版本和日志检查保留。准备后重跑原机器范围并重新递交，原三项仍待验。 第二次交付使用R277_SOURCE_STATE只读克隆，按操作后真实状态组合步骤锁合同，保留390实际视口溢出与全部标记几何检查。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision"
+        }
+      ]
+    }
+  ],
+  "reason": "旧R278卡的R276/R277测试转换已在真实base130c931内；本批不重新声明已发布历史差异，历史handoff和completed记录原样保留在base和各卡审计链。当前新递交输入只声明本批真实差异。"
+}

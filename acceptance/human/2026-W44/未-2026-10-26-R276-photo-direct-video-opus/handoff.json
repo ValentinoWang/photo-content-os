@@ -1,9 +1,9 @@
 {
   "baseline": {
-    "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+    "base": "130c931c8250368205165ef8c59d19b2796d55d4",
     "branch": "detached",
-    "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
-    "tree": "2ef184b559dd9d8a520fdc5e320114e379f66e6b"
+    "head": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+    "tree": "b32e8bc0b6e36b9aee0957b3367b2f689e29054d"
   },
   "binding_sha256": "0f218986be8bfb8aa1e71f974e2912cd8d2f10f58df34707088800c4c61eba88",
   "blocking": true,
@@ -15,6 +15,13 @@
       "claim_key": "studio.direct-video.generate",
       "item": "H-01",
       "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "protected_test_overlap": [
+        {
+          "decision": "rebaseline",
+          "reason": "本批共享门禁检查R278两份已批准保护变更；R278仅用R283触发的一份新批准合同准备并已重验，引用同批完成记录；本卡自身保护摘要未变，原人工责任独立PENDING。",
+          "target": "2026-10-26-R278-photo-direct-rescript"
+        }
+      ],
       "relations": [
         {
           "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。",
@@ -45,11 +52,15 @@
           "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
           "target": "2026-10-26-R278-photo-direct-rescript",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
         }
       ],
       "surfaces": [
         "acceptance.artifacts",
-        "acceptance.evidence",
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
@@ -91,11 +102,15 @@
           "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
           "target": "2026-10-26-R278-photo-direct-rescript",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
         }
       ],
       "surfaces": [
         "acceptance.artifacts",
-        "acceptance.evidence",
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
@@ -137,11 +152,15 @@
           "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
           "target": "2026-10-26-R278-photo-direct-rescript",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
         }
       ],
       "surfaces": [
         "acceptance.artifacts",
-        "acceptance.evidence",
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
@@ -164,17 +183,17 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261026T170642Z-macos-headless-serial-fc072d9-5c8f9f/result.md",
-      "result_sha256": "28d6b94a52d98d849c32682487240bf6eaf53be27551c161e3ce7bae03ffbefc",
-      "run_id": "20261026T170642Z-macos-headless-serial-fc072d9-5c8f9f",
-      "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-178a71/result.md",
+      "result_sha256": "df048e7dd9f8d7ccef684d710728c13b866666c614731aeec0b64caa8a409fe1",
+      "run_id": "20261026T200526Z-macos-v4-headless-serial-7d0ab00-178a71",
+      "source_identity": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd"
     },
     {
       "layer": "machine/e2e",
-      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261026T170642Z-macos-headless-serial-fc072d9-5f0102/result.md",
-      "result_sha256": "693d2bc19d06bcab7eb22b27dab70cf4f4a795c14dcf22531de4bd9333fbc0ce",
-      "run_id": "20261026T170642Z-macos-headless-serial-fc072d9-5f0102",
-      "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-d7ae41/result.md",
+      "result_sha256": "24734874576c10d3f6c05af9e2055004f05eff81e62fc89bd4f5dc17f6bfa37e",
+      "run_id": "20261026T200526Z-macos-v4-headless-serial-7d0ab00-d7ae41",
+      "source_identity": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd"
     }
   ],
   "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
@@ -228,13 +247,13 @@
       "trigger_card": "2026-10-26-R278-photo-direct-rescript"
     }
   ],
-  "ready_at": "2026-10-26T17:16:05.333875Z",
+  "ready_at": "2026-10-26T20:11:02.089388Z",
   "release_slice": "R276",
   "request_id": "2026-10-26-R276-photo-direct-video-opus",
   "required_role": "产品负责人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
-  "summary": "fc072d9上原合同完整机器范围重新验证通过并重定受保护基准；原三项保持PENDING，未代签人工通过。",
+  "source_commit": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+  "summary": "第四次交付，R283触发的新源码7d0ab00验证；299项专项、Node及完整前端门禁通过，人工三项PENDING。 本卡保护摘要未变，仅正式重新递交一次，不制造无差异rebaseline；原全部审计保留。",
   "task_id": "2026-10-26-R276-photo-direct-video-opus"
 }

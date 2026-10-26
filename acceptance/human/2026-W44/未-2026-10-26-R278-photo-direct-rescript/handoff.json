@@ -1,32 +1,20 @@
 {
   "baseline": {
-    "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+    "base": "130c931c8250368205165ef8c59d19b2796d55d4",
     "branch": "detached",
-    "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
-    "tree": "2ef184b559dd9d8a520fdc5e320114e379f66e6b"
+    "head": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+    "tree": "b32e8bc0b6e36b9aee0957b3367b2f689e29054d"
   },
-  "binding_sha256": "f31fdfdaa3416177bc195303131449d239a79f82e8c83786c112d352356fba84",
+  "binding_sha256": "80076c95ce449928685bf9323d8e8cb08891ad59fa27fe182cc50e5fe927708e",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "49587b3e78510400cda9e7becc8d044c112a664fe1b51790d5b4ebd46a374012",
+  "checklist_sha256": "53f248b66e379e0436578fa7e8dd305b60ef6b42bf85b5bbad23291a37bc2bd2",
   "claims": [
     {
       "claim_key": "studio.direct-rescript",
       "item": "H-01",
       "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
-      "protected_test_overlap": [
-        {
-          "decision": "rebaseline",
-          "reason": "任务单授权；三个受保护 Python 文件补合法 style、motionSummary/bannedShort，严格投影增加 visual/subtitle/camera/audio/fromDraft。门禁更新端口参数、台词/分镜表及风格请求和批准的步骤条/设计区合同；原生成配音合成、失败安全及 H-03 单镜不变性断言保留。逐处见 REPORT-A 第4节和 REPORT-F1 第6节，完成准备后重跑原机器范围并重新递交，原三项仍待验。 第二次交付另保留旧视频移除后的回调回归；合同只组合R278批准的分支文案，原断言不降级。",
-          "target": "2026-10-26-R276-photo-direct-video-opus"
-        },
-        {
-          "decision": "rebaseline",
-          "reason": "任务单授权；test_r277_revisions.py 补合法 style 并严格容纳 visual/subtitle/camera/audio/fromDraft，保留版本、样例和隐私断言；revision_frontend_gate.mjs 接入 R278 批准步骤条和设计标题、端口与无头浏览器参数，镜详情、标记、对比、版本和日志检查保留。准备后重跑原机器范围并重新递交，原三项仍待验。 第二次交付使用R277_SOURCE_STATE只读克隆，按操作后真实状态组合步骤锁合同，保留390实际视口溢出与全部标记几何检查。",
-          "target": "2026-10-26-R277-photo-shot-visual-revision"
-        }
-      ],
       "relations": [
         {
           "reason": "旧卡验仓库内剪辑工具安装、环境诊断及候选播放；本卡验分镜回改、全片风格和首镜样张，不承接工具安装或候选验收。",
@@ -57,11 +45,15 @@
           "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
           "target": "2026-10-26-R277-photo-shot-visual-revision",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
         }
       ],
       "surfaces": [
         "acceptance.artifacts",
-        "acceptance.evidence",
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
@@ -103,11 +95,15 @@
           "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
           "target": "2026-10-26-R277-photo-shot-visual-revision",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
         }
       ],
       "surfaces": [
         "acceptance.artifacts",
-        "acceptance.evidence",
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
@@ -149,11 +145,15 @@
           "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
           "target": "2026-10-26-R277-photo-shot-visual-revision",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
         }
       ],
       "surfaces": [
         "acceptance.artifacts",
-        "acceptance.evidence",
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
@@ -163,8 +163,8 @@
     }
   ],
   "contract_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
-  "contract_sha256": "c09cdffe9bb97c23b7526c7dce449611d0c5eada03d8db47bbfd86c3c72ac49d",
-  "contract_version": "1",
+  "contract_sha256": "21040745022fd273f8c138bfae74dc76afaeb3930fc31781dbb6a8bf4af80088",
+  "contract_version": "2",
   "estimated_minutes": 10,
   "execution_policy": "terminal-after-machine-green",
   "invalidation_keys": [
@@ -176,27 +176,75 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261026T170643Z-macos-headless-serial-fc072d9-61e71b/result.md",
-      "result_sha256": "6b3b9900e13cb9a8afc2ffb5aefa0218b16379a601ffc42541c325fd900302c1",
-      "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-61e71b",
-      "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-43a173/result.md",
+      "result_sha256": "4135c9a328921f551e9422007065fa9e17752d5d0d9ac0ce72083951b78f7a63",
+      "run_id": "20261026T200526Z-macos-v4-headless-serial-7d0ab00-43a173",
+      "source_identity": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd"
     },
     {
       "layer": "machine/e2e",
-      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261026T170643Z-macos-headless-serial-fc072d9-2447b2/result.md",
-      "result_sha256": "df21bab50b8cd534ac30792ff3efd6c180bd60e60893301dfd51b9c048fff290",
-      "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-2447b2",
-      "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-5b5129/result.md",
+      "result_sha256": "4fad463271d49176ced4aabafc82b13ddfc123fc9582403d69e564943201672a",
+      "run_id": "20261026T200526Z-macos-v4-headless-serial-7d0ab00-5b5129",
+      "source_identity": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd"
     }
   ],
   "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
-  "ready_at": "2026-10-26T17:16:07.932204Z",
+  "protected_test_rebaselines": [
+    {
+      "approved_contract": {
+        "base": {
+          "commit": "130c931c8250368205165ef8c59d19b2796d55d4",
+          "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+          "sha256": "c09cdffe9bb97c23b7526c7dce449611d0c5eada03d8db47bbfd86c3c72ac49d",
+          "version": "1"
+        },
+        "binding": {
+          "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/binding.md",
+          "sha256": "80076c95ce449928685bf9323d8e8cb08891ad59fa27fe182cc50e5fe927708e"
+        },
+        "checklist": {
+          "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
+          "sha256": "53f248b66e379e0436578fa7e8dd305b60ef6b42bf85b5bbad23291a37bc2bd2"
+        },
+        "current": {
+          "commit": "5c99eb44199f6e5b35198e92189a022c97a36642",
+          "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+          "sha256": "21040745022fd273f8c138bfae74dc76afaeb3930fc31781dbb6a8bf4af80088",
+          "version": "2"
+        }
+      },
+      "base": "130c931c8250368205165ef8c59d19b2796d55d4",
+      "checklist_sha256": "53f248b66e379e0436578fa7e8dd305b60ef6b42bf85b5bbad23291a37bc2bd2",
+      "head": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+      "phase": "completed",
+      "prepared_at": "2026-10-26T20:05:10.915662Z",
+      "previous_binding_sha256": "80076c95ce449928685bf9323d8e8cb08891ad59fa27fe182cc50e5fe927708e",
+      "previous_ready_at": "2026-10-26T17:16:07.932204Z",
+      "range_head": "5c99eb44199f6e5b35198e92189a022c97a36642",
+      "reason": "用户2026-10-27第四次交付授权：仅R283推送范围，批准的原标准保留，触发卡R283；新源码机器重验、人工PENDING。",
+      "tests": [
+        {
+          "new_sha256": "98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0",
+          "old_sha256": "734701b1224ffce564e7988b45490bc7b8956f9a1e8eebeb6f728d0c4dee661e",
+          "path": "tests/test_r278_direct_rescript.mjs"
+        },
+        {
+          "new_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
+          "old_sha256": "1656090287a72e335d1bba60f7ec155ed8d31ad41ecc6cae9bcc2a2f2336a9cd",
+          "path": "scripts/direct_video/rescript_frontend_gate.mjs"
+        }
+      ],
+      "trigger_card": "2026-10-26-R283-photo-direct-style-library"
+    }
+  ],
+  "ready_at": "2026-10-26T20:10:58.711886Z",
   "release_slice": "R278",
   "request_id": "2026-10-26-R278-photo-direct-rescript",
   "required_role": "产品负责人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
-  "summary": "fc072d9上263项专项、40次合同与交互、安全检查通过；三项原文待用户验收。样张实测约3分36秒，用户接受近似时长，不代表人工PASS。",
+  "source_commit": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+  "summary": "第四次交付，R283触发的新源码7d0ab00验证；299项专项、Node及完整前端门禁通过，人工三项PENDING。 新批准合同准备后完成一次R283触发的rebaseline。H-03实测首次3分36秒、修改2分49秒，用户原话「这个没事 大概差不多就行」，不作为人工PASS。",
   "task_id": "2026-10-26-R278-photo-direct-rescript"
 }

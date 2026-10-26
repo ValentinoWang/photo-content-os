@@ -1,0 +1,422 @@
+[
+  {
+    "state": "review",
+    "name": "review",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review",
+    "name": "review-expanded",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review",
+    "name": "review",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review",
+    "name": "review-expanded",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "select",
+    "name": "select",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "select",
+    "name": "select",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "picked",
+    "name": "picked",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "picked",
+    "name": "picked",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rewriting2",
+    "name": "rewriting2",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rewriting2",
+    "name": "rewriting2",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "compare",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "compare",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "kept-prev",
+    "name": "kept-prev",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "kept-prev",
+    "name": "kept-prev",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "saved",
+    "name": "saved",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "saved",
+    "name": "saved",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review-failed",
+    "name": "review-failed",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review-failed",
+    "name": "review-failed",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "log",
+    "name": "log",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "log",
+    "name": "log",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review",
+    "name": "look-running",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review",
+    "name": "look-running",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review-failed",
+    "name": "no-boxes",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review-failed",
+    "name": "no-boxes",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review",
+    "name": "no-boxes-look-running",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review",
+    "name": "no-boxes-look-running",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "verify-running",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "verify-running",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "verify-missed",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "verify-missed",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "verify-failed",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "verify-failed",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "log",
+    "name": "log-empty",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "log",
+    "name": "log-empty",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "log",
+    "name": "proposal-running",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "log",
+    "name": "proposal-running",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review",
+    "name": "review",
+    "width": 390,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "picked",
+    "name": "picked",
+    "width": 390,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "compare",
+    "name": "compare",
+    "width": 390,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "kept-prev",
+    "name": "kept-prev",
+    "width": 390,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "review-failed",
+    "name": "no-boxes",
+    "width": 390,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "log",
+    "name": "log",
+    "width": 390,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  }
+]

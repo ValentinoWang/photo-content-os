@@ -1,0 +1,162 @@
+[
+  {
+    "claim_key": "studio.direct-video.generate",
+    "item": "H-01",
+    "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "本卡仍独立验七镜生成、上传配音合成及单镜重写不影响其余镜；R277 验同页单镜热区详情、版本核对、样例和问题记录，新增交互未承接本卡生成与合成责任，H-03 仍用后端不变性测试和 REPORT-B 证明。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ],
+    "protected_test_overlap": [
+      {
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "decision": "rebaseline",
+        "reason": "本批共享门禁检查R278两份已批准保护变更；R278仅用R283触发的一份新批准合同准备并已重验，引用同批完成记录；本卡自身保护摘要未变，原人工责任独立PENDING。"
+      }
+    ]
+  },
+  {
+    "claim_key": "studio.direct-video.compose",
+    "item": "H-02",
+    "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "本卡仍独立验七镜生成、上传配音合成及单镜重写不影响其余镜；R277 验同页单镜热区详情、版本核对、样例和问题记录，新增交互未承接本卡生成与合成责任，H-03 仍用后端不变性测试和 REPORT-B 证明。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.direct-video.single-rewrite",
+    "item": "H-03",
+    "open_route": "http://127.0.0.1:8766/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装与标准剪辑交接或可编辑时间线；本卡验 Opus 逐镜动画直出，不承接旧工具安装验收。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验两平台链接下载、重复导入及会员边界；本卡只用上传口播配音，不导入曲库，不改变平台账户验收。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验侧栏设置导航、素材精选决定持久化及已有成片和音乐播放；本卡验新增脚本直出任务生成与单镜修改，原验收责任保留。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐 AI 标签、节拍试听与新导入自动分析；本卡验口播动画直出，不改曲目分析和节拍模块。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "本卡仍独立验七镜生成、上传配音合成及单镜重写不影响其余镜；R277 验同页单镜热区详情、版本核对、样例和问题记录，新增交互未承接本卡生成与合成责任，H-03 仍用后端不变性测试和 REPORT-B 证明。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  }
+]

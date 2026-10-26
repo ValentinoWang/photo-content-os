@@ -1,0 +1,221 @@
+{
+  "R276-direct-video-opus": {
+    "comparison": "130c931..7d0ab00",
+    "protected_tests": [
+      {
+        "path": "tests/test_r276_direct_video.py",
+        "old_sha256": "c932e418ed2362b44e50514c689b9e6a6b7b9b1569fea31e06f8b385764a3e69",
+        "new_sha256": "c932e418ed2362b44e50514c689b9e6a6b7b9b1569fea31e06f8b385764a3e69",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r276_direct_api.py",
+        "old_sha256": "875dbb95f91f9d464055e21de8b17d45f504a90a133c99eb87c8374b0ecb6b72",
+        "new_sha256": "875dbb95f91f9d464055e21de8b17d45f504a90a133c99eb87c8374b0ecb6b72",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r276_direct_media.py",
+        "old_sha256": "d74658695d78ebc24f9869c88adb938c510517129d4ba655322115bad5eaec9e",
+        "new_sha256": "d74658695d78ebc24f9869c88adb938c510517129d4ba655322115bad5eaec9e",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r276_direct_c.py",
+        "old_sha256": "85f8665a1a972174bcaab842caba43109dd82d5cb1c36c66fd300f21f0d4cb9c",
+        "new_sha256": "85f8665a1a972174bcaab842caba43109dd82d5cb1c36c66fd300f21f0d4cb9c",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r276_direct_d.py",
+        "old_sha256": "fe7b1505535e7636404ba68d505358e7797d055e5d8ba2c4866afb4e4f39bed7",
+        "new_sha256": "fe7b1505535e7636404ba68d505358e7797d055e5d8ba2c4866afb4e4f39bed7",
+        "changed_in_r283": false
+      }
+    ],
+    "prepared": {
+      "phase": "prepared",
+      "trigger_card": "2026-10-26-R278-photo-direct-rescript",
+      "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+      "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "range_head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "reason": "用户2026-10-27第二次交付明确授权：R278必需风格、短文案和分镜四列使三个保护文件需更新合法夹具及严格投影集合；原生成配音合成和单镜不变性责任不变。原合同完整机器范围在fc072d9准备后重新验证，人工三项保持PENDING。",
+      "prepared_at": "2026-10-26T17:05:48.410034Z",
+      "previous_ready_at": "2026-10-26T03:41:09.533714Z",
+      "previous_binding_sha256": "43df5bc4d6831d0d53ac3fec1d416dd8c88a0ecef9d4b39eacc525643f52296c",
+      "checklist_sha256": "06961a51136a70d478465352b16893be5f08ac99030c7b32030cc7d941232430",
+      "tests": [
+        {
+          "path": "tests/test_r276_direct_video.py",
+          "old_sha256": "95dd1530a9573600e502c4fae680befb6dbcbc96c3c3c29bf2a21568ac74011a",
+          "new_sha256": "c932e418ed2362b44e50514c689b9e6a6b7b9b1569fea31e06f8b385764a3e69"
+        },
+        {
+          "path": "tests/test_r276_direct_api.py",
+          "old_sha256": "94b03c8a331ed3342e395800d34e6fac579c5672898af660eeca16db2f37154a",
+          "new_sha256": "875dbb95f91f9d464055e21de8b17d45f504a90a133c99eb87c8374b0ecb6b72"
+        },
+        {
+          "path": "tests/test_r276_direct_c.py",
+          "old_sha256": "88fdd5e2a0f05e2459d527ce23984fe1fc6366f06de3aa48fcc095cbcd1b1d90",
+          "new_sha256": "85f8665a1a972174bcaab842caba43109dd82d5cb1c36c66fd300f21f0d4cb9c"
+        }
+      ]
+    }
+  },
+  "R277-shot-visual-revision": {
+    "comparison": "130c931..7d0ab00",
+    "protected_tests": [
+      {
+        "path": "tests/test_r277_api.py",
+        "old_sha256": "913d08ffa2854a09b4034073d84885733105d6d5b5a55ff6950e1a5e7441136e",
+        "new_sha256": "913d08ffa2854a09b4034073d84885733105d6d5b5a55ff6950e1a5e7441136e",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r277_boxes.py",
+        "old_sha256": "ba9b91d7c481a2d06be284aae6d3f355ca721aec708c8fff0393ceca7d7ac93f",
+        "new_sha256": "ba9b91d7c481a2d06be284aae6d3f355ca721aec708c8fff0393ceca7d7ac93f",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r277_frontend.py",
+        "old_sha256": "b7a78eb47417d11cd4e2388285e986ff724506f7be185f29063507ba62f55d3b",
+        "new_sha256": "b7a78eb47417d11cd4e2388285e986ff724506f7be185f29063507ba62f55d3b",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r277_revisions.py",
+        "old_sha256": "13b8699cdd6b8f5d55cc95b6945fa6f5a431d86f38dbc82b9329159fd8adc7ca",
+        "new_sha256": "13b8699cdd6b8f5d55cc95b6945fa6f5a431d86f38dbc82b9329159fd8adc7ca",
+        "changed_in_r283": false
+      }
+    ],
+    "prepared": {
+      "phase": "prepared",
+      "trigger_card": "2026-10-26-R278-photo-direct-rescript",
+      "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+      "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "range_head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "reason": "用户2026-10-27第二次交付明确授权：R278必需风格及分镜四列使revisions保护测试需补合法style并严格容纳五个投影字段；保留单镜选块、版本、样例及规则草稿原责任。完整机器范围在fc072d9准备后重跑，人工三项保持PENDING。",
+      "prepared_at": "2026-10-26T17:05:48.902616Z",
+      "previous_ready_at": "2026-10-26T03:41:10.522621Z",
+      "previous_binding_sha256": "3f8e9079377d0f7d6f48c87d7f5a18d58696311fe795eecbf61b67e23d2022f5",
+      "checklist_sha256": "5add7bb71e0e49fbb14c3d0e63baee8c12f013c1bcbc11effd00bbef79519785",
+      "tests": [
+        {
+          "path": "tests/test_r277_revisions.py",
+          "old_sha256": "b5232e7d28a85a5dec1383d349bd3dda261a34521ee9e76497792cf67fea777c",
+          "new_sha256": "13b8699cdd6b8f5d55cc95b6945fa6f5a431d86f38dbc82b9329159fd8adc7ca"
+        }
+      ]
+    }
+  },
+  "R278-direct-rescript": {
+    "comparison": "130c931..7d0ab00",
+    "protected_tests": [
+      {
+        "path": "tests/test_r278_clips.py",
+        "old_sha256": "5fd045560a32e2768d33527ac54331542eea1135ad2a967145134f2a94b343cf",
+        "new_sha256": "5fd045560a32e2768d33527ac54331542eea1135ad2a967145134f2a94b343cf",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r278_direct_frontend.py",
+        "old_sha256": "5353332357e17696a420e77e2df0a7cdff88c3df2810857db24f29185a01ec83",
+        "new_sha256": "5353332357e17696a420e77e2df0a7cdff88c3df2810857db24f29185a01ec83",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r278_style_base.py",
+        "old_sha256": "329e483a28fa46c3ff465e0b79602b6ae07e8c03368a4ee77c46f1d14125e21f",
+        "new_sha256": "329e483a28fa46c3ff465e0b79602b6ae07e8c03368a4ee77c46f1d14125e21f",
+        "changed_in_r283": false
+      },
+      {
+        "path": "tests/test_r278_direct_rescript.mjs",
+        "old_sha256": "734701b1224ffce564e7988b45490bc7b8956f9a1e8eebeb6f728d0c4dee661e",
+        "new_sha256": "98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0",
+        "changed_in_r283": true
+      },
+      {
+        "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+        "old_sha256": "1656090287a72e335d1bba60f7ec155ed8d31ad41ecc6cae9bcc2a2f2336a9cd",
+        "new_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
+        "changed_in_r283": true
+      }
+    ],
+    "prepared": {
+      "phase": "prepared",
+      "trigger_card": "2026-10-26-R283-photo-direct-style-library",
+      "base": "130c931c8250368205165ef8c59d19b2796d55d4",
+      "head": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+      "range_head": "5c99eb44199f6e5b35198e92189a022c97a36642",
+      "reason": "用户2026-10-27第四次交付授权：仅R283推送范围，批准的原标准保留，触发卡R283；新源码机器重验、人工PENDING。",
+      "prepared_at": "2026-10-26T20:05:10.915662Z",
+      "previous_ready_at": "2026-10-26T17:16:07.932204Z",
+      "previous_binding_sha256": "80076c95ce449928685bf9323d8e8cb08891ad59fa27fe182cc50e5fe927708e",
+      "checklist_sha256": "53f248b66e379e0436578fa7e8dd305b60ef6b42bf85b5bbad23291a37bc2bd2",
+      "tests": [
+        {
+          "path": "tests/test_r278_direct_rescript.mjs",
+          "old_sha256": "734701b1224ffce564e7988b45490bc7b8956f9a1e8eebeb6f728d0c4dee661e",
+          "new_sha256": "98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0"
+        },
+        {
+          "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+          "old_sha256": "1656090287a72e335d1bba60f7ec155ed8d31ad41ecc6cae9bcc2a2f2336a9cd",
+          "new_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed"
+        }
+      ],
+      "approved_contract": {
+        "base": {
+          "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+          "commit": "130c931c8250368205165ef8c59d19b2796d55d4",
+          "version": "1",
+          "sha256": "c09cdffe9bb97c23b7526c7dce449611d0c5eada03d8db47bbfd86c3c72ac49d"
+        },
+        "current": {
+          "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+          "commit": "5c99eb44199f6e5b35198e92189a022c97a36642",
+          "version": "2",
+          "sha256": "21040745022fd273f8c138bfae74dc76afaeb3930fc31781dbb6a8bf4af80088"
+        },
+        "binding": {
+          "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/binding.md",
+          "sha256": "80076c95ce449928685bf9323d8e8cb08891ad59fa27fe182cc50e5fe927708e"
+        },
+        "checklist": {
+          "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
+          "sha256": "53f248b66e379e0436578fa7e8dd305b60ef6b42bf85b5bbad23291a37bc2bd2"
+        }
+      }
+    }
+  },
+  "shared_gate_and_design": [
+    {
+      "path": "scripts/direct_video/frontend_gate.mjs",
+      "old_sha256": "26dd9c5bd0218731316220ccd7f1ddd0cf4691b07c9f9f4a0549bd73ea767941",
+      "new_sha256": "39bb0fe9da37da8787befc705ece4f59266306d7178452809c17fa3b547f538f",
+      "changed": true
+    },
+    {
+      "path": "scripts/direct_video/revision_frontend_gate.mjs",
+      "old_sha256": "c2576f4bda1306aa127dd3c72b8d95410c16613df09fc1d33f70b31cb5bf6c76",
+      "new_sha256": "c2576f4bda1306aa127dd3c72b8d95410c16613df09fc1d33f70b31cb5bf6c76",
+      "changed": false
+    },
+    {
+      "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+      "old_sha256": "1656090287a72e335d1bba60f7ec155ed8d31ad41ecc6cae9bcc2a2f2336a9cd",
+      "new_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
+      "changed": true
+    },
+    {
+      "path": "docs/tasks/R278-direct-rescript/design/contract.json",
+      "old_sha256": "497541b8c6fd0d799d12a0988cd5d5f7bb07c934165c5d946fe235d66e4eea5c",
+      "new_sha256": "b9704044a7e344d30ef50dda4b84f9248fc0128cb5a38c1194ed69996ca80707",
+      "changed": true
+    }
+  ]
+}

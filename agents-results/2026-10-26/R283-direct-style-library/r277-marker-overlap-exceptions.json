@@ -1,0 +1,1550 @@
+[
+  {
+    "name": "real-boxes-review-05",
+    "width": 1440,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 1440,
+    "boxId": "nl2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 1440,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 1440,
+    "boxId": "c2",
+    "kind": "pin",
+    "placement": "bottom",
+    "area": 120,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 120
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 1440,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 1440,
+    "boxId": "nl2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 1440,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 1440,
+    "boxId": "c2",
+    "kind": "pin",
+    "placement": "bottom",
+    "area": 120,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 120
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 960,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 960,
+    "boxId": "nl2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 960,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 960,
+    "boxId": "c2",
+    "kind": "pin",
+    "placement": "bottom",
+    "area": 120,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 120
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 960,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 960,
+    "boxId": "nl2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 960,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 960,
+    "boxId": "c2",
+    "kind": "pin",
+    "placement": "bottom",
+    "area": 120,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 120
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 390,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 390,
+    "boxId": "nl2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 390,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05",
+    "width": 390,
+    "boxId": "c2",
+    "kind": "pin",
+    "placement": "bottom",
+    "area": 65.5,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 65.5
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 390,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 390,
+    "boxId": "nl2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 390,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-review-05-detail",
+    "width": 390,
+    "boxId": "c2",
+    "kind": "pin",
+    "placement": "bottom",
+    "area": 65.5,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 65.5
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 1440,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 1440,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 1440,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 1440,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 1440,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 120,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 120
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 1440,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 1440,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 1440,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 1440,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 1440,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 120,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 120
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 960,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 960,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 960,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 960,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 960,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 120,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 120
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 960,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 960,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 960,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 960,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 960,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 120,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 120
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 390,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 390,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 390,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 390,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05",
+    "width": 390,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 65.5,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 65.5
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 390,
+    "boxId": "refT",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 390,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 390,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 390,
+    "boxId": "c1",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-picked-05-detail",
+    "width": 390,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 65.5,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 65.5
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 1440,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 1440,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 1440,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 199.25,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 199.25
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 1440,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 1440,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 1440,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 199.25,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 199.25
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 960,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 960,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 960,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 199.25,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 199.25
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 960,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 960,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 960,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 199.25,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 199.25
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 390,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "right",
+    "area": 284.806640625,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      },
+      {
+        "boxId": "unit",
+        "area": 28.806640625
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 390,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05",
+    "width": 390,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 69.75,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 69.75
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 390,
+    "boxId": "num",
+    "kind": "number",
+    "placement": "right",
+    "area": 284.806640625,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      },
+      {
+        "boxId": "unit",
+        "area": 28.806640625
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 390,
+    "boxId": "nl2",
+    "kind": "number",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "real-boxes-compare-05-detail",
+    "width": 390,
+    "boxId": "c2",
+    "kind": "number",
+    "placement": "bottom",
+    "area": 69.75,
+    "otherBlocks": [
+      {
+        "boxId": "cv",
+        "area": 69.75
+      }
+    ]
+  },
+  {
+    "name": "review",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "review-expanded",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "review",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "review-expanded",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "select",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "select",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "picked",
+    "width": 1440,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "picked",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "picked",
+    "width": 960,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "picked",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "rewriting2",
+    "width": 1440,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "rewriting2",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "rewriting2",
+    "width": 960,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "rewriting2",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "compare",
+    "width": 1440,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "compare",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "compare",
+    "width": 960,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "compare",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "kept-prev",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "kept-prev",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 400,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 400
+      }
+    ]
+  },
+  {
+    "name": "verify-running",
+    "width": 1440,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-running",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-running",
+    "width": 960,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-running",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-missed",
+    "width": 1440,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-missed",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-missed",
+    "width": 960,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-missed",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-failed",
+    "width": 1440,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-failed",
+    "width": 1440,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-failed",
+    "width": 960,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "verify-failed",
+    "width": 960,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "review",
+    "width": 390,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "picked",
+    "width": 390,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "picked",
+    "width": 390,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "compare",
+    "width": 390,
+    "boxId": "b1",
+    "kind": "number",
+    "placement": "left",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  },
+  {
+    "name": "compare",
+    "width": 390,
+    "boxId": "b2",
+    "kind": "number",
+    "placement": "right",
+    "area": 237.75,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 237.75
+      }
+    ]
+  },
+  {
+    "name": "kept-prev",
+    "width": 390,
+    "boxId": "b2",
+    "kind": "pin",
+    "placement": "right",
+    "area": 256,
+    "otherBlocks": [
+      {
+        "boxId": "3",
+        "area": 256
+      }
+    ]
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "scope": "Reused third-handoff personal review of two hash-identical full-page final F screenshots; no fresh visual review in fourth handoff",
+  "samples": [
+    {
+      "state": "first-lib",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:19.446Z",
+      "scroll_coverage": [
+        0,
+        2575
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2575
+      },
+      "path": "first-lib-1440.png",
+      "sha256": "0a03222d3442ed55d8f234322c8c7b5af42d8ffee9e56ba6d5e18124e47071b7",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 库首卡单独高亮，右侧扁平插画真实样张、色板、字号、动作规矩和不用完整；生成条为库名称。 1440 视口：两组同款卡片与右侧预览对齐，图文层级清楚。",
+      "personally_inspected_in_handoff": false,
+      "review_reused_from_third_handoff": true,
+      "findings": "完整看到页底；九卡、单一高亮、样张预览与色板层级清楚，分镜、相邻选项和生成条完整。"
+    },
+    {
+      "state": "first-lib",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T18:27:56.477Z",
+      "scroll_coverage": [
+        0,
+        4482
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 4482
+      },
+      "path": "first-lib-390.png",
+      "sha256": "a8d518cc520da76b22c3036e22ac761efc6237794ee894eec6605659aa79885b",
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected the full final image including the bottom. 库首卡单独高亮，右侧扁平插画真实样张、色板、字号、动作规矩和不用完整；生成条为库名称。 390 实际手机视口：卡片单列，预览与元数据上下排列，元数据没有溢出；长表格在自身内部横向滚动。",
+      "personally_inspected_in_handoff": false,
+      "review_reused_from_third_handoff": true,
+      "findings": "实际390×900；完整长页九卡单列，样张和元数据上下排，四色与禁用项未越界，页底生成条完整。"
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "allowlist_modified_by_task": false,
+  "approved_media_count": 18,
+  "styles": [
+    {
+      "id": "flat",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/flat.html",
+          "bytes": 8406,
+          "sha256": "f72ae81f4a4b6d099b6bf776b5d962696b98d81a74af34ecc60038d32c27e1fe"
+        },
+        {
+          "path": "scripts/direct_video/style_library/flat.json",
+          "bytes": 3980,
+          "sha256": "68db222d551b555526b9360c3e25f11df8b0709ff03536ab57b85ee0cf921da0"
+        },
+        {
+          "path": "scripts/direct_video/style_library/flat.jpg",
+          "bytes": 51444,
+          "sha256": "d1d5985228f3218c4ada1920116aebe1fa463a128c9a800f71ee4b407a9865d1",
+          "allowlist_reason": "R283 风格库「扁平插画」样张最后一帧 360×640：本仓库样张代码 flat.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/flat.mp4",
+          "bytes": 65986,
+          "sha256": "5cc01647bb17def64b7eb3fa6d2401f0735a7d7e98109acc64a5ec972feb55eb",
+          "allowlist_reason": "R283 风格库「扁平插画」样张360×640 无声小片段：本仓库样张代码 flat.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    },
+    {
+      "id": "math",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/math.html",
+          "bytes": 7516,
+          "sha256": "479c3e7080f04255fbf6eab5ffeb7fe700de2835a64614ac9790a5d4a820571b"
+        },
+        {
+          "path": "scripts/direct_video/style_library/math.json",
+          "bytes": 3602,
+          "sha256": "7025621dcb3d5d0ab7680b0060b5603d6cfe6785c140ebf3410178d8bf4fe7b7"
+        },
+        {
+          "path": "scripts/direct_video/style_library/math.jpg",
+          "bytes": 45232,
+          "sha256": "32570e1f6a8a92c1997c116ca62609c8362765543e94c792aff6686e255d9abf",
+          "allowlist_reason": "R283 风格库「数学动画」样张最后一帧 360×640：本仓库样张代码 math.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/math.mp4",
+          "bytes": 53777,
+          "sha256": "71955e56fda6a971fc9e9336a86152af5ae010f2b724f7f21f601d64b2479910",
+          "allowlist_reason": "R283 风格库「数学动画」样张360×640 无声小片段：本仓库样张代码 math.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    },
+    {
+      "id": "launch",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/launch.html",
+          "bytes": 8119,
+          "sha256": "b43bbe3c759582dabd56f2059d429fa1d8f56dc774a8be669c29532cbf7f2257"
+        },
+        {
+          "path": "scripts/direct_video/style_library/launch.json",
+          "bytes": 3511,
+          "sha256": "3b0fff3c0dd9ca6e352d0d718cea6b2a9118dd0618ef856dd821876d761517c6"
+        },
+        {
+          "path": "scripts/direct_video/style_library/launch.jpg",
+          "bytes": 27786,
+          "sha256": "4bb05ab7198e9d05cc47284d2250fa27a5fb2bc009536904d18086dd4dfb4ac1",
+          "allowlist_reason": "R283 风格库「极简发布会」样张最后一帧 360×640：本仓库样张代码 launch.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/launch.mp4",
+          "bytes": 70431,
+          "sha256": "866d6fa74be63932bcc04d9319b4f7e654ab48f8a59dc715e9d963b23fa33cb6",
+          "allowlist_reason": "R283 风格库「极简发布会」样张360×640 无声小片段：本仓库样张代码 launch.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    },
+    {
+      "id": "whiteboard",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/whiteboard.html",
+          "bytes": 9391,
+          "sha256": "d9b3392f2901203557049ce91451b2c6494c0032c061f6a090094ddc58742267"
+        },
+        {
+          "path": "scripts/direct_video/style_library/whiteboard.json",
+          "bytes": 2357,
+          "sha256": "c0f88c2c8e7ff4ecafc4b6924565a09cda7e47c081acd90fd25993e3f2717be3"
+        },
+        {
+          "path": "scripts/direct_video/style_library/whiteboard.jpg",
+          "bytes": 45374,
+          "sha256": "c12a7bc95faa933193481ccedd11004972609a4912b4a3734cede27757411c87",
+          "allowlist_reason": "R283 风格库「手绘白板」样张最后一帧 360×640：本仓库样张代码 whiteboard.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/whiteboard.mp4",
+          "bytes": 155407,
+          "sha256": "bbd0f63dd183ac0a212b25eea2f023c12d8f05139ebdf0210dd2d9937584623a",
+          "allowlist_reason": "R283 风格库「手绘白板」样张360×640 无声小片段：本仓库样张代码 whiteboard.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    },
+    {
+      "id": "cyber",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/cyber.html",
+          "bytes": 4079,
+          "sha256": "fb02562f7b6f03630b099aeacb13bc448db454f0f7e26bec39b7a982cc40e235"
+        },
+        {
+          "path": "scripts/direct_video/style_library/cyber.json",
+          "bytes": 2374,
+          "sha256": "654cca8a475c43a02fc116c723434cc044379631742d3eb4a4ca516f63e4faa9"
+        },
+        {
+          "path": "scripts/direct_video/style_library/cyber.jpg",
+          "bytes": 58497,
+          "sha256": "8399b89f9af083d631208514a3cc4788f024d22521203ca6e7abf7fea9ab0aae",
+          "allowlist_reason": "R283 风格库「赛博故障」样张最后一帧 360×640：本仓库样张代码 cyber.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/cyber.mp4",
+          "bytes": 54315,
+          "sha256": "634df9df6f4f0ab234718413602b7330fa0605e877f853229a33279f1a48765f",
+          "allowlist_reason": "R283 风格库「赛博故障」样张360×640 无声小片段：本仓库样张代码 cyber.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    },
+    {
+      "id": "ink",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/ink.html",
+          "bytes": 4036,
+          "sha256": "c1edc42b25625154e05ffd916a2a6492282b985fac2a791b612a08220892f4c5"
+        },
+        {
+          "path": "scripts/direct_video/style_library/ink.json",
+          "bytes": 2391,
+          "sha256": "9f2fa003dd331dea5080a52d11b184d361b144287ba92a251c304b3257a06228"
+        },
+        {
+          "path": "scripts/direct_video/style_library/ink.jpg",
+          "bytes": 24251,
+          "sha256": "8768deddf44462b0d494c5ceca1e31306415dc546d1ac4c6e9f17da2461bd3e3",
+          "allowlist_reason": "R283 风格库「水墨国风」样张最后一帧 360×640：本仓库样张代码 ink.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/ink.mp4",
+          "bytes": 37146,
+          "sha256": "2841bb5d631a6c08c8efdaa4a4228ff5805ff72a39979c30d622a09ae2b783e2",
+          "allowlist_reason": "R283 风格库「水墨国风」样张360×640 无声小片段：本仓库样张代码 ink.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    },
+    {
+      "id": "dataviz",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/dataviz.html",
+          "bytes": 7476,
+          "sha256": "95da011bf9ab1199c4c5d7fc18a9319f3b1486f4bf74faf6a8452bac5d8dc8de"
+        },
+        {
+          "path": "scripts/direct_video/style_library/dataviz.json",
+          "bytes": 2372,
+          "sha256": "fcb27e826df324e553d1354a4af989f2594981ef579e52d16ac8cf9ff398e2ed"
+        },
+        {
+          "path": "scripts/direct_video/style_library/dataviz.jpg",
+          "bytes": 33349,
+          "sha256": "bf1e9c5f7abbd098d9144c148d6835e6df070c498c8c8f18a8e6dac0398dd680",
+          "allowlist_reason": "R283 风格库「数据可视化」样张最后一帧 360×640：本仓库样张代码 dataviz.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/dataviz.mp4",
+          "bytes": 54044,
+          "sha256": "bfd102a54858c9ce17bbc1a0c59b2ed52f3cc38762fdd6a5bc9bed718b2422bc",
+          "allowlist_reason": "R283 风格库「数据可视化」样张360×640 无声小片段：本仓库样张代码 dataviz.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    },
+    {
+      "id": "pixel",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/pixel.html",
+          "bytes": 3920,
+          "sha256": "23dfd041eb4f10e6c8904bf7f0c446259a15ff42684388513c28f674f299148d"
+        },
+        {
+          "path": "scripts/direct_video/style_library/pixel.json",
+          "bytes": 2454,
+          "sha256": "8828d112c66c5a36fe66b811dead9129728ab4ad6b49213ce742efd2ba42ff8c"
+        },
+        {
+          "path": "scripts/direct_video/style_library/pixel.jpg",
+          "bytes": 32506,
+          "sha256": "c77e3993c4918a396ec0a1592752a9cf558c3b873a87d635929afe1df76ca071",
+          "allowlist_reason": "R283 风格库「8-bit 像素」样张最后一帧 360×640：本仓库样张代码 pixel.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/pixel.mp4",
+          "bytes": 33918,
+          "sha256": "7d28841d65e7fd994ea7c77394ae6e86998c493af78edadded0e5f6d06c49a19",
+          "allowlist_reason": "R283 风格库「8-bit 像素」样张360×640 无声小片段：本仓库样张代码 pixel.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    },
+    {
+      "id": "code",
+      "files": [
+        {
+          "path": "scripts/direct_video/style_library/code.html",
+          "bytes": 4250,
+          "sha256": "1242e701c2ebf68156b34f5709f5e4e2f47a72ffde736e7e31216d4adba5a908"
+        },
+        {
+          "path": "scripts/direct_video/style_library/code.json",
+          "bytes": 2536,
+          "sha256": "a19667ca6a33f6c3ccc81c5f8fdede4788964af2962c0e4cb7554710c745cc3b"
+        },
+        {
+          "path": "scripts/direct_video/style_library/code.jpg",
+          "bytes": 25339,
+          "sha256": "c72dc71358bfa07f6c12de9ea8dff51ee5714af9feaadebe2515f6548ed4221a",
+          "allowlist_reason": "R283 风格库「代码录屏」样张最后一帧 360×640：本仓库样张代码 code.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        },
+        {
+          "path": "scripts/direct_video/style_library/code.mp4",
+          "bytes": 40461,
+          "sha256": "d66394d51f7b32eca385c5ebea990c83726d8ac5b9a7460b8850ea0f68e85bbc",
+          "allowlist_reason": "R283 风格库「代码录屏」样张360×640 无声小片段：本仓库样张代码 code.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记"
+        }
+      ]
+    }
+  ]
+}
