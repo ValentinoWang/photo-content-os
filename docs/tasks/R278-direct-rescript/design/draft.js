@@ -61,7 +61,7 @@ function styleWide(o){
   const s=o.base;
   const card=x=>`<button class="dv-sw-card" data-style="${x.id}" aria-pressed="${!!s&&x.id===s.id}">${x.img?`<img src="${x.img}" alt="">`:phTile(x)}<span><b data-design-data>${esc(x.lib?x.name:x.title)}</b>${x.lib?'':`<small data-design-data>${x.cur&&o.rescript?'这条 · ':''}${x.time}</small>`}${sw(x.pal)}</span></button>`;
   edit=(o.none?'<p class="dv-sw-none">这台电脑上还没有做过的成片，先从风格库里挑一个。</p>':`<label class="dv-sw-label">这台电脑上做过的</label><div class="dv-sw-cards" data-design-id="DV-STYLE-CARDS">${STYLES.map(card).join('')}</div>`)
-   +(o.lib?`<label class="dv-sw-label">风格库<span>样张都是同一段台词</span></label><div class="dv-sw-cards" data-design-id="DV-STYLE-LIB">${LIB.map(card).join('')}</div>`:'')+`<label class="dv-sw-label">在这个风格上改哪里<span>（可不填）</span></label><textarea rows="3" data-adjust placeholder="例：强调色换成暖黄，其余不动；数字再大一些">${esc(o.adjust||'')}</textarea>`;
+   +(o.lib!==false?`<label class="dv-sw-label">风格库<span>样张都是同一段台词</span></label><div class="dv-sw-cards" data-design-id="DV-STYLE-LIB">${LIB.map(card).join('')}</div>`:'')+`<label class="dv-sw-label">在这个风格上改哪里<span>（可不填）</span></label><textarea rows="3" data-adjust placeholder="例：强调色换成暖黄，其余不动；数字再大一些">${esc(o.adjust||'')}</textarea>`;
   prev=!s?`<div class="dv-sw-empty"><b>还没选风格</b><span>在左边选一个</span></div><div class="dv-sw-meta"><p class="muted">选好以后这里放它的样张，和色板、字号、动作规矩、不用的套路。</p></div>`
    :s.lib&&!s.clip?`<div><div class="dv-poster">${phTile(s)}</div><p class="dv-sw-cap">样张 · 同一段台词</p></div>${metaOf(s,s.pal,`风格库 · ${esc(s.name)}`)}`
    :s.lib?`<div><div class="dv-poster"><video src="${s.clip}" poster="${s.img}" muted loop playsinline preload="metadata" aria-hidden="true"></video></div><p class="dv-sw-cap">样张 · 同一段台词</p></div>${metaOf(s,s.pal,`风格库 · ${esc(s.name)}`)}`
@@ -156,7 +156,6 @@ const STATES=[
  ['first-new-revising','从头定 · 按「再改一句」改样张',{mode:'new',text:DESC,draft:'revising',revise:'主色再深一点，标题再大一号'}],
  ['first-new-accepted','从头定 · 点了「就用这个」，可以生成',{mode:'new',text:DESC,draft:'accepted',revised:true}],
  ['first-new-failed','从头定 · 样张没定成',{mode:'new',text:DESC,draft:'failed'}],
- ['first-none-r278','这台电脑上还没有做过的成片（R278 单独上线时：只能从头定）',{mode:'new',none:true,nolib:true}],
  ['first-lib','R283 · 第一次 · 选了风格库里的「扁平插画」',{mode:'base',base:LIBX('flat'),lib:true}],
  ['first-none','R283 · 这台电脑上还没有做过的成片：只有风格库，还没选（「生成」灰）',{mode:'base',base:null,none:true,lib:true}],
  ['designing','沿用并改 · Opus 正在改全片设计（页头以下同现在，未画）'],

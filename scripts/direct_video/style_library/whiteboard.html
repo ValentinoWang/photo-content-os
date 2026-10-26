@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#f4efe6}
+body{position:relative;font-family:'STHeiti','Heiti SC',sans-serif;color:#2a2724}
+.fw{display:inline-block;width:1em;text-align:center}
+canvas{position:absolute;left:0;top:0}
+#hd{position:absolute;left:72px;top:88px;width:936px}
+.eb{font-size:44px;line-height:1.2;color:#6b665f}
+.tt{font-size:72px;line-height:1.2;color:#2a2724;margin-top:18px;white-space:nowrap}
+.tt i{font-style:normal;display:inline-block}
+</style></head><body data-hold="8.4-12">
+<canvas id="bg" width="1080" height="1920"></canvas>
+<canvas id="cv" width="1080" height="1920"></canvas>
+<div id="hd" data-role="header"><div class="eb">聚光灯效应</div><div class="tt" id="tt">真有那么多人在看<span class="fw">？</span></div></div>
+<script>
+const D = 12;
+const INK='#2a2724',RED='#c0392b',GRY='#6b665f',FONT='PCPinned0';
+const cl=x=>x<0?0:x>1?1:x,eo=x=>1-Math.pow(1-cl(x),3);
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+// 标题逐字轻微歪斜：手写感，固定不动
+(()=>{const el=document.getElementById('tt'),r=rng(41);[...el.childNodes].forEach(n=>{if(n.nodeType!==3)return;const f=document.createDocumentFragment();[...n.textContent].forEach(ch=>{const i=document.createElement('i');i.textContent=ch;i.style.transform='rotate('+((r()-0.5)*5).toFixed(2)+'deg) translateY('+((r()-0.5)*5).toFixed(1)+'px)';f.appendChild(i);});n.replaceWith(f);});})();
+// 纸面：一次画好的噪点纹理 + 淡暗角，每帧不变
+(()=>{const c=document.getElementById('bg').getContext('2d'),im=c.createImageData(1080,1920),d=im.data,r=rng(11);
+for(let i=0;i<d.length;i+=4){const n=(r()-0.5)*9;d[i]=244+n;d[i+1]=239+n;d[i+2]=230+n;d[i+3]=255;}
+c.putImageData(im,0,0);
+c.globalAlpha=0.03;c.strokeStyle=INK;c.lineCap='round';
+for(let k=0;k<6;k++){c.lineWidth=26+r()*30;const x=r()*900,y=300+r()*1300;c.beginPath();c.moveTo(x,y);c.bezierCurveTo(x+120,y+r()*50-25,x+220,y+r()*50-25,x+300+r()*160,y+r()*40-20);c.stroke();}
+c.globalAlpha=1;const g=c.createRadialGradient(540,900,520,540,900,1250);g.addColorStop(0,'rgba(90,70,40,0)');g.addColorStop(1,'rgba(90,70,40,0.10)');c.fillStyle=g;c.fillRect(0,0,1080,1920);})();
+
+const ctx=document.getElementById('cv').getContext('2d');
+const S=[];let SID=0;
+function seg(pts,closed){if(closed)pts=pts.concat([pts[0]]);const o=[pts[0].slice()];for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],n=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/5));for(let k=1;k<=n;k++)o.push([a[0]+(b[0]-a[0])*k/n,a[1]+(b[1]-a[1])*k/n]);}return o;}
+function hand(p,id,amp){const r=rng(id*977+5),f1=0.015+r()*0.02,f2=0.05+r()*0.04,a=r()*6.28,b=r()*6.28,c=r()*6.28,d=r()*6.28;return p.map((q,i)=>[q[0]+amp*(Math.sin(i*f1+a)*0.7+Math.sin(i*f2+b)*0.3),q[1]+amp*(Math.sin(i*f1*1.1+c)*0.7+Math.sin(i*f2*0.9+d)*0.3)]);}
+function arc(cx,cy,rx,ry,a0,a1){const o=[],n=Math.max(8,Math.ceil(Math.abs(a1-a0)*Math.max(rx,ry)/5));for(let k=0;k<=n;k++){const a=a0+(a1-a0)*k/n;o.push([cx+rx*Math.cos(a),cy+ry*Math.sin(a)]);}return o;}
+function add(pts,t0,dur,o){o=o||{};const id=++SID;S.push({id,p:hand(seg(pts,o.closed),id,o.amp==null?2:o.amp),t0,dur,w:o.w||6,c:o.c||INK,dash:o.dash||0});}
+function head(tip,from,t0,c){const a=Math.atan2(tip[1]-from[1],tip[0]-from[0]);[0.55,-0.55].forEach((d,i)=>add([[tip[0]-26*Math.cos(a+d),tip[1]-26*Math.sin(a+d)],tip],t0+i*0.08,0.1,{w:6,c,amp:0.6}));}
+// 沸腾线：每 1/8 秒换一组固定种子的小抖动（约 1.3px），线不会停成死线
+function draw(p,n,id,b,w,c,dash){const r=rng(id*131+b*7907+3),A=1.3,p1=r()*6.28,p2=r()*6.28,fq=0.05+r()*0.05,sx=(r()-0.5)*1.2,sy=(r()-0.5)*1.2;
+ctx.strokeStyle=c;ctx.lineWidth=w;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();let pen=false;
+for(let i=0;i<n;i++){const on=!dash||Math.floor(i/dash)%2===0;if(!on){pen=false;continue;}const x=p[i][0]+A*Math.sin(i*fq+p1)+sx,y=p[i][1]+A*Math.sin(i*fq*1.3+p2)+sy;if(!pen){ctx.moveTo(x,y);pen=true;}else ctx.lineTo(x,y);}
+ctx.stroke();}
+// 手写字：逐字轻微歪斜，从左往右写出来
+function htext(str,x,y,size,col,t,t0,dur,align,seed){const f=cl((t-t0)/dur);if(f<=0)return null;ctx.font=size+'px '+FONT;ctx.textBaseline='top';
+const ch=[...str],ws=ch.map(c=>ctx.measureText(c).width),W=ws.reduce((a,b)=>a+b,0),x0=align==='center'?x-W/2:x,r=rng(seed);
+ctx.save();ctx.beginPath();ctx.rect(x0-12,y-24,W*f+12,size*1.7);ctx.clip();ctx.fillStyle=col;let cx=x0;
+ch.forEach((c,i)=>{const rot=(r()-0.5)*0.07,dy=(r()-0.5)*5;ctx.save();ctx.translate(cx+ws[i]/2,y+size/2+dy);ctx.rotate(rot);ctx.fillText(c,-ws[i]/2,-size/2);ctx.restore();cx+=ws[i];});
+ctx.restore();return f<1?[x0+W*f,y+size*0.85]:null;}
+function bignum(v,fin,cx,base,size,col,seed){ctx.font=size+'px '+FONT;ctx.textBaseline='alphabetic';const W=ctx.measureText(fin).width;let x=Math.max(84,cx-W/2);const r=rng(seed);ctx.fillStyle=col;
+[...(Math.round(v)+'%')].forEach(c=>{const w=ctx.measureText(c).width,rot=(r()-0.5)*0.08;ctx.save();ctx.translate(x+w/2,base);ctx.rotate(rot);ctx.fillText(c,-w/2,0);ctx.restore();x+=w;});}
+function hatch(x0,y0,x1,col,seed){if(1300-y0<2)return;ctx.save();ctx.beginPath();ctx.rect(x0,y0,x1-x0,1300-y0);ctx.clip();ctx.strokeStyle=col;ctx.lineWidth=5;ctx.lineCap='round';const r=rng(seed);
+for(let k=-430;k<x1-x0+10;k+=18){const j=(r()-0.5)*5;ctx.beginPath();ctx.moveTo(x0+k+j,1302);ctx.lineTo(x0+k+j+430,872+(r()-0.5)*8);ctx.stroke();}ctx.restore();}
+function marker(x,y,c){ctx.save();ctx.translate(x,y);ctx.rotate(-0.8);ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(18,-10);ctx.lineTo(18,10);ctx.closePath();ctx.fill();
+ctx.fillStyle='#3a3734';ctx.fillRect(18,-14,22,28);ctx.fillStyle='#fbf8f2';ctx.strokeStyle='#3a3734';ctx.lineWidth=3;ctx.beginPath();ctx.rect(40,-17,112,34);ctx.fill();ctx.stroke();ctx.fillStyle=c;ctx.fillRect(132,-17,20,34);ctx.restore();}
+
+// ---- 第 0 帧已有：地面、门、坐标底线（主图雏形）
+add([[72,690],[1008,690]],-1,0.4,{w:5});
+add([[100,690],[100,385],[232,385],[232,690]],-0.9,0.5,{w:6});
+add([[232,385],[284,407],[284,670],[232,690]],-0.6,0.3,{w:5});
+add(arc(268,545,6,6,0,6.4),-0.3,0.1,{w:5,amp:0.4});
+add([[96,1300],[984,1300]],-0.5,0.4,{w:6});
+// 标题下的红色马克笔横线
+add([[70,266],[330,262],[560,262],[714,256]],0.0,0.5,{w:9,c:RED,amp:2.5});
+// 学生：穿 T 恤走进门
+add(arc(380,432,34,36,-1.6,4.8),0.2,0.35,{w:6,amp:1});
+add([[352,474],[408,474],[442,502],[425,524],[410,512],[410,592],[350,592],[350,512],[335,524],[318,502]],0.55,0.55,{w:6,closed:true,amp:1.2});
+add([[430,520],[448,586]],1.1,0.15);add([[330,520],[311,584]],1.25,0.15);
+add([[368,592],[352,688]],1.4,0.15);add([[394,592],[416,688]],1.55,0.15);
+// 聚光灯
+add([[380,276],[380,292]],1.95,0.08,{w:5,amp:0.3});
+add([[352,292],[408,292],[428,326],[332,326]],2.0,0.3,{w:6,closed:true,amp:0.8});
+add([[336,336],[282,684]],2.25,0.22,{w:4,c:GRY,dash:5});add([[424,336],[478,684]],2.3,0.22,{w:4,c:GRY,dash:5});
+add(arc(380,690,104,15,3.3,9.6),2.45,0.25,{w:4,c:GRY,amp:0.8});
+// 同学：两排人头 + 课桌
+[640,740,840,940].forEach((x,i)=>{add(arc(x,492,26,27,-1.6,4.8),2.4+i*0.07,0.12,{w:5,amp:0.6});add(arc(x,548,34,24,3.14,6.28),2.45+i*0.07,0.1,{w:5,amp:0.6});});
+add([[600,552],[982,552]],2.72,0.12,{w:5});
+[600,700,800,900].forEach((x,i)=>{add(arc(x,604,26,27,-1.6,4.8),2.62+i*0.07,0.12,{w:5,amp:0.6});add(arc(x,660,34,24,3.14,6.28),2.67+i*0.07,0.1,{w:5,amp:0.6});});
+add([[560,664],[946,664]],2.95,0.1,{w:5});
+// 标注箭头
+add([[486,410],[470,452],[432,494]],2.95,0.2,{w:5,amp:0.8});head([432,494],[470,452],3.12,INK);
+// 差值：以为的高度虚线、红色差值箭头
+add([[400,900],[812,900]],6.9,0.45,{w:4,c:GRY,dash:4,amp:1});
+add([[822,908],[822,1092]],7.35,0.28,{w:7,c:RED,amp:0.8});head([822,906],[822,1000],7.6,RED);head([822,1094],[822,1000],7.6,RED);
+
+function box(x0,x1,y,id,b){const p=hand(seg([[x0,1300],[x0,y],[x1,y],[x1,1300]]),id,1.5);draw(p,p.length,id,b,6,INK,0);}
+const A0=120,A1=400,B0=500,B1=780;
+window.seekFrame=(frame,fps)=>{const t=frame/fps,b=Math.floor(Math.min(t,8.3)*8);ctx.clearRect(0,0,1080,1920);
+let tip=null,tt=-9,tc=INK;const T=(p,t0,c)=>{if(p&&t0>=tt){tip=p;tt=t0;tc=c;}};
+// 两根柱：边画边涨，数字跳 1.4 秒后停住
+const vA=t<3.4?0:50*eo((t-3.4)/1.4),vB=t<5.4?0:25*eo((t-5.4)/1.4);
+const yA=1300-8*vA,yB=1300-8*vB;
+if(t>=3.4){hatch(A0,yA,A1,GRY,7);box(A0,A1,yA,901,b);bignum(vA,'50%',260,876,168,INK,61);if(t<4.8)T([A1,yA],3.4,INK);}
+if(t>=5.4){hatch(B0,yB,B1,RED,8);box(B0,B1,yB,902,b);bignum(vB,'25%',640,1076,168,RED,62);if(t<6.8)T([B1,yB],5.4,RED);}
+for(const s of S){const f=cl((t-s.t0)/s.dur);if(f<=0)continue;const n=Math.max(2,Math.round(f*s.p.length));draw(s.p,n,s.id,b,s.w,s.c,s.dash);if(f<1)T(s.p[n-1],s.t0,s.c);}
+T(htext('囧',380,512,46,INK,t,1.72,0.25,'center',21),1.72,INK);
+T(htext('尴尬T恤',452,352,44,INK,t,2.75,0.3,'left',22),2.75,INK);
+T(htext('穿的人以为约',260,1322,44,INK,t,3.0,0.35,'center',23),3.0,INK);
+T(htext('实际注意到约',640,1322,44,INK,t,5.0,0.35,'center',24),5.0,INK);
+T(htext('少一半',848,970,44,RED,t,7.75,0.35,'left',25),7.75,RED);
+T(htext('Gilovich 等，2000 · 示意图，非原始数据',72,1432,34,GRY,t,8.0,0.32,'left',26),8.0,GRY);
+if(tip&&t<8.4)marker(tip[0],tip[1],tc);};
+window.seekFrame(0,30);
+</script></body></html>

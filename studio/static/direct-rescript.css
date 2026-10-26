@@ -114,7 +114,9 @@ td.sb-vc{position:relative}
 .dv-legacy-motion{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .dv-design-line>span{min-width:0}.dv-design-line .dv-nots{display:flex}.dv-design-src{white-space:normal;overflow-wrap:anywhere}
 .dv-sw-pal .dv-sw i{background:var(--swatch)}
-.dv-sw-acts p{margin:0}.dv-sw-preview .dv-poster{height:320px}.dv-sw-preview .dv-poster img{height:100%;width:100%;object-fit:cover}
+.dv-sw-acts p{margin:0}.dv-sw-preview .dv-poster{height:320px}.dv-sw-preview .dv-poster img,.dv-sw-preview .dv-poster video{height:100%;width:100%;object-fit:cover}
 .dv-sw-edit textarea:focus-visible{outline:none}.dv-sw-edit textarea[readonly]{color:var(--ink-3)}
 .dv-sw-hints button:focus-visible,.dv-sw-card:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 @media(max-width:960px){.dv-form header{flex-wrap:wrap;gap:8px}.dv-script-sub{white-space:normal}.dv-genbar p{overflow-wrap:anywhere}.dv-step-edit,.dv-step-lock{white-space:normal}.dv-direct .fstep{flex-wrap:wrap}.dv-direct .fstep em{margin-left:36px}.dv-design-src{flex-basis:100%}}
+
+@media(max-width:620px){.dv-sw-preview{grid-template-columns:minmax(0,1fr)}}

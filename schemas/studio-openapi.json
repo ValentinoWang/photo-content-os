@@ -77,51 +77,74 @@
                     "type": "null"
                   },
                   {
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "instruction": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "library"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
                     "required": [
-                      "jobId"
+                      "kind",
+                      "id",
+                      "name",
+                      "instruction"
                     ],
                     "type": "object"
                   },
                   {
+                    "oneOf": [
+                      {
+                        "required": [
+                          "jobId"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "draftId"
+                        ]
+                      }
+                    ],
+                    "properties": {
+                      "draftId": {
+                        "type": "string"
+                      },
+                      "instruction": {
+                        "type": "string"
+                      },
+                      "jobId": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "enum": [
+                          "inherited",
+                          "adjusted",
+                          "drafted"
+                        ]
+                      },
+                      "projectId": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      }
+                    },
                     "required": [
-                      "draftId"
+                      "kind",
+                      "projectId",
+                      "title",
+                      "instruction"
                     ],
                     "type": "object"
                   }
-                ],
-                "properties": {
-                  "draftId": {
-                    "type": "string"
-                  },
-                  "instruction": {
-                    "type": "string"
-                  },
-                  "jobId": {
-                    "type": "string"
-                  },
-                  "kind": {
-                    "enum": [
-                      "inherited",
-                      "adjusted",
-                      "drafted"
-                    ]
-                  },
-                  "projectId": {
-                    "type": "string"
-                  },
-                  "title": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "kind",
-                  "projectId",
-                  "title",
-                  "instruction"
-                ],
-                "type": [
-                  "object",
-                  "null"
                 ]
               },
               "status": {
@@ -846,51 +869,74 @@
                     "type": "null"
                   },
                   {
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "instruction": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "library"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
                     "required": [
-                      "jobId"
+                      "kind",
+                      "id",
+                      "name",
+                      "instruction"
                     ],
                     "type": "object"
                   },
                   {
+                    "oneOf": [
+                      {
+                        "required": [
+                          "jobId"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "draftId"
+                        ]
+                      }
+                    ],
+                    "properties": {
+                      "draftId": {
+                        "type": "string"
+                      },
+                      "instruction": {
+                        "type": "string"
+                      },
+                      "jobId": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "enum": [
+                          "inherited",
+                          "adjusted",
+                          "drafted"
+                        ]
+                      },
+                      "projectId": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      }
+                    },
                     "required": [
-                      "draftId"
+                      "kind",
+                      "projectId",
+                      "title",
+                      "instruction"
                     ],
                     "type": "object"
                   }
-                ],
-                "properties": {
-                  "draftId": {
-                    "type": "string"
-                  },
-                  "instruction": {
-                    "type": "string"
-                  },
-                  "jobId": {
-                    "type": "string"
-                  },
-                  "kind": {
-                    "enum": [
-                      "inherited",
-                      "adjusted",
-                      "drafted"
-                    ]
-                  },
-                  "projectId": {
-                    "type": "string"
-                  },
-                  "title": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "kind",
-                  "projectId",
-                  "title",
-                  "instruction"
-                ],
-                "type": [
-                  "object",
-                  "null"
                 ]
               },
               "status": {
@@ -1609,6 +1655,119 @@
               "application/json": {
                 "schema": {
                   "properties": {
+                    "library": {
+                      "items": {
+                        "properties": {
+                          "clipUrl": {
+                            "type": "string"
+                          },
+                          "design": {
+                            "properties": {
+                              "banned": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "bannedShort": {
+                                "items": {
+                                  "maxLength": 12,
+                                  "minLength": 1,
+                                  "type": "string"
+                                },
+                                "maxItems": 8,
+                                "minItems": 1,
+                                "type": [
+                                  "array",
+                                  "null"
+                                ]
+                              },
+                              "motionRules": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "motionSummary": {
+                                "maxLength": 30,
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "palette": {
+                                "properties": {
+                                  "accent": {
+                                    "pattern": "^#[0-9a-fA-F]{6}$",
+                                    "type": "string"
+                                  },
+                                  "background": {
+                                    "pattern": "^#[0-9a-fA-F]{6}$",
+                                    "type": "string"
+                                  },
+                                  "neutral": {
+                                    "pattern": "^#[0-9a-fA-F]{6}$",
+                                    "type": "string"
+                                  },
+                                  "primary": {
+                                    "pattern": "^#[0-9a-fA-F]{6}$",
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "background",
+                                  "primary",
+                                  "accent",
+                                  "neutral"
+                                ],
+                                "type": [
+                                  "object",
+                                  "null"
+                                ]
+                              },
+                              "typeScale": {
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "maxItems": 3,
+                                "minItems": 3,
+                                "type": [
+                                  "array",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "palette",
+                              "typeScale",
+                              "motionRules",
+                              "banned",
+                              "motionSummary",
+                              "bannedShort"
+                            ],
+                            "type": "object"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "posterUrl": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "design",
+                          "posterUrl",
+                          "clipUrl"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
                     "ok": {
                       "const": true
                     },
@@ -1735,7 +1894,8 @@
                   },
                   "required": [
                     "ok",
-                    "styles"
+                    "styles",
+                    "library"
                   ],
                   "type": "object"
                 }
@@ -1768,6 +1928,210 @@
         },
         "summary": "List distinct completed designs across projects"
       }
+    },
+    "/api/direct/styles/library/{id}/clip.mp4": {
+      "get": {
+        "operationId": "getDirectLibraryClip",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Unknown or invalid library style: style_base_not_found"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read a library style clip"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/direct/styles/library/{id}/poster.jpg": {
+      "get": {
+        "operationId": "getDirectLibraryPoster",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Unknown or invalid library style: style_base_not_found"
+          },
+          "416": {
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read a library style poster"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/api/health": {
       "get": {
@@ -2103,7 +2467,7 @@
         }
       ],
       "post": {
-        "description": "Without styleBase a nonblank style is required (style_required). Missing sources: 404 style_base_not_found; unready drafts: 409 draft_not_ready. Unchanged sources skip design generation.",
+        "description": "Without styleBase a nonblank style is required (style_required). styleBase accepts job, draft or library sources. Missing sources: 404 style_base_not_found; unready drafts: 409 draft_not_ready. Unchanged sources skip design generation. Library shots and revisions receive the recipe visual grammar and sample code.",
         "operationId": "createDirectJob",
         "parameters": [
           {
@@ -2254,6 +2618,22 @@
                           "kind",
                           "projectId",
                           "draftId"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "library"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "id"
                         ],
                         "type": "object"
                       }

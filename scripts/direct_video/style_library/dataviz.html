@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang='zh'><head><meta charset='utf-8'><style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0a0710}
+body{position:relative;font-family:'STHeiti','Heiti SC',sans-serif;color:#f4f0ff}
+.fw{display:inline-block;width:1em;text-align:center}
+.a{position:absolute}
+#bg{left:0;top:0}
+#hd{left:72px;top:96px;width:936px}
+.eb{font-size:44px;line-height:1.2;color:#ff8577;display:flex;align-items:center;gap:20px}
+.eb i{display:block;width:16px;height:16px;border-radius:50%;background:#ff5a4a;box-shadow:0 0 22px 6px rgba(255,90,74,.65)}
+.tt{font-size:72px;line-height:1.2;color:#f4f0ff;margin-top:14px}
+.rl{height:3px;margin-top:30px;background:linear-gradient(90deg,rgba(255,90,74,.9),rgba(123,92,255,.55) 45%,rgba(123,92,255,0))}
+#ctx{left:72px;top:372px;font-size:44px;line-height:1.2;color:#c9c0e2;white-space:nowrap}
+#ch{left:72px;top:450px;width:936px;height:1060px;transform:perspective(2600px) rotateX(5deg) rotateY(-9deg);transform-origin:50% 62%}
+#cv{left:0;top:0}
+.lb{width:420px;text-align:center;font-size:44px;line-height:1.2;color:#c9c0e2;white-space:nowrap}
+.nm{width:520px;text-align:center;font-size:168px;line-height:1;white-space:nowrap}
+#lA{left:-2px;top:752px}#lB{left:518px;top:752px}
+#nA{left:-52px;top:816px;color:#f4f0ff}
+#nB{left:468px;top:816px;color:#ff5a4a;text-shadow:0 0 36px rgba(255,90,74,.55)}
+#gc{left:474px;top:160px;width:440px;height:132px;border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05));border:2px solid rgba(255,255,255,.22);box-shadow:0 18px 50px rgba(0,0,0,.45);font-size:48px;line-height:132px;text-align:center;color:#f4f0ff;white-space:nowrap}
+#gc b{font-weight:inherit;color:#ff6b5c}
+#src{left:72px;top:1466px;font-size:34px;line-height:1.2;color:#8f86a8;white-space:nowrap}
+</style></head><body data-hold='8.4-12'>
+<canvas id='bg' class='a' width='1080' height='1920'></canvas>
+<div id='hd' class='a' data-role='header'><div class='eb'><i></i>聚光灯效应</div><div class='tt'>真有那么多人在看<span class='fw'>？</span></div><div class='rl'></div></div>
+<div id='ctx' class='a'>实验：穿尴尬 T 恤走进教室</div>
+<div id='ch' class='a'>
+<canvas id='cv' class='a' width='936' height='1060'></canvas>
+<div id='lA' class='a lb'>穿的人以为约</div>
+<div id='lB' class='a lb'>实际注意到约</div>
+<div id='nA' class='a nm'>0%</div>
+<div id='nB' class='a nm'>0%</div>
+<div id='gc' class='a'>只有以为的<b>一半</b></div>
+</div>
+<div id='src' class='a'>Gilovich 等，2000 · 示意图，非原始数据</div>
+<script>
+const D = 12;
+const $=id=>document.getElementById(id);
+const cl=x=>x<0?0:x>1?1:x;
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;};
+const p=(t,s,d)=>eo((t-s)/d);
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+// 时间点（秒）：先「以为」，再「实际」，最后差值
+const T={ctx:.3,src:.9,lA:2.4,A:2.6,ref:4.2,lB:5.0,dim:5.0,B:5.2,gap:6.8,card:7.3};
+// 图表坐标（图表容器内）：底线 730，1 个百分点 = 12.8px
+const BASE=730,U=12.8,AX=68,BX=588,CW=280,SLOT=40;
+const R=mulberry32(20001);
+const dots=[];for(let i=0;i<70;i++)dots.push({x:R()*1080,y:R()*1500+40,r:.8+R()*2.4,a:.12+R()*.4,w:R()<.3});
+const bokeh=[];for(let i=0;i<9;i++)bokeh.push({x:R()*1080,y:R()*1400+200,r:30+R()*70,a:.025+R()*.04});
+function drawBg(){
+ // 光雾逐像素算一次（不用画布渐变：渐变自带抖动噪点，帧图会变大变慢）
+ const c=$('bg').getContext('2d'),im=c.createImageData(1080,1920),px=im.data;
+ const F=[[170,640,430,[106,44,112],.62],[980,1240,380,[255,90,74],.22],[860,300,280,[123,92,255],.14]];
+ for(let y=0;y<1920;y++)for(let x=0;x<1080;x++){
+  let r=10,g=7,b=16;
+  for(const f of F){const dx=x-f[0],dy=y-f[1],w=f[4]*Math.exp(-(dx*dx+dy*dy)/(2*f[2]*f[2]));r+=(f[3][0]-r)*w;g+=(f[3][1]-g)*w;b+=(f[3][2]-b)*w;}
+  const dx=x-540,dy=y-900,v=1-.5*cl((Math.sqrt(dx*dx+dy*dy)-520)/800);
+  const i=(y*1080+x)*4;px[i]=Math.round(r*v);px[i+1]=Math.round(g*v);px[i+2]=Math.round(b*v);px[i+3]=255;
+ }
+ c.putImageData(im,0,0);
+ for(const b of bokeh){c.fillStyle='rgba(255,200,230,'+b.a+')';c.beginPath();c.arc(b.x,b.y,b.r,0,7);c.fill();}
+ for(const d of dots){c.fillStyle=d.w?'rgba(255,170,160,'+d.a+')':'rgba(230,220,255,'+d.a+')';c.beginPath();c.arc(d.x,d.y,d.r,0,7);c.fill();}
+}
+function rr(c,x,y,w,h,r){r=Math.min(r,h);c.beginPath();c.moveTo(x,y+h);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h);c.closePath();}
+function col(c,x,h,c0,c1,glow,ga){
+ if(h<1)return;
+ const g=c.createLinearGradient(0,BASE,0,BASE-h);g.addColorStop(0,c0);g.addColorStop(1,c1);
+ c.save();c.shadowColor=glow;c.shadowBlur=56*ga;c.fillStyle=g;rr(c,x,BASE-h,CW,h,18);c.fill();c.restore();
+ c.fillStyle='rgba(255,255,255,'+(.5*ga+.15)+')';c.fillRect(x+18,BASE-h,CW-36,4);
+}
+drawBg();
+const mix=(a,b,k)=>a.map((v,i)=>Math.round(v+(b[i]-v)*k));
+const rgb=a=>'rgb('+a.join(',')+')';
+window.seekFrame=(frame,fps)=>{
+ const t=frame/fps;
+ const c=$('cv').getContext('2d');c.clearRect(0,0,936,1060);
+ // 框和轴：两根玻璃槽 + 底线 + 两条淡参考线，第 0 帧就在
+ for(const x of [AX,BX]){c.fillStyle='rgba(255,255,255,.035)';rr(c,x,SLOT,CW,BASE-SLOT,18);c.fill();c.strokeStyle='rgba(255,255,255,.09)';c.lineWidth=2;c.stroke();}
+ c.setLineDash([6,10]);c.strokeStyle='rgba(255,255,255,.10)';c.lineWidth=2;
+ for(const v of [25,50]){c.beginPath();c.moveTo(30,BASE-v*U);c.lineTo(906,BASE-v*U);c.stroke();}
+ c.setLineDash([]);c.strokeStyle='rgba(255,255,255,.35)';c.lineWidth=3;c.beginPath();c.moveTo(30,BASE);c.lineTo(906,BASE);c.stroke();
+ // 「以为」柱：升到 50，「实际」出现后退成灰紫
+ const kA=eo((t-T.A)/1.4),dm=p(t,T.dim,.5);
+ col(c,AX,50*U*kA,rgb(mix([88,62,226],[44,36,70],dm)),rgb(mix([157,132,255],[70,58,112],dm)),'rgba(123,92,255,.85)',1-dm);
+ if(dm>0){c.strokeStyle='rgba(157,132,255,'+(.6*dm)+')';c.lineWidth=3;rr(c,AX,BASE-50*U*kA,CW,50*U*kA,18);c.stroke();}
+ // 参考线：从「以为」柱顶拉到「实际」柱
+ const kr=p(t,T.ref,.6);
+ if(kr>0){c.setLineDash([18,12]);c.strokeStyle='rgba(255,255,255,.6)';c.lineWidth=3;c.beginPath();c.moveTo(AX,BASE-50*U);c.lineTo(AX+(BX+CW-AX)*kr,BASE-50*U);c.stroke();c.setLineDash([]);}
+ // 「实际」柱：升到 25，唯一的珊瑚高亮
+ const kB=eo((t-T.B)/1.4);
+ col(c,BX,25*U*kB,'#6b4cf0','#ff5a4a','rgba(255,90,74,.9)',1);
+ // 差值：虚线框从 25 长到 50
+ const kg=p(t,T.gap,.6);
+ if(kg>0){const top=BASE-25*U-25*U*kg;c.fillStyle='rgba(255,90,74,'+(.08*kg)+')';c.fillRect(BX,top,CW,25*U*kg);c.setLineDash([14,10]);c.strokeStyle='rgba(255,110,96,.9)';c.lineWidth=3;c.strokeRect(BX+1.5,top,CW-3,25*U*kg);c.setLineDash([]);}
+ $('ctx').style.clipPath='inset(0 '+(100-100*p(t,T.ctx,.8))+'% 0 0)';
+ $('src').style.opacity=p(t,T.src,.5);
+ $('lA').style.opacity=p(t,T.lA,.3);
+ $('lB').style.opacity=p(t,T.lB,.3);
+ const nA=$('nA');nA.textContent=Math.round(50*kA)+'%';nA.style.opacity=p(t,T.A,.25);
+ nA.style.color='rgba(244,240,255,'+(1-dm)+')';nA.style.webkitTextStroke=(3*dm).toFixed(2)+'px #a99bd6';
+ const nB=$('nB');nB.textContent=Math.round(25*kB)+'%';nB.style.opacity=p(t,T.B,.25);
+ const kc=p(t,T.card,.6);const gc=$('gc');gc.style.opacity=kc;gc.style.transform='translateY('+(18*(1-kc))+'px)';
+};
+window.seekFrame(0,30);
+</script></body></html>

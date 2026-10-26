@@ -23,7 +23,7 @@ import llm_common
 from direct_video.lint import declared_seconds, lint
 from direct_video.media import FPS, LocalMedia, OutputCheckError, atomic_bytes, wav_seconds
 from direct_video.revisions import RevisionMixin, empty_look
-from direct_video.styles import StyleMixin, shot_context
+from direct_video.styles import StyleMixin
 from direct_video.revision_library import RevisionLibrary, read_json
 
 MODEL = 'claude-opus-5-5'
@@ -57,7 +57,7 @@ def dump(path: Path, value) -> None:
     atomic_bytes(path, (json.dumps(value, ensure_ascii=False, allow_nan=False, indent=2) + '\n').encode())
 
 
-def validate_design(value: dict, shots: list[dict]) -> dict:
+def validate_design(value: dict, shots: list[dict], *, library_recipe=False) -> dict:
     if not isinstance(value, dict):
         raise DirectVideoError('design_invalid')
     palette = value.get('palette')
@@ -66,7 +66,7 @@ def validate_design(value: dict, shots: list[dict]) -> dict:
              and all(isinstance(c, str) and re.fullmatch(r'#[0-9a-fA-F]{6}', c) for c in palette.values())
              and isinstance(scale, list) and len(scale) == 3 and all(type(n) is int and 34 <= n <= 500 for n in scale)
              and scale[0] > scale[1] > scale[2]
-             and isinstance(banned, list) and 3 <= len(banned) <= 6
+             and isinstance(banned, list) and (len(banned) >= 1 if library_recipe else 3 <= len(banned) <= 6)
              and all(isinstance(b, str) and 0 < len(b.strip()) <= 500 for b in banned)
              and isinstance(value.get('motionRules'), str) and 0 < len(value['motionRules'].strip()) <= 1000
              and isinstance(rows, list) and len(rows) == len(shots))
@@ -437,7 +437,7 @@ class Generator(StyleMixin, RevisionMixin):
                            'shotId': sid, 'shotNumber': index + 1, 'totalShots': len(job['shots']),
                            'previousDialogue': job['shots'][index - 1]['dialogue'] if index else None,
                            'nextDialogue': job['shots'][index + 1]['dialogue'] if index + 1 < len(job['shots']) else None,
-                           'instruction': instruction, **shot_context(shot)}
+                           'instruction': instruction, **self.style_shot_context(job, shot)}
                 with self.lock:
                     samples = self.library.closest(shot)
                     sample_images = []
@@ -463,7 +463,9 @@ class Generator(StyleMixin, RevisionMixin):
                     value = {}
                     try:
                         value = self.timed_call(root, 'write', '只输出 JSON {"code": "完整 HTML"}。严格遵守以下镜头规则，不改口播。'
-                                                'visual 是编导写的画面；subtitle 是画面上要出现的字；camera 是景别 · 运镜（照着做；颜色、字号以全片设计为准）。\n' + self.library.rules(RULES), context,
+                                                'visual 是编导写的画面；subtitle 是画面上要出现的字；camera 是景别 · 运镜（照着做；颜色、字号以全片设计为准）。'
+                                                '若提供 styleSampleCode，它是同一风格的一镜样例，内容不同，只照画法；颜色、字号以全片设计为准。'
+                                                'form_profile.visual_grammar 指定该风格的画法，与默认禁用冲突时照它。\n' + self.library.rules(RULES), context,
                                                 image_paths=sample_images,
                                                 shotId=sid, attempt=attempt + 1, instructionKind='retry' if retry_errors is not None else 'requested' if instruction else 'initial')
                         if isinstance(value.get('code'), str):

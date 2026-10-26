@@ -46,6 +46,7 @@ async function mocks(page,state){
   await page.route('**/api/**',async route=>{
     const req=route.request(),url=new URL(req.url()),path=url.pathname;
     const json=(body,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(body)});
+    if(path.startsWith('/api/direct/styles/library/')){const ident=path.split('/').at(-2),ext=path.endsWith('.mp4')?'mp4':'jpg';assert(JSON.parse(readFileSync(join(ROOT,'tests/fixtures/r278-direct/first.json'),'utf8')).styles.library.some(x=>x.id===ident));return route.fulfill({contentType:ext==='mp4'?'video/mp4':'image/jpeg',body:readFileSync(join(ROOT,'scripts/direct_video/style_library',`${ident}.${ext}`))});}
     if(path.endsWith('/poster.jpg'))return route.fulfill({contentType:'image/jpeg',body:readFileSync(join(OUT,`poster-${path.split('/').at(-2)}.jpg`))});
     if(path.endsWith('/output.mp4')){
       const body=readFileSync(join(OUT,'synthetic-output.mp4')),range=req.headers().range?.match(/^bytes=(\d+)-(\d*)$/);

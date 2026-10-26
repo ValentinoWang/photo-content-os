@@ -45,12 +45,12 @@ export function canRescript(job,readError=false){return !!job&&!readError&&!shou
 
 export function createDirectView(ctx) {
   let project, job=null, selected, userSelected=false, timer, generation=0, tabs='', readError=false, unavailable=false, pendingVoice=null, actionError='', busy=false, outputKey='';
-  const forms=new Map();let form,editor,draftTimer;
-  function newForm(){return {rows:[],editing:false,styles:null,mode:'base',base:null,adjust:'',text:'',revise:'',draft:null,accepted:false,revising:false};}
+  const forms=new Map();let form,editor,draftTimer,disposeStyle=()=>{};
+  function newForm(){return {rows:[],editing:false,styles:null,library:[],mode:'base',base:null,adjust:'',text:'',revise:'',draft:null,accepted:false,revising:false};}
   const active = token => token===generation && ctx.active(project?.id);
   const root=ctx.root;
   const find=s=>root().querySelector(s);
-  function stop(){generation++;clearTimeout(timer);clearTimeout(draftTimer);timer=null;editor?.dispose();editor=null;root().querySelectorAll('video').forEach(v=>v.pause());}
+  function stop(){generation++;clearTimeout(timer);clearTimeout(draftTimer);timer=null;disposeStyle();disposeStyle=()=>{};editor?.dispose();editor=null;root().querySelectorAll('video').forEach(v=>v.pause());}
   // The Studio JSON helper stringifies files and discards error codes. Keep binary and
   // text requests here, using the same bootstrap token and same-origin credentials.
   async function request(path,options={}) {
@@ -86,10 +86,10 @@ export function createDirectView(ctx) {
   function head(title,lede='',actions=''){return `<div class="stephead full" data-design-id="DV-HEAD"><div><p class="eyebrow">脚本直出</p><h2>${title}</h2>${lede?`<p>${lede}</p>`:''}</div><div class="actions">${actions}</div></div>`;}
   async function loadStyles(token){
     const result=await ctx.api('/api/direct/styles');if(!active(token))return;
-    if(!Array.isArray(result.styles))throw new Error('invalid styles');form.styles=result.styles;
-    if(form.base)form.base=result.styles.find(x=>x.projectId===form.base.projectId&&x.jobId===form.base.jobId)||(form.editing&&form.base.projectId===project.id&&form.base.jobId===job?.jobId?form.base:null);
+    if(!Array.isArray(result.styles)||!Array.isArray(result.library))throw new Error('invalid styles');form.styles=result.styles;form.library=result.library;
+    if(form.base?.kind==='library'){const match=result.library.find(x=>x.id===form.base.id);form.base=match?{...match,kind:'library'}:null;}
+    else if(form.base)form.base=result.styles.find(x=>x.projectId===form.base.projectId&&x.jobId===form.base.jobId)||(form.editing&&form.base.projectId===project.id&&form.base.jobId===job?.jobId?form.base:null);
     else form.base=result.styles[0]||null;
-    if(!result.styles.length)form.mode='new';
   }
   function updateForm(){
     const summary=rowSummary(form.rows),[text,need]=generationText(form.rows,form);
@@ -104,7 +104,7 @@ export function createDirectView(ctx) {
     document.querySelector('.main').dataset.designState=stateName();
   }
   function paintStyle(){
-    renderStyle(find('[data-style-slot]'),{state:form,styles:form.styles||[],rows:form.rows,projectId:project.id,jobId:form.editing?job.jobId:null,unavailable,busy,mmss,elapsed,failureMessage,
+    disposeStyle();disposeStyle=renderStyle(find('[data-style-slot]'),{state:form,styles:form.styles||[],library:form.library,rows:form.rows,projectId:project.id,jobId:form.editing?job.jobId:null,unavailable,busy,mmss,elapsed,failureMessage,
       onChange:redraw=>{if(redraw)paintStyle();updateForm();},onDraft:()=>writeDraft(false),onRevise:()=>writeDraft(true),onRedo:()=>{clearTimeout(draftTimer);form.draft=null;form.accepted=false;form.revising=false;form.revise='';paintStyle();updateForm();}});
   }
   function startForm(){
@@ -180,6 +180,7 @@ export function createDirectView(ctx) {
       startForm();
       scheduleDraft(generation);return;
     }
+    disposeStyle();disposeStyle=()=>{};
     if(!find('[data-film]')) {find('[data-body]').innerHTML='<div data-job-alert class="dv-body"></div><div data-design class="dv-body"></div><div data-progress class="dv-body"></div><div data-output class="dv-body"></div><div data-film class="dv-body"></div><div data-detail class="dv-body"></div>';outputKey='';}
     find('[data-flow]').innerHTML=flow();
     find('[data-rescript]')?.addEventListener('click',rescript);

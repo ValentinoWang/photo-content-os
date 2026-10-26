@@ -226,7 +226,9 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
                     },
                 }}},
             }
-    operation_contract(operation, spec)
+    # The revision-library decorator assumes /api/direct responses are JSON.
+    if not (spec.get('response_media') and str(spec['path']).startswith('/api/direct/')):
+        operation_contract(operation, spec)
     direct_style_contract.operation_contract(operation, spec)
     return operation
 

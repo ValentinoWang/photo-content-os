@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {readFileSync,writeFileSync,mkdirSync,mkdtempSync,rmSync,statfsSync,copyFileSync} from 'node:fs';
+import {readFileSync,writeFileSync,mkdirSync,mkdtempSync,rmSync,statfsSync,copyFileSync,existsSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {homedir,tmpdir} from 'node:os';
 import {spawn,spawnSync} from 'node:child_process';
 import {pathToFileURL} from 'node:url';
 import {testFormulas,testBrowser} from '../../tests/test_r278_direct_rescript.mjs';
+import {testLibraryFormulas,testLibraryBrowser} from '../../tests/test_r283_frontend.mjs';
 const ROOT=resolve(import.meta.dirname,'../..');
-export const R278_STATES=['entry','writing','composing','rescript','rescript-zoom','rescript-adjust','rescript-other','first-empty','first','first-new','first-new-text','first-new-drafting','first-new-ready','first-new-revising','first-new-accepted','first-new-failed','first-none-r278','designing','inherited','adjusted'];
+export const R278_STATES=['entry','writing','composing','rescript','rescript-zoom','rescript-adjust','rescript-other','first-empty','first','first-new','first-new-text','first-new-drafting','first-new-ready','first-new-revising','first-new-accepted','first-new-failed','designing','inherited','adjusted'];
+export const R283_STATES=['first-lib','first-none','library'];
+const ALL_STATES=[...R278_STATES,...R283_STATES];
 export function blockSelectors(state){
-  const names=state.startsWith('rescript')||state.startsWith('first')?['steps','head','script','style','opts','gen']:['steps','head',...(['designing','inherited','adjusted'].includes(state)?['design']:[])];
+  const names=state.startsWith('rescript')||state.startsWith('first')?['steps','head','script','style','opts','gen']:['steps','head',...(['designing','inherited','adjusted','library'].includes(state)?['design']:[])];
   const selectors={steps:'[data-flow]',head:'[data-head]',script:'[data-script-slot]',style:'[data-style-slot]',opts:'.dv-opts',gen:'.dv-start',design:'[data-design]'};
   // Generation is collected inside a wrapper so the root design id is inventoried.
   selectors.gen='[data-gen-slot]';return Object.fromEntries(names.map(name=>[`${state}-${name}`,selectors[name]]));
@@ -60,12 +63,13 @@ async function main(){
   const MEDIA=process.env.R278_DESIGN_MEDIA_ROOT||join(DESIGN,'img');
   const OUT=process.env.R278_FRONTEND_EVIDENCE||join(homedir(),'.photo-content-os/evidence/R278-direct-rescript/frontend');mkdirSync(OUT,{recursive:true});
   const PORT=Number(process.env.DIRECT_GATE_PORT||8768);assert.equal(PORT,8768,'R278 must use 8768');const BASE=`http://127.0.0.1:${PORT}`;
+  const widths=process.argv.find(x=>x.startsWith('--widths='))?.slice(9).split(',').map(Number)||[1440,960];assert(widths.length&&widths.every(w=>Number.isInteger(w)&&w>=320),'Invalid viewport widths');
   const subset=process.argv.find(x=>x.startsWith('--states='))?.slice(9).split(',');
-  if(subset)assert(subset.length&&subset.every(s=>R278_STATES.includes(s)||s==='real-worst-rescript'),'Unknown capture state');
-  const previous=subset?JSON.parse(readFileSync(join(OUT,'screenshot-manifest.json'),'utf8')):null;
-  const temp=mkdtempSync(join(tmpdir(),'r278-frontend-')),screenshots=previous?previous.screenshots.filter(x=>!subset.includes(x.state)):[],contracts=previous?previous.contracts.map((x,i)=>({...x,name:x.name||previous.screenshots[i]?.state||x.state})).filter(x=>!subset.includes(x.name)):[],errors=[],requests=[];let server,browser;
+  if(subset)assert(subset.length&&subset.every(s=>ALL_STATES.includes(s)||s==='real-worst-rescript'),'Unknown capture state');
+  const previous=subset&&!process.argv.includes('--checks-only')&&existsSync(join(OUT,'screenshot-manifest.json'))?JSON.parse(readFileSync(join(OUT,'screenshot-manifest.json'),'utf8')):null;
+  const temp=mkdtempSync(join(tmpdir(),'r278-frontend-')),screenshots=previous?previous.screenshots.filter(x=>!subset.includes(x.state)||!widths.includes(x.viewport.width)):[],contracts=previous?previous.contracts.map((x,i)=>({...x,name:x.name||previous.screenshots[i]?.state||x.state})).filter(x=>!subset.includes(x.name)||!widths.includes(x.width)):[],errors=[],requests=[];let server,browser;
   const {chromium}=await import(pathToFileURL(process.env.VIDEO_RENDER_PLAYWRIGHT_MODULE.replace(/index\.js$/,'index.mjs')));
-  const read=state=>JSON.parse(readFileSync(state==='real'?join(OUT,'real-projection.json'):join(ROOT,'tests/fixtures/r278-direct',state+'.json'),'utf8'));
+  const read=state=>JSON.parse(readFileSync(state==='real'?join(OUT,'real-projection.json'):join(ROOT,'tests/fixtures',R283_STATES.includes(state)?'r283-direct':'r278-direct',state+'.json'),'utf8'));
   const disk=()=>{const s=statfsSync(OUT);assert(s.bavail*s.bsize>=3*1024**3,'Disk below 3 GiB; stop');};
   const hash=buf=>createHash('sha256').update(buf).digest('hex');
   async function open(state,width=1440,{prepare=true,omitCurrentStyle=false}={}){
@@ -80,6 +84,7 @@ async function main(){
     await page.route('**/api/**',async route=>{try{
       const req=route.request(),url=new URL(req.url()),p=url.pathname,method=req.method(),json=(body,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(body)});
       if(p.endsWith('/poster.jpg')||p.endsWith('/clip.mp4')||p.endsWith('/output.mp4')){
+        if(p.startsWith('/api/direct/styles/library/')){const ident=p.split('/').at(-2),ext=p.endsWith('.mp4')?'mp4':'jpg';assert(data.styles.library.some(x=>x.id===ident));return route.fulfill({contentType:ext==='mp4'?'video/mp4':'image/jpeg',body:readFileSync(join(ROOT,'scripts/direct_video/style_library',`${ident}.${ext}`))});}
         let filename;if(p.includes('style-drafts'))filename='style-7719.jpg';else if(p.includes('dv_other1'))filename='style-0d6e.jpg';else if(p.includes('dv_other2'))filename='style-7719.jpg';else filename=`job-${p.includes('/shots/')?p.split('/').at(-2):'01'}.${p.endsWith('.mp4')?'mp4':'jpg'}`;
         const buffer=readFileSync(join(OUT,'media',filename));return route.fulfill({contentType:p.endsWith('.mp4')?'video/mp4':'image/jpeg',body:buffer});
       }
@@ -112,11 +117,11 @@ async function main(){
     if(prepare){
       if(state.startsWith('rescript')||state==='real'){await page.locator('[data-rescript]').click();await page.locator('.dv-sb').waitFor();await page.locator('.dv-sw-card').first().waitFor();assert.equal(await page.locator('.dv-sb .sb-tag').count(),0,'Rescript pictures have no source labels');}
       if(state==='rescript-adjust')await page.locator('[data-adjust]').fill('强调色换成暖黄，其余不动');
-      if(state==='rescript-other')await page.locator('[data-style-card]').last().click();
+      if(state==='rescript-other')await page.locator('[data-design-id="DV-STYLE-CARDS"] [data-style-card]').last().click();
       if(state.startsWith('first')&&state!=='first-empty'){
         const chooser=page.waitForEvent('filechooser');await page.locator('[data-import]').click();await(await chooser).setFiles({name:'storyboard.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(data.script))});await page.locator('.dv-sb').waitFor();
         if(state.startsWith('first-new'))await page.locator('[data-mode="new"]').click();
-        if(!['first','first-new','first-none-r278'].includes(state)){await page.locator('[data-desc]').fill(data.text);}
+        if(state.startsWith('first-new')&&state!=='first-new'){await page.locator('[data-desc]').fill(data.text);}
         if(['first-new-drafting','first-new-ready','first-new-revising','first-new-accepted','first-new-failed'].includes(state)){
           if(state==='first-new-revising'){const ready=read('first-new-ready').draft.draft;data.draft.draft=ready;}
           await page.locator('[data-draft]').click();
@@ -127,6 +132,7 @@ async function main(){
           else await page.locator('.dv-sw-fail').waitFor();
         }
       }
+      if(state==='first-lib')await page.locator('[data-library="flat"]').click();
     }
     return {page,mock};
   }
@@ -168,24 +174,35 @@ for s in raw['shots']:
 j=projection(raw)
 style={'projectId':j['projectId'],'jobId':j['jobId'],'title':'断更一年，我拆了四句话','createdAt':j['createdAt'],'design':{k:v for k,v in j['design'].items() if k not in ['status','source']},'posterUrl':'/api/projects/'+j['projectId']+'/direct/jobs/'+j['jobId']+'/shots/01/poster.jpg?v=1'}
 print(json.dumps({'latest':{'ok':True,'job':j},'styles':{'ok':True,'styles':[style]}},ensure_ascii=False))`;
-    const result=spawnSync(join(ROOT,'.venv/bin/python'),['-c',code,join(OUT,'real-job.json')],{cwd:ROOT,encoding:'utf8'});assert.equal(result.status,0,result.stderr);writeFileSync(join(OUT,'real-projection.json'),result.stdout);
+    const result=spawnSync(join(ROOT,'.venv/bin/python'),['-c',code,join(OUT,'real-job.json')],{cwd:ROOT,encoding:'utf8'});assert.equal(result.status,0,result.stderr);const real=JSON.parse(result.stdout);real.styles.library=read('first').styles.library;writeFileSync(join(OUT,'real-projection.json'),JSON.stringify(real));
     const after=hash(readFileSync(source));assert.equal(before,after);assert.equal(before,hash(readFileSync(join(OUT,'real-job.json'))));writeFileSync(join(OUT,'source-preservation.json'),JSON.stringify({before,after,copy:before,identical:true},null,2));
   }
   try{
-    testFormulas();disk();prepareMedia();assert(!await fetch(BASE).catch(()=>null),'8768 already occupied; refusing to reuse or kill it');
+    const expectedBlocks=Object.keys(JSON.parse(readFileSync(join(DESIGN,'contract.json'),'utf8')).states).filter(s=>!s.startsWith('rescript-newer-')&&!s.startsWith('first-handoff-')).sort();
+    assert.deepEqual(ALL_STATES.flatMap(s=>Object.keys(blockSelectors(s))).sort(),expectedBlocks,'Every approved non-R282 block must be collected');
+    testFormulas();testLibraryFormulas();disk();prepareMedia();assert(!await fetch(BASE).catch(()=>null),'8768 already occupied; refusing to reuse or kill it');
     server=spawn(join(ROOT,'.venv/bin/python'),['-u','-c','from pathlib import Path; import sys; from studio.server import serve; serve(state_dir=Path(sys.argv[1]),port=int(sys.argv[2])).serve_forever()',temp,String(PORT)],{cwd:ROOT,env:{...process.env,LOCAL_MEDIA_ROOT:join(temp,'media')},stdio:['ignore','pipe','pipe']});
     server.stdout.on('data',d=>writeFileSync(join(OUT,'server.stdout.log'),d,{flag:'a'}));server.stderr.on('data',d=>writeFileSync(join(OUT,'server.stderr.log'),d,{flag:'a'}));
     let ready=false;for(let i=0;i<100;i++){if(await fetch(BASE).then(r=>r.ok).catch(()=>false)){ready=true;break;}await new Promise(r=>setTimeout(r,100));}assert(ready,'Studio failed to start');
+    const live=await fetch(BASE+'/api/direct/styles').then(r=>{assert(r.ok);return r.json();});
+    assert.deepEqual(live.library,read('first').styles.library,'Fixture library must match the real backend projection');
+    const mediaChecks=[];
+    for(const item of live.library){
+      const poster=await fetch(BASE+item.posterUrl);assert.equal(poster.status,200);const bytes=Buffer.from(await poster.arrayBuffer());assert.equal(hash(bytes),hash(readFileSync(join(ROOT,'scripts/direct_video/style_library',item.id+'.jpg'))));
+      const clip=await fetch(BASE+item.clipUrl,{headers:{Range:'bytes=0-63'}});assert.equal(clip.status,206);assert(Buffer.from(await clip.arrayBuffer()).equals(readFileSync(join(ROOT,'scripts/direct_video/style_library',item.id+'.mp4')).subarray(0,64)));
+      mediaChecks.push({id:item.id,poster_status:poster.status,poster_sha256:hash(bytes),clip_status:clip.status,range:clip.headers.get('content-range')});
+    }
+    writeFileSync(join(OUT,'real-library-api.json'),JSON.stringify({library:live.library,media:mediaChecks},null,2));
     browser=await chromium.launch({headless:true,executablePath:process.env.VIDEO_RENDER_BROWSER});
-    if(!process.argv.includes('--capture-only'))await testBrowser({open,testZoomAndClips});
-    const captureStates=subset||[...R278_STATES,...(process.argv.includes('--checks-only')?[]:['real-worst-rescript'])];
-    for(const state of captureStates)for(const width of state==='real-worst-rescript'?[1440]:[1440,960]){
+    if(!process.argv.includes('--capture-only')){await testLibraryBrowser({open});await testBrowser({open,testZoomAndClips});}
+    const captureStates=subset||[...ALL_STATES,...(process.argv.includes('--checks-only')?[]:['real-worst-rescript'])];
+    for(const state of captureStates)for(const width of state==='real-worst-rescript'?[1440]:widths){
       const {page}=await open(state==='real-worst-rescript'?'real':state,width);if(!process.argv.includes('--checks-only'))await capture(page,state,width);
       if(state==='rescript-zoom'&&process.argv.includes('--checks-only'))await page.locator('button[data-pic]').nth(1).click();
       contracts.push(await checkBlocks(page,state==='real-worst-rescript'?'rescript':state,{core:CORE,contract:join(DESIGN,'contract.json'),out:OUT,name:state,width}));await page.close();
     }
     writeFileSync(join(OUT,'contracts.json'),JSON.stringify(contracts,null,2));assert.deepEqual(errors,[]);assert.equal(contracts.filter(c=>c.exit_code!==0).length,0,JSON.stringify(contracts.filter(c=>c.exit_code!==0).map(c=>({state:c.state,width:c.width,result:c.result})),null,2));
-    console.log(`PASS R278: ${contracts.length} contract runs; ${screenshots.length} complete-page screenshots; mounted browser interactions`);
+    console.log(`PASS R278/R283: ${contracts.length} contract runs; ${screenshots.length} complete-page screenshots; mounted browser interactions`);
   }finally{
     await browser?.close();if(server){server.kill('SIGTERM');await new Promise(r=>server.once('exit',r));}rmSync(temp,{recursive:true,force:true});
     writeFileSync(join(OUT,'browser-requests.json'),JSON.stringify(requests,null,2));writeFileSync(join(OUT,'browser-errors.json'),JSON.stringify(errors,null,2));

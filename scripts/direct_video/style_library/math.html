@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang='zh'><head><meta charset='utf-8'><style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#070b16}
+body{position:relative;font-family:'STHeiti','Heiti SC',sans-serif;color:#f5f0e8}
+.fw{display:inline-block;width:1em;text-align:center}
+.a{position:absolute}
+#cv{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#hd{left:72px;top:96px;width:936px;z-index:2}
+.eb{font-size:44px;line-height:1.2;color:#58c4dd}
+.tt{font-size:72px;line-height:1.2;color:#f5f0e8;margin-top:14px}
+#ul{height:3px;margin-top:20px;background:#58c4dd;transform-origin:0 50%}
+#lab{left:210px;top:318px;font-size:34px;line-height:1.2;color:#8a96a8;white-space:nowrap;z-index:2}
+.row{left:210px;display:flex;align-items:center;white-space:nowrap;z-index:2}
+#r1{top:1090px}
+#r2{top:1262px}
+.lb{font-size:72px;line-height:1;width:150px}
+.ap{width:64px;height:44px;margin:0 36px 0 6px}
+.ap path{fill:none;stroke:#f5f0e8;stroke-width:5;stroke-linecap:round}
+.nm{font-size:140px;line-height:1}
+#l1,#n1{color:#58c4dd}
+#l2,#n2{color:#ffd76a}
+#n2{text-shadow:0 0 26px rgba(255,215,106,.55)}
+#src{left:210px;top:1462px;font-size:34px;line-height:1.2;color:#8a96a8;white-space:nowrap;z-index:2}
+</style></head><body data-hold='7.8-12'>
+<canvas id='cv' width='1080' height='1920'></canvas>
+<div id='hd' class='a' data-role='header'><div class='eb'>聚光灯效应</div><div class='tt'>真有那么多人在看<span class='fw'>？</span></div><div id='ul'></div></div>
+<div id='lab' class='a'>全班</div>
+<div id='r1' class='a row'><span id='l1' class='lb'>以为</span><svg class='ap' viewBox='0 0 64 44'><path d='M6 15 Q19 3 32 15 T58 15'/><path d='M6 33 Q19 21 32 33 T58 33'/></svg><span id='n1' class='nm'>50%</span></div>
+<div id='r2' class='a row'><span id='l2' class='lb'>实际</span><svg class='ap' viewBox='0 0 64 44'><path d='M6 15 Q19 3 32 15 T58 15'/><path d='M6 33 Q19 21 32 33 T58 33'/></svg><span id='n2' class='nm'>25%</span></div>
+<div id='src' class='a'>Gilovich 等，2000 · 示意图，非原始数据</div>
+<script>
+const D = 12;
+const W=1080,H=1920,PI=Math.PI,TAU=2*PI;
+const $=id=>document.getElementById(id);
+const cv=$('cv'),c=cv.getContext('2d');
+const cl=x=>x<0?0:x>1?1:x;
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;};
+const p=(t,s,d)=>eo((t-s)/d);
+const hx=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16));
+const mx=(a,b,k)=>a.map((v,i)=>v+(b[i]-v)*k);
+const rgb=(a,al)=>'rgba('+a.map(Math.round).join(',')+','+(al===undefined?1:al)+')';
+const DIM=hx('#26344b'),GRY=hx('#7d8aa0'),CYA=hx('#58c4dd'),GLD=hx('#ffd76a'),BG=hx('#070b16');
+const SX=210,SY=380,S=660,CELL=110,HALF=330;
+const T={wave:0.4,est:2.8,act:5.0,hatch:7.0,src:7.2};
+// 实际区域（左下四分之一）的边界，用圆链画出来：先对边界取样做离散傅里叶变换
+const M=128,QX=SX,QY=SY+HALF,QC={x:QX+HALF/2,y:QY+HALF/2};
+const pts=[];
+for(let m=0;m<M;m++){const side=Math.floor(m/32),f=(m%32)/32;let x,y;
+ if(side===0){x=QX+f*HALF;y=QY;}else if(side===1){x=QX+HALF;y=QY+f*HALF;}else if(side===2){x=QX+HALF-f*HALF;y=QY+HALF;}else{x=QX;y=QY+HALF-f*HALF;}
+ pts.push({x,y});}
+const coef=[];
+for(let k=-M/2;k<M/2;k++){let re=0,im=0;for(let m=0;m<M;m++){const zr=pts[m].x-QC.x,zi=pts[m].y-QC.y,a=-TAU*k*m/M;re+=zr*Math.cos(a)-zi*Math.sin(a);im+=zr*Math.sin(a)+zi*Math.cos(a);}coef.push({k,re:re/M,im:im/M,r:Math.hypot(re,im)/M});}
+coef.sort((a,b)=>b.r-a.r);
+function tip(s,n){let x=QC.x,y=QC.y;const chain=[];for(let j=0;j<n;j++){const q=coef[j],a=TAU*q.k*s,ca=Math.cos(a),sa=Math.sin(a);chain.push({x,y,r:q.r});x+=q.re*ca-q.im*sa;y+=q.re*sa+q.im*ca;}return {x,y,chain};}
+function grid(){
+ c.fillStyle='#070b16';c.fillRect(0,0,W,H);
+ c.strokeStyle='rgba(88,196,221,.10)';c.lineWidth=1.5;c.beginPath();
+ for(let x=30;x<W;x+=60){c.moveTo(x,0);c.lineTo(x,H);}
+ for(let y=20;y<H;y+=60){c.moveTo(0,y);c.lineTo(W,y);}
+ c.stroke();
+}
+function rectPath(x,y,w,h,k){
+ // 按周长比例 k 画出矩形的一部分（从左上角顺时针）
+ const L=2*(w+h),seg=[[x,y,x+w,y],[x+w,y,x+w,y+h],[x+w,y+h,x,y+h],[x,y+h,x,y]];let left=k*L;
+ c.beginPath();c.moveTo(x,y);
+ for(const [a,b,e,f] of seg){const len=Math.hypot(e-a,f-b);if(left<=0)break;const u=Math.min(1,left/len);c.lineTo(a+(e-a)*u,b+(f-b)*u);left-=len;}
+}
+function dotState(t,i,j){
+ // i 列 j 行
+ const idx=j*6+i;
+ let col=mx(DIM,GRY,p(t,T.wave+idx*0.035,0.3)),hollow=0;
+ if(i<3){const o=j*3+i;col=mx(col,CYA,p(t,T.est+0.25+o*0.06,0.3));}
+ if(i<3&&j>=3){const o=(j-3)*3+i;col=mx(col,GLD,p(t,T.act+0.5+o*0.1,0.3));}
+ if(i<3&&j<3){hollow=p(t,T.act+1.6+(j*3+i)*0.05,0.3);}
+ return {col,hollow};
+}
+window.seekFrame=(frame,fps)=>{
+ const t=frame/fps;
+ grid();
+ // 全班：方框
+ c.lineWidth=3;c.strokeStyle='rgba(245,240,232,.55)';c.strokeRect(SX,SY,S,S);
+ // 以为：左半
+ const eF=p(t,T.est+0.4,0.5),eB=eio((t-T.est)/0.8);
+ if(eF>0){c.fillStyle=rgb(CYA,0.13*eF);c.fillRect(SX,SY,HALF,S);}
+ // 差的那一块：斜线
+ const hk=eio((t-T.hatch)/0.8);
+ if(hk>0){c.save();c.beginPath();c.rect(SX,SY,HALF,HALF);c.clip();c.strokeStyle=rgb(CYA,0.32);c.lineWidth=3;c.beginPath();
+  const n=30;for(let q=0;q<n;q++){if(q/n>hk)break;const o=q*24-HALF;c.moveTo(SX+o,SY);c.lineTo(SX+o+HALF,SY+HALF);}c.stroke();c.restore();}
+ // 实际：淡粉填充
+ const aF=p(t,T.act+1.4,0.5);
+ if(aF>0){c.fillStyle='rgba(255,179,199,'+(0.25*aF)+')';c.fillRect(QX,QY,HALF,HALF);}
+ if(eB>0){c.lineWidth=4;c.strokeStyle=rgb(CYA,0.95);rectPath(SX,SY,HALF,S,eB);c.stroke();}
+ // 点：全班 36 人
+ for(let j=0;j<6;j++)for(let i=0;i<6;i++){
+  const x=SX+CELL/2+i*CELL,y=SY+CELL/2+j*CELL,st=dotState(t,i,j);
+  c.fillStyle=st.hollow>0?rgb(mx(st.col,BG,st.hollow)):rgb(st.col);
+  c.beginPath();c.arc(x,y,17,0,TAU);c.fill();
+  if(st.hollow>0){c.strokeStyle=rgb(CYA,st.hollow);c.lineWidth=4;c.beginPath();c.arc(x,y,15,0,TAU);c.stroke();}
+ }
+ // 实际：圆链画出金色边界
+ const s=eio((t-T.act-0.1)/1.4),chainA=cl((t-T.act+0.1)/0.25)*(1-cl((t-T.act-1.5)/0.4));
+ if(s>0){
+  const n=Math.floor(s*M);
+  c.save();c.lineJoin='round';c.lineCap='round';
+  const wid=5+2*p(t,T.act+1.5,0.4);
+  for(const pass of [0,1]){
+   c.shadowColor='#ffd76a';c.shadowBlur=pass?8:26;c.strokeStyle=pass?'#fff2c4':'#ffd76a';c.lineWidth=pass?wid*0.45:wid;
+   c.beginPath();c.moveTo(pts[0].x,pts[0].y);for(let m=1;m<=n&&m<M;m++)c.lineTo(pts[m].x,pts[m].y);
+   if(s>=1)c.closePath();else{const e=tip(s,M);c.lineTo(e.x,e.y);}
+   c.stroke();
+  }
+  c.restore();
+ }
+ if(chainA>0&&s<1.0001){
+  const e=tip(Math.min(s,0.9999),M),ch=tip(Math.min(s,0.9999),36);
+  c.save();c.globalAlpha=chainA;
+  for(const q of ch.chain){if(q.r<2.5)continue;c.strokeStyle='rgba(88,196,221,.5)';c.lineWidth=2;c.beginPath();c.arc(q.x,q.y,q.r,0,TAU);c.stroke();}
+  c.strokeStyle='rgba(245,240,232,.75)';c.lineWidth=2;c.beginPath();c.moveTo(QC.x,QC.y);for(const q of ch.chain)c.lineTo(q.x,q.y);c.lineTo(ch.x,ch.y);c.lineTo(e.x,e.y);c.stroke();
+  c.shadowColor='#ffd76a';c.shadowBlur=20;c.fillStyle='#fff2c4';c.beginPath();c.arc(e.x,e.y,8,0,TAU);c.fill();
+  c.restore();
+ }
+ $('ul').style.transform='scaleX('+eio(t/0.9)+')';
+ $('lab').style.clipPath='inset(0 '+(100-100*eio((t-0.2)/0.5))+'% 0 0)';
+ $('r1').style.clipPath='inset(0 '+(100-100*eio((t-T.est)/0.5))+'% 0 0)';
+ $('r2').style.clipPath='inset(0 '+(100-100*eio((t-T.act)/0.5))+'% 0 0)';
+ $('n1').textContent=Math.round(50*eo((t-T.est-0.15)/1.4))+'%';
+ $('n2').textContent=Math.round(25*eo((t-T.act-0.15)/1.4))+'%';
+ $('src').style.opacity=p(t,T.src,0.4);
+};
+window.seekFrame(0,30);
+</script></body></html>

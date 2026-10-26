@@ -783,7 +783,10 @@ class StudioApplication:
                         if segments[2] == 'samples' and 'poster' in query:
                             self._media(app.direct_video.generator.library.poster(query['poster'][0]))
                         elif segments[2] == 'styles':
-                            self._json(200, {'ok': True, **app.direct_video.styles()})
+                            if len(segments) == 6 and segments[3] == 'library':
+                                self._media(app.direct_video.style_library_artifact(segments[4], segments[5]))
+                            else:
+                                self._json(200, {'ok': True, **app.direct_video.styles()})
                         else:
                             self._json(200, {'ok': True, **app.direct_video.library(segments[2])})
                         return

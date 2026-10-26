@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang='zh'><head><meta charset='utf-8'><style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#04091a}
+body{position:relative;font-family:'STHeiti','Heiti SC',sans-serif;color:#eaf4ff}
+.fw{display:inline-block;width:1em;text-align:center}
+.a{position:absolute}
+#cv{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#hd{left:72px;top:96px;width:936px;z-index:2}
+.eb{display:inline-block;font-size:44px;line-height:1.2;padding:6px 30px;border-radius:999px;background:#ffd24a;color:#0a1a3f}
+.tt{font-size:72px;line-height:1.2;color:#ffffff;margin-top:26px}
+.hl{position:relative;display:inline-block}
+.hl i{position:absolute;left:-10px;right:-10px;bottom:6px;height:20px;background:#d97757;z-index:-1;transform-origin:0 50%}
+.col{top:1176px;width:440px;text-align:center;z-index:2}
+#cE{left:72px}
+#cA{left:568px}
+.pill{display:inline-block;font-size:44px;line-height:1.2;padding:8px 34px;border-radius:999px;transform-origin:50% 50%}
+#pE{background:#2f6fd0;color:#ffffff}
+#pA{background:#ffd24a;color:#0a1a3f}
+.num{position:relative;display:inline-block;font-size:168px;line-height:1;margin-top:22px;white-space:nowrap}
+#nE{color:#eaf4ff}
+#nA{color:#ffd24a}
+#bar{position:absolute;left:-14px;right:-14px;bottom:2px;height:20px;background:#d97757;z-index:-1;transform-origin:0 50%}
+#src{left:72px;top:1466px;font-size:34px;line-height:1.2;color:#8fa3c7;white-space:nowrap;z-index:2}
+</style></head><body data-hold='7.6-12'>
+<canvas id='cv' width='1080' height='1920'></canvas>
+<div id='hd' class='a' data-role='header'><div class='eb'>聚光灯效应</div><div class='tt'>真有那么多人<span class='hl'>在看<i id='hl'></i></span><span class='fw'>？</span></div></div>
+<div id='cE' class='a col'><div id='pE' class='pill'>以为约</div><br><div id='nE' class='num'><span id='nEt'>50%</span></div></div>
+<div id='cA' class='a col'><div id='pA' class='pill'>实际约</div><br><div id='nA' class='num'><span id='nAt'>25%</span><i id='bar'></i></div></div>
+<div id='src' class='a'>Gilovich 等，2000 · 示意图，非原始数据</div>
+<script>
+const D = 12;
+const W=1080,H=1920,PI=Math.PI;
+const $=id=>document.getElementById(id);
+const cv=$('cv'),c=cv.getContext('2d');
+const cl=x=>x<0?0:x>1?1:x;
+const eo=x=>1-Math.pow(1-cl(x),3);
+const p=(t,s,d)=>eo((t-s)/d);
+const back=x=>{x=cl(x);const s=1.7;return 1+(s+1)*Math.pow(x-1,3)+s*Math.pow(x-1,2);};
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const rnd=mulberry32(20001);
+const stars=[];
+for(let i=0;i<110;i++){const lv=rnd();stars.push({x:rnd()*W,y:rnd()*1520,r:lv<0.7?1.6:lv<0.93?2.6:3.6,a:lv<0.7?0.35:lv<0.93?0.6:0.9});}
+const CX=540,CY=772,A=410,B=330,ROT=-8*PI/180,PR=50;
+const T={stu:0.5,est:2.8,act:5.0,bar:6.9,src:7.1};
+const EST=[0,2,4,6,8,10],GHOST=[2,6,10];
+const PL=[];
+for(let k=0;k<12;k++){const th=(-75+k*30)*PI/180;const ex=A*Math.cos(th),ey=B*Math.sin(th);PL.push({x:CX+ex*Math.cos(ROT)-ey*Math.sin(ROT),y:CY+ex*Math.sin(ROT)+ey*Math.cos(ROT)});}
+const hx=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16));
+const mix=(a,b,k)=>'rgb('+a.map((v,i)=>Math.round(v+(b[i]-v)*k)).join(',')+')';
+const BLUE=hx('#2f6fd0'),YEL=hx('#ffd24a');
+function disk(x,y,r,col){c.fillStyle=col;c.beginPath();c.arc(x,y,r,0,2*PI);c.fill();}
+function drawBg(){
+ const g=c.createRadialGradient(CX,CY,60,CX,CY,1250);g.addColorStop(0,'#13295c');g.addColorStop(0.45,'#0a1a3f');g.addColorStop(1,'#04091a');
+ c.fillStyle=g;c.fillRect(0,0,W,H);
+ for(const s of stars){c.globalAlpha=s.a;disk(s.x,s.y,s.r,'#eaf4ff');}
+ c.globalAlpha=1;
+ c.save();c.setLineDash([16,16]);c.lineWidth=3;c.strokeStyle='rgba(255,255,255,.25)';c.beginPath();c.ellipse(CX,CY,A,B,ROT,0,2*PI);c.stroke();c.restore();
+}
+function drawSun(t){
+ const hg=c.createRadialGradient(CX,CY,150,CX,CY,320);hg.addColorStop(0,'rgba(255,210,74,.30)');hg.addColorStop(1,'rgba(255,210,74,0)');
+ c.fillStyle=hg;c.beginPath();c.arc(CX,CY,320,0,2*PI);c.fill();
+ const rot=-0.5*(1-p(t,0,1.4));
+ c.fillStyle='#ffb43a';
+ for(let i=0;i<12;i++){
+  const a=rot+i*PI/6+(i%2?0.04:-0.03),len=i%2?232:252,w=0.13;
+  c.beginPath();c.moveTo(CX+178*Math.cos(a-w),CY+178*Math.sin(a-w));c.lineTo(CX+len*Math.cos(a),CY+len*Math.sin(a));c.lineTo(CX+178*Math.cos(a+w),CY+178*Math.sin(a+w));c.closePath();c.fill();
+ }
+ disk(CX,CY,186,'#ff6a3d');disk(CX,CY,166,'#ff9a2e');disk(CX,CY,144,'#ffd24a');
+}
+function drawStudent(t){
+ const k=t<T.stu?0:back((t-T.stu)/0.6);if(k<=0)return;
+ c.save();c.beginPath();c.arc(CX,CY,144,0,2*PI);c.clip();
+ c.translate(CX,CY+144);c.scale(k,k);c.translate(-CX,-(CY+144));
+ c.globalAlpha=cl((t-T.stu)/0.2);
+ // 身体：尴尬的波点衬衫
+ c.fillStyle='#2f6fd0';c.beginPath();c.moveTo(CX-96,CY+150);c.lineTo(CX-96,CY+58);c.quadraticCurveTo(CX-96,CY+14,CX-46,CY+14);c.lineTo(CX+46,CY+14);c.quadraticCurveTo(CX+96,CY+14,CX+96,CY+58);c.lineTo(CX+96,CY+150);c.closePath();c.fill();
+ c.fillStyle='#3fae63';
+ for(const [dx,dy] of [[-62,44],[-20,64],[26,40],[64,70],[-48,98],[6,104],[50,118],[-78,128]])disk(CX+dx,CY+dy,11,'#3fae63');
+ c.fillStyle='#ff6a3d';c.beginPath();c.moveTo(CX-22,CY+14);c.lineTo(CX,CY+40);c.lineTo(CX+22,CY+14);c.closePath();c.fill();
+ // 头
+ disk(CX,CY-34,46,'#f6c9a0');
+ c.fillStyle='#10224d';c.beginPath();c.arc(CX,CY-40,48,PI*1.02,PI*1.98);c.quadraticCurveTo(CX+30,CY-62,CX-46,CY-52);c.closePath();c.fill();
+ disk(CX-16,CY-28,5,'#10224d');disk(CX+16,CY-28,5,'#10224d');
+ c.strokeStyle='#10224d';c.lineWidth=4;c.lineCap='round';c.beginPath();c.moveTo(CX-10,CY-10);c.quadraticCurveTo(CX,CY-4,CX+10,CY-10);c.stroke();
+ disk(CX-28,CY-14,7,'rgba(255,106,61,.45)');disk(CX+28,CY-14,7,'rgba(255,106,61,.45)');
+ c.restore();
+}
+function look(t,k){
+ const i=EST.indexOf(k);if(i<0)return 0;
+ let v=p(t,T.est+0.2+i*0.2,0.35);
+ const g=GHOST.indexOf(k);if(g>=0)v*=1-p(t,T.act+0.2+g*0.3,0.35);
+ return v;
+}
+function ghost(t,k){const g=GHOST.indexOf(k);return g<0?0:p(t,T.act+0.2+g*0.3,0.35);}
+function drawCones(t){
+ c.save();c.globalCompositeOperation='lighter';
+ for(let k=0;k<12;k++){
+  const v=look(t,k);if(v<=0.01)continue;
+  const P=PL[k],dx=CX-P.x,dy=CY-P.y,L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L;
+  c.fillStyle='rgba(255,210,74,'+(0.20*v)+')';
+  c.beginPath();c.moveTo(P.x+nx*16,P.y+ny*16);c.lineTo(CX+nx*96,CY+ny*96);c.lineTo(CX-nx*96,CY-ny*96);c.lineTo(P.x-nx*16,P.y-ny*16);c.closePath();c.fill();
+ }
+ c.restore();
+}
+function drawPlanets(t){
+ for(let k=0;k<12;k++){
+  const P=PL[k],v=look(t,k),gk=ghost(t,k);
+  const dx=CX-P.x,dy=CY-P.y,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L;
+  disk(P.x,P.y,PR,mix(BLUE,YEL,v));
+  // 背光半球：背向中心的一半压暗
+  c.save();c.beginPath();c.arc(P.x,P.y,PR,0,2*PI);c.clip();
+  c.fillStyle='rgba(4,9,26,'+(0.32*(1-v))+')';
+  const ang=Math.atan2(uy,ux);c.beginPath();c.arc(P.x,P.y,PR,ang+PI/2,ang+PI*1.5);c.closePath();c.fill();
+  c.restore();
+  // 眼睛：没注意时看向外侧，注意时看向中间
+  const ox=ux*(2*v-1),oy=uy*(2*v-1);
+  const gx=ux*6*(2*v-1),gy=uy*6*(2*v-1);
+  for(const s of [-1,1]){
+   const ex=P.x+s*16+gx*0.6,ey=P.y-6+gy*0.6;
+   disk(ex,ey,11,'#ffffff');disk(ex+ox*4,ey+oy*4,5.5,'#10224d');
+  }
+  if(gk>0){
+   c.save();c.globalAlpha=gk;c.setLineDash([10,9]);c.lineWidth=4;c.strokeStyle='#eaf4ff';
+   c.beginPath();c.arc(P.x,P.y,PR+12,0,2*PI);c.stroke();c.restore();
+  }
+ }
+}
+function drawArrow(t){
+ const k=p(t,T.act-0.2,0.4);if(k<=0)return;
+ c.save();c.globalAlpha=k;c.fillStyle='#8fa3c7';
+ const x=520+(1-k)*-14,y=1346;
+ c.beginPath();c.moveTo(x,y-7);c.lineTo(x+20,y-7);c.lineTo(x+20,y-20);c.lineTo(x+42,y);c.lineTo(x+20,y+20);c.lineTo(x+20,y+7);c.lineTo(x,y+7);c.closePath();c.fill();
+ c.restore();
+}
+function pop(el,t,s){
+ const k=cl((t-s)/0.35);
+ el.style.opacity=t<s?0:cl(k*2.5);
+ el.style.transform='scale('+(1.06-0.06*eo(k))+')';
+}
+window.seekFrame=(frame,fps)=>{
+ const t=frame/fps;
+ drawBg();drawCones(t);drawSun(t);drawStudent(t);drawPlanets(t);drawArrow(t);
+ $('hl').style.transform='scaleX('+p(t,0.3,0.6)+')';
+ pop($('pE'),t,T.est);pop($('pA'),t,T.act);
+ const nE=$('nE'),nA=$('nA');
+ $('nEt').textContent=Math.round(50*eo((t-T.est-0.1)/1.4))+'%';nE.style.opacity=p(t,T.est+0.1,0.25);
+ $('nAt').textContent=Math.round(25*eo((t-T.act-0.1)/1.4))+'%';nA.style.opacity=p(t,T.act+0.1,0.25);
+ $('bar').style.transform='scaleX('+p(t,T.bar,0.5)+')';
+ $('src').style.opacity=p(t,T.src,0.4);
+};
+window.seekFrame(0,30);
+</script></body></html>

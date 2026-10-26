@@ -96,7 +96,7 @@ class DirectVideo:
                 'failureCode': job['failureCode'], 'startedAt': job['startedAt'], 'revisions': redact(job['revisions'])}
 
     def styles(self):
-        from direct_video.styles import DESIGN_FIELDS
+        from direct_video.styles import DESIGN_FIELDS, StyleLibrary
         projects = {row['id']: row['title'] for row in self.store.list_projects()}
         rows = []
         with self.generator.lock:
@@ -124,7 +124,18 @@ class DirectVideo:
                         break
                 result.append({'projectId': pid, 'jobId': jid, 'title': redact(projects[pid]), 'createdAt': job['createdAt'],
                                'design': redact(design), 'posterUrl': poster})
-        return {'styles': result}
+        library = []
+        for row in StyleLibrary().entries():
+            base = '/api/direct/styles/library/' + row['id']
+            library.append({'id': row['id'], 'name': redact(row['name']),
+                            'design': redact({k: row['design'][k] for k in DESIGN_FIELDS}),
+                            'posterUrl': base + '/poster.jpg', 'clipUrl': base + '/clip.mp4'})
+        return {'styles': result, 'library': library}
+
+    def style_library_artifact(self, ident, kind):
+        from direct_video.styles import StyleLibrary
+        row = StyleLibrary().get(ident)
+        return row['poster' if kind == 'poster.jpg' else 'clip']
 
     def command(self, project_id, job_id, action, body, *, sid=None):
         self.store.get_project(project_id)
