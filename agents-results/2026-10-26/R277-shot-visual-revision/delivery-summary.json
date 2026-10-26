@@ -11,5 +11,77 @@
   ],
   "r276_rebaseline": "completed",
   "r277_handoff": "created",
-  "validation_logs": "newly executed at 277cd1c; no previous attempt logs reused"
+  "validation_logs": "newly executed at 277cd1c; no previous attempt logs reused",
+  "artifact_commit": "2ff655f6f57ab038a913af8cf97c92d5cea43ed2",
+  "post_artifact_exit_code": 1,
+  "post_artifact_gates": [
+    {
+      "id": "G1",
+      "state": "fail"
+    },
+    {
+      "id": "G2",
+      "state": "pass"
+    },
+    {
+      "id": "G3",
+      "state": "pass"
+    },
+    {
+      "id": "G4",
+      "state": "pass"
+    },
+    {
+      "id": "G5",
+      "state": "pass"
+    },
+    {
+      "id": "G6",
+      "state": "pass"
+    },
+    {
+      "id": "G7",
+      "state": "pass"
+    },
+    {
+      "id": "G8",
+      "state": "pass"
+    },
+    {
+      "id": "G9",
+      "state": "fail"
+    },
+    {
+      "id": "G10",
+      "state": "pass"
+    },
+    {
+      "id": "G11",
+      "state": "pass"
+    },
+    {
+      "id": "G12",
+      "state": "pass"
+    },
+    {
+      "id": "G13",
+      "state": "pass"
+    },
+    {
+      "id": "G14",
+      "state": "pass"
+    },
+    {
+      "id": "G15",
+      "state": "pass"
+    },
+    {
+      "id": "G16",
+      "state": "pass"
+    },
+    {
+      "id": "G17",
+      "state": "pass"
+    }
+  ]
 }

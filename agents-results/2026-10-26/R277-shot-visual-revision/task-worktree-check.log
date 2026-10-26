@@ -1,0 +1,3 @@
+task worktree rule violations:
+  /private/tmp/task-worktrees/photo-content-os-r277-shot-visual-revision: unmerged commits, uncommitted files
+  branch r277-aborted-handoff: not merged into origin/main
