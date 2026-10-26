@@ -1,0 +1,47 @@
+{
+  "scope": "Two personally inspected reused R278 full-page screenshots, not fresh captures or all-site review",
+  "samples": [
+    {
+      "path": "rescript-1440.png",
+      "sha256": "636bf71e2a36ef813dbbc590be65a073f0cb943b473096a976cf48d3c6fe6bcf",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2310
+      },
+      "capture_time": "2026-10-26T16:56:44.481Z",
+      "scroll_coverage": [
+        0,
+        2310
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 七镜画面旁显示浅灰新占位，无来源标签；完整表格、风格和底部生成条正常。 1440 宽度六列对齐，长台词可读。",
+      "personally_inspected_in_attempt_2": true,
+      "findings": "完整页至底；六列表格、七镜、风格及相邻选项、页底生成条完整，无当前画面来源标签，新画面说明占位清楚。"
+    },
+    {
+      "path": "rescript-960.png",
+      "sha256": "64346f69aff0fcae5a14687b131e9bc09789a113297b53af1a9cd65fe074081e",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2800
+      },
+      "capture_time": "2026-10-26T16:56:45.042Z",
+      "scroll_coverage": [
+        0,
+        2800
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 七镜画面旁显示浅灰新占位，无来源标签；完整表格、风格和底部生成条正常。 960 宽度为表内横向滚动，页面无横向溢出；风格/选项上下排。",
+      "personally_inspected_in_attempt_2": true,
+      "findings": "完整页至底；表格按设计在容器内横滚，风格预览及选项纵排，未见整页横溢、意外裁切或新增空块。"
+    }
+  ]
+}

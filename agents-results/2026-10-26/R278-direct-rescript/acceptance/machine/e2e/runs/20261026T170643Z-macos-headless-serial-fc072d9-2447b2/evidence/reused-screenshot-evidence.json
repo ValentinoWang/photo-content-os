@@ -1,0 +1,789 @@
+{
+  "attempt": 2,
+  "reuse_authorized": "用户2026-10-27第二次交付指令，沿用已逐张审阅的一套；本轮不重拍",
+  "root": "~/.photo-content-os/evidence/R278-direct-rescript/frontend",
+  "manifest_sha256": "4cba6bafc590f6474f2f0e39466272ecd65b09716c77798e86685d96921ec3a4",
+  "gallery_sha256": "122a2fa99ff5283b8ff202e338969f144c41660aa827332451f4e06fc6fe7a67",
+  "gallery_targets_checked": 41,
+  "screenshots": [
+    {
+      "path": "entry-1440.png",
+      "sha256": "fa6476081425c44302d41484b7b0e086e6622f6231c513c0020f05ebbe461b21",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1495
+      },
+      "capture_time": "2026-10-26T15:35:32.075Z",
+      "scroll_coverage": [
+        0,
+        1495
+      ],
+      "review_result": "PASS",
+      "review_note": "重算夹具为142.8秒、4284帧后，重新打开1440和960最终整页图；入口、播放器、检查项与页底镜卡完整，帧数检查为绿色。"
+    },
+    {
+      "path": "entry-960.png",
+      "sha256": "3cebfe11ec1e5bd7a8628ec9b9f2a6cadac99acb47d3751964281bcef5fedc11",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2313
+      },
+      "capture_time": "2026-10-26T15:35:32.541Z",
+      "scroll_coverage": [
+        0,
+        2313
+      ],
+      "review_result": "PASS",
+      "review_note": "重算夹具为142.8秒、4284帧后，重新打开1440和960最终整页图；入口、播放器、检查项与页底镜卡完整，帧数检查为绿色。"
+    },
+    {
+      "path": "writing-1440.png",
+      "sha256": "48cf1f4f92f4666bfefa68e01d812851a91ecc64d63b3ef418e71ec00c5ebbae",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1667
+      },
+      "capture_time": "2026-10-26T15:35:32.988Z",
+      "scroll_coverage": [
+        0,
+        1667
+      ],
+      "review_result": "PASS",
+      "review_note": "灰字锁定原因清楚，3/7 进度与写镜状态对应；既有 R277 详情完整到页底。"
+    },
+    {
+      "path": "writing-960.png",
+      "sha256": "472389ac0ef78d01332d118ee8a95d5d85dc07efd6ecd1012241688fb2b32d59",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2103
+      },
+      "capture_time": "2026-10-26T15:35:33.538Z",
+      "scroll_coverage": [
+        0,
+        2103
+      ],
+      "review_result": "PASS",
+      "review_note": "灰字锁定原因清楚，3/7 进度与写镜状态对应；既有 R277 详情完整到页底。"
+    },
+    {
+      "path": "composing-1440.png",
+      "sha256": "25e3d81458d242ad099dee6a222b59425042b87f96c8f62e44cc67f2c60748b2",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 994
+      },
+      "capture_time": "2026-10-26T15:35:33.926Z",
+      "scroll_coverage": [
+        0,
+        994
+      ],
+      "review_result": "PASS",
+      "review_note": "第一步显示合成完才能改，合成状态在主内容上方；镜卡与设计行可读。"
+    },
+    {
+      "path": "composing-960.png",
+      "sha256": "a854728de96b02f319d1c43c82b8de382e90d3e499bfd12ed115ae725a48aa2d",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1454
+      },
+      "capture_time": "2026-10-26T15:35:34.343Z",
+      "scroll_coverage": [
+        0,
+        1454
+      ],
+      "review_result": "PASS",
+      "review_note": "第一步显示合成完才能改，合成状态在主内容上方；镜卡与设计行可读。"
+    },
+    {
+      "path": "first-empty-1440.png",
+      "sha256": "c7f36a9aef92552d24f59ab3dcee1cec92466475606944897c9e40d5f7fdc931",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1487
+      },
+      "capture_time": "2026-10-26T15:35:39.862Z",
+      "scroll_coverage": [
+        0,
+        1487
+      ],
+      "review_result": "PASS",
+      "review_note": "大粘贴框与导入入口清楚；生成条说明脚本为空，按钮禁用。"
+    },
+    {
+      "path": "first-empty-960.png",
+      "sha256": "0496b950f34d677b398f639a9e71363c25cbf30de4e4a73c2b5720c56c968b1e",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1911
+      },
+      "capture_time": "2026-10-26T15:35:40.212Z",
+      "scroll_coverage": [
+        0,
+        1911
+      ],
+      "review_result": "PASS",
+      "review_note": "大粘贴框与导入入口清楚；生成条说明脚本为空，按钮禁用。"
+    },
+    {
+      "path": "first-new-1440.png",
+      "sha256": "c916157abc73910ab87ccda90b7eb4e765fa3126e39e61f4d40554aae9ae1e44",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2294
+      },
+      "capture_time": "2026-10-26T15:35:41.790Z",
+      "scroll_coverage": [
+        0,
+        2294
+      ],
+      "review_result": "PASS",
+      "review_note": "六个提示按钮、空样张区和禁用生成按钮清楚；960风格区上下排。"
+    },
+    {
+      "path": "first-new-960.png",
+      "sha256": "665fb80cd72a333683b57509941429273f3b4d3b2695bcb650a0e556550ae0c3",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2795
+      },
+      "capture_time": "2026-10-26T15:35:42.336Z",
+      "scroll_coverage": [
+        0,
+        2795
+      ],
+      "review_result": "PASS",
+      "review_note": "六个提示按钮、空样张区和禁用生成按钮清楚；960风格区上下排。"
+    },
+    {
+      "path": "first-new-text-1440.png",
+      "sha256": "6d8da2fbdf6897dfaabbb170e0f8c65f5b5677ebed0ca8b8bdd3a04b3f12f70b",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2294
+      },
+      "capture_time": "2026-10-26T15:35:42.890Z",
+      "scroll_coverage": [
+        0,
+        2294
+      ],
+      "review_result": "PASS",
+      "review_note": "风格说明保持四行、提示按钮不遮挡；先定风格可用，生成仍禁用。"
+    },
+    {
+      "path": "first-new-text-960.png",
+      "sha256": "04683ed8a98f2590c4818a483e7cc03e619d6a788b739e9cb75712420dd09f92",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2795
+      },
+      "capture_time": "2026-10-26T15:35:43.489Z",
+      "scroll_coverage": [
+        0,
+        2795
+      ],
+      "review_result": "PASS",
+      "review_note": "风格说明保持四行、提示按钮不遮挡；先定风格可用，生成仍禁用。"
+    },
+    {
+      "path": "first-new-drafting-1440.png",
+      "sha256": "974293680e0b48ce73d447b5726a5b0f93f70b37fc044aa9c759829edcf3e015",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2294
+      },
+      "capture_time": "2026-10-26T15:35:44.097Z",
+      "scroll_coverage": [
+        0,
+        2294
+      ],
+      "review_result": "PASS",
+      "review_note": "说明只读，样张区显示正在定风格及0:42；减少动态效果下流光静止。"
+    },
+    {
+      "path": "first-new-drafting-960.png",
+      "sha256": "bd1e16e978ca86551df40ff8f4361c326a507fe6c5476c48ddc100c260bd651a",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2795
+      },
+      "capture_time": "2026-10-26T15:35:44.725Z",
+      "scroll_coverage": [
+        0,
+        2795
+      ],
+      "review_result": "PASS",
+      "review_note": "说明只读，样张区显示正在定风格及0:42；减少动态效果下流光静止。"
+    },
+    {
+      "path": "first-new-ready-1440.png",
+      "sha256": "0cf43a6ae337704743528402fbed49db4611233294047bbd57193a5d152a0d32",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2366
+      },
+      "capture_time": "2026-10-26T15:35:45.318Z",
+      "scroll_coverage": [
+        0,
+        2366
+      ],
+      "review_result": "PASS",
+      "review_note": "样张、色板、动作规矩和不用分层；再改一句与就用这个可见，生成禁用。"
+    },
+    {
+      "path": "first-new-ready-960.png",
+      "sha256": "29d0c28cfc7399b587e7a724a9b159e65e3271059394f6f791ed6f7b0fc65234",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2940
+      },
+      "capture_time": "2026-10-26T15:35:45.986Z",
+      "scroll_coverage": [
+        0,
+        2940
+      ],
+      "review_result": "PASS",
+      "review_note": "样张、色板、动作规矩和不用分层；再改一句与就用这个可见，生成禁用。"
+    },
+    {
+      "path": "first-new-revising-1440.png",
+      "sha256": "09bf23b9e4f3b4a6376bfa83456bf1dfb66d61dd0ab05f0881f349f85cee1f23",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2366
+      },
+      "capture_time": "2026-10-26T15:35:46.644Z",
+      "scroll_coverage": [
+        0,
+        2366
+      ],
+      "review_result": "PASS",
+      "review_note": "保留再改一句原文，预览区显示正在改样张和0:42；按钮锁定。"
+    },
+    {
+      "path": "first-new-revising-960.png",
+      "sha256": "9a22ff49c45a1b3bdf66106f7901795e4531382fd199c7a68d0ca46a8d198238",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2924
+      },
+      "capture_time": "2026-10-26T15:35:47.319Z",
+      "scroll_coverage": [
+        0,
+        2924
+      ],
+      "review_result": "PASS",
+      "review_note": "保留再改一句原文，预览区显示正在改样张和0:42；按钮锁定。"
+    },
+    {
+      "path": "first-new-accepted-1440.png",
+      "sha256": "12b4f7284f1653ef8f49cda41c2ddd16bcb9cb7713107271448e342ce8254fbb",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2310
+      },
+      "capture_time": "2026-10-26T15:35:48.030Z",
+      "scroll_coverage": [
+        0,
+        2310
+      ],
+      "review_result": "PASS",
+      "review_note": "已选用状态与重新定清楚；流程第一步和生成条显示样张来源，生成可用。"
+    },
+    {
+      "path": "first-new-accepted-960.png",
+      "sha256": "7f10d9142eb15f2a383727f0db53c23e3c1d4daf1d70de22fb13eb16095f01d8",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2768
+      },
+      "capture_time": "2026-10-26T15:35:48.677Z",
+      "scroll_coverage": [
+        0,
+        2768
+      ],
+      "review_result": "PASS",
+      "review_note": "已选用状态与重新定清楚；流程第一步和生成条显示样张来源，生成可用。"
+    },
+    {
+      "path": "first-new-failed-1440.png",
+      "sha256": "040c91ab7b6b3e622f53fd65593d5c15edace88e1009049e60a7ca5133d29839",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2294
+      },
+      "capture_time": "2026-10-26T15:35:49.295Z",
+      "scroll_coverage": [
+        0,
+        2294
+      ],
+      "review_result": "PASS",
+      "review_note": "失败原因和重试在预览区显示，说明与脚本保留，生成禁用。"
+    },
+    {
+      "path": "first-new-failed-960.png",
+      "sha256": "6cb83baa2faf7904925a168d3201434fb94c054e1faf8b31304a6c5f166cd6b7",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2795
+      },
+      "capture_time": "2026-10-26T15:35:49.991Z",
+      "scroll_coverage": [
+        0,
+        2795
+      ],
+      "review_result": "PASS",
+      "review_note": "失败原因和重试在预览区显示，说明与脚本保留，生成禁用。"
+    },
+    {
+      "path": "first-none-r278-1440.png",
+      "sha256": "aaab1dbe0e73079239d9a55fa069bb1ea733a6e8dc4523501d1569df290b786c",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2294
+      },
+      "capture_time": "2026-10-26T15:35:50.556Z",
+      "scroll_coverage": [
+        0,
+        2294
+      ],
+      "review_result": "PASS",
+      "review_note": "已有台词、无可沿用风格；现成风格分段禁用，默认从头定，未引入风格库。"
+    },
+    {
+      "path": "first-none-r278-960.png",
+      "sha256": "1a68a0fe09a0426a62064a34a478fc8e6c22c391d84c0c806c125aec50c35b54",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2829
+      },
+      "capture_time": "2026-10-26T15:35:51.082Z",
+      "scroll_coverage": [
+        0,
+        2829
+      ],
+      "review_result": "PASS",
+      "review_note": "已有台词、无可沿用风格；现成风格分段禁用，默认从头定，未引入风格库。"
+    },
+    {
+      "path": "designing-1440.png",
+      "sha256": "bbc6a4a6e0df64499d35703234b046e5b08e1afbdf8a37b9d90bfccbb0338983",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-26T15:35:51.407Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "review_result": "PASS",
+      "review_note": "页头和虚线设计行说明正在调整既有风格，入口锁定，七镜等待写。 最终刷新后重新逐张打开检查，浮层/设计等待行和页底保持正确。"
+    },
+    {
+      "path": "designing-960.png",
+      "sha256": "87162e1463149895a3c4037b02df33353651415c5957d0543735a1c2be534cc2",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1257
+      },
+      "capture_time": "2026-10-26T15:35:51.757Z",
+      "scroll_coverage": [
+        0,
+        1257
+      ],
+      "review_result": "PASS",
+      "review_note": "页头和虚线设计行说明正在调整既有风格，入口锁定，七镜等待写。"
+    },
+    {
+      "path": "inherited-1440.png",
+      "sha256": "48cf1f4f92f4666bfefa68e01d812851a91ecc64d63b3ef418e71ec00c5ebbae",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1667
+      },
+      "capture_time": "2026-10-26T15:35:52.208Z",
+      "scroll_coverage": [
+        0,
+        1667
+      ],
+      "review_result": "PASS",
+      "review_note": "全片设计显示沿用来源、短动作规矩和不用标签；无删除线。"
+    },
+    {
+      "path": "inherited-960.png",
+      "sha256": "472389ac0ef78d01332d118ee8a95d5d85dc07efd6ecd1012241688fb2b32d59",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2103
+      },
+      "capture_time": "2026-10-26T15:35:52.697Z",
+      "scroll_coverage": [
+        0,
+        2103
+      ],
+      "review_result": "PASS",
+      "review_note": "全片设计显示沿用来源、短动作规矩和不用标签；无删除线。"
+    },
+    {
+      "path": "adjusted-1440.png",
+      "sha256": "1a36d07ca1fe57b537f0b1e31618d4bf0c3898fb3ad541533e8cf78aeb049022",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1667
+      },
+      "capture_time": "2026-10-26T15:35:53.166Z",
+      "scroll_coverage": [
+        0,
+        1667
+      ],
+      "review_result": "PASS",
+      "review_note": "全片设计来源显示改过，两个标题及短标签清楚；960正常换行。"
+    },
+    {
+      "path": "adjusted-960.png",
+      "sha256": "d911ea82c7652bfb3968fa3f19b122b83068de5379badb7754c32ef803608f06",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2103
+      },
+      "capture_time": "2026-10-26T15:35:53.643Z",
+      "scroll_coverage": [
+        0,
+        2103
+      ],
+      "review_result": "PASS",
+      "review_note": "全片设计来源显示改过，两个标题及短标签清楚；960正常换行。"
+    },
+    {
+      "path": "rescript-zoom-1440.png",
+      "sha256": "5e00db7fa7c381406394a749db9e20db3ea64a374774f5662794c505da0d13d5",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2310
+      },
+      "capture_time": "2026-10-26T16:23:30.287Z",
+      "scroll_coverage": [
+        0,
+        2310
+      ],
+      "review_result": "PASS",
+      "review_note": "逐张查看最终整页图：背景表格无来源标签，第02镜放大浮层、关闭按钮和减少动态效果下的播放控件完整；无新增裁切。"
+    },
+    {
+      "path": "rescript-zoom-960.png",
+      "sha256": "e733ef90d62bd76c4fe5e2c5d30a76f9880adfbbaf307bc28f95967602d5e1ff",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2800
+      },
+      "capture_time": "2026-10-26T16:23:31.023Z",
+      "scroll_coverage": [
+        0,
+        2800
+      ],
+      "review_result": "PASS",
+      "review_note": "逐张查看最终整页图：背景表格无来源标签，第02镜放大浮层、关闭按钮和减少动态效果下的播放控件完整；无新增裁切。"
+    },
+    {
+      "path": "real-worst-rescript-1440.png",
+      "sha256": "59ca8b6e00d46390149602ad7940e6c72b8e7c47f256ff4721b95da1e37c3a16",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2334
+      },
+      "capture_time": "2026-10-26T16:23:33.557Z",
+      "scroll_coverage": [
+        0,
+        2334
+      ],
+      "review_result": "PASS",
+      "review_note": "逐张查看最终完整页图：真实旧任务七镜画面旁没有来源标签；长台词、旧风格原话两行限制、长标签省略以及页底生成条完整。"
+    },
+    {
+      "path": "rescript-1440.png",
+      "sha256": "636bf71e2a36ef813dbbc590be65a073f0cb943b473096a976cf48d3c6fe6bcf",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2310
+      },
+      "capture_time": "2026-10-26T16:56:44.481Z",
+      "scroll_coverage": [
+        0,
+        2310
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 七镜画面旁显示浅灰新占位，无来源标签；完整表格、风格和底部生成条正常。 1440 宽度六列对齐，长台词可读。"
+    },
+    {
+      "path": "rescript-960.png",
+      "sha256": "64346f69aff0fcae5a14687b131e9bc09789a113297b53af1a9cd65fe074081e",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2800
+      },
+      "capture_time": "2026-10-26T16:56:45.042Z",
+      "scroll_coverage": [
+        0,
+        2800
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 七镜画面旁显示浅灰新占位，无来源标签；完整表格、风格和底部生成条正常。 960 宽度为表内横向滚动，页面无横向溢出；风格/选项上下排。"
+    },
+    {
+      "path": "rescript-adjust-1440.png",
+      "sha256": "ee3e83d3e04f603958796d4ade29b319bc83a6337c41ef0d24404bb8ee606fc6",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2310
+      },
+      "capture_time": "2026-10-26T16:56:45.706Z",
+      "scroll_coverage": [
+        0,
+        2310
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 新占位正确，调整说明、第一步解释与生成条一致；页底完整。 1440 宽度六列对齐，长台词可读。"
+    },
+    {
+      "path": "rescript-adjust-960.png",
+      "sha256": "0c5bfa4616d3e2a916676ba35c7e444fef3c737e609719583e4c5cd05d03d0e6",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2800
+      },
+      "capture_time": "2026-10-26T16:56:46.336Z",
+      "scroll_coverage": [
+        0,
+        2800
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 新占位正确，调整说明、第一步解释与生成条一致；页底完整。 960 宽度为表内横向滚动，页面无横向溢出；风格/选项上下排。"
+    },
+    {
+      "path": "rescript-other-1440.png",
+      "sha256": "635ece077c41d3d06474ff5cae750e9d9a8c93f5260ed7a65ab437f5a9401898",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2310
+      },
+      "capture_time": "2026-10-26T16:56:47.114Z",
+      "scroll_coverage": [
+        0,
+        2310
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 新占位正确；第三张风格高亮、大预览与生成条同步，页底完整。 1440 宽度六列对齐，长台词可读。"
+    },
+    {
+      "path": "rescript-other-960.png",
+      "sha256": "6fa572307733df10ef0920560bb47446150dcef94ad424a10f5a63c6638e9237",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2800
+      },
+      "capture_time": "2026-10-26T16:56:47.881Z",
+      "scroll_coverage": [
+        0,
+        2800
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 新占位正确；第三张风格高亮、大预览与生成条同步，页底完整。 960 宽度为表内横向滚动，页面无横向溢出；风格/选项上下排。"
+    },
+    {
+      "path": "first-1440.png",
+      "sha256": "bf79f4451f9a57dac1166e30050f9b1076fcac55a6425f4bc5fd2773b36da267",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2310
+      },
+      "capture_time": "2026-10-26T16:56:48.480Z",
+      "scroll_coverage": [
+        0,
+        2310
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 七镜无图框与画面占位清晰；其他列保留破折号，风格和生成条完整。 1440 宽度六列对齐，长台词可读。"
+    },
+    {
+      "path": "first-960.png",
+      "sha256": "1af391479a2bd3e093387e566e1ae89bb7ce4c637a69fd9441656f6537340eef",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 2800
+      },
+      "capture_time": "2026-10-26T16:56:49.121Z",
+      "scroll_coverage": [
+        0,
+        2800
+      ],
+      "review_result": "PASS",
+      "review_note": "Codex personally inspected this final full-page image, including the bottom. 七镜无图框与画面占位清晰；其他列保留破折号，风格和生成条完整。 960 宽度为表内横向滚动，页面无横向溢出；风格/选项上下排。"
+    }
+  ]
+}

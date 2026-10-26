@@ -1,0 +1,24 @@
+{
+  "scope": "current ACTIVE/PENDING handoffs only; no retirement",
+  "decisions": {
+    "2026-10-19-R207-photo-edit-tools-in-repo": "旧卡验仓库内剪辑工具安装、环境诊断及候选播放；本卡验分镜回改、全片风格和首镜样张，不承接工具安装或候选验收。",
+    "2026-10-19-R210-photo-music-link-import": "旧卡验汽水及网易云导入、去重和会员失败；本卡验动画分镜及视觉风格，音乐音效列只保存，不改变导入和入库责任。",
+    "2026-10-20-R220-photo-studio-ia-preview": "旧卡验六项导航、项目分组、精选连播与决定保存和成片音乐预览；本卡只增加脚本直出分镜表与风格步骤，不承接导航、精选和原预览责任。",
+    "2026-10-20-R223-photo-music-beat-map": "旧卡验音乐标签、分面筛选、节拍与自动分析；本卡的音乐音效列只保存，不生成音乐或改变分析、试听和筛选责任。",
+    "2026-10-26-R276-photo-direct-video-opus": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+    "2026-10-26-R277-photo-shot-visual-revision": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。"
+  },
+  "protected": [
+    {
+      "target": "2026-10-26-R276-photo-direct-video-opus",
+      "decision": "rebaseline",
+      "reason": "任务单授权；三个受保护 Python 文件补合法 style、motionSummary/bannedShort，严格投影增加 visual/subtitle/camera/audio/fromDraft。门禁更新端口参数、台词/分镜表及风格请求和批准的步骤条/设计区合同；原生成配音合成、失败安全及 H-03 单镜不变性断言保留。逐处见 REPORT-A 第4节和 REPORT-F1 第6节，完成准备后重跑原机器范围并重新递交，原三项仍待验。"
+    },
+    {
+      "target": "2026-10-26-R277-photo-shot-visual-revision",
+      "decision": "rebaseline",
+      "reason": "任务单授权；test_r277_revisions.py 补合法 style 并严格容纳 visual/subtitle/camera/audio/fromDraft，保留版本、样例和隐私断言；revision_frontend_gate.mjs 接入 R278 批准步骤条和设计标题、端口与无头浏览器参数，镜详情、标记、对比、版本和日志检查保留。准备后重跑原机器范围并重新递交，原三项仍待验。"
+    }
+  ],
+  "request_criteria_unchanged": true
+}

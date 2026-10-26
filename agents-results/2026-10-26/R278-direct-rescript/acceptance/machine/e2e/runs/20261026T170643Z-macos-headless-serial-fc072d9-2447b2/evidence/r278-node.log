@@ -1,0 +1,2 @@
+PASS R278 formulas, editing, request bodies, availability and entry locks
+PASS R276 approved block composition + R277 current-projection step locks

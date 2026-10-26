@@ -1,0 +1,202 @@
+{
+  "baseline": {
+    "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+    "branch": "detached",
+    "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+    "tree": "2ef184b559dd9d8a520fdc5e320114e379f66e6b"
+  },
+  "binding_sha256": "f31fdfdaa3416177bc195303131449d239a79f82e8c83786c112d352356fba84",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "49587b3e78510400cda9e7becc8d044c112a664fe1b51790d5b4ebd46a374012",
+  "claims": [
+    {
+      "claim_key": "studio.direct-rescript",
+      "item": "H-01",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "protected_test_overlap": [
+        {
+          "decision": "rebaseline",
+          "reason": "任务单授权；三个受保护 Python 文件补合法 style、motionSummary/bannedShort，严格投影增加 visual/subtitle/camera/audio/fromDraft。门禁更新端口参数、台词/分镜表及风格请求和批准的步骤条/设计区合同；原生成配音合成、失败安全及 H-03 单镜不变性断言保留。逐处见 REPORT-A 第4节和 REPORT-F1 第6节，完成准备后重跑原机器范围并重新递交，原三项仍待验。 第二次交付另保留旧视频移除后的回调回归；合同只组合R278批准的分支文案，原断言不降级。",
+          "target": "2026-10-26-R276-photo-direct-video-opus"
+        },
+        {
+          "decision": "rebaseline",
+          "reason": "任务单授权；test_r277_revisions.py 补合法 style 并严格容纳 visual/subtitle/camera/audio/fromDraft，保留版本、样例和隐私断言；revision_frontend_gate.mjs 接入 R278 批准步骤条和设计标题、端口与无头浏览器参数，镜详情、标记、对比、版本和日志检查保留。准备后重跑原机器范围并重新递交，原三项仍待验。 第二次交付使用R277_SOURCE_STATE只读克隆，按操作后真实状态组合步骤锁合同，保留390实际视口溢出与全部标记几何检查。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision"
+        }
+      ],
+      "relations": [
+        {
+          "reason": "旧卡验仓库内剪辑工具安装、环境诊断及候选播放；本卡验分镜回改、全片风格和首镜样张，不承接工具安装或候选验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验汽水及网易云导入、去重和会员失败；本卡验动画分镜及视觉风格，音乐音效列只保存，不改变导入和入库责任。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验六项导航、项目分组、精选连播与决定保存和成片音乐预览；本卡只增加脚本直出分镜表与风格步骤，不承接导航、精选和原预览责任。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、分面筛选、节拍与自动分析；本卡的音乐音效列只保存，不生成音乐或改变分析、试听和筛选责任。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "studio.direct-style-base",
+      "item": "H-02",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验仓库内剪辑工具安装、环境诊断及候选播放；本卡验分镜回改、全片风格和首镜样张，不承接工具安装或候选验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验汽水及网易云导入、去重和会员失败；本卡验动画分镜及视觉风格，音乐音效列只保存，不改变导入和入库责任。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验六项导航、项目分组、精选连播与决定保存和成片音乐预览；本卡只增加脚本直出分镜表与风格步骤，不承接导航、精选和原预览责任。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、分面筛选、节拍与自动分析；本卡的音乐音效列只保存，不生成音乐或改变分析、试听和筛选责任。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "studio.direct-style-draft",
+      "item": "H-03",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-6546d6621b&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验仓库内剪辑工具安装、环境诊断及候选播放；本卡验分镜回改、全片风格和首镜样张，不承接工具安装或候选验收。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验汽水及网易云导入、去重和会员失败；本卡验动画分镜及视觉风格，音乐音效列只保存，不改变导入和入库责任。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验六项导航、项目分组、精选连播与决定保存和成片音乐预览；本卡只增加脚本直出分镜表与风格步骤，不承接导航、精选和原预览责任。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、分面筛选、节拍与自动分析；本卡的音乐音效列只保存，不生成音乐或改变分析、试听和筛选责任。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+  "contract_sha256": "c09cdffe9bb97c23b7526c7dce449611d0c5eada03d8db47bbfd86c3c72ac49d",
+  "contract_version": "1",
+  "estimated_minutes": 10,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "studio.direct-rescript",
+    "studio.direct-style-base",
+    "studio.direct-style-draft"
+  ],
+  "loop_name": "脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261026T170643Z-macos-headless-serial-fc072d9-61e71b/result.md",
+      "result_sha256": "6b3b9900e13cb9a8afc2ffb5aefa0218b16379a601ffc42541c325fd900302c1",
+      "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-61e71b",
+      "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+    },
+    {
+      "layer": "machine/e2e",
+      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261026T170643Z-macos-headless-serial-fc072d9-2447b2/result.md",
+      "result_sha256": "df21bab50b8cd534ac30792ff3efd6c180bd60e60893301dfd51b9c048fff290",
+      "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-2447b2",
+      "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+    }
+  ],
+  "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
+  "ready_at": "2026-10-26T17:16:07.932204Z",
+  "release_slice": "R278",
+  "request_id": "2026-10-26-R278-photo-direct-rescript",
+  "required_role": "产品负责人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+  "summary": "fc072d9上263项专项、40次合同与交互、安全检查通过；三项原文待用户验收。样张实测约3分36秒，用户接受近似时长，不代表人工PASS。",
+  "task_id": "2026-10-26-R278-photo-direct-rescript"
+}

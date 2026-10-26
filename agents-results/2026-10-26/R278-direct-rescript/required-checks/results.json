@@ -1,0 +1,111 @@
+[
+  {
+    "name": "candidates",
+    "command": [
+      "python3",
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/acceptance-handoff/scripts/candidates.py",
+      "--project-root",
+      ".",
+      "--range",
+      "origin/main..HEAD",
+      "--checklist",
+      "acceptance/human/2026-W44/\u672a-2026-10-26-R278-photo-direct-rescript/checklist.md",
+      "--claims",
+      "agents-results/2026-10-26/R278-direct-rescript/claims.json",
+      "--json"
+    ],
+    "started_at": "2026-10-26T17:10:30.880769+00:00",
+    "completed_at": "2026-10-26T17:10:31.887150+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "runtime",
+    "command": [
+      "bash",
+      "scripts/check_runtime_contract.sh"
+    ],
+    "started_at": "2026-10-26T17:10:31.887588+00:00",
+    "completed_at": "2026-10-26T17:10:32.891429+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "registry",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_music_analysis_registry.py"
+    ],
+    "started_at": "2026-10-26T17:10:32.891736+00:00",
+    "completed_at": "2026-10-26T17:10:33.897999+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "obsidian",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_obsidian_doc_sync.py"
+    ],
+    "started_at": "2026-10-26T17:10:33.898425+00:00",
+    "completed_at": "2026-10-26T17:10:34.904630+00:00",
+    "exit_code": 1
+  },
+  {
+    "name": "outline",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_outline_contract.py",
+      "."
+    ],
+    "started_at": "2026-10-26T17:10:34.904899+00:00",
+    "completed_at": "2026-10-26T17:10:35.907849+00:00",
+    "exit_code": 1
+  },
+  {
+    "name": "full-pytest",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests"
+    ],
+    "started_at": "2026-10-26T17:10:35.909084+00:00",
+    "completed_at": "2026-10-26T17:14:49.990731+00:00",
+    "exit_code": 1
+  },
+  {
+    "name": "task-help",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_content_os_task.py",
+      "--help"
+    ],
+    "started_at": "2026-10-26T17:14:49.992104+00:00",
+    "completed_at": "2026-10-26T17:14:51.000178+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "draft-help",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_jianying_draft.py",
+      "--help"
+    ],
+    "started_at": "2026-10-26T17:14:51.000505+00:00",
+    "completed_at": "2026-10-26T17:14:52.012784+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "evidence-retention",
+    "command": [
+      "python3",
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/scripts/quality/check_evidence_retention.py",
+      "--evidence-root",
+      "agents-results",
+      "--doc-root",
+      "agents-results/2026-10-26/R278-direct-rescript"
+    ],
+    "started_at": "2026-10-26T17:14:52.013104+00:00",
+    "completed_at": "2026-10-26T17:14:53.015181+00:00",
+    "exit_code": 0
+  }
+]

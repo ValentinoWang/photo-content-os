@@ -1,0 +1,39 @@
+{
+  "attempt": 2,
+  "authority": "用户2026-10-27总控第二次交付指令",
+  "verified_head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+  "prior_attempt_invalidated": [
+    "4fd1243",
+    "db54a3b",
+    "ffc8c00"
+  ],
+  "prior_logs_reused_as_new_machine_results": false,
+  "user_approved_changes": [
+    "去掉改分镜脚本当前画面旁的「这一版」",
+    "画面说明为空时写「写这一镜画什么（可不填）」"
+  ],
+  "timing": {
+    "original_initial_seconds": 215.621,
+    "original_revise_seconds": 168.813,
+    "displayed_to_user": [
+      "3分36秒",
+      "2分49秒"
+    ],
+    "user_quote": "这个没事 大概差不多就行",
+    "quote_date": "2026-10-27",
+    "criteria_text_changed": false,
+    "human_pass": false
+  },
+  "repair_report": "docs/tasks/R278-direct-rescript/REPORT-F1.md#10-去掉这一版；第11节交付前修一轮",
+  "repair_report_sha256": "60f96ad32ed9e8111a60590ab8115132d313bd2a1aa60fab2ee8faf26db99c43",
+  "restrictions": [
+    "验收物追加提交，不改写fc072d9，不推送",
+    "不改studio/scripts/tests/schemas/docs；不动运行中的8769和8765/8766/8767",
+    "浏览器无头、一次一个，门禁串行，8768；低于3GiB停止"
+  ],
+  "known_unfixed": [
+    "Obsidian时间戳同步",
+    "outline文档同步前置",
+    "全量pytest既有9失败6错误"
+  ]
+}

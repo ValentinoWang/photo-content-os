@@ -86,7 +86,7 @@ Given 已选中一镜；When 点画面块、选改法并补充说明；Then 只�
 | tests/test_r277_api.py | 913d08ffa2854a09b4034073d84885733105d6d5b5a55ff6950e1a5e7441136e | AC-01, AC-02, AC-03 |
 | tests/test_r277_boxes.py | ba9b91d7c481a2d06be284aae6d3f355ca721aec708c8fff0393ceca7d7ac93f | AC-01, AC-02, AC-03 |
 | tests/test_r277_frontend.py | b7a78eb47417d11cd4e2388285e986ff724506f7be185f29063507ba62f55d3b | AC-01, AC-02, AC-03 |
-| tests/test_r277_revisions.py | b5232e7d28a85a5dec1383d349bd3dda261a34521ee9e76497792cf67fea777c | AC-01, AC-02, AC-03 |
+| tests/test_r277_revisions.py | 13b8699cdd6b8f5d55cc95b6945fa6f5a431d86f38dbc82b9329159fd8adc7ca | AC-01, AC-02, AC-03 |
 
 ## Requirements-test traceability
 

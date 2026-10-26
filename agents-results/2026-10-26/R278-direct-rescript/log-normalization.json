@@ -1,0 +1,11 @@
+{
+  "raw_root": "~/.photo-content-os/evidence/R278-direct-rescript/handoff-2-fc072d9-raw",
+  "changes": [
+    {
+      "path": "agents-results/2026-10-26/R278-direct-rescript/required-checks/full-pytest.log",
+      "raw_sha256": "82283dd3c75503fdc26ba6b9a2f4ac861d065902973809d49b70c00379bacf7f",
+      "normalized_sha256": "c25b11c275f2b1a4a588de9230a52e6931367b4de19372e095dc19bfad8db514",
+      "transform": "line-ending whitespace only"
+    }
+  ]
+}

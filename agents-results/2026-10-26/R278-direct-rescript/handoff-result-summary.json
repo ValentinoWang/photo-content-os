@@ -1,0 +1,95 @@
+[
+  {
+    "task_id": "2026-10-26-R276-photo-direct-video-opus",
+    "workspace": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus",
+    "contract": "agents-results/2026-10-26/R276-direct-video-opus/acceptance-contract.md",
+    "source_commit": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+    "ready_at": "2026-10-26T17:16:05.333875Z",
+    "human_status": "PENDING",
+    "machine_evidence": [
+      {
+        "layer": "machine/integration-contract",
+        "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/integration-contract/runs/20261026T170642Z-macos-headless-serial-fc072d9-5c8f9f/result.md",
+        "result_sha256": "28d6b94a52d98d849c32682487240bf6eaf53be27551c161e3ce7bae03ffbefc",
+        "run_id": "20261026T170642Z-macos-headless-serial-fc072d9-5c8f9f",
+        "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      },
+      {
+        "layer": "machine/e2e",
+        "result_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance/machine/e2e/runs/20261026T170642Z-macos-headless-serial-fc072d9-5f0102/result.md",
+        "result_sha256": "693d2bc19d06bcab7eb22b27dab70cf4f4a795c14dcf22531de4bd9333fbc0ce",
+        "run_id": "20261026T170642Z-macos-headless-serial-fc072d9-5f0102",
+        "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      }
+    ],
+    "baseline": {
+      "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+      "branch": "detached",
+      "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "tree": "2ef184b559dd9d8a520fdc5e320114e379f66e6b"
+    },
+    "checklist_sha256": "06961a51136a70d478465352b16893be5f08ac99030c7b32030cc7d941232430"
+  },
+  {
+    "task_id": "2026-10-26-R277-photo-shot-visual-revision",
+    "workspace": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision",
+    "contract": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance-contract.md",
+    "source_commit": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+    "ready_at": "2026-10-26T17:16:06.556019Z",
+    "human_status": "PENDING",
+    "machine_evidence": [
+      {
+        "layer": "machine/integration-contract",
+        "result_path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance/machine/integration-contract/runs/20261026T170643Z-macos-headless-serial-fc072d9-881b7d/result.md",
+        "result_sha256": "7cabb043ff280ecdf9d82ee27abf0e7caca00b8a5306c7f8216803fd8b8992d6",
+        "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-881b7d",
+        "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      },
+      {
+        "layer": "machine/e2e",
+        "result_path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance/machine/e2e/runs/20261026T170643Z-macos-headless-serial-fc072d9-bff40c/result.md",
+        "result_sha256": "7ee7686b64c44aeb6724f3c572d3177aaebd15d0c32545e8a8849b236fc2ad74",
+        "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-bff40c",
+        "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      }
+    ],
+    "baseline": {
+      "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+      "branch": "detached",
+      "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "tree": "2ef184b559dd9d8a520fdc5e320114e379f66e6b"
+    },
+    "checklist_sha256": "5add7bb71e0e49fbb14c3d0e63baee8c12f013c1bcbc11effd00bbef79519785"
+  },
+  {
+    "task_id": "2026-10-26-R278-photo-direct-rescript",
+    "workspace": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript",
+    "contract": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+    "source_commit": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+    "ready_at": "2026-10-26T17:16:07.932204Z",
+    "human_status": "PENDING",
+    "machine_evidence": [
+      {
+        "layer": "machine/integration-contract",
+        "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261026T170643Z-macos-headless-serial-fc072d9-61e71b/result.md",
+        "result_sha256": "6b3b9900e13cb9a8afc2ffb5aefa0218b16379a601ffc42541c325fd900302c1",
+        "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-61e71b",
+        "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      },
+      {
+        "layer": "machine/e2e",
+        "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261026T170643Z-macos-headless-serial-fc072d9-2447b2/result.md",
+        "result_sha256": "df21bab50b8cd534ac30792ff3efd6c180bd60e60893301dfd51b9c048fff290",
+        "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-2447b2",
+        "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
+      }
+    ],
+    "baseline": {
+      "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+      "branch": "detached",
+      "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "tree": "2ef184b559dd9d8a520fdc5e320114e379f66e6b"
+    },
+    "checklist_sha256": "49587b3e78510400cda9e7becc8d044c112a664fe1b51790d5b4ebd46a374012"
+  }
+]

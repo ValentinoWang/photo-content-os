@@ -1,0 +1,560 @@
+{
+  "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+  "candidates": [
+    {
+      "claim_key": "studio.direct-video.generate",
+      "exact": false,
+      "expected": "先出现全片设计（底色、主色、强调色和动作规矩），然后七镜依次从「正在写」变成「写好了」，每一镜写好后出现渲染出来的关键帧；从点生成到七镜写好不超过十五分钟。",
+      "fields": {
+        "预期表现": "先出现全片设计（底色、主色、强调色和动作规矩），然后七镜依次从「正在写」变成「写好了」，每一镜写好后出现渲染出来的关键帧；从点生成到七镜写好不超过十五分钟。",
+        "验收步骤": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」，切到「一键直出」。\n  2. 粘贴七句口播稿，模型选 Opus，点「生成」。\n  3. 查看页面，直到七镜都显示「写好了」。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.6111413920704967,
+      "steps": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」，切到「一键直出」。\n  2. 粘贴七句口播稿，模型选 Opus，点「生成」。\n  3. 查看页面，直到七镜都显示「写好了」。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+      "text": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」，切到「一键直出」。\n  2. 粘贴七句口播稿，模型选 Opus，点「生成」。\n  3. 查看页面，直到七镜都显示「写好了」。\n先出现全片设计（底色、主色、强调色和动作规矩），然后七镜依次从「正在写」变成「写好了」，每一镜写好后出现渲染出来的关键帧；从点生成到七镜写好不超过十五分钟。",
+      "text_cosine": 0.22228278414099326,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus"
+    },
+    {
+      "claim_key": "studio.direct-shot-revision",
+      "exact": false,
+      "expected": "画面上有几处橙色「!」，点开能看到 Opus 说这一块哪里不对；选了改法的两根柱子在画面上出现编号 1、2，右边「要改的」有同号的两条具体要求，字数不超过 200；重写完，第 1 版和第 2 版两张画面并排，右边每条写着「做到了」或「没做到」，其他六镜的画面和写好的时间都不变。",
+      "fields": {
+        "预期表现": "画面上有几处橙色「!」，点开能看到 Opus 说这一块哪里不对；选了改法的两根柱子在画面上出现编号 1、2，右边「要改的」有同号的两条具体要求，字数不超过 200；重写完，第 1 版和第 2 版两张画面并排，右边每条写着「做到了」或「没做到」，其他六镜的画面和写好的时间都不变。",
+        "验收步骤": "1. 打开作品「断更一年，我拆了四句话」的「脚本直出」，点第 02 镜。\n  2. 点画面上「约 25%」那根柱子，点「缩小变灰」；再点「约 50%」那根柱子，点「做主角」。\n  3. 输入「底色不动」，点「重写这一镜」。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.5557202433356313,
+      "steps": "1. 打开作品「断更一年，我拆了四句话」的「脚本直出」，点第 02 镜。\n  2. 点画面上「约 25%」那根柱子，点「缩小变灰」；再点「约 50%」那根柱子，点「做主角」。\n  3. 输入「底色不动」，点「重写这一镜」。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+      "text": "1. 打开作品「断更一年，我拆了四句话」的「脚本直出」，点第 02 镜。\n  2. 点画面上「约 25%」那根柱子，点「缩小变灰」；再点「约 50%」那根柱子，点「做主角」。\n  3. 输入「底色不动」，点「重写这一镜」。\n画面上有几处橙色「!」，点开能看到 Opus 说这一块哪里不对；选了改法的两根柱子在画面上出现编号 1、2，右边「要改的」有同号的两条具体要求，字数不超过 200；重写完，第 1 版和第 2 版两张画面并排，右边每条写着「做到了」或「没做到」，其他六镜的画面和写好的时间都不变。",
+      "text_cosine": 0.11144048667126259,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision"
+    },
+    {
+      "claim_key": "studio.direct-video.single-rewrite",
+      "exact": false,
+      "expected": "只有第三镜变成「正在写」再变回「写好了」，关键帧换成新的样子；其他六镜的关键帧和写好的时间都没有变。",
+      "fields": {
+        "预期表现": "只有第三镜变成「正在写」再变回「写好了」，关键帧换成新的样子；其他六镜的关键帧和写好的时间都没有变。",
+        "验收步骤": "1. 输入第三镜的修改意见「数字再大一点」，点「让 Opus 重写这一镜」。\n  2. 查看七镜的关键帧和写好的时间。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.5447038698070575,
+      "steps": "1. 输入第三镜的修改意见「数字再大一点」，点「让 Opus 重写这一镜」。\n  2. 查看七镜的关键帧和写好的时间。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+      "text": "1. 输入第三镜的修改意见「数字再大一点」，点「让 Opus 重写这一镜」。\n  2. 查看七镜的关键帧和写好的时间。\n只有第三镜变成「正在写」再变回「写好了」，关键帧换成新的样子；其他六镜的关键帧和写好的时间都没有变。",
+      "text_cosine": 0.08940773961411509,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus"
+    },
+    {
+      "claim_key": "studio.direct-video.compose",
+      "exact": false,
+      "expected": "页面里出现一条竖屏成片，能从头放到尾，画面跟着口播一镜一镜换，声音和画面对得上；成片下方写着时长和七镜，时长和配音一样长。",
+      "fields": {
+        "预期表现": "页面里出现一条竖屏成片，能从头放到尾，画面跟着口播一镜一镜换，声音和画面对得上；成片下方写着时长和七镜，时长和配音一样长。",
+        "验收步骤": "1. 上传这条口播的配音文件，点「合成成片」。\n  2. 点成片的播放按钮，从头看到尾。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.5368747265573554,
+      "steps": "1. 上传这条口播的配音文件，点「合成成片」。\n  2. 点成片的播放按钮，从头看到尾。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+      "text": "1. 上传这条口播的配音文件，点「合成成片」。\n  2. 点成片的播放按钮，从头看到尾。\n页面里出现一条竖屏成片，能从头放到尾，画面跟着口播一镜一镜换，声音和画面对得上；成片下方写着时长和七镜，时长和配音一样长。",
+      "text_cosine": 0.07374945311471061,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus"
+    },
+    {
+      "claim_key": "studio.direct-revision-log",
+      "exact": false,
+      "expected": "每种问题写着改过几次、出在哪几镜；到 3 次的那一行写着「建议写进规则」并附上起草好的规则修改，没点「采用」之前规则不变。",
+      "fields": {
+        "预期表现": "每种问题写着改过几次、出在哪几镜；到 3 次的那一行写着「建议写进规则」并附上起草好的规则修改，没点「采用」之前规则不变。",
+        "验收步骤": "1. 打开「画面问题记录」。\n  2. 查看「主次不清」那一行。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.5227400953716752,
+      "steps": "1. 打开「画面问题记录」。\n  2. 查看「主次不清」那一行。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+      "text": "1. 打开「画面问题记录」。\n  2. 查看「主次不清」那一行。\n每种问题写着改过几次、出在哪几镜；到 3 次的那一行写着「建议写进规则」并附上起草好的规则修改，没点「采用」之前规则不变。",
+      "text_cosine": 0.04548019074335039,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision"
+    },
+    {
+      "claim_key": "studio.direct-shot-versions-sample",
+      "exact": false,
+      "expected": "第 02 镜的画面回到重写前的样子，标题下写着「用第 1 版 · 共 2 版」；第 01 镜显示「已存为样例」。",
+      "fields": {
+        "预期表现": "第 02 镜的画面回到重写前的样子，标题下写着「用第 1 版 · 共 2 版」；第 01 镜显示「已存为样例」。",
+        "验收步骤": "1. 点「退回第 1 版」。\n  2. 点第 01 镜，点「这镜好」。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.5183902389524102,
+      "steps": "1. 点「退回第 1 版」。\n  2. 点第 01 镜，点「这镜好」。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+      "text": "1. 点「退回第 1 版」。\n  2. 点第 01 镜，点「这镜好」。\n第 02 镜的画面回到重写前的样子，标题下写着「用第 1 版 · 共 2 版」；第 01 镜显示「已存为样例」。",
+      "text_cosine": 0.03678047790482045,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision"
+    },
+    {
+      "claim_key": "music.ai-tags-beat-map",
+      "exact": false,
+      "expected": "列表里每首歌名下面有 2～3 个标签（例如「电子」「夏日」「有人声」）；右侧「AI 标注」区分风格、情绪、场景、人声、乐器五行；波形下面有一条分成几段的色带，再往下是每拍一根短柱的拍子区，每小节开头有小节号；「速度」一行显示一个 BPM 数字，不再出现「还没分析」；页面上没有「授权」列，也没有「平台版权曲」「来源不明」字样。",
+      "fields": {
+        "预期表现": "列表里每首歌名下面有 2～3 个标签（例如「电子」「夏日」「有人声」）；右侧「AI 标注」区分风格、情绪、场景、人声、乐器五行；波形下面有一条分成几段的色带，再往下是每拍一根短柱的拍子区，每小节开头有小节号；「速度」一行显示一个 BPM 数字，不再出现「还没分析」；页面上没有「授权」列，也没有「平台版权曲」「来源不明」字样。",
+        "验收步骤": "1. 打开 Studio 的音乐库。\n  2. 点「Turn Back Time」这一行。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.3937669548293339,
+      "steps": "1. 打开 Studio 的音乐库。\n  2. 点「Turn Back Time」这一行。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+      "text": "1. 打开 Studio 的音乐库。\n  2. 点「Turn Back Time」这一行。\n列表里每首歌名下面有 2～3 个标签（例如「电子」「夏日」「有人声」）；右侧「AI 标注」区分风格、情绪、场景、人声、乐器五行；波形下面有一条分成几段的色带，再往下是每拍一根短柱的拍子区，每小节开头有小节号；「速度」一行显示一个 BPM 数字，不再出现「还没分析」；页面上没有「授权」列，也没有「平台版权曲」「来源不明」字样。",
+      "text_cosine": 0.03753390965866773,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "claim_key": "studio.outputs-music-playback",
+      "exact": false,
+      "expected": "已出的成片能直接播放；音乐能试听，写着来源平台。",
+      "fields": {
+        "预期表现": "已出的成片能直接播放；音乐能试听，写着来源平台。",
+        "验收步骤": "1. 进入项目，点击作品卡片上的「看成片」。\n  2. 进入音乐库，点击一首歌的播放。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.38935718266485003,
+      "steps": "1. 进入项目，点击作品卡片上的「看成片」。\n  2. 进入音乐库，点击一首歌的播放。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R220-photo-studio-ia-preview/H-03",
+      "text": "1. 进入项目，点击作品卡片上的「看成片」。\n  2. 进入音乐库，点击一首歌的播放。\n已出的成片能直接播放；音乐能试听，写着来源平台。",
+      "text_cosine": 0.02871436532970003,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview"
+    },
+    {
+      "claim_key": "music.beat-playback",
+      "exact": false,
+      "expected": "播放线扫过短柱时那一拍变白，和听到的鼓点对得上；播放按钮右边显示当前第几小节和所在段落（安静、推进或高潮）。",
+      "fields": {
+        "预期表现": "播放线扫过短柱时那一拍变白，和听到的鼓点对得上；播放按钮右边显示当前第几小节和所在段落（安静、推进或高潮）。",
+        "验收步骤": "1. 点右侧的播放按钮。\n  2. 点色带的开头、中间、结尾，各听 10 秒。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.3870890916649929,
+      "steps": "1. 点右侧的播放按钮。\n  2. 点色带的开头、中间、结尾，各听 10 秒。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+      "text": "1. 点右侧的播放按钮。\n  2. 点色带的开头、中间、结尾，各听 10 秒。\n播放线扫过短柱时那一拍变白，和听到的鼓点对得上；播放按钮右边显示当前第几小节和所在段落（安静、推进或高潮）。",
+      "text_cosine": 0.024178183329985736,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "claim_key": "studio.shot-review-playback",
+      "exact": false,
+      "expected": "精选按顺序连着播放；改过的镜头刷新后仍是「可用」，精选数量少一个。",
+      "fields": {
+        "预期表现": "精选按顺序连着播放；改过的镜头刷新后仍是「可用」，精选数量少一个。",
+        "验收步骤": "1. 进入项目，点开「2026年重回兰州大学」里的「奔赴与校运会」。\n  2. 点击播放器的播放，看完几个镜头；把其中一个改成「可用」，刷新页面。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.38537802182192343,
+      "steps": "1. 进入项目，点开「2026年重回兰州大学」里的「奔赴与校运会」。\n  2. 点击播放器的播放，看完几个镜头；把其中一个改成「可用」，刷新页面。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R220-photo-studio-ia-preview/H-02",
+      "text": "1. 进入项目，点开「2026年重回兰州大学」里的「奔赴与校运会」。\n  2. 点击播放器的播放，看完几个镜头；把其中一个改成「可用」，刷新页面。\n精选按顺序连着播放；改过的镜头刷新后仍是「可用」，精选数量少一个。",
+      "text_cosine": 0.020756043643846846,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview"
+    },
+    {
+      "claim_key": "studio.navigation-settings",
+      "exact": false,
+      "expected": "每一项都打开对应页面且有内容或明确的空状态；上游账号、安装向导、网页中台都能在设置与诊断里找到。",
+      "fields": {
+        "预期表现": "每一项都打开对应页面且有内容或明确的空状态；上游账号、安装向导、网页中台都能在设置与诊断里找到。",
+        "验收步骤": "1. 打开 Photo Studio，依次点击侧栏六项。\n  2. 进入设置与诊断，查看上游账号和安装向导。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.3843846146215196,
+      "steps": "1. 打开 Photo Studio，依次点击侧栏六项。\n  2. 进入设置与诊断，查看上游账号和安装向导。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R220-photo-studio-ia-preview/H-01",
+      "text": "1. 打开 Photo Studio，依次点击侧栏六项。\n  2. 进入设置与诊断，查看上游账号和安装向导。\n每一项都打开对应页面且有内容或明确的空状态；上游账号、安装向导、网页中台都能在设置与诊断里找到。",
+      "text_cosine": 0.018769229243039205,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview"
+    },
+    {
+      "claim_key": "music.auto-analysis-facets",
+      "exact": false,
+      "expected": "新导入的歌先显示「分析中」，过一会儿不刷新页面就出现 BPM 数字和标签；点「夏日」后列表只剩标了「夏日」的歌，数量和「夏日」后面的数字一样。",
+      "fields": {
+        "预期表现": "新导入的歌先显示「分析中」，过一会儿不刷新页面就出现 BPM 数字和标签；点「夏日」后列表只剩标了「夏日」的歌，数量和「夏日」后面的数字一样。",
+        "验收步骤": "1. 点右上角「从文件夹导入」，导入一首库里没有的歌。\n  2. 查看列表里这首歌，不刷新页面。\n  3. 点标签筛选里的「夏日」。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.38272710950106503,
+      "steps": "1. 点右上角「从文件夹导入」，导入一首库里没有的歌。\n  2. 查看列表里这首歌，不刷新页面。\n  3. 点标签筛选里的「夏日」。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+      "text": "1. 点右上角「从文件夹导入」，导入一首库里没有的歌。\n  2. 查看列表里这首歌，不刷新页面。\n  3. 点标签筛选里的「夏日」。\n新导入的歌先显示「分析中」，过一会儿不刷新页面就出现 BPM 数字和标签；点「夏日」后列表只剩标了「夏日」的歌，数量和「夏日」后面的数字一样。",
+      "text_cosine": 0.015454219002130112,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "claim_key": "music.duplicate-import",
+      "exact": false,
+      "expected": "提示这首已在库里，没有重复的一条，也没有重新下载。",
+      "fields": {
+        "预期表现": "提示这首已在库里，没有重复的一条，也没有重新下载。",
+        "验收步骤": "1. 粘贴刚才任意一首的链接，再导入一次。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.3812402274807375,
+      "steps": "1. 粘贴刚才任意一首的链接，再导入一次。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-19-R210-photo-music-link-import/H-02",
+      "text": "1. 粘贴刚才任意一首的链接，再导入一次。\n提示这首已在库里，没有重复的一条，也没有重新下载。",
+      "text_cosine": 0.012480454961475021,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import"
+    },
+    {
+      "claim_key": "music.link-import",
+      "exact": false,
+      "expected": "两首都出现在音乐库里，每首能播放，并写着歌名、歌手和来源平台。",
+      "fields": {
+        "预期表现": "两首都出现在音乐库里，每首能播放，并写着歌名、歌手和来源平台。",
+        "验收步骤": "1. 复制汽水音乐、网易云音乐各一首歌的分享链接。\n  2. 粘贴到音乐导入里，逐个导入。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.3806833048390342,
+      "steps": "1. 复制汽水音乐、网易云音乐各一首歌的分享链接。\n  2. 粘贴到音乐导入里，逐个导入。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-19-R210-photo-music-link-import/H-01",
+      "text": "1. 复制汽水音乐、网易云音乐各一首歌的分享链接。\n  2. 粘贴到音乐导入里，逐个导入。\n两首都出现在音乐库里，每首能播放，并写着歌名、歌手和来源平台。",
+      "text_cosine": 0.011366609678068363,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import"
+    },
+    {
+      "claim_key": "music.membership-boundary",
+      "exact": false,
+      "expected": "明确提示这首要会员才能下载，并建议去汽水音乐找同名歌；音乐库里没有多出残缺的一条。",
+      "fields": {
+        "预期表现": "明确提示这首要会员才能下载，并建议去汽水音乐找同名歌；音乐库里没有多出残缺的一条。",
+        "验收步骤": "1. 粘贴任意一首网易云会员歌曲的链接导入。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.3780091913092177,
+      "steps": "1. 粘贴任意一首网易云会员歌曲的链接导入。",
+      "surface_jaccard": 0.75,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-19-R210-photo-music-link-import/H-03",
+      "text": "1. 粘贴任意一首网易云会员歌曲的链接导入。\n明确提示这首要会员才能下载，并建议去汽水音乐找同名歌；音乐库里没有多出残缺的一条。",
+      "text_cosine": 0.0060183826184353004,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import"
+    },
+    {
+      "claim_key": "photo.edit-tools.openchatcut-candidate",
+      "exact": false,
+      "expected": "用 OpenChatCut 生成出能播放的候选视频。",
+      "fields": {
+        "预期表现": "用 OpenChatCut 生成出能播放的候选视频。",
+        "验收步骤": "1. 打开 Photo Studio，进入一个分镜已确认的项目。\n  2. 点击生成剪辑候选。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.2581746135632086,
+      "steps": "1. 打开 Photo Studio，进入一个分镜已确认的项目。\n  2. 点击生成剪辑候选。",
+      "surface_jaccard": 0.4444444444444444,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.edit-backends",
+        "photo.project-tools",
+        "photo.tests-scripts"
+      ],
+      "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+      "text": "1. 打开 Photo Studio，进入一个分镜已确认的项目。\n  2. 点击生成剪辑候选。\n用 OpenChatCut 生成出能播放的候选视频。",
+      "text_cosine": 0.07190478268197274,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo"
+    },
+    {
+      "claim_key": "photo.edit-tools.installation",
+      "exact": false,
+      "expected": "环境检查的剪辑工具一栏列出 OpenChatCut、OpenFilm 和各自版本，位置都在 Photo 软件文件夹里面，没有一处指向桌面的开源工具文件夹或自媒体创作 Agent 仓库。",
+      "fields": {
+        "预期表现": "环境检查的剪辑工具一栏列出 OpenChatCut、OpenFilm 和各自版本，位置都在 Photo 软件文件夹里面，没有一处指向桌面的开源工具文件夹或自媒体创作 Agent 仓库。",
+        "验收步骤": "1. 打开终端，进入 Photo 软件所在的文件夹。\n  2. 输入 README 里写的剪辑工具安装命令，再输入环境检查命令。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.23079027822043632,
+      "steps": "1. 打开终端，进入 Photo 软件所在的文件夹。\n  2. 输入 README 里写的剪辑工具安装命令，再输入环境检查命令。",
+      "surface_jaccard": 0.4444444444444444,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.edit-backends",
+        "photo.project-tools",
+        "photo.tests-scripts"
+      ],
+      "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+      "text": "1. 打开终端，进入 Photo 软件所在的文件夹。\n  2. 输入 README 里写的剪辑工具安装命令，再输入环境检查命令。\n环境检查的剪辑工具一栏列出 OpenChatCut、OpenFilm 和各自版本，位置都在 Photo 软件文件夹里面，没有一处指向桌面的开源工具文件夹或自媒体创作 Agent 仓库。",
+      "text_cosine": 0.017136111996428227,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo"
+    }
+  ],
+  "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+  "paths": [
+    "acceptance/requests/2026-W44/2026-10-26-R278-photo-direct-rescript/request.json",
+    "acceptance/requests/2026-W44/2026-10-26-R278-photo-direct-rescript/request.md",
+    "docs/tasks/R278-direct-rescript/FRONTEND-TASK.md",
+    "docs/tasks/R278-direct-rescript/REPORT-A.md",
+    "docs/tasks/R278-direct-rescript/REPORT-F1.md",
+    "docs/tasks/R278-direct-rescript/TASK.md",
+    "docs/tasks/R278-direct-rescript/design/contract.json",
+    "docs/tasks/R278-direct-rescript/design/css/direct-shot-detail.css",
+    "docs/tasks/R278-direct-rescript/design/css/direct.css",
+    "docs/tasks/R278-direct-rescript/design/css/review.css",
+    "docs/tasks/R278-direct-rescript/design/css/styles.css",
+    "docs/tasks/R278-direct-rescript/design/css/workflow.css",
+    "docs/tasks/R278-direct-rescript/design/draft.css",
+    "docs/tasks/R278-direct-rescript/design/draft.js",
+    "docs/tasks/R278-direct-rescript/design/index.html",
+    "docs/tasks/R278-direct-rescript/design/lib-data.js",
+    "docs/tasks/R278-direct-rescript/design/spec.html",
+    "evidence/2026-10-26/R278-direct-rescript/expanded-first.log",
+    "evidence/2026-10-26/R278-direct-rescript/green-first.log",
+    "evidence/2026-10-26/R278-direct-rescript/live-result.json",
+    "evidence/2026-10-26/R278-direct-rescript/live.log",
+    "evidence/2026-10-26/R278-direct-rescript/live_sample.py",
+    "evidence/2026-10-26/R278-direct-rescript/media-verification.json",
+    "evidence/2026-10-26/R278-direct-rescript/red-clips.log",
+    "evidence/2026-10-26/R278-direct-rescript/red-legacy-title.log",
+    "evidence/2026-10-26/R278-direct-rescript/red-style.log",
+    "evidence/2026-10-26/R278-direct-rescript/repository-safety.log",
+    "evidence/2026-10-26/R278-direct-rescript/targeted-final.log",
+    "evidence/2026-10-26/R278-direct-rescript/targeted-first.log",
+    "evidence/2026-10-26/R278-direct-rescript/untracked-safety.json",
+    "evidence/2026-10-26/R278-direct-rescript/verification-summary.json",
+    "schemas/studio-openapi.json",
+    "scripts/direct_video/frontend_gate.mjs",
+    "scripts/direct_video/generate.py",
+    "scripts/direct_video/media.py",
+    "scripts/direct_video/rescript_frontend_gate.mjs",
+    "scripts/direct_video/revision_frontend_gate.mjs",
+    "scripts/direct_video/revisions.py",
+    "scripts/direct_video/styles.py",
+    "studio/api_contract.py",
+    "studio/direct_style_contract.py",
+    "studio/direct_video.py",
+    "studio/server.py",
+    "studio/static/direct-rescript.css",
+    "studio/static/direct-storyboard.js",
+    "studio/static/direct-style.js",
+    "studio/static/direct-view.js",
+    "studio/static/direct.css",
+    "studio/static/index.html",
+    "tests/fixtures/r278-direct/adjusted.json",
+    "tests/fixtures/r278-direct/composing.json",
+    "tests/fixtures/r278-direct/designing.json",
+    "tests/fixtures/r278-direct/entry.json",
+    "tests/fixtures/r278-direct/first-empty.json",
+    "tests/fixtures/r278-direct/first-new-accepted.json",
+    "tests/fixtures/r278-direct/first-new-drafting.json",
+    "tests/fixtures/r278-direct/first-new-failed.json",
+    "tests/fixtures/r278-direct/first-new-ready.json",
+    "tests/fixtures/r278-direct/first-new-revising.json",
+    "tests/fixtures/r278-direct/first-new-text.json",
+    "tests/fixtures/r278-direct/first-new.json",
+    "tests/fixtures/r278-direct/first-none-r278.json",
+    "tests/fixtures/r278-direct/first.json",
+    "tests/fixtures/r278-direct/inherited.json",
+    "tests/fixtures/r278-direct/rescript-adjust.json",
+    "tests/fixtures/r278-direct/rescript-other.json",
+    "tests/fixtures/r278-direct/rescript-zoom.json",
+    "tests/fixtures/r278-direct/rescript.json",
+    "tests/fixtures/r278-direct/writing.json",
+    "tests/test_r276_direct_api.py",
+    "tests/test_r276_direct_c.py",
+    "tests/test_r276_direct_video.py",
+    "tests/test_r277_revisions.py",
+    "tests/test_r278_clips.py",
+    "tests/test_r278_direct_frontend.py",
+    "tests/test_r278_direct_rescript.mjs",
+    "tests/test_r278_style_base.py"
+  ],
+  "range_head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+  "surfaces": [
+    "acceptance.artifacts",
+    "acceptance.evidence",
+    "photo.documentation",
+    "photo.tests-scripts",
+    "photo.video-pipeline",
+    "studio.backend",
+    "studio.frontend"
+  ],
+  "thresholds": {
+    "duplicate": 0.75,
+    "possible": 0.35
+  },
+  "undeclared_legacy": [
+    "2026-10-26-R278-photo-direct-rescript"
+  ],
+  "unmapped": []
+}

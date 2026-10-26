@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-10-26T03:41:10.522621Z
-- 来源事实 SHA-256：af9bf614e047599bd9082b74369b367f34b36fde5bd90e7856fa03545a35849e
+- 事实时间：2026-10-26T17:16:07.932204Z
+- 来源事实 SHA-256：2bdde986eee564e9ea023b953b1def25b10e68b84b917b0f892aefe0828f797f
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -12,8 +12,9 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| 2026-10-26T03:41:10.522621Z | 2026-10-26-R277-photo-shot-visual-revision | 脚本直出里改一镜的画面：在画面上点着改、看两版对比、攒好样例，让画面规则越用越准 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision/checklist.md | - | - |
-| 2026-10-26T03:41:09.533714Z | 2026-10-26-R276-photo-direct-video-opus | Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/checklist.md | - | - |
+| 2026-10-26T17:16:07.932204Z | 2026-10-26-R278-photo-direct-rescript | 脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md | - | - |
+| 2026-10-26T17:16:06.556019Z | 2026-10-26-R277-photo-shot-visual-revision | 脚本直出里改一镜的画面：在画面上点着改、看两版对比、攒好样例，让画面规则越用越准 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision/checklist.md | - | - |
+| 2026-10-26T17:16:05.333875Z | 2026-10-26-R276-photo-direct-video-opus | Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/checklist.md | - | - |
 | 2026-10-20T21:08:20.633838Z | 2026-10-20-R223-photo-music-beat-map | 音乐库：AI 给每首歌打标签，并显示节拍图 | 产品负责人 | 6 | acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/checklist.md | - | - |
 | 2026-10-20T21:08:19.490324Z | 2026-10-20-R220-photo-studio-ia-preview | Studio 导航、镜头过目和媒体预览 | 产品负责人 | 8 | acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/checklist.md | - | - |
 | 2026-10-20T21:08:17.642017Z | 2026-10-19-R210-photo-music-link-import | 汽水音乐、网易云音乐链接导入并入库 | 产品负责人 | 3 | acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md | - | - |

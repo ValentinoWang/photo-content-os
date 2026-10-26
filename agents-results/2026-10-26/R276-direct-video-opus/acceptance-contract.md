@@ -83,10 +83,10 @@ H-01 从生成到七镜写好不超过十五分钟；B2 实跑 495.902 秒，F2 
 
 | Path | SHA-256 | Covers |
 | --- | --- | --- |
-| tests/test_r276_direct_video.py | 95dd1530a9573600e502c4fae680befb6dbcbc96c3c3c29bf2a21568ac74011a | AC-01, AC-02, AC-03 |
-| tests/test_r276_direct_api.py | 94b03c8a331ed3342e395800d34e6fac579c5672898af660eeca16db2f37154a | AC-01, AC-02 |
+| tests/test_r276_direct_video.py | c932e418ed2362b44e50514c689b9e6a6b7b9b1569fea31e06f8b385764a3e69 | AC-01, AC-02, AC-03 |
+| tests/test_r276_direct_api.py | 875dbb95f91f9d464055e21de8b17d45f504a90a133c99eb87c8374b0ecb6b72 | AC-01, AC-02 |
 | tests/test_r276_direct_media.py | d74658695d78ebc24f9869c88adb938c510517129d4ba655322115bad5eaec9e | AC-01, AC-02 |
-| tests/test_r276_direct_c.py | 88fdd5e2a0f05e2459d527ce23984fe1fc6366f06de3aa48fcc095cbcd1b1d90 | AC-01, AC-02 |
+| tests/test_r276_direct_c.py | 85f8665a1a972174bcaab842caba43109dd82d5cb1c36c66fd300f21f0d4cb9c | AC-01, AC-02 |
 | tests/test_r276_direct_d.py | fe7b1505535e7636404ba68d505358e7797d055e5d8ba2c4866afb4e4f39bed7 | AC-01, AC-02 |
 
 ## Requirements-test traceability

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "check-contract-R276-direct-video-opus",
+    "exit_code": 0
+  },
+  {
+    "name": "handoff-R276-direct-video-opus",
+    "exit_code": 0
+  },
+  {
+    "name": "check-contract-R277-shot-visual-revision",
+    "exit_code": 0
+  },
+  {
+    "name": "handoff-R277-shot-visual-revision",
+    "exit_code": 0
+  },
+  {
+    "name": "check-contract-R278-direct-rescript",
+    "exit_code": 0
+  },
+  {
+    "name": "handoff-R278-direct-rescript",
+    "exit_code": 0
+  },
+  {
+    "name": "index-R276-direct-video-opus",
+    "exit_code": 0
+  },
+  {
+    "name": "index-R277-shot-visual-revision",
+    "exit_code": 0
+  },
+  {
+    "name": "index-R278-direct-rescript",
+    "exit_code": 0
+  },
+  {
+    "name": "log-generation",
+    "exit_code": 0
+  },
+  {
+    "name": "check-project",
+    "exit_code": 0
+  },
+  {
+    "name": "deep-check-R276-direct-video-opus",
+    "exit_code": 1
+  },
+  {
+    "name": "deep-check-R277-shot-visual-revision",
+    "exit_code": 1
+  },
+  {
+    "name": "deep-check-R278-direct-rescript",
+    "exit_code": 1
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-10-26-R278-photo-direct-rescript",
+  "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+  "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+  "range_head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+  "reason": "用户2026-10-27第二次交付明确授权：R278必需风格及分镜四列使revisions保护测试需补合法style并严格容纳五个投影字段；保留单镜选块、版本、样例及规则草稿原责任。完整机器范围在fc072d9准备后重跑，人工三项保持PENDING。",
+  "prepared_at": "2026-10-26T17:05:48.902616Z",
+  "previous_ready_at": "2026-10-26T03:41:10.522621Z",
+  "previous_binding_sha256": "3f8e9079377d0f7d6f48c87d7f5a18d58696311fe795eecbf61b67e23d2022f5",
+  "checklist_sha256": "5add7bb71e0e49fbb14c3d0e63baee8c12f013c1bcbc11effd00bbef79519785",
+  "tests": [
+    {
+      "path": "tests/test_r277_revisions.py",
+      "old_sha256": "b5232e7d28a85a5dec1383d349bd3dda261a34521ee9e76497792cf67fea777c",
+      "new_sha256": "13b8699cdd6b8f5d55cc95b6945fa6f5a431d86f38dbc82b9329159fd8adc7ca"
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "baseline": {
-    "base": "4c1fc220b32a1cd67a30adb323affca8724b47e1",
+    "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
     "branch": "detached",
-    "head": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
-    "tree": "363864e01b731310a35f698fda7e8b21aa488f5f"
+    "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+    "tree": "2ef184b559dd9d8a520fdc5e320114e379f66e6b"
   },
-  "binding_sha256": "3f8e9079377d0f7d6f48c87d7f5a18d58696311fe795eecbf61b67e23d2022f5",
+  "binding_sha256": "41d86627b2def39f4b13c49caf6059d410a608f32bb367b87628901d7005e23c",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
@@ -15,13 +15,6 @@
       "claim_key": "studio.direct-shot-revision",
       "item": "H-01",
       "open_route": "note:Studio 作品「断更一年」的脚本直出页，点第 02 镜",
-      "protected_test_overlap": [
-        {
-          "decision": "rebaseline",
-          "reason": "经 R276 总控同意及第二段任务授权：R277 单镜投影增加 currentVersion、versions、boxes、look、sample 五个字段，test_busy_job_and_projection 严格相等字段集合随之扩大；其余四个保护文件不变，原 H-01 至 H-03 语义不变，H-03 仍由 test_rewrite_only_one_shot_and_invalidate_output 与 R276 REPORT-B 真跑证明。详情按钮由「让 Opus 重写这一镜」改为「重写这一镜」，原卡不改，由 R276 总控告知用户对应关系。 非保护测试重叠另有：tests/test_r276_direct_frontend.mjs 与 scripts/direct_video/frontend_gate.mjs 改到 R277 详情元素，按钮用「重写这一镜」，合同比对跳过 DV-DETAIL；tests/fixtures/r276-direct/approved-extras.json 的13个状态增加「画面问题记录」。",
-          "target": "2026-10-26-R276-photo-direct-video-opus"
-        }
-      ],
       "relations": [
         {
           "reason": "旧卡验工具在仓库内安装、诊断和剪辑候选；本卡验脚本直出单镜选块修改、版本、样例和规则草稿，不承接工具安装与候选验收。",
@@ -46,6 +39,11 @@
         {
           "reason": "旧卡验生成、配音、合成及单镜重写不影响其余镜；本卡验同一页面选中一镜后的热区详情、两版核对、样例和画面问题记录，不承接生成与合成。旧 H-03 仍由后端单镜不变性测试和 REPORT-B 真跑证明。",
           "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
           "type": "independent"
         }
       ],
@@ -88,6 +86,11 @@
           "reason": "旧卡验生成、配音、合成及单镜重写不影响其余镜；本卡验同一页面选中一镜后的热区详情、两版核对、样例和画面问题记录，不承接生成与合成。旧 H-03 仍由后端单镜不变性测试和 REPORT-B 真跑证明。",
           "target": "2026-10-26-R276-photo-direct-video-opus",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
         }
       ],
       "surfaces": [
@@ -129,6 +132,11 @@
           "reason": "旧卡验生成、配音、合成及单镜重写不影响其余镜；本卡验同一页面选中一镜后的热区详情、两版核对、样例和画面问题记录，不承接生成与合成。旧 H-03 仍由后端单镜不变性测试和 REPORT-B 真跑证明。",
           "target": "2026-10-26-R276-photo-direct-video-opus",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
         }
       ],
       "surfaces": [
@@ -143,7 +151,7 @@
     }
   ],
   "contract_path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance-contract.md",
-  "contract_sha256": "f5998674c6e484665967242c509ffe4ce97d5df71832007292c9065655f6938d",
+  "contract_sha256": "8646e9ada223ec50d5af77c0e6fd3f8d7762c46bdc639849cedb02e0efce9b3d",
   "contract_version": "1",
   "estimated_minutes": 10,
   "execution_policy": "terminal-after-machine-green",
@@ -156,27 +164,48 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance/machine/integration-contract/runs/20261026T033228Z-macos-isolated-277-84b7f7/result.md",
-      "result_sha256": "d2caec16f7f36d9f4871f7b972d2ad9a1011ad7fe75a9c8f44832b944bb7339e",
-      "run_id": "20261026T033228Z-macos-isolated-277-84b7f7",
-      "source_identity": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b"
+      "result_path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance/machine/integration-contract/runs/20261026T170643Z-macos-headless-serial-fc072d9-881b7d/result.md",
+      "result_sha256": "7cabb043ff280ecdf9d82ee27abf0e7caca00b8a5306c7f8216803fd8b8992d6",
+      "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-881b7d",
+      "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
     },
     {
       "layer": "machine/e2e",
-      "result_path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance/machine/e2e/runs/20261026T033228Z-macos-chrome-277-6a9ecc/result.md",
-      "result_sha256": "f4d9a9d9eed356fede590e8028862cf7d925cd6ebf752968e3267ae11d0db15d",
-      "run_id": "20261026T033228Z-macos-chrome-277-6a9ecc",
-      "source_identity": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b"
+      "result_path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance/machine/e2e/runs/20261026T170643Z-macos-headless-serial-fc072d9-bff40c/result.md",
+      "result_sha256": "7ee7686b64c44aeb6724f3c572d3177aaebd15d0c32545e8a8849b236fc2ad74",
+      "run_id": "20261026T170643Z-macos-headless-serial-fc072d9-bff40c",
+      "source_identity": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a"
     }
   ],
   "open_route": null,
-  "ready_at": "2026-10-26T03:41:10.522621Z",
+  "protected_test_rebaselines": [
+    {
+      "base": "107b56eb0ab66881d706e8bdecae30f945619da2",
+      "checklist_sha256": "5add7bb71e0e49fbb14c3d0e63baee8c12f013c1bcbc11effd00bbef79519785",
+      "head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "phase": "completed",
+      "prepared_at": "2026-10-26T17:05:48.902616Z",
+      "previous_binding_sha256": "3f8e9079377d0f7d6f48c87d7f5a18d58696311fe795eecbf61b67e23d2022f5",
+      "previous_ready_at": "2026-10-26T03:41:10.522621Z",
+      "range_head": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+      "reason": "用户2026-10-27第二次交付明确授权：R278必需风格及分镜四列使revisions保护测试需补合法style并严格容纳五个投影字段；保留单镜选块、版本、样例及规则草稿原责任。完整机器范围在fc072d9准备后重跑，人工三项保持PENDING。",
+      "tests": [
+        {
+          "new_sha256": "13b8699cdd6b8f5d55cc95b6945fa6f5a431d86f38dbc82b9329159fd8adc7ca",
+          "old_sha256": "b5232e7d28a85a5dec1383d349bd3dda261a34521ee9e76497792cf67fea777c",
+          "path": "tests/test_r277_revisions.py"
+        }
+      ],
+      "trigger_card": "2026-10-26-R278-photo-direct-rescript"
+    }
+  ],
+  "ready_at": "2026-10-26T17:16:06.556019Z",
   "release_slice": "R277",
   "request_id": "2026-10-26-R277-photo-shot-visual-revision",
   "required_role": "产品负责人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "277cd1c6ca730f77bd653a31a8b7ca22ea90277b",
-  "summary": "277cd1c 上204项专项、42次合同与交互验证通过；三项原文待用户验收，真实画面措辞差异见合同。",
+  "source_commit": "fc072d9694a6c807f2eafd4a4104c8e803d89b2a",
+  "summary": "fc072d9上原合同完整机器范围重新验证通过并重定受保护基准；原三项保持PENDING，未代签人工通过。",
   "task_id": "2026-10-26-R277-photo-shot-visual-revision"
 }

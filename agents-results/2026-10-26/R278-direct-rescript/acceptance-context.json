@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "r278-studio-context",
+  "authority": [
+    "acceptance/requests/2026-W44/2026-10-26-R278-photo-direct-rescript/request.json",
+    "docs/tasks/R278-direct-rescript/TASK.md",
+    "docs/tasks/R278-direct-rescript/design/contract.json"
+  ],
+  "inherited_context": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance-context.json",
+  "product": {
+    "purpose": "本机创作者修改分镜并重生成，先选定全片风格或用首镜样张定风格",
+    "privacy": "媒体和状态留在本机，样张不入仓库"
+  },
+  "role": {
+    "id": "local-creator",
+    "label": "本机创作者",
+    "scope": "本机作品与脚本直出"
+  },
+  "screen_contract": {
+    "route": "/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "states_ref": "docs/tasks/R278-direct-rescript/design/contract.json",
+    "interaction_requirements": [
+      "H-01",
+      "H-02",
+      "H-03"
+    ],
+    "invariants": [
+      "保留旧任务文件，只显示新任务",
+      "写镜及合成中锁定入口",
+      "未选用样张不能生成",
+      "音乐音效列只保存"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "path": "docs/tasks/R278-direct-rescript/design/index.html",
+      "sha256": "e8da41b555f29153a3319047642e82855ab7bc3bd45aee08fd90c9051160978d",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ]
+}

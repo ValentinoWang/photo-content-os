@@ -6,7 +6,7 @@
 - SSOT node: none
 - Acceptance contract: agents-results/2026-10-26/R277-shot-visual-revision/acceptance-contract.md
 - Contract version: 1
-- Contract SHA-256: f5998674c6e484665967242c509ffe4ce97d5df71832007292c9065655f6938d
+- Contract SHA-256: 8646e9ada223ec50d5af77c0e6fd3f8d7762c46bdc639849cedb02e0efce9b3d
 - Human checklist: acceptance/human/2026-W44/2026-10-26-R277-photo-shot-visual-revision/checklist.md
 - Checklist SHA-256: 5add7bb71e0e49fbb14c3d0e63baee8c12f013c1bcbc11effd00bbef79519785
 

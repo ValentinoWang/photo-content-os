@@ -1,0 +1,66 @@
+{
+  "R278": {
+    "root": "~/.photo-content-os/evidence/R278-direct-rescript/handoff-2-fc072d9",
+    "mode": "--checks-only",
+    "full_page_captures_in_this_run": 0,
+    "files": {
+      "contracts.json": {
+        "sha256": "a84549649ac7f1d0b0b9cc316adbad6b2d52eed5ddd81944a52f61becff7d598"
+      },
+      "source-preservation.json": {
+        "sha256": "fffc61a0545923018953eb9f471b61ef6c16a07c39665950dce741c7955b4654"
+      }
+    },
+    "contracts": 40,
+    "source_preservation": {
+      "before": "aef4edf1b08e08ca88271155d9c2f7f53440c7765cdd2df3b3d0c510758f64bc",
+      "after": "aef4edf1b08e08ca88271155d9c2f7f53440c7765cdd2df3b3d0c510758f64bc",
+      "copy": "aef4edf1b08e08ca88271155d9c2f7f53440c7765cdd2df3b3d0c510758f64bc",
+      "identical": true
+    }
+  },
+  "R276": {
+    "root": "~/.photo-content-os/evidence/R276-direct-video-opus/handoff-2-fc072d9",
+    "mode": "--checks-only",
+    "full_page_captures_in_this_run": 0,
+    "files": {
+      "contracts.json": {
+        "sha256": "886da219198cf8f378dfe87b6c65f4d59a1d99230c4f8292d568b43bdd6cd8bc"
+      },
+      "screenshot-manifest.json": {
+        "sha256": "20bc48d2b211f1615797182e43d532326a875382df9a6a75d4c8304aad0a772c"
+      }
+    },
+    "contracts": 26
+  },
+  "R277": {
+    "root": "~/.photo-content-os/evidence/R277-shot-visual-revision/handoff-2-fc072d9",
+    "mode": "--checks-only",
+    "full_page_captures_in_this_run": 0,
+    "files": {
+      "contracts.json": {
+        "sha256": "aefc3ac4f6f1ebf7b238b434821eeac351b8ec3cddc1c7c43ffedc9cc735d707"
+      },
+      "source-preservation.json": {
+        "sha256": "de2eb59f00808abeacb9a972f1e7f88abef5bea83537ba9b6312adf047a6cab9"
+      },
+      "screenshot-manifest.json": {
+        "sha256": "a6451923ffe8c090e1c4129d466583434370f5e6bb780d4dae8e5f4fd0f6e1e6"
+      },
+      "marker-overlap-exceptions.json": {
+        "sha256": "daf5101ac8cb7bb62f500c7b6146078b5d06f591db464b831e9d273c070983be"
+      },
+      "source-hashes-before.json": {
+        "sha256": "ac391d4e5fd9b87a32c4b931c98d9ce90c3f3f91c5284c39fef372fe7d8e64b3"
+      },
+      "source-hashes-after.json": {
+        "sha256": "ac391d4e5fd9b87a32c4b931c98d9ce90c3f3f91c5284c39fef372fe7d8e64b3"
+      }
+    },
+    "contracts": 42,
+    "source_preservation": {
+      "identical": true,
+      "files": 8670
+    }
+  }
+}
