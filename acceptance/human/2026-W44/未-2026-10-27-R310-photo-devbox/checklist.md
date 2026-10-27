@@ -4,7 +4,7 @@
 - 任务编号：2026-10-27-R310-photo-devbox
 - 人工验收绑定：acceptance/human/2026-W44/2026-10-27-R310-photo-devbox/binding.md
 - 验收合同：agents-results/2026-10-27/R310-photo-devbox/acceptance-contract.md
-- 合同版本：2
+- 合同版本：3
 - 清单状态：已批准
 - 清单可独立执行版本：1
 - 所需人工角色：任务委托人

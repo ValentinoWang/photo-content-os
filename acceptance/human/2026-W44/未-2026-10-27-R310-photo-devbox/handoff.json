@@ -1,21 +1,24 @@
 {
   "baseline": {
-    "base": "c1465ffffb34697d3ad01a3fd3e9c33f55273307",
+    "base": "0422f6bf4ea9b92f319ef5a78dbaf9dc6be1da43",
     "branch": "detached",
-    "head": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
-    "tree": "087eb3d6bb336632633ff55820d42adb60e55c45"
+    "head": "553e02c8b2c936526a79d9aae76e1149ef91b611",
+    "tree": "321fdda798e5c361f5584a2c09da516cde4e3df3"
   },
-  "binding_sha256": "18c2fa8a5d071456d7c1d60280d2a9e68280a9db623afa77a267e969a6974c8e",
+  "binding_sha256": "760cdef97f39acf8c281ec4dbad4b2cf866ccbb47cef45ec6c973d75216dc0a9",
   "blocking": false,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "67290efa9d601677b74ea7b7f052b9f9f6abc67980bae7a4e57666f459c2215b",
+  "checklist_sha256": "33aa83c8a4554f5490bcd73ff56b7bddf059b3be1ba2a194c2bc8f0ddf6e4652",
   "claims": [
     {
       "claim_key": "photo.devbox-execution",
       "item": "H-01",
       "open_route": "note:本机活动监视器和与总控的测试对话",
       "relations": [],
+      "request_changes": {
+        "H-01": "H步骤和预期原样；新增理解5见request-understanding-coverage.json的技能结构/双入口审阅、lint与新入口远端九项；理解6见该文件的ffmpeg9.0中转与安装并行源码核查、lint和带来源装机复盘。本轮不重装或真传ffmpeg，静态覆盖不当作新机器安装PASS。"
+      },
       "surfaces": [
         "acceptance.artifacts",
         "photo.devbox",
@@ -27,6 +30,9 @@
       "item": "H-02",
       "open_route": "note:与总控对话里的开发机同步文件清单",
       "relations": [],
+      "request_changes": {
+        "H-02": "H步骤和预期原样；新增理解7见request-understanding-coverage.json的studio-data默认r278分支核查，及新unit run的lint/默认代码清单自测。只核查一个job.json与设计图的传输配置，未执行studio-data或传真实Studio数据；不复用旧R278门禁结果冒充当前运行。"
+      },
       "surfaces": [
         "acceptance.artifacts",
         "photo.devbox",
@@ -35,8 +41,8 @@
     }
   ],
   "contract_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance-contract.md",
-  "contract_sha256": "2c5042ae7515a22531e76c3055c5b01b3d816b54e0db3812cd4e7454908243ee",
-  "contract_version": "2",
+  "contract_sha256": "4defe4814ceb15c1bd546613e2b2d55df837ee002c28ab90ab76f7bb88429873",
+  "contract_version": "3",
   "estimated_minutes": 5,
   "execution_policy": "terminal-after-machine-green",
   "invalidation_keys": [
@@ -47,27 +53,34 @@
   "machine_evidence": [
     {
       "layer": "machine/unit",
-      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T092843Z-macos-phase2-cb3478/result.md",
-      "result_sha256": "277e000e1762ffa35e7fc3c017280c97a996f0f1afbee37658c330c75ef2f294",
-      "run_id": "20261027T092843Z-macos-phase2-cb3478",
-      "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401"
+      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T100601Z-macos-phase3-988d65/result.md",
+      "result_sha256": "ea425e0623765844f8789a54430c3c1416d6084552d187c6ebba42dd5fc2e09d",
+      "run_id": "20261027T100601Z-macos-phase3-988d65",
+      "source_identity": "553e02c8b2c936526a79d9aae76e1149ef91b611"
     },
     {
       "layer": "machine/integration-contract",
-      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/integration-contract/runs/20261027T092843Z-photo-dev-phase2-830f59/result.md",
-      "result_sha256": "42c5d20f7a246489706f47ad4b34fb89af2a09183191b6acce621a8779c1251e",
-      "run_id": "20261027T092843Z-photo-dev-phase2-830f59",
-      "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401"
+      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/integration-contract/runs/20261027T100602Z-photo-dev-phase3-2b7d6c/result.md",
+      "result_sha256": "81324f3e2c5c148feec1e800cc82b4837310a28be1fb0ba99e29efaa589dc700",
+      "run_id": "20261027T100602Z-photo-dev-phase3-2b7d6c",
+      "source_identity": "553e02c8b2c936526a79d9aae76e1149ef91b611"
+    },
+    {
+      "layer": "machine/static",
+      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/static/runs/20261027T100602Z-source-phase3-a4a033/result.md",
+      "result_sha256": "682de87e301c5414f957cfd466a2de4ec20e7c81a44765ac5e529b7d22c37903",
+      "run_id": "20261027T100602Z-source-phase3-a4a033",
+      "source_identity": "553e02c8b2c936526a79d9aae76e1149ef91b611"
     }
   ],
   "open_route": null,
-  "ready_at": "2026-10-27T09:30:12.777014Z",
+  "ready_at": "2026-10-27T10:08:26.915857Z",
   "release_slice": "R310",
   "request_id": "2026-10-27-R310-photo-devbox",
   "required_role": "任务委托人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
-  "summary": "fb6f2fe三份自测通过；真实直连开发机成功后执行浅色专项9过，远端HEAD和四份保护文件摘要一致；原H两项非阻塞待人工抽查。全量既有失败及R277字体限制保留。",
+  "source_commit": "553e02c8b2c936526a79d9aae76e1149ef91b611",
+  "summary": "553e02c项目技能入口：lint与三份自测过、开发机浅色9过；理解5–7覆盖关系已记录，ffmpeg安装并行和R278最小同步仅做源码核查，未重装或真传数据。原H两项非阻塞待人工抽查。",
   "task_id": "2026-10-27-R310-photo-devbox"
 }

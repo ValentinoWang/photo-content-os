@@ -189,7 +189,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-27T09:30:12.777014Z",
+  "generated_at": "2026-10-27T10:08:26.915857Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -202,12 +202,12 @@
       ],
       "latest_run": null,
       "loop_name": "photo-content-os 用自己的开发机跑测试、门禁和渲染",
-      "ready_at": "2026-10-27T09:30:12.777014Z",
+      "ready_at": "2026-10-27T10:08:26.915857Z",
       "release_slice": "R310",
       "required_role": "任务委托人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "fb6f2fe三份自测通过；真实直连开发机成功后执行浅色专项9过，远端HEAD和四份保护文件摘要一致；原H两项非阻塞待人工抽查。全量既有失败及R277字体限制保留。",
+      "summary": "553e02c项目技能入口：lint与三份自测过、开发机浅色9过；理解5–7覆盖关系已记录，ffmpeg安装并行和R278最小同步仅做源码核查，未重装或真传数据。原H两项非阻塞待人工抽查。",
       "task_id": "2026-10-27-R310-photo-devbox",
       "workspace": "acceptance/human/2026-W44/2026-10-27-R310-photo-devbox"
     },
@@ -232,5 +232,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "1c1a7667d52335f799fc28d49943193c15009be10707f43a38a7d6f17cc41813"
+  "source_facts_sha256": "4393084aa429ef30e687986a7ac1ed437742fd79e097cf1a887c0059e2bde894"
 }

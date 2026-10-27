@@ -1,20 +1,20 @@
 # Acceptance Contract: 2026-10-27-R310-photo-devbox
 
 - Task ID: 2026-10-27-R310-photo-devbox
-- Contract version: 2
+- Contract version: 3
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户2026-10-27第二阶段原话「现在 verified head 是 fb6f2fe」「按新 head 重做 baseline、机器运行」「按 TASK.md 正式 handoff」；沿用需求H两项、非阻塞与五分钟，不追称实现前已锁合同，不代表人工PASS
-- Request source: acceptance/requests/2026-W44/2026-10-27-R310-photo-devbox/request.json; docs/tasks/R310-photo-devbox/TASK.md
+- Approval evidence: 用户2026-10-27第三阶段原话「verified head 现在是 553e02c」「按新 head 重做 baseline 和机器运行」「用 --replace 重新 handoff R310」「H-01/H-02 原样」；补入已merge的理解5–7覆盖说明，不代表人工PASS
+- Request source: acceptance/requests/2026-W44/2026-10-27-R310-photo-devbox/request.json; agents-results/2026-10-27/R310-photo-devbox/TASK.md
 - SSOT node: none
 - SSOT path: none
 - Readiness mode: FORMAL
 - Decision refs: none
 - Assumption IDs: none
 - Invalidation keys: photo.devbox-execution, photo.devbox-transfer
-- AC budget: 2
-- Baseline identity: fb6f2fe7a656c78461bb4fd1967e88bbb2175401，见baseline.json
+- AC budget: 3
+- Baseline identity: 553e02c8b2c936526a79d9aae76e1149ef91b611，见baseline.json
 - Product Context refs: none
 - Role Context refs: none
 - Resolved Surface Contract refs: none
@@ -49,11 +49,11 @@ Given 源码为冻结提交且开发机在线；When 经 rbox 运行浅色专项
 
 ## Invariants
 
-不修改原始媒体、作品和真实剪映草稿；不传 AI 凭据；人工作业仅由任务委托人签署。开发机素材根独立于软件根，当前指向空目录。
+不修改原始媒体、作品和真实剪映草稿；不传 AI 凭据；人工作业仅由任务委托人签署。开发机素材根独立于软件根，本轮不读取或改写其真实数据。
 
 ## Data impact
 
-本轮只新增验收证据和生成投影、补同步范围映射；旧卡和需求卡不变。默认同步不含 agents-results。已获准的真实 Studio 数据是总控既有单独操作，不属于默认代码同步，也不是本轮操作。
+本轮只更新本卡验收证据和生成投影；需求由总控先前提交merge，执行者不再改需求或其他卡。默认同步不含 agents-results。已获准的真实 Studio 数据是总控既有单独操作，不属于默认代码同步，也不是本轮操作。
 
 ## Permissions
 
@@ -69,6 +69,7 @@ Given 源码为冻结提交且开发机在线；When 经 rbox 运行浅色专项
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | AC-01 | behavior | H-01 | machine/integration-contract | 冻结源码的浅色专项经项目开发机入口执行并返回九项通过 | Integration | Automatic | Yes |
 | AC-02 | behavior | H-02 | machine/unit | 默认清单排除私人媒体、证据和凭据，拒绝AI执行与凭据传输，在线判定区分不可读与离线，缺检查器时直连失败不放行 | Unit | Automatic | Yes |
+| AC-03 | behavior | H-01, H-02 | machine/static | 项目技能说明、复盘、双工具入口可读取，ffmpeg中转并行与9.0配置及R278最小数据分支具有可追溯静态证据；不把静态审阅当作真装机或真数据传输 | Static | Automatic | Yes |
 
 ## Human acceptance
 
@@ -83,9 +84,10 @@ Given 源码为冻结提交且开发机在线；When 经 rbox 运行浅色专项
 
 | Path | SHA-256 | Covers |
 | --- | --- | --- |
-| scripts/devbox/test_push_rules.sh | f2eb65355390d3811725c5b1093ebce36679cbb9cf3641e66c23bf53141bdc57 | AC-02 |
-| scripts/devbox/test_ai_guard.sh | 7d8000cd154bc48aab6e3e3a047151f1ffed8e693110e9a021e57148dd010161 | AC-02 |
-| scripts/devbox/test_where.sh | 086d8446690b0940a3ff009b2dc68acf2c107168a435d629031f61a4de311f4d | AC-02 |
+| .agents/skills/photo-remote-dev-box/scripts/test_push_rules.sh | f2eb65355390d3811725c5b1093ebce36679cbb9cf3641e66c23bf53141bdc57 | AC-02 |
+| .agents/skills/photo-remote-dev-box/scripts/test_ai_guard.sh | 7d8000cd154bc48aab6e3e3a047151f1ffed8e693110e9a021e57148dd010161 | AC-02 |
+| .agents/skills/photo-remote-dev-box/scripts/test_where.sh | 086d8446690b0940a3ff009b2dc68acf2c107168a435d629031f61a4de311f4d | AC-02 |
+| .agents/skills/photo-remote-dev-box/scripts/lint_scripts.sh | c67077fbb817becd343822be1e39e3efcca84b48d6e2c9bbbf2107dd6a5053d2 | AC-02, AC-03 |
 | tests/test_r280_light.py | e98f6199f0f0a897e3a94fa53fa57d5b70b369225e2803e67259e1e1ffa585ef | AC-01 |
 
 ## Requirements-test traceability
@@ -93,7 +95,8 @@ Given 源码为冻结提交且开发机在线；When 经 rbox 运行浅色专项
 | Requirement | Verification | Evidence target | Mode | Blocking |
 | --- | --- | --- | --- | --- |
 | AC-01 | 远端浅色专项 | tests/test_r280_light.py | Automatic | Yes |
-| AC-02 | 三份既有自测 | scripts/devbox/test_push_rules.sh; scripts/devbox/test_ai_guard.sh; scripts/devbox/test_where.sh | Automatic | Yes |
+| AC-02 | lint与三份既有自测 | .agents/skills/photo-remote-dev-box/scripts/test_push_rules.sh; .agents/skills/photo-remote-dev-box/scripts/test_ai_guard.sh; .agents/skills/photo-remote-dev-box/scripts/test_where.sh | Automatic | Yes |
+| AC-03 | 当前源码静态审阅及入口核对 | request-understanding-coverage.json; .agents/skills/photo-remote-dev-box/scripts/lint_scripts.sh | Automatic | Yes |
 | H-01 | 原样人工观察 | acceptance/human/2026-W44/2026-10-27-R310-photo-devbox/checklist.md#h-01 | Human | No |
 | H-02 | 原样清单检查 | acceptance/human/2026-W44/2026-10-27-R310-photo-devbox/checklist.md#h-02 | Human | No |
 
@@ -109,6 +112,6 @@ Given 源码为冻结提交且开发机在线；When 经 rbox 运行浅色专项
 
 人工未签署。总控全量报告1204通过、12失败、36跳过，不能宣称全绿：9项本机同样红，3项开发机环境差异。开发机中文字体与Arial使用链接替身，特定复制命令使用cp替身，melt版本不同；R277字体度量不一致仍留本机，不由本卡证明等价渲染。R278和R276既有门禁PASS并非本轮重跑。此根是验收证据包，无SSOT声明，不创建Obsidian快照。
 
-## Revision 2
+## Third-stage scope and evidence boundary
 
-用户第二阶段指定fb6f2fe，授权按新源码重做基准和真实机器运行。test_where新增缺检查器且无法直连的拒绝分支，保护摘要按该提交更新；旧40cf307基准和合同保存在history/40cf307，旧运行不改、不用于新handoff。
+本轮理解5由项目技能布局、Claude软链、Git跟踪与忽略规则、lint和新入口真实远端九项覆盖；理解6由当前rbox/setup_remote源码审阅、lint和总控装机复盘作为带来源背景覆盖，未执行setup或重装；理解7由默认r278分支源码审阅、lint与默认代码同步清单自测覆盖，未执行studio-data或传真实数据。理解5–7的逐项证据、源码摘要和限制保存在request-understanding-coverage.json，claims.request_changes说明H两项标准没有改动。旧fb6f2fe基准、合同、claims与handoff快照保存在history/fb6f2fe，旧运行保持原身份。

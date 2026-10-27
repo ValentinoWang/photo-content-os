@@ -1,0 +1,140 @@
+{
+  "source_identity": "553e02c8b2c936526a79d9aae76e1149ef91b611",
+  "contract_version": 3,
+  "request_id": "2026-10-27-R310-photo-devbox",
+  "human_criteria_changed": false,
+  "static_run": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/static/runs/20261027T100602Z-source-phase3-a4a033/result.md",
+  "unit_run": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T100601Z-macos-phase3-988d65/result.md",
+  "integration_run": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/integration-contract/runs/20261027T100602Z-photo-dev-phase3-2b7d6c/result.md",
+  "items": [
+    {
+      "understanding": 5,
+      "source_requirement": "开发机工具和装机经验做成本项目技能，Codex和Claude都能找到",
+      "result": "PASS",
+      "coverage": "静态结构与入口解析；真实新入口pytest另见integration运行",
+      "evidence": [
+        "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/static/runs/20261027T100602Z-source-phase3-a4a033/evidence/source-review.json",
+        "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T100601Z-macos-phase3-988d65/evidence/lint_scripts.log",
+        "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/integration-contract/runs/20261027T100602Z-photo-dev-phase3-2b7d6c/evidence/pytest-r280.log"
+      ],
+      "observations": [
+        "项目自有技能本体、说明、脚本与装机复盘存在并受Git跟踪",
+        "技能文件未被.gitignore忽略",
+        "Claude相对软链解析至同一项目技能；当前Codex技能目录亦列出本技能"
+      ],
+      "not_verified": [
+        "未新启Claude客户端以测试独立会话技能加载；无浏览器或产品视觉验收"
+      ]
+    },
+    {
+      "understanding": 6,
+      "source_requirement": "ffmpeg本机下载传开发机，与Python安装并行，固定9.0",
+      "result": "PASS",
+      "coverage": "仅当前源码/配置审阅及lint，不是setup运行结论",
+      "evidence": [
+        "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/static/runs/20261027T100602Z-source-phase3-a4a033/evidence/source-review.json",
+        "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T100601Z-macos-phase3-988d65/evidence/lint_scripts.log",
+        ".agents/skills/photo-remote-dev-box/references/2026-10-27-setup-review.md"
+      ],
+      "observations": [
+        "FFMPEG_TAR使用ffmpeg-n9.0-latest；本机下载、独立连接上传有显式实现",
+        "setup先后台启动ffmpeg_upload，再执行远端setup_remote，最后wait；远端按n9.0检查安装",
+        "热点、磁盘不足或传输失败走已声明的远端下载分支，不能声称所有情况下都本机中转"
+      ],
+      "source_refs": {
+        ".agents/skills/photo-remote-dev-box/scripts/rbox": [
+          {
+            "line": 140,
+            "anchor": "FFMPEG_TAR=ffmpeg-n9.0"
+          },
+          {
+            "line": 142,
+            "anchor": "ffmpeg_upload()"
+          },
+          {
+            "line": 151,
+            "anchor": "curl -fsSL --max-time 600"
+          },
+          {
+            "line": 196,
+            "anchor": "ffmpeg_upload >"
+          },
+          {
+            "line": 200,
+            "anchor": "\"$HERE/setup_remote.sh\""
+          },
+          {
+            "line": 201,
+            "anchor": "wait $fpid || true"
+          }
+        ],
+        ".agents/skills/photo-remote-dev-box/scripts/setup_remote.sh": [
+          {
+            "line": 37,
+            "anchor": "Python 包（和本机"
+          },
+          {
+            "line": 64,
+            "anchor": "ffmpeg 9.0（BtbN"
+          },
+          {
+            "line": 70,
+            "anchor": "version n9"
+          },
+          {
+            "line": 75,
+            "anchor": "ffmpeg-n9.0-latest"
+          }
+        ]
+      },
+      "not_verified": [
+        "未执行setup、下载、上传、重装环境或对新机器测并行耗时",
+        "复盘中的耗时为总控历史记录，不是553e02c的新安装结果"
+      ]
+    },
+    {
+      "understanding": 7,
+      "source_requirement": "R278真实Studio同步只要一个作品记录和设计图",
+      "result": "PASS",
+      "coverage": "仅当前默认分支/目标清单配置审阅；默认代码同步过滤另有unit夹具",
+      "evidence": [
+        "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/static/runs/20261027T100602Z-source-phase3-a4a033/evidence/source-review.json",
+        "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T100601Z-macos-phase3-988d65/evidence/lint_scripts.log",
+        "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T100601Z-macos-phase3-988d65/evidence/test_push_rules.log"
+      ],
+      "observations": [
+        "studio-data未传参数时默认r278",
+        "r278分支只指定一个job.json和R278设计图目录；整份studio-r278及素材占位仅在显式r277分支",
+        "默认代码同步排除agents-results及未点名evidence；自测是合成夹具，非真实数据传输"
+      ],
+      "source_refs": {
+        ".agents/skills/photo-remote-dev-box/scripts/rbox": [
+          {
+            "line": 212,
+            "anchor": "what=\"${1:-r278}\""
+          },
+          {
+            "line": 214,
+            "anchor": "if [ \"$what\" = r278 ]"
+          },
+          {
+            "line": 215,
+            "anchor": "job=\"studio-r276/"
+          },
+          {
+            "line": 219,
+            "anchor": "img=\"docs/tasks/R278-direct-rescript/design/img\""
+          },
+          {
+            "line": 223,
+            "anchor": "for s in studio-r278 evidence/R277-shot-visual-revision;"
+          }
+        ]
+      },
+      "not_verified": [
+        "未执行studio-data，未读写远端真实Studio数据或媒体根",
+        "未跑当前源码的R278浏览器门禁；历史54次合同比较只作总控来源背景"
+      ]
+    }
+  ]
+}

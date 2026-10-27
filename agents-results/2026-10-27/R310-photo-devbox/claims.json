@@ -8,7 +8,10 @@
       "photo.project-tools",
       "acceptance.artifacts"
     ],
-    "relations": []
+    "relations": [],
+    "request_changes": {
+      "H-01": "H步骤和预期原样；新增理解5见request-understanding-coverage.json的技能结构/双入口审阅、lint与新入口远端九项；理解6见该文件的ffmpeg9.0中转与安装并行源码核查、lint和带来源装机复盘。本轮不重装或真传ffmpeg，静态覆盖不当作新机器安装PASS。"
+    }
   },
   {
     "item": "H-02",
@@ -19,6 +22,9 @@
       "photo.project-tools",
       "acceptance.artifacts"
     ],
-    "relations": []
+    "relations": [],
+    "request_changes": {
+      "H-02": "H步骤和预期原样；新增理解7见request-understanding-coverage.json的studio-data默认r278分支核查，及新unit run的lint/默认代码清单自测。只核查一个job.json与设计图的传输配置，未执行studio-data或传真实Studio数据；不复用旧R278门禁结果冒充当前运行。"
+    }
   }
 ]

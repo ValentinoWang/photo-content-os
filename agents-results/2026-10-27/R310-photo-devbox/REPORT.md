@@ -279,3 +279,89 @@ M tools/console/generated/console-data/cutover.json
 ```
 
 本包是普通验收证据包，不是声明SSOT；无Obsidian快照或手机提醒。未推送，任务worktree保留供总控合入。第二阶段结果已写入本节，执行到此停止。
+
+
+## 第三阶段：553e02c 项目技能重新递交（2026-10-27）
+
+记录时间：2026-10-27T10:13:07.523730+00:00。本阶段使用任务 worktree `~/.local/share/task-worktrees/photo-content-os-devbox-skill`；原任务单中的脚本路径和工作区断言按用户第三阶段指令替换。本节沿用原需求两项，不修改历史报告。
+
+**指定目标已达到：G1 PASS、G12 PASS、G16 PASS。** 完整检查仍为FAIL、退出1：G9调度台快照未同步；G6为WARN，两个未映射路径如原输出。没有宣称全门禁全绿、发布READY或人工通过。
+
+### 基准、原项与当前机器证据
+
+base=`0422f6bf4ea9b92f319ef5a78dbaf9dc6be1da43`（origin/main 0422f6b）；verified head/source_commit=`553e02c8b2c936526a79d9aae76e1149ef91b611`（553e02c）；tree=`321fdda798e5c361f5584a2c09da516cde4e3df3`。合同版本3保护当前技能路径的lint与三份自测、原浅色专项。原三份自测搬迁前后字节完全相同，路径和摘要对照见静态审阅。G16沿用正式规则，本卡自身不作为其他旧卡重叠；未改其他卡的合同、测试或状态。
+
+旧fb6f2fe合同、baseline、claims、binding、checklist和handoff在 `history/fb6f2fe/` 保存原字节。旧40cf307、fb6f2fe运行均保持原身份与结论，**没有用于本次handoff**。当前三份新run均绑定553e02c、合同版本3，原始日志及摘要均在相应run中。
+
+| 本轮检查 | 执行位置与结果 | 新run及证据 |
+| --- | --- | --- |
+| `bash .agents/skills/photo-remote-dev-box/scripts/lint_scripts.sh` | 本机，退出0，脚本静态门禁通过 | `acceptance/machine/unit/runs/20261027T100601Z-macos-phase3-988d65/evidence/lint_scripts.log` |
+| `bash .agents/skills/photo-remote-dev-box/scripts/test_push_rules.sh` | 本机，退出0，清单自测全过 | 同unit run的test_push_rules.log |
+| `bash .agents/skills/photo-remote-dev-box/scripts/test_ai_guard.sh` | 本机，不加--remote，退出0 | 同unit run的test_ai_guard.log |
+| `bash .agents/skills/photo-remote-dev-box/scripts/test_where.sh` | 本机，退出0，四种在线判定夹具通过 | 同unit run的test_where.log |
+| `.venv/bin/python -m pytest -q tests/test_r280_light.py` | 经新技能rbox入口在photo-dev固定.venv执行，**9 passed in 0.07s**，退出0 | `acceptance/machine/integration-contract/runs/20261027T100602Z-photo-dev-phase3-2b7d6c/` |
+| 当前源码静态审阅 | PASS，限定为技能结构、入口与配置，不是装机/传数据实测 | `acceptance/machine/static/runs/20261027T100602Z-source-phase3-a4a033/` |
+
+本机重活进程检查前 **0**、检查后 **0**，保存在unit run的local-process-budget.json。没有本机pytest、浏览器、门禁渲染或常驻服务。真实远端命令先通过直连在线判定，再同步并回读Git完整HEAD和五份保护文件摘要，全部一致；含同步和身份读取的整次rbox调用5.594秒。
+
+### 理解5–7覆盖与限制
+
+覆盖关系逐项写入 `claims.json` 的 `request_changes`，细节和精确证据路径在 `request-understanding-coverage.json`。H-01/H-02的步骤和预期与当前request.json逐字相等，没有新增、删除或改写人工项。
+
+| 新理解 | 本轮证据覆盖 | 没有实测的部分 |
+| --- | --- | --- |
+| 5：项目技能和装机经验，Codex/Claude都能找到 | Git当前源码与工作区摘要一致；SKILL、scripts、复盘文件齐全；技能未被忽略；Claude相对软链指向同一技能；当前会话Codex技能目录列出它；lint和新技能rbox真实远端九项 | 没有新开Claude客户端测试一次独立会话加载；没有把文件可读解释为产品视觉验收 |
+| 6：ffmpeg本机中转、与Python安装并行、9.0 | rbox及setup_remote当前源码行锚点和摘要：9.0文件名、后台ffmpeg_upload、远端setup执行与wait顺序；lint通过；装机复盘仅作有来源历史背景 | **未运行setup、下载、上传或重装**；热点、磁盘不足、传输失败仍按源码走远端下载分支，不承诺任何环境都本机中转；没有新机器安装PASS或新并行耗时证明 |
+| 7：R278只传一个作品记录和设计图 | rbox默认r278分支静态审阅；指定单一job.json和设计图；整份状态与素材占位留在显式r277分支；lint和默认代码清单过滤夹具 | **未运行studio-data或读写真实Studio数据**；默认代码清单自测不冒充真实数据传输；历史R278门禁不当作553e02c的新运行 |
+
+本轮没有用替身伪造setup或studio-data的成功，也没有为补证据操作开发机真实数据或媒体根。
+
+### replace handoff
+
+已用 `--replace --request-id 2026-10-27-R310-photo-devbox --non-blocking --estimated-minutes 5 --required-role 任务委托人` 更新原卡。当前handoff的三个machine_evidence只指向本轮phase3运行；source_commit为553e02c，baseline的base为0422f6b。原H两项继续PENDING，位于非阻塞抽查分区，未写人工反馈、PASS或签署记录。已重建任务索引、项目索引和人工台账。
+
+合同check、本任务深层check及check-project均OK。逐文件暂存27个合同/运行/审计文件后运行 `python3 scripts/check_repository_safety.py --base origin/main`，返回 `Repository safety check passed.`；该轻量检查按TASK.md明确允许在本机运行。报告另按明确文件名暂存；无源代码或真实媒体入库。
+
+### check-delivery 提交前原样结果
+
+命令：`python3 ~/Desktop/Opensource_Tool/Harness_Engineering/tools/harnessctl.py acceptance check-delivery --project . --range origin/main..HEAD`。该次源码范围为0422f6b..553e02c，退出1。
+
+```text
+check-delivery  origin/main..HEAD  (1 commits, tree 321fdda)
+  G1 有卡  PASS  
+  G2 基准一致  PASS  
+  G3 机器先绿  PASS  
+  G4 看得懂  PASS  
+  G5 有入口  PASS  
+  G6 去重已声明  WARN  unmapped: .claude/skills/photo-remote-dev-box, scripts/devbox/README.md → 补充 surfaces.yaml 映射
+  G7 失效传播  PASS  
+  G8 坏一条不连累  PASS  
+  G9 页面可见  FAIL  2026-10-27-R310-photo-devbox 没有出现在 ready/ACTIVE 投影中 → 重新生成调度台并确认新卡 ready/ACTIVE → python3 tools/console/generate_console.py；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py check-project --project-root .
+  G10 不自证  PASS  
+  G11 有需求卡  PASS  
+  G12 验收覆盖需求  PASS  
+  G13 沿用已有卡  PASS  
+  G14 已通过不可变  PASS  
+  G15 自动替代完整  PASS  
+  G16 不连累前面的卡  PASS  
+  G17 真实链路没被替换  PASS  2026-10-27-R310-photo-devbox: 证据里没有脚本
+结果：FAIL（本命令如实返回门禁状态；推送策略由调用方应用）
+```
+
+G6的WARN涉及新增Claude技能入口及删除的旧README，不影响本轮点名的三个PASS；未添加旧脚本兼容入口或重标产品源码为验收物。G9读取已登记主检出的调度台快照；本线程不改项目登记、不在其他主检出复制卡，也不手写ready/ACTIVE投影凑绿。G17如实显示本任务证据根没有可执行脚本，不能外推为对全部产品源码的新审计。
+
+### 保留的限制与规则卡结果
+
+历史全量仍是总控记录的 **1204过、12红、36跳过**，本轮没重跑。9项本机同样红（8项旧ffmpeg参数、1项旧深色令牌），3项开发机环境差异（Obsidian库缺失、melt像素两项）没有被本轮修复。R276历史26次、R278/R282/R283历史54次合同比较PASS并非本轮新证据。R277因Mac/Linux中文字体度量差异仍留本机，本轮未运行。
+
+开发机Noto/Liberation字体路径链接、特定复制命令的cp替身、melt7.4对本机7.39、缺Obsidian库的差异保留。当前浅色专项不证明等价渲染、完整真实AI生成或全部环境行为。
+
+| 规则卡行 | 第三阶段结果 |
+| --- | --- |
+| 所有Git写操作前断言任务worktree | 暂存、rbox内部Git同步和本机临时Git自测的调用前，均断言当前toplevel为新worktree；提交前再次核对 |
+| G16必须通过，不以不可读当不相关 | 七张旧卡合同目录按需保留；本轮G16 PASS；不改其他卡和旧保护测试 |
+| 逐文件git add -f、安全与隐私 | 用git add -f --sparse传精确文件列表，仅acceptance/和agents-results/；安全检查PASS；源文件、媒体、密钥和交付缓存不提交 |
+| 只说真实通过范围，列替身和差异 | 当前四项本机检查、远端九项与静态审阅分开；理解6/7未运行、历史全量红项、R277和字体/cp差异均写明 |
+| 本机执行预算 | 当前明确获准lint和三自测前后0→0；pytest仅经新技能rbox在开发机跑 |
+
+本包是普通验收证据包，无SSOT归档声明，不创建Obsidian快照或手机提醒。提交后范围复查与最终Git状态追加在后续小节；不推送。

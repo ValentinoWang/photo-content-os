@@ -1,0 +1,11 @@
+{
+  "command": ".agents/skills/photo-remote-dev-box/scripts/rbox run <任务 worktree> -- bash -c <remote_script>",
+  "remote_script": "set -e\ngit rev-parse HEAD\nsha256sum .agents/skills/photo-remote-dev-box/scripts/lint_scripts.sh .agents/skills/photo-remote-dev-box/scripts/test_push_rules.sh .agents/skills/photo-remote-dev-box/scripts/test_ai_guard.sh .agents/skills/photo-remote-dev-box/scripts/test_where.sh tests/test_r280_light.py\n.venv/bin/python -m pytest -q tests/test_r280_light.py",
+  "source_identity": "553e02c8b2c936526a79d9aae76e1149ef91b611",
+  "started_at": "2026-10-27T10:06:41.090258+00:00",
+  "completed_at": "2026-10-27T10:06:46.684809+00:00",
+  "duration_seconds": 5.594,
+  "exit_code": 0,
+  "execution_host": "photo-dev",
+  "path_redaction": "任务 worktree and ~ replace local paths only"
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.devbox-execution",
+    "open_route": "note:本机活动监视器和与总控的测试对话",
+    "surfaces": [
+      "photo.devbox",
+      "photo.project-tools",
+      "acceptance.artifacts"
+    ],
+    "relations": []
+  },
+  {
+    "item": "H-02",
+    "claim_key": "photo.devbox-transfer",
+    "open_route": "note:与总控对话里的开发机同步文件清单",
+    "surfaces": [
+      "photo.devbox",
+      "photo.project-tools",
+      "acceptance.artifacts"
+    ],
+    "relations": []
+  }
+]
