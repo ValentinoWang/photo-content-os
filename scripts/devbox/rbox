@@ -135,7 +135,14 @@ remote_cmd() { local c=""; for a in "$@"; do c+=" $(q "$a")"; done; echo "$c"; }
 # 退出码 0（devbox）照常发；10（local）停下，改在本机跑并守本机预算；其他（读不到状态）也停下，不许当成 local（Core「读不到不是没有」）
 where_check() {
   local s="${RBOX_DEVBOX_STATUS:-$HARNESS_ROOT/Core/scripts/devbox/devbox_status.py}" rc=0 out
-  if [ ! -f "$s" ]; then echo "[rbox] Harness 的 devbox_status.py 还没进主检出，这次不问在线判定" >&2; return 0; fi
+  # 检查器还没发布（10-27 它还在 Harness 的任务 worktree 里）：不是「判定为在线」，改用直连开发机来判断——
+  # 10 秒内连得上才发；连不上就停下，报开发机连不上，不当成「在本机跑」（R310 交付准备时 Codex 指出原先这里直接放行）
+  if [ ! -f "$s" ]; then
+    if ssh "${SSH_OPTS[@]}" -o BatchMode=yes -o ConnectTimeout=10 "$HOST" true 2>/dev/null; then
+      echo "[rbox] Harness 的在线判定脚本还没发布（$s 不存在），改用直连判断：开发机连得上" >&2; return 0
+    fi
+    die "Harness 的在线判定脚本还没发布（$s 不存在），直连开发机 ${HOST} 也连不上：先查 ssh ${HOST} 和机器是否到期；不当成「在本机跑」"
+  fi
   out="$(python3 "$s" where --project-root "$1" 2>&1)" || rc=$?
   case $rc in
     0) return 0 ;;

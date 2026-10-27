@@ -13,4 +13,7 @@ fake 'boom' 2; out=$(try); rc=$?
 { [ $rc != 0 ] && grep -q '读不到开发机在线状态' <<<"$out" && grep -q '不当成不在线' <<<"$out"; } || { echo "读不到状态（2）应停下并说读不到：$out"; fail=1; }
 fake devbox 0; out=$(try); rc=$?
 grep -qE '读不到开发机在线状态|不在线（' <<<"$out" && { echo "devbox（0）不该被在线判定拦下：$out"; fail=1; }
+# 检查器文件不存在：不许直接放行；改用直连开发机判断，连不上就停下（在推送之前），并且不说成「不在线、在本机跑」
+rm -f "$T/status.py"; out=$(try); rc=$?
+{ [ $rc != 0 ] && grep -q '在线判定脚本还没发布' <<<"$out" && grep -q '直连开发机' <<<"$out" && ! grep -q '推送' <<<"$out"; } || { echo "检查器缺失且开发机连不上时应在推送前停下：$out"; fail=1; }
 [ $fail = 0 ] && echo "rbox 在线判定自测全过" || exit 1

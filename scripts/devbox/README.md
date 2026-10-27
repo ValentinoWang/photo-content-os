@@ -48,7 +48,7 @@ $R list "$PWD"                                                                 #
 $R status
 ```
 
-- 每次 `run`、`bg` 都先问 Harness 的在线判定（`Core/scripts/devbox/devbox_status.py where`）：判本机就停下，改在本机跑、守本机预算；读不到状态也停下，不当成不在线。
+- 每次 `run`、`bg` 都先问 Harness 的在线判定（`Core/scripts/devbox/devbox_status.py where`）：判本机就停下，改在本机跑、守本机预算；读不到状态也停下，不当成不在线。这个脚本还没发布到 Harness 主检出时，改用直连开发机判断：10 秒内连得上才发，连不上就停下、报连不上（自测 `test_where.sh` 覆盖这四种情况）。
 - 然后推一次目录：只推 git 跟踪的和没被 `.gitignore` 忽略的新文件，没有改动时 1–3 秒。目录里有任务在跑或在排队时拒绝推，免得换掉正在测的文件。
 - 排队：全量、门禁、渲染用 `RBOX_QUEUE=heavy`，同一时间只跑一个；只开一个浏览器的拍图用 `light`。外壳是 `queue_run.sh`，和寸木那份一样。
 - 开发机 4 核：pytest 不要开超过 4 路。
