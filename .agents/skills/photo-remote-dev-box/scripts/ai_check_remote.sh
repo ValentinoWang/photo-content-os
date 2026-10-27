@@ -18,7 +18,8 @@ hit() { echo "AI 痕迹：$*"; found=1; }
 if [ -z "${AI_ROOT:-}" ]; then
   while IFS= read -r l; do hit "进程 $l"; done < <(ps -eo pid=,args= | grep -E '(^|[ /])(claude|codex)( |$)|@anthropic-ai/claude-code|@openai/codex' | grep -vE 'grep|ai_check_remote')
   for b in claude codex; do p=$(command -v "$b" 2>/dev/null) && hit "PATH 里有 ${b}：$p"; done
-  for n in /root/.prbox/node/bin/npm; do [ -x "$n" ] && "$n" ls -g --depth=0 2>/dev/null | grep -E '@openai/codex|@anthropic-ai/claude-code' | while read -r l; do echo "AI 痕迹：npm 全局包 ${l}（${n}）"; done; done | grep . && found=1
+  n=/root/.prbox/node/bin/npm   # 开发机上 rbox 自己装的 npm 前缀（本项目只有这一处）
+  [ -x "$n" ] && "$n" ls -g --depth=0 2>/dev/null | grep -E '@openai/codex|@anthropic-ai/claude-code' | while read -r l; do echo "AI 痕迹：npm 全局包 ${l}（${n}）"; done | grep . && found=1
   ROOTS=(/root /home /opt /usr/local /tmp)
 else ROOTS=("$R"); fi
 while IFS= read -r f; do hit "CLI $f"; done < <(find "${ROOTS[@]}" -xdev -maxdepth 8 \( -path '*/node_modules/@openai/codex' -o -path '*/node_modules/@anthropic-ai/claude-code' -o \( \( -type f -o -type l \) \( -name claude -o -name codex \) -path '*/bin/*' \) \) -prune -print 2>/dev/null | head -10)

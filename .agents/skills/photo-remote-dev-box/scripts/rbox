@@ -2,12 +2,16 @@
 # rbox（photo-content-os 版）— 本机只改代码、跑 Claude/Codex；测试、门禁、拍图、渲染放到开发机。
 # 照寸木 cunmu-remote-dev-box/scripts/rbox 和 Cadenvo cadenvo-remote-dev-box/scripts/rbox 改写（2026-10-27），
 # 换成本仓库的路径和工具链（Python .venv、.tools 里的 Node / Playwright 浏览器、ffmpeg）。规则见 Core remote-dev-box-harness.md。
+# 本技能在 .agents/skills/photo-remote-dev-box/（.claude/skills/ 下有软链），用法和经验见同目录 SKILL.md。
 #
 #   rbox init                       开发机上建和本机同样的绝对路径（主目录、两个任务 worktree 根各一个软链）
-#   rbox setup                      新机器装环境（国内镜像）：Python 3.13 .venv（包和本机一样）、.tools（Node、剪辑工具、浏览器）、ffmpeg
+#   rbox setup                      新机器装环境（国内镜像）：Python 3.13 .venv（包和本机一样）、.tools（Node、剪辑工具、浏览器）、
+#                                   ffmpeg 9.0（本机下载后限速上传，和装 Python 包同时进行）、melt、字体和 macOS 替身
 #   rbox harness                    推 Harness Core（门禁读 ui-copy-quality 的脚本）到同一绝对路径
 #   rbox sync [DIR]                 只推 DIR 里将来会提交的文件（git 跟踪 + 未忽略的新文件）；证据、私密文件、本机数据不推
 #   rbox fresh DIR                  删掉开发机上这个 worktree 的副本再重推（清掉本机已删的旧文件）
+#   rbox list [DIR]                 列出这次会推哪些文件（不连开发机）
+#   rbox studio-data [r278|r277]    推门禁要读的真实 Studio 数据：r278（默认）只推一个 job.json 和设计图；r277 推整份状态（约 1.2 GB）
 #   rbox run DIR -- CMD...          推 DIR 后前台跑；完整日志留在开发机，回传末尾 RBOX_TAIL 行和退出码
 #   rbox bg NAME DIR -- CMD...      推 DIR 后放进开发机后台（tmux）跑，马上返回
 #   RBOX_QUEUE=heavy rbox bg …      全量、门禁、渲染：同一时间只跑一个；light：单浏览器拍图，最多 3 个并排、和 heavy 互斥（queue_run.sh）
@@ -131,6 +135,25 @@ git_align() {
     git ls-files -z -d | xargs -0 -r git update-index --skip-worktree"
 }
 remote_cmd() { local c=""; for a in "$@"; do c+=" $(q "$a")"; done; echo "$c"; }
+DEPLOY_LOG="$HOME/.local/share/photo-rbox/devbox-deploy-times.tsv"   # Harness 统一的 9 列装机记录，第 2 列写「IP:端口」
+# ffmpeg 钉 9.0 发布版，和本机 Homebrew 同一大版本。不用 master：它删了 -filter_complex_script，烧字幕全挂（10-27 实测）
+FFMPEG_TAR=ffmpeg-n9.0-latest-linux64-gpl-9.0.tar.xz
+metered_gw() { local gw; gw="$(route -n get default 2>/dev/null | awk '/gateway/{print $2}')"; [[ $gw == 192.168.43.1 || $gw == 172.20.10.1 ]] && echo "$gw"; return 0; }
+ffmpeg_upload() {   # 本机下载 BtbN 的 ffmpeg 9.0（10-27：本机 54–64 秒），单独的连接限速传到开发机 $LOGDIR/ffmpeg-upload.tar.xz（约 58 秒）
+  local up="$LOGDIR/ffmpeg-upload.tar.xz" d gw free
+  rs "rm -f $LOGDIR/ffmpeg-upload.none"   # 上一次放弃中转留下的标记，不能让这次的安装误以为又放弃了
+  if rs "$LOGDIR/bin/ffmpeg -version 2>/dev/null | head -1 | grep -q 'version n9\\.0'"; then echo "[rbox] 开发机已有 ffmpeg 9.0，不传"; return 0; fi
+  if rs "test -s $up && xz -t $up"; then echo "[rbox] 开发机上已有传好的 ffmpeg 包"; return 0; fi
+  gw="$(metered_gw)"; free=$(df -k "${TMPDIR:-/tmp}" | awk 'NR==2{print $4}')
+  if [ -n "$gw" ] && [ "${RBOX_ALLOW_METERED:-}" != 1 ]; then echo "[rbox] 本机在手机热点上（网关 ${gw}），ffmpeg 包 150 MB 不经本机中转，开发机自己去 GitHub 下（慢）"; rs "touch $LOGDIR/ffmpeg-upload.none"; return 0; fi
+  if [ "${free:-0}" -lt 1048576 ]; then echo "[rbox] 本机临时目录可用不到 1 GB，不经本机中转 ffmpeg，开发机自己去 GitHub 下（慢）"; rs "touch $LOGDIR/ffmpeg-upload.none"; return 0; fi
+  d="$(mktemp -d)"
+  if curl -fsSL --max-time 600 -o "$d/$FFMPEG_TAR" "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/$FFMPEG_TAR" && xz -t "$d/$FFMPEG_TAR" \
+    && rsync --partial --bwlimit="${RBOX_BWLIMIT:-3072}" -e "$BIG_SSH" "$d/$FFMPEG_TAR" "$HOST:$up"; then
+    echo "[rbox] ffmpeg 9.0 已从本机传到开发机"
+  else echo "[rbox] 本机下载或上传 ffmpeg 失败，开发机自己去 GitHub 下（慢）"; rs "touch $LOGDIR/ffmpeg-upload.none"; fi
+  rm -rf "$d"
+}
 # 发重活之前问 Harness 控制台的在线判定（Core scripts/devbox/devbox_status.py，用户 10-27 定：开发机在线就在开发机上开发，不在线就在本机）：
 # 退出码 0（devbox）照常发；10（local）停下，改在本机跑并守本机预算；其他（读不到状态）也停下，不许当成 local（Core「读不到不是没有」）
 where_check() {
@@ -168,51 +191,64 @@ case "${1:-}" in
       ls -ld $(q "$LOCAL_ROOT") $(for r in "${WT_ROOTS[@]}"; do q "$r"; printf ' '; done); nproc; free -h | sed -n 2p; df -h / | tail -1" ;;
   setup)
     t0=$SECONDS; freeze="$(mktemp)"
+    rs "test -f $(q "$LOCAL_ROOT")/scripts/setup_edit_tools.py" || die "开发机主目录还没打底：先 rbox sync <任意 worktree>，再在开发机上 rsync -a <那个 worktree>/ $RBOX_ROOT/（见 SKILL.md「换机器」）"
+    # ffmpeg 和开发机装 Python 包同时进行：本机后台下载、限速上传（开发机直连 GitHub 发布文件只有 100–200 KB/s，10-27 白等了 19 分钟）
+    ffmpeg_upload > "$freeze.ffmpeg.log" 2>&1 & fpid=$!
     "$LOCAL_ROOT/.venv/bin/python" -m pip freeze --exclude-editable > "$freeze"
     pyv="$("$LOCAL_ROOT/.venv/bin/python" -c 'import platform; print(platform.python_version())')"
-    rs "cat > $LOGDIR/freeze.txt" < "$freeze"; rm -f "$freeze"
-    rs "bash -s -- $(q "$LOCAL_ROOT") $pyv $LOGDIR" < "$HERE/setup_remote.sh"
-    echo "[rbox] setup 用了 $((SECONDS - t0)) 秒" ;;
+    rs "cat > $LOGDIR/freeze.txt" < "$freeze"
+    rs "bash -s -- $(q "$LOCAL_ROOT") $pyv $LOGDIR" < "$HERE/setup_remote.sh" || { wait $fpid; cat "$freeze.ffmpeg.log"; rm -f "$freeze" "$freeze.ffmpeg.log"; die "开发机安装失败，见上面的输出"; }
+    wait $fpid || true; cat "$freeze.ffmpeg.log"; rm -f "$freeze" "$freeze.ffmpeg.log"
+    echo "[rbox] setup 用了 $((SECONDS - t0)) 秒（照 Harness 格式记进 ${DEPLOY_LOG}，失败的那次也记）" ;;
   sync) shift; push "${1:-}" ;;
   list) shift; p="$(abs "${1:-}")"; file_list "$p" | tr '\0' '\n' ;;
   studio-data)
-    # 真实 Studio 数据（有用户的作品和照片）：用户 2026-10-27 同意放到这台开发机，R277、R278 门禁要复制它。
-    # 只推门禁用到的几份，放在同一路径（开发机上 ~/.photo-content-os 软链到 /root/.photo-content-os）；机器到期前删掉（README「到期」）。
-    # 约 1.8 GB：单独的连接、限速（RBOX_BWLIMIT，KB/s，默认 3072），studio-r278 和 studio-r276 相同的文件在开发机上直接拷（--copy-dest），不重复传
-    t0=$SECONDS; bw="${RBOX_BWLIMIT:-3072}"; D="$HOME/.photo-content-os"
-    for s in studio-r276 studio-r278 evidence/R277-shot-visual-revision; do
-      [ -d "$D/$s" ] || { echo "[rbox] 本机没有 $D/$s，跳过"; continue; }
-      basis=""; [ "$s" = studio-r278 ] && basis="--copy-dest=/root/.photo-content-os/studio-r276/"
-      rs "mkdir -p /root/.photo-content-os/$(dirname "$s")"
-      rsync -a --partial --delete --bwlimit="$bw" $basis -e "$BIG_SSH" "$D/$s/" "$HOST:/root/.photo-content-os/$s/" --info=stats1 2>&1 | grep -E 'Total transferred|Number of regular files transferred' || true
-      echo "[rbox] $s 推完（累计 $((SECONDS - t0)) 秒）"
-    done
-    # R277 门禁打开的作品 project-fc6baa3294 连着素材根下的 testing/R131-hiatus-video（236 KB，只有 json 和 html，没有照片）；
-    # 少了它 /api/review/catalog 报「已连接的本地素材目录不可用」，作品页出不来（10-27 实测）。开发机上的素材根只放这一个目录
-    # 素材目录接口挨个读每件作品，任何一件连着的目录不存在就整个报错；目录存在、是空的，那件作品就显示成空作品（studio/media_review.py piece）。
-    # 所以别的作品连着的目录只在开发机上建空目录占位：其中 4 个是真实照片、视频项目（10-27 共约 8.7 GB），不传
-    mr="$HOME/Desktop/照片筛选"; ws="testing/R131-hiatus-video"
-    rs "mkdir -p /root/media-root && { [ -e $(q "$mr") ] || [ -L $(q "$mr") ] || ln -s /root/media-root $(q "$mr"); }"
-    if [ -d "$mr/$ws" ]; then
-      rs "mkdir -p /root/media-root/$(dirname "$ws")"; rsync -a --partial -e "$BIG_SSH" "$mr/$ws/" "$HOST:/root/media-root/$ws/"; echo "[rbox] 作品连着的素材目录 $ws 推完"
-    fi
-    holders="$(python3 -I -c 'import json, sys, os
+    # 真实 Studio 数据（有用户的作品和照片）：用户 2026-10-27 同意放到这台开发机。按门禁只推它读的东西，同一路径
+    # （开发机上 ~/.photo-content-os 软链到 /root/.photo-content-os）；机器到期前删掉（SKILL.md「换机器」）。
+    #   r278（默认）：R278 门禁只读 studio-r276 里一个作品的 job.json（10-27 第一次把 studio-r276 整份 806 MB 传了，白花 330 秒），外加设计图
+    #   r277：R277 门禁要复制整份 studio-r278、回放 R277 证据（约 1.2 GB），作品要连着素材目录。R277 现在因字体度量留在本机，
+    #         等镜头代码固定了字体再用（SKILL.md「R277 为什么还在本机」）
+    # 单独的连接、限速（RBOX_BWLIMIT，KB/s，默认 3072；本机上行实测约 2.2 MB/s）
+    shift; what="${1:-r278}"; t0=$SECONDS; bw="${RBOX_BWLIMIT:-3072}"; D="$HOME/.photo-content-os"
+    [[ $what == r278 || $what == r277 ]] || die "用法：studio-data [r278|r277]"
+    if [ "$what" = r278 ]; then
+      job="studio-r276/direct-jobs-parked/project-fc6baa3294/dv_0e184e961bd14ac084c67411/job.json"
+      [ -f "$D/$job" ] || die "本机没有 $D/$job"
+      rs "mkdir -p /root/.photo-content-os/$(dirname "$job")"
+      rsync -a --partial -e "$BIG_SSH" "$D/$job" "$HOST:/root/.photo-content-os/$job"; echo "[rbox] R278 读的真实作品 job.json 推完"
+      img="docs/tasks/R278-direct-rescript/design/img"   # 本机排除在 git 之外的媒体，推到开发机主目录同一路径
+      [ -d "$LOCAL_ROOT/$img" ] || die "本机没有 $LOCAL_ROOT/$img"
+      rs "mkdir -p $(q "$LOCAL_ROOT/$img")"; rsync -a --partial -e "$BIG_SSH" "$LOCAL_ROOT/$img/" "$HOST:$LOCAL_ROOT/$img/"; echo "[rbox] R278 设计图推完"
+    else
+      for s in studio-r278 evidence/R277-shot-visual-revision; do
+        [ -d "$D/$s" ] || { echo "[rbox] 本机没有 ${D}/${s}，跳过"; continue; }
+        rs "mkdir -p /root/.photo-content-os/$(dirname "$s")"
+        rsync -a --partial --delete --bwlimit="$bw" -e "$BIG_SSH" "$D/$s/" "$HOST:/root/.photo-content-os/$s/" --info=stats1 2>&1 | grep -E 'Total transferred|Number of regular files transferred' || true
+        echo "[rbox] $s 推完（累计 $((SECONDS - t0)) 秒）"
+      done
+      # 素材目录接口挨个读每件作品，任何一件连着的目录不存在就整个报错（studio/media_review.py piece）。R277 打开的作品 project-fc6baa3294
+      # 连着素材根下的 testing/R131-hiatus-video（236 KB，只有 json 和 html）：整份推；别的作品连着的目录只建空目录占位，
+      # 其中 4 个是真实照片、视频项目（10-27 共约 8.7 GB），不传
+      mr="$HOME/Desktop/照片筛选"; ws="testing/R131-hiatus-video"
+      rs "mkdir -p /root/media-root && { [ -e $(q "$mr") ] || [ -L $(q "$mr") ] || ln -s /root/media-root $(q "$mr"); }"
+      if [ -d "$mr/$ws" ]; then
+        rs "mkdir -p /root/media-root/$(dirname "$ws")"; rsync -a --partial -e "$BIG_SSH" "$mr/$ws/" "$HOST:/root/media-root/$ws/"; echo "[rbox] 作品连着的素材目录 $ws 推完"
+      fi
+      holders="$(python3 -I -c 'import json, sys, os
 paths = set()
 for st in sys.argv[2:]:
     try: d = json.load(open(os.path.join(st, "creative-projects.json")))
     except OSError: continue
     paths |= {(p.get("local_workspace") or {}).get("local_path") or "" for p in d.get("projects", [])}
 root = sys.argv[1] + "/"
-print("\n".join(sorted(p[len(root):] for p in paths if p.startswith(root))))' "$mr" "$D/studio-r276" "$D/studio-r278")"
-    if [ -n "$holders" ]; then
-      cmd=""; while IFS= read -r h; do [ "$h" = "$ws" ] || cmd+="mkdir -p $(q "/root/media-root/$h"); "; done <<<"$holders"
-      rs "$cmd true"; echo "[rbox] 其余作品连着的素材目录在开发机上建了空目录占位（照片不传）：$(grep -cv "^$ws\$" <<<"$holders") 个"
+print("\n".join(sorted(p[len(root):] for p in paths if p.startswith(root))))' "$mr" "$D/studio-r278")"
+      if [ -n "$holders" ]; then
+        cmd=""; while IFS= read -r h; do [ "$h" = "$ws" ] || cmd+="mkdir -p $(q "/root/media-root/$h"); "; done <<<"$holders"
+        rs "$cmd true"; echo "[rbox] 其余作品连着的素材目录在开发机上建了空目录占位（照片不传）：$(grep -cv "^$ws\$" <<<"$holders") 个"
+      fi
     fi
-    # R278 门禁读的设计图（docs/tasks/R278-direct-rescript/design/img，本机排除在 git 之外、媒体）：推到开发机主目录同一路径
-    img="docs/tasks/R278-direct-rescript/design/img"
-    if [ -d "$LOCAL_ROOT/$img" ]; then rs "mkdir -p $(q "$LOCAL_ROOT/$img")"; rsync -a --partial -e "$BIG_SSH" "$LOCAL_ROOT/$img/" "$HOST:$LOCAL_ROOT/$img/"; echo "[rbox] R278 设计图推完"; fi
-    rs "du -sh /root/.photo-content-os/studio-r276 /root/.photo-content-os/studio-r278 /root/.photo-content-os/evidence/R277-shot-visual-revision 2>/dev/null; df -h / | tail -1"
-    echo "[rbox] Studio 数据推完，用了 $((SECONDS - t0)) 秒" ;;
+    rs "du -sh /root/.photo-content-os 2>/dev/null; df -h / | tail -1"
+    echo "[rbox] Studio 数据（${what}）推完，用了 $((SECONDS - t0)) 秒" ;;
   harness)
     # 门禁要读 Harness Core 的检查脚本（HARNESS_CORE）。只推 Core 里 git 跟踪的文件，同一绝对路径
     t0=$SECONDS; list="$(mktemp)"; git -C "$HARNESS_ROOT" ls-files -z -- Core | drop_private > "$list"
@@ -252,7 +288,7 @@ print("\n".join(sorted(p[len(root):] for p in paths if p.startswith(root))))' "$
     # 一次 ssh 问三件事：有结果了 / 还在跑 / 既没结果也不在跑（没起来或被杀），最后一种立刻退出，不空转（寸木 10-26 空转过 25 分钟）
     while :; do
       st=$(rs "if [ -f $LOGDIR/$name.rc ]; then echo done; elif tmux has-session -t =$name 2>/dev/null; then echo run; else echo gone; fi")
-      [ "$st" = done ] && break
+      [ "$st" = "done" ] && break
       [ "$st" = gone ] && die "${name} 没有结果也不在跑（没启动成功，或被杀了）；日志：rbox log ${name} 40"
       [ $((SECONDS - t0)) -ge "$max" ] && die "${name} 等了 $((SECONDS - t0)) 秒还没结束（RBOX_WAIT_MAX=${max}），还在后台跑"
       sleep "$every"
@@ -277,5 +313,5 @@ print("\n".join(sorted(p[len(root):] for p in paths if p.startswith(root))))' "$
     shift; rs "t=\$(mktemp $LOGDIR/.ai.XXXXXX) && cat > \$t && bash \$t ${1:-}; rc=\$?; rm -f \$t; exit \$rc" < "$HERE/ai_check_remote.sh" ;;
   exposure-check)
     rs "bash -s" < "$HERE/exposure_check_remote.sh" ;;
-  *) sed -n '2,24p' "$0" | sed 's/^# \{0,1\}//'; exit 2 ;;
+  *) awk 'NR > 1 && /^set -euo/ { exit } NR > 1' "$0" | sed 's/^# \{0,1\}//'; exit 2 ;;
 esac

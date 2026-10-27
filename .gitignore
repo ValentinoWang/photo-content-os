@@ -89,6 +89,8 @@ htmlcov/
 # `harnessctl link`; never commit them.
 develop/Harness/*
 .agents/skills/*
+# 项目自己的技能，不是 Core 链接，要进仓库
+!.agents/skills/photo-remote-dev-box/
 scripts/quality/check_ai_egress_ownership.py
 scripts/quality/check_evidence_retention.py
 scripts/quality/test_pruning.py

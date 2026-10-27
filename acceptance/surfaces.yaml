@@ -175,7 +175,7 @@
       "key": "photo.video-pipeline"
     },
     {
-      "glob": "scripts/devbox/**",
+      "glob": ".agents/skills/photo-remote-dev-box/**",
       "key": "photo.devbox"
     }
   ]

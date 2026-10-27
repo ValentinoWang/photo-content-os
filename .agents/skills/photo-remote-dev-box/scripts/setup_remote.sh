@@ -27,7 +27,7 @@ if [ ! -x /root/.local/bin/uv ]; then
 fi
 tmux -V; melt --version 2>&1 | head -1; $UV --version
 
-step "Python $PYV（uv）"
+step "Python ${PYV}（uv）"
 $UV python install "$PYV" 2>&1 | tail -1 || echo "uv 没有 ${PYV}，用已装的 3.13"
 if ! .venv/bin/python -c 'import sys; sys.exit(0)' 2>/dev/null; then
   $UV venv -q --python "$PYV" .venv 2>/dev/null || $UV venv -q --python 3.13 .venv
@@ -61,18 +61,21 @@ export ONNXRUNTIME_NODE_INSTALL=skip
 .venv/bin/python scripts/setup_edit_tools.py
 ls .tools/browsers
 
-step "ffmpeg（BtbN 静态版）"
-# 开发机直连 GitHub 的发布文件只有 100–200 KB/s，157 MB 的包要 15 分钟以上；本机下载约 2 MB/s（10-27 实测 64 秒），
-# 再用单独的连接限速传上来约 1 分钟。所以先用本机传上来的 $L/ffmpeg-upload.tar.xz（见 README「换机器」），没有才直接下，限时 20 分钟
+step "ffmpeg 9.0（BtbN 静态版，和本机 Homebrew 同一大版本）"
+# 开发机直连 GitHub 的发布文件只有 100–200 KB/s，150 MB 的包要 15 分钟以上；rbox setup 同时在本机下载、限速传到 $L/ffmpeg-upload.tar.xz
+# （10-27：本机下载 54–64 秒、上传约 58 秒）。这里等它传到（rsync 先写临时名、传完才改名，文件出现就是传完了），
+# 本机放弃中转（热点、空间不够、下载失败）会留下 ffmpeg-upload.none，才自己去 GitHub 下，限时 20 分钟。
+# 钉 9.0：master 版删了 -filter_complex_script，烧字幕全挂（10-27 实测）
 mkdir -p "$L/bin"
-if ! "$L/bin/ffmpeg" -version >/dev/null 2>&1; then
+if ! "$L/bin/ffmpeg" -version 2>/dev/null | head -1 | grep -q 'version n9\.0'; then
   src="$L/ffmpeg-upload.tar.xz"
+  for _ in $(seq 1 180); do { [ -s "$src" ] || [ -f "$L/ffmpeg-upload.none" ]; } && break; sleep 5; done
   if [ ! -s "$src" ]; then
     src=/tmp/ffmpeg.tar.xz
-    timeout -k 10 1200 wget -q -O "$src" https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz
+    timeout -k 10 1200 wget -q -O "$src" https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n9.0-latest-linux64-gpl-9.0.tar.xz
   fi
   rm -rf /tmp/ffmpeg-x && mkdir /tmp/ffmpeg-x && tar xJf "$src" -C /tmp/ffmpeg-x --strip-components=1
-  cp /tmp/ffmpeg-x/bin/ffmpeg /tmp/ffmpeg-x/bin/ffprobe "$L/bin/" && rm -rf /tmp/ffmpeg-x /tmp/ffmpeg.tar.xz
+  cp /tmp/ffmpeg-x/bin/ffmpeg /tmp/ffmpeg-x/bin/ffprobe "$L/bin/" && rm -rf /tmp/ffmpeg-x /tmp/ffmpeg.tar.xz "$L/ffmpeg-upload.none"
 fi
 "$L/bin/ffmpeg" -version | head -1
 
@@ -82,10 +85,11 @@ step "macOS 替身：字体路径、cp -cR"
 mkdir -p /System/Library/Fonts/Supplemental
 ln -sfn /usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc "/System/Library/Fonts/STHeiti Medium.ttc"
 ln -sfn /usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf /System/Library/Fonts/Supplemental/Arial.ttf
-# cp -cR 替身：只在 with-macos-cp 包住的命令里生效（见 scripts/devbox/with-macos-cp）
+# cp -cR 替身：只在 with-macos-cp 包住的命令里生效（见本技能 scripts/with-macos-cp）
 mkdir -p "$L/shims" "$L/bin"
 [ -x "$L/shims/cp.real" ] || cp /usr/bin/cp "$L/shims/cp.real"
-install -m 755 scripts/devbox/cp-shim "$L/shims/cp"; install -m 755 scripts/devbox/with-macos-cp "$L/bin/with-macos-cp"
+K=.agents/skills/photo-remote-dev-box/scripts
+install -m 755 $K/cp-shim "$L/shims/cp"; install -m 755 $K/with-macos-cp "$L/bin/with-macos-cp"
 ls -la "/System/Library/Fonts/STHeiti Medium.ttc" /System/Library/Fonts/Supplemental/Arial.ttf "$L/bin/with-macos-cp"
 
 step 完成
