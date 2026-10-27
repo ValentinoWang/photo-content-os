@@ -4,7 +4,7 @@
 - 任务编号：2026-10-26-R278-photo-direct-rescript
 - 人工验收绑定：acceptance/human/2026-W44/2026-10-26-R278-photo-direct-rescript/binding.md
 - 验收合同：agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md
-- 合同版本：3
+- 合同版本：4
 - 清单状态：已批准
 - 所需人工角色：产品负责人
 - 清单负责人：任务委托人

@@ -5,10 +5,10 @@
 - SSOT path: none
 - SSOT node: none
 - Acceptance contract: agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md
-- Contract version: 3
-- Contract SHA-256: 0e2a37aa6055f6a357a78b7345ea0c0d31d6d144076e0d18db4710aa0e39bb8d
+- Contract version: 4
+- Contract SHA-256: 28846dbb7938c890f1ba0879e777798688816ef0b3602341d5c64715859bd017
 - Human checklist: acceptance/human/2026-W44/2026-10-26-R278-photo-direct-rescript/checklist.md
-- Checklist SHA-256: fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f
+- Checklist SHA-256: 1b0ef80db91ac44b27c230ba0e5a02264b733dc9c86374632e0742ef9f2f9b96
 
 ## Item bindings
 

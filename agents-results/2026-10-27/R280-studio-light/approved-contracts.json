@@ -1,0 +1,44 @@
+[
+  {
+    "task": "2026-10-26-R282-photo-direct-handoff-storyboard",
+    "old_version": "1",
+    "new_version": 2,
+    "changes": [
+      {
+        "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+        "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+        "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc",
+        "changed": true
+      }
+    ],
+    "criteria_steps_protected_paths_blockers_unchanged": true
+  },
+  {
+    "task": "2026-10-26-R283-photo-direct-style-library",
+    "old_version": "2",
+    "new_version": 3,
+    "changes": [
+      {
+        "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+        "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+        "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc",
+        "changed": true
+      }
+    ],
+    "criteria_steps_protected_paths_blockers_unchanged": true
+  },
+  {
+    "task": "2026-10-26-R278-photo-direct-rescript",
+    "old_version": "3",
+    "new_version": 4,
+    "changes": [
+      {
+        "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+        "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+        "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc",
+        "changed": true
+      }
+    ],
+    "criteria_steps_protected_paths_blockers_unchanged": true
+  }
+]

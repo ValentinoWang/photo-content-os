@@ -1,11 +1,11 @@
 # Acceptance Contract: 2026-10-26-R282-photo-direct-handoff-storyboard
 
 - Task ID: 2026-10-26-R282-photo-direct-handoff-storyboard
-- Contract version: 1
+- Contract version: 2
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户2026-10-27R282第二次交付准备指令及现行批准需求/设计；只装配原三项，不追称实现前合同已存在，不代表人工PASS
+- Approval evidence: 用户2026-10-27R280交付准备授权，R280批准设计的追加批准的旧任务横向边界扩展共用门禁；只更新当前摘要/版本/来源，AC/H、保护路径和阻塞判据不变；不代表人工PASS
 - Request source: acceptance/requests/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard/request.json; docs/tasks/R282-direct-handoff/TASK.md
 - SSOT node: none
 - SSOT path: none
@@ -14,7 +14,7 @@
 - Assumption IDs: none
 - Invalidation keys: studio.direct-handoff-storyboard, studio.direct-handoff-narration, studio.direct-handoff-newer
 - AC budget: 3
-- Baseline identity: 6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3，冻结基准见baseline.json
+- Baseline identity: e26ec2f19d5e1136577873beb932f537a2a0037f；本批输入见handoff-r282/
 - Product Context refs: agents-results/2026-10-27/R282-direct-handoff/acceptance-context.json
 - Role Context refs: agents-results/2026-10-27/R282-direct-handoff/acceptance-context.json
 - Resolved Surface Contract refs: agents-results/2026-10-27/R282-direct-handoff/resolved-surface-contract.json
@@ -86,7 +86,7 @@ Given 同作品有效落地包；When 首次进入；Then 填六列、图片和�
 | tests/test_r282_frontend.py | b8415d29aad4e5419217108747f5f0f65cfcb278e4f4904aeb8cdf7072f425f5 | AC-01, AC-02, AC-03 |
 | tests/test_r282_handoff.py | 58d24528c11d3e8b02b8b90205049d1b07cf46bd9837159bfa84ec666c9053fb | AC-01, AC-02, AC-03 |
 | tests/test_r282_frontend.mjs | 6ad869cdb883b58abdedeaf2e1d95670082a1bb3f4d483918dd44c2292e73d5e | AC-01, AC-02, AC-03 |
-| scripts/direct_video/rescript_frontend_gate.mjs | a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055 | AC-01, AC-02, AC-03 |
+| scripts/direct_video/rescript_frontend_gate.mjs | 91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc | AC-01, AC-02, AC-03 |
 
 ## Requirements-test traceability
 

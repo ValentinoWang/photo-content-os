@@ -4,7 +4,7 @@
 - 任务编号：2026-10-26-R282-photo-direct-handoff-storyboard
 - 人工验收绑定：acceptance/human/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard/binding.md
 - 验收合同：agents-results/2026-10-27/R282-direct-handoff/acceptance-contract.md
-- 合同版本：1
+- 合同版本：2
 - 清单状态：已批准
 - 所需人工角色：产品负责人
 - 清单负责人：任务委托人

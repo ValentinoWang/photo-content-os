@@ -1,11 +1,11 @@
 # Acceptance Contract: 2026-10-26-R283-photo-direct-style-library
 
 - Task ID: 2026-10-26-R283-photo-direct-style-library
-- Contract version: 2
+- Contract version: 3
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户2026-10-27R282第二次交付准备授权，R282批准设计的交接分支和旧包兼容扩展共用门禁；只更新当前摘要/版本/来源，AC/H、保护路径和阻塞判据不变；不代表人工PASS
+- Approval evidence: 用户2026-10-27R280交付准备授权，R280批准设计的追加批准的旧任务横向边界扩展共用门禁；只更新当前摘要/版本/来源，AC/H、保护路径和阻塞判据不变；不代表人工PASS
 - Request source: acceptance/requests/2026-W44/2026-10-26-R283-photo-direct-style-library/request.json; docs/tasks/R283-direct-style-library/TASK.md
 - SSOT node: none
 - SSOT path: none
@@ -14,7 +14,7 @@
 - Assumption IDs: none
 - Invalidation keys: studio.direct-style-library, studio.direct-library-generation, studio.direct-library-adjustment
 - AC budget: 3
-- Baseline identity: 6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3；本批输入见handoff-r282/
+- Baseline identity: e26ec2f19d5e1136577873beb932f537a2a0037f；本批输入见handoff-r282/
 - Product Context refs: agents-results/2026-10-26/R283-direct-style-library/acceptance-context.json
 - Role Context refs: agents-results/2026-10-26/R283-direct-style-library/acceptance-context.json
 - Resolved Surface Contract refs: agents-results/2026-10-26/R283-direct-style-library/resolved-surface-contract.json
@@ -86,7 +86,7 @@ Given 有台词；When 选白板库卡；Then 单选、预览及生成载荷对�
 | tests/test_r283_frontend.py | ef550d5c94ac83bef05058906c9c756db4ec010e2f030ae60899e7fbeed29f1c | AC-01, AC-02, AC-03 |
 | tests/test_r283_style_library.py | 41db92d1130c2547a28fdc45c42042b4e24bf90c84a2d486d0ac0c1395f7dfcd | AC-01, AC-02, AC-03 |
 | tests/test_r283_frontend.mjs | 78aa1ea9717ea59ecc3a6e3aafac23719b8e9638e8d39f7d67fddcebbb1fb2ca | AC-01, AC-02, AC-03 |
-| scripts/direct_video/rescript_frontend_gate.mjs | a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055 | AC-01, AC-02, AC-03 |
+| scripts/direct_video/rescript_frontend_gate.mjs | 91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc | AC-01, AC-02, AC-03 |
 
 ## Requirements-test traceability
 
