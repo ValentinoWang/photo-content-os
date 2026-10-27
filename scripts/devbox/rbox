@@ -35,14 +35,15 @@ TAIL="${RBOX_TAIL:-40}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 HARNESS_ROOT="${RBOX_HARNESS_ROOT:-/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering}"   # 门禁读 Core/skills/ui-copy-quality；rbox harness 推过去，两边同一绝对路径
 # 门禁和渲染找浏览器、Playwright、字体的变量（本机在 R278 REPORT-F1 §7 里手设的那几个），开发机上指到主目录装好的 .tools 和 Noto CJK。
-# 素材根 LOCAL_MEDIA_ROOT 指到空目录：素材只在本机（runtime_paths.local_media_root），测试自己建临时素材
+# 素材根 LOCAL_MEDIA_ROOT 用本机默认的同名路径 ~/Desktop/照片筛选，开发机上软链到 /root/media-root：里面只有 rbox studio-data 推的
+# 文本素材目录和空的占位目录，没有照片（测试自己建临时素材；门禁打开的真实作品要求素材目录在素材根内）
 # 本机字体是 STHeiti Medium（黑体里偏粗的一款）；apt 装的 Noto Sans CJK 只有 Regular、Bold，取 Bold
 TOOLS="$LOCAL_ROOT/.tools"; CJK=/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc
-REMOTE_ENV="export PATH=$LOGDIR/bin:$TOOLS/node/bin:/root/.local/bin:\$PATH CI=true LOCAL_MEDIA_ROOT=$LOGDIR/no-media PHOTO_CONTENT_OS_DEVBOX=1 \
+REMOTE_ENV="export PATH=$LOGDIR/bin:$TOOLS/node/bin:/root/.local/bin:\$PATH CI=true LOCAL_MEDIA_ROOT=$(printf %q "$HOME/Desktop/照片筛选") PHOTO_CONTENT_OS_DEVBOX=1 \
 HARNESS_CORE=$(printf %q "$HARNESS_ROOT/Core") UI_COPY_QUALITY_CHECKER=$(printf %q "$HARNESS_ROOT/Core/skills/ui-copy-quality/scripts/check_ui_copy_quality.py") \
 VIDEO_RENDER_PLAYWRIGHT_MODULE=$(printf %q "$TOOLS/browser-runtime/node_modules/playwright/index.js") PLAYWRIGHT_MODULE=$(printf %q "$TOOLS/browser-runtime/node_modules/playwright/index.mjs") \
 VIDEO_RENDER_BROWSER=$(printf %q "$TOOLS/browsers/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell") \
-DIRECT_VIDEO_FONT=$CJK VIDEO_RENDER_TEST_FONT=$CJK; mkdir -p $LOGDIR/tmp $LOGDIR/no-media"
+DIRECT_VIDEO_FONT=$CJK VIDEO_RENDER_TEST_FONT=$CJK; mkdir -p $LOGDIR/tmp /root/media-root"
 # 每个任务用自己的 TMPDIR，结束就删；任务名长时截短：Chrome 在 TMPDIR 下建单例套接字，Unix 套接字路径上限 107 字节（寸木 10-27 实测）
 task_tmp_dir() { if [ "$(printf %s "$1" | wc -c)" -le 40 ]; then echo "$LOGDIR/tmp/$1"; else echo "$LOGDIR/tmp/$(printf %s "$1" | LC_ALL=C cut -c1-24)-$(printf %s "$1" | cksum | cut -d' ' -f1)"; fi; }
 task_tmp() { local t; t="$(task_tmp_dir "$1")"; if [ "${RBOX_KEEP_TMP:-}" = 1 ]; then echo "export TMPDIR=$t; mkdir -p $t"; else echo "export TMPDIR=$t; rm -rf $t; mkdir -p $t; trap 'rm -rf $t' EXIT"; fi; }
@@ -118,7 +119,7 @@ git_align() {
   rs "[ -d $BARE/objects ] || git init -q --bare $BARE; mkdir -p $BARE/info; grep -qx '/.venv' $BARE/info/exclude 2>/dev/null || echo '/.venv' >> $BARE/info/exclude"
   if ! rs "git -C $BARE cat-file -e $commit^{commit} 2>/dev/null"; then
     local t0=$SECONDS
-    echo "[rbox] 提交 ${commit:0:9} 不在开发机上，推过去（第一次推整个历史，约 430 MB，走单独的连接）"
+    echo "[rbox] 提交 ${commit:0:9} 不在开发机上，推过去（走单独的连接；10-27 第一次推整个历史 183 个提交只用了 3 秒）"
     GIT_SSH_COMMAND="$BIG_SSH" git -C "$p" push -q --no-thin "$HOST:$BARE" "+$commit:refs/rbox/$(basename "$p")" || die "推 git 提交到开发机失败"
     echo "[rbox] 推提交用了 $((SECONDS - t0)) 秒"
   fi
@@ -153,6 +154,7 @@ case "${1:-}" in
   init)
     links=""; for r in "${WT_ROOTS[@]}"; do links+="mkdir -p $(q "$(dirname "$r")") && { [ -e $(q "$r") ] || [ -L $(q "$r") ] || ln -s $RBOX_WT $(q "$r"); } && "; done
     # 门禁、渲染默认把截图和帧写到 ~/.photo-content-os/evidence（开发机上是 /root 下）；本机同名路径软链过去，rbox pull 用本机路径就能拉回来
+    links+="mkdir -p /root/media-root && { [ -e $(q "$HOME/Desktop/照片筛选") ] || [ -L $(q "$HOME/Desktop/照片筛选") ] || ln -s /root/media-root $(q "$HOME/Desktop/照片筛选"); } && "
     links+="mkdir -p /root/.photo-content-os/evidence && { [ -e $(q "$HOME/.photo-content-os") ] || [ -L $(q "$HOME/.photo-content-os") ] || ln -s /root/.photo-content-os $(q "$HOME/.photo-content-os"); } && "
     rs "mkdir -p $(q "$(dirname "$LOCAL_ROOT")") $RBOX_ROOT $RBOX_WT $LOGDIR/tmp $LOGDIR/bin && chmod 700 $LOGDIR \
       && { [ -e $(q "$LOCAL_ROOT") ] || [ -L $(q "$LOCAL_ROOT") ] || ln -s $RBOX_ROOT $(q "$LOCAL_ROOT"); } && $links \
@@ -178,6 +180,27 @@ case "${1:-}" in
       rsync -a --partial --delete --bwlimit="$bw" $basis -e "$BIG_SSH" "$D/$s/" "$HOST:/root/.photo-content-os/$s/" --info=stats1 2>&1 | grep -E 'Total transferred|Number of regular files transferred' || true
       echo "[rbox] $s 推完（累计 $((SECONDS - t0)) 秒）"
     done
+    # R277 门禁打开的作品 project-fc6baa3294 连着素材根下的 testing/R131-hiatus-video（236 KB，只有 json 和 html，没有照片）；
+    # 少了它 /api/review/catalog 报「已连接的本地素材目录不可用」，作品页出不来（10-27 实测）。开发机上的素材根只放这一个目录
+    # 素材目录接口挨个读每件作品，任何一件连着的目录不存在就整个报错；目录存在、是空的，那件作品就显示成空作品（studio/media_review.py piece）。
+    # 所以别的作品连着的目录只在开发机上建空目录占位：其中 4 个是真实照片、视频项目（10-27 共约 8.7 GB），不传
+    mr="$HOME/Desktop/照片筛选"; ws="testing/R131-hiatus-video"
+    rs "mkdir -p /root/media-root && { [ -e $(q "$mr") ] || [ -L $(q "$mr") ] || ln -s /root/media-root $(q "$mr"); }"
+    if [ -d "$mr/$ws" ]; then
+      rs "mkdir -p /root/media-root/$(dirname "$ws")"; rsync -a --partial -e "$BIG_SSH" "$mr/$ws/" "$HOST:/root/media-root/$ws/"; echo "[rbox] 作品连着的素材目录 $ws 推完"
+    fi
+    holders="$(python3 -I -c 'import json, sys, os
+paths = set()
+for st in sys.argv[2:]:
+    try: d = json.load(open(os.path.join(st, "creative-projects.json")))
+    except OSError: continue
+    paths |= {(p.get("local_workspace") or {}).get("local_path") or "" for p in d.get("projects", [])}
+root = sys.argv[1] + "/"
+print("\n".join(sorted(p[len(root):] for p in paths if p.startswith(root))))' "$mr" "$D/studio-r276" "$D/studio-r278")"
+    if [ -n "$holders" ]; then
+      cmd=""; while IFS= read -r h; do [ "$h" = "$ws" ] || cmd+="mkdir -p $(q "/root/media-root/$h"); "; done <<<"$holders"
+      rs "$cmd true"; echo "[rbox] 其余作品连着的素材目录在开发机上建了空目录占位（照片不传）：$(grep -cv "^$ws\$" <<<"$holders") 个"
+    fi
     # R278 门禁读的设计图（docs/tasks/R278-direct-rescript/design/img，本机排除在 git 之外、媒体）：推到开发机主目录同一路径
     img="docs/tasks/R278-direct-rescript/design/img"
     if [ -d "$LOCAL_ROOT/$img" ]; then rs "mkdir -p $(q "$LOCAL_ROOT/$img")"; rsync -a --partial -e "$BIG_SSH" "$LOCAL_ROOT/$img/" "$HOST:$LOCAL_ROOT/$img/"; echo "[rbox] R278 设计图推完"; fi

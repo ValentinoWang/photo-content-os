@@ -70,7 +70,7 @@ Set `OBSIDIAN_ROOT` explicitly for document synchronization. Use the fixed
 
 证据里的图片、视频和音频放在仓库外 `~/.photo-content-os/evidence/<任务>/`，避免私人媒体随 Git 推送泄露；证据文本使用相对素材根的路径。
 
-上面的检查、pytest、门禁、拍图和渲染都在开发机上跑，不在本机跑：`scripts/devbox/rbox run <worktree> -- <命令>`，全量和门禁用 `RBOX_QUEUE=heavy scripts/devbox/rbox bg …`。用法、哪些文件不推、开发机和本机的差异，见 `scripts/devbox/README.md`。只有要复制本机真实 Studio 数据的门禁（R277、R278，以及 R276 的 `--real` 模式）暂时还在本机跑，守本机预算：浏览器只开无头的、同一时间只开一个，跑之前先数本机重活进程。
+上面的检查、pytest、门禁、拍图和渲染都在开发机上跑，不在本机跑：`scripts/devbox/rbox run <worktree> -- <命令>`，全量和门禁用 `RBOX_QUEUE=heavy scripts/devbox/rbox bg …`。R277、R278 门禁要用的真实 Studio 数据，用户同意放到开发机（`rbox studio-data`）。用法、门禁命令、哪些文件不推、开发机和本机的差异，见 `scripts/devbox/README.md`。在本机跑只有两种情况：Harness 判开发机不在线；R277 门禁（它的标注框位置按 Mac 的中文字体量，开发机上量不出同样的数，原因见 README）。在本机跑时守本机预算：浏览器只开无头的、同一时间只开一个，跑之前先数本机重活进程。
 
 ## Document synchronization
 

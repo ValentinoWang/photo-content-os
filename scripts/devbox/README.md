@@ -64,6 +64,8 @@ RBOX_QUEUE=heavy $R bg r278 "$PWD" -- env DIRECT_GATE_PORT=8768 R278_DESIGN_MEDI
 - 门禁要的 `HARNESS_CORE`、`UI_COPY_QUALITY_CHECKER`、`VIDEO_RENDER_PLAYWRIGHT_MODULE`、`VIDEO_RENDER_BROWSER`、字体变量，rbox 都设好了。
 - R277（以及 R276 `--real`）复制 Studio 状态时写死了 macOS 的 `/bin/cp -cR`，所以要用 `with-macos-cp` 包一层：它只在这一个命令的挂载命名空间里把 cp 换成替身，开发机上别的进程看到的还是原来的 cp。
 - R277、R278 要用真实 Studio 数据：先 `rbox studio-data`。
+- 2026-10-27 在开发机上的结果：R276 `--checks-only` 通过（26 次设计比对）；R278 通过（R278、R282、R283 共 54 次合同比较），和本机 R280 汇报的数字一样。
+- **R277 还得在本机跑**：开发机上它过了夹具、真实作品首屏和标注回放，最后卡在「固定的标注框和渲染器量出来的位置一致」。镜头代码没指定中文字体，Mac 上落到苹方，开发机上落到 Noto，行高不同，文字框矮了 5–9 像素（`review/02` 的 h 89→80、53→48）。苹方是苹果的字体，不能装到这台机器上。所以 R277 门禁按 Core「本机例外」第 2 种（被测对象只在本机）留在本机跑，守本机预算；要搬上来，得先让镜头代码固定用一款仓库自带的中文字体，并重新生成夹具里的框。
 
 ## 什么不推、什么放到了开发机
 
