@@ -38,7 +38,7 @@ const screenshots=[],contracts=[],browserErrors=[];
 let server,browser;
 async function mocks(page,state){
   let current=JSON.parse(readFileSync(join(ROOT,'tests/fixtures/r276-direct',state+'.json'),'utf8')),
-      anchor=Date.parse(current.job?.updatedAt),polls=0,createCalls=0,codeCalls=0,narrationCalls=0,rewriteCalls=0,composeCalls=0;
+      anchor=Date.parse(current.job?.updatedAt),polls=0,createCalls=0,codeCalls=0,narrationCalls=0,rewriteCalls=0,composeCalls=0,handoffReads=0;
   if(Number.isFinite(anchor)){const shift=Date.now()-anchor;for(const item of [current.job,...current.job.shots])for(const key of ['createdAt','updatedAt','writingStartedAt','writtenAt','renderedAt'])if(item[key])item[key]=new Date(Date.parse(item[key])+shift).toISOString();}
   if(['unavailable','read-error'].includes(state))current={ok:true,job:null};
   await page.route('https://fonts.googleapis.com/**',r=>r.abort());
@@ -46,6 +46,7 @@ async function mocks(page,state){
   await page.route('**/api/**',async route=>{
     const req=route.request(),url=new URL(req.url()),path=url.pathname;
     const json=(body,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(body)});
+    if(path===`/api/projects/${project.id}/direct/handoff`&&req.method()==='GET'){handoffReads++;return json({ok:true,handoff:null});}
     if(path.startsWith('/api/direct/styles/library/')){const ident=path.split('/').at(-2),ext=path.endsWith('.mp4')?'mp4':'jpg';assert(JSON.parse(readFileSync(join(ROOT,'tests/fixtures/r278-direct/first.json'),'utf8')).styles.library.some(x=>x.id===ident));return route.fulfill({contentType:ext==='mp4'?'video/mp4':'image/jpeg',body:readFileSync(join(ROOT,'scripts/direct_video/style_library',`${ident}.${ext}`))});}
     if(path.endsWith('/poster.jpg'))return route.fulfill({contentType:'image/jpeg',body:readFileSync(join(OUT,`poster-${path.split('/').at(-2)}.jpg`))});
     if(path.endsWith('/output.mp4')){
@@ -82,7 +83,7 @@ async function mocks(page,state){
     if(path==='/api/review/music')return json({ok:true,tracks:[]});
     throw new Error(`Unmocked API: ${req.method()} ${path}`);
   });
-  return {get current(){return current;},get polls(){return polls;},get createCalls(){return createCalls;},get codeCalls(){return codeCalls;},get narrationCalls(){return narrationCalls;},get rewriteCalls(){return rewriteCalls;},get composeCalls(){return composeCalls;},set(value){current=value;}};
+  return {get current(){return current;},get handoffReads(){return handoffReads;},get polls(){return polls;},get createCalls(){return createCalls;},get codeCalls(){return codeCalls;},get narrationCalls(){return narrationCalls;},get rewriteCalls(){return rewriteCalls;},get composeCalls(){return composeCalls;},set(value){current=value;}};
 }
 async function open(state,width=1440){
   const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
@@ -97,6 +98,7 @@ async function open(state,width=1440){
     await page.locator('[data-adjust]').fill('浅米色底');
     if(state==='unavailable'){await page.getByRole('button',{name:'生成',exact:true}).click();await page.locator('[data-design-id="DV-UNAVAILABLE"]').waitFor();}
   }else await page.locator(`[data-design-id="${state==='empty'?'DV-START':'DV-FILM'}"]`).waitFor();
+  assert.equal(mock.handoffReads,state==='read-error'?0:1,`${state}: initial handoff read`);
   return {page,mock};
 }
 async function capture(page,state,width){

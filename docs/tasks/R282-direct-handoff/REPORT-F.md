@@ -144,3 +144,61 @@ node scripts/direct_video/rescript_frontend_gate.mjs --capture-only --states=fir
 - 临时浏览器、8768 服务及临时状态已关闭/移除，8768 无监听；没有操作其他端口的 Studio。收尾磁盘约 **5.1 GiB**。相交的人工作品验收仍为 PENDING，未代签；没有创建 SSOT 开发包或 Obsidian 快照。
 
 补充 1 写完后停止。
+
+## 修一轮（交付前）
+
+2026-10-27，总控指定的修复轮。以当前 `2430f0d2ee490c317e38ab9eb1cb99e49349da6e` 为基准，先按原样串行复跑四项，再修仍然失败的门禁。**指定检查最终全部 PASS**；未提交、未推送，未应用交付线程的受阻补丁，未改产品前端、后端 `.py`、渲染器、设计合同、判据或 approved-extras。
+
+### 逐条根因与处理
+
+| 原失败 | 在恢复的 headless-shell 下复跑 | 根因与处理 |
+| --- | --- | --- |
+| R278 点浮层外面关闭后焦点返回失败 | 原码直接 PASS；R282/R278/R283 全门禁 52 次合同比较通过 | 本轮未复现。使用恢复的 1228 构建，保留原来的关闭和焦点返回断言，没有改交互或断言。先前环境使用了另一浏览器，本轮证据只支持「原固定浏览器下通过」，不能独立证明系统 Chrome 是唯一原因。 |
+| R276 缺 handoff 接口夹具 | 原码稳定报 `Unmocked API: GET …/direct/handoff` | R282 进入页面会读取交接投影，旧 R276 夹具未登记此 GET。只在 `frontend_gate.mjs` 补该作品精确路由的 `{ok:true,handoff:null}`，表示本场景没有交接包；未知路由仍失败。 |
+| R277 等 `DV-DETAIL` 15000ms 超时 | 原码稳定复现；错误清单明确记录同一 handoff GET 未处理 | 旧 R277 夹具把该请求变成 500，应用进入读取错误态，因此没有详情元素。只在 `revision_frontend_gate.mjs` 补同一空交接投影；没有增加等待时间或改产品错误处理。 |
+| R277 DOM 子进程 45 秒 / `shot_timeout` | 两条真实浏览器用例直接 **2 passed in 27.31s** | 恢复原浏览器后未复现；保留原 30 秒镜头预算、45 秒子进程预算及所有几何断言。不改渲染器、后端或测试 Python。与焦点问题一样，不将一次环境恢复后的通过当成系统 Chrome 唯一根因的证明。 |
+
+两个门禁同时加强了回归检查：统计真实挂载页面对 handoff 的读取次数，正常初次进入必须恰好一次；R276 的原读取失败场景必须为零，因为 latest 已失败。原场景、空态、读取错误、交互、来源隔离、合同和布局断言全部保留。修复前的两份失败日志就是缺夹具的红证据；没有把接口请求屏蔽、绕开或当作读取成功。
+
+实际源码改动只有：
+
+- `scripts/direct_video/frontend_gate.mjs`：精确 GET 夹具、读取计数和页面级断言。
+- `scripts/direct_video/revision_frontend_gate.mjs`：同上。
+- 本报告末尾追加本节，之前的报告正文保持逐字不变。
+
+### 固定环境与重跑结果
+
+本轮使用 **Playwright 1.61.1 / chromium-headless-shell revision 1228 / 149.0.7827.55**。可执行文件是恢复后的 `~/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-mac-arm64/chrome-headless-shell`，不是系统应用目录里的 Google Chrome。`--version` 显示的品牌文字为 `Google Chrome for Testing`；包元数据、具体可执行文件路径和 SHA-256 已记录到证据，不能仅凭品牌文字判断是否换了浏览器。
+
+环境沿用 R278 `REPORT-F1.md` 第 7 节，另将 `R278_DESIGN_ROOT` 固定为本 worktree 的批准合同，设置 `R278_DESIGN_MEDIA_ROOT` 为原项目只读样例目录，`DIRECT_GATE_PORT=8768`，`R277_SOURCE_STATE=~/.photo-content-os/studio-r278`。三份门禁使用独立的本轮证据子目录，全部串行执行，一次只有一个自有无头浏览器。
+
+证据根：`~/.photo-content-os/evidence/R282-direct-handoff/frontend/pre-delivery-repair/`。
+
+| 检查 | 最终结果 | 日志 / 结构化证据 |
+| --- | --- | --- |
+| `rescript_frontend_gate.mjs --checks-only` | **52/52 次、264 块合同 PASS**；含原关闭/焦点、视频生命周期、R282、R278、R283 交互 | `rescript-baseline.log`、`rescript/contracts.json` |
+| `frontend_gate.mjs --checks-only` | **26/26 次合同 PASS**；原公式、交互及新增 handoff 读取断言通过 | `r276-final.log`、`r276/contracts.json` |
+| `revision_frontend_gate.mjs --checks-only` | **42/42 次合同 PASS**；原真实旧任务、图形标记、详情、版本、日志、轮询和布局检查通过 | `r277-final.log`、`r277/contracts.json` |
+| `tests/test_r277_boxes.py` 全文件 | **2 passed in 27.31s**，未跳过、未用渲染替身 | `r277-render-baseline.log` |
+| 五份前端 pytest：R276 / R277 / R278 / R282 / R283 | **16 passed in 0.31s** | `frontend-pytest.log` |
+| `check_repository_safety.py --base HEAD` | PASS | `repository-safety.log` |
+| `git diff --check` | PASS | 收尾终端记录 |
+
+两条真实用例分别是：
+
+- `test_r276_shot02_boxes_at_poster_frame_and_chinese_names`：真实帧渲染与 DOM 测量，保持隐藏元素剔除、中文名称、坐标、柱宽和两倍柱高关系等全部断言。
+- `test_local_render_stores_boxes_and_three_review_frames`：真实 `LocalMedia.render`，保持 poster 时刻坐标和三张 review frame 文件/尺寸断言。
+
+本轮没有跑全量 pytest，没有真实 Claude 生成、中台新包或人工 H-01–H-03 验收。R276/R277 的页面交互仍包含合成 API 夹具；R277 同时运行真实旧任务副本和已有真实投影的只读重放。两条 Python 用例是真实浏览器渲染/DOM 检查，与这些页面夹具的验证范围分开记录。
+
+### 证据和收尾状态
+
+- 失败证据保留在 `r276-baseline.log`、`r277-baseline.log`、`r277-baseline-manifest.json`；后者的错误清单可直接追到未处理的 handoff GET。没有覆盖成成功记录。
+- `verification-summary.json` 汇总固定浏览器、包版本、文件哈希、各门禁计数和测试输出。R276/R277 最终浏览器错误清单均为空。
+- R277 使用原状态的 APFS 临时副本；原目录 **8,670 个文件**前后哈希一致。30 个产品 Python 源文件前后哈希一致，见 `protected-python-after.json`。未编辑任一 `.py`。
+- 本轮只改门禁，没有视觉修改，因此按指定的 `--checks-only` 运行，**未新增整页截图，也未宣称完成一轮新的视觉审图**。原设计及截图没有被重写或加入新的批准例外。
+- 业务 Git HEAD 仍是 `2430f0d`；工作区只有两个门禁、本报告的未提交修改，以及开工已有的 `.venv`。没有暂存、提交、推送或改写历史。完整状态见本轮 `business-status.log`。
+- Harness SSOT 零修改；只读状态仍有 **94 条**既有/并行记录，见 `harness-status.log`。没有改验收记录或代签，关联人工项仍为 PENDING。本轮没有创建声明的 SSOT 开发包，不产生 Obsidian 快照。
+- 磁盘始终高于 3 GiB，收尾约 **7.9 GiB**。本轮临时服务、浏览器和临时目录已退出/清理，8768 无监听。**8769 仍是原监听 PID 45249**，没有停止或重启。
+
+本节写完后停止。

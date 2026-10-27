@@ -51,11 +51,12 @@ async function contract(page,state,name,width,payload){
   const composed=composeLegacyContract({...legacyContract,states:{[state]:structuredClone(legacyContract.states[state])}},r278Contract,()=>payload);
   writeFileSync(composedPath,JSON.stringify(composed));
   const inventory=await page.evaluate(`(()=>{${collector};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`),path=join(OUT,`${name}-${width}.inventory.json`);writeFileSync(path,JSON.stringify(inventory,null,2));const r=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',composedPath,'--approved-extras',join(DESIGN,'approved-extras.json'),'--inventory',path,'--json'],{encoding:'utf8'});assert(r.stdout,r.stderr);writeFileSync(join(OUT,`${name}-${width}.contract.json`),r.stdout);contracts.push({state,name,width,exit_code:r.status,result:JSON.parse(r.stdout)});}
-async function mocks(page,name){let payload=load(name);const requests=[];let codeCalls=0;
+async function mocks(page,name){let payload=load(name);const requests=[];let codeCalls=0,handoffReads=0;
   const anchor=Date.parse(payload.job.updatedAt),shift=clockTime.getTime()-anchor;
   for(const entry of [payload.job,...payload.job.shots])for(const key of ['createdAt','updatedAt','writingStartedAt','writtenAt','renderedAt'])if(entry[key])entry[key]=new Date(Date.parse(entry[key])+shift).toISOString();
   await page.route('**/api/**',async route=>{try{
     const request=route.request(),url=new URL(request.url()),path=url.pathname,method=request.method(),json=(body,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(body)});
+    if(path===`/api/projects/${project.id}/direct/handoff`&&method==='GET'){handoffReads++;return json({ok:true,handoff:null});}
     if(path.endsWith('/poster.jpg')||path==='/api/direct/samples'&&url.searchParams.has('poster')){const id=path.endsWith('/poster.jpg')?path.split('/').at(-2):url.searchParams.get('poster').slice(-2);const version=url.searchParams.get('version')||url.searchParams.get('v');const file=id==='02'&&version==='2'?'poster-02-after.jpg':`poster-${id}.jpg`;return route.fulfill({contentType:'image/jpeg',body:readFileSync(join(OUT,file))});}
     if(path.endsWith('/code')){codeCalls++;return route.fulfill({contentType:'text/plain',body:'<!doctype html><html><body>代码</body></html>'});}
     if(method!=='GET'){
@@ -86,10 +87,10 @@ async function mocks(page,name){let payload=load(name);const requests=[];let cod
     if(path==='/api/review/music')return json({ok:true,tracks:[]});
     throw new Error(`Unmocked API ${method} ${path}`);
   }catch(e){errors.push(e.stack||e.message);await route.fulfill({status:500,contentType:'application/json',body:JSON.stringify({ok:false,error:{code:'fixture_failure'}})});}});
-  return {requests,get payload(){return payload;},get codeCalls(){return codeCalls;}};
+  return {requests,get payload(){return payload;},get codeCalls(){return codeCalls;},get handoffReads(){return handoffReads;}};
 }
 async function pick(page){await page.locator('[data-box="b1"]').click();await page.locator('[data-act="main"]').click();await page.locator('[data-box="b2"]').click();await page.locator('[data-act="dim"]').click();await page.locator('[data-box="2"]').click();await page.locator('[data-act="del"]').click();await page.locator('[data-box="b2"]').click();await page.locator('[data-extra]').fill('底色不动');assert.equal(await page.locator('.rv-count').textContent(),'93 / 200 字');}
-async function open(name,width){const page=await newPage(width);await page.clock.install({time:clockTime});await page.clock.setFixedTime(clockTime);const mock=await mocks(page,name);await page.goto(BASE+'/#view=piece&piece=fixture-piece&ptab=direct');await page.locator('[data-design-id="DV-DETAIL"]').waitFor();await page.locator(`[data-shot="${name==='saved'?'01':'02'}"]`).click();
+async function open(name,width){const page=await newPage(width);await page.clock.install({time:clockTime});await page.clock.setFixedTime(clockTime);const mock=await mocks(page,name);await page.goto(BASE+'/#view=piece&piece=fixture-piece&ptab=direct');await page.locator('[data-design-id="DV-DETAIL"]').waitFor();assert.equal(mock.handoffReads,1,`${name}: initial handoff read`);await page.locator(`[data-shot="${name==='saved'?'01':'02'}"]`).click();
   if(name==='select')await page.locator('[data-box="b2"]').click();
   if(['picked','rewriting2'].includes(name))await pick(page);
   if(name==='rewriting2'){await page.locator('[data-revise]').click();await page.locator('[data-design-id="RV-BUSY"]').waitFor();assert.equal(mock.requests.length,1);assert.equal(await page.locator('[data-busy-clock]').textContent(),'正在按 4 处改法重写 · 0:42');}
