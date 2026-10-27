@@ -1,11 +1,11 @@
 # Acceptance Contract: 2026-10-26-R278-photo-direct-rescript
 
 - Task ID: 2026-10-26-R278-photo-direct-rescript
-- Contract version: 2
+- Contract version: 3
 - Contract status: APPROVED
 - Test baseline: LOCKED
 - Acceptance owner: 任务委托人
-- Approval evidence: 用户2026-10-27第四次交付要求7d0ab00上R283触发的新批准合同入口；仅更新两份已批准R283测试摘要、版本及来源，原AC/H、保护路径和阻塞判据不变；不代表人工PASS
+- Approval evidence: 用户2026-10-27R282第二次交付准备授权，R282批准设计的交接分支和旧包兼容扩展共用门禁；只更新当前摘要/版本/来源，AC/H、保护路径和阻塞判据不变；不代表人工PASS
 - Request source: acceptance/requests/2026-W44/2026-10-26-R278-photo-direct-rescript/request.json; docs/tasks/R278-direct-rescript/TASK.md
 - SSOT node: none
 - SSOT path: none
@@ -14,7 +14,7 @@
 - Assumption IDs: none
 - Invalidation keys: studio.direct-rescript, studio.direct-style-base, studio.direct-style-draft
 - AC budget: 3
-- Baseline identity: 7d0ab0046ef286a5bac8c468d86ebc10ccf557cd，输入见handoff-r283/baseline.json
+- Baseline identity: 6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3；本批输入见handoff-r282/
 - Product Context refs: agents-results/2026-10-26/R278-direct-rescript/acceptance-context.json
 - Role Context refs: agents-results/2026-10-26/R278-direct-rescript/acceptance-context.json
 - Resolved Surface Contract refs: agents-results/2026-10-26/R278-direct-rescript/resolved-surface-contract.json
@@ -87,7 +87,7 @@ H-03卡上三分钟标准原字保留。实测首次215.621秒（约3分36秒）
 | tests/test_r278_direct_frontend.py | 5353332357e17696a420e77e2df0a7cdff88c3df2810857db24f29185a01ec83 | AC-01, AC-02, AC-03 |
 | tests/test_r278_style_base.py | 329e483a28fa46c3ff465e0b79602b6ae07e8c03368a4ee77c46f1d14125e21f | AC-01, AC-02, AC-03 |
 | tests/test_r278_direct_rescript.mjs | 98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0 | AC-01, AC-02, AC-03 |
-| scripts/direct_video/rescript_frontend_gate.mjs | a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed | AC-01, AC-02, AC-03 |
+| scripts/direct_video/rescript_frontend_gate.mjs | a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055 | AC-01, AC-02, AC-03 |
 
 ## Requirements-test traceability
 
