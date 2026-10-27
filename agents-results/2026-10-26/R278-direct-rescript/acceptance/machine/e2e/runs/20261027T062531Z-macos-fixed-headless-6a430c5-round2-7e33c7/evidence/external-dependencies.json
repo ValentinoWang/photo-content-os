@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "relations": [
+    {
+      "type": "depends_on",
+      "target_project": "自媒体创作Agent",
+      "target": "2026-10-27-R299-media-handoff-storyboard-revision",
+      "items": [
+        "H-01",
+        "H-03"
+      ],
+      "status": "IN_PROGRESS_UNPUBLISHED",
+      "authority": "用户2026-10-27R282第二次交付准备说明",
+      "reason": "中台需要传递storyboardRevision和handedAt，旧包二者为空；真实版次、时间、新版链路未具备",
+      "blocking_for_human_completion": true,
+      "not_a_completed_relation": true
+    }
+  ]
+}

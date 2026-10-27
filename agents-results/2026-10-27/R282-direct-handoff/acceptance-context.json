@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "r282-studio-context",
+  "authority": [
+    "acceptance/requests/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard/request.json",
+    "docs/tasks/R282-direct-handoff/TASK.md",
+    "docs/tasks/R278-direct-rescript/design/contract.json"
+  ],
+  "inherited_context": "agents-results/2026-10-26/R278-direct-rescript/acceptance-context.json",
+  "product": {
+    "purpose": "本机创作者直接使用中台落地的六列分镜、图片和配音，主动换成新版；本机修改不回写中台",
+    "privacy": "媒体和状态留在本机，样张不入仓库"
+  },
+  "role": {
+    "id": "local-creator",
+    "label": "本机创作者",
+    "scope": "本机作品与脚本直出"
+  },
+  "screen_contract": {
+    "route": "/#view=piece&piece=<bound-project>&ptab=direct",
+    "states_ref": "docs/tasks/R278-direct-rescript/design/contract.json",
+    "interaction_requirements": [
+      "H-01",
+      "H-02",
+      "H-03"
+    ],
+    "invariants": [
+      "交接同源身份校验",
+      "缺分镜版本和时间不造值",
+      "本机修改不回写中台",
+      "显式换版才覆盖本机分镜",
+      "当前未找到有效交接入口，人工保持PENDING"
+    ]
+  }
+}

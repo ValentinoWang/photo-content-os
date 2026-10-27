@@ -1,0 +1,182 @@
+{
+  "cards": [
+    {
+      "task_id": "2026-10-26-R278-photo-direct-rescript",
+      "title": "脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成",
+      "contract_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+      "contract_version": "3",
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript",
+      "ready_at": "2026-10-27T06:30:35.124050Z",
+      "source_commit": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+      "status": "PENDING",
+      "new_completed_count": 1,
+      "new_completed": [
+        {
+          "approved_contract": {
+            "base": {
+              "commit": "614c55060554de74beb547e7213877c369fa69cb",
+              "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+              "sha256": "21040745022fd273f8c138bfae74dc76afaeb3930fc31781dbb6a8bf4af80088",
+              "version": "2"
+            },
+            "binding": {
+              "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/binding.md",
+              "sha256": "a103be094a971b0a1ee16112e41b8e4d55e103d5d624e0ca74d53c21d57b5df9"
+            },
+            "checklist": {
+              "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
+              "sha256": "fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f"
+            },
+            "current": {
+              "commit": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+              "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+              "sha256": "0e2a37aa6055f6a357a78b7345ea0c0d31d6d144076e0d18db4710aa0e39bb8d",
+              "version": "3"
+            }
+          },
+          "base": "614c55060554de74beb547e7213877c369fa69cb",
+          "checklist_sha256": "fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f",
+          "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+          "phase": "completed",
+          "prepared_at": "2026-10-27T06:24:52.418436Z",
+          "previous_binding_sha256": "a103be094a971b0a1ee16112e41b8e4d55e103d5d624e0ca74d53c21d57b5df9",
+          "previous_ready_at": "2026-10-26T20:10:58.711886Z",
+          "range_head": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+          "reason": "用户R282第二次交付授权：同源交接和新旧包元数据分支加入共享门禁，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+          "tests": [
+            {
+              "new_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+              "old_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
+              "path": "scripts/direct_video/rescript_frontend_gate.mjs"
+            }
+          ],
+          "trigger_card": "2026-10-26-R282-photo-direct-handoff-storyboard"
+        }
+      ],
+      "previous_history_count": 1,
+      "previous_history_preserved": true,
+      "machine_evidence": [
+        {
+          "layer": "machine/integration-contract",
+          "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-3c11bb/result.md",
+          "result_sha256": "3bc9a1f46bbde13d48ab5ae5cd5a304ee151a45da9ea862864d3812057c9873e",
+          "run_id": "20261027T062531Z-macos-fixed-headless-6a430c5-round2-3c11bb",
+          "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+        },
+        {
+          "layer": "machine/e2e",
+          "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-7e33c7/result.md",
+          "result_sha256": "5b9f6d4454450872d8123958420f0a507d2a47fc8a05478136d00558fc6d9273",
+          "run_id": "20261027T062531Z-macos-fixed-headless-6a430c5-round2-7e33c7",
+          "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+        }
+      ]
+    },
+    {
+      "task_id": "2026-10-26-R283-photo-direct-style-library",
+      "title": "脚本直出的视频风格加风格库：九种现成风格直接挑",
+      "contract_path": "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
+      "contract_version": "2",
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library",
+      "ready_at": "2026-10-27T06:30:40.790297Z",
+      "source_commit": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+      "status": "PENDING",
+      "new_completed_count": 1,
+      "new_completed": [
+        {
+          "approved_contract": {
+            "base": {
+              "commit": "614c55060554de74beb547e7213877c369fa69cb",
+              "path": "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
+              "sha256": "839e69bc7b5d1cf8a8a51d804293d08e559dfe7ab4b2e2509ed7da4dd9da8cfe",
+              "version": "1"
+            },
+            "binding": {
+              "path": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/binding.md",
+              "sha256": "854b9466f58b2686b78900ed82e7ee25f3a13c82a523c75f960906df09ef568e"
+            },
+            "checklist": {
+              "path": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/checklist.md",
+              "sha256": "29b676367d3cc9dbf9d85c335c1c1e9f9da34f9b605e6a55ee4d967eb86e79cb"
+            },
+            "current": {
+              "commit": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+              "path": "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
+              "sha256": "b42cf67c2ceeef69b332cd122ab2969451a67f7a0b55adb8d759342d85199faa",
+              "version": "2"
+            }
+          },
+          "base": "614c55060554de74beb547e7213877c369fa69cb",
+          "checklist_sha256": "29b676367d3cc9dbf9d85c335c1c1e9f9da34f9b605e6a55ee4d967eb86e79cb",
+          "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+          "phase": "completed",
+          "prepared_at": "2026-10-27T06:24:51.162382Z",
+          "previous_binding_sha256": "854b9466f58b2686b78900ed82e7ee25f3a13c82a523c75f960906df09ef568e",
+          "previous_ready_at": "2026-10-26T20:10:59.688065Z",
+          "range_head": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+          "reason": "用户R282第二次交付授权：同源交接和新旧包元数据分支加入共享门禁，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+          "tests": [
+            {
+              "new_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+              "old_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
+              "path": "scripts/direct_video/rescript_frontend_gate.mjs"
+            }
+          ],
+          "trigger_card": "2026-10-26-R282-photo-direct-handoff-storyboard"
+        }
+      ],
+      "previous_history_count": 0,
+      "previous_history_preserved": true,
+      "machine_evidence": [
+        {
+          "layer": "machine/integration-contract",
+          "result_path": "agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/integration-contract/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-61c265/result.md",
+          "result_sha256": "b4a10d9fbbfba93fe75df5d93eabb49a4ea62aeba6f1a6c5298a8d5dc2b349b6",
+          "run_id": "20261027T062531Z-macos-fixed-headless-6a430c5-round2-61c265",
+          "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+        },
+        {
+          "layer": "machine/e2e",
+          "result_path": "agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/e2e/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-29ad12/result.md",
+          "result_sha256": "591be9f915f3d06c838de2904bdf03a830e8c0efda6b7187af2d89e8c95baa25",
+          "run_id": "20261027T062532Z-macos-fixed-headless-6a430c5-round2-29ad12",
+          "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+        }
+      ]
+    },
+    {
+      "task_id": "2026-10-26-R282-photo-direct-handoff-storyboard",
+      "title": "中台交过来的分镜和配音直接进脚本直出",
+      "contract_path": "agents-results/2026-10-27/R282-direct-handoff/acceptance-contract.md",
+      "contract_version": "1",
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard",
+      "ready_at": "2026-10-27T06:30:46.799625Z",
+      "source_commit": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+      "status": "PENDING",
+      "new_completed_count": 0,
+      "new_completed": [],
+      "previous_history_count": 0,
+      "previous_history_preserved": true,
+      "machine_evidence": [
+        {
+          "layer": "machine/integration-contract",
+          "result_path": "agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/integration-contract/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-199f30/result.md",
+          "result_sha256": "04153d4dda302607b82ce59cce1928ba09fddc7cbbf6122908a8bd93a9d76fb2",
+          "run_id": "20261027T062532Z-macos-fixed-headless-6a430c5-round2-199f30",
+          "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+        },
+        {
+          "layer": "machine/e2e",
+          "result_path": "agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/e2e/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-ff7d89/result.md",
+          "result_sha256": "717ed0397cc55b3f4b9274cb84ded3559857720eead723379af741d63588c15f",
+          "run_id": "20261027T062532Z-macos-fixed-headless-6a430c5-round2-ff7d89",
+          "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+        }
+      ]
+    }
+  ],
+  "source_head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+  "R278_R283_each_once_trigger_R282": true,
+  "R276_R277_registered_protected_tests_unchanged": true,
+  "no_replay_or_deleted_history": true
+}

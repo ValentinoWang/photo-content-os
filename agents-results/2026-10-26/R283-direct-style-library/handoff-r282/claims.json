@@ -1,0 +1,167 @@
+[
+  {
+    "claim_key": "studio.direct-style-library",
+    "item": "H-01",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-28aaf4f527&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验固定风格库、样张及库来源生成，不承接工具安装或剪辑候选责任。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验汽水和网易云导入、去重及会员失败；本卡九种视觉风格没有音乐和音效，不改导入与入库。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验导航、项目分组、精选播放和决定保存及既有成片音乐预览；本卡只验脚本直出的九库卡与风格生成，不承接原导航精选预览。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、节拍试听及自动分析；本卡验视觉样张、画法和库设计来源，不生成音乐或改变分析。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留选块改画面、版本核对、样例和规则草稿；本卡验九种库及库画法传递，不承接单镜详情交互责任。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+        "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.direct-library-generation",
+    "item": "H-02",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-28aaf4f527&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验固定风格库、样张及库来源生成，不承接工具安装或剪辑候选责任。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验汽水和网易云导入、去重及会员失败；本卡九种视觉风格没有音乐和音效，不改导入与入库。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验导航、项目分组、精选播放和决定保存及既有成片音乐预览；本卡只验脚本直出的九库卡与风格生成，不承接原导航精选预览。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、节拍试听及自动分析；本卡验视觉样张、画法和库设计来源，不生成音乐或改变分析。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留选块改画面、版本核对、样例和规则草稿；本卡验九种库及库画法传递，不承接单镜详情交互责任。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+        "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.direct-library-adjustment",
+    "item": "H-03",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-4c886fc28b&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验固定风格库、样张及库来源生成，不承接工具安装或剪辑候选责任。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验汽水和网易云导入、去重及会员失败；本卡九种视觉风格没有音乐和音效，不改导入与入库。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验导航、项目分组、精选播放和决定保存及既有成片音乐预览；本卡只验脚本直出的九库卡与风格生成，不承接原导航精选预览。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、节拍试听及自动分析；本卡验视觉样张、画法和库设计来源，不生成音乐或改变分析。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留首次生成、配音合成及单镜不变性；本卡增加固定风格来源与样张，不能替代原合成、同步和单镜重写验收。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留选块改画面、版本核对、样例和规则草稿；本卡验九种库及库画法传递，不承接单镜详情交互责任。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+        "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  }
+]

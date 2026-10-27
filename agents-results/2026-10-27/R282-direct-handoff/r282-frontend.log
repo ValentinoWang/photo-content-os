@@ -1,0 +1,7 @@
+PASS R278 formulas, editing, request bodies, availability and entry locks
+PASS R283 library payloads, generation/source copy and no-selection lock
+PASS R282 handoff provenance and timing formulas
+PASS R282 mounted handoff prefill, local edits, replacement and request identity
+PASS R283 mounted Studio: nine-card selection, sample media lifecycle/fallback, empty state, library jobs and source
+PASS R278 mounted Studio: entry/back, editor keys/IME/paste/import, styles, samples/revise/accept and jobs
+PASS R278/R282/R283: 52 contract runs; 0 complete-page screenshots; mounted browser interactions

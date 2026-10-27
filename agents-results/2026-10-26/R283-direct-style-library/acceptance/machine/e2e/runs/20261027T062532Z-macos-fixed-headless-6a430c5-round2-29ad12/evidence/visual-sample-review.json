@@ -1,0 +1,23 @@
+{
+  "scope": "Reuse first handoff personal inspection of two hash-identical full final renders; not fresh visual review in second handoff",
+  "samples": [
+    {
+      "path": "frontend/first-handoff-1440.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "findings": "此前亲自查看至底部；来源版本时间、七镜六列、画面缩略图/警示、配音卡、相邻风格及页底完整。合成夹具不是真实交接。",
+      "current_hash_matched": true
+    },
+    {
+      "path": "frontend/supplement-1/rescript-newer-unversioned-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "findings": "此前亲自查看完整长页；无版本号时使用新的分镜句子，按钮完整，表格自身横滚、风格单列、配音和生成条可达。其余细节沿用F审阅及挂载断言。",
+      "current_hash_matched": true
+    }
+  ]
+}

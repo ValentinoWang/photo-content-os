@@ -1,0 +1,8 @@
+{
+  "route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct",
+  "project_id": "p5-f24c41f746",
+  "authority": "genuine production reader and studio-r278 binding-candidate review",
+  "live_handoff": null,
+  "requires_control_plane_handoff_and_listener_binding": true,
+  "not_current_human_test_readiness": true
+}

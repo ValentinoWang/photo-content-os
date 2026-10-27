@@ -1,0 +1,655 @@
+{
+  "base": "614c55060554de74beb547e7213877c369fa69cb",
+  "candidates": [
+    {
+      "claim_key": "studio.direct-rescript",
+      "exact": false,
+      "expected": "回到第一屏，分镜脚本表填好了这次的七镜：左边是镜号和起止时间，画面列是这一版每镜的动画在循环播放，台词各在自己那一格，字只出现一次；下面「视频风格」默认是「选现成的风格」，选中的是这条，右边显示这条的色板、字号和动作规矩。",
+      "fields": {
+        "预期表现": "回到第一屏，分镜脚本表填好了这次的七镜：左边是镜号和起止时间，画面列是这一版每镜的动画在循环播放，台词各在自己那一格，字只出现一次；下面「视频风格」默认是「选现成的风格」，选中的是这条，右边显示这条的色板、字号和动作规矩。",
+        "验收步骤": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」的「脚本直出」页，等七镜写好。\n  2. 点步骤条上「分镜脚本」那一格（右边写着「改分镜脚本」）。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.5981271813129396,
+      "steps": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」的「脚本直出」页，等七镜写好。\n  2. 点步骤条上「分镜脚本」那一格（右边写着「改分镜脚本」）。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R278-photo-direct-rescript/H-01",
+      "text": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」的「脚本直出」页，等七镜写好。\n  2. 点步骤条上「分镜脚本」那一格（右边写着「改分镜脚本」）。\n回到第一屏，分镜脚本表填好了这次的七镜：左边是镜号和起止时间，画面列是这一版每镜的动画在循环播放，台词各在自己那一格，字只出现一次；下面「视频风格」默认是「选现成的风格」，选中的是这条，右边显示这条的色板、字号和动作规矩。",
+      "text_cosine": 0.19625436262587917,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript"
+    },
+    {
+      "claim_key": "studio.direct-video.compose",
+      "exact": false,
+      "expected": "页面里出现一条竖屏成片，能从头放到尾，画面跟着口播一镜一镜换，声音和画面对得上；成片下方写着时长和七镜，时长和配音一样长。",
+      "fields": {
+        "预期表现": "页面里出现一条竖屏成片，能从头放到尾，画面跟着口播一镜一镜换，声音和画面对得上；成片下方写着时长和七镜，时长和配音一样长。",
+        "验收步骤": "1. 上传这条口播的配音文件，点「合成成片」。\n  2. 点成片的播放按钮，从头看到尾。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.5495145827205317,
+      "steps": "1. 上传这条口播的配音文件，点「合成成片」。\n  2. 点成片的播放按钮，从头看到尾。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+      "text": "1. 上传这条口播的配音文件，点「合成成片」。\n  2. 点成片的播放按钮，从头看到尾。\n页面里出现一条竖屏成片，能从头放到尾，画面跟着口播一镜一镜换，声音和画面对得上；成片下方写着时长和七镜，时长和配音一样长。",
+      "text_cosine": 0.09902916544106335,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus"
+    },
+    {
+      "claim_key": "studio.direct-style-library",
+      "exact": false,
+      "expected": "风格库有九张卡片，每张有样张图、名字和四个色块；点「手绘白板」后右边播放它的样张动画，旁边是色板、字号、动作规矩和不用的套路，生成条写着「风格：风格库「手绘白板」」，「生成」可以点。",
+      "fields": {
+        "预期表现": "风格库有九张卡片，每张有样张图、名字和四个色块；点「手绘白板」后右边播放它的样张动画，旁边是色板、字号、动作规矩和不用的套路，生成条写着「风格：风格库「手绘白板」」，「生成」可以点。",
+        "验收步骤": "1. 打开一件还没做过脚本直出的作品，切到「脚本直出」，在分镜脚本里粘贴一段台词。\n  2. 点「视频风格」里的「选现成的风格」，查看「风格库」一组。\n  3. 点「手绘白板」那张卡片。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.5466778446645727,
+      "steps": "1. 打开一件还没做过脚本直出的作品，切到「脚本直出」，在分镜脚本里粘贴一段台词。\n  2. 点「视频风格」里的「选现成的风格」，查看「风格库」一组。\n  3. 点「手绘白板」那张卡片。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R283-photo-direct-style-library/H-01",
+      "text": "1. 打开一件还没做过脚本直出的作品，切到「脚本直出」，在分镜脚本里粘贴一段台词。\n  2. 点「视频风格」里的「选现成的风格」，查看「风格库」一组。\n  3. 点「手绘白板」那张卡片。\n风格库有九张卡片，每张有样张图、名字和四个色块；点「手绘白板」后右边播放它的样张动画，旁边是色板、字号、动作规矩和不用的套路，生成条写着「风格：风格库「手绘白板」」，「生成」可以点。",
+      "text_cosine": 0.0933556893291455,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library"
+    },
+    {
+      "claim_key": "studio.direct-style-draft",
+      "exact": false,
+      "expected": "点「先定风格」后三分钟内出现样张和色板、字号；改过以后样张和主色跟着变；点「就用这个」之前「生成」是灰的。生成后全片设计和样张那套完全一样，第一镜就是样张，页面不出现「Opus 正在定全片设计」。",
+      "fields": {
+        "预期表现": "点「先定风格」后三分钟内出现样张和色板、字号；改过以后样张和主色跟着变；点「就用这个」之前「生成」是灰的。生成后全片设计和样张那套完全一样，第一镜就是样张，页面不出现「Opus 正在定全片设计」。",
+        "验收步骤": "1. 打开另一件还没做过脚本直出的作品，切到「脚本直出」，在分镜脚本里粘贴一段台词。\n  2. 点「从头定风格」，输入「浅米色底，一个深青主色，结论只用橙色」，点「先定风格」。\n  3. 查看样张，在「再改一句」里写「主色再深一点」，点「改」，再点「就用这个」，点「生成」。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.5442873392720066,
+      "steps": "1. 打开另一件还没做过脚本直出的作品，切到「脚本直出」，在分镜脚本里粘贴一段台词。\n  2. 点「从头定风格」，输入「浅米色底，一个深青主色，结论只用橙色」，点「先定风格」。\n  3. 查看样张，在「再改一句」里写「主色再深一点」，点「改」，再点「就用这个」，点「生成」。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R278-photo-direct-rescript/H-03",
+      "text": "1. 打开另一件还没做过脚本直出的作品，切到「脚本直出」，在分镜脚本里粘贴一段台词。\n  2. 点「从头定风格」，输入「浅米色底，一个深青主色，结论只用橙色」，点「先定风格」。\n  3. 查看样张，在「再改一句」里写「主色再深一点」，点「改」，再点「就用这个」，点「生成」。\n点「先定风格」后三分钟内出现样张和色板、字号；改过以后样张和主色跟着变；点「就用这个」之前「生成」是灰的。生成后全片设计和样张那套完全一样，第一镜就是样张，页面不出现「Opus 正在定全片设计」。",
+      "text_cosine": 0.08857467854401319,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript"
+    },
+    {
+      "claim_key": "studio.direct-library-adjustment",
+      "exact": false,
+      "expected": "全片设计只有底色变深，主色、强调色、字号和动作规矩都和「水墨国风」一样；七镜仍然是水墨画法，只是换成深色底。",
+      "fields": {
+        "预期表现": "全片设计只有底色变深，主色、强调色、字号和动作规矩都和「水墨国风」一样；七镜仍然是水墨画法，只是换成深色底。",
+        "验收步骤": "1. 打开另一件作品的「脚本直出」，粘贴一段台词，点「选现成的风格」里风格库的「水墨国风」。\n  2. 输入「底色换成深色，其余不动」到「在这个风格上改哪里」，点「生成」。\n  3. 查看新的全片设计和七镜。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.5418221158555456,
+      "steps": "1. 打开另一件作品的「脚本直出」，粘贴一段台词，点「选现成的风格」里风格库的「水墨国风」。\n  2. 输入「底色换成深色，其余不动」到「在这个风格上改哪里」，点「生成」。\n  3. 查看新的全片设计和七镜。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R283-photo-direct-style-library/H-03",
+      "text": "1. 打开另一件作品的「脚本直出」，粘贴一段台词，点「选现成的风格」里风格库的「水墨国风」。\n  2. 输入「底色换成深色，其余不动」到「在这个风格上改哪里」，点「生成」。\n  3. 查看新的全片设计和七镜。\n全片设计只有底色变深，主色、强调色、字号和动作规矩都和「水墨国风」一样；七镜仍然是水墨画法，只是换成深色底。",
+      "text_cosine": 0.08364423171109134,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library"
+    },
+    {
+      "claim_key": "studio.direct-shot-revision",
+      "exact": false,
+      "expected": "画面上有几处橙色「!」，点开能看到 Opus 说这一块哪里不对；选了改法的两根柱子在画面上出现编号 1、2，右边「要改的」有同号的两条具体要求，字数不超过 200；重写完，第 1 版和第 2 版两张画面并排，右边每条写着「做到了」或「没做到」，其他六镜的画面和写好的时间都不变。",
+      "fields": {
+        "预期表现": "画面上有几处橙色「!」，点开能看到 Opus 说这一块哪里不对；选了改法的两根柱子在画面上出现编号 1、2，右边「要改的」有同号的两条具体要求，字数不超过 200；重写完，第 1 版和第 2 版两张画面并排，右边每条写着「做到了」或「没做到」，其他六镜的画面和写好的时间都不变。",
+        "验收步骤": "1. 打开作品「断更一年，我拆了四句话」的「脚本直出」，点第 02 镜。\n  2. 点画面上「约 25%」那根柱子，点「缩小变灰」；再点「约 50%」那根柱子，点「做主角」。\n  3. 输入「底色不动」，点「重写这一镜」。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.5326746562991702,
+      "steps": "1. 打开作品「断更一年，我拆了四句话」的「脚本直出」，点第 02 镜。\n  2. 点画面上「约 25%」那根柱子，点「缩小变灰」；再点「约 50%」那根柱子，点「做主角」。\n  3. 输入「底色不动」，点「重写这一镜」。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+      "text": "1. 打开作品「断更一年，我拆了四句话」的「脚本直出」，点第 02 镜。\n  2. 点画面上「约 25%」那根柱子，点「缩小变灰」；再点「约 50%」那根柱子，点「做主角」。\n  3. 输入「底色不动」，点「重写这一镜」。\n画面上有几处橙色「!」，点开能看到 Opus 说这一块哪里不对；选了改法的两根柱子在画面上出现编号 1、2，右边「要改的」有同号的两条具体要求，字数不超过 200；重写完，第 1 版和第 2 版两张画面并排，右边每条写着「做到了」或「没做到」，其他六镜的画面和写好的时间都不变。",
+      "text_cosine": 0.06534931259834041,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision"
+    },
+    {
+      "claim_key": "studio.direct-shot-versions-sample",
+      "exact": false,
+      "expected": "第 02 镜的画面回到重写前的样子，标题下写着「用第 1 版 · 共 2 版」；第 01 镜显示「已存为样例」。",
+      "fields": {
+        "预期表现": "第 02 镜的画面回到重写前的样子，标题下写着「用第 1 版 · 共 2 版」；第 01 镜显示「已存为样例」。",
+        "验收步骤": "1. 点「退回第 1 版」。\n  2. 点第 01 镜，点「这镜好」。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.5288256888545015,
+      "steps": "1. 点「退回第 1 版」。\n  2. 点第 01 镜，点「这镜好」。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+      "text": "1. 点「退回第 1 版」。\n  2. 点第 01 镜，点「这镜好」。\n第 02 镜的画面回到重写前的样子，标题下写着「用第 1 版 · 共 2 版」；第 01 镜显示「已存为样例」。",
+      "text_cosine": 0.05765137770900302,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision"
+    },
+    {
+      "claim_key": "studio.direct-style-base",
+      "exact": false,
+      "expected": "全片设计的背景、主色、中性色、字号和动作规矩都和原来一样，只有强调色变成暖黄；七镜从头写，第二镜念的是改过的台词，画面是左右两栏对比；原来的关键帧和成片不再显示。",
+      "fields": {
+        "预期表现": "全片设计的背景、主色、中性色、字号和动作规矩都和原来一样，只有强调色变成暖黄；七镜从头写，第二镜念的是改过的台词，画面是左右两栏对比；原来的关键帧和成片不再显示。",
+        "验收步骤": "1. 输入改短的第 02 镜台词，在它的「画面」里写「左右两栏：以为一半人注意到，实际四分之一」，在「在这个风格上改哪里」里写「强调色换成暖黄，其余不动」，点「生成」。\n  2. 查看新的全片设计和七镜。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.5220647789603277,
+      "steps": "1. 输入改短的第 02 镜台词，在它的「画面」里写「左右两栏：以为一半人注意到，实际四分之一」，在「在这个风格上改哪里」里写「强调色换成暖黄，其余不动」，点「生成」。\n  2. 查看新的全片设计和七镜。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R278-photo-direct-rescript/H-02",
+      "text": "1. 输入改短的第 02 镜台词，在它的「画面」里写「左右两栏：以为一半人注意到，实际四分之一」，在「在这个风格上改哪里」里写「强调色换成暖黄，其余不动」，点「生成」。\n  2. 查看新的全片设计和七镜。\n全片设计的背景、主色、中性色、字号和动作规矩都和原来一样，只有强调色变成暖黄；七镜从头写，第二镜念的是改过的台词，画面是左右两栏对比；原来的关键帧和成片不再显示。",
+      "text_cosine": 0.04412955792065523,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript"
+    },
+    {
+      "claim_key": "studio.direct-video.generate",
+      "exact": false,
+      "expected": "先出现全片设计（底色、主色、强调色和动作规矩），然后七镜依次从「正在写」变成「写好了」，每一镜写好后出现渲染出来的关键帧；从点生成到七镜写好不超过十五分钟。",
+      "fields": {
+        "预期表现": "先出现全片设计（底色、主色、强调色和动作规矩），然后七镜依次从「正在写」变成「写好了」，每一镜写好后出现渲染出来的关键帧；从点生成到七镜写好不超过十五分钟。",
+        "验收步骤": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」，切到「一键直出」。\n  2. 粘贴七句口播稿，模型选 Opus，点「生成」。\n  3. 查看页面，直到七镜都显示「写好了」。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.5209384797234438,
+      "steps": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」，切到「一键直出」。\n  2. 粘贴七句口播稿，模型选 Opus，点「生成」。\n  3. 查看页面，直到七镜都显示「写好了」。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+      "text": "1. 打开 Studio，进入作品「断更一年，我拆了四句话」，切到「一键直出」。\n  2. 粘贴七句口播稿，模型选 Opus，点「生成」。\n  3. 查看页面，直到七镜都显示「写好了」。\n先出现全片设计（底色、主色、强调色和动作规矩），然后七镜依次从「正在写」变成「写好了」，每一镜写好后出现渲染出来的关键帧；从点生成到七镜写好不超过十五分钟。",
+      "text_cosine": 0.04187695944688753,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus"
+    },
+    {
+      "claim_key": "studio.direct-video.single-rewrite",
+      "exact": false,
+      "expected": "只有第三镜变成「正在写」再变回「写好了」，关键帧换成新的样子；其他六镜的关键帧和写好的时间都没有变。",
+      "fields": {
+        "预期表现": "只有第三镜变成「正在写」再变回「写好了」，关键帧换成新的样子；其他六镜的关键帧和写好的时间都没有变。",
+        "验收步骤": "1. 输入第三镜的修改意见「数字再大一点」，点「让 Opus 重写这一镜」。\n  2. 查看七镜的关键帧和写好的时间。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.5193004138902005,
+      "steps": "1. 输入第三镜的修改意见「数字再大一点」，点「让 Opus 重写这一镜」。\n  2. 查看七镜的关键帧和写好的时间。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+      "text": "1. 输入第三镜的修改意见「数字再大一点」，点「让 Opus 重写这一镜」。\n  2. 查看七镜的关键帧和写好的时间。\n只有第三镜变成「正在写」再变回「写好了」，关键帧换成新的样子；其他六镜的关键帧和写好的时间都没有变。",
+      "text_cosine": 0.03860082778040117,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus"
+    },
+    {
+      "claim_key": "studio.direct-revision-log",
+      "exact": false,
+      "expected": "每种问题写着改过几次、出在哪几镜；到 3 次的那一行写着「建议写进规则」并附上起草好的规则修改，没点「采用」之前规则不变。",
+      "fields": {
+        "预期表现": "每种问题写着改过几次、出在哪几镜；到 3 次的那一行写着「建议写进规则」并附上起草好的规则修改，没点「采用」之前规则不变。",
+        "验收步骤": "1. 打开「画面问题记录」。\n  2. 查看「主次不清」那一行。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.5143481931153318,
+      "steps": "1. 打开「画面问题记录」。\n  2. 查看「主次不清」那一行。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+      "text": "1. 打开「画面问题记录」。\n  2. 查看「主次不清」那一行。\n每种问题写着改过几次、出在哪几镜；到 3 次的那一行写着「建议写进规则」并附上起草好的规则修改，没点「采用」之前规则不变。",
+      "text_cosine": 0.02869638623066349,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision"
+    },
+    {
+      "claim_key": "studio.direct-library-generation",
+      "exact": false,
+      "expected": "全片设计一行写着用的是风格库「手绘白板」，四色和字号与卡片上一样；页面没有出现「Opus 正在定全片设计」；七镜都是白板底、一笔一笔画出来的手绘样子，和样张一看就是同一种风格。",
+      "fields": {
+        "预期表现": "全片设计一行写着用的是风格库「手绘白板」，四色和字号与卡片上一样；页面没有出现「Opus 正在定全片设计」；七镜都是白板底、一笔一笔画出来的手绘样子，和样张一看就是同一种风格。",
+        "验收步骤": "1. 点「生成」，等七镜写好、出片。\n  2. 查看全片设计一行和七镜画面。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.5074459739564736,
+      "steps": "1. 点「生成」，等七镜写好、出片。\n  2. 查看全片设计一行和七镜画面。",
+      "surface_jaccard": 1.0,
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-26-R283-photo-direct-style-library/H-02",
+      "text": "1. 点「生成」，等七镜写好、出片。\n  2. 查看全片设计一行和七镜画面。\n全片设计一行写着用的是风格库「手绘白板」，四色和字号与卡片上一样；页面没有出现「Opus 正在定全片设计」；七镜都是白板底、一笔一笔画出来的手绘样子，和样张一看就是同一种风格。",
+      "text_cosine": 0.014891947912947175,
+      "workspace": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library"
+    },
+    {
+      "claim_key": "studio.navigation-settings",
+      "exact": false,
+      "expected": "每一项都打开对应页面且有内容或明确的空状态；上游账号、安装向导、网页中台都能在设置与诊断里找到。",
+      "fields": {
+        "预期表现": "每一项都打开对应页面且有内容或明确的空状态；上游账号、安装向导、网页中台都能在设置与诊断里找到。",
+        "验收步骤": "1. 打开 Photo Studio，依次点击侧栏六项。\n  2. 进入设置与诊断，查看上游账号和安装向导。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.33647580440033825,
+      "steps": "1. 打开 Photo Studio，依次点击侧栏六项。\n  2. 进入设置与诊断，查看上游账号和安装向导。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R220-photo-studio-ia-preview/H-01",
+      "text": "1. 打开 Photo Studio，依次点击侧栏六项。\n  2. 进入设置与诊断，查看上游账号和安装向导。\n每一项都打开对应页面且有内容或明确的空状态；上游账号、安装向导、网页中台都能在设置与诊断里找到。",
+      "text_cosine": 0.047951608800676525,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview"
+    },
+    {
+      "claim_key": "studio.outputs-music-playback",
+      "exact": false,
+      "expected": "已出的成片能直接播放；音乐能试听，写着来源平台。",
+      "fields": {
+        "预期表现": "已出的成片能直接播放；音乐能试听，写着来源平台。",
+        "验收步骤": "1. 进入项目，点击作品卡片上的「看成片」。\n  2. 进入音乐库，点击一首歌的播放。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.32865952813629745,
+      "steps": "1. 进入项目，点击作品卡片上的「看成片」。\n  2. 进入音乐库，点击一首歌的播放。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R220-photo-studio-ia-preview/H-03",
+      "text": "1. 进入项目，点击作品卡片上的「看成片」。\n  2. 进入音乐库，点击一首歌的播放。\n已出的成片能直接播放；音乐能试听，写着来源平台。",
+      "text_cosine": 0.032319056272594925,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview"
+    },
+    {
+      "claim_key": "studio.shot-review-playback",
+      "exact": false,
+      "expected": "精选按顺序连着播放；改过的镜头刷新后仍是「可用」，精选数量少一个。",
+      "fields": {
+        "预期表现": "精选按顺序连着播放；改过的镜头刷新后仍是「可用」，精选数量少一个。",
+        "验收步骤": "1. 进入项目，点开「2026年重回兰州大学」里的「奔赴与校运会」。\n  2. 点击播放器的播放，看完几个镜头；把其中一个改成「可用」，刷新页面。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.3195825590994316,
+      "steps": "1. 进入项目，点开「2026年重回兰州大学」里的「奔赴与校运会」。\n  2. 点击播放器的播放，看完几个镜头；把其中一个改成「可用」，刷新页面。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R220-photo-studio-ia-preview/H-02",
+      "text": "1. 进入项目，点开「2026年重回兰州大学」里的「奔赴与校运会」。\n  2. 点击播放器的播放，看完几个镜头；把其中一个改成「可用」，刷新页面。\n精选按顺序连着播放；改过的镜头刷新后仍是「可用」，精选数量少一个。",
+      "text_cosine": 0.014165118198863208,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview"
+    },
+    {
+      "claim_key": "music.link-import",
+      "exact": false,
+      "expected": "两首都出现在音乐库里，每首能播放，并写着歌名、歌手和来源平台。",
+      "fields": {
+        "预期表现": "两首都出现在音乐库里，每首能播放，并写着歌名、歌手和来源平台。",
+        "验收步骤": "1. 复制汽水音乐、网易云音乐各一首歌的分享链接。\n  2. 粘贴到音乐导入里，逐个导入。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.31891904977430147,
+      "steps": "1. 复制汽水音乐、网易云音乐各一首歌的分享链接。\n  2. 粘贴到音乐导入里，逐个导入。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-19-R210-photo-music-link-import/H-01",
+      "text": "1. 复制汽水音乐、网易云音乐各一首歌的分享链接。\n  2. 粘贴到音乐导入里，逐个导入。\n两首都出现在音乐库里，每首能播放，并写着歌名、歌手和来源平台。",
+      "text_cosine": 0.012838099548602907,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import"
+    },
+    {
+      "claim_key": "music.ai-tags-beat-map",
+      "exact": false,
+      "expected": "列表里每首歌名下面有 2～3 个标签（例如「电子」「夏日」「有人声」）；右侧「AI 标注」区分风格、情绪、场景、人声、乐器五行；波形下面有一条分成几段的色带，再往下是每拍一根短柱的拍子区，每小节开头有小节号；「速度」一行显示一个 BPM 数字，不再出现「还没分析」；页面上没有「授权」列，也没有「平台版权曲」「来源不明」字样。",
+      "fields": {
+        "预期表现": "列表里每首歌名下面有 2～3 个标签（例如「电子」「夏日」「有人声」）；右侧「AI 标注」区分风格、情绪、场景、人声、乐器五行；波形下面有一条分成几段的色带，再往下是每拍一根短柱的拍子区，每小节开头有小节号；「速度」一行显示一个 BPM 数字，不再出现「还没分析」；页面上没有「授权」列，也没有「平台版权曲」「来源不明」字样。",
+        "验收步骤": "1. 打开 Studio 的音乐库。\n  2. 点「Turn Back Time」这一行。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.3167893572771217,
+      "steps": "1. 打开 Studio 的音乐库。\n  2. 点「Turn Back Time」这一行。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+      "text": "1. 打开 Studio 的音乐库。\n  2. 点「Turn Back Time」这一行。\n列表里每首歌名下面有 2～3 个标签（例如「电子」「夏日」「有人声」）；右侧「AI 标注」区分风格、情绪、场景、人声、乐器五行；波形下面有一条分成几段的色带，再往下是每拍一根短柱的拍子区，每小节开头有小节号；「速度」一行显示一个 BPM 数字，不再出现「还没分析」；页面上没有「授权」列，也没有「平台版权曲」「来源不明」字样。",
+      "text_cosine": 0.008578714554243416,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "claim_key": "music.auto-analysis-facets",
+      "exact": false,
+      "expected": "新导入的歌先显示「分析中」，过一会儿不刷新页面就出现 BPM 数字和标签；点「夏日」后列表只剩标了「夏日」的歌，数量和「夏日」后面的数字一样。",
+      "fields": {
+        "预期表现": "新导入的歌先显示「分析中」，过一会儿不刷新页面就出现 BPM 数字和标签；点「夏日」后列表只剩标了「夏日」的歌，数量和「夏日」后面的数字一样。",
+        "验收步骤": "1. 点右上角「从文件夹导入」，导入一首库里没有的歌。\n  2. 查看列表里这首歌，不刷新页面。\n  3. 点标签筛选里的「夏日」。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.31533622670910016,
+      "steps": "1. 点右上角「从文件夹导入」，导入一首库里没有的歌。\n  2. 查看列表里这首歌，不刷新页面。\n  3. 点标签筛选里的「夏日」。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+      "text": "1. 点右上角「从文件夹导入」，导入一首库里没有的歌。\n  2. 查看列表里这首歌，不刷新页面。\n  3. 点标签筛选里的「夏日」。\n新导入的歌先显示「分析中」，过一会儿不刷新页面就出现 BPM 数字和标签；点「夏日」后列表只剩标了「夏日」的歌，数量和「夏日」后面的数字一样。",
+      "text_cosine": 0.005672453418200349,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "claim_key": "music.duplicate-import",
+      "exact": false,
+      "expected": "提示这首已在库里，没有重复的一条，也没有重新下载。",
+      "fields": {
+        "预期表现": "提示这首已在库里，没有重复的一条，也没有重新下载。",
+        "验收步骤": "1. 粘贴刚才任意一首的链接，再导入一次。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.31513547817969434,
+      "steps": "1. 粘贴刚才任意一首的链接，再导入一次。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-19-R210-photo-music-link-import/H-02",
+      "text": "1. 粘贴刚才任意一首的链接，再导入一次。\n提示这首已在库里，没有重复的一条，也没有重新下载。",
+      "text_cosine": 0.005270956359388686,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import"
+    },
+    {
+      "claim_key": "music.beat-playback",
+      "exact": false,
+      "expected": "播放线扫过短柱时那一拍变白，和听到的鼓点对得上；播放按钮右边显示当前第几小节和所在段落（安静、推进或高潮）。",
+      "fields": {
+        "预期表现": "播放线扫过短柱时那一拍变白，和听到的鼓点对得上；播放按钮右边显示当前第几小节和所在段落（安静、推进或高潮）。",
+        "验收步骤": "1. 点右侧的播放按钮。\n  2. 点色带的开头、中间、结尾，各听 10 秒。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.31410758495892044,
+      "steps": "1. 点右侧的播放按钮。\n  2. 点色带的开头、中间、结尾，各听 10 秒。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+      "text": "1. 点右侧的播放按钮。\n  2. 点色带的开头、中间、结尾，各听 10 秒。\n播放线扫过短柱时那一拍变白，和听到的鼓点对得上；播放按钮右边显示当前第几小节和所在段落（安静、推进或高潮）。",
+      "text_cosine": 0.0032151699178408974,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map"
+    },
+    {
+      "claim_key": "music.membership-boundary",
+      "exact": false,
+      "expected": "明确提示这首要会员才能下载，并建议去汽水音乐找同名歌；音乐库里没有多出残缺的一条。",
+      "fields": {
+        "预期表现": "明确提示这首要会员才能下载，并建议去汽水音乐找同名歌；音乐库里没有多出残缺的一条。",
+        "验收步骤": "1. 粘贴任意一首网易云会员歌曲的链接导入。"
+      },
+      "item": "H-03",
+      "scope_declared": true,
+      "score": 0.3125,
+      "steps": "1. 粘贴任意一首网易云会员歌曲的链接导入。",
+      "surface_jaccard": 0.625,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ],
+      "target": "2026-10-19-R210-photo-music-link-import/H-03",
+      "text": "1. 粘贴任意一首网易云会员歌曲的链接导入。\n明确提示这首要会员才能下载，并建议去汽水音乐找同名歌；音乐库里没有多出残缺的一条。",
+      "text_cosine": 0.0,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import"
+    },
+    {
+      "claim_key": "photo.edit-tools.openchatcut-candidate",
+      "exact": false,
+      "expected": "用 OpenChatCut 生成出能播放的候选视频。",
+      "fields": {
+        "预期表现": "用 OpenChatCut 生成出能播放的候选视频。",
+        "验收步骤": "1. 打开 Photo Studio，进入一个分镜已确认的项目。\n  2. 点击生成剪辑候选。"
+      },
+      "item": "H-02",
+      "scope_declared": true,
+      "score": 0.18999691562968393,
+      "steps": "1. 打开 Photo Studio，进入一个分镜已确认的项目。\n  2. 点击生成剪辑候选。",
+      "surface_jaccard": 0.3333333333333333,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.edit-backends",
+        "photo.project-tools",
+        "photo.tests-scripts"
+      ],
+      "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+      "text": "1. 打开 Photo Studio，进入一个分镜已确认的项目。\n  2. 点击生成剪辑候选。\n用 OpenChatCut 生成出能播放的候选视频。",
+      "text_cosine": 0.046660497926034536,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo"
+    },
+    {
+      "claim_key": "photo.edit-tools.installation",
+      "exact": false,
+      "expected": "环境检查的剪辑工具一栏列出 OpenChatCut、OpenFilm 和各自版本，位置都在 Photo 软件文件夹里面，没有一处指向桌面的开源工具文件夹或自媒体创作 Agent 仓库。",
+      "fields": {
+        "预期表现": "环境检查的剪辑工具一栏列出 OpenChatCut、OpenFilm 和各自版本，位置都在 Photo 软件文件夹里面，没有一处指向桌面的开源工具文件夹或自媒体创作 Agent 仓库。",
+        "验收步骤": "1. 打开终端，进入 Photo 软件所在的文件夹。\n  2. 输入 README 里写的剪辑工具安装命令，再输入环境检查命令。"
+      },
+      "item": "H-01",
+      "scope_declared": true,
+      "score": 0.17230695277856575,
+      "steps": "1. 打开终端，进入 Photo 软件所在的文件夹。\n  2. 输入 README 里写的剪辑工具安装命令，再输入环境检查命令。",
+      "surface_jaccard": 0.3333333333333333,
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.edit-backends",
+        "photo.project-tools",
+        "photo.tests-scripts"
+      ],
+      "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+      "text": "1. 打开终端，进入 Photo 软件所在的文件夹。\n  2. 输入 README 里写的剪辑工具安装命令，再输入环境检查命令。\n环境检查的剪辑工具一栏列出 OpenChatCut、OpenFilm 和各自版本，位置都在 Photo 软件文件夹里面，没有一处指向桌面的开源工具文件夹或自媒体创作 Agent 仓库。",
+      "text_cosine": 0.011280572223798191,
+      "workspace": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo"
+    }
+  ],
+  "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+  "paths": [
+    "acceptance/requests/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard/request.json",
+    "acceptance/requests/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard/request.md",
+    "docs/tasks/R282-direct-handoff/REPORT-B.md",
+    "docs/tasks/R282-direct-handoff/REPORT-F.md",
+    "docs/tasks/R282-direct-handoff/TASK.md",
+    "schemas/studio-openapi.json",
+    "scripts/direct_video/frontend_gate.mjs",
+    "scripts/direct_video/generate.py",
+    "scripts/direct_video/rescript_frontend_gate.mjs",
+    "scripts/direct_video/revision_frontend_gate.mjs",
+    "studio/api_contract.py",
+    "studio/direct_handoff_contract.py",
+    "studio/direct_video.py",
+    "studio/server.py",
+    "studio/static/direct-rescript.css",
+    "studio/static/direct-storyboard.js",
+    "studio/static/direct-view.js",
+    "tests/fixtures/r282-direct/first-handoff-legacy.json",
+    "tests/fixtures/r282-direct/first-handoff.json",
+    "tests/fixtures/r282-direct/rescript-newer.json",
+    "tests/test_r282_frontend.mjs",
+    "tests/test_r282_frontend.py",
+    "tests/test_r282_handoff.py"
+  ],
+  "range_head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+  "surfaces": [
+    "acceptance.artifacts",
+    "photo.documentation",
+    "photo.tests-scripts",
+    "photo.video-pipeline",
+    "studio.backend",
+    "studio.frontend"
+  ],
+  "thresholds": {
+    "duplicate": 0.75,
+    "possible": 0.35
+  },
+  "undeclared_legacy": [
+    "2026-10-26-R282-photo-direct-handoff-storyboard"
+  ],
+  "unmapped": []
+}

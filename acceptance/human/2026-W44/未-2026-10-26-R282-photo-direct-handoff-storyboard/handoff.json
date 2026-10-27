@@ -1,0 +1,229 @@
+{
+  "baseline": {
+    "base": "614c55060554de74beb547e7213877c369fa69cb",
+    "branch": "detached",
+    "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+    "tree": "9b8e5d75b3f282b79da585f2434971cbb0bfd81b"
+  },
+  "binding_sha256": "978df1d8bbfcd1cc33947ac33ca5c8d8597949b2b4d89a9c88656c8d567139c6",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "2e3b4abce331ba5332b3269ee19db56bc8415eaad5a1e3190fa980a9c5f655bf",
+  "claims": [
+    {
+      "claim_key": "studio.direct-handoff-storyboard",
+      "item": "H-01",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct",
+      "protected_test_overlap": [
+        {
+          "decision": "rebaseline",
+          "reason": "R282批准交接与旧包兼容场景扩展共用门禁，原断言保留；以新批准合同准备后同头完整重验并重新handoff，原三项人工PENDING。",
+          "target": "2026-10-26-R278-photo-direct-rescript"
+        },
+        {
+          "decision": "rebaseline",
+          "reason": "R282批准交接与旧包兼容场景扩展共用门禁，原断言保留；以新批准合同准备后同头完整重验并重新handoff，原三项人工PENDING。",
+          "target": "2026-10-26-R283-photo-direct-style-library"
+        }
+      ],
+      "relations": [
+        {
+          "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验中台交接填分镜、配音沿用和换版，不承接工具链责任。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐导入、去重及会员失败；本卡只消费交接配音，不改音乐入库。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验导航、项目分组、精选和决定保存；本卡只验同件作品的交接分镜/图片/配音及主动换版。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、节拍试听及分析；本卡不生成音乐或改变分析，只消费中台交接数据。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留生成配音合成和单镜不变性；本卡增加中台交接来源，不承接原成片合成、同步和单镜重写责任。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留选块改画面、版本核对、样例与规则草稿；本卡验中台全表主动换版，不替代单镜详情交互。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "studio.direct-handoff-narration",
+      "item": "H-02",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验中台交接填分镜、配音沿用和换版，不承接工具链责任。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐导入、去重及会员失败；本卡只消费交接配音，不改音乐入库。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验导航、项目分组、精选和决定保存；本卡只验同件作品的交接分镜/图片/配音及主动换版。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、节拍试听及分析；本卡不生成音乐或改变分析，只消费中台交接数据。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留生成配音合成和单镜不变性；本卡增加中台交接来源，不承接原成片合成、同步和单镜重写责任。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留选块改画面、版本核对、样例与规则草稿；本卡验中台全表主动换版，不替代单镜详情交互。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "studio.direct-handoff-newer",
+      "item": "H-03",
+      "open_route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct",
+      "relations": [
+        {
+          "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验中台交接填分镜、配音沿用和换版，不承接工具链责任。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐导入、去重及会员失败；本卡只消费交接配音，不改音乐入库。",
+          "target": "2026-10-19-R210-photo-music-link-import",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验导航、项目分组、精选和决定保存；本卡只验同件作品的交接分镜/图片/配音及主动换版。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验音乐标签、节拍试听及分析；本卡不生成音乐或改变分析，只消费中台交接数据。",
+          "target": "2026-10-20-R223-photo-music-beat-map",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留生成配音合成和单镜不变性；本卡增加中台交接来源，不承接原成片合成、同步和单镜重写责任。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡保留选块改画面、版本核对、样例与规则草稿；本卡验中台全表主动换版，不替代单镜详情交互。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-10-27/R282-direct-handoff/acceptance-contract.md",
+  "contract_sha256": "3c8d6a0d98343ca90106c6c16d14a114995bc0d00896f6e86795c4916038e569",
+  "contract_version": "1",
+  "estimated_minutes": 10,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "studio.direct-handoff-narration",
+    "studio.direct-handoff-newer",
+    "studio.direct-handoff-storyboard"
+  ],
+  "loop_name": "中台交过来的分镜和配音直接进脚本直出",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/integration-contract/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-199f30/result.md",
+      "result_sha256": "04153d4dda302607b82ce59cce1928ba09fddc7cbbf6122908a8bd93a9d76fb2",
+      "run_id": "20261027T062532Z-macos-fixed-headless-6a430c5-round2-199f30",
+      "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+    },
+    {
+      "layer": "machine/e2e",
+      "result_path": "agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/e2e/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-ff7d89/result.md",
+      "result_sha256": "717ed0397cc55b3f4b9274cb84ded3559857720eead723379af741d63588c15f",
+      "run_id": "20261027T062532Z-macos-fixed-headless-6a430c5-round2-ff7d89",
+      "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+    }
+  ],
+  "open_route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct",
+  "ready_at": "2026-10-27T06:30:46.799625Z",
+  "release_slice": "R282",
+  "request_id": "2026-10-26-R282-photo-direct-handoff-storyboard",
+  "required_role": "产品负责人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+  "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 P5仅为真实可绑定旧包候选，8769当前交接null，需总控完成当前中台交接与binding/workspace；H-01版本时间及H-03更新依赖未发布R299，不声称真实链路具备。",
+  "task_id": "2026-10-26-R282-photo-direct-handoff-storyboard"
+}

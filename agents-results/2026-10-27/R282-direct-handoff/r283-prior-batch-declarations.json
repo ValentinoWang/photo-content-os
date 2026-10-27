@@ -1,0 +1,15 @@
+{
+  "reason": "旧已发布批次声明不当作本批差异；原Git及审计历史保留",
+  "prior_declarations": [
+    {
+      "item": "H-01",
+      "declarations": [
+        {
+          "decision": "rebaseline",
+          "reason": "用户第四次交付授权：R283使风格库常驻、first-none替代旧空态，更新R278 Node和共用门禁两份受保护文件；保留全部拆并镜、输入法、导入、样张及媒体断言；新源码完整重验和重新递交，人工三项不变。",
+          "target": "2026-10-26-R278-photo-direct-rescript"
+        }
+      ]
+    }
+  ]
+}

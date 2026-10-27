@@ -1,0 +1,46 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-10-26-R283-photo-direct-style-library",
+  "base": "130c931c8250368205165ef8c59d19b2796d55d4",
+  "head": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
+  "range_head": "5c99eb44199f6e5b35198e92189a022c97a36642",
+  "reason": "用户2026-10-27第四次交付授权：仅R283推送范围，批准的原标准保留，触发卡R283；新源码机器重验、人工PENDING。",
+  "prepared_at": "2026-10-26T20:05:10.915662Z",
+  "previous_ready_at": "2026-10-26T17:16:07.932204Z",
+  "previous_binding_sha256": "80076c95ce449928685bf9323d8e8cb08891ad59fa27fe182cc50e5fe927708e",
+  "checklist_sha256": "53f248b66e379e0436578fa7e8dd305b60ef6b42bf85b5bbad23291a37bc2bd2",
+  "tests": [
+    {
+      "path": "tests/test_r278_direct_rescript.mjs",
+      "old_sha256": "734701b1224ffce564e7988b45490bc7b8956f9a1e8eebeb6f728d0c4dee661e",
+      "new_sha256": "98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0"
+    },
+    {
+      "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+      "old_sha256": "1656090287a72e335d1bba60f7ec155ed8d31ad41ecc6cae9bcc2a2f2336a9cd",
+      "new_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed"
+    }
+  ],
+  "approved_contract": {
+    "base": {
+      "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+      "commit": "130c931c8250368205165ef8c59d19b2796d55d4",
+      "version": "1",
+      "sha256": "c09cdffe9bb97c23b7526c7dce449611d0c5eada03d8db47bbfd86c3c72ac49d"
+    },
+    "current": {
+      "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+      "commit": "5c99eb44199f6e5b35198e92189a022c97a36642",
+      "version": "2",
+      "sha256": "21040745022fd273f8c138bfae74dc76afaeb3930fc31781dbb6a8bf4af80088"
+    },
+    "binding": {
+      "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/binding.md",
+      "sha256": "80076c95ce449928685bf9323d8e8cb08891ad59fa27fe182cc50e5fe927708e"
+    },
+    "checklist": {
+      "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
+      "sha256": "53f248b66e379e0436578fa7e8dd305b60ef6b42bf85b5bbad23291a37bc2bd2"
+    }
+  }
+}

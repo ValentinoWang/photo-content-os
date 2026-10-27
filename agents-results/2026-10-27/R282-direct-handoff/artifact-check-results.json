@@ -1,0 +1,257 @@
+[
+  {
+    "name": "handoff-R278-direct-rescript",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "handoff",
+      "agents-results/2026-10-26/R278-direct-rescript",
+      "--project-root",
+      ".",
+      "--loop-name",
+      "脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成",
+      "--summary",
+      "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 共用门禁保护摘要重新批准，R282触发的一份同头rebaseline，原步骤预期不变。 H-03实测3分36秒/修改2分49秒，用户「这个没事 大概差不多就行」，不作人工PASS。",
+      "--source-commit",
+      "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+      "--blocking",
+      "--estimated-minutes",
+      "10",
+      "--required-role",
+      "产品负责人",
+      "--release-slice",
+      "R278",
+      "--request-id",
+      "2026-10-26-R278-photo-direct-rescript",
+      "--baseline",
+      "agents-results/2026-10-26/R278-direct-rescript/handoff-r282/baseline.json",
+      "--claims",
+      "agents-results/2026-10-26/R278-direct-rescript/handoff-r282/claims.json",
+      "--machine-run",
+      "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-3c11bb/result.md",
+      "--machine-run",
+      "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-7e33c7/result.md",
+      "--invalidation-key",
+      "studio.direct-rescript",
+      "--invalidation-key",
+      "studio.direct-style-base",
+      "--invalidation-key",
+      "studio.direct-style-draft",
+      "--open-route",
+      "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "--replace"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "handoff-R283-direct-style-library",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "handoff",
+      "agents-results/2026-10-26/R283-direct-style-library",
+      "--project-root",
+      ".",
+      "--loop-name",
+      "脚本直出的视频风格加风格库：九种现成风格直接挑",
+      "--summary",
+      "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 共用门禁保护摘要重新批准，R282触发的一份同头rebaseline，原步骤预期不变。",
+      "--source-commit",
+      "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+      "--blocking",
+      "--estimated-minutes",
+      "10",
+      "--required-role",
+      "产品负责人",
+      "--release-slice",
+      "R283",
+      "--request-id",
+      "2026-10-26-R283-photo-direct-style-library",
+      "--baseline",
+      "agents-results/2026-10-26/R283-direct-style-library/handoff-r282/baseline.json",
+      "--claims",
+      "agents-results/2026-10-26/R283-direct-style-library/handoff-r282/claims.json",
+      "--machine-run",
+      "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/integration-contract/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-61c265/result.md",
+      "--machine-run",
+      "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/e2e/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-29ad12/result.md",
+      "--invalidation-key",
+      "studio.direct-library-adjustment",
+      "--invalidation-key",
+      "studio.direct-library-generation",
+      "--invalidation-key",
+      "studio.direct-style-library",
+      "--open-route",
+      "http://127.0.0.1:8769/#view=piece&piece=project-28aaf4f527&ptab=direct",
+      "--replace"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "handoff-R282-direct-handoff",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "handoff",
+      "agents-results/2026-10-27/R282-direct-handoff",
+      "--project-root",
+      ".",
+      "--loop-name",
+      "中台交过来的分镜和配音直接进脚本直出",
+      "--summary",
+      "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 P5仅为真实可绑定旧包候选，8769当前交接null，需总控完成当前中台交接与binding/workspace；H-01版本时间及H-03更新依赖未发布R299，不声称真实链路具备。",
+      "--source-commit",
+      "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+      "--blocking",
+      "--estimated-minutes",
+      "10",
+      "--required-role",
+      "产品负责人",
+      "--release-slice",
+      "R282",
+      "--request-id",
+      "2026-10-26-R282-photo-direct-handoff-storyboard",
+      "--baseline",
+      "agents-results/2026-10-27/R282-direct-handoff/baseline.json",
+      "--claims",
+      "agents-results/2026-10-27/R282-direct-handoff/claims.json",
+      "--machine-run",
+      "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/integration-contract/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-199f30/result.md",
+      "--machine-run",
+      "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/e2e/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-ff7d89/result.md",
+      "--invalidation-key",
+      "studio.direct-handoff-storyboard",
+      "--invalidation-key",
+      "studio.direct-handoff-narration",
+      "--invalidation-key",
+      "studio.direct-handoff-newer"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "contract-R278-direct-rescript",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/check_acceptance_contract.py",
+      "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "index-R278-direct-rescript",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "index",
+      "agents-results/2026-10-26/R278-direct-rescript",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "contract-R283-direct-style-library",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/check_acceptance_contract.py",
+      "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "index-R283-direct-style-library",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "index",
+      "agents-results/2026-10-26/R283-direct-style-library",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "contract-R282-direct-handoff",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/check_acceptance_contract.py",
+      "agents-results/2026-10-27/R282-direct-handoff/acceptance-contract.md",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "index-R282-direct-handoff",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "index",
+      "agents-results/2026-10-27/R282-direct-handoff",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "log-generation",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "log",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "check-project",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "check-project",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "deep-check-R278-direct-rescript",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "check",
+      "agents-results/2026-10-26/R278-direct-rescript",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 1
+  },
+  {
+    "name": "deep-check-R283-direct-style-library",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "check",
+      "agents-results/2026-10-26/R283-direct-style-library",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 1
+  },
+  {
+    "name": "deep-check-R282-direct-handoff",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "check",
+      "agents-results/2026-10-27/R282-direct-handoff",
+      "--project-root",
+      "."
+    ],
+    "exit_code": 1
+  },
+  {
+    "name": "check-delivery-precommit",
+    "command": [
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/acceptance-handoff/scripts/check_delivery.py",
+      "--project-root",
+      ".",
+      "--range",
+      "origin/main..HEAD",
+      "--json",
+      "--read-only"
+    ],
+    "exit_code": 1
+  }
+]

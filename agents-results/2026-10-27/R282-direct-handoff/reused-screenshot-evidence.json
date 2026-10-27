@@ -1,0 +1,261 @@
+{
+  "scope": "Reuse F final six plus supplement final four; SHA-256 and links verified, no new capture; no product visual change in 6a430c5",
+  "galleries": [
+    {
+      "root": "~/.photo-content-os/evidence/R282-direct-handoff/frontend",
+      "manifest_sha256": "232b40ef6a9ec9a5a44247665bf0ed71ad51242196b731ed3544c977e2e926fd",
+      "gallery_sha256": "5272bb7c0afc22962da42cbfd845414aa52258e3bd00aeb256048acdb6a74318",
+      "links_checked": 6,
+      "screenshots": [
+        {
+          "state": "first-handoff",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:27:26.826Z",
+          "scroll_coverage": [
+            0,
+            2637
+          ],
+          "output_dimensions": {
+            "width": 1440,
+            "height": 2637
+          },
+          "path": "frontend/first-handoff-1440.png",
+          "sha256": "2624a6e367a25ae83e2c2d1e5bb15bff9ad84a0584c0215e19165fd792556f2e",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "整页：来源横条在表头下，七镜六列及来源标签对齐，第03镜版权待确认呈警示色；配音卡与页底生成条完整。",
+          "reviewer": "Codex F · personal view_image inspection"
+        },
+        {
+          "state": "first-handoff",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 960,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:27:27.314Z",
+          "scroll_coverage": [
+            0,
+            3240
+          ],
+          "output_dimensions": {
+            "width": 960,
+            "height": 3240
+          },
+          "path": "frontend/first-handoff-960.png",
+          "sha256": "af5d834aaba33656f596a64753a11a7f4a6552fc5d203e8fd899fcfde91cf238",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "整页：来源与本机修改说明自然换行，表格在自身容器横滚；视频风格、配音与生成条上下排列，页底完整。",
+          "reviewer": "Codex F · personal view_image inspection"
+        },
+        {
+          "state": "first-handoff",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 390,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:27:27.809Z",
+          "scroll_coverage": [
+            0,
+            4632
+          ],
+          "output_dimensions": {
+            "width": 390,
+            "height": 4632
+          },
+          "path": "frontend/first-handoff-390.png",
+          "sha256": "0b194ea3691a16af92ce4ec719d10f0cdf9e0bf6a8570d084c5dfe56109cabbb",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "整页与手机原尺寸检查：来源、版本、时间和本机修改说明可读，表格保留横滚；风格卡为单列，带入配音信息完整，生成文字保持一行。",
+          "reviewer": "Codex F · personal view_image inspection"
+        },
+        {
+          "state": "rescript-newer",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:27:28.629Z",
+          "scroll_coverage": [
+            0,
+            2612
+          ],
+          "output_dimensions": {
+            "width": 1440,
+            "height": 2612
+          },
+          "path": "frontend/rescript-newer-1440.png",
+          "sha256": "4db3ec67ef0b635301a926188597ee58929b399be8f6e9d736e46f04b7c27995",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "整页：新版横条与换成中台这版按钮明显；未接受前仍是当前任务七镜，无来源标签；风格、默认配音卡、页底生成条完整。",
+          "reviewer": "Codex F · personal view_image inspection"
+        },
+        {
+          "state": "rescript-newer",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 960,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:27:29.351Z",
+          "scroll_coverage": [
+            0,
+            3186
+          ],
+          "output_dimensions": {
+            "width": 960,
+            "height": 3186
+          },
+          "path": "frontend/rescript-newer-960.png",
+          "sha256": "32956b776bd7cc689d45af83be6379bd2576293f0880203b447e077331631149",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "整页：新版横条、回到现在这条与换版按钮可辨；旧表格按稿横滚，风格和说明有序排列，未见页级溢出。",
+          "reviewer": "Codex F · personal view_image inspection"
+        },
+        {
+          "state": "rescript-newer",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 390,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:27:30.093Z",
+          "scroll_coverage": [
+            0,
+            4628
+          ],
+          "output_dimensions": {
+            "width": 390,
+            "height": 4628
+          },
+          "path": "frontend/rescript-newer-390.png",
+          "sha256": "3f8b62d48d630a67d08fc75c75a2db70d4eac84274a2151a5710997214ed7497",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "整页并以原尺寸复看：第4版与时间自然折行，换版按钮可见；当前七镜和相邻风格段完整，生成按钮一行，页面底部无裁切。",
+          "reviewer": "Codex F · personal view_image inspection"
+        }
+      ]
+    },
+    {
+      "root": "~/.photo-content-os/evidence/R282-direct-handoff/frontend/supplement-1",
+      "manifest_sha256": "8dd68135ea6e2c9513b696fcd7158eafd56b67f929f3074aa5c95d803d61d27c",
+      "gallery_sha256": "9db3128809697003628be69be4323292ed32387f9bc297ea5fe4f0c4e90322e0",
+      "links_checked": 4,
+      "screenshots": [
+        {
+          "state": "first-handoff-legacy",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:38:54.522Z",
+          "scroll_coverage": [
+            0,
+            2637
+          ],
+          "output_dimensions": {
+            "width": 1440,
+            "height": 2637
+          },
+          "path": "frontend/supplement-1/first-handoff-legacy-1440.png",
+          "sha256": "1c10bebd9b649944460eaeb05fa51e7bb4dc388875f8d67332ff4aa52788dda1",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "完整页已看：来源条保留作品名和配音，无版本号、交接时间、null 或悬空分隔点；七镜六列、相邻风格及页底完整。",
+          "reviewer": "Codex F · individual view_image inspection"
+        },
+        {
+          "state": "first-handoff-legacy",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 390,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:38:55.289Z",
+          "scroll_coverage": [
+            0,
+            4612
+          ],
+          "output_dimensions": {
+            "width": 390,
+            "height": 4612
+          },
+          "path": "frontend/supplement-1/first-handoff-legacy-390.png",
+          "sha256": "660670e326b7a1e4bbaecc8a667038e71d8a999dfd595e62b250c36e16951b2d",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "完整手机页已看：缺失的版本和时间无占位，来源及本机修改说明换行自然；表格自身横滚，配音卡与生成按钮完整。",
+          "reviewer": "Codex F · individual view_image inspection"
+        },
+        {
+          "state": "rescript-newer-unversioned",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:38:56.694Z",
+          "scroll_coverage": [
+            0,
+            2612
+          ],
+          "output_dimensions": {
+            "width": 1440,
+            "height": 2612
+          },
+          "path": "frontend/supplement-1/rescript-newer-unversioned-1440.png",
+          "sha256": "3859c39cb275b077e8b3d99a89143fa1d7f344b13826769635b71db0c58b6c91",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "完整页已看：新版横条为「中台又交过来新的分镜。」并接换版按钮，无虚构版本号；当前表格和相邻区域完整。",
+          "reviewer": "Codex F · individual view_image inspection"
+        },
+        {
+          "state": "rescript-newer-unversioned",
+          "route": "http://127.0.0.1:8768/#view=piece&piece=fixture-piece&ptab=direct",
+          "viewport": {
+            "width": 390,
+            "height": 900
+          },
+          "capture_time": "2026-10-27T05:38:57.606Z",
+          "scroll_coverage": [
+            0,
+            4576
+          ],
+          "output_dimensions": {
+            "width": 390,
+            "height": 4576
+          },
+          "path": "frontend/supplement-1/rescript-newer-unversioned-390.png",
+          "sha256": "fc7f17f3c8e18bd1dd3b3791b5e4f7df2c74588378f4410a528244a6a2c7c54c",
+          "browser": "149.0.7827.55",
+          "font_mode": "fallback-local",
+          "review_result": "PASS",
+          "review_note": "完整手机页已看并以原尺寸复看：新版句子与换版按钮一行可读；表格横滚边界、风格、配音卡及页底生成按钮完整，无页级溢出。",
+          "reviewer": "Codex F · individual view_image inspection"
+        }
+      ]
+    }
+  ]
+}

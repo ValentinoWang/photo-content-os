@@ -2,6 +2,69 @@
   "blocking_entries": [
     {
       "blocking": true,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/checklist.md",
+      "estimated_minutes": 10,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/handoff.json",
+      "invalidation_keys": [
+        "studio.direct-handoff-narration",
+        "studio.direct-handoff-newer",
+        "studio.direct-handoff-storyboard"
+      ],
+      "latest_run": null,
+      "loop_name": "中台交过来的分镜和配音直接进脚本直出",
+      "ready_at": "2026-10-27T06:30:46.799625Z",
+      "release_slice": "R282",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 P5仅为真实可绑定旧包候选，8769当前交接null，需总控完成当前中台交接与binding/workspace；H-01版本时间及H-03更新依赖未发布R299，不声称真实链路具备。",
+      "task_id": "2026-10-26-R282-photo-direct-handoff-storyboard",
+      "workspace": "acceptance/human/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard"
+    },
+    {
+      "blocking": true,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/checklist.md",
+      "estimated_minutes": 10,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/handoff.json",
+      "invalidation_keys": [
+        "studio.direct-library-adjustment",
+        "studio.direct-library-generation",
+        "studio.direct-style-library"
+      ],
+      "latest_run": null,
+      "loop_name": "脚本直出的视频风格加风格库：九种现成风格直接挑",
+      "ready_at": "2026-10-27T06:30:40.790297Z",
+      "release_slice": "R283",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 共用门禁保护摘要重新批准，R282触发的一份同头rebaseline，原步骤预期不变。",
+      "task_id": "2026-10-26-R283-photo-direct-style-library",
+      "workspace": "acceptance/human/2026-W44/2026-10-26-R283-photo-direct-style-library"
+    },
+    {
+      "blocking": true,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
+      "estimated_minutes": 10,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/handoff.json",
+      "invalidation_keys": [
+        "studio.direct-rescript",
+        "studio.direct-style-base",
+        "studio.direct-style-draft"
+      ],
+      "latest_run": null,
+      "loop_name": "脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成",
+      "ready_at": "2026-10-27T06:30:35.124050Z",
+      "release_slice": "R278",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 共用门禁保护摘要重新批准，R282触发的一份同头rebaseline，原步骤预期不变。 H-03实测3分36秒/修改2分49秒，用户「这个没事 大概差不多就行」，不作人工PASS。",
+      "task_id": "2026-10-26-R278-photo-direct-rescript",
+      "workspace": "acceptance/human/2026-W44/2026-10-26-R278-photo-direct-rescript"
+    },
+    {
+      "blocking": true,
       "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision/checklist.md",
       "estimated_minutes": 10,
       "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision/handoff.json",
@@ -41,48 +104,6 @@
       "summary": "第四次交付，R283触发的新源码7d0ab00验证；299项专项、Node及完整前端门禁通过，人工三项PENDING。 本卡保护摘要未变，仅正式重新递交一次，不制造无差异rebaseline；原全部审计保留。",
       "task_id": "2026-10-26-R276-photo-direct-video-opus",
       "workspace": "acceptance/human/2026-W44/2026-10-26-R276-photo-direct-video-opus"
-    },
-    {
-      "blocking": true,
-      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/checklist.md",
-      "estimated_minutes": 10,
-      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/handoff.json",
-      "invalidation_keys": [
-        "studio.direct-library-adjustment",
-        "studio.direct-library-generation",
-        "studio.direct-style-library"
-      ],
-      "latest_run": null,
-      "loop_name": "脚本直出的视频风格加风格库：九种现成风格直接挑",
-      "ready_at": "2026-10-26T20:10:59.688065Z",
-      "release_slice": "R283",
-      "required_role": "产品负责人",
-      "scope_hints": [],
-      "status": "PENDING",
-      "summary": "第四次交付，R283触发的新源码7d0ab00验证；299项专项、Node及完整前端门禁通过，人工三项PENDING。",
-      "task_id": "2026-10-26-R283-photo-direct-style-library",
-      "workspace": "acceptance/human/2026-W44/2026-10-26-R283-photo-direct-style-library"
-    },
-    {
-      "blocking": true,
-      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
-      "estimated_minutes": 10,
-      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/handoff.json",
-      "invalidation_keys": [
-        "studio.direct-rescript",
-        "studio.direct-style-base",
-        "studio.direct-style-draft"
-      ],
-      "latest_run": null,
-      "loop_name": "脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成",
-      "ready_at": "2026-10-26T20:10:58.711886Z",
-      "release_slice": "R278",
-      "required_role": "产品负责人",
-      "scope_hints": [],
-      "status": "PENDING",
-      "summary": "第四次交付，R283触发的新源码7d0ab00验证；299项专项、Node及完整前端门禁通过，人工三项PENDING。 新批准合同准备后完成一次R283触发的rebaseline。H-03实测首次3分36秒、修改2分49秒，用户原话「这个没事 大概差不多就行」，不作为人工PASS。",
-      "task_id": "2026-10-26-R278-photo-direct-rescript",
-      "workspace": "acceptance/human/2026-W44/2026-10-26-R278-photo-direct-rescript"
     },
     {
       "blocking": true,
@@ -148,7 +169,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-26T20:11:04.844527Z",
+  "generated_at": "2026-10-27T06:30:46.799625Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -171,5 +192,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "687fa86015e7b3a86109e521b3df36dd18e1e2faac4c9cefd5356d0d5fe5f773"
+  "source_facts_sha256": "ea31dc8847cc3077ecb1e3b050a4d445d27cc874d5a8a8c58a31b16e8db49062"
 }

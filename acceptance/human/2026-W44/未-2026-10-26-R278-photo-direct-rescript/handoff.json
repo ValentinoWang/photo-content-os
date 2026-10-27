@@ -1,15 +1,15 @@
 {
   "baseline": {
-    "base": "130c931c8250368205165ef8c59d19b2796d55d4",
+    "base": "614c55060554de74beb547e7213877c369fa69cb",
     "branch": "detached",
-    "head": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
-    "tree": "b32e8bc0b6e36b9aee0957b3367b2f689e29054d"
+    "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+    "tree": "9b8e5d75b3f282b79da585f2434971cbb0bfd81b"
   },
-  "binding_sha256": "80076c95ce449928685bf9323d8e8cb08891ad59fa27fe182cc50e5fe927708e",
+  "binding_sha256": "a103be094a971b0a1ee16112e41b8e4d55e103d5d624e0ca74d53c21d57b5df9",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "53f248b66e379e0436578fa7e8dd305b60ef6b42bf85b5bbad23291a37bc2bd2",
+  "checklist_sha256": "fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f",
   "claims": [
     {
       "claim_key": "studio.direct-rescript",
@@ -49,6 +49,11 @@
         {
           "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
           "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
           "type": "independent"
         }
       ],
@@ -100,6 +105,11 @@
           "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
           "target": "2026-10-26-R283-photo-direct-style-library",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+          "type": "independent"
         }
       ],
       "surfaces": [
@@ -150,6 +160,11 @@
           "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
           "target": "2026-10-26-R283-photo-direct-style-library",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+          "type": "independent"
         }
       ],
       "surfaces": [
@@ -163,8 +178,8 @@
     }
   ],
   "contract_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
-  "contract_sha256": "21040745022fd273f8c138bfae74dc76afaeb3930fc31781dbb6a8bf4af80088",
-  "contract_version": "2",
+  "contract_sha256": "0e2a37aa6055f6a357a78b7345ea0c0d31d6d144076e0d18db4710aa0e39bb8d",
+  "contract_version": "3",
   "estimated_minutes": 10,
   "execution_policy": "terminal-after-machine-green",
   "invalidation_keys": [
@@ -176,17 +191,17 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-43a173/result.md",
-      "result_sha256": "4135c9a328921f551e9422007065fa9e17752d5d0d9ac0ce72083951b78f7a63",
-      "run_id": "20261026T200526Z-macos-v4-headless-serial-7d0ab00-43a173",
-      "source_identity": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd"
+      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-3c11bb/result.md",
+      "result_sha256": "3bc9a1f46bbde13d48ab5ae5cd5a304ee151a45da9ea862864d3812057c9873e",
+      "run_id": "20261027T062531Z-macos-fixed-headless-6a430c5-round2-3c11bb",
+      "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
     },
     {
       "layer": "machine/e2e",
-      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261026T200526Z-macos-v4-headless-serial-7d0ab00-5b5129/result.md",
-      "result_sha256": "4fad463271d49176ced4aabafc82b13ddfc123fc9582403d69e564943201672a",
-      "run_id": "20261026T200526Z-macos-v4-headless-serial-7d0ab00-5b5129",
-      "source_identity": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd"
+      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-7e33c7/result.md",
+      "result_sha256": "5b9f6d4454450872d8123958420f0a507d2a47fc8a05478136d00558fc6d9273",
+      "run_id": "20261027T062531Z-macos-fixed-headless-6a430c5-round2-7e33c7",
+      "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
     }
   ],
   "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
@@ -236,15 +251,56 @@
         }
       ],
       "trigger_card": "2026-10-26-R283-photo-direct-style-library"
+    },
+    {
+      "approved_contract": {
+        "base": {
+          "commit": "614c55060554de74beb547e7213877c369fa69cb",
+          "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+          "sha256": "21040745022fd273f8c138bfae74dc76afaeb3930fc31781dbb6a8bf4af80088",
+          "version": "2"
+        },
+        "binding": {
+          "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/binding.md",
+          "sha256": "a103be094a971b0a1ee16112e41b8e4d55e103d5d624e0ca74d53c21d57b5df9"
+        },
+        "checklist": {
+          "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
+          "sha256": "fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f"
+        },
+        "current": {
+          "commit": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+          "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+          "sha256": "0e2a37aa6055f6a357a78b7345ea0c0d31d6d144076e0d18db4710aa0e39bb8d",
+          "version": "3"
+        }
+      },
+      "base": "614c55060554de74beb547e7213877c369fa69cb",
+      "checklist_sha256": "fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f",
+      "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+      "phase": "completed",
+      "prepared_at": "2026-10-27T06:24:52.418436Z",
+      "previous_binding_sha256": "a103be094a971b0a1ee16112e41b8e4d55e103d5d624e0ca74d53c21d57b5df9",
+      "previous_ready_at": "2026-10-26T20:10:58.711886Z",
+      "range_head": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+      "reason": "用户R282第二次交付授权：同源交接和新旧包元数据分支加入共享门禁，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+      "tests": [
+        {
+          "new_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+          "old_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
+          "path": "scripts/direct_video/rescript_frontend_gate.mjs"
+        }
+      ],
+      "trigger_card": "2026-10-26-R282-photo-direct-handoff-storyboard"
     }
   ],
-  "ready_at": "2026-10-26T20:10:58.711886Z",
+  "ready_at": "2026-10-27T06:30:35.124050Z",
   "release_slice": "R278",
   "request_id": "2026-10-26-R278-photo-direct-rescript",
   "required_role": "产品负责人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "7d0ab0046ef286a5bac8c468d86ebc10ccf557cd",
-  "summary": "第四次交付，R283触发的新源码7d0ab00验证；299项专项、Node及完整前端门禁通过，人工三项PENDING。 新批准合同准备后完成一次R283触发的rebaseline。H-03实测首次3分36秒、修改2分49秒，用户原话「这个没事 大概差不多就行」，不作为人工PASS。",
+  "source_commit": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+  "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 共用门禁保护摘要重新批准，R282触发的一份同头rebaseline，原步骤预期不变。 H-03实测3分36秒/修改2分49秒，用户「这个没事 大概差不多就行」，不作人工PASS。",
   "task_id": "2026-10-26-R278-photo-direct-rescript"
 }

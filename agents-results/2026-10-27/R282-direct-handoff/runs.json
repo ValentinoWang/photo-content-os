@@ -1,0 +1,14 @@
+{
+  "R278-direct-rescript": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-3c11bb/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-7e33c7/result.md"
+  },
+  "R283-direct-style-library": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/integration-contract/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-61c265/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/e2e/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-29ad12/result.md"
+  },
+  "R282-direct-handoff": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/integration-contract/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-199f30/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-r282-direct-handoff/agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/e2e/runs/20261027T062532Z-macos-fixed-headless-6a430c5-round2-ff7d89/result.md"
+  }
+}

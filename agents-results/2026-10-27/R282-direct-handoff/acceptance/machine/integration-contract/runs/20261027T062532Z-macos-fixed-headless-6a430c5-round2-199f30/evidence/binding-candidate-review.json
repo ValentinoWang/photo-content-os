@@ -1,0 +1,122 @@
+{
+  "scope": "Production reader, genuine studio-r278 store and bindings; process-local environment only, listener unchanged",
+  "candidates": [
+    {
+      "binding_media_relative": "testing/video-pipeline-2026-10-12/spoken-binding-success.json",
+      "project_id": "p3-504ca70e6f",
+      "valid_if_explicitly_configured": true,
+      "listener_configuration_changed": false,
+      "title": "P3 合成口播实践：平均速度",
+      "shot_count": 1,
+      "revision": null,
+      "handedAt": null,
+      "narration": null,
+      "local_image_count": 0,
+      "candidate_route": "http://127.0.0.1:8769/#view=piece&piece=p3-504ca70e6f&ptab=direct"
+    },
+    {
+      "binding_media_relative": "testing/video-pipeline-2026-10-12/spoken-binding.json",
+      "project_id": "p3-504ca70e6f",
+      "valid_if_explicitly_configured": true,
+      "listener_configuration_changed": false,
+      "title": "P3 合成口播实践：平均速度",
+      "shot_count": 1,
+      "revision": null,
+      "handedAt": null,
+      "narration": null,
+      "local_image_count": 0,
+      "candidate_route": "http://127.0.0.1:8769/#view=piece&piece=p3-504ca70e6f&ptab=direct"
+    },
+    {
+      "binding_media_relative": "testing/R131-hiatus-video-v4-render/r131-v4-render-binding.json",
+      "project_id": "project-6546d6621b",
+      "valid_if_explicitly_configured": false,
+      "listener_configuration_changed": false
+    },
+    {
+      "binding_media_relative": "testing/R131-hiatus-video/r131-part3-final-binding.json",
+      "project_id": "project-fc6baa3294",
+      "valid_if_explicitly_configured": false,
+      "listener_configuration_changed": false
+    },
+    {
+      "binding_media_relative": "testing/R131-hiatus-video-v2-render2/r131-v2-render2-binding.json",
+      "project_id": "project-13b12eebe1",
+      "valid_if_explicitly_configured": false,
+      "listener_configuration_changed": false
+    },
+    {
+      "binding_media_relative": "testing/R131-hiatus-video/r131-binding.json",
+      "project_id": "project-fc6baa3294",
+      "valid_if_explicitly_configured": false,
+      "listener_configuration_changed": false
+    },
+    {
+      "binding_media_relative": "testing/R131-hiatus-video/r131-part2-binding.json",
+      "project_id": "project-fc6baa3294",
+      "valid_if_explicitly_configured": false,
+      "listener_configuration_changed": false
+    },
+    {
+      "binding_media_relative": "testing/R131-hiatus-video/r131-part2-final-binding.json",
+      "project_id": "project-fc6baa3294",
+      "valid_if_explicitly_configured": false,
+      "listener_configuration_changed": false
+    },
+    {
+      "binding_media_relative": "testing/R131-hiatus-video-v2/r131-v2-binding.json",
+      "project_id": "project-4c886fc28b",
+      "valid_if_explicitly_configured": false,
+      "listener_configuration_changed": false
+    },
+    {
+      "binding_media_relative": "testing/R131-hiatus-video-v4-render2/r131-v4-render2-binding.json",
+      "project_id": "project-28aaf4f527",
+      "valid_if_explicitly_configured": false,
+      "listener_configuration_changed": false
+    },
+    {
+      "binding_media_relative": "testing/video-pipeline-2026-10-12/p4-binding.json",
+      "project_id": "p4-11d01841df",
+      "valid_if_explicitly_configured": true,
+      "listener_configuration_changed": false,
+      "title": "P4 教学实践：平均速度",
+      "shot_count": 2,
+      "revision": null,
+      "handedAt": null,
+      "narration": null,
+      "local_image_count": 0,
+      "candidate_route": "http://127.0.0.1:8769/#view=piece&piece=p4-11d01841df&ptab=direct"
+    },
+    {
+      "binding_media_relative": "testing/video-pipeline-2026-10-12/p5-binding.json",
+      "project_id": "p5-f24c41f746",
+      "valid_if_explicitly_configured": true,
+      "listener_configuration_changed": false,
+      "title": "P5 直出实践：平均速度",
+      "shot_count": 2,
+      "revision": null,
+      "handedAt": null,
+      "narration": {
+        "voice": "Cherry",
+        "durationSeconds": 50.24
+      },
+      "local_image_count": 0,
+      "candidate_route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct"
+    },
+    {
+      "binding_media_relative": "testing/video-pipeline-2026-10-12/p3c-binding.json",
+      "project_id": "p3-504ca70e6f",
+      "valid_if_explicitly_configured": true,
+      "listener_configuration_changed": false,
+      "title": "P3 合成口播实践：平均速度",
+      "shot_count": 1,
+      "revision": null,
+      "handedAt": null,
+      "narration": null,
+      "local_image_count": 0,
+      "candidate_route": "http://127.0.0.1:8769/#view=piece&piece=p3-504ca70e6f&ptab=direct"
+    }
+  ],
+  "input_files_unchanged": true
+}

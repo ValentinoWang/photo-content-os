@@ -1,0 +1,106 @@
+{
+  "source_state": "~/.photo-content-os/studio-r278",
+  "media_root_source": "runtime_paths.local_media_root()",
+  "listener_pid": "45249",
+  "listener_binding_config_present": {},
+  "project_store_sha256": "6aca0d50b32bf4dc08c9d427673ffe749d9ab9969e774e18d2175562b97d5d5a",
+  "projects": [
+    {
+      "project_id": "20260625-a70b04ac51",
+      "title": "20260625_第一视角体验清华毕业典礼",
+      "project_revision": 1,
+      "workspace_media_relative": "projects/2026-tsinghua-graduation/2026-tsinghua-graduation-pov",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=20260625-a70b04ac51&ptab=direct"
+    },
+    {
+      "project_id": "20260514-400-e3ad82300c",
+      "title": "20260514_400米比赛_第一视角",
+      "project_revision": 1,
+      "workspace_media_relative": "projects/2026-lzu-revisit/2026-lzu-400m-pov",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=20260514-400-e3ad82300c&ptab=direct"
+    },
+    {
+      "project_id": "20260514-7d5c6cda2d",
+      "title": "20260514_兰州大学_奔赴与校运会",
+      "project_revision": 1,
+      "workspace_media_relative": "projects/2026-lzu-revisit/2026-lzu-travel-and-sports",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=20260514-7d5c6cda2d&ptab=direct"
+    },
+    {
+      "project_id": "20260514-jpg-cb8a9636f7",
+      "title": "20260514_兰州大学校运会_合照与荣誉展厅JPG补充包",
+      "project_revision": 1,
+      "workspace_media_relative": "projects/2026-lzu-revisit/2026-lzu-group-and-honors",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=20260514-jpg-cb8a9636f7&ptab=direct"
+    },
+    {
+      "project_id": "p3-504ca70e6f",
+      "title": "P3 合成口播实践：平均速度",
+      "project_revision": 1,
+      "workspace_media_relative": "testing/video-pipeline-2026-10-12/spoken",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=p3-504ca70e6f&ptab=direct"
+    },
+    {
+      "project_id": "p4-11d01841df",
+      "title": "P4 教学实践：平均速度",
+      "project_revision": 1,
+      "workspace_media_relative": "testing/video-pipeline-2026-10-12/teaching",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=p4-11d01841df&ptab=direct"
+    },
+    {
+      "project_id": "p5-f24c41f746",
+      "title": "P5 直出实践：平均速度",
+      "project_revision": 1,
+      "workspace_media_relative": "testing/video-pipeline-2026-10-12/direct",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct"
+    },
+    {
+      "project_id": "project-fc6baa3294",
+      "title": "断更一年，我拆了四句话",
+      "project_revision": 1,
+      "workspace_media_relative": "testing/R131-hiatus-video",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct"
+    },
+    {
+      "project_id": "project-4c886fc28b",
+      "title": "断更一年后，我才发现自己在躲什么",
+      "project_revision": 1,
+      "workspace_media_relative": "testing/R131-hiatus-video-v2",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=project-4c886fc28b&ptab=direct"
+    },
+    {
+      "project_id": "project-13b12eebe1",
+      "title": "断更一年后，我才发现自己在躲什么",
+      "project_revision": 1,
+      "workspace_media_relative": "testing/R131-hiatus-video-v2-render2",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=project-13b12eebe1&ptab=direct"
+    },
+    {
+      "project_id": "project-6546d6621b",
+      "title": "断更一年，我的担心准吗",
+      "project_revision": 1,
+      "workspace_media_relative": "testing/R131-hiatus-video-v4-render",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=project-6546d6621b&ptab=direct"
+    },
+    {
+      "project_id": "project-28aaf4f527",
+      "title": "断更一年，我的担心准吗",
+      "project_revision": 1,
+      "workspace_media_relative": "testing/R131-hiatus-video-v4-render2",
+      "usable_with_listener_configuration": false,
+      "route": "http://127.0.0.1:8769/#view=piece&piece=project-28aaf4f527&ptab=direct"
+    }
+  ],
+  "store_unchanged": true
+}

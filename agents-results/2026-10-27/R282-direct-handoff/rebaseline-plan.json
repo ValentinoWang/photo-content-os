@@ -1,0 +1,48 @@
+[
+  {
+    "task": "2026-10-26-R283-photo-direct-style-library",
+    "command": [
+      "python3",
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "rebaseline",
+      "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library",
+      "--project-root",
+      ".",
+      "--base",
+      "origin/main",
+      "--head",
+      "6a430c5",
+      "--range-head",
+      "HEAD",
+      "--trigger-card",
+      "2026-10-26-R282-photo-direct-handoff-storyboard",
+      "--reason",
+      "用户R282第二次交付授权：同源交接和新旧包元数据分支加入共享门禁，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+      "--from-approved-contract"
+    ],
+    "exit_code": 0
+  },
+  {
+    "task": "2026-10-26-R278-photo-direct-rescript",
+    "command": [
+      "python3",
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "rebaseline",
+      "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript",
+      "--project-root",
+      ".",
+      "--base",
+      "origin/main",
+      "--head",
+      "6a430c5",
+      "--range-head",
+      "HEAD",
+      "--trigger-card",
+      "2026-10-26-R282-photo-direct-handoff-storyboard",
+      "--reason",
+      "用户R282第二次交付授权：同源交接和新旧包元数据分支加入共享门禁，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+      "--from-approved-contract"
+    ],
+    "exit_code": 0
+  }
+]

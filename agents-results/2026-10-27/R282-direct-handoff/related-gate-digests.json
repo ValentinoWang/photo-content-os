@@ -1,0 +1,20 @@
+[
+  {
+    "path": "scripts/direct_video/frontend_gate.mjs",
+    "base_sha256": "39bb0fe9da37da8787befc705ece4f59266306d7178452809c17fa3b547f538f",
+    "head_sha256": "b634dd4cbf830b243a3e6b6c214afa905d85064c62128a645e118ecac8c4a872",
+    "changed": true
+  },
+  {
+    "path": "scripts/direct_video/revision_frontend_gate.mjs",
+    "base_sha256": "c2576f4bda1306aa127dd3c72b8d95410c16613df09fc1d33f70b31cb5bf6c76",
+    "head_sha256": "acb3e9d95bdb59853d40567ad21ed20a5d18a669e9638480af40d768e8f9720f",
+    "changed": true
+  },
+  {
+    "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+    "base_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
+    "head_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+    "changed": true
+  }
+]

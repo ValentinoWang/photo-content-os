@@ -1,0 +1,121 @@
+{
+  "state": "fail",
+  "checked_at": "2026-10-27T06:32:12.464745Z",
+  "head": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+  "base": "614c55060554de74beb547e7213877c369fa69cb",
+  "tree": "5c6feb93bcb7c51d122157b15092db87753782a3",
+  "results": [
+    {
+      "id": "G1",
+      "label": "有卡",
+      "state": "fail",
+      "detail": "2026-10-26-R278-photo-direct-rescript 阻塞卡未获当前人工通过; 2026-10-26-R282-photo-direct-handoff-storyboard 阻塞卡未获当前人工通过; 2026-10-26-R283-photo-direct-style-library 阻塞卡未获当前人工通过 → 为非豁免提交创建交付验收卡；阻塞卡需用户通过，并遵守切片额度 → python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py handoff <任务根> --project-root . --replace --baseline <基准文件> --claims <声明文件> <原递交参数>；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py repair retired <不可恢复的未通过卡目录> --project-root . --actor <执行者> --reason <原因>"
+    },
+    {
+      "id": "G2",
+      "label": "基准一致",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G3",
+      "label": "机器先绿",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G4",
+      "label": "看得懂",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G5",
+      "label": "有入口",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G6",
+      "label": "去重已声明",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G7",
+      "label": "失效传播",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G8",
+      "label": "坏一条不连累",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G9",
+      "label": "页面可见",
+      "state": "fail",
+      "detail": "2026-10-26-R278-photo-direct-rescript 没有出现在 ready/ACTIVE 投影中; 2026-10-26-R282-photo-direct-handoff-storyboard 没有出现在 ready/ACTIVE 投影中; 2026-10-26-R283-photo-direct-style-library 没有出现在 ready/ACTIVE 投影中 → 重新生成调度台并确认新卡 ready/ACTIVE → python3 tools/console/generate_console.py；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py check-project --project-root ."
+    },
+    {
+      "id": "G10",
+      "label": "不自证",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G11",
+      "label": "有需求卡",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G12",
+      "label": "验收覆盖需求",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G13",
+      "label": "沿用已有卡",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G14",
+      "label": "已通过不可变",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G15",
+      "label": "自动替代完整",
+      "state": "pass",
+      "detail": ""
+    },
+    {
+      "id": "G16",
+      "label": "不连累前面的卡",
+      "state": "pass",
+      "detail": "",
+      "hard": true
+    },
+    {
+      "id": "G17",
+      "label": "真实链路没被替换",
+      "state": "pass",
+      "detail": "2026-10-26-R278-photo-direct-rescript: 证据里没有脚本; 2026-10-26-R282-photo-direct-handoff-storyboard: 证据里没有脚本; 2026-10-26-R283-photo-direct-style-library: 证据里没有脚本"
+    }
+  ],
+  "verified_head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+  "verified_tree": "9b8e5d75b3f282b79da585f2434971cbb0bfd81b",
+  "metadata_only_cards": [],
+  "exempt": [
+    {
+      "commit": "1afb1c5",
+      "reason": "仅批准来源、版本、门禁摘要及绑定，行为/人工/阻塞标准不变。"
+    }
+  ]
+}
