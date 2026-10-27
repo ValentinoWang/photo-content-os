@@ -71,7 +71,7 @@ async function main(){
   const subset=process.argv.find(x=>x.startsWith('--states='))?.slice(9).split(',');
   if(subset)assert(subset.length&&subset.every(s=>ALL_STATES.includes(s)||Object.hasOwn(R282_VARIANTS,s)||s==='real-worst-rescript'),'Unknown capture state');
   const previous=subset&&!process.argv.includes('--checks-only')&&existsSync(join(OUT,'screenshot-manifest.json'))?JSON.parse(readFileSync(join(OUT,'screenshot-manifest.json'),'utf8')):null;
-  const temp=mkdtempSync(join(tmpdir(),'r278-frontend-')),screenshots=previous?previous.screenshots.filter(x=>!subset.includes(x.state)||!widths.includes(x.viewport.width)):[],contracts=previous?previous.contracts.map((x,i)=>({...x,name:x.name||previous.screenshots[i]?.state||x.state})).filter(x=>!subset.includes(x.name)||!widths.includes(x.width)):[],errors=[],requests=[];let server,browser;
+  const temp=mkdtempSync(join(tmpdir(),'r278-frontend-')),screenshots=previous?previous.screenshots.filter(x=>!subset.includes(x.state)||!widths.includes(x.viewport.width)):[],contracts=previous?previous.contracts.map((x,i)=>({...x,name:x.name||previous.screenshots[i]?.state||x.state})).filter(x=>!subset.includes(x.name)||!widths.includes(x.width)):[],errors=[],requests=[],realLayouts=[];let server,browser;
   const {chromium}=await import(pathToFileURL(process.env.VIDEO_RENDER_PLAYWRIGHT_MODULE.replace(/index\.js$/,'index.mjs')));
   const read=state=>{
     const source=state==='rescript-newer-unversioned'?'rescript-newer':state;
@@ -209,13 +209,19 @@ print(json.dumps({'latest':{'ok':True,'job':j},'styles':{'ok':True,'styles':[sty
     writeFileSync(join(OUT,'real-library-api.json'),JSON.stringify({library:live.library,media:mediaChecks},null,2));
     browser=await chromium.launch({headless:true,executablePath:process.env.VIDEO_RENDER_BROWSER});
     if(!process.argv.includes('--capture-only')){await testHandoffBrowser({open});await testLibraryBrowser({open});await testBrowser({open,testZoomAndClips});}
-    const captureStates=subset||[...ALL_STATES,...Object.keys(R282_VARIANTS),...(process.argv.includes('--checks-only')?[]:['real-worst-rescript'])];
-    for(const state of captureStates)for(const width of state==='real-worst-rescript'?[1440]:widths){
+    const captureStates=subset||[...ALL_STATES,...Object.keys(R282_VARIANTS),'real-worst-rescript'];
+    for(const state of captureStates)for(const width of state==='real-worst-rescript'?[1440,960]:widths){
       const {page}=await open(state==='real-worst-rescript'?'real':state,width);if(!process.argv.includes('--checks-only'))await capture(page,state,width);
+      if(state==='real-worst-rescript'){
+        const layout=await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth}));
+        assert.equal(layout.width,width,'Real legacy job must use the requested viewport');
+        realLayouts.push(layout);writeFileSync(join(OUT,'real-worst-layout.json'),JSON.stringify(realLayouts,null,2));
+      }
       if(state==='rescript-zoom'&&process.argv.includes('--checks-only'))await page.locator('button[data-pic]').nth(1).click();
       contracts.push(await checkBlocks(page,state==='real-worst-rescript'?'rescript':state,{core:CORE,contract:join(DESIGN,'contract.json'),out:OUT,name:state,width}));await page.close();
     }
     writeFileSync(join(OUT,'contracts.json'),JSON.stringify(contracts,null,2));assert.deepEqual(errors,[]);assert.equal(contracts.filter(c=>c.exit_code!==0).length,0,JSON.stringify(contracts.filter(c=>c.exit_code!==0).map(c=>({state:c.state,width:c.width,result:c.result})),null,2));
+    for(const layout of realLayouts)assert(layout.scrollWidth<=layout.width,`Real legacy rescript horizontal overflow: ${layout.scrollWidth} > viewport ${layout.width}; constrain the style metadata column`);
     console.log(`PASS R278/R282/R283: ${contracts.length} contract runs; ${screenshots.length} complete-page screenshots; mounted browser interactions`);
   }finally{
     await browser?.close();if(server){server.kill('SIGTERM');await new Promise(r=>server.once('exit',r));}rmSync(temp,{recursive:true,force:true});

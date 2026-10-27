@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Studio 浅色界面</title>
+<style>
+:root{--bg:#F5F6F4;--panel:#FFFFFF;--rule:#E4E8E7;--rule-2:#D2D9D8;--ink:#152021;--ink-2:#3A4849;--ink-3:#5F6E6F;--ac:#1F8D96;--ac-soft:#18727A;--f:"Asap","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace}
+body{margin:0;background:var(--bg);color:var(--ink);font:13px/1.65 var(--f)}
+.doc{max-width:1500px;margin:0 auto;padding:32px 24px 80px}
+h1{font-size:22px;margin:0 0 6px}
+h2{font-size:16px;margin:40px 0 12px;padding-top:16px;border-top:1px solid var(--rule)}
+p.lead{color:var(--ink-2);max-width:980px;margin:0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0 28px}
+.pair figure{margin:0;background:var(--panel);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.pair figcaption{padding:8px 12px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--ink-3)}
+.pair img{display:block;width:100%}
+table{border-collapse:collapse;width:100%;font-size:12.5px;background:var(--panel)}
+th,td{border:1px solid var(--rule-2);padding:6px 9px;text-align:left;vertical-align:middle}
+th{background:#F7F8F7;color:var(--ink-2)}
+code{font:12px var(--mono);color:var(--ac-soft)}
+.chip{display:inline-block;width:16px;height:16px;border-radius:3px;border:1px solid var(--rule-2);vertical-align:-3px;margin-right:6px}
+ol{padding-left:20px;color:var(--ink-2)} li{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="doc">
+<h1>Studio 浅色界面</h1>
+<p class="lead">需求：「我觉得这个主题太黑了」→ 整个 Studio 换成浅色。做法是把 <code>studio/static/styles.css</code> 里的颜色令牌换成浅色值，再把 <code>styles.css</code>、<code>workflow.css</code> 里约 40 处写死的深色改掉；页面结构、字号、间距都不动。视频画面区（播放器、关键帧、成片）保持原样。下面每组左边是现在，右边是把 <code>light.css</code> 套到真实页面上的截图（临时 Studio，这台电脑数据的克隆）。</p>
+
+<h2>1 逐页对比</h2>
+<div data-pairs></div>
+
+<h2>2 颜色令牌</h2>
+<table data-tokens><tr><th>令牌</th><th>现在</th><th>浅色</th><th>用在哪</th></tr></table>
+
+<h2>3 写死的颜色</h2>
+<ol>
+<li>按 <code>light.css</code> 「写死颜色」两节逐条改：能换成令牌的换令牌（侧栏、悬停、标签、提示框、步骤圆点、轨道底），主按钮和品牌标的字改白色，主按钮悬停 <code>#18767E</code>。</li>
+<li><code>index.html</code> 的 <code>&lt;meta name="color-scheme"&gt;</code> 改成 <code>light</code>，表单控件和滚动条跟着变浅。</li>
+<li>保持深色：<code>.handoff .stage</code>（视频预览区）、播放钮、成片播放器、关键帧图本身。</li>
+</ol>
+
+<h2>4 门禁</h2>
+<ol>
+<li>新测试：<code>styles.css</code> 的 <code>:root</code> 令牌等于本页第 2 节的值；<code>styles.css</code>、<code>workflow.css</code> 除允许的视频区规则外不再出现深色字面量（亮度低于 30% 的颜色）。</li>
+<li>所有页面的正文和次要文字对底色对比度 ≥ 4.5（<code>--ink-3</code> 对 <code>--panel</code> 是 5.3），<code>--ink-4</code> 只用于占位和说明小字（≥ 3）。</li>
+<li>各前端门禁的截图全部重拍；设计合同（文字、编号）不受影响。</li>
+</ol>
+</div>
+<script>
+const PAGES=[['home','工作台'],['direct-done','脚本直出 · 无声预览出来了'],['direct-shot02','脚本直出 · 选中第 02 镜（R277 详情）'],['vlog','按素材剪 vlog'],['direct-other','另一件作品的脚本直出']];
+document.querySelector('[data-pairs]').innerHTML=PAGES.map(([k,t])=>`<h3>${t}</h3><div class="pair"><figure><figcaption>现在（深色）</figcaption><img src="img/dark-${k}.png" alt=""></figure><figure><figcaption>浅色</figcaption><img src="img/light-${k}.png" alt=""></figure></div>`).join('');
+const T=[['--bg','#0D1314','#F5F6F4','页面底'],['--panel','#111819','#FFFFFF','卡片、面板'],['--panel-2','#131C1D','#F7F8F7','输入框、次级面板'],['--raise','#161F20','#EEF2F1','悬停、选中底'],['--rule','#1C2627','#E4E8E7','分隔线'],['--rule-2','#253133','#D2D9D8','描边'],['--ink','#E4EBEB','#152021','标题、正文'],['--ink-2','#B0BEBF','#3A4849','正文'],['--ink-3','#7D8C8E','#5F6E6F','次要文字'],['--ink-4','#5F7477','#7F8C8D','占位、说明小字'],['--ink-5','#46585A','#A5AFB0','最弱提示、删除线'],['--ac','#4FB3BD','#1F8D96','主色、主按钮'],['--ac-2','#2E5F65','#A9D5D9','主色描边'],['--ac-bg','#10292C','#E6F3F4','主色浅底'],['--ac-soft','#8FC7CD','#18727A','主色文字、链接'],['--ok','#7FBB92','#2E7D4B','通过'],['--ok-bg','#16261B','#E7F4EC','通过底'],['--warn','#D9A94B','#9A6B10','提醒'],['--warn-bg','#1A1410','#FBF2DE','提醒底'],['--cut','#E07A6A','#B5412F','出错、删除'],['--cut-bg','#2A1715','#FCE9E5','出错底']];
+document.querySelector('[data-tokens]').insertAdjacentHTML('beforeend',T.map(([k,a,b,u])=>`<tr><td><code>${k}</code></td><td><span class="chip" style="background:${a}"></span>${a}</td><td><span class="chip" style="background:${b}"></span>${b}</td><td>${u}</td></tr>`).join(''));
+</script>
+</body>
+</html>

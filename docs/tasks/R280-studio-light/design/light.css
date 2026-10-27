@@ -1,0 +1,47 @@
+/* Studio 浅色主题（设计稿）。实现时：:root 令牌直接替换 studio/static/styles.css 现值，
+   下面「写死颜色」一节逐条改成令牌或新值。 */
+:root{color-scheme:light;
+--sec-quiet:#C9D6D7;--sec-build:#7FB7BD;--sec-peak:#1F8D96;
+--bg:#F5F6F4;--panel:#FFFFFF;--panel-2:#F7F8F7;--raise:#EEF2F1;--rule:#E4E8E7;--rule-2:#D2D9D8;
+--ink:#152021;--ink-2:#3A4849;--ink-3:#5F6E6F;--ink-4:#7F8C8D;--ink-5:#A5AFB0;
+--ac:#1F8D96;--ac-2:#A9D5D9;--ac-bg:#E6F3F4;--ac-soft:#18727A;
+--ok:#2E7D4B;--ok-bg:#E7F4EC;--ok-line:#BFE0CB;
+--warn:#9A6B10;--warn-bg:#FBF2DE;--warn-line:#E8CB8C;
+--cut:#B5412F;--cut-bg:#FCE9E5}
+/* 写死颜色：styles.css */
+body{background:var(--bg)}
+.side{background:#FBFCFB}
+.brand-mark{color:#fff}
+.nav button:hover,.side-sec button:hover{background:var(--raise)}
+.btn--pri{color:#fff}
+.btn--pri:hover{background:#18767E;color:#fff}
+.chip{background:var(--raise)}
+.chip--warn{background:var(--warn-bg)}
+.thumb,.media{background:var(--raise)}
+.delete-row{border-top-color:var(--warn-line)}
+.tree button[aria-current="true"],.tree button:hover{background:var(--raise)}
+.tracks{background:var(--panel-2)}
+.tracks div:nth-child(2) i{background:#9FC7C0}
+:where(.settings-layout) .set-nav button:hover,:where(.settings-layout) .set-nav button[aria-current="true"]{background:var(--raise)}
+.surface{background:var(--bg)}
+.login-brand{background:var(--panel)}
+.wizard-steps li.active b{color:#fff}
+.toast{background:var(--panel);box-shadow:0 6px 20px rgba(21,32,33,.12)}
+/* 写死颜色：workflow.css */
+.handoff .w-bar{fill:#7FB7BD}
+.handoff .ruler{color:var(--ink-5)}
+.handoff .proto{background:#ffffffee}
+.handoff .proto a[aria-current]{color:#fff}
+.handoff .attn b{color:var(--warn)}
+.handoff .done{border-color:var(--ok-line)}
+.handoff .cs-dot{box-shadow:0 0 0 3px #2E7D4B26}
+.handoff .method-cards a[aria-current]{background:var(--ac-bg)}
+.handoff .method-cards a[aria-current] .mc-ico svg{stroke:#fff}
+.handoff .method-cards a[aria-current] .mc-text b{color:var(--ac-soft)}
+.handoff .software-option:has([aria-pressed=true]){background:var(--ac-bg)}
+.handoff .cue{background:var(--panel-2)}
+.handoff .clips .edit-clip{border-color:var(--ac-2)}
+.handoff .clips .edit-clip[aria-pressed=true]{background:#1F8D9614}
+.handoff .applied-cut{background:repeating-linear-gradient(135deg,#D9DFDE 0 4px,#EEF2F1 4px 8px)}
+.handoff .clips .edit-clip::after{box-shadow:inset 0 0 0 1px #15202122}
+/* 视频画面区保持深色：.handoff .stage、播放钮、成片播放器 */
