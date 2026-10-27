@@ -76,9 +76,10 @@ class FullChecklistStaticAcceptanceTests(unittest.TestCase):
         css = (STATIC / "styles.css").read_text(encoding="utf-8")
 
         for token in (
-            "--bg:#0D1314",
-            "--ink-5:#46585A",
-            "--ac:#4FB3BD",
+            "--bg:#F5F6F4",
+            "--ink-5:#A5AFB0",
+            "--ac:#1F8D96",
+            "--media-bg:#0D1314",
             "Archivo",
             "Asap",
             "JetBrains Mono",

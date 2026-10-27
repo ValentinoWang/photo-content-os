@@ -535,7 +535,7 @@ def extract_scene_change_frames(video_path: Path, output_dir: Path, max_frames: 
             str(video_path),
             "-vf",
             "select='gt(scene,0.25)',scale='min(720,iw)':-2",
-            "-vsync",
+            "-fps_mode",
             "vfr",
             "-frames:v",
             str(max_frames),

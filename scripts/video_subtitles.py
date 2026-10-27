@@ -278,7 +278,7 @@ def burn_subtitles(video: Path, subtitles: Path, output: Path) -> float:
                            f"x=(w-text_w)/2:y=h*0.9-text_h/2:enable='gte(n,{cue['startFrame']})*lt(n,{cue['endFrame']})'")
         (root/'captions.filters').write_text('[0:v]'+','.join(filters)+'[captioned]', encoding='utf-8')
         subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
-                        '-filter_complex_script','captions.filters','-map','[captioned]','-map','0:a:0',
+                        '-/filter_complex','captions.filters','-map','[captioned]','-map','0:a:0',
                         '-c:v','libx264','-threads','1','-crf','18','-pix_fmt','yuv420p','-c:a','copy',
                         '-map_metadata','-1','-movflags','+faststart',str(output)],cwd=root,capture_output=True,timeout=1800,check=True)
     output.with_suffix('.subtitle-style.json').write_text(json.dumps(style,indent=2)+'\n')

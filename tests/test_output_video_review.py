@@ -76,6 +76,25 @@ class OutputVideoReviewIntegrationTest(unittest.TestCase):
             self.assertTrue((root / "project_output_review.md").exists())
             self.assertTrue((root / "review/current/contact_sheet.jpg").exists())
 
+    def test_scene_change_frames_are_extracted(self) -> None:
+        # ffmpeg 9 删了 -vsync：抽帧命令失败时函数只返回空列表，场景切换缩略图一直是空的也没人发现（R312）
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            video = root / "two-scenes.mp4"
+            run_ffmpeg(
+                [
+                    "-filter_complex",
+                    "color=c=red:s=320x240:d=1:r=25[a];color=c=blue:s=320x240:d=1:r=25[b];[a][b]concat=n=2:v=1:a=0[v]",
+                    "-map",
+                    "[v]",
+                    "-pix_fmt",
+                    "yuv420p",
+                    str(video),
+                ]
+            )
+            frames = output_review.extract_scene_change_frames(video, root / "scene-frames")
+            self.assertGreaterEqual(len(frames), 1)
+
     def test_black_video_generates_fail(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
