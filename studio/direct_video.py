@@ -8,6 +8,7 @@ import re
 
 from direct_video.generate import DirectVideoError, Generator
 from studio.project_store import ProjectStoreError
+from studio.direct_handoff_contract import read_handoff, handoff_identity, handoff_projection, image_path, local_file, newer_handoff
 
 JOB_FIELDS = ('jobId', 'projectId', 'model', 'status', 'createdAt', 'updatedAt', 'failureCode',
               'design', 'shots', 'narration', 'output')
@@ -27,10 +28,12 @@ def redact(value):
     return value
 
 
-def projection(job: dict | None) -> dict | None:
+def projection(job: dict | None, *, current_handoff=None) -> dict | None:
     if job is None:
         return None
     result = {k: copy.deepcopy(job[k]) for k in JOB_FIELDS}
+    result['handoff'] = copy.deepcopy(job.get('handoff'))
+    result['handoffNewer'] = newer_handoff(job, current_handoff)
     result['shots'] = [{k: copy.deepcopy(shot.get(k, False if k == 'fromDraft' else None) if k in ('writingStartedAt', 'visual', 'subtitle', 'camera', 'audio', 'fromDraft') else shot[k]) for k in SHOT_FIELDS} for shot in job['shots']]
     result['design'] = {k: result['design'].get(k) for k in ('status', 'palette', 'typeScale', 'motionRules', 'banned', 'motionSummary', 'bannedShort', 'source')}
     # Persisted private diagnostics must not become fields through a future
@@ -65,7 +68,28 @@ class DirectVideo:
     def get(self, project_id, job_id):
         self.store.get_project(project_id)
         job = self.generator.latest(project_id) if job_id == 'latest' else self.generator.read(project_id, job_id)
-        return projection(job)
+        return self.project_job(job)
+
+    def handoff(self, project_id):
+        value = handoff_projection(read_handoff(self.store, project_id))
+        if value:
+            value['title'] = redact(value['title'])
+            for row in value['shots']:
+                for key in ('dialogue', 'visual', 'subtitle', 'camera', 'audio'):
+                    row[key] = redact(row[key])
+        return value
+
+    def handoff_image(self, project_id, shot_id, version):
+        context = read_handoff(self.store, project_id)
+        value = handoff_projection(context)
+        row = next((row for row in value['shots'] if row['shotId'] == shot_id), None) if value else None
+        url = row['image']['url'] if row and row['image'] else None
+        if not url or (version is not None and url.rsplit('=', 1)[-1] != version):
+            raise DirectVideoError('artifact_not_found')
+        return image_path(context, shot_id)
+
+    def project_job(self, job):
+        return projection(job, current_handoff=handoff_identity(read_handoff(self.store, job['projectId'])) if job else None)
 
     def create(self, project_id, body):
         title = self.store.get_project(project_id)['title']
@@ -76,8 +100,28 @@ class DirectVideo:
                 body['_styleBaseTitle'] = self.store.get_project(source['projectId'])['title']
             except ProjectStoreError as exc:
                 raise DirectVideoError('style_base_not_found') from exc
-        job = self.generator.create(project_id, body)
-        return projection(job)
+        context = read_handoff(self.store, project_id) if 'handoff' in body else None
+        current = handoff_projection(context)
+        reference = body.get('handoff')
+        audio = None
+        if 'handoff' in body:
+            if (not isinstance(reference, dict) or set(reference) != {'jobId', 'revision'}
+                    or current is None or reference['jobId'] != current['jobId']
+                    or (reference['revision'] is not None and (type(reference['revision']) is not int
+                        or reference['revision'] < 1 or reference['revision'] != current['revision']))):
+                raise DirectVideoError('handoff_changed')
+            if current['narration'] is not None:
+                mx = context['descriptor'].get('mxHandoff')
+                audio = local_file(context['workspace'], mx.get('tts_ref')) if isinstance(mx, dict) else None
+                if audio is None:
+                    raise DirectVideoError('narration_invalid')
+        try:
+            job = self.generator.create(project_id, body, narration_path=audio)
+        except OSError as exc:
+            if audio is None:
+                raise
+            raise DirectVideoError('narration_invalid') from exc
+        return self.project_job(job)
 
     def draft(self, project_id, draft_id=None, body=None, *, revise=False):
         title = self.store.get_project(project_id)['title']
@@ -155,13 +199,13 @@ class DirectVideo:
             job = self.generator.request_compose(project_id, job_id)
         else:
             raise DirectVideoError('route_not_found')
-        return projection(job)
+        return self.project_job(job)
 
     def narration(self, project_id, job_id, stream, length, content_type):
         self.store.get_project(project_id)
         if content_type.split(';', 1)[0].strip().lower() != 'audio/wav':
             raise DirectVideoError('narration_invalid')
-        return projection(self.generator.narration(project_id, job_id, stream, length))
+        return self.project_job(self.generator.narration(project_id, job_id, stream, length))
 
     def library(self, kind, proposal_id=None, adopt=None):
         with self.generator.lock:

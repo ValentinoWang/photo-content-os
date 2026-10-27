@@ -1,6 +1,6 @@
 import { renderShotDetail } from './direct-shot-detail.js';
-import {normalizeRows,rowSummary,storyboard,renderStoryboard} from './direct-storyboard.js';
-import {canGenerate,canDraft,stylePayload,sourceText,swatches,applySwatches,designLines,howFirst,generationText,renderStyle,draftBusy} from './direct-style.js';
+import {normalizeRows,handoffRows,rowSummary,storyboard,renderStoryboard} from './direct-storyboard.js';
+import {canGenerate,canDraft,stylePayload,sourceText,swatches,applySwatches,designLines,howFirst,generationText,renderStyle,draftBusy,styleTime} from './direct-style.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const D = value => `<span data-design-data>${esc(value)}</span>`;
@@ -44,9 +44,9 @@ export function posterUrl(projectId,job,shot) { return `${jobUrl(projectId,job.j
 export function canRescript(job,readError=false){return !!job&&!readError&&!shouldPoll(job)&&job.failureCode!=='claude_cli_unavailable'&&!job.shots.some(s=>s.look?.status==='running'||s.versions?.find(v=>v.version===s.currentVersion)?.verify?.status==='running');}
 
 export function createDirectView(ctx) {
-  let project, job=null, selected, userSelected=false, timer, generation=0, tabs='', readError=false, unavailable=false, pendingVoice=null, actionError='', busy=false, outputKey='';
+  let project, job=null, selected, userSelected=false, timer, generation=0, tabs='', readError=false, unavailable=false, pendingVoice=null, actionError='', busy=false, outputKey='',currentHandoff=null;
   const forms=new Map();let form,editor,draftTimer,disposeStyle=()=>{};
-  function newForm(){return {rows:[],editing:false,styles:null,library:[],mode:'base',base:null,adjust:'',text:'',revise:'',draft:null,accepted:false,revising:false};}
+  function newForm(){return {rows:[],editing:false,handoff:null,measured:false,styles:null,library:[],mode:'base',base:null,adjust:'',text:'',revise:'',draft:null,accepted:false,revising:false};}
   const active = token => token===generation && ctx.active(project?.id);
   const root=ctx.root;
   const find=s=>root().querySelector(s);
@@ -67,7 +67,8 @@ export function createDirectView(ctx) {
   function model(){document.querySelector('#top-actions').innerHTML=`<span class="dv-model" data-design-id="DV-MODEL"><i class="dot ${unavailable?'dot--warn':'dot--ok'}"></i>Opus 5.5 · 本机 Claude${unavailable?' · 调不通':''}</span>`;}
   function stateName(){
     if(readError)return 'read-error';
-    if(form.editing)return 'rescript';
+    if(form.editing)return currentHandoff&&job?.handoffNewer&&!form.handoff?'rescript-newer':'rescript';
+    if(!job&&form.handoff)return 'first-handoff';
     if(!job)return unavailable?'unavailable':rowSummary(form.rows).count?'filled':'empty';
     if(job.output.status==='ready' && job.status==='done')return job.output.kind==='silent'?'done-silent':'done';
     if(job.output.status==='composing')return job.output.kind==='silent'?'composing-silent':'composing';
@@ -78,8 +79,8 @@ export function createDirectView(ctx) {
   }
   function flow(){
     const editing=form.editing||!job,shots=readError?[]:editing?form.rows:job.shots,n=shots.filter(s=>s.dialogue?.trim()).length,count=writtenCount(shots),st=stateName();
-    const duration=editing?rowSummary(shots).seconds:totalSeconds(shots);
-    const steps=[['分镜脚本',readError?'读不到':n?`${n} 镜 · 约 ${mmss(duration)}`:'还没粘贴'],['Opus 写每一镜',form.editing?'生成后从头写':!job||readError?'等分镜脚本':st==='designing'?'正在定全片设计':count===n?`${n} 镜都写好了`:`${count} / ${n} 镜写好`],['成片',form.editing?'生成后重新合成':st.startsWith('composing')?'正在合成':st.startsWith('done')?`${job.output.kind==='narrated'?'带配音':'无声预览'} · ${mmss(job.output.durationSeconds)}`:'还没合成']];
+    const duration=editing?rowSummary(shots,form.measured).seconds:totalSeconds(shots);
+    const steps=[['分镜脚本',readError?'读不到':n?`${n} 镜 · ${editing&&form.measured?'':'约 '}${mmss(duration)}`:'还没粘贴'],['Opus 写每一镜',form.editing?'生成后从头写':!job||readError?'等分镜脚本':st==='designing'?'正在定全片设计':count===n?`${n} 镜都写好了`:`${count} / ${n} 镜写好`],['成片',form.editing?'生成后重新合成':st.startsWith('composing')?'正在合成':st.startsWith('done')?`${job.output.kind==='narrated'?'带配音':'无声预览'} · ${mmss(job.output.durationSeconds)}`:'还没合成']];
     const cur=editing||readError?0:(st.startsWith('composing')||st.startsWith('done'))?2:1,entry=!editing&&canRescript(job,readError);
     return `<nav class="flow full" aria-label="这件作品的步骤" data-design-id="DV-STEPS">${steps.map(([title,note],i)=>{const done=!editing&&(i<cur||st.startsWith('done')),tag=i===0&&entry?'button':'div';return `<${tag} class="fstep ${done?'done':''} ${i===cur&&!st.startsWith('done')?'cur':''} ${i===0&&entry?'dv-fstep-btn':''}" ${i===0&&entry?'data-rescript aria-label="改分镜脚本"':''} ${i===cur?'aria-current="step"':''}><b>${done?'✓':i+1}</b><span><strong>${title}</strong><small data-design-data>${esc(note)}</small></span>${i===0&&!editing&&!readError?(entry?'<em class="dv-step-edit" data-design-id="DV-RESCRIPT-ENTRY">改分镜脚本</em>':`<em class="dv-step-lock" data-design-id="DV-RESCRIPT-LOCKED">${job.output.status==='composing'?'合成完才能改':'写完才能改'}</em>`):''}</${tag}>`;}).join('')}</nav>`;
   }
@@ -92,11 +93,11 @@ export function createDirectView(ctx) {
     else form.base=result.styles[0]||null;
   }
   function updateForm(){
-    const summary=rowSummary(form.rows),[text,need]=generationText(form.rows,form);
+    const summary=rowSummary(form.rows,form.measured),[text,need]=generationText(form.rows,form);
     find('[data-generate]').disabled=!canGenerate(form.rows,form,unavailable,busy);
     find('[data-gen-text]').textContent=text;find('[data-gen-text]').classList.toggle('need',need);
     find('[data-flow]').innerHTML=flow();
-    find('[data-head]').innerHTML=form.editing?head('改分镜脚本，重新生成','点「生成」后 Opus 从头写每一镜，配音要重新上传。现在这条留在本机，页面只显示新的那条。',btn('回到现在这条','data-rescript-back')):summary.count?head(D(`分镜脚本共 ${summary.count} 镜，可以生成了`),'检查一下分镜：一格是一镜。时长先按字数估，上传配音后按实测。'):head('把分镜脚本直接做成视频','粘贴分镜脚本，Opus 给每一镜写一段动画代码，在这台电脑上逐帧渲染成画面，再合成一条竖屏成片。不用素材，也不用剪辑软件。');
+    find('[data-head]').innerHTML=form.editing?head('改分镜脚本，重新生成','点「生成」后 Opus 从头写每一镜，配音要重新上传。现在这条留在本机，页面只显示新的那条。',btn('回到现在这条','data-rescript-back')):summary.count?head(D(`分镜脚本共 ${summary.count} 镜，可以生成了`),form.handoff?(form.handoff.narration?'中台交过来的分镜和配音都已带上。检查一下，改完就能生成。':''):'检查一下分镜：一格是一镜。时长先按字数估，上传配音后按实测。'):head('把分镜脚本直接做成视频','粘贴分镜脚本，Opus 给每一镜写一段动画代码，在这台电脑上逐帧渲染成画面，再合成一条竖屏成片。不用素材，也不用剪辑软件。');
     find('[data-rescript-back]')?.addEventListener('click',()=>{editor?.dispose();editor=null;form.editing=false;pendingVoice=null;actionError='';paint();schedule(generation);});
     const first=howFirst(form);find('[data-how-first]').innerHTML=`${first[0]}<small>${first[1]}</small>`;
     const draftButton=find('[data-draft]');if(draftButton)draftButton.disabled=!canDraft(form.rows,form,unavailable,busy)||(!!form.draft&&form.draft.status!=='failed');
@@ -107,9 +108,22 @@ export function createDirectView(ctx) {
     disposeStyle();disposeStyle=renderStyle(find('[data-style-slot]'),{state:form,styles:form.styles||[],library:form.library,rows:form.rows,projectId:project.id,jobId:form.editing?job.jobId:null,unavailable,busy,mmss,elapsed,failureMessage,
       onChange:redraw=>{if(redraw)paintStyle();updateForm();},onDraft:()=>writeDraft(false),onRevise:()=>writeDraft(true),onRedo:()=>{clearTimeout(draftTimer);form.draft=null;form.accepted=false;form.revising=false;form.revise='';paintStyle();updateForm();}});
   }
+  function takeHandoff(){
+    if(!currentHandoff)return;
+    form.handoff=structuredClone(currentHandoff);form.rows=handoffRows(form.handoff);form.measured=true;pendingVoice=null;startForm();
+  }
+  function handoffTime(h){return Number.isFinite(Date.parse(h.handedAt))?' · '+styleTime(h.handedAt):'';}
+  function handoffSource(){
+    if(form.handoff){const h=form.handoff;return `<p class="dv-sb-src" data-design-id="DV-SB-SOURCE">${D(`从中台交过来：「${h.title}」${h.revision==null?'':`第 ${h.revision} 版`}${handoffTime(h)}${h.narration?` · 带配音（${h.narration.voice} · ${mmss(h.narration.durationSeconds)}）`:''}。`)}<span>在这里改只存在本机，不会改中台的分镜。</span></p>`;}
+    return form.editing&&currentHandoff&&job.handoffNewer?`<p class="dv-sb-src" data-design-id="DV-SB-SOURCE">${D(currentHandoff.revision==null?'中台又交过来新的分镜。':`中台又交过来新的分镜：第 ${currentHandoff.revision} 版${handoffTime(currentHandoff)}。`)}<button class="link" data-take-handoff>换成中台这版</button></p>`:'';
+  }
+  function voiceCard(){
+    const n=form.handoff?.narration;
+    return `<h4>${n?'配音（从中台带过来）':'配音（可以之后再加）'}</h4><p>${n?D(`${n.voice} · ${mmss(n.durationSeconds)}`)+'。生成时按这条配音实测每一镜的时长，动画比配音长的镜会自动改短。':'没有配音先出无声预览。上传配音以后，按配音实测每一镜的时长，动画比配音长的镜会自动改短。'}</p><div class="row">${btn(n?'换一个配音…':'上传配音…','data-voice')}<span class="dv-voice-name" data-design-data>${esc(pendingVoice?.name||'')}</span></div>`;
+  }
   function startForm(){
-    editor?.dispose();find('[data-body]').innerHTML=`<div class="dv-start" data-design-id="DV-START"><div data-script-slot class="dv-body"></div><div data-style-slot class="dv-body"></div><aside class="dv-opts"><div class="dv-opt" data-design-id="DV-HOW"><h4>点「生成」以后</h4><ol class="dv-how"><li><b>1</b><span data-how-first></span></li><li><b>2</b><span>每一镜写一段动画代码，三镜同时写；写完自查，不过关的自动重写一次<small>每镜约 1–3 分钟</small></span></li><li><b>3</b><span>写好一镜就在本机逐帧渲染一镜，页面上马上能看<small>可以离开这一页，不会中断</small></span></li></ol></div><div class="dv-opt" data-design-id="DV-VOICE"><h4>配音（可以之后再加）</h4><p>没有配音先出无声预览。上传配音以后，按配音实测每一镜的时长，动画比配音长的镜会自动改短。</p><div class="row">${btn('上传配音…','data-voice')}<span class="dv-voice-name" data-design-data>${esc(pendingVoice?.name||'')}</span></div></div></aside><div class="dv-genbar" data-design-id="DV-GENBAR"><p data-gen-text data-design-data></p><div class="actions">${btn('生成','data-generate disabled',true)}</div></div></div>`;
-    editor=renderStoryboard(find('[data-script-slot]'),{rows:form.rows,onChange:rows=>{form.rows=rows;updateForm();},onImport:()=>pickFile('application/json,.json',async file=>{const value=JSON.parse(await file.text());if(!Array.isArray(value.shots)||value.shots.some(s=>typeof s.dialogue!=='string'||['visual','subtitle','camera','audio'].some(f=>s[f]!=null&&typeof s[f]!=='string')))throw new Error('invalid storyboard');form.rows=normalizeRows(value.shots);startForm();})});
+    editor?.dispose();find('[data-body]').innerHTML=`<div class="dv-start" data-design-id="DV-START"><div data-script-slot class="dv-body"></div><div data-style-slot class="dv-body"></div><aside class="dv-opts"><div class="dv-opt" data-design-id="DV-HOW"><h4>点「生成」以后</h4><ol class="dv-how"><li><b>1</b><span data-how-first></span></li><li><b>2</b><span>每一镜写一段动画代码，三镜同时写；写完自查，不过关的自动重写一次<small>每镜约 1–3 分钟</small></span></li><li><b>3</b><span>写好一镜就在本机逐帧渲染一镜，页面上马上能看<small>可以离开这一页，不会中断</small></span></li></ol></div><div class="dv-opt" data-design-id="DV-VOICE">${voiceCard()}</div></aside><div class="dv-genbar" data-design-id="DV-GENBAR"><p data-gen-text data-design-data></p><div class="actions">${btn('生成','data-generate disabled',true)}</div></div></div>`;
+    editor=renderStoryboard(find('[data-script-slot]'),{rows:form.rows,source:handoffSource(),onTakeHandoff:takeHandoff,measured:form.measured,hasNarration:!!form.handoff?.narration,onChange:(rows,measured)=>{form.rows=rows;form.measured=measured;updateForm();},onImport:()=>pickFile('application/json,.json',async file=>{const value=JSON.parse(await file.text());if(!Array.isArray(value.shots)||value.shots.some(s=>typeof s.dialogue!=='string'||['visual','subtitle','camera','audio'].some(f=>s[f]!=null&&typeof s[f]!=='string')))throw new Error('invalid storyboard');form.rows=normalizeRows(value.shots);form.handoff=null;form.measured=false;startForm();})});
     paintStyle();updateForm();find('[data-generate]').onclick=generate;bindVoice();
   }
   function draftUrl(){return `/api/projects/${encodeURIComponent(project.id)}/direct/style-drafts`;}
@@ -126,7 +140,8 @@ export function createDirectView(ctx) {
   }
   async function rescript(){
     if(!canRescript(job,readError))return;
-    form.editing=true;form.rows=normalizeRows(job.shots).map((r,i)=>({...r,image:job.shots[i].posterRevision?{poster:posterUrl(project.id,job,job.shots[i]),clip:`${jobUrl(project.id,job.jobId)}/shots/${encodeURIComponent(r.shotId)}/clip.mp4?v=${encodeURIComponent(job.shots[i].posterRevision)}`} :null}));
+    const token=generation;try{const result=await ctx.api(jobUrl(project.id,job.jobId));if(!active(token))return;job=result.job;const hand=await ctx.api(`/api/projects/${encodeURIComponent(project.id)}/direct/handoff`);if(!active(token))return;currentHandoff=hand.handoff;}catch{if(active(token)){actionError=failureMessage();paintMessage();}return;}
+    form.handoff=null;form.measured=false;form.editing=true;form.rows=normalizeRows(job.shots).map((r,i)=>({...r,image:job.shots[i].posterRevision?{poster:posterUrl(project.id,job,job.shots[i]),clip:`${jobUrl(project.id,job.jobId)}/shots/${encodeURIComponent(r.shotId)}/clip.mp4?v=${encodeURIComponent(job.shots[i].posterRevision)}`} :null}));
     form.base={projectId:project.id,jobId:job.jobId,title:project.title,createdAt:job.createdAt,design:job.design,posterUrl:job.shots.find(s=>s.posterRevision)?posterUrl(project.id,job,job.shots.find(s=>s.posterRevision)):null};form.mode='base';form.adjust='';pendingVoice=null;clearTimeout(timer);paint();window.scrollTo(0,0);editor.focus();
     if(!form.styles){try{await loadStyles(generation);if(ctx.active(project.id)&&form.editing){paintStyle();updateForm();}}catch{actionError=failureMessage();paintMessage();}}
   }
@@ -221,7 +236,7 @@ export function createDirectView(ctx) {
   async function generate(){
     if(!canGenerate(form.rows,form,unavailable,busy))return;
     const token=generation;busy=true;updateForm();
-    try{const result=await request(jobUrl(project.id),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({storyboard:storyboard(form.rows),...stylePayload(form,project.id)})});if(!active(token))return;job=result.job;form.editing=false;clearTimeout(draftTimer);editor?.dispose();editor=null;selected=undefined;userSelected=false;paint();if(pendingVoice){const file=pendingVoice;pendingVoice=null;await mutate('/narration',file,true);}schedule(token);}
+    try{const result=await request(jobUrl(project.id),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({storyboard:storyboard(form.rows),...stylePayload(form,project.id),...(form.handoff?{handoff:{jobId:form.handoff.jobId,revision:form.handoff.revision}}:{})})});if(!active(token))return;job=result.job;form.editing=false;clearTimeout(draftTimer);editor?.dispose();editor=null;selected=undefined;userSelected=false;paint();if(pendingVoice){const file=pendingVoice;pendingVoice=null;await mutate('/narration',file,true);}schedule(token);}
     catch(e){if(active(token)){unavailable=e.code==='claude_cli_unavailable';actionError=unavailable?'':failureMessage(e.code);paint();}}
     finally{busy=false;if(active(token)&&(form.editing||!job))updateForm();}
   }
@@ -233,11 +248,11 @@ export function createDirectView(ctx) {
   }
   function schedule(token){clearTimeout(timer);if(active(token)&&!form.editing&&(shouldPoll(job)||job&&!canRescript(job,readError)&&job.failureCode!=='claude_cli_unavailable'))timer=setTimeout(()=>refresh(token),2000);}
   async function refresh(token,latest=false){
-    try{const result=await ctx.api(jobUrl(project.id,latest||!job?'latest':job.jobId));if(!active(token))return;if(!Object.hasOwn(result,'job') || result.job!==null&&(!Array.isArray(result.job.shots)||!result.job.output||!result.job.design))throw new Error('invalid projection');const changed=job?.jobId!==result.job?.jobId;job=result.job;if(changed){selected=undefined;userSelected=false;}readError=false;actionError='';if(!job&&form.styles===null)await loadStyles(token);if(!active(token))return;paint();schedule(token);}
+    try{const result=await ctx.api(jobUrl(project.id,latest||!job?'latest':job.jobId));if(!active(token))return;if(!Object.hasOwn(result,'job') || result.job!==null&&(!Array.isArray(result.job.shots)||!result.job.output||!result.job.design))throw new Error('invalid projection');const changed=job?.jobId!==result.job?.jobId;job=result.job;if(latest){const hand=await ctx.api(`/api/projects/${encodeURIComponent(project.id)}/direct/handoff`);if(!active(token))return;currentHandoff=hand.handoff;if(!job&&!form.rows.length&&currentHandoff){form.handoff=structuredClone(currentHandoff);form.rows=handoffRows(form.handoff);form.measured=true;}}if(changed){selected=undefined;userSelected=false;}readError=false;actionError='';if(!job&&form.styles===null)await loadStyles(token);if(!active(token))return;paint();schedule(token);}
     catch{if(active(token)){readError=true;paint();}}
   }
   return {stop,async render(piece,tabMarkup){
-    stop();const changed=project?.id!==piece.id;project=piece;if(changed){job=null;selected=undefined;userSelected=false;form=forms.get(piece.id)||newForm();forms.set(piece.id,form);pendingVoice=null;unavailable=false;}readError=false;actionError='';tabs=tabMarkup;
+    stop();const changed=project?.id!==piece.id;project=piece;if(changed){currentHandoff=null;job=null;selected=undefined;userSelected=false;form=forms.get(piece.id)||newForm();forms.set(piece.id,form);pendingVoice=null;unavailable=false;}readError=false;actionError='';tabs=tabMarkup;
     ctx.mark('direct');root().classList.add('single','dv-direct');document.querySelector('.topbar').dataset.designId='DV-TOPBAR';document.querySelector('#crumb').parentElement.removeAttribute('data-design-id');
     root().innerHTML=tabs.replace('R208-PIECE-tabs','DV-TABS').replace(' aria-label="做法"','')+'<div data-flow class="dv-body"></div><div data-head class="dv-body"></div><div data-message class="dv-body"></div><div data-body class="dv-body"></div>';
     document.querySelector('#crumb').childNodes.forEach(n=>{if(n.nodeType===3&&n.textContent==='›')n.textContent='·';});

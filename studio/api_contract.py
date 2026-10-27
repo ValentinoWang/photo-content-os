@@ -6,9 +6,9 @@ import re
 from typing import Any
 
 from studio.direct_revision_contract import SHOT_PROPERTIES, operation_contract, routes
-from studio import direct_style_contract
+from studio import direct_style_contract, direct_handoff_contract
 
-ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.routes() + (
+ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.routes() + direct_handoff_contract.routes() + (
     {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs', 'operation_id': 'createDirectJob', 'summary': 'createDirectJob', 'write': True},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/latest', 'operation_id': 'getLatestDirectJob', 'summary': 'getLatestDirectJob'},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}', 'operation_id': 'getDirectJob', 'summary': 'getDirectJob'},
@@ -146,6 +146,8 @@ def _direct_job_schema() -> dict[str, Any]:
                   'narration': {'type': 'object', 'required': ['status', 'durationSeconds'], 'properties': {
                       'status': {'enum': ['none', 'aligning', 'ready', 'invalid']}, 'durationSeconds': seconds}},
                   'output': {'type': 'object', 'required': list(output), 'properties': output}}
+    properties['handoff'] = {'anyOf': [direct_handoff_contract.HANDOFF_REF, {'type': 'null'}]}
+    properties['handoffNewer'] = {'type': 'boolean'}
     return {'type': 'object', 'required': list(properties), 'properties': properties, 'additionalProperties': False}
 
 
@@ -230,6 +232,7 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
     if not (spec.get('response_media') and str(spec['path']).startswith('/api/direct/')):
         operation_contract(operation, spec)
     direct_style_contract.operation_contract(operation, spec)
+    direct_handoff_contract.operation_contract(operation, spec)
     return operation
 
 

@@ -257,14 +257,8 @@ class StudioApplication:
 
     @staticmethod
     def _video_json(root: Path, ref: str) -> dict:
-        path = (root / ref).resolve()
-        if not path.is_relative_to(root.resolve()) or not path.is_file() or path.stat().st_size > MAX_BODY_BYTES:
-            return {}
-        try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, ValueError):
-            return {}
-        return data if isinstance(data, dict) else {}
+        from studio.direct_handoff_contract import read_json
+        return read_json(root, ref)
 
     def video_handoff_projection(self, project_id: str) -> dict | None:
         data = self._video_handoff_projection(project_id)
@@ -272,48 +266,14 @@ class StudioApplication:
 
     def _video_handoff_projection(self, project_id: str) -> dict | None:
         """Read PF's explicitly bound inputs and results, with no local locators."""
-        from runtime_paths import local_media_root
         from doctor import probe_app
         from studio.video_workflow import candidate_failed
-        project = self.store.get_project(project_id)
-        try:
-            root = self.store.local_workspace_path(project_id).resolve()
-        except ProjectStoreError:
+        from studio.direct_handoff_contract import read_handoff
+        context = read_handoff(self.store, project_id)
+        if context is None:
             return None
-        if not root.is_relative_to(local_media_root()):
-            return None
-        binding_ref = os.environ.get("PHOTO_STUDIO_VIDEO_BINDING")
-        binding = {}
-        if binding_ref:
-            binding_path = Path(binding_ref).expanduser().resolve()
-            binding = self._video_json(binding_path.parent, binding_path.name)
-            if (binding.get("identity", {}).get("project_id") != project_id
-                    or Path(binding.get("project_root", "")).resolve() != root):
-                return None
-            canonical_path = Path(binding.get("creative_store", "")).expanduser().resolve()
-            canonical = self._video_json(canonical_path.parent, canonical_path.name)
-            active = [p for p in canonical.get("projects", []) if p.get("id") == project_id]
-            if len(active) != 1 or active[0].get("revision") != binding["identity"].get("project_revision"):
-                return None
-            revision = active[0]["revision"]
-        else:
-            revision = project["revision"]
-        workspace = Path(os.environ.get("PHOTO_STUDIO_VIDEO_WORKSPACE", str(root))).expanduser().resolve()
-        if not workspace.is_relative_to(local_media_root()):
-            return None
-        job = binding.get("identity", {}).get("job_id")
-        if job:
-            descriptor = self._video_json(workspace, "video-inputs/" + job + "/video.json")
-            if not descriptor:
-                descriptor = self._video_json(workspace, "video.json")
-        else:
-            descriptor = self._video_json(workspace, "video.json")
-        identity = descriptor.get("identity", {})
-        if not isinstance(identity.get("jobId"), str) or not identity["jobId"] or "/" in identity["jobId"] or "\\" in identity["jobId"]:
-            return None
-        if (descriptor.get("scope") != "video_handoff_v1" or identity.get("photoProjectId") != project_id
-                or identity.get("photoProjectRevision") != revision or (job and identity.get("jobId") != job)):
-            return None
+        project, root, workspace, binding, revision, descriptor, identity = (
+            context[key] for key in ('project', 'root', 'workspace', 'binding', 'revision', 'descriptor', 'identity'))
         run = workspace / "runs" / hashlib.sha256(identity["jobId"].encode()).hexdigest()[:32]
         handoff = self._video_json(run, "handoff_manifest.json")
         payload = self._video_json(root, binding.get("candidate_ref", "candidate.json")) or handoff
@@ -789,6 +749,13 @@ class StudioApplication:
                                 self._json(200, {'ok': True, **app.direct_video.styles()})
                         else:
                             self._json(200, {'ok': True, **app.direct_video.library(segments[2])})
+                        return
+                    if len(segments) >= 5 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'handoff']:
+                        if len(segments) == 5:
+                            self._json(200, {'ok': True, 'handoff': app.direct_video.handoff(segments[2])})
+                        else:
+                            version = urllib.parse.parse_qs(parsed.query).get('v', [None])[0]
+                            self._media(app.direct_video.handoff_image(segments[2], segments[6], version))
                         return
                     if len(segments) >= 6 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'style-drafts']:
                         project_id, draft_id = segments[2], segments[5]
@@ -1482,7 +1449,7 @@ class StudioApplication:
             def _handle_error(self, exc: Exception) -> None:
                 if isinstance(exc, DirectVideoError):
                     code = exc.code
-                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found', 'style_base_not_found', 'draft_not_found'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready', 'draft_not_ready', 'draft_busy'} else 400
+                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found', 'style_base_not_found', 'draft_not_found'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready', 'draft_not_ready', 'draft_busy', 'handoff_changed'} else 400
                     self._json(status, _error(code, '直出任务暂时无法执行，请检查输入或任务状态后重试。'))
                     return
                 code = getattr(exc, "code", "request_invalid")

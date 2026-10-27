@@ -99,6 +99,7 @@ td.sb-vc{position:relative}
 .dv-sw-used{display:inline-flex;align-self:flex-start;border-radius:4px;padding:1px 7px;font:11.5px var(--f-tx);background:var(--ok-bg);color:var(--ok)}
 .dv-genbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px;border:1px solid var(--rule);border-radius:8px;background:var(--panel)}
 .dv-genbar p{font:12.5px/1.5 var(--f-tx);color:var(--ink-2);min-width:0}
+.dv-genbar .actions{flex:none}
 .dv-genbar p.need{color:var(--warn)}
 @media(max-width:960px){.dv-sw-body{grid-template-columns:1fr}.dv-sw-edit{border-right:0;border-bottom:1px solid var(--rule)}.dv-sw-head{flex-wrap:wrap}.dv-sw-head .seg{width:100%}}
 /* 全片设计一行：来源 + 两行带标题的「动作规矩」「不用」，去掉删除线 */

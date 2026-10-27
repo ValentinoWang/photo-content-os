@@ -185,6 +185,37 @@
               "null"
             ]
           },
+          "handoff": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "jobId": {
+                    "type": "string"
+                  },
+                  "revision": {
+                    "description": "Top-level storyboardRevision; null when absent or invalid. A null request revision compares jobId only.",
+                    "minimum": 1,
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "jobId",
+                  "revision"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "handoffNewer": {
+            "type": "boolean"
+          },
           "jobId": {
             "type": "string"
           },
@@ -792,7 +823,9 @@
           "design",
           "shots",
           "narration",
-          "output"
+          "output",
+          "handoff",
+          "handoffNewer"
         ],
         "type": "object"
       },
@@ -2455,6 +2488,262 @@
         "summary": "Add an indexed asset reference to a project"
       }
     },
+    "/api/projects/{projectId}/direct/handoff": {
+      "get": {
+        "operationId": "getDirectHandoff",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "handoff": {
+                      "properties": {
+                        "handedAt": {
+                          "description": "Top-level handedAt, an ISO UTC timestamp; null when absent or invalid.",
+                          "format": "date-time",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "jobId": {
+                          "type": "string"
+                        },
+                        "narration": {
+                          "properties": {
+                            "durationSeconds": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "voice": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "voice",
+                            "durationSeconds"
+                          ],
+                          "type": [
+                            "object",
+                            "null"
+                          ]
+                        },
+                        "revision": {
+                          "description": "Top-level storyboardRevision; null when absent or invalid. A null request revision compares jobId only.",
+                          "minimum": 1,
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "shots": {
+                          "items": {
+                            "properties": {
+                              "audio": {
+                                "type": "string"
+                              },
+                              "camera": {
+                                "type": "string"
+                              },
+                              "dialogue": {
+                                "type": "string"
+                              },
+                              "endSeconds": {
+                                "type": "number"
+                              },
+                              "image": {
+                                "properties": {
+                                  "rightsStatus": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "source": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "sourceTimeSeconds": {
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  },
+                                  "url": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "source",
+                                  "rightsStatus",
+                                  "sourceTimeSeconds",
+                                  "url"
+                                ],
+                                "type": [
+                                  "object",
+                                  "null"
+                                ]
+                              },
+                              "shotId": {
+                                "type": "string"
+                              },
+                              "startSeconds": {
+                                "type": "number"
+                              },
+                              "subtitle": {
+                                "type": "string"
+                              },
+                              "visual": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "shotId",
+                              "startSeconds",
+                              "endSeconds",
+                              "dialogue",
+                              "visual",
+                              "subtitle",
+                              "camera",
+                              "audio",
+                              "image"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "title": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "jobId",
+                        "revision",
+                        "title",
+                        "handedAt",
+                        "shots",
+                        "narration"
+                      ],
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "handoff"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read the current local handoff"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/projects/{projectId}/direct/handoff/images/{shotId}": {
+      "get": {
+        "operationId": "getDirectHandoffImage",
+        "parameters": [
+          {
+            "description": "Local image content fingerprint",
+            "in": "query",
+            "name": "v",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Current handoff image unavailable or version changed"
+          }
+        },
+        "summary": "Read a locally available handoff image"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "shotId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
     "/api/projects/{projectId}/direct/jobs": {
       "parameters": [
         {
@@ -2514,6 +2803,27 @@
                   }
                 ],
                 "properties": {
+                  "handoff": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "jobId": {
+                        "type": "string"
+                      },
+                      "revision": {
+                        "description": "Top-level storyboardRevision; null when absent or invalid. A null request revision compares jobId only.",
+                        "minimum": 1,
+                        "type": [
+                          "integer",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "jobId",
+                      "revision"
+                    ],
+                    "type": "object"
+                  },
                   "model": {
                     "enum": [
                       "claude-opus-5-5"
@@ -2719,7 +3029,7 @@
                 }
               }
             },
-            "description": "Task busy or required artifacts not ready"
+            "description": "Task busy or required artifacts not ready; handoff_changed when jobId or revision no longer matches the current local package"
           }
         },
         "summary": "createDirectJob"

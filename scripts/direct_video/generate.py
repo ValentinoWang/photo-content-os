@@ -310,7 +310,7 @@ class Generator(StyleMixin, RevisionMixin):
                     self.active.discard(key)
         threading.Thread(target=run, daemon=True, name='direct-video-job').start()
 
-    def create(self, project_id: str, body: dict, *, background=True, draft=False) -> dict:
+    def create(self, project_id: str, body: dict, *, background=True, draft=False, narration_path=None) -> dict:
         rows = parse_shots(body)
         base = self.resolve_style_base(body)
         if base is None and not body.get('style', '').strip():
@@ -329,6 +329,11 @@ class Generator(StyleMixin, RevisionMixin):
                'narration': {'status': 'none', 'durationSeconds': None},
                'output': {'status': 'none', 'composedAt': None, 'kind': 'silent', 'durationSeconds': None, 'frames': None, 'revision': 0,
                           'checks': {'playable': 'unknown', 'avOffsetSeconds': None, 'blackFrames': None}}}
+        job['handoff'] = copy.deepcopy(body.get('handoff'))
+        if narration_path is not None:
+            with narration_path.open('rb') as stream:
+                duration = self.copy_narration(root, stream, narration_path.stat().st_size, len(rows))
+            job['narration'] = {'status': 'aligning', 'durationSeconds': duration}
         job['design']['source'] = None
         if draft:
             job.update(_isDraft=True, text=body['style'], startedAt=timestamp, revisions=[])
@@ -411,6 +416,13 @@ class Generator(StyleMixin, RevisionMixin):
         with ThreadPoolExecutor(max_workers=self.workers) as pool:
             list(pool.map(lambda sid: self.write_shot(project_id, job_id, sid), [s['shotId'] for s in job['shots'] if not s.get('fromDraft')]))
         self.finish_shots(project_id, job_id)
+        job = self.read(project_id, job_id)
+        if job['narration']['status'] == 'aligning':
+            if job['status'] == 'ready':
+                self._align(project_id, job_id)
+            else:
+                job['narration']['status'] = 'invalid'
+                self.save(root, job)
 
     def finish_shots(self, project_id, job_id):
         with self.lock:
@@ -558,6 +570,31 @@ class Generator(StyleMixin, RevisionMixin):
         self.write_shot(project_id, job_id, sid, instruction, retry_errors=retry_errors)
         self.finish_shots(project_id, job_id)
 
+    @staticmethod
+    def copy_narration(root, stream, length, shot_count):
+        if type(length) is not int or not 0 < length <= 100 * 1024 * 1024:
+            raise DirectVideoError('narration_invalid')
+        root.mkdir(parents=True, exist_ok=True)
+        pending = root / 'narration.pending.wav'
+        try:
+            with pending.open('wb') as handle:
+                remaining = length
+                while remaining:
+                    block = stream.read(min(remaining, 256 * 1024))
+                    if not block:
+                        raise DirectVideoError('narration_invalid')
+                    handle.write(block)
+                    remaining -= len(block)
+            duration = wav_seconds(pending)
+            if round(duration * FPS) < shot_count:
+                raise DirectVideoError('narration_invalid')
+            pending.replace(root / 'narration.wav')
+            return duration
+        except (OSError, ValueError, wave.Error, EOFError) as exc:
+            raise DirectVideoError('narration_invalid') from exc
+        finally:
+            pending.unlink(missing_ok=True)
+
     def narration(self, project_id, job_id, stream, length: int) -> dict:
         if type(length) is not int or not 0 < length <= 100 * 1024 * 1024:
             raise DirectVideoError('narration_invalid')
@@ -568,26 +605,12 @@ class Generator(StyleMixin, RevisionMixin):
             if job['design']['status'] != 'done' or not all(s['status'] == 'rendered' for s in job['shots']):
                 raise DirectVideoError('shots_not_ready')
             root = self.path(project_id, job_id)
-            pending = root / 'narration.pending.wav'
             try:
-                with pending.open('wb') as handle:
-                    remaining = length
-                    while remaining:
-                        block = stream.read(min(remaining, 256 * 1024))
-                        if not block:
-                            raise DirectVideoError('narration_invalid')
-                        handle.write(block)
-                        remaining -= len(block)
-                duration = wav_seconds(pending)
-                if round(duration * FPS) < len(job['shots']):
-                    raise DirectVideoError('narration_invalid')
-                pending.replace(root / 'narration.wav')
-            except (OSError, ValueError, wave.Error, EOFError) as exc:
+                duration = self.copy_narration(root, stream, length, len(job['shots']))
+            except DirectVideoError:
                 job['narration']['status'] = 'invalid'
                 self.save(root, job)
-                raise DirectVideoError('narration_invalid') from exc
-            finally:
-                pending.unlink(missing_ok=True)
+                raise
             job['narration'] = {'status': 'aligning', 'durationSeconds': duration}
             self.invalidate_output(root, job, preserve_composed_at=True)
             self.start(project_id, job_id, self._align)
