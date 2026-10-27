@@ -1,0 +1,73 @@
+{
+  "baseline": {
+    "base": "c1465ffffb34697d3ad01a3fd3e9c33f55273307",
+    "branch": "detached",
+    "head": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
+    "tree": "087eb3d6bb336632633ff55820d42adb60e55c45"
+  },
+  "binding_sha256": "18c2fa8a5d071456d7c1d60280d2a9e68280a9db623afa77a267e969a6974c8e",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "67290efa9d601677b74ea7b7f052b9f9f6abc67980bae7a4e57666f459c2215b",
+  "claims": [
+    {
+      "claim_key": "photo.devbox-execution",
+      "item": "H-01",
+      "open_route": "note:本机活动监视器和与总控的测试对话",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.devbox",
+        "photo.project-tools"
+      ]
+    },
+    {
+      "claim_key": "photo.devbox-transfer",
+      "item": "H-02",
+      "open_route": "note:与总控对话里的开发机同步文件清单",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.devbox",
+        "photo.project-tools"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance-contract.md",
+  "contract_sha256": "2c5042ae7515a22531e76c3055c5b01b3d816b54e0db3812cd4e7454908243ee",
+  "contract_version": "2",
+  "estimated_minutes": 5,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.devbox-execution",
+    "photo.devbox-transfer"
+  ],
+  "loop_name": "photo-content-os 用自己的开发机跑测试、门禁和渲染",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T092843Z-macos-phase2-cb3478/result.md",
+      "result_sha256": "277e000e1762ffa35e7fc3c017280c97a996f0f1afbee37658c330c75ef2f294",
+      "run_id": "20261027T092843Z-macos-phase2-cb3478",
+      "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401"
+    },
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/integration-contract/runs/20261027T092843Z-photo-dev-phase2-830f59/result.md",
+      "result_sha256": "42c5d20f7a246489706f47ad4b34fb89af2a09183191b6acce621a8779c1251e",
+      "run_id": "20261027T092843Z-photo-dev-phase2-830f59",
+      "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-10-27T09:30:12.777014Z",
+  "release_slice": "R310",
+  "request_id": "2026-10-27-R310-photo-devbox",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
+  "summary": "fb6f2fe三份自测通过；真实直连开发机成功后执行浅色专项9过，远端HEAD和四份保护文件摘要一致；原H两项非阻塞待人工抽查。全量既有失败及R277字体限制保留。",
+  "task_id": "2026-10-27-R310-photo-devbox"
+}

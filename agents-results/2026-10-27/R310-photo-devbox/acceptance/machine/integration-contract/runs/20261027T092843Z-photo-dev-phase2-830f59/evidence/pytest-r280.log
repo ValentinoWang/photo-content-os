@@ -1,0 +1,12 @@
+[rbox] Harness 的在线判定脚本还没发布（~/Desktop/Opensource_Tool/Harness_Engineering/Core/scripts/devbox/devbox_status.py 不存在），改用直连判断：开发机连得上
+[rbox] 提交 fb6f2fe7a 不在开发机上，推过去（走单独的连接；10-27 第一次推整个历史 183 个提交只用了 3 秒）
+[rbox] 推提交用了 2 秒
+[rbox] 推送 778 个文件，5 秒
+fb6f2fe7a656c78461bb4fd1967e88bbb2175401
+f2eb65355390d3811725c5b1093ebce36679cbb9cf3641e66c23bf53141bdc57  scripts/devbox/test_push_rules.sh
+7d8000cd154bc48aab6e3e3a047151f1ffed8e693110e9a021e57148dd010161  scripts/devbox/test_ai_guard.sh
+086d8446690b0940a3ff009b2dc68acf2c107168a435d629031f61a4de311f4d  scripts/devbox/test_where.sh
+e98f6199f0f0a897e3a94fa53fa57d5b70b369225e2803e67259e1e1ffa585ef  tests/test_r280_light.py
+.........                                                                [100%]
+9 passed in 0.06s
+[rbox] 退出码 0，完整日志 /root/.prbox/run-172917-19566.log

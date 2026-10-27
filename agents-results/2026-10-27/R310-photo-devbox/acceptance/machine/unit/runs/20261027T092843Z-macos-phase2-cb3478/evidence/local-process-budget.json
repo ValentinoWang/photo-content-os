@@ -1,0 +1,42 @@
+{
+  "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
+  "before": {
+    "at": "2026-10-27T09:28:54.978952+00:00",
+    "count": 0,
+    "processes": []
+  },
+  "commands": [
+    {
+      "command": "bash scripts/devbox/test_push_rules.sh",
+      "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
+      "started_at": "2026-10-27T09:28:54.980501+00:00",
+      "completed_at": "2026-10-27T09:28:55.484659+00:00",
+      "duration_seconds": 0.504,
+      "exit_code": 0,
+      "evidence": "test_push_rules.log"
+    },
+    {
+      "command": "bash scripts/devbox/test_ai_guard.sh",
+      "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
+      "started_at": "2026-10-27T09:28:55.484703+00:00",
+      "completed_at": "2026-10-27T09:28:57.240623+00:00",
+      "duration_seconds": 1.756,
+      "exit_code": 0,
+      "evidence": "test_ai_guard.log"
+    },
+    {
+      "command": "bash scripts/devbox/test_where.sh",
+      "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
+      "started_at": "2026-10-27T09:28:57.240709+00:00",
+      "completed_at": "2026-10-27T09:28:57.954699+00:00",
+      "duration_seconds": 0.714,
+      "exit_code": 0,
+      "evidence": "test_where.log"
+    }
+  ],
+  "after": {
+    "at": "2026-10-27T09:28:58.050830+00:00",
+    "count": 0,
+    "processes": []
+  }
+}

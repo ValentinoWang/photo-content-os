@@ -173,6 +173,10 @@
     {
       "glob": "scripts/direct_video/**",
       "key": "photo.video-pipeline"
+    },
+    {
+      "glob": "scripts/devbox/**",
+      "key": "photo.devbox"
     }
   ]
 }

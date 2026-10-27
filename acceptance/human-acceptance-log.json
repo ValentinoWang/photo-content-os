@@ -189,8 +189,28 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-27T07:57:37.837149Z",
+  "generated_at": "2026-10-27T09:30:12.777014Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md",
+      "estimated_minutes": 5,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/handoff.json",
+      "invalidation_keys": [
+        "photo.devbox-execution",
+        "photo.devbox-transfer"
+      ],
+      "latest_run": null,
+      "loop_name": "photo-content-os 用自己的开发机跑测试、门禁和渲染",
+      "ready_at": "2026-10-27T09:30:12.777014Z",
+      "release_slice": "R310",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "fb6f2fe三份自测通过；真实直连开发机成功后执行浅色专项9过，远端HEAD和四份保护文件摘要一致；原H两项非阻塞待人工抽查。全量既有失败及R277字体限制保留。",
+      "task_id": "2026-10-27-R310-photo-devbox",
+      "workspace": "acceptance/human/2026-W44/2026-10-27-R310-photo-devbox"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/checklist.md",
@@ -212,5 +232,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "04e6d78780f7a1efdbfca935c82ec39f76c97509909d8a37fc38c6e2c6aa72b3"
+  "source_facts_sha256": "1c1a7667d52335f799fc28d49943193c15009be10707f43a38a7d6f17cc41813"
 }

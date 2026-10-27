@@ -1,0 +1,13 @@
+{
+  "range": "origin/main..fb6f2fe",
+  "surfaces": [
+    "acceptance.artifacts",
+    "photo.devbox",
+    "photo.project-tools"
+  ],
+  "candidate_count": 28,
+  "maximum_score": 0.16909453722715678,
+  "exact_matches": [],
+  "threshold_candidates": [],
+  "decision": "未命中L0；本卡验开发执行交接与同步清单，旧卡验Studio及剪辑/音乐产品行为；入口不同，不承接或改写旧卡，保留其人工责任。"
+}

@@ -1,0 +1,10 @@
+{
+  "command": "scripts/devbox/rbox run <任务 worktree> -- .venv/bin/python -m pytest -q tests/test_r280_light.py",
+  "source_identity": "40cf307c41490b8c4dccf586185e9f37eca0eb14",
+  "started_at": "2026-10-27T09:22:45.117484+00:00",
+  "completed_at": "2026-10-27T09:22:48.798715+00:00",
+  "duration_seconds": 3.681,
+  "exit_code": 0,
+  "execution_host": "photo-dev",
+  "path_redaction": "任务 worktree and ~ replace local paths only"
+}

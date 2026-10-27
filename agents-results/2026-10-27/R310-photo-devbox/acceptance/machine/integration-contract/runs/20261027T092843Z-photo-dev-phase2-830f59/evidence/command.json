@@ -1,0 +1,11 @@
+{
+  "command": "scripts/devbox/rbox run <任务 worktree> -- bash -c <Git identity, four protected-file hashes, and .venv/bin/python -m pytest -q tests/test_r280_light.py>",
+  "remote_script": "set -e\ngit rev-parse HEAD\nsha256sum scripts/devbox/test_push_rules.sh scripts/devbox/test_ai_guard.sh scripts/devbox/test_where.sh tests/test_r280_light.py\n.venv/bin/python -m pytest -q tests/test_r280_light.py",
+  "source_identity": "fb6f2fe7a656c78461bb4fd1967e88bbb2175401",
+  "started_at": "2026-10-27T09:29:11.768621+00:00",
+  "completed_at": "2026-10-27T09:29:18.569141+00:00",
+  "duration_seconds": 6.8,
+  "exit_code": 0,
+  "execution_host": "photo-dev",
+  "path_redaction": "任务 worktree and ~ replace local paths only"
+}

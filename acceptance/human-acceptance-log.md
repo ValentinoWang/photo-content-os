@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-10-27T07:57:37.837149Z
-- 来源事实 SHA-256：04e6d78780f7a1efdbfca935c82ec39f76c97509909d8a37fc38c6e2c6aa72b3
+- 事实时间：2026-10-27T09:30:12.777014Z
+- 来源事实 SHA-256：1c1a7667d52335f799fc28d49943193c15009be10707f43a38a7d6f17cc41813
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -58,6 +58,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-10-27T09:30:12.777014Z | 2026-10-27-R310-photo-devbox | photo-content-os 用自己的开发机跑测试、门禁和渲染 | 任务委托人 | 5 | acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md | - | - |
 | 2026-10-19T16:11:46.979649Z | 2026-10-19-R207-photo-edit-tools-in-repo | 剪辑工具安装与候选生成 | 产品负责人 | 8 | acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/checklist.md | - | - |
 
 ### 已拒绝待修复

@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-10-27T09:24:40.970796+00:00",
+  "source_path": "scripts/devbox/rbox",
+  "source_sha256": "a79a09b7bf788d2695fb0d023005cfb3b0f9bad90d052b47ea4d695df539dc16",
+  "function": "where_check",
+  "line": 139,
+  "default_checker": "~/Desktop/Opensource_Tool/Harness_Engineering/Core/scripts/devbox/devbox_status.py",
+  "default_checker_exists": false,
+  "actual_output": "[rbox] Harness 的 devbox_status.py 还没进主检出，这次不问在线判定",
+  "source_behavior": "if [ ! -f \"$s\" ]; then ...; return 0; fi",
+  "impact": "默认检查器缺失时跳过在线判定，真实运行已命中；不是读不到状态就停止。",
+  "required_next_action": "总控处理工具实现或开发机在线判定依赖；本执行线程按TASK.md只报告并停止。",
+  "product_files_modified": false,
+  "handoff_created": false
+}

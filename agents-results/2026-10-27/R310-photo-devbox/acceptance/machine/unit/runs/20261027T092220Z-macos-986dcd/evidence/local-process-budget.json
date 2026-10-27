@@ -1,0 +1,39 @@
+{
+  "source_identity": "40cf307c41490b8c4dccf586185e9f37eca0eb14",
+  "before": {
+    "at": "2026-10-27T09:22:35.478928+00:00",
+    "count": 0,
+    "processes": []
+  },
+  "commands": [
+    {
+      "command": "bash scripts/devbox/test_push_rules.sh",
+      "source_identity": "40cf307c41490b8c4dccf586185e9f37eca0eb14",
+      "started_at": "2026-10-27T09:22:35.479956+00:00",
+      "duration_seconds": 0.486,
+      "exit_code": 0,
+      "evidence": "test_push_rules.log"
+    },
+    {
+      "command": "bash scripts/devbox/test_ai_guard.sh",
+      "source_identity": "40cf307c41490b8c4dccf586185e9f37eca0eb14",
+      "started_at": "2026-10-27T09:22:35.966064+00:00",
+      "duration_seconds": 1.322,
+      "exit_code": 0,
+      "evidence": "test_ai_guard.log"
+    },
+    {
+      "command": "bash scripts/devbox/test_where.sh",
+      "source_identity": "40cf307c41490b8c4dccf586185e9f37eca0eb14",
+      "started_at": "2026-10-27T09:22:37.287806+00:00",
+      "duration_seconds": 0.796,
+      "exit_code": 0,
+      "evidence": "test_where.log"
+    }
+  ],
+  "after": {
+    "at": "2026-10-27T09:22:38.179819+00:00",
+    "count": 0,
+    "processes": []
+  }
+}
