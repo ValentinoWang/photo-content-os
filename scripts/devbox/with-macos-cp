@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# with-macos-cp <命令...>：开发机上给门禁用的 macOS cp 替身（setup 装到 /root/.prbox/bin/）。
+# R276 --real、R277 门禁复制 Studio 状态时写死了 macOS 的 `/bin/cp -cR`（-c = APFS 克隆），GNU cp 没有 -c，直接报错。
+# 不改门禁代码（它们受 R276、R277 验收卡保护），也不动系统的 cp：在单独的挂载命名空间里把 /usr/bin/cp（/bin 是它的软链）
+# 换成替身，只对这一个命令和它的子进程生效。替身只认实际用法 `-cR`，换成 `-R --reflink=auto`，其余参数原样交给真 cp。
+set -euo pipefail
+S=/root/.prbox/shims
+[ -x "$S/cp.real" ] || cp /usr/bin/cp "$S/cp.real"
+exec unshare --mount --propagation private bash -c 'mount --bind "$0/cp" /usr/bin/cp && exec "$@"' "$S" "$@"

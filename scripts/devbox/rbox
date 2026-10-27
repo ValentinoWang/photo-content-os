@@ -20,9 +20,11 @@
 #   rbox exposure-check             公网隧道、对外文件服务根目录下有没有密钥（判据 C）
 set -euo pipefail
 
-# 同一家租用平台：移动 223.109.239.0/24，电信 180.127.11.0/24。到期换机器时改这两个默认值或 export RBOX_HOST/RBOX_PORT
-HOST="${RBOX_HOST:-root@223.109.239.36}"     # 电信线：root@180.127.11.177
-PORT="${RBOX_PORT:-13640}"
+# 只认本机 ~/.ssh/config 里的别名 photo-dev（地址、端口、用户、密钥都写在那一段，Harness 控制台按同一个别名判在线）。
+# 2026-10-27 装机时是移动线 223.109.239.36:13640（电信线 180.127.11.177）；到期换机器只改 ~/.ssh/config 那一段
+HOST="${RBOX_HOST:-photo-dev}"
+PORT="${RBOX_PORT:-}"
+BARE=/root/pco.git                  # 开发机上的 git 裸仓库：提交从本机推上去（开发机不放 GitHub 凭据），worktree 副本的索引对齐到本机同一个提交
 LOCAL_ROOT="${RBOX_LOCAL_ROOT:-/Users/vsiyo/Desktop/创业项目/photo-content-os}"
 # task_worktree.py 建的任务 worktree 在这两处之一；开发机上两处都软链到 RBOX_WT
 WT_ROOTS=(/private/tmp/task-worktrees /Users/vsiyo/.local/share/task-worktrees)
@@ -34,7 +36,8 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 HARNESS_ROOT="${RBOX_HARNESS_ROOT:-/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering}"   # 门禁读 Core/skills/ui-copy-quality；rbox harness 推过去，两边同一绝对路径
 # 门禁和渲染找浏览器、Playwright、字体的变量（本机在 R278 REPORT-F1 §7 里手设的那几个），开发机上指到主目录装好的 .tools 和 Noto CJK。
 # 素材根 LOCAL_MEDIA_ROOT 指到空目录：素材只在本机（runtime_paths.local_media_root），测试自己建临时素材
-TOOLS="$LOCAL_ROOT/.tools"; CJK=/usr/share/fonts/opentype/noto/NotoSansCJK-Medium.ttc
+# 本机字体是 STHeiti Medium（黑体里偏粗的一款）；apt 装的 Noto Sans CJK 只有 Regular、Bold，取 Bold
+TOOLS="$LOCAL_ROOT/.tools"; CJK=/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc
 REMOTE_ENV="export PATH=$LOGDIR/bin:$TOOLS/node/bin:/root/.local/bin:\$PATH CI=true LOCAL_MEDIA_ROOT=$LOGDIR/no-media PHOTO_CONTENT_OS_DEVBOX=1 \
 HARNESS_CORE=$(printf %q "$HARNESS_ROOT/Core") UI_COPY_QUALITY_CHECKER=$(printf %q "$HARNESS_ROOT/Core/skills/ui-copy-quality/scripts/check_ui_copy_quality.py") \
 VIDEO_RENDER_PLAYWRIGHT_MODULE=$(printf %q "$TOOLS/browser-runtime/node_modules/playwright/index.js") PLAYWRIGHT_MODULE=$(printf %q "$TOOLS/browser-runtime/node_modules/playwright/index.mjs") \
@@ -44,8 +47,10 @@ DIRECT_VIDEO_FONT=$CJK VIDEO_RENDER_TEST_FONT=$CJK; mkdir -p $LOGDIR/tmp $LOGDIR
 task_tmp_dir() { if [ "$(printf %s "$1" | wc -c)" -le 40 ]; then echo "$LOGDIR/tmp/$1"; else echo "$LOGDIR/tmp/$(printf %s "$1" | LC_ALL=C cut -c1-24)-$(printf %s "$1" | cksum | cut -d' ' -f1)"; fi; }
 task_tmp() { local t; t="$(task_tmp_dir "$1")"; if [ "${RBOX_KEEP_TMP:-}" = 1 ]; then echo "export TMPDIR=$t; mkdir -p $t"; else echo "export TMPDIR=$t; rm -rf $t; mkdir -p $t; trap 'rm -rf $t' EXIT"; fi; }
 
-SSH_OPTS=(-p "$PORT" -o ControlMaster=auto -o "ControlPath=$HOME/.ssh/cm-rbox-pco-%C" -o ControlPersist=2h
+SSH_OPTS=(${PORT:+-p "$PORT"} -o ControlMaster=auto -o "ControlPath=$HOME/.ssh/cm-rbox-pco-%C" -o ControlPersist=2h
   -o Compression=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=6 -o ConnectTimeout=20)
+# 大传输（第一次推 git 历史约 430 MB）走单独的连接，不和 run、monitor 挤同一条 ControlMaster（Core 网络一节）
+BIG_SSH="ssh ${PORT:+-p $PORT} -o ControlPath=none -o Compression=no -o ServerAliveInterval=30 -o ConnectTimeout=20"
 die() { echo "rbox: $*" >&2; exit 1; }
 q() { local s=${1//\'/\'\\\'\'}; printf "'%s'" "$s"; }   # 单引号包住，中文路径原样保留
 rs() { ssh "${SSH_OPTS[@]}" "$HOST" "$@"; }
@@ -57,8 +62,11 @@ abs() { local p="${1:-$LOCAL_ROOT}" r; [[ $p == /* ]] || p="$PWD/$p"; p="$(cd "$
 # 推哪些文件：git 跟踪的 + 没被 .gitignore 忽略的新文件（= 将来会提交的那些），稀疏 worktree 没检出的（ls-files -t 标 S）跳过。
 # 素材本来就被 .gitignore 挡着（仓库规定媒体不进 git，测试素材测试时现造），所以照片、视频、音频不会推上去。
 # 另外不推：证据目录（evidence/、agents-results/ 的图和日志）、私密文件、依赖目录。门禁要读的证据用 RBOX_WITH 点名推。
+# 测试要读、又在证据目录里的（git 跟踪的 3 个文本文件，tests/test_checklist_remediation_static.py 读）：默认就推
+TEST_EVIDENCE="evidence/2026-09-01/openclaw-media-ui-prototype-and-checklist"
 file_list() {
   local p="$1"
+  RBOX_WITH="$TEST_EVIDENCE ${RBOX_WITH:-}"
   { git -C "$p" ls-files -z -co --exclude-standard -t . | perl -0ne 'print substr($_,2) unless /^S /'
     if [ -n "${RBOX_WITH:-}" ]; then local w; for w in $RBOX_WITH; do [ -e "$p/$w" ] && (cd "$p" && git ls-files -z -co --exclude-standard -- "$w"); done; fi
   } | drop_private
@@ -77,6 +85,11 @@ drop_private() {
 push() {
   local p; p="$(abs "${1:-}")"; local list; list="$(mktemp)"; local t0=$SECONDS
   git -C "$p" rev-parse --is-inside-work-tree >/dev/null 2>&1 || die "不是 git 检出：$p"
+  # 全量、门禁在跑（或排着队）的目录不再推：推进去的改动会换掉正在测的文件（寸木 R281 10-26 因此多出一项假红）
+  local busy; busy="$(rs "for f in $LOGDIR/*.dir; do [ -f \"\$f\" ] || continue; n=\$(basename \"\$f\" .dir); [ -f $LOGDIR/\$n.rc ] && continue; tmux has-session -t =\$n 2>/dev/null || continue; [ \"\$(cat \"\$f\")\" = $(q "$p") ] && echo \$n; done; true")"
+  if [ -n "$busy" ] && [ "${RBOX_PUSH_WHILE_RUNNING:-}" != 1 ]; then
+    die "开发机上这个目录有任务在跑或在排队（$(echo $busy)），现在推会换掉它正在测的文件。等它结束（rbox wait），或换一个 worktree；确认不影响就 RBOX_PUSH_WHILE_RUNNING=1"
+  fi
   file_list "$p" > "$list"; local n; n=$(tr -cd '\0' < "$list" | wc -c | tr -d ' ')
   local top; top="$(git -C "$p" rev-parse --show-toplevel)"
   # 新 worktree 第一次推：先在开发机上按同一份清单从主目录副本拷一份打底，再按内容比（-c）只推不同的（寸木 10-26：65 秒降到 10 秒）
@@ -89,13 +102,46 @@ push() {
   rsync -az ${seeded:+-c} --partial --from0 --files-from="$list" --ignore-missing-args -e "ssh ${SSH_OPTS[*]}" "$p/" "$HOST:$p/" \
     --info=stats0 2>&1 | grep -v '^$' || true
   rm -f "$list"
-  # worktree 里的 .venv、.tools 是指向主目录的软链（task_worktree 惯例）；开发机上同样链到主目录装好的那份（两边绝对路径相同）
+  # worktree 用主目录装好的 .venv：开发机上链到主目录那份（两边绝对路径相同）。.tools 不链：本机 worktree 里也没有，
+  # tests/test_edit_tools_runtime.py 要求默认路径落在 worktree 自己下面；门禁和渲染经 VIDEO_RENDER_* 变量找主目录的 .tools
   if [ "$top" != "$LOCAL_ROOT" ] && [ "$p" = "$top" ]; then
-    rs "cd $(q "$p") && for d in .venv .tools; do [ -e \$d ] || [ -L \$d ] || ln -s $(q "$LOCAL_ROOT")/\$d \$d; done"
+    rs "cd $(q "$p") && { [ -e .venv ] || [ -L .venv ] || ln -s $(q "$LOCAL_ROOT")/.venv .venv; }"
   fi
+  [ "$p" = "$top" ] && git_align "$p"
   echo "[rbox] 推送 ${n} 个文件，$((SECONDS - t0)) 秒"
 }
+# 开发机副本的 git 索引对齐到本机同一个提交：测试和交付检查要 git ls-files、git log（tests/test_p1_openclaw_bridge.py 等）。
+# 文件内容由上面的 rsync 推；这里只建 .git、reset --mixed 到同一提交，本机没检出（稀疏）的路径标 skip-worktree，本机删掉的文件开发机也删
+git_align() {
+  local p="$1" commit; commit="$(git -C "$p" rev-parse HEAD)"
+  # .venv 是开发机上补的软链（本机 worktree 没有），不该出现在 git status 里
+  rs "[ -d $BARE/objects ] || git init -q --bare $BARE; mkdir -p $BARE/info; grep -qx '/.venv' $BARE/info/exclude 2>/dev/null || echo '/.venv' >> $BARE/info/exclude"
+  if ! rs "git -C $BARE cat-file -e $commit^{commit} 2>/dev/null"; then
+    local t0=$SECONDS
+    echo "[rbox] 提交 ${commit:0:9} 不在开发机上，推过去（第一次推整个历史，约 430 MB，走单独的连接）"
+    GIT_SSH_COMMAND="$BIG_SSH" git -C "$p" push -q --no-thin "$HOST:$BARE" "+$commit:refs/rbox/$(basename "$p")" || die "推 git 提交到开发机失败"
+    echo "[rbox] 推提交用了 $((SECONDS - t0)) 秒"
+  fi
+  git -C "$p" ls-files -z -d | rs "set -e; cd $(q "$p")
+    new=''; if [ ! -e .git ]; then t=$LOGDIR/wt-new-\$\$; git -C $BARE worktree add -q --no-checkout --detach \$t $commit; mv \$t/.git .git; rmdir \$t; git -C $BARE worktree repair \"\$PWD\" >/dev/null; new=1; fi
+    # --no-checkout 建出来的索引是空的，新建时一定要 reset 一次（10-27 第一次漏了：3563 个文件全显示成已删除）
+    { [ -z \"\$new\" ] && [ \"\$(git rev-parse HEAD)\" = $commit ]; } || git reset -q --mixed $commit
+    xargs -0 -r rm -f --
+    git ls-files -z -d | xargs -0 -r git update-index --skip-worktree"
+}
 remote_cmd() { local c=""; for a in "$@"; do c+=" $(q "$a")"; done; echo "$c"; }
+# 发重活之前问 Harness 控制台的在线判定（Core scripts/devbox/devbox_status.py，用户 10-27 定：开发机在线就在开发机上开发，不在线就在本机）：
+# 退出码 0（devbox）照常发；10（local）停下，改在本机跑并守本机预算；其他（读不到状态）也停下，不许当成 local（Core「读不到不是没有」）
+where_check() {
+  local s="${RBOX_DEVBOX_STATUS:-$HARNESS_ROOT/Core/scripts/devbox/devbox_status.py}" rc=0 out
+  if [ ! -f "$s" ]; then echo "[rbox] Harness 的 devbox_status.py 还没进主检出，这次不问在线判定" >&2; return 0; fi
+  out="$(python3 "$s" where --project-root "$1" 2>&1)" || rc=$?
+  case $rc in
+    0) return 0 ;;
+    10) die "Harness 判开发机不在线（${out}）：这次在本机跑，守本机预算（无头浏览器同一时间一个、全量加 nice -n 10）" ;;
+    *) die "读不到开发机在线状态（退出码 ${rc}：${out}），不当成不在线；先查 Harness 控制台或 ssh photo-dev" ;;
+  esac
+}
 guard() {   # 开发机不跑 AI：命令里调用 claude/codex 或带凭据就拒（Core devbox-split 判据 A，ai_guard.py 与 Cadenvo 同一份）
   local why rc=0; why="$(python3 -I "$HERE/ai_guard.py" "$@")" || rc=$?
   if [ $rc = 2 ]; then die "命令里有 AI 凭据（${why}），不发到开发机"; fi
@@ -106,6 +152,8 @@ guard() {   # 开发机不跑 AI：命令里调用 claude/codex 或带凭据就�
 case "${1:-}" in
   init)
     links=""; for r in "${WT_ROOTS[@]}"; do links+="mkdir -p $(q "$(dirname "$r")") && { [ -e $(q "$r") ] || [ -L $(q "$r") ] || ln -s $RBOX_WT $(q "$r"); } && "; done
+    # 门禁、渲染默认把截图和帧写到 ~/.photo-content-os/evidence（开发机上是 /root 下）；本机同名路径软链过去，rbox pull 用本机路径就能拉回来
+    links+="mkdir -p /root/.photo-content-os/evidence && { [ -e $(q "$HOME/.photo-content-os") ] || [ -L $(q "$HOME/.photo-content-os") ] || ln -s /root/.photo-content-os $(q "$HOME/.photo-content-os"); } && "
     rs "mkdir -p $(q "$(dirname "$LOCAL_ROOT")") $RBOX_ROOT $RBOX_WT $LOGDIR/tmp $LOGDIR/bin && chmod 700 $LOGDIR \
       && { [ -e $(q "$LOCAL_ROOT") ] || [ -L $(q "$LOCAL_ROOT") ] || ln -s $RBOX_ROOT $(q "$LOCAL_ROOT"); } && $links \
       ls -ld $(q "$LOCAL_ROOT") $(for r in "${WT_ROOTS[@]}"; do q "$r"; printf ' '; done); nproc; free -h | sed -n 2p; df -h / | tail -1" ;;
@@ -118,6 +166,23 @@ case "${1:-}" in
     echo "[rbox] setup 用了 $((SECONDS - t0)) 秒" ;;
   sync) shift; push "${1:-}" ;;
   list) shift; p="$(abs "${1:-}")"; file_list "$p" | tr '\0' '\n' ;;
+  studio-data)
+    # 真实 Studio 数据（有用户的作品和照片）：用户 2026-10-27 同意放到这台开发机，R277、R278 门禁要复制它。
+    # 只推门禁用到的几份，放在同一路径（开发机上 ~/.photo-content-os 软链到 /root/.photo-content-os）；机器到期前删掉（README「到期」）。
+    # 约 1.8 GB：单独的连接、限速（RBOX_BWLIMIT，KB/s，默认 3072），studio-r278 和 studio-r276 相同的文件在开发机上直接拷（--copy-dest），不重复传
+    t0=$SECONDS; bw="${RBOX_BWLIMIT:-3072}"; D="$HOME/.photo-content-os"
+    for s in studio-r276 studio-r278 evidence/R277-shot-visual-revision; do
+      [ -d "$D/$s" ] || { echo "[rbox] 本机没有 $D/$s，跳过"; continue; }
+      basis=""; [ "$s" = studio-r278 ] && basis="--copy-dest=/root/.photo-content-os/studio-r276/"
+      rs "mkdir -p /root/.photo-content-os/$(dirname "$s")"
+      rsync -a --partial --delete --bwlimit="$bw" $basis -e "$BIG_SSH" "$D/$s/" "$HOST:/root/.photo-content-os/$s/" --info=stats1 2>&1 | grep -E 'Total transferred|Number of regular files transferred' || true
+      echo "[rbox] $s 推完（累计 $((SECONDS - t0)) 秒）"
+    done
+    # R278 门禁读的设计图（docs/tasks/R278-direct-rescript/design/img，本机排除在 git 之外、媒体）：推到开发机主目录同一路径
+    img="docs/tasks/R278-direct-rescript/design/img"
+    if [ -d "$LOCAL_ROOT/$img" ]; then rs "mkdir -p $(q "$LOCAL_ROOT/$img")"; rsync -a --partial -e "$BIG_SSH" "$LOCAL_ROOT/$img/" "$HOST:$LOCAL_ROOT/$img/"; echo "[rbox] R278 设计图推完"; fi
+    rs "du -sh /root/.photo-content-os/studio-r276 /root/.photo-content-os/studio-r278 /root/.photo-content-os/evidence/R277-shot-visual-revision 2>/dev/null; df -h / | tail -1"
+    echo "[rbox] Studio 数据推完，用了 $((SECONDS - t0)) 秒" ;;
   harness)
     # 门禁要读 Harness Core 的检查脚本（HARNESS_CORE）。只推 Core 里 git 跟踪的文件，同一绝对路径
     t0=$SECONDS; list="$(mktemp)"; git -C "$HARNESS_ROOT" ls-files -z -- Core | drop_private > "$list"
@@ -126,10 +191,12 @@ case "${1:-}" in
     echo "[rbox] 推 Harness Core $(tr -cd '\0' < "$list" | wc -c | tr -d ' ') 个文件，$((SECONDS - t0)) 秒"; rm -f "$list" ;;
   fresh)
     shift; dir="$(abs "${1:?DIR}")"; [ "$dir" != "$LOCAL_ROOT" ] || die "主目录副本里有装好的 .venv、.tools，不整份删；只对 worktree 用"
-    rs "rm -rf $(q "$(rs "readlink -f $(q "$dir")")")" && push "$dir" ;;
+    real="$(rs "readlink -f $(q "$dir")")"; [[ $real == $RBOX_WT/* ]] || die "开发机上的副本不在 $RBOX_WT 下：$real"
+    # 先在裸仓库里注销这个 worktree，不然重建后裸仓库里会有两条同一路径的记录（10-27 实测）
+    rs "git -C $BARE worktree remove --force $(q "$real") 2>/dev/null; rm -rf $(q "$real"); git -C $BARE worktree prune" && push "$dir" ;;
   run)
     shift; [[ $# -ge 3 && $2 == -- ]] || die "用法：run DIR -- CMD..."
-    dir="$(abs "$1")"; shift 2; guard "$@"; push "$dir"; name="run-$(date +%H%M%S)-$$"
+    dir="$(abs "$1")"; shift 2; guard "$@"; where_check "$dir"; push "$dir"; name="run-$(date +%H%M%S)-$$"
     set +e
     rs "$REMOTE_ENV; $(task_tmp "$name"); cd $(q "$dir") && ($(remote_cmd "$@")) > $LOGDIR/$name.log 2>&1; rc=\$?; tail -n $TAIL $LOGDIR/$name.log; echo \"[rbox] 退出码 \${rc}，完整日志 $LOGDIR/$name.log\"; exit \$rc"
     exit $? ;;
@@ -137,7 +204,7 @@ case "${1:-}" in
     shift; [[ $# -ge 4 && $3 == -- ]] || die "用法：bg NAME DIR -- CMD..."
     name="$1"; dir="$(abs "$2")"; shift 3
     [[ $name =~ ^[A-Za-z0-9._-]+$ ]] || die "任务名只能用字母、数字、. _ -：$name"
-    guard "$@"; push "$dir"
+    guard "$@"; where_check "$dir"; push "$dir"
     job="cd $(q "$dir") && ($(remote_cmd "$@"))"
     if [ -n "${RBOX_QUEUE:-}" ]; then
       [[ $RBOX_QUEUE =~ ^[a-z0-9-]+$ ]] || die "RBOX_QUEUE 只能用小写字母、数字、-：$RBOX_QUEUE"
@@ -149,7 +216,7 @@ case "${1:-}" in
     fi
     nice=""; [ -n "${RBOX_QUEUE:-}" ] && nice="nice -n 10 "   # 后台排队的任务让着前台的单项
     cmd="$REMOTE_ENV; $(task_tmp "$name"); (${nice}bash -c $(q "$job")) > $LOGDIR/$name.log 2>&1; echo \$? > $LOGDIR/$name.rc"
-    rs "rm -f $LOGDIR/$name.rc; tmux kill-session -t =$name 2>/dev/null; tmux new-session -d -s $name $(q "$cmd") && echo \"[rbox] 已在后台：${name}（日志 $LOGDIR/${name}.log）\"" ;;
+    rs "rm -f $LOGDIR/$name.rc; printf %s $(q "$dir") > $LOGDIR/$name.dir; tmux kill-session -t =$name 2>/dev/null; tmux new-session -d -s $name $(q "$cmd") && echo \"[rbox] 已在后台：${name}（日志 $LOGDIR/${name}.log）\"" ;;
   wait)
     shift; name="${1:?NAME}"; every="${2:-30}"; max="${RBOX_WAIT_MAX:-7200}"; t0=$SECONDS
     # 一次 ssh 问三件事：有结果了 / 还在跑 / 既没结果也不在跑（没起来或被杀），最后一种立刻退出，不空转（寸木 10-26 空转过 25 分钟）

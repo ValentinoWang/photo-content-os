@@ -1,0 +1,5 @@
+#!/bin/sh
+# macOS `cp -cR` 的替身（with-macos-cp 绑定挂载到 /usr/bin/cp，只在那个命名空间里生效）：
+# -cR（APFS 克隆、递归）换成 GNU 的 -R --reflink=auto；别的用法原样交给真 cp
+if [ "${1:-}" = "-cR" ]; then shift; exec /root/.prbox/shims/cp.real -R --reflink=auto "$@"; fi
+exec /root/.prbox/shims/cp.real "$@"
