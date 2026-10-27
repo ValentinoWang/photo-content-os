@@ -126,12 +126,11 @@ R277（以及 R276 `--real`）复制 Studio 状态时写死了 macOS 的 `/bin/c
 | 门禁默认把证据写到 `~/.photo-content-os/evidence` | 开发机上落到 `/root` 下，`rbox pull` 用本机路径拉不到 | 开发机上 `~/.photo-content-os` 的同名路径软链到 `/root/.photo-content-os` |
 | `$变量` 后面直接跟中文标点（Core E-86） | `rbox setup` 最后一行 `DEPLOY_LOG…: unbound variable`，退出码 1 | 写 `${变量}`；`scripts/lint_scripts.sh` 用 perl 按字节查，改脚本后必跑 |
 
-## 已知的红（2026-10-27 开发机全量：1204 过、12 红、36 跳过）
+## 已知的红（开发机全量）
 
-- **本机同样会红的 9 项**（代码的问题，不是开发机的）：
-  - 8 项字幕和黑帧测试（`test_direct_video_subtitles.py`、`test_bilingual_subtitles_r6.py`、`test_pf_video_pipeline.py` 里烧字幕的几项）：`scripts/video_subtitles.py` 用的 `-filter_complex_script` 在 ffmpeg 9 里已删除；
-  - `tests/test_full_checklist_acceptance.py` 还查 R280 之前的深色令牌 `--bg:#0D1314`。
-- **开发机环境差异的 3 项**：`test_obsidian_doc_sync.py` 里用系统 python 跑同步检查的一项（开发机上没有 Obsidian 库）；`test_pf_video_pipeline.py::FrameMappingTests::test_every_frame_matches_retained_source_clock` 和 `test_pipeline_backends.py::MeltPipelineTests::test_overlay_and_subtitle_pixels_are_rendered`（melt 7.4 对本机 7.39）。
+- 2026-10-27 第一次跑：1204 过、12 红、36 跳过。其中 9 项本机同样红，是代码的问题，已在「剪第一版时烧字幕在新版 ffmpeg 上恢复正常」（R312）里修掉：烧字幕的 `-filter_complex_script` 和场景抽帧的 `-vsync` 在 ffmpeg 9 里已删除，分别改成 `-/filter_complex <文件>`、`-fps_mode`；一项测试还查浅色界面之前的深色令牌。
+- 修完后（R312）：1214 过、3 红、36 跳过。剩下的 3 项都是开发机环境差异：`test_obsidian_doc_sync.py` 里用系统 python 跑同步检查的一项（开发机上没有 Obsidian 库）；`test_pf_video_pipeline.py::FrameMappingTests::test_every_frame_matches_retained_source_clock` 和 `test_pipeline_backends.py::MeltPipelineTests::test_overlay_and_subtitle_pixels_are_rendered`（melt 7.4 对本机 7.39）。
+- 本机或开发机升级 ffmpeg 以后先跑一遍全量：ffmpeg 删参数时，有的调用只会静默返回空结果（场景抽帧就是这样，一直没人发现）。
 
 ## 失败先分类
 
