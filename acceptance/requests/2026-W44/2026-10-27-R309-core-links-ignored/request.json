@@ -1,0 +1,51 @@
+{
+  "id": "2026-10-27-R309-core-links-ignored",
+  "project": "photo-content-os",
+  "title": "接上全部 Core 规则和技能，Core 链接不再挂在未提交列表里",
+  "author": {
+    "agent": "claude",
+    "session": "d75ae5f3-ff34-43f8-9002-545d3e528327"
+  },
+  "executors": [
+    {
+      "agent": "claude",
+      "session": "d75ae5f3-ff34-43f8-9002-545d3e528327",
+      "role": "总控"
+    }
+  ],
+  "raw_request": "整个 core 规则组都必守 这次交付里把现有项目都补齐，然后立即硬失败 / （链接不提交进项目仓库，用 .gitignore 忽略；Cadenvo_Frontend 改成直接链接）可以",
+  "understanding": [
+    "本项目接上 Core 规则组里的全部规则、技能和脚本（原来缺 36 条），项目自检显示 Core 规则全部接上、通过。",
+    "这些链接是本机生成的，不提交进仓库：.gitignore 忽略 Harness 规则目录、Core 技能和 3 个 Core 脚本链接。git status 里一直挂着的几十个未跟踪链接从此消失。",
+    "以后 Core 新加规则，重新运行一次 link 就能补上（我补充的）。"
+  ],
+  "out_of_scope": [
+    "不改任何 Core 规则的内容",
+    "不改本项目自己的技能、脚本和代码",
+    "不改历史证据目录里的文件"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开控制台的项目页，找到Photo Content OS 本地创作工作台。",
+        "查看它的 Core 规则接入情况。"
+      ],
+      "expected": "显示通过，接上的 Core 规则数和 Core 规则组里的数量相同。"
+    },
+    {
+      "key": "H-02",
+      "steps": [
+        "打开终端，进入Photo Content OS 本地创作工作台的项目目录。",
+        "查看 git 的未提交文件列表。"
+      ],
+      "expected": "列表里没有 Harness 规则文件、Core 技能或 Core 脚本的链接。"
+    }
+  ],
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "created_at": "2026-10-27T08:31:47.061487Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": []
+}
