@@ -1,0 +1,53 @@
+{
+  "id": "2026-10-27-R310-photo-devbox",
+  "project": "photo-content-os",
+  "title": "photo-content-os 用自己的开发机跑测试、门禁和渲染",
+  "author": {
+    "agent": "claude",
+    "session": "fd886749-65ab-4995-987b-066c31f1aca1"
+  },
+  "executors": [
+    {
+      "agent": "claude",
+      "session": "fd886749-65ab-4995-987b-066c31f1aca1",
+      "role": "总控"
+    }
+  ],
+  "raw_request": "你问一下 ai4math-b1 你的任务能不能放在上面开发 / （ai4math-b1 建议另租一台后，用户发来新租开发机的连接方式）你是这个 3个小时时间 给我赶紧弄好",
+  "understanding": [
+    "新租的这台开发机专给 photo-content-os 用。装好和本机一样的 Python、Node、剪辑工具、浏览器和 ffmpeg，以后测试、门禁、拍图和渲染都在开发机上跑，本机不再跑这些重活。",
+    "仓库里放一个 rbox 脚本：一条命令把改动推到开发机，再在开发机上跑命令；全量测试和门禁要排队，同一时间只跑一个。",
+    "照片、视频、证据截图、密钥和本机 Studio 数据都不推到开发机；开发机上不装 Claude、Codex，也不放 AI 凭据。",
+    "R277、R278 两个门禁要复制本机真实的 Studio 数据（里面有照片），在用户定下这份数据能不能放到这台租来的机器之前，它们还在本机跑（我补充的）。"
+  ],
+  "out_of_scope": [
+    "不把真实 Studio 数据和照片放到开发机",
+    "不改产品代码和门禁脚本",
+    "不和 Cadenvo、寸木、茶思屋的开发机共用"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开本机的活动监视器，按 CPU 排序。",
+        "发送给 Claude：「跑一遍浅色界面的测试」。",
+        "查看 Claude 回复的测试结果和活动监视器。"
+      ],
+      "expected": "测试结果显示通过；跑测试的这段时间，活动监视器里本机没有新出现的测试进程或无头浏览器。"
+    },
+    {
+      "key": "H-02",
+      "steps": [
+        "发送给 Claude：「列出这次会推到开发机的文件清单」。",
+        "检查清单里有没有照片、视频、截图和密钥文件。"
+      ],
+      "expected": "清单里一个都没有。"
+    }
+  ],
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "created_at": "2026-10-27T08:33:46.987826Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": []
+}
