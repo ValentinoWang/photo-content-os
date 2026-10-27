@@ -1,0 +1,20 @@
+[rbox] 排队 heavy：18:56:44 开始等
+[rbox] 轮到了，排了 0 秒
+5d62356222028aa31083fc693845875b1acf5edd
+b84bc4a3d6718b344c3bd9707c363d6c22b321d0e26b9c6d943d5ed109c3dbca  tests/test_direct_video_subtitles.py
+03ce62a8d9be62ed3ab6e1f1e56efaec6bb1ace0c0e4f97562a9588eda9a203f  tests/test_bilingual_subtitles_r6.py
+98f336196582e73aa79eb41b1869d2f8d4db9a353e948b84ba2b95bde31c10ef  tests/test_pf_video_pipeline.py
+5b4ea9e62a993582e15b21b76bfb82bfbd1840ec02e35972b42274594a6644ee  tests/test_output_video_review.py
+3051adf605487ce5ff303673ed9757ba9850ef5d6a17f052dff98d26ade18931  tests/test_full_checklist_acceptance.py
+ffmpeg version n9.0.2-36-g6882969ce9-20261026 Copyright (c) 2000-2026 the FFmpeg developers
+melt 7.4.0
+/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc
+......................................                                 [100%]
+=============================== warnings summary ===============================
+tests/test_bilingual_subtitles_r6.py::BilingualCaptionTests::test_real_two_layer_burn
+  /root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_bilingual_subtitles_r6.py:67: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    en=image.crop((72,layout['englishTop'],1008,layout['englishTop']+layout['englishFontSize']+3));pixels=list(en.getdata());assert sum(150<min(p)<230 for p in pixels)>50
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+38 passed, 1 warning, 2 subtests passed in 27.12s
+R312_JUNIT_SUMMARY {"counts": {"tests": 40, "failures": 0, "errors": 0, "skipped": 0}, "case_count": 38, "failed": [], "skipped": []}

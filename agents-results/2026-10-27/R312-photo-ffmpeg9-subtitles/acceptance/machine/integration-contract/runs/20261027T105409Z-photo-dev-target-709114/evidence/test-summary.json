@@ -1,0 +1,11 @@
+{
+  "counts": {
+    "tests": 40,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "case_count": 38,
+  "failed": [],
+  "skipped": []
+}

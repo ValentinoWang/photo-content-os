@@ -1,0 +1,63 @@
+{
+  "baseline": {
+    "base": "78b6e41c9605c359967a8fa0fc274fabbd512fed",
+    "branch": "detached",
+    "head": "5d62356222028aa31083fc693845875b1acf5edd",
+    "tree": "34dc9f1ee1686aa241d761d9f46cae4b07bbde6d"
+  },
+  "binding_sha256": "5031a497bc55d468497e560c44e883fa6706cd33a6571be87eb406325989cca9",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "4c3f4a89d36c5cb8f269f2e51a97747c7a5cec16db37b26691e66e4eb646dfc4",
+  "claims": [
+    {
+      "claim_key": "photo.ffmpeg9-subtitles",
+      "item": "H-01",
+      "open_route": "note:Studio作品的视频页与剪好的第一版成片",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.devbox",
+        "photo.project-tools",
+        "photo.tests-scripts",
+        "photo.video-pipeline"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-10-27/R312-photo-ffmpeg9-subtitles/acceptance-contract.md",
+  "contract_sha256": "b97b39c75a9cb522846fe1fad7e2e2c7e96385409c01ccb7a2a51a71715144b7",
+  "contract_version": "1",
+  "estimated_minutes": 5,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.ffmpeg9-subtitles"
+  ],
+  "loop_name": "剪第一版时烧字幕在新版 ffmpeg 上恢复正常",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-10-27/R312-photo-ffmpeg9-subtitles/acceptance/machine/integration-contract/runs/20261027T105409Z-photo-dev-target-709114/result.md",
+      "result_sha256": "ef2f83f6b6a49fefb61ecb01071ee17d068d8b71d98edfe1fce48146ea12896f",
+      "run_id": "20261027T105409Z-photo-dev-target-709114",
+      "source_identity": "5d62356222028aa31083fc693845875b1acf5edd"
+    },
+    {
+      "layer": "machine/non-functional",
+      "result_path": "agents-results/2026-10-27/R312-photo-ffmpeg9-subtitles/acceptance/machine/non-functional/runs/20261027T105409Z-photo-dev-full-02bac1/result.md",
+      "result_sha256": "c30d7ed556074e2a89d677828c58d168f9a2e26188b3dc3114bc4d05fb0310a4",
+      "run_id": "20261027T105409Z-photo-dev-full-02bac1",
+      "source_identity": "5d62356222028aa31083fc693845875b1acf5edd"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-10-27T11:08:28.788626Z",
+  "release_slice": "R312",
+  "request_id": "2026-10-27-R312-photo-ffmpeg9-subtitles",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "5d62356222028aa31083fc693845875b1acf5edd",
+  "summary": "5d62356定向38过、2子测试过；全量1214过、3项任务允许环境失败、36跳过、2005子测试过。原始pytest退出1如实保留；仅无额外回归条件PASS，H-01原样非阻塞待人工。",
+  "task_id": "2026-10-27-R312-photo-ffmpeg9-subtitles"
+}

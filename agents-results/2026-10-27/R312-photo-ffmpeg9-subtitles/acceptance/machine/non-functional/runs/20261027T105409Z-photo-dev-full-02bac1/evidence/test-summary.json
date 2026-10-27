@@ -1,0 +1,247 @@
+{
+  "counts": {
+    "tests": 3258,
+    "failures": 3,
+    "errors": 0,
+    "skipped": 36
+  },
+  "case_count": 1253,
+  "failed": [
+    {
+      "nodeid": "tests/test_obsidian_doc_sync.py::ObsidianDocSyncTest::test_document_contract_commands_run_with_system_python_without_media_dependencies",
+      "kind": "failure",
+      "message": "AssertionError: 1 != 0 : Traceback (most recent call last):\n  File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 185, in <module>\n    main()\n  File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 176, in main\n    errors = run_checks(contract_path, local_root, obsidian_root)\n  File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 161, in run_checks\n    errors.extend(check_pair(pair, local_root, obsidian_root, fail_if_source_newer, grace_seconds))\n  File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 122, in check_pair\n    target_texts = {path: read_text(path) for path in target_paths}\n  File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 122, in <dictcomp>\n    target_texts = {path: read_text(path) for path in target_paths}\n  File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 38, in read_text\n    raise FileNotFoundError(f\"missing required doc: {path}\")\nFileNotFoundError: missing required doc: /root/Obsidian/自媒体/06_技术栈与自动化/腾讯云OpenClaw与MAC_OpenClaw本地素材协同流转规范.md",
+      "detail": "self = <test_obsidian_doc_sync.ObsidianDocSyncTest testMethod=test_document_contract_commands_run_with_system_python_without_media_dependencies>\n\n    def test_document_contract_commands_run_with_system_python_without_media_dependencies(self) -> None:\n        root = Path(__file__).resolve().parents[1]\n        env = dict(os.environ, PYTHONDONTWRITEBYTECODE=\"1\")\n        for script, extra_args in (\n            (\"check_obsidian_doc_sync.py\", []),\n            (\"check_outline_contract.py\", [\".\"]),\n        ):\n            result = subprocess.run(\n                [\"python3\", str(root / \"scripts\" / script), *extra_args],\n                cwd=root,\n                env=env,\n                capture_output=True,\n                text=True,\n                check=False,\n            )\n>           self.assertEqual(result.returncode, 0, result.stderr or result.stdout)\nE           AssertionError: 1 != 0 : Traceback (most recent call last):\nE             File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 185, in <module>\nE               main()\nE             File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 176, in main\nE               errors = run_checks(contract_path, local_root, obsidian_root)\nE             File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 161, in run_checks\nE               errors.extend(check_pair(pair, local_root, obsidian_root, fail_if_source_newer, grace_seconds))\nE             File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 122, in check_pair\nE               target_texts = {path: read_text(path) for path in target_paths}\nE             File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 122, in <dictcomp>\nE               target_texts = {path: read_text(path) for path in target_paths}\nE             File \"/root/pco-wt/photo-content-os-ffmpeg9-subtitles/scripts/check_obsidian_doc_sync.py\", line 38, in read_text\nE               raise FileNotFoundError(f\"missing required doc: {path}\")\nE           FileNotFoundError: missing required doc: /root/Obsidian/自媒体/06_技术栈与自动化/腾讯云OpenClaw与MAC_OpenClaw本地素材协同流转规范.md\n\ntests/test_obsidian_doc_sync.py:103: AssertionError"
+    },
+    {
+      "nodeid": "tests/test_pf_video_pipeline.py::FrameMappingTests::test_every_frame_matches_retained_source_clock",
+      "kind": "failure",
+      "message": "AssertionError: Lists differ: [0, 1[931 chars]329, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,[943 chars] 599] != [0, 1[931 chars]329, 330, 331, 332, 333, 334, 335, 336, 337, 3[1003 chars] 599]\n\nFirst differing element 210:\n0\n330\n\nDiff is 3451 characters long. Set self.maxDiff to None to see it.",
+      "detail": "self = <test_pf_video_pipeline.FrameMappingTests testMethod=test_every_frame_matches_retained_source_clock>\n\n    def test_every_frame_matches_retained_source_clock(self):\n        def clocks(path):\n            pixels = run('ffmpeg','-v','error','-i',str(path),'-vf','crop=160:2:0:8,format=gray','-f','rawvideo','-')\n            return [sum((pixels[o+i*16+8]>128)<<i for i in range(10)) for o in range(0,len(pixels),320)]\n        original = clocks(self.source)\n        candidate = clocks(Path(self.result['output']))\n        expected = original[:120]+original[180:240]+original[300:360]+original[420:600]\n        self.assertEqual(len(candidate), 420)\n>       self.assertEqual(candidate, expected)\nE       AssertionError: Lists differ: [0, 1[931 chars]329, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,[943 chars] 599] != [0, 1[931 chars]329, 330, 331, 332, 333, 334, 335, 336, 337, 3[1003 chars] 599]\nE       \nE       First differing element 210:\nE       0\nE       330\nE       \nE       Diff is 3451 characters long. Set self.maxDiff to None to see it.\n\ntests/test_pf_video_pipeline.py:72: AssertionError"
+    },
+    {
+      "nodeid": "tests/test_pipeline_backends.py::MeltPipelineTests::test_overlay_and_subtitle_pixels_are_rendered",
+      "kind": "failure",
+      "message": "AssertionError: 0 not greater than 10",
+      "detail": "self = <test_pipeline_backends.MeltPipelineTests testMethod=test_overlay_and_subtitle_pixels_are_rendered>\n\n    def test_overlay_and_subtitle_pixels_are_rendered(self):\n        def frame(t):\n            return subprocess.run([\"ffmpeg\", \"-v\", \"error\", \"-ss\", str(t), \"-i\", self.result[\"output\"], \"-frames:v\", \"1\", \"-pix_fmt\", \"rgb24\", \"-f\", \"rawvideo\", \"-\"], capture_output=True, check=True).stdout\n        blue, red = frame(0), frame(1.2)\n        self.assertGreater(blue[2], blue[0] + 100)\n        self.assertGreater(red[0], red[2] + 100)\n        caption = frame(0.3)\n>       self.assertGreater(sum(1 for i in range(0, len(caption), 3) if min(caption[i:i+3]) > 180), 10)\nE       AssertionError: 0 not greater than 10\n\ntests/test_pipeline_backends.py:212: AssertionError"
+    }
+  ],
+  "skipped": [
+    {
+      "nodeid": "tests/test_content_os_v2_document_links.py::ContentOsV2DocumentLinksTest::test_obsidian_markdown_and_wikilinks_resolve",
+      "kind": "skipped",
+      "message": "Obsidian vault is unavailable: /root/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_content_os_v2_document_links.py:111: Obsidian vault is unavailable: /root/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体"
+    },
+    {
+      "nodeid": "tests/test_content_os_v2_document_links.py::ContentOsV2DocumentLinksTest::test_obsidian_protocol_documents_exist",
+      "kind": "skipped",
+      "message": "Obsidian vault is unavailable: /root/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_content_os_v2_document_links.py:107: Obsidian vault is unavailable: /root/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体"
+    },
+    {
+      "nodeid": "tests/test_content_os_v2_document_links.py::ContentOsV2DocumentLinksTest::test_operator_documents_do_not_expose_internal_implementation",
+      "kind": "skipped",
+      "message": "Obsidian vault is unavailable: /root/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_content_os_v2_document_links.py:115: Obsidian vault is unavailable: /root/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_candidate_duration_frames_audio_and_manifest",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:134: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_source_frames_at_each_retained_interval[segment0]",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:154: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_source_frames_at_each_retained_interval[segment1]",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:154: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_source_frames_at_each_retained_interval[segment2]",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:154: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_source_frames_at_each_retained_interval[segment3]",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:154: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_alpha_overlay_preserves_background_and_contains_animation",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:175: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_chinese_captions_are_burned_in_and_recognizable",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:198: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_bad_input_writes_failure_receipt_without_backend_change",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:228: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_render_timeout_writes_failure_and_reaps_process",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:245: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_refine_delete_undo_read_back_and_export_or_explicitly_unsupported",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:260: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_edit_backend_qualification.py::test_close_leaves_no_owned_editor_processes",
+      "kind": "skipped",
+      "message": "real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_edit_backend_qualification.py:294: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE"
+    },
+    {
+      "nodeid": "tests/test_openfilm_adapter.py::test_existing_vp9_alpha_survives_the_working_copy_conversion",
+      "kind": "skipped",
+      "message": "real alpha conversion requires the shared synthetic fixture",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_openfilm_adapter.py:102: real alpha conversion requires the shared synthetic fixture"
+    },
+    {
+      "nodeid": "tests/test_pf2_agent_runtime.py::Stage5RuntimeTests::test_controlled_narration_is_consumed_and_hash_checked_on_replay",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned browser",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf2_agent_runtime.py:183: Requires locked Agent and pinned browser"
+    },
+    {
+      "nodeid": "tests/test_pf2_agent_runtime.py::Stage5RuntimeTests::test_revision_only_renders_target_preserves_old_run_and_returns_poster",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned browser",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf2_agent_runtime.py:60: Requires locked Agent and pinned browser"
+    },
+    {
+      "nodeid": "tests/test_pf2_agent_runtime.py::Stage5RuntimeTests::test_revision_rejects_digest_identity_and_unselected_changes",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned browser",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf2_agent_runtime.py:127: Requires locked Agent and pinned browser"
+    },
+    {
+      "nodeid": "tests/test_pf2_agent_runtime.py::Stage5RuntimeTests::test_source_frame_and_code_render_and_normalized_retry",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned browser",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf2_agent_runtime.py:89: Requires locked Agent and pinned browser"
+    },
+    {
+      "nodeid": "tests/test_pf2_agent_runtime.py::Stage5RuntimeTests::test_teaching_revision_reuses_other_animation_and_exports_kdenlive",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned browser",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf2_agent_runtime.py:142: Requires locked Agent and pinned browser"
+    },
+    {
+      "nodeid": "tests/test_pf2_service_e2e.py::test_source_frame_save_confirmed_rewrite_target_render_and_real_posters",
+      "kind": "skipped",
+      "message": "Requires disposable PostgreSQL and locked Agent environment",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf2_service_e2e.py:21: Requires disposable PostgreSQL and locked Agent environment"
+    },
+    {
+      "nodeid": "tests/test_pf_agent_runtime.py::NativeRuntimeTests::test_failed_shot_retry_preserves_other_frames_voice_and_run",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned Playwright environment",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf_agent_runtime.py:118: Requires locked Agent and pinned Playwright environment"
+    },
+    {
+      "nodeid": "tests/test_pf_agent_runtime.py::NativeRuntimeTests::test_native_composition_projection_and_replay",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned Playwright environment",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf_agent_runtime.py:96: Requires locked Agent and pinned Playwright environment"
+    },
+    {
+      "nodeid": "tests/test_pf_agent_runtime.py::NativeRuntimeTests::test_native_kdenlive_projection_uses_explicit_backend",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned Playwright environment",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf_agent_runtime.py:106: Requires locked Agent and pinned Playwright environment"
+    },
+    {
+      "nodeid": "tests/test_pf_agent_runtime.py::NativeRuntimeTests::test_wrong_retry_and_tampered_full_descriptor_do_not_execute",
+      "kind": "skipped",
+      "message": "Requires locked Agent and pinned Playwright environment",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_pf_agent_runtime.py:137: Requires locked Agent and pinned Playwright environment"
+    },
+    {
+      "nodeid": "tests/test_ps3_openfilm_session.py::test_native_accept_retract_split_undo_redo_and_conflict",
+      "kind": "skipped",
+      "message": "explicit pinned openfilm runtime required",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_ps3_openfilm_session.py:15: explicit pinned openfilm runtime required"
+    },
+    {
+      "nodeid": "tests/test_ps3_openfilm_session.py::test_native_export_projects_only_actual_selected_animations",
+      "kind": "skipped",
+      "message": "explicit pinned openfilm runtime required",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_ps3_openfilm_session.py:104: explicit pinned openfilm runtime required"
+    },
+    {
+      "nodeid": "tests/test_r223_music_analysis_runtime.py::test_click_bpm_shift_and_full_scores",
+      "kind": "skipped",
+      "message": "opt-in offline model runtime; R223_RUNTIME_TESTS=1",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_r223_music_analysis_runtime.py:37: opt-in offline model runtime; R223_RUNTIME_TESTS=1"
+    },
+    {
+      "nodeid": "tests/test_video_render.py::BrowserRenderTests::test_corrupt_cached_frame_invalidates_only_that_shot",
+      "kind": "skipped",
+      "message": "Requires explicitly configured local Playwright module, font, browser and FFmpeg",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_video_render.py:246: Requires explicitly configured local Playwright module, font, browser and FFmpeg"
+    },
+    {
+      "nodeid": "tests/test_video_render.py::BrowserRenderTests::test_independent_solid_and_alpha_teaching_clips",
+      "kind": "skipped",
+      "message": "Requires explicitly configured local Playwright module, font, browser and FFmpeg",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_video_render.py:273: Requires explicitly configured local Playwright module, font, browser and FFmpeg"
+    },
+    {
+      "nodeid": "tests/test_video_render.py::BrowserRenderTests::test_missing_line14_repair_only_renders_failed_shot",
+      "kind": "skipped",
+      "message": "Requires explicitly configured local Playwright module, font, browser and FFmpeg",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_video_render.py:215: Requires explicitly configured local Playwright module, font, browser and FFmpeg"
+    },
+    {
+      "nodeid": "tests/test_video_render.py::BrowserRenderTests::test_per_shot_wav_and_mismatch_rejection",
+      "kind": "skipped",
+      "message": "Requires explicitly configured local Playwright module, font, browser and FFmpeg",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_video_render.py:289: Requires explicitly configured local Playwright module, font, browser and FFmpeg"
+    },
+    {
+      "nodeid": "tests/test_video_render.py::BrowserRenderTests::test_remote_asset_is_rejected",
+      "kind": "skipped",
+      "message": "Requires explicitly configured local Playwright module, font, browser and FFmpeg",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_video_render.py:267: Requires explicitly configured local Playwright module, font, browser and FFmpeg"
+    },
+    {
+      "nodeid": "tests/test_video_render.py::BrowserRenderTests::test_same_input_produces_same_frame_hashes_and_explicit_seek",
+      "kind": "skipped",
+      "message": "Requires explicitly configured local Playwright module, font, browser and FFmpeg",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_video_render.py:236: Requires explicitly configured local Playwright module, font, browser and FFmpeg"
+    },
+    {
+      "nodeid": "tests/test_video_render.py::BrowserRenderTests::test_three_shot_mp4_schedule_tracks_and_original_inputs",
+      "kind": "skipped",
+      "message": "Requires explicitly configured local Playwright module, font, browser and FFmpeg",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_video_render.py:201: Requires explicitly configured local Playwright module, font, browser and FFmpeg"
+    },
+    {
+      "nodeid": "tests/test_video_render.py::BrowserRenderTests::test_timeout_is_bounded_and_other_shots_continue",
+      "kind": "skipped",
+      "message": "Requires explicitly configured local Playwright module, font, browser and FFmpeg",
+      "detail": "/root/pco-wt/photo-content-os-ffmpeg9-subtitles/tests/test_video_render.py:256: Requires explicitly configured local Playwright module, font, browser and FFmpeg"
+    }
+  ]
+}

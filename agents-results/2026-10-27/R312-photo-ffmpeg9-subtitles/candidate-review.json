@@ -1,0 +1,14 @@
+{
+  "range": "origin/main..5d62356",
+  "surfaces": [
+    "acceptance.artifacts",
+    "photo.devbox",
+    "photo.project-tools",
+    "photo.tests-scripts",
+    "photo.video-pipeline"
+  ],
+  "candidate_count": 30,
+  "maximum_score": 0.30926375222348906,
+  "threshold_candidates": [],
+  "decision": "本卡验ffmpeg9字幕与抽帧恢复，原Studio交互、风格、音乐、开发工具卡的责任继续保留；无相同逐项地址。"
+}

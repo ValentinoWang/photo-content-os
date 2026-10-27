@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-10-27T10:08:26.915857Z
-- 来源事实 SHA-256：4393084aa429ef30e687986a7ac1ed437742fd79e097cf1a887c0059e2bde894
+- 事实时间：2026-10-27T11:08:28.788626Z
+- 来源事实 SHA-256：126b1c1df2237f31ef407e0caeaa3b81472a633213f554a4c7047fc013d8c599
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -58,6 +58,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-10-27T11:08:28.788626Z | 2026-10-27-R312-photo-ffmpeg9-subtitles | 剪第一版时烧字幕在新版 ffmpeg 上恢复正常 | 任务委托人 | 5 | acceptance/human/2026-W44/未-2026-10-27-R312-photo-ffmpeg9-subtitles/checklist.md | - | - |
 | 2026-10-27T10:08:26.915857Z | 2026-10-27-R310-photo-devbox | photo-content-os 用自己的开发机跑测试、门禁和渲染 | 任务委托人 | 5 | acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md | - | - |
 | 2026-10-19T16:11:46.979649Z | 2026-10-19-R207-photo-edit-tools-in-repo | 剪辑工具安装与候选生成 | 产品负责人 | 8 | acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/checklist.md | - | - |
 

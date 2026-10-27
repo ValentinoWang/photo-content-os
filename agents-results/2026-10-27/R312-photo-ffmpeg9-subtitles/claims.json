@@ -1,0 +1,15 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.ffmpeg9-subtitles",
+    "open_route": "note:Studio作品的视频页与剪好的第一版成片",
+    "surfaces": [
+      "photo.video-pipeline",
+      "photo.tests-scripts",
+      "photo.devbox",
+      "photo.project-tools",
+      "acceptance.artifacts"
+    ],
+    "relations": []
+  }
+]

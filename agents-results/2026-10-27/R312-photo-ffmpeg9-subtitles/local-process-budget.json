@@ -1,0 +1,14 @@
+{
+  "before": {
+    "at": "2026-10-27T10:56:41.339351+00:00",
+    "count": 0,
+    "processes": []
+  },
+  "local_pytest_started": false,
+  "local_browser_started": false,
+  "after": {
+    "at": "2026-10-27T11:08:28.694471+00:00",
+    "count": 0,
+    "processes": []
+  }
+}

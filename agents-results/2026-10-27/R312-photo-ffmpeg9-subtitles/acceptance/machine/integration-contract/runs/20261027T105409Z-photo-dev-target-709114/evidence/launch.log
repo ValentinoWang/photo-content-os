@@ -1,0 +1,5 @@
+[rbox] Harness 的在线判定脚本还没发布（~/Desktop/Opensource_Tool/Harness_Engineering/Core/scripts/devbox/devbox_status.py 不存在），改用直连判断：开发机连得上
+[rbox] 提交 5d6235622 不在开发机上，推过去（走单独的连接；10-27 第一次推整个历史 183 个提交只用了 3 秒）
+[rbox] 推提交用了 0 秒
+[rbox] 推送 783 个文件，3 秒
+[rbox] 已在后台：r312-target-20261027T105409Z-photo-dev-target-709114（日志 /root/.prbox/r312-target-20261027T105409Z-photo-dev-target-709114.log）

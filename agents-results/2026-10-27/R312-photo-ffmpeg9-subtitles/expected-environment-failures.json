@@ -1,0 +1,23 @@
+{
+  "source_identity": "5d62356222028aa31083fc693845875b1acf5edd",
+  "authority": "agents-results/2026-10-27/R312-photo-ffmpeg9-subtitles/TASK.md",
+  "scope": "本次开发机全量，不改产品断言或全局基线",
+  "expected_failures": [
+    {
+      "nodeid": "tests/test_obsidian_doc_sync.py::ObsidianDocSyncTest::test_document_contract_commands_run_with_system_python_without_media_dependencies",
+      "reason": "开发机没有Obsidian库，系统python文档同步子命令缺目标文档"
+    },
+    {
+      "nodeid": "tests/test_pf_video_pipeline.py::FrameMappingTests::test_every_frame_matches_retained_source_clock",
+      "reason": "开发机melt7.4与本机7.39像素/帧差异"
+    },
+    {
+      "nodeid": "tests/test_pipeline_backends.py::MeltPipelineTests::test_overlay_and_subtitle_pixels_are_rendered",
+      "reason": "开发机melt7.4与本机7.39字幕/叠层像素差异"
+    }
+  ],
+  "collection_errors_allowed": 0,
+  "unexpected_failures_allowed": 0,
+  "expected_skip_count": 36,
+  "skip_policy": "保留现行源码条件跳过；记录本次每项ID及原因，数量变化不静默放行"
+}

@@ -189,8 +189,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-27T10:08:26.915857Z",
+  "generated_at": "2026-10-27T11:08:28.788626Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-27-R312-photo-ffmpeg9-subtitles/checklist.md",
+      "estimated_minutes": 5,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-27-R312-photo-ffmpeg9-subtitles/handoff.json",
+      "invalidation_keys": [
+        "photo.ffmpeg9-subtitles"
+      ],
+      "latest_run": null,
+      "loop_name": "剪第一版时烧字幕在新版 ffmpeg 上恢复正常",
+      "ready_at": "2026-10-27T11:08:28.788626Z",
+      "release_slice": "R312",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "5d62356定向38过、2子测试过；全量1214过、3项任务允许环境失败、36跳过、2005子测试过。原始pytest退出1如实保留；仅无额外回归条件PASS，H-01原样非阻塞待人工。",
+      "task_id": "2026-10-27-R312-photo-ffmpeg9-subtitles",
+      "workspace": "acceptance/human/2026-W44/2026-10-27-R312-photo-ffmpeg9-subtitles"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md",
@@ -232,5 +251,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "4393084aa429ef30e687986a7ac1ed437742fd79e097cf1a887c0059e2bde894"
+  "source_facts_sha256": "126b1c1df2237f31ef407e0caeaa3b81472a633213f554a4c7047fc013d8c599"
 }
