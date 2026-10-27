@@ -1,0 +1,222 @@
+[
+  {
+    "name": "pytest-targeted",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_r280_light.py",
+      "tests/test_r283_frontend.py",
+      "tests/test_r283_style_library.py",
+      "tests/test_r282_frontend.py",
+      "tests/test_r282_handoff.py",
+      "tests/test_r278_clips.py",
+      "tests/test_r278_direct_frontend.py",
+      "tests/test_r278_style_base.py",
+      "tests/test_r276_direct_api.py",
+      "tests/test_r276_direct_c.py",
+      "tests/test_r276_direct_d.py",
+      "tests/test_r276_direct_frontend.py",
+      "tests/test_r276_direct_media.py",
+      "tests/test_r276_direct_video.py",
+      "tests/test_r277_api.py",
+      "tests/test_r277_boxes.py",
+      "tests/test_r277_frontend.py",
+      "tests/test_r277_revisions.py"
+    ],
+    "started_at": "2026-10-27T07:41:34.625489+00:00",
+    "completed_at": "2026-10-27T07:46:04.908451+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "r282-node",
+    "command": [
+      "node",
+      "tests/test_r282_frontend.mjs"
+    ],
+    "started_at": "2026-10-27T07:46:04.910225+00:00",
+    "completed_at": "2026-10-27T07:46:05.921892+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "r283-node",
+    "command": [
+      "node",
+      "tests/test_r283_frontend.mjs"
+    ],
+    "started_at": "2026-10-27T07:46:05.926587+00:00",
+    "completed_at": "2026-10-27T07:46:06.932085+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "r278-node",
+    "command": [
+      "node",
+      "tests/test_r278_direct_rescript.mjs"
+    ],
+    "started_at": "2026-10-27T07:46:06.932795+00:00",
+    "completed_at": "2026-10-27T07:46:07.937362+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "r276-node",
+    "command": [
+      "node",
+      "tests/test_r276_direct_frontend.mjs"
+    ],
+    "started_at": "2026-10-27T07:46:07.939771+00:00",
+    "completed_at": "2026-10-27T07:46:08.955153+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "r277-node",
+    "command": [
+      "node",
+      "tests/test_r277_frontend.mjs"
+    ],
+    "started_at": "2026-10-27T07:46:08.958180+00:00",
+    "completed_at": "2026-10-27T07:46:09.974816+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "r282-frontend",
+    "command": [
+      "node",
+      "scripts/direct_video/rescript_frontend_gate.mjs",
+      "--checks-only"
+    ],
+    "started_at": "2026-10-27T07:46:09.975468+00:00",
+    "completed_at": "2026-10-27T07:47:09.293146+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "r276-frontend",
+    "command": [
+      "node",
+      "scripts/direct_video/frontend_gate.mjs",
+      "--checks-only"
+    ],
+    "started_at": "2026-10-27T07:47:09.296752+00:00",
+    "completed_at": "2026-10-27T07:47:52.541512+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "r277-frontend",
+    "command": [
+      "node",
+      "scripts/direct_video/revision_frontend_gate.mjs",
+      "--checks-only"
+    ],
+    "started_at": "2026-10-27T07:47:52.544132+00:00",
+    "completed_at": "2026-10-27T07:51:16.420956+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "repository-safety",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_repository_safety.py",
+      "--base",
+      "origin/main"
+    ],
+    "started_at": "2026-10-27T07:51:16.431338+00:00",
+    "completed_at": "2026-10-27T07:51:21.452950+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "runtime",
+    "command": [
+      "bash",
+      "scripts/check_runtime_contract.sh"
+    ],
+    "started_at": "2026-10-27T07:51:21.457921+00:00",
+    "completed_at": "2026-10-27T07:51:25.556875+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "registry",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_music_analysis_registry.py"
+    ],
+    "started_at": "2026-10-27T07:51:25.559011+00:00",
+    "completed_at": "2026-10-27T07:51:27.601291+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "obsidian",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_obsidian_doc_sync.py"
+    ],
+    "started_at": "2026-10-27T07:51:27.602565+00:00",
+    "completed_at": "2026-10-27T07:51:28.741994+00:00",
+    "exit_code": 1,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "outline",
+    "command": [
+      ".venv/bin/python",
+      "scripts/check_outline_contract.py",
+      "."
+    ],
+    "started_at": "2026-10-27T07:51:28.763318+00:00",
+    "completed_at": "2026-10-27T07:51:30.258776+00:00",
+    "exit_code": 1,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "task-help",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_content_os_task.py",
+      "--help"
+    ],
+    "started_at": "2026-10-27T07:51:30.262102+00:00",
+    "completed_at": "2026-10-27T07:51:31.331483+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  },
+  {
+    "name": "draft-help",
+    "command": [
+      ".venv/bin/python",
+      "scripts/validate_jianying_draft.py",
+      "--help"
+    ],
+    "started_at": "2026-10-27T07:51:31.333340+00:00",
+    "completed_at": "2026-10-27T07:51:32.421197+00:00",
+    "exit_code": 0,
+    "disk_stop": false,
+    "browser_missing_stop": false
+  }
+]

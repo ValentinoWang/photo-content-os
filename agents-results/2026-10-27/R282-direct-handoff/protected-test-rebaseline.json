@@ -1,0 +1,41 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-10-26-R280-photo-studio-light",
+  "base": "a28a991210b72f0be38aca786ec32c3e93208c3e",
+  "head": "e26ec2f19d5e1136577873beb932f537a2a0037f",
+  "range_head": "ba2dd857b08fd9b7406ddc32103ef8a0bfc513c1",
+  "reason": "用户R280交付授权：浅色主题与追加旧任务说明列约束；54次合同包含真实旧任务两宽边界，原断言保留，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+  "prepared_at": "2026-10-27T07:41:15.820422Z",
+  "previous_ready_at": "2026-10-27T06:30:46.799625Z",
+  "previous_binding_sha256": "015b909a3b54d1199c376e33d191a1f8fa5026d9f447fc0f3590776051a61a1e",
+  "checklist_sha256": "976190b80f13242513031da03c9febc142ccb5dd0e2a0827c61a467ef2119f11",
+  "tests": [
+    {
+      "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+      "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+      "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc"
+    }
+  ],
+  "approved_contract": {
+    "base": {
+      "path": "agents-results/2026-10-27/R282-direct-handoff/acceptance-contract.md",
+      "commit": "a28a991210b72f0be38aca786ec32c3e93208c3e",
+      "version": "1",
+      "sha256": "3c8d6a0d98343ca90106c6c16d14a114995bc0d00896f6e86795c4916038e569"
+    },
+    "current": {
+      "path": "agents-results/2026-10-27/R282-direct-handoff/acceptance-contract.md",
+      "commit": "ba2dd857b08fd9b7406ddc32103ef8a0bfc513c1",
+      "version": "2",
+      "sha256": "803cb0105e7c4196069dc036138103f2229745111d380a82e125c6b65e092201"
+    },
+    "binding": {
+      "path": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/binding.md",
+      "sha256": "015b909a3b54d1199c376e33d191a1f8fa5026d9f447fc0f3590776051a61a1e"
+    },
+    "checklist": {
+      "path": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/checklist.md",
+      "sha256": "976190b80f13242513031da03c9febc142ccb5dd0e2a0827c61a467ef2119f11"
+    }
+  }
+}

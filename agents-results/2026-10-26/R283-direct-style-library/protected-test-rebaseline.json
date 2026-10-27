@@ -1,41 +1,41 @@
 {
   "phase": "prepared",
-  "trigger_card": "2026-10-26-R282-photo-direct-handoff-storyboard",
-  "base": "614c55060554de74beb547e7213877c369fa69cb",
-  "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
-  "range_head": "1afb1c51449d2811ca56a33d18303101738c3ba8",
-  "reason": "用户R282第二次交付授权：同源交接和新旧包元数据分支加入共享门禁，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
-  "prepared_at": "2026-10-27T06:24:51.162382Z",
-  "previous_ready_at": "2026-10-26T20:10:59.688065Z",
-  "previous_binding_sha256": "854b9466f58b2686b78900ed82e7ee25f3a13c82a523c75f960906df09ef568e",
-  "checklist_sha256": "29b676367d3cc9dbf9d85c335c1c1e9f9da34f9b605e6a55ee4d967eb86e79cb",
+  "trigger_card": "2026-10-26-R280-photo-studio-light",
+  "base": "a28a991210b72f0be38aca786ec32c3e93208c3e",
+  "head": "e26ec2f19d5e1136577873beb932f537a2a0037f",
+  "range_head": "ba2dd857b08fd9b7406ddc32103ef8a0bfc513c1",
+  "reason": "用户R280交付授权：浅色主题与追加旧任务说明列约束；54次合同包含真实旧任务两宽边界，原断言保留，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+  "prepared_at": "2026-10-27T07:41:16.520952Z",
+  "previous_ready_at": "2026-10-27T06:30:40.790297Z",
+  "previous_binding_sha256": "e5043444b5375f21dc77341d2fdec6d6773a70d1219fcd98d202ebe90c063d1f",
+  "checklist_sha256": "b399eaf1e86a27a22f65622899f7a0b8f3fac0c4686741255ce9f641f21e161b",
   "tests": [
     {
       "path": "scripts/direct_video/rescript_frontend_gate.mjs",
-      "old_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
-      "new_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055"
+      "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+      "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc"
     }
   ],
   "approved_contract": {
     "base": {
       "path": "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
-      "commit": "614c55060554de74beb547e7213877c369fa69cb",
-      "version": "1",
-      "sha256": "839e69bc7b5d1cf8a8a51d804293d08e559dfe7ab4b2e2509ed7da4dd9da8cfe"
-    },
-    "current": {
-      "path": "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
-      "commit": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+      "commit": "a28a991210b72f0be38aca786ec32c3e93208c3e",
       "version": "2",
       "sha256": "b42cf67c2ceeef69b332cd122ab2969451a67f7a0b55adb8d759342d85199faa"
     },
+    "current": {
+      "path": "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
+      "commit": "ba2dd857b08fd9b7406ddc32103ef8a0bfc513c1",
+      "version": "3",
+      "sha256": "771e4e81ce2a4b9e1599389f32ea491cc764cc926580d877c669bb3ab3c8e084"
+    },
     "binding": {
       "path": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/binding.md",
-      "sha256": "854b9466f58b2686b78900ed82e7ee25f3a13c82a523c75f960906df09ef568e"
+      "sha256": "e5043444b5375f21dc77341d2fdec6d6773a70d1219fcd98d202ebe90c063d1f"
     },
     "checklist": {
       "path": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/checklist.md",
-      "sha256": "29b676367d3cc9dbf9d85c335c1c1e9f9da34f9b605e6a55ee4d967eb86e79cb"
+      "sha256": "b399eaf1e86a27a22f65622899f7a0b8f3fac0c4686741255ce9f641f21e161b"
     }
   }
 }

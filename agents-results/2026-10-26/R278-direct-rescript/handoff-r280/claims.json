@@ -1,0 +1,182 @@
+[
+  {
+    "claim_key": "studio.direct-rescript",
+    "item": "H-01",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验仓库内剪辑工具安装、环境诊断及候选播放；本卡验分镜回改、全片风格和首镜样张，不承接工具安装或候选验收。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验汽水及网易云导入、去重和会员失败；本卡验动画分镜及视觉风格，音乐音效列只保存，不改变导入和入库责任。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验六项导航、项目分组、精选连播与决定保存和成片音乐预览；本卡只增加脚本直出分镜表与风格步骤，不承接导航、精选和原预览责任。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、分面筛选、节拍与自动分析；本卡的音乐音效列只保存，不生成音乐或改变分析、试听和筛选责任。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R280-photo-studio-light",
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.direct-style-base",
+    "item": "H-02",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验仓库内剪辑工具安装、环境诊断及候选播放；本卡验分镜回改、全片风格和首镜样张，不承接工具安装或候选验收。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验汽水及网易云导入、去重和会员失败；本卡验动画分镜及视觉风格，音乐音效列只保存，不改变导入和入库责任。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验六项导航、项目分组、精选连播与决定保存和成片音乐预览；本卡只增加脚本直出分镜表与风格步骤，不承接导航、精选和原预览责任。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、分面筛选、节拍与自动分析；本卡的音乐音效列只保存，不生成音乐或改变分析、试听和筛选责任。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R280-photo-studio-light",
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.direct-style-draft",
+    "item": "H-03",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-6546d6621b&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验仓库内剪辑工具安装、环境诊断及候选播放；本卡验分镜回改、全片风格和首镜样张，不承接工具安装或候选验收。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验汽水及网易云导入、去重和会员失败；本卡验动画分镜及视觉风格，音乐音效列只保存，不改变导入和入库责任。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验六项导航、项目分组、精选连播与决定保存和成片音乐预览；本卡只增加脚本直出分镜表与风格步骤，不承接导航、精选和原预览责任。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、分面筛选、节拍与自动分析；本卡的音乐音效列只保存，不生成音乐或改变分析、试听和筛选责任。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验首次生成、配音合成和仅一镜重写的不变性；本卡验回到分镜后全片重生成及风格来源、首镜样张。全片重生成不替代单镜重写，原三项继续独立人工验收。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验选块意见、单镜两版核对、样例和问题规则草稿；本卡验分镜表回改及全片风格与样张，保留旧卡全部单镜交互和人工责任。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留回分镜表、重生成及沿用成片/从头定样张；本卡新增固定九种库、公共样张和library来源，未替代旧三项，原R278验收仍须用户完成。",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R280-photo-studio-light",
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  }
+]

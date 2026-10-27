@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "path": "docs/tasks/R280-studio-light/design/index.html",
+      "sha256": "a73ec44f26d0e6f6d36d90b381f304d9a8af765e948ee77156bafa1f3a0ce5f4",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ]
+}

@@ -1,15 +1,15 @@
 {
   "baseline": {
-    "base": "614c55060554de74beb547e7213877c369fa69cb",
+    "base": "a28a991210b72f0be38aca786ec32c3e93208c3e",
     "branch": "detached",
-    "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
-    "tree": "9b8e5d75b3f282b79da585f2434971cbb0bfd81b"
+    "head": "e26ec2f19d5e1136577873beb932f537a2a0037f",
+    "tree": "accadb837fb8fe4fc30781336415d684e939bf2f"
   },
-  "binding_sha256": "a103be094a971b0a1ee16112e41b8e4d55e103d5d624e0ca74d53c21d57b5df9",
+  "binding_sha256": "f2af2060289597e74abb679eaa363b86d30bd4a1df945973f11f2da4fbd77396",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f",
+  "checklist_sha256": "1b0ef80db91ac44b27c230ba0e5a02264b733dc9c86374632e0742ef9f2f9b96",
   "claims": [
     {
       "claim_key": "studio.direct-rescript",
@@ -55,6 +55,11 @@
           "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
           "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。",
+          "target": "2026-10-26-R280-photo-studio-light",
+          "type": "independent"
         }
       ],
       "surfaces": [
@@ -62,7 +67,6 @@
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
-        "studio.backend",
         "studio.frontend"
       ]
     },
@@ -110,6 +114,11 @@
           "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
           "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。",
+          "target": "2026-10-26-R280-photo-studio-light",
+          "type": "independent"
         }
       ],
       "surfaces": [
@@ -117,7 +126,6 @@
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
-        "studio.backend",
         "studio.frontend"
       ]
     },
@@ -165,6 +173,11 @@
           "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
           "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
           "type": "independent"
+        },
+        {
+          "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。",
+          "target": "2026-10-26-R280-photo-studio-light",
+          "type": "independent"
         }
       ],
       "surfaces": [
@@ -172,14 +185,13 @@
         "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
-        "studio.backend",
         "studio.frontend"
       ]
     }
   ],
   "contract_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
-  "contract_sha256": "0e2a37aa6055f6a357a78b7345ea0c0d31d6d144076e0d18db4710aa0e39bb8d",
-  "contract_version": "3",
+  "contract_sha256": "28846dbb7938c890f1ba0879e777798688816ef0b3602341d5c64715859bd017",
+  "contract_version": "4",
   "estimated_minutes": 10,
   "execution_policy": "terminal-after-machine-green",
   "invalidation_keys": [
@@ -191,17 +203,17 @@
   "machine_evidence": [
     {
       "layer": "machine/integration-contract",
-      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-3c11bb/result.md",
-      "result_sha256": "3bc9a1f46bbde13d48ab5ae5cd5a304ee151a45da9ea862864d3812057c9873e",
-      "run_id": "20261027T062531Z-macos-fixed-headless-6a430c5-round2-3c11bb",
-      "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261027T074133Z-macos-fixed-headless-e26ec2f-round2-c699c2/result.md",
+      "result_sha256": "803c379f053dcff18a168bc8d5b75c6489bbbfbafcea0193a45a6435d29b91ed",
+      "run_id": "20261027T074133Z-macos-fixed-headless-e26ec2f-round2-c699c2",
+      "source_identity": "e26ec2f19d5e1136577873beb932f537a2a0037f"
     },
     {
       "layer": "machine/e2e",
-      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261027T062531Z-macos-fixed-headless-6a430c5-round2-7e33c7/result.md",
-      "result_sha256": "5b9f6d4454450872d8123958420f0a507d2a47fc8a05478136d00558fc6d9273",
-      "run_id": "20261027T062531Z-macos-fixed-headless-6a430c5-round2-7e33c7",
-      "source_identity": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3"
+      "result_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261027T074133Z-macos-fixed-headless-e26ec2f-round2-8a335d/result.md",
+      "result_sha256": "57c1a06ca01d30486d75fd9d527e23c965c38d1ebb7b83150ffdd88f3b4751e6",
+      "run_id": "20261027T074133Z-macos-fixed-headless-e26ec2f-round2-8a335d",
+      "source_identity": "e26ec2f19d5e1136577873beb932f537a2a0037f"
     }
   ],
   "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
@@ -292,15 +304,56 @@
         }
       ],
       "trigger_card": "2026-10-26-R282-photo-direct-handoff-storyboard"
+    },
+    {
+      "approved_contract": {
+        "base": {
+          "commit": "a28a991210b72f0be38aca786ec32c3e93208c3e",
+          "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+          "sha256": "0e2a37aa6055f6a357a78b7345ea0c0d31d6d144076e0d18db4710aa0e39bb8d",
+          "version": "3"
+        },
+        "binding": {
+          "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/binding.md",
+          "sha256": "f2af2060289597e74abb679eaa363b86d30bd4a1df945973f11f2da4fbd77396"
+        },
+        "checklist": {
+          "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
+          "sha256": "1b0ef80db91ac44b27c230ba0e5a02264b733dc9c86374632e0742ef9f2f9b96"
+        },
+        "current": {
+          "commit": "ba2dd857b08fd9b7406ddc32103ef8a0bfc513c1",
+          "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+          "sha256": "28846dbb7938c890f1ba0879e777798688816ef0b3602341d5c64715859bd017",
+          "version": "4"
+        }
+      },
+      "base": "a28a991210b72f0be38aca786ec32c3e93208c3e",
+      "checklist_sha256": "1b0ef80db91ac44b27c230ba0e5a02264b733dc9c86374632e0742ef9f2f9b96",
+      "head": "e26ec2f19d5e1136577873beb932f537a2a0037f",
+      "phase": "completed",
+      "prepared_at": "2026-10-27T07:41:17.490031Z",
+      "previous_binding_sha256": "f2af2060289597e74abb679eaa363b86d30bd4a1df945973f11f2da4fbd77396",
+      "previous_ready_at": "2026-10-27T06:30:35.124050Z",
+      "range_head": "ba2dd857b08fd9b7406ddc32103ef8a0bfc513c1",
+      "reason": "用户R280交付授权：浅色主题与追加旧任务说明列约束；54次合同包含真实旧任务两宽边界，原断言保留，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+      "tests": [
+        {
+          "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc",
+          "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+          "path": "scripts/direct_video/rescript_frontend_gate.mjs"
+        }
+      ],
+      "trigger_card": "2026-10-26-R280-photo-studio-light"
     }
   ],
-  "ready_at": "2026-10-27T06:30:35.124050Z",
+  "ready_at": "2026-10-27T07:51:43.250455Z",
   "release_slice": "R278",
   "request_id": "2026-10-26-R278-photo-direct-rescript",
   "required_role": "产品负责人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
-  "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 共用门禁保护摘要重新批准，R282触发的一份同头rebaseline，原步骤预期不变。 H-03实测3分36秒/修改2分49秒，用户「这个没事 大概差不多就行」，不作人工PASS。",
+  "source_commit": "e26ec2f19d5e1136577873beb932f537a2a0037f",
+  "summary": "e26ec2f固定1228无头浏览器，六代Python、五份现有Node、54/26/42次合同及原交互通过，人工仍PENDING。 R280触发的一份正式批准合同rebaseline已完成，原H标准不变。 H-03实测首次3分36秒/修改2分49秒，用户「这个没事 大概差不多就行」，不作人工PASS。",
   "task_id": "2026-10-26-R278-photo-direct-rescript"
 }

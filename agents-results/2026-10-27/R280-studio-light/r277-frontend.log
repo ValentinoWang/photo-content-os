@@ -1,0 +1,41 @@
+PASS R277 fixtures: 17 states, baseVersion lineage, 85-character brief, retained versions
+checked review/1440
+checked review/960
+checked select/1440
+checked select/960
+checked picked/1440
+checked picked/960
+checked rewriting2/1440
+checked rewriting2/960
+checked compare/1440
+checked compare/960
+checked kept-prev/1440
+checked kept-prev/960
+checked saved/1440
+checked saved/960
+checked review-failed/1440
+checked review-failed/960
+checked log/1440
+checked log/960
+checked look-running/1440
+checked look-running/960
+checked no-boxes/1440
+checked no-boxes/960
+checked no-boxes-look-running/1440
+checked no-boxes-look-running/960
+checked verify-running/1440
+checked verify-running/960
+checked verify-missed/1440
+checked verify-missed/960
+checked verify-failed/1440
+checked verify-failed/960
+checked log-empty/1440
+checked log-empty/960
+checked proposal-running/1440
+checked proposal-running/960
+PASS R277 browser detail: formulas, coordinates, selection/input/focus/disclosures, version conditions, retries, failures
+PASS R277 log: count sort/filter, source dedup/order, threshold since throughCount, rule revisions and sample labels
+PASS R277 polling ownership: detail polls only after the outer job poll has stopped
+PASS R277 marker edges: ordered four directions, 2px gap, corner fallback, coexisting badges and resize
+PASS R277 avoidance: neighboring blocks, minimum-area fallback, earlier badges, negative overlap
+Functional PASS; 0 captures; contracts 42/42 passed

@@ -1,0 +1,6 @@
+{
+  "minimum_free_bytes": 5572251648,
+  "stop_threshold_bytes": 3221225472,
+  "stopped": false,
+  "browser_missing_stop": false
+}

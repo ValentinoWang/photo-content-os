@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "r280-studio-light-surface",
+  "generated_from": [
+    "acceptance/requests/2026-W44/2026-10-26-R280-photo-studio-light/request.json",
+    "docs/tasks/R280-studio-light/TASK.md"
+  ],
+  "role": "local-creator",
+  "surface": "studio.light-theme",
+  "requirements": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开 Studio 工作台，依次点左边每一项。",
+        "查看每一页的底色、文字和按钮。"
+      ],
+      "expected": "每一页都是浅色底，标题、正文、灰色说明都看得清；主按钮是青色底白字；页面上没有残留的大块深色（视频画面除外）。"
+    },
+    {
+      "key": "H-02",
+      "steps": [
+        "进入作品「断更一年，我拆了四句话」，切换三个分页。",
+        "点「脚本直出」页里的第 02 镜。"
+      ],
+      "expected": "三个分页都是浅色；脚本直出的步骤条、七镜卡片、全片设计、成片区、第 02 镜详情都清楚，关键帧和成片画面保持原样。"
+    }
+  ],
+  "invariants": [
+    "只换获批主题颜色，媒体画布隔离",
+    "旧任务说明列宽度有界，长文本可省略",
+    "原文字结构和其他布局保留",
+    "人工未签署"
+  ],
+  "out_of_scope": [
+    "不做深浅切换开关",
+    "不改上游中台的界面"
+  ]
+}

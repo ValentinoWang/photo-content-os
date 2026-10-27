@@ -2,24 +2,23 @@
   "blocking_entries": [
     {
       "blocking": true,
-      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/checklist.md",
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R280-photo-studio-light/checklist.md",
       "estimated_minutes": 10,
-      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/handoff.json",
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R280-photo-studio-light/handoff.json",
       "invalidation_keys": [
-        "studio.direct-handoff-narration",
-        "studio.direct-handoff-newer",
-        "studio.direct-handoff-storyboard"
+        "studio.light-media-isolation",
+        "studio.light-theme"
       ],
       "latest_run": null,
-      "loop_name": "中台交过来的分镜和配音直接进脚本直出",
-      "ready_at": "2026-10-27T06:30:46.799625Z",
-      "release_slice": "R282",
+      "loop_name": "Studio 界面换成浅色",
+      "ready_at": "2026-10-27T07:57:37.837149Z",
+      "release_slice": "R280",
       "required_role": "产品负责人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 P5仅为真实可绑定旧包候选，8769当前交接null，需总控完成当前中台交接与binding/workspace；H-01版本时间及H-03更新依赖未发布R299，不声称真实链路具备。",
-      "task_id": "2026-10-26-R282-photo-direct-handoff-storyboard",
-      "workspace": "acceptance/human/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard"
+      "summary": "e26ec2f固定1228无头浏览器，六代Python、五份现有Node、54/26/42次合同及原交互通过，人工仍PENDING。",
+      "task_id": "2026-10-26-R280-photo-studio-light",
+      "workspace": "acceptance/human/2026-W44/2026-10-26-R280-photo-studio-light"
     },
     {
       "blocking": true,
@@ -33,14 +32,35 @@
       ],
       "latest_run": null,
       "loop_name": "脚本直出的视频风格加风格库：九种现成风格直接挑",
-      "ready_at": "2026-10-27T06:30:40.790297Z",
+      "ready_at": "2026-10-27T07:52:11.749884Z",
       "release_slice": "R283",
       "required_role": "产品负责人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 共用门禁保护摘要重新批准，R282触发的一份同头rebaseline，原步骤预期不变。",
+      "summary": "e26ec2f固定1228无头浏览器，六代Python、五份现有Node、54/26/42次合同及原交互通过，人工仍PENDING。 R280触发的一份正式批准合同rebaseline已完成，原H标准不变。",
       "task_id": "2026-10-26-R283-photo-direct-style-library",
       "workspace": "acceptance/human/2026-W44/2026-10-26-R283-photo-direct-style-library"
+    },
+    {
+      "blocking": true,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/checklist.md",
+      "estimated_minutes": 10,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/handoff.json",
+      "invalidation_keys": [
+        "studio.direct-handoff-narration",
+        "studio.direct-handoff-newer",
+        "studio.direct-handoff-storyboard"
+      ],
+      "latest_run": null,
+      "loop_name": "中台交过来的分镜和配音直接进脚本直出",
+      "ready_at": "2026-10-27T07:52:04.962669Z",
+      "release_slice": "R282",
+      "required_role": "产品负责人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "e26ec2f固定1228无头浏览器，六代Python、五份现有Node、54/26/42次合同及原交互通过，人工仍PENDING。 R280触发的一份正式批准合同rebaseline已完成，原H标准不变。 原R299未发布与真实中台交接/binding前置条件继续保留，主题检查不代表外部链路已就绪。",
+      "task_id": "2026-10-26-R282-photo-direct-handoff-storyboard",
+      "workspace": "acceptance/human/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard"
     },
     {
       "blocking": true,
@@ -54,12 +74,12 @@
       ],
       "latest_run": null,
       "loop_name": "脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成",
-      "ready_at": "2026-10-27T06:30:35.124050Z",
+      "ready_at": "2026-10-27T07:51:43.250455Z",
       "release_slice": "R278",
       "required_role": "产品负责人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "第二次交付，6a430c5上固定1228 headless-shell的五代专项和串行门禁通过；上一轮失败由总控备份保留，不挪用。人工三项PENDING。 共用门禁保护摘要重新批准，R282触发的一份同头rebaseline，原步骤预期不变。 H-03实测3分36秒/修改2分49秒，用户「这个没事 大概差不多就行」，不作人工PASS。",
+      "summary": "e26ec2f固定1228无头浏览器，六代Python、五份现有Node、54/26/42次合同及原交互通过，人工仍PENDING。 R280触发的一份正式批准合同rebaseline已完成，原H标准不变。 H-03实测首次3分36秒/修改2分49秒，用户「这个没事 大概差不多就行」，不作人工PASS。",
       "task_id": "2026-10-26-R278-photo-direct-rescript",
       "workspace": "acceptance/human/2026-W44/2026-10-26-R278-photo-direct-rescript"
     },
@@ -169,7 +189,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-27T06:30:46.799625Z",
+  "generated_at": "2026-10-27T07:57:37.837149Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -192,5 +212,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "ea31dc8847cc3077ecb1e3b050a4d445d27cc874d5a8a8c58a31b16e8db49062"
+  "source_facts_sha256": "04e6d78780f7a1efdbfca935c82ec39f76c97509909d8a37fc38c6e2c6aa72b3"
 }

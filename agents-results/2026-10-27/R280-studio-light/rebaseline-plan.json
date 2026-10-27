@@ -1,0 +1,71 @@
+[
+  {
+    "task": "2026-10-26-R282-photo-direct-handoff-storyboard",
+    "command": [
+      "python3",
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "rebaseline",
+      "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard",
+      "--project-root",
+      ".",
+      "--base",
+      "origin/main",
+      "--head",
+      "e26ec2f",
+      "--range-head",
+      "HEAD",
+      "--trigger-card",
+      "2026-10-26-R280-photo-studio-light",
+      "--reason",
+      "用户R280交付授权：浅色主题与追加旧任务说明列约束；54次合同包含真实旧任务两宽边界，原断言保留，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+      "--from-approved-contract"
+    ],
+    "exit_code": 0
+  },
+  {
+    "task": "2026-10-26-R283-photo-direct-style-library",
+    "command": [
+      "python3",
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "rebaseline",
+      "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library",
+      "--project-root",
+      ".",
+      "--base",
+      "origin/main",
+      "--head",
+      "e26ec2f",
+      "--range-head",
+      "HEAD",
+      "--trigger-card",
+      "2026-10-26-R280-photo-studio-light",
+      "--reason",
+      "用户R280交付授权：浅色主题与追加旧任务说明列约束；54次合同包含真实旧任务两宽边界，原断言保留，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+      "--from-approved-contract"
+    ],
+    "exit_code": 0
+  },
+  {
+    "task": "2026-10-26-R278-photo-direct-rescript",
+    "command": [
+      "python3",
+      "/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py",
+      "rebaseline",
+      "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript",
+      "--project-root",
+      ".",
+      "--base",
+      "origin/main",
+      "--head",
+      "e26ec2f",
+      "--range-head",
+      "HEAD",
+      "--trigger-card",
+      "2026-10-26-R280-photo-studio-light",
+      "--reason",
+      "用户R280交付授权：浅色主题与追加旧任务说明列约束；54次合同包含真实旧任务两宽边界，原断言保留，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+      "--from-approved-contract"
+    ],
+    "exit_code": 0
+  }
+]

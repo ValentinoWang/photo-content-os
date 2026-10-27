@@ -1,0 +1,1096 @@
+{
+  "root": "~/.photo-content-os/evidence/R280-studio-light",
+  "scope": "19 final files = 16 retained plus 3 overflow-repair; no stale 1554-width files linked; no new captures by handoff",
+  "manifest_sha256": "1b16621ba74178828de9961ca4753e68b8a7fa5cc4c193d43b15fe78bc374384",
+  "gallery_sha256": "9317cc0b349ee481b155941af843819b887142d17caa4d26b03e3e4488ec83f9",
+  "gallery_references": [
+    "screenshots/home-1440.png",
+    "screenshots/home-1440.png",
+    "screenshots/inbox-1440.png",
+    "screenshots/inbox-1440.png",
+    "screenshots/projects-1440.png",
+    "screenshots/projects-1440.png",
+    "screenshots/project-1440.png",
+    "screenshots/project-1440.png",
+    "screenshots/piece-vlog-1440.png",
+    "screenshots/piece-vlog-1440.png",
+    "screenshots/piece-script-1440.png",
+    "screenshots/piece-script-1440.png",
+    "screenshots/piece-direct-1440.png",
+    "screenshots/piece-direct-1440.png",
+    "screenshots/piece-direct-960.png",
+    "screenshots/piece-direct-960.png",
+    "screenshots/piece-direct-390.png",
+    "screenshots/piece-direct-390.png",
+    "screenshots/shot02-1440.png",
+    "screenshots/shot02-1440.png",
+    "screenshots/shot02-960.png",
+    "screenshots/shot02-960.png",
+    "screenshots/shot02-390.png",
+    "screenshots/shot02-390.png",
+    "screenshots/shot02-expanded-1440.png",
+    "screenshots/shot02-expanded-1440.png",
+    "screenshots/rescript-1440.png",
+    "screenshots/rescript-1440.png",
+    "screenshots/rescript-960.png",
+    "screenshots/rescript-960.png",
+    "screenshots/rescript-zoom-1440.png",
+    "screenshots/rescript-zoom-1440.png",
+    "screenshots/library-1440.png",
+    "screenshots/library-1440.png",
+    "screenshots/music-1440.png",
+    "screenshots/music-1440.png",
+    "screenshots/settings-1440.png",
+    "screenshots/settings-1440.png"
+  ],
+  "screenshots": [
+    {
+      "state": "home",
+      "route": "http://127.0.0.1:8768/#view=home",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:25.230Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "screenshots/home-1440.png",
+      "sha256": "595eeb2d3c6789a7e1df081f5ad015d190d6cbd624678a5e36658cbc89db2334",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "本机能力剪映可用ChatCut没连上OpenChatCut、OpenFilm没装好创意和看图模型Codex 可用音乐下载经广州服务器，可用设置与诊断",
+        "media": [],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          },
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "浅灰画布、白卡、选中导航和青底白字主操作清楚；顶部待办和页底本机能力完整。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "inbox",
+      "route": "http://127.0.0.1:8768/#view=inbox",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:25.980Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "screenshots/inbox-1440.png",
+      "sha256": "0168b110dcb15c27ec6c0c083e26d61d22a87485ad48b65df3d246a72d557a22",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "会按拍摄时间和地点自动分成一批批放在这里，你决定每一批放进哪个项目。太短、损坏、完全重复的会列出来让你勾选删除。原文件不会被改动。已整理进项目的作品12件视频140段照片245张导入照片和视频去看项目",
+        "media": [],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          },
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "真实无待整理素材状态；说明、计数、主次按钮完整，无深色残块。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "projects",
+      "route": "http://127.0.0.1:8768/#view=projects",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:26.744Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "screenshots/projects-1440.png",
+      "sha256": "e4be382195d933b9ca1ee9c4b8b4f78f53d68cd39afa8b4d026fb23d8c58a4af",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "2026年清华毕业典礼内容创作1 件作品1 件出过成片›2026年重回兰州大学内容创作3 件作品1 件等你过目2 件出过成片›其他作品8 件作品›",
+        "media": [],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "三个项目分组、作品计数和相邻缩略图完整；照片保持原样。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "project",
+      "route": "http://127.0.0.1:8768/#view=project&project=other",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:27.468Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "screenshots/project-1440.png",
+      "sha256": "49da8613fb5ec76fa7a38053f99aa29e8b268a736c30e2dda41e22b48f264b48",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "己在躲什么还没有素材断更一年后，我才发现自己在躲什么还没有素材断更一年，我拆了四句话还没有素材P5 直出实践：平均速度还没有素材P4 教学实践：平均速度还没有素材P3 合成口播实践：平均速度还没有素材",
+        "media": [],
+        "primary": []
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "其他作品的八张文字卡与页底完整；浅色层级清楚。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "piece-vlog",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=project-fc6baa3294&ptab=vlog",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:28.240Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "screenshots/piece-vlog-1440.png",
+      "sha256": "50af9750172722c572dc75beea47990ac35efdef6333f80a5d4ef8570bc99026",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "先挑镜头，再配乐卡点AI 会先在本机量每张照片的清晰度和曝光，再让大模型看图，挑出这条视频要用的精选。原素材只读，不会被改动。开始挑镜头",
+        "media": [],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "五步流程、真实无素材状态和开始按钮为浅色；未触发生成。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "piece-script",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=project-fc6baa3294&ptab=script",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:28.993Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "screenshots/piece-script-1440.png",
+      "sha256": "b9edc0d79b7dedd74db42daff930222e1a3ee738ae7ce87f153a27e171650157",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "按素材剪 vlog按脚本做视频脚本直出",
+        "media": [],
+        "primary": []
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "六步流程、文档卡、右栏和页底双轨时间线均浅色；文字与轨道区分清楚。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "piece-direct",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:29.871Z",
+      "scroll_coverage": [
+        0,
+        1500
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1500
+      },
+      "path": "screenshots/piece-direct-1440.png",
+      "sha256": "e3a9d9c1ae93dbe4148ece6936fa862adc235986ace856b1db7ad6dd8af30708",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 1500,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": " 秒发布是训练课，不是比赛。发出来的七十分，比没发的九十五分有用。你也有一件存了很久的东西吧？今天写两行字。一行写：如果什么时候，我就做哪个小动作。一行写：我最担心会发生什么。过两天，回来对一对。写好",
+        "media": [
+          {
+            "selector": "dv-stage",
+            "bg": "rgb(13, 19, 20)"
+          }
+        ],
+        "primary": []
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "步骤、成片检查、全片设计和七镜卡片清楚；视频和缩略图保持深色；页底完整。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "library",
+      "route": "http://127.0.0.1:8768/#view=library",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:30.637Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "screenshots/library-1440.png",
+      "sha256": "bb0dc72eab9df8724c7e34a14fca305f7e691d699bf40c466652b79e0b49125e",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "素材库还是空的在作品的「挑镜头」里选中一个镜头，点「收进素材库」，它就会出现在这里，别的作品也能直接用。去看项目登记素材",
+        "media": [],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "真实空库状态；说明和主次操作清楚，未注入演示数据。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "music",
+      "route": "http://127.0.0.1:8768/#view=music",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:31.603Z",
+      "scroll_coverage": [
+        0,
+        1066
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 1066
+      },
+      "path": "screenshots/music-1440.png",
+      "sha256": "889eccb65a5ab6de1108d347ec501db534bab683e20a79e4bea26c396f57e0b3",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 1066,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "I 标注风格电子Tropical House情绪深沉欢快场景夏日人声有人声乐器贝斯合成器键盘来源网易云音乐打开原页面时长3:10速度115 BPM每小节 4 拍导入时间2026/10/20 00:52",
+        "media": [],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "三首歌曲、波形、筛选、标签及右栏至导入时间完整；无深色界面残块。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "settings",
+      "route": "http://127.0.0.1:8768/#view=settings",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:32.337Z",
+      "scroll_coverage": [
+        0,
+        900
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "path": "screenshots/settings-1440.png",
+      "sha256": "4210361e2e95c9f505924581bc0ec6e4d408716421eb44834f230305c68ff8fc",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": ".py没连上ChatCut Desktop 还没连上本机还没连上本机。在 ChatCut 里开启本机连接后，点「重新检查」。没连上剪映 · 11.0.0可用Kdenlive · 26.04可用重新检查",
+        "media": [],
+        "primary": []
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "剪辑软件未连接与可用状态均可读；设置导航、列表及重新检查按钮完整。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "shot02",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:17:33.414Z",
+      "scroll_coverage": [
+        0,
+        2228
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2228
+      },
+      "path": "screenshots/shot02-1440.png",
+      "sha256": "a2c1ea2d5c8c965965f6c990f8c3dc7fd7c411978b5ffe8cf6110c764579ca14",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 2228,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "，请核对出处和数量。画面数字 50% 未出现在本镜口播，请核对出处和数量。动画在这一镜时长内做完页眉标好了字幕带里没放字不读网络和外部文件不用定时器和随机数代码3,823 字 · 上限 100,000",
+        "media": [
+          {
+            "selector": "dv-stage",
+            "bg": "rgb(13, 19, 20)"
+          },
+          {
+            "selector": "rv-stage",
+            "bg": "rgb(13, 19, 20)"
+          }
+        ],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "第02镜选中、详情输入框、禁用按钮和折叠项清楚；关键帧保持原样；详情底部完整。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "shot02-expanded",
+      "route": "http://127.0.0.1:8768/#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:20:36.622Z",
+      "scroll_coverage": [
+        0,
+        2330
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2330
+      },
+      "path": "screenshots/shot02-expanded-1440.png",
+      "sha256": "6c54e5edbfa06a9fa31d4c13418394eccae5d4df226f09c7b8f4f27a644ad8bb",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollHeight": 2330,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "，请核对出处和数量。画面数字 50% 未出现在本镜口播，请核对出处和数量。动画在这一镜时长内做完页眉标好了字幕带里没放字不读网络和外部文件不用定时器和随机数代码3,823 字 · 上限 100,000",
+        "media": [
+          {
+            "selector": "dv-stage",
+            "bg": "rgb(13, 19, 20)"
+          },
+          {
+            "selector": "rv-stage",
+            "bg": "rgb(13, 19, 20)"
+          }
+        ],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "口播和规则检查展开，层级与嵌套列表可读；代码保持折叠；详情页底完整。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "piece-direct",
+      "route": "http://127.0.0.1:8768/?capture=13#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:21:32.285Z",
+      "scroll_coverage": [
+        0,
+        2317
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 2317
+      },
+      "path": "screenshots/piece-direct-960.png",
+      "sha256": "0657048f3b7e42ccc2760b9a517334dbce3cfce13d5322a978525b5233f62e12",
+      "metrics": {
+        "width": 960,
+        "height": 900,
+        "scrollHeight": 2317,
+        "scrollWidth": 960,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": " 秒发布是训练课，不是比赛。发出来的七十分，比没发的九十五分有用。你也有一件存了很久的东西吧？今天写两行字。一行写：如果什么时候，我就做哪个小动作。一行写：我最担心会发生什么。过两天，回来对一对。写好",
+        "media": [
+          {
+            "selector": "dv-stage",
+            "bg": "rgb(13, 19, 20)"
+          }
+        ],
+        "primary": []
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "步骤、成片检查、全片设计和七镜卡片清楚；视频和缩略图保持深色；页底完整。 实际960宽度，页面无横向溢出，七镜换行和详情两栏完整。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "shot02",
+      "route": "http://127.0.0.1:8768/?capture=13#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:21:32.547Z",
+      "scroll_coverage": [
+        0,
+        3046
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 3046
+      },
+      "path": "screenshots/shot02-960.png",
+      "sha256": "72e9fd89ddf9351dcfa609b0c1a02845c136a0fac97d044bdd9e455acd010176",
+      "metrics": {
+        "width": 960,
+        "height": 900,
+        "scrollHeight": 3046,
+        "scrollWidth": 960,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "，请核对出处和数量。画面数字 50% 未出现在本镜口播，请核对出处和数量。动画在这一镜时长内做完页眉标好了字幕带里没放字不读网络和外部文件不用定时器和随机数代码3,823 字 · 上限 100,000",
+        "media": [
+          {
+            "selector": "dv-stage",
+            "bg": "rgb(13, 19, 20)"
+          },
+          {
+            "selector": "rv-stage",
+            "bg": "rgb(13, 19, 20)"
+          }
+        ],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "第02镜选中、详情输入框、禁用按钮和折叠项清楚；关键帧保持原样；详情底部完整。 实际960宽度，页面无横向溢出，七镜换行和详情两栏完整。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "piece-direct",
+      "route": "http://127.0.0.1:8768/?capture=14#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:21:33.602Z",
+      "scroll_coverage": [
+        0,
+        2491
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 2491
+      },
+      "path": "screenshots/piece-direct-390.png",
+      "sha256": "b7367accfb525f537c56e9740c0f8d86e902cde645fb7e47d1624f624ba3229b",
+      "metrics": {
+        "width": 390,
+        "height": 900,
+        "scrollHeight": 2491,
+        "scrollWidth": 390,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": " 秒发布是训练课，不是比赛。发出来的七十分，比没发的九十五分有用。你也有一件存了很久的东西吧？今天写两行字。一行写：如果什么时候，我就做哪个小动作。一行写：我最担心会发生什么。过两天，回来对一对。写好",
+        "media": [
+          {
+            "selector": "dv-stage",
+            "bg": "rgb(13, 19, 20)"
+          }
+        ],
+        "primary": []
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "步骤、成片检查、全片设计和七镜卡片清楚；视频和缩略图保持深色；页底完整。 实际390宽度，页面无横向溢出，详情上下排列；沿用既有字号与截断。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "shot02",
+      "route": "http://127.0.0.1:8768/?capture=14#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:21:33.842Z",
+      "scroll_coverage": [
+        0,
+        3645
+      ],
+      "output_dimensions": {
+        "width": 390,
+        "height": 3645
+      },
+      "path": "screenshots/shot02-390.png",
+      "sha256": "b952fa1b774c08cdbc7616de39824a868f2809eaa51c3bcf9bcded20fd1569bd",
+      "metrics": {
+        "width": 390,
+        "height": 900,
+        "scrollHeight": 3645,
+        "scrollWidth": 390,
+        "scrollY": 0,
+        "bodyBg": "rgb(245, 246, 244)",
+        "scheme": "light",
+        "bottom": "，请核对出处和数量。画面数字 50% 未出现在本镜口播，请核对出处和数量。动画在这一镜时长内做完页眉标好了字幕带里没放字不读网络和外部文件不用定时器和随机数代码3,823 字 · 上限 100,000",
+        "media": [
+          {
+            "selector": "dv-stage",
+            "bg": "rgb(13, 19, 20)"
+          },
+          {
+            "selector": "rv-stage",
+            "bg": "rgb(13, 19, 20)"
+          }
+        ],
+        "primary": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "bg": "rgb(31, 141, 150)"
+          }
+        ]
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real local Studio with a cloned state; no API mocks or model calls",
+      "review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "第02镜选中、详情输入框、禁用按钮和折叠项清楚；关键帧保持原样；详情底部完整。 实际390宽度，页面无横向溢出，详情上下排列；沿用既有字号与截断。",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS"
+    },
+    {
+      "state": "rescript",
+      "route": "http://127.0.0.1:8768/?repair=1#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:34:20.954Z",
+      "scroll_coverage": [
+        0,
+        2575
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2575
+      },
+      "path": "screenshots/rescript-1440.png",
+      "sha256": "4d37d4d5fb25abdc26cebab949fe955b25a06aab4801b668d41ea9ccaadda50a",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2575,
+        "columnWidth": 252,
+        "motion": {
+          "text": "每拍只有一个主动作随口播句级时序出现，次要动作幅度为主动作的50–70%并晚150毫秒开始；数字跳动1.4秒后停住；橙色只在结论落定时出现一次，之后画面静止不再动字。",
+          "title": null,
+          "height": 59.390625,
+          "lineHeight": 19.8,
+          "clamp": "3",
+          "overflow": "hidden"
+        },
+        "tags": [
+          {
+            "text": "第二个彩色强调色：橙色只标结论，关键词强调只用更亮的中性色或加大字号",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 405,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "光晕、霓虹、粒子、紫蓝渐变、毛玻璃卡片",
+            "title": null,
+            "width": 234.5,
+            "scrollWidth": 233,
+            "clientWidth": 233,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "三卡并排、KPI网格、一屏要点列表、圆圈里放图标",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 274,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "所有元素同时淡入或全部从下往上滑入，字在被读时仍在移动",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 325,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "把口播原句整句写上画面，或在底部 y≥1536 放文字和关键图形",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 338,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "饼图、仪表盘、图例，以及未标「示意图，非原始数据」的示意数据",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 359,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          }
+        ],
+        "bottom": "风格：沿用「断更一年，我拆了四句话」10 月 26 日 01:51生成"
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real cloned Studio state; no API or CSS mocks, no model calls",
+      "review_result": "PASS",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "逐张查看整页：七镜、视频风格右半列、相邻选项及生成条完整；老原话三行省略，标签单行省略且不超说明列，页面宽1440，无横向溢出。"
+    },
+    {
+      "state": "rescript-zoom",
+      "route": "http://127.0.0.1:8768/?repair=1#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:34:21.674Z",
+      "scroll_coverage": [
+        0,
+        2575
+      ],
+      "output_dimensions": {
+        "width": 1440,
+        "height": 2575
+      },
+      "path": "screenshots/rescript-zoom-1440.png",
+      "sha256": "3b894db25a2eac0476b9c29588be383842350f34d80147023cdca780f9300453",
+      "metrics": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2575,
+        "columnWidth": 252,
+        "motion": {
+          "text": "每拍只有一个主动作随口播句级时序出现，次要动作幅度为主动作的50–70%并晚150毫秒开始；数字跳动1.4秒后停住；橙色只在结论落定时出现一次，之后画面静止不再动字。",
+          "title": null,
+          "height": 59.390625,
+          "lineHeight": 19.8,
+          "clamp": "3",
+          "overflow": "hidden"
+        },
+        "tags": [
+          {
+            "text": "第二个彩色强调色：橙色只标结论，关键词强调只用更亮的中性色或加大字号",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 405,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "光晕、霓虹、粒子、紫蓝渐变、毛玻璃卡片",
+            "title": null,
+            "width": 234.5,
+            "scrollWidth": 233,
+            "clientWidth": 233,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "三卡并排、KPI网格、一屏要点列表、圆圈里放图标",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 274,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "所有元素同时淡入或全部从下往上滑入，字在被读时仍在移动",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 325,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "把口播原句整句写上画面，或在底部 y≥1536 放文字和关键图形",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 338,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "饼图、仪表盘、图例，以及未标「示意图，非原始数据」的示意数据",
+            "title": null,
+            "width": 252,
+            "scrollWidth": 359,
+            "clientWidth": 250,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          }
+        ],
+        "bottom": "风格：沿用「断更一年，我拆了四句话」10 月 26 日 01:51生成"
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real cloned Studio state; no API or CSS mocks, no model calls",
+      "review_result": "PASS",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "逐张查看整页：第02镜放大浮层标题和关闭按钮完整，画面/播放区保持深色；说明列、相邻表格与页底完整，页面宽1440，无横向溢出。"
+    },
+    {
+      "state": "rescript",
+      "route": "http://127.0.0.1:8768/?repair=2#view=piece&piece=project-fc6baa3294&ptab=direct",
+      "viewport": {
+        "width": 960,
+        "height": 900
+      },
+      "capture_time": "2026-10-27T07:34:24.114Z",
+      "scroll_coverage": [
+        0,
+        3173
+      ],
+      "output_dimensions": {
+        "width": 960,
+        "height": 3173
+      },
+      "path": "screenshots/rescript-960.png",
+      "sha256": "0c7ec18769aa2cc17d7ddb024eab09a9831d85f740f903fe786882c361dbe1e0",
+      "metrics": {
+        "width": 960,
+        "height": 900,
+        "scrollWidth": 960,
+        "scrollHeight": 3173,
+        "columnWidth": 488,
+        "motion": {
+          "text": "每拍只有一个主动作随口播句级时序出现，次要动作幅度为主动作的50–70%并晚150毫秒开始；数字跳动1.4秒后停住；橙色只在结论落定时出现一次，之后画面静止不再动字。",
+          "title": null,
+          "height": 39.59375,
+          "lineHeight": 19.8,
+          "clamp": "3",
+          "overflow": "hidden"
+        },
+        "tags": [
+          {
+            "text": "第二个彩色强调色：橙色只标结论，关键词强调只用更亮的中性色或加大字号",
+            "title": null,
+            "width": 260,
+            "scrollWidth": 405,
+            "clientWidth": 258,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "光晕、霓虹、粒子、紫蓝渐变、毛玻璃卡片",
+            "title": null,
+            "width": 234.5,
+            "scrollWidth": 233,
+            "clientWidth": 233,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "三卡并排、KPI网格、一屏要点列表、圆圈里放图标",
+            "title": null,
+            "width": 260,
+            "scrollWidth": 274,
+            "clientWidth": 258,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "所有元素同时淡入或全部从下往上滑入，字在被读时仍在移动",
+            "title": null,
+            "width": 260,
+            "scrollWidth": 325,
+            "clientWidth": 258,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "把口播原句整句写上画面，或在底部 y≥1536 放文字和关键图形",
+            "title": null,
+            "width": 260,
+            "scrollWidth": 338,
+            "clientWidth": 258,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          },
+          {
+            "text": "饼图、仪表盘、图例，以及未标「示意图，非原始数据」的示意数据",
+            "title": null,
+            "width": 260,
+            "scrollWidth": 359,
+            "clientWidth": 258,
+            "whiteSpace": "nowrap",
+            "textOverflow": "ellipsis",
+            "overflow": "hidden"
+          }
+        ],
+        "bottom": "风格：沿用「断更一年，我拆了四句话」10 月 26 日 01:51生成"
+      },
+      "browser": "149.0.7827.55",
+      "font_mode": "fallback-local",
+      "scope": "Real cloned Studio state; no API or CSS mocks, no model calls",
+      "review_result": "PASS",
+      "color_review_result": "PASS",
+      "layout_review_result": "PASS",
+      "reviewer": "Codex /root (individual view_image inspection)",
+      "review_note": "逐张查看整页：视频风格上下排，说明列老原话两行，标签单行省略；七镜和页底生成条完整，页面宽960，无横向溢出。分镜表格保留已有内部横向滚动，未把它变成整页滚动。"
+    }
+  ]
+}

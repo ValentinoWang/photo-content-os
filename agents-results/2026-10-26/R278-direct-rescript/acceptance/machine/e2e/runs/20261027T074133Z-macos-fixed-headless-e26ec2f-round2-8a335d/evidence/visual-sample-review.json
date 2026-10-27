@@ -1,0 +1,21 @@
+{
+  "scope": "Two personally inspected existing final complete renders; all 19 are hash-verified and earlier F individually reviewed; not new capture/all-site fresh inspection",
+  "samples": [
+    {
+      "path": "screenshots/rescript-1440.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "findings": "完整至生成条；浅色画布/白表和选中态清楚，七镜媒体仍深色；老风格文字三行和标签在右说明列内省略，无1554宽活动图，附近库卡/配音/页底完整。"
+    },
+    {
+      "path": "screenshots/shot02-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "findings": "完整至第二镜详情底部；浅色步骤/七镜卡片/全片设计/输入区分明，主色白字按钮，关键帧与播放器深色，详情单列可读，媒体未漂白。"
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+[
+  {
+    "task_id": "2026-10-26-R282-photo-direct-handoff-storyboard",
+    "title": "中台交过来的分镜和配音直接进脚本直出",
+    "status": "PENDING",
+    "contract_path": "agents-results/2026-10-27/R282-direct-handoff/acceptance-contract.md",
+    "workspace": "acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard",
+    "version": "1",
+    "tests": [
+      {
+        "path": "tests/test_r282_frontend.py",
+        "old_sha256": "b8415d29aad4e5419217108747f5f0f65cfcb278e4f4904aeb8cdf7072f425f5",
+        "new_sha256": "b8415d29aad4e5419217108747f5f0f65cfcb278e4f4904aeb8cdf7072f425f5",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r282_handoff.py",
+        "old_sha256": "58d24528c11d3e8b02b8b90205049d1b07cf46bd9837159bfa84ec666c9053fb",
+        "new_sha256": "58d24528c11d3e8b02b8b90205049d1b07cf46bd9837159bfa84ec666c9053fb",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r282_frontend.mjs",
+        "old_sha256": "6ad869cdb883b58abdedeaf2e1d95670082a1bb3f4d483918dd44c2292e73d5e",
+        "new_sha256": "6ad869cdb883b58abdedeaf2e1d95670082a1bb3f4d483918dd44c2292e73d5e",
+        "changed": false
+      },
+      {
+        "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+        "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+        "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc",
+        "changed": true
+      }
+    ]
+  },
+  {
+    "task_id": "2026-10-26-R283-photo-direct-style-library",
+    "title": "脚本直出的视频风格加风格库：九种现成风格直接挑",
+    "status": "PENDING",
+    "contract_path": "agents-results/2026-10-26/R283-direct-style-library/acceptance-contract.md",
+    "workspace": "acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library",
+    "version": "2",
+    "tests": [
+      {
+        "path": "tests/test_r283_frontend.py",
+        "old_sha256": "ef550d5c94ac83bef05058906c9c756db4ec010e2f030ae60899e7fbeed29f1c",
+        "new_sha256": "ef550d5c94ac83bef05058906c9c756db4ec010e2f030ae60899e7fbeed29f1c",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r283_style_library.py",
+        "old_sha256": "41db92d1130c2547a28fdc45c42042b4e24bf90c84a2d486d0ac0c1395f7dfcd",
+        "new_sha256": "41db92d1130c2547a28fdc45c42042b4e24bf90c84a2d486d0ac0c1395f7dfcd",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r283_frontend.mjs",
+        "old_sha256": "78aa1ea9717ea59ecc3a6e3aafac23719b8e9638e8d39f7d67fddcebbb1fb2ca",
+        "new_sha256": "78aa1ea9717ea59ecc3a6e3aafac23719b8e9638e8d39f7d67fddcebbb1fb2ca",
+        "changed": false
+      },
+      {
+        "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+        "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+        "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc",
+        "changed": true
+      }
+    ]
+  },
+  {
+    "task_id": "2026-10-26-R278-photo-direct-rescript",
+    "title": "脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成",
+    "status": "PENDING",
+    "contract_path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+    "workspace": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript",
+    "version": "3",
+    "tests": [
+      {
+        "path": "tests/test_r278_clips.py",
+        "old_sha256": "5fd045560a32e2768d33527ac54331542eea1135ad2a967145134f2a94b343cf",
+        "new_sha256": "5fd045560a32e2768d33527ac54331542eea1135ad2a967145134f2a94b343cf",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r278_direct_frontend.py",
+        "old_sha256": "5353332357e17696a420e77e2df0a7cdff88c3df2810857db24f29185a01ec83",
+        "new_sha256": "5353332357e17696a420e77e2df0a7cdff88c3df2810857db24f29185a01ec83",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r278_style_base.py",
+        "old_sha256": "329e483a28fa46c3ff465e0b79602b6ae07e8c03368a4ee77c46f1d14125e21f",
+        "new_sha256": "329e483a28fa46c3ff465e0b79602b6ae07e8c03368a4ee77c46f1d14125e21f",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r278_direct_rescript.mjs",
+        "old_sha256": "98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0",
+        "new_sha256": "98468f866da84d49c0d9ec01e457b166128434f79895a4d912333c99bf0f23b0",
+        "changed": false
+      },
+      {
+        "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+        "old_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055",
+        "new_sha256": "91f3d8d20aba8db5466050c62295214b358921c68e1e8a8c4b25cbc6c680d1cc",
+        "changed": true
+      }
+    ]
+  },
+  {
+    "task_id": "2026-10-26-R277-photo-shot-visual-revision",
+    "title": "脚本直出里改一镜的画面：在画面上点着改、看两版对比、攒好样例，让画面规则越用越准",
+    "status": "PENDING",
+    "contract_path": "agents-results/2026-10-26/R277-shot-visual-revision/acceptance-contract.md",
+    "workspace": "acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision",
+    "version": "1",
+    "tests": [
+      {
+        "path": "tests/test_r277_api.py",
+        "old_sha256": "913d08ffa2854a09b4034073d84885733105d6d5b5a55ff6950e1a5e7441136e",
+        "new_sha256": "913d08ffa2854a09b4034073d84885733105d6d5b5a55ff6950e1a5e7441136e",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r277_boxes.py",
+        "old_sha256": "ba9b91d7c481a2d06be284aae6d3f355ca721aec708c8fff0393ceca7d7ac93f",
+        "new_sha256": "ba9b91d7c481a2d06be284aae6d3f355ca721aec708c8fff0393ceca7d7ac93f",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r277_frontend.py",
+        "old_sha256": "b7a78eb47417d11cd4e2388285e986ff724506f7be185f29063507ba62f55d3b",
+        "new_sha256": "b7a78eb47417d11cd4e2388285e986ff724506f7be185f29063507ba62f55d3b",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r277_revisions.py",
+        "old_sha256": "13b8699cdd6b8f5d55cc95b6945fa6f5a431d86f38dbc82b9329159fd8adc7ca",
+        "new_sha256": "13b8699cdd6b8f5d55cc95b6945fa6f5a431d86f38dbc82b9329159fd8adc7ca",
+        "changed": false
+      }
+    ]
+  },
+  {
+    "task_id": "2026-10-26-R276-photo-direct-video-opus",
+    "title": "Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片",
+    "status": "PENDING",
+    "contract_path": "agents-results/2026-10-26/R276-direct-video-opus/acceptance-contract.md",
+    "workspace": "acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus",
+    "version": "2",
+    "tests": [
+      {
+        "path": "tests/test_r276_direct_video.py",
+        "old_sha256": "c932e418ed2362b44e50514c689b9e6a6b7b9b1569fea31e06f8b385764a3e69",
+        "new_sha256": "c932e418ed2362b44e50514c689b9e6a6b7b9b1569fea31e06f8b385764a3e69",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r276_direct_api.py",
+        "old_sha256": "875dbb95f91f9d464055e21de8b17d45f504a90a133c99eb87c8374b0ecb6b72",
+        "new_sha256": "875dbb95f91f9d464055e21de8b17d45f504a90a133c99eb87c8374b0ecb6b72",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r276_direct_media.py",
+        "old_sha256": "d74658695d78ebc24f9869c88adb938c510517129d4ba655322115bad5eaec9e",
+        "new_sha256": "d74658695d78ebc24f9869c88adb938c510517129d4ba655322115bad5eaec9e",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r276_direct_c.py",
+        "old_sha256": "85f8665a1a972174bcaab842caba43109dd82d5cb1c36c66fd300f21f0d4cb9c",
+        "new_sha256": "85f8665a1a972174bcaab842caba43109dd82d5cb1c36c66fd300f21f0d4cb9c",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r276_direct_d.py",
+        "old_sha256": "fe7b1505535e7636404ba68d505358e7797d055e5d8ba2c4866afb4e4f39bed7",
+        "new_sha256": "fe7b1505535e7636404ba68d505358e7797d055e5d8ba2c4866afb4e4f39bed7",
+        "changed": false
+      }
+    ]
+  },
+  {
+    "task_id": "2026-10-20-R223-photo-music-beat-map",
+    "title": "音乐库：AI 给每首歌打标签，并显示节拍图",
+    "status": "PENDING",
+    "contract_path": "agents-results/2026-10-21/r223-delivery/acceptance-contract.md",
+    "workspace": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map",
+    "version": "1",
+    "tests": [
+      {
+        "path": "tests/test_r223_music_analysis.py",
+        "old_sha256": "1ad66c0329ff743703f4a0fed14b5ec90df292cfb2a69d7025ee3d3ad1408232",
+        "new_sha256": "1ad66c0329ff743703f4a0fed14b5ec90df292cfb2a69d7025ee3d3ad1408232",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r223_sections.py",
+        "old_sha256": "8d1241bdc92b558632581c64acc4b0c8f7acb683928062f75440886eb7393a75",
+        "new_sha256": "8d1241bdc92b558632581c64acc4b0c8f7acb683928062f75440886eb7393a75",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r223_music_analysis_runtime.py",
+        "old_sha256": "c6d945a51cff3ce540eda0ce6e864c1efdfeefd183ee8ed7f06b1baff73153d2",
+        "new_sha256": "c6d945a51cff3ce540eda0ce6e864c1efdfeefd183ee8ed7f06b1baff73153d2",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r223_beat_map.mjs",
+        "old_sha256": "1d6fa412d672a86dd0e2e5b6828236f67ac8817f25d3d32fb5e17bd391e6fa01",
+        "new_sha256": "1d6fa412d672a86dd0e2e5b6828236f67ac8817f25d3d32fb5e17bd391e6fa01",
+        "changed": false
+      },
+      {
+        "path": "scripts/verify_r223_interactions.mjs",
+        "old_sha256": "77603cb7e38a40704ab2ac4accb0051fe0358e0a40ec2119b794afd3c0c40e5b",
+        "new_sha256": "77603cb7e38a40704ab2ac4accb0051fe0358e0a40ec2119b794afd3c0c40e5b",
+        "changed": false
+      },
+      {
+        "path": "scripts/check_r223_design.py",
+        "old_sha256": "7f2b48d69ff50d097e0b9fc4d2f2981b41ab291aa3f1a5ada5570a409180d705",
+        "new_sha256": "7f2b48d69ff50d097e0b9fc4d2f2981b41ab291aa3f1a5ada5570a409180d705",
+        "changed": false
+      }
+    ]
+  },
+  {
+    "task_id": "2026-10-20-R220-photo-studio-ia-preview",
+    "title": "Studio 导航、镜头过目和媒体预览",
+    "status": "PENDING",
+    "contract_path": "evidence/2026-10-20/R220/delivery/acceptance-contract.md",
+    "workspace": "acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview",
+    "version": "2",
+    "tests": [
+      {
+        "path": "tests/test_studio_review.py",
+        "old_sha256": "aa1f02edf4592017801af3238a9867596c9d86c01ced504aa93a30d5d70f548d",
+        "new_sha256": "aa1f02edf4592017801af3238a9867596c9d86c01ced504aa93a30d5d70f548d",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r220_number_formulas.py",
+        "old_sha256": "dae2208fea72e2454c7acbaeef496c53505eef73f85fa1f9219754a481859006",
+        "new_sha256": "dae2208fea72e2454c7acbaeef496c53505eef73f85fa1f9219754a481859006",
+        "changed": false
+      },
+      {
+        "path": "tests/test_r220_number_formulas.mjs",
+        "old_sha256": "be773417e61820cfcb62fe8fccf0039fa61a598671941fa2891b0a8018769c3d",
+        "new_sha256": "be773417e61820cfcb62fe8fccf0039fa61a598671941fa2891b0a8018769c3d",
+        "changed": false
+      }
+    ]
+  },
+  {
+    "task_id": "2026-10-19-R210-photo-music-link-import",
+    "title": "汽水音乐、网易云音乐链接导入并入库",
+    "status": "PENDING",
+    "contract_path": "evidence/2026-10-20/r210-music-link-import/delivery/acceptance-contract.md",
+    "workspace": "acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import",
+    "version": "3",
+    "tests": [
+      {
+        "path": "tests/test_music_library.py",
+        "old_sha256": "13151f4b3465cec5a13e9edbc58497c96dc935ce35d5169c23de2a7708d10a2a",
+        "new_sha256": "13151f4b3465cec5a13e9edbc58497c96dc935ce35d5169c23de2a7708d10a2a",
+        "changed": false
+      },
+      {
+        "path": "tests/test_music_network.py",
+        "old_sha256": "6c7b0dfd9ada9c8d518c776be90ffd9d676db6593b1062c99760419ca322eafe",
+        "new_sha256": "6c7b0dfd9ada9c8d518c776be90ffd9d676db6593b1062c99760419ca322eafe",
+        "changed": false
+      },
+      {
+        "path": "tests/test_musicdl_engine.py",
+        "old_sha256": "3002c872f10f9ca590dc91932564e03db7e6cd938c1294a8a5b0bc29eea6d85d",
+        "new_sha256": "3002c872f10f9ca590dc91932564e03db7e6cd938c1294a8a5b0bc29eea6d85d",
+        "changed": false
+      },
+      {
+        "path": "tests/test_music_egress.py",
+        "old_sha256": "c90fc2903577034b315fe1c4e72a345deac38128e3a27121068a095bed788fef",
+        "new_sha256": "c90fc2903577034b315fe1c4e72a345deac38128e3a27121068a095bed788fef",
+        "changed": false
+      },
+      {
+        "path": "tests/test_douyin_music_api.py",
+        "old_sha256": "b78aa7e0af9d67513c8001724b9b6c9f09f7552f21b93371e059fddc0760d017",
+        "new_sha256": "b78aa7e0af9d67513c8001724b9b6c9f09f7552f21b93371e059fddc0760d017",
+        "changed": false
+      },
+      {
+        "path": "tests/test_douyin_share_page.py",
+        "old_sha256": "b221d275bc7a7f6bda384e5b2e129a5659d019bf3b6eeea5455d140871939701",
+        "new_sha256": "b221d275bc7a7f6bda384e5b2e129a5659d019bf3b6eeea5455d140871939701",
+        "changed": false
+      },
+      {
+        "path": "tests/test_music_failure_message.py",
+        "old_sha256": "8731c14c8d04b120db1922cd76b5db552caec8d05e5156bc7d283c6f882f6799",
+        "new_sha256": "8731c14c8d04b120db1922cd76b5db552caec8d05e5156bc7d283c6f882f6799",
+        "changed": false
+      }
+    ]
+  }
+]

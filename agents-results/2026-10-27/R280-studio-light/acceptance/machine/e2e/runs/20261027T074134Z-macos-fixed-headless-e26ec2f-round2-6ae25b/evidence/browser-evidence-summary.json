@@ -1,0 +1,30 @@
+{
+  "shared": {
+    "root": "~/.photo-content-os/evidence/R280-studio-light/handoff-e26ec2f",
+    "mode": "--checks-only",
+    "files": {
+      "contracts.json": "37984e8081886b882be21b3c7fc7a7ff09bdf13ccb2008d40eb1abcf3d47b4d3",
+      "source-preservation.json": "fffc61a0545923018953eb9f471b61ef6c16a07c39665950dce741c7955b4654",
+      "real-library-api.json": "7687b02b03b8071ab79c6d0abe9be07373e83beb69db1d055dbfbed6444aaf51"
+    },
+    "contract_count": 54
+  },
+  "r276": {
+    "root": "~/.photo-content-os/evidence/R280-studio-light/handoff-e26ec2f-r276",
+    "mode": "--checks-only",
+    "files": {
+      "contracts.json": "886da219198cf8f378dfe87b6c65f4d59a1d99230c4f8292d568b43bdd6cd8bc"
+    },
+    "contract_count": 26
+  },
+  "r277": {
+    "root": "~/.photo-content-os/evidence/R280-studio-light/handoff-e26ec2f-r277",
+    "mode": "--checks-only",
+    "files": {
+      "contracts.json": "aefc3ac4f6f1ebf7b238b434821eeac351b8ec3cddc1c7c43ffedc9cc735d707",
+      "source-preservation.json": "de2eb59f00808abeacb9a972f1e7f88abef5bea83537ba9b6312adf047a6cab9",
+      "marker-overlap-exceptions.json": "daf5101ac8cb7bb62f500c7b6146078b5d06f591db464b831e9d273c070983be"
+    },
+    "contract_count": 42
+  }
+}

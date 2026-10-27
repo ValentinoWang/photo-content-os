@@ -1,0 +1,169 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "studio.light-theme",
+    "open_route": "http://127.0.0.1:8769/",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "studio.frontend",
+      "photo.video-pipeline"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "reason": "旧卡验工具安装、诊断与剪辑候选；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "reason": "旧卡验音乐导入、去重及会员失败；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "reason": "旧卡验导航、项目分组、精选和决定保存；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "reason": "旧卡验音乐标签、节拍试听及分析；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "reason": "旧卡保留生成配音合成和单镜不变性；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "reason": "旧卡保留选块改画面、版本核对、样例与规则草稿；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "reason": "旧卡验九库选择、库画法和底色调整；本卡只验Studio浅色阅读和媒体保色、已批准旧任务说明列边界，不承接原数据/生成/编辑/音乐责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+        "reason": "旧卡验中台分镜/图片/配音及主动换版，版次时间仍依赖未发布R299；本卡只验浅色与媒体保色，不承接真实交接链路。"
+      }
+    ],
+    "protected_test_overlap": [
+      {
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "decision": "rebaseline",
+        "reason": "R280浅色及获批旧任务说明列约束扩展共用门禁至54次；原合同/交互断言保留，新批准合同准备后同头全范围重验并重新handoff，人工PENDING。"
+      },
+      {
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+        "decision": "rebaseline",
+        "reason": "R280浅色及获批旧任务说明列约束扩展共用门禁至54次；原合同/交互断言保留，新批准合同准备后同头全范围重验并重新handoff，人工PENDING。"
+      },
+      {
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "decision": "rebaseline",
+        "reason": "R280浅色及获批旧任务说明列约束扩展共用门禁至54次；原合同/交互断言保留，新批准合同准备后同头全范围重验并重新handoff，人工PENDING。"
+      }
+    ]
+  },
+  {
+    "item": "H-02",
+    "claim_key": "studio.light-media-isolation",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=project-fc6baa3294&ptab=direct",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "studio.frontend",
+      "photo.video-pipeline"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+        "reason": "旧项要求「先出现全片设计（底色、主色、强调色和动作规矩），然后七镜依次从「正在写」变成「写好了」，每一镜写好后出现渲染出来的关键帧；从点生成到七镜写好不超过十五分钟。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+        "reason": "旧项要求「页面里出现一条竖屏成片，能从头放到尾，画面跟着口播一镜一镜换，声音和画面对得上；成片下方写着时长和七镜，时长和配音一样长。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+        "reason": "旧项要求「只有第三镜变成「正在写」再变回「写好了」，关键帧换成新的样子；其他六镜的关键帧和写好的时间都没有变。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+        "reason": "旧项要求「画面上有几处橙色「!」，点开能看到 Opus 说这一块哪里不对；选了改法的两根柱子在画面上出现编号 1、2，右边「要改的」有同号的两条具体要求，字数不超过 200；重写完，第 1 版和第 2 版两张画面并排，右边每条写着「做到了」或「没做到」，其他六镜的画面和写好的时间都不变。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+        "reason": "旧项要求「第 02 镜的画面回到重写前的样子，标题下写着「用第 1 版 · 共 2 版」；第 01 镜显示「已存为样例」。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+        "reason": "旧项要求「每种问题写着改过几次、出在哪几镜；到 3 次的那一行写着「建议写进规则」并附上起草好的规则修改，没点「采用」之前规则不变。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R278-photo-direct-rescript/H-01",
+        "reason": "旧项要求「回到第一屏，分镜脚本表填好了这次的七镜：左边是镜号和起止时间，画面列是这一版每镜的动画在循环播放，台词各在自己那一格，字只出现一次；下面「视频风格」默认是「选现成的风格」，选中的是这条，右边显示这条的色板、字号和动作规矩。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R278-photo-direct-rescript/H-02",
+        "reason": "旧项要求「全片设计的背景、主色、中性色、字号和动作规矩都和原来一样，只有强调色变成暖黄；七镜从头写，第二镜念的是改过的台词，画面是左右两栏对比；原来的关键帧和成片不再显示。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R278-photo-direct-rescript/H-03",
+        "reason": "旧项要求「点「先定风格」后三分钟内出现样张和色板、字号；改过以后样张和主色跟着变；点「就用这个」之前「生成」是灰的。生成后全片设计和样张那套完全一样，第一镜就是样张，页面不出现「Opus 正在定全片设计」。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-01",
+        "reason": "旧项要求「分镜脚本表已经填好，六列内容和中台的分镜一字不差，画面列带着中台的画面图；表头下写着「从中台交过来」和版本、时间。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-02",
+        "reason": "旧项要求「「配音」卡写着「配音（从中台带过来）」和音色、时长，镜头列时间按配音；生成完的成片带着这条配音，不用再上传。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-03",
+        "reason": "旧项要求「改分镜脚本一屏上方写着「中台又交过来新的分镜」和新版本号；点了以后整张表换成中台新版，第 02 镜是中台改过的台词。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library/H-01",
+        "reason": "旧项要求「风格库有九张卡片，每张有样张图、名字和四个色块；点「手绘白板」后右边播放它的样张动画，旁边是色板、字号、动作规矩和不用的套路，生成条写着「风格：风格库「手绘白板」」，「生成」可以点。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library/H-02",
+        "reason": "旧项要求「全片设计一行写着用的是风格库「手绘白板」，四色和字号与卡片上一样；页面没有出现「Opus 正在定全片设计」；七镜都是白板底、一笔一笔画出来的手绘样子，和样张一看就是同一种风格。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library/H-03",
+        "reason": "旧项要求「全片设计只有底色变深，主色、强调色、字号和动作规矩都和「水墨国风」一样；七镜仍然是水墨画法，只是换成深色底。」；本项只验作品分页及媒体画布的浅色/保色，不验证该旧项的数据、生成或编辑责任，原项仍独立待验。"
+      }
+    ]
+  }
+]

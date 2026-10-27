@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "r280-studio-context",
+  "authority": [
+    "acceptance/requests/2026-W44/2026-10-26-R280-photo-studio-light/request.json",
+    "docs/tasks/R280-studio-light/TASK.md",
+    "docs/tasks/R280-studio-light/design/index.html",
+    "docs/tasks/R280-studio-light/design/light.css"
+  ],
+  "inherited_context": "agents-results/2026-10-26/R278-direct-rescript/acceptance-context.json",
+  "product": {
+    "purpose": "本机创作者在浅色Studio阅读和操作，媒体画布保持原样",
+    "privacy": "媒体和状态留在本机，样张不入仓库"
+  },
+  "role": {
+    "id": "local-creator",
+    "label": "本机创作者",
+    "scope": "本机作品与脚本直出"
+  },
+  "screen_contract": {
+    "route": "/",
+    "states_ref": "docs/tasks/R278-direct-rescript/design/contract.json",
+    "interaction_requirements": [
+      "H-01",
+      "H-02"
+    ],
+    "invariants": [
+      "只换获批主题颜色，媒体画布隔离",
+      "旧任务说明列宽度有界，长文本可省略",
+      "原文字结构和其他布局保留",
+      "人工未签署"
+    ]
+  }
+}

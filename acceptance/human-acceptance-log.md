@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-10-27T06:30:46.799625Z
-- 来源事实 SHA-256：ea31dc8847cc3077ecb1e3b050a4d445d27cc874d5a8a8c58a31b16e8db49062
+- 事实时间：2026-10-27T07:57:37.837149Z
+- 来源事实 SHA-256：04e6d78780f7a1efdbfca935c82ec39f76c97509909d8a37fc38c6e2c6aa72b3
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -12,9 +12,10 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| 2026-10-27T06:30:46.799625Z | 2026-10-26-R282-photo-direct-handoff-storyboard | 中台交过来的分镜和配音直接进脚本直出 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/checklist.md | - | - |
-| 2026-10-27T06:30:40.790297Z | 2026-10-26-R283-photo-direct-style-library | 脚本直出的视频风格加风格库：九种现成风格直接挑 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/checklist.md | - | - |
-| 2026-10-27T06:30:35.124050Z | 2026-10-26-R278-photo-direct-rescript | 脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md | - | - |
+| 2026-10-27T07:57:37.837149Z | 2026-10-26-R280-photo-studio-light | Studio 界面换成浅色 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R280-photo-studio-light/checklist.md | - | - |
+| 2026-10-27T07:52:11.749884Z | 2026-10-26-R283-photo-direct-style-library | 脚本直出的视频风格加风格库：九种现成风格直接挑 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/checklist.md | - | - |
+| 2026-10-27T07:52:04.962669Z | 2026-10-26-R282-photo-direct-handoff-storyboard | 中台交过来的分镜和配音直接进脚本直出 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/checklist.md | - | - |
+| 2026-10-27T07:51:43.250455Z | 2026-10-26-R278-photo-direct-rescript | 脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md | - | - |
 | 2026-10-26T20:11:04.844527Z | 2026-10-26-R277-photo-shot-visual-revision | 脚本直出里改一镜的画面：在画面上点着改、看两版对比、攒好样例，让画面规则越用越准 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision/checklist.md | - | - |
 | 2026-10-26T20:11:02.089388Z | 2026-10-26-R276-photo-direct-video-opus | Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/checklist.md | - | - |
 | 2026-10-20T21:08:20.633838Z | 2026-10-20-R223-photo-music-beat-map | 音乐库：AI 给每首歌打标签，并显示节拍图 | 产品负责人 | 6 | acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/checklist.md | - | - |

@@ -1,0 +1,182 @@
+[
+  {
+    "claim_key": "studio.direct-handoff-storyboard",
+    "item": "H-01",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验中台交接填分镜、配音沿用和换版，不承接工具链责任。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐导入、去重及会员失败；本卡只消费交接配音，不改音乐入库。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验导航、项目分组、精选和决定保存；本卡只验同件作品的交接分镜/图片/配音及主动换版。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、节拍试听及分析；本卡不生成音乐或改变分析，只消费中台交接数据。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留生成配音合成和单镜不变性；本卡增加中台交接来源，不承接原成片合成、同步和单镜重写责任。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留选块改画面、版本核对、样例与规则草稿；本卡验中台全表主动换版，不替代单镜详情交互。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R280-photo-studio-light",
+        "reason": "旧卡验中台分镜/图片/配音及主动换版，版次时间仍依赖未发布R299；本卡只验浅色与媒体保色，不承接真实交接链路。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.direct-handoff-narration",
+    "item": "H-02",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验中台交接填分镜、配音沿用和换版，不承接工具链责任。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐导入、去重及会员失败；本卡只消费交接配音，不改音乐入库。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验导航、项目分组、精选和决定保存；本卡只验同件作品的交接分镜/图片/配音及主动换版。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、节拍试听及分析；本卡不生成音乐或改变分析，只消费中台交接数据。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留生成配音合成和单镜不变性；本卡增加中台交接来源，不承接原成片合成、同步和单镜重写责任。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留选块改画面、版本核对、样例与规则草稿；本卡验中台全表主动换版，不替代单镜详情交互。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R280-photo-studio-light",
+        "reason": "旧卡验中台分镜/图片/配音及主动换版，版次时间仍依赖未发布R299；本卡只验浅色与媒体保色，不承接真实交接链路。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  },
+  {
+    "claim_key": "studio.direct-handoff-newer",
+    "item": "H-03",
+    "open_route": "http://127.0.0.1:8769/#view=piece&piece=p5-f24c41f746&ptab=direct",
+    "relations": [
+      {
+        "reason": "旧卡验工具安装、诊断与剪辑候选；本卡验中台交接填分镜、配音沿用和换版，不承接工具链责任。",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐导入、去重及会员失败；本卡只消费交接配音，不改音乐入库。",
+        "target": "2026-10-19-R210-photo-music-link-import",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验导航、项目分组、精选和决定保存；本卡只验同件作品的交接分镜/图片/配音及主动换版。",
+        "target": "2026-10-20-R220-photo-studio-ia-preview",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验音乐标签、节拍试听及分析；本卡不生成音乐或改变分析，只消费中台交接数据。",
+        "target": "2026-10-20-R223-photo-music-beat-map",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留生成配音合成和单镜不变性；本卡增加中台交接来源，不承接原成片合成、同步和单镜重写责任。",
+        "target": "2026-10-26-R276-photo-direct-video-opus",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡保留选块改画面、版本核对、样例与规则草稿；本卡验中台全表主动换版，不替代单镜详情交互。",
+        "target": "2026-10-26-R277-photo-shot-visual-revision",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验回分镜编辑与成片沿用/从头定风格；本卡验中台交接填表、配音和主动换版。H-01版次/时间和H-03依赖未发布R299，未替代旧卡。",
+        "target": "2026-10-26-R278-photo-direct-rescript",
+        "type": "independent"
+      },
+      {
+        "reason": "旧卡验九库选择、库画法和底色调整；本卡只消费中台分镜/配音和新版，不替代风格库责任。",
+        "target": "2026-10-26-R283-photo-direct-style-library",
+        "type": "independent"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R280-photo-studio-light",
+        "reason": "旧卡验中台分镜/图片/配音及主动换版，版次时间仍依赖未发布R299；本卡只验浅色与媒体保色，不承接真实交接链路。"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.backend",
+      "studio.frontend"
+    ]
+  }
+]

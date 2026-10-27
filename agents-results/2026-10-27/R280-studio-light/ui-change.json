@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.2.0",
+  "ui_change_id": "r280-direct-rescript",
+  "kind": "incremental",
+  "user_visible": true,
+  "source_authority_mode": "strict",
+  "source_requirements_ref": {
+    "path": "agents-results/2026-10-27/R280-studio-light/source-requirements.json",
+    "entity_id": "r280-design-authority",
+    "canonical_digest": "959e6a183e319ef1a4f0d1510a08be14b881167fff9dfaa6057ca9a77676a10e"
+  },
+  "affected_surfaces": [
+    {
+      "surface_id": "studio.light-theme",
+      "resolved_surface_contract_ref": {
+        "path": "agents-results/2026-10-27/R280-studio-light/resolved-surface-contract.json",
+        "entity_id": "r280-studio-light-surface",
+        "canonical_digest": "f1babddffac56875e1b8a11bb471ace0ca8aae1eeaa341e83137043f6cb6c26c"
+      }
+    }
+  ],
+  "product_context_ref": {
+    "path": "agents-results/2026-10-27/R280-studio-light/acceptance-context.json",
+    "entity_id": "r280-studio-context",
+    "canonical_digest": "e98ec2ce22fb994550040df08279db9d3e0ba4e4f73e8ef87feab48164233baf"
+  },
+  "role_context_refs": [
+    {
+      "path": "agents-results/2026-10-27/R280-studio-light/acceptance-context.json",
+      "entity_id": "local-creator",
+      "canonical_digest": "e98ec2ce22fb994550040df08279db9d3e0ba4e4f73e8ef87feab48164233baf"
+    }
+  ],
+  "screen_contract_ref": {
+    "path": "agents-results/2026-10-27/R280-studio-light/acceptance-context.json",
+    "entity_id": "r280-direct-screen",
+    "canonical_digest": "e98ec2ce22fb994550040df08279db9d3e0ba4e4f73e8ef87feab48164233baf"
+  },
+  "visual_contract_ref": {
+    "path": "agents-results/2026-10-27/R280-studio-light/visual-contract.json",
+    "entity_id": "r280-visual",
+    "canonical_digest": "bff3e54386c72c6fa58bb45da81e1d64d0036e0baf8a422e7e04190ad9237dfb"
+  },
+  "reference_prototypes": [
+    {
+      "path": "docs/tasks/R280-studio-light/design/index.html",
+      "sha256": "a73ec44f26d0e6f6d36d90b381f304d9a8af765e948ee77156bafa1f3a0ce5f4",
+      "media_type": "text/html",
+      "authority_by_dimension": {
+        "information_architecture": "normative",
+        "visual_tokens": "normative",
+        "layout": "normative",
+        "interaction_behavior": "normative",
+        "seed_data": "illustrative",
+        "runtime_side_effects": "simulated"
+      }
+    }
+  ],
+  "capture_matrix": {
+    "routes": [
+      "/",
+      "#view=piece&piece=project-fc6baa3294&ptab=direct"
+    ],
+    "locales": [
+      "zh-CN"
+    ],
+    "themes": [
+      "studio-light"
+    ],
+    "viewports": [
+      "1440x900",
+      "960x900",
+      "390x900"
+    ],
+    "helper_modes": [
+      "isolated-state-real-api"
+    ]
+  },
+  "interaction_matrix_ref": {
+    "path": "agents-results/2026-10-27/R280-studio-light/resolved-surface-contract.json",
+    "entity_id": "r280-interactions",
+    "canonical_digest": "f1babddffac56875e1b8a11bb471ace0ca8aae1eeaa341e83137043f6cb6c26c"
+  },
+  "visual_evidence_types": [
+    "dom-structure",
+    "computed-style",
+    "fixed-browser-screenshot",
+    "interaction-trace"
+  ]
+}

@@ -1,0 +1,542 @@
+[
+  {
+    "state": "entry",
+    "name": "entry",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "entry",
+    "name": "entry",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "writing",
+    "name": "writing",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "writing",
+    "name": "writing",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "composing",
+    "name": "composing",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "composing",
+    "name": "composing",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript",
+    "name": "rescript",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript",
+    "name": "rescript",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-zoom",
+    "name": "rescript-zoom",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-zoom",
+    "name": "rescript-zoom",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-adjust",
+    "name": "rescript-adjust",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-adjust",
+    "name": "rescript-adjust",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-other",
+    "name": "rescript-other",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-other",
+    "name": "rescript-other",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-empty",
+    "name": "first-empty",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-empty",
+    "name": "first-empty",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first",
+    "name": "first",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first",
+    "name": "first",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new",
+    "name": "first-new",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new",
+    "name": "first-new",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-text",
+    "name": "first-new-text",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-text",
+    "name": "first-new-text",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-drafting",
+    "name": "first-new-drafting",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-drafting",
+    "name": "first-new-drafting",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-ready",
+    "name": "first-new-ready",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-ready",
+    "name": "first-new-ready",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-revising",
+    "name": "first-new-revising",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-revising",
+    "name": "first-new-revising",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-accepted",
+    "name": "first-new-accepted",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-accepted",
+    "name": "first-new-accepted",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-failed",
+    "name": "first-new-failed",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-new-failed",
+    "name": "first-new-failed",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "designing",
+    "name": "designing",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "designing",
+    "name": "designing",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "inherited",
+    "name": "inherited",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "inherited",
+    "name": "inherited",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "adjusted",
+    "name": "adjusted",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "adjusted",
+    "name": "adjusted",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-lib",
+    "name": "first-lib",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-lib",
+    "name": "first-lib",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-none",
+    "name": "first-none",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-none",
+    "name": "first-none",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "library",
+    "name": "library",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "library",
+    "name": "library",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-handoff",
+    "name": "first-handoff",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-handoff",
+    "name": "first-handoff",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-newer",
+    "name": "rescript-newer",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-newer",
+    "name": "rescript-newer",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-handoff",
+    "name": "first-handoff-legacy",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "first-handoff",
+    "name": "first-handoff-legacy",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-newer",
+    "name": "rescript-newer-unversioned",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript-newer",
+    "name": "rescript-newer-unversioned",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript",
+    "name": "real-worst-rescript",
+    "width": 1440,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  },
+  {
+    "state": "rescript",
+    "name": "real-worst-rescript",
+    "width": 960,
+    "exit_code": 0,
+    "result": {
+      "failures": [],
+      "result": "PASS"
+    }
+  }
+]

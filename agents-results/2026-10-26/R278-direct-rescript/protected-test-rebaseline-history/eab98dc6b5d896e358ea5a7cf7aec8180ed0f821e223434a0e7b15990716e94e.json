@@ -1,0 +1,41 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-10-26-R282-photo-direct-handoff-storyboard",
+  "base": "614c55060554de74beb547e7213877c369fa69cb",
+  "head": "6a430c5ecc2d0df4c88b5285bb29e8bfba3b62d3",
+  "range_head": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+  "reason": "用户R282第二次交付授权：同源交接和新旧包元数据分支加入共享门禁，保留原流程、计时公式、库和编辑断言；原人工三项保持PENDING。",
+  "prepared_at": "2026-10-27T06:24:52.418436Z",
+  "previous_ready_at": "2026-10-26T20:10:58.711886Z",
+  "previous_binding_sha256": "a103be094a971b0a1ee16112e41b8e4d55e103d5d624e0ca74d53c21d57b5df9",
+  "checklist_sha256": "fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f",
+  "tests": [
+    {
+      "path": "scripts/direct_video/rescript_frontend_gate.mjs",
+      "old_sha256": "a3e655dedebd99533545aa6e5377e4ad313bdb0c5d8d19b74f5e4e48b5ceb9ed",
+      "new_sha256": "a43315ea3e46506d1fb438d42abcc362cfdc8f36070e386b27ad33088c22c055"
+    }
+  ],
+  "approved_contract": {
+    "base": {
+      "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+      "commit": "614c55060554de74beb547e7213877c369fa69cb",
+      "version": "2",
+      "sha256": "21040745022fd273f8c138bfae74dc76afaeb3930fc31781dbb6a8bf4af80088"
+    },
+    "current": {
+      "path": "agents-results/2026-10-26/R278-direct-rescript/acceptance-contract.md",
+      "commit": "1afb1c51449d2811ca56a33d18303101738c3ba8",
+      "version": "3",
+      "sha256": "0e2a37aa6055f6a357a78b7345ea0c0d31d6d144076e0d18db4710aa0e39bb8d"
+    },
+    "binding": {
+      "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/binding.md",
+      "sha256": "a103be094a971b0a1ee16112e41b8e4d55e103d5d624e0ca74d53c21d57b5df9"
+    },
+    "checklist": {
+      "path": "acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md",
+      "sha256": "fa0f7d0a3abbdfb81faef590bdb2b970b99ca28feb79ee016415b95cf0c51a4f"
+    }
+  }
+}

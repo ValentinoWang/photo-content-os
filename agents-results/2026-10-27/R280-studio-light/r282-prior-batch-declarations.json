@@ -1,0 +1,20 @@
+{
+  "reason": "只从本批输入去掉已发布旧批次保护转换声明；Git和历史完成审计保留",
+  "prior_declarations": [
+    {
+      "item": "H-01",
+      "declarations": [
+        {
+          "decision": "rebaseline",
+          "reason": "R282批准交接与旧包兼容场景扩展共用门禁，原断言保留；以新批准合同准备后同头完整重验并重新handoff，原三项人工PENDING。",
+          "target": "2026-10-26-R278-photo-direct-rescript"
+        },
+        {
+          "decision": "rebaseline",
+          "reason": "R282批准交接与旧包兼容场景扩展共用门禁，原断言保留；以新批准合同准备后同头完整重验并重新handoff，原三项人工PENDING。",
+          "target": "2026-10-26-R283-photo-direct-style-library"
+        }
+      ]
+    }
+  ]
+}

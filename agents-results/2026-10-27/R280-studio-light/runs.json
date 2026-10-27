@@ -1,0 +1,18 @@
+{
+  "R278-direct-rescript": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-r280-studio-light/agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/integration-contract/runs/20261027T074133Z-macos-fixed-headless-e26ec2f-round2-c699c2/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-r280-studio-light/agents-results/2026-10-26/R278-direct-rescript/acceptance/machine/e2e/runs/20261027T074133Z-macos-fixed-headless-e26ec2f-round2-8a335d/result.md"
+  },
+  "R283-direct-style-library": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-r280-studio-light/agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/integration-contract/runs/20261027T074133Z-macos-fixed-headless-e26ec2f-round2-344929/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-r280-studio-light/agents-results/2026-10-26/R283-direct-style-library/acceptance/machine/e2e/runs/20261027T074133Z-macos-fixed-headless-e26ec2f-round2-c9e8a6/result.md"
+  },
+  "R282-direct-handoff": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-r280-studio-light/agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/integration-contract/runs/20261027T074134Z-macos-fixed-headless-e26ec2f-round2-c3038c/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-r280-studio-light/agents-results/2026-10-27/R282-direct-handoff/acceptance/machine/e2e/runs/20261027T074134Z-macos-fixed-headless-e26ec2f-round2-fad87e/result.md"
+  },
+  "R280-studio-light": {
+    "machine/integration-contract": "/private/tmp/task-worktrees/photo-content-os-r280-studio-light/agents-results/2026-10-27/R280-studio-light/acceptance/machine/integration-contract/runs/20261027T074134Z-macos-fixed-headless-e26ec2f-round2-c7533c/result.md",
+    "machine/e2e": "/private/tmp/task-worktrees/photo-content-os-r280-studio-light/agents-results/2026-10-27/R280-studio-light/acceptance/machine/e2e/runs/20261027T074134Z-macos-fixed-headless-e26ec2f-round2-6ae25b/result.md"
+  }
+}

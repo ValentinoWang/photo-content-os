@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "r280-light-visual",
+  "approved_authority": "docs/tasks/R280-studio-light/design/index.html",
+  "tokens_ref": "docs/tasks/R280-studio-light/design/light.css",
+  "tokens_sha256": "6a8c655a48cb13fc7b1cb59dce9f8e8ade946f707f86d9ed8f63a4964c317c42",
+  "scope": [
+    "whole-studio-light-surfaces",
+    "dark-media-isolation",
+    "bounded-legacy-style-metadata"
+  ],
+  "machine_guard": "tests/test_r280_light.py",
+  "approved_overflow_repair": "docs/tasks/R280-studio-light/REPORT.md#修横向溢出"
+}

@@ -1,0 +1,13 @@
+{
+  "requested": "R280 frontend .mjs",
+  "found": false,
+  "actual_R280_guard": "tests/test_r280_light.py",
+  "actual_node_tests": [
+    "tests/test_r276_direct_frontend.mjs",
+    "tests/test_r277_frontend.mjs",
+    "tests/test_r278_direct_rescript.mjs",
+    "tests/test_r282_frontend.mjs",
+    "tests/test_r283_frontend.mjs"
+  ],
+  "reason": "No test_r280_*.mjs exists in verified e26ec2f; do not create or fabricate one"
+}
