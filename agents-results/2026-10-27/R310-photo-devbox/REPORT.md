@@ -365,3 +365,59 @@ G6的WARN涉及新增Claude技能入口及删除的旧README，不影响本轮�
 | 本机执行预算 | 当前明确获准lint和三自测前后0→0；pytest仅经新技能rbox在开发机跑 |
 
 本包是普通验收证据包，无SSOT归档声明，不创建Obsidian快照或手机提醒。提交后范围复查与最终Git状态追加在后续小节；不推送。
+
+
+### 第三阶段提交后复查及收尾
+
+记录时间：2026-10-27T10:15:51.460770+00:00。验收提交 `b1218c220816d7fc23564cd6c5c99680957b8361`（b1218c2）含28个文件，全部属于acceptance/或agents-results/。回读已提交handoff的三份新run摘要完整，旧fb6f2fe快照与origin/main原文一致；没有提交任何技能源文件、SKILL.md、AGENTS.md或需求卡修改。
+
+在该验收提交上再次执行同一 `check-delivery --range origin/main..HEAD`，实际范围为2笔提交，缓存HEAD与该提交一致、verified head仍为553e02c。**G1/G12/G16再次PASS；G6 WARN、G9 FAIL，退出1。** 以下是该次完整原始输出：
+
+```text
+check-delivery  origin/main..HEAD  (2 commits, tree c8da4f2)
+  G1 有卡  PASS  
+  G2 基准一致  PASS  
+  G3 机器先绿  PASS  
+  G4 看得懂  PASS  
+  G5 有入口  PASS  
+  G6 去重已声明  WARN  unmapped: .claude/skills/photo-remote-dev-box, scripts/devbox/README.md → 补充 surfaces.yaml 映射
+  G7 失效传播  PASS  
+  G8 坏一条不连累  PASS  
+  G9 页面可见  FAIL  2026-10-27-R310-photo-devbox 没有出现在 ready/ACTIVE 投影中 → 重新生成调度台并确认新卡 ready/ACTIVE → python3 tools/console/generate_console.py；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py check-project --project-root .
+  G10 不自证  PASS  
+  G11 有需求卡  PASS  
+  G12 验收覆盖需求  PASS  
+  G13 沿用已有卡  PASS  
+  G14 已通过不可变  PASS  
+  G15 自动替代完整  PASS  
+  G16 不连累前面的卡  PASS  
+  G17 真实链路没被替换  PASS  2026-10-27-R310-photo-devbox: 证据里没有脚本
+结果：FAIL（本命令如实返回门禁状态；推送策略由调用方应用）
+```
+
+结果没有因提交验收物改变。G9仍须总控在主检出合入后同步真实调度台快照；未修改或绕过投影。G6两个范围映射警告原样保留。不推送，不宣称发布READY。
+
+本节另以仅REPORT.md的验收物提交保存；该最后提交只保存本次输出和收尾说明，不修改合同、handoff、机器证据或源码，不推进verified head。上述门禁结论的精确实测范围是0422f6b..b1218c2；没有把报告保存后的新Git HEAD冒充已运行的缓存身份。
+
+业务项目Git状态：b1218c2后的跟踪文件及暂存区均干净，只有本地交付缓存未跟踪；最后的报告提交也只包含本文件：
+
+```text
+?? acceptance/.delivery-check.json
+```
+
+Harness SSOT Git状态：本轮没有写Core、登记或调度台生成文件，没有Harness提交；开场及收尾均见以下十个既有脏路径，未暂存、覆盖或回退：
+
+```text
+M tools/console/generated/console-data/cutover.json
+ M tools/console/generated/console-data/harness-engineering.json
+ M tools/console/generated/console-data/harness-engineering/acceptance.json
+ M tools/console/generated/console-data/harness-engineering/bundles.json
+ M tools/console/generated/console-data/harness-engineering/requests.json
+ M tools/console/generated/console-data/harness-engineering/tasks.json
+ M tools/console/generated/console-data/index.json
+ M tools/console/generated/manifest.json
+ M tools/console/generated/projects.json
+ M tools/console/generated/version.json
+```
+
+规则卡结果：每次Git写入前断言新worktree；本卡H两项原样、非阻塞五分钟；当前lint及三自测通过，进程0→0；远端浅色9过；理解5–7及未执行边界已落盘；安全检查通过；G1/G12/G16前后均通过；只逐文件提交验收物。无新机器安装、真实数据同步、浏览器、渲染、全量或人工签署。验收物已提交，不推送，执行到此停止。
