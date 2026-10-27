@@ -95,3 +95,87 @@ G9是已登记主检出的调度台快照尚无本卡；本线程不改登记、
 | 本机不跑pytest/browser | 本机重活0→0，pytest和可能涉及的渲染都在开发机，无本机大媒体证据 |
 
 仅普通验收证据包，无SSOT声明，不创建Obsidian快照或提醒。提交后的门禁、仓库安全和Git收尾状态另补在下一节。只提交验收物，不推送。
+
+
+## 提交后复查与最终回执
+
+记录时间：2026-10-27T11:16:46.093067+00:00。验收物提交 `28ca304498363701884cf49d6c0a9c9c31dd34a0`（28ca304），精确26个文件全部在acceptance/和agents-results/，包括本TASK.md与REPORT.md。未改实现、测试、技能、AGENTS或原需求；没有推送。
+
+在该验收提交运行 `check-delivery --range origin/main..HEAD`，实际范围3笔提交；缓存HEAD与此提交一致，verified_head仍为5d62356。**G1/G12/G16再次PASS，16项PASS、仅G9 FAIL，退出1。** 原始结果如下：
+
+```text
+check-delivery  origin/main..HEAD  (3 commits, tree cdee357)
+  G1 有卡  PASS  
+  G2 基准一致  PASS  
+  G3 机器先绿  PASS  
+  G4 看得懂  PASS  
+  G5 有入口  PASS  
+  G6 去重已声明  PASS  
+  G7 失效传播  PASS  
+  G8 坏一条不连累  PASS  
+  G9 页面可见  FAIL  2026-10-27-R312-photo-ffmpeg9-subtitles 没有出现在 ready/ACTIVE 投影中 → 重新生成调度台并确认新卡 ready/ACTIVE → python3 tools/console/generate_console.py；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py check-project --project-root .
+  G10 不自证  PASS  
+  G11 有需求卡  PASS  
+  G12 验收覆盖需求  PASS  
+  G13 沿用已有卡  PASS  
+  G14 已通过不可变  PASS  
+  G15 自动替代完整  PASS  
+  G16 不连累前面的卡  PASS  
+  G17 真实链路没被替换  PASS  2026-10-27-R312-photo-ffmpeg9-subtitles: 证据里没有脚本
+结果：FAIL（本命令如实返回门禁状态；推送策略由调用方应用）
+```
+
+### 仓库安全检查
+
+检查完全在开发机执行。第一次使用命令里的origin/main名称，开发机副本没有该远端跟踪引用，输入读取失败，原文保留：
+
+```text
+[rbox] Harness 的在线判定脚本还没发布（~/Desktop/Opensource_Tool/Harness_Engineering/Core/scripts/devbox/devbox_status.py 不存在），改用直连判断：开发机连得上
+[rbox] 提交 28ca30449 不在开发机上，推过去（走单独的连接；10-27 第一次推整个历史 183 个提交只用了 3 秒）
+[rbox] 推提交用了 1 秒
+[rbox] 推送 785 个文件，2 秒
+repository safety check failed:
+- repository-privacy-input: Command '['git', '-C', '/root/pco-wt/photo-content-os-ffmpeg9-subtitles', 'rev-parse', '--verify', 'origin/main^{commit}']' returned non-zero exit status 128.; 检查 --root/--base，恢复可读 Git 对象和安全清单后重跑
+[rbox] 退出码 1，完整日志 /root/.prbox/run-191258-75389.log
+```
+
+没有把读不到输入当成通过，也未改脚本、安装环境或伪造引用。核对本机origin/main精确等于baseline冻结base后，使用baseline.json中的同一完整SHA作为 `--base` 参数；远端先用git cat-file确认该提交对象可读，再运行同一安全检查。实际base为 `78b6e41c9605c359967a8fa0fc274fabbd512fed`。这是同一Git基准的直接寻址，不是改变范围或放宽规则。成功输出如下；其中JUnit清单JSON单列存档，不在此重复展开：
+
+```text
+[rbox] Harness 的在线判定脚本还没发布（~/Desktop/Opensource_Tool/Harness_Engineering/Core/scripts/devbox/devbox_status.py 不存在），改用直连判断：开发机连得上
+[rbox] 推送 785 个文件，5 秒
+Repository safety check passed.
+[rbox] 退出码 0，完整日志 /root/.prbox/run-191533-94274.log
+```
+
+回读原全量JUnit记录，1253个pytest用例覆盖 **130个测试文件**；文件清单和原JUnit SHA-256见full-suite-file-inventory.json。只读补取原run审计，没有重跑测试。该补取时Git HEAD为28ca304，但记录的执行源码仍为原5d62356，未混淆身份。
+
+### 收尾状态与停止边界
+
+指定目标已达到；真实全量仍为1214过、3项允许的环境失败、36跳过及2005子测试通过，原pytest退出1保留。非阻塞H-01未签；G9投影需要总控后续同步，不能称发布READY。所有检查均未在本机启动pytest或浏览器；本机进程0→0，无视频/原尺寸帧证据。
+
+本回执和full-suite-file-inventory.json另做最后一笔仅验收物提交。它只保存检查输出及原run文件清单，不修改合同、handoff、选定机器run或源码。上方门禁精确实测范围是78b6e41..28ca304；报告保存后的新HEAD不冒充那次缓存身份，verified head继续为5d62356。
+
+业务项目在回执保存前的Git状态：跟踪文件及暂存区干净，仅本地检查缓存与待提交的补充文件清单；回执提交后不留下本轮跟踪文件改动：
+
+```text
+?? acceptance/.delivery-check.json
+?? agents-results/2026-10-27/R312-photo-ffmpeg9-subtitles/full-suite-file-inventory.json
+```
+
+Harness SSOT Git状态：本轮没有写Core、登记或调度台快照；以下十个既有生成文件脏路径保留，没有暂存、回退或覆盖，也无Harness提交：
+
+```text
+M tools/console/generated/console-data/cutover.json
+ M tools/console/generated/console-data/harness-engineering.json
+ M tools/console/generated/console-data/harness-engineering/acceptance.json
+ M tools/console/generated/console-data/harness-engineering/bundles.json
+ M tools/console/generated/console-data/harness-engineering/requests.json
+ M tools/console/generated/console-data/harness-engineering/tasks.json
+ M tools/console/generated/console-data/index.json
+ M tools/console/generated/manifest.json
+ M tools/console/generated/projects.json
+ M tools/console/generated/version.json
+```
+
+规则卡最终结果：每次Git写前断言指定worktree；G16前后PASS且无重叠旧卡；精确逐文件提交，仓库安全经冻结的相同base检查PASS；原始环境失败与差异保留；本机无pytest/browser。仅普通验收包，不触发SSOT快照。已保存结果，只提交验收物，不推送，执行到此停止。
