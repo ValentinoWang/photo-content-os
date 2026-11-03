@@ -1,6 +1,7 @@
 import { renderShotDetail } from './direct-shot-detail.js';
 import {normalizeRows,handoffRows,rowSummary,storyboard,renderStoryboard} from './direct-storyboard.js';
 import {canGenerate,canDraft,stylePayload,sourceText,swatches,applySwatches,designLines,howFirst,generationText,renderStyle,draftBusy,styleTime} from './direct-style.js';
+import {anyOver} from './input-limit.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const D = value => `<span data-design-data>${esc(value)}</span>`;
@@ -13,7 +14,10 @@ export const FAILURE_COPY = Object.freeze({
   render_failed:'这一镜没渲染出来，可以只重试这一镜',
   narration_invalid:'配音文件读不出来，换一个 WAV 再传',
 });
-export function failureMessage(code) { return FAILURE_COPY[code] || '读不到这一镜的状态，点重试'; }
+export function failureMessage(code) {
+  if(code==null||code==='')return '';
+  return Object.hasOwn(FAILURE_COPY,code)?FAILURE_COPY[code]:`没做成（错误码 ${String(code)}），可以重试`;
+}
 export function safeText(value) {
   return String(value ?? '').replace(/(?:[A-Za-z]:[\\/][^\s<>]+|\/(?:[^\s/<>]+\/)+[^\s<>]*)/g,'［本机路径］').replace(/\b[a-z]+(?:_[a-z0-9]+)+\b/g,'［状态未登记］');
 }
@@ -94,14 +98,15 @@ export function createDirectView(ctx) {
   }
   function updateForm(){
     const summary=rowSummary(form.rows,form.measured),[text,need]=generationText(form.rows,form);
-    find('[data-generate]').disabled=!canGenerate(form.rows,form,unavailable,busy);
+    const overLimit=anyOver(root());
+    find('[data-generate]').disabled=!canGenerate(form.rows,form,unavailable,busy)||overLimit;
     find('[data-gen-text]').textContent=text;find('[data-gen-text]').classList.toggle('need',need);
     find('[data-flow]').innerHTML=flow();
     find('[data-head]').innerHTML=form.editing?head('改分镜脚本，重新生成','点「生成」后 Opus 从头写每一镜，配音要重新上传。现在这条留在本机，页面只显示新的那条。',btn('回到现在这条','data-rescript-back')):summary.count?head(D(`分镜脚本共 ${summary.count} 镜，可以生成了`),form.handoff?(form.handoff.narration?'中台交过来的分镜和配音都已带上。检查一下，改完就能生成。':''):'检查一下分镜：一格是一镜。时长先按字数估，上传配音后按实测。'):head('把分镜脚本直接做成视频','粘贴分镜脚本，Opus 给每一镜写一段动画代码，在这台电脑上逐帧渲染成画面，再合成一条竖屏成片。不用素材，也不用剪辑软件。');
     find('[data-rescript-back]')?.addEventListener('click',()=>{editor?.dispose();editor=null;form.editing=false;pendingVoice=null;actionError='';paint();schedule(generation);});
     const first=howFirst(form);find('[data-how-first]').innerHTML=`${first[0]}<small>${first[1]}</small>`;
-    const draftButton=find('[data-draft]');if(draftButton)draftButton.disabled=!canDraft(form.rows,form,unavailable,busy)||(!!form.draft&&form.draft.status!=='failed');
-    const revise=find('[data-revise-go]');if(revise)revise.disabled=!form.revise.trim()||draftBusy(form.draft)||busy||unavailable;
+    const draftButton=find('[data-draft]');if(draftButton)draftButton.disabled=!canDraft(form.rows,form,unavailable,busy)||(!!form.draft&&form.draft.status!=='failed')||overLimit;
+    const revise=find('[data-revise-go]');if(revise)revise.disabled=!form.revise.trim()||draftBusy(form.draft)||busy||unavailable||overLimit;
     document.querySelector('.main').dataset.designState=stateName();
   }
   function paintStyle(){
@@ -128,7 +133,7 @@ export function createDirectView(ctx) {
   }
   function draftUrl(){return `/api/projects/${encodeURIComponent(project.id)}/direct/style-drafts`;}
   async function writeDraft(revise){
-    if(revise?(!form.revise.trim()||draftBusy(form.draft)||unavailable||busy):!canDraft(form.rows,form,unavailable,busy))return;
+    if(anyOver(root())||(revise?(!form.revise.trim()||draftBusy(form.draft)||unavailable||busy):!canDraft(form.rows,form,unavailable,busy)))return;
     const token=generation,previous=form.draft;form.accepted=false;form.revising=revise;form.draft={...previous,status:'designing',startedAt:new Date().toISOString()};paintStyle();updateForm();
     try{const result=await request(draftUrl()+(revise?'/'+encodeURIComponent(previous.draftId)+'/revise':''),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(revise?{instruction:form.revise.trim()}:{text:form.text.trim(),shot:storyboard(form.rows).shots[0]})});if(!active(token))return;form.draft=result.draft;if(!draftBusy(form.draft))form.revising=false;paintStyle();updateForm();scheduleDraft(token);}
     catch(e){if(active(token)){form.draft={...form.draft,status:'failed',failureCode:e.code};form.revising=false;unavailable=e.code==='claude_cli_unavailable';model();paintMessage();paintStyle();updateForm();}}
@@ -140,10 +145,10 @@ export function createDirectView(ctx) {
   }
   async function rescript(){
     if(!canRescript(job,readError))return;
-    const token=generation;try{const result=await ctx.api(jobUrl(project.id,job.jobId));if(!active(token))return;job=result.job;const hand=await ctx.api(`/api/projects/${encodeURIComponent(project.id)}/direct/handoff`);if(!active(token))return;currentHandoff=hand.handoff;}catch{if(active(token)){actionError=failureMessage();paintMessage();}return;}
+    const token=generation;try{const result=await ctx.api(jobUrl(project.id,job.jobId));if(!active(token))return;job=result.job;const hand=await ctx.api(`/api/projects/${encodeURIComponent(project.id)}/direct/handoff`);if(!active(token))return;currentHandoff=hand.handoff;}catch{if(active(token)){actionError='读不到这一镜的状态，点重试';paintMessage();}return;}
     form.handoff=null;form.measured=false;form.editing=true;form.rows=normalizeRows(job.shots).map((r,i)=>({...r,image:job.shots[i].posterRevision?{poster:posterUrl(project.id,job,job.shots[i]),clip:`${jobUrl(project.id,job.jobId)}/shots/${encodeURIComponent(r.shotId)}/clip.mp4?v=${encodeURIComponent(job.shots[i].posterRevision)}`} :null}));
     form.base={projectId:project.id,jobId:job.jobId,title:project.title,createdAt:job.createdAt,design:job.design,posterUrl:job.shots.find(s=>s.posterRevision)?posterUrl(project.id,job,job.shots.find(s=>s.posterRevision)):null};form.mode='base';form.adjust='';pendingVoice=null;clearTimeout(timer);paint();window.scrollTo(0,0);editor.focus();
-    if(!form.styles){try{await loadStyles(generation);if(ctx.active(project.id)&&form.editing){paintStyle();updateForm();}}catch{actionError=failureMessage();paintMessage();}}
+    if(!form.styles){try{await loadStyles(generation);if(ctx.active(project.id)&&form.editing){paintStyle();updateForm();}}catch{actionError='读不到风格库，点重试';paintMessage();}}
   }
   function design(){
     const d=job.design;
@@ -153,7 +158,7 @@ export function createDirectView(ctx) {
   function card(s){
     const writing=s.status==='writing',failed=s.status==='failed',interrupted=s.status==='interrupted',rewriting=writing&&!!s.lastInstruction,auto=writing&&!rewriting&&s.attempts>1;
     const good=['written','rendering','rendered'].includes(s.status);
-    const label=good?writtenLabel(s):rewriting?'按你的意见重写':auto?'自查没过，正在重写':writing?'正在写':failed?(s.failureCode==='lint_failed_after_retry'?'写了两次都没过':failureMessage(s.failureCode)):interrupted?'中断了':s.status==='queued'?'等着写':failureMessage(s.failureCode);
+    const label=good?writtenLabel(s):rewriting?'按你的意见重写':auto?'自查没过，正在重写':writing?'正在写':failed?(s.failureCode==='lint_failed_after_retry'?'写了两次都没过':failureMessage(s.failureCode)||'这一镜没写成，可以重试'):interrupted?'中断了':s.status==='queued'?'等着写':failureMessage(s.failureCode)||'这一镜没写成，可以重试';
     let poster=s.posterRevision?`<img src="${posterUrl(project.id,job,s)}" alt="">`:'';
     if(!poster||writing)poster+=`<div class="dv-veil ${failed?'dv-veil--fail':writing?'dv-veil--writing'+(s.posterRevision?' dv-veil--dim':''):'dv-veil--queued'}"><b>${failed?'没写成':rewriting?'按你的意见重写':auto?'自查没过，正在重写':writing?'Opus 正在写':interrupted?'中断了':'等着写'}</b>${writing&&writingSeconds(s)!=null?`<span class="mono" data-design-data>已写 ${mmss(writingSeconds(s))}</span>`:''}</div>`;
     return `<article tabindex="0" class="dv-card ${failed?'is-bad':''}" data-shot="${esc(s.shotId)}" aria-current="${selected===s.shotId}" data-design-id="DV-SHOT"><div class="dv-poster">${poster}</div><div class="dv-card-b"><header><b data-design-data>${esc(s.shotId)}</b><span data-design-data>${shotSeconds(s).toFixed(1)} 秒</span></header><p data-design-data>${esc(safeText(s.dialogue))}</p><div class="dv-tags">${interrupted?`<button class="st st--off" data-retry-shot="${esc(s.shotId)}">中断了 · 重试</button>`:`<span class="st ${failed?'st--bad':auto?'st--wait':writing?'st--run':good?'':'st--off'}" data-design-data>${esc(label)}</span>`}${good&&s.checks.warnings.length?'<span class="st st--wait">有提醒</span>':''}</div></div></article>`;
@@ -168,12 +173,13 @@ export function createDirectView(ctx) {
   }
   function output(){
     const o=job.output,checks=o.checks||{},duration=o.durationSeconds||totalSeconds(job.shots),silent=o.kind==='silent';
+    const missingOutputCopy='读不到这项检查结果';
     const check=(label,pass,note)=>`<li class="${pass===true?'':pass===false?'fail':'warn'}">${label}<span data-design-data>${esc(note)}</span></li>`;
-    return `<section class="dv-out" data-design-id="DV-OUTPUT"><div class="dv-player"><div class="dv-stage"><video src="${jobUrl(project.id,job.jobId)}/output.mp4?v=${encodeURIComponent(o.revision)}" playsinline preload="metadata" poster="${posterUrl(project.id,job,job.shots[0])}"></video><button class="dv-bigplay" data-play aria-label="播放成片">▶</button></div><div class="dv-scrub" data-design-id="DV-SCRUB"><input type="range" min="0" max="${duration}" step="0.01" value="0" data-scrub aria-label="拖到成片哪里"><span data-readout data-design-data>0:00 / ${mmss(duration)}</span></div></div><div class="dv-outinfo"><h3 data-design-data>${esc(safeText(project.title))}</h3><p data-design-data>竖屏 1080×1920 · ${job.shots.length} 镜 · ${o.kind==='narrated'?'带配音':'无声预览'} ${mmss(duration)}</p><ul class="dv-outchecks" data-design-id="DV-OUTCHECKS">${check('能从头放到尾',checks.playable==='pass'?true:checks.playable==='fail'?false:null,o.frames==null?failureMessage():`${o.frames.toLocaleString()} 帧`)}${silent?'<li class="none">无声预览，不检查声音</li>':check('声音和画面对得上',Number.isFinite(checks.avOffsetSeconds)?Math.abs(checks.avOffsetSeconds)<=.1:null,Number.isFinite(checks.avOffsetSeconds)?`差 ${Math.abs(checks.avOffsetSeconds).toFixed(2)} 秒`:failureMessage())}${check(silent?'帧数和各镜时长一致':'帧数和配音时长一致',Number.isFinite(o.frames)&&Number.isFinite(silent?totalSeconds(job.shots):job.narration.durationSeconds)?Math.abs(o.frames/30-(silent?totalSeconds(job.shots):job.narration.durationSeconds))<=1/30:null,mmss(silent?totalSeconds(job.shots):job.narration.durationSeconds))}${check('没有黑帧',checks.blackFrames==='pass'?true:checks.blackFrames==='fail'?false:null,checks.blackFrames==='pass'?'0 处':failureMessage())}</ul><div class="dv-strip" data-design-id="DV-STRIP">${job.shots.map((s,i)=>`<button data-jump="${i}" data-design-data aria-label="第 ${esc(s.shotId)} 镜"><img src="${posterUrl(project.id,job,s)}" alt=""><b>${esc(s.shotId)}</b></button>`).join('')}</div></div></section>`;
+    return `<section class="dv-out" data-design-id="DV-OUTPUT"><div class="dv-player"><div class="dv-stage"><video src="${jobUrl(project.id,job.jobId)}/output.mp4?v=${encodeURIComponent(o.revision)}" playsinline preload="metadata" poster="${posterUrl(project.id,job,job.shots[0])}"></video><button class="dv-bigplay" data-play aria-label="播放成片">▶</button></div><div class="dv-scrub" data-design-id="DV-SCRUB"><input type="range" min="0" max="${duration}" step="0.01" value="0" data-scrub aria-label="拖到成片哪里"><span data-readout data-design-data>0:00 / ${mmss(duration)}</span></div></div><div class="dv-outinfo"><h3 data-design-data>${esc(safeText(project.title))}</h3><p data-design-data>竖屏 1080×1920 · ${job.shots.length} 镜 · ${o.kind==='narrated'?'带配音':'无声预览'} ${mmss(duration)}</p><ul class="dv-outchecks" data-design-id="DV-OUTCHECKS">${check('能从头放到尾',checks.playable==='pass'?true:checks.playable==='fail'?false:null,o.frames==null?missingOutputCopy:`${o.frames.toLocaleString()} 帧`)}${silent?'<li class="none">无声预览，不检查声音</li>':check('声音和画面对得上',Number.isFinite(checks.avOffsetSeconds)?Math.abs(checks.avOffsetSeconds)<=.1:null,Number.isFinite(checks.avOffsetSeconds)?`差 ${Math.abs(checks.avOffsetSeconds).toFixed(2)} 秒`:missingOutputCopy)}${check(silent?'帧数和各镜时长一致':'帧数和配音时长一致',Number.isFinite(o.frames)&&Number.isFinite(silent?totalSeconds(job.shots):job.narration.durationSeconds)?Math.abs(o.frames/30-(silent?totalSeconds(job.shots):job.narration.durationSeconds))<=1/30:null,mmss(silent?totalSeconds(job.shots):job.narration.durationSeconds))}${check('没有黑帧',checks.blackFrames==='pass'?true:checks.blackFrames==='fail'?false:null,checks.blackFrames==='pass'?'0 处':missingOutputCopy)}</ul><div class="dv-strip" data-design-id="DV-STRIP">${job.shots.map((s,i)=>`<button data-jump="${i}" data-design-data aria-label="第 ${esc(s.shotId)} 镜"><img src="${posterUrl(project.id,job,s)}" alt=""><b>${esc(s.shotId)}</b></button>`).join('')}</div></div></section>`;
   }
   function bindOutput(){
     const video=find('video'),scrub=find('[data-scrub]'),play=find('[data-play]');if(!video)return;
-    play.onclick=()=>{if(video.paused)video.play().catch(()=>{actionError=failureMessage();paintMessage();});else video.pause();};
+    play.onclick=()=>{if(video.paused)video.play().catch(()=>{actionError='视频播放失败，再点一次试试';paintMessage();});else video.pause();};
     video.onclick=()=>play.click();video.onplay=()=>{play.hidden=true;};video.onpause=video.onended=()=>{play.hidden=false;};
     video.ontimeupdate=()=>{if(!video.isConnected)return;scrub.value=video.currentTime;find('[data-readout]').textContent=`${mmss(video.currentTime)} / ${mmss(Number(scrub.max))}`;root().querySelectorAll('[data-jump]').forEach(b=>{const i=Number(b.dataset.jump),t=video.currentTime;b.setAttribute('aria-current',String(t>=shotStart(job.shots,i)&&t<shotStart(job.shots,i+1)));});};
     scrub.oninput=()=>{video.currentTime=Number(scrub.value);};
@@ -203,7 +209,7 @@ export function createDirectView(ctx) {
     let title='',lede='',actions='';
     if(st==='designing'){title=job.design.source?.kind==='adjusted'?'Opus 正在按你的话改全片设计':'Opus 正在定全片设计';lede='定好以后七镜三镜一组同时写。可以离开这一页，回来接着看进度。';}
     else if(st==='writing'){title=D(`Opus 写好了 ${count} 镜${writing.length?'，正在写第 '+writing.map(s=>s.shotId).join('、')+' 镜':''}`);lede=D('写好一镜就渲染一镜。'+job.shots.filter(s=>s.status==='writing'&&!s.lastInstruction&&s.attempts>1).map(s=>`第 ${s.shotId} 镜自查没过，正在自动重写一次。`).join(''));}
-    else if(st==='failed-shot'){title=D(failed?`${count} 镜写好了，第 ${failed.shotId} 镜没写成`:failureMessage(job.failureCode));}
+    else if(st==='failed-shot'){title=D(failed?`${count} 镜写好了，第 ${failed.shotId} 镜没写成`:failureMessage(job.failureCode)||'没做成，可以重试');}
     else if(st==='rewriting'){title=D(`正在按你的意见重写第 ${writing.find(s=>s.lastInstruction)?.shotId} 镜`);lede=D(`只重写、只重渲这一镜；其他 ${n-1} 镜不动。`);}
     else if(st.startsWith('composing')){title=st==='composing-silent'?'正在合成无声预览':'正在合成成片';lede=st==='composing-silent'?'七镜画面逐帧拼起来，再检查一遍。':'七镜画面按配音逐帧拼起来，再检查一遍。';}
     else if(st==='done-silent'){title='无声预览出来了';lede=D(`${job.output.composedAt?`从点「生成」到出片用了 ${mmss(elapsed(job.createdAt,Date.parse(job.output.composedAt)))}。`:""}上传配音以后按配音重排时长，再合成带声成片。`);actions=btn('上传配音…','data-voice')+btn('重新合成','data-compose');}
@@ -230,20 +236,20 @@ export function createDirectView(ctx) {
   }
   async function pickFile(accept,handler){
     const token=generation,input=document.createElement('input');input.type='file';input.accept=accept;
-    input.onchange=async()=>{if(!input.files[0]||!active(token))return;try{await handler(input.files[0]);}catch{if(active(token)){actionError=failureMessage(accept.includes('wav')?'narration_invalid':null);paintMessage();}}};input.click();
+    input.onchange=async()=>{if(!input.files[0]||!active(token))return;try{await handler(input.files[0]);}catch{if(active(token)){actionError=accept.includes('wav')?failureMessage('narration_invalid'):'导入失败，可以重试';paintMessage();}}};input.click();
   }
   function bindVoice(){find('[data-revision-log]')?.addEventListener('click',async()=>{stop();const token=generation,saved=document.createDocumentFragment();while(root().firstChild)saved.append(root().firstChild);const {renderRevisionLog}=await import('./direct-revision-log.js');if(!active(token))return;renderRevisionLog(root(),{api:ctx.api,onBack:()=>{if(!active(token))return;root().replaceChildren(saved);refresh(generation);}});});find('[data-voice]')?.addEventListener('click',()=>pickFile('.wav,audio/wav',async file=>{if(job&&!form.editing)await mutate('/narration',file,true);else {pendingVoice=file;find('.dv-voice-name').textContent=safeText(file.name);}}));}
   async function generate(){
-    if(!canGenerate(form.rows,form,unavailable,busy))return;
+    if(anyOver(root())||!canGenerate(form.rows,form,unavailable,busy))return;
     const token=generation;busy=true;updateForm();
     try{const result=await request(jobUrl(project.id),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({storyboard:storyboard(form.rows),...stylePayload(form,project.id),...(form.handoff?{handoff:{jobId:form.handoff.jobId,revision:form.handoff.revision}}:{})})});if(!active(token))return;job=result.job;form.editing=false;clearTimeout(draftTimer);editor?.dispose();editor=null;selected=undefined;userSelected=false;paint();if(pendingVoice){const file=pendingVoice;pendingVoice=null;await mutate('/narration',file,true);}schedule(token);}
-    catch(e){if(active(token)){unavailable=e.code==='claude_cli_unavailable';actionError=unavailable?'':failureMessage(e.code);paint();}}
+    catch(e){if(active(token)){unavailable=e.code==='claude_cli_unavailable';actionError=unavailable?'':failureMessage(e.code)||'没做成，可以重试';paint();}}
     finally{busy=false;if(active(token)&&(form.editing||!job))updateForm();}
   }
   async function mutate(suffix,body,binary=false){
     const token=generation,button=find(suffix==='/compose'?'[data-compose]':'[data-voice]');if(button)button.disabled=true;
     try{const result=await request(jobUrl(project.id,job.jobId)+suffix,{method:'POST',headers:{'Content-Type':binary?'audio/wav':'application/json'},body:binary?body:JSON.stringify(body)});if(!active(token))return;job=result.job;actionError='';paint();schedule(token);}
-    catch(e){if(active(token)){actionError=failureMessage(e.code);paintMessage();}}
+    catch(e){if(active(token)){actionError=failureMessage(e.code)||'没做成，可以重试';paintMessage();}}
     finally{if(button?.isConnected)button.disabled=false;}
   }
   function schedule(token){clearTimeout(timer);if(active(token)&&!form.editing&&(shouldPoll(job)||job&&!canRescript(job,readError)&&job.failureCode!=='claude_cli_unavailable'))timer=setTimeout(()=>refresh(token),2000);}

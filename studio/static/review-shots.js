@@ -3,7 +3,7 @@ export const seconds = n => {const t=Math.round(n||0);return Math.floor(t/60)+':
 const labels={selected:'精选',usable:'可用',unused:'不用',rejected:'淘汰'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 export function createShotView(ctx) {
- const {api,notice,root,mark,refreshCatalog,D,esc,button}=ctx;
+ const {api,notice,root,mark,refreshCatalog,bindTabs,D,esc,button}=ctx;
  let data,piece,focus=null,index=0,playing=false,muted=false,tab='usable',scene='all',expanded=new Set(),detail=false,poll,timer,photoStart=0;
  const selected=()=>data.shots.filter(s=>s.status==='selected');
  const current=()=>data.shots.find(s=>s.id===focus)||selected()[Math.min(index,selected().length-1)];
@@ -23,7 +23,7 @@ export function createShotView(ctx) {
  }
  function board() {
   const list=selected(),scenes=[...new Set(list.map(s=>s.scene))];
-  return scenes.map(k=>{const rows=list.filter(s=>s.scene===k);return `<div class="board-scene"><h3><span data-design-data>${esc(rows[0].scene_name)}</span><span data-design-data>${rows.length}</span></h3><div class="sb-row">${rows.map(s=>{const n=list.indexOf(s);return `<button class="sb" data-hero="${n}" aria-current="${!focus&&n===index}" data-design-data>${thumb(s)}<span class="n">${n+1}</span><span class="d">${s.kind==='photo'?'照片':sec(s.duration)+'″'}</span></button>`;}).join('')}</div></div>`;}).join('');
+  return scenes.map(k=>{const rows=list.filter(s=>s.scene===k);return `<div class="board-scene"><h3><span data-design-data>${esc(rows[0].scene_name)}</span><span data-design-data>${rows.length}</span></h3><div class="sb-row">${rows.map(s=>{const n=list.indexOf(s);return `<button class="sb" data-hero="${n}" aria-label="第 ${String(n+1).padStart(2,'0')} 镜" aria-current="${!focus&&n===index}" data-design-data>${thumb(s)}<span class="n">${n+1}</span><span class="d">${s.kind==='photo'?'照片':sec(s.duration)+'″'}</span></button>`;}).join('')}</div></div>`;}).join('');
  }
  function alternatives() {
   const scenes=[...new Set(data.shots.map(s=>s.scene))];
@@ -72,14 +72,14 @@ export function createShotView(ctx) {
   const list=selected();index=Math.min(index,Math.max(0,list.length-1));
   const title=data.partial?`已经挑出 ${D(list.length)} 个镜头`:data.confirmed?`精选已确认：${D(list.length)} 个镜头`:`AI 给这条视频挑了 ${D(list.length)} 个镜头`;
   const lede=data.partial?'看图做完之前不能确认。已看完的部分可以先播一遍。':data.confirmed?'配乐卡点下一阶段上线，到时直接用这些镜头。之后再改精选，需要重新确认。':`串起来 ${D(seconds(data.duration))}。先从头看一遍，不合适的在右边改成「可用」或「不用」；最下面还有 ${D(data.counts.usable)} 个可用的备选。确认后，下一步配乐卡点会从<button class="link" data-go="music">音乐库</button>挑一首歌，按拍子把这些镜头排起来。`;
-  root().innerHTML=tabs+flow()+warning+(!interrupted&&data.partial?`<div class="attention full" role="alert" data-design-id="R208-REV-partial"><div><strong>看图只做完 ${D(data.model_progress?.completed||0)} / ${D(data.model_progress?.total||0)} 页</strong><p>还有 ${D(data.shots.filter(s=>!s.status).length)} 个镜头（${D([...new Set(data.shots.filter(s=>!s.status).map(s=>s.scene_name))].join('、'))}那一组）没有结论，先不列出来。本地体检的结果都留着，继续时不会重做。</p></div>${button('继续看图','data-job="resume"')}</div>`:'')+head(title,lede,(interrupted?'':button('重新挑选','data-job="restart"'))+(!data.partial&&!data.confirmed?button('确认精选','data-confirm',true):''))+`<section class="hero full" data-design-id="R208-REV-hero"><div class="stage-wrap"><div class="stage" id="hero-stage"></div><div class="prog" id="hero-prog">${list.map((s,i)=>`<button data-hero="${i}" data-design-data data-duration="${s.duration}"><i></i></button>`).join('')}</div><div class="hero-ctl"><button class="btn-round" id="hero-play" data-toggle aria-label="播放">▶</button>${button('上一个','data-hstep="-1"')}${button('下一个','data-hstep="1"')}<button class="btn" id="hero-mute">${muted?'声音关':'声音开'}</button><span class="hero-pos" id="hero-pos"></span></div></div><aside class="shot-panel" id="shot-panel" data-design-id="R208-REV-shot"></aside></section><section class="board full" id="hero-board" data-design-id="R208-REV-board"><h2 class="section-title">精选顺序<span>按场景排，配乐卡点时会按节奏重排</span></h2>${board()}</section>${alternatives()}`;
+  root().innerHTML=tabs+flow()+warning+(!interrupted&&data.partial?`<div class="attention full" role="alert" data-design-id="R208-REV-partial"><div><strong>看图只做完 ${D(data.model_progress?.completed||0)} / ${D(data.model_progress?.total||0)} 页</strong><p>还有 ${D(data.shots.filter(s=>!s.status).length)} 个镜头（${D([...new Set(data.shots.filter(s=>!s.status).map(s=>s.scene_name))].join('、'))}那一组）没有结论，先不列出来。本地体检的结果都留着，继续时不会重做。</p></div>${button('继续看图','data-job="resume"')}</div>`:'')+head(title,lede,(interrupted?'':button('重新挑选','data-job="restart"'))+(!data.partial&&!data.confirmed?button('确认精选','data-confirm',true):''))+`<section class="hero full" data-design-id="R208-REV-hero"><div class="stage-wrap"><div class="stage" id="hero-stage"></div><div class="prog" id="hero-prog">${list.map((s,i)=>`<button data-hero="${i}" aria-label="第 ${String(i+1).padStart(2,'0')} 镜" data-design-data data-duration="${s.duration}"><i></i></button>`).join('')}</div><div class="hero-ctl"><button class="btn-round" id="hero-play" data-toggle aria-label="播放">▶</button>${button('上一个','data-hstep="-1"')}${button('下一个','data-hstep="1"')}<button class="btn" id="hero-mute">${muted?'声音关':'声音开'}</button><span class="hero-pos" id="hero-pos"></span></div></div><aside class="shot-panel" id="shot-panel" data-design-id="R208-REV-shot"></aside></section><section class="board full" id="hero-board" data-design-id="R208-REV-board"><h2 class="section-title">精选顺序<span>按场景排，配乐卡点时会按节奏重排</span></h2>${board()}</section>${alternatives()}`;
   bind();paintHero();
  }
  function bind() {
   $$('[data-duration]').forEach(n=>n.style.flex=`${n.dataset.duration} 1 0`);
   $$('[data-percent]').forEach(n=>n.style.width=n.dataset.percent+'%');
   ctx.common();
-  $$('[data-ptab]').forEach(b=>b.onclick=()=>{try{localStorage.setItem('studio-piece-tab:'+piece.id,b.dataset.ptab);}catch{}location.hash=new URLSearchParams({...ctx.route(),ptab:b.dataset.ptab});});
+  bindTabs();
   $$('[data-filter]').forEach(b=>b.onclick=()=>{tab=b.dataset.filter;scene='all';paint();});
   $$('[data-scene]').forEach(b=>b.onclick=()=>{scene=b.dataset.scene;paint();});
   $$('[data-more]').forEach(b=>b.onclick=()=>{expanded.add(b.dataset.more);paint();});

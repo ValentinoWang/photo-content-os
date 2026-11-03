@@ -2,10 +2,27 @@ import {flowSteps, deliveryLabel} from '/review-common.js';
 import { createStudio } from '/review-view.js';
 import { renderHandoff, formatDuration } from '/handoff.js';
 import { videoActions } from '/video-actions.js';
+import { anyOver, bindLimits } from '/input-limit.js';
 const state = { csrf: '', projects: [], project: null, settings: null, screen: 'home', wizard: 1, deleteCandidates: [], deleteError: '', selectedDeleteNumbers: [], inboxPlan: null, inboxPlanError: '', selectedBatchId: '', assets: [], assetStatistics: null, assetError: '', selectedAsset: null, libraryView: 'grid', edlView: 'timeline', diagnostics: null, analysisBudget: null, setup: null, upstreamTasks: [], videoHandoff: null };
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
 const notice = (message, bad = false) => { const node = $('#toast'); node.textContent = message; node.className = `toast show${bad ? ' error' : ''}`; clearTimeout(notice.timer); notice.timer = setTimeout(() => node.className = 'toast', 2600); };
+function bindFormLimits(form) {
+  bindLimits(form);
+  const submit = form.querySelector('button:not([type]), button[type="submit"]');
+  const updateSubmit = () => { submit.disabled = anyOver(form); };
+  form.addEventListener('input', updateSubmit);
+  updateSubmit();
+}
+function confirmDelete(count) {
+  const dialog = $('#confirm-dialog');
+  $('#confirm-dialog-message').textContent = `确认将选中的 ${count} 项移入系统回收站？`;
+  dialog.returnValue = '';
+  return new Promise(resolve => {
+    dialog.addEventListener('close', () => resolve(dialog.returnValue === 'confirm'), { once: true });
+    dialog.showModal();
+  });
+}
 
 async function api(path, options = {}) {
   const init = { credentials: 'same-origin', ...options, headers: { Accept: 'application/json', ...(options.headers || {}) } };
@@ -70,7 +87,7 @@ function renderInbox() {
   target.querySelector('#select-all-delete').onclick = () => { state.selectedDeleteNumbers = state.selectedDeleteNumbers.length === state.deleteCandidates.length ? [] : state.deleteCandidates.map(candidate => candidate.candidate_number); renderInbox(); };
   target.querySelector('#confirm-batch')?.addEventListener('click', async () => { try { const response = await api(`/api/projects/${encodeURIComponent(state.project.id)}/inbox-plan/confirm`, { method: 'POST', body: { expectedRevision: state.project.revision, planDigest: state.inboxPlan.plan_digest, batchId: selectedBatch.batch_id, targetProjectId: state.project.id } }); state.project = response.project; notice('批次落点已确认。'); renderInbox(); } catch (error) { notice(error.message, true); } });
   target.querySelector('#reanalyze').onclick = async () => { await Promise.all([loadInboxPlan(), loadDeleteRecommendations()]); renderInbox(); notice(state.inboxPlan ? '已根据当前媒体清单重新生成批次计划和删除建议。' : state.inboxPlanError, !state.inboxPlan); };
-  target.querySelector('#confirm-delete').onclick = async () => { if (!window.confirm(`确认将选中的 ${state.selectedDeleteNumbers.length} 项移入系统回收站？`)) return; try { const selected = [...state.selectedDeleteNumbers]; const response = await api(`/api/projects/${encodeURIComponent(state.project.id)}/media-delete/confirm`, { method: 'POST', body: { candidates: state.deleteCandidates, selectedCandidateNumbers: selected, secondConfirmation: true } }); state.deleteCandidates = state.deleteCandidates.filter(candidate => !selected.includes(candidate.candidate_number)); state.selectedDeleteNumbers = []; renderInbox(); notice(`已移入系统回收站：${response.receipts.length} 项。`); } catch (error) { notice(error.message, true); } };
+  target.querySelector('#confirm-delete').onclick = async () => { if (!(await confirmDelete(state.selectedDeleteNumbers.length))) return; try { const selected = [...state.selectedDeleteNumbers]; const response = await api(`/api/projects/${encodeURIComponent(state.project.id)}/media-delete/confirm`, { method: 'POST', body: { candidates: state.deleteCandidates, selectedCandidateNumbers: selected, secondConfirmation: true } }); state.deleteCandidates = state.deleteCandidates.filter(candidate => !selected.includes(candidate.candidate_number)); state.selectedDeleteNumbers = []; renderInbox(); notice(`已移入系统回收站：${response.receipts.length} 项。`); } catch (error) { notice(error.message, true); } };
 }
 
 function renderLibrary() {
@@ -157,8 +174,12 @@ document.querySelectorAll('[data-surface]').forEach(button => button.onclick = (
 document.querySelectorAll('[data-close-surface]').forEach(button => button.onclick = closeSurface);
 document.querySelectorAll('[data-cancel-project]').forEach(b=>b.onclick=()=>$('#project-dialog').close());
 $('[data-close-folder]').onclick=()=>$('#folder-dialog').close();
-$('#project-form').onsubmit = async event => { event.preventDefault(); try { const value = Object.fromEntries(new FormData(event.currentTarget)); const response = await api('/api/projects', { method: 'POST', body: value }); state.projects.unshift(response.project); state.project = response.project; $('#project-dialog').close(); await studio.refreshCatalog(); showScreen('project'); } catch (error) { notice(error.message, true); } };
-$('#pair-form').onsubmit = async event => { event.preventDefault(); try { const value = Object.fromEntries(new FormData(event.currentTarget)); const response = await api('/api/settings/upstream/pair', { method: 'POST', body: value }); state.settings = { ...state.settings, upstream: response.upstream }; closeSurface(); render(); notice(response.upstream.upstream_features_available ? '已连接上游。' : '上游当前不可用，本地工作台仍可使用。'); } catch (error) { notice(error.message, true); } };
+const projectForm = $('#project-form');
+const pairForm = $('#pair-form');
+bindFormLimits(projectForm);
+bindFormLimits(pairForm);
+projectForm.onsubmit = async event => { event.preventDefault(); if (anyOver(event.currentTarget)) return; try { const value = Object.fromEntries(new FormData(event.currentTarget)); const response = await api('/api/projects', { method: 'POST', body: value }); state.projects.unshift(response.project); state.project = response.project; $('#project-dialog').close(); await studio.refreshCatalog(); showScreen('project'); } catch (error) { notice(error.message, true); } };
+pairForm.onsubmit = async event => { event.preventDefault(); if (anyOver(event.currentTarget)) return; try { const value = Object.fromEntries(new FormData(event.currentTarget)); const response = await api('/api/settings/upstream/pair', { method: 'POST', body: value }); state.settings = { ...state.settings, upstream: response.upstream }; closeSurface(); render(); notice(response.upstream.upstream_features_available ? '已连接上游。' : '上游当前不可用，本地工作台仍可使用。'); } catch (error) { notice(error.message, true); } };
 $('#logout-upstream').onclick = async () => { try { const response = await api('/api/settings/upstream/logout', { method: 'POST', body: {} }); state.settings = { ...state.settings, upstream: response.upstream }; closeSurface(); render(); notice('已解除配对，本地功能保持可用。'); } catch (error) { notice(error.message, true); } };
 $('#wizard-prev').onclick = () => { state.wizard = Math.max(1, state.wizard - 1); renderWizard(); }; $('#wizard-next').onclick = async () => { try { if (!state.setup?.current_step) { closeSurface(); return; } const accountOptional = state.setup.current_step === 'account_device' && !state.settings?.upstream?.upstream_features_available; const response = await api('/api/setup/state', { method: 'POST', body: { expectedRevision: state.setup.revision, step: state.setup.current_step, status: accountOptional ? 'skipped' : 'ready', ...(accountOptional ? { reasonCode: 'user_skipped' } : {}) } }); state.setup = response.setup; const setupOrder = ['storage_location', 'runtime_environment', 'editor', 'account_device']; state.wizard = Math.max(1, setupOrder.indexOf(state.setup.current_step) + 1); if (state.setup.completed) { closeSurface(); notice('本机向导已完成。'); } else renderWizard(); } catch (error) { notice(error.message, true); } };
 bootstrap();

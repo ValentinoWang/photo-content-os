@@ -1,0 +1,50 @@
+{
+  "id": "2026-11-04-Pho_R02-component-redesign",
+  "project": "photo-content-os",
+  "title": "工作台组件重构：新增公共组件，减少裸文字",
+  "author": {
+    "agent": "claude",
+    "session": "a7ef4c00-6f21-47af-966e-0f4ce922904f"
+  },
+  "executors": [
+    {
+      "agent": "claude",
+      "session": "a7ef4c00-6f21-47af-966e-0f4ce922904f",
+      "role": "总控"
+    }
+  ],
+  "raw_request": "在梳理组件后 看看怎么同时对组件进行重构形式美化会增加组件（美化设计的部分你来做） 减少裸文字登",
+  "understanding": [
+    "先把工作台现有组件梳理清楚，再定一批公共组件。",
+    "作品卡、设置、空页面的长句换成图标、徽标和数字，读得更快。",
+    "用户认可设计稿之后，才交给 cdx n 实现（我补充的）。"
+  ],
+  "out_of_scope": [
+    "这张卡不改脚本直出和交接页的内部结构",
+    "不单独清理写死的字号和间距"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开工作台首页。",
+        "查看最近的作品和本机能力。"
+      ],
+      "expected": "作品卡有三段进度条和图标加数字；本机能力每行右侧有彩色徽标，绿色写可用，黄色写没连上。"
+    },
+    {
+      "key": "H-02",
+      "steps": [
+        "进入整理台，素材为空时查看页面。"
+      ],
+      "expected": "页面显示三步图解：导入、自动分批、你定去处，下方有作品、视频、照片三个数字块，不再有整段说明。"
+    }
+  ],
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "created_at": "2026-11-03T19:18:32.270533Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}

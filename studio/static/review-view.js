@@ -7,6 +7,14 @@ const $$ = s => [...document.querySelectorAll(s)];
 export const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const D = v => `<span data-design-data>${esc(v)}</span>`;
 export const button = (text, attrs='', pri=false) => `<button class="btn${pri?' btn--pri':''}" ${attrs}>${text}</button>`;
+export function nextTabIndex(current, key, count) {
+ if(count < 1)return null;
+ if(key==='Home')return 0;
+ if(key==='End')return count-1;
+ if(key==='ArrowLeft')return (current-1+count)%count;
+ if(key==='ArrowRight')return (current+1)%count;
+ return null;
+}
 export const icons = {
  home:'<path d="M15 21v-8h-6v8M3 10l9-8 9 8v11H3z"/>',
  inbox:'<path d="M2 12h6l2 3h4l2-3h6M2 12l4-8h12l4 8v8H2z"/>',
@@ -26,7 +34,8 @@ export const icon = key => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="tru
 export function createStudio(ctx) {
  const {state,api,notice,openProjectDialog,openSurface,renderProject,renderInbox,loadLibrary,loadInboxPlan,loadDeleteRecommendations}=ctx;
  let route={view:'home'}, catalog={groups:[],pieces:[]}, request=0;
- let shots, music, direct, assetCategory='', musicSettings;
+ let shots, music, direct, assetCategory='', musicSettings, pendingTabFocus=null;
+ const boundTabLists=new WeakSet();
  const root=()=>$('#review-screen');
  const piece=id=>catalog.pieces.find(p=>p.id===id);
  const issues=()=>diagnosticGroups(state.diagnostics?.checks||[]).issues;
@@ -94,12 +103,40 @@ export function createStudio(ctx) {
   route.ptab=tab;
   top(D(p.title),p.date?D(p.date):'',p.versions?button('看已出的成片 '+D(p.outputs.map(o=>o.version).filter((v,i,a)=>a.indexOf(v)===i).join(' · ')),`data-versions="${esc(p.id)}"`):'',`<button data-go="projects">项目</button>›<button data-go-project="${esc(p.group_id)}" data-design-data>${esc(catalog.groups.find(g=>g.id===p.group_id)?.title)}</button>`);
   $('#crumb').parentElement.dataset.designId='R208-REV-topbar';
-  const tabs=`<nav class="ptabs" role="tablist" aria-label="做法" data-design-id="R208-PIECE-tabs">${[['vlog','按素材剪 vlog'],['script','按脚本做视频'],['direct','脚本直出']].map(([key,label])=>`<button role="tab" data-ptab="${key}" aria-selected="${tab===key}">${label}</button>`).join('')}</nav>`;
+  const tabs=`<nav class="ptabs" role="tablist" aria-label="做法" data-design-id="R208-PIECE-tabs">${[['vlog','按素材剪 vlog'],['script','按脚本做视频'],['direct','脚本直出']].map(([key,label])=>`<button role="tab" data-ptab="${key}" aria-selected="${tab===key}" tabindex="${tab===key?'0':'-1'}">${label}</button>`).join('')}</nav>`;
   root().classList.add('single');root().innerHTML=tabs;
   if(tab==='script') {mark('piece-script');root().classList.add('single');$('[data-screen-panel="project"]').hidden=false;renderProject();$('[data-screen-panel="project"]').dataset.designId='R208-PIECE-script';}
   else if(tab==='direct') {await direct.render(p,tabs);}
   else {await shots.render(p,tabs);}
-  $$('[data-ptab]').forEach(b=>b.onclick=()=>{try{localStorage.setItem('studio-piece-tab:'+p.id,b.dataset.ptab);}catch{}go({...route,ptab:b.dataset.ptab});});common();
+  bindTabs();
+  if(pendingTabFocus){const restore=pendingTabFocus===tab;pendingTabFocus=null;if(restore)root().querySelector(`[data-ptab="${tab}"]`)?.focus();}
+  common();
+ }
+ function bindTabs() {
+  const tablist=root().querySelector('.ptabs[role="tablist"]');
+  if(!tablist||boundTabLists.has(tablist))return;
+  boundTabLists.add(tablist);
+  tablist.addEventListener('click',event=>{
+   const tab=event.target.closest('[role="tab"][data-ptab]');
+   if(!tab||!tablist.contains(tab))return;
+   if(route.ptab===tab.dataset.ptab)return;
+   pendingTabFocus=tab.dataset.ptab;
+   try{localStorage.setItem('studio-piece-tab:'+route.piece,tab.dataset.ptab);}catch{}
+   go({...route,ptab:tab.dataset.ptab});
+  });
+  tablist.addEventListener('keydown',event=>{
+   const tab=event.target.closest('[role="tab"][data-ptab]');
+   if(!tab||!tablist.contains(tab))return;
+   const tabs=[...tablist.querySelectorAll('[role="tab"][data-ptab]')];
+   const next=nextTabIndex(tabs.indexOf(tab),event.key,tabs.length);
+   if(next===null)return;
+   event.preventDefault();
+   const target=tabs[next];
+   if(target===tab){tab.focus();return;}
+   pendingTabFocus=target.dataset.ptab;
+   try{localStorage.setItem('studio-piece-tab:'+route.piece,target.dataset.ptab);}catch{}
+   go({...route,ptab:target.dataset.ptab});
+  });
  }
  async function inbox() {
   if(state.project)await Promise.all([loadInboxPlan(),loadDeleteRecommendations()]);
@@ -185,7 +222,7 @@ export function createStudio(ctx) {
  async function refreshCatalog(){catalog=await api('/api/review/catalog');nav();}
  function go(value){const hash=new URLSearchParams(value).toString();route=value;if(location.hash.slice(1)===hash)render();else location.hash=hash;}
  function restore(){const params=new URLSearchParams(location.hash.slice(1));route=Object.fromEntries(params);if(!route.view){const path=location.pathname;route=path.startsWith('/app/project/')?{view:'piece',piece:decodeURIComponent(path.slice(13))}:{view:({'/app/inbox':'inbox','/app/library':'library','/app/settings':'settings'})[path]||'home'};}render();}
- shots=createShotView({state,api,notice,root,mark,route:()=>route,refreshCatalog,render,common,D,esc,button});
+ shots=createShotView({state,api,notice,root,mark,route:()=>route,refreshCatalog,render,common,bindTabs,D,esc,button});
  direct=createDirectView({api,root,mark,active:id=>route.view==='piece'&&route.ptab==='direct'&&route.piece===id,go});
  music=createMusicView({api,notice,root,top,mark,D,esc,button,active:()=>route.view==='music'});
  window.addEventListener('hashchange',restore);

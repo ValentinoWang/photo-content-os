@@ -5,7 +5,7 @@ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 const clean=value=>esc(safeText(value));
 const D=value=>`<span data-design-data>${clean(value)}</span>`;
 const failures={instruction_too_long:'要改的超过 200 字了，删短一点再重写。',version_not_found:'这一版找不到了，刷新一下再选。',sample_not_found:'这个样例已经不在了，刷新一下。',proposal_not_found:'这条草稿已经处理过，刷新一下。',proposal_not_ready:'这条草稿已经处理过，刷新一下。',look_failed:'Opus 这次没看成画面：读不到渲染出的图。你照样可以自己点。',verify_failed:'Opus 这次没核对成，两版照样可以比。'};
-const message=code=>failures[code]||failureMessage(code);
+const message=code=>failures[code]||failureMessage(code)||'没做成，可以重试';
 const ACTS=[['main','做主角'],['dim','缩小变灰'],['del','删掉'],['short','字改短']];
 const WHOLE=[['space','太空或挤在上面','主画面放在页眉和字幕之间居中，下面空白不超过三成。'],['color','颜色乱','只用一个强调色，只标结论；其余用主色和灰。'],['sync','跟口播对不上','口播说到哪一部分，画面才出现哪一部分。']];
 const actText=(action,name)=>({main:`${name}做成这一镜唯一的主角：数字 150px 以上，柱子至少占画面高度的四分之一。`,dim:`${name}缩小一档、改成灰色，不和主角抢。`,del:`删掉${name}。`,short:`${name}只留关键词，不超过 8 个字。`})[action];

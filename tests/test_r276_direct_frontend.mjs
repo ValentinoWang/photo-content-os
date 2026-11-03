@@ -34,6 +34,35 @@ export function testCompositionHeader(){
 }
 export function testFormulas(){
   testCompositionHeader();
+  const storyboardView=readFileSync(new URL('../studio/static/direct-storyboard.js',import.meta.url),'utf8');
+  const styleView=readFileSync(new URL('../studio/static/direct-style.js',import.meta.url),'utf8');
+  const directView=readFileSync(new URL('../studio/static/direct-view.js',import.meta.url),'utf8');
+  const revisionLog=readFileSync(new URL('../studio/static/direct-revision-log.js',import.meta.url),'utf8');
+  const shotDetail=readFileSync(new URL('../studio/static/direct-shot-detail.js',import.meta.url),'utf8');
+  const oldStatusCopy='读不到这一镜的状态，点重试';
+  assert.equal(directView.split(oldStatusCopy).length-1,1);
+  assert.match(directView.split('\n').find(line=>line.includes(oldStatusCopy)),/ctx\.api\(jobUrl\(/);
+  for(const source of [styleView,revisionLog,shotDetail])assert(!source.includes(oldStatusCopy));
+  assert.equal(directView.split("failureMessage(s.failureCode)||'这一镜没写成，可以重试'").length-1,2);
+  for(const fragment of ["failureMessage(job.failureCode)||'没做成，可以重试'", "const missingOutputCopy='读不到这项检查结果'", "failureMessage('narration_invalid'):'导入失败，可以重试'"]){assert(directView.includes(fragment));}
+  assert.equal(directView.split("failureMessage(e.code)||'没做成，可以重试'").length-1,2);
+  assert(styleView.includes("failureMessage(s.draft.failureCode)||'没做成，可以重试'"));
+  assert(revisionLog.includes("failureMessage(e.code)||'没做成，可以重试'"));
+  const messageDeclaration=shotDetail.split('\n').find(line=>line.startsWith('const message='));
+  assert(messageDeclaration);
+  const detailMessage=runInNewContext(`${messageDeclaration};message`,{failures:{known:'已知'},failureMessage});
+  assert.equal(detailMessage(), '没做成，可以重试');
+  assert.equal(detailMessage(null), '没做成，可以重试');
+  assert.equal(detailMessage('known'), '已知');
+  assert.equal(detailMessage('unregistered_code'), '没做成（错误码 unregistered_code），可以重试');
+  for(const source of [storyboardView,styleView])assert.doesNotMatch(source,/\bmaxlength\s*=/i);
+  assert.match(storyboardView,/data-limit="2000"/);
+  assert.match(styleView,/data-limit="4000"[\s\S]*data-adjust/);
+  assert.match(styleView,/data-limit="4000"[\s\S]*data-desc/);
+  assert.match(styleView,/data-limit="1000"[\s\S]*data-revise/);
+  assert.match(storyboardView,/bindLimits\(container\)/);
+  assert.match(styleView,/bindLimits\(container\)/);
+  assert.match(directView,/anyOver\(root\(\)\)/);
   assert.deepEqual(splitScript('  第一镜。\r\n\n 第二镜！ \n  '),['第一镜。','第二镜！']);
   assert.equal(shotSeconds({dialogue:'你好吗？'}),.8);
   assert.equal(shotSeconds({dialogue:'😀'}),.2);
@@ -69,13 +98,15 @@ export function testFormulas(){
   const expectedFailures={claude_cli_unavailable:'本机的 Claude 调不通，现在用不了 Opus',model_timeout:'Opus 这一镜写了太久没写完，可以重试',code_invalid:'Opus 写出来的不是一段完整的动画代码，可以重试',lint_failed_after_retry:'写了两次都没过自查（下面写卡在哪条）',render_failed:'这一镜没渲染出来，可以只重试这一镜',narration_invalid:'配音文件读不出来，换一个 WAV 再传'};
   for(const [code,text] of Object.entries(expectedFailures))assert.equal(failureMessage(code),text);
   for(const [code,text] of Object.entries(FAILURE_COPY)){assert.equal(failureMessage(code),text);assert.match(text,/[\u4e00-\u9fff]/);assert(!text.includes(code));}
-  for(const code of ['unregistered_code',null,undefined])assert.equal(failureMessage(code),'读不到这一镜的状态，点重试');
+  assert.equal(failureMessage('unregistered_code'),'没做成（错误码 unregistered_code），可以重试');
+  assert.equal(failureMessage(null),'');
+  assert.equal(failureMessage(undefined),'');
   assert.equal(defaultShot([{shotId:'01',status:'rendered'},{shotId:'02',status:'writing',lastInstruction:'重写'},{shotId:'03',status:'failed'}]),'03');
   assert.equal(defaultShot([{shotId:'01',status:'rendered'},{shotId:'02',status:'writing',attempts:2}]),'02');
   assert.equal(shotStart([{measuredSeconds:2.4},{measuredSeconds:3.6}],2),6);
   assert.equal(posterUrl('p',{jobId:'j'},{shotId:'03',posterRevision:8}),'/api/projects/p/direct/jobs/j/shots/03/poster.jpg?v=8');
   assert(!safeText('render_failed /private/tmp/example/file').includes('render_failed'));
-  console.log('PASS R276: split, Unicode, measured/estimated duration, totals, counts, elapsed/written time, polling, failures, selection, jumps, cache URLs');
+  console.log('PASS R276: input limits, split, Unicode, measured/estimated duration, totals, counts, elapsed/written time, polling, failures, selection, jumps, cache URLs');
 }
 export async function testDetail(page,job){
   const result=await page.evaluate(async job=>{
