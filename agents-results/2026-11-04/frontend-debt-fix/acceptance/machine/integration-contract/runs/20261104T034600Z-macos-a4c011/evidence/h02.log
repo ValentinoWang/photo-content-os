@@ -1,0 +1,4 @@
+CANCEL: 2 selected, both synthetic files unchanged
+SIMULATED_PARTIAL: 已移入 1 项，1 项状态待确认（错误码 post_move_verification_failed）。
+REAL_CONFIRM: {"http":200,"status":"completed","receiptCount":2,"visibleReceiptCount":2,"filesMoved":true,"pageErrors":[]}
+CLEANUP: two synthetic files restored and hash verified

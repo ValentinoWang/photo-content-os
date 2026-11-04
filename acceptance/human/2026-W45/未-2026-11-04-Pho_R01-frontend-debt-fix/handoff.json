@@ -1,0 +1,95 @@
+{
+  "baseline": {
+    "base": "2f945935bd14562e78319890b20fbf139fe7058e",
+    "branch": "frontend-debt-fix",
+    "head": "a571e42ad5b01318f690c728dd9812c62dba91e6",
+    "tree": "21d889a9472dc46722edc7029e06f440555eabb9"
+  },
+  "binding_sha256": "a42818cca92846b23c92a445907f2cc1240aa6f273c5f68d9507b5e24e80c9ef",
+  "blocking": true,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "e1b0dcbe644cf0641508e5a66d6fced059448c0a2d1bf72d987093fd661ebe15",
+  "claims": [
+    {
+      "claim_key": "photo.frontend.input-limit",
+      "item": "H-01",
+      "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-01-task5-desktop.png、H-01-task5-phone.png。",
+      "open_route": "note:作品中的脚本直出分镜脚本",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "photo.frontend.trash-confirm",
+      "item": "H-02",
+      "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-02-task3-confirm-desktop.png、H-02-task3-confirm-phone.png、H-02-task3-moved-desktop.png、H-02-task3-moved-phone.png。",
+      "open_route": "note:工作台的整理台",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "photo.frontend.method-tabs",
+      "item": "H-03",
+      "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-03-tabs-desktop.png、H-03-tabs-phone.png。",
+      "open_route": "note:作品页的做法页签",
+      "relations": [],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-04/frontend-debt-fix/acceptance-contract.md",
+  "contract_sha256": "d4eefdd9428fad5342f5017e384a1910bc8c09179ec58652572917c892c7fbc8",
+  "contract_version": "2",
+  "estimated_minutes": 6,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.frontend-debt-fix"
+  ],
+  "loop_name": "前端技术债务修复",
+  "machine_evidence": [
+    {
+      "layer": "machine/integration-contract",
+      "result_path": "agents-results/2026-11-04/frontend-debt-fix/acceptance/machine/integration-contract/runs/20261104T040000Z-macos-a571e4/result.md",
+      "result_sha256": "c9bcead2dbab4df1b139325a2d317828d46a3f8f2c63d1f45898aaf2bd303702",
+      "run_id": "20261104T040000Z-macos-a571e4",
+      "source_identity": "a571e42ad5b01318f690c728dd9812c62dba91e6"
+    },
+    {
+      "layer": "machine/non-functional",
+      "result_path": "agents-results/2026-11-04/frontend-debt-fix/acceptance/machine/non-functional/runs/20261104T041000Z-macos-a571e4/result.md",
+      "result_sha256": "229eb2f60b49eb379e25998df0b56aeb5a2358042a856e35e4b3d6b0b691913a",
+      "run_id": "20261104T041000Z-macos-a571e4",
+      "source_identity": "a571e42ad5b01318f690c728dd9812c62dba91e6"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-04T06:01:52.634344Z",
+  "release_slice": "frontend-debt-fix",
+  "request_id": "2026-11-04-Pho_R01-frontend-debt-fix",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "a571e42ad5b01318f690c728dd9812c62dba91e6",
+  "summary": "工作台输入、回收站确认和做法页签",
+  "task_id": "2026-11-04-Pho_R01-frontend-debt-fix"
+}

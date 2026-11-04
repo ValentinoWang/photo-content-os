@@ -1,0 +1,2 @@
+desktop {"viewport":1440,"fieldLeft":667.5,"fieldRight":1008.5,"scrollLeft":0,"scrollWidth":1180,"clientWidth":1180,"color":"rgb(181, 65, 47)"}
+phone {"viewport":390,"fieldLeft":111.5,"fieldRight":372.5,"scrollLeft":396,"scrollWidth":1100,"clientWidth":298,"color":"rgb(181, 65, 47)"}

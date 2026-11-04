@@ -1,0 +1,1532 @@
+.....................................F................... [  4%]
+.......................................FFF........................ss [  9%]
+sssssssss.................................................................................................................................................................. [ 23%]
+............................F............................... [ 28%]
+..............s..............................................F............................................................... [ 38%]
+..........sssss.....sssssEEEEEE..FFF..F................................. [ 43%]
+.........ss.......................................................................................................s.... [ 53%]
+........................................................................ [ 59%]
+..................................s..................................... [ 64%]
+................ss...................................................... [ 70%]
+........................................................................ [ 76%]
+........................................................................ [ 82%]
+................................................... [ 86%]
+........................................................................................................... [ 94%]
+...........ssssssss................................................                                                   [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of FrameMappingTests.test_alpha_and_geometry_have_exact_pixel_bounds _
+
+cls = <class 'test_pf_video_pipeline.FrameMappingTests'>
+
+    @classmethod
+    def setUpClass(cls):
+        evidence = os.getenv('PF_FRAME_EVIDENCE_ROOT')
+        cls.temporary = None if evidence else tempfile.TemporaryDirectory(prefix='pf-frame-')
+        cls.root = Path(evidence) if evidence else Path(cls.temporary.name)
+        cls.root.mkdir(parents=True, exist_ok=True)
+        cls.source = cls.root / 'source.mp4'
+        font = '/System/Library/Fonts/Supplemental/Arial.ttf'
+        barcode = 'if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)'
+        vf = f"format=rgb24,geq=r='{barcode}':g='{barcode}':b='{barcode}',drawtext=fontfile={font}:text='frame=%{{n}} t=%{{pts}}':x=170:y=2:fontsize=12:fontcolor=white"
+>       run('ffmpeg','-v','error','-y','-f','lavfi','-i','color=blue:s=320x180:r=30:d=20',
+            '-f','lavfi','-i','sine=frequency=440:duration=20:sample_rate=48000','-vf',vf,
+            '-c:v','libx264','-crf','12','-pix_fmt','yuv420p','-c:a','aac',str(cls.source))
+
+tests/test_pf_video_pipeline.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:22: in run
+    return subprocess.run(args, capture_output=True, check=True).stdout
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', ...),)
+kwargs = {'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', 'color=blue:s=320x180:r=30:d=20', '-f', 'lavfi', '-i', 'sine=frequency=440:duration=20:sample_rate=48000', '-vf', "format=rgb24,geq=r='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':g='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':b='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)',drawtext=fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:text='frame=%{n} t=%{pts}':x=170:y=2:fontsize=12:fontcolor=white", '-c:v', 'libx264', '-crf', '12', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-frame-4wf3a09t/source.mp4')' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+___ ERROR at setup of FrameMappingTests.test_changed_source_fails_projection ___
+
+cls = <class 'test_pf_video_pipeline.FrameMappingTests'>
+
+    @classmethod
+    def setUpClass(cls):
+        evidence = os.getenv('PF_FRAME_EVIDENCE_ROOT')
+        cls.temporary = None if evidence else tempfile.TemporaryDirectory(prefix='pf-frame-')
+        cls.root = Path(evidence) if evidence else Path(cls.temporary.name)
+        cls.root.mkdir(parents=True, exist_ok=True)
+        cls.source = cls.root / 'source.mp4'
+        font = '/System/Library/Fonts/Supplemental/Arial.ttf'
+        barcode = 'if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)'
+        vf = f"format=rgb24,geq=r='{barcode}':g='{barcode}':b='{barcode}',drawtext=fontfile={font}:text='frame=%{{n}} t=%{{pts}}':x=170:y=2:fontsize=12:fontcolor=white"
+>       run('ffmpeg','-v','error','-y','-f','lavfi','-i','color=blue:s=320x180:r=30:d=20',
+            '-f','lavfi','-i','sine=frequency=440:duration=20:sample_rate=48000','-vf',vf,
+            '-c:v','libx264','-crf','12','-pix_fmt','yuv420p','-c:a','aac',str(cls.source))
+
+tests/test_pf_video_pipeline.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:22: in run
+    return subprocess.run(args, capture_output=True, check=True).stdout
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', ...),)
+kwargs = {'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', 'color=blue:s=320x180:r=30:d=20', '-f', 'lavfi', '-i', 'sine=frequency=440:duration=20:sample_rate=48000', '-vf', "format=rgb24,geq=r='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':g='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':b='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)',drawtext=fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:text='frame=%{n} t=%{pts}':x=170:y=2:fontsize=12:fontcolor=white", '-c:v', 'libx264', '-crf', '12', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-frame-4wf3a09t/source.mp4')' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ ERROR at setup of FrameMappingTests.test_editable_document_structure_and_neutral_producers _
+
+cls = <class 'test_pf_video_pipeline.FrameMappingTests'>
+
+    @classmethod
+    def setUpClass(cls):
+        evidence = os.getenv('PF_FRAME_EVIDENCE_ROOT')
+        cls.temporary = None if evidence else tempfile.TemporaryDirectory(prefix='pf-frame-')
+        cls.root = Path(evidence) if evidence else Path(cls.temporary.name)
+        cls.root.mkdir(parents=True, exist_ok=True)
+        cls.source = cls.root / 'source.mp4'
+        font = '/System/Library/Fonts/Supplemental/Arial.ttf'
+        barcode = 'if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)'
+        vf = f"format=rgb24,geq=r='{barcode}':g='{barcode}':b='{barcode}',drawtext=fontfile={font}:text='frame=%{{n}} t=%{{pts}}':x=170:y=2:fontsize=12:fontcolor=white"
+>       run('ffmpeg','-v','error','-y','-f','lavfi','-i','color=blue:s=320x180:r=30:d=20',
+            '-f','lavfi','-i','sine=frequency=440:duration=20:sample_rate=48000','-vf',vf,
+            '-c:v','libx264','-crf','12','-pix_fmt','yuv420p','-c:a','aac',str(cls.source))
+
+tests/test_pf_video_pipeline.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:22: in run
+    return subprocess.run(args, capture_output=True, check=True).stdout
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', ...),)
+kwargs = {'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', 'color=blue:s=320x180:r=30:d=20', '-f', 'lavfi', '-i', 'sine=frequency=440:duration=20:sample_rate=48000', '-vf', "format=rgb24,geq=r='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':g='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':b='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)',drawtext=fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:text='frame=%{n} t=%{pts}':x=170:y=2:fontsize=12:fontcolor=white", '-c:v', 'libx264', '-crf', '12', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-frame-4wf3a09t/source.mp4')' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ ERROR at setup of FrameMappingTests.test_every_frame_matches_retained_source_clock _
+
+cls = <class 'test_pf_video_pipeline.FrameMappingTests'>
+
+    @classmethod
+    def setUpClass(cls):
+        evidence = os.getenv('PF_FRAME_EVIDENCE_ROOT')
+        cls.temporary = None if evidence else tempfile.TemporaryDirectory(prefix='pf-frame-')
+        cls.root = Path(evidence) if evidence else Path(cls.temporary.name)
+        cls.root.mkdir(parents=True, exist_ok=True)
+        cls.source = cls.root / 'source.mp4'
+        font = '/System/Library/Fonts/Supplemental/Arial.ttf'
+        barcode = 'if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)'
+        vf = f"format=rgb24,geq=r='{barcode}':g='{barcode}':b='{barcode}',drawtext=fontfile={font}:text='frame=%{{n}} t=%{{pts}}':x=170:y=2:fontsize=12:fontcolor=white"
+>       run('ffmpeg','-v','error','-y','-f','lavfi','-i','color=blue:s=320x180:r=30:d=20',
+            '-f','lavfi','-i','sine=frequency=440:duration=20:sample_rate=48000','-vf',vf,
+            '-c:v','libx264','-crf','12','-pix_fmt','yuv420p','-c:a','aac',str(cls.source))
+
+tests/test_pf_video_pipeline.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:22: in run
+    return subprocess.run(args, capture_output=True, check=True).stdout
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', ...),)
+kwargs = {'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', 'color=blue:s=320x180:r=30:d=20', '-f', 'lavfi', '-i', 'sine=frequency=440:duration=20:sample_rate=48000', '-vf', "format=rgb24,geq=r='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':g='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':b='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)',drawtext=fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:text='frame=%{n} t=%{pts}':x=170:y=2:fontsize=12:fontcolor=white", '-c:v', 'libx264', '-crf', '12', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-frame-4wf3a09t/source.mp4')' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ ERROR at setup of FrameMappingTests.test_projection_checks_preview_waveform_and_no_local_paths _
+
+cls = <class 'test_pf_video_pipeline.FrameMappingTests'>
+
+    @classmethod
+    def setUpClass(cls):
+        evidence = os.getenv('PF_FRAME_EVIDENCE_ROOT')
+        cls.temporary = None if evidence else tempfile.TemporaryDirectory(prefix='pf-frame-')
+        cls.root = Path(evidence) if evidence else Path(cls.temporary.name)
+        cls.root.mkdir(parents=True, exist_ok=True)
+        cls.source = cls.root / 'source.mp4'
+        font = '/System/Library/Fonts/Supplemental/Arial.ttf'
+        barcode = 'if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)'
+        vf = f"format=rgb24,geq=r='{barcode}':g='{barcode}':b='{barcode}',drawtext=fontfile={font}:text='frame=%{{n}} t=%{{pts}}':x=170:y=2:fontsize=12:fontcolor=white"
+>       run('ffmpeg','-v','error','-y','-f','lavfi','-i','color=blue:s=320x180:r=30:d=20',
+            '-f','lavfi','-i','sine=frequency=440:duration=20:sample_rate=48000','-vf',vf,
+            '-c:v','libx264','-crf','12','-pix_fmt','yuv420p','-c:a','aac',str(cls.source))
+
+tests/test_pf_video_pipeline.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:22: in run
+    return subprocess.run(args, capture_output=True, check=True).stdout
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', ...),)
+kwargs = {'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', 'color=blue:s=320x180:r=30:d=20', '-f', 'lavfi', '-i', 'sine=frequency=440:duration=20:sample_rate=48000', '-vf', "format=rgb24,geq=r='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':g='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':b='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)',drawtext=fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:text='frame=%{n} t=%{pts}':x=170:y=2:fontsize=12:fontcolor=white", '-c:v', 'libx264', '-crf', '12', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-frame-4wf3a09t/source.mp4')' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ ERROR at setup of FrameMappingTests.test_real_silence_envelope_has_no_simulated_peaks _
+
+cls = <class 'test_pf_video_pipeline.FrameMappingTests'>
+
+    @classmethod
+    def setUpClass(cls):
+        evidence = os.getenv('PF_FRAME_EVIDENCE_ROOT')
+        cls.temporary = None if evidence else tempfile.TemporaryDirectory(prefix='pf-frame-')
+        cls.root = Path(evidence) if evidence else Path(cls.temporary.name)
+        cls.root.mkdir(parents=True, exist_ok=True)
+        cls.source = cls.root / 'source.mp4'
+        font = '/System/Library/Fonts/Supplemental/Arial.ttf'
+        barcode = 'if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)'
+        vf = f"format=rgb24,geq=r='{barcode}':g='{barcode}':b='{barcode}',drawtext=fontfile={font}:text='frame=%{{n}} t=%{{pts}}':x=170:y=2:fontsize=12:fontcolor=white"
+>       run('ffmpeg','-v','error','-y','-f','lavfi','-i','color=blue:s=320x180:r=30:d=20',
+            '-f','lavfi','-i','sine=frequency=440:duration=20:sample_rate=48000','-vf',vf,
+            '-c:v','libx264','-crf','12','-pix_fmt','yuv420p','-c:a','aac',str(cls.source))
+
+tests/test_pf_video_pipeline.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:22: in run
+    return subprocess.run(args, capture_output=True, check=True).stdout
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', ...),)
+kwargs = {'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '('ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', 'color=blue:s=320x180:r=30:d=20', '-f', 'lavfi', '-i', 'sine=frequency=440:duration=20:sample_rate=48000', '-vf', "format=rgb24,geq=r='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':g='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)':b='if(lt(Y,20)*lt(X,160),20+210*mod(floor(N/pow(2,floor(X/16))),2),70)',drawtext=fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:text='frame=%{n} t=%{pts}':x=170:y=2:fontsize=12:fontcolor=white", '-c:v', 'libx264', '-crf', '12', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-frame-4wf3a09t/source.mp4')' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+=================================== FAILURES ===================================
+________________ BilingualCaptionTests.test_real_two_layer_burn ________________
+
+self = <test_bilingual_subtitles_r6.BilingualCaptionTests testMethod=test_real_two_layer_burn>
+
+    def test_real_two_layer_burn(self):
+>    with tempfile.TemporaryDirectory() as directory:check_real_burn_contains_two_layers_in_one_safe_backplate(Path(directory))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bilingual_subtitles_r6.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_bilingual_subtitles_r6.py:60: in check_real_burn_contains_two_layers_in_one_safe_backplate
+    s.write_direct_subtitles(d,sub,fps=30,total_frames=15);s.burn_subtitles(video,sub,out)
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/video_subtitles.py:280: in burn_subtitles
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 1800, check = True
+popenargs = (['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', ...],)
+kwargs = {'cwd': PosixPath('/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/photo-subtitles-a1onbouy'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', '-y', '-i', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/tmpem3sn7w4/source.mp4', '-/filter_complex', 'captions.filters', '-map', '[captioned]', '-map', '0:a:0', '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-map_metadata', '-1', '-movflags', '+faststart', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/tmpem3sn7w4/out.mp4']' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ RenderedSubtitleTests.test_chinese_glyphs_do_not_fall_back_to_identical_missing_glyph_boxes _
+
+self = <test_direct_video_subtitles.RenderedSubtitleTests testMethod=test_chinese_glyphs_do_not_fall_back_to_identical_missing_glyph_boxes>
+
+    def test_chinese_glyphs_do_not_fall_back_to_identical_missing_glyph_boxes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); source=root/'source.mp4'; output=root/'captioned.mp4'; subtitles=root/'subtitles.srt'
+            self.run_ffmpeg('-f','lavfi','-i','color=white:s=1080x1920:r=30:d=0.4', '-f','lavfi','-i','anullsrc=r=8000:cl=mono',
+                '-shortest','-c:v','libx264','-threads','1','-preset','ultrafast','-c:a','aac',str(source))
+            subtitles.write_text('1\n00:00:00,000 --> 00:00:00,200\n一一一一\n\n2\n00:00:00,200 --> 00:00:00,400\n汉字清晰\n')
+>           candidate.burn_subtitles(source,subtitles,output)
+
+tests/test_direct_video_subtitles.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/video_subtitles.py:280: in burn_subtitles
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 1800, check = True
+popenargs = (['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', ...],)
+kwargs = {'cwd': PosixPath('/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/photo-subtitles-o25qriic'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', '-y', '-i', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/tmp5vgzuk9t/source.mp4', '-/filter_complex', 'captions.filters', '-map', '[captioned]', '-map', '0:a:0', '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-map_metadata', '-1', '-movflags', '+faststart', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/tmp5vgzuk9t/captioned.mp4']' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+___ RenderedSubtitleTests.test_real_cut_first_frames_80166667_and_122866667 ____
+
+self = <test_direct_video_subtitles.RenderedSubtitleTests testMethod=test_real_cut_first_frames_80166667_and_122866667>
+
+    def test_real_cut_first_frames_80166667_and_122866667(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); source=root/'source.mp4'; output=root/'captioned.mp4'; subtitles=root/'subtitles.srt'
+            self.run_ffmpeg('-f','lavfi','-i','color=white:s=320x568:r=30:d=123', '-f','lavfi','-i','anullsrc=r=8000:cl=mono',
+                '-shortest','-c:v','libx264','-threads','1','-preset','ultrafast','-c:a','aac',str(source))
+            subtitles.write_text('1\n00:00:00,000 --> 00:01:20,167\n上一镜的字幕还没有结束\n\n2\n00:01:20,167 --> 00:02:02,867\n本镜字幕\n\n3\n00:02:02,867 --> 00:02:03,000\n最后一镜的字幕\n')
+>           candidate.burn_subtitles(source, subtitles, output)
+
+tests/test_direct_video_subtitles.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/video_subtitles.py:280: in burn_subtitles
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 1800, check = True
+popenargs = (['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', ...],)
+kwargs = {'cwd': PosixPath('/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/photo-subtitles-2xr81q16'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', '-y', '-i', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/tmpg8mr5ikj/source.mp4', '-/filter_complex', 'captions.filters', '-map', '[captioned]', '-map', '0:a:0', '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-map_metadata', '-1', '-movflags', '+faststart', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/tmpg8mr5ikj/captioned.mp4']' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ RenderedSubtitleTests.test_white_text_has_a_dark_backplate_on_white_and_black _
+
+self = <test_direct_video_subtitles.RenderedSubtitleTests testMethod=test_white_text_has_a_dark_backplate_on_white_and_black>
+
+    def test_white_text_has_a_dark_backplate_on_white_and_black(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); source=root/'source.mp4'; output=root/'captioned.mp4'; subtitles=root/'subtitles.srt'
+            self.run_ffmpeg('-f','lavfi','-i','color=white:s=1080x1920:r=30:d=0.2',
+                '-f','lavfi','-i','color=black:s=1080x1920:r=30:d=0.2', '-f','lavfi','-i','anullsrc=r=8000:cl=mono',
+                '-filter_complex','[0:v][1:v]concat=n=2:v=1:a=0[v]', '-map','[v]','-map','2:a','-t','0.4',
+                '-c:v','libx264','-threads','1','-preset','ultrafast','-c:a','aac',str(source))
+            subtitles.write_text('1\n00:00:00,000 --> 00:00:00,400\n一二三四五六七八九十一二三四\n甲乙丙丁戊己庚辛壬癸甲乙丙丁\n')
+>           candidate.burn_subtitles(source, subtitles, output)
+
+tests/test_direct_video_subtitles.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/video_subtitles.py:280: in burn_subtitles
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 1800, check = True
+popenargs = (['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', ...],)
+kwargs = {'cwd': PosixPath('/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/photo-subtitles-xspftr4l'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', '-y', '-i', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/tmpexmlz_zu/source.mp4', '-/filter_complex', 'captions.filters', '-map', '[captioned]', '-map', '0:a:0', '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-map_metadata', '-1', '-movflags', '+faststart', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/tmpexmlz_zu/captioned.mp4']' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ ObsidianDocSyncTest.test_document_contract_commands_run_with_system_python_without_media_dependencies _
+
+self = <test_obsidian_doc_sync.ObsidianDocSyncTest testMethod=test_document_contract_commands_run_with_system_python_without_media_dependencies>
+
+    def test_document_contract_commands_run_with_system_python_without_media_dependencies(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
+        for script, extra_args in (
+            ("check_obsidian_doc_sync.py", []),
+            ("check_outline_contract.py", ["."]),
+        ):
+            result = subprocess.run(
+                ["python3", str(root / "scripts" / script), *extra_args],
+                cwd=root,
+                env=env,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+>           self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
+E           AssertionError: 1 != 0 : Traceback (most recent call last):
+E             File "/private/tmp/photo-frontend-debt-suite-T8NOmg/scripts/check_obsidian_doc_sync.py", line 185, in <module>
+E               main()
+E             File "/private/tmp/photo-frontend-debt-suite-T8NOmg/scripts/check_obsidian_doc_sync.py", line 176, in main
+E               errors = run_checks(contract_path, local_root, obsidian_root)
+E             File "/private/tmp/photo-frontend-debt-suite-T8NOmg/scripts/check_obsidian_doc_sync.py", line 161, in run_checks
+E               errors.extend(check_pair(pair, local_root, obsidian_root, fail_if_source_newer, grace_seconds))
+E             File "/private/tmp/photo-frontend-debt-suite-T8NOmg/scripts/check_obsidian_doc_sync.py", line 122, in check_pair
+E               target_texts = {path: read_text(path) for path in target_paths}
+E             File "/private/tmp/photo-frontend-debt-suite-T8NOmg/scripts/check_obsidian_doc_sync.py", line 122, in <dictcomp>
+E               target_texts = {path: read_text(path) for path in target_paths}
+E             File "/private/tmp/photo-frontend-debt-suite-T8NOmg/scripts/check_obsidian_doc_sync.py", line 38, in read_text
+E               raise FileNotFoundError(f"missing required doc: {path}")
+E           FileNotFoundError: missing required doc: /private/tmp/photo-frontend-debt-suite-T8NOmg/isolated-obsidian/06_技术栈与自动化/腾讯云OpenClaw与MAC_OpenClaw本地素材协同流转规范.md
+
+tests/test_obsidian_doc_sync.py:103: AssertionError
+___ OpenClawBridgeTests.test_core_has_no_mandatory_openclaw_media_dependency ___
+
+self = <test_p1_openclaw_bridge.OpenClawBridgeTests testMethod=test_core_has_no_mandatory_openclaw_media_dependency>
+
+    def test_core_has_no_mandatory_openclaw_media_dependency(self):
+        requirements = (REPOSITORY_ROOT / "requirements-dev.txt").read_text(encoding="utf-8").lower()
+        self.assertNotIn("openclaw-media", requirements)
+    
+>       direct_imports = direct_media_imports(REPOSITORY_ROOT)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_p1_openclaw_bridge.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_p1_openclaw_bridge.py:21: in direct_media_imports
+    paths = subprocess.run(['git', 'ls-files', '-t', '-z', '--', '*.py'], cwd=repository_root,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (['git', 'ls-files', '-t', '-z', '--', '*.py'],)
+kwargs = {'cwd': PosixPath('/private/tmp/photo-frontend-debt-suite-T8NOmg'), 'text': True, 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'ls-files', '-t', '-z', '--', '*.py']' returned non-zero exit status 128.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ PreviewAndBlackFrameTests.test_black_native_frames_fail_even_with_burned_subtitles _
+
+self = <test_pf_video_pipeline.PreviewAndBlackFrameTests testMethod=test_black_native_frames_fail_even_with_burned_subtitles>
+
+    def test_black_native_frames_fail_even_with_burned_subtitles(self):
+        with tempfile.TemporaryDirectory(prefix='pf-black-') as directory:
+            root=Path(directory);source=root/'source.mp4';native=root/'native.mp4'
+            run('ffmpeg','-v','error','-y','-f','lavfi','-i','color=black:s=160x90:r=30:d=1',
+                '-f','lavfi','-i','sine=duration=1:sample_rate=48000','-c:v','libx264','-c:a','aac','-pix_fmt','yuv420p',str(source))
+            shutil.copyfile(source,native)
+            desc=descriptor();desc['shots'][0]['shot']['endSeconds']=1
+>           payload=project_candidate(native={'status':'completed','candidate':str(native),'checks':{'frames':30}},
+                                      descriptor=desc,source=source,original_hashes={source:renderer.sha256_file(source)},
+                                      output_dir=root/'return',workspace=root)
+
+tests/test_pf_video_pipeline.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/video_candidate.py:196: in project_candidate
+    bottom = burn_subtitles(video, subtitle_path, captioned)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/video_subtitles.py:280: in burn_subtitles
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 1800, check = True
+popenargs = (['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', ...],)
+kwargs = {'cwd': PosixPath('/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/photo-subtitles-sq8hq7tj'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', '-y', '-i', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-black-h5nb02ex/native.mp4', '-/filter_complex', 'captions.filters', '-map', '[captioned]', '-map', '0:a:0', '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-map_metadata', '-1', '-movflags', '+faststart', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-black-h5nb02ex/return/captioned.mp4']' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ PreviewAndBlackFrameTests.test_dark_design_with_a_few_dots_is_not_a_black_frame _
+
+self = <test_pf_video_pipeline.PreviewAndBlackFrameTests testMethod=test_dark_design_with_a_few_dots_is_not_a_black_frame>
+
+    def test_dark_design_with_a_few_dots_is_not_a_black_frame(self):
+>       self._assert_dark_fixture('0x14110D', 'drawbox=x=80:y=70:w=4:h=4:color=white:t=fill,drawbox=x=100:y=70:w=4:h=4:color=white:t=fill', 'pass')
+
+tests/test_pf_video_pipeline.py:179: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:192: in _assert_dark_fixture
+    payload=project_candidate(native={'status':'completed','candidate':str(native),'checks':{'frames':6}},
+scripts/video_candidate.py:196: in project_candidate
+    bottom = burn_subtitles(video, subtitle_path, captioned)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/video_subtitles.py:280: in burn_subtitles
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 1800, check = True
+popenargs = (['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', ...],)
+kwargs = {'cwd': PosixPath('/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/photo-subtitles-2ei06dq6'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', '-y', '-i', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-dark-content-o_e2vs82/native.mp4', '-/filter_complex', 'captions.filters', '-map', '[captioned]', '-map', '0:a:0', '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-map_metadata', '-1', '-movflags', '+faststart', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-dark-content-o_e2vs82/return/captioned.mp4']' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+_ PreviewAndBlackFrameTests.test_dark_design_with_a_small_white_header_is_not_a_black_frame _
+
+self = <test_pf_video_pipeline.PreviewAndBlackFrameTests testMethod=test_dark_design_with_a_small_white_header_is_not_a_black_frame>
+
+    def test_dark_design_with_a_small_white_header_is_not_a_black_frame(self):
+>       self._assert_dark_fixture('0x14110D', 'drawbox=x=12:y=12:w=30:h=3:color=white:t=fill', 'pass')
+
+tests/test_pf_video_pipeline.py:176: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:192: in _assert_dark_fixture
+    payload=project_candidate(native={'status':'completed','candidate':str(native),'checks':{'frames':6}},
+scripts/video_candidate.py:196: in project_candidate
+    bottom = burn_subtitles(video, subtitle_path, captioned)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/video_subtitles.py:280: in burn_subtitles
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 1800, check = True
+popenargs = (['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', ...],)
+kwargs = {'cwd': PosixPath('/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/photo-subtitles-o5uwq7ki'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', '-y', '-i', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-dark-content-krqevzaa/native.mp4', '-/filter_complex', 'captions.filters', '-map', '[captioned]', '-map', '0:a:0', '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-map_metadata', '-1', '-movflags', '+faststart', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-dark-content-krqevzaa/return/captioned.mp4']' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+__ PreviewAndBlackFrameTests.test_uniform_deep_gray_has_no_content_and_fails ___
+
+self = <test_pf_video_pipeline.PreviewAndBlackFrameTests testMethod=test_uniform_deep_gray_has_no_content_and_fails>
+
+    def test_uniform_deep_gray_has_no_content_and_fails(self):
+>       self._assert_dark_fixture('0x303030', None, 'fail')
+
+tests/test_pf_video_pipeline.py:182: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_pf_video_pipeline.py:192: in _assert_dark_fixture
+    payload=project_candidate(native={'status':'completed','candidate':str(native),'checks':{'frames':6}},
+scripts/video_candidate.py:196: in project_candidate
+    bottom = burn_subtitles(video, subtitle_path, captioned)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/video_subtitles.py:280: in burn_subtitles
+    subprocess.run(['ffmpeg','-nostdin','-hide_banner','-v','error','-xerror','-y','-i',str(video),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 1800, check = True
+popenargs = (['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', ...],)
+kwargs = {'cwd': PosixPath('/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/photo-subtitles-96nf8qvz'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['ffmpeg', '-nostdin', '-hide_banner', '-v', 'error', '-xerror', '-y', '-i', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-dark-content-ozdjayos/native.mp4', '-/filter_complex', 'captions.filters', '-map', '[captioned]', '-map', '0:a:0', '-c:v', 'libx264', '-threads', '1', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-map_metadata', '-1', '-movflags', '+faststart', '/tmp/photo-frontend-debt-suite-T8NOmg/isolated-tmp/pf-dark-content-ozdjayos/return/captioned.mp4']' returned non-zero exit status 8.
+
+/opt/homebrew/Cellar/python@3.13/3.13.16/Frameworks/Python.framework/Versions/3.13/lib/python3.13/subprocess.py:578: CalledProcessError
+=========================== short test summary info ============================
+FAILED tests/test_bilingual_subtitles_r6.py::BilingualCaptionTests::test_real_two_layer_burn
+FAILED tests/test_direct_video_subtitles.py::RenderedSubtitleTests::test_chinese_glyphs_do_not_fall_back_to_identical_missing_glyph_boxes
+FAILED tests/test_direct_video_subtitles.py::RenderedSubtitleTests::test_real_cut_first_frames_80166667_and_122866667
+FAILED tests/test_direct_video_subtitles.py::RenderedSubtitleTests::test_white_text_has_a_dark_backplate_on_white_and_black
+FAILED tests/test_obsidian_doc_sync.py::ObsidianDocSyncTest::test_document_contract_commands_run_with_system_python_without_media_dependencies
+FAILED tests/test_p1_openclaw_bridge.py::OpenClawBridgeTests::test_core_has_no_mandatory_openclaw_media_dependency
+FAILED tests/test_pf_video_pipeline.py::PreviewAndBlackFrameTests::test_black_native_frames_fail_even_with_burned_subtitles
+FAILED tests/test_pf_video_pipeline.py::PreviewAndBlackFrameTests::test_dark_design_with_a_few_dots_is_not_a_black_frame
+FAILED tests/test_pf_video_pipeline.py::PreviewAndBlackFrameTests::test_dark_design_with_a_small_white_header_is_not_a_black_frame
+FAILED tests/test_pf_video_pipeline.py::PreviewAndBlackFrameTests::test_uniform_deep_gray_has_no_content_and_fails
+ERROR tests/test_pf_video_pipeline.py::FrameMappingTests::test_alpha_and_geometry_have_exact_pixel_bounds
+ERROR tests/test_pf_video_pipeline.py::FrameMappingTests::test_changed_source_fails_projection
+ERROR tests/test_pf_video_pipeline.py::FrameMappingTests::test_editable_document_structure_and_neutral_producers
+ERROR tests/test_pf_video_pipeline.py::FrameMappingTests::test_every_frame_matches_retained_source_clock
+ERROR tests/test_pf_video_pipeline.py::FrameMappingTests::test_projection_checks_preview_waveform_and_no_local_paths
+ERROR tests/test_pf_video_pipeline.py::FrameMappingTests::test_real_silence_envelope_has_no_simulated_peaks
+SKIPPED [1] tests/test_edit_backend_qualification.py:134: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE
+SKIPPED [4] tests/test_edit_backend_qualification.py:154: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE
+SKIPPED [1] tests/test_edit_backend_qualification.py:175: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE
+SKIPPED [1] tests/test_edit_backend_qualification.py:198: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE
+SKIPPED [1] tests/test_edit_backend_qualification.py:228: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE
+SKIPPED [1] tests/test_edit_backend_qualification.py:245: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE
+SKIPPED [1] tests/test_edit_backend_qualification.py:260: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE
+SKIPPED [1] tests/test_edit_backend_qualification.py:294: real adapter qualification requires EI_TEST_BACKEND and EI_TEST_FIXTURE
+SKIPPED [1] tests/test_openfilm_adapter.py:102: real alpha conversion requires the shared synthetic fixture
+SKIPPED [1] tests/test_pf2_agent_runtime.py:183: Requires locked Agent and pinned browser
+SKIPPED [1] tests/test_pf2_agent_runtime.py:60: Requires locked Agent and pinned browser
+SKIPPED [1] tests/test_pf2_agent_runtime.py:127: Requires locked Agent and pinned browser
+SKIPPED [1] tests/test_pf2_agent_runtime.py:89: Requires locked Agent and pinned browser
+SKIPPED [1] tests/test_pf2_agent_runtime.py:142: Requires locked Agent and pinned browser
+SKIPPED [1] tests/test_pf2_service_e2e.py:21: Requires disposable PostgreSQL and locked Agent environment
+SKIPPED [1] tests/test_pf_agent_runtime.py:118: Requires locked Agent and pinned Playwright environment
+SKIPPED [1] tests/test_pf_agent_runtime.py:96: Requires locked Agent and pinned Playwright environment
+SKIPPED [1] tests/test_pf_agent_runtime.py:106: Requires locked Agent and pinned Playwright environment
+SKIPPED [1] tests/test_pf_agent_runtime.py:137: Requires locked Agent and pinned Playwright environment
+SKIPPED [1] tests/test_ps3_openfilm_session.py:15: explicit pinned openfilm runtime required
+SKIPPED [1] tests/test_ps3_openfilm_session.py:104: explicit pinned openfilm runtime required
+SKIPPED [1] tests/test_r223_music_analysis_runtime.py:37: opt-in offline model runtime; R223_RUNTIME_TESTS=1
+SKIPPED [1] tests/test_r276_direct_media.py:74: No pinned Playwright/browser configured; real HTML rendering deferred
+SKIPPED [1] tests/test_r277_boxes.py:17: Pinned Playwright/browser required for DOM measurement
+SKIPPED [1] tests/test_r277_boxes.py:54: Pinned Playwright/browser required for DOM measurement
+SKIPPED [1] tests/test_video_render.py:246: Requires explicitly configured local Playwright module, font, browser and FFmpeg
+SKIPPED [1] tests/test_video_render.py:273: Requires explicitly configured local Playwright module, font, browser and FFmpeg
+SKIPPED [1] tests/test_video_render.py:215: Requires explicitly configured local Playwright module, font, browser and FFmpeg
+SKIPPED [1] tests/test_video_render.py:289: Requires explicitly configured local Playwright module, font, browser and FFmpeg
+SKIPPED [1] tests/test_video_render.py:267: Requires explicitly configured local Playwright module, font, browser and FFmpeg
+SKIPPED [1] tests/test_video_render.py:236: Requires explicitly configured local Playwright module, font, browser and FFmpeg
+SKIPPED [1] tests/test_video_render.py:201: Requires explicitly configured local Playwright module, font, browser and FFmpeg
+SKIPPED [1] tests/test_video_render.py:256: Requires explicitly configured local Playwright module, font, browser and FFmpeg
+10 failed, 1205 passed, 36 skipped, 6 errors, 2005 subtests passed in 366.40s (0:06:06)

@@ -1,0 +1,35 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.frontend.input-limit",
+    "open_route": "note:作品中的脚本直出分镜脚本",
+    "surfaces": [
+      "studio.frontend",
+      "photo.tests-scripts"
+    ],
+    "relations": [],
+    "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-01-task5-desktop.png、H-01-task5-phone.png。"
+  },
+  {
+    "item": "H-02",
+    "claim_key": "photo.frontend.trash-confirm",
+    "open_route": "note:工作台的整理台",
+    "surfaces": [
+      "studio.frontend",
+      "photo.tests-scripts"
+    ],
+    "relations": [],
+    "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-02-task3-confirm-desktop.png、H-02-task3-confirm-phone.png、H-02-task3-moved-desktop.png、H-02-task3-moved-phone.png。"
+  },
+  {
+    "item": "H-03",
+    "claim_key": "photo.frontend.method-tabs",
+    "open_route": "note:作品页的做法页签",
+    "surfaces": [
+      "studio.frontend",
+      "photo.tests-scripts"
+    ],
+    "relations": [],
+    "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-03-tabs-desktop.png、H-03-tabs-phone.png。"
+  }
+]

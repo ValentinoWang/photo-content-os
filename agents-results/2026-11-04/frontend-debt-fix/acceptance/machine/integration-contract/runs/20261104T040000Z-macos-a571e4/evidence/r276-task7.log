@@ -1,0 +1,31 @@
+[rbox] 排队 heavy：13:57:00 开始等
+[rbox] 轮到了，排了 0 秒
+PASS R276: input limits, split, Unicode, measured/estimated duration, totals, counts, elapsed/written time, polling, failures, selection, jumps, cache URLs
+PASS 26 design comparisons, 0 complete-page captures, formulas and browser interactions
+{"id":"localPairingIntent","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"localPairingIntent","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"title","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"title","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"platform","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"platform","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"account","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"account","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"localWorkspace","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"localWorkspace","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"visual","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"visual","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"dialogue","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"dialogue","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"subtitle","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"subtitle","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"camera","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"camera","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"audio","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"audio","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"dv-adjust","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"dv-adjust","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"dv-desc","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"dv-desc","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"dv-revise","focused":false,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+{"id":"dv-revise","focused":true,"actual":"rgb(181, 65, 47)","expected":"rgb(181, 65, 47)"}
+[rbox] frontend-debt-r276-task7 结束，退出码 0

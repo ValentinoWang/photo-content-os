@@ -2,6 +2,25 @@
   "blocking_entries": [
     {
       "blocking": true,
+      "checklist_path": "acceptance/human/2026-W45/未-2026-11-04-Pho_R01-frontend-debt-fix/checklist.md",
+      "estimated_minutes": 6,
+      "handoff_path": "acceptance/human/2026-W45/未-2026-11-04-Pho_R01-frontend-debt-fix/handoff.json",
+      "invalidation_keys": [
+        "photo.frontend-debt-fix"
+      ],
+      "latest_run": null,
+      "loop_name": "前端技术债务修复",
+      "ready_at": "2026-11-04T06:01:52.634344Z",
+      "release_slice": "frontend-debt-fix",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "工作台输入、回收站确认和做法页签",
+      "task_id": "2026-11-04-Pho_R01-frontend-debt-fix",
+      "workspace": "acceptance/human/2026-W45/2026-11-04-Pho_R01-frontend-debt-fix"
+    },
+    {
+      "blocking": true,
       "checklist_path": "acceptance/human/2026-W44/未-2026-10-26-R280-photo-studio-light/checklist.md",
       "estimated_minutes": 10,
       "handoff_path": "acceptance/human/2026-W44/未-2026-10-26-R280-photo-studio-light/handoff.json",
@@ -189,7 +208,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-10-27T11:08:28.788626Z",
+  "generated_at": "2026-11-04T06:01:52.634344Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -251,5 +270,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "126b1c1df2237f31ef407e0caeaa3b81472a633213f554a4c7047fc013d8c599"
+  "source_facts_sha256": "20124cbc65d99f0b3df518b74a602db66fafe3f6041cdfba99be306b79615511"
 }

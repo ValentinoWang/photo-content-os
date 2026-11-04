@@ -1,0 +1,22 @@
+执行记录：以下为本次工具会话中各命令的原始输出和退出码，逐项转录；命令在源码 dd8096e 对应的相同工作树内容上执行。
+
+$ node tests/test_input_limit.mjs
+input limits: 23 assertions passed
+exit 0
+
+$ node tests/test_review_tabs.mjs
+passed 8 review tab direction cases and 5 accessibility source checks
+exit 0
+
+$ node tests/test_r276_direct_frontend.mjs
+PASS R276: input limits, split, Unicode, measured/estimated duration, totals, counts, elapsed/written time, polling, failures, selection, jumps, cache URLs
+exit 0
+
+$ node tests/test_r278_direct_rescript.mjs
+PASS R278 formulas, editing, request bodies, availability and entry locks
+PASS R276 approved block composition + R277 current-projection step locks
+exit 0
+
+$ node tests/test_trash_result.mjs
+trash result reconciliation: complete, partial, unknown codes, and missing receipts
+exit 0
