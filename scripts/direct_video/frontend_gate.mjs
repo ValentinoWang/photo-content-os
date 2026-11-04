@@ -287,3 +287,4 @@ try {
   writeFileSync(join(OUT,'screenshot-manifest.json'),JSON.stringify({scope:'F2 local Studio on configured gate port, intercepted projection fixtures; no backend generation claim',screenshots,contracts,browser_errors:browserErrors},null,2));
   await browser?.close();if(server){server.kill('SIGTERM');await new Promise(r=>server.once('exit',r));}rmSync(temp,{recursive:true,force:true});
 }
+await import('../../tests/test_input_limit_border.mjs');
