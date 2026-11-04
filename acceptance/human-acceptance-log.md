@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-11-04T06:01:52.634344Z
-- 来源事实 SHA-256：20124cbc65d99f0b3df518b74a602db66fafe3f6041cdfba99be306b79615511
+- 事实时间：2026-11-04T06:13:59.286210Z
+- 来源事实 SHA-256：274c0aefd9105143071ee9f261756338287aa608bfc806feb0353293a35aee4b
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -12,7 +12,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| 2026-11-04T06:01:52.634344Z | 2026-11-04-Pho_R01-frontend-debt-fix | 前端技术债务修复 | 任务委托人 | 6 | acceptance/human/2026-W45/未-2026-11-04-Pho_R01-frontend-debt-fix/checklist.md | - | - |
+| 2026-11-04T06:13:59.286210Z | 2026-11-04-Pho_R01-frontend-debt-fix | 前端技术债务修复 | 任务委托人 | 6 | acceptance/human/2026-W45/未-2026-11-04-Pho_R01-frontend-debt-fix/checklist.md | - | - |
 | 2026-10-27T07:57:37.837149Z | 2026-10-26-R280-photo-studio-light | Studio 界面换成浅色 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R280-photo-studio-light/checklist.md | - | - |
 | 2026-10-27T07:52:11.749884Z | 2026-10-26-R283-photo-direct-style-library | 脚本直出的视频风格加风格库：九种现成风格直接挑 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R283-photo-direct-style-library/checklist.md | - | - |
 | 2026-10-27T07:52:04.962669Z | 2026-10-26-R282-photo-direct-handoff-storyboard | 中台交过来的分镜和配音直接进脚本直出 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R282-photo-direct-handoff-storyboard/checklist.md | - | - |

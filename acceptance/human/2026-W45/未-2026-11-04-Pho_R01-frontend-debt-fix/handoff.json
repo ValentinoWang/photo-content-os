@@ -5,18 +5,58 @@
     "head": "a571e42ad5b01318f690c728dd9812c62dba91e6",
     "tree": "21d889a9472dc46722edc7029e06f440555eabb9"
   },
-  "binding_sha256": "a42818cca92846b23c92a445907f2cc1240aa6f273c5f68d9507b5e24e80c9ef",
+  "binding_sha256": "b32d3b78be2c77ecc60700a4808c85b7bcc1a57b8cb20f4df3095baea87d1e2b",
   "blocking": true,
   "blocking_budget": 3,
   "budget_exception": null,
-  "checklist_sha256": "e1b0dcbe644cf0641508e5a66d6fced059448c0a2d1bf72d987093fd661ebe15",
+  "bypasses": [
+    {
+      "line": 27,
+      "not_verified": "部分失败时系统实际返回的内容和文件去向没有通过这次模拟得到验证；完整移动和恢复已另行实测。",
+      "path": "agents-results/2026-11-04/frontend-debt-fix/H02-probe.mjs",
+      "reason": "真实系统部分失败难以稳定构造，用合成响应检查页面提示和待处理项",
+      "replaces": "回收站确认时返回部分成功和待确认项的响应"
+    }
+  ],
+  "checklist_sha256": "e8d44c8e74dc3a1ff3303d3fff385670aeb34a6840d19ad192fe0fe75fd4203e",
   "claims": [
     {
       "claim_key": "photo.frontend.input-limit",
       "item": "H-01",
       "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-01-task5-desktop.png、H-01-task5-phone.png。",
       "open_route": "note:作品中的脚本直出分镜脚本",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "旧卡验七镜生成、配音合成与单镜重写，本卡只验输入上限、回收站确认及页签方向键，旧卡仍须独立验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验画面标注重写、版本退回及问题记录，本卡只验输入上限、回收站确认及页签方向键，旧卡仍须独立验收。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验回到分镜、修改内容重新生成及定风格，本卡验输入上限、回收站确认及页签方向键，不替代原流程验收。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验工作台浅色主题、文字按钮及三个分页的整体观感，本卡验超限红边、回收站确认及页签方向键，不替代整体主题验收。",
+          "target": "2026-10-26-R280-photo-studio-light",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验中台分镜与配音交接及新版分镜切换，本卡验输入上限、回收站确认及页签方向键，不替代交接验收。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验九种风格库、生成效果及单项风格调整，本卡验输入上限、回收站确认及页签方向键，不替代风格库验收。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
+        }
+      ],
       "surfaces": [
         "acceptance.artifacts",
         "photo.documentation",
@@ -31,7 +71,38 @@
       "item": "H-02",
       "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-02-task3-confirm-desktop.png、H-02-task3-confirm-phone.png、H-02-task3-moved-desktop.png、H-02-task3-moved-phone.png。",
       "open_route": "note:工作台的整理台",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "旧卡验七镜生成、配音合成与单镜重写，本卡只验输入上限、回收站确认及页签方向键，旧卡仍须独立验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验画面标注重写、版本退回及问题记录，本卡只验输入上限、回收站确认及页签方向键，旧卡仍须独立验收。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验回到分镜、修改内容重新生成及定风格，本卡验输入上限、回收站确认及页签方向键，不替代原流程验收。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验工作台浅色主题、文字按钮及三个分页的整体观感，本卡验超限红边、回收站确认及页签方向键，不替代整体主题验收。",
+          "target": "2026-10-26-R280-photo-studio-light",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验中台分镜与配音交接及新版分镜切换，本卡验输入上限、回收站确认及页签方向键，不替代交接验收。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验九种风格库、生成效果及单项风格调整，本卡验输入上限、回收站确认及页签方向键，不替代风格库验收。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
+        }
+      ],
       "surfaces": [
         "acceptance.artifacts",
         "photo.documentation",
@@ -46,7 +117,38 @@
       "item": "H-03",
       "no_screenshot_reason": "项目隐私门禁规定截图不进 Git，已实拍并存放在仓库外证据目录 2026-11-04-frontend-debt-fix：H-03-tabs-desktop.png、H-03-tabs-phone.png。",
       "open_route": "note:作品页的做法页签",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "旧卡验七镜生成、配音合成与单镜重写，本卡只验输入上限、回收站确认及页签方向键，旧卡仍须独立验收。",
+          "target": "2026-10-26-R276-photo-direct-video-opus",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验画面标注重写、版本退回及问题记录，本卡只验输入上限、回收站确认及页签方向键，旧卡仍须独立验收。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验回到分镜、修改内容重新生成及定风格，本卡验输入上限、回收站确认及页签方向键，不替代原流程验收。",
+          "target": "2026-10-26-R278-photo-direct-rescript",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验工作台浅色主题、文字按钮及三个分页的整体观感，本卡验超限红边、回收站确认及页签方向键，不替代整体主题验收。",
+          "target": "2026-10-26-R280-photo-studio-light",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验中台分镜与配音交接及新版分镜切换，本卡验输入上限、回收站确认及页签方向键，不替代交接验收。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard",
+          "type": "independent"
+        },
+        {
+          "reason": "旧卡验九种风格库、生成效果及单项风格调整，本卡验输入上限、回收站确认及页签方向键，不替代风格库验收。",
+          "target": "2026-10-26-R283-photo-direct-style-library",
+          "type": "independent"
+        }
+      ],
       "surfaces": [
         "acceptance.artifacts",
         "photo.documentation",
@@ -83,7 +185,7 @@
     }
   ],
   "open_route": null,
-  "ready_at": "2026-11-04T06:01:52.634344Z",
+  "ready_at": "2026-11-04T06:13:59.286210Z",
   "release_slice": "frontend-debt-fix",
   "request_id": "2026-11-04-Pho_R01-frontend-debt-fix",
   "required_role": "任务委托人",

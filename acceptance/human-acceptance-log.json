@@ -10,7 +10,7 @@
       ],
       "latest_run": null,
       "loop_name": "前端技术债务修复",
-      "ready_at": "2026-11-04T06:01:52.634344Z",
+      "ready_at": "2026-11-04T06:13:59.286210Z",
       "release_slice": "frontend-debt-fix",
       "required_role": "任务委托人",
       "scope_hints": [],
@@ -208,7 +208,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-04T06:01:52.634344Z",
+  "generated_at": "2026-11-04T06:13:59.286210Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -270,5 +270,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "20124cbc65d99f0b3df518b74a602db66fafe3f6041cdfba99be306b79615511"
+  "source_facts_sha256": "274c0aefd9105143071ee9f261756338287aa608bfc806feb0353293a35aee4b"
 }

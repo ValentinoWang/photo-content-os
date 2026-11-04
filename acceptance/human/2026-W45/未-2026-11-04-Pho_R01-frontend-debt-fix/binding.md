@@ -8,7 +8,7 @@
 - Contract version: 2
 - Contract SHA-256: d4eefdd9428fad5342f5017e384a1910bc8c09179ec58652572917c892c7fbc8
 - Human checklist: acceptance/human/2026-W45/2026-11-04-Pho_R01-frontend-debt-fix/checklist.md
-- Checklist SHA-256: e1b0dcbe644cf0641508e5a66d6fced059448c0a2d1bf72d987093fd661ebe15
+- Checklist SHA-256: e8d44c8e74dc3a1ff3303d3fff385670aeb34a6840d19ad192fe0fe75fd4203e
 
 ## Item bindings
 
