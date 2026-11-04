@@ -35,19 +35,24 @@ _REQUIRED_BACKEND_METHODS = (
 )
 _MACOS_TRASH_TIMEOUT_SECONDS = 10.0
 _MACOS_TRASH_SCRIPT = r'''
-ObjC.import('Foundation');
-const source = $.NSURL.fileURLWithPath($(arguments[0]));
-const resulting = Ref();
-const error = Ref();
-const ok = $.NSFileManager.defaultManager.trashItemAtURLResultingItemURLError(
-  source,
-  resulting,
-  error
-);
-if (!ok || resulting[0] === undefined || resulting[0] === null) {
-  throw new Error('system_trash_failed');
-}
-$.puts(JSON.stringify({trash_path: ObjC.unwrap(resulting[0].path)}));
+import ctypes, ctypes.util, json, sys
+objc = ctypes.CDLL(ctypes.util.find_library('objc'))
+ctypes.CDLL('/System/Library/Frameworks/Foundation.framework/Foundation')
+objc.objc_getClass.restype = ctypes.c_void_p; objc.objc_getClass.argtypes = [ctypes.c_char_p]
+objc.sel_registerName.restype = ctypes.c_void_p; objc.sel_registerName.argtypes = [ctypes.c_char_p]
+def send(restype, *argtypes):
+    f = ctypes.CFUNCTYPE(restype, ctypes.c_void_p, ctypes.c_void_p, *argtypes)
+    return f(('objc_msgSend', objc))
+c, s = objc.objc_getClass, objc.sel_registerName
+ns = send(ctypes.c_void_p, ctypes.c_char_p)(c(b'NSString'), s(b'stringWithUTF8String:'), sys.argv[1].encode())
+url = send(ctypes.c_void_p, ctypes.c_void_p)(c(b'NSURL'), s(b'fileURLWithPath:'), ns)
+fm = send(ctypes.c_void_p)(c(b'NSFileManager'), s(b'defaultManager'))
+out = ctypes.c_void_p(); err = ctypes.c_void_p()
+ok = send(ctypes.c_bool, ctypes.c_void_p, ctypes.POINTER(ctypes.c_void_p), ctypes.POINTER(ctypes.c_void_p))(fm, s(b'trashItemAtURL:resultingItemURL:error:'), url, ctypes.byref(out), ctypes.byref(err))
+if not ok or not out.value: sys.exit(1)
+p = send(ctypes.c_void_p)(out.value, s(b'path'))
+u = send(ctypes.c_char_p)(p, s(b'UTF8String'))
+print(json.dumps({'trash_path': u.decode()}))
 '''
 
 
@@ -250,7 +255,7 @@ class MacOSSystemTrashBackend:
             raise MediaTrashFlowError("unsupported_backend", "macOS system trash is unavailable")
         try:
             result = self._runner(
-                ("/usr/bin/osascript", "-l", "JavaScript", "-e", _MACOS_TRASH_SCRIPT, str(source)),
+                (sys.executable, "-I", "-c", _MACOS_TRASH_SCRIPT, str(source)),
                 _MACOS_TRASH_TIMEOUT_SECONDS,
             )
         except (OSError, subprocess.SubprocessError, TimeoutError) as exc:
@@ -480,6 +485,14 @@ def _resolve_inside_root(work_root: Path, relative_path: str) -> Path:
     return candidate
 
 
+def _move_failure_code(source: Path, fallback: str) -> str:
+    try:
+        source.lstat()
+    except OSError:
+        return "post_move_verification_failed"
+    return fallback
+
+
 def _pending_record(
     *,
     candidate_number: str,
@@ -606,7 +619,7 @@ class MediaTrashFlow:
                         expected_sha256=evidence["sha256"],
                         operator=audit_operator,
                         operation_time=timestamp,
-                        code=exc.code,
+                        code=_move_failure_code(source, exc.code),
                     )
                 )
                 continue
@@ -618,7 +631,7 @@ class MediaTrashFlow:
                         expected_sha256=evidence["sha256"],
                         operator=audit_operator,
                         operation_time=timestamp,
-                        code="move_failed",
+                        code=_move_failure_code(source, "move_failed"),
                         location_id=None,
                     )
                 )

@@ -153,6 +153,7 @@ def _public_trash_receipt(receipt: Mapping[str, object]) -> dict[str, object]:
     allowed = (
         "receipt_id",
         "status",
+        "failure_code",
         "candidate_number",
         "media_id",
         "original_relative_path",

@@ -8,6 +8,7 @@ import json
 import sys
 import tempfile
 import unittest
+import uuid
 from pathlib import Path
 from typing import Any
 from types import SimpleNamespace
@@ -302,7 +303,7 @@ class MediaTrashFlowTests(unittest.TestCase):
             self.assertTrue(receipt["trash_location_id"].startswith("macos-"))
             self.assertNotIn(str(Path(self.temp_dir.name)), json.dumps(receipt))
             self.assertFalse((self.root / "one.jpg").exists())
-            self.assertEqual(runner.calls[0][0][:4], ("/usr/bin/osascript", "-l", "JavaScript", "-e"))
+            self.assertEqual(runner.calls[0][0], (sys.executable, "-I", "-c", media_trash_flow._MACOS_TRASH_SCRIPT, str((self.root / "one.jpg").resolve())))
 
             restarted = MacOSSystemTrashBackend(registry_path=registry, runner=runner)
             restored = MediaTrashFlow(self.root, restarted).restore_receipt(receipt)
@@ -311,12 +312,63 @@ class MediaTrashFlowTests(unittest.TestCase):
         self.assertEqual(sha256_file(self.root / "one.jpg"), item["sha256"])
         self.assertEqual(json.loads(registry.read_text(encoding="utf-8"))["locations"], {})
 
+    @unittest.skipUnless(sys.platform == "darwin", "requires the macOS system Trash")
+    def test_macos_real_system_trash_moves_and_verifies_synthetic_file(self) -> None:
+        name = f"photo-trash-test-{uuid.uuid4().hex}.mov"
+        source = self.root / name
+        source.write_bytes(b"synthetic system trash fixture")
+        expected = sha256_file(source)
+        output = []
+        def real_runner(command: Any, timeout: float) -> Any:
+            result = MacOSSystemTrashBackend._run_foundation_trash(command, timeout)
+            output.append(result.stdout)
+            return result
+
+        backend = MacOSSystemTrashBackend(registry_path=Path(self.temp_dir.name) / "trash-registry.json", runner=real_runner)
+        location = None
+        try:
+            location = backend.move_to_trash(source, candidate_number="synthetic")
+            self.assertFalse(source.exists())
+            self.assertTrue(backend.verify_in_trash(location, expected))
+            self.assertEqual(Path(json.loads(output[0])["trash_path"]).name, name)
+        finally:
+            if location is not None:
+                trash_path = backend._locations[location]
+                self.assertEqual(trash_path.name, name)
+                self.assertTrue(backend.verify_in_trash(location, expected))
+                backend.restore_from_trash(location, source, candidate_number="synthetic")
+                self.assertEqual(sha256_file(source), expected)
+            elif not source.exists():
+                # A failed receipt parse may still follow a successful move.
+                trash_path = Path.home() / ".Trash" / name
+                self.assertEqual(trash_path.name, name)
+                self.assertEqual(sha256_file(trash_path), expected)
+                trash_path.rename(source)
+
     def test_macos_factory_is_available_only_on_macos(self) -> None:
         registry = Path(self.temp_dir.name) / "private-state" / "trash-receipts.json"
         with patch.object(media_trash_flow.sys, "platform", "darwin"):
             self.assertIsInstance(get_system_trash_backend("macos", registry_path=registry), MacOSSystemTrashBackend)
         with patch.object(media_trash_flow.sys, "platform", "linux"):
             self.assertIsInstance(get_system_trash_backend("macos", registry_path=registry), UnavailableSystemTrashBackend)
+
+    def test_crashed_trash_process_after_move_is_unverified(self) -> None:
+        _, item = self.write_media("synthetic.mov", b"synthetic crash fixture")
+
+        def crashed_runner(command: Any, _timeout: float) -> SimpleNamespace:
+            Path(command[-1]).rename(self.trash / "synthetic.mov")
+            return SimpleNamespace(returncode=-11, stdout="")
+
+        with patch.object(media_trash_flow.sys, "platform", "darwin"):
+            backend = MacOSSystemTrashBackend(runner=crashed_runner)
+            result = MediaTrashFlow(self.root, backend).trash_confirmed_candidates(
+                self.confirmation_for(item), operator="operator-a", second_confirmation=True
+            )
+        self.assertEqual(result["status"], "partial")
+        self.assertEqual(result["receipts"], [])
+        self.assertEqual(result["pending"][0]["failure_code"], "post_move_verification_failed")
+        self.assertFalse((self.root / "synthetic.mov").exists())
+        self.assertTrue((self.trash / "synthetic.mov").is_file())
 
 
 if __name__ == "__main__":

@@ -118,6 +118,9 @@ def _validate_reason(value: Mapping[str, Any]) -> tuple[str, dict[str, Any]]:
             _reject("invalid_reason_evidence", "duration reason requires a non-negative duration_sec")
         if not isinstance(threshold, (int, float)) or isinstance(threshold, bool) or threshold <= 0 or duration >= threshold:
             _reject("invalid_reason_evidence", "duration reason must prove duration_sec is below threshold_sec")
+        # JavaScript serializes integral floats as integers; keep candidate IDs stable across the browser round trip.
+        normalized["duration_sec"] = float(duration)
+        normalized["threshold_sec"] = float(threshold)
     elif reason == REASON_FILE_DAMAGED:
         if normalized.get("image_health") not in {"malformed", "unreadable"}:
             _reject("invalid_reason_evidence", "damaged-file reason requires malformed or unreadable image health")

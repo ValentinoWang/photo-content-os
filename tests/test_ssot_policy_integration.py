@@ -42,8 +42,11 @@ class FakeTrashBackend:
         self.trash_root = trash_root
         self.trash_root.mkdir(parents=True)
         self.locations: dict[str, Path] = {}
+        self.fail_move: set[str] = set()
 
     def move_to_trash(self, source: Path, *, candidate_number: str) -> str:
+        if candidate_number in self.fail_move:
+            raise RuntimeError("synthetic move failure")
         location_id = f"fixture-{candidate_number}"
         target = self.trash_root / candidate_number
         source.rename(target)
@@ -301,6 +304,36 @@ class StudioPolicyIntegrationTests(unittest.TestCase):
         self.assertEqual(restored["receipt"]["status"], "restored")
         self.assertTrue(source.exists())
 
+
+    def test_partial_trash_response_exposes_failure_code_and_keeps_failed_file(self) -> None:
+        csrf, _ = self.bootstrap()
+        project = self.create_project(csrf)
+        workspace = self.root / "workspace"
+        items = []
+        for index in (1, 2):
+            source = workspace / f"synthetic-{index}.mov"
+            source.write_bytes(f"synthetic-{index}".encode())
+            items.append({"media_id": f"{index:012x}", "relative_path": source.name,
+                          "sha256": sha256_file(source), "media_type": "video", "duration_sec": 0.4,
+                          "image_health": "not_applicable", "image_readable": None})
+        manifest_path = workspace / "ai-analysis" / "media-manifest.json"
+        manifest_path.parent.mkdir()
+        manifest_path.write_text(json.dumps({"items": items}), encoding="utf-8")
+        base = f"/api/projects/{project['id']}/media-delete"
+        _, suggested = self.request(base + "/recommendations", method="POST", csrf=csrf, body={})
+        candidates = suggested["candidates"]
+        self.trash.fail_move.add(candidates[1]["candidate_number"])
+        status, result = self.request(base + "/confirm", method="POST", csrf=csrf, body={
+            "candidates": candidates,
+            "selectedCandidateNumbers": [item["candidate_number"] for item in candidates],
+            "secondConfirmation": True,
+        })
+        self.assertEqual(status, 200)
+        self.assertEqual(result["status"], "partial")
+        self.assertEqual(len(result["receipts"]), 1)
+        self.assertEqual(result["pending"][0]["failure_code"], "move_failed")
+        self.assertFalse((workspace / "synthetic-1.mov").exists())
+        self.assertTrue((workspace / "synthetic-2.mov").exists())
 
 if __name__ == "__main__":
     unittest.main()

@@ -156,6 +156,21 @@ class MediaDeleteRecommendationTests(unittest.TestCase):
         with self.assertRaisesRegex(recommendations.DeleteRecommendationError, "stale_candidate_number"):
             recommendations.confirm_delete_selection([tampered], [candidate["candidate_number"]])
 
+    def test_browser_integer_serialization_preserves_candidate_identity(self) -> None:
+        for duration in (0.0, 0.4):
+            with self.subTest(duration=duration):
+                candidate = recommendations.generate_delete_recommendations(
+                    {"items": [short_video_item(duration_sec=duration)]}
+                )[0]
+                returned = copy.deepcopy(candidate)
+                returned["reason_evidence"]["threshold_sec"] = 1
+                if duration == 0:
+                    returned["reason_evidence"]["duration_sec"] = 0
+                confirmation = recommendations.confirm_delete_selection(
+                    [returned], [candidate["candidate_number"]]
+                )
+                self.assertEqual(confirmation["selected_candidate_numbers"], [candidate["candidate_number"]])
+
     def test_confirmation_preserves_evidence_and_has_no_side_effect(self) -> None:
         candidate = recommendations.generate_delete_recommendations({"items": [short_video_item()]})[0]
         before = copy.deepcopy(candidate)
