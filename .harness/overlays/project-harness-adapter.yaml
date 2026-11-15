@@ -1,6 +1,21 @@
 project:
   name: photo-content-os
   profile: core
+# 远端只有 main 一条分支：日常合并和发布都在它上面。以后开了 dev，再把 integration 改成 dev。
+branches:
+  integration: main
+  release: main
+acceptance:
+  # 只列用户看不到的仓库工具。后端、脚本、门禁脚本和本文件都没列进来，照旧按完整验收走。
+  machine_only_paths:
+    - .github/**
+    - .agents/skills/photo-remote-dev-box/**
+    - requirements-dev.txt
+  # 用户直接看到的：工作台页面、风格库样张、项目模板。
+  visible_paths:
+    - studio/static/**
+    - scripts/direct_video/style_library/**
+    - templates/**
 design:
   token_sources:
     - evidence/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html
