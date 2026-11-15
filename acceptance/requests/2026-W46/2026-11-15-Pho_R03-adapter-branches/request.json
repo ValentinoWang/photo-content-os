@@ -1,0 +1,45 @@
+{
+  "id": "2026-11-15-Pho_R03-adapter-branches",
+  "project": "photo-content-os",
+  "title": "项目适配文件写明集成和发布分支，登记只走机器验证的路径",
+  "author": {
+    "agent": "claude",
+    "session": "4436b39b-fa46-4efa-9ed2-7b0157610bb0"
+  },
+  "executors": [
+    {
+      "agent": "claude",
+      "session": "4436b39b-fa46-4efa-9ed2-7b0157610bb0",
+      "role": "总控"
+    }
+  ],
+  "raw_request": "（不是用户原话，是 Harness 总控会话 250ff3f5 在 2026-11-15 发来的跨会话通知）photo-content-os 在新的统一流程检查里缺两项必填，台北 2026-11-22 起会挡推送。缺：.harness/overlays/project-harness-adapter.yaml 的 branches.integration、branches.release（例如 dev / main，按你们实际分支写）。建议：声明 acceptance.machine_only_paths / visible_paths——推 dev 的提交级别现在按它们自动判，只碰 machine_only 的提交不要需求卡。请你们会话改并提交；有异议回信。",
+  "understanding": [
+    "统一流程检查对本项目显示合规，11 月 22 日以后推送不会因为缺分支声明被挡。",
+    "集成分支和发布分支都写 main：远端只有 main 一条分支，和工具原来的默认值一样，推送和验收的做法不变（我补充的）。",
+    "只改 CI 配置、开发机技能和开发依赖清单的提交，以后只要机器检查通过，不用另登记需求卡；工作台页面、风格库样张、项目模板的改动照旧要人工验收（我补充的）。"
+  ],
+  "out_of_scope": [
+    "不新开 dev 分支，不改现在的推送流程",
+    "后端、脚本、门禁脚本和适配文件本身不放进只走机器验证的清单",
+    "不处理主目录里别的会话留下的未提交改动"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开终端，进入 Photo Content OS 本地创作工作台的项目目录。",
+        "输入统一流程检查的命令 harnessctl conform，项目参数填当前目录，按回车。",
+        "查看输出的第一行和下面各行。"
+      ],
+      "expected": "第一行写着「合规」，下面没有「不合规」的行。"
+    }
+  ],
+  "confirmation_required": false,
+  "schema": "request-card/v1",
+  "created_at": "2026-11-15T17:26:43.829220Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}
