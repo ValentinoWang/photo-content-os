@@ -106,3 +106,20 @@ def test_build_index_reads_only_category_cards():
     assert len(entries) == 124
     assert {entry["category"] for entry in entries}.isdisjoint(recipe_library.NON_CATEGORY_DIRS)
 
+
+def test_upstream_demo_sources_resolve_inside_repo():
+    upstream = recipe_library.ROOT / "upstream"
+    assert "3ac67b75dd0b3bc2fd807c17f6b7ce35373eef3d" in (upstream / "UPSTREAM").read_text(encoding="utf-8")
+    demos = recipe_library.ROOT / "demos"
+    # Upstream's own render-demos.mjs reads workbench/demosrc -> ../demos; both must land on the one copy in shot_recipes/demos.
+    assert (upstream / "workbench" / "demosrc").resolve() == demos.resolve()
+    assert (upstream / "demos").resolve() == demos.resolve()
+    assert (upstream / "workbench" / "scripts" / "render-demos.mjs").is_file()
+    missing = []
+    for source in demos.glob("*/*/*.tsx"):
+        for target in re.findall(r"from '(\.{1,2}/[^']+)'", source.read_text(encoding="utf-8")):
+            base = (source.parent / target).resolve()
+            candidates = [base, *(base.with_name(base.name + ext) for ext in (".ts", ".tsx", ".json")), base / "index.ts"]
+            if not any(path.is_file() for path in candidates):
+                missing.append(f"{source.relative_to(demos)} -> {target}")
+    assert missing == []

@@ -94,3 +94,8 @@ develop/Harness/*
 scripts/quality/check_ai_egress_ownership.py
 scripts/quality/check_evidence_retention.py
 scripts/quality/test_pruning.py
+
+# 上游 video-shotcraft（Apache-2.0）动画源码渲染要用的贴图和截图，来源提交见 shot_recipes/upstream/UPSTREAM
+!scripts/direct_video/shot_recipes/**/*.png
+!scripts/direct_video/shot_recipes/**/*.jpg
+!scripts/direct_video/shot_recipes/**/*.webp

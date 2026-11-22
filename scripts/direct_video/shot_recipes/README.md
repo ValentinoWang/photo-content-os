@@ -8,11 +8,36 @@
 | --- | --- | --- |
 | `poster` / `poster_source` | 上游画廊封面 50 张（`upstream`）；其余有动画源码的 72 张，用上游自己的 `workbench/scripts/render-demos.mjs` 渲染后取 90% 处一帧（`render`，和 50 张官方封面比最接近）；卡里列了几个镜头的取第一个；上游没有源码的 2 张为空 | `media/posters/` |
 | `clip` | 上游画廊样片 87 个，共 62 MB，不进 git；`python3 scripts/direct_video/recipe_library.py --fetch-clips` 按 `media/clips.json` 的 SHA-256 下载到 `~/.photo-content-os/media/shot_recipes/clips/`（可用 `SHOT_RECIPE_CLIP_DIR` 改） | 本机 |
-| `demo` | 上游 Remotion 动画源码，122 张卡有，只作写镜头时的参照，不进渲染管线 | `demos/<类别>/<id>/` |
+| `demo` | 上游 Remotion 动画源码：122 张卡有，另有 2 个上游没配卡的镜头。连同共用组件 `_fixtures`、贴图 `_textures`、旧版 `_legacy` 一起原样搬入，可以直接渲染（见下节）。只作写镜头时的参照，不进制作台的出片管线 | `demos/<类别>/<id>/` |
 
 上游画廊的样片有一部分比封面旧（例如 blur-slide 的样片还是占位文案），选镜以封面为准。
 
-重新生成 `render` 封面：在上游克隆的 `workbench/` 里 `npm ci`，跑 `node scripts/render-demos.mjs --out <目录>`（150 个镜头约 30 分钟），再跑 `python3 scripts/direct_video/recipe_library.py --posters-from-renders <目录>` 和 `python3 scripts/direct_video/recipe_library.py`。
+## 上游原样代码（`upstream/`）
+
+`upstream/` 保留上游的目录结构，不用另找克隆就能跑上游自己的脚本：
+
+| 目录 | 内容 |
+| --- | --- |
+| `workbench/` | Remotion 工作台和批量渲染脚本 `scripts/render-demos.mjs` |
+| `template/` | 上游的 Remotion 成片模板 |
+| `references/` | 美学规则、流程、音效设计、卡点、终审、镜头序列等文档（`shots` 就是本目录各类别下的配方卡，不重复存） |
+| `shot-polish/` | 上游逐镜打磨的笔记和对照脚本 |
+| `gallery/api/library.json`、`gallery/translations.js` | 工作台用来取中文名和时长的画廊数据 |
+| `demos` | 链接到本目录的 `demos/`，动画源码只存一份 |
+
+没搬的部分：`ClipCardLooping` 镜头（要真实视频素材，上游自己的批量渲染也跳过它，还依赖上游 `assets/lib`）；上游的背景音乐，以及 `template/public/audio` 里的音效（许可没核实，只留 `ATTRIBUTION.md`）；画廊网站、剪映导出、发布脚本（制作台有自己的剪映导出）；README 的各语种译本。
+
+重新渲染（150 个镜头约 30 分钟）：
+
+```bash
+cd scripts/direct_video/shot_recipes/upstream/workbench
+npm ci
+node scripts/render-demos.mjs --out <目录>        # 只渲几个：--only BlurSlide,MultiplaneReal
+```
+
+渲染完成后，再跑 `python3 scripts/direct_video/recipe_library.py --posters-from-renders <目录>` 和 `python3 scripts/direct_video/recipe_library.py`，重新生成 `render` 封面。
+
+`npm ci`（会顺带跑 `scripts/gen-index.mjs`）会生成 `node_modules/`、`public/` 下的链接和 `src/cards/*-index.ts`，上游的 `.gitignore` 已把它们排除。
 
 ## 类别数量
 
