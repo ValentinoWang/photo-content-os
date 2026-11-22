@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Photo Content OS Studio</title>
+  <script src="../mock.js"></script>
+<link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./workflow.css">
+  <link rel="stylesheet" href="./review.css">
+  <link rel="stylesheet" href="./direct.css">
+  <link rel="stylesheet" href="./direct-shot-detail.css">
+  <link rel="stylesheet" href="./direct-rescript.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite">
+    <aside class="side" data-design-id="R208-NAV">
+      <div class="brand"><span class="brand-mark">P</span><div><b>Photo Content OS</b><small>本地创作工作台</small></div></div>
+<nav class="nav" aria-label="主导航" data-design-id="R208-NAV"><button data-screen="home" data-nav="home" aria-label="工作台"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8h-6v8M3 10l9-8 9 8v11H3z"/></svg></span>工作台<i class="badge" id="home-count" data-design-data hidden></i></button><button data-screen="inbox" data-nav="inbox" aria-label="整理台"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h6l2 3h4l2-3h6M2 12l4-8h12l4 8v8H2z"/></svg></span>整理台</button><button data-screen="project" data-nav="projects" aria-label="项目"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 20V3h7l4 3h9v14z"/></svg></span>项目</button><button data-screen="library" data-nav="library" aria-label="素材库"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m6 21 10-10 5 5"/></svg></span>素材库</button><button data-nav="music" aria-label="音乐库"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>音乐库</button><button data-screen="settings" data-nav="settings" aria-label="设置与诊断"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span>设置与诊断</button></nav><footer class="side-foot"><div><i class="dot dot--ok"></i>本机可用</div><div id="upstream-state"></div></footer>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><div class="crumb" id="crumb"></div><h1 id="screen-title"></h1><p id="screen-sub"></p></div><div class="topbar-actions" id="top-actions"></div></header>
+      <section class="review-screen" id="review-screen"></section>
+      <section class="screen" data-screen-panel="home" hidden></section>
+      <section class="screen" data-screen-panel="inbox" hidden></section>
+      <section class="screen" data-screen-panel="library" hidden></section>
+      <section class="screen" data-screen-panel="project" hidden></section>
+      <section class="screen" data-screen-panel="settings" hidden></section>
+    </main>
+  </div>
+
+  <section class="surface" data-surface-panel="login" hidden>
+    <div class="login"><aside class="login-brand" data-login-step="identity"><div class="brand"><span class="brand-mark">P</span><b>Photo Content OS</b></div><h1>从本地开始，按需连接上游。</h1><p>未登录时，本地项目、素材和创作能力保持完整。</p></aside><main class="login-form" data-login-step="pair"><div class="login-card"><p class="eyebrow">上游中台账号</p><h2>连接账号</h2><p class="muted">连接后可使用同一套上游身份；本机不会存储令牌明文。</p><form id="pair-form" class="form"><label>配对意图<input name="localPairingIntent" maxlength="120" required placeholder="在上游完成授权后粘贴意图"></label><button class="btn btn--pri">连接上游</button><button type="button" class="btn" id="logout-upstream">解除配对</button><button type="button" class="btn" data-close-surface>跳过，稍后再连</button></form></div></main></div>
+  </section>
+
+  <section class="surface" data-surface-panel="setup" hidden>
+    <div class="wizard"><header><div><p class="eyebrow">安装向导</p><h1>完成本机工作台准备</h1></div><button class="btn" data-close-surface>关闭</button></header><ol class="wizard-steps"><li data-wizard-step="1" class="active"><b>1</b><div><strong>存放位置</strong><small>选择项目状态保存位置</small></div></li><li data-wizard-step="2"><b>2</b><div><strong>运行环境</strong><small>检查本机工具链</small></div></li><li data-wizard-step="3"><b>3</b><div><strong>剪辑器</strong><small>选择标准交接或可编辑时间线</small></div></li><li data-wizard-step="4"><b>4</b><div><strong>账号与设备</strong><small>可选地连接上游中台</small></div></li></ol><div class="wizard-panel" id="wizard-panel"></div><footer><button id="wizard-prev" class="btn">上一步</button><button id="wizard-next" class="btn btn--pri">下一步</button></footer></div>
+  </section>
+
+  <section class="surface" data-surface-panel="cloud" hidden>
+    <div class="cloud"><header><div><p class="eyebrow">网页中台</p><h1>上游任务状态</h1></div><button class="btn" data-close-surface>关闭</button></header><div id="cloud-content" class="cloud-content"></div></div>
+  </section>
+
+  <dialog id="project-dialog"><form method="dialog" id="project-form" class="dialog-form"><header><div><p class="eyebrow">项目</p><h2>新建作品</h2></div><button type="button" data-cancel-project value="cancel" class="icon-button" aria-label="关闭">×</button></header><label>作品名称<input name="title" maxlength="120" required></label><div class="two-col"><label>目标平台<input name="platform" value="未指定" maxlength="80"></label><label>账号<input name="account" maxlength="80"></label></div><label>本地素材目录（可选）<input name="localWorkspace" maxlength="1024"></label><footer><button type="button" data-cancel-project value="cancel" class="btn">取消</button><button value="default" class="btn btn--pri">创建</button></footer></form></dialog>
+  <div class="ov" id="ov" hidden role="dialog" aria-modal="true" aria-labelledby="pl-title" data-design-id="R208-PLAYER"><div class="pl"><header><div><strong id="pl-title"></strong><small id="pl-sub"></small></div><button class="pl-x" id="pl-x" aria-label="关闭">×</button></header><div class="pl-stage" id="pl-stage"></div><div class="pl-ctl" id="pl-ctl"></div><div class="pl-strip" id="pl-strip"></div></div></div>
+  <audio id="music-player" preload="none"></audio>
+  <dialog id="folder-dialog"><form id="folder-form" class="dialog-form"><h2>从文件夹导入</h2><label>文件夹位置<input name="folder" required></label><footer><button type="button" class="btn" data-close-folder>取消</button><button class="btn btn--pri">导入</button></footer></form></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

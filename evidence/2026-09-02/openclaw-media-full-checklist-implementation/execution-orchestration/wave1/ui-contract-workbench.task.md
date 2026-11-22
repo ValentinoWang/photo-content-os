@@ -5,7 +5,7 @@
 权威输入（只读）：
 - /Users/vsiyo/Desktop/照片筛选/AGENTS.md
 - /Users/vsiyo/Desktop/照片筛选/.harness/overlays/project-harness-adapter.yaml
-- /Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html
+- docs/design-drafts/flow-openclaw-media--clickable-prototype--2026-10-12/index.html
 - /Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html
 - /Users/vsiyo/Desktop/照片筛选/agents-results/2026-09-02/openclaw-media-full-checklist-implementation/.ssot/source-requirements.json
 - /Users/vsiyo/Desktop/照片筛选/.agents/skills/product-context-discovery/**

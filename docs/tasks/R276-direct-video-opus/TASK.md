@@ -112,11 +112,11 @@
 - 总控复核：本机 Playwright 用上游的 `apps/media/web/node_modules/playwright`（1.61.1），浏览器要指到 `chromium_headless_shell-1228`；这样真实 HTML 渲染测试通过。本机 ffmpeg 没有 drawtext，本任务不烧字幕，设计稿已去掉「字幕已烧录」。
 - 全量 pytest 的 9 失败 6 错误都是既有问题（drawtext 缺失、Obsidian 文档时间戳），与本任务无关。
 - 第二段 B（真跑十镜带配音、七镜无配音、单镜重写）已在同一线程续跑，汇报写 `REPORT-B.md`。
-- 前端：设计稿 `design/index.html`、`design/direct.html`，等用户认可后派 cdx 2。
+- 前端：设计稿 `docs/design-drafts/page-script-to-video--opus-storyboard--Pho_R276/spec.html`、`docs/design-drafts/page-script-to-video--opus-storyboard--Pho_R276/index.html`，等用户认可后派 cdx 2。
 
 ### 交接 2（2026-10-26，总控）
 
 - 第二段 B 通过（REPORT-B.md）：七镜从建任务到全部写好渲染 8 分 16 秒；十镜带声成片音画差 0；第 03 镜按意见重写 71 秒，只这一镜变。联系表和成片在仓库外 `~/.photo-content-os/evidence/R276-direct-video-opus/`，总控已逐张看过。配音对齐这次走的是按字数比例（`proportional`），内部切镜最大偏差约 1 秒，逐字对齐没做到，留作后续。
 - 第三段 C 通过（REPORT-C.md）：加了 `writingStartedAt`、中断或失败的镜可空意见重试、构图提醒 `layout_bottom_gap`（只提醒不重写）。总控原以为 B 的关键帧主画面挤在上 60%，亲自量过 7 张关键帧，内容下沿都在 y≈1400–1500，紧贴字幕带，是总控看错了；构图检查保留，取消「至少 10 张要报」那条要求。
-- 前端 F1 通过（REPORT-F1.md），和稿基本一致。总控据 F1 的问题更新了设计稿和合同（13 个状态，见 design/index.html 第 1 节「F1 后的改动」）。F2（接新字段、真实环境截图）在前端线程 `01a1742b-35f5-75a3-bb11-7897ecfb9137`（账号 2）续跑，汇报写 REPORT-F2.md。
+- 前端 F1 通过（REPORT-F1.md），和稿基本一致。总控据 F1 的问题更新了设计稿和合同（13 个状态，见 docs/design-drafts/page-script-to-video--opus-storyboard--Pho_R276/spec.html 第 1 节「F1 后的改动」）。F2（接新字段、真实环境截图）在前端线程 `01a1742b-35f5-75a3-bb11-7897ecfb9137`（账号 2）续跑，汇报写 REPORT-F2.md。
 - 还没做：提交（等 F2 验收）、推送（要过交付检查）；R277（会话 photo-content-os-b5）等 R276 的提交号开工。

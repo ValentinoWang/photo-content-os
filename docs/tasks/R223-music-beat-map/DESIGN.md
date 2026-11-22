@@ -7,7 +7,7 @@
 | 管什么 | 唯一来源 | 谁读 |
 |---|---|---|
 | 分析出什么、叫什么、怎么取舍：段落类型、标签类别、每个标签的编号和中文名、阈值、所用模型、改动规则和改动记录 | 仓库根目录 `music-analysis.registry.json` | 后台分析、接口、Studio 页面、文案检查、本设计稿 |
-| 页面长什么样：布局、状态、交互、页面上数字的算法 | 本文件 + `mock/beat-map.html` | 前端实现、截图验收 |
+| 页面长什么样：布局、状态、交互、页面上数字的算法 | 本文件 + `docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html` | 前端实现、截图验收 |
 
 - 本文件不重复写清单里的内容，用到时只写「见清单」。
 - 设计稿里的 `mock/registry.js` 是清单的生成快照（设计稿用 file:// 打开读不了 JSON），用 `mock/make_registry_js.py` 生成，不手改。
@@ -29,7 +29,7 @@
 | 文件 | 是什么 |
 |---|---|
 | `music-analysis.registry.json`（仓库根目录） | 唯一清单，见第 0、7 节 |
-| `mock/beat-map.html` | 可交互的设计稿。直接用浏览器打开；左下角切换状态。Studio 在 `127.0.0.1:8765` 运行时，点播放会放真实音频，没开就用计时器模拟 |
+| `docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html` | 可交互的设计稿。直接用浏览器打开；左下角切换状态。Studio 在 `127.0.0.1:8765` 运行时，点播放会放真实音频，没开就用计时器模拟 |
 | `mock/beat-data.js` | 设计数据。曲目信息来自本机音乐库接口；拍点和段落是 2026-10-21 用 librosa 临时估算的；标签存的是同日用 Essentia 在本机算出的**原始分数**，显示哪些标签由页面按清单现算。不含本机路径 |
 | `mock/registry.js`、`mock/make_registry_js.py` | 清单快照和生成脚本 |
 | `mock/design-states.html`、`mock/design-contract.json` | 各状态的静态导出，以及从中生成的文案表和设计编号 |

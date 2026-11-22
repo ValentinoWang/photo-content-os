@@ -4,7 +4,7 @@
 
 - 要求来源：`agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html`
 - 要求来源 SHA-256：`73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb`
-- 视觉原型：`agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html`
+- 视觉原型：`docs/design-drafts/flow-openclaw-media--clickable-prototype--2026-10-12/index.html`
 - 视觉原型 SHA-256：`aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8`
 - 源码基线：`main@a3ae47100d6fce4cb139ce17a479eea16717e73a`，创建本 SSOT 时本地、跟踪分支与远端主分支一致。
 - 回归基线：以本轮最终生成后的完整 unittest 运行记录为准；历史通过数不得替代当前候选证据。

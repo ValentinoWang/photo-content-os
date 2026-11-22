@@ -7,7 +7,7 @@ HERE=${0:A:h}
 SRC=$HERE/samples/$ID.html
 STUDIO=/private/tmp/claude-501/-Users-vsiyo-Desktop------photo-content-os/f43dc626-4d80-4822-a763-33a7a646fc64/scratchpad/r276/studio-107b56e
 WORK=/private/tmp/claude-501/-Users-vsiyo-Desktop------photo-content-os/f43dc626-4d80-4822-a763-33a7a646fc64/scratchpad/stylelib/$ID
-IMG=$HERE/../R278-direct-rescript/design/img
+IMG=$HERE/../../design-drafts/page-script-to-video--style-and-rescript--Pho_R278/img
 DIALOGUE='有个经典实验：让学生穿件尴尬的衣服走进教室。穿的人估计，约 50% 的人会注意到；实际只有约 25%。别人的注意，远比我们以为的少。'
 rm -rf $WORK/in $WORK/out; mkdir -p $WORK/in
 cp $SRC $WORK/in/01.html

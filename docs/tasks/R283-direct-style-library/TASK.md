@@ -17,7 +17,7 @@
   - 不跑全量 pytest；
   - 磁盘低于 3 GB 停下汇报。
 - 两个线程同时跑，各改各的文件，见下面 S、B 两节。别人的文件不碰；需要对方改的写进汇报。
-- **设计稿以它为准**：`docs/tasks/R278-direct-rescript/design/spec.html` 里标「R283」的规则、文案、接口、门禁，状态 `first-lib`、`first-none`、`library`。给用户看的预览在同目录 `index.html` 第 5 节。
+- **设计稿以它为准**：`docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/spec.html` 里标「R283」的规则、文案、接口、门禁，状态 `first-lib`、`first-none`、`library`。给用户看的预览在同目录 `index.html` 第 5 节。
 - **改一个名字**：spec 写的数据目录 `scripts/direct_video/styles/` 改成 `scripts/direct_video/style_library/`。原因是 R278 已经有模块 `scripts/direct_video/styles.py`，同名目录会和模块混淆。下面都用新名字。
 - 遇到要拍板的事：先做不受影响的部分，写进汇报后停下。
 

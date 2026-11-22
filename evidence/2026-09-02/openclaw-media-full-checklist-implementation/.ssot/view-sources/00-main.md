@@ -63,7 +63,7 @@ NORMATIVE_EXECUTABLE_ARTIFACT_MODE: strict
 | --- | --- | --- | --- | --- | --- | --- |
 | 45 项实施编排 | `.ssot/manifest.json` 与唯一 `.ssot/source-requirements.json` | decision/orchestration | 统一验证 | 是 | F | 来源守恒、表面覆盖与证据轮廓 |
 | 原始需求 | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html` | domain-contract | SHA-256 与条目定位 | 否 | F | 45/45 条目 |
-| 视觉与信息架构 | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html` | domain-contract | SHA-256 与捕获矩阵 | 否 | Z1 | DOM、计算样式、截图和交互轨迹 |
+| 视觉与信息架构 | `docs/design-drafts/flow-openclaw-media--clickable-prototype--2026-10-12/index.html` | domain-contract | SHA-256 与捕获矩阵 | 否 | Z1 | DOM、计算样式、截图和交互轨迹 |
 | 项目内视觉工作台 | `99_System_OpenClaw/visual-workbench.html` 与 `99_System_OpenClaw/visual-workbench.json` | project-generated | Z1 实现与视觉工作台校验 | 是 | Z1 | 证据、原型、候选、选择记录、界面状态和深链接 |
 | 当前代码现状 | `source-notes.md` | runtime-evidence | 文件行号和当前主分支 | 是 | F | 新鲜审计与回归基线 |
 
@@ -72,7 +72,7 @@ NORMATIVE_EXECUTABLE_ARTIFACT_MODE: strict
 | Artifact ID | Path | Git identity | SHA-256 | Media type | Information architecture | Visual tokens | Layout | Interaction behavior | Seed data | Runtime side effects |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | SRC-ART-CHECKLIST | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-dev-checklist.html` | `main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:6202f61978a7bc94e01e3d50e80698a32856746b` | `73554eb91c80c8a85b267f15dd07e7f89c06eeea27a907c254f00c35813b9eeb` | text/html | normative | informative | informative | normative | illustrative | simulated |
-| SRC-ART-PROTOTYPE | `agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html` | `main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:d881b06ab26d0cb46b88b653e72dc15160611fce` | `aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8` | text/html | normative | normative | normative | normative | illustrative | simulated |
+| SRC-ART-PROTOTYPE | `docs/design-drafts/flow-openclaw-media--clickable-prototype--2026-10-12/index.html` | `main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:d881b06ab26d0cb46b88b653e72dc15160611fce` | `aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8` | text/html | normative | normative | normative | normative | illustrative | simulated |
 
 MUST requirement coverage: 100%（以统一机器验证通过为前提）。
 

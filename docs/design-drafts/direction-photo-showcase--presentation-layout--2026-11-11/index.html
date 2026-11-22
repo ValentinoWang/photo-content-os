@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photo 功能展示 · 预览稿</title>
+<meta name="description" content="Photo Content OS 功能展示页预览稿：方向 A 一屏讲透一件事，方向 B 流水线画廊">
+<style>
+/* 令牌取自 Photo Studio styles.css（origin/main b0ddff5）同名值 */
+:root{
+  --bg:#F5F6F4; --panel:#FFFFFF; --panel-2:#F7F8F7; --raise:#EEF2F1; --rule:#E4E8E7; --rule-2:#D2D9D8;
+  --ink:#152021; --ink-2:#3A4849; --ink-3:#5F6E6F; --ink-4:#7F8C8D;
+  --ac:#1F8D96; --ac-hover:#18767E; --ac-bg:#E6F3F4; --on-ac:#FFFFFF; --ac-soft:#18727A;
+  --media-bg:#0D1314; --media-ink:#E4EBEB; --media-muted:#7D8C8E;
+  --warn:#9A6B10; --warn-bg:#FBF2DE;
+  --f-ui:"Archivo","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-mo:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#101617; --panel:#172021; --panel-2:#1B2526; --raise:#1F2A2B; --rule:#263233; --rule-2:#324041;
+    --ink:#E4EBEB; --ink-2:#C2CDCD; --ink-3:#97A5A6; --ink-4:#7D8C8E;
+    --ac:#3FB0B9; --ac-hover:#5CC3CB; --ac-bg:#16322F; --on-ac:#06191A; --ac-soft:#7FCBD1;
+    --warn:#E2C36B; --warn-bg:#352C14; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--f-ui)}
+img{max-width:100%;display:block}
+a{color:var(--ac-soft)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+
+/* 稿子用的切换条，不属于设计本身 */
+.draftbar{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:8px 16px;background:#222;color:#eee;font-size:14px}
+.draftbar b{font-weight:600}
+.draftbar a{color:#eee;text-decoration:none;padding:3px 10px;border:1px solid #555;border-radius:6px}
+.draftbar a[aria-current=true]{background:#eee;color:#111;border-color:#eee}
+.draftbar .hint{color:#aaa}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header.site{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px}
+.logo{width:30px;height:30px;border-radius:8px;background:var(--ac);color:var(--on-ac);display:grid;place-items:center;font-weight:700;font-size:15px}
+nav.site{display:flex;gap:6px;flex-wrap:wrap}
+nav.site a{text-decoration:none;color:var(--ink-2);padding:6px 12px;border-radius:8px;font-size:15px}
+nav.site a:hover{background:var(--raise)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;border:1px solid var(--rule-2);background:var(--panel);text-decoration:none;color:var(--ink);font-weight:600;cursor:pointer}
+.btn.pri{background:var(--ac);border-color:var(--ac);color:var(--on-ac)}
+.btn.pri:hover{background:var(--ac-hover)}
+
+.hero{padding:44px 0 28px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:center}
+.eyebrow{font-size:14px;color:var(--ac-soft);font-weight:600;letter-spacing:.02em}
+h1{font-size:44px;line-height:1.18;margin:8px 0 14px;letter-spacing:-.01em}
+.sub{font-size:18px;color:var(--ink-2);margin:0 0 22px;max-width:30em}
+.ctas{display:flex;gap:10px;flex-wrap:wrap}
+.proof{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:18px 20px}
+.proof .cap{font-size:13px;color:var(--ink-3);margin-bottom:10px}
+.chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:start}
+.chain div{min-width:0}
+.chain b{display:block;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
+.chain span{font-size:13px;color:var(--ink-3)}
+.chain .arr{color:var(--ink-4)}
+.proof img{border-radius:8px;margin-top:14px;border:1px solid var(--rule)}
+
+/* 方向 A：一屏讲透一件 */
+.lines{display:flex;gap:6px;border-bottom:1px solid var(--rule);margin:28px 0 0}
+.lines button{border:0;background:none;padding:12px 16px;font-size:17px;font-weight:600;color:var(--ink-3);border-bottom:2px solid transparent;cursor:pointer}
+.lines button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ac)}
+.lines small{font-size:12px;font-weight:600;color:var(--ac-soft);background:var(--ac-bg);border-radius:99px;padding:1px 8px;margin-left:6px;vertical-align:2px}
+.viewer{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:0;margin-top:18px;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--panel)}
+.stage{background:var(--media-bg);padding:18px;display:flex;flex-direction:column;gap:10px;justify-content:center;min-height:420px}
+.stage img{border-radius:6px;width:100%}
+.stage .placeholder{color:var(--media-ink);border:1px dashed var(--media-muted);border-radius:8px;padding:40px 24px;text-align:center}
+.stage .placeholder p{margin:6px 0;color:var(--media-muted)}
+.detail{padding:24px 24px 20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.stepno{font-family:var(--f-mo);font-size:13px;color:var(--ac-soft)}
+.detail h3{font-size:26px;line-height:1.25;margin:0}
+.detail .one{font-size:16px;color:var(--ink-2);margin:0}
+.io{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;font-size:15px;margin:4px 0}
+.io dt{color:var(--ink-3)}
+.io dd{margin:0}
+.example{background:var(--panel-2);border-left:3px solid var(--ac);border-radius:6px;padding:10px 12px;font-size:15px}
+.example b{display:block;font-size:13px;color:var(--ink-3);font-weight:600;margin-bottom:2px}
+.navhint{margin-top:auto;font-size:13px;color:var(--ink-4)}
+.navhint kbd{font-family:var(--f-mo);border:1px solid var(--rule-2);border-radius:4px;padding:0 5px;background:var(--panel-2)}
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0 0}
+.strip button{display:flex;flex-direction:column;gap:6px;text-align:left;padding:8px;border:1px solid var(--rule);border-radius:10px;background:var(--panel);cursor:pointer;min-width:0}
+.strip button[aria-current=true]{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.strip .thumb{height:64px;border-radius:6px;background:var(--media-bg) left top/cover no-repeat}
+.strip .thumb.none{display:grid;place-items:center;color:var(--media-muted);font-size:12px}
+.strip .n{font-family:var(--f-mo);font-size:12px;color:var(--ink-4)}
+.strip .t{font-size:15px;font-weight:600;line-height:1.3}
+.trust{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:40px 0 20px}
+.trust div{min-width:0}
+.trust h4{margin:0 0 4px;font-size:17px}
+.trust p{margin:0;color:var(--ink-2);font-size:15px}
+
+/* 方向 B：流水线画廊 */
+.lineB{margin:36px 0 10px}
+.lineB header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.lineB h2{font-size:26px;margin:0}
+.lineB header p{margin:0;color:var(--ink-3)}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.card .img{aspect-ratio:16/10;background:var(--media-bg) center/contain no-repeat}
+.card .img.none{display:grid;place-items:center;color:var(--media-muted);font-size:13px;text-align:center;padding:10px}
+.card .body{padding:10px 12px 12px}
+.card .n{font-family:var(--f-mo);font-size:12px;color:var(--ink-4)}
+.card h3{font-size:16px;margin:2px 0 4px}
+.card p{font-size:14px;color:var(--ink-2);margin:0}
+
+/* 参考对照（稿子附带） */
+.refs{margin:56px 0 40px;padding-top:24px;border-top:1px dashed var(--rule-2)}
+.refs h2{font-size:18px;margin:0 0 4px}
+.refs p{color:var(--ink-3);font-size:14px;margin:0 0 12px}
+.refgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.refgrid figure{margin:0;min-width:0}
+.refgrid img{border:1px solid var(--rule);border-radius:8px}
+.refgrid figcaption{font-size:13px;color:var(--ink-3);margin-top:6px}
+
+[hidden]{display:none!important}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:24px;padding-top:28px}
+  h1{font-size:32px}
+  .chain b{font-size:24px}
+  .viewer{grid-template-columns:1fr}
+  .stage{min-height:0}
+  .strip{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:42%;overflow-x:auto;padding-bottom:6px}
+  .cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:72%;overflow-x:auto;padding-bottom:6px}
+  .trust{grid-template-columns:1fr}
+  .refgrid{grid-template-columns:1fr}
+  nav.site{display:none}
+}
+</style>
+</head>
+<body>
+<div class="draftbar" role="navigation" aria-label="预览稿切换">
+  <b>预览稿</b>
+  <a href="?d=A" id="tabA">方向 A · 一屏讲透一件（推荐）</a>
+  <a href="?d=B" id="tabB">方向 B · 流水线画廊</a>
+  <span class="hint">画面全部是 Photo 真实界面截图；没有真实截图的步骤标了出来</span>
+</div>
+
+<div class="wrap">
+<header class="site">
+  <div class="brand"><span class="logo" aria-hidden="true">P</span>Photo Content OS</div>
+  <nav class="site" aria-label="主导航"><a href="#lines">素材成片</a><a href="#lines">脚本直出</a><a href="#trust">为什么放心</a></nav>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">本机运行的视频创作工作台</div>
+    <h1>把你拍的素材，<br>剪成能发的片子</h1>
+    <p class="sub">导入一批照片和视频，AI 先量清晰度、再看图挑镜头，按配乐节拍排好粗剪，交给剪映精剪。原片只读，不出本机。</p>
+    <div class="ctas"><a class="btn pri" href="#lines">看它怎么挑镜头</a><a class="btn" href="#lines" data-go="direct">有稿子？直接出片</a></div>
+  </div>
+  <div class="proof">
+    <div class="cap">真实作品：一场校园运动会</div>
+    <div class="chain">
+      <div><b>61</b><span>导入的素材</span></div>
+      <div><b>27</b><span>AI 选中的镜头</span></div>
+      <div><b>1:03</b><span>对好拍子的粗剪</span></div>
+    </div>
+    <img src="img/s2-strip.jpg" alt="AI 挑出的精选镜头按场景排成的胶片条">
+  </div>
+</section>
+
+<!-- 方向 A -->
+<section id="dirA">
+  <div class="lines" role="tablist" aria-label="两种做法" id="lines">
+    <button role="tab" id="t-vlog" aria-selected="true" data-line="vlog">用素材剪<small>主打</small></button>
+    <button role="tab" id="t-direct" aria-selected="false" data-line="direct">用稿子直出</button>
+  </div>
+  <div class="viewer" role="tabpanel" aria-labelledby="t-vlog" id="viewer">
+    <div class="stage" id="stage"></div>
+    <div class="detail">
+      <div class="stepno" id="stepno"></div>
+      <h3 id="sname"></h3>
+      <p class="one" id="sone"></p>
+      <dl class="io"><dt>你给</dt><dd id="sin"></dd><dt>你拿到</dt><dd id="sout"></dd></dl>
+      <div class="example" id="sex"></div>
+      <div class="navhint">点下面的步骤，或按 <kbd>←</kbd> <kbd>→</kbd> 切换</div>
+    </div>
+  </div>
+  <div class="strip" id="strip" aria-label="步骤"></div>
+
+  <div class="trust" id="trust">
+    <div><h4>原片只读，不出本机</h4><p>工作台只在你的电脑上运行，原始照片和视频不会被改动，也不会被上传。</p></div>
+    <div><h4>每个选择都写明理由</h4><p>挑镜头会写「为什么选它」，剪辑手法标出用在哪几处，不同意就一键改。</p></div>
+    <div><h4>最后由你在剪映里定</h4><p>Photo 出草稿，不替你做审美定稿；字幕、音乐、镜头在剪映里都能改。</p></div>
+  </div>
+</section>
+
+<!-- 方向 B -->
+<section id="dirB" hidden>
+  <div class="lineB" id="linesB">
+    <header><h2>用素材剪</h2><p>拍了一堆、没空剪：五步出剪映草稿</p></header>
+    <div class="cards" id="cardsVlog"></div>
+  </div>
+  <div class="lineB">
+    <header><h2>用稿子直出</h2><p>写好口播稿：每一镜动画自动写好，直接出成片</p></header>
+    <div class="cards" id="cardsDirect"></div>
+  </div>
+  <div class="trust">
+    <div><h4>原片只读，不出本机</h4><p>工作台只在你的电脑上运行，原始照片和视频不会被改动，也不会被上传。</p></div>
+    <div><h4>每个选择都写明理由</h4><p>挑镜头会写「为什么选它」，剪辑手法标出用在哪几处，不同意就一键改。</p></div>
+    <div><h4>最后由你在剪映里定</h4><p>Photo 出草稿，不替你做审美定稿；字幕、音乐、镜头在剪映里都能改。</p></div>
+  </div>
+</section>
+
+<section class="refs" aria-label="参考对照">
+  <h2>参考对照（稿子附带，不进正式页面）</h2>
+  <p>方向 A 借 talkcraft 首屏「大窗讲透一件 + 胶片条切换」的结构，配色和字体守 Photo 现有设计系统；方向 B 借 shotcraft 画廊「同一结构的卡片排一行」。只借版式，不拿代码和素材。</p>
+  <div class="refgrid">
+    <figure><img src="img/ref-talkcraft.jpg" alt="talkcraft 口播动效库首屏：左侧大播放窗，右侧名称、标签、说明，下方胶片条"><figcaption>参考 · video-talkcraft 首屏（方向 A 的结构来源）</figcaption></figure>
+    <figure><img src="img/ref-shotcraft.jpg" alt="shotcraft 镜头画廊：左侧分类，右侧三列卡片"><figcaption>参考 · video-shotcraft 画廊（方向 B 的结构来源）</figcaption></figure>
+  </div>
+</section>
+</div>
+
+<script>
+const LINES = {
+  vlog: [
+    {name:"导入整理", one:"从手机或相机导入照片和视频，按拍摄时间和地点自动分成一批批；太短、损坏、完全重复的列出来，让你勾选删除。",
+     in:"一批原始照片和视频", out:"按批次整理好的素材，放进一个作品", img:["s1-inbox.jpg"],
+     ex:["已整理","12 件作品，视频 140 段，照片 245 张"]},
+    {name:"AI 挑镜头", one:"先在本机量每段的清晰度和曝光，再让大模型看图挑精选。每个镜头都写明为什么选它，不同意一键改成「可用」或「不用」。",
+     in:"整理好的一批素材", out:"按场景排好顺序的精选镜头", img:["s2-pick.jpg","s2-strip.jpg"],
+     ex:["一场校园运动会","55 段视频、6 张照片，挑出 27 个精选，串起来 1:32；还有 71 个可用的备选"]},
+    {name:"配乐卡点", one:"从音乐库挑一首，切点都对在拍子上。先按三种预设各排一版：轻快旅行、赛场热血、松弛日常，AI 推荐一版。",
+     in:"精选镜头 + 一首歌", out:"对好拍子的粗剪，标出用了哪些剪辑手法", img:["s3-presets.jpg"],
+     ex:["按《Turn Back Time》排好","27 个镜头，1:03，平均 2.3 秒一切；用了 4 种剪辑手法、共 9 处"]},
+    {name:"出剪映草稿", one:"在粗剪时间轴上看清每一处剪辑手法用在哪：声音先进、停顿处切、动作做完再切。确认后生成剪映草稿。",
+     in:"确认过的粗剪", out:"能直接在剪映里打开的草稿", img:["s4-timeline.jpg"],
+     ex:["待补","截图是粗剪时间轴；剪映草稿打开后的画面还没有真实截图"]},
+    {name:"人工精剪", one:"在剪映里打开草稿，字幕、音乐、镜头顺序都能改。Photo 只出草稿，不替你做审美定稿。",
+     in:"剪映草稿", out:"你自己定稿的成片", img:[], none:"在剪映里完成 · 暂无真实截图",
+     ex:["由你决定","Photo 不自动发布，发到哪个平台由你定"]}
+  ],
+  direct: [
+    {name:"写分镜脚本", one:"一格是一镜：写这一镜的台词，画面可以不写。也能直接接收上游交来的分镜和配音。",
+     in:"口播稿", out:"按镜拆好的分镜脚本，时长按字数先估", img:["d1-script.jpg"],
+     ex:["断更一年，我拆了四句话","7 镜，约 2:23"]},
+    {name:"定全片风格", one:"先定一套全片设计：背景、主色、强调色、字号，以及不准用的花样。每一镜都守同一套，不会一镜一个样。",
+     in:"从风格库挑一个，或写几句想要的样子", out:"全片设计", img:["d2-style.jpg"],
+     ex:["用风格库「扁平插画」","圆润色块一个个弹出来，被看的人亮起来"]},
+    {name:"Opus 写每一镜", one:"Opus 按每句台词写一镜动画，写好一镜就渲一镜；自查没过会自己重写。",
+     in:"分镜脚本 + 全片设计", out:"每一镜的动画画面", img:["d3-writing.jpg"],
+     ex:["三镜同时写","写好 3 镜用时 0:42；第 06 镜自查没过，正在自动重写"]},
+    {name:"出成片", one:"无声预览先出来，自动检查能不能从头放到尾、帧数和时长、有没有黑帧；上传配音后按配音重排时长，合成带声成片。",
+     in:"写好的每一镜，可选配音", out:"竖屏成片", img:["d4-film.jpg"],
+     ex:["竖屏 1080×1920","7 镜，无声预览 2:23，4,284 帧，黑帧 0 处"]},
+    {name:"逐镜修改", one:"哪一镜不满意就点哪一镜：选「太空或挤在上面」「颜色乱」「跟口播对不上」，再补一句，只重写这一镜，其他镜不动。",
+     in:"不满意的那一镜 + 一句意见", out:"这一镜的新版本，和上一版能对比", img:["d5-revise.jpg"],
+     ex:["第 02 镜","按字数估 20.8 秒，第 1 版"]}
+  ]
+};
+const $ = s => document.querySelector(s);
+let line = "vlog", idx = 0;
+function render(){
+  const steps = LINES[line], s = steps[idx];
+  $("#stepno").textContent = `第 ${idx+1} / ${steps.length} 步`;
+  $("#sname").textContent = s.name;
+  $("#sone").textContent = s.one;
+  $("#sin").textContent = s.in;
+  $("#sout").textContent = s.out;
+  $("#sex").innerHTML = `<b>${s.ex[0]}</b>${s.ex[1]}`;
+  $("#stage").innerHTML = s.img.length
+    ? s.img.map(f => `<img src="img/${f}" alt="${s.name}的真实界面截图">`).join("")
+    : `<div class="placeholder"><strong>${s.name}</strong><p>${s.none}</p></div>`;
+  $("#strip").innerHTML = steps.map((x,i) => `<button aria-current="${i===idx}" data-i="${i}">
+      ${x.img.length ? `<span class="thumb" style="background-image:url(img/${x.img[0]})"></span>` : `<span class="thumb none">剪映</span>`}
+      <span class="n">0${i+1}</span><span class="t">${x.name}</span></button>`).join("");
+  document.querySelectorAll(".lines button").forEach(b => b.setAttribute("aria-selected", b.dataset.line===line));
+  $("#viewer").setAttribute("aria-labelledby", "t-"+line);
+}
+document.addEventListener("click", e => {
+  const st = e.target.closest("#strip button"); if (st){ idx = +st.dataset.i; render(); return; }
+  const ln = e.target.closest(".lines button"); if (ln){ line = ln.dataset.line; idx = 0; render(); return; }
+  const go = e.target.closest("[data-go]"); if (go){ line = go.dataset.go; idx = 0; render(); }
+});
+document.addEventListener("keydown", e => {
+  if (e.target.closest("input,textarea")) return;
+  const n = LINES[line].length;
+  if (e.key === "ArrowRight"){ idx = (idx+1)%n; render(); }
+  if (e.key === "ArrowLeft"){ idx = (idx-1+n)%n; render(); }
+});
+function cards(key, el){
+  $(el).innerHTML = LINES[key].map((x,i) => `<article class="card">
+    ${x.img.length ? `<div class="img" style="background-image:url(img/${x.img[0]})" role="img" aria-label="${x.name}的真实界面截图"></div>` : `<div class="img none">${x.none}</div>`}
+    <div class="body"><div class="n">0${i+1}</div><h3>${x.name}</h3><p>${x.one}</p></div></article>`).join("");
+}
+const params = new URLSearchParams(location.search);
+const dir = params.get("d") === "B" ? "B" : "A";
+$("#dirA").hidden = dir !== "A"; $("#dirB").hidden = dir !== "B";
+$("#tabA").setAttribute("aria-current", dir==="A"); $("#tabB").setAttribute("aria-current", dir==="B");
+if (params.get("line") === "direct") line = "direct";
+if (params.get("step")) idx = Math.max(0, Math.min(4, (+params.get("step")||1)-1));
+render(); cards("vlog","#cardsVlog"); cards("direct","#cardsDirect");
+</script>
+</body>
+</html>

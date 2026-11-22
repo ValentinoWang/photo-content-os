@@ -63,7 +63,7 @@ rbox 给每个命令设好的环境变量：`LOCAL_MEDIA_ROOT`、`HARNESS_CORE`�
 
 ```bash
 RBOX_QUEUE=heavy $R bg r276 "$PWD" -- node scripts/direct_video/frontend_gate.mjs --checks-only
-RBOX_QUEUE=heavy $R bg r278 "$PWD" -- env DIRECT_GATE_PORT=8768 R278_DESIGN_MEDIA_ROOT=/root/pco/docs/tasks/R278-direct-rescript/design/img node scripts/direct_video/rescript_frontend_gate.mjs --checks-only
+RBOX_QUEUE=heavy $R bg r278 "$PWD" -- env DIRECT_GATE_PORT=8768 R278_DESIGN_MEDIA_ROOT=/root/pco/docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/img node scripts/direct_video/rescript_frontend_gate.mjs --checks-only
 ```
 
 | 门禁 | 在哪跑 | 10-27 结果 | 要的数据 |

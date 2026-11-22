@@ -19,7 +19,7 @@
 - Role Context refs: agents-results/2026-10-27/R282-direct-handoff/acceptance-context.json
 - Resolved Surface Contract refs: agents-results/2026-10-27/R282-direct-handoff/resolved-surface-contract.json
 - Screen Contract ref: agents-results/2026-10-27/R282-direct-handoff/acceptance-context.json
-- Visual Contract refs: docs/tasks/R278-direct-rescript/design/contract.json; docs/tasks/R278-direct-rescript/design/index.html
+- Visual Contract refs: docs/tasks/R278-direct-rescript/design/contract.json; docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/index.html
 - UI Change declaration: agents-results/2026-10-27/R282-direct-handoff/ui-change.json
 - Human acceptance workspace: acceptance/human/2026-W44/2026-10-26-R282-photo-direct-handoff-storyboard
 

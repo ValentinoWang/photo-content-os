@@ -1,0 +1,17 @@
+(function(){
+const art=(a,b,t)=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="320" height="200" fill="url(#g)"/><path d="M0 150 70 95l50 40 60-70 70 75 70-30v90H0z" fill="#fff" opacity=".22"/><circle cx="${t}" cy="50" r="20" fill="#fff" opacity=".5"/></svg>`);
+const pieces=[
+ {id:'p1',group_id:'g1',title:'成都街头 vlog',date:'10-28',videos:14,photos:6,cover:art('#c9764f','#3f2d4f',250),pending:true,selected:5,versions:0,outputs:[],workspace_key:'p1'},
+ {id:'p2',group_id:'g2',title:'川西自驾 · 第二集',date:'10-21',videos:38,photos:0,cover:art('#3f7f93','#1c3440',80),pending:false,versions:3,outputs:[{id:'o1',name:'第 3 版',version:'V3'}],workspace_key:'p2'},
+ {id:'p3',group_id:'g1',title:'咖啡馆探店',date:'10-16',videos:0,photos:42,cover:art('#a78a5e','#40352a',190),pending:false,versions:0,outputs:[],workspace_key:'p3'},
+ {id:'p4',group_id:'g2',title:'周末露营',date:'10-09',videos:9,photos:17,cover:art('#5d8a5a','#20382a',120),pending:false,versions:1,outputs:[{id:'o2',name:'第 1 版',version:'V1'}],workspace_key:'p4'}];
+const groups=[{id:'g1',title:'城市日常',count:2,pending:1,produced:0,pieces:[pieces[0],pieces[2]]},{id:'g2',title:'旅行',count:2,pending:0,produced:2,pieces:[pieces[1],pieces[3]]}];
+const shots={hook_candidates:['s1','s2','s3','s4','s5'].map(id=>({id})),shots:['s1','s2','s3','s4','s5'].map((id,i)=>({id,status:'selected',kind:'video',name:id,duration:3,preview:'',frames:[art(['#c9764f','#a78a5e','#3f7f93','#5d8a5a','#7a5d8a'][i],'#222',60+i*40)]}))};
+const checks=[['jianying','ready','剪映','' ],['chatcut_mcp','missing','ChatCut Desktop','在 ChatCut 里开启本机连接'],['edit_tool_openchatcut','ready','OpenChatCut',''],['edit_tool_openfilm','ready','OpenFilm',''],['kdenlive','ready','Kdenlive',''],['creative_provider','ready','Codex',''],['creative_model','ready','创意模型','']].map(([id,status,summary,repair])=>({id,status,summary,repair}));
+const empty=new URLSearchParams(location.search).has('empty');
+const R={'/api/bootstrap':{csrfToken:'x',projects:[]},'/api/settings':{settings:{upstream:{upstream_features_available:false},model_providers:[{display_name:'Codex'}],archive:{lifecycle:'在线',locations:[{label:'本机硬盘',status:'已回读'}]}}},'/api/diagnostics':{diagnostics:{checks,checked_at:new Date().toISOString(),checking:false}},'/api/settings/analysis-budget':{analysisBudget:{revision:1,budget:{preview_images_per_asset:3,deep_images_per_asset:8,max_preview_assets:60,max_deep_assets:12,max_audio_minutes:30}}},'/api/setup/state':{setup:{current_step:null}},'/api/upstream/tasks':{tasks:[]},'/api/review/catalog':{groups,pieces},'/api/review/music-settings':{egress:{state:'configured'},account:{state:'absent'}},'/api/review/music':{tracks:new Array(26).fill({})},'/api/assets/statistics':{statistics:{asset_count:0,categories:[]}},'/api/assets':{assets:[]}};
+const real=window.fetch;
+window.fetch=async(u,o)=>{const p=String(u).split('?')[0];let body=R[p];if(/\/shots$/.test(p))body=shots;if(p.startsWith('/api/assets')&&!body)body={assets:[]};if(p.startsWith('/api/')){return new Response(JSON.stringify({ok:true,...(body||{})}),{status:200,headers:{'content-type':'application/json'}});}return real(u,o);};
+const send=()=>parent.postMessage({frame:name,h:document.documentElement.scrollHeight},'*');
+addEventListener('load',()=>{new ResizeObserver(send).observe(document.documentElement);setTimeout(send,600);setTimeout(send,1500);});
+})();

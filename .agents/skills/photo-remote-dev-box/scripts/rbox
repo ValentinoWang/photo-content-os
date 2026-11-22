@@ -216,7 +216,7 @@ case "${1:-}" in
       [ -f "$D/$job" ] || die "本机没有 $D/$job"
       rs "mkdir -p /root/.photo-content-os/$(dirname "$job")"
       rsync -a --partial -e "$BIG_SSH" "$D/$job" "$HOST:/root/.photo-content-os/$job"; echo "[rbox] R278 读的真实作品 job.json 推完"
-      img="docs/tasks/R278-direct-rescript/design/img"   # 本机排除在 git 之外的媒体，推到开发机主目录同一路径
+      img="docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/img"   # 本机排除在 git 之外的媒体，推到开发机主目录同一路径
       [ -d "$LOCAL_ROOT/$img" ] || die "本机没有 $LOCAL_ROOT/$img"
       rs "mkdir -p $(q "$LOCAL_ROOT/$img")"; rsync -a --partial -e "$BIG_SSH" "$LOCAL_ROOT/$img/" "$HOST:$LOCAL_ROOT/$img/"; echo "[rbox] R278 设计图推完"
     else

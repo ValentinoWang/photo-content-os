@@ -51,7 +51,7 @@
   "execution_mode": "incremental",
   "reference_prototypes": [
     {
-      "path": "docs/tasks/R223-music-beat-map/mock/beat-map.html",
+      "path": "docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html",
       "sha256": "62511ed2ecca1de7a58d086a8274097fc64f32f148c42b4e924860a977abbf67",
       "media_type": "text/html",
       "authority_by_dimension": {

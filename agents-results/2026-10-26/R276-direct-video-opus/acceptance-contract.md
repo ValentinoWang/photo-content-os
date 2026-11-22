@@ -19,7 +19,7 @@
 - Role Context refs: agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json
 - Resolved Surface Contract refs: agents-results/2026-10-26/R276-direct-video-opus/resolved-surface-contract.json
 - Screen Contract ref: agents-results/2026-10-26/R276-direct-video-opus/acceptance-context.json
-- Visual Contract refs: docs/tasks/R276-direct-video-opus/design/contract.json; docs/tasks/R276-direct-video-opus/design/direct.html
+- Visual Contract refs: docs/tasks/R276-direct-video-opus/design/contract.json; docs/design-drafts/page-script-to-video--opus-storyboard--Pho_R276/index.html
 - UI Change declaration: agents-results/2026-10-26/R276-direct-video-opus/ui-change.json
 - Human acceptance workspace: acceptance/human/2026-W44/2026-10-26-R276-photo-direct-video-opus
 

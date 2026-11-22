@@ -51,7 +51,7 @@ code{font:12px var(--f-mo);color:var(--ac-soft);background:#0A1415;border-radius
   <p>作品页加第三个分页「脚本直出」。粘贴口播稿 → Opus 先定全片设计，再给每一镜写一段动画代码（三镜同时写）→ 写好一镜就在这台电脑上逐帧渲染一镜 → 合成一条竖屏成片在页面里播放。哪一镜不满意，写一句意见让 Opus 只重写那一镜。</p>
   <div class="meta">需求卡：Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片 · 待确认（2026-10-26-R276-photo-direct-video-opus） · 设计稿，未实现</div>
   <nav class="toc"><a href="#rules">1 交互规则</a><a href="#cmp">2 逐处对比</a><a href="#states">3 各状态整页</a><a href="#ids">4 设计编号和接口字段</a><a href="#copy">5 文案表</a><a href="#nums">6 数字公式</a><a href="#gates">7 门禁</a><a href="#how">8 画法说明</a></nav>
-</div><a class="btn btn--pri" href="direct.html#s=writing" style="text-decoration:none">打开可以点的稿</a></header>
+</div><a class="btn btn--pri" href="index.html#s=writing" style="text-decoration:none">打开可以点的稿</a></header>
 
 <section class="sec" id="rules"><h2><i>1</i>交互规则</h2>
 <ul class="plain">
@@ -72,7 +72,7 @@ code{font:12px var(--f-mo);color:var(--ac-soft);background:#0A1415;border-radius
 <section class="sec" id="cmp"><h2><i>2</i>逐处对比</h2>
 <p class="lede">只改作品页：分页多一个「脚本直出」，点进去是新页面。其他页面不动。</p>
 <div class="cmp"><div><small>现在 · 作品页「按脚本做视频」</small><div class="shot"><img src="img/before-script.png" alt="现在的按脚本做视频页"></div><ul><li>只有「按素材剪 vlog」「按脚本做视频」两个分页；「按脚本做视频」是占位页，没有让 Opus 写画面的入口。</li><li>Opus 写镜头代码现在只能在 Claude Code 会话里做，再用脚本推进上游中台。</li></ul></div>
-<div class="after"><small>改后 · 新分页「脚本直出」</small><div class="shot"><iframe data-src="direct.html#s=empty&amp;chrome=0" title="改后"></iframe><a href="direct.html#s=empty"></a></div><ul><li>粘贴口播稿就能生成；右边写清点了以后会发生什么、要多久。</li><li>风格说明、配音都可以不填，之后再加。</li></ul></div></div>
+<div class="after"><small>改后 · 新分页「脚本直出」</small><div class="shot"><iframe data-src="index.html#s=empty&amp;chrome=0" title="改后"></iframe><a href="index.html#s=empty"></a></div><ul><li>粘贴口播稿就能生成；右边写清点了以后会发生什么、要多久。</li><li>风格说明、配音都可以不填，之后再加。</li></ul></div></div>
 </section>
 
 <section class="sec" id="states"><h2><i>3</i>各状态整页</h2>
@@ -145,7 +145,7 @@ code{font:12px var(--f-mo);color:var(--ac-soft);background:#0A1415;border-radius
 </div>
 <script>
 const S=[['empty','还没生成（第一屏）'],['read-error','读不到任务'],['filled','粘贴了口播稿'],['unavailable','本机 Claude 调不通'],['designing','Opus 定全片设计'],['writing','Opus 写到第 4 镜'],['failed-shot','第 05 镜没写成'],['ready','七镜都写好'],['rewriting','重写第 03 镜'],['composing','正在合成成片'],['composing-silent','正在合成无声预览'],['done','成片出来了'],['done-silent','无声预览出来了']];
-document.getElementById('gal').innerHTML=S.map(([k,l])=>`<figure><div class="shot"><iframe data-src="direct.html#s=${k}&chrome=0" title="${l}"></iframe><a href="direct.html#s=${k}" aria-label="打开${l}"></a></div><figcaption><span>${l}</span><a href="direct.html#s=${k}">打开 ›</a></figcaption></figure>`).join('');
+document.getElementById('gal').innerHTML=S.map(([k,l])=>`<figure><div class="shot"><iframe data-src="index.html#s=${k}&chrome=0" title="${l}"></iframe><a href="index.html#s=${k}" aria-label="打开${l}"></a></div><figcaption><span>${l}</span><a href="index.html#s=${k}">打开 ›</a></figcaption></figure>`).join('');
 const fit=()=>document.querySelectorAll('.shot iframe').forEach(f=>f.style.transform=`scale(${f.parentElement.clientWidth/1440})`);
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!e.target.src){e.target.src=e.target.dataset.src;io.unobserve(e.target);}}),{rootMargin:'300px'});
 document.querySelectorAll('.shot iframe').forEach(f=>io.observe(f));fit();addEventListener('resize',fit);

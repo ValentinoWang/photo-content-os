@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Photo 精简后预览</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/workflow.css">
+<link rel="stylesheet" href="css/review.css">
+<link rel="stylesheet" href="css/direct.css">
+<link rel="stylesheet" href="css/direct-shot-detail.css">
+<link rel="stylesheet" href="css/direct-rescript.css">
+<link rel="stylesheet" href="slim.css">
+</head>
+<body>
+<div class="pv-bar"><b>Photo 精简后预览</b><span>示例数据 · 左侧 4 个入口和作品里的步骤都能点</span><label><input type="checkbox" id="show-chg"> 标出改动</label></div>
+<div id="app" class="app">
+  <aside class="side">
+    <div class="brand"><span class="brand-mark">P</span><div><b>Photo Content OS</b><small>本地创作工作台</small></div></div>
+    <nav class="nav" aria-label="主导航" data-chg="6 个入口收成 4 个：整理台和素材库并成「素材」，「项目」并进「作品」">
+      <button data-go="home"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 20V3h7l4 3h9v14z"/></svg></span>作品</button>
+      <button data-go="media"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m6 21 10-10 5 5"/></svg></span>素材<i class="badge">2</i></button>
+      <button data-go="music"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>音乐</button>
+      <button data-go="settings"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span>设置</button>
+    </nav>
+    <footer class="side-foot" data-chg="去掉「上游中台未连接」"><div><i class="dot dot--ok"></i>本机可用</div></footer>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><div class="crumb" id="crumb"></div><h1 id="title"></h1><p id="sub"></p></div><div class="topbar-actions" id="acts"></div></header>
+    <section class="review-screen single" id="root"></section>
+  </main>
+</div>
+
+<dialog id="new-dialog">
+  <form method="dialog" class="dialog-form" id="new-form" data-chg="新建时选一次做法，之后作品页只走这一条">
+    <header><div><p class="eyebrow">新建作品</p><h2>这条视频怎么做？</h2></div><button type="button" class="icon-button" data-close aria-label="关闭">×</button></header>
+    <div class="pv-pick">
+      <label><input type="radio" name="line" value="vlog" checked><strong>用素材剪</strong><p>把你拍的照片和视频交给 AI 挑镜头、配乐卡点，出剪映草稿，你再精剪。</p><em>要准备：一批照片和视频</em></label>
+      <label><input type="radio" name="line" value="direct"><strong>用稿子直出</strong><p>把分镜口播稿交给 AI，逐镜画成讲解动画，配好音直接出竖屏成片。</p><em>要准备：分镜口播稿</em></label>
+    </div>
+    <label>作品名称<input name="title" value="周末骑行去海边" required></label>
+    <label id="folder-field">素材放在哪个文件夹<input name="folder" value="~/Movies/2026-11-08 骑行"></label>
+    <p class="pv-hint">选好以后作品页只显示这一条的步骤；想换做法就另建一件作品。</p>
+    <footer><button type="button" class="btn" data-close>取消</button><button class="btn btn--pri" value="ok">创建</button></footer>
+  </form>
+</dialog>
+
+<script>
+const $ = s => document.querySelector(s);
+const IMG = {pick:'img/s2-pick.jpg', strip:'img/s2-strip.jpg', beat:'img/s3-beat.jpg', presets:'img/s3-presets.jpg', timeline:'img/s4-timeline.jpg', script:'img/d1-script.jpg', style:'img/d2-style.jpg', writing:'img/d3-writing.jpg', film:'img/d4-film.jpg', revise:'img/d5-revise.jpg'};
+// 示例缩略图：从真实挑镜头截图的胶片条里逐个切出来
+const thumb = (i) => `background-image:url(img/t${i%13}.jpg)`;
+
+const PIECES = [
+  {id:'meet', title:'兰州大学 · 奔赴与校运会', line:'vlog', step:1, note:'挑镜头做完了 · 27 个精选等你过目', date:'11 月 3 日', media:'48 段视频 · 13 张照片'},
+  {id:'year', title:'断更一年，我拆了四句话', line:'direct', step:3, note:'配音合成中', date:'11 月 9 日', media:'7 镜 · 约 2:23'},
+  {id:'ride', title:'周末骑行去海边', line:'vlog', step:0, note:'素材已导入，还没挑镜头', date:'11 月 8 日', media:'36 段视频 · 22 张照片'},
+  {id:'p5', title:'P5 直出实践：平均速度', line:'direct', step:4, note:'已出 2 版成片', date:'10 月 28 日', media:'6 镜 · 1:48'},
+  {id:'run', title:'清晨 5 公里配速记录', line:'vlog', step:4, note:'剪映草稿已出 · 在精剪', date:'10 月 21 日', media:'19 段视频'},
+  {id:'p4', title:'P4 教学实践：平均速度', line:'direct', step:4, note:'已出 1 版成片', date:'10 月 17 日', media:'5 镜 · 1:31'},
+];
+const LINES = {
+  vlog:{label:'用素材剪', steps:[
+    ['导入素材','61 个素材'],['挑镜头','27 个精选'],['配乐卡点','按拍子排好'],['出剪映草稿','先看一眼粗剪'],['人工精剪','在剪映里改']]},
+  direct:{label:'用稿子直出', steps:[
+    ['分镜口播稿','7 镜 · 约 2:23'],['选风格','扁平插画'],['写每一镜','Opus 写好 7 镜'],['配音合成','带声成片 2:23'],['修改','改一镜或改整稿']]},
+};
+let route = {view:'home'};
+
+function setTop(title, sub='', acts='', crumb=''){ $('#title').textContent=title; $('#sub').textContent=sub; $('#acts').innerHTML=acts; $('#crumb').innerHTML=crumb; }
+function navMark(){ document.querySelectorAll('.nav [data-go]').forEach(b=>b.setAttribute('aria-current', String(b.dataset.go===(route.view==='piece'?'home':route.view)))); }
+const lineChip = l => `<span class="pv-line pv-line--${l}">${LINES[l].label}</span>`;
+
+function home(){
+  setTop('作品','正在做的和最近做的','<button class="btn btn--pri" data-new>新建作品</button>');
+  const running = PIECES.filter(p=>['meet','year','ride'].includes(p.id));
+  $('#root').innerHTML = `
+  <section class="pv-sec" data-chg="首页只放正在做的作品；「ChatCut 没连上」「OpenChatCut 没装好」两条装工具提醒和右栏「本机能力」都去掉">
+    <h2>正在做<span>${running.length} 件</span></h2>
+    <div class="pv-run">
+      <div class="pv-task hot"><div><strong>兰州大学 · 奔赴与校运会：挑镜头做完了</strong><p>27 个精选等你过目，确认后就能配乐卡点。</p><div class="thumbs">${[0,2,3,5,9].map(i=>`<i style="${thumb(i)}"></i>`).join('')}</div></div><button class="btn btn--play" data-open="meet" data-s="1">预览精选</button><button class="btn btn--pri" data-open="meet" data-s="1">去过目</button></div>
+      <div class="pv-task"><div><strong>断更一年，我拆了四句话：配音合成中</strong><p>第 3 / 7 镜，大约还要 2 分钟。合成完会出带声成片。</p><div class="bar"><i style="width:43%"></i></div></div><button class="btn" data-open="year" data-s="3">看进度</button></div>
+      <div class="pv-task"><div><strong>周末骑行去海边：素材导入好了</strong><p>36 段视频、22 张照片，下一步让 AI 挑镜头。</p></div><button class="btn btn--pri" data-open="ride" data-s="1">开始挑镜头</button></div>
+    </div>
+  </section>
+  <section class="pv-sec">
+    <h2>全部作品<span>${PIECES.length} 件</span></h2>
+    <div class="pv-grid">${PIECES.map(p=>`<button class="pv-piece" data-open="${p.id}"><b>${p.title}</b><small>${p.date} · ${p.media}</small><div class="row">${lineChip(p.line)}<span class="chip">${p.note}</span></div></button>`).join('')}</div>
+  </section>`;
+}
+
+function piece(){
+  const p = PIECES.find(x=>x.id===route.piece) || PIECES[0];
+  const L = LINES[p.line]; const s = route.step ?? p.step;
+  setTop(p.title, p.date, p.line==='direct'?'<button class="btn">看已出的成片</button>':'', `<button data-go="home">作品</button>›<span>${L.label}</span>`);
+  const flow = `<nav class="flow full" aria-label="这件作品的步骤" data-chg="三个做法页签（按素材剪 vlog / 按脚本做视频 / 脚本直出）去掉，只显示这件作品自己那一条的 5 步">${L.steps.map(([t,n],i)=>`<div class="fstep ${i<p.step?'done':''} ${i===s?'cur':''}" data-step="${i}" ${i===s?'aria-current="step"':''}><b>${i<p.step?'✓':i+1}</b><span><strong>${t}</strong><small>${n}</small></span></div>`).join('')}</nav>`;
+  $('#root').innerHTML = flow + `<div class="pv-stage">${(p.line==='vlog'?VLOG:DIRECT)[s](p)}</div>`;
+}
+
+const head = (n,t,lede,acts='') => `<header><div><p class="eyebrow">第 ${n} 步</p><h2>${t}</h2><p>${lede}</p></div><div class="actions">${acts}</div></header>`;
+const keep = '<span class="pv-keep">这一屏沿用现在的界面，没改</span>';
+const VLOG = [
+  p => head(1,'素材都进来了','导入时已经自动扫描、按拍摄时间分好批，太短、损坏、重复的单独列出来。','<button class="btn">再导入一些</button><button class="btn btn--pri" data-step-go="1">开始挑镜头</button>') + `
+    <div class="pv-two"><div class="pv-card" data-chg="「素材匹配」不再是单独页签：有脚本就在这里放进来，挑镜头会照着它挑">
+      <div class="pv-facts"><div><b>48</b><span>段视频</span></div><div><b>13</b><span>张照片</span></div><div><b>3</b><span>批</span></div></div>
+      <div class="pv-list">
+        <div><span class="sw" style="${thumb(0)}"></span><span><strong>路上 · 兰州中川机场</strong><small>11 月 1 日 · 13 个</small></span><span class="chip">已放进来</span></div>
+        <div><span class="sw" style="${thumb(9)}"></span><span><strong>校运会开幕 · 主会场</strong><small>11 月 2 日 · 31 个</small></span><span class="chip">已放进来</span></div>
+        <div><span class="sw" style="${thumb(12)}"></span><span><strong>晚上 · 宿舍</strong><small>11 月 2 日 · 17 个</small></span><span class="chip">已放进来</span></div>
+      </div>
+      <div class="setrow" style="margin-top:6px"><div><strong>有脚本吗？</strong><small>可选。放进来后挑镜头按脚本的段落挑；不放就按画面挑。</small></div><button class="btn">放入脚本</button></div>
+    </div>
+    <div class="pv-card"><div class="pv-warn"><div><strong>4 个可能不要</strong><p>2 个太短（不到 1 秒）、1 个打不开、1 个和别的完全重复。原文件不会被改动。</p></div><button class="btn">去勾选</button></div>
+      <p class="muted" data-chg="扫描、分层分析、语音转文字都改成后台自动跑，不再让你选层级">清晰度、曝光、抖动和人声都在导入时自动量好了，挑镜头直接用；你不用选分析档位。</p></div></div>`,
+  p => head(2,'AI 给这条视频挑了 27 个镜头','串起来 1:32。先从头看一遍，不合适的改成「可用」或「不用」；确认后进入配乐卡点。','<button class="btn">重新挑选</button><button class="btn btn--pri" data-step-go="2">确认精选</button>') + keep + `
+    <div class="pv-shot" data-chg="「镜头预览」并进这一步：挑完直接在这里过目"><img src="img/s2-pick-body.jpg" alt="挑镜头：左边播放精选，右边写为什么选它"></div><div class="pv-shot"><img src="${IMG.strip}" alt="精选顺序：按场景排的胶片条"></div>`,
+  p => head(3,'按《Turn Back Time》排好了 1:03 的粗剪','三套剪辑预设任选，镜头切在拍子上。满意就去出剪映草稿。','<button class="btn">换一首</button><button class="btn btn--pri" data-step-go="3">去出草稿</button>') + keep + `
+    <div class="pv-shot" data-chg="右上角「用 Kdenlive 换」去掉：可编辑时间线（OTIO / Kdenlive）砍掉"><img src="${IMG.presets}" alt="配乐卡点：三套剪辑预设"></div><div class="pv-shot"><img src="${IMG.timeline}" alt="粗剪时间线：音乐、画面和节拍点"></div>`,
+  p => head(4,'出剪映草稿','先看一眼无声粗剪，没问题就生成草稿，剪映里直接打开。') + `
+    <div class="pv-two"><div class="pv-card" data-chg="「预览粗剪」并进出草稿这一步"><div class="pv-video" style="background-image:url(img/v-pick.jpg)"></div><p class="pv-cap">粗剪预览 · 1:03 · 无声</p></div>
+    <div class="pv-export" data-chg="出口从 5 个（剪映 / ChatCut / OpenChatCut / OpenFilm / Kdenlive）收成剪映 1 个；剪辑交接包降成一个按钮">
+      <div class="main-act"><div><strong>生成剪映草稿</strong><p>27 个镜头、配乐和节拍点都放在草稿里，字幕轨留空。</p></div><button class="btn btn--pri" data-step-go="4">生成</button></div>
+      <div class="pv-card"><div class="setrow" style="border-top:0;padding-top:0"><div><strong>剪映</strong><small>已找到 · 5.9.0</small></div><span class="chip chip--ok">可用</span></div>
+      <div class="setrow"><div><strong>用别的剪辑软件？</strong><small>导出镜头清单和素材文件夹，自己拖进去。</small></div><button class="btn">导出给其他软件</button></div></div>
+    </div></div>`,
+  p => head(5,'在剪映里精剪','草稿已经放进剪映的草稿箱。改完导出成片，放回这里就能留版本。','<button class="btn">在剪映打开</button><button class="btn btn--pri">放回成片</button>') + `
+    <div class="pv-card" data-chg="「粗剪草稿编辑」停掉、「剪辑复盘」砍掉：精剪全在剪映里做">
+      <div class="pv-list">
+        <div><span class="sw" style="${thumb(5)}"></span><span><strong>剪映草稿 · 奔赴与校运会</strong><small>11 月 3 日 21:40 生成 · 1:03 · 27 个镜头</small></span><span class="chip chip--ok">在剪映里</span></div>
+        <div><span class="sw" style="${thumb(14)}"></span><span><strong>成片 v1</strong><small>还没放回来</small></span><span class="chip">等你导出</span></div>
+      </div></div>`,
+];
+const DIRECT = [
+  p => head(1,'分镜口播稿','7 镜，读完约 2:23。上游交来的分镜会自动填好，不用另外导入。','<button class="btn">改稿</button><button class="btn btn--pri" data-step-go="1">下一步</button>') + keep + `<div class="pv-shot" data-chg="「接收上游分镜」不再单独露面：自动预填到这里"><img src="${IMG.script}" alt="分镜口播稿表格"></div>`,
+  p => head(2,'选风格','整片的颜色、字号和动作规矩，每一镜都照它画。','<button class="btn btn--pri" data-step-go="2">用这套风格</button>') + `<div class="pv-card" data-chg="风格库加入 shotcraft 的镜头配方（可商用），补每镜质量不稳"><div class="pv-shot" style="max-width:640px"><img src="${IMG.style}" alt="风格色板"></div>
+    <div class="pv-list" style="margin-top:14px"><div><span><strong>扁平插画</strong><small>圆润色块一个个弹出来；不用描边线稿、写实照片</small></span><span class="chip chip--ok">在用</span></div><div><span><strong>镜头配方 · 数字跳动</strong><small>来自 shotcraft 镜头库 · 大数字从 0 跳到结论</small></span><span class="chip">可加</span></div><div><span><strong>镜头配方 · 对比条</strong><small>来自 shotcraft 镜头库 · 两组数左右对比</small></span><span class="chip">可加</span></div></div></div>`,
+  p => head(3,'Opus 写每一镜','每句口播现写一段动画，写完先出无声预览。','<button class="btn btn--pri" data-step-go="3">去配音</button>') + keep + `<div class="pv-shot"><img src="${IMG.writing}" alt="7 镜写完的预览"></div>`,
+  p => head(4,'配音合成','上传配音或用合成音，按每句的长度重排每一镜，误差在一帧内。','<button class="btn">上传配音</button><button class="btn btn--pri" data-step-go="4">看成片</button>') + keep + `<div class="pv-shot" data-chg="「成片检查」改成后台自动跑：只在有问题时出现"><img src="${IMG.film}" alt="成片：播放器和检查结果"></div>`,
+  p => head(5,'修改','哪一镜不满意就点哪一镜，写一句要改的；或者改稿后整片重来。','<button class="btn">改整稿</button><button class="btn btn--pri">改这一镜</button>') + keep + `<div class="pv-shot" data-chg="「逐镜画面修改」和「改稿重生成」合成一个「修改」；「区块修改（锁定 + AI 改选中）」界面砍掉"><img src="${IMG.revise}" alt="逐镜修改：左边这一镜，右边写要改的"></div>`,
+];
+
+function media(){
+  setTop('素材','导入的照片和视频，先在这里分批','<button class="btn btn--pri">导入照片和视频</button>');
+  $('#root').innerHTML = `
+  <section class="pv-sec" data-chg="整理台和素材库并成这一页：上面是新导入待分批的，下面是收藏的镜头">
+    <h2>新导入的<span>2 批 · 58 个</span></h2>
+    <div class="pv-batches">
+      <div class="pv-batch"><div class="strip">${[4,5,6,7].map(i=>`<i style="${thumb(i)}"></i>`).join('')}</div><div><strong>11 月 8 日 · 海边公路</strong><p>36 段视频 · 22 张照片 · 按拍摄时间和地点自动分的</p><div class="acts"><button class="btn btn--pri">放进「周末骑行去海边」</button><button class="btn">新建作品</button></div></div></div>
+      <div class="pv-batch"><div class="strip">${[10,11,12,13].map(i=>`<i style="${thumb(i)}"></i>`).join('')}</div><div><strong>11 月 10 日 · 宿舍</strong><p>0 段视频 · 6 张照片 · 2 张疑似重复</p><div class="acts"><button class="btn">放进作品…</button><button class="btn">只归档</button></div></div></div>
+    </div>
+  </section>
+  <section class="pv-sec"><h2>收藏的镜头<span>4 个 · 别的作品也能直接用</span></h2>
+    <div class="pv-batches">${[[1,'机场大厅行走','路上 · 4.7 秒'],[3,'到达大厅全景','路上 · 3.3 秒'],[8,'开幕式入场','校运会 · 2.1 秒'],[13,'宿舍自拍','晚上 · 1.8 秒']].map(([i,t,n])=>`<div class="pv-batch"><div class="strip" style="grid-template-columns:1fr;height:84px"><i style="${thumb(i)}"></i></div><div><strong>${t}</strong><p>${n}</p></div></div>`).join('')}</div>
+  </section>`;
+}
+
+function music(){
+  setTop('音乐','配乐卡点从这里选歌','<button class="btn btn--pri">从文件夹导入</button>');
+  const T=[['Turn Back Time','Rich Edwards / Emelie','3:10','115',['电子','夏日','有人声']],['CRUSH VIBE','未知歌手','1:36','143',['电子','旋律优美','纯音乐']],['Fever Pitch','Richz','2:15','125',['电子','夏日']]];
+  $('#root').innerHTML = `
+  <div class="filters" data-chg="去掉「粘贴汽水 / 网易云分享链接导入」和按来源筛选：只留从文件夹导入（版权风险）"><button aria-pressed="true">全部 3</button><button>夏日 2</button><button>欢快 1</button><button>深沉 2</button><button>有人声 1</button><button>纯音乐 1</button></div>
+  <div class="pv-music"><div class="pv-table"><div class="tr th"><span></span><span>歌名</span><span>时长</span><span>速度</span></div>
+    ${T.map((t,i)=>`<div class="tr ${i===0?'sel':''}"><span class="play">▶</span><span><b>${t[0]}</b><small>${t[1]}</small><span class="chips">${t[4].map(c=>`<span class="chip">${c}</span>`).join('')}</span></span><span class="num">${t[2]}</span><span class="num">${t[3]} BPM</span></div>`).join('')}</div>
+    <aside class="pv-detail"><img src="${IMG.beat}" alt="节拍图：安静、推进、高潮三段"><div><h3>Turn Back Time</h3><small>Rich Edwards / Emelie · 115 BPM · 每小节 4 拍</small><div class="pv-list" style="margin-top:12px"><div><span><strong>用在</strong><small>兰州大学 · 奔赴与校运会</small></span></div></div></div></aside></div>`;
+}
+
+function settings(){
+  const tab = route.tab || 'places';
+  setTop('设置','本机的存放位置、模型和剪映');
+  const P = {
+    places:['存放位置','素材、成片、音乐都在本机这个文件夹里，不上传。',`<div class="setrow"><div><strong>素材根目录</strong><small>~/Movies/Photo</small></div><button class="btn">更改</button></div><div class="setrow"><div><strong>音乐库</strong><small>3 首</small></div></div>`],
+    model:['创意和看图模型','挑镜头看图、直出写每一镜都用它。密钥只存在本机。',`<div class="setrow"><div><strong>Claude · Opus 5.5</strong><small>本机 Claude，可用</small></div><span class="chip chip--ok">在用</span></div><div class="setrow"><div><strong>每次看图上限</strong><small>120 张</small></div><div class="segmented"><button>−</button><button>+</button></div></div>`],
+    asr:['语音转文字','素材里有人声时自动转写，挑镜头会参考说了什么。',`<div class="setrow"><div><strong>阿里云在线转写</strong><small>默认；失败时用本机 FunASR</small></div><span class="chip chip--ok">可用</span></div>`],
+    jy:['剪映','出草稿只用剪映。没找到剪映时，出草稿那一步会提示你。',`<div class="setrow"><div><strong>剪映专业版</strong><small>5.9.0 · ~/Movies/JianyingPro/草稿</small></div><span class="chip chip--ok">已找到</span></div>`],
+    doctor:['诊断','出问题时看这里；平时不用打开。',`<div class="diagnostic"><span class="dot dot--ok"></span><div><strong>FFmpeg 可用</strong><small>7.1</small></div></div><div class="diagnostic"><span class="dot dot--ok"></span><div><strong>剪映草稿目录可写</strong><small>~/Movies/JianyingPro/草稿</small></div></div><button class="btn" style="margin-top:12px">复制报告</button>`],
+  };
+  const [h,p,body]=P[tab];
+  $('#root').innerHTML = `<div class="settings-layout pv-set" data-chg="「剪辑器」只列剪映；去掉 ChatCut / OpenChatCut / OpenFilm / Kdenlive；「上游账号」随云端任务桥冻结一起去掉"><aside class="set-nav">${[['places','存放位置'],['model','创意模型'],['asr','语音转文字'],['jy','剪映']].map(([k,l])=>`<button data-tab="${k}" aria-current="${k===tab}">${l}</button>`).join('')}<hr><button data-tab="doctor" aria-current="${tab==='doctor'}">诊断</button></aside><main><section class="set-sec"><h3>${h}</h3><p>${p}</p>${body}</section></main></div>`;
+}
+
+function render(){ ({home, piece, media, music, settings})[route.view](); navMark(); window.scrollTo(0,0); }
+function go(r){ route = r; const q = new URLSearchParams(); Object.entries(r).forEach(([k,v])=>v!=null&&q.set(k,v)); history.replaceState(null,'','#'+q); render(); }
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-go],[data-open],[data-step],[data-step-go],[data-tab],[data-new],[data-close]'); if(!t) return;
+  if(t.dataset.go) go({view:t.dataset.go});
+  else if(t.dataset.open) go({view:'piece', piece:t.dataset.open, step:t.dataset.s!=null?+t.dataset.s:undefined});
+  else if(t.dataset.step!=null) go({...route, step:+t.dataset.step});
+  else if(t.dataset.stepGo!=null) go({...route, step:+t.dataset.stepGo});
+  else if(t.dataset.tab) go({view:'settings', tab:t.dataset.tab});
+  else if(t.hasAttribute('data-new')) $('#new-dialog').showModal();
+  else if(t.hasAttribute('data-close')) $('#new-dialog').close();
+});
+$('#new-form').addEventListener('change', e => { if(e.target.name==='line') $('#folder-field').hidden = e.target.value!=='vlog'; });
+$('#new-form').addEventListener('submit', e => {
+  const f = new FormData(e.target); if(e.submitter?.value!=='ok') return;
+  const id = 'new'+Date.now(); const line=f.get('line');
+  PIECES.unshift({id, title:f.get('title')||'新作品', line, step:0, note:'刚建好', date:'今天', media:line==='vlog'?'素材导入中':'还没有稿子'});
+  go({view:'piece', piece:id, step:0});
+});
+$('#show-chg').addEventListener('change', e => document.body.classList.toggle('show-chg', e.target.checked));
+const init = new URLSearchParams(location.hash.slice(1));
+if(init.get('chg')==='1'){ $('#show-chg').checked=true; document.body.classList.add('show-chg'); }
+route = {view:init.get('view')||'home', piece:init.get('piece')||undefined, step:init.get('step')!=null?+init.get('step'):undefined, tab:init.get('tab')||undefined};
+render();
+</script>
+</body>
+</html>

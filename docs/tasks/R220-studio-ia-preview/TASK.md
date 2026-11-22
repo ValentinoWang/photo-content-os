@@ -6,7 +6,7 @@
 
 ## 设计稿（用户已认可，照稿实现）
 
-- 交互稿：`docs/tasks/R208-vlog-aesthetic-layer/mock/review.html`。用浏览器打开就能点，右下角黑条切换状态（不属于产品）。
+- 交互稿：`docs/design-drafts/flow-studio--vlog-workflow--Pho_R208/index.html`。用浏览器打开就能点，右下角黑条切换状态（不属于产品）。
 - 全部 27 个状态的渲染结果：同目录 `design-states.html`；导出脚本：本目录 `export_states.mjs`。
 - **这个 mock 目录只在主目录本地，含用户的真实照片、视频和本机路径：不许提交、不许复制进仓库、不许把里面的路径写进代码或测试。** 只读引用。
 - 文案表和设计编号：本目录 `design-contract.json`（由 `ui-copy-quality` 的 `check_design_contract.py extract` 从 `design-states.html` 生成，不含个人数据）。

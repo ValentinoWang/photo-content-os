@@ -64,7 +64,7 @@ export async function checkBlocks(page,state,{core,contract,out,name=state,width
 async function main(){
   const CORE=process.env.HARNESS_CORE;assert(CORE,'Set HARNESS_CORE');
   const DESIGN=process.env.R278_DESIGN_ROOT||join(ROOT,'docs/tasks/R278-direct-rescript/design');
-  const MEDIA=process.env.R278_DESIGN_MEDIA_ROOT||join(DESIGN,'img');
+  const MEDIA=process.env.R278_DESIGN_MEDIA_ROOT||join(ROOT,'docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/img');
   const OUT=process.env.R278_FRONTEND_EVIDENCE||join(homedir(),'.photo-content-os/evidence/R278-direct-rescript/frontend');mkdirSync(OUT,{recursive:true});
   const PORT=Number(process.env.DIRECT_GATE_PORT||8768);assert.equal(PORT,8768,'R278 must use 8768');const BASE=`http://127.0.0.1:${PORT}`;
   const widths=process.argv.find(x=>x.startsWith('--widths='))?.slice(9).split(',').map(Number)||[1440,960];assert(widths.length&&widths.every(w=>Number.isInteger(w)&&w>=320),'Invalid viewport widths');

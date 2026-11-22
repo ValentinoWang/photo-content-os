@@ -29,7 +29,7 @@
 
 ## 1. 设计稿（以它为准）
 
-在 `docs/tasks/R278-direct-rescript/design/`：
+在 `docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/`：
 
 - `spec.html` 里标「R283」的内容：
   - 第 1 节「风格库（R283）」和「其他」里 R283 上线后的那段；

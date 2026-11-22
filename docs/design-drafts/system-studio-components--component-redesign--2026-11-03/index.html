@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
+<title>组件重构稿</title><meta name="description" content="Photo 工作台组件梳理和美化设计稿，手机单列">
+<link rel="stylesheet" href="live/after/styles.css"><link rel="stylesheet" href="live/after/review.css"><link rel="stylesheet" href="live/after/components.css">
+<style>
+body{background:var(--bg);display:block}
+.d{max-width:560px;margin:0 auto;padding:20px 16px 56px}
+.d h1{font-size:22px;line-height:1.3}.d>p{font-size:14px;line-height:1.65;color:var(--ink-2);margin-top:8px}
+.d h2{font-size:17px;margin:30px 0 12px}
+.d .ntiles{margin:14px 0 0}
+.comp{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:14px;margin-bottom:10px}
+.comp header{display:flex;justify-content:space-between;align-items:center;gap:8px}.comp h3{font-size:15px}
+.comp .demo{background:var(--panel-2);border-radius:8px;padding:12px;margin:10px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.comp .demo .fstrip{margin:0}.comp .demo .ntiles,.comp .demo .sempty{margin:0;width:100%}
+.comp p{font-size:13px;line-height:1.55;color:var(--ink-3)}
+.frame-card{background:var(--panel);border:1px solid var(--rule);border-radius:12px;margin-bottom:14px;overflow:hidden}
+.frame-head{padding:12px 14px}.frame-head h3{font-size:15px}.frame-head p{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+.sw{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.sw button{border:0;background:var(--panel-2);padding:10px;font:600 13px var(--f-ui);color:var(--ink-3);min-height:44px}
+.sw button[aria-pressed=true][data-s=before]{background:var(--warn-bg);color:var(--warn);box-shadow:inset 0 -3px 0 var(--warn)}
+.sw button[aria-pressed=true][data-s=after]{background:var(--ok-bg);color:var(--ok);box-shadow:inset 0 -3px 0 var(--ok)}
+iframe{display:block;width:100%;height:520px;border:0}iframe[hidden]{display:none}
+.scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--panel)}
+table{border-collapse:collapse;font-size:13px;width:100%}td:first-child,th:first-child{width:62px}th,td{padding:9px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top;line-height:1.5}th{color:var(--ink-3);font-weight:600;font-size:12px}tr:last-child td{border-bottom:0}
+.d ul.plain{margin:0;padding-left:18px;font-size:13.5px;line-height:1.75;color:var(--ink-2)}
+</style></head><body><main class="d">
+<h1>工作台组件重构稿</h1>
+<p>新增 6 个公共组件，把长句换成图标、徽标和数字。下面 5 页说明文字从 <b id="n0"></b> 字降到 <b id="n1"></b> 字，主要信息都保留。</p>
+<div class="stats" id="stats"></div>
+
+<h2>组件现状</h2>
+<ul class="plain" id="now"></ul>
+
+<h2>新增的 6 个组件</h2>
+<div id="comps"></div>
+
+<h2>5 页改前改后</h2>
+<p style="font-size:13px;color:var(--ink-3);margin:-4px 0 12px">真实页面加模拟数据，点上方两个按钮切换。这是页面在窄屏下的样子，电脑上用同一套组件。</p>
+<div id="frames">
+<section class="frame-card"><div class="frame-head"><h3>工作台</h3><p>作品卡换阶段条和素材计数；本机能力换状态徽标。</p></div><div class="sw" role="group" aria-label="工作台"><button data-s="before" aria-pressed="false">现在</button><button data-s="after" aria-pressed="true">改后</button></div><iframe name="b0" title="工作台 现在" src="live/before/index.html#view=home" hidden></iframe><iframe name="a0" title="工作台 改后" src="live/after/index.html#view=home"></iframe></section>
+<section class="frame-card"><div class="frame-head"><h3>设置 · 剪辑软件</h3><p>说明长句换事实条；状态换徽标。</p></div><div class="sw" role="group" aria-label="设置 · 剪辑软件"><button data-s="before" aria-pressed="false">现在</button><button data-s="after" aria-pressed="true">改后</button></div><iframe name="b1" title="设置 · 剪辑软件 现在" src="live/before/index.html#view=settings&amp;tab=tools" hidden></iframe><iframe name="a1" title="设置 · 剪辑软件 改后" src="live/after/index.html#view=settings&amp;tab=tools"></iframe></section>
+<section class="frame-card"><div class="frame-head"><h3>设置 · 存放位置</h3><p>一排小字数字换数字块。</p></div><div class="sw" role="group" aria-label="设置 · 存放位置"><button data-s="before" aria-pressed="false">现在</button><button data-s="after" aria-pressed="true">改后</button></div><iframe name="b2" title="设置 · 存放位置 现在" src="live/before/index.html#view=settings&amp;tab=places" hidden></iframe><iframe name="a2" title="设置 · 存放位置 改后" src="live/after/index.html#view=settings&amp;tab=places"></iframe></section>
+<section class="frame-card"><div class="frame-head"><h3>整理台（空）</h3><p>整段说明换三步图解和数字块。</p></div><div class="sw" role="group" aria-label="整理台（空）"><button data-s="before" aria-pressed="false">现在</button><button data-s="after" aria-pressed="true">改后</button></div><iframe name="b3" title="整理台（空） 现在" src="live/before/index.html#view=inbox" hidden></iframe><iframe name="a3" title="整理台（空） 改后" src="live/after/index.html#view=inbox"></iframe></section>
+<section class="frame-card"><div class="frame-head"><h3>素材库（空）</h3><p>整段说明换三步图解。</p></div><div class="sw" role="group" aria-label="素材库（空）"><button data-s="before" aria-pressed="false">现在</button><button data-s="after" aria-pressed="true">改后</button></div><iframe name="b4" title="素材库（空） 现在" src="live/before/index.html#view=library" hidden></iframe><iframe name="a4" title="素材库（空） 改后" src="live/after/index.html#view=library"></iframe></section>
+</div>
+
+<h2>新增文字，请过目</h2>
+<div class="scroll"><table><thead><tr><th>位置</th><th>原来</th><th>改成</th></tr></thead><tbody id="copy"></tbody></table></div>
+
+<h2>这轮不动</h2>
+<ul class="plain">
+<li>脚本直出和交接页的内部结构：先落这 6 个组件，再逐页换。</li>
+<li>写死的字号和间距：改到哪页收到哪页，不单独清。</li>
+<li>页面的功能、顺序和入口都不变。</li>
+</ul>
+</main>
+<script type="module">
+import {statusBadge,factStrip,stepEmpty,statTiles,stageTrack,mediaMeta} from './live/after/components.js';
+const NUM={"before": 424, "after": 250};
+document.getElementById('n0').textContent=NUM.before;document.getElementById('n1').textContent=NUM.after;
+document.getElementById('stats').innerHTML=statTiles([[302,'个','检出组件'],[206,'个','只用一次'],[38,'个','可复用']]);
+document.getElementById('now').innerHTML=['工具把函数也算进来，302 个全部还没归类，所以要先定一份公共组件清单。','同名不同实现：<b>button</b> 3 份，<b>card</b> 2 份，<b>timeline</b> 2 份。','状态只靠文字：<b>可用、没连上</b> 这类词是灰字，一眼分不出好坏。','空状态是一整段说明，用户要读完才知道下一步。'].map(x=>`<li>${x}</li>`).join('');
+const C=[
+['状态徽标','变体（基于 chip）','替换灰字状态。绿、黄、灰、红四档，颜色带含义。','工作台本机能力、设置各页',['可用','没连上','暂不支持','读取失败'].map(x=>statusBadge(x)).join('')],
+['事实条','新组件','替换标题下的说明长句。每条一个图标加一个短句。','设置 5 个页签',factStrip([['route','优先 ChatCut，没连上用剪映'],['bell','换了会在工作台提醒']])],
+['步骤空状态','新组件（基于 empty）','空页面用三步图解说明会发生什么，最后一步实心表示终点。','整理台、素材库',stepEmpty('素材库还是空的',[['scissors','挑镜头','在作品里选中'],['star','收进素材库','点一下就行'],['repeat','到处复用','别的作品直接用']])],
+['数字块','新组件','替换一行小字里的数字，数字先被看到。','整理台、存放位置',statTiles([[2,'个','项目'],[4,'件','作品'],[26,'首','音乐库'],[0,'项','素材库']])],
+['阶段条','新组件（替换 chip）','作品走到哪一步直接看三段进度，等你处理时变黄。','作品卡',`<div style="width:100%;display:grid;gap:8px">${[{videos:1},{pending:true},{versions:3}].map(stageTrack).join('')}</div>`],
+['素材计数','新组件','「14 段视频 · 6 张照片」换成图标加数字，窄卡不再折行。','作品卡',mediaMeta({videos:14,photos:6})],
+];
+document.getElementById('comps').innerHTML=C.map(([n,t,w,u,demo])=>`<section class="comp"><header><h3>${n}</h3><span class="chip chip--ai">${t}</span></header><div class="demo">${demo}</div><p>${w}</p><p>用在：${u}</p></section>`).join('');
+addEventListener('message',e=>{const f=document.querySelector(`iframe[name="${e.data?.frame}"]`);if(f&&e.data.h>200)f.style.height=e.data.h+'px';});
+document.querySelectorAll('.sw button').forEach(b=>b.onclick=()=>{const c=b.closest('section');c.querySelectorAll('.sw button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));c.querySelector('iframe[name^=b]').hidden=b.dataset.s!=='before';c.querySelector('iframe[name^=a]').hidden=b.dataset.s!=='after';});
+const K=[['剪辑软件说明','出草稿时 ChatCut 连上就用 ChatCut，否则用剪映……','优先 ChatCut，没连上用剪映 / 换了会在工作台提醒'],['存放位置说明','素材、成片、音乐都在本机这个文件夹里，不上传。','都在本机 / 不上传'],['模型说明','写脚本、挑镜头时看图都用这里的模型。密钥只存本机。','写脚本、挑镜头都用 / 密钥只存本机'],['音乐下载说明','只在你粘贴链接时下载那一首，不批量抓取。','粘贴链接，下那一首 / 不批量抓取'],['上游账号说明','连上后能在网页中台看任务进度。不连也不影响本机创作。','连上能看任务进度 / 不连也能创作'],['整理台空状态','从手机或相机导入的照片和视频……（共 80 字）','导入 手机或相机 / 自动分批 按时间和地点 / 你定去处 放进哪个项目 / 原文件不动 / 太短、损坏、重复的由你勾选删'],['素材库空状态','在作品的「挑镜头」里选中一个镜头……','挑镜头 在作品里选中 / 收进素材库 点一下就行 / 到处复用 别的作品直接用'],['作品状态','挑镜头 · 等你过目','等你过目']];
+document.getElementById('copy').innerHTML=K.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('');
+</script></body></html>

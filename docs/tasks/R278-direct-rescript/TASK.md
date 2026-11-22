@@ -24,7 +24,7 @@
 ## 1. 先读
 
 - worktree 里的 `AGENTS.md`、`CONTRIBUTING.md`、`docs/execution-rules.md`。
-- **设计稿的实现说明**：主目录 `docs/tasks/R278-direct-rescript/design/spec.html`（浏览器打开或直接读源码）。本段看：
+- **设计稿的实现说明**：主目录 `docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/spec.html`（浏览器打开或直接读源码）。本段看：
   - 第 1 节「交互规则」，了解前端要什么；
   - 第 5 节「数字公式和接口」：接口以这一节为准；
   - 第 6 节「门禁」的后端几条。

@@ -4,7 +4,7 @@
 
 ## 1. 文件与设计依据
 
-以 `docs/tasks/R278-direct-rescript/design/spec.html`、`draft.js`、`draft.css`、`lib-data.js` 和最新 `contract.json` 为设计依据，沿用 `studio/static/styles.css` 令牌、现有 `.dv-sw-card`、`.dv-sw-cards`、按钮和分段控件。没有重写设计稿或添加稿外文字。
+以 `docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/spec.html`、`draft.js`、`draft.css`、`lib-data.js` 和最新 `contract.json` 为设计依据，沿用 `studio/static/styles.css` 令牌、现有 `.dv-sw-card`、`.dv-sw-cards`、按钮和分段控件。没有重写设计稿或添加稿外文字。
 
 本段修改：
 

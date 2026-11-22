@@ -17,7 +17,8 @@ const detailIds=new Set(['DV-DETAIL','DV-FACTS','DV-CHECKS','DV-REWRITE','DV-COD
 function outerContract(path){const contract=composeLegacyContract(JSON.parse(readFileSync(path,'utf8')),JSON.parse(readFileSync(join(process.env.R278_DESIGN_ROOT||join(ROOT,'docs/tasks/R278-direct-rescript/design'),'contract.json'),'utf8')),state=>JSON.parse(readFileSync(join(ROOT,'tests/fixtures/r276-direct',state+'.json'),'utf8')));for(const spec of Object.values(contract.states))spec.ids=spec.ids.filter(id=>!detailIds.has(id));const file=join(temp,'r276-outer-contract.json');writeFileSync(file,JSON.stringify(contract));return file;}
 function outerCollector(source){return source.replace('for (let n = el;', `if(el.closest('[data-design-id="DV-DETAIL"]'))return false; for (let n = el;`);}
 
-const DESIGN=process.env.R276_DESIGN_ROOT||join(ROOT,'docs/tasks/R276-direct-video-opus/design');
+const DESIGN=process.env.R276_DESIGN_ROOT||join(ROOT,'docs/design-drafts/page-script-to-video--opus-storyboard--Pho_R276');
+const CONTRACT=join(ROOT,'docs/tasks/R276-direct-video-opus/design/contract.json');
 const CORE=process.env.HARNESS_CORE;
 if(!CORE) throw new Error('设置 HARNESS_CORE，指向 Harness Engineering 的 Core 目录（设计合同检查脚本在那里）');
 const OUT=process.env.R276_FRONTEND_EVIDENCE||join(homedir(),'.photo-content-os/evidence/R276-direct-video-opus/frontend-f2');
@@ -143,7 +144,7 @@ async function runReal() {
     await capture(page,name,width);
     const inventory=await page.evaluate(`(()=>{${outerCollector(collect)};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`);
     const file=join(realOut,`${name}-${width}.inventory.json`);writeFileSync(file,JSON.stringify(inventory,null,2));
-    const result=spawnSync(join(ROOT,'.venv/bin/python'),[checkScript,'check','--contract',outerContract(join(DESIGN,'contract.json')),'--inventory',file,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});
+    const result=spawnSync(join(ROOT,'.venv/bin/python'),[checkScript,'check','--contract',outerContract(CONTRACT),'--inventory',file,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});
     const value=JSON.parse(result.stdout);contracts.push({state,name,width,exit_code:result.status,result:value});writeFileSync(join(realOut,`${name}-${width}.contract.json`),result.stdout);
     return result.status;
   }
@@ -212,7 +213,7 @@ async function captureLive() {
       const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});await page.route('https://fonts.googleapis.com/**',r=>r.abort());await page.route('https://fonts.gstatic.com/**',r=>r.abort());
       await page.goto(BASE+'/#view=piece&piece=project-fc6baa3294&ptab=direct');await page.locator('[data-design-id="DV-PVNOTE"]').waitFor();await capture(page,'real-writing-final',width);
       const inventory=await page.evaluate(`(()=>{${outerCollector(collect)};return collectDesignInventory({states:{writing:'#app'}});})()`),file=join(OUT,`real-writing-final-${width}.inventory.json`);writeFileSync(file,JSON.stringify(inventory,null,2));
-      const r=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',outerContract(join(DESIGN,'contract.json')),'--inventory',file,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});writeFileSync(join(OUT,`real-writing-final-${width}.contract.json`),r.stdout);assert.equal(r.status,0,r.stdout);await page.close();
+      const r=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',outerContract(CONTRACT),'--inventory',file,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});writeFileSync(join(OUT,`real-writing-final-${width}.contract.json`),r.stdout);assert.equal(r.status,0,r.stdout);await page.close();
     }
   } finally {writeFileSync(join(OUT,'real-writing-final.manifest.json'),JSON.stringify({scope:'Live real writing stage, no mocks',screenshots},null,2));await browser.close();rmSync(temp,{recursive:true,force:true});}
 }
@@ -228,13 +229,13 @@ try {
   }
   browser=await chromium.launch({headless:true,...(process.env.VIDEO_RENDER_BROWSER?{executablePath:process.env.VIDEO_RENDER_BROWSER}:{channel:'chrome'})});
   const reference=await browser.newPage({viewport:{width:1440,height:900}});
-  await reference.goto(pathToFileURL(join(DESIGN,'direct.html')).href+'#s=ready&chrome=0');
+  await reference.goto(pathToFileURL(join(DESIGN,'index.html')).href+'#s=ready&chrome=0');
   await reference.locator('.dv-card').first().waitFor();
   await reference.waitForTimeout(700);
   for(let i=0;i<7;i++)await reference.locator('.dv-poster').nth(i).screenshot({path:join(OUT,`poster-${String(i+1).padStart(2,'0')}.jpg`),type:'jpeg'});
   if(!process.argv.includes('--checks-only'))for(const state of STATES)for(const width of [1440,960]){
     await reference.setViewportSize({width,height:900});
-    await reference.goto(pathToFileURL(join(DESIGN,'direct.html')).href+`#s=${state}&chrome=0`);
+    await reference.goto(pathToFileURL(join(DESIGN,'index.html')).href+`#s=${state}&chrome=0`);
     await reference.waitForTimeout(150);
     await reference.screenshot({path:join(OUT,`reference-${state}-${width}.png`),fullPage:true});
   }
@@ -250,7 +251,7 @@ try {
       {
         const inventory=await page.evaluate(`(()=>{${outerCollector(collectSource)};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`);
         const path=join(OUT,`${state}-${width}.inventory.json`);writeFileSync(path,JSON.stringify(inventory,null,2));
-        const result=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',outerContract(join(DESIGN,'contract.json')),'--inventory',path,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});
+        const result=spawnSync(join(ROOT,'.venv/bin/python'),[join(CORE,'skills/ui-copy-quality/scripts/check_design_contract.py'),'check','--contract',outerContract(CONTRACT),'--inventory',path,'--approved-extras',join(ROOT,'tests/fixtures/r276-direct/approved-extras.json'),'--json'],{encoding:'utf8'});
         writeFileSync(join(OUT,`${state}-${width}.contract.json`),result.stdout);contracts.push({state,width,exit_code:result.status,result:JSON.parse(result.stdout)});
       }
       if(state==='ready'){await page.locator('[data-design-id="DV-CHECKS"] summary').click();assert(await page.getByText('画面下半截空着：主画面只占到 y=900，离字幕带还空 46.2%',{exact:true}).isVisible());}

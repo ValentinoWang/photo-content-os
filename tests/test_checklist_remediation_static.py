@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_DIR = ROOT / "evidence" / "2026-09-01" / "openclaw-media-ui-prototype-and-checklist"
 CHECKLIST = ARTIFACT_DIR / "openclaw-dev-checklist.html"
-PROTOTYPE = ARTIFACT_DIR / "openclaw-media-ui-prototype.html"
+PROTOTYPE = ROOT / "docs/design-drafts/flow-openclaw-media--clickable-prototype--2026-10-12/index.html"
 STUDIO_INDEX = ROOT / "studio" / "static" / "index.html"
 STUDIO_APP = ROOT / "studio" / "static" / "app.js"
 

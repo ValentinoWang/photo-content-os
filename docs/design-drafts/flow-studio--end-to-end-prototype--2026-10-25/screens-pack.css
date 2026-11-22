@@ -1,0 +1,79 @@
+/* 包装素材页。前缀 .pk-。令牌全部来自 base.css。 */
+.pk-card{padding:0}
+.pk-grid{display:grid;grid-template-columns:220px minmax(0,1fr) 280px;gap:0}
+.pk-grid>div{padding:16px;min-width:0}
+.pk-grid>div+div{border-left:1px solid var(--rule)}
+.pk-left{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+/* 预览台：9:16，透明叠加层叠在真实镜头上，或叠在棋盘格上只看透明部分 */
+.pk-stage{position:relative;width:100%;aspect-ratio:9/16;border-radius:8px;overflow:hidden;background:#050909}
+.pk-stage>img,.pk-stage>.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pk-stage[data-bg="checker"]>img,.pk-stage[data-bg="checker"]>.ph{display:none}
+.pk-stage[data-bg="checker"]{background:repeating-conic-gradient(#2A3334 0 25%,#1A2122 0 50%) 0 0/16px 16px}
+.pk-anim{position:absolute;inset:0;overflow:hidden}
+.pk-anim iframe{position:absolute;left:0;top:0;width:1080px;height:1920px;border:0;transform-origin:0 0;pointer-events:none;background:transparent}
+.pk-scrub{display:flex;flex-direction:column;gap:6px}
+.pk-scrub input{width:100%;min-width:0;accent-color:var(--ac);margin:0}
+.pk-scrub-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pk-scrub span{font-size:11px;color:var(--ink-3);white-space:nowrap}
+.seg.pk-bgseg,.seg.pk-seg2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.seg.pk-bgseg button{padding:6px 0;font-size:11.5px}
+.pk-mid{display:flex;flex-direction:column;gap:12px}
+.pk-mid header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.pk-mid h3{font-size:15px}
+.pk-mid header p{color:var(--ink-3);font:12px/1.5 var(--f-tx);margin-top:4px}
+.pk-mid h4{margin:2px 0 0;font:600 12px var(--f-ui);color:var(--ink-3);letter-spacing:.04em}
+.pk-mid .chk{grid-template-columns:1fr}
+.pk-mid .attention{padding:12px 14px;flex-wrap:wrap}
+.pk-mid .attention strong{font-size:13.5px}
+.pk-issue{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:start}
+.pk-issue .actions{grid-column:2;justify-content:flex-start}
+.pk-src{display:block;width:72px;height:96px;border-radius:6px;overflow:hidden;background:#0A1112;border:1px solid var(--warn-line)}
+.pk-src img,.pk-src .ph{width:100%;height:100%;object-fit:cover;display:block}
+.pk-right{display:flex;flex-direction:column;gap:14px}
+.pk-ai label{display:block;font-size:12.5px;font-weight:500;color:var(--ink-2);margin-bottom:8px}
+.pk-ai textarea{display:block;width:100%;resize:vertical;border:1px solid var(--rule-2);border-radius:6px;padding:8px 10px;background:var(--panel-2);color:var(--ink);font:12.5px/1.55 var(--f-tx);margin-bottom:8px}
+.pk-ai textarea:focus{outline:none;border-color:var(--ac)}
+.pk-ai small{margin-top:6px;line-height:1.5}
+.pk-code summary{cursor:pointer;color:var(--ac-soft);font-size:12.5px;list-style:none}
+.pk-code summary::-webkit-details-marker{display:none}
+.pk-code summary::before{content:"▸ ";color:var(--ink-4)}
+.pk-code[open] summary::before{content:"▾ "}
+.pk-code summary span{color:var(--ink-4);font:11px var(--f-mo);margin-left:4px}
+.pk-code pre,.pk-stream{margin:8px 0 0;max-height:300px;overflow:auto;background:#0A1112;border:1px solid var(--rule);border-radius:6px;padding:10px 12px;font:11px/1.6 var(--f-mo);color:var(--ink-2);white-space:pre}
+.pk-export{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.pk-export small{line-height:1.5}
+/* 新做一段 */
+.pk-types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pk-types button,.pk-srcpick button{border:1px solid var(--rule-2);border-radius:8px;background:var(--panel-2);padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:3px;color:var(--ink-2)}
+.pk-types button b{font-size:13px;color:var(--ink)}
+.pk-types button[aria-checked="true"],.pk-srcpick button[aria-checked="true"]{border-color:var(--ac);background:var(--ac-bg);box-shadow:0 0 0 1px var(--ac)}
+.pk-textarea{border:1px solid var(--rule-2);border-radius:6px;background:var(--panel-2);padding:10px 12px;font:13.5px/1.6 var(--f-ui);color:var(--ink);min-height:48px;outline:none}
+.pk-textarea:focus{border-color:var(--ac)}
+.pk-srcpick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pk-srcpick button{padding:6px}
+.pk-srcpick span{display:block;aspect-ratio:4/3;border-radius:5px;overflow:hidden;background:#0A1112}
+.pk-srcpick img,.pk-srcpick .ph{width:100%;height:100%;object-fit:cover;display:block}
+.pk-srcpick small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pk-out{display:flex;flex-direction:column;gap:4px}
+.pk-out .seg{max-width:280px;margin-bottom:6px}
+.pk-comp{flex:0 0 52px;height:52px;border-radius:6px;background:#0F1A1C;position:relative;overflow:hidden}
+.pk-comp i{position:absolute;left:8px;height:9px;border-radius:0 4px 4px 0;background:#3A4B4D;top:16px;width:34px}
+.pk-comp i+i{background:var(--ac);top:30px;width:26px}
+.pk-p{color:var(--ink-2);font:12.5px/1.65 var(--f-tx)}
+/* AI 正在写：画法和出现顺序 */
+.pk-order{display:flex;flex-direction:column;gap:6px;padding:4px 0 8px;border-bottom:1px solid var(--rule)}
+.pk-order>small{margin-bottom:2px}
+.pk-order>div{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr) 84px;gap:10px;align-items:center;font-size:12px;color:var(--ink-2)}
+.pk-order code{font:11px var(--f-mo);color:var(--ink-4);text-align:right}
+.pk-ol{position:relative;height:10px;background:#0A1112;border-radius:3px}
+.pk-ol i{position:absolute;top:0;bottom:0;background:var(--ac);border-radius:3px}
+.pk-ol i.hold{background:var(--ac-2)}
+.pk-sw{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pk-sw i{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid var(--rule-2)}
+.pk-stream{max-height:420px}
+.pk-caret{display:inline-block;width:7px;height:13px;background:var(--ac);vertical-align:-2px;margin-left:2px;animation:pk-blink 1s steps(1) infinite}
+@keyframes pk-blink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.pk-caret{animation:none}}
+@media(max-width:1180px){.pk-grid{grid-template-columns:200px minmax(0,1fr)}.pk-right{grid-column:1/-1;border-left:0!important;border-top:1px solid var(--rule)}}
+@media(max-width:960px){.pk-types,.pk-srcpick{grid-template-columns:repeat(2,minmax(0,1fr))}.pk-order>div{grid-template-columns:minmax(0,1fr) 70px}.pk-order .pk-ol{display:none}}
+@media(max-width:620px){.pk-grid{grid-template-columns:1fr}.pk-grid>div+div{border-left:0;border-top:1px solid var(--rule)}.pk-left{max-width:240px}}

@@ -9,7 +9,7 @@
   "task_id": "OCM-S1",
   "reference_prototypes": [
     {
-      "path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
+      "path": "docs/design-drafts/flow-openclaw-media--clickable-prototype--2026-10-12/index.html",
       "sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8",
       "git_identity": "main@a3ae47100d6fce4cb139ce17a479eea16717e73a#blob:d881b06ab26d0cb46b88b653e72dc15160611fce",
       "authority_by_dimension": {

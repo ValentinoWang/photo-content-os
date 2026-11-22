@@ -5,6 +5,6 @@ from pathlib import Path
 
 here = Path(__file__).resolve().parent
 registry = json.loads((here.parents[3] / 'music-analysis.registry.json').read_text(encoding='utf-8'))
-(here / 'registry.js').write_text(
+(here.parents[3] / 'docs/design-drafts/page-music-library--beat-map--Pho_R223/registry.js').write_text(
     '// 由仓库根目录 music-analysis.registry.json 生成，不要手改；改清单后运行 make_registry_js.py。\n'
     f'window.MUSIC_REGISTRY={json.dumps(registry, ensure_ascii=False, separators=(",", ":"))};\n', encoding='utf-8')

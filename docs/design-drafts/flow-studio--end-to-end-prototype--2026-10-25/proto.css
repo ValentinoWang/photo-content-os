@@ -1,0 +1,132 @@
+/* 全流程设计稿：各页共用的新组件。令牌全部来自 base.css（studio/static/styles.css 现值），这里不新增颜色。
+   实现时：.pnl/.rows/.chk/.drop/.cand/.pub 并入 studio/static/review.css；.pbar 只属于设计稿，不实现。 */
+
+/* ---------- 设计稿状态条（只属于设计稿） ---------- */
+.pbar{position:fixed;left:222px;right:12px;bottom:10px;z-index:50;display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:8px;background:#000e;border:1px solid #333;font:11px var(--f-mo);flex-wrap:wrap}
+.pbar select{background:#111;color:#cdd;border:1px solid #333;border-radius:5px;padding:4px 6px;font:11px var(--f-mo);max-width:240px}
+.pbar b{color:#677;padding:4px 6px;font-weight:400}
+.pbar button{border:0;background:none;color:#9aa;padding:5px 8px;border-radius:5px;font:11px var(--f-mo)}
+.pbar button[aria-pressed="true"]{background:#2a3a3c;color:#fff}
+.pbar a{color:#7ab;margin-left:auto;padding:4px 8px;text-decoration:none}
+.pbar[hidden]{display:none}
+.screen{padding-bottom:84px}
+.no-chrome .screen{padding-bottom:40px}
+
+/* ---------- 通用块 ---------- */
+.ph{display:block;width:100%;height:100%;background:linear-gradient(135deg,#1b2627,#0f1718);}
+.stack{display:flex;flex-direction:column;gap:12px;min-width:0}
+.row{display:flex;align-items:center;gap:10px;min-width:0}
+.grow{flex:1;min-width:0}
+.muted{color:var(--ink-3)}
+.mono{font-family:var(--f-mo)}
+.pnl{border:1px solid var(--rule);border-radius:8px;background:var(--panel);min-width:0}
+.pnl-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule)}
+.pnl-h h3{font-size:14px}
+.pnl-h h3>span:not([data-design-data]),.pnl-h h3>span.meta{color:var(--ink-4);font:11px var(--f-mo);font-weight:400;margin-left:8px}
+.pnl-h p{color:var(--ink-3);font:12px/1.5 var(--f-tx)}
+.pnl-b{padding:14px 16px}
+.pnl-f{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.pnl-f p{color:var(--ink-3);font:12px/1.5 var(--f-tx)}
+
+/* 两栏：主区 + 右栏（右栏 340，窄屏落到下面） */
+.cols{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+.cols>aside{position:sticky;top:16px}
+@media(max-width:1180px){.cols{grid-template-columns:minmax(0,1fr) 300px}}
+@media(max-width:960px){.cols{grid-template-columns:1fr}.cols>aside{position:static}}
+
+/* 一行状态：两块以上只有说明文字的空块合成这一行 */
+.statusline{grid-column:1/-1;display:flex;align-items:center;gap:10px;border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:11px 16px;color:var(--ink-3);font:12.5px/1.5 var(--f-tx)}
+.statusline b{color:var(--ink-2);font-weight:500}
+.statusline .btn{margin-left:auto}
+
+/* 提醒块的失败色（检查没通过、渲染失败）。要你处理但不是失败的，用 base 的 .attention */
+.attention--cut{border-color:#5a2b25;background:var(--cut-bg)}
+.attention--cut strong{color:var(--cut)}
+.attention--cut .btn{border-color:#5a2b25;color:var(--cut)}
+.attention .actions{flex-wrap:nowrap}
+.attention ul{margin:6px 0 0;padding-left:18px;color:var(--ink-2);font:12.5px/1.7 var(--f-tx)}
+
+/* 按钮补充 */
+.btn--sm{padding:5px 10px;font-size:12px}
+.btn--warn{border-color:var(--warn-line);color:var(--warn)}
+.btn--danger{border-color:#5a2b25;color:var(--cut)}
+.btn--danger:hover{border-color:var(--cut);color:#f09a8c}
+
+/* 做法标记：vlog / 口播 / 直出。只是分类，不用状态色 */
+.lineb{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--rule-2);border-radius:4px;padding:1px 7px;color:var(--ink-3);font:11px var(--f-tx);white-space:nowrap}
+.lineb::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ink-4)}
+.lineb--vlog::before{background:var(--ac)}
+.lineb--spoken::before{background:var(--ac-soft)}
+.lineb--direct::before{background:var(--sec-build,#2E6E75)}
+
+/* 列表行 */
+.rows{list-style:none;margin:0;padding:0}
+.rows>li{display:flex;align-items:center;gap:12px;padding:11px 16px;border-top:1px solid var(--rule);min-width:0}
+.rows>li:first-child{border-top:0}
+.rows>li>div{flex:1;min-width:0}
+.rows b{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.rows small{margin-top:2px;font-size:12px;color:var(--ink-3)}
+.rows .end{flex:0 0 auto;display:flex;align-items:center;gap:8px}
+
+/* 细进度条 */
+.meter{height:4px;background:var(--rule-2);border-radius:2px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--ac);border-radius:2px}
+.meter.done i{background:var(--ac-2)}
+
+/* 缩略图一排 */
+.thumbrow{display:flex;gap:4px;overflow:hidden}
+.thumbrow>*{flex:0 0 auto;width:72px;height:46px;border-radius:4px;overflow:hidden;background:#0A1112}
+.thumbrow img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ---------- 收回成片 · 六项检查（vlog 第 5 步、脚本第 5 步共用） ---------- */
+.drop{border:1.5px dashed var(--rule-2);border-radius:10px;background:var(--panel);padding:26px 22px;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:16px;align-items:center}
+.drop .ic-box{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:var(--ac-bg);color:var(--ac)}
+.drop .ic-box svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.drop h3{font-size:15px}
+.drop p{color:var(--ink-3);font:12.5px/1.6 var(--f-tx);margin-top:4px}
+.chk{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}
+.chk li{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink-2)}
+.chk li::before{content:"✓";color:var(--ok);font:600 12px var(--f-mo)}
+.chk li.fail::before{content:"✕";color:var(--cut)}
+.chk li.unk::before{content:"?";color:var(--warn)}
+.chk li span{font:11.5px var(--f-mo);color:var(--ink-4);white-space:nowrap}
+.chk li.fail span{color:var(--cut)}
+.chk li.unk span{color:var(--warn)}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px}
+.cand{border:1px solid var(--rule);border-radius:8px;background:var(--panel);display:grid;grid-template-columns:104px minmax(0,1fr);overflow:hidden}
+.cand[aria-current="true"]{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.cand .poster{position:relative;background:#050909;aspect-ratio:9/16;overflow:hidden}
+.cand .poster img{width:100%;height:100%;object-fit:cover;display:block}
+.cand .poster .len{position:absolute;right:5px;bottom:5px;background:#000b;border-radius:3px;padding:0 5px;font:10.5px var(--f-mo);color:var(--ink)}
+.cand .facts{padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.cand .facts header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cand .facts h4{margin:0;font-size:14px}
+.cand .facts p{color:var(--ink-3);font:12px/1.55 var(--f-tx)}
+.cand .facts .chk{grid-template-columns:1fr}
+.cand .facts .chk li{padding:4px 0;font-size:12px;border-bottom:0}
+.cand .facts .actions{margin-top:auto;padding-top:6px}
+.st{display:inline-flex;align-items:center;border-radius:4px;padding:2px 7px;font:11px var(--f-tx);white-space:nowrap;background:var(--ok-bg);color:var(--ok)}
+.st--bad{background:var(--cut-bg);color:var(--cut)}
+.st--wait{background:#2A2018;color:var(--warn)}
+.st--run{background:var(--ac-bg);color:var(--ac-soft)}
+.st--off{background:#1A2425;color:var(--ink-3)}
+
+/* 发布与复盘 */
+.pub{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--rule)}
+.pub>div{padding:12px 16px;border-right:1px solid var(--rule)}
+.pub>div:last-child{border-right:0}
+.pub small{font-size:11.5px}
+.pub b{display:block;margin-top:4px;font:500 15px var(--f-mo);color:var(--ink)}
+.pub b.txt{font:500 13px var(--f-ui)}
+@media(max-width:960px){.pub{grid-template-columns:repeat(2,minmax(0,1fr))}.chk{grid-template-columns:1fr}}
+
+/* 步骤条改成可以点的按钮（现有 Studio 里是 div） */
+.flow .fstep{border:0;border-right:1px solid var(--rule);background:none;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.flow .fstep:last-child{border-right:0}
+.flow .fstep:hover{background:var(--panel-2)}
+.flow .fstep.cur:hover{background:var(--ac-bg)}
+.flow .fstep--warn small{color:var(--warn)}
+.ptabs .ptab-side{margin-left:auto}
+/* 提醒块里的主按钮保持主色（base 的 .attention .btn 会把它染成黄色） */
+.attention .btn.btn--pri{background:var(--ac);border-color:var(--ac);color:#08191B}
+.attention--cut .btn.btn--pri{background:var(--ac);border-color:var(--ac);color:#08191B}

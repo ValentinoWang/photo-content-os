@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--analysis-input', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
-    mock = ROOT / 'docs/tasks/R223-music-beat-map/mock'
+    mock = ROOT / 'docs/design-drafts/page-music-library--beat-map--Pho_R223'
     inputs = json.JSONDecoder().raw_decode((mock / 'beat-data.js').read_text().split('window.TRACKS=', 1)[1])[0]
     source = json.loads((args.library_copy / 'library/music/index.json').read_text())['tracks']
     media = Path(tempfile.mkdtemp(prefix='r223-frontend-fixtures-'))

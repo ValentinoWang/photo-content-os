@@ -9,7 +9,7 @@ from pathlib import Path
 from playwright.async_api import async_playwright
 
 HERE = Path(__file__).resolve().parent
-PAGE = (HERE / 'direct.html').as_uri()
+PAGE = (HERE / '../../../design-drafts/page-script-to-video--opus-storyboard--Pho_R276/index.html').as_uri()
 EXTRACTOR = Path(os.environ.get('HARNESS_CORE', '~/Desktop/Opensource_Tool/Harness_Engineering/Core')).expanduser() / 'skills/ui-copy-quality/scripts/check_design_contract.py'
 COLLECT = """() => { const app = document.querySelector('#app').cloneNode(true);
   app.querySelectorAll('iframe').forEach(n => { n.removeAttribute('srcdoc'); n.removeAttribute('title'); });

@@ -9,7 +9,7 @@
 
 ## 0. 先读
 
-1. 本目录 `DESIGN.md`（设计说明，权威），`mock/beat-map.html`（可交互设计稿，左下角切状态）。
+1. 本目录 `DESIGN.md`（设计说明，权威），`docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html`（可交互设计稿，左下角切状态）。
 2. 仓库根目录 `music-analysis.registry.json`：段落、标签、阈值、模型、改动规则的唯一来源。
 3. `docs/discussions/2026-10-20-music-tagging/synthesis.md` 和 `record.md` 的「最终结论」「用户拍板」。
 4. 项目 `AGENTS.md`、`develop/harness/fullstack-ai-harness.md`。
@@ -154,7 +154,7 @@ rg -n "license_status|LICENSE_LABELS|平台版权曲|来源不明|licenseTag|lic
 
 ### A6 显示用标签的取舍（共享实现）
 
-- `studio/music_analysis.py` 里写一个函数：按清单规则，从原始分数算出要显示的标签。必须和设计稿 `mock/beat-map.html` 里的 `derive()` 结果一致。
+- `studio/music_analysis.py` 里写一个函数：按清单规则，从原始分数算出要显示的标签。必须和设计稿 `docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html` 里的 `derive()` 结果一致。
 - 用设计稿的数据做测试夹具：`mock/beat-data.js` 里的 `scores`，复制到 `tests/fixtures/r223/`，不含路径。期望结果：
   - Turn Back Time：风格「电子」，细分 Tropical House；情绪「深沉」「欢快」；场景「夏日」；有人声；乐器贝斯、合成器、键盘。
   - Fever Pitch：「电子」，细分 House；情绪「深沉」；场景「夏日」；人声**拿不准**；乐器贝斯、合成器、键盘。
@@ -208,7 +208,7 @@ rg -n "license_status|LICENSE_LABELS|平台版权曲|来源不明|licenseTag|lic
 
 ### B1 实现
 
-- 照 `mock/beat-map.html` 实现，以 `DESIGN.md` 第 3–6 节为准：
+- 照 `docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html` 实现，以 `DESIGN.md` 第 3–6 节为准：
   - 音乐库页：列表的速度列和标签行、来源筛选下面的分面标签筛选、筛选后没有歌；
   - 右侧栏：节拍图、播放行、AI 标注区、速度行；
   - `DESIGN.md` 第 4 节的全部状态。

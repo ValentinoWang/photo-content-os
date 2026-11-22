@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>剪辑手法设计稿</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* ---- R226 新增：配乐、剪辑预设、剪辑手法、粗剪时间轴。实现时并入 studio/static/review.css ---- */
+/* 手法只分两类上色（2026-10-21 用 dataviz 校验脚本在 #111819 上验证：CVD ΔE 15.9、正常视力 ΔE 26.5）；切点类方点、声音类圆点，同类靠行首名字区分 */
+:root{--fam-cut:#3987e5;--fam-snd:#d55181}
+
+.screen.single{grid-template-columns:minmax(0,1fr)}
+.ptabs .ptab-side{margin-left:auto}
+.ptabs{overflow-x:auto;scrollbar-width:none}.ptabs::-webkit-scrollbar{display:none}
+.ptabs button{white-space:nowrap;flex:0 0 auto}.ptabs button:last-child{margin-right:0}
+
+/* 第 3 步：选歌（最差首屏） */
+.pick{border:1px solid var(--rule);border-radius:10px;background:var(--panel);overflow:hidden}
+.pick-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--rule)}
+.pick-row:last-of-type{border-bottom:0}
+.pick-row b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick-row small{margin-top:3px;font-size:11.5px}
+.pick-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 16px 4px}
+.pick-head h3{font-size:13px}
+
+/* 剪辑预设：卡片顶部用这件作品自己的镜头预览排出来的样子 */
+.styles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(150px,.55fr);gap:10px}
+.style{position:relative;border:1px solid var(--rule);border-radius:10px;background:var(--panel);padding:0;text-align:left;display:flex;flex-direction:column;overflow:hidden}
+.style-body{padding:11px 14px 12px;display:flex;flex-direction:column;gap:6px}
+.pv{background:#0A1112;padding:8px 8px 7px;border-bottom:1px solid var(--rule)}
+.pv-thumbs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px}
+.pv-thumbs img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:2px;opacity:.88}
+.style[aria-checked="true"] .pv-thumbs img{opacity:1}
+.pv-bar{position:relative;height:9px;margin-top:6px;border-radius:2px;overflow:hidden;background:#0D1314}
+.pv-bar i{position:absolute;top:0;bottom:0;background:var(--sec-quiet)}
+.pv-bar i.b{background:var(--sec-build)}.pv-bar i.p{background:var(--sec-peak)}
+.pv-bar b{position:absolute;top:0;bottom:0;width:1px;background:#E4EBEBcc}
+.preset-more{border:1px dashed var(--rule-2);border-radius:10px;background:none;padding:14px;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:6px;color:var(--ink-2)}
+.preset-more:hover{border-color:var(--ac-2);background:var(--panel-2)}
+.preset-more b{font-size:13.5px;color:var(--ink)}
+.preset-more small{font-size:11.5px;line-height:1.5}
+.preset-more span{color:var(--ac-soft);font-size:12px}
+.changed .btn{padding:5px 10px;font-size:12px}
+.stephead .actions{position:relative}
+.draft-box{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.draft-box>.btn--pri:disabled{background:var(--panel-2);border-color:var(--rule-2);color:var(--ink-3);opacity:1}
+.attention.draft-status{border-color:var(--rule-2);background:var(--panel-2)}
+.draft-status strong{color:var(--ink-2)}
+.draft-status .btn{border-color:var(--rule-2);color:var(--ink-2)}
+.attention.draft-status[data-tone="success"]{border-color:var(--ok-line);background:var(--ok-bg)}
+.draft-status[data-tone="success"] strong,.draft-status[data-tone="success"] .btn{color:var(--ok)}
+.draft-status[data-tone="success"] .btn{border-color:var(--ok-line)}
+.draft-status a.btn{display:inline-block;text-decoration:none}
+.draft-to{font:12px var(--f-tx);color:var(--ink-3);display:inline-flex;gap:8px;align-items:baseline;min-width:0}.draft-to>span{overflow-wrap:anywhere}.draft-to .link{flex-shrink:0}
+.editor-pop{position:absolute;right:0;top:calc(100% + 8px);z-index:20;width:min(420px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 18px 40px -16px #000;padding:12px;text-align:left}
+.ep-h{font-size:12.5px;font-weight:600;margin-bottom:8px}
+.ep-opt{display:grid;grid-template-columns:16px minmax(0,1fr) auto;gap:10px;align-items:start;width:100%;text-align:left;border:1px solid transparent;border-radius:8px;background:none;padding:9px 8px}
+.ep-opt:hover{background:var(--panel-2)}
+.ep-opt[aria-checked="true"]{border-color:var(--ac-2);background:var(--ac-bg)}
+.ep-opt[aria-checked="true"] .radio{border-color:var(--ac);box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 7px var(--ac)}
+.ep-opt .radio{margin-top:2px}
+.ep-opt b{display:block;font-size:13px}
+.ep-opt small{margin-top:2px;font-size:11.5px;line-height:1.5}
+.ep-opt em{font-style:normal;font:11px/1.5 var(--f-tx);color:var(--ink-3);max-width:145px;text-align:right;overflow-wrap:anywhere}
+.ep-opt em.warn{color:var(--warn)}
+.ep-foot{margin-top:8px;font:11.5px var(--f-tx);color:var(--ink-4)}
+@media(max-width:520px){.draft-box{width:100%;justify-content:space-between}.editor-pop{left:0;right:0;width:auto}.ep-opt{grid-template-columns:16px minmax(0,1fr)}.ep-opt em{grid-column:2;text-align:left;max-width:none}}
+.lib-pl{width:min(1120px,100%);max-height:100%;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;overflow:hidden}
+.lib-pl header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule)}
+.lib-pl header strong{font-size:15px}
+.lib-pl header small{margin-top:3px;font-size:11.5px}
+.lib-body{padding:14px 16px 18px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.lib-body .tabs{align-self:flex-start;max-width:100%;overflow-x:auto;flex-shrink:0}
+.lib-grid.styles{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.lib-empty{color:var(--ink-3);font:12.5px/1.6 var(--f-tx);padding:20px 0}
+.style:hover{border-color:var(--ac-2);background:var(--panel-2)}
+.style[aria-checked="true"]{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac);background:linear-gradient(0deg,var(--panel),var(--ac-bg))}
+.style-top{display:flex;align-items:center;gap:8px}
+.style-top b{font-size:14px}
+.style p{color:var(--ink-3);font:12px/1.55 var(--f-tx)}
+.style .rh{color:var(--ink-4);font:11px var(--f-tx)}
+.style .uses{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.radio{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--rule-2);flex:0 0 14px;display:inline-block}
+.style[aria-checked="true"] .radio{border-color:var(--ac);box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 7px var(--ac)}
+.why{color:var(--ink-3);font:12px/1.6 var(--f-tx);margin-top:8px}
+.why b{color:var(--ink-2);font-weight:500}
+.changed{margin-top:8px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font:12px var(--f-tx);color:var(--ink-2)}
+
+/* 手法小标签：形状 + 颜色 + 名字 */
+.tq-tag{display:inline-flex;align-items:center;gap:5px;border-radius:4px;padding:2px 7px;background:#1A2425;color:var(--ink-2);font:11px var(--f-tx);white-space:nowrap}
+.tq-tag::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--fam-cut)}
+.tq-tag.snd::before{background:var(--fam-snd);border-radius:50%}
+.tq-tag.off{color:var(--ink-4);text-decoration:line-through}
+.tq-tag.off::before{opacity:.35}
+
+/* 播放器 + 手法面板：面板按内容撑高，播放器下面放「此刻」 */
+.hero{grid-template-columns:minmax(0,600px) minmax(0,1fr)}
+.hero .stage-wrap{background:var(--panel)}
+.hero .shot-panel>div{position:static}
+.stage img{object-fit:cover}
+.nowbox{border-top:1px solid var(--rule);padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px}
+.nowbox p{color:var(--ink-2);font:12.5px var(--f-tx)}
+.nowbox .tags{display:flex;gap:6px;flex-wrap:wrap}
+.nowbox .none{color:var(--ink-4);font:12px var(--f-tx)}
+.tq{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--rule)}
+.tq li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.tq li:last-child{border-bottom:0}
+.tq li[aria-current="true"]{background:linear-gradient(90deg,var(--ac-bg),transparent);margin:0 -16px;padding:11px 16px}
+.tq .nm{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.tq .nm button{border:0;background:none;padding:0;font-size:13.5px;font-weight:600;color:var(--ink);text-align:left}
+.tq .nm button:hover{color:var(--ac-soft)}
+.tq .nm i{font:11px var(--f-mo);font-style:normal;color:var(--ink-3)}
+.tq p{color:var(--ink-3);font:12px/1.55 var(--f-tx);margin-top:4px}
+.tq .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:7px;flex-wrap:wrap}
+.tq li.off .nm button,.tq li.off p{color:var(--ink-4)}
+.tq .short{color:var(--warn);font:12px/1.55 var(--f-tx);margin-top:6px}
+.sw{position:relative;width:32px;height:18px;border-radius:10px;border:0;background:var(--rule-2);padding:0;margin-top:1px}
+.sw::after{content:"";position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:var(--ink-3);transition:left .12s}
+.sw[aria-checked="true"]{background:var(--ac)}
+.sw[aria-checked="true"]::after{left:16px;background:#071719}
+.does{display:inline-flex;align-items:center;gap:5px;font:11.5px var(--f-tx);color:var(--ink-3)}
+.does::before{content:"";width:12px;height:12px;flex:0 0 12px;background:no-repeat center/12px 12px}
+.does--auto{color:var(--ok)}
+.does--auto::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237FBB92' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")}
+.does--handoff::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237D8C8E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E")}
+
+/* 这一处 / 换歌处 */
+.occ .back{margin-bottom:10px}
+.occ .eyebrow.snd{color:#E58AAE}.occ .eyebrow.cut{color:#7FB0EE}
+.dia{position:relative;margin:14px 0 4px;border:1px solid var(--rule);border-radius:8px;background:#0A1112;padding:10px 12px}
+.dia-rows{position:relative}
+.dia-row{display:grid;grid-template-columns:40px minmax(0,1fr);gap:8px;align-items:center;height:22px}
+.dia-row span{font:10.5px var(--f-tx);color:var(--ink-4);white-space:nowrap}
+.dia-row div{position:relative;height:14px}
+.dia-row i{position:absolute;top:0;bottom:0;border-radius:3px;background:#2E3B3D}
+.dia-row i.nx{background:var(--ac-2)}
+.dia-row i.hl{background:var(--fam-snd)}
+.dia-row i.hlc{background:var(--fam-cut)}
+.dia-row i.mute{background:repeating-linear-gradient(135deg,#253133 0 3px,transparent 3px 6px)}
+.dia-row i.fadeout{background:linear-gradient(90deg,#2E3B3D,transparent)}
+.dia-cut{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--ink)}
+.dia small{margin-top:6px}
+.occ-act{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.occ .skip{margin-top:12px}
+.occ .skipped{margin-top:12px;color:var(--ink-3);font:12px var(--f-tx)}
+.alt-pos{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+
+/* 粗剪时间轴 */
+.tl2{border:1px solid var(--rule);border-radius:10px;background:var(--panel);padding:14px 16px 16px}
+.tl2-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px 16px;flex-wrap:wrap}
+.tl2-head .section-title{margin:0;flex-wrap:wrap;row-gap:2px}
+.section-title.wrap{flex-wrap:wrap;row-gap:2px}.section-title.wrap b{white-space:nowrap;font-weight:inherit}
+.tl2-head .section-title b{white-space:nowrap;font-weight:inherit}
+.tl2-legend{display:flex;gap:12px;flex-wrap:wrap;font:11px var(--f-tx);color:var(--ink-3)}
+.tl2-legend span{display:inline-flex;align-items:center;gap:5px}
+.tl2-legend .sw2{width:9px;height:9px;border-radius:2px;display:inline-block}
+.songs-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding:10px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.songs-bar .lab{font:12px var(--f-tx);color:var(--ink-3);margin-right:4px}
+.song-chip{display:flex;align-items:center;gap:10px;border:1px solid var(--rule-2);border-radius:8px;padding:7px 10px;background:var(--panel-2)}
+.song-chip>b{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:var(--ac-bg);color:var(--ac-soft);font:500 10.5px var(--f-mo);flex:0 0 18px}
+.song-chip strong{display:block;font-size:12.5px;font-weight:600;white-space:nowrap}
+.song-chip small{margin-top:2px;white-space:nowrap}
+.song-chip>div{min-width:0;flex:1}
+.song-chip strong,.song-chip small{overflow:hidden;text-overflow:ellipsis}
+.song-chip .acts{display:flex;gap:10px;margin-left:4px;flex:0 0 auto;white-space:nowrap}
+.tl2-scroll{margin-top:12px;overflow-x:auto}
+.tl2-grid{display:grid;grid-template-columns:104px minmax(0,1fr);min-width:0}
+.tl2-labs{display:flex;flex-direction:column}
+.tl2-labs>span{font:11px var(--f-tx);color:var(--ink-4);display:flex;align-items:center;white-space:nowrap}
+.tl2-labs .l-ruler{height:18px}.tl2-labs .l-songs{height:20px}.tl2-labs .l-music{height:22px}.tl2-labs .l-video{height:46px}.tl2-labs .l-audio{height:30px}
+.tl2-labs .l-lane{height:22px;gap:6px;color:var(--ink-2);cursor:pointer}
+.tl2-labs .l-lane::before{content:"";width:8px;height:8px;flex:0 0 8px;border-radius:2px;background:var(--fam-cut)}
+.tl2-labs .l-lane.snd::before{border-radius:50%;background:var(--fam-snd)}
+.tl2-labs .l-lane.off{color:var(--ink-5)}.tl2-labs .l-lane.off::before{opacity:.3}
+.tl2-labs .l-lane.sel{color:var(--ink);font-weight:600}
+.tl2-labs .l-first{border-top:1px solid var(--rule)}
+.tl2-body{position:relative;cursor:pointer}
+.tl2-ruler{position:relative;height:18px}
+.tl2-ruler i{position:absolute;top:0;font:10px var(--f-mo);font-style:normal;color:var(--ink-4);transform:translateX(-50%)}
+.tl2-ruler i:first-child{transform:none}
+.tl2-songs{position:relative;height:20px}
+.tl2-songs .sn{position:absolute;top:3px;font:11px var(--f-tx);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:4px}
+.tl2-songs .swap{position:absolute;top:1px;height:17px;transform:translateX(-50%);border:1px solid var(--ac);border-radius:9px;background:var(--ac-bg);color:var(--ac-soft);font:10.5px var(--f-tx);padding:0 7px;z-index:2;white-space:nowrap}
+.tl2-songs .swap[aria-current="true"]{background:var(--ac);color:#071719}
+.tl2-music{position:relative;height:22px}
+.tl2-music .seg{position:absolute;top:5px;height:8px;border-radius:2px;background:var(--sec-quiet)}
+.tl2-music .seg.b{background:var(--sec-build)}.tl2-music .seg.p{background:var(--sec-peak)}
+.tl2-music .db{position:absolute;top:16px;width:1px;height:5px;background:var(--rule-2)}
+.tl2-music .fade{position:absolute;top:5px;height:8px;background:linear-gradient(90deg,var(--sec-quiet),transparent)}
+.tl2-swapline{position:absolute;top:18px;height:42px;width:2px;margin-left:-1px;background:var(--ac);pointer-events:none}
+.tl2-video{position:relative;height:46px}
+.tl2-video .blk{position:absolute;top:4px;height:38px;border-radius:3px;background:#0A1112 center/cover no-repeat;border:0;padding:0;overflow:hidden}
+.tl2-video .blk::after{content:"";position:absolute;inset:0;background:#0D131455}
+.tl2-video .blk[aria-current="true"]{box-shadow:0 0 0 2px var(--ac)}
+.tl2-video .blk[aria-current="true"]::after{background:none}
+.tl2-video .blk b{position:absolute;left:3px;top:2px;z-index:1;font:9.5px var(--f-mo);color:var(--ink);background:#000a;border-radius:2px;padding:0 3px}
+.tl2-audio{position:relative;height:30px}
+.tl2-audio .au{position:absolute;top:8px;height:12px;border-radius:2px;background:#2A3638}
+.tl2-audio .au.mute{background:repeating-linear-gradient(135deg,#253133 0 3px,transparent 3px 6px)}
+.tl2-audio .au.lead{background:var(--fam-snd)}
+.tl2-audio .bed{position:absolute;top:4px;height:20px;border:1px solid var(--fam-snd);border-radius:4px}
+.tl2-lanes{border-top:1px solid var(--rule)}
+.lane{position:relative;height:22px}
+.lane.sel{background:#10292C88}
+.lane .ev{position:absolute;top:6px;width:10px;height:10px;margin-left:-5px;border:0;padding:0;border-radius:2px;background:var(--fam-cut)}
+.lane.snd .ev{border-radius:50%;background:var(--fam-snd)}
+.lane .span{position:absolute;top:7px;height:8px;border:0;padding:0;border-radius:4px;background:var(--fam-snd);min-width:6px}
+.lane .ev::after,.lane .span::after{content:"";position:absolute;inset:-6px -4px}
+.lane .ev[aria-current="true"],.lane .span[aria-current="true"]{box-shadow:0 0 0 2px var(--panel),0 0 0 3.5px var(--ink)}
+.lane .skip{background:transparent!important;box-shadow:inset 0 0 0 1.5px var(--ink-4)}
+.lane .lane-note{position:absolute;left:6px;top:4px;font:11px var(--f-tx);color:var(--ink-5);pointer-events:none}
+.tl2-ph{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--ink);pointer-events:none;z-index:3}
+.tl2-cut{position:absolute;top:60px;height:76px;width:1px;background:#ffffff14;pointer-events:none}
+.tl2-cut.hl{background:var(--fam-cut);width:2px;margin-left:-1px}
+.tl2-note{margin-top:10px;color:var(--ink-4);font:11.5px var(--f-tx)}
+
+@media(max-width:1180px){.hero{grid-template-columns:minmax(0,480px) minmax(0,1fr)}}
+@media(max-width:960px){.styles:not(.lib-grid){display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}.styles:not(.lib-grid)>.style,.styles:not(.lib-grid)>.preset-more{flex:0 0 260px;scroll-snap-align:start}.hero{grid-template-columns:1fr}.hero .shot-panel{border-left:0;border-top:1px solid var(--rule)}}
+@media(max-width:620px){.tl2-grid{min-width:780px}.tl2-labs{position:sticky;left:0;z-index:4;background:var(--panel)}.songs-bar .lab{flex:1 1 100%}.song-chip{flex:1 1 100%;min-width:0;max-width:100%}}
+.mockbar{max-height:112px;overflow-y:auto}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="side">
+    <div class="brand"><span class="brand-mark">P</span><div><b>Photo Content OS</b><small>本地创作工作台</small></div></div>
+    <nav class="nav" aria-label="主导航" data-design-id="R208-NAV">
+      <button data-nav="home"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>工作台<i class="badge" data-design-data>2</i></button>
+      <button data-nav="inbox"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span>整理台</button>
+      <button data-nav="projects" aria-current="true"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span>项目</button>
+      <button data-nav="library"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span>素材库</button>
+      <button data-nav="music"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>音乐库</button>
+      <button data-nav="settings"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span>设置与诊断</button>
+    </nav>
+    <footer class="side-foot"><div><i class="dot dot--ok"></i>本机可用</div><div><i class="dot dot--ok"></i>上游中台已连接</div></footer>
+  </aside>
+  <div class="main">
+    <header class="topbar"><div><div class="crumb"><button>项目</button>·<span data-design-data>2026年重回兰州大学内容创作</span></div><h1 data-design-data>兰州大学 · 奔赴与校运会</h1></div><div class="actions"><button class="btn btn--play">看已出的成片 <span data-design-data>v1 · v2</span></button></div></header>
+    <main class="screen single" id="screen"></main>
+  </div>
+  <div class="ov" id="songov" hidden role="dialog" aria-modal="true" aria-labelledby="song-t" data-design-id="R226-SONG-DIALOG"></div>
+  <div class="ov" id="libov" hidden role="dialog" aria-modal="true" aria-labelledby="lib-t" data-design-id="R226-PRESETS"></div>
+</div>
+<div class="mockbar" id="mockbar"></div>
+<div class="toast" id="toast"></div>
+
+<script src="../flow-studio--vlog-workflow--Pho_R208/data.js"></script>
+<script src="../page-music-library--beat-map--Pho_R223/beat-data.js"></script>
+<script src="../page-music-library--beat-map--Pho_R223/registry.js"></script>
+<script>
+// 设计稿：镜头取自 R208 设计数据（兰大 27 个精选），拍点和段落取自 R223 设计数据（librosa 估算）。
+// 粗剪的排法、换歌位置、自拍里的说话和停顿是按下面的规则模拟的，只给设计用，不是正式结果。
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const D=v=>`<span data-design-data>${esc(v)}</span>`;
+const mmss=t=>{t=Math.max(0,Math.round(t));return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};
+const s1=t=>(Math.round(t*10)/10).toFixed(1);
+const SCENES={'selfie-moments':'自拍','sports-meet':'校运会','travel':'路上','travel/raw-pending':'路上'};
+const frameOf=s=>s.frames[Math.min(1,s.frames.length-1)]||s.frames[0]||'';
+
+const TECH=[
+  {id:'jcut',name:'声音先进',fam:'snd',does:'handoff',desc:'下一个镜头的声音提前半秒进来，先听到再看到，换场不突兀。'},
+  {id:'bed',name:'现场声连着',fam:'snd',does:'handoff',desc:'同一个地方连着好几个镜头时，用一段现场声从头铺到尾，听起来是连着的一件事。'},
+  {id:'duck',name:'说话时压低音乐',fam:'snd',does:'handoff',desc:'自拍里你说话的时候，背景音乐压低 12 分贝，说完再回来。'},
+  {id:'pause',name:'停顿处切',fam:'cut',does:'auto',desc:'自拍说话的镜头，切在两句话之间的停顿上，不切在半句话中间。'},
+  {id:'action',name:'动作做完再切',fam:'cut',does:'auto',desc:'起跑、冲刺这类镜头，动作最猛的那一下落在切点前 0.25 秒，做完才切走。'},
+];
+const T=Object.fromEntries(TECH.map(x=>[x.id,x]));
+const DOES={auto:'出草稿时直接做好',handoff:'要你在剪辑软件里做'};
+// 段落名只从 R223 的音乐分析清单读（music-analysis.registry.json 生成的快照），不在页面里另写
+const SEC=Object.fromEntries((window.MUSIC_REGISTRY?.sections?.kinds||[]).map(k=>[k.id,k.name]));
+// 出草稿用什么：沿用 handoff.js 的「剪辑方式 + 软件」，剪映指导＝照剪点清单自己剪
+const EDITORS=[
+  {key:'otio_kdenlive',name:'Kdenlive',line:'出一份能直接打开的时间线，在 Kdenlive 里精剪。',status:'已安装 · 可选',ok:true},
+  {key:'chatcut',name:'ChatCut',line:'在 ChatCut 里打开，接着用它精剪。',status:'没连上',ok:false},
+  {key:'openchatcut',name:'OpenChatCut',line:'开源的网页剪辑工具，装在本仓库里。',status:'已安装 · 还出不了多镜头草稿',ok:false},
+  {key:'guide',name:'剪映',line:'不出工程，给你剪点清单和交接说明，照着在剪映里自己剪。',status:'剪映已安装',ok:true},
+];
+const editorNote=k=>({otio_kdenlive:'用 Kdenlive',chatcut:st.chatConnected?'ChatCut 还出不了这件作品':'ChatCut 还没连上',openchatcut:'OpenChatCut 还出不了这件作品',guide:'在剪映里照清单剪',openfilm:'用 OpenFilm',unreadable:'读不到这件作品用什么出草稿'})[k];
+const editorLabel=()=>st.editor==='chatcut'?'用 ChatCut':st.editor==='openchatcut'?'用 OpenChatCut':editorNote(st.editor);
+const editorBlocked=()=>['chatcut','openchatcut','unreadable'].includes(st.editor)||(st.editor==='otio_kdenlive'&&!st.kdenliveInstalled);
+const editorStatus=e=>e.key==='otio_kdenlive'&&!st.kdenliveInstalled?'没装':e.key==='chatcut'&&st.chatConnected?'已连上 · 还出不了多镜头草稿':e.key==='guide'&&!st.guideInstalled?'剪映没装，也能照清单剪':e.status;
+const doesOf=t=>st.editor==='guide'?'handoff':t.does;
+const doesTag=t=>`<span class="does does--${doesOf(t)}">${DOES[doesOf(t)]}</span>`;
+// 剪辑预设：切点密度（每段几拍一切）+ 用哪些手法 + 镜头先后
+const STYLES={
+  trip:{name:'轻快旅行',cat:'旅行',line:'路上一段段往前走，到了校运会再提速，结尾慢下来。',slot:{quiet:8,build:4,peak:2},on:['jcut','bed','duck','pause','action'],order:'story'},
+  race:{name:'赛场热血',cat:'运动',line:'比赛镜头放到前面，切得更密，动作做完再切。',slot:{quiet:4,build:2,peak:1},on:['jcut','bed','duck','action'],order:'sports'},
+  calm:{name:'松弛日常',cat:'日常',line:'镜头留得久，多听现场声和你说的话。',slot:{quiet:8,build:8,peak:4},on:['bed','duck','pause'],order:'story'},
+  walk:{name:'城市漫步',cat:'旅行',line:'跟着脚步慢慢走，声音先到，画面再跟上。',slot:{quiet:8,build:4,peak:4},on:['jcut','bed','duck'],order:'story'},
+  beat:{name:'卡点快剪',cat:'运动',line:'几乎每一拍都切，适合开头和高潮。',slot:{quiet:2,build:2,peak:1},on:['jcut','action'],order:'sports'},
+  diary:{name:'自拍日记',cat:'日常',line:'以你说的话为主线，路上和比赛镜头穿插进来。',slot:{quiet:8,build:4,peak:4},on:['bed','duck','pause'],order:'selfie'},
+};
+const SHOWN=['trip','race','calm'];
+const names=ids=>ids.map(id=>'「'+T[id].name+'」').join('');
+const diffText=(off,add)=>[off.length?'关掉了'+names(off):'',add.length?'打开了'+names(add):''].filter(Boolean).join('，');
+const preset=k=>{if(k!=='mine')return STYLES[k];const b=STYLES[st.mine.base];return {name:'我的预设',cat:'我的',line:`从「${b.name}」改的：${diffText(st.mine.off,st.mine.add)}。`,slot:b.slot,on:[...b.on.filter(id=>!st.mine.off.includes(id)),...st.mine.add],order:b.order};};
+const RECOMMEND='trip';
+const SEL=SHOTS.filter(s=>s.status==='selected');
+const SONG_A=TRACKS.find(t=>t.title==='Turn Back Time')||TRACKS[0];
+const SONG_B=TRACKS.find(t=>t.title==='Fever Pitch')||TRACKS[1];
+const NO_WORDS_ALL=new Set(SEL.filter(s=>s.scene==='selfie-moments'&&s.kind==='video').map(s=>s.id));
+const NO_WORDS_PARTIAL=new Set(SEL.filter(s=>s.scene==='selfie-moments'&&s.kind==='video').slice(-2).map(s=>s.id));
+const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
+const PAUSE_SHIFT=[0,0.18,-0.22,0.31];
+const fresh=()=>({state:'cut-ready',style:RECOMMEND,off:new Set(),skip:new Set(),sel:null,occ:null,swapOpen:false,swapIdx:null,multi:false,t:0,playing:false,noWords:new Set(),mine:null,lib:false,libCat:'全部',add:new Set(),editor:'otio_kdenlive',editorOpen:false,kdenliveInstalled:true,chatConnected:false,guideInstalled:true,presetsUnreadable:false,allWordsMissing:false,bedShort:false,rearrangeReason:null,songMode:null,replaceSong:0,tracks:[SONG_A],shotDurations:new Map(),beatStatus:'done',draftStatus:null,draftSignature:null});
+let st=fresh(), P=null, timer=null, handoffUrl=null;
+const draftInputs=()=>JSON.stringify([st.style,preset(st.style),[...st.off].sort(),[...st.add].sort(),[...st.skip].sort(),st.tracks.map(t=>t.id),st.multi,st.swapIdx,st.editor]);
+
+function plan(k=st.style){
+  const S=preset(k), cur=k===st.style, off=cur?st.off:new Set(), more=cur?st.add:new Set(), skipSet=cur?st.skip:new Set(), on=new Set([...S.on.filter(id=>!off.has(id)),...[...more].filter(id=>!S.on.includes(id))]);
+  // 开场钩子取前 3 个，最长的那个放第一个，盖住前奏
+  const hooks=META.hooks.map(id=>SEL.find(s=>s.id===id)).filter(Boolean).slice(0,3).sort((a,b)=>(b.kind==='video'?b.dur:0)-(a.kind==='video'?a.dur:0));
+  const rest=SEL.filter(s=>!hooks.includes(s)), by=k=>rest.filter(s=>s.scene===k);
+  const selfie=by('selfie-moments'), half=Math.ceil(selfie.length/2);
+  const order=S.order==='sports'?[...hooks,...by('sports-meet'),...by('travel'),...selfie,...by('travel/raw-pending')]
+    :S.order==='selfie'?[...hooks,...selfie.slice(0,half),...by('travel'),...by('sports-meet'),...selfie.slice(half),...by('travel/raw-pending')]
+    :[...hooks,...by('travel'),...selfie.slice(0,half),...by('sports-meet'),...selfie.slice(half),...by('travel/raw-pending')];
+  // 换歌候选：第 6 个镜头以后的场景交界处；默认优先「进校运会」，其次最靠中间的一处
+  const bounds=order.map((s,i)=>i).filter(i=>i>=6&&SCENES[order[i].scene]!==SCENES[order[i-1].scene]);
+  let swapIdx=null;
+  if(st.multi&&bounds.length){swapIdx=bounds.includes(st.swapIdx)?st.swapIdx:(bounds.find(i=>order[i].scene==='sports-meet')??bounds.reduce((a,b)=>Math.abs(b-order.length/2)<Math.abs(a-order.length/2)?b:a));}
+  const A=st.tracks[0];
+  let beats=[...A.beats], downs=[...A.downbeats], secs=A.sections.map(x=>({...x,song:0}));
+  const songs=[{track:A,from:0,inPt:0}];
+  const secAt=t=>secs.find(x=>t>=x.start&&t<x.end)||secs[secs.length-1];
+  const clips=[]; let t=0, bi=0, swap=null;
+  order.forEach((s,i)=>{
+    if(i===swapIdx){const B=st.tracks[1]||SONG_B, sec=B.sections.find(x=>x.kind!=='quiet'&&x.start>=8)||B.sections[1], inB=B.downbeats.find(d=>d>=sec.start-0.01)||B.downbeats[0], map=b=>b-inB+t;
+      beats=[...beats.filter(b=>b<t-1e-3),...B.beats.filter(b=>b>=inB-1e-3).map(map)];
+      downs=[...downs.filter(b=>b<t-1e-3),...B.downbeats.filter(b=>b>=inB-1e-3).map(map)];
+      secs=[...secs.filter(x=>x.start<t).map(x=>({...x,end:Math.min(x.end,t)})),...B.sections.filter(x=>x.end>inB).map(x=>({start:map(Math.max(x.start,inB)),end:map(x.end),kind:x.kind,song:1}))];
+      songs[0].to=t;songs.push({track:B,from:t,inPt:inB,kind:sec.kind});swap={at:t,idx:i,from:order[i-1],to:s};bi=beats.findIndex(b=>b>=t-1e-3);}
+    const photo=s.kind==='photo', avail=photo?99:Math.max(0.6,s.dur||2);
+    let end, kind=secAt(t).kind;
+    if(i===0){end=A.downbeats.find(x=>x>=4)||beats[4];bi=beats.findIndex(b=>b>=end-1e-3);}
+    else{let n=photo?2:S.slot[kind];while(n>1&&beats[Math.min(bi+n,beats.length-1)]-t>avail)n--;bi=Math.min(bi+n,beats.length-1);end=beats[bi];}
+    clips.push({n:i+1,shot:s,start:t,end,kind,srcIn:s.start||0,song:songs.length-1});
+    t=end;
+  });
+  const total=t+1.6; songs[songs.length-1].to=total;
+  const occ=[], bedMisses=[], add=(tech,key,at,extra)=>{const o={tech,key,at,...extra,skipped:skipSet.has(key)};occ.push(o);return o};
+  const speaks=c=>c.shot.scene==='selfie-moments'&&c.shot.kind==='video';
+  if(on.has('action')) clips.forEach(c=>{const s=c.shot;if(s.scene!=='sports-meet'||s.kind!=='video'||s.mpeak==null)return;const d=c.end-c.start, lo=s.start, hi=Math.max(s.start,s.end-d), want=s.mpeak+0.25-d;
+    if(want<lo-0.05||want>hi+0.05)return;const o=add('action','action:'+c.n,c.end,{clip:c,peak:s.mpeak});if(!o.skipped)c.srcIn=Math.min(hi,Math.max(lo,want));});
+  if(on.has('pause')) clips.forEach(c=>{if(!speaks(c)||c===clips[clips.length-1]||st.noWords.has(c.shot.id))return;add('pause','pause:'+c.n,c.end,{clip:c,shift:PAUSE_SHIFT[hash(c.shot.id)%4]});});
+  if(on.has('jcut')) clips.forEach((c,i)=>{const nx=clips[i+1];if(!nx||nx.shot.kind!=='video'||SCENES[nx.shot.scene]===SCENES[c.shot.scene]||!['sports-meet','selfie-moments'].includes(nx.shot.scene))return;add('jcut','jcut:'+nx.n,c.end,{clip:nx,prev:c,lead:0.5});});
+  if(on.has('bed')){let run=[];const flush=()=>{if(run.length>=3){const src=run.reduce((a,b)=>(b.shot.dur||0)>(a.shot.dur||0)?b:a);if(st.bedShort&&(src.shot.dur||0)<run[run.length-1].end-run[0].start){bedMisses.push([...run]);run=[];return;}add('bed','bed:'+run[0].n,run[0].start,{clips:[...run],src,until:run[run.length-1].end});}run=[];};
+    clips.forEach(c=>{if(c.shot.scene==='sports-meet'&&c.shot.kind==='video')run.push(c);else flush();});flush();}
+  if(on.has('duck')) clips.forEach(c=>{if(speaks(c)&&!st.noWords.has(c.shot.id))add('duck','duck:'+c.n,c.start,{clip:c,until:c.end});});
+  occ.sort((a,b)=>a.at-b.at||a.tech.localeCompare(b.tech));
+  const live=occ.filter(o=>!o.skipped), count=id=>live.filter(o=>o.tech===id).length;
+  const shortWords=on.has('pause')||on.has('duck')?clips.filter(c=>speaks(c)&&st.noWords.has(c.shot.id)).length:0;
+  const cands=bounds.map(i=>({idx:i,at:clips[i].start,from:order[i-1],to:order[i]}));
+  return {clips,total,occ,live,count,on,shortWords,bedMisses,songs,secs,downs,swap,cands,used:TECH.filter(x=>on.has(x.id)&&count(x.id)>0).length};
+}
+
+const pct=t=>(t/P.total*100).toFixed(3)+'%';
+const clipAt=t=>P.clips.find(c=>t>=c.start&&t<c.end)||P.clips[P.clips.length-1];
+const startOf=o=>o.tech==='bed'?o.clips[0].start:o.tech==='duck'?o.clip.start:o.at;
+const activeAt=t=>P.live.filter(o=>{const a=o.tech==='jcut'?o.at-o.lead:o.tech==='bed'||o.tech==='duck'?startOf(o):o.at-0.4, b=o.tech==='bed'||o.tech==='duck'?o.until:o.at+0.4;return t>=a&&t<b;});
+const songOf=t=>P.songs.find(g=>t>=g.from&&t<g.to)||P.songs[P.songs.length-1];
+
+function ptabs(){return `<div class="ptabs full" role="tablist" data-design-id="R208-PIECE-tabs"><button role="tab" aria-selected="true">按素材剪 vlog</button><button role="tab" aria-selected="false">按脚本做视频</button><button role="tab" class="ptab-side" aria-selected="false">素材整理</button><button role="tab" aria-selected="false">保存与归档</button></div>`;}
+function flow(cur3){
+  const draftNote=({drafting:'正在出草稿',ready:'草稿已出好',stale:'草稿是上一版'})[st.draftStatus]||editorNote(st.editor);
+  const steps=[['素材','55 段视频 · 6 张照片',1],['挑镜头',`${SEL.length} 个精选 · 已确认`,1],['配乐卡点',cur3,0],['出草稿',draftNote,st.draftStatus==='ready'],['人工精剪','在剪辑软件里改',0]];
+  return `<nav class="flow full" aria-label="这件作品的步骤" data-design-id="R208-STEPS">${steps.map(([title,note,done],i)=>`<div class="fstep ${done?'done':''} ${i===2?'cur':''}" ${i===2?'aria-current="step"':''}><b data-design-data>${done?'✓':i+1}</b><span><strong>${title}</strong><small>${note}</small></span></div>`).join('')}</nav>`;
+}
+function head(title,lede,actions){return `<div class="stephead full" data-design-id="R226-HEAD"><div><p class="eyebrow">第 3 步 · 配乐卡点</p><h2>${title}</h2><p>${lede}</p></div><div class="actions">${actions}</div></div>`;}
+
+function render(){
+  clearInterval(timer);st.playing=false;
+  if(handoffUrl){URL.revokeObjectURL(handoffUrl);handoffUrl=null;}
+  if(st.draftStatus==='ready'&&st.draftSignature!==draftInputs()){st.draftStatus='stale';st.state='cut-draft-stale';}
+  const scr=$('#screen');scr.dataset.designState=st.state;
+  $('#songov').hidden=true;$('#libov').hidden=true;
+  if(st.state==='cut-no-music')return renderPick(scr);
+  if(['cut-arranging','cut-beat-queued','cut-beat-analyzing'].includes(st.state))return renderArranging(scr);
+  if(st.state==='cut-failed'||st.state.startsWith('cut-failed-'))return renderFailed(scr);
+  P=plan();
+  const S=preset(st.style), changed=[...st.off].filter(id=>S.on.includes(id)), added=[...st.add].filter(id=>!S.on.includes(id)), multi=P.songs.length>1, used=`「${D(S.name)}」${S.name.endsWith('预设')?'':'预设'}`;
+  const title=multi?`用 ${D(P.songs.length)} 首歌排好了 ${D(mmss(P.total))} 的粗剪`:`按《${D(st.tracks[0].title)}》排好了 ${D(mmss(P.total))} 的粗剪`;
+  const lede=multi
+    ?`${D(SEL.length)} 个镜头，切点都对在各自那首歌的拍子上，从${D(SCENES[P.swap.from.scene])}进${D(SCENES[P.swap.to.scene])}时换成《${D((st.tracks[1]||SONG_B).title)}》。用的是${used}。先从头看一遍，不想要的剪辑手法在右边关掉。`
+    :`${D(SEL.length)} 个镜头，切点都对在拍子上，用的是${used}。先从头看一遍，不想要的剪辑手法在右边关掉。`;
+  scr.innerHTML=ptabs()+flow(multi?`${P.songs.length} 首歌 · ${mmss(P.total)}`:`${st.tracks[0].title} · ${mmss(P.total)}`)+head(title,lede,draftBox())+draftStatusHTML()+notices()+
+    `<section class="full" data-design-id="R226-STYLES"><h2 class="section-title wrap"><b>剪辑预设</b><span>每张卡都是用这件作品的镜头排出来的样子；换预设会重新排切点和手法</span></h2><div class="styles" role="radiogroup" aria-label="剪辑预设">${shownPresets().map(presetCard).join('')}<button class="preset-more" data-lib><b>更多预设</b><small>共 ${D(Object.keys(STYLES).length+(!st.presetsUnreadable&&st.mine?1:0))} 个，按旅行、运动、日常${!st.presetsUnreadable&&st.mine?'和我的':''}分好了</small><span>打开预设库 ›</span></button></div>
+      ${st.style===RECOMMEND?`<p class="why">推荐理由：<b>路上</b>的镜头最多（${D(SEL.filter(s=>s.scene.startsWith('travel')).length)} 个），中间有一段<b>校运会</b>（${D(SEL.filter(s=>s.scene==='sports-meet').length)} 个），适合先松后紧。</p>`:''}
+      ${changed.length||added.length?`<p class="changed">你改过：${diffText(changed,added)}。<button class="btn" data-save ${st.presetsUnreadable?'disabled':''}>存为我的预设</button><button class="link" data-restore>恢复「${S.name}」原样</button></p>`:''}</section>`+
+    `<section class="hero full" data-design-id="R226-HERO"><div class="stage-wrap"><div class="stage" id="stage"></div><div class="hero-ctl"><button class="btn-round" id="play" aria-label="播放">▶</button><button class="btn" data-from0>从头播</button><span class="hero-pos" id="pos"></span></div><div class="nowbox" id="nowbox" data-design-id="R226-NOW"></div></div><aside class="shot-panel" data-design-id="R226-TECH"><div id="panel"></div></aside></section>`+
+    timeline();
+  renderLib();renderSong();bind();paintPanel();paintTime();
+}
+
+function draftBox(){
+  const blocked=editorBlocked()||st.draftStatus==='drafting', label=st.draftStatus==='drafting'?'正在出草稿':st.draftStatus?'重新出草稿':'出草稿';
+  return `<div class="draft-box" data-design-id="R226-DRAFT"><span class="draft-to">${D(editorLabel())}${['openfilm','unreadable'].includes(st.editor)?' · ':''}<button class="link" data-editor-open aria-expanded="${st.editorOpen}">换</button></span><button class="btn btn--pri" data-draft-start ${blocked?'disabled aria-disabled="true"':''}>${label}</button>${st.editorOpen?editorPop():''}</div>`;
+}
+function draftStatusHTML(){
+  if(!st.draftStatus)return '';
+  const editor=EDITORS.find(e=>e.key===st.editor)?.name, done=st.draftStatus==='ready';
+  let title, body, actions='', id;
+  if(st.draftStatus==='drafting'){
+    id='R226-DRAFTING-STATUS';title=`正在用 ${D(editor)} 出草稿`;
+    body=`把这 ${D(P.clips.length)} 个镜头和配乐放进时间线，通常一两分钟。可以先去做别的，出好后在工作台提醒你。`;
+  }else if(done){
+    const guide=st.editor==='guide';id=guide?'R226-DRAFTED-GUIDE-STATUS':'R226-DRAFTED-STATUS';
+    title=guide?'剪点清单出好了':`草稿出好了，可以在 ${D(editor)} 里打开`;
+    body=guide?'照着清单在剪映里剪：每个切点、每一处手法都写了时间码和做法。':'切点、配乐和能自动做的手法都放好了；标着「要你在剪辑软件里做」的那几处，写在剪辑交接说明里，带时间码。';
+    actions=(guide?'':`<button class="btn" data-design-id="R226-DRAFT-OPEN">在 ${D(editor)} 里打开</button>`)+`<a class="btn" data-design-id="R226-DRAFT-HANDOFF" href="${handoffTextURL()}" target="_blank" rel="noopener">看剪辑交接说明</a>`;
+  }else{
+    id='R226-DRAFT-STALE-STATUS';title='粗剪改过了，草稿还是上一版';body='再出一次草稿，Kdenlive 里才是现在这一版。';
+  }
+  return `<div class="attention draft-status" role="status" data-tone="${done?'success':'neutral'}" data-design-id="${id}"><div><strong>${title}</strong><p>${body}</p></div>${actions?`<div class="actions">${actions}</div>`:''}</div>`;
+}
+function handoffTextURL(){
+  const clips=P.clips.map(c=>`${mmss(c.start)}–${mmss(c.end)} · ${c.n} · ${SCENES[c.shot.scene]}`);
+  const techniques=P.live.map(o=>{const fragment=document.createElement('div');fragment.innerHTML=occHTML(o);return [...fragment.querySelectorAll('h3,.where,.verdict p')].map(e=>e.textContent).join('\n');});
+  handoffUrl=URL.createObjectURL(new Blob([[...clips,...techniques].join('\n\n')],{type:'text/plain;charset=utf-8'}));
+  return handoffUrl;
+}
+function editorPop(){
+  return `<div class="editor-pop" role="dialog" aria-label="这件作品用什么出草稿" data-design-id="R226-EDITOR"><div class="tl2-head"><p class="ep-h">这件作品用什么出草稿</p><button class="pl-x" data-editor-x aria-label="关闭" data-design-id="R226-EDITOR-CLOSE">×</button></div><div role="radiogroup">${EDITORS.map(e=>`<button class="ep-opt" role="radio" aria-checked="${st.editor===e.key}" data-editor-pick="${e.key}"><i class="radio"></i><span><b>${e.name}</b><small>${e.line}</small></span><em class="${e.ok&&!(e.key==='otio_kdenlive'&&!st.kdenliveInstalled)?'':'warn'}" data-design-data>${editorStatus(e)}</em></button>`).join('')}</div><p class="ep-foot">只改这件作品；没选过的作品默认用 Kdenlive。</p></div>`;
+}
+function shownPresets(){
+  const list=st.mine&&!st.presetsUnreadable?['mine',RECOMMEND,...SHOWN.filter(k=>k!==RECOMMEND)]:[RECOMMEND,...SHOWN.filter(k=>k!==RECOMMEND)];
+  if(!list.slice(0,3).includes(st.style))list.splice(2,0,st.style);
+  return [...new Set(list)].slice(0,3);
+}
+function presetCard(k){
+  const x=preset(k), sel=k===st.style, p=sel?P:plan(k), changed=sel&&([...st.off].some(id=>x.on.includes(id))||[...st.add].some(id=>!x.on.includes(id)));
+  const end=p.total-1.6, f=t=>(t/p.total*100).toFixed(2)+'%';
+  const pick=[0,1,2,3,4,5].map(i=>p.clips[Math.round(i*(p.clips.length-1)/5)]); // 从整条片里均匀取 6 个镜头
+  const thumbs=pick.map(c=>`<img src="${esc(frameOf(c.shot))}" alt="">`).join('');
+  const bar=p.secs.filter(s=>s.start<end).map(s=>`<i class="${s.kind==='build'?'b':s.kind==='peak'?'p':''}" style="left:${f(s.start)};width:${f(Math.min(s.end,end)-s.start)}"></i>`).join('')+p.clips.slice(1).map(c=>`<b style="left:${f(c.start)}"></b>`).join('');
+  return `<button class="style" role="radio" aria-checked="${sel}" data-style="${k}"><div class="pv" aria-hidden="true"><div class="pv-thumbs">${thumbs}</div><div class="pv-bar">${bar}</div></div><div class="style-body"><div class="style-top"><i class="radio"></i><b>${x.name}</b>${k===RECOMMEND?'<span class="chip chip--ac">AI 推荐</span>':''}${k==='mine'?'<span class="chip">我的</span>':''}${changed?'<span class="chip">改过</span>':''}</div><p>${x.line}</p><span class="rh">${D(mmss(p.total))} · 平均 ${D(s1(end/p.clips.length))} 秒一切</span><div class="uses">${TECH.map(t=>`<span class="tq-tag ${t.fam==='snd'?'snd':''} ${x.on.includes(t.id)?'':'off'}">${t.name}</span>`).join('')}</div></div></button>`;
+}
+function renderLib(){
+  const box=$('#libov');if(!st.lib){box.hidden=true;box.innerHTML='';return;}
+  const keys=[...Object.keys(STYLES),...(!st.presetsUnreadable&&st.mine?['mine']:[])], cats=['全部','旅行','运动','日常','我的'];
+  const shown=keys.filter(k=>st.libCat==='全部'||preset(k).cat===st.libCat);
+  box.hidden=false;
+  box.innerHTML=`<div class="lib-pl"><header><div><strong id="lib-t">剪辑预设</strong><small>每个预设都用这件作品的 ${D(SEL.length)} 个镜头和${P.songs.length>1?`这 ${D(P.songs.length)} 首歌`:`《${D(st.tracks[0].title)}》`}排一遍给你看</small></div><button class="pl-x" data-lib-x aria-label="关闭">×</button></header><div class="lib-body"><div class="tabs" role="group" aria-label="按类型看">${cats.map(c=>`<button data-cat="${c}" aria-pressed="${st.libCat===c}">${c}${c==='我的'&&st.presetsUnreadable?'':`<i data-design-data>${c==='全部'?keys.length:keys.filter(k=>preset(k).cat===c).length}</i>`}</button>`).join('')}</div><div class="lib-grid styles" role="radiogroup" aria-label="剪辑预设">${st.libCat==='我的'&&st.presetsUnreadable?presetsNotice():shown.length?shown.map(presetCard).join(''):'<p class="lib-empty">还没有存过预设。在剪辑手法里改过开关以后，可以「存为我的预设」。</p>'}</div></div></div>`;
+}
+
+function timeline(){
+  const end=P.total, cutsHL=st.sel&&T[st.sel].fam==='cut'?new Set(P.live.filter(o=>o.tech===st.sel).map(o=>o.at.toFixed(3))):new Set();
+  const ticks=[];for(let x=0;x<=end;x+=15)ticks.push(`<i style="left:${pct(x)}">${mmss(x)}</i>`);
+  const songs=P.songs.map((g,i)=>`<span class="sn" style="left:${pct(g.from)};width:calc(${pct(g.to-g.from)} - ${i<P.songs.length-1?24:0}px)${i?';margin-left:26px':''}">${esc(g.track.title)}</span>`).join('')+
+    (P.swap?`<button class="swap" data-swap style="left:${pct(P.swap.at)}" aria-current="${st.swapOpen}" title="换歌处 · ${mmss(P.swap.at)}">换歌</button>`:'');
+  const segs=P.secs.filter(s=>s.start<end-1.6).map(s=>`<i class="seg ${s.kind==='build'?'b':s.kind==='peak'?'p':''}" style="left:calc(${pct(s.start)} + 1px);width:calc(${pct(Math.min(s.end,end-1.6)-s.start)} - 2px)" title="${SEC[s.kind]} ${mmss(s.start)}–${mmss(Math.min(s.end,end))}"></i>`).join('');
+  const dbs=P.downs.filter(b=>b<end).map(b=>`<i class="db" style="left:${pct(b)}"></i>`).join('');
+  const fade=`<i class="fade" style="left:${pct(end-1.6)};width:${pct(1.6)}"></i>`;
+  const blocks=P.clips.map(c=>`<button class="blk" data-clip="${c.n}" style="left:calc(${pct(c.start)} + 1px);width:calc(${pct(c.end-c.start)} - 2px);background-image:url('${esc(frameOf(c.shot))}')" title="第 ${c.n} 个镜头 · ${esc(SCENES[c.shot.scene])}"><b data-design-data>${c.n}</b></button>`).join('');
+  const bedClips=new Map();P.live.filter(o=>o.tech==='bed').forEach(o=>o.clips.forEach(c=>bedClips.set(c.n,o)));
+  const leads=new Map(P.live.filter(o=>o.tech==='jcut').map(o=>[o.clip.n,o]));
+  const audio=P.clips.map(c=>{if(c.shot.kind==='photo')return '';const bed=bedClips.get(c.n), mute=bed&&bed.src!==c, ld=leads.get(c.n);
+    return (ld?`<i class="au lead" style="left:${pct(c.start-ld.lead)};width:${pct(ld.lead)}" title="声音先进"></i>`:'')+`<i class="au ${mute?'mute':''}" style="left:calc(${pct(c.start)} + 1px);width:calc(${pct(c.end-c.start)} - 2px)"></i>`;}).join('')+
+    P.live.filter(o=>o.tech==='bed').map(o=>`<i class="bed" style="left:${pct(o.clips[0].start)};width:${pct(o.until-o.clips[0].start)}" title="现场声连着"></i>`).join('');
+  const cuts=P.clips.slice(1).map(c=>`<i class="tl2-cut ${cutsHL.has(c.start.toFixed(3))?'hl':''}" style="left:${pct(c.start)}"></i>`).join('');
+  const S=preset(st.style);
+  const lanes=TECH.map(t=>{const on=P.on.has(t.id), inStyle=S.on.includes(t.id);
+    const items=P.occ.filter(o=>o.tech===t.id).map(o=>{const span=o.tech==='bed'||o.tech==='duck', a=startOf(o), tip=`${t.name} · ${mmss(a)}${o.skipped?' · 这一处不用':''}`;
+      return span?`<button class="span ${o.skipped?'skip':''}" data-occ="${o.key}" style="left:${pct(a)};width:${pct(o.until-a)}" aria-current="${st.occ===o.key}" title="${tip}" aria-label="${tip}"></button>`
+                 :`<button class="ev ${o.skipped?'skip':''}" data-occ="${o.key}" style="left:${pct(o.at)}" aria-current="${st.occ===o.key}" title="${tip}" aria-label="${tip}"></button>`;}).join('');
+    return `<div class="lane ${t.fam} ${st.sel===t.id?'sel':''}">${on&&needsWords(t.id)?'<span class="lane-note" data-design-id="R226-WORDS-LANE-'+t.id+'">要先转写自拍</span>':on?items:`<span class="lane-note">${inStyle?'关掉了':'这个预设不用'}</span>`}</div>`;}).join('');
+  const labs=TECH.map((t,i)=>`<span class="l-lane ${t.fam} ${P.on.has(t.id)?'':'off'} ${st.sel===t.id?'sel':''} ${i===0?'l-first':''}" data-pick="${t.id}">${t.name}</span>`).join('');
+  const chips=P.songs.map((g,i)=>`<div class="song-chip"><b data-design-data>${i+1}</b><div><strong data-design-data>${esc(g.track.title)}</strong><small>${D(mmss(g.from))}–${D(mmss(g.to))} · ${D(Math.round(g.track.bpm)+' BPM')}</small></div><span class="acts"><button class="link" data-replace-song="${i}">换一首</button>${i?'<button class="link" data-remove-song>去掉</button>':''}</span></div>`).join('');
+  return `<section class="tl2 full" data-design-id="R226-TIMELINE"><div class="tl2-head"><h2 class="section-title"><b>粗剪时间轴</b><span>点任意位置跳过去；点手法那几行里的点或条，看这一处怎么做</span></h2>
+    <div class="tl2-legend"><span><i class="sw2 sw--quiet"></i>${SEC.quiet}</span><span><i class="sw2 sw--build"></i>${SEC.build}</span><span><i class="sw2 sw--peak"></i>${SEC.peak}</span></div></div>
+    <div class="songs-bar" data-design-id="R226-SONGS"><span class="lab">配乐</span>${chips}${P.songs.length<3?`<button class="btn" data-add-song>加一首歌</button>`:''}</div>
+    <div class="tl2-scroll"><div class="tl2-grid"><div class="tl2-labs"><span class="l-ruler"></span><span class="l-songs"></span><span class="l-music">音乐</span><span class="l-video">画面</span><span class="l-audio">现场声</span>${labs}</div>
+    <div class="tl2-body" id="tlbody"><div class="tl2-ruler">${ticks.join('')}</div><div class="tl2-songs">${songs}</div><div class="tl2-music">${segs}${dbs}${fade}</div><div class="tl2-video">${blocks}</div><div class="tl2-audio">${audio}</div><div class="tl2-lanes">${lanes}</div>${cuts}${P.swap?`<i class="tl2-swapline" style="left:${pct(P.swap.at)}"></i>`:''}<i class="tl2-ph" id="ph"></i></div></div></div>
+    <p class="tl2-note">现场声那一行：斜线是静掉的现场声，洋红框是用一段现场声铺底，洋红条是提前进来的声音。</p></section>`;
+}
+
+function paintPanel(){
+  const box=$('#panel');if(!box)return;
+  const o=st.occ&&P.occ.find(x=>x.key===st.occ);
+  if(st.swapOpen&&P.swap){box.innerHTML=swapHTML();box.className='occ';box.parentElement.dataset.designId='R226-SWAP';bindPanel();return;}
+  if(o){box.innerHTML=occHTML(o);box.className='occ';box.parentElement.dataset.designId='R226-OCC';bindPanel();return;}
+  box.className='';box.parentElement.dataset.designId='R226-TECH';
+  const S=preset(st.style);
+  box.innerHTML=`<p class="eyebrow">剪辑手法 · ${D(S.name)}</p><h3>用了 ${D(P.used)} 种，共 ${D(P.live.length)} 处</h3>
+  <ul class="tq">${TECH.map(t=>{const inStyle=S.on.includes(t.id), on=P.on.has(t.id), n=P.count(t.id);
+    const short=t.id==='bed'&&on&&P.bedMisses.length?`<p class="short" data-design-id="R226-BED-SHORT">有 ${D(P.bedMisses.length)} 处连着的镜头现场声不够长，没铺上</p>`:t.id==='pause'&&on&&P.shortWords&&!st.allWordsMissing?`<p class="short">另有 ${D(P.shortWords)} 段自拍没有逐字时间，这里用不上。</p>`:'';
+    return `<li class="${on?'':'off'}" aria-current="${st.sel===t.id}"><button class="sw" role="switch" aria-checked="${on}" aria-label="${t.name}" data-sw="${t.id}"></button><div><div class="nm"><button data-pick="${t.id}">${t.name}</button><i data-design-data>${on&&needsWords(t.id)?'要先转写自拍':on?n+' 处':inStyle?'关掉了':'这个预设不用'}</i></div><p>${t.desc}</p>${short}<div class="foot">${doesTag(t)}${on&&n?`<button class="link" data-first="${t.id}">看第 1 处</button>`:''}</div></div></li>`;}).join('')}</ul>`;
+  bindPanel();
+}
+
+const W=10, row=(lab,items)=>`<div class="dia-row"><span>${lab}</span><div>${items}</div></div>`;
+const box=(a,b,cls)=>`<i class="${cls||''}" style="left:${a*W}%;width:${(b-a)*W}%"></i>`;
+const cutAt=f=>`<i class="dia-cut" style="left:calc(48px + (100% - 48px)*${f})"></i>`;
+
+function occHTML(o){
+  const t=T[o.tech], list=P.occ.filter(x=>x.tech===o.tech), i=list.indexOf(o), sc=x=>SCENES[x.shot.scene];
+  let title, where, why, does, dia;
+  if(o.tech==='jcut'){title=`${mmss(o.at)} · ${sc(o.prev)} → ${sc(o.clip)}`;where=`第 ${o.clip.n} 个镜头的现场声提前 ${s1(o.lead)} 秒进来`;
+    why=`从${sc(o.prev)}换到${sc(o.clip)}，先听到${sc(o.clip)}那边的声音，再看到画面，换场不跳。`;
+    does=`把第 ${o.clip.n} 个镜头的声音往前拖 ${s1(o.lead)} 秒，盖住第 ${o.prev.n} 个镜头的最后 ${s1(o.lead)} 秒。`;
+    dia=row('画面',box(0,5)+box(5,10,'nx'))+row('声音',box(0,4)+box(4,10,'hl'))+cutAt(.5);}
+  else if(o.tech==='bed'){const k=o.src.n;title=`${mmss(o.clips[0].start)}–${mmss(o.until)} · ${sc(o.clips[0])}`;where=`第 ${o.clips[0].n}–${o.clips[o.clips.length-1].n} 个镜头，共 ${o.clips.length} 个`;
+    why=`这 ${o.clips.length} 个镜头都在${sc(o.clips[0])}，用第 ${k} 个镜头的现场声从头铺到尾，中间换镜头时声音不断。`;
+    does=`把这几个镜头自己的声音关掉，只留第 ${k} 个镜头的现场声，拉长铺满这一段。`;
+    dia=row('画面',box(0,3.3)+box(3.4,6.6,'nx')+box(6.7,10))+row('声音',box(0,10,'hl'));}
+  else if(o.tech==='duck'){title=`${mmss(o.clip.start)}–${mmss(o.until)} · 自拍`;where=`第 ${o.clip.n} 个镜头，${s1(o.until-o.clip.start)} 秒`;
+    why=`这个镜头里你在说话，背景音乐压低 12 分贝，让说的话听得清。`;does=`在这一段把音乐轨压低 12 分贝，镜头结束后恢复。`;
+    dia=row('说话',box(2,8,'nx'))+row('音乐',box(0,2)+box(2,8,'mute')+box(8,10));}
+  else if(o.tech==='pause'){title=`${mmss(o.at)} · 自拍`;where=`第 ${o.clip.n} 个镜头和第 ${o.clip.n+1} 个镜头之间`;
+    why=o.shift?`停顿比拍子${o.shift>0?'晚':'早'} ${s1(Math.abs(o.shift))} 秒，切点跟着停顿走，等这句话说完再切。`:`这里的停顿正好落在拍子上，切点没动。`;
+    does=null;dia=row('说话',box(0,4.4,'nx')+box(5.6,10,'nx'))+row('画面',box(0,5)+box(5,10))+cutAt(.5);}
+  else {title=`${mmss(o.at)} · 校运会`;where=`第 ${o.clip.n} 个镜头，原片第 ${s1(o.peak)} 秒动作最猛`;
+    why=`动作最猛的那一下放在切点前 0.25 秒，动作做完才切走，不会切在半个动作上。`;does=null;
+    dia=row('动感',`<i class="hlc" style="left:72%;width:6%"></i>`)+row('画面',box(0,8)+box(8,10,'nx'))+cutAt(.8);}
+  return `<button class="link back" data-back>‹ 全部手法</button>
+   <p class="eyebrow ${t.fam}">${t.name} · 第 ${D(i+1)} / ${D(list.length)} 处</p><h3>${title}</h3><p class="where">${where}</p>
+   <div class="dia" aria-hidden="true"><div class="dia-rows">${dia}</div><small>示意图，不按比例</small></div>
+   <div class="verdict"><small>为什么在这里用</small><p>${why}</p></div>
+   <div class="verdict"><small>${doesTag(t)}</small><p>${does?does+' 出草稿时写进剪辑交接说明，带这一处的时间码。':st.editor==='guide'?'剪点清单里已经按这个位置标好，照着切就行。':'已经按这个位置切好，出草稿时直接带上。'}</p></div>
+   <div class="occ-act"><button class="btn btn--play" data-play-occ>从前 2 秒播放</button><button class="btn" data-step="-1" ${i?'':'disabled'}>上一处</button><button class="btn" data-step="1" ${i<list.length-1?'':'disabled'}>下一处</button></div>
+   ${o.skipped?`<p class="skipped">这一处不用了。<button class="link" data-unskip>还是用</button></p>`:`<button class="link skip" data-skip>这一处不用</button>`}`;
+}
+
+function swapHTML(){
+  const w=P.swap, A=P.songs[0].track, B=P.songs[1].track, d=Math.round(B.bpm)-Math.round(A.bpm), kind=SEC[P.songs[1].kind]+'段';
+  const others=P.cands.filter(c=>c.idx!==w.idx);
+  return `<button class="link back" data-back>‹ 全部手法</button>
+   <p class="eyebrow">换歌处</p><h3>${D(mmss(w.at))} · 换成《${D(B.title)}》</h3><p class="where">从${SCENES[w.from.scene]}进${SCENES[w.to.scene]}的那一刀</p>
+   <div class="dia" aria-hidden="true"><div class="dia-rows">${row('前一首',box(0,5)+box(5,6,'fadeout'))+row('后一首',box(5,10,'nx'))+cutAt(.5)}</div><small>示意图，不按比例</small></div>
+   <div class="verdict"><small>为什么在这里换</small><p>从${SCENES[w.from.scene]}进${SCENES[w.to.scene]}，换到《${esc(B.title)}》的${kind}；它每分钟 ${Math.round(B.bpm)} 拍，${d>0?`比前一首快 ${d} 拍`:d<0?`比前一首慢 ${-d} 拍`:'和前一首一样快'}。</p></div>
+   <div class="verdict"><small>换到别的地方</small><div class="alt-pos">${others.length?others.map(c=>`<button class="pill" data-swap-to="${c.idx}">进${SCENES[c.to.scene]} · ${mmss(c.at)}</button>`).join(''):'<span class="muted">没有别的场景交界处。</span>'}</div></div>
+   <div class="verdict"><small><span class="does does--handoff">${DOES.handoff}</span></small><p>在 ${mmss(w.at)} 接上第二首，第一首淡出 1 秒，第二首从重拍进来。出草稿时写进剪辑交接说明，带这一处的时间码。</p></div>
+   <div class="occ-act"><button class="btn btn--play" data-play-swap>从前 2 秒播放</button></div>`;
+}
+
+function paintTime(){
+  if(!P)return;const c=clipAt(st.t), stage=$('#stage');if(!stage)return;
+  const act=activeAt(st.t);
+  stage.innerHTML=`<img src="${esc(frameOf(c.shot))}" alt="">${st.playing?'':'<button class="big-play" data-toggle aria-label="播放">▶</button>'}`;
+  const len=c.end-c.start, src=c.shot.kind==='photo'?'照片':`原片第 ${s1(c.srcIn)}–${s1(c.srcIn+len)} 秒`;
+  const song=P.songs.length>1?` · 配乐《${songOf(st.t).track.title}》`:'';
+  $('#nowbox').innerHTML=`<small>此刻</small><p>第 ${D(c.n)} / ${D(P.clips.length)} 个镜头 · ${D(SCENES[c.shot.scene])} · ${D(src)}${D(song)}</p>${act.length?`<div class="tags">${act.map(o=>`<span class="tq-tag ${T[o.tech].fam==='snd'?'snd':''}">${T[o.tech].name}</span>`).join('')}</div>`:'<span class="none">这一段没有用剪辑手法</span>'}`;
+  $('#pos').innerHTML=`${D(mmss(st.t))} / ${D(mmss(P.total))}`;
+  $('#play').textContent=st.playing?'❚❚':'▶';$('#play').setAttribute('aria-label',st.playing?'暂停':'播放');
+  $('#ph').style.left=pct(st.t);
+  $$('.blk').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.clip===c.n)));
+  $$('[data-toggle]').forEach(b=>b.onclick=toggle);
+}
+function toggle(){st.playing=!st.playing;clearInterval(timer);if(st.playing){timer=setInterval(()=>{st.t+=0.1;if(st.t>=P.total){st.t=P.total;st.playing=false;clearInterval(timer);}paintTime();},100);}paintTime();}
+function seek(t){st.t=Math.max(0,Math.min(P.total,t));paintTime();}
+function rerender(keepT=true){const k=st.t;render();if(keepT){st.t=k;paintTime();}}
+
+function bind(){
+  $$('[data-draft-start]').forEach(b=>b.onclick=()=>{st.draftStatus='drafting';st.state='cut-drafting';st.occ=null;st.sel=null;st.swapOpen=false;render();});
+  $$('[data-style]').forEach(b=>b.onclick=()=>{st.style=b.dataset.style;st.off=new Set();st.add=new Set();st.skip=new Set();st.sel=null;st.occ=null;st.swapOpen=false;st.swapIdx=null;st.t=0;st.lib=false;if(['cut-custom','cut-occurrence','cut-multi-swap','cut-presets'].includes(st.state))st.state=st.multi?'cut-multi':'cut-ready';if(st.style==='mine')st.state='cut-mine';render();toast(`已按「${preset(st.style).name}」重排`);});
+  $('[data-editor-open]')?.addEventListener('click',()=>{st.editorOpen=!st.editorOpen;if(st.state==='cut-ready'&&st.editorOpen)st.state='cut-editor';else if(st.state==='cut-editor'&&!st.editorOpen)st.state='cut-ready';rerender();});
+  $('[data-editor-x]')?.addEventListener('click',()=>{st.editorOpen=false;rerender();});
+  $$('[data-editor-pick]').forEach(b=>b.onclick=()=>{st.editor=b.dataset.editorPick;st.editorOpen=false;rerender();});
+  $('[data-dismiss-rearrange]')?.addEventListener('click',()=>{st.rearrangeReason=null;rerender();});
+  $('[data-song-x]')?.addEventListener('click',()=>{st.songMode=null;rerender();});
+  $$('[data-song-use]').forEach(b=>b.onclick=()=>{const t=TRACKS.find(x=>x.id===b.dataset.songUse);if(st.songMode==='replace')st.tracks[st.replaceSong]=t;else st.tracks.push(t);st.multi=st.tracks.length>1;st.songMode=null;st.swapIdx=null;st.occ=null;st.state=st.multi?'cut-multi':'cut-ready';render();});
+  $$('[data-replace-song]').forEach(b=>b.onclick=()=>{st.replaceSong=+b.dataset.replaceSong;st.songMode='replace';rerender();});
+  $('[data-lib]')?.addEventListener('click',()=>{st.lib=true;st.libCat='全部';if(st.state==='cut-ready')st.state='cut-presets';rerender();});
+  $('[data-lib-x]')?.addEventListener('click',()=>{st.lib=false;if(st.state==='cut-presets')st.state='cut-ready';rerender();});
+  $$('[data-cat]').forEach(b=>b.onclick=()=>{st.libCat=b.dataset.cat;rerender();});
+  $('[data-save]')?.addEventListener('click',()=>{const was=st.style==='mine'?st.mine:{off:[],add:[]}, base=st.style==='mine'?st.mine.base:st.style, bOn=STYLES[base].on, on=new Set([...preset(st.style).on.filter(id=>!st.off.has(id)),...st.add]);st.mine={base,off:bOn.filter(id=>!on.has(id)),add:[...on].filter(id=>!bOn.includes(id))};st.style='mine';st.off=new Set();st.add=new Set();st.state='cut-mine';rerender();toast('存好了，以后在「我的」里也能找到');});
+  $('[data-restore]')?.addEventListener('click',()=>{st.off=new Set();st.add=new Set();if(st.state==='cut-custom')st.state='cut-ready';rerender();});
+  $('#play').onclick=toggle;$('[data-from0]').onclick=()=>{seek(0);if(!st.playing)toggle();};
+  $('#tlbody').onclick=e=>{if(e.target.closest('[data-occ],[data-swap],.blk'))return;const r=$('#tlbody').getBoundingClientRect();seek((e.clientX-r.left)/r.width*P.total);};
+  $$('.blk').forEach(b=>b.onclick=()=>seek(P.clips[+b.dataset.clip-1].start));
+  $$('[data-occ]').forEach(m=>m.onclick=()=>openOcc(m.dataset.occ));
+  $('[data-swap]')?.addEventListener('click',openSwap);
+  $('[data-add-song]')?.addEventListener('click',()=>{st.songMode='add';rerender();});
+  $('[data-remove-song]')?.addEventListener('click',()=>{st.multi=false;st.tracks=st.tracks.slice(0,1);st.swapIdx=null;st.swapOpen=false;st.state='cut-ready';render();toast('去掉了第 2 首，已重排');});
+  $$('.tl2-labs [data-pick]').forEach(b=>b.onclick=()=>{st.sel=st.sel===b.dataset.pick?null:b.dataset.pick;rerender();});
+}
+function bindPanel(){
+  $$('[data-sw]').forEach(b=>b.onclick=()=>{const id=b.dataset.sw, inS=preset(st.style).on.includes(id);
+    if(P.on.has(id)){if(inS)st.off.add(id);else st.add.delete(id);}else{if(inS)st.off.delete(id);else st.add.add(id);}
+    st.occ=null;if(st.sel===id)st.sel=null;if(!st.multi&&st.style!=='mine'&&!st.allWordsMissing&&!st.presetsUnreadable)st.state=st.off.size||st.add.size?'cut-custom':'cut-ready';rerender();});
+  $$('#panel [data-pick]').forEach(b=>b.onclick=()=>{st.sel=st.sel===b.dataset.pick?null:b.dataset.pick;rerender();});
+  $$('[data-first]').forEach(b=>b.onclick=()=>openOcc(P.occ.find(o=>o.tech===b.dataset.first&&!o.skipped).key));
+  $('[data-back]')?.addEventListener('click',()=>{st.occ=null;st.sel=null;st.swapOpen=false;if(st.state==='cut-occurrence')st.state='cut-ready';if(st.state==='cut-multi-swap')st.state='cut-multi';rerender();});
+  $$('[data-step]').forEach(b=>b.onclick=()=>{const o=P.occ.find(x=>x.key===st.occ), list=P.occ.filter(x=>x.tech===o.tech);openOcc(list[list.indexOf(o)+ +b.dataset.step].key);});
+  $('[data-play-occ]')?.addEventListener('click',()=>{const o=P.occ.find(x=>x.key===st.occ);seek(Math.max(0,startOf(o)-2));if(!st.playing)toggle();});
+  $('[data-play-swap]')?.addEventListener('click',()=>{seek(Math.max(0,P.swap.at-2));if(!st.playing)toggle();});
+  $$('[data-swap-to]').forEach(b=>b.onclick=()=>{st.swapIdx=+b.dataset.swapTo;openSwap();toast('换歌位置改了，已重排');});
+  $('[data-skip]')?.addEventListener('click',()=>{st.skip.add(st.occ);reopen();});
+  $('[data-unskip]')?.addEventListener('click',()=>{st.skip.delete(st.occ);reopen();});
+}
+function reopen(){const k=st.occ;rerender();st.occ=k;paintPanel();}
+function openOcc(key){const o=P.occ.find(x=>x.key===key);st.occ=key;st.sel=o.tech;st.swapOpen=false;if(st.state==='cut-ready')st.state='cut-occurrence';render();seek(Math.max(0,startOf(o)-2));}
+function openSwap(){st.swapOpen=true;st.occ=null;st.sel=null;if(st.state==='cut-multi')st.state='cut-multi-swap';render();seek(Math.max(0,P.swap.at-2));}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),1400);}
+
+/* 最差首屏：精选已确认，还没选歌 */
+const shortShots=track=>SEL.filter(s=>s.kind==='video'&&(st.shotDurations.get(s.id)??s.dur)<60/track.bpm);
+const needsWords=id=>st.allWordsMissing&&P.shortWords&&['pause','duck'].includes(id);
+function attention(id,title,body,actions){return `<div class="attention" role="alert" data-design-id="${id}"><div><strong>${title}</strong><p>${body}</p></div><div class="actions">${actions}</div></div>`;}
+function presetsNotice(){return attention('R226-PRESETS-UNREADABLE','读不到你存的剪辑预设','内置预设照常能用。读出来以前，先不能存新的。','<button class="btn">重试</button>');}
+function notices(){
+  let html='';
+  if(st.editor==='chatcut'&&!st.chatConnected)html+=attention('R226-BLOCKED','ChatCut 还没连上本机','这件作品选了在 ChatCut 里精剪，连上之前出不了草稿。去设置里接上，或者改用 Kdenlive。','<button class="btn">去设置</button><button class="btn" data-editor-pick="otio_kdenlive">改用 Kdenlive</button>');
+  else if(['chatcut','openchatcut'].includes(st.editor)){
+    const name=EDITORS.find(e=>e.key===st.editor).name;
+    html+=attention('R226-EDITOR-UNSUPPORTED',`这件作品的草稿还不能交给 ${D(name)}`,`${D(name)} 现在一次只能处理一段原片，这件作品排好的 ${D(P.clips.length)} 个镜头交不过去。改用 Kdenlive，或者在剪映里照剪点清单自己剪。`,'<button class="btn" data-editor-pick="otio_kdenlive">改用 Kdenlive</button><button class="btn" data-editor-pick="guide">改用剪映</button>');
+  }else if(st.editor==='otio_kdenlive'&&!st.kdenliveInstalled)html+=attention('R226-KDENLIVE-MISSING','本机还没装 Kdenlive','装好以后就能出草稿。也可以先在剪映里照剪点清单自己剪。','<button class="btn">去设置</button><button class="btn" data-editor-pick="guide">改用剪映</button>');
+  if(st.rearrangeReason){
+    const body=st.rearrangeReason==='entry'?`《${D((st.tracks[1]||SONG_B).title)}》第 8 秒以后没有推进段或高潮段，接不上前一首。换一首歌试试。`:st.rearrangeReason==='short'?`有 ${D(shortShots(SONG_A).length)} 个镜头太短，按这首歌的拍子排不进去。`:'读不到这首歌的拍子分析结果。';
+    html+=attention('R226-REARRANGE-FAILED','刚才的改动没排出来，原来的粗剪还在',body,'<button class="btn" data-dismiss-rearrange>知道了</button>');
+  }
+  if(st.presetsUnreadable)html+=presetsNotice();
+  if(st.allWordsMissing&&P.shortWords){
+    const names=['pause','duck'].filter(id=>P.on.has(id)).map(id=>T[id].name).join('和');
+    html+=attention('R226-PARTIAL-NONE',`有 ${D(P.shortWords)} 段自拍还没转写，${names}用不上`,`这 ${D(P.shortWords)} 段先按拍子切，可能切在半句话中间，说话时音乐也不会压低。转写后会自动补上。`,`<button class="btn">转写这 ${D(P.shortWords)} 段</button>`);
+  }else if(st.state==='cut-partial')html+=attention('R226-PARTIAL',`有 ${D(P.shortWords)} 段自拍没有逐字时间，停顿处切用不上`,`这 ${D(P.shortWords)} 段先按拍子切，可能切在半句话中间。重新转写后会自动补上。`,`<button class="btn">重新转写这 ${D(P.shortWords)} 段</button>`);
+  return html;
+}
+function songRows(dialog){return TRACKS.map(t=>{
+  const used=dialog&&st.tracks.some(x=>x.id===t.id);
+  return `<div class="pick-row" data-design-id="R226-SONG-ROW-${esc(t.id)}"><button class="play" aria-label="试听 ${esc(t.title)}" data-design-data>▶</button><div><b data-design-data>${esc(t.title)}</b><small>${D(t.artist)} · ${D(mmss(t.dur))} · ${D(Math.round(t.bpm)+' BPM')}</small></div>${used?'<small data-design-id="R226-SONG-IN-USE">已在用</small>':`<button class="btn" ${dialog?`data-song-use="${esc(t.id)}"`:''}>用这首</button>`}</div>`;
+}).join('');}
+function renderSong(){
+  const box=$('#songov');if(!st.songMode){box.hidden=true;box.innerHTML='';return;}
+  const replace=st.songMode==='replace';box.hidden=false;
+  box.innerHTML=`<div class="lib-pl" data-design-id="R226-SONG-PICKER"><header><strong id="song-t">${replace?'换一首歌':'加一首歌'}</strong><button class="pl-x" data-song-x aria-label="关闭">×</button></header><div class="lib-body"><div class="pick">${songRows(true)}</div><p class="why" data-design-id="R226-SONG-FOOT">${replace?'换了以后，这一段的切点按新歌的拍子重新排。':'加进来以后，会在场景交界处换到这首，后面的切点重新对拍子。'}</p></div></div>`;
+}
+function renderPick(scr){
+  const rows=songRows(false);
+  scr.innerHTML=ptabs()+flow('还没选歌')+head(`先给这 ${D(SEL.length)} 个镜头选一首歌`,`选好后，本机会分析这首歌的拍子，把切点对在拍子上，再按剪辑预设加上声音先进、停顿处切这类剪辑手法。排好后还可以再加歌，在场景交界处换歌。原素材不会被改动。`,'')+
+   `<section class="pick full" data-design-id="R226-PICK"><div class="pick-head"><h3>音乐库里的歌 <span class="chip" data-design-data>${TRACKS.length} 首</span></h3><button class="link">去音乐库导入别的歌</button></div>${rows}</section>`;
+}
+function renderArranging(scr){
+  const done=st.beatStatus==='done', queued=st.beatStatus==='queued';
+  const arranged=done?Math.floor(SEL.length*2/3):0;
+  const p=[['分析这首歌的拍子',done?`${st.tracks[0].beats.length} 拍`:queued?'排队中':'正在分析',done?100:0,done?'done':''],['按拍子排切点',done?`${arranged} / ${SEL.length} 个镜头`:'',done?arranged/SEL.length*100:0,''],['加剪辑手法','',0,'']];
+  scr.innerHTML=ptabs()+flow('正在排')+head(`正在按《${D(st.tracks[0].title)}》排粗剪`,done?'通常一分钟内排好。可以先去做别的，排好后在工作台提醒你。':'这首歌的拍子还没分析完，分析完会自动接着排。可以先去做别的，排好后在工作台提醒你。','<button class="btn">停止</button>')+
+   `<div class="progress" data-design-id="R226-PROGRESS"><div class="steps">${p.map(([b,s,w,c])=>`<div class="step ${c}"><b>${b}</b><span data-design-data>${s}</span><div class="bar"><i style="width:${w}%"></i></div></div>`).join('')}</div></div>`;
+}
+function renderFailed(scr){
+  const short=shortShots(st.tracks[0]).length;
+  const [title,body,buttons]={
+    'cut-failed':['这首歌的拍子没分析出来','分析到一半出错了，可以再试一次，或者换一首歌。',['重新分析','换一首歌']],
+    'cut-failed-unreadable':['读不到这首歌的拍子分析结果','分析结果的文件读不出来，可以重新分析一次，或者换一首歌。',['重新分析','换一首歌']],
+    'cut-failed-missing':['音乐库里找不到这首歌了','它可能被删掉了。换一首歌就能接着排。',['换一首歌']],
+    'cut-failed-short':[`有 ${D(short)} 个镜头太短，按这首歌的拍子排不进去`,'换一首慢一点的歌，或者回第 2 步换掉这几个镜头。',['换一首歌','回去挑镜头']],
+  }[st.state];
+  scr.innerHTML=ptabs()+flow('没排出来')+head(`粗剪没排出来`,`已经挑好的 ${D(SEL.length)} 个精选都留着，不用重挑。`,'')+attention(st.state==='cut-failed'?'R226-FAILED':'R226-'+st.state.toUpperCase(),title,body,buttons.map(b=>`<button class="btn">${b}</button>`).join(''));
+
+}
+
+/* 设计稿控制条（不属于产品） */
+const STATES=[
+  ['cut-no-music','还没选歌（最差首屏）'],['cut-arranging','正在排'],['cut-failed','没排出来'],['cut-ready','排好了'],['cut-occurrence','看一处手法'],['cut-custom','关掉一种手法'],['cut-partial','部分用不上'],['cut-multi','两首歌'],['cut-multi-swap','看换歌处'],['cut-presets','预设库'],['cut-mine','存成我的预设'],['cut-editor','换剪辑软件'],['cut-editor-chatcut','ChatCut 没连上'],
+  ['cut-add-song','加歌'],['cut-replace-song','换歌'],['cut-beat-queued','排队中'],['cut-beat-analyzing','分析中'],['cut-failed-unreadable','分析读不到'],['cut-failed-missing','歌找不到'],['cut-failed-short','镜头太短'],['cut-rearrange-failed','重排失败'],['cut-editor-unsupported','软件还不能出'],['cut-presets-unreadable','预设读不到'],['cut-partial-none','自拍没转写'],['cut-bed-short','现场声不够'],['cut-stacked','警示组合'],
+  ['cut-editor-kdenlive-missing','Kdenlive 没装'],['cut-editor-chatcut-connected','ChatCut 已连'],['cut-editor-guide-missing','剪映没装'],['cut-editor-openfilm','用 OpenFilm'],['cut-editor-unreadable','选择读不到'],['cut-presets-unreadable-mine','我的读不到'],
+  ['cut-drafting','正在出草稿'],['cut-drafted','草稿出好了'],['cut-drafted-guide','剪点清单出好了'],['cut-draft-stale','草稿是上一版'],
+];
+function go(name){st=fresh();st.state=name;P=null;$('#toast').classList.remove('show');
+  if(name==='cut-custom')st.off.add('jcut');
+  if(name==='cut-presets'){st.lib=true;st.libCat='全部';}
+  if(name==='cut-editor')st.editorOpen=true;
+  if(name==='cut-editor-chatcut'||name==='cut-stacked')st.editor='chatcut';
+  if(name==='cut-mine'){st.mine={base:'trip',off:['jcut'],add:[]};st.style='mine';}
+  if(name==='cut-partial')st.noWords=new Set(NO_WORDS_PARTIAL);
+  if(name==='cut-partial-none'||name==='cut-stacked'){st.noWords=new Set(NO_WORDS_ALL);st.allWordsMissing=true;}
+  if(name.startsWith('cut-multi')){st.multi=true;st.tracks.push(SONG_B);}
+  if(name==='cut-add-song')st.songMode='add';
+  if(name==='cut-replace-song')st.songMode='replace';
+  if(name==='cut-beat-queued')st.beatStatus='queued';
+  if(name==='cut-beat-analyzing')st.beatStatus='analyzing';
+  // 镜头太短为设计错误 fixture：把现有最短视频的可用区间缩成半拍，按区间重新计数。
+  if(name==='cut-failed-short'){const shortest=SEL.filter(s=>s.kind==='video').reduce((a,b)=>a.dur<=b.dur?a:b);st.shotDurations.set(shortest.id,60/st.tracks[0].bpm/2);}
+  if(name==='cut-rearrange-failed')st.rearrangeReason='unreadable';
+  if(name==='cut-editor-unsupported')st.editor='openchatcut';
+  if(name.startsWith('cut-presets-unreadable')){st.presetsUnreadable=true;st.off.add('jcut');if(name.endsWith('-mine')){st.lib=true;st.libCat='我的';}}
+  if(name==='cut-bed-short')st.bedShort=true;
+  if(name==='cut-editor-kdenlive-missing'){st.kdenliveInstalled=false;st.editorOpen=true;}
+  if(name==='cut-editor-chatcut-connected'){st.editor='chatcut';st.chatConnected=true;st.editorOpen=true;}
+  if(name==='cut-editor-guide-missing'){st.editor='guide';st.guideInstalled=false;st.editorOpen=true;}
+  if(name==='cut-editor-openfilm'){st.editor='openfilm';st.editorOpen=true;}
+  if(name==='cut-editor-unreadable'){st.editor='unreadable';st.editorOpen=true;}
+  if(name==='cut-drafting')st.draftStatus='drafting';
+  if(name==='cut-drafted-guide')st.editor='guide';
+  if(name==='cut-drafted'||name==='cut-drafted-guide'){st.draftStatus='ready';st.draftSignature=draftInputs();}
+  if(name==='cut-draft-stale'){st.draftStatus='stale';st.off.add('jcut');}
+  render();
+  if(name==='cut-occurrence'){const o=P.occ.filter(x=>x.tech==='jcut')[1]||P.occ[0];openOcc(o.key);}
+  else if(name==='cut-multi-swap')openSwap();
+  else if(P)seek(name==='cut-ready'?P.clips[3].start+0.6:0);
+  $$('#mockbar button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.go===name)));
+  try{history.replaceState(null,'','#'+name);}catch{}
+}
+$('#mockbar').innerHTML='<b>状态</b>'+STATES.map(([k,l])=>`<button data-go="${k}">${l}</button>`).join('');
+$$('#mockbar button').forEach(b=>b.onclick=()=>go(b.dataset.go));
+const first=(location.hash||'').slice(1);
+go(STATES.some(s=>s[0]===first)?first:'cut-no-music');
+</script>
+</body>
+</html>

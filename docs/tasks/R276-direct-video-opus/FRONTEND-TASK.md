@@ -18,9 +18,9 @@
 
 ## 1. 先读
 
-- 设计稿（权威）：主目录 `docs/tasks/R276-direct-video-opus/design/`
+- 设计稿（权威）：主目录 `docs/design-drafts/page-script-to-video--opus-storyboard--Pho_R276/`
   - `index.html`：交互规则（第 1 节）、设计编号和接口字段（第 4 节）、失败代码翻译表（第 5 节）、数字公式（第 6 节）、门禁（第 7 节）。
-  - `direct.html`：可以点的稿，十个状态，底部状态条切换。新组件样式在它头部 `<style>` 里（`.dv-` 开头），照抄到 `direct.css` / `direct-shot-detail.css`；颜色只用 `studio/static/styles.css` 里的令牌。
+  - `index.html`：可以点的稿，十个状态，底部状态条切换。新组件样式在它头部 `<style>` 里（`.dv-` 开头），照抄到 `direct.css` / `direct-shot-detail.css`；颜色只用 `studio/static/styles.css` 里的令牌。
   - `contract.json`：文案表和设计编号合同（由 `export_states.py` 从稿导出）。
 - 接口和任务投影：主目录 `docs/tasks/R276-direct-video-opus/TASK.md` 第 2.3 节；实际实现看 worktree 里 `studio/direct_video.py` 的投影函数。字段以代码为准，和任务单不一致时写进汇报。
 - 现有前端写法：`studio/static/review-view.js`（路由、`api()`、`top()`、`mark()`、分页）、`review-shots.js`（挑镜头页，步骤条 `flowSteps`）、`review-common.js`。照它的写法，不引第三方库。
@@ -72,7 +72,7 @@ export function renderShotDetail(container, { job, shot, projectId, api, onRewri
 
 - `tests/test_r276_direct_frontend.mjs`：上面的公式；按行切分；轮询结束条件；失败代码翻译（含未登记代码）；详情模块轮询重画保留输入值。
 - `tests/test_r276_direct_frontend.py`：新文件里没有 `style=` 内联样式、没有英文失败代码字面量出现在页面文字里、`review-view.js` 有 `direct` 分页、`index.html` 引了两个样式表。
-- 状态夹具：照十个设计状态各写一份任务投影 JSON（形状照后端真实投影；「还没生成」是 `job:null`，「调不通」是建任务返回 `claude_cli_unavailable`），放 `tests/fixtures/r276-direct/`。截图脚本用 Playwright 拦截这几个接口返回夹具，打开真实 Studio 页面（8767，临时状态目录），逐状态截图 1440 和 960 两个宽度，放仓库外 `~/.photo-content-os/evidence/R276-direct-video-opus/frontend/`；同时用 `collect_design_inventory.js` 清点、`check_design_contract.py check --contract <主目录>/docs/tasks/R276-direct-video-opus/design/contract.json` 比对，十个状态都要通过。稿外文字或元素：写进汇报「需要新文案」「稿外元素」后停下，不要自己加。
+- 状态夹具：照十个设计状态各写一份任务投影 JSON（形状照后端真实投影；「还没生成」是 `job:null`，「调不通」是建任务返回 `claude_cli_unavailable`），放 `tests/fixtures/r276-direct/`。截图脚本用 Playwright 拦截这几个接口返回夹具，打开真实 Studio 页面（8767，临时状态目录），逐状态截图 1440 和 960 两个宽度，放仓库外 `~/.photo-content-os/evidence/R276-direct-video-opus/frontend/`；同时用 `collect_design_inventory.js` 清点、`check_design_contract.py check --contract <主目录>/docs/design-drafts/page-script-to-video--opus-storyboard--Pho_R276/contract.json` 比对，十个状态都要通过。稿外文字或元素：写进汇报「需要新文案」「稿外元素」后停下，不要自己加。
 - 最差首屏：「读不到任务」和「调不通」两个状态必须截图。
 - **你自己逐张看截图**，再交给总控；总控也会逐张看。
 

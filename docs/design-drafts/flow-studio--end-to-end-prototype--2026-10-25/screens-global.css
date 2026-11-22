@@ -1,0 +1,205 @@
+/* 全局页和作品侧页（工作台、整理台、项目、素材库、音乐库、设置、素材整理、保存与归档）。前缀 .gl- */
+/* 工作台：脚本线作品没有画面时，用「要记住的那一句」做封面 */
+.gl-cover{display:grid;place-items:center;background:linear-gradient(160deg,#132224,#0B1213)}
+.gl-quote{margin:0;padding:0 18px;color:var(--ink-2);font:500 14px/1.6 var(--f-ui);text-align:center;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.gl-quote::before{content:"“";display:block;color:var(--ac);font:600 22px/1 var(--f-ui);margin-bottom:4px}
+.piece-body .lineb{align-self:flex-start;margin-bottom:2px}
+
+/* 本机能力：每一行都能点 */
+.gl-caps>li{padding:0}
+.gl-caps button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;color:inherit;text-align:left;padding:11px 16px;font:inherit}
+.gl-caps button:hover{background:var(--panel-2)}
+.gl-caps button>div{flex:1;min-width:0}
+.gl-chev{font-style:normal;color:var(--ink-4);font-size:16px}
+.gl-chip-bad{background:var(--cut-bg)!important;color:var(--cut)}
+
+/* 缩略图块 */
+.gl-th{position:relative;display:block;border-radius:5px;overflow:hidden;background:#0A1112;aspect-ratio:16/10}
+.gl-th img{width:100%;height:100%;object-fit:cover;display:block}
+.gl-more{display:grid;place-items:center;color:var(--ink-3);font:12px var(--f-mo);border:1px dashed var(--rule-2);background:transparent}
+
+/* ---------- 整理台 ---------- */
+.gl-inbox{display:grid;grid-template-columns:320px minmax(0,1fr);gap:16px;align-items:start}
+.gl-batch{display:flex;flex-direction:column;gap:6px;width:100%;text-align:left;border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:12px;color:inherit;font:inherit}
+.gl-batch:hover{border-color:var(--ac-2)}
+.gl-batch[aria-selected="true"]{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac);background:var(--panel-2)}
+.gl-batch .thumbrow>*{width:66px;height:42px}
+.gl-batch b{font-size:13px;margin-top:4px}
+.gl-batch small{font-size:11.5px;color:var(--ink-3)}
+.gl-guess{align-self:flex-start;border:1px solid var(--ac-2);color:var(--ac-soft);border-radius:4px;padding:2px 7px;font:11px var(--f-tx)}
+.gl-guess--none{border-color:var(--rule-2);color:var(--ink-3)}
+.gl-bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}
+.gl-dest{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.gl-opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1px solid var(--rule-2);border-radius:8px;background:var(--panel-2);padding:12px;color:inherit;font:inherit;min-width:0}
+.gl-opt>i{flex:0 0 16px;height:16px;border-radius:50%;border:1.5px solid var(--ink-4);margin-top:1px}
+.gl-opt[aria-checked="true"]{border-color:var(--ac);background:var(--ac-bg)}
+.gl-opt[aria-checked="true"]>i{border-color:var(--ac);box-shadow:inset 0 0 0 3px var(--ac-bg);background:var(--ac)}
+.gl-opt span{min-width:0}
+.gl-opt b{display:block;font-size:13px}
+.gl-opt small{margin-top:4px;font-size:11.5px;line-height:1.5;color:var(--ink-3)}
+.gl-select{display:inline-block;margin-top:8px;border:1px solid var(--rule-2);border-radius:5px;padding:4px 8px;background:var(--panel);color:var(--ink-2);font:12px var(--f-tx);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gl-select--empty{color:var(--warn);border-color:var(--warn-line)}
+.gl-clean{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.gl-cgroup{padding:12px 16px;border-bottom:1px solid var(--rule)}
+.gl-cgroup:nth-child(odd){border-right:1px solid var(--rule)}
+.gl-cgroup h4{margin:0 0 6px;font-size:12.5px;color:var(--ink-2);display:flex;gap:8px;align-items:baseline}
+.gl-cgroup h4 span{font:11px var(--f-mo);color:var(--ink-4)}
+.gl-crow{display:grid;grid-template-columns:18px minmax(0,auto) minmax(0,1fr);gap:10px;align-items:baseline;padding:6px 0;cursor:pointer}
+.gl-crow input{margin:0;accent-color:var(--ac);transform:translateY(2px)}
+.gl-crow b{font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap}
+.gl-crow small{font-size:12px;color:var(--ink-3)}
+.gl-count{font:12px var(--f-mo);color:var(--ink-3)}
+
+/* ---------- 项目 ---------- */
+.gl-filter{display:flex}
+.gl-proj-nocover{grid-template-columns:minmax(0,1fr) auto}
+.gl-pieces{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.gl-pieces .cover .chip{left:auto;right:8px}
+.gl-trash{display:flex;align-items:baseline;gap:12px;width:100%;border:1px solid var(--rule);border-radius:8px;background:none;color:var(--ink-2);padding:12px 16px;text-align:left;font:inherit}
+.gl-trash:hover{border-color:var(--ac-2)}
+.gl-trash span{font-size:13px;font-weight:500}
+.gl-trash small{flex:1;font-size:12px}
+.gl-trash i{font-style:normal;color:var(--ink-4)}
+
+/* ---------- 素材库 ---------- */
+.gl-lib{display:grid;grid-template-columns:176px minmax(0,1fr) 320px;gap:16px;align-items:start}
+.gl-tree p{margin:10px 8px 4px;font:10.5px var(--f-mo);letter-spacing:.06em;color:var(--ink-4)}
+.gl-tree small{margin:10px 8px 4px;line-height:1.5}
+.gl-tree button{gap:8px}
+.gl-assets{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.gl-asset{display:flex;flex-direction:column;color:inherit;font:inherit}
+.gl-asset .cover{aspect-ratio:4/3}
+.gl-asset .len{position:absolute;right:6px;bottom:6px;background:#000b;border-radius:3px;padding:0 6px;font:10.5px var(--f-mo);color:var(--ink)}
+.gl-asset-b{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.gl-asset-b b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gl-asset-b small{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gl-asset-b .tags{margin-top:3px}
+.gl-ai{align-self:flex-start}
+.gl-librail .viewer img{object-fit:cover}
+.gl-librail .kv strong .tag{margin-left:4px}
+.gl-pickbar{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid var(--ac-2);background:var(--ac-bg);border-radius:8px;padding:14px 16px}
+.gl-pickbar strong{display:block;font-size:14px;color:var(--ink)}
+.gl-pickbar p{margin-top:4px;color:var(--ink-2);font:12.5px/1.6 var(--f-tx)}
+
+/* ---------- 音乐库（沿用现状） ---------- */
+.gl-tagfilters{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.gl-tf{font:11.5px var(--f-tx);color:var(--ink-4);margin:0 2px 0 8px}
+.gl-tf:first-child{margin-left:0}
+.trow .tags{margin-top:5px}
+.trow .num b{font-weight:500;color:var(--ink-2)}
+.gl-ptime{font-size:11.5px;color:var(--ink-3)}
+.gl-tg{margin-top:14px;border-top:1px solid var(--rule);padding-top:10px}
+.gl-tghead{font-size:11.5px;color:var(--ink-4);margin-bottom:4px}
+.gl-tgrow{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule);font-size:12px;color:var(--ink-3)}
+.gl-tgrow div{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.gl-tgrow small{display:inline;color:var(--ink-4);font-size:11.5px}
+.gl-tgrow em{font-style:normal;color:var(--ink-4)}
+
+/* ---------- 设置 ---------- */
+.gl-set{display:grid;grid-template-columns:188px minmax(0,1fr);gap:28px;align-items:start}
+.gl-setnav{display:flex;flex-direction:column;gap:2px;position:sticky;top:16px}
+.gl-setnav p{margin:12px 10px 6px;font:11px var(--f-tx);color:var(--ink-4)}
+.gl-setnav p:first-child{margin-top:0}
+.gl-setnav button{display:flex;align-items:center;gap:10px;border:0;background:none;color:var(--ink-3);text-align:left;padding:9px 10px;border-radius:6px;font-size:13px}
+.gl-setnav button:hover{background:#141D1E;color:var(--ink-2)}
+.gl-setnav button[aria-current="true"]{background:var(--raise);color:var(--ink);font-weight:600;box-shadow:inset 0 0 0 1px var(--rule-2)}
+.gl-setnav .ic{width:16px;height:16px}
+.gl-set .set-main{max-width:860px}
+.gl-set .set-main>.attention{margin-bottom:16px}
+.gl-mtab{border:1px solid var(--rule);border-radius:12px;background:var(--panel);overflow:hidden}
+.gl-mrow{display:grid;grid-template-columns:minmax(150px,1.3fr) minmax(150px,1.3fr) minmax(130px,1.2fr) 74px 70px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2)}
+.gl-mrow:first-child{border-top:0}
+.gl-mrow b{font-size:13.5px;font-weight:600;color:var(--ink)}
+.gl-mhead{background:var(--panel-2);color:var(--ink-4);font:11px var(--f-tx);padding:8px 16px}
+.gl-none{color:var(--ink-4)}
+.gl-mact{text-align:right}
+.gl-budget{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.gl-field{display:flex;flex-direction:column;gap:6px;border:1px solid var(--rule);border-radius:10px;background:var(--panel);padding:12px 14px}
+.gl-field>span:first-child{font-size:13px;color:var(--ink-2);font-weight:500}
+.gl-num{display:flex;align-items:center;gap:8px;color:var(--ink-3);font-size:12px}
+.gl-num input{width:72px;border:1px solid var(--rule-2);border-radius:6px;background:var(--panel-2);color:var(--ink);padding:6px 8px;font:13px var(--f-mo)}
+.gl-field small{font-size:11.5px;line-height:1.5}
+.dx-list .dx-tile .ic{width:18px;height:18px}
+
+/* ---------- 素材整理 ---------- */
+.gl-subtabs{display:flex}
+.gl-adds{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.gl-add{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--rule);border-radius:8px;padding:8px;background:var(--panel-2)}
+.gl-add b{display:block;font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gl-add small{margin-top:3px;font-size:11.5px;line-height:1.45;color:var(--ink-3)}
+.gl-add .gl-select{margin-top:6px}
+.gl-bottombar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;border-color:var(--ac-2)}
+.gl-bottombar p{color:var(--ink-2);font:12.5px/1.6 var(--f-tx)}
+.gl-th--row{flex:0 0 96px;width:96px}
+.gl-burst{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}
+.gl-rep{outline:2px solid var(--ac);outline-offset:1px}
+.gl-rep-tag{position:absolute;left:4px;bottom:4px;font:normal 10px var(--f-tx);background:#000c;color:var(--ac-soft);border-radius:3px;padding:1px 5px;white-space:nowrap}
+.gl-uses{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
+.gl-usedesc{color:var(--ink-3);font:12px/1.55 var(--f-tx);margin-bottom:10px;min-height:37px}
+.gl-usegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.gl-usepend{display:flex;flex-direction:column;gap:8px}
+.gl-pend{display:grid;grid-template-columns:88px minmax(0,1fr);gap:8px;align-items:center}
+.gl-pend .actions{gap:6px;flex-wrap:nowrap}
+.gl-use .pnl-h{align-items:center}
+
+/* ---------- 保存与归档 ---------- */
+.gl-astatus{display:flex;gap:8px;flex-wrap:wrap}
+.gl-astatus .st{font-size:12px;padding:3px 9px}
+.gl-stages{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rule);border-radius:8px;background:var(--panel);overflow:hidden}
+.gl-stages li{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-right:1px solid var(--rule);position:relative;min-width:0}
+.gl-stages li:last-child{border-right:0}
+.gl-stages b{flex:0 0 22px;height:22px;display:grid;place-items:center;border:1px solid var(--rule-2);border-radius:50%;font:500 10.5px var(--f-mo);color:var(--ink-4)}
+.gl-stages strong{display:block;font-size:12.5px;font-weight:500;color:var(--ink-3)}
+.gl-stages small{margin-top:3px;font-size:11px;line-height:1.45}
+.gl-stages li.done b{border-color:var(--ac-2);color:var(--ac-soft)}
+.gl-stages li.cur{background:var(--ac-bg)}
+.gl-stages li.cur::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ac)}
+.gl-stages li.cur b{background:var(--ac);border-color:var(--ac);color:#071719}
+.gl-stages li.cur strong{color:var(--ink);font-weight:600}
+.gl-stages li.cur small{color:var(--ac-soft)}
+.gl-stages li.gl-restore{background-image:repeating-linear-gradient(90deg,var(--rule-2) 0 6px,transparent 6px 12px);background-size:100% 1px;background-repeat:no-repeat;background-position:top}
+.gl-arch{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+.gl-arch .rows .dx-tile{flex:0 0 34px;width:34px;height:34px}
+.gl-conds{grid-template-columns:1fr}
+.gl-condn{font:12px var(--f-mo);color:var(--ink-3)}
+.gl-keep p{font-size:12px}
+.gl-ready{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid var(--ok-line);background:var(--ok-bg);border-radius:8px;padding:14px 16px}
+.gl-ready strong{display:block;font-size:14px;color:var(--ok)}
+.gl-ready p{margin-top:4px;color:var(--ink-2);font:12.5px/1.6 var(--f-tx)}
+
+/* ---------- 窄屏 ---------- */
+@media(max-width:1180px){
+  .gl-lib{grid-template-columns:160px minmax(0,1fr) 280px}
+  .gl-uses{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gl-mrow{grid-template-columns:minmax(120px,1.2fr) minmax(130px,1.2fr) minmax(110px,1fr) 70px 64px}
+}
+@media(max-width:960px){
+  .gl-inbox{grid-template-columns:1fr}
+  .gl-inbox>.stack{flex-direction:row;overflow-x:auto}
+  .gl-inbox>.stack .gl-batch{flex:0 0 280px}
+  .gl-dest{grid-template-columns:1fr}
+  .gl-clean{grid-template-columns:1fr}
+  .gl-cgroup:nth-child(odd){border-right:0}
+  .gl-lib{grid-template-columns:1fr}
+  .gl-tree{display:flex;flex-wrap:wrap;gap:2px}
+  .gl-tree button{width:auto}
+  .gl-tree p,.gl-tree small{display:none}
+  .gl-librail{position:static}
+  .gl-set{grid-template-columns:1fr;gap:16px}
+  .gl-setnav{position:static;flex-direction:row;flex-wrap:wrap}
+  .gl-setnav p{display:none}
+  .gl-mrow{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n s" "m a" "w a";row-gap:3px}
+  .gl-mrow>b{grid-area:n}.gl-mrow>span:nth-child(2){grid-area:m}.gl-mrow>span:nth-child(3){grid-area:w;color:var(--ink-3);font-size:12px}
+  .gl-mrow>span:nth-child(4){grid-area:s;justify-self:end}.gl-mrow>span:nth-child(5){grid-area:a;align-self:center}
+  .gl-mhead{display:none}
+  .gl-arch{grid-template-columns:1fr}
+  .gl-stages{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gl-stages li:nth-child(2){border-right:0}
+  .gl-stages li:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+  .gl-burst{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .gl-pickbar,.gl-ready,.gl-bottombar{flex-direction:column;align-items:flex-start}
+}
+.gl-noquote{color:var(--ink-4);font:12.5px var(--f-tx);border:1px dashed var(--rule-2);border-radius:6px;padding:6px 12px}
+/* 冷归档条件里「还没到」不是失败，用中性灰 */
+.gl-conds li.gl-todo::before{content:"–";color:var(--ink-4)}
+.gl-conds li.gl-todo span{color:var(--ink-4)}

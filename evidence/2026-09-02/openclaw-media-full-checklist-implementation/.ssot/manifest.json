@@ -77,7 +77,7 @@
     },
     {
       "external_dependency_id": "EXT-PROTOTYPE",
-      "authority_path": "agents-results/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html",
+      "authority_path": "docs/design-drafts/flow-openclaw-media--clickable-prototype--2026-10-12/index.html",
       "authority_commit": "a3ae47100d6fce4cb139ce17a479eea16717e73a",
       "authority_sha256": "aae220ef70cf7aeceefaf9a35ab4ee43d85366e92f2831513b53c36023a49cc8",
       "required_state": "ACCEPTED",

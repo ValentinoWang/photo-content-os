@@ -22,7 +22,7 @@
 
 ## 1. 设计稿和现有代码
 
-- **设计稿**：`docs/tasks/R278-direct-rescript/design/`，以它为准。
+- **设计稿**：`docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/`，以它为准。
   - `spec.html` 里所有标「R282」的地方：
     - 第 1 节「从中台交过来」「中台又交过来新版本」，以及配音卡的写法；
     - 第 3 节 `DV-SB-SOURCE`、`DV-VOICE`（R282）；

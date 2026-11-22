@@ -61,7 +61,7 @@
 ```sh
 export HARNESS_CORE="$HOME/Desktop/Opensource_Tool/Harness_Engineering/Core"
 export UI_COPY_QUALITY_CHECKER="$HARNESS_CORE/skills/ui-copy-quality/scripts/check_ui_copy_quality.py"
-export R278_DESIGN_MEDIA_ROOT="$HOME/Desktop/创业项目/photo-content-os/docs/tasks/R278-direct-rescript/design/img"
+export R278_DESIGN_MEDIA_ROOT="$HOME/Desktop/创业项目/photo-content-os/docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/img"
 export R278_FRONTEND_EVIDENCE="$HOME/.photo-content-os/evidence/R282-direct-handoff/frontend"
 export VIDEO_RENDER_PLAYWRIGHT_MODULE="$HOME/Desktop/创业项目/自媒体创作Agent/apps/media/web/node_modules/playwright/index.js"
 export VIDEO_RENDER_BROWSER="$HOME/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-mac-arm64/chrome-headless-shell"

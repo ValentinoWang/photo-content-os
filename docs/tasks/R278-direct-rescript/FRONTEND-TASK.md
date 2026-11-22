@@ -33,7 +33,7 @@
 
 ## 1. 先读
 
-设计稿在主目录 `docs/tasks/R278-direct-rescript/design/`，以它为准：
+设计稿在主目录 `docs/design-drafts/page-script-to-video--style-and-rescript--Pho_R278/`，以它为准：
 
 - `spec.html`：给你的实现说明。
   - 第 1 节：交互规则。

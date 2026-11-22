@@ -18,7 +18,7 @@ acceptance:
     - templates/**
 design:
   token_sources:
-    - evidence/2026-09-01/openclaw-media-ui-prototype-and-checklist/openclaw-media-ui-prototype.html
+    - docs/design-drafts/flow-openclaw-media--clickable-prototype--2026-10-12/index.html
   theme_sources:
     - studio/static/styles.css
   page_shell_sources:

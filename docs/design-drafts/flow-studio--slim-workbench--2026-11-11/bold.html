@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Photo 大改版预览</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="bold.css">
+</head>
+<body>
+<div class="b-pv"><b>Photo 大改版预览</b><span>示例数据 · 海报、按钮、左栏的每一句都能点</span><button id="before" aria-pressed="false">看现在的样子</button></div>
+<header class="b-top" id="top"></header>
+<main id="root"></main>
+<div class="b-drawer" id="drawer" hidden><div>
+  <header><h2>设置</h2><button class="icon-button" data-close-drawer aria-label="关闭">×</button></header>
+  <div class="setrow"><div><strong>素材和成片存在哪</strong><small>~/Movies/Photo · 原片只读，不上传</small></div><button class="btn">更改</button></div>
+  <div class="setrow"><div><strong>看图和写镜头的模型</strong><small>本机 Claude · Opus 5.5</small></div><span class="chip chip--ok">可用</span></div>
+  <div class="setrow"><div><strong>剪映专业版</strong><small>5.9.0 · 出草稿只用它</small></div><span class="chip chip--ok">已找到</span></div>
+  <div class="setrow"><div><strong>语音转文字</strong><small>素材有人声时自动转</small></div><span class="chip chip--ok">可用</span></div>
+  <div class="setrow"><div><strong>出问题了？</strong><small>生成一份诊断报告，复制给我们</small></div><button class="btn">复制诊断</button></div>
+</div></div>
+<div class="b-before" id="before-view" hidden><p id="before-cap"></p><img id="before-img" alt="现在的界面截图"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const T = i => `img/t${i%13}.jpg`, F = i => `img/f${i%7}.jpg`;
+const WORKS = [
+  {id:'meet', line:'vlog', title:'兰州大学 · 奔赴与校运会', state:'等你过目 27 个精选', me:true, cover:'img/v-pick.jpg', meta:'61 个素材 · 11 月 3 日'},
+  {id:'year', line:'direct', title:'断更一年，我拆了四句话', state:'配音合成中', prog:43, cover:F(0), meta:'7 镜 · 2:23'},
+  {id:'ride', line:'vlog', title:'周末骑行去海边', state:'素材到了，等 AI 挑', mosaic:[4,5,6,7,1,2], meta:'58 个素材 · 11 月 8 日'},
+  {id:'p5', line:'direct', title:'P5 直出实践：平均速度', state:'已出 2 版', cover:F(3), meta:'6 镜 · 1:48'},
+  {id:'run', line:'vlog', title:'清晨 5 公里配速记录', state:'在剪映里精剪', mosaic:[9,10,11,12,3,8], meta:'19 个素材 · 10 月 21 日'},
+  {id:'p4', line:'direct', title:'P4 教学实践：平均速度', state:'已出 1 版', cover:F(6), meta:'5 镜 · 1:31'},
+];
+const LINES = [
+  ['01','18.2 秒','清华 AI 体育博士，断更一年。会写代码，会练体能，就是不敢发。'],
+  ['02','20.8 秒','第一句：发出去，会被人看低。断了这么久，大家肯定觉得我不行了。'],
+  ['03','20.4 秒','第二句：担心的事，一定会发生。开头那个数就来自一项研究。'],
+  ['04','22.0 秒','第三句：还没做到最好，再改改。西蒙提过一个说法叫「满意即可」。'],
+  ['05','21.6 秒','第四句：反正都断了，再断几天也一样。这叫破戒效应。'],
+  ['06','21.0 秒','这些道理我早就懂。可懂了，身体还是怕。旧的预测还在起作用。'],
+  ['07','18.8 秒','发布是训练课，不是比赛。发出来的七十分，比没发的九十五分有用。'],
+];
+let route = {view:'home'};
+const ic = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>';
+const brand = '<div class="brand" data-go="home"><span class="brand-mark">P</span><div><b>Photo</b><small>把你拍的素材剪成片</small></div></div>';
+const lineTag = l => l==='vlog'?'<span class="b-line">用素材剪</span>':'<span class="b-line b-line--direct">用稿子直出</span>';
+
+function header(w){
+  $('#top').innerHTML = w
+    ? `<button class="back" data-go="home">‹ 作品</button><h1>${w.title}</h1>${lineTag(w.line)}<div class="sp"></div><button class="gear" data-drawer aria-label="设置">${ic}</button>`
+    : `${brand}<div class="sp"></div><button class="gear" data-drawer aria-label="设置">${ic}</button>`;
+}
+
+function home(){
+  header();
+  const me = WORKS.filter(w=>w.me).length;
+  $('#root').innerHTML = `<div class="b-home">
+    <section class="b-drop">
+      <div><h2>把这次拍的照片和视频拖进来</h2>
+      <p>AI 会挑出能用的镜头、按音乐的拍子排好，出一份剪映草稿给你精剪。原片只读，不离开这台电脑。</p>
+      <div class="acts"><button class="btn btn--pri" data-new="vlog">选择文件夹</button><button class="btn">从手机导入</button></div>
+      <p class="alt">手上是分镜口播稿？<button data-new="direct">贴进来直接出片</button></p></div>
+      <div class="b-fan"><i style="background-image:url(${T(2)})"></i><i style="background-image:url(img/v-pick.jpg)"></i><i style="background-image:url(${F(4)})"></i></div>
+    </section>
+    <div class="b-h"><h2>作品</h2><span>${WORKS.length} 件 · ${me} 件等你拍板</span></div>
+    <div class="b-wall">${WORKS.map(w=>`<button class="b-poster" data-open="${w.id}"><div class="b-cover">${w.cover?`<img src="${w.cover}" alt="">`:`<div class="mosaic">${w.mosaic.map(i=>`<i style="background-image:url(${T(i)})"></i>`).join('')}</div>`}<div class="state"><b class="${w.me?'me':''}">${w.state}</b></div>${w.prog?`<div class="prog"><i style="width:${w.prog}%"></i></div>`:''}</div><strong>${w.title}</strong><small>${lineTag(w.line)}${w.meta}</small></button>`).join('')}</div>
+  </div>`;
+}
+
+// 用素材剪：四个检查点，AI 做完一步交给你拍板一次
+const STAGES = ['pick','music','export','done'];
+function vlog(w){
+  const st = route.stage || 'pick', k = STAGES.indexOf(st);
+  const song = route.song ?? 0;
+  const songs = [['Turn Back Time','115 BPM · 3:10','和你的镜头节奏最接近'],['Fever Pitch','125 BPM · 2:15','更快，适合比赛片段多'],['CRUSH VIBE','143 BPM · 1:36','最短，适合 1 分钟内']];
+  const bars = s => Array.from({length:24},(_,i)=>{const h=[30,40,35,60,70,55,80,90,60,40,50,75,95,100,85,60,45,55,70,90,100,80,50,30][(i+s*5)%24];const c=h>85?'p':h>55?'b':'';return `<i class="${c}" style="height:${h}%"></i>`}).join('');
+  const card = (n,i,title,body,small='') => `<section class="b-card ${i<k?'done':i===k?'now':'later'}"><header><b>${i<k?'✓':n}</b><strong>${title}</strong>${i<k&&small?`<small>${small}</small>`:''}</header>${i===k?body:''}</section>`;
+  const capText = ['精选串起来 <b>1:32</b> · 27 个镜头','按《'+songs[song][0]+'》卡点 <b>1:03</b>','粗剪 <b>1:03</b> · 准备出草稿','剪映草稿 <b>1:03</b> · 已放进剪映'][k];
+  $('#root').innerHTML = `<div class="b-canvas">
+    <aside class="b-col"><header><h3>素材<span>61 个</span></h3><div class="b-seg"><button aria-pressed="true">精选 27</button><button>备选 30</button><button>不要 4</button></div></header>
+      ${[['路上 · 中川机场',[0,1,2,3,4,5,6,7,8]],['校运会 · 主会场',[9,10,11,12,0,3]],['晚上 · 宿舍',[11,12,2,10,6]]].map(([n,a])=>`<div class="b-batch"><small>${n}</small><div class="b-thumbs">${a.map((i,j)=>`<i class="${j%4===3?'off':'on'}" style="background-image:url(${T(i)})"></i>`).join('')}</div></div>`).join('')}
+    </aside>
+    <section class="b-stage has-track"><div class="b-player" style="background-image:url(img/v-pick.jpg)"></div><div class="cap">${capText}</div>
+      <div class="b-track"><small>${k>=1?'画面切在拍子上':'精选顺序 · 按场景排'}</small><div class="row">${Array.from({length:18},(_,i)=>`<i style="background-image:url(${T(i)})"></i>`).join('')}</div>${k>=1?`<div class="beats">${Array.from({length:32},(_,i)=>`<i class="${i%4===0?'k':''}" style="left:${i*3.1}%"></i>`).join('')}</div>`:''}</div></section>
+    <aside class="b-col"><header><h3>AI 做到哪了<span>${Math.min(k+1,3)} / 3</span></h3></header><div class="b-feed">
+      <section class="b-card done"><header><b>✓</b><strong>整理好 61 个素材</strong><small>3 批 · 4 个不要</small></header></section>
+      ${card(1,0,'我挑了 27 个镜头',`<p>串起来 1:32。先播一遍，在素材里点掉不想要的，或者把备选换进来。</p><div class="b-why"><small>为什么选第 1 个</small>开阔的室内空间、行走的人和纵深顶棚，画面清晰、构图完整。</div><div class="acts"><button class="btn">我再改改</button><button class="btn btn--pri" data-stage="music">就用这 27 个</button></div>`,'27 个 · 1:32')}
+      ${card(2,1,'选一首歌，我按拍子排',`<p>按你镜头的节奏挑了 3 首，选一首就重排。</p><div class="b-songs">${songs.map((s,i)=>`<button class="b-song" data-song="${i}" aria-pressed="${i===song}"><strong>${s[0]}</strong><span>${s[1]}</span><small style="grid-column:1/-1">${s[2]}</small><div class="bars">${bars(i)}</div></button>`).join('')}</div><div class="acts"><button class="btn">用我自己的歌</button><button class="btn btn--pri" data-stage="export">就用这首</button></div>`, songs[song][0])}
+      ${card(3,2,'出剪映草稿',`<p>27 个镜头、配乐和拍点都放进草稿，字幕轨留空，打开剪映就能接着剪。</p><div class="acts"><button class="btn">导出给别的软件</button><button class="btn btn--pri" data-stage="done">生成剪映草稿</button></div>`,'已放进剪映')}
+      ${k===3?`<section class="b-card now"><header><b>✓</b><strong>草稿在剪映里了</strong></header><p>剪映草稿箱里叫「奔赴与校运会」。精剪完导出的成片拖回这里，会按版本留着。</p><div class="acts"><button class="btn">把成片拖回来</button><button class="btn btn--pri">在剪映打开</button></div></section>`:''}
+    </div></aside></div>`;
+}
+
+function direct(w){
+  const cur = route.shot ?? null;
+  const shotCard = cur==null ? '' : `<section class="b-card now"><header><b>${LINES[cur][0]}</b><strong>改第 ${LINES[cur][0]} 镜</strong></header><p>${LINES[cur][2]}</p><div class="b-quick"><button>字太多</button><button>颜色乱</button><button>动作太快</button><button>和口播对不上</button></div><textarea placeholder="还想怎么改，写一句（可不填）"></textarea><div class="acts"><button class="btn" data-shot="">取消</button><button class="btn btn--pri">重写这一镜</button></div></section>`;
+  $('#root').innerHTML = `<div class="b-canvas">
+    <aside class="b-col"><header><h3>口播稿<span>7 镜 · 2:23</span></h3></header><ol class="b-lines">${LINES.map((l,i)=>`<li data-shot="${i}" aria-current="${i===cur}"><i class="f" style="background-image:url(${F(i)})"></i><div><strong><span>${l[0]}</span><span>${l[1]}</span></strong><p>${l[2]}</p></div></li>`).join('')}</ol></aside>
+    <section class="b-stage has-track"><div class="b-player" style="background-image:url(${cur==null?'img/fbig.jpg':F(cur)})"></div><div class="cap">${cur==null?'无声预览 <b>2:23</b> · 配音合成到第 3 镜':'第 '+LINES[cur][0]+' 镜 · '+LINES[cur][1]}</div>
+      <div class="b-track"><small>7 镜 · 点一镜跳过去</small><div class="row">${LINES.map((l,i)=>`<i data-shot="${i}" style="background-image:url(${F(i)});flex:${parseFloat(l[1])}"></i>`).join('')}</div></div></section>
+    <aside class="b-col"><header><h3>AI 做到哪了<span>3 / 4</span></h3></header><div class="b-feed">
+      ${shotCard}
+      <section class="b-card done"><header><b>✓</b><strong>读完稿子，排好 7 镜</strong><small>2:23</small></header></section>
+      <section class="b-card done"><header><b>✓</b><strong>定了风格</strong><small>扁平插画</small></header></section>
+      <section class="b-card done"><header><b>✓</b><strong>写好 7 镜动画</strong><small>无声预览</small></header></section>
+      <section class="b-card ${cur==null?'now':''}"><header><b>4</b><strong>配音合成中</strong><small>3 / 7</small></header><p>按每句的长度重排每一镜，误差在一帧内。大约还要 2 分钟。</p><div class="b-bar"><i style="width:43%"></i></div><p>哪一镜不满意，点左边那一句就能改；也可以<button class="link" style="border:0;background:none;color:var(--ac-soft);padding:0;font-weight:600">改整份稿子</button>。</p></section>
+    </div></aside></div>`;
+}
+
+const BEFORE = {home:['before-home.jpg','现在的首页：侧栏 6 个入口、3 条「等你处理」里 2 条是装工具提醒、右栏本机能力'], vlog:['before-piece-vlog.jpg','现在的作品页：三个做法页签 + 5 步步骤条 + 一块空白说明'], direct:['before-piece-direct.jpg','现在的直出页：页签、步骤条、全片设计表、播放器、检查表和 7 张卡片从上往下排']};
+function render(){
+  const w = WORKS.find(x=>x.id===route.work);
+  if(route.view==='work' && w){ header(w); (w.line==='vlog'?vlog:direct)(w); }
+  else { route = {view:'home'}; home(); }
+  const key = route.view==='home'?'home':w.line;
+  $('#before-img').src = 'img/'+BEFORE[key][0]; $('#before-cap').textContent = BEFORE[key][1];
+}
+function go(r){ route = r; const q = new URLSearchParams(); Object.entries(r).forEach(([k,v])=>v!=null&&v!==''&&q.set(k,v)); history.replaceState(null,'','#'+q); render(); }
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-go],[data-open],[data-stage],[data-song],[data-shot],[data-new],[data-drawer],[data-close-drawer]'); if(!t) return;
+  if(t.dataset.go) go({view:'home'});
+  else if(t.dataset.open) go({view:'work', work:t.dataset.open});
+  else if(t.dataset.stage) go({...route, stage:t.dataset.stage});
+  else if(t.dataset.song!=null) go({...route, song:+t.dataset.song});
+  else if(t.dataset.shot!=null) go({...route, shot:t.dataset.shot===''?null:+t.dataset.shot});
+  else if(t.dataset.new) go({view:'work', work:t.dataset.new==='vlog'?'meet':'year'});
+  else if(t.hasAttribute('data-drawer')) $('#drawer').hidden=false;
+  else if(t.hasAttribute('data-close-drawer')) $('#drawer').hidden=true;
+});
+$('#drawer').addEventListener('click', e => { if(e.target.id==='drawer') e.target.hidden=true; });
+$('#before').addEventListener('click', e => { const on = e.currentTarget.getAttribute('aria-pressed')!=='true'; e.currentTarget.setAttribute('aria-pressed', on); $('#before-view').hidden=!on; $('#top').hidden=on; $('#root').hidden=on; e.currentTarget.textContent = on?'回到新版':'看现在的样子'; });
+const q = new URLSearchParams(location.hash.slice(1));
+route = {view:q.get('view')||'home', work:q.get('work')||undefined, stage:q.get('stage')||undefined, song:q.get('song')!=null?+q.get('song'):undefined, shot:q.get('shot')!=null?+q.get('shot'):undefined};
+render();
+if(q.get('drawer')) $('#drawer').hidden=false;
+if(q.get('before')) $('#before').click();
+</script>
+</body>
+</html>

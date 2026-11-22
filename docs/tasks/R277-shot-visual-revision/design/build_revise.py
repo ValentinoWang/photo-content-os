@@ -8,7 +8,7 @@ R276 的稿改了以后重跑一遍即可；替换不上会报错，不会悄悄
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SRC = HERE.parent.parent / 'R276-direct-video-opus/design/direct.html'
+SRC = HERE / '../../../design-drafts/page-script-to-video--opus-storyboard--Pho_R276/index.html'
 EXTRA = (HERE / 'revise-extra.js').read_text(encoding='utf-8')
 RV_LINE = "const RV_STATES=[['review','第 02 镜：画面上标出 Opus 看出的 3 处'],['select','点了画面上的「约 25%」'],['picked','选好 3 处改法，补了一句'],['rewriting2','正在重写第 02 镜'],['compare','重写好了：第 1 版和第 2 版'],['kept-prev','退回第 1 版'],['saved','第 01 镜存为样例'],['review-failed','Opus 没看成画面'],['log','画面问题记录']];"
 CSS = (HERE / 'revise-extra.css').read_text(encoding='utf-8')
@@ -23,8 +23,8 @@ def rep(old, new, count=1):
     s = s.replace(old, new)
 
 
-rep('href="base.css"', 'href="../../R276-direct-video-opus/design/base.css"')
-rep('src="shots-data.js"', 'src="../../R276-direct-video-opus/design/shots-data.js"')
+rep('href="base.css"', 'href="../../../design-drafts/page-script-to-video--opus-storyboard--Pho_R276/base.css"')
+rep('src="shots-data.js"', 'src="../../../design-drafts/page-script-to-video--opus-storyboard--Pho_R276/shots-data.js"')
 rep('</style>', CSS + '\n</style>')
 rep('// ---------- 页面 ----------', EXTRA + '\n// ---------- 页面 ----------')
 # 状态：本稿只有「七镜都写好」之后的改画面流程

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Photo 预览：素材整理 · 风格库 · 做同款</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="bold.css">
+<link rel="stylesheet" href="photo.css">
+</head>
+<body>
+<div class="b-pv"><b>Photo 预览</b><span>示例数据 · 顶上四个页签和里面的卡片都能点</span></div>
+<header class="p-top">
+  <div class="brand"><span class="brand-mark">P</span><div><b>Photo</b><small>你拍的素材，剪成片</small></div></div>
+  <nav class="p-tabs" aria-label="主导航">
+    <button data-tab="lib">素材整理<i>102</i></button>
+    <button data-tab="style">风格库<i>270</i></button>
+    <button data-tab="same">做同款</button>
+    <button data-tab="works">作品<i>6</i></button>
+  </nav>
+  <div class="sp"></div>
+</header>
+<main id="root"></main>
+<div class="p-detail" id="detail" hidden></div>
+<div id="toast" class="toast" role="status"></div>
+
+<script src="styles-data.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const T = i => `img/t${i%13}.jpg`, F = i => `img/f${i%7}.jpg`;
+let route = {tab:'lib'}; const picked = new Set([1,2,3,9,10]);
+function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove('show'),1800); }
+
+/* ---------- 素材整理 ---------- */
+const EVENTS = [
+  {name:'11 月 1 日 上午 · 9:12–10:05', place:'兰州中川机场 · 大厅', n:58, tags:['室内','人流','远景'], clips:[[3,'到达大厅 · 远景','0:12'],[0,'大厅绿植 · 走过','0:08'],[4,'航班屏','0:05'],[5,'大厅 · 人来人往','0:21'],[1,'广告灯箱','0:01','太短'],[9,'玻璃长廊','0:09']]},
+  {name:'11 月 1 日 下午 · 14:30–15:02', place:'登机口 · 廊桥', n:31, tags:['有我','说话'], clips:[[12,'看镜头 · 笑','0:15'],[2,'边走边说','0:06'],[10,'侧脸 · 走廊','0:04'],[11,'长廊 · 背影','0:05']]},
+  {name:'11 月 1 日 晚上 · 19:40–20:15', place:'候机区', n:13, tags:['电脑','照片'], clips:[[7,'屏幕 · 代码','照片'],[8,'屏幕 · 预览','0:03'],[6,'合上电脑','0:02','糊了']]},
+];
+function lib(){
+  const pf = route.f || 'all';
+  const filters = [
+    ['按时间',[['all','全部',102],['e0','11 月 1 日 上午',58],['e1','11 月 1 日 下午',31],['e2','11 月 1 日 晚上',13]]],
+    ['按地点',[['p0','兰州中川机场 · 大厅',58],['p1','登机口 · 廊桥',31],['p2','候机区',13]]],
+    ['按内容',[['me','有我出镜',31],['view','远景',22],['talk','有人说话',9],['photo','照片',13]]],
+    ['按好坏',[['ok','能用',89],['bad','建议删',4,'warn'],['dup','重复',9,'warn']]],
+  ];
+  const events = /^[ep]\d$/.test(pf) ? [EVENTS[+pf[1]]] : EVENTS;
+  $('#root').innerHTML = `<div class="p-page">
+    <div class="p-intro"><div><h1>素材整理</h1><p>导进来的照片和视频，按拍摄时间排好，同一段时间、同一个地方拍的自动归成一组，标出里面有谁、在干什么、哪些糊了或重复。原片只读，不离开这台电脑。</p></div><div class="acts"><button class="btn">从手机导入</button><button class="btn btn--pri">从文件夹导入</button></div></div>
+    <div class="p-lib">
+      <aside class="p-filter">${filters.map(([h,rows])=>`<section><h3>${h}</h3>${rows.map(([k,l,n,c])=>`<button data-f="${k}" class="${c||''}" aria-pressed="${k===pf}"><span>${l}</span><i>${n}</i></button>`).join('')}</section>`).join('')}</aside>
+      <section>
+        <div class="p-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="用一句话找镜头，比如「我在机场边走边说」"><button class="btn btn--pri">找</button></div>
+        <div class="p-chips"><button>我边走边说</button><button>大厅的远景</button><button>有人说话的片段</button><button>适合当开头的</button></div>
+        <div class="p-tidy"><div><strong>4 个建议删、9 个重复</strong><p>2 个不到 1 秒、1 个打不开、1 个糊了；重复的只留最清楚的那个。勾选后才会移到废纸篓。</p></div><button class="btn">去看看</button></div>
+        ${events.map(e=>`<div class="p-event"><header><strong>${e.name}</strong><small>${e.place} · ${e.n} 个</small><span class="tags">${e.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</span></header><div class="p-grid">${e.clips.map(([i,cap,d,bad],j)=>{const id=EVENTS.indexOf(e)*10+j;return `<button class="p-clip" data-pick="${id}" aria-pressed="${picked.has(id)}"><span class="im" style="background-image:url(${T(i)})"></span>${bad&&bad!==1?`<span class="bad">${bad}</span>`:''}<span class="dur">${d}</span><small>${cap}</small></button>`}).join('')}</div></div>`).join('')}
+        <div class="p-sel" ${picked.size?'':'hidden'}><span>选了 ${picked.size} 个</span><button class="btn" data-go="style">挑个风格剪</button><button class="btn btn--pri" data-go="same">照一条视频做同款</button></div>
+      </section>
+    </div></div>`;
+}
+
+/* ---------- 风格库 ---------- */
+const ANIM = [
+  ['flat','扁平插画','圆润色块一个个弹出来，被看的人亮起来',['#0a1a3f','#ffd24a','#d97757','#8fa3c7'],'科普、生活小知识'],
+  ['math','数学动画','像数学课动画，用圆一笔笔画出图形，再写出算式',['#070b16','#58c4dd','#ffd76a','#8a96a8'],'讲公式、讲原理'],
+  ['launch','极简发布会','黑场里一件金属主角慢慢转正，大字一个个亮起',['#050505','#cfd4dc','#a58bff','#8f97a3'],'讲产品、讲一个大数字'],
+  ['whiteboard','手绘白板','边讲边画，一笔一笔画出来，画完就停',['#f4efe6','#2a2724','#c0392b','#6b665f'],'课堂讲解、步骤'],
+  ['cyber','赛博故障','霓虹图形依次亮起，出场短暂错位后停稳',['#1a0b2e','#2ef2ff','#ff2bd6','#a89aba'],'科技、游戏'],
+  ['ink','水墨国风','墨迹徐徐铺开，朱红落在结论上，画完留白',['#eae3d6','#2c2a27','#b03a2e','#4a4640'],'传统文化、读书'],
+  ['dataviz','数据可视化','先画参照线，再长出数据条，最后标出差距',['#0a0710','#7b5cff','#ff5a4a','#8f86a8'],'对比、研究结论'],
+  ['pixel','8-bit 像素','人物逐格走进画面，像素亮起后停住',['#2b1b4d','#ff8a3d','#ffd84a','#c7b8df'],'轻松、怀旧'],
+  ['code','代码录屏','代码逐字写出，下面的结果跟着出现',['#15171c','#82aaff','#c3e88d','#a5afb9'],'编程教学'],
+];
+const CUTS = [
+  ['轻快旅行','路上一段段往前走，到了目的地再提速，结尾慢下来。','1:03 · 平均 2.3 秒一切',0,'AI 推荐'],
+  ['赛场热血','比赛镜头放到前面，切得更密，动作做完再切。','0:37 · 平均 1.3 秒一切',1,''],
+  ['松弛日常','镜头留得久，多听现场声和你说的话。','1:13 · 平均 2.6 秒一切',2,''],
+];
+const FAM = {
+  shot:{label:'镜头动效', note:'开场、字卡、界面登场、运镜、数据、转场、收尾……一镜一个动作'},
+  talk:{label:'口播花字', note:'给真人口播配的字幕花字、数据图、强调标注和转场'},
+  anim:{label:'讲解动画', note:'一份口播稿，整片统一一种画法'},
+  cut:{label:'素材剪法', note:'拿你拍的照片和视频，按不同节奏剪成 vlog'},
+};
+function allStyles(){
+  const cuts = CUTS.map(([n,p,m,i],j)=>({fam:'cut',id:'cut'+j,name:n,cat:['旅行','运动','日常'][j],desc:p,img:`img/cut${j}.jpg`}));
+  return [
+    ...(window.SC||[]).map(x=>({fam:'shot',id:x.id,name:x.name,cat:x.cat,desc:x.use,img:`shots/${x.id}.jpg`,vid:`shots/${x.id}.mp4`,meta:x.dur})),
+    ...(window.TC||[]).map(x=>({fam:'talk',id:x.id,name:x.name,cat:x.cat,desc:x.use?('适合：'+x.use):'',img:`talk/${x.id}.jpg`,meta:x.energy?('能量 '+x.energy):''})),
+    ...ANIM.map(([id,n,p])=>({fam:'anim',id,name:n,cat:'整片风格',desc:p,img:`styles/${id}.jpg`,vid:`styles/${id}.mp4`,tall:true})),
+    ...cuts,
+  ];
+}
+const chosen = new Set();
+function style(){
+  const all = allStyles(); const fam = route.k || 'all'; const cat = route.c || ''; const qy = (route.q||'').trim();
+  const list = all.filter(x=>(fam==='all'||x.fam===fam)&&(!cat||x.cat===cat)&&(!qy||(x.name+x.desc+x.cat).includes(qy)));
+  const cur = list.find(x=>x.fam+':'+x.id===route.s) || list[0];
+  const idx = cur ? list.indexOf(cur) : -1;
+  const strip = list.slice(Math.max(0,idx-3), Math.max(0,idx-3)+9);
+  const side = Object.entries(FAM).map(([k,f])=>{ const xs=all.filter(x=>x.fam===k); const cats=[...new Set(xs.map(x=>x.cat))];
+    return `<section><button class="fam" data-k="${k}" aria-pressed="${fam===k&&!cat}"><span>${f.label}</span><i>${xs.length}</i></button>${fam===k&&cats.length>1?cats.map(c=>`<button class="sub" data-k="${k}" data-c="${c}" aria-pressed="${c===cat}"><span>${c}</span><i>${xs.filter(x=>x.cat===c).length}</i></button>`).join(''):''}</section>`; }).join('');
+  const media = x => x.vid ? `<video src="${x.vid}" poster="${x.img}" muted loop playsinline autoplay></video>` : `<img src="${x.img}" alt="">`;
+  const card = x => `<div class="p-sty ${x.tall?'tall':''} ${cur===x?'cur':''}" ><button class="v" data-s="${x.fam}:${x.id}"><img src="${x.img}" alt="" loading="lazy">${x.vid?`<video data-src="${x.vid}" muted loop playsinline preload="none"></video><i class="pl">▶</i>`:''}</button><strong>${x.name}</strong><small>${FAM[x.fam].label} · ${x.cat}</small><label class="pick"><input type="checkbox" data-choose="${x.fam}:${x.id}" ${chosen.has(x.fam+':'+x.id)?'checked':''}> 选取</label></div>`;
+  $('#root').innerHTML = `<div class="p-gal">
+    <aside class="p-gside"><h3>来源</h3><button class="fam" data-k="all" aria-pressed="${fam==='all'}"><span>全部风格</span><i>${all.length}</i></button>${side}</aside>
+    <section class="p-gmain">
+      <div class="p-ghead"><div><h1>风格库</h1><p>Photo 能做出来的样子。每种都有真做出来的样片，挑中了就拿去做一条。</p></div>
+        <div class="p-stat"><div><small>风格</small><b>${all.length}</b></div><div><small>有动态样片</small><b>${all.filter(x=>x.vid).length}</b></div><div><small>已选取</small><b>${chosen.size}</b></div></div></div>
+      <div class="p-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="sq" value="${qy}" placeholder="搜名字或用途，比如「数字」「转场」「打字」「对比」"></div>
+      ${cur?`<div class="p-feat"><div class="stage"><span class="n">${idx+1} / ${list.length}</span>${media(cur)}</div>
+        <div class="info"><h2>${cur.name}</h2><div class="tags"><span class="chip chip--ai">${FAM[cur.fam].label}</span><span class="chip">${cur.cat}</span>${cur.meta?`<span class="chip">${cur.meta.split('（')[0]}</span>`:''}</div>
+        <p>${cur.desc||FAM[cur.fam].note}</p>
+        <div class="acts"><button class="btn btn--pri" data-use="${cur.name}">用这个风格做一条</button><button class="btn" data-choose-btn="${cur.fam}:${cur.id}">${chosen.has(cur.fam+':'+cur.id)?'已选取':'选取'}</button></div>
+        <small class="keys">← → 切换 · 下面的胶片条也能点</small></div></div>
+        <div class="p-film">${strip.map(x=>`<button data-s="${x.fam}:${x.id}" class="${x===cur?'on':''}"><img src="${x.img}" alt="" loading="lazy"><span>${list.indexOf(x)+1}</span><b>${x.name}</b></button>`).join('')}</div>`:''}
+      <div class="p-h"><h2>${cat||(fam==='all'?'全部风格':FAM[fam].label)}</h2><span>${list.length} 种</span></div>
+      <div class="p-sgrid">${list.map(card).join('')||'<p class="muted">没找到，换个词试试。</p>'}</div>
+      <div class="p-sel" ${chosen.size?'':'hidden'}><span>选了 ${chosen.size} 个风格</span><button class="btn" data-clear>清空</button><button class="btn btn--pri" data-go="lib">去挑素材，拿这些风格做</button></div>
+    </section></div>`;
+  const inp=$('#sq'); inp.onkeydown=e=>{ if(e.key==='Enter') go({tab:'style', k:route.k, q:inp.value||undefined}); };
+  document.querySelectorAll('.p-sty .v').forEach(v=>{ const vd=v.querySelector('video'); if(!vd) return;
+    v.addEventListener('mouseenter',()=>{ if(!vd.src) vd.src=vd.dataset.src; vd.classList.add('on'); vd.play().catch(()=>{}); });
+    v.addEventListener('mouseleave',()=>{ vd.pause(); vd.classList.remove('on'); }); });
+  style.list = list; style.idx = idx;
+}
+document.addEventListener('keydown', e => { if(route.tab!=='style'||e.target.tagName==='INPUT'||!style.list) return;
+  const d = e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0; if(!d) return; const x = style.list[(style.idx+d+style.list.length)%style.list.length];
+  route.s = x.fam+':'+x.id; const y=scrollY; render(); scrollTo(0,y); });
+function openStyle(key){
+  const [fam,id]=key.split(':'); const x=allStyles().find(y=>y.fam===fam&&y.id===id); if(!x) return;
+  const media = x.vid ? `<video src="${x.vid}" poster="${x.img}" muted loop playsinline autoplay controls></video>` : `<img src="${x.img}" alt="">`;
+  $('#detail').innerHTML = `<div class="${x.tall?'':'wide'}">${media}<div class="body"><p class="eyebrow">${FAM[fam].label} · ${x.cat}</p><h2>${x.name}</h2><p class="muted">${x.desc||''}</p>${x.meta?`<div class="kv"><b>样片</b><span>${x.meta}</span></div>`:''}<div class="acts"><button class="btn" data-close>关闭</button><button class="btn btn--pri" data-use="${x.name}">用这个风格做一条</button></div></div></div>`;
+  $('#detail').hidden=false;
+}
+
+/* ---------- 做同款 ---------- */
+const SLOTS = [
+  ['开头钩子','近景 · 看着镜头笑',1.2,'var(--fam-snd)',12,'看镜头 · 笑 · 和参考一样正对镜头'],
+  ['开头钩子','字幕大字：第一次一个人…',1.0,'var(--fam-snd)',10,'侧脸 · 走廊 · 字幕压在这里'],
+  ['铺垫','远景 · 出发的地方',2.4,'var(--sec-build)',3,'到达大厅 · 同样是开阔远景'],
+  ['铺垫','手部特写',1.6,'var(--sec-build)',7,'屏幕 · 代码 · 照片，做慢推'],
+  ['高潮','快切 · 指示牌',0.8,'var(--ac)',4,'航班屏 · 卡在重拍上'],
+  ['高潮','快切 · 灯光',0.8,'var(--ac)',1,'广告灯箱 · 只有 1 秒，刚好够'],
+  ['收尾','空镜 · 慢下来',3.2,'var(--ink-3)',11,'长廊 · 背影 · 不太像，你可以换'],
+];
+function same(){
+  const has = route.ref==='1';
+  $('#root').innerHTML = `<div class="p-page">
+    <div class="p-intro"><div><h1>做同款</h1><p>看到一条喜欢的视频，贴进来。AI 拆出它的节奏、结构、镜头怎么排、字幕怎么放，再从你的素材里找对应的镜头填进去，出一份剪映草稿。</p></div></div>
+    <section class="p-ref-in"><h2>${has?'已拆好：「第一次一个人出远门」':'贴一条你想照着做的视频'}</h2><p>${has?'来自抖音 · 0:32 · 只拆节奏和结构，不用它的画面和音乐。':'抖音、B 站、小红书的分享链接都行，也可以直接拖进一个视频文件。'}</p>
+      <div class="row"><input value="${has?'https://v.douyin.com/示例/':''}" placeholder="粘贴分享链接"><button class="btn btn--pri" data-ref>${has?'换一条':'拆解这条视频'}</button></div>
+      ${has?'':'<p class="note">只照搬节奏、结构和剪法，不下载、不使用原视频的画面和音乐。</p>'}</section>
+    ${has?`<div class="p-same">
+      <section class="p-panel"><h3>参考视频拆出来的样子<span>14 镜，这里列前 7 镜</span></h3>
+        <div class="p-facts"><div><b>0:32</b><span>时长</span></div><div><b>14</b><span>个镜头</span></div><div><b>2.3s</b><span>平均一切</span></div><div><b>118</b><span>BPM 配乐</span></div></div>
+        <small>结构</small><div class="p-struct"><i style="flex:2.2;background:var(--fam-snd)">钩子</i><i style="flex:4;background:var(--sec-build)">铺垫</i><i style="flex:1.6;background:var(--ac)">高潮</i><i style="flex:3.2;background:var(--ink-3)">收尾</i></div>
+        <small>字幕：大字居中、黄底黑字，一句一屏 · 转场：硬切为主，高潮处跟拍子</small>
+        <div class="p-slots">${SLOTS.map((s,i)=>`<div class="p-slot"><b>${String(i+1).padStart(2,'0')}</b><span class="ph" style="background:${s[3]}">${s[0]}</span><span><strong>${s[1]}</strong><small>${s[2]} 秒</small></span><span></span></div>`).join('')}</div>
+      </section>
+      <section class="p-panel"><h3>用你的素材填进去<span>从「素材整理」里自动找的</span></h3>
+        <div class="p-facts"><div><b>14/14</b><span>都找到了</span></div><div><b>2</b><span>个不太像</span></div><div><b>0:32</b><span>成片时长</span></div><div><b>115</b><span>BPM 你的歌</span></div></div>
+        <small>换歌：<b>Turn Back Time</b> · 115 BPM，和参考的节奏最接近</small>
+        <div class="p-slots" style="margin-top:28px">${SLOTS.map((s,i)=>`<div class="p-slot"><b>${String(i+1).padStart(2,'0')}</b><span class="im" style="background-image:url(${T(s[4])})"></span><span><strong>${s[5].split(' · ').slice(0,2).join(' · ')}</strong><small>${s[5].split(' · ').slice(2).join(' · ')}</small></span><button class="btn">换一个</button></div>`).join('')}</div>
+        <div class="p-out"><div><strong>出剪映草稿</strong><p>14 个镜头按参考的节奏排好，字幕照它的样式放，打开剪映接着改。</p></div><button class="btn btn--pri" data-use="剪映草稿">生成</button></div>
+      </section></div>`:''}
+  </div>`;
+}
+
+/* ---------- 作品 ---------- */
+const WORKS = [
+  ['兰州大学 · 奔赴与校运会','轻快旅行','img/v-pick.jpg','剪映草稿已出','me'],
+  ['断更一年，我拆了四句话','扁平插画',F(0),'已出 2 版',''],
+  ['第一次一个人出远门（同款）','做同款',T(12),'等你看',''],
+  ['P5 直出实践：平均速度','数据可视化',F(3),'已出 1 版',''],
+  ['清晨 5 公里配速记录','赛场热血',T(9),'在剪映里精剪',''],
+  ['P4 教学实践：平均速度','手绘白板',F(6),'已出 1 版',''],
+];
+function works(){
+  $('#root').innerHTML = `<div class="p-page"><div class="p-intro"><div><h1>作品</h1><p>从风格库或做同款出来的片子都在这里，标着用的是哪个风格。</p></div></div>
+  <div class="b-wall">${WORKS.map(([n,s,c,st,me])=>`<button class="b-poster" data-use="${n}"><div class="b-cover"><img src="${c}" alt=""><div class="state"><b class="${me?'me':''}">${st}</b></div></div><strong>${n}</strong><small><span class="b-line">${s}</span></small></button>`).join('')}</div></div>`;
+}
+
+function render(){
+  document.querySelectorAll('.p-tabs [data-tab]').forEach(b=>b.setAttribute('aria-current', String(b.dataset.tab===route.tab)));
+  ({lib, style, same, works})[route.tab]();
+}
+function go(r){ route = r; const q=new URLSearchParams(); Object.entries(r).forEach(([k,v])=>v!=null&&q.set(k,v)); history.replaceState(null,'','#'+q); render(); window.scrollTo(0,0); }
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-tab],[data-go],[data-f],[data-pick],[data-k],[data-c],[data-sty],[data-s],[data-choose],[data-choose-btn],[data-clear],[data-cut],[data-ref],[data-use],[data-close]'); if(!t) return;
+  if(t.dataset.tab) go({tab:t.dataset.tab});
+  else if(t.dataset.go) go({tab:t.dataset.go});
+  else if(t.dataset.f) go({tab:'lib', f:t.dataset.f});
+  else if(t.dataset.pick){ const id=+t.dataset.pick; picked.has(id)?picked.delete(id):picked.add(id); const y=scrollY; render(); scrollTo(0,y); }
+  else if(t.dataset.choose){ const k=t.dataset.choose; t.checked?chosen.add(k):chosen.delete(k); const y=scrollY; render(); scrollTo(0,y); }
+  else if(t.dataset.chooseBtn){ const k=t.dataset.chooseBtn; chosen.has(k)?chosen.delete(k):chosen.add(k); const y=scrollY; render(); scrollTo(0,y); }
+  else if(t.hasAttribute('data-clear')){ chosen.clear(); render(); }
+  else if(t.dataset.s){ route.s=t.dataset.s; render(); document.querySelector('.p-feat')?.scrollIntoView({block:'start',behavior:'smooth'}); }
+  else if(t.dataset.k) go({tab:'style', k:t.dataset.k, c:t.dataset.c||undefined});
+  else if(t.dataset.sty) openStyle(t.dataset.sty);
+  else if(t.dataset.cut) toast(t.dataset.cut==='more'?'预览里只放了 3 套':'选这套剪法后，从「素材整理」里挑素材');
+  else if(t.hasAttribute('data-ref')) go({tab:'same', ref:'1'});
+  else if(t.dataset.use) toast('预览：这里会开始做「'+t.dataset.use+'」');
+  else if(t.hasAttribute('data-close')) $('#detail').hidden = true;
+});
+$('#detail').addEventListener('click', e => { if(e.target.id==='detail') e.target.hidden = true; });
+const q = new URLSearchParams(location.hash.slice(1));
+route = {tab:q.get('tab')||'lib', f:q.get('f')||undefined, k:q.get('k')||undefined, c:q.get('c')||undefined, s:q.get('s')||undefined, q:q.get('q')||undefined, ref:q.get('ref')||undefined};
+render();
+if(q.get('sty')) openStyle(q.get('sty'));
+</script>
+</body>
+</html>

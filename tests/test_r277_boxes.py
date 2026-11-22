@@ -15,7 +15,7 @@ pytestmark = pytest.mark.skipif(not os.getenv('VIDEO_RENDER_PLAYWRIGHT_MODULE'),
 
 
 def test_r276_shot02_boxes_at_poster_frame_and_chinese_names(tmp_path):
-    source = (ROOT / 'docs/tasks/R276-direct-video-opus/design/shots-data.js').read_text()
+    source = (ROOT / 'docs/design-drafts/page-script-to-video--opus-storyboard--Pho_R276/shots-data.js').read_text()
     shot = json.loads(source.split('window.R131 = ', 1)[1].rsplit(';', 1)[0])['shots'][1]
     # Two real browser frames: 0 and exactly .8D, using the renderer's existing
     # frame_clock_scale. The original scene code and timings are unchanged.

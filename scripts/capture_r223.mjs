@@ -16,7 +16,7 @@ async function inventory(page,state){return page.evaluate(({collect,state})=>{co
 async function capture(page,name,width,height,kind,open=false){
  const file=path.join(out,`${kind}-${name}-${width}${open?'-open':''}.png`);await page.screenshot({path:file,fullPage:true});
  const measure=await page.evaluate(()=>({width:innerWidth,height:innerHeight,scrollHeight:document.documentElement.scrollHeight,scrollWidth:document.documentElement.scrollWidth,rail:document.querySelector('#rail')?{height:document.querySelector('#rail').clientHeight,scrollHeight:document.querySelector('#rail').scrollHeight}:null}));assert.equal(measure.width,width);assert(measure.scrollWidth<=width+1,'horizontal overflow '+name);
- const item={name,width,height,open,kind,file:path.basename(file),sha256:checksum(file),captured_at:new Date().toISOString(),route:kind==='mock'?`mock/beat-map.html?state=${name}`:'#view=music',browser:'Chrome',font_mode:'fallback-local',animation_clock:name==='music-playing'?'frozen playback sample at 88.4s':'live',measure};manifest.push(item);
+ const item={name,width,height,open,kind,file:path.basename(file),sha256:checksum(file),captured_at:new Date().toISOString(),route:kind==='mock'?`docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html?state=${name}`:'#view=music',browser:'Chrome',font_mode:'fallback-local',animation_clock:name==='music-playing'?'frozen playback sample at 88.4s':'live',measure};manifest.push(item);
  if(open&&measure.rail?.scrollHeight>measure.rail?.height+1){
   const rail=page.locator('#rail'),total=measure.rail.scrollHeight,view=measure.rail.height;item.scroll_frames=[];
   for(let scroll=0;scroll<total;scroll+=Math.max(1,view-80)){await rail.evaluate((n,y)=>{n.scrollTop=y;},scroll);const actual=await rail.evaluate(n=>n.scrollTop);const part=file.replace('.png',`-panel-${item.scroll_frames.length+1}.png`);await rail.screenshot({path:part});item.scroll_frames.push({file:path.basename(part),top:actual,height:view});if(actual+view>=total)break;}
@@ -66,7 +66,7 @@ try{
   if(title!=='Turn Back Time')await page.locator('[data-track]').filter({hasText:title}).click();
   if(name==='music-filtered'||name==='music-filter-empty')await page.locator('[data-tag="scene.summer"]').click();if(name==='music-filtered')await page.locator('[data-tag="voice.voice"]').click();if(name==='music-filter-empty')await page.locator('[data-src="local"]').click();
   await seek(page,t);assert.equal(await page.locator('.main').getAttribute('data-design-state'),state,name+' state');await checkNumbers(page,payload,name,t);if(name==='music-playing')await freezeFrame(page,t,true);
-  const mc=await context(),mock=await mc.newPage();await mock.goto('file://'+path.join(root,'docs/tasks/R223-music-beat-map/mock/beat-map.html')+'?state='+(name.startsWith('real-')?state:name));await mock.addStyleTag({content:'#mockbar{display:none}'});
+  const mc=await context(),mock=await mc.newPage();await mock.goto('file://'+path.join(root,'docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html')+'?state='+(name.startsWith('real-')?state:name));await mock.addStyleTag({content:'#mockbar{display:none}'});
   for(const [w,h]of sizes){if(onlyWidths&&!onlyWidths.has(w))continue;await page.setViewportSize({width:w,height:h});await mock.setViewportSize({width:w,height:h});if(w===430){await page.locator('[data-close-rail]').evaluateAll(ns=>ns.forEach(n=>n.click()));}
    if(name==='music-playing')await freezeFrame(page,t);await capture(page,name,w,h,'implementation');await capture(mock,name,w,h,'mock');
    const inv=await inventory(page,state),mi=await inventory(mock,state),extras=structuredClone(approved);extras.optional_ids={[state]:contract.states[state].ids.filter(id=>!mi.ids.includes(id))};
@@ -75,8 +75,8 @@ try{
   }
   if(['music','music-playing','music-intro','music-end'].includes(name)&&(!onlyWidths||onlyWidths.has(1440))){
    const zc=await context(false,2);await zc.route('**/api/review/music',r=>r.fulfill({json:payload}));const zp=await zc.newPage();await zp.goto(base+'/#view=music');await zp.waitForSelector('[data-track]');if(title!=='Turn Back Time')await zp.locator('[data-track]').filter({hasText:title}).click();await seek(zp,t);if(name==='music-playing')await freezeFrame(zp,t,true);
-   const zmc=await context(false,2),zmp=await zmc.newPage();await zmp.goto('file://'+path.join(root,'docs/tasks/R223-music-beat-map/mock/beat-map.html')+'?state='+name);await zmp.addStyleTag({content:'#mockbar{display:none}'});
-   for(const [kind,p] of [['implementation',zp],['mock',zmp]]){const file=path.join(out,kind+'-'+name+'-rail-2x.png');await p.locator('#rail').screenshot({path:file});manifest.push({name,kind,width:1440,height:960,deviceScaleFactor:2,file:path.basename(file),sha256:checksum(file),captured_at:new Date().toISOString(),route:kind==='mock'?'mock/beat-map.html?state='+name:'#view=music',browser:'Chrome',font_mode:'fallback-local'});}
+   const zmc=await context(false,2),zmp=await zmc.newPage();await zmp.goto('file://'+path.join(root,'docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html')+'?state='+name);await zmp.addStyleTag({content:'#mockbar{display:none}'});
+   for(const [kind,p] of [['implementation',zp],['mock',zmp]]){const file=path.join(out,kind+'-'+name+'-rail-2x.png');await p.locator('#rail').screenshot({path:file});manifest.push({name,kind,width:1440,height:960,deviceScaleFactor:2,file:path.basename(file),sha256:checksum(file),captured_at:new Date().toISOString(),route:kind==='mock'?'docs/design-drafts/page-music-library--beat-map--Pho_R223/index.html?state='+name:'#view=music',browser:'Chrome',font_mode:'fallback-local'});}
    await zc.close();await zmc.close();
   }
   await ctx.close();await mc.close();console.log('Captured',name);
