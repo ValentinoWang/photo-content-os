@@ -1,0 +1,42 @@
+{
+  "source_script_used": false,
+  "clips": [
+    {
+      "slot": 1,
+      "time_range": "0-4",
+      "source_start_sec": 0,
+      "source_file": "scene.mkv",
+      "purpose": "开场",
+      "visual_need": "现场",
+      "caption": "字幕",
+      "edit_note": "顺剪",
+      "candidate_files": [
+        "scene.mkv"
+      ]
+    },
+    {
+      "slot": 2,
+      "time_range": "4-8",
+      "source_start_sec": 0,
+      "source_file": "scene.mkv",
+      "purpose": "开场",
+      "visual_need": "现场",
+      "caption": "第二镜字幕",
+      "edit_note": "顺剪",
+      "candidate_files": [
+        "scene.mkv"
+      ]
+    }
+  ],
+  "missing_materials": [],
+  "project_id": "r227-e2",
+  "project_revision": 1,
+  "provenance": {
+    "kind": "media_first_planner",
+    "planner": "roughcut_planner",
+    "planner_version": "1.0",
+    "preset_id": "trip",
+    "preset_name": "轻快旅行",
+    "input_digest": "abababababababababababababababababababababababababababababababab"
+  }
+}

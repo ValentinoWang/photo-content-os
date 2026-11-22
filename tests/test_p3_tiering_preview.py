@@ -214,11 +214,20 @@ class TieringPreviewTests(unittest.TestCase):
             validate_analysis_tiering_document(preview_budget_exceeded)
 
     def test_preview_is_local_dry_run_plan(self):
+        import subprocess
+        from edl_contract import EDLContractError
+
         with tempfile.TemporaryDirectory() as directory:
             project = Path(directory)
             source = project / "01_Media" / "a.mp4"
             source.parent.mkdir()
-            source.write_bytes(b"placeholder")
+            subprocess.run(
+                ["ffmpeg", "-nostdin", "-v", "error", "-y",
+                 "-f", "lavfi", "-i", "color=c=blue:s=160x90:r=30:d=4",
+                 "-f", "lavfi", "-i", "sine=frequency=440:sample_rate=48000:duration=4",
+                 "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", str(source)],
+                capture_output=True, check=True, timeout=30,
+            )
             raw = {
                 "source_script_used": True,
                 "generation_model": "gpt",
@@ -228,8 +237,15 @@ class TieringPreviewTests(unittest.TestCase):
             edl = normalise_edl(raw)
             plan = preview.build_plan(edl, project=project, output=project / "preview.mp4", require_sources=True)
             self.assertFalse(plan["privacy"]["raw_media_upload"])
-            self.assertEqual(plan["mode"], "silent_roughcut")
+            self.assertTrue(plan["privacy"]["local_execution_only"])
+            self.assertEqual(plan["mode"], "mixed_roughcut")
             self.assertEqual(plan["command"][0], "ffmpeg")
+            self.assertFalse((project / "preview.mp4").exists())
+
+            source.write_bytes(b"placeholder")
+            with self.assertRaises(EDLContractError) as raised:
+                preview.build_plan(edl, project=project, output=project / "preview.mp4", require_sources=True)
+            self.assertEqual(raised.exception.code, "audio_probe_failed")
 
     def test_preview_blocks_escape(self):
         with tempfile.TemporaryDirectory() as directory:

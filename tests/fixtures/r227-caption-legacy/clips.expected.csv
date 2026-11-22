@@ -1,0 +1,3 @@
+timeline_order,slot,layer,role,timeline_start_sec,timeline_end_sec,duration_sec,source_file,source_start_sec,source_end_sec,purpose,visual_need,edit_note,caption,audio_lead_sec,audio_tail_sec,audio_mute,audio_fade_in_sec,audio_fade_out_sec,audio_plan,audio_beds,music
+1,1,primary,,0.0,4.0,4.0,scene.mkv,0.0,4.0,开场,现场,顺剪,字幕,,,,,,,,
+2,2,primary,,4.0,8.0,4.0,scene.mkv,0.0,4.0,开场,现场,顺剪,第二镜字幕,,,,,,,,

@@ -1,0 +1,25 @@
+{
+  "source_script_used": true,
+  "generation_model": "fixture-model",
+  "generation_reasoning": "fixture-reasoning",
+  "clips": [
+    {
+      "slot": 1,
+      "time_range": "0-4",
+      "source_start_sec": 1,
+      "source_file": "media/scene.wav",
+      "purpose": "开场",
+      "visual_need": "现场",
+      "caption": "字幕",
+      "edit_note": "顺剪",
+      "role": "b_roll",
+      "layer": "primary",
+      "speed": 1,
+      "volume": 0.8,
+      "transform": {
+        "scale": 1.1
+      }
+    }
+  ],
+  "missing_materials": []
+}

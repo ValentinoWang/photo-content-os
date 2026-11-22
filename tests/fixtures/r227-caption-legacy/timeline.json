@@ -1,0 +1,36 @@
+{
+  "timeline": [
+    {
+      "timeline_order": 1,
+      "slot": 1,
+      "layer": "primary",
+      "role": "",
+      "timeline_start_sec": 0.0,
+      "timeline_end_sec": 4.0,
+      "duration_sec": 4.0,
+      "source_file": "scene.mkv",
+      "source_start_sec": 0.0,
+      "source_end_sec": 4.0,
+      "purpose": "开场",
+      "visual_need": "现场",
+      "edit_note": "顺剪",
+      "caption": "字幕"
+    },
+    {
+      "timeline_order": 2,
+      "slot": 2,
+      "layer": "primary",
+      "role": "",
+      "timeline_start_sec": 4.0,
+      "timeline_end_sec": 8.0,
+      "duration_sec": 4.0,
+      "source_file": "scene.mkv",
+      "source_start_sec": 0.0,
+      "source_end_sec": 4.0,
+      "purpose": "开场",
+      "visual_need": "现场",
+      "edit_note": "顺剪",
+      "caption": "第二镜字幕"
+    }
+  ]
+}

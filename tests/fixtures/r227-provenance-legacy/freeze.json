@@ -1,0 +1,8 @@
+{
+  "normalizer_sha256": "f60a52d098c97bd531101f13affdeb4c506a9de06ac4b86130b9892003d662cf",
+  "serialization": "write_edl: ensure_ascii=False, indent=2, trailing newline",
+  "cases": {
+    "v1": "88ff208d282a8f465abf7a98d6b77d7c9949dedf3150ebbfd1c90b7b77330197",
+    "v2": "3a1c874da2c5e6383e5e0fa9c2abfc2592bc8dd905b3e6e107714b32e3df7624"
+  }
+}

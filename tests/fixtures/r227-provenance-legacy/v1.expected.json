@@ -1,0 +1,27 @@
+{
+  "schema_version": "edit_decision_list_v1",
+  "doc_type": "edit_decision_list",
+  "source_script_used": true,
+  "generation_model": "fixture-model",
+  "generation_reasoning": "fixture-reasoning",
+  "clips": [
+    {
+      "slot": 1,
+      "time_range": "0.000-4.000",
+      "source_start_sec": 1.0,
+      "purpose": "开场",
+      "visual_need": "现场",
+      "caption": "字幕",
+      "candidate_files": [
+        "media/scene.wav"
+      ],
+      "edit_note": "顺剪",
+      "source_file": "media/scene.wav"
+    }
+  ],
+  "missing_materials": [],
+  "project_id": "provenance-legacy",
+  "project_revision": 3,
+  "local_project_path": "fixture-project",
+  "notes": "保留既有来源与编排字段"
+}

@@ -34,6 +34,10 @@ DEFAULT_CLIP_LAYER = "primary"
 EXCLUSIVE_LAYERS = frozenset({"primary"})
 
 CROP_KEYS = ("x", "y", "width", "height")
+AUDIO_CLIP_FIELDS = (
+    "audio_lead_sec", "audio_tail_sec", "audio_mute",
+    "audio_fade_in_sec", "audio_fade_out_sec",
+)
 
 
 @dataclass(frozen=True)
@@ -97,12 +101,12 @@ def canonical_time_range(start: float, end: float) -> str:
     return f"{start:.3f}-{end:.3f}"
 
 
-def _required_text(clip: dict[str, Any], field: str, *, path: str) -> str:
+def _required_text(clip: dict[str, Any], field: str, *, path: str, allow_empty: bool = False) -> str:
     value = clip.get(field)
     if field == "caption" and not value:
         value = clip.get("subtitle")
     text = str(value or "").strip()
-    if not text:
+    if not text and not allow_empty:
         _fail(f"{field}_missing", f"缺少必填字段 {field}", f"{path}.{field}")
     return text
 
@@ -240,10 +244,103 @@ def _normalise_music_track(raw: Any, *, index: int) -> dict[str, Any]:
     note = _optional_text(raw, "note", path=path)
     if note is not None:
         track["note"] = note
+    if "duck_regions" in raw:
+        track["duck_regions"] = normalise_duck_regions(raw["duck_regions"], path=f"{path}.duck_regions")
     return track
 
 
-def normalise_clip(raw: Any, *, index: int) -> dict[str, Any]:
+def normalise_duck_regions(raw: Any, *, path: str) -> list[dict[str, float]]:
+    if not isinstance(raw, list):
+        _fail("audio_duck_invalid", "压低区间必须是数组", path)
+    regions = []
+    previous_end = -1.0
+    for index, item in enumerate(raw):
+        location = f"{path}[{index}]"
+        if not isinstance(item, dict):
+            _fail("audio_duck_invalid", "压低区间必须是对象", location)
+        region = {key: parse_seconds(item.get(key), path=f"{location}.{key}")
+                  for key in ("start_sec", "end_sec", "ramp_sec")}
+        gain = _optional_number(item, "gain", path=location, minimum=0, maximum=1)
+        if gain is None:
+            _fail("audio_duck_invalid", "压低区间必须提供 gain", location)
+        region["gain"] = gain
+        start, end, ramp = (region[k] for k in ("start_sec", "end_sec", "ramp_sec"))
+        if end <= start or start - ramp < previous_end - TIMING_TOLERANCE:
+            _fail("audio_duck_invalid", "压低区间须顺序排列，含过渡的区间不能重叠；请合并后重试", location)
+        previous_end = end + ramp
+        regions.append(region)
+    return regions
+
+
+def _normalise_audio_bed(raw: Any, *, index: int) -> dict[str, Any]:
+    path = f"audio_beds[{index}]"
+    if not isinstance(raw, dict) or not isinstance(raw.get("source"), str) or not raw["source"].strip():
+        _fail("audio_bed_invalid", "铺底声必须指定 source", path)
+    bed: dict[str, Any] = {"source": raw["source"].strip()}
+    for key in ("source_start_sec", "timeline_start_sec", "timeline_end_sec"):
+        bed[key] = parse_seconds(raw.get(key), path=f"{path}.{key}")
+    for key in ("fade_in_sec", "fade_out_sec"):
+        if key in raw:
+            bed[key] = parse_seconds(raw[key], path=f"{path}.{key}")
+    if "volume" in raw:
+        value = _optional_number(raw, "volume", path=path, minimum=0, maximum=2)
+        if value is None:
+            _fail("audio_bed_invalid", "volume 不能是 null", path)
+        bed["volume"] = value
+    note = _optional_text(raw, "note", path=path)
+    if note is not None:
+        bed["note"] = note
+    return bed
+
+
+def validate_audio_layout(clips: list[dict[str, Any]], extras: dict[str, Any], *, new_audio: bool) -> None:
+    """Check authored timing without reading local media; source tails need preflight."""
+    duration = max(parse_time_range(c["time_range"])[1] for c in clips)
+    primary = [c for c in clips if clip_layer(c) == "primary"]
+    for clip in clips:
+        path = f"clip:{clip['slot']}"
+        if new_audio and clip.get("speed", 1) != 1:
+            _fail("audio_speed_unsupported", "新音频处理只支持 speed=1；请移除变速或音频请求", path)
+        if not any(k in clip for k in AUDIO_CLIP_FIELDS):
+            continue
+        start, end = parse_time_range(clip["time_range"])
+        lead, tail = clip.get("audio_lead_sec", 0), clip.get("audio_tail_sec", 0)
+        if lead or tail:
+            if clip_layer(clip) != "primary":
+                _fail("audio_handle_invalid", "声音早进晚出只支持主轴相邻镜头", path)
+            index = primary.index(clip)
+            for amount, neighbor_index, boundary in ((lead, index - 1, start), (tail, index + 1, end)):
+                if not amount:
+                    continue
+                if neighbor_index < 0 or neighbor_index >= len(primary):
+                    _fail("audio_handle_invalid", "声音延伸需要相邻镜头", path)
+                ns, ne = parse_time_range(primary[neighbor_index]["time_range"])
+                expected = ne if neighbor_index < index else ns
+                if abs(expected - boundary) > TIMING_TOLERANCE or amount > ne - ns + TIMING_TOLERANCE:
+                    _fail("audio_handle_invalid", "声音延伸不能超过连续相邻镜头的时长", path)
+        if clip["source_start_sec"] < lead - TIMING_TOLERANCE:
+            _fail("audio_handle_invalid", "原片向前的声音余量不足", path)
+        for key in ("audio_fade_in_sec", "audio_fade_out_sec"):
+            if clip.get(key, 0) > (end - start + lead + tail) / 2 + TIMING_TOLERANCE:
+                _fail("audio_fade_invalid", "淡变不能超过声音区间的一半", f"{path}.{key}")
+    for section in ("audio_beds", "music"):
+        for index, track in enumerate(extras.get(section, [])):
+            path = f"{section}[{index}]"
+            start, end = track["timeline_start_sec"], track.get("timeline_end_sec", duration)
+            # Legacy music normalization is deliberately unchanged. Execution
+            # validates its bounds too, without rounding old high precision.
+            if section == "audio_beds" or "duck_regions" in track:
+                if end <= start or end > duration + TIMING_TOLERANCE:
+                    _fail("audio_range_invalid", "声音区间须位于影片内且终点晚于起点", path)
+                for key in ("fade_in_sec", "fade_out_sec"):
+                    if track.get(key, 0) > (end - start) / 2 + TIMING_TOLERANCE:
+                        _fail("audio_fade_invalid", "淡变不能超过声音区间的一半", path)
+            for region in track.get("duck_regions", []):
+                if region["start_sec"] - region["ramp_sec"] < start - TIMING_TOLERANCE or region["end_sec"] + region["ramp_sec"] > end + TIMING_TOLERANCE:
+                    _fail("audio_duck_invalid", "压低区间及过渡必须位于这首歌内", path)
+
+
+def normalise_clip(raw: Any, *, index: int, allow_empty_caption: bool = False) -> dict[str, Any]:
     path = f"clips[{index}]"
     if not isinstance(raw, dict):
         _fail("edl_clip_format", "片段必须是对象", path)
@@ -293,7 +390,7 @@ def normalise_clip(raw: Any, *, index: int) -> dict[str, Any]:
         "source_start_sec": parse_seconds(raw.get("source_start_sec", 0), path=f"{path}.source_start_sec"),
         "purpose": _required_text(raw, "purpose", path=path),
         "visual_need": _required_text(raw, "visual_need", path=path),
-        "caption": _required_text(raw, "caption", path=path),
+        "caption": _required_text(raw, "caption", path=path, allow_empty=allow_empty_caption),
         "candidate_files": candidate_files,
         "edit_note": _required_text(raw, "edit_note", path=path),
     }
@@ -316,6 +413,16 @@ def normalise_clip(raw: Any, *, index: int) -> dict[str, Any]:
     volume = _optional_number(raw, "volume", path=path, minimum=0.0, maximum=2.0)
     if volume is not None:
         normalised["volume"] = volume
+
+    for field in AUDIO_CLIP_FIELDS:
+        if field not in raw:
+            continue
+        if field == "audio_mute":
+            if not isinstance(raw[field], bool):
+                _fail("audio_mute_invalid", "audio_mute 必须是布尔值", f"{path}.{field}")
+            normalised[field] = raw[field]
+        else:
+            normalised[field] = parse_seconds(raw[field], path=f"{path}.{field}")
 
     if raw.get("transform") is not None:
         normalised["transform"] = _normalise_transform(
@@ -385,8 +492,28 @@ V2_CLIP_FIELDS = (
     "transition_in",
     "transition_out",
     "transition_duration",
-)
-V2_DOCUMENT_FIELDS = ("audio", "music", "subtitles")
+) + AUDIO_CLIP_FIELDS
+V2_DOCUMENT_FIELDS = ("audio", "music", "subtitles", "audio_beds")
+
+
+def _normalise_provenance(raw: dict[str, Any]) -> dict[str, Any]:
+    value = raw["provenance"]
+    required = ("kind", "planner", "planner_version", "preset_id", "input_digest")
+    allowed = (*required, "preset_name")
+    if not isinstance(value, dict) or set(value) - set(allowed):
+        _fail("provenance_invalid", "provenance 必须是来源声明对象，且不能包含未知字段", "provenance")
+    for field in required:
+        if not isinstance(value.get(field), str) or not value[field].strip():
+            _fail("provenance_invalid", f"{field} 必须是非空文本", f"provenance.{field}")
+    if value["kind"] != "media_first_planner":
+        _fail("provenance_invalid", "kind 只支持 media_first_planner", "provenance.kind")
+    if re.fullmatch(r"[0-9a-fA-F]{64}", value["input_digest"]) is None:
+        _fail("provenance_invalid", "input_digest 必须是 64 位十六进制", "provenance.input_digest")
+    if "preset_name" in value and (not isinstance(value["preset_name"], str) or not value["preset_name"].strip()):
+        _fail("provenance_invalid", "preset_name 必须是非空文本", "provenance.preset_name")
+    if raw.get("source_script_used") is not False:
+        _fail("provenance_script_conflict", "媒体优先编排必须明确声明 source_script_used=false", "source_script_used")
+    return {field: value[field] for field in allowed if field in value}
 
 
 def normalise_edl(
@@ -401,7 +528,9 @@ def normalise_edl(
     if not isinstance(clips_raw, list) or not clips_raw:
         _fail("edl_clips_missing", "EDL 必须有非空 clips 列表", "clips")
 
-    clips = [normalise_clip(clip, index=index) for index, clip in enumerate(clips_raw)]
+    provenance = _normalise_provenance(raw) if "provenance" in raw else None
+    clips = [normalise_clip(clip, index=index, allow_empty_caption=provenance is not None)
+             for index, clip in enumerate(clips_raw)]
     slots = [clip["slot"] for clip in clips]
     if len(set(slots)) != len(slots):
         _fail("edl_slot_invalid", "slot 必须唯一", "clips")
@@ -427,12 +556,22 @@ def normalise_edl(
 
     model = str(generation_model or raw.get("generation_model") or "").strip()
     reasoning = str(generation_reasoning or raw.get("generation_reasoning") or "").strip()
-    if not model:
-        _fail("generation_model_missing", "generation_model 不能为空", "generation_model")
-    if not reasoning:
-        _fail("generation_reasoning_missing", "generation_reasoning 不能为空", "generation_reasoning")
-    if raw.get("source_script_used") is not True:
-        _fail("source_script_required", "source_script_used 必须为 true", "source_script_used")
+    if provenance is not None:
+        origin: dict[str, Any] = {"source_script_used": False, "provenance": provenance}
+        for field, override in (("generation_model", generation_model), ("generation_reasoning", generation_reasoning)):
+            if field in raw or override is not None:
+                value = override if override is not None else raw[field]
+                if not isinstance(value, str) or not value.strip():
+                    _fail(f"{field}_invalid", f"{field} 若提供就必须是非空文本", field)
+                origin[field] = value.strip()
+    else:
+        if not model:
+            _fail("generation_model_missing", "generation_model 不能为空", "generation_model")
+        if not reasoning:
+            _fail("generation_reasoning_missing", "generation_reasoning 不能为空", "generation_reasoning")
+        if raw.get("source_script_used") is not True:
+            _fail("source_script_required", "source_script_used 必须为 true", "source_script_used")
+        origin = {"source_script_used": True, "generation_model": model, "generation_reasoning": reasoning}
 
     missing = raw.get("missing_materials") or []
     if not isinstance(missing, list):
@@ -447,6 +586,8 @@ def normalise_edl(
             continue
         if not isinstance(value, dict):
             _fail(f"{section}_invalid", f"{section} 必须是对象", section)
+        if section == "audio" and "tracks" in value:
+            _fail("audio_tracks_invalid", "audio 只放全片设置，轨道请写 audio_beds 或 music", section)
         extras[section] = value
     music_raw = raw.get("music")
     if music_raw not in (None, []):
@@ -456,6 +597,12 @@ def normalise_edl(
             _normalise_music_track(track, index=index)
             for index, track in enumerate(music_raw)
         ]
+    if "audio_beds" in raw:
+        if not isinstance(raw["audio_beds"], list):
+            _fail("audio_bed_invalid", "audio_beds 必须是数组", "audio_beds")
+        extras["audio_beds"] = [_normalise_audio_bed(bed, index=i) for i, bed in enumerate(raw["audio_beds"])]
+    new_audio = "audio_beds" in raw or any(k in c for c in clips for k in AUDIO_CLIP_FIELDS) or any("duck_regions" in m for m in extras.get("music", []))
+    validate_audio_layout(clips, extras, new_audio=new_audio)
 
     uses_v2 = bool(extras) or any(
         field in clip for clip in clips for field in V2_CLIP_FIELDS
@@ -464,9 +611,7 @@ def normalise_edl(
     result: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION_V2 if uses_v2 else SCHEMA_VERSION,
         "doc_type": DOC_TYPE,
-        "source_script_used": True,
-        "generation_model": model,
-        "generation_reasoning": reasoning,
+        **origin,
         "clips": clips,
         "missing_materials": missing,
     }

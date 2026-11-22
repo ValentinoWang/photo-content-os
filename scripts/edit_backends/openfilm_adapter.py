@@ -14,6 +14,7 @@ import tempfile
 import time
 
 from edit_tools_runtime import ROOT, INSTALL, node_path
+from audio_plan import reject_audio_request
 
 from .interface import BackendError, CloseResult, Description, Probe
 from .kdenlive_render import (FPS, frames, plan_ranges, probe_media, remap_span,
@@ -212,6 +213,7 @@ class Backend:
         source = Path(kwargs['source']).expanduser().resolve()
         suggestions_path = Path(kwargs['suggestions_path']).expanduser().resolve()
         suggestions = json.loads(suggestions_path.read_text())
+        reject_audio_request(suggestions, backend='openfilm')
         metadata = probe_media(source)
         _deadline(deadline)
         video = next((s for s in metadata['streams'] if s['codec_type'] == 'video'), None)
@@ -353,6 +355,8 @@ class Backend:
             if isinstance(timeout_seconds, bool) or not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
                 raise BackendError('render_timeout_invalid')
             _deadline(deadline)
+            if Path(suggestions_path).is_file():
+                reject_audio_request(json.loads(Path(suggestions_path).read_text()), backend='openfilm')
             self._package()
             if self._matches_readback(kwargs):
                 origin = self._readback['project']
@@ -444,6 +448,8 @@ class Backend:
 
     def prepare_for_studio(self, *, output_dir: Path, **kwargs) -> Path:
         """Build an owned film without opening a browser or exporting a video."""
+        if Path(kwargs['suggestions_path']).is_file():
+            reject_audio_request(json.loads(Path(kwargs['suggestions_path']).read_text()), backend='openfilm')
         self._package()
         output_dir = output_dir.expanduser().resolve()
         if output_dir.exists():

@@ -23,21 +23,22 @@ EDL_SCHEMA_VERSIONS = frozenset({"edit_decision_list_v1", "edit_decision_list_v2
 EDL_SCHEMA_PATH = SCRIPTS_DIR.parent / "schemas" / "edit-decision-list.schema.json"
 
 
-def _load_required_fields() -> tuple[tuple[str, ...], tuple[str, ...]]:
+def _load_required_fields() -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...]]:
     try:
         schema = json.loads(EDL_SCHEMA_PATH.read_text(encoding="utf-8"))
         document_fields = schema["required"]
         clip_fields = schema["properties"]["clips"]["items"]["required"]
+        script_fields = schema["else"]["required"]
     except (OSError, UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError) as exc:
         raise RuntimeError(f"invalid EDL schema declaration: {EDL_SCHEMA_PATH}") from exc
-    if not isinstance(document_fields, list) or not isinstance(clip_fields, list):
+    if not all(isinstance(fields, list) for fields in (document_fields, clip_fields, script_fields)):
         raise RuntimeError(f"invalid EDL required-field declaration: {EDL_SCHEMA_PATH}")
-    if not all(isinstance(field, str) and field for field in document_fields + clip_fields):
+    if not all(isinstance(field, str) and field for field in document_fields + clip_fields + script_fields):
         raise RuntimeError(f"invalid EDL required-field declaration: {EDL_SCHEMA_PATH}")
-    return tuple(document_fields), tuple(clip_fields)
+    return tuple(document_fields), tuple(clip_fields), tuple(script_fields)
 
 
-EDL_REQUIRED_FIELDS, EDL_CLIP_REQUIRED_FIELDS = _load_required_fields()
+EDL_REQUIRED_FIELDS, EDL_CLIP_REQUIRED_FIELDS, EDL_SCRIPT_REQUIRED_FIELDS = _load_required_fields()
 
 
 @dataclass(frozen=True)
@@ -138,7 +139,10 @@ def _raise_contract_invalid(
 
 
 def _declared_schema_error(raw: dict[str, Any]) -> str | None:
-    for field in EDL_REQUIRED_FIELDS:
+    required = EDL_REQUIRED_FIELDS
+    if "provenance" not in raw:
+        required = EDL_SCRIPT_REQUIRED_FIELDS
+    for field in required:
         if field not in raw:
             return f"{field}_missing"
     raw_clips = raw["clips"]

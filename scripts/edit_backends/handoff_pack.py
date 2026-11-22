@@ -28,7 +28,8 @@ _SCRIPTS_DIR = Path(__file__).resolve().parent.parent
 if str(_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS_DIR))
 
-from edl_contract import EDLContractError  # noqa: E402
+from edl_contract import AUDIO_CLIP_FIELDS, EDLContractError, normalise_edl  # noqa: E402
+from audio_plan import audio_operations, compile_audio_plan, probe_audio_source  # noqa: E402
 from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
 from media_common import file_sha256 as sha256_file  # noqa: E402
@@ -58,6 +59,9 @@ CSV_FIELDS = [
     "edit_note",
     "caption",
 ]
+AUDIO_CSV_FIELDS = [*AUDIO_CLIP_FIELDS, "audio_plan", "audio_beds", "music"]
+LEGACY_CSV_FIELDS = CSV_FIELDS.copy()
+CSV_FIELDS += AUDIO_CSV_FIELDS
 
 # Composition stack, bottom first.  Rows are grouped in this order so a reader
 # walks the base cut before the things layered on top of it.
@@ -290,6 +294,12 @@ def normalise_timeline(
     clips = edl.get("clips")
     if not isinstance(clips, list) or not clips:
         raise HandoffError("edl_clips_missing", "EDL 必须有非空 clips 列表")
+    media_first = "provenance" in edl
+    if media_first:
+        try:
+            clips = normalise_edl(edl)["clips"]
+        except EDLContractError as exc:
+            raise HandoffError(exc.code, f"剪辑方案无效：{exc.message}") from exc
     local_project_path: Path | None = None
     local_value = edl.get("local_project_path")
     if isinstance(local_value, str) and local_value.strip():
@@ -322,7 +332,7 @@ def normalise_timeline(
             end = round(start + duration, 3)
 
         caption = str(raw_clip.get("caption", raw_clip.get("subtitle", ""))).strip()
-        if not caption:
+        if not caption and not media_first:
             raise HandoffError("caption_missing", f"EDL 第 {index} 个片段缺少 caption；交接包要求每段均有可校验字幕")
         source, skipped_raw = choose_source(
             raw_clip,
@@ -358,6 +368,12 @@ def normalise_timeline(
                 "caption": caption,
             }
         )
+        for field in (*AUDIO_CLIP_FIELDS, "volume", "speed"):
+            if field in raw_clip:
+                timeline[-1][field] = raw_clip[field]
+
+    if any(clip["caption"] for clip in timeline) and not all(clip["caption"] for clip in timeline):
+        raise HandoffError("caption_missing", "有字幕的交接包要求每个镜头均有一条字幕；请补齐缺项或明确移除全部字幕")
 
     # Ordering is checked within each layer: the EDL must already list a layer's
     # clips in the order they play, and the pack must not silently reorder them.
@@ -466,10 +482,83 @@ def write_clips_csv(path: Path, timeline: list[dict[str, Any]]) -> None:
         writer = csv.DictWriter(handle, fieldnames=CSV_FIELDS)
         writer.writeheader()
         for clip in timeline:
-            writer.writerow({field: clip[field] for field in CSV_FIELDS})
+            writer.writerow({field: csv_value(clip, field) for field in CSV_FIELDS})
+
+
+def csv_value(clip: dict[str, Any], field: str) -> str:
+    if field not in clip:
+        return ""
+    if field in AUDIO_CSV_FIELDS:
+        return json.dumps(clip[field], ensure_ascii=False, sort_keys=True)
+    return str(clip[field])
+
+
+def handoff_audio(edl: dict[str, Any], timeline: list[dict[str, Any]], edl_path: Path,
+                  *, materials_allowed: set[Path], materials_root: Path | None) -> dict[str, Any] | None:
+    if not audio_operations(edl) and not any("volume" in c for c in edl["clips"]):
+        return None
+    try:
+        normalized = normalise_edl(edl)
+        by_slot = {clip["slot"]: clip for clip in timeline}
+        for clip in normalized["clips"]:
+            clip["source_file"] = by_slot[clip["slot"]]["source_file"]
+        for section in ("audio_beds", "music"):
+            for track in normalized.get(section, []):
+                source, _ = choose_source(
+                    {"source_file": track["source"]}, edl_path=edl_path,
+                    local_project_path=resolve_path(edl["local_project_path"], [edl_path.parent]) if edl.get("local_project_path") else None,
+                    materials_allowed=materials_allowed, materials_root=materials_root)
+                track["source"] = str(source)
+        sources = {c["source_file"] for c in normalized["clips"] if not c.get("audio_mute")}
+        sources.update(t["source"] for section in ("audio_beds", "music") for t in normalized.get(section, []))
+        info = {source: probe_audio_source(Path(source)) for source in sorted(sources)}
+        plan = compile_audio_plan(normalized, source_info=info)
+    except EDLContractError as exc:
+        raise HandoffError(exc.code, f"音频处理无效：{exc.message}") from exc
+    for clip in timeline:
+        normalized_clip = next(c for c in normalized["clips"] if c["slot"] == clip["slot"])
+        for field in (*AUDIO_CLIP_FIELDS, "volume", "speed"):
+            if field in normalized_clip:
+                clip[field] = normalized_clip[field]
+        clip["audio_plan"] = [s for s in plan["segments"] if s.get("slot") == clip["slot"]]
+        clip["audio_beds"] = normalized.get("audio_beds", [])
+        clip["music"] = normalized.get("music", [])
+    return {"audio_plan": plan, "audio_beds": normalized.get("audio_beds", []), "music": normalized.get("music", []),
+            "audio_settings": normalized.get("audio", {}),
+            "audio_sources": [{"source": source, "sha256": sha256_file(Path(source)), **info[source]} for source in sorted(sources)]}
+
+
+def audio_handoff_text(timeline: list[dict[str, Any]], audio: dict[str, Any] | None) -> str:
+    if audio is None:
+        return ""
+    lines = ["\n## 声音处理（时间码为影片秒数）", "", "ChatCut：这项声音处理尚未核实；以下为精剪交接做法。"]
+    for clip in timeline:
+        start, end = clip["timeline_start_sec"], clip["timeline_end_sec"]
+        if clip.get("audio_mute"):
+            lines.append(f"- 镜头 {clip['slot']}，{start:.3f}–{end:.3f}：现场声静音；铺底和配乐继续。")
+        for field, label in (("audio_lead_sec", "声音先进"), ("audio_tail_sec", "声音晚出")):
+            if clip.get(field):
+                lines.append(f"- 镜头 {clip['slot']}，{start:.3f}–{end:.3f}：{label} {clip[field]:.3f} 秒。")
+    for segment in audio["audio_plan"]["segments"]:
+        label = {"clip": "镜头现场声", "bed": "连续铺底", "music": "配乐 / 换歌"}[segment["kind"]]
+        lines.append(f"- {label} {segment['id']}，{segment['timeline_start_sec']:.3f}–{segment['timeline_end_sec']:.3f}；"
+                     f"来源 `{segment['source']}` {segment['source_start_sec']:.3f}–{segment['source_end_sec']:.3f}；"
+                     f"音量 {segment['volume']:.6g}；淡入 {segment['fade_in_sec']:.3f} 秒，淡出 {segment['fade_out_sec']:.3f} 秒；"
+                         f"独立音轨 {segment['physical_track']}。")
+        for region in segment["duck_regions"]:
+            lines.append(f"  - {region['start_sec']:.3f}–{region['end_sec']:.3f}：音乐压低至基础音量的 {region['gain']:.6g} 倍；"
+                         f"前后各 {region['ramp_sec']:.3f} 秒过渡。")
+    for section, label in (("audio_beds", "铺底"), ("music", "配乐")):
+        for track in audio[section]:
+            if track.get("note"):
+                lines.append(f"- {label} {track['timeline_start_sec']:.3f}–{track.get('timeline_end_sec', audio['audio_plan']['duration_sec']):.3f}：{track['note']}")
+    lines.append("- 真正声音切口至少淡变 0.030 秒（短于 0.060 秒的声音各取半长）；连续铺底不在画面切点重启淡变。")
+    return "\n".join(lines) + "\n"
 
 
 def write_srt(path: Path, timeline: list[dict[str, Any]]) -> None:
+    if not any(clip["caption"] for clip in timeline):
+        return
     lines: list[str] = []
     for index, clip in enumerate(timeline, start=1):
         lines.extend(
@@ -483,7 +572,22 @@ def write_srt(path: Path, timeline: list[dict[str, Any]]) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def write_handoff_note(path: Path, *, project_id: str, revision: int, timeline: list[dict[str, Any]]) -> None:
+def handoff_provenance(edl: dict[str, Any]) -> dict[str, Any] | None:
+    if "provenance" not in edl:
+        return None
+    try:
+        return normalise_edl(edl)["provenance"]
+    except EDLContractError as exc:
+        raise HandoffError(exc.code, f"来源声明无效：{exc.message}") from exc
+
+
+def write_handoff_note(path: Path, *, project_id: str, revision: int, timeline: list[dict[str, Any]], audio: dict[str, Any] | None = None, provenance: dict[str, Any] | None = None) -> None:
+    caption_instruction = ("使用 `captions.srt` 作为同一版字幕时间轴。" if any(clip["caption"] for clip in timeline)
+                           else "这份粗剪没有字幕。")
+    source_note = ""
+    if provenance is not None:
+        preset = provenance.get("preset_name", provenance["preset_id"])
+        source_note = f"\n\n按素材和拍子自动排出（剪辑预设：{preset}）"
     rows = "\n".join(
         f"| {clip['timeline_order']} | {clip['timeline_start_sec']:.3f}–{clip['timeline_end_sec']:.3f} | "
         f"{clip['purpose'] or '未说明'} | {clip['caption']} |"
@@ -493,14 +597,14 @@ def write_handoff_note(path: Path, *, project_id: str, revision: int, timeline: 
         f"""# 剪辑交接说明
 
 项目：`{project_id}`  
-版本：`{revision}`
+版本：`{revision}`{source_note}
 
 这是一份可编辑剪辑的交接包。它只记录已经确认的剪辑顺序、时长、材料位置与字幕；不会生成或修改任何剪辑软件项目。
 
 ## 编辑时必须保持
 
 - 严格按 `clips.csv` 的顺序、起止时间和来源材料处理。
-- 使用 `captions.srt` 作为同一版字幕时间轴。
+- {caption_instruction}
 - 如需改动脚本、顺序、时长或素材，请先提交修改，不要直接覆盖这个版本的文件。
 - 任何 360 原始文件均未被直接使用；若素材清单提示需要重构，应先导出可剪视频。
 
@@ -509,6 +613,7 @@ def write_handoff_note(path: Path, *, project_id: str, revision: int, timeline: 
 | 顺序 | 时间 | 目的 | 字幕 |
 | --- | --- | --- | --- |
 {rows}
+{audio_handoff_text(timeline, audio)}
 """,
         encoding="utf-8",
     )
@@ -516,6 +621,8 @@ def write_handoff_note(path: Path, *, project_id: str, revision: int, timeline: 
 
 def write_preview_note(path: Path, *, timeline: list[dict[str, Any]]) -> None:
     duration = float(timeline[-1]["timeline_end_sec"])
+    caption_instruction = ("字幕预览：打开 `captions.srt`，时间必须与 `clips.csv` 一致。" if any(clip["caption"] for clip in timeline)
+                           else "这份粗剪没有字幕。")
     path.write_text(
         f"""# 预览说明
 
@@ -523,7 +630,7 @@ def write_preview_note(path: Path, *, timeline: list[dict[str, Any]]) -> None:
 
 - 预览总时长：`{duration:.3f}` 秒
 - 预览顺序：按 `clips.csv` 的 `timeline_order` 从 1 到 {len(timeline)}。
-- 字幕预览：打开 `captions.srt`，时间必须与 `clips.csv` 一致。
+- {caption_instruction}
 - 画面预览：按 `clips.csv` 的 `source_file`、`source_start_sec` 和 `duration_sec` 在编辑器中查看对应片段。
 
 若必须交付渲染预览，应由人工或专用渲染流程在此版本之外生成，并在其结果中记录来源版本。
@@ -558,6 +665,7 @@ def build_manifest(
     revision_basis_path: Path | None,
     timeline: list[dict[str, Any]],
     skipped_raw_sources: list[str],
+    audio: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     artifacts = {
         "clips_csv": "clips.csv",
@@ -565,14 +673,16 @@ def build_manifest(
         "handoff_note": "剪辑交接说明.md",
         "preview": {"kind": "explanation", "path": "预览说明.md", "rendered_video": False},
     }
+    if not any(clip["caption"] for clip in timeline):
+        del artifacts["captions_srt"]
     checksums = {
         key: sha256_file(artifact_dir / relative)
         for key, relative in {
             "clips_csv": artifacts["clips_csv"],
-            "captions_srt": artifacts["captions_srt"],
+            "captions_srt": artifacts.get("captions_srt"),
             "handoff_note": artifacts["handoff_note"],
             "preview_note": artifacts["preview"]["path"],
-        }.items()
+        }.items() if relative is not None
     }
     inputs = [input_descriptor("edl", edl_path), input_descriptor("storyboard", storyboard_path)]
     if materials_path is not None:
@@ -599,6 +709,7 @@ def build_manifest(
         "package_dir": str(package_dir),
         "inputs": inputs,
         "timeline": timeline,
+        **(audio or {}),
         "artifacts": artifacts,
         "artifact_checksums": checksums,
         "raw360_direct_use": "blocked",
@@ -620,7 +731,7 @@ def result_from_manifest(manifest_path: Path, manifest: dict[str, Any]) -> dict[
         "manifest": str(manifest_path),
         "artifacts": {
             "clips_csv": str(package_dir / artifacts["clips_csv"]),
-            "captions_srt": str(package_dir / artifacts["captions_srt"]),
+            **({"captions_srt": str(package_dir / artifacts["captions_srt"])} if "captions_srt" in artifacts else {}),
             "handoff_note": str(package_dir / artifacts["handoff_note"]),
             "preview_note": str(package_dir / artifacts["preview"]["path"]),
         },
@@ -642,6 +753,7 @@ def generate(
     edl_path = edl_path.expanduser().resolve()
     storyboard_path = storyboard_path.expanduser().resolve()
     edl = read_json_object(edl_path, label="EDL")
+    provenance = handoff_provenance(edl)
     if not storyboard_path.is_file() or not storyboard_path.read_text(encoding="utf-8").strip():
         raise HandoffError("storyboard_missing", f"Storyboard 文件不存在或为空：{storyboard_path}")
     declared_project_id = str(edl.get("project_id", "")).strip()
@@ -659,13 +771,14 @@ def generate(
         materials_allowed=materials_allowed,
         materials_root=materials_root,
     )
+    audio = handoff_audio(edl, timeline, edl_path, materials_allowed=materials_allowed, materials_root=materials_root)
     destination = ensure_new_revision_dir(output_root, project_revision)
     staging_parent = destination.parent
     staging = Path(tempfile.mkdtemp(prefix=f".{project_revision}.staging-", dir=staging_parent))
     try:
         write_clips_csv(staging / "clips.csv", timeline)
         write_srt(staging / "captions.srt", timeline)
-        write_handoff_note(staging / "剪辑交接说明.md", project_id=effective_project_id, revision=project_revision, timeline=timeline)
+        write_handoff_note(staging / "剪辑交接说明.md", project_id=effective_project_id, revision=project_revision, timeline=timeline, audio=audio, provenance=provenance)
         write_preview_note(staging / "预览说明.md", timeline=timeline)
         manifest = build_manifest(
             package_dir=destination,
@@ -678,6 +791,7 @@ def generate(
             revision_basis_path=revision_basis_path,
             timeline=timeline,
             skipped_raw_sources=skipped_raw_sources,
+            audio=audio,
         )
         # Checksums were calculated from the staging files. Their content is
         # identical after the atomic directory rename, while their final paths
@@ -695,7 +809,7 @@ def read_csv_rows(path: Path) -> list[dict[str, str]]:
     try:
         with path.open("r", encoding="utf-8", newline="") as handle:
             reader = csv.DictReader(handle)
-            if reader.fieldnames != CSV_FIELDS:
+            if reader.fieldnames not in (CSV_FIELDS, LEGACY_CSV_FIELDS):
                 raise HandoffError("clips_csv_columns", "clips.csv 的列顺序或名称不符合交接包契约")
             rows = list(reader)
     except csv.Error as exc:
@@ -793,23 +907,65 @@ def validate(manifest_path: Path) -> dict[str, Any]:
 
     artifact_paths = {
         "clips_csv": require_artifact(package_dir, artifacts.get("clips_csv"), label="clips.csv"),
-        "captions_srt": require_artifact(package_dir, artifacts.get("captions_srt"), label="captions.srt"),
         "handoff_note": require_artifact(package_dir, artifacts.get("handoff_note"), label="剪辑交接说明"),
         "preview_note": require_artifact(package_dir, preview.get("path"), label="预览说明"),
     }
+    if "captions_srt" in artifacts:
+        artifact_paths["captions_srt"] = require_artifact(package_dir, artifacts["captions_srt"], label="captions.srt")
     for key, path in artifact_paths.items():
         if checksums.get(key) != sha256_file(path):
             raise HandoffError("artifact_checksum_mismatch", f"交接包文件已被修改：{path.name}")
 
+    # Bind derived audio to the hashed source, rather than trusting a manifest
+    # and CSV that an editor could modify together and rehash.
+    edl_inputs = [item for item in manifest.get("inputs", []) if item.get("role") == "edl"]
+    if len(edl_inputs) != 1:
+        raise HandoffError("manifest_contract", "交接包必须绑定唯一源 EDL")
+    edl_path = Path(edl_inputs[0]["path"])
+    if not edl_path.is_file() or sha256_file(edl_path) != edl_inputs[0].get("sha256"):
+        raise HandoffError("audio_source_changed", "源剪辑方案已变化；请为新版本重新生成交接包")
+    edl = read_json_object(edl_path, label="EDL")
+    provenance = handoff_provenance(edl)
+    materials = next((item for item in manifest["inputs"] if item.get("role") in ("materials", "materials_root")), None)
+    if materials and materials["role"] == "materials" and (not Path(materials["path"]).is_file() or sha256_file(Path(materials["path"])) != materials.get("sha256")):
+        raise HandoffError("audio_source_changed", "素材清单已变化；请重新生成交接包")
+    allowed, root = material_policy(Path(materials["path"]) if materials else None)
+    expected_timeline, _ = normalise_timeline(edl, edl_path, materials_allowed=allowed, materials_root=root)
+    expected_audio = handoff_audio(edl, expected_timeline, edl_path, materials_allowed=allowed, materials_root=root)
+    if expected_audio is not None:
+        if any(manifest.get(key) != value for key, value in expected_audio.items()) or timeline != expected_timeline:
+            raise HandoffError("audio_handoff_mismatch", "音频交接内容与源剪辑方案不一致；请重新生成交接包")
+    elif any(key in manifest for key in ("audio_plan", "audio_beds", "music", "audio_settings", "audio_sources")):
+        raise HandoffError("audio_handoff_mismatch", "交接包含源方案未声明的音频；请重新生成交接包")
+    if expected_audio is not None or provenance is not None:
+        with tempfile.TemporaryDirectory() as temporary:
+            expected_note = Path(temporary) / "note.md"
+            write_handoff_note(expected_note, project_id=project_id, revision=revision, timeline=expected_timeline, audio=expected_audio, provenance=provenance)
+            if expected_note.read_bytes() != artifact_paths["handoff_note"].read_bytes():
+                code = "provenance_handoff_mismatch" if provenance is not None else "audio_handoff_mismatch"
+                message = "来源或声音处理说明不完整；请重新生成交接包" if provenance is not None else "声音处理说明不完整；请重新生成交接包"
+                raise HandoffError(code, message)
+
     rows = read_csv_rows(artifact_paths["clips_csv"])
     if len(rows) != len(timeline):
         raise HandoffError("timeline_count", "clips.csv 与 manifest 的片段数不一致")
-    srt_entries = parse_srt(artifact_paths["captions_srt"])
-    if len(srt_entries) != len(timeline):
-        raise HandoffError("caption_count", "captions.srt 必须与每个剪辑片段一一对应")
+    if expected_audio is not None:
+        for row, clip in zip(rows, expected_timeline):
+            if any(row.get(field) != csv_value(clip, field) for field in AUDIO_CSV_FIELDS):
+                raise HandoffError("audio_handoff_mismatch", "CSV 声音处理不完整；请重新生成交接包")
+    has_captions = any(clip["caption"] for clip in expected_timeline)
+    if has_captions:
+        caption_path = require_artifact(package_dir, artifacts.get("captions_srt"), label="captions.srt")
+        srt_entries = parse_srt(caption_path)
+        if len(srt_entries) != len(timeline):
+            raise HandoffError("caption_count", "captions.srt 必须与每个剪辑片段一一对应")
+    else:
+        if "captions_srt" in artifacts or "captions_srt" in checksums or (package_dir / "captions.srt").exists():
+            raise HandoffError("captions_unexpected", "这份粗剪没有字幕，交接包不应包含或声明字幕文件")
+        srt_entries = []
 
     previous_end: float | None = None
-    for index, (row, clip, srt_entry) in enumerate(zip(rows, timeline, srt_entries), start=1):
+    for index, (row, clip) in enumerate(zip(rows, timeline), start=1):
         if not isinstance(clip, dict):
             raise HandoffError("manifest_timeline", f"manifest 第 {index} 个片段不是对象")
         if int(row["timeline_order"]) != index or int(clip.get("timeline_order", 0)) != index:
@@ -841,11 +997,14 @@ def validate(manifest_path: Path) -> dict[str, Any]:
         for key in ("slot", "layer", "role", "timeline_start_sec", "timeline_end_sec", "duration_sec", "source_file", "caption"):
             if str(clip.get(key, "")) != row[key]:
                 raise HandoffError("manifest_csv_mismatch", f"manifest 与 clips.csv 在第 {index} 段的 {key} 不一致")
-        srt_index, srt_start, srt_end, srt_caption = srt_entry
-        if srt_index != index or abs(srt_start - start) > TIMING_TOLERANCE or abs(srt_end - end) > TIMING_TOLERANCE:
-            raise HandoffError("srt_timing_mismatch", f"captions.srt 第 {index} 段时间与 clips.csv 不一致")
-        if srt_caption != row["caption"]:
-            raise HandoffError("srt_caption_mismatch", f"captions.srt 第 {index} 段文字与 clips.csv 不一致")
+        if has_captions:
+            srt_index, srt_start, srt_end, srt_caption = srt_entries[index - 1]
+            if srt_index != index or abs(srt_start - start) > TIMING_TOLERANCE or abs(srt_end - end) > TIMING_TOLERANCE:
+                raise HandoffError("srt_timing_mismatch", f"captions.srt 第 {index} 段时间与 clips.csv 不一致")
+            if srt_caption != row["caption"]:
+                raise HandoffError("srt_caption_mismatch", f"captions.srt 第 {index} 段文字与 clips.csv 不一致")
+        elif row["caption"] or clip.get("caption"):
+            raise HandoffError("caption_source_mismatch", "源方案没有字幕，manifest 和 clips.csv 的字幕必须留空")
 
     if previous_end is None:
         raise HandoffError(

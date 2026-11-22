@@ -19,6 +19,7 @@ if str(SCRIPTS) not in sys.path:
 from edit_backends.otio_kdenlive import (
     ContractError, FPS, TimelineClip, frames, make_otio_timeline, require_otio,
     sha256_file, write_json, write_kdenlive_project, timeline_tractor,
+    prepare_edl_audio,
 )
 
 
@@ -231,6 +232,69 @@ def build_timeline(*, source: Path, suggestions: dict, subtitles: Path | None,
             "subtitles": str(subtitle_output) if subtitle_output else None, "assets": [],
             "subtitle_burned_in": subtitles is not None, "subtitle_bottom_ratio": 0.8 if subtitles else 0,
             "ignored_review_only": ignored, "removed_seconds": frames(duration) / FPS - output_duration}
+
+
+def generate_from_edl(*, edl_path: Path, output_dir: Path, media_root: Path | None = None,
+                      project_id: str, project_revision: int) -> dict:
+    """Explicit EDL-to-editable-project entry; the spoken suggestion route is separate."""
+    edl_path, output_dir = edl_path.expanduser().resolve(), output_dir.expanduser().resolve()
+    if output_dir.exists():
+        raise ContractError("output_directory_already_exists")
+    if not project_id.strip() or type(project_revision) is not int or project_revision < 1:
+        raise ContractError("render_project_identity_invalid")
+    raw = json.loads(edl_path.read_text(encoding="utf-8"))
+    if raw.get("project_id") != project_id or raw.get("project_revision", project_revision) != project_revision:
+        raise ContractError("edl_project_identity_mismatch")
+    normalized, clips, audio_plan = prepare_edl_audio(raw, media_root)
+    dimensions = None
+    for clip in clips:
+        media = probe_media(Path(clip.candidate))
+        video = next((s for s in media["streams"] if s.get("codec_type") == "video"), None)
+        if video is None:
+            raise ContractError("edl_video_stream_missing")
+        native = float(video.get("duration") or media["format"]["duration"])
+        if clip.source_start + clip.duration > native + 1 / FPS:
+            raise ContractError("edl_video_source_range")
+        if clip.layer == "primary" and dimensions is None:
+            dimensions = (int(video["width"]), int(video["height"]))
+    if dimensions is None or any(n <= 0 or n % 2 for n in dimensions):
+        raise ContractError("edl_video_dimensions_invalid")
+    paths = {Path(c.candidate) for c in clips} | {Path(s["source"]) for s in audio_plan["segments"]}
+    inputs = [{"path": str(p), "sha256": sha256_file(p), "role": "edl_media"} for p in sorted(paths)]
+    inputs.append({"path": str(edl_path), "sha256": sha256_file(edl_path), "role": "edl"})
+    output_dir.mkdir(parents=True)
+    audio_sources = {}
+    for source in sorted({s['source'] for s in audio_plan['segments']}):
+        media = probe_media(Path(source))
+        audio = next(s for s in media['streams'] if s['codec_type'] == 'audio')
+        if any(s['codec_type'] == 'video' for s in media['streams']) or audio['codec_name'].startswith('pcm_'):
+            continue
+        # MLT's audio-only compressed producers retain codec priming samples.
+        # Decode from sample zero once, preserving the plan's source clock.
+        prepared = output_dir / 'audio-sources' / (sha256_file(Path(source)) + '.wav')
+        prepared.parent.mkdir(exist_ok=True)
+        subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-n', '-i', source, '-map', '0:a:0',
+                        '-vn', '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s24le', str(prepared)],
+                       check=True, capture_output=True, timeout=120)
+        audio_sources[source] = str(prepared)
+        inputs.append({'path': str(prepared), 'sha256': sha256_file(prepared), 'role': 'prepared_audio',
+                       'source': source})
+    timeline = make_otio_timeline(require_otio(), project_id, project_revision, normalized, clips, None,
+                                  audio_plan=audio_plan, audio_sources=audio_sources)
+    plan = {"doc_type": "edl_audio_kdenlive_plan", "project_id": project_id, "project_revision": project_revision,
+            "inputs": inputs, "audio_plan": audio_plan, "width": dimensions[0], "height": dimensions[1],
+            "audio_sources": audio_sources,
+            "duration": audio_plan["duration_sec"], "fps": FPS, "audio_envelope_resolution_sec": 1 / FPS}
+    require_otio().adapters.write_to_file(timeline, str(output_dir / "timeline.otio"))
+    write_kdenlive_project(output_dir / "timeline.kdenlive", timeline, project_id, project_revision,
+                           width=dimensions[0], height=dimensions[1])
+    write_json(output_dir / "render-plan.json", plan)
+    result = {"status": "done", "editor_backend": "otio_kdenlive", "mode": "edl_audio",
+              "project_id": project_id, "project_revision": project_revision,
+              "kdenlive_project": str(output_dir / "timeline.kdenlive"), "otio": str(output_dir / "timeline.otio"),
+              "audio_track_count": audio_plan["physical_track_count"], "audio_envelope_resolution_sec": 1 / FPS}
+    write_json(output_dir / "render-result.json", result)
+    return result
 
 
 def render(*, source: Path, suggestions_path: Path, output_dir: Path, subtitles: Path | None = None,

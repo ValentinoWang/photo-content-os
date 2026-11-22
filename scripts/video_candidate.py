@@ -87,6 +87,24 @@ def preview_video(video: Path, output: Path) -> dict:
             'width': width, 'height': height, 'shortEdge': min(width, height), 'longEdge': max(width, height)}
 
 
+def mixed_edl_preview(video: Path, output: Path, *, edl: dict, project: Path) -> dict:
+    """Replace embedded audio with the validated EDL mix on the same film clock."""
+    from edl_contract import normalise_edl, parse_time_range
+    from render_preview import build_plan, execute_plan
+    normalized = normalise_edl(edl)
+    metadata = probe_media(video)
+    stream = next(s for s in metadata['streams'] if s.get('codec_type') == 'video')
+    duration = float(stream.get('duration') or metadata['format']['duration'])
+    expected = max(parse_time_range(c['time_range'])[1] for c in normalized['clips'])
+    # A frame-grid header can differ by less than one frame; another cut cannot.
+    fps = float(Fraction(stream['avg_frame_rate']))
+    if abs(duration - expected) > 1 / fps + 1e-6:
+        raise ProductContractError('audio_preview_duration_mismatch')
+    plan = build_plan(normalized, project=project, output=output, video=video)
+    execute_plan(plan)
+    return plan['audio_plan']
+
+
 def cut_projection(plan: dict, source_duration: float) -> list[dict]:
     cuts, cursor = [], 0.0
     # The execution map uses the editor's frame grid. Resampling a source at
@@ -151,7 +169,7 @@ def failed_shot_progress(native: dict, descriptor: dict, fps: float, *,
 
 
 def project_candidate(*, native: dict, descriptor: dict, source: Path, original_hashes: dict[Path, str],
-                      output_dir: Path, workspace: Path) -> dict:
+                      output_dir: Path, workspace: Path, edl: dict | None = None, project: Path | None = None) -> dict:
     if native.get('status') not in {'candidate', 'completed'}:
         raise ProductContractError('photo_native_candidate_missing')
     video = Path(native.get('output') or native.get('candidate') or '')
@@ -166,6 +184,16 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
             path = Path(item['path'])
             if file_sha256(path) != item['sha256']:
                 raise ProductContractError('photo_native_candidate_changed')
+    if edl is not None:
+        identity = descriptor['identity']
+        revision = edl.get('project_revision')
+        if (project is None or edl.get('project_id') != identity['photoProjectId']
+                or type(revision) is not type(identity['photoProjectRevision'])
+                or revision != identity['photoProjectRevision']):
+            raise ProductContractError('audio_preview_identity_mismatch')
+        mixed = output_dir / 'mixed.mp4'
+        mixed_edl_preview(video, mixed, edl=edl, project=project)
+        video = mixed
     metadata = probe_media(video)
     v = next(s for s in metadata['streams'] if s.get('codec_type') == 'video')
     duration = float(v['duration']); fps = float(Fraction(v['avg_frame_rate']))
@@ -273,6 +301,9 @@ def project_candidate(*, native: dict, descriptor: dict, source: Path, original_
         if not plan and shot['status'] == 'completed':
             progress['shotProgress'][-1].update(shot_poster(shot, output_dir, workspace))
     payload = {'candidate': candidate, 'preview_ref': str(preview_path.resolve().relative_to(workspace.resolve())), 'progress': progress}
+    if edl is not None:
+        from edl_contract import normalise_edl
+        payload['preview_edl_digest'] = video_digest(normalise_edl(edl))
     encoded = json.dumps(payload, ensure_ascii=True, allow_nan=False)
     if len(encoded.encode()) > 1_000_000:
         raise ProductContractError('video_candidate_size_rejected')

@@ -97,10 +97,35 @@ class VideoWorkflow:
         return {'data': data, 'root': root, 'run': run, 'workspace': workspace, 'descriptor': descriptor,
                 'identity': identity, 'key': key, 'source': source, 'subtitles': subs, 'suggestions_path': suggestions, 'binding': binding}
 
+    def _preview_edl(self, ctx):
+        from studio.edl_bridge import AUTHORITY_FILE, EDLBridgeError, read_edl_bridge
+        if ctx.get('data', {}).get('line') == 'direct':
+            return None
+        source = ctx['root'] / AUTHORITY_FILE
+        if not source.exists() and not source.is_symlink():
+            return None
+        try:
+            edl = read_edl_bridge(ctx['root'])['content']
+        except EDLBridgeError as exc:
+            raise ProjectStoreError('video_input_invalid', '剪辑方案无法读取，请检查后重新生成预览') from exc
+        identity = ctx['identity']
+        revision = edl.get('project_revision')
+        if (edl.get('project_id') != identity['photoProjectId']
+                or type(revision) is not type(identity['photoProjectRevision'])
+                or revision != identity['photoProjectRevision']):
+            raise ProjectStoreError('video_binding_invalid', '剪辑方案版本与当前作品不一致，请重新交接')
+        return edl
+
+    def _preview_edl_digest(self, ctx):
+        from openclaw_product_contract import video_digest
+        edl = self._preview_edl(ctx)
+        return video_digest(edl) if edl is not None else None
+
     def candidate_records(self, ctx):
         records = copy.deepcopy(self.app._video_json(ctx['run'], 'studio-candidates.json'))
         entries = records.setdefault('candidates', [])
         previews = records.setdefault('previews', {})
+        edls = records.setdefault('preview_edls', {})
         payload = (self.app._video_json(ctx['run'], 'studio-candidate.json')
                    or self.app._video_json(ctx['root'], ctx.get('binding', {}).get('candidate_ref', 'candidate.json'))
                    or self.app._video_json(ctx['run'], 'handoff_manifest.json'))
@@ -111,18 +136,21 @@ class VideoWorkflow:
                 entries.append(candidate)
             if payload.get('preview_ref'):
                 previews.setdefault(cid, payload['preview_ref'])
+            if payload.get('preview_edl_digest'):
+                edls.setdefault(cid, payload['preview_edl_digest'])
         return records
 
     def public_candidates(self, project_id, ctx, *, direct=False):
         records = self.candidate_records(ctx)
         rows = []
+        edl_digest = self._preview_edl_digest(ctx)
         for candidate in records['candidates']:
             if candidate.get('identity') != ctx['identity']:
                 continue
             cid = candidate.get('publicCandidateId')
             ref = records['previews'].get(cid)
             path = (ctx['workspace'] / ref).resolve() if ref else None
-            available = path is not None and path.is_relative_to(ctx['workspace']) and path.is_file() and path.stat().st_size <= 20*1024**2
+            available = records['preview_edls'].get(cid) == edl_digest and path is not None and path.is_relative_to(ctx['workspace']) and path.is_file() and path.stat().st_size <= 20*1024**2
             rows.append({**{k: candidate[k] for k in ('status', 'durationSeconds', 'frameCount', 'cutCount', 'editingMethod', 'provenance') if k in candidate},
                          'editorName': '本机逐帧渲染' if direct else candidate.get('editor', {}).get('displayName'),
                          'previewUrl': f'/api/projects/{project_id}/video-preview/{cid}' if available else None})
@@ -437,6 +465,7 @@ class VideoWorkflow:
         bid = 'openfilm' if own else choice['editor']
         if own and session.get('backend') is None:
             raise ProjectStoreError('video_session_missing', '先打开内置剪辑器')
+        preview_edl = self._preview_edl(ctx)
         if not own and session.get('backend'): session['backend'].close()
         backend = session['backend'] if own else get_backend(bid)
         args = self._kwargs(ctx)
@@ -470,7 +499,8 @@ class VideoWorkflow:
                 actual={a['animation_id'] for a in plan.get('animation_placements',[])}
                 descriptor['animations']=[a for a in descriptor['animations'] if a['animationId'] in actual]
             payload = project_candidate(native=native, descriptor=descriptor, source=ctx['source'],
-                                        original_hashes=original, output_dir=output / 'studio-check', workspace=ctx['workspace'])
+                                        original_hashes=original, output_dir=output / 'studio-check', workspace=ctx['workspace'],
+                                        **({'edl': preview_edl, 'project': ctx['root']} if preview_edl is not None else {}))
             self._record_candidate(ctx, session, payload, editing_method='software_workflow' if own else 'open_source', editor_id=bid, verified=True)
             if not own and not candidate_failed(payload['candidate']): session['public']['state'] = 'refine'
         except Exception as exc:
@@ -512,7 +542,9 @@ class VideoWorkflow:
         entries.append(copy.deepcopy(candidate))
         previews=history.get('previews',{})
         if payload.get('preview_ref'): previews[candidate['publicCandidateId']]=payload['preview_ref']
-        (ctx['run']/'studio-candidates.json').write_text(json.dumps({'candidates':entries[-12:],'previews':previews},default=str),encoding='utf-8')
+        edls=history.get('preview_edls',{})
+        if payload.get('preview_edl_digest'): edls[candidate['publicCandidateId']]=payload['preview_edl_digest']
+        (ctx['run']/'studio-candidates.json').write_text(json.dumps({'candidates':entries[-12:],'previews':previews,'preview_edls':edls},default=str),encoding='utf-8')
         (ctx['run']/'studio-candidate.json').write_text(json.dumps(payload,default=str),encoding='utf-8')
         session['public'].update(editorName=name,
                                  candidate={k:v for k,v in candidate.items() if k in ('status','durationSeconds','frameCount','cutCount','removedSeconds','returnedAt','checks','provenance')},
@@ -603,6 +635,8 @@ class VideoWorkflow:
         records=self.candidate_records(ctx)
         if not any(c.get('publicCandidateId')==candidate_id and c.get('identity')==ctx['identity'] for c in records.get('candidates',[])):
             raise ProjectStoreError('video_preview_missing','候选预览不可用')
+        if records['preview_edls'].get(candidate_id) != self._preview_edl_digest(ctx):
+            raise ProjectStoreError('video_preview_missing','剪辑方案已变化，请重新生成预览')
         ref=records.get('previews',{}).get(candidate_id,'')
         path=(ctx['workspace']/ref).resolve()
         if not ref or not path.is_relative_to(ctx['workspace']) or not path.is_file() or path.stat().st_size>20*1024**2:

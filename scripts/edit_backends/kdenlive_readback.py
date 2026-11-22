@@ -8,10 +8,189 @@ import xml.etree.ElementTree as ET
 
 from .interface import BackendError
 from .kdenlive_render import probe_media, sha256_file, timeline_tractor
+from .otio_kdenlive import FPS, audio_level_keyframes, frames
 
 
 def properties(node):
     return {p.get('name'): p.text or '' for p in node.findall('property')}
+
+
+def same_frame_time(first, second, fps):
+    """Compare fractional frame positions without rounding away a half-frame error."""
+    delta = (Fraction(str(first)) - Fraction(str(second))) * Fraction(str(fps))
+    return abs(delta) < Fraction(1, 2)
+
+
+def level_frames(value):
+    """Native saves may serialize animation positions as MLT clock times."""
+    values = []
+    for entry in value.split(';'):
+        position, gain = entry.split('=')
+        if ':' in position:
+            h, m, s = position.split(':')
+            position = frames(int(h)*3600 + int(m)*60 + float(s))
+        values.append((int(position), round(float(gain), 6)))
+    return values
+
+
+def read_audio_graph(root, directory: Path) -> list[dict]:
+    """Traverse audible graph edges, including the pure audio editing tractors."""
+    nodes = {node.get("id"): node for node in root if node.get("id")}
+    profile = root.find("profile")
+    fps = float(Fraction(int(profile.get("frame_rate_num")), int(profile.get("frame_rate_den"))))
+    def frame(value):
+        if ":" in value:
+            h, m, s = value.split(":")
+            return round((int(h)*3600 + int(m)*60 + float(s))*fps)
+        return int(value)
+    sounds = []
+    def walk(node, at=0, audible=True, lane=None, ancestors=()):
+        identity = node.get("id")
+        if identity in ancestors:
+            raise BackendError("kdenlive_graph_cycle")
+        ancestors = (*ancestors, identity)
+        values = properties(node)
+        if values.get("kdenlive:audio_track") == "1" and node.tag == "playlist":
+            lane = int(values["content_os:physical_lane"]) - 1 if "content_os:physical_lane" in values else lane
+        if audible and any(properties(f).get("disable") != "1" for f in node.findall("filter")):
+            raise BackendError("kdenlive_audio_track_effect_unverified")
+        if node.tag == "tractor":
+            audio_lane = 0
+            for track in node.findall("track"):
+                if properties(nodes[track.get("producer")]).get("kdenlive:audio_track") == "1" and node is timeline_tractor(root):
+                    lane = audio_lane
+                    audio_lane += 1
+                if frame(track.get("in", "0")):
+                    raise BackendError("kdenlive_nested_trim_unsupported")
+                walk(nodes[track.get("producer")], at, audible and track.get("hide") not in ("audio", "both"), lane, ancestors)
+        elif node.tag == "playlist":
+            cursor = at
+            for entry in node:
+                if entry.tag == "blank":
+                    cursor += frame(entry.get("length"))
+                elif entry.tag == "entry":
+                    start, end = frame(entry.get("in", "0")), frame(entry.get("out")) + 1
+                    if start < 0 or end <= start:
+                        raise BackendError("kdenlive_project_time_invalid")
+                    producer = nodes[entry.get("producer")]
+                    info = properties(producer)
+                    if audible:
+                        if lane is None:
+                            raise BackendError("kdenlive_video_audio_unverified")
+                        if info.get("mlt_service") not in ("avformat", "avformat-novalidate") or "content_os:audio_segment_id" not in info:
+                            raise BackendError("kdenlive_audio_source_unverified")
+                        filters = producer.findall("filter")
+                        gains = [f for f in filters if properties(f).get("mlt_service") == "volume"]
+                        ramps = [f for f in filters if properties(f).get("mlt_service") == "avfilter.afade"]
+                        if len(filters) != 2 or len(gains) != 1 or len(ramps) != 1 or entry.findall("filter"):
+                            raise BackendError("kdenlive_audio_gain_unverified")
+                        volume = gains[0]
+                        ramp = ramps[0]
+                        if (frame(ramp.get("in", "0")) != start or frame(ramp.get("out", "0")) != start or
+                            any(properties(ramp).get(k) != v for k, v in {"internal_added": "1", "av.type": "in"}.items()) or
+                            abs(float(properties(ramp).get("av.duration", "-1"))-1/fps) > 1e-9 or properties(ramp).get("disable") == "1"):
+                            raise BackendError("kdenlive_audio_initial_ramp_unverified")
+                        level = properties(volume)
+                        if level.get("disable") == "1" or info.get("set.test_audio") == "1" or level.get('kdenlive_id') != 'volume':
+                            raise BackendError("kdenlive_audio_gain_or_stream_unverified")
+                        resource = Path(info["resource"]).expanduser()
+                        if not resource.is_absolute():
+                            resource = directory / resource
+                        if "audio_index" in info:
+                            first_audio = next(s["index"] for s in probe_media(resource)["streams"] if s["codec_type"] == "audio")
+                            if int(info["audio_index"]) != first_audio:
+                                raise BackendError("kdenlive_audio_stream_changed")
+                        sounds.append({"id": info["content_os:audio_segment_id"], "source": str(resource.resolve()),
+                                       "timeline_start_sec": cursor/fps, "timeline_end_sec": (cursor+end-start)/fps,
+                                       "source_start_sec": start/fps, "source_end_sec": end/fps,
+                                       "physical_track": lane, "level_keyframes_db": level["level"],
+                                       "initial_ramp_start_sec": float(properties(ramp).get("av.start_time", "-1")),
+                                       "filter_in_frame": frame(volume.get("in", "0")),
+                                       "filter_out_frame": frame(volume.get("out", str(end-1)))})
+                    cursor += end - start
+    walk(timeline_tractor(root))
+    return sounds
+
+
+def audio_graph_differences(root, directory, audio_plan, audio_sources=None):
+    actual = read_audio_graph(root, directory)
+    profile = root.find("profile")
+    fps = float(Fraction(int(profile.get("frame_rate_num")), int(profile.get("frame_rate_den"))))
+    expected = {}
+    for sound in audio_plan["segments"]:
+        start, end = frames(sound["timeline_start_sec"]), frames(sound["timeline_end_sec"])
+        source = frames(sound["source_start_sec"])
+        source_path = (audio_sources or {}).get(sound['source'], sound['source'])
+        expected[sound["id"]] = {"id": sound["id"], "source": str(Path(source_path).resolve()),
+            "timeline_start_sec": start/FPS, "timeline_end_sec": end/FPS,
+            "source_start_sec": source/FPS, "source_end_sec": (source+end-start)/FPS,
+            "physical_track": sound["physical_track"], "level_keyframes_db": audio_level_keyframes(sound, end-start),
+            "initial_ramp_start_sec": start/FPS,
+            "filter_in_frame": source, "filter_out_frame": source+end-start-1}
+    mismatches = []
+    seen = set()
+    for sound in actual:
+        identity = sound["id"]
+        if identity in seen:
+            mismatches.append(f"{identity}:duplicate")
+        seen.add(identity)
+        if identity not in expected:
+            mismatches.append(f"{identity}:unexpected")
+            continue
+        for key, value in expected[identity].items():
+            if key == 'level_keyframes_db':
+                same = level_frames(sound[key]) == level_frames(value)
+            elif key.endswith('_sec'):
+                same = key in sound and same_frame_time(sound[key], value, fps)
+            else:
+                same = sound.get(key) == value
+            if not same:
+                mismatches.append(f"{identity}:{key}")
+    mismatches.extend(f"{identity}:missing" for identity in expected.keys() - seen)
+    sequence = timeline_tractor(root)
+    nodes = {node.get("id"): node for node in root if node.get("id")}
+    audio_indices = [i for i, t in enumerate(sequence.findall("track")) if properties(nodes[t.get("producer")]).get("kdenlive:audio_track") == "1"]
+    transitions = [t for t in sequence.findall("transition") if properties(t).get("mlt_service") == "mix"]
+    mixes = [properties(t) for t in transitions]
+    def frame(value):
+        if ":" in value:
+            h, m, s = value.split(":")
+            return frames(int(h)*3600 + int(m)*60 + float(s))
+        return int(value)
+    trimmed = any(frame(t.get("in", "0")) != 0 or
+                  (t.get('out') is not None and frame(t.get('out')) < frames(audio_plan["duration_sec"]) - 1) or
+                  (t.get('out') is None and properties(t).get('internal_added') != '237') for t in transitions)
+    altered_gain = any(m.get("sum") != "1" or m.get("a_track") != "0" or m.get("always_active") != "1" or
+                       m.get('internal_added') != '237' or m.get('accepts_blanks') != '1' or
+                       m.get("disable") == "1" or any(key in m for key in ("start", "end", "reverse", "combine")) for m in mixes)
+    if sorted(int(m.get("b_track", "-1")) for m in mixes) != audio_indices or trimmed or altered_gain:
+        mismatches.append("mix:physical_tracks_or_gain")
+    return actual, mismatches
+
+
+def read_edl_project(root, directory, plan, receipt):
+    for item in plan["inputs"]:
+        if sha256_file(Path(item["path"])) != item["sha256"]:
+            raise BackendError("kdenlive_original_input_changed")
+    for item in plan['inputs']:
+        if sha256_file(Path(item['path'])) != item['sha256']:
+            raise BackendError('kdenlive_original_input_changed')
+    actual, mismatches = audio_graph_differences(root, directory, plan["audio_plan"], plan.get('audio_sources'))
+    approved = {str(Path(item["path"]).resolve()) for item in plan["inputs"] if item["role"] in ("edl_media", "prepared_audio")}
+    if any(sound["source"] not in approved for sound in actual):
+        raise BackendError("kdenlive_unapproved_project_asset")
+    profile = root.find("profile")
+    fps = float(Fraction(int(profile.get("frame_rate_num")), int(profile.get("frame_rate_den"))))
+    sequence = timeline_tractor(root)
+    # Native projects add an editor-only blank tail and an inclusive wrapper
+    # frame. The actual audio entries determine the audible content duration.
+    duration = max((s['timeline_end_sec'] for s in actual), default=0)
+    if fps != FPS or not same_frame_time(duration, plan["duration"], fps):
+        mismatches.append("sequence:fps_or_duration")
+    return {"project_id": receipt["project_id"], "project_revision": receipt["project_revision"],
+            "mode": "edl_audio", "audio_segments": actual, "audio_matches_plan": not mismatches,
+            "audio_mismatches": mismatches, "duration": duration, "fps": fps,
+            "engine_revision": sha256_file(directory / "timeline.kdenlive")}
 
 
 def read_project(project_dir: Path) -> dict:
@@ -27,8 +206,13 @@ def read_project(project_dir: Path) -> dict:
         plan = json.loads((directory / 'render-plan.json').read_text())
         receipt = json.loads((directory / 'render-result.json').read_text())
         identity = properties(root)
+        if plan.get("doc_type") == "edl_audio_kdenlive_plan":
+            identity = properties(root.find("playlist[@id='main_bin']"))
+            identity["content_os.project_revision"] = identity.get("kdenlive:docproperties.content_os_revision")
         if root.tag != 'mlt' or identity.get('kdenlive:docproperties.projectid') != receipt['project_id'] or identity.get('content_os.project_revision') != str(receipt['project_revision']):
             raise BackendError('kdenlive_project_identity_mismatch')
+        if plan.get("doc_type") == "edl_audio_kdenlive_plan":
+            return read_edl_project(root, directory, plan, receipt)
         profile = root.find('profile')
         fps = float(Fraction(int(profile.get('frame_rate_num')), int(profile.get('frame_rate_den'))))
         if not math.isfinite(fps) or fps <= 0:
@@ -104,14 +288,17 @@ def read_project(project_dir: Path) -> dict:
         cursor, output = 0., 0.
         cuts = []
         for r in [*ranges, {'source_start': round(source_duration*fps)/fps, 'source_end': round(source_duration*fps)/fps, 'output_start': output}]:
-            if r['source_start'] < cursor-1e-6 or r['source_end'] > source_duration+1/fps:
+            if ((r['source_start'] < cursor and not same_frame_time(r['source_start'], cursor, fps)) or
+                (r['source_end'] > source_duration and not same_frame_time(r['source_end'], source_duration, fps))):
                 raise BackendError('kdenlive_source_reorder_unsupported')
-            if r in ranges and abs(r['output_start']-output) > 1e-6:
+            if r in ranges and not same_frame_time(r['output_start'], output, fps):
                 raise BackendError('kdenlive_source_gap_unsupported')
-            if r['source_start'] > cursor+1e-6:
+            if r['source_start'] > cursor and not same_frame_time(r['source_start'], cursor, fps):
                 # The XML establishes boundaries; the producer supplies only
                 # the acoustic reason, which cannot be invented from a gap.
-                facts = [c for c in plan.get('executed_cuts', []) if c['startSeconds'] <= cursor+1e-6 and c['endSeconds'] >= r['source_start']-1e-6]
+                facts = [c for c in plan.get('executed_cuts', [])
+                         if (c['startSeconds'] <= cursor or same_frame_time(c['startSeconds'], cursor, fps))
+                         and (c['endSeconds'] >= r['source_start'] or same_frame_time(c['endSeconds'], r['source_start'], fps))]
                 cuts.append({'kind': facts[0]['kind'] if facts else 'manual', 'startSeconds': cursor, 'endSeconds': min(r['source_start'], source_duration)})
             cursor = r['source_end']
             output += r['source_end']-r['source_start']
@@ -152,7 +339,8 @@ def read_project(project_dir: Path) -> dict:
         duration = max(visited)/fps
         if sequence.get('out') is not None and frame(sequence.get('out'))+1 != round(duration*fps):
             raise BackendError('kdenlive_sequence_duration_mismatch')
-        if abs(duration-output) > 1/fps or any(p['end'] > duration+1/fps for p in placements):
+        if not same_frame_time(duration, output, fps) or any(
+                p['end'] > duration and not same_frame_time(p['end'], duration, fps) for p in placements):
             raise BackendError('kdenlive_project_duration_invalid')
         return {'time_map':ranges, 'fps':fps, 'duration':duration, 'frames':round(duration*fps),
                 'executed_cuts':cuts, 'animation_placements':placements, 'subtitles':str(subtitles),

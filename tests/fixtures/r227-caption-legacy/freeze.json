@@ -1,0 +1,13 @@
+{
+  "normalizer_sha256": "5e6a9154fd6b980647ff433949055902508c0354298f5fa9ed5556fc807f9a52",
+  "handoff_sha256": "fc0382a5c723bba320417e1e235cd4779271e5be517cd2dc82fe15966a3f9717",
+  "files": {
+    "clips.expected.csv": "ab2c4a0835eeb7e7c52c91612f5ec10ee63eeed257e35b4b2c67f291c657efe9",
+    "timeline.json": "a226592da26c7e581adead31d5d1eb57069def78b6cfb02bd89769077fe37b62",
+    "captions.expected.srt": "559d393b251b7d66fd93fd3ed57b9e7ed351982359c742794c0a243cc2f2dd93",
+    "preview.expected.md": "fd4d43070fd9f83396024f11f12ae99fc7949c8f3e35f81198e049fb14927812",
+    "media-first.expected.json": "8c41988e9f966ff5f7350394768440d4c5f31e584f0a3ddce2267c5e806aa79a",
+    "media-first.input.json": "c22b5561a61b4adfb10237a4558a569571c1a7ba1181c312577d393f032f143f",
+    "handoff.expected.md": "9431e2c7716bd92e9356cfb61155d32d66521bde5b7c07d6d4c4d6f161b59f0a"
+  }
+}

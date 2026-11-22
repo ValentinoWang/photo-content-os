@@ -1,0 +1,44 @@
+{
+  "schema_version": "edit_decision_list_v1",
+  "doc_type": "edit_decision_list",
+  "source_script_used": false,
+  "provenance": {
+    "kind": "media_first_planner",
+    "planner": "roughcut_planner",
+    "planner_version": "1.0",
+    "preset_id": "trip",
+    "input_digest": "abababababababababababababababababababababababababababababababab",
+    "preset_name": "轻快旅行"
+  },
+  "clips": [
+    {
+      "slot": 1,
+      "time_range": "0.000-4.000",
+      "source_start_sec": 0.0,
+      "purpose": "开场",
+      "visual_need": "现场",
+      "caption": "字幕",
+      "candidate_files": [
+        "scene.mkv"
+      ],
+      "edit_note": "顺剪",
+      "source_file": "scene.mkv"
+    },
+    {
+      "slot": 2,
+      "time_range": "4.000-8.000",
+      "source_start_sec": 0.0,
+      "purpose": "开场",
+      "visual_need": "现场",
+      "caption": "第二镜字幕",
+      "candidate_files": [
+        "scene.mkv"
+      ],
+      "edit_note": "顺剪",
+      "source_file": "scene.mkv"
+    }
+  ],
+  "missing_materials": [],
+  "project_id": "r227-e2",
+  "project_revision": 1
+}

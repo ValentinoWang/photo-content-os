@@ -56,6 +56,8 @@ class Backend:
         # Never overwrite another run's receipt, including on preflight failure.
         if output_dir.exists():
             raise BackendError("output_directory_already_exists")
+        if self._readback and self._readback.get('mode') == 'edl_audio':
+            raise BackendError('kdenlive_edl_project_requires_native_export')
         if self._readback and Path(source).resolve()==self._readback['render_kwargs']['source'] and project_id==self._readback['project_id'] and project_revision==self._readback['project_revision']:
             from .kdenlive_readback import render_saved
             return render_saved(project_dir=self._readback['directory'],expected_revision=self._readback['engine_revision'],output_dir=output_dir,timeout_seconds=timeout_seconds)
@@ -74,6 +76,11 @@ class Backend:
                     "reason": str(exc) if isinstance(exc, ValueError) else type(exc).__name__})
             raise BackendError(str(exc)) from exc
 
+    def generate_from_edl(self, *, edl_path: Path, output_dir: Path, media_root: Path | None = None,
+                          project_id: str, project_revision: int) -> dict:
+        return kdenlive_render.generate_from_edl(edl_path=edl_path, output_dir=output_dir, media_root=media_root,
+                                                 project_id=project_id, project_revision=project_revision)
+
     def open_for_refine(self, *, project_dir: Path) -> dict:
         import json
         project=project_dir.resolve()/'timeline.kdenlive'
@@ -82,7 +89,7 @@ class Backend:
         if not receipt.is_file() or not project.is_file() or not executable.is_file():
             raise BackendError('kdenlive_refine_unsupported_missing_project')
         result=json.loads(receipt.read_text())
-        if result.get('status')!='candidate' or result.get('editor_backend')!='otio_kdenlive':
+        if (result.get('status')!='candidate' and not (result.get('status')=='done' and result.get('mode')=='edl_audio')) or result.get('editor_backend')!='otio_kdenlive':
             raise BackendError('kdenlive_owned_project_required')
         if self._application is None or self._application.poll() is not None:
             self._application=subprocess.Popen([str(executable),str(project)],start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)

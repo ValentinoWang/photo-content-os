@@ -1,0 +1,11 @@
+{
+  "normalizer_sha256": "c1fb185352cd4c33d3bda1dd9d6918969db0cdda6e94fa2be5ecf114817023e6",
+  "serialization": "write_edl: ensure_ascii=False, indent=2, trailing newline",
+  "cases": {
+    "v1": "e9091729594154d73802e320105656f1f9b8aa5a59ddcebce6c3fb055ae6d7bc",
+    "v2": "85a4abcc300d8eff91813f8a9007171dc329957aa26b4fc8782f219da53d8f64",
+    "audio-object": "6f560f18794616c7e0746b7692cc3db94cac74a83fa5ce75f221521faa9fccec",
+    "duck-loop": "ed34c7b488dfbacc0ac5cc871ff2b3014f8bec7d4de4b6330218c84e3cdf34d4",
+    "music-precision": "65d8c2abe140557a2ce28b527764b2be4a8e42571c5c15d162e562768d936ca3"
+  }
+}

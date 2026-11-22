@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import shutil
 import subprocess
@@ -26,6 +27,9 @@ if str(_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS_DIR))
 
 from edl_contract import EDLContractError  # noqa: E402
+from edl_contract import normalise_edl  # noqa: E402
+from audio_plan import audio_operations, compile_audio_plan, gain_at, probe_audio_source  # noqa: E402
+from runtime_paths import local_media_root  # noqa: E402
 from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
 from media_common import file_sha256 as sha256_file  # noqa: E402
@@ -372,6 +376,9 @@ def make_otio_timeline(
     edl: dict[str, Any],
     clips: list[TimelineClip],
     revision_basis: dict[str, str] | None,
+    *,
+    audio_plan: dict[str, Any] | None = None,
+    audio_sources: dict[str, str] | None = None,
 ) -> Any:
     grouped = clips_by_layer(clips)
     timeline = otio.schema.Timeline(name=f"{project_id}_r{project_revision}")
@@ -392,7 +399,89 @@ def make_otio_timeline(
     }
     if revision_basis is not None:
         timeline.metadata["content_os"]["revision_basis"] = revision_basis
+    if audio_plan is not None:
+        if audio_plan.get("source_validation") != "passed":
+            raise ContractError("audio_source_preflight_required")
+        for lane in range(audio_plan["physical_track_count"]):
+            track = otio.schema.Track(name=f"声音 {lane + 1}", kind=otio.schema.TrackKind.Audio)
+            track.metadata["content_os"] = {"layer": "audio", "physical_lane": lane + 1}
+            cursor = 0
+            for sound in sorted((s for s in audio_plan["segments"] if s["physical_track"] == lane), key=lambda s: s["timeline_start_sec"]):
+                candidate = (audio_sources or {}).get(sound['source'], sound['source'])
+                start, end = frames(sound["timeline_start_sec"]), frames(sound["timeline_end_sec"])
+                if end <= start:
+                    raise ContractError("audio_shorter_than_frame; use a longer sound segment")
+                if start < cursor:
+                    raise ContractError("audio_quantized_lane_overlap")
+                if start > cursor:
+                    track.append(otio.schema.Gap(source_range=otio.opentime.TimeRange(
+                        otio.opentime.RationalTime(0, FPS), otio.opentime.RationalTime(start - cursor, FPS))))
+                item = otio.schema.Clip(name=sound["id"], media_reference=otio.schema.ExternalReference(target_url=candidate_resource(candidate)),
+                                        source_range=otio.opentime.TimeRange(otio.opentime.RationalTime(frames(sound["source_start_sec"]), FPS),
+                                                                             otio.opentime.RationalTime(end - start, FPS)))
+                item.metadata["content_os"] = {"audio_segment": sound, "candidate_file": candidate,
+                                                "timeline_start_frame": start, "timeline_start_sec": sound["timeline_start_sec"]}
+                track.append(item)
+                cursor = end
+            timeline.tracks.append(track)
+        timeline.metadata["content_os"]["audio_plan"] = audio_plan
+        timeline.metadata["content_os"]["audio_sources"] = audio_sources or {}
+        timeline.metadata["content_os"]["physical_track_count"] = len(timeline.tracks)
     return timeline
+
+
+def plain_data(value):
+    """Convert OTIO's JSON metadata containers without losing nested arrays."""
+    if hasattr(value, "items"):
+        return {str(k): plain_data(v) for k, v in value.items()}
+    if not isinstance(value, (str, bytes)) and hasattr(value, "__iter__"):
+        return [plain_data(v) for v in value]
+    return value
+
+
+def prepare_edl_audio(edl: dict[str, Any], media_root: Path | None = None):
+    """Resolve explicitly selected sources, then consume the frozen compiler."""
+    try:
+        normalized = normalise_edl(edl)
+        root = local_media_root(media_root)
+        def resolve(value):
+            source = Path(value).expanduser()
+            source = source.resolve() if source.is_absolute() else (root / source).resolve()
+            if is_raw360(str(source)) or not source.is_file():
+                raise ContractError("audio_source_missing_or_raw360; select readable editable media")
+            return str(source)
+        for clip in normalized["clips"]:
+            source = resolve(clip.get("source_file") or clip["candidate_files"][0])
+            clip.update(source_file=source, candidate_files=[source])
+        for section in ("audio_beds", "music"):
+            for track in normalized.get(section, []):
+                track["source"] = resolve(track["source"])
+        sources = {c["source_file"] for c in normalized["clips"] if not c.get("audio_mute")}
+        sources.update(t["source"] for section in ("audio_beds", "music") for t in normalized.get(section, []))
+        info = {source: probe_audio_source(Path(source)) for source in sources}
+        plan = compile_audio_plan(normalized, source_info=info)
+    except EDLContractError as exc:
+        raise ContractError(str(exc)) from exc
+    clips = [TimelineClip(str(c["slot"]), *parse_time_range(c["time_range"]), c["caption"], c["source_file"], c["edit_note"],
+                          source_start=c["source_start_sec"], layer=c.get("layer", DEFAULT_LAYER), role=c.get("role", "")) for c in normalized["clips"]]
+    return normalized, clips, plan
+
+
+def audio_level_keyframes(sound: dict[str, Any], duration_frames: int) -> str:
+    """MLT volume ramps from the previous frame's amplitude to this frame's.
+
+    Sampling the frozen envelope at frame ends compensates that one-frame
+    evaluation lag. Zero is represented below PCM resolution (-120 dB).
+    """
+    start = sound["timeline_start_sec"]
+    end = sound["timeline_end_sec"]
+    values = []
+    for frame in range(duration_frames):
+        time = min(end, start + (frame + 1) / FPS)
+        gain = gain_at(sound, time)
+        level = 20 * math.log10(gain) if gain > 1e-6 else -120.0
+        values.append(f"{frame}={level:.9f}")
+    return ";".join(values)
 
 
 def timeline_manifest(
@@ -474,7 +563,14 @@ def generate_otio(args: argparse.Namespace) -> int:
     storyboard = args.storyboard.resolve()
     if not storyboard.is_file() or not storyboard.read_text(encoding="utf-8").strip():
         raise ContractError("Storyboard is missing or empty")
-    edl, clips = load_edl(args.edl.resolve(), project_id, args.project_revision)
+    edl = read_json(args.edl.resolve())
+    audio_plan = None
+    if audio_operations(edl):
+        if edl.get("project_id") != project_id or edl.get("project_revision", args.project_revision) != args.project_revision:
+            raise ContractError("edl_project_identity_mismatch")
+        edl, clips, audio_plan = prepare_edl_audio(edl)
+    else:
+        edl, clips = load_edl(args.edl.resolve(), project_id, args.project_revision)
     revision_basis = (
         revision_basis_descriptor(args.revision_basis, project_id=project_id, project_revision=args.project_revision)
         if args.revision_basis is not None
@@ -483,9 +579,11 @@ def generate_otio(args: argparse.Namespace) -> int:
     output_root = args.output_root.resolve() / str(args.project_revision)
     output_root.mkdir(parents=True, exist_ok=True)
     otio_path = output_root / "timeline.otio"
-    timeline = make_otio_timeline(otio, project_id, args.project_revision, edl, clips, revision_basis)
+    timeline = make_otio_timeline(otio, project_id, args.project_revision, edl, clips, revision_basis, audio_plan=audio_plan)
     otio.adapters.write_to_file(timeline, str(otio_path))
     manifest = timeline_manifest(project_id, args.project_revision, clips, otio_path, revision_basis)
+    if audio_plan is not None:
+        manifest["audio_plan"] = audio_plan
     manifest_path = output_root / "manifest.json"
     write_json(manifest_path, manifest)
     write_handoff_readme(output_root / "剪辑交接说明.md", manifest)
@@ -592,6 +690,13 @@ def timeline_tractor(root):
     for element in root.findall("tractor"):
         if element.find("property[@name='content_os:timeline']") is not None:
             return element
+    master = next((t for t in root.findall("tractor") if t.find("property[@name='kdenlive:projectTractor']") is not None), None)
+    if master is not None:
+        track = master.find("track")
+        if track is not None:
+            sequence = root.find(f"tractor[@id='{track.get('producer')}']")
+            if sequence is not None:
+                return sequence
     raise ContractError("kdenlive_sequence_missing")
 
 
@@ -606,10 +711,14 @@ def wrap_kdenlive_document(root, sequence, playlist_ids, project_id, revision, t
     xml_properties(sequence, {"content_os:timeline": 1, "kdenlive:uuid": sequence_id,
                              "kdenlive:clipname": project_id})
     root.remove(sequence)
+    explicit_audio = root.find("property[@name='content_os:audio_plan']") is not None
     resources = {}
     for producer in root.findall("producer"):
         resource = producer.find("property[@name='resource']").text
-        bin_id = resources.setdefault(resource, str(len(resources) + 4))
+        # Timeline audio has its own bin item: sharing the video's bin ID makes
+        # Kdenlive rebuild it from the effect-free video producer on save.
+        segment = producer.findtext("property[@name='content_os:audio_segment_id']")
+        bin_id = resources.setdefault((resource, segment), str(len(resources) + 4))
         xml_properties(producer, {"mlt_service": "avformat", "kdenlive:id": bin_id})
     background = ET.Element("producer", {"id": "black", "in": "0", "out": str(total - 1)})
     xml_properties(background, {"mlt_service": "color", "resource": "black", "length": total,
@@ -626,11 +735,18 @@ def wrap_kdenlive_document(root, sequence, playlist_ids, project_id, revision, t
         track = ET.SubElement(root, "tractor", {"id": f"track{index}", "in": "0", "out": str(total - 1)})
         name = playlist.find("property[@name='kdenlive:track_name']").text
         xml_properties(track, {"kdenlive:timeline_active": 1, "kdenlive:track_name": name})
-        ET.SubElement(track, "track", {"producer": playlist_id, "hide": "audio"})
-        ET.SubElement(track, "track", {"producer": empty_id, "hide": "audio"})
+        audio = playlist.find("property[@name='kdenlive:audio_track']") is not None
+        if audio:
+            xml_properties(track, {"kdenlive:audio_track": 1})
+        hidden = "video" if audio else "audio"
+        ET.SubElement(track, "track", {"producer": playlist_id, "hide": hidden})
+        ET.SubElement(track, "track", {"producer": empty_id, "hide": hidden})
     original_tracks = sequence.findall("track")
     for index, track in enumerate(original_tracks):
         track.set("producer", f"track{index}")
+        if explicit_audio:
+            playlist = root.find(f"playlist[@id='{playlist_ids[index]}']")
+            track.set("hide", "video" if playlist.find("property[@name='kdenlive:audio_track']") is not None else "audio")
     sequence.insert(0, ET.Element("track", {"producer": "black"}))
     for transition in sequence.findall("transition"):
         for name in ("a_track", "b_track"):
@@ -639,7 +755,7 @@ def wrap_kdenlive_document(root, sequence, playlist_ids, project_id, revision, t
     # Keep primary audio as an independent, editable lane; overlay audio is muted.
     primary = next((root.find(f"playlist[@id='{pid}']") for pid in playlist_ids
                     if root.find(f"playlist[@id='{pid}']/property[@name='content_os:layer']").text == "primary"), None)
-    if primary is not None:
+    if primary is not None and not explicit_audio:
         import copy
         audio = copy.deepcopy(primary)
         audio.set("id", "audio_playlist")
@@ -653,11 +769,19 @@ def wrap_kdenlive_document(root, sequence, playlist_ids, project_id, revision, t
         ET.SubElement(audio_track, "track", {"producer": "audio_playlist", "hide": "video"})
         ET.SubElement(audio_track, "track", {"producer": "audio_empty", "hide": "video"})
         ET.SubElement(sequence, "track", {"producer": "audio_track", "hide": "video"})
+    if explicit_audio:
+        for index, playlist_id in enumerate(playlist_ids):
+            playlist = root.find(f"playlist[@id='{playlist_id}']")
+            if playlist.find("property[@name='kdenlive:audio_track']") is not None:
+                mix = ET.SubElement(sequence, "transition", {"in": "0", "out": str(total - 1)})
+                xml_properties(mix, {"mlt_service": "mix", "a_track": 0, "b_track": index + 1,
+                                     "always_active": 1, "sum": 1, "internal_added": 237, "accepts_blanks": 1})
     root.append(sequence)
     main_bin = ET.SubElement(root, "playlist", {"id": "main_bin"})
     xml_properties(main_bin, {"kdenlive:docproperties.uuid": sequence_id,
                              "kdenlive:docproperties.version": "1.1", "xml_retain": 1,
                              "kdenlive:docproperties.projectid": project_id,
+                             "kdenlive:docproperties.content_os_revision": revision,
                              "content_os.project_revision": revision})
     ET.SubElement(main_bin, "entry", {"producer": sequence_id, "in": "0", "out": str(total - 1)})
     seen = set()
@@ -679,6 +803,9 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
     ET.SubElement(root, "property", {"name": "kdenlive:docproperties.projectid"}).text = project_id
     ET.SubElement(root, "property", {"name": "content_os.project_revision"}).text = str(project_revision)
     tracks = list(otio_data.tracks)
+    explicit_audio = "audio_plan" in plain_metadata(otio_data.metadata).get("content_os", {})
+    if explicit_audio:
+        xml_properties(root, {"content_os:audio_plan": "audio_plan_v1", "content_os:audio_envelope_resolution_sec": 1 / FPS})
     if not tracks:
         raise ContractError("OTIO timeline has no tracks")
 
@@ -693,6 +820,9 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
         track_metadata = plain_metadata(track.metadata).get("content_os", {})
         track_metadata = plain_metadata(track_metadata)
         layer = str(track_metadata.get("layer") or "")
+        audio_track = track.kind == "Audio"
+        if audio_track:
+            xml_properties(playlist, {"kdenlive:audio_track": 1})
         if layer:
             ET.SubElement(
                 playlist, "property", {"name": "content_os:layer"}
@@ -729,6 +859,19 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
             ET.SubElement(producer, "property", {"name": "resource"}).text = safe_xml_resource(candidate)
             ET.SubElement(producer, "property", {"name": "kdenlive:clipname"}).text = item.name
             ET.SubElement(producer, "property", {"name": "content_os:needs_relink"}).text = "1" if not Path(candidate).expanduser().exists() else "0"
+            if audio_track:
+                sound = plain_data(metadata["audio_segment"])
+                xml_properties(producer, {"content_os:audio_segment_id": sound["id"]})
+                volume = ET.SubElement(producer, "filter", {"in": str(source_in), "out": str(source_out)})
+                xml_properties(volume, {"mlt_service": "volume", "kdenlive_id": "volume", "kdenlive:ix": 1,
+                                        "level": audio_level_keyframes(sound, duration_frames)})
+                # Volume initializes its first frame at the current level. A
+                # persistent sample ramp supplies that frame without relying on
+                # MLT's private cache, which native XML saves deliberately omit.
+                fade = ET.SubElement(producer, "filter", {"in": str(source_in), "out": str(source_in)})
+                xml_properties(fade, {"mlt_service": "avfilter.afade", "kdenlive_id": "fadein", "internal_added": 1,
+                                      "av.type": "in", "av.start_time": metadata["timeline_start_frame"] / FPS,
+                                      "av.duration": 1 / FPS})
             if metadata.get("geometry"):
                 x, y, w, h = metadata["geometry"]
                 transform = ET.SubElement(producer, "filter", {"in": "0", "out": str(source_out)})
@@ -758,6 +901,8 @@ def write_kdenlive_project(path: Path, otio_data: Any, project_id: str, project_
     # track opaque, which would hide everything beneath an overlay.  Blend each
     # track above the bottom one onto the accumulated result instead.
     for track_index in range(1, len(playlist_ids)):
+        if tracks[track_index].kind == "Audio":
+            continue
         transition = ET.SubElement(
             tractor,
             "transition",
@@ -883,13 +1028,13 @@ def validate(args: argparse.Namespace) -> int:
                 raise ContractError(f"Kdenlive playlist{track_index} clip #{item_index} is not an entry")
             clip_metadata = plain_metadata(plain_metadata(otio_item.metadata).get("content_os"))
             try:
-                timeline_start = _canonical_parse_seconds(
+                timeline_start = clip_metadata["timeline_start_frame"] / FPS if "timeline_start_frame" in clip_metadata else _canonical_parse_seconds(
                     clip_metadata.get("timeline_start_sec"),
                     path=f"tracks[{track_index}].clips[{item_index}].timeline_start_sec",
                 )
             except EDLContractError as exc:
                 raise ContractError(f"OTIO clip has invalid timeline position metadata: {exc}") from exc
-            if frames(timeline_start) != timeline_cursor:
+            if clip_metadata.get("timeline_start_frame", frames(timeline_start)) != timeline_cursor:
                 raise ContractError(
                     f"Kdenlive playlist{track_index} clip #{item_index} changed timeline position"
                 )
@@ -905,6 +1050,12 @@ def validate(args: argparse.Namespace) -> int:
                 raise ContractError(
                     f"Kdenlive playlist{track_index} clip #{item_index} producer trim does not match OTIO"
                 )
+            if track.kind == "Audio":
+                expected = audio_level_keyframes(plain_data(clip_metadata["audio_segment"]), duration_frames)
+                volume = producer.find("filter/property[@name='level']")
+                resource = producer.find("property[@name='resource']")
+                if volume is None or volume.text != expected or resource is None or resource.text != clip_metadata["candidate_file"]:
+                    raise ContractError("Kdenlive audio source/gain does not match OTIO")
             timeline_cursor += duration_frames
             total_entries += 1
     if not total_entries:
@@ -912,6 +1063,13 @@ def validate(args: argparse.Namespace) -> int:
     tractor_tracks = [t for t in timeline_tractor(root).findall("track") if t.get("producer", "").startswith("track")]
     if len(tractor_tracks) != len(otio_tracks):
         raise ContractError("Kdenlive tractor does not reference every playlist")
+    audio_plan = plain_data(metadata.get("audio_plan"))
+    if audio_plan is not None:
+        from edit_backends.kdenlive_readback import audio_graph_differences
+        _, mismatches = audio_graph_differences(root, args.kdenlive.resolve().parent, audio_plan,
+                                                plain_data(metadata.get('audio_sources', {})))
+        if mismatches:
+            raise ContractError(f"Kdenlive audio graph does not match OTIO: {', '.join(mismatches)}")
     kdenlive = kdenlive_executable()
     if not kdenlive:
         raise ContractError("Kdenlive executable is unavailable; validation is blocked")
@@ -938,9 +1096,24 @@ def validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def generate_edl_project(args: argparse.Namespace) -> int:
+    from edit_backends.kdenlive_render import generate_from_edl
+    result = generate_from_edl(edl_path=args.edl, output_dir=args.output_dir, media_root=args.media_root,
+                               project_id=args.project_id, project_revision=args.project_revision)
+    print(json.dumps(result, ensure_ascii=False))
+    return 0
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description=__doc__)
     commands = result.add_subparsers(dest="command", required=True)
+    edl_command = commands.add_parser("generate-edl", help="从规范剪辑方案生成带混音的可编辑工程")
+    edl_command.add_argument("--project-id", required=True)
+    edl_command.add_argument("--project-revision", required=True, type=int)
+    edl_command.add_argument("--edl", required=True, type=Path)
+    edl_command.add_argument("--output-dir", required=True, type=Path)
+    edl_command.add_argument("--media-root", type=Path)
+    edl_command.set_defaults(func=generate_edl_project)
     generate = commands.add_parser("generate-otio")
     generate.add_argument("--project-id", required=True)
     generate.add_argument("--project-revision", type=int, required=True)

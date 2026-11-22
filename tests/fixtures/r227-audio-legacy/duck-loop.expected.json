@@ -1,0 +1,36 @@
+{
+  "schema_version": "edit_decision_list_v2",
+  "doc_type": "edit_decision_list",
+  "source_script_used": true,
+  "generation_model": "fixture-model",
+  "generation_reasoning": "fixture-reasoning",
+  "clips": [
+    {
+      "slot": 1,
+      "time_range": "0.000-4.000",
+      "source_start_sec": 1.0,
+      "purpose": "开场",
+      "visual_need": "现场",
+      "caption": "字幕",
+      "candidate_files": [
+        "media/scene.wav"
+      ],
+      "edit_note": "顺剪",
+      "source_file": "media/scene.wav"
+    }
+  ],
+  "missing_materials": [],
+  "music": [
+    {
+      "source": "music/one.wav",
+      "timeline_start_sec": 0.0,
+      "timeline_end_sec": 4.0,
+      "source_start_sec": 0.5,
+      "volume": 0.7,
+      "fade_in_sec": 0.2,
+      "fade_out_sec": 0.3,
+      "duck_to": 0.2,
+      "loop": true
+    }
+  ]
+}

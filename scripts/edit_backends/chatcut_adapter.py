@@ -9,7 +9,7 @@ from .chatcut_handoff import prepare_package, execute_handoff
 class Backend:
     def describe(self):
         return {'id': 'chatcut', 'display_name': 'ChatCut', 'license': '闭源',
-            'capability_notes': {'automatic_first_cut':'登录后','transparent_overlay':'待验证','chinese_subtitle_burn_in':'待验证','undo':'软件内'},
+            'capability_notes': {'automatic_first_cut':'登录后','transparent_overlay':'待验证','chinese_subtitle_burn_in':'待验证','undo':'软件内', 'audio_operations':'这项声音处理尚未核实'},
             'capabilities': {
             'automatic_first_cut': True, 'transparent_overlay': False, 'chinese_subtitle_burn_in': False,
             'web_refine': False, 'undo': False, 'read_back': False, 'export_formats': ['mp4']}}

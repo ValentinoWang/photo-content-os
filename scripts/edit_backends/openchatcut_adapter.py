@@ -15,6 +15,7 @@ import time
 import urllib.request
 
 from edit_tools_runtime import ROOT, INSTALL, configured_browser, node_path, read_lock
+from audio_plan import reject_audio_request
 
 from .interface import BackendError, CloseResult, Description, Probe
 from . import kdenlive_render as planning
@@ -393,6 +394,8 @@ class Backend:
                 raise BackendError("render_project_identity_invalid")
             if not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
                 raise BackendError("render_timeout_invalid")
+            if Path(suggestions_path).is_file():
+                reject_audio_request(json.loads(Path(suggestions_path).read_text()), backend="openchatcut")
             availability = self.probe()
             if not availability["runnable"]:
                 raise BackendError(availability["reason"])

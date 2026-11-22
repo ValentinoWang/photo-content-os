@@ -15,6 +15,7 @@ for directory in (SYSTEM, SYSTEM / "scripts"):
         sys.path.insert(0, str(directory))
 from studio.chatcut_mcp import LocalMcpSession
 from media_common import file_sha256
+from audio_plan import audio_operations, UNVERIFIED_AUDIO
 from edit_backends.kdenlive_render import plan_ranges, probe_media
 
 
@@ -62,6 +63,9 @@ def prepare_package(*, source: Path, subtitles: Path, animations: list[Path], su
     manifest = {"contract": "chatcut_local_handoff.v1", "project_id": project_id,
                 "project_revision": project_revision, "status": "awaiting_chatcut_login",
                 "message": "等 ChatCut 登录", "files": entries}
+    operations = audio_operations(raw)
+    if operations:
+        manifest.update(audio_operations=operations, status="audio_unverified", message=UNVERIFIED_AUDIO)
     (output_dir / "handoff.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return manifest
 
@@ -110,7 +114,11 @@ def execute_handoff(package: Path, *, adapter: dict | None = None, live: bool = 
         path = (package / item["path"]).resolve()
         if path.parent != package or file_sha256(path) != item["sha256"]:
             raise ValueError("handoff_integrity_failed")
-    if live:
+    suggestions_entry = next(item for item in manifest["files"] if item["role"] == "suggestions")
+    operations = audio_operations(json.loads((package / suggestions_entry["path"]).read_text()))
+    if operations:
+        result.update(status="audio_unverified", message=UNVERIFIED_AUDIO, audio_operations=operations)
+    if live and not operations:
         try:
             with session_factory() as session:
                 tools = session.list_tools()
