@@ -1,0 +1,55 @@
+{
+  "schema": "dev-shots/v1",
+  "items": {
+    "H-01": {
+      "fingerprint": "ce3a003c7d36d6a0bd7bdae8137c970911e33a9aaa3721f80c5132f8f34a31ea",
+      "screenshots": [
+        {
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-01-c879fa98089953f4923d0cfa70fee3200ffd1b26a42645de373ff183454be0c4.png",
+          "sha256": "c879fa98089953f4923d0cfa70fee3200ffd1b26a42645de373ff183454be0c4",
+          "caption": "配方库一览：124 张、10 类、来源与许可、逐卡与上游一致 · 由配方库索引生成的汇总图",
+          "captured_at": "2026-11-22T15:29:52.070894+00:00"
+        }
+      ]
+    },
+    "H-02": {
+      "fingerprint": "750994aec13261ecf9f6fd81fa300cd59849cbc267046abd4745e8ccd616735b",
+      "screenshots": [
+        {
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-45634f4cca9ebacb295863a32a43c1dbdf37537829ebc7fa2ef0f26635306340.jpg",
+          "sha256": "45634f4cca9ebacb295863a32a43c1dbdf37537829ebc7fa2ef0f26635306340",
+          "caption": "8 张配方样张竖屏版末帧 · 本机渲染后取末帧拼成总图",
+          "captured_at": "2026-11-22T15:29:52.220265+00:00"
+        },
+        {
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-fe5232bca51b968af9be8d2f56154af497ecd197e129559450b2590a537e67e7.jpg",
+          "sha256": "fe5232bca51b968af9be8d2f56154af497ecd197e129559450b2590a537e67e7",
+          "caption": "8 张配方样张横屏版末帧 · 本机渲染后取末帧拼成总图",
+          "captured_at": "2026-11-22T15:29:52.369271+00:00"
+        }
+      ]
+    },
+    "H-03": {
+      "fingerprint": "1cd0c33000f5eba681af1613dd3e4a9f3628f2a8a31ac84da9927e5acddb308d",
+      "screenshots": [
+        {
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-03-1ecf4c9884072b9cad0d5e3b6b4fc5d90a395e6058530ff5993ebc944869ec80.jpg",
+          "sha256": "1ecf4c9884072b9cad0d5e3b6b4fc5d90a395e6058530ff5993ebc944869ec80",
+          "caption": "「产品界面」风格样张末帧 · 本机渲染样张取末帧",
+          "captured_at": "2026-11-22T15:29:52.531458+00:00"
+        }
+      ]
+    },
+    "H-04": {
+      "fingerprint": "bdfd56f088dbed55acf470b2ac43204e2e79597ce3851300b329dcfeeaa7ba0d",
+      "screenshots": [
+        {
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-04-b1d7e867d105f5352fad0326153d22f7aa1db42998503d73d8e88bcabd980ff7.jpg",
+          "sha256": "b1d7e867d105f5352fad0326153d22f7aa1db42998503d73d8e88bcabd980ff7",
+          "caption": "宣传片小样每秒一帧，三镜各 3 小节在重拍上切换 · 成片每秒抽一帧拼成联系表",
+          "captured_at": "2026-11-22T15:29:52.712352+00:00"
+        }
+      ]
+    }
+  }
+}
