@@ -98,3 +98,11 @@ def test_clip_path_follows_index(monkeypatch, tmp_path):
     assert recipe_library.clip_path("blur-slide") == tmp_path / "blur-slide.mp4"
     no_clip = next(e["id"] for e in recipe_library.load_index() if not e["clip"])
     assert recipe_library.clip_path(no_clip) is None
+
+
+def test_build_index_reads_only_category_cards():
+    # demos/README.md and upstream/*.md are upstream docs, not recipe cards.
+    entries = recipe_library.build_index()
+    assert len(entries) == 124
+    assert {entry["category"] for entry in entries}.isdisjoint(recipe_library.NON_CATEGORY_DIRS)
+

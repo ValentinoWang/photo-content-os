@@ -8,6 +8,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent / "shot_recipes"
 MEDIA = ROOT / "media"
+# Top-level folders that are not recipe categories: media, upstream demo sources, upstream code kept verbatim.
+NON_CATEGORY_DIRS = {"demos", "media", "upstream"}
 CLIPS_MANIFEST = MEDIA / "clips.json"
 # Upstream motion previews are 62 MB, so they live outside git; fetch-clips restores them by SHA-256.
 CLIP_DIR = Path(os.environ.get("SHOT_RECIPE_CLIP_DIR", Path.home() / ".photo-content-os/media/shot_recipes/clips"))
@@ -207,7 +209,7 @@ def posters_from_renders(render_dir):
 
 
 def build_index():
-    cards = sorted(ROOT.glob('*/*.md'))
+    cards = sorted(path for path in ROOT.glob('*/*.md') if path.parent.name not in NON_CATEGORY_DIRS)
     errors, entries = [], []
     for path in cards:
         try:
