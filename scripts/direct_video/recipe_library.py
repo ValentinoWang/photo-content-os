@@ -2,10 +2,15 @@
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent / "shot_recipes"
+MEDIA = ROOT / "media"
+CLIPS_MANIFEST = MEDIA / "clips.json"
+# Upstream motion previews are 62 MB, so they live outside git; fetch-clips restores them by SHA-256.
+CLIP_DIR = Path(os.environ.get("SHOT_RECIPE_CLIP_DIR", Path.home() / ".photo-content-os/media/shot_recipes/clips"))
 UPSTREAM_COMMIT = "3ac67b75dd0b3bc2fd807c17f6b7ce35373eef3d"
 REQUIRED_FIELDS = {
     "name": "id",
@@ -130,6 +135,47 @@ def read_card(path, category):
     return entry
 
 
+def load_clips():
+    return json.loads(CLIPS_MANIFEST.read_text(encoding="utf-8"))
+
+
+def media_fields(recipe_id, category, clips):
+    """Upstream gallery poster first; a mid-clip frame only when upstream ships no poster."""
+    poster, source = MEDIA / "posters" / f"{recipe_id}.jpg", "upstream"
+    if not poster.is_file():
+        poster, source = MEDIA / "posters" / f"{recipe_id}.from-clip.jpg", "clip"
+    demo = ROOT / "demos" / category / recipe_id
+    return {
+        "poster": poster.relative_to(ROOT).as_posix() if poster.is_file() else None,
+        "poster_source": source if poster.is_file() else None,
+        "clip": clips[recipe_id]["file"] if recipe_id in clips else None,
+        "demo": demo.relative_to(ROOT).as_posix() if demo.is_dir() else None,
+    }
+
+
+def clip_path(recipe_id):
+    """Local path of the upstream preview clip, or None when the card has none."""
+    clip = get(recipe_id)["clip"]
+    return CLIP_DIR / clip if clip else None
+
+
+def fetch_clips():
+    clips = load_clips()["clips"]
+    CLIP_DIR.mkdir(parents=True, exist_ok=True)
+    def ok(item):
+        path = CLIP_DIR / item["file"]
+        return path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
+    missing = [item for item in clips.values() if not ok(item)]
+    if missing:
+        args = [arg for item in missing for arg in ("-p", item["file"])]
+        subprocess.run(["gh", "release", "download", "gallery-media", "--repo", "Vincentwei1021/video-shotcraft",
+                        "--dir", str(CLIP_DIR), "--clobber", *args], check=True, timeout=1800)
+    bad = [item["file"] for item in clips.values() if not ok(item)]
+    if bad:
+        raise ValueError(f"clip SHA-256 mismatch after download: {bad}")
+    print(f"OK: {len(clips)} clips in {CLIP_DIR} ({len(missing)} downloaded)")
+
+
 def build_index():
     cards = sorted(ROOT.glob('*/*.md'))
     errors, entries = [], []
@@ -144,6 +190,12 @@ def build_index():
         raise ValueError('expected 124 cards in 10 categories')
     if len({item['id'] for item in entries}) != len(entries):
         raise ValueError('duplicate recipe id')
+    clips = load_clips()["clips"]
+    unknown = set(clips) - {item["id"] for item in entries}
+    if unknown:
+        raise ValueError(f"clips.json lists unknown recipes: {sorted(unknown)}")
+    for item in entries:
+        item.update(media_fields(item["id"], item["category"], clips))
     return entries
 
 
@@ -189,6 +241,18 @@ def check(upstream):
             f"extra {sorted(local_paths - upstream_paths)}"
         )
     files = [(ROOT / path, upstream / path) for path in sorted(local_paths)]
+    gallery = repo / "gallery" / "media" / "poster"
+    for entry in entries:
+        if entry["poster_source"] == "upstream":
+            files.append((ROOT / entry["poster"], gallery / f"{entry['id']}.jpg"))
+        if entry["demo"]:
+            local_demo = ROOT / entry["demo"]
+            source_demo = repo / "demos" / entry["category"] / entry["id"]
+            names = {p.relative_to(local_demo).as_posix() for p in local_demo.rglob("*") if p.is_file()}
+            if names != {p.relative_to(source_demo).as_posix() for p in source_demo.rglob("*") if p.is_file()}:
+                raise ValueError(f"demo file set differs from upstream: {entry['demo']}")
+            files.extend((local_demo / name, source_demo / name) for name in sorted(names))
+    files.append((ROOT / "demos" / "LICENSE-video-shotcraft.txt", repo / "LICENSE"))
     files.extend((
         (ROOT / "ATTRIBUTION.md", upstream / "ATTRIBUTION.md"),
         (ROOT / "LICENSE-video-shotcraft.txt", repo / "LICENSE"),
@@ -198,7 +262,10 @@ def check(upstream):
             raise ValueError(f"upstream SHA-256 mismatch: {local.relative_to(ROOT)}")
 
     missing_tags = sum(entry["tags_source"] == "missing" for entry in entries)
-    print(f"OK: {len(entries)} cards, 10 categories; cards, attribution and license match upstream SHA-256")
+    print(f"OK: {len(entries)} cards, 10 categories; cards, posters, demos, attribution and license match upstream SHA-256")
+    print(f"Posters: {sum(e['poster_source'] == 'upstream' for e in entries)} upstream, "
+          f"{sum(e['poster_source'] == 'clip' for e in entries)} from clip; clips {sum(bool(e['clip']) for e in entries)}; "
+          f"demos {sum(bool(e['demo']) for e in entries)}")
     print(f"Tags: {len(entries) - missing_tags} from upstream, {missing_tags} missing")
 
 
@@ -206,9 +273,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--upstream', type=Path)
+    parser.add_argument('--fetch-clips', action='store_true', help='download upstream preview clips into SHOT_RECIPE_CLIP_DIR')
     args = parser.parse_args()
     try:
-        if args.check:
+        if args.fetch_clips:
+            fetch_clips()
+        elif args.check:
             if args.upstream is None:
                 parser.error('--check requires --upstream')
             check(args.upstream)

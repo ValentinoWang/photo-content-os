@@ -16,16 +16,10 @@
       "fingerprint": "750994aec13261ecf9f6fd81fa300cd59849cbc267046abd4745e8ccd616735b",
       "screenshots": [
         {
-          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-725d72fa85cba5d2bea3b1ee095de0cbf6ea9cba8358ace16d73d89a652c6968.jpg",
-          "sha256": "725d72fa85cba5d2bea3b1ee095de0cbf6ea9cba8358ace16d73d89a652c6968",
-          "caption": "8 张配方样张竖屏版末帧（重画后） · 本机渲染后取末帧拼成总图",
-          "captured_at": "2026-11-22T16:35:51.129230+00:00"
-        },
-        {
-          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-0670303927d13c278349c1bcc55f1167883ce09f22ccd26c8945a1ddf1f80383.jpg",
-          "sha256": "0670303927d13c278349c1bcc55f1167883ce09f22ccd26c8945a1ddf1f80383",
-          "caption": "8 张配方样张横屏版末帧（重画后） · 本机渲染后取末帧拼成总图",
-          "captured_at": "2026-11-22T16:35:51.291272+00:00"
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-dc609cabdb428f30ff516a2a8a9887b70f539253254a0b9f4040cf838b0cf6c6.jpg",
+          "sha256": "dc609cabdb428f30ff516a2a8a9887b70f539253254a0b9f4040cf838b0cf6c6",
+          "caption": "8 张配方卡的封面（原项目画廊封面，原项目没有的 2 张用本机渲染样张） · 由配方索引的封面字段拼成总图",
+          "captured_at": "2026-11-22T16:52:17.983767+00:00"
         }
       ]
     },

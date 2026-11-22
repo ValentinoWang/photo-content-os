@@ -17,7 +17,7 @@ def test_index_count_fields_and_unique_ids():
     for entry in entries:
         assert set(entry) == {
             "id", "category", "path", "summary", "use", "duration", "energy",
-            "tags", "tags_source", "portrait_fit",
+            "tags", "tags_source", "portrait_fit", "poster", "poster_source", "clip", "demo",
         }
         assert (recipe_library.ROOT / entry["path"]).is_file()
         assert entry["portrait_fit"] is True or entry["portrait_fit"] is None
@@ -26,6 +26,20 @@ def test_index_count_fields_and_unique_ids():
     }
     for entry in entries:
         assert bool(entry["tags"]) == (entry["tags_source"] == "upstream")
+
+    # Every card with an upstream poster or clip shows it; upstream posters win over clip frames.
+    assert Counter(entry["poster_source"] for entry in entries) == {"upstream": 50, "clip": 37, None: 37}
+    for entry in entries:
+        assert (entry["poster"] is None) == (entry["poster_source"] is None)
+        if entry["poster"]:
+            assert (recipe_library.ROOT / entry["poster"]).is_file()
+        if entry["poster_source"] == "clip":
+            assert entry["clip"]
+        if entry["demo"]:
+            assert (recipe_library.ROOT / entry["demo"]).is_dir()
+    clips = recipe_library.load_clips()["clips"]
+    assert {e["id"] for e in entries if e["clip"]} == set(clips)
+    assert all(re.fullmatch(r"[0-9a-f]{64}", item["sha256"]) for item in clips.values())
 
     readme = (recipe_library.ROOT / "README.md").read_text(encoding="utf-8")
     documented = re.findall(r"^\| \[[^\]]+\]\(([^)]+\.md)\) \|", readme, flags=re.MULTILINE)
@@ -75,3 +89,10 @@ def test_tags_preserve_their_source(tmp_path, tags, expected, source):
     assert entry["tags"] == expected
     assert entry["tags_source"] == source
     assert entry["portrait_fit"] is None
+
+
+def test_clip_path_follows_index(monkeypatch, tmp_path):
+    monkeypatch.setattr(recipe_library, "CLIP_DIR", tmp_path)
+    assert recipe_library.clip_path("blur-slide") == tmp_path / "blur-slide.mp4"
+    no_clip = next(e["id"] for e in recipe_library.load_index() if not e["clip"])
+    assert recipe_library.clip_path(no_clip) is None

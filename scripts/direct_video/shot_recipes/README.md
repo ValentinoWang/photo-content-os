@@ -1,6 +1,16 @@
 # 镜头配方库
 
-来源：Vincentwei1021/video-shotcraft，提交 `3ac67b75dd0b3bc2fd807c17f6b7ce35373eef3d`，Apache-2.0。只搬手法卡，不搬代码和素材。卡片内的路径指向上游仓库。
+来源：Vincentwei1021/video-shotcraft，提交 `3ac67b75dd0b3bc2fd807c17f6b7ce35373eef3d`，Apache-2.0。手法卡、画廊封面、动画源码原样搬入，`recipe_library.py --check --upstream <克隆>/references/shots` 逐字节核对。
+
+## 封面、样片、动画源码
+
+| 字段 | 内容 | 位置 |
+| --- | --- | --- |
+| `poster` / `poster_source` | 上游画廊封面 50 张（`upstream`）；上游没封面但有样片的 37 张，取样片中间一帧（`clip`）；其余 37 张为空 | `media/posters/` |
+| `clip` | 上游画廊样片 87 个，共 62 MB，不进 git；`python3 scripts/direct_video/recipe_library.py --fetch-clips` 按 `media/clips.json` 的 SHA-256 下载到 `~/.photo-content-os/media/shot_recipes/clips/`（可用 `SHOT_RECIPE_CLIP_DIR` 改） | 本机 |
+| `demo` | 上游 Remotion 动画源码，122 张卡有，只作写镜头时的参照，不进渲染管线 | `demos/<类别>/<id>/` |
+
+上游画廊的样片有一部分比封面旧（例如 blur-slide 的样片还是占位文案），选镜以封面为准。
 
 ## 类别数量
 

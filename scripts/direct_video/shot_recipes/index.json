@@ -9,7 +9,11 @@
     "path": "camera/basic-3d-scene.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/basic-3d-scene.jpg",
+    "poster_source": "upstream",
+    "clip": "basic-3d-scene.mp4",
+    "demo": "demos/camera/basic-3d-scene"
   },
   {
     "id": "crash-zoom-punch",
@@ -23,7 +27,11 @@
       "effects"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/crash-zoom-punch.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "crash-zoom-punch.mp4",
+    "demo": "demos/camera/crash-zoom-punch"
   },
   {
     "id": "cursor-flyover",
@@ -35,7 +43,11 @@
     "path": "camera/cursor-flyover.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/cursor-flyover.jpg",
+    "poster_source": "upstream",
+    "clip": "cursor-flyover.mp4",
+    "demo": "demos/camera/cursor-flyover"
   },
   {
     "id": "depth-layer-moves",
@@ -47,7 +59,11 @@
     "path": "camera/depth-layer-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/camera/depth-layer-moves"
   },
   {
     "id": "graze-face-tour",
@@ -61,7 +77,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/graze-face-tour.jpg",
+    "poster_source": "upstream",
+    "clip": "graze-face-tour.mp4",
+    "demo": "demos/camera/graze-face-tour"
   },
   {
     "id": "overhead-camera-moves",
@@ -76,7 +96,11 @@
       "transition"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/camera/overhead-camera-moves"
   },
   {
     "id": "space-camera-moves",
@@ -88,7 +112,11 @@
     "path": "camera/space-camera-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/camera/space-camera-moves"
   },
   {
     "id": "steep-tilt-glide",
@@ -102,7 +130,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/steep-tilt-glide.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "steep-tilt-glide.mp4",
+    "demo": "demos/camera/steep-tilt-glide"
   },
   {
     "id": "tension-camera-moves",
@@ -114,7 +146,11 @@
     "path": "camera/tension-camera-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/camera/tension-camera-moves"
   },
   {
     "id": "terminal-3d",
@@ -126,7 +162,11 @@
     "path": "camera/terminal-3d.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/terminal-3d.jpg",
+    "poster_source": "upstream",
+    "clip": "terminal-3d.mp4",
+    "demo": "demos/camera/terminal-3d"
   },
   {
     "id": "before-after-slider-scrub",
@@ -140,7 +180,11 @@
       "interaction"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/before-after-slider-scrub.jpg",
+    "poster_source": "upstream",
+    "clip": "before-after-slider-scrub.mp4",
+    "demo": "demos/data/before-after-slider-scrub"
   },
   {
     "id": "chart-live-moves",
@@ -152,7 +196,11 @@
     "path": "data/chart-live-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/data/chart-live-moves"
   },
   {
     "id": "gauge-readout-moves",
@@ -164,7 +212,11 @@
     "path": "data/gauge-readout-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/data/gauge-readout-moves"
   },
   {
     "id": "scroll-brake-moves",
@@ -178,7 +230,11 @@
       "rhythm"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/data/scroll-brake-moves"
   },
   {
     "id": "timeline-travel",
@@ -192,7 +248,11 @@
       "camera"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/timeline-travel.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "timeline-travel.mp4",
+    "demo": "demos/data/timeline-travel"
   },
   {
     "id": "assemble-then-type-flyin",
@@ -204,7 +264,11 @@
     "path": "effects/assemble-then-type-flyin.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/assemble-then-type-flyin.jpg",
+    "poster_source": "upstream",
+    "clip": "assemble-then-type-flyin.mp4",
+    "demo": "demos/effects/assemble-then-type-flyin"
   },
   {
     "id": "aurora-bloom-bg-flip",
@@ -216,7 +280,11 @@
     "path": "effects/aurora-bloom-bg-flip.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/aurora-bloom-bg-flip.jpg",
+    "poster_source": "upstream",
+    "clip": "aurora-bloom-bg-flip.mp4",
+    "demo": "demos/effects/aurora-bloom-bg-flip"
   },
   {
     "id": "brand-frame-snap",
@@ -230,7 +298,11 @@
       "transition"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/brand-frame-snap.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "brand-frame-snap.mp4",
+    "demo": "demos/effects/brand-frame-snap"
   },
   {
     "id": "fui-hud-moves",
@@ -244,7 +316,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/effects/fui-hud-moves"
   },
   {
     "id": "glow-flyline-moves",
@@ -258,7 +334,11 @@
       "data"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/effects/glow-flyline-moves"
   },
   {
     "id": "icon-performance-moves",
@@ -272,7 +352,11 @@
       "interaction"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/effects/icon-performance-moves"
   },
   {
     "id": "impact-feedback",
@@ -284,7 +368,11 @@
     "path": "effects/impact-feedback.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/effects/impact-feedback"
   },
   {
     "id": "light-play-moves",
@@ -298,7 +386,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/effects/light-play-moves"
   },
   {
     "id": "radial-ripple-phone-chips",
@@ -310,7 +402,11 @@
     "path": "effects/radial-ripple-phone-chips.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/radial-ripple-phone-chips.jpg",
+    "poster_source": "upstream",
+    "clip": "radial-ripple-phone-chips.mp4",
+    "demo": "demos/effects/radial-ripple-phone-chips"
   },
   {
     "id": "riso-print-hits",
@@ -324,7 +420,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/effects/riso-print-hits"
   },
   {
     "id": "scan-bracket-sweep",
@@ -336,7 +436,11 @@
     "path": "effects/scan-bracket-sweep.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/scan-bracket-sweep.jpg",
+    "poster_source": "upstream",
+    "clip": "scan-bracket-sweep.mp4",
+    "demo": "demos/effects/scan-bracket-sweep"
   },
   {
     "id": "scanline-annotate-focus",
@@ -348,7 +452,11 @@
     "path": "effects/scanline-annotate-focus.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/scanline-annotate-focus.jpg",
+    "poster_source": "upstream",
+    "clip": "scanline-annotate-focus.mp4",
+    "demo": "demos/effects/scanline-annotate-focus"
   },
   {
     "id": "scanline-assemble-flyin",
@@ -360,7 +468,11 @@
     "path": "effects/scanline-assemble-flyin.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/scanline-assemble-flyin.jpg",
+    "poster_source": "upstream",
+    "clip": "scanline-assemble-flyin.mp4",
+    "demo": "demos/effects/scanline-assemble-flyin"
   },
   {
     "id": "slam-entrance-moves",
@@ -374,7 +486,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/effects/slam-entrance-moves"
   },
   {
     "id": "spotlight-sweep-moves",
@@ -389,7 +505,11 @@
       "transition"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/effects/spotlight-sweep-moves"
   },
   {
     "id": "autolayout-gap-dial",
@@ -401,7 +521,11 @@
     "path": "interaction/autolayout-gap-dial.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/autolayout-gap-dial.jpg",
+    "poster_source": "upstream",
+    "clip": "autolayout-gap-dial.mp4",
+    "demo": "demos/interaction/autolayout-gap-dial"
   },
   {
     "id": "canvas-materialize-moves",
@@ -415,7 +539,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/interaction/canvas-materialize-moves"
   },
   {
     "id": "chip-grid-single-select-blackout",
@@ -427,7 +555,11 @@
     "path": "interaction/chip-grid-single-select-blackout.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/chip-grid-single-select-blackout.jpg",
+    "poster_source": "upstream",
+    "clip": "chip-grid-single-select-blackout.mp4",
+    "demo": "demos/interaction/chip-grid-single-select-blackout"
   },
   {
     "id": "collab-cursor-moves",
@@ -439,7 +571,11 @@
     "path": "interaction/collab-cursor-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/interaction/collab-cursor-moves"
   },
   {
     "id": "glass-pill-dictation-typing",
@@ -451,7 +587,11 @@
     "path": "interaction/glass-pill-dictation-typing.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/glass-pill-dictation-typing.jpg",
+    "poster_source": "upstream",
+    "clip": "glass-pill-dictation-typing.mp4",
+    "demo": "demos/interaction/glass-pill-dictation-typing"
   },
   {
     "id": "hashtag-to-pill-materialize",
@@ -465,7 +605,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/hashtag-to-pill-materialize.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "hashtag-to-pill-materialize.mp4",
+    "demo": "demos/interaction/hashtag-to-pill-materialize"
   },
   {
     "id": "picker-carousel-feature-cycle",
@@ -477,7 +621,11 @@
     "path": "interaction/picker-carousel-feature-cycle.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/picker-carousel-feature-cycle.jpg",
+    "poster_source": "upstream",
+    "clip": "picker-carousel-feature-cycle.mp4",
+    "demo": "demos/interaction/picker-carousel-feature-cycle"
   },
   {
     "id": "segmented-thumb-hero",
@@ -489,7 +637,11 @@
     "path": "interaction/segmented-thumb-hero.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/segmented-thumb-hero.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "segmented-thumb-hero.mp4",
+    "demo": "demos/interaction/segmented-thumb-hero"
   },
   {
     "id": "theme-switch-moves",
@@ -501,7 +653,11 @@
     "path": "interaction/theme-switch-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/interaction/theme-switch-moves"
   },
   {
     "id": "type-and-filter",
@@ -513,7 +669,11 @@
     "path": "interaction/type-and-filter.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/type-and-filter.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "type-and-filter.mp4",
+    "demo": "demos/interaction/type-and-filter"
   },
   {
     "id": "voice-waveform-live",
@@ -525,7 +685,11 @@
     "path": "interaction/voice-waveform-live.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/voice-waveform-live.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "voice-waveform-live.mp4",
+    "demo": "demos/interaction/voice-waveform-live"
   },
   {
     "id": "brand-ink-open",
@@ -539,7 +703,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/brand-ink-open.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "brand-ink-open.mp4",
+    "demo": null
   },
   {
     "id": "crane-rise-reveal",
@@ -554,7 +722,11 @@
       "data"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/crane-rise-reveal.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "crane-rise-reveal.mp4",
+    "demo": "demos/opening/crane-rise-reveal"
   },
   {
     "id": "dataviz-landscape-open",
@@ -569,7 +741,11 @@
       "camera"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/dataviz-landscape-open.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "dataviz-landscape-open.mp4",
+    "demo": "demos/opening/dataviz-landscape-open"
   },
   {
     "id": "fracture",
@@ -581,7 +757,11 @@
     "path": "opening/fracture.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/fracture.jpg",
+    "poster_source": "upstream",
+    "clip": "fracture.mp4",
+    "demo": "demos/opening/fracture"
   },
   {
     "id": "icon-field-colorize",
@@ -596,7 +776,11 @@
       "outro"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/icon-field-colorize.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "icon-field-colorize.mp4",
+    "demo": "demos/opening/icon-field-colorize"
   },
   {
     "id": "letterspace-materialize",
@@ -611,7 +795,11 @@
       "outro"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/letterspace-materialize.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "letterspace-materialize.mp4",
+    "demo": "demos/opening/letterspace-materialize"
   },
   {
     "id": "magician-card-flourish",
@@ -626,7 +814,11 @@
       "effects"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/magician-card-flourish.jpg",
+    "poster_source": "upstream",
+    "clip": "magician-card-flourish.mp4",
+    "demo": "demos/opening/magician-card-flourish"
   },
   {
     "id": "orbit-ring-title-open",
@@ -640,7 +832,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/orbit-ring-title-open.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "orbit-ring-title-open.mp4",
+    "demo": "demos/opening/orbit-ring-title-open"
   },
   {
     "id": "spotlight-hero-card",
@@ -655,7 +851,11 @@
       "camera"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/spotlight-hero-card.jpg",
+    "poster_source": "upstream",
+    "clip": "spotlight-hero-card.mp4",
+    "demo": "demos/opening/spotlight-hero-card"
   },
   {
     "id": "stroke-segment-build",
@@ -669,7 +869,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/stroke-segment-build.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "stroke-segment-build.mp4",
+    "demo": "demos/opening/stroke-segment-build"
   },
   {
     "id": "text-as-mask",
@@ -683,7 +887,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/text-as-mask.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "text-as-mask.mp4",
+    "demo": "demos/opening/text-as-mask"
   },
   {
     "id": "grain-dissolve",
@@ -695,7 +903,11 @@
     "path": "outro/grain-dissolve.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/grain-dissolve.jpg",
+    "poster_source": "upstream",
+    "clip": "grain-dissolve.mp4",
+    "demo": "demos/outro/grain-dissolve"
   },
   {
     "id": "logo-shrink-wordmark-lockup",
@@ -707,7 +919,11 @@
     "path": "outro/logo-shrink-wordmark-lockup.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/logo-shrink-wordmark-lockup.jpg",
+    "poster_source": "upstream",
+    "clip": "logo-shrink-wordmark-lockup.mp4",
+    "demo": "demos/outro/logo-shrink-wordmark-lockup"
   },
   {
     "id": "neon-triple-marquee",
@@ -721,7 +937,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/neon-triple-marquee.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "neon-triple-marquee.mp4",
+    "demo": "demos/outro/neon-triple-marquee"
   },
   {
     "id": "outro-group-photo-launch",
@@ -733,7 +953,11 @@
     "path": "outro/outro-group-photo-launch.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/outro-group-photo-launch.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "outro-group-photo-launch.mp4",
+    "demo": "demos/outro/outro-group-photo-launch"
   },
   {
     "id": "ui-strip-away-outro",
@@ -745,7 +969,11 @@
     "path": "outro/ui-strip-away-outro.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/ui-strip-away-outro.jpg",
+    "poster_source": "upstream",
+    "clip": "ui-strip-away-outro.mp4",
+    "demo": "demos/outro/ui-strip-away-outro"
   },
   {
     "id": "ui-to-brand-morph",
@@ -757,7 +985,11 @@
     "path": "outro/ui-to-brand-morph.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/outro/ui-to-brand-morph"
   },
   {
     "id": "beat-cut-moves",
@@ -771,7 +1003,11 @@
       "transition"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/rhythm/beat-cut-moves"
   },
   {
     "id": "beat-step-list-theme-cycle",
@@ -785,7 +1021,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/beat-step-list-theme-cycle.jpg",
+    "poster_source": "upstream",
+    "clip": "beat-step-list-theme-cycle.mp4",
+    "demo": "demos/rhythm/beat-step-list-theme-cycle"
   },
   {
     "id": "panel-grid-moves",
@@ -799,7 +1039,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/rhythm/panel-grid-moves"
   },
   {
     "id": "quad-split-parallel-scenes",
@@ -811,7 +1055,11 @@
     "path": "rhythm/quad-split-parallel-scenes.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/quad-split-parallel-scenes.jpg",
+    "poster_source": "upstream",
+    "clip": "quad-split-parallel-scenes.mp4",
+    "demo": "demos/rhythm/quad-split-parallel-scenes"
   },
   {
     "id": "rhythm-interrupt-moves",
@@ -823,7 +1071,11 @@
     "path": "rhythm/rhythm-interrupt-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/rhythm/rhythm-interrupt-moves"
   },
   {
     "id": "sakuga-timing-shift",
@@ -837,7 +1089,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/sakuga-timing-shift.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "sakuga-timing-shift.mp4",
+    "demo": "demos/rhythm/sakuga-timing-shift"
   },
   {
     "id": "speed-ramp-freeze",
@@ -849,7 +1105,11 @@
     "path": "rhythm/speed-ramp-freeze.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/rhythm/speed-ramp-freeze"
   },
   {
     "id": "trailer-grammar-moves",
@@ -864,7 +1124,11 @@
       "transition"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/rhythm/trailer-grammar-moves"
   },
   {
     "id": "bottom-push-stack-wipe",
@@ -876,7 +1140,11 @@
     "path": "transition/bottom-push-stack-wipe.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/bottom-push-stack-wipe.jpg",
+    "poster_source": "upstream",
+    "clip": "bottom-push-stack-wipe.mp4",
+    "demo": "demos/transition/bottom-push-stack-wipe"
   },
   {
     "id": "card-flip-reveal",
@@ -890,7 +1158,11 @@
       "data"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/card-flip-reveal.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "card-flip-reveal.mp4",
+    "demo": "demos/transition/card-flip-reveal"
   },
   {
     "id": "card-flock-tumble",
@@ -902,7 +1174,11 @@
     "path": "transition/card-flock-tumble.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/card-flock-tumble.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "card-flock-tumble.mp4",
+    "demo": "demos/transition/card-flock-tumble"
   },
   {
     "id": "circle-match-iris",
@@ -914,7 +1190,11 @@
     "path": "transition/circle-match-iris.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/circle-match-iris.jpg",
+    "poster_source": "upstream",
+    "clip": "circle-match-iris.mp4",
+    "demo": "demos/transition/circle-match-iris"
   },
   {
     "id": "gradient-transition",
@@ -926,7 +1206,11 @@
     "path": "transition/gradient-transition.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/gradient-transition.jpg",
+    "poster_source": "upstream",
+    "clip": "gradient-transition.mp4",
+    "demo": "demos/transition/gradient-transition"
   },
   {
     "id": "line-carry-transition",
@@ -940,7 +1224,11 @@
       "camera"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/line-carry-transition.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "line-carry-transition.mp4",
+    "demo": "demos/transition/line-carry-transition"
   },
   {
     "id": "mosaic-reframe",
@@ -952,7 +1240,11 @@
     "path": "transition/mosaic-reframe.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/mosaic-reframe.jpg",
+    "poster_source": "upstream",
+    "clip": "mosaic-reframe.mp4",
+    "demo": "demos/transition/mosaic-reframe"
   },
   {
     "id": "page-turn-transitions",
@@ -964,7 +1256,11 @@
     "path": "transition/page-turn-transitions.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/transition/page-turn-transitions"
   },
   {
     "id": "print-texture-transitions",
@@ -976,7 +1272,11 @@
     "path": "transition/print-texture-transitions.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/transition/print-texture-transitions"
   },
   {
     "id": "shot-transitions",
@@ -988,7 +1288,11 @@
     "path": "transition/shot-transitions.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/transition/shot-transitions"
   },
   {
     "id": "tear-streak-transitions",
@@ -1002,7 +1306,11 @@
       "effects"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/transition/tear-streak-transitions"
   },
   {
     "id": "transition-hidden-cut",
@@ -1014,7 +1322,11 @@
     "path": "transition/transition-hidden-cut.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/transition/transition-hidden-cut"
   },
   {
     "id": "transition-travel",
@@ -1028,7 +1340,11 @@
       "camera"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/transition/transition-travel"
   },
   {
     "id": "white-flash-logo-simplify-cut",
@@ -1040,7 +1356,11 @@
     "path": "transition/white-flash-logo-simplify-cut.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/white-flash-logo-simplify-cut.jpg",
+    "poster_source": "upstream",
+    "clip": "white-flash-logo-simplify-cut.mp4",
+    "demo": "demos/transition/white-flash-logo-simplify-cut"
   },
   {
     "id": "wipe-transitions",
@@ -1052,7 +1372,11 @@
     "path": "transition/wipe-transitions.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/transition/wipe-transitions"
   },
   {
     "id": "blur-slide",
@@ -1064,7 +1388,11 @@
     "path": "typography/blur-slide.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/blur-slide.jpg",
+    "poster_source": "upstream",
+    "clip": "blur-slide.mp4",
+    "demo": "demos/typography/blur-slide"
   },
   {
     "id": "brace-expand",
@@ -1076,7 +1404,11 @@
     "path": "typography/brace-expand.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/brace-expand.jpg",
+    "poster_source": "upstream",
+    "clip": "brace-expand.mp4",
+    "demo": "demos/typography/brace-expand"
   },
   {
     "id": "countdown-arc-scatter",
@@ -1088,7 +1420,11 @@
     "path": "typography/countdown-arc-scatter.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/countdown-arc-scatter.jpg",
+    "poster_source": "upstream",
+    "clip": "countdown-arc-scatter.mp4",
+    "demo": "demos/typography/countdown-arc-scatter"
   },
   {
     "id": "document-typewriter-reveal",
@@ -1102,7 +1438,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/document-typewriter-reveal.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "document-typewriter-reveal.mp4",
+    "demo": null
   },
   {
     "id": "flying-words",
@@ -1114,7 +1454,11 @@
     "path": "typography/flying-words.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/flying-words.jpg",
+    "poster_source": "upstream",
+    "clip": "flying-words.mp4",
+    "demo": "demos/typography/flying-words"
   },
   {
     "id": "glitch-cycle",
@@ -1126,7 +1470,11 @@
     "path": "typography/glitch-cycle.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/glitch-cycle.jpg",
+    "poster_source": "upstream",
+    "clip": "glitch-cycle.mp4",
+    "demo": "demos/typography/glitch-cycle"
   },
   {
     "id": "gradient-word-sweep",
@@ -1140,7 +1488,11 @@
       "effects"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/gradient-word-sweep.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "gradient-word-sweep.mp4",
+    "demo": "demos/typography/gradient-word-sweep"
   },
   {
     "id": "lead-word-zoom-assemble",
@@ -1154,7 +1506,11 @@
       "opening"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/lead-word-zoom-assemble.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "lead-word-zoom-assemble.mp4",
+    "demo": "demos/typography/lead-word-zoom-assemble"
   },
   {
     "id": "marker-underline-title",
@@ -1166,7 +1522,11 @@
     "path": "typography/marker-underline-title.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/marker-underline-title.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "marker-underline-title.mp4",
+    "demo": "demos/typography/marker-underline-title"
   },
   {
     "id": "outline-word-fill",
@@ -1178,7 +1538,11 @@
     "path": "typography/outline-word-fill.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/outline-word-fill.jpg",
+    "poster_source": "upstream",
+    "clip": "outline-word-fill.mp4",
+    "demo": "demos/typography/outline-word-fill"
   },
   {
     "id": "paper-title-card",
@@ -1193,7 +1557,11 @@
       "rhythm"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/paper-title-card.jpg",
+    "poster_source": "upstream",
+    "clip": "paper-title-card.mp4",
+    "demo": "demos/typography/paper-title-card"
   },
   {
     "id": "pill-chip-slot-cycle-handled",
@@ -1205,7 +1573,11 @@
     "path": "typography/pill-chip-slot-cycle-handled.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/pill-chip-slot-cycle-handled.jpg",
+    "poster_source": "upstream",
+    "clip": "pill-chip-slot-cycle-handled.mp4",
+    "demo": "demos/typography/pill-chip-slot-cycle-handled"
   },
   {
     "id": "pill-slot-cycle",
@@ -1217,7 +1589,11 @@
     "path": "typography/pill-slot-cycle.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/pill-slot-cycle.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "pill-slot-cycle.mp4",
+    "demo": "demos/typography/pill-slot-cycle"
   },
   {
     "id": "text-column-converge",
@@ -1231,7 +1607,11 @@
       "outro"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/text-column-converge.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "text-column-converge.mp4",
+    "demo": "demos/typography/text-column-converge"
   },
   {
     "id": "title-demote-to-label",
@@ -1245,7 +1625,11 @@
       "transition"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/title-demote-to-label.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "title-demote-to-label.mp4",
+    "demo": "demos/typography/title-demote-to-label"
   },
   {
     "id": "type-assembly-moves",
@@ -1257,7 +1641,11 @@
     "path": "typography/type-assembly-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/typography/type-assembly-moves"
   },
   {
     "id": "type-entrance-moves",
@@ -1269,7 +1657,11 @@
     "path": "typography/type-entrance-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/typography/type-entrance-moves"
   },
   {
     "id": "type-rhythm-sync",
@@ -1283,7 +1675,11 @@
       "rhythm"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/typography/type-rhythm-sync"
   },
   {
     "id": "typewriter-moves",
@@ -1297,7 +1693,11 @@
       "opening"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/typography/typewriter-moves"
   },
   {
     "id": "vertical-word-roll-blur-cycle",
@@ -1309,7 +1709,11 @@
     "path": "typography/vertical-word-roll-blur-cycle.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/vertical-word-roll-blur-cycle.jpg",
+    "poster_source": "upstream",
+    "clip": "vertical-word-roll-blur-cycle.mp4",
+    "demo": "demos/typography/vertical-word-roll-blur-cycle"
   },
   {
     "id": "word-relay-filmstrip",
@@ -1323,7 +1727,11 @@
       "ui-entrance"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/word-relay-filmstrip.jpg",
+    "poster_source": "upstream",
+    "clip": "word-relay-filmstrip.mp4",
+    "demo": "demos/typography/word-relay-filmstrip"
   },
   {
     "id": "word-relay-geometry",
@@ -1335,7 +1743,11 @@
     "path": "typography/word-relay-geometry.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/word-relay-geometry.jpg",
+    "poster_source": "upstream",
+    "clip": "word-relay-geometry.mp4",
+    "demo": "demos/typography/word-relay-geometry"
   },
   {
     "id": "avatar-bracket-carousel",
@@ -1347,7 +1759,11 @@
     "path": "ui-entrance/avatar-bracket-carousel.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/avatar-bracket-carousel.jpg",
+    "poster_source": "upstream",
+    "clip": "avatar-bracket-carousel.mp4",
+    "demo": "demos/ui-entrance/avatar-bracket-carousel"
   },
   {
     "id": "bezier-source-converge-merge",
@@ -1359,7 +1775,11 @@
     "path": "ui-entrance/bezier-source-converge-merge.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/bezier-source-converge-merge.jpg",
+    "poster_source": "upstream",
+    "clip": "bezier-source-converge-merge.mp4",
+    "demo": "demos/ui-entrance/bezier-source-converge-merge"
   },
   {
     "id": "card-stack",
@@ -1371,7 +1791,11 @@
     "path": "ui-entrance/card-stack.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/card-stack.jpg",
+    "poster_source": "upstream",
+    "clip": "card-stack.mp4",
+    "demo": "demos/ui-entrance/card-stack"
   },
   {
     "id": "carousel-3d",
@@ -1383,7 +1807,11 @@
     "path": "ui-entrance/carousel-3d.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/carousel-3d.jpg",
+    "poster_source": "upstream",
+    "clip": "carousel-3d.mp4",
+    "demo": "demos/ui-entrance/carousel-3d"
   },
   {
     "id": "cloner-depth-echo",
@@ -1395,7 +1823,11 @@
     "path": "ui-entrance/cloner-depth-echo.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/cloner-depth-echo.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "cloner-depth-echo.mp4",
+    "demo": "demos/ui-entrance/cloner-depth-echo"
   },
   {
     "id": "deck-deal-flyin",
@@ -1407,7 +1839,11 @@
     "path": "ui-entrance/deck-deal-flyin.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/deck-deal-flyin.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "deck-deal-flyin.mp4",
+    "demo": "demos/ui-entrance/deck-deal-flyin"
   },
   {
     "id": "doc-park-left-pill-deal",
@@ -1419,7 +1855,11 @@
     "path": "ui-entrance/doc-park-left-pill-deal.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/doc-park-left-pill-deal.jpg",
+    "poster_source": "upstream",
+    "clip": "doc-park-left-pill-deal.mp4",
+    "demo": "demos/ui-entrance/doc-park-left-pill-deal"
   },
   {
     "id": "draw-svg-trace",
@@ -1433,7 +1873,11 @@
       "typography"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/draw-svg-trace.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "draw-svg-trace.mp4",
+    "demo": "demos/ui-entrance/draw-svg-trace"
   },
   {
     "id": "element-body-moves",
@@ -1445,7 +1889,11 @@
     "path": "ui-entrance/element-body-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/ui-entrance/element-body-moves"
   },
   {
     "id": "integration-hub-map",
@@ -1459,7 +1907,11 @@
       "effects"
     ],
     "tags_source": "upstream",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/integration-hub-map.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "integration-hub-map.mp4",
+    "demo": "demos/ui-entrance/integration-hub-map"
   },
   {
     "id": "list-reveal",
@@ -1471,7 +1923,11 @@
     "path": "ui-entrance/list-reveal.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/list-reveal.jpg",
+    "poster_source": "upstream",
+    "clip": "list-reveal.mp4",
+    "demo": "demos/ui-entrance/list-reveal"
   },
   {
     "id": "list-stack-press",
@@ -1483,7 +1939,11 @@
     "path": "ui-entrance/list-stack-press.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/list-stack-press.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "list-stack-press.mp4",
+    "demo": "demos/ui-entrance/list-stack-press"
   },
   {
     "id": "neon-frame-forerun",
@@ -1497,7 +1957,11 @@
       "effects"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/neon-frame-forerun.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "neon-frame-forerun.mp4",
+    "demo": "demos/ui-entrance/neon-frame-forerun"
   },
   {
     "id": "neon-frame-orbit-drop",
@@ -1512,7 +1976,11 @@
       "camera"
     ],
     "tags_source": "upstream",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/neon-frame-orbit-drop.jpg",
+    "poster_source": "upstream",
+    "clip": "neon-frame-orbit-drop.mp4",
+    "demo": "demos/ui-entrance/neon-frame-orbit-drop"
   },
   {
     "id": "page-waterfall-wall",
@@ -1524,7 +1992,11 @@
     "path": "ui-entrance/page-waterfall-wall.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": "media/posters/page-waterfall-wall.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "page-waterfall-wall.mp4",
+    "demo": "demos/ui-entrance/page-waterfall-wall"
   },
   {
     "id": "product-card-progressive-assemble",
@@ -1536,7 +2008,11 @@
     "path": "ui-entrance/product-card-progressive-assemble.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/product-card-progressive-assemble.jpg",
+    "poster_source": "upstream",
+    "clip": "product-card-progressive-assemble.mp4",
+    "demo": "demos/ui-entrance/product-card-progressive-assemble"
   },
   {
     "id": "radial-wave",
@@ -1548,7 +2024,11 @@
     "path": "ui-entrance/radial-wave.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/radial-wave.jpg",
+    "poster_source": "upstream",
+    "clip": "radial-wave.mp4",
+    "demo": "demos/ui-entrance/radial-wave"
   },
   {
     "id": "research-card-stack-scroll",
@@ -1560,7 +2040,11 @@
     "path": "ui-entrance/research-card-stack-scroll.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/research-card-stack-scroll.jpg",
+    "poster_source": "upstream",
+    "clip": "research-card-stack-scroll.mp4",
+    "demo": "demos/ui-entrance/research-card-stack-scroll"
   },
   {
     "id": "row-embed",
@@ -1572,7 +2056,11 @@
     "path": "ui-entrance/row-embed.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/row-embed.from-clip.jpg",
+    "poster_source": "clip",
+    "clip": "row-embed.mp4",
+    "demo": "demos/ui-entrance/row-embed"
   },
   {
     "id": "value-stagger-gradient",
@@ -1584,7 +2072,11 @@
     "path": "ui-entrance/value-stagger-gradient.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": true
+    "portrait_fit": true,
+    "poster": "media/posters/value-stagger-gradient.jpg",
+    "poster_source": "upstream",
+    "clip": "value-stagger-gradient.mp4",
+    "demo": "demos/ui-entrance/value-stagger-gradient"
   },
   {
     "id": "wall-reveal-moves",
@@ -1596,6 +2088,10 @@
     "path": "ui-entrance/wall-reveal-moves.md",
     "tags": [],
     "tags_source": "missing",
-    "portrait_fit": null
+    "portrait_fit": null,
+    "poster": null,
+    "poster_source": null,
+    "clip": null,
+    "demo": "demos/ui-entrance/wall-reveal-moves"
   }
 ]
