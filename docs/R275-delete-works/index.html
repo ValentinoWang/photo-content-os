@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>项目页 · 删除作品</title>
+<!-- 改后画面直接用 Studio 的真实样式，新块的类名照现有组件起；文档自己的样式一律 d- 开头，避免和 Studio 样式撞名 -->
+<link rel="stylesheet" href="../../studio/static/styles.css">
+<link rel="stylesheet" href="../../studio/static/workflow.css">
+<link rel="stylesheet" href="../../studio/static/review.css">
+<style>
+:root { --d-ink: #091850; --d-muted: #52678D; --d-bg: #F3F5F8; --d-after: #16A34A; --d-line: #E3E8EF; }
+body { background: var(--d-bg); color: var(--d-ink); font: 14px "PingFang SC", sans-serif; }
+.d-doc { max-width: 1360px; margin: 0 auto; padding: 32px 24px 96px; }
+.d-doc > h1 { font-size: 28px; margin: 0 0 6px; color: var(--d-ink); }
+.d-doc > h2 { font-size: 20px; margin: 44px 0 12px; color: var(--d-ink); }
+.d-doc h3 { font-size: 16px; margin: 0 0 8px; color: var(--d-ink); }
+.d-doc p.d-t, .d-box li, .d-doc > ul li { font-size: 14px; line-height: 1.7; color: var(--d-ink); margin: 0; text-wrap: pretty; }
+.d-lead { color: var(--d-muted) !important; margin: 0 0 18px !important; font-size: 14px; line-height: 1.7; }
+.d-box { background: #fff; border: 1px solid var(--d-line); border-radius: 12px; padding: 18px 20px; }
+.d-box li + li { margin-top: 6px; }
+.d-doc table { border-collapse: collapse; width: 100%; font-size: 13px; background: #fff; color: var(--d-ink); }
+.d-doc th, .d-doc td { border: 1px solid var(--d-line); padding: 7px 10px; text-align: left; vertical-align: top; line-height: 1.55; }
+.d-doc th { background: #F6F8FB; }
+.d-doc code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; background: #EEF1F6; padding: 1px 4px; border-radius: 4px; }
+/* ---------- 逐处对比（照排版审图页的版式） ---------- */
+.d-shot { display: flex; gap: 20px; background: #fff; border: 1px solid var(--d-line); border-radius: 12px; padding: 14px; margin-bottom: 14px; }
+.d-thumb { position: sticky; top: 12px; width: 240px; flex: 0 0 240px; align-self: flex-start; }
+.d-thumb img { width: 100%; display: block; border: 1px solid #E5EAF1; }
+.d-thumb .d-none { font-size: 13px; color: var(--d-muted); background: #F4F6FA; border-radius: 10px; padding: 12px; line-height: 1.6; }
+.d-band { position: absolute; border: 2px dashed; border-radius: 4px; }
+.d-band span { position: absolute; left: -2px; top: -2px; color: #fff; font: 700 11px/16px sans-serif; padding: 0 5px; border-radius: 3px 0 3px 0; }
+.d-txt { flex: 1; min-width: 0; }
+.d-txt h3 { margin: 0; }
+.d-uuid { font-size: 12px; color: var(--d-muted); margin: 2px 0 10px; }
+.d-chead { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 0 6px 13px; font-size: 12.5px; font-weight: 700; color: var(--d-muted); border-bottom: 1px solid #E5EAF1; margin-bottom: 8px; }
+.d-chead .d-ra { color: var(--d-after); }
+ol.d-items { margin: 0; padding: 0; list-style: none; }
+ol.d-items > li { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 10px; padding: 8px 0 12px 10px; border-left: 3px solid #E5EAF1; border-bottom: 1px solid #F1F3F5; }
+ol.d-items > li > div { min-width: 0; }
+.d-ptag { display: inline-block; color: #fff; border-radius: 4px; padding: 1px 6px; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.d-prob, .d-fixt { font-size: 13.5px; line-height: 1.65; color: var(--d-ink); }
+.d-fixt { background: #EBFBEE; border-radius: 6px; padding: 6px 10px; }
+.d-crop { margin-top: 8px; width: 100%; outline: 1px solid #E5EAF1; border-radius: 6px; background-repeat: no-repeat; background-size: 100% auto; }
+.d-crop.d-empty { display: grid; place-items: center; background: #F4F6FA; color: var(--d-muted); font-size: 13px; min-height: 80px; padding: 12px; line-height: 1.6; }
+.d-aw { position: relative; margin-top: 8px; outline: 1.5px dashed var(--d-after); border-radius: 6px; overflow: hidden; }
+.d-ai { position: absolute; top: 0; left: 0; transform-origin: top left; }
+.d-anote { font-size: 12px; color: var(--d-muted); margin-top: 6px; line-height: 1.5; }
+ol.d-items > li > .d-todo { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; padding: 6px 10px; background: #F6F8FB; border: 1px solid #E5EAF1; border-radius: 8px; }
+.d-todo label { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--d-ink); }
+.d-todo input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--d-after); margin: 0; }
+.d-todo input[type=text] { flex: 1; min-width: 0; font: inherit; font-size: 13px; padding: 5px 8px; border: 1px solid #D7E0ED; border-radius: 6px; background: #fff; color: var(--d-ink); }
+ol.d-items > li.d-todo-on { border-left-color: var(--d-after); background: #F6FDF8; }
+.d-hidden { display: none !important; }
+#d-todo-panel { position: fixed; right: 16px; bottom: 16px; z-index: 90; display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #fff; border: 1px solid #D7E0ED; border-radius: 12px; box-shadow: 0 6px 24px rgba(9,24,80,.12); font-size: 13px; color: var(--d-ink); }
+#d-todo-panel b { color: var(--d-after); font-size: 15px; }
+#d-todo-panel label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+#d-todo-panel button { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 8px; border: 1px solid #D7E0ED; background: #fff; color: var(--d-ink); }
+#d-todo-panel button.d-primary { background: var(--d-after); border-color: var(--d-after); color: #fff; font-weight: 600; }
+/* ---------- 整页 ---------- */
+.d-cap { font-size: 14px; margin: 0 0 8px; color: var(--d-ink); }
+.d-tag { display: inline-block; padding: 3px 12px; border-radius: 999px; background: var(--d-after); color: #fff; font-size: 13px; font-weight: 700; margin-right: 6px; }
+.d-frame { width: calc(1280px * var(--k)); height: calc(800px * var(--k)); overflow: hidden; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.18); margin-bottom: 28px; --k: .78; }
+.d-frame > .d-screen { transform: scale(var(--k)); transform-origin: top left; }
+
+/* Studio 画面：1280 × 800 逻辑像素。左侧导航是真实截图切片，右侧照 review-view.js 的结构用真实样式画 */
+.d-screen { position: relative; width: 1280px; height: 800px; overflow: hidden; background: var(--bg); color: var(--ink); font: 14px var(--f-ui); text-align: left; }
+.d-screen .app { min-height: 0; height: 800px; }
+.d-side { width: 210px; flex: 0 0 210px; height: 800px; background: url("img/before-project-other.png") 0 0 / 1280px 800px no-repeat; }
+.d-screen .review-screen { overflow: hidden; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ic { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ===== 新块（实现时写进 review.css；每个数的出处见第 4 节） ===== */
+/* 1 选择模式的卡片：沿用 .piece，选中沿用 .card[aria-selected] 的描边写法 */
+.piece.is-picking { position: relative; }
+.piece.is-picking .piece-body { padding-left: 40px; }
+.pick-box { position: absolute; left: 13px; top: 13px; width: 18px; height: 18px; border: 1.5px solid var(--rule-2); border-radius: 4px; background: var(--panel-2); display: grid; place-items: center; color: var(--bg); }
+.piece[aria-checked=true] { border-color: var(--ac); background: var(--ac-bg); }
+.piece[aria-checked=true] .pick-box { background: var(--ac); border-color: var(--ac); }
+.pick-box .ic { width: 13px; height: 13px; stroke-width: 2.5; }
+.piece .where-line { font-size: 11.5px; color: var(--ink-4); overflow-wrap: anywhere; }
+.piece-cover-ph { aspect-ratio: 16/10; background: var(--panel-2); }
+/* 3 底部操作条 */
+.pick-bar { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; background: var(--raise); border: 1px solid var(--rule-2); border-radius: 10px; padding: 10px 12px 10px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.45); z-index: 5; }
+.pick-bar .count { font-size: 12.5px; color: var(--ink-2); margin-right: 8px; white-space: nowrap; }
+.btn--danger { border-color: var(--cut); background: var(--cut); color: #1C0B08; font-weight: 600; }
+.btn--danger:disabled { opacity: .4; cursor: default; }
+/* 4 确认框：沿用 .dialog-form；列表行沿用 .kv 的分隔线 */
+.d-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 78%, transparent); display: grid; place-items: center; z-index: 10; }
+.del-dialog { width: 520px; }
+.del-dialog h2 { margin: 0; }
+.del-dialog > p { font: 12.5px/1.65 var(--f-tx); color: var(--ink-3); margin: 10px 0 14px; }
+.del-list { border: 1px solid var(--rule); border-radius: 8px; background: var(--panel-2); max-height: 228px; overflow: auto; }
+.del-list li { list-style: none; padding: 10px 13px; border-bottom: 1px solid var(--rule); }
+.del-list li:last-child { border-bottom: 0; }
+.del-list b { display: block; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.del-list small { display: block; font-size: 11.5px; color: var(--ink-4); margin-top: 3px; overflow-wrap: anywhere; }
+.del-list small.keep { color: var(--warn); }
+.del-ul { margin: 0; padding: 0; }
+.trash-opt { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding: 12px 13px; border: 1px solid var(--rule-2); border-radius: 8px; }
+.trash-opt .pick-box { position: static; flex: 0 0 18px; margin-top: 1px; }
+.trash-opt b { display: block; font-size: 13px; font-weight: 600; }
+.trash-opt small { display: block; font: 11.5px/1.6 var(--f-tx); color: var(--ink-3); margin-top: 3px; }
+.trash-opt[aria-disabled=true] b { color: var(--ink-4); }
+.trash-opt[aria-disabled=true] .pick-box { opacity: .45; }
+.del-dialog footer { margin-top: 18px !important; }
+/* 5 撤销提示：沿用 .toast */
+.d-screen .toast { position: absolute; display: flex; align-items: center; gap: 14px; }
+.toast .link { font-size: 12px; }
+/* 6 项目列表底部的「最近删除」入口：比项目行轻一级 */
+.recent-row { display: flex; align-items: center; gap: 10px; width: 100%; margin-top: 4px; padding: 12px 14px; border: 1px dashed var(--rule-2); border-radius: 8px; background: none; color: var(--ink-3); font-size: 12.5px; text-align: left; }
+.recent-row span { color: var(--ink-4); font-size: 11.5px; }
+.recent-row i { margin-left: auto; font-style: normal; color: var(--ink-4); }
+/* 7 最近删除页：行沿用设置页 .setrow 的格子 */
+.recent-list { display: flex; flex-direction: column; max-width: 860px; }
+.recent-list .setrow { display: flex; justify-content: space-between; gap: 16px; align-items: center; background: var(--panel); border: 1px solid var(--rule); border-bottom: 0; padding: 14px 18px; }
+.recent-list .setrow:first-child { border-radius: 8px 8px 0 0; }
+.recent-list .setrow:last-child { border-bottom: 1px solid var(--rule); border-radius: 0 0 8px 8px; }
+.recent-list .setrow strong { display: block; font-size: 13.5px; font-weight: 600; }
+.recent-list .setrow small { display: block; font-size: 11.5px; line-height: 1.55; color: var(--ink-4); margin-top: 3px; overflow-wrap: anywhere; }
+.recent-list .setrow small.gone { color: var(--warn); }
+.recent-list .setrow .btn { flex: 0 0 auto; }
+</style>
+</head>
+<body>
+<div class="d-doc">
+  <h1>项目页 · 删除作品</h1>
+  <p class="d-lead">设计稿 · 2026-10-25 · photo-content-os 总控会话出稿 · 需求卡「Studio 项目页能批量删除作品，删掉的能恢复」（R275）。第 2 节逐处对比：左边是现在截图里的那一块，右边是这一块改好后的样子；第 3 节是改后整页和可以点的演示。截图里的照片已涂灰（私人素材不进仓库）。</p>
+
+  <div class="d-box"><h3>一句话</h3><p class="d-t">项目页右上角加「选择」，勾好作品后在底部点「删除 N 件」；确认框逐件列出作品和文件夹，可以选择把没有素材的作品的文件夹一起移到废纸篓；删掉的作品先放进项目列表底部的「最近删除」，能撤销、能恢复。</p></div>
+
+  <h2>1 · 交互规则</h2>
+  <div class="d-box"><ol style="margin:0;padding-left:20px">
+    <li><b>进入选择</b>：单个项目页的右上角，在「添加作品」左边加「选择」。点了进入选择：每张卡片左上角出现勾选框，卡片下面多一行「×月×日建 · 文件夹 ××」（同名作品靠它分清）；点卡片是勾选 / 取消勾选，不再打开作品；右上角的两个按钮换成「全选」。项目列表页、工作台不加选择。</li>
+    <li><b>底部操作条</b>：选择时一直浮在内容区底部中间，写「已选 N 件」，右边「取消」「删除 N 件」。一件没选时写「还没选作品」，删除按钮写「删除」并且点不了。点「取消」或按 Esc 退出选择、清空勾选。网址不变；刷新页面也退出选择。</li>
+    <li><b>确认框</b>：点「删除 N 件」弹确认框。标题「删除 N 件作品？」；逐件列出作品名和「文件夹 ××」，超过 5 件时框内滚动。下面一个勾选项「同时把文件夹移到废纸篓」，<b>每次打开都默认不勾</b>。焦点落在「取消」上。点「取消」关框，勾选保留。</li>
+    <li><b>有素材的作品不能连文件夹删</b>：选中的作品里有素材（视频或照片数大于 0）的，那一行多一句「有素材，文件夹留在原处」；全部都有素材时，「同时把文件夹移到废纸篓」点不了，说明写「选中的作品都有素材，文件夹不能从这里移走；要删素材，去素材库。」只有一部分有素材时，这一项写成「同时把 M 件没有素材的作品的文件夹移到废纸篓」。</li>
+    <li><b>确认删除</b>：逐件处理，一件出错不影响别的。勾了移文件夹的，先把文件夹移到废纸篓，移成功才删作品；移不成功这件就不删。完成后退出选择、列表刷新，右下角提示「已删除 N 件作品」和「撤销」，停 8 秒；部分失败时提示改用警示色，写「已删除 N 件。「作品名」没删成：文件夹移不到废纸篓」（多件失败写「M 件没删成」），没删成的作品留在列表里。两种提示都带「撤销」，点了把这一批全部恢复（文件夹也从废纸篓放回原处）。</li>
+    <li><b>项目空了</b>：一个项目里的作品全部删掉后，这个项目从项目列表里消失，页面回到项目列表。工作台「最近的作品」和「等你处理」里也不再出现删掉的作品。</li>
+    <li><b>最近删除</b>：项目列表最下面一行「最近删除 · N 件」，没有删过东西时不显示。点进去按删除时间从新到旧列出：作品名；「原来在 ×× · 文件夹 ×× · ×月×日 ××:×× 删除」；文件夹状态写在下一行。每行右边「恢复」。恢复后回到原来的项目；文件夹在废纸篓的，先放回原处再恢复。</li>
+    <li><b>恢复不了的</b>：文件夹已经不在废纸篓里（废纸篓清空了），或原来的位置已经有同名文件夹时，这一行写明原因，「恢复」换成「移出列表」。点了直接移出，不再二次确认，这是这一页唯一的彻底删除。</li>
+    <li><b>读屏</b>：选择时卡片是 <code>role="checkbox"</code>，读「作品名，文件夹 ××，已选 / 未选」；操作条的件数用 <code>aria-live="polite"</code> 播报；确认框是模态框，关掉后焦点回到「删除 N 件」。动画只有提示的淡入淡出（沿用 <code>.toast</code> 的 0.15 秒），减少动画时不淡入。</li>
+  </ol></div>
+
+  <h2>2 · 逐处对比：现在 → 改后</h2>
+  <p class="d-lead">每张截图一张卡：左边缩略图上的色带标出改动位置；右边每处一行，左是截图里这一块，右是这一块改好后的样子（同一比例）。要改的勾「要改」写备注，右下角导出清单发给 Claude。</p>
+  <div id="compare"></div>
+
+  <h2>3 · 改后整页和可以点的演示</h2>
+  <div id="states"></div>
+  <div style="margin-top:12px"><p class="d-cap"><b>点着试试</b>：点「选择」→ 勾卡片 → 「删除 N 件」→ 勾或不勾「同时把文件夹移到废纸篓」→ 确认 → 「撤销」；回项目列表点「最近删除」→「恢复」。</p><div class="d-frame" id="live-frame"></div></div>
+
+  <h2>4 · 设计编号</h2>
+  <table>
+    <tr><th style="width:50px">编号</th><th style="width:150px">位置</th><th>要求（每个数都写出来）</th><th style="width:320px">代码依据</th></tr>
+    <tr><td>1</td><td>项目页顶栏</td><td>「选择」用 <code>.btn</code>（描边，12.5px），放在「添加作品」左边，间距沿用 <code>.topbar-actions</code> 的 10px。选择时两个按钮换成一个「全选」（<code>.btn</code>）；全部选中后它写「全不选」。</td><td><code>review-view.js</code> <code>project()</code> 的 <code>top()</code> 调用；<code>styles.css .btn</code>、<code>.topbar-actions</code></td></tr>
+    <tr><td>2</td><td>选择时的作品卡</td><td>沿用 <code>.piece</code>。勾选框 18×18，圆角 4，描边 1.5px <code>--rule-2</code>，底 <code>--panel-2</code>，距卡片左 13、上 13（有封面时压在封面左上角）。无封面卡片正文左内边距从 13 改成 40，给勾选框让位。选中：卡片描边 <code>--ac</code>、底 <code>--ac-bg</code>，勾选框实心 <code>--ac</code>，白勾 13px。卡片多一行「×月×日建 · 文件夹 ××」，11.5px <code>--ink-4</code>，接在原来那行素材数下面；长文件夹名折行，不省略。</td><td><code>review.css .piece / .piece-body / .piece-body small</code>；选中照 <code>.card[aria-selected=true]{border-color:var(--ac)}</code>；底色照 <code>.fstep.cur{background:var(--ac-bg)}</code></td></tr>
+    <tr><td>3</td><td>底部操作条</td><td>浮在内容区底部中间，距底 22。底 <code>--raise</code>，描边 1px <code>--rule-2</code>，圆角 10，内边距 10 / 12 / 10 / 16，阴影 0 10 30 黑 45%。件数 12.5px <code>--ink-2</code>；按钮「取消」<code>.btn</code>，「删除 N 件」<code>.btn--danger</code>（新变体：底和描边 <code>--cut</code> #E07A6A，字 #1C0B08 600，点不了时不透明度 0.4）。</td><td><code>styles.css .btn / .btn--pri</code>（照它写 danger）；颜色 token <code>--cut</code>；层叠照 <code>.toast</code></td></tr>
+    <tr><td>4</td><td>确认框</td><td>沿用 <code>&lt;dialog&gt;</code> + <code>.dialog-form</code>（底 <code>--panel</code>，描边 <code>--rule-2</code>，内边距 22），宽 520。顶部小字「项目」用 <code>.eyebrow</code>，标题 18px。说明 12.5px/1.65 <code>--ink-3</code>。作品列表：底 <code>--panel-2</code>，描边 <code>--rule</code>，圆角 8，行内边距 10 / 13，行间 1px <code>--rule</code> 分隔，最高 228（约 5 行）后框内滚动；作品名 13px 600，文件夹 11.5px <code>--ink-4</code>，「有素材，文件夹留在原处」用 <code>--warn</code>。勾选项：描边 1px <code>--rule-2</code> 圆角 8，内边距 12 / 13；点不了时标题变 <code>--ink-4</code>、勾选框不透明度 0.45。按钮「取消」<code>.btn</code>、「删除 N 件」<code>.btn--danger</code>，右对齐，间距 8。</td><td><code>index.html #project-dialog</code>；<code>styles.css .dialog-form / .dialog-form footer / .eyebrow</code>；分隔照 <code>review.css .kv</code></td></tr>
+    <tr><td>5</td><td>撤销提示</td><td>沿用 <code>.toast</code>（右 20、下 18，底 #172224，描边 <code>--rule-2</code>，12px），文字后跟「撤销」，用 <code>.link</code>（<code>--ac-soft</code>）。停 8 秒；鼠标停在上面时不消失。部分失败用 <code>.toast.error</code>。</td><td><code>styles.css .toast / .toast.show / .toast.error</code>；<code>review.css .link</code></td></tr>
+    <tr><td>6</td><td>项目列表底部入口</td><td>项目行下面 4px，一整行虚线框：描边 1px dashed <code>--rule-2</code>，圆角 8，内边距 12 / 14；左边垃圾桶图标 18（和侧栏图标同一套线条图标），「最近删除」12.5px <code>--ink-3</code>，「N 件」11.5px <code>--ink-4</code>，右边「›」。比项目行轻一级，不放封面、不放胶囊。0 件不显示。</td><td><code>review.css .proj</code>（对比用）、<code>.ic</code>；图标照 <code>review-view.js</code> 顶部 <code>icon</code> 表新增一个 <code>trash</code></td></tr>
+    <tr><td>7</td><td>最近删除页</td><td>顶栏面包屑「项目 ›」，标题「最近删除」，副标题「N 件 · 恢复后回到原来的项目」。列表最宽 860，行沿用设置页 <code>.setrow</code> 的格子（底 <code>--panel</code>，描边 <code>--rule</code>，内边距 14 / 18）；作品名 13.5px 600；说明两行 11.5px <code>--ink-4</code>，第二行写文件夹状态，恢复不了的那句用 <code>--warn</code>。右边「恢复」<code>.btn</code>，恢复不了时换成「移出列表」<code>.btn</code>。</td><td><code>review.css .set-main .setrow</code>、<code>.setrow strong / small</code></td></tr>
+  </table>
+
+  <h2>5 · 文案表</h2>
+  <p class="d-lead">稿子里出现的每一句字都在这里，实现时不许出现表外的字。Studio 不做多语言，所以没有 l10n 键，「键」一列写放在哪个函数里。</p>
+  <table id="copy-table">
+    <tr><th style="width:150px">位置</th><th>文字</th><th style="width:200px">放在</th><th style="width:80px">变化</th></tr>
+  </table>
+  <p class="d-lead" style="margin-top:8px">用词：macOS 访达里叫「废纸篓」，这里都写「废纸篓」。整理台现有的「移入系统回收站」不在这次范围里，留给以后统一。</p>
+
+  <h2>6 · 数字公式（逻辑像素，窗口 1280 × 800）</h2>
+  <table>
+    <tr><th style="width:240px">量</th><th>公式</th><th style="width:200px">结果</th></tr>
+    <tr><td>内容区宽</td><td>1280 − 侧栏 210 − 左右内边距 24 × 2</td><td>1022</td></tr>
+    <tr><td>每行卡片数</td><td><code>repeat(auto-fill,minmax(230px,1fr))</code>，间距 12：⌊(1022 + 12) ÷ (230 + 12)⌋</td><td>4 张，每张 246.5</td></tr>
+    <tr><td>无封面卡片正文可用宽</td><td>246.5 − 左 40 − 右 13 − 描边 2</td><td>191.5</td></tr>
+    <tr><td>最长作品名（16 字，13px）</td><td>「断更一年后，我才发现自己在躲什么」16 × 13 = 208 &gt; 191.5</td><td>折成 2 行（现在本来就允许折行）</td></tr>
+    <tr><td>最长文件夹行（11.5px）</td><td>「10月16日建 · 文件夹 R131-hiatus-video-v4-render2」约 30 个西文字符 × 6.4 + 10 个汉字 × 11.5 ≈ 307 &gt; 191.5</td><td>折成 2 行，<code>overflow-wrap:anywhere</code></td></tr>
+    <tr><td>选择时第二排卡片下沿</td><td>顶栏 75 + 内边距 20 + 标题 31 + 两排卡片 (104 + 12) × 2</td><td>≈ 358，操作条在 800 − 22 − 52 = 726 起，不压卡片</td></tr>
+    <tr><td>确认框列表 5 行高</td><td>每行 10 + 17 + 3 + 15 + 10 + 1 ≈ 56；5 × 56 − 1 ≈ 279 → 上限取 228（约 4 行露出第 5 行的一半，提示能滚）</td><td>最高 228</td></tr>
+    <tr><td>确认框总高（5 件）</td><td>22 + 标题 44 + 说明 50 + 列表 228 + 勾选项 74 + 按钮 54 + 22</td><td>≈ 494 &lt; 800，不出窗口</td></tr>
+  </table>
+
+  <h2>7 · 实现前先立的门禁（在现在的代码上会失败）</h2>
+  <table><tr><th style="width:44px">编号</th><th>门禁</th></tr>
+    <tr><td>G1</td><td>后端单测：删除接口把作品放进「最近删除」后，作品列表、项目分组、工作台待处理都不再含它；恢复后原样回来，文档和修改记录逐字节不变。</td></tr>
+    <tr><td>G2</td><td>后端单测：要求移文件夹时，有素材的作品、文件夹不在素材根目录下、文件夹是软链接、两件作品指向同一文件夹、文件夹就是素材根目录本身，这五种都拒绝，作品不删，文件夹不动。</td></tr>
+    <tr><td>G3</td><td>后端单测：移文件夹失败时这件作品不删；同一批里其他作品照常删除，返回里逐件写成功 / 失败。</td></tr>
+    <tr><td>G4</td><td>后端单测：恢复一件文件夹在废纸篓的作品时，文件夹回到原路径；废纸篓里已没有、或原路径被占用时，恢复被拒绝，返回能显示给人的原因。</td></tr>
+    <tr><td>G5</td><td>浏览器测试：项目页有「选择」；进入选择后点卡片不跳转；勾 2 件后操作条写「已选 2 件」；确认框里「同时把文件夹移到废纸篓」默认未勾；全选有素材的作品时它点不了。</td></tr>
+    <tr><td>G6</td><td>文案比对：实现页上出现的字都在第 5 节文案表里（<code>check_design_contract.py</code>）。</td></tr>
+  </table>
+
+  <h2>8 · 受影响的截图</h2>
+  <ul>
+    <li>项目列表（<code>#view=projects</code>）— 2026-10-25 本机实拍，照片已涂灰：<code>img/before-projects.png</code></li>
+    <li>其他作品（<code>#view=project&amp;project=other</code>）— 2026-10-25 本机实拍：<code>img/before-project-other.png</code></li>
+    <li>2026年重回兰州大学内容创作（<code>#view=project&amp;project=a3446cb2f9abdba66913</code>）— 2026-10-25 本机实拍，封面已涂灰：<code>img/before-project-lzu.png</code></li>
+  </ul>
+
+  <h2>9 · 画法说明</h2>
+  <ul>
+    <li>「现在」：2026-10-25 用 Playwright 在 1280 × 800、2 倍像素下截本机 Studio（127.0.0.1:8765）。原图带照片，放在仓库外 <code>~/.photo-content-os/evidence/R275-delete-works/</code>；仓库里的是把照片区域涂成 <code>--panel-2</code> 的版本。</li>
+    <li>「改后」：左侧导航是「其他作品」截图的切片（左 210 像素）；顶栏和内容区照 <code>review-view.js</code> 的 <code>top()</code>、<code>project()</code>、<code>projects()</code>、<code>card()</code> 的结构，直接引用 <code>studio/static/</code> 下的三份真实样式表画；新块的样式在本页 <code>&lt;style&gt;</code> 的「新块」一段，实现时并进 <code>review.css</code>。兰州大学的封面画成同色占位块。</li>
+    <li>字体：Studio 没有加载网络字体，实际落到苹方，本稿一样。图标照 <code>review-view.js</code> 的线条图标写法（24 视框、1.75 描边）。</li>
+  </ul>
+</div>
+<div id="d-todo-panel"><span>已勾选 <b id="d-todo-count">0</b> 条</span><label><input type="checkbox" id="d-todo-only">只看已勾选</label><button class="d-primary" id="d-todo-export">导出清单</button><button id="d-todo-clear">清空</button></div>
+
+<script>
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const ICON = {
+  check: '<path d="m5 12 4.5 4.5L19 7"/>',
+  trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/>',
+};
+const ic = k => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICON[k]}</svg>`;
+
+// 左侧导航切片里没改的文字；动态值（工作台角标）放 DATA
+const SLICE_COPY = ["Photo Content OS", "本地创作工作台", "工作台", "整理台", "项目", "素材库", "音乐库", "设置与诊断", "本机可用", "上游中台未连接"];
+const SLICE_DATA = ["1"];
+
+// 作品数据：照 2026-10-25 本机 /api/review/catalog
+const OTHER = [
+  { id: "a", title: "断更一年，我的担心准吗", folder: "R131-hiatus-video-v4-render2", made: "10月16日建" },
+  { id: "b", title: "断更一年，我的担心准吗", folder: "R131-hiatus-video-v4-render", made: "10月16日建" },
+  { id: "c", title: "断更一年后，我才发现自己在躲什么", folder: "R131-hiatus-video-v2-render2", made: "10月15日建" },
+  { id: "d", title: "断更一年后，我才发现自己在躲什么", folder: "R131-hiatus-video-v2", made: "10月15日建" },
+  { id: "e", title: "断更一年，我拆了四句话", folder: "R131-hiatus-video", made: "10月14日建" },
+  { id: "f", title: "P5 直出实践：平均速度", folder: "direct", made: "10月13日建" },
+  { id: "g", title: "P4 教学实践：平均速度", folder: "teaching", made: "10月13日建" },
+  { id: "h", title: "P3 合成口播实践：平均速度", folder: "spoken", made: "10月12日建" },
+];
+const LZU = [
+  { id: "l1", title: "400米比赛 · 第一视角", folder: "2026-lzu-400m-pov", made: "10月12日建", media: "2026/5/14 · 76 段视频 · 15 张照片", chip: "已出 1 版", videos: 76, photos: 15 },
+  { id: "l2", title: "兰州大学 · 奔赴与校运会", folder: "2026-lzu-travel-and-sports", made: "10月12日建", media: "2026/5/14 · 55 段视频 · 6 张照片", chip: "挑镜头 · 等你过目", videos: 55, photos: 6 },
+  { id: "l3", title: "兰州大学校运会 · 合照与荣誉展厅JPG补充包", folder: "2026-lzu-group-and-honors", made: "10月12日建", media: "2026/5/14 · 224 张照片", chip: "素材已归档", videos: 0, photos: 224 },
+];
+const GROUPS = [
+  { id: "thu", title: "2026年清华毕业典礼内容创作", count: 1, chips: ["1 件出过成片"], cover: true },
+  { id: "lzu", title: "2026年重回兰州大学内容创作", count: 3, chips: ["1 件等你过目", "2 件出过成片"], cover: true },
+  { id: "other", title: "其他作品", count: 8, chips: [], cover: false },
+];
+
+// ---------- 画面零件（整页、对比、演示共用） ----------
+const side = () => `<div class="d-side" aria-hidden="true"></div><div class="sr-only" data-design-id="unchanged-nav">${SLICE_COPY.map(t => `<span>${t}</span>`).join("")}${SLICE_DATA.map(t => `<span data-design-data>${t}</span>`).join("")}</div>`;
+const topbar = (crumb, title, sub, actions) => `<header class="topbar" data-design-id="R208-REV-topbar"><div><div class="crumb">${crumb}</div><h1 data-design-data>${title}</h1>${sub ? `<p data-design-data>${sub}</p>` : ""}</div><div class="topbar-actions" data-design-id="R275-1-actions">${actions}</div></header>`;
+const crumbProjects = `<button>项目</button>`;
+
+function pieceCard(p, { picking = false, checked = false } = {}) {
+  const box = picking ? `<span class="pick-box" aria-hidden="true">${checked ? ic("check") : ""}</span>` : "";
+  const cover = p.media ? `<div class="cover piece-cover-ph">${p.chip ? `<span class="chip" data-design-data>${p.chip}</span>` : ""}</div>` : "";
+  const media = p.media || "还没有素材";
+  const where = picking ? `<span class="where-line" data-design-id="R275-2-where" data-design-data>${p.made} · 文件夹 ${esc(p.folder)}</span>` : "";
+  const attrs = picking ? ` role="checkbox" aria-checked="${checked}" data-design-id="R275-2-card" data-pick="${p.id}"` : ` role="link" data-design-id="R208-PROJECT-piece" data-open="${p.id}"`;
+  return `<article class="piece ${p.media ? "" : "piece--compact"} ${picking ? "is-picking" : ""}"${attrs} tabindex="0">${box}${cover}<div class="piece-body"><b data-design-data>${esc(p.title)}</b><small data-design-data>${media}</small>${where}</div></article>`;
+}
+function pickBar(n) {
+  return `<div class="pick-bar" data-design-id="R275-3-bar" role="toolbar" aria-label="选择作品"><span class="count" aria-live="polite" data-design-data>${n ? `已选 ${n} 件` : "还没选作品"}</span><button class="btn" data-act="cancel">取消</button><button class="btn btn--danger" data-act="ask"${n ? "" : " disabled"}>${n ? `删除 ${n} 件` : "删除"}</button></div>`;
+}
+function projectBody(title, list, { picking = false, picked = [] } = {}) {
+  const actions = picking ? `<button class="btn" data-act="all">${picked.length === list.length ? "全不选" : "全选"}</button>` : `<button class="btn" data-act="pick">选择</button><button class="btn">添加作品</button>`;
+  return topbar(crumbProjects, title, "", actions) +
+    `<div class="review-screen single"><section data-design-id="R208-PROJECT-pieces"><h2 class="section-title">作品<span data-design-data>${list.length} 件</span></h2><div class="pieces">${list.map(p => pieceCard(p, { picking, checked: picked.includes(p.id) })).join("")}</div></section></div>` +
+    (picking ? pickBar(picked.length) : "");
+}
+function confirmDialog(items, { trash = false } = {}) {
+  const withMedia = items.filter(p => p.videos || p.photos), plain = items.length - withMedia.length;
+  const rows = items.map(p => `<li><b data-design-data>${esc(p.title)}</b><small data-design-data>文件夹 ${esc(p.folder)}</small>${p.videos || p.photos ? `<small class="keep">有素材，文件夹留在原处</small>` : ""}</li>`).join("");
+  const off = plain === 0;
+  const label = off || withMedia.length === 0 ? "同时把文件夹移到废纸篓" : `同时把 <span data-design-data>${plain}</span> 件没有素材的作品的文件夹移到废纸篓`;
+  const note = off ? "选中的作品都有素材，文件夹不能从这里移走；要删素材，去素材库。" : "文件夹里的成片和中间文件一起移走。恢复作品时，会从废纸篓放回原处。";
+  return `<div class="d-scrim"><form class="dialog-form del-dialog" data-design-id="R275-4-dialog" role="dialog" aria-modal="true" aria-labelledby="del-title" onsubmit="return false">
+    <header><div><p class="eyebrow">项目</p><h2 id="del-title">删除 <span data-design-data>${items.length}</span> 件作品？</h2></div></header>
+    <p>作品从项目里移走，连同它的脚本、分镜和修改记录，放进项目列表底部的「最近删除」，随时可以恢复。</p>
+    <ul class="del-list del-ul" data-design-id="R275-4-list">${rows}</ul>
+    <div class="trash-opt" role="checkbox" aria-checked="${!off && trash}" aria-disabled="${off}" tabindex="${off ? -1 : 0}" data-act="trash" data-design-id="R275-4-trash"><span class="pick-box" aria-hidden="true">${!off && trash ? ic("check") : ""}</span><div><b>${label}</b><small>${note}</small></div></div>
+    <footer><button type="button" class="btn" data-act="close">取消</button><button type="button" class="btn btn--danger" data-act="do">删除 <span data-design-data>${items.length}</span> 件</button></footer>
+  </form></div>`;
+}
+const toast = (text, err) => `<div class="toast show${err ? " error" : ""}" data-design-id="R275-5-toast" role="status"><span data-design-data>${text}</span><button class="link" data-act="undo">撤销</button></div>`;
+function projectsBody(groups, recent) {
+  const rows = groups.map(g => `<button class="proj ${g.cover ? "" : "proj--compact"}" data-design-id="R208-PROJECTS-row" data-go="${g.id}">${g.cover ? `<div class="collage one"></div>` : ""}<div><h2 data-design-data>${g.title}</h2><p data-design-data>${g.count} 件作品</p>${g.chips.length ? `<div class="chips">${g.chips.map(c => `<span class="chip" data-design-data>${c}</span>`).join("")}</div>` : ""}</div><i>›</i></button>`).join("");
+  const total = groups.reduce((a, g) => a + g.count, 0);
+  return topbar("", "项目", `${groups.length} 个项目 · ${total} 件作品`, `<button class="btn btn--pri">新建作品</button>`) +
+    `<div class="review-screen single"><div class="projects" data-design-id="R208-PROJECTS">${rows}${recent ? `<button class="recent-row" data-design-id="R275-6-recent" data-go="recent">${ic("trash")}最近删除<span data-design-data>${recent} 件</span><i>›</i></button>` : ""}</div></div>`;
+}
+function recentBody(rows) {
+  return topbar(`${crumbProjects}›`, "最近删除", `${rows.length} 件 · 恢复后回到原来的项目`, "") +
+    `<div class="review-screen single"><div class="recent-list" data-design-id="R275-7-list">${rows.map(r => `<div class="setrow"><div><strong data-design-data>${esc(r.title)}</strong><small data-design-data>原来在 ${r.group} · 文件夹 ${esc(r.folder)} · ${r.when} 删除</small><small class="${r.gone ? "gone" : ""}">${r.gone || (r.trashed ? "文件夹在废纸篓里，恢复时放回原处" : "文件夹还在原处")}</small></div>${r.gone ? `<button class="btn" data-act="drop" data-id="${r.id}">移出列表</button>` : `<button class="btn" data-act="restore" data-id="${r.id}">恢复</button>`}</div>`).join("")}</div></div>`;
+}
+const screen = (inner, overlay = "") => `<div class="app">${side()}<main class="main" style="position:relative">${inner}</main></div>${overlay}`;
+
+// ---------- 第 3 节：整页状态（也是文案合同的状态根） ----------
+const two = ["a", "b"];
+const STATES = [
+  { key: "pick-other", label: "其他作品 · 选择中，已选两件同名作品", html: () => screen(projectBody("其他作品", OTHER, { picking: true, picked: two })) },
+  { key: "confirm-other", label: "确认框 · 两件都没有素材，移文件夹默认不勾", html: () => screen(projectBody("其他作品", OTHER, { picking: true, picked: two }), confirmDialog(OTHER.filter(p => two.includes(p.id)))) },
+  { key: "deleted-other", label: "删除之后 · 剩 6 件，右下角可以撤销", html: () => screen(projectBody("其他作品", OTHER.filter(p => !two.includes(p.id))), toast("已删除 2 件作品")) },
+  { key: "partial-fail", label: "删除之后 · 有一件文件夹没移成（最差情况）", html: () => screen(projectBody("其他作品", OTHER.filter(p => p.id !== "a")), toast("已删除 1 件。「P3 合成口播实践：平均速度」没删成：文件夹移不到废纸篓", true)) },
+  { key: "confirm-lzu", label: "兰州大学 · 选中的作品有素材，移文件夹点不了", html: () => screen(projectBody("2026年重回兰州大学内容创作", LZU, { picking: true, picked: ["l2"] }), confirmDialog([LZU[1]])) },
+  { key: "projects-recent", label: "项目列表 · 底部多出「最近删除」", html: () => screen(projectsBody([GROUPS[0], GROUPS[1], { ...GROUPS[2], count: 6 }], 2)) },
+  { key: "recent", label: "最近删除 · 三种文件夹状态都在（含恢复不了的）", html: () => screen(recentBody([
+    { id: "a", title: "断更一年，我的担心准吗", group: "其他作品", folder: "R131-hiatus-video-v4-render2", when: "10月25日 21:40" },
+    { id: "h", title: "P3 合成口播实践：平均速度", group: "其他作品", folder: "spoken", when: "10月25日 21:38", trashed: true },
+    { id: "z", title: "断更一年，我拆了四句话", group: "其他作品", folder: "R131-hiatus-video", when: "10月20日 10:05", gone: "文件夹已经不在废纸篓里，恢复不了。" },
+  ])) },
+];
+const host = document.getElementById("states");
+for (const st of STATES) {
+  host.insertAdjacentHTML("beforeend", `<p class="d-cap"><span class="d-tag">改后</span>${st.label}</p><div class="d-frame"><div class="d-screen" data-design-state="${st.key}">${st.html()}</div></div>`);
+}
+
+// ---------- 可以点的演示 ----------
+(function live() {
+  const frame = document.getElementById("live-frame");
+  let view = "other", list = OTHER.slice(), picking = false, picked = [], dialog = false, trash = false, recent = [], toastText = "", lastBatch = [];
+  const byId = id => OTHER.find(p => p.id === id);
+  let timer;
+  function draw() {
+    let html;
+    if (view === "projects") html = screen(projectsBody([GROUPS[0], GROUPS[1], ...(list.length ? [{ ...GROUPS[2], count: list.length }] : [])], recent.length));
+    else if (view === "recent") html = screen(recentBody(recent.map(r => ({ ...r, group: "其他作品", when: "10月25日 21:40" }))));
+    else html = screen(projectBody("其他作品", list, { picking, picked }), (dialog ? confirmDialog(picked.map(byId), { trash }) : "") + (toastText ? toast(toastText) : ""));
+    frame.innerHTML = `<div class="d-screen">${html}</div>`;
+  }
+  frame.addEventListener("click", e => {
+    const t = e.target.closest("[data-act],[data-pick],[data-go],[data-open],.crumb button");
+    if (!t) return;
+    if (t.matches(".crumb button")) { view = "projects"; picking = false; picked = []; }
+    else if (t.dataset.pick) { const id = t.dataset.pick; picked = picked.includes(id) ? picked.filter(x => x !== id) : [...picked, id]; }
+    else if (t.dataset.go) { view = t.dataset.go === "recent" ? "recent" : t.dataset.go === "other" && list.length ? "other" : view; }
+    else switch (t.dataset.act) {
+      case "pick": picking = true; picked = []; break;
+      case "cancel": picking = false; picked = []; break;
+      case "all": picked = picked.length === list.length ? [] : list.map(p => p.id); break;
+      case "ask": dialog = true; trash = false; break;
+      case "close": dialog = false; break;
+      case "trash": if (t.getAttribute("aria-disabled") !== "true") trash = !trash; break;
+      case "do":
+        lastBatch = picked.map(id => ({ ...byId(id), trashed: trash }));
+        recent = [...lastBatch, ...recent]; list = list.filter(p => !picked.includes(p.id));
+        toastText = `已删除 ${picked.length} 件作品`; picking = false; picked = []; dialog = false;
+        if (!list.length) view = "projects";
+        clearTimeout(timer); timer = setTimeout(() => { toastText = ""; draw(); }, 8000); break;
+      case "undo": list = OTHER.filter(p => list.includes(p) || lastBatch.some(b => b.id === p.id)); recent = recent.filter(r => !lastBatch.some(b => b.id === r.id)); toastText = ""; view = "other"; break;
+      case "restore": { const r = recent.find(x => x.id === t.dataset.id); recent = recent.filter(x => x !== r); list = OTHER.filter(p => list.includes(p) || p.id === r.id); if (!recent.length) view = "projects"; break; }
+    }
+    draw();
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && frame.matches(":hover")) { if (dialog) dialog = false; else { picking = false; picked = []; } draw(); } });
+  draw();
+})();
+
+// ---------- 第 2 节：逐处对比（截图和改后块都是 1280 逻辑宽，同一比例） ----------
+const W = 1280, BAND = ["#2b8a3e", "#d9480f", "#1971c2", "#ae3ec9", "#0c8599", "#c2255c"];
+const canvas = html => `<div class="d-screen" style="height:auto">${html}</div>`;
+const COMPARE = [
+  { name: "其他作品", uuid: "#view=project&project=other", img: "img/before-project-other.png", H: 800, items: [
+    { n: "1", cat: "缺入口", crop: [0, 75], x: [860, 1280], prob: "顶栏只有「添加作品」，页面上没有任何删除入口。", fix: "「添加作品」左边加「选择」；选择时换成「全选」。", after: () => canvas(`<div style="width:1280px">${topbar(crumbProjects, "其他作品", "", `<button class="btn">选择</button><button class="btn">添加作品</button>`)}</div>`), note: "review-view.js project() 的 top()；styles.css .btn" },
+    { n: "2", cat: "分不清同名", crop: [75, 290], x: [210, 1280], ax: [0, 1070], prob: "两件「断更一年，我的担心准吗」、两件「断更一年后，我才发现自己在躲什么」长得一模一样，又都写「还没有素材」，删的时候不知道是哪一件。", fix: "选择时卡片左上角出勾选框，下面多一行「×月×日建 · 文件夹 ××」；选中的卡片描边和底色变成主色。", after: () => canvas(`<div style="width:1070px;height:290px;overflow:hidden">${projectBody("其他作品", OTHER, { picking: true, picked: two }).replace(pickBar(2), "")}</div>`), note: "review.css .piece；选中照 .card[aria-selected=true]" },
+    { n: "3", cat: "新块", crop: [700, 800], x: [520, 980], ax: [410, 870], prob: "现在没有这一块。", fix: "选择时底部中间浮一条操作条：「已选 N 件」「取消」「删除 N 件」。", after: () => canvas(`<div style="position:relative;width:1280px;height:100px">${pickBar(2)}</div>`), note: "新增 .pick-bar、.btn--danger（照 .btn--pri 写）" },
+  ]},
+  { name: "项目列表", uuid: "#view=projects", img: "img/before-projects.png", H: 800, items: [
+    { n: "6", cat: "缺入口", crop: [380, 500], x: [210, 820], prob: "删掉的作品没有地方找回来。", fix: "项目行下面加一行轻的虚线入口「最近删除 · N 件」，没有删过时不显示。", after: () => canvas(`<div style="width:1280px;height:100px;overflow:hidden;padding:0 24px 0 234px"><div class="projects"><button class="recent-row">${ic("trash")}最近删除<span>2 件</span><i>›</i></button></div></div>`), note: "新增 .recent-row；对比 review.css .proj" },
+  ]},
+  { name: "2026年重回兰州大学内容创作", uuid: "#view=project&project=a3446cb2f9abdba66913", img: "img/before-project-lzu.png", H: 800, items: [
+    { n: "4", cat: "防误删", crop: [80, 360], x: [210, 1280], ax: [360, 920], empty: "现在没有确认框。这件作品有 55 段视频、6 张照片，原始素材在它的文件夹里。", prob: "有素材的作品如果连文件夹一起删，原始素材会被移走。", fix: "确认框里这件写「有素材，文件夹留在原处」；「同时把文件夹移到废纸篓」点不了，并写明要删素材去素材库。", after: () => canvas(`<div style="position:relative;width:1280px;height:520px">${confirmDialog([LZU[1]])}</div>`), note: "index.html #project-dialog 的 .dialog-form；新增 .del-list、.trash-opt" },
+  ]},
+];
+const cmp = document.getElementById("compare");
+COMPARE.forEach(shot => {
+  const bands = shot.items.map((it, i) => `<div class="d-band" style="top:${it.crop[0] / shot.H * 100}%;height:${(it.crop[1] - it.crop[0]) / shot.H * 100}%;left:${it.x[0] / W * 100}%;width:${(it.x[1] - it.x[0]) / W * 100}%;border-color:${BAND[i]}"><span style="background:${BAND[i]}">${it.n}</span></div>`).join("");
+  cmp.insertAdjacentHTML("beforeend", `<section class="d-shot"><div class="d-thumb" style="position:sticky"><div style="position:relative"><img src="${shot.img}" alt="">${bands}</div></div>
+    <div class="d-txt"><h3>${shot.name}</h3><div class="d-uuid">${shot.uuid}</div>
+      <div class="d-chead"><span>现在（截图里这一块）</span><span class="d-ra">改后（这一块改好后的样子）</span></div>
+      <ol class="d-items">${shot.items.map((it, i) => {
+        const h = it.crop[1] - it.crop[0], pos = shot.H === h ? 0 : it.crop[0] / (shot.H - h) * 100;
+        const cw = it.x[1] - it.x[0], posx = cw === W ? 0 : it.x[0] / (W - cw) * 100, ax = it.ax || it.x;
+        const now = it.empty ? `<div class="d-crop d-empty">${it.empty}</div>` : `<div class="d-crop" style="background-image:url('${shot.img}');aspect-ratio:${cw} / ${h};background-size:${W / cw * 100}% auto;background-position:${posx}% ${pos}%"></div>`;
+        return `<li data-item-id="${shot.uuid}#${it.n}"><div class="d-todo"><label><input type="checkbox" aria-label="标记要改">要改</label><input type="text" placeholder="备注（可选），例如：按钮换个说法"></div>
+          <div><span class="d-ptag" style="background:${BAND[i]}">${it.n} · ${it.cat}</span><div class="d-prob">${it.prob}</div>${now}</div>
+          <div><div class="d-fixt">${it.fix}</div><div class="d-aw" data-x0="${ax[0]}" data-w="${ax[1] - ax[0]}"><div class="d-ai">${it.after()}</div></div><div class="d-anote">${it.note}</div></div></li>`;
+      }).join("")}</ol></div></section>`);
+});
+function fitAfter() {
+  document.querySelectorAll(".d-aw").forEach(aw => { const ai = aw.querySelector(".d-ai"), k = aw.clientWidth / Number(aw.dataset.w); ai.style.transform = `scale(${k}) translateX(${-Number(aw.dataset.x0)}px)`; aw.style.height = ai.offsetHeight * k + "px"; });
+}
+window.addEventListener("load", fitAfter); window.addEventListener("resize", fitAfter); document.fonts.ready.then(fitAfter);
+
+// ---------- 第 5 节：文案表（新增的字逐句列出） ----------
+const COPY = [
+  ["项目页顶栏", "选择", "project()", "新增"], ["项目页顶栏（选择时）", "全选 / 全不选", "project()", "新增"],
+  ["作品卡（选择时）", "×月×日建 · 文件夹 ××", "card()", "新增"],
+  ["底部操作条", "已选 N 件 / 还没选作品", "新增 pickBar()", "新增"], ["底部操作条", "取消", "pickBar()", "新增"], ["底部操作条", "删除 N 件 / 删除", "pickBar()", "新增"],
+  ["确认框", "项目", "新增 deleteDialog()", "新增"], ["确认框", "删除 N 件作品？", "deleteDialog()", "新增"],
+  ["确认框", "作品从项目里移走，连同它的脚本、分镜和修改记录，放进项目列表底部的「最近删除」，随时可以恢复。", "deleteDialog()", "新增"],
+  ["确认框列表", "文件夹 ××", "deleteDialog()", "新增"], ["确认框列表", "有素材，文件夹留在原处", "deleteDialog()", "新增"],
+  ["确认框勾选项", "同时把文件夹移到废纸篓", "deleteDialog()", "新增"], ["确认框勾选项（部分有素材）", "同时把 M 件没有素材的作品的文件夹移到废纸篓", "deleteDialog()", "新增"],
+  ["确认框勾选项说明", "文件夹里的成片和中间文件一起移走。恢复作品时，会从废纸篓放回原处。", "deleteDialog()", "新增"],
+  ["确认框勾选项说明（都有素材）", "选中的作品都有素材，文件夹不能从这里移走；要删素材，去素材库。", "deleteDialog()", "新增"],
+  ["确认框按钮", "取消 / 删除 N 件", "deleteDialog()", "新增"],
+  ["提示", "已删除 N 件作品", "notice()", "新增"], ["提示", "撤销", "notice()", "新增"], ["提示（部分失败）", "已删除 N 件。「作品名」没删成：文件夹移不到废纸篓（多件时写「M 件没删成」）", "notice()", "新增"],
+  ["项目列表底部", "最近删除 / N 件", "projects()", "新增"],
+  ["最近删除页", "最近删除", "新增 recent()", "新增"], ["最近删除页", "N 件 · 恢复后回到原来的项目", "recent()", "新增"],
+  ["最近删除页行", "原来在 ×× · 文件夹 ×× · ×月×日 ××:×× 删除", "recent()", "新增"],
+  ["最近删除页行", "文件夹还在原处 / 文件夹在废纸篓里，恢复时放回原处", "recent()", "新增"],
+  ["最近删除页行", "文件夹已经不在废纸篓里，恢复不了。", "recent()", "新增"], ["最近删除页行", "原来的位置已经有同名文件夹，恢复不了。", "recent()", "新增"],
+  ["最近删除页按钮", "恢复 / 移出列表", "recent()", "新增"],
+  ["恢复失败提示", "没恢复成：××", "notice()", "新增（×× 为上面两句原因之一）"],
+];
+document.getElementById("copy-table").insertAdjacentHTML("beforeend", COPY.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td><code>${r[2]}</code></td><td>${r[3]}</td></tr>`).join(""));
+
+// ---------- 「要改」勾选和备注 ----------
+(function () {
+  const KEY = "design-todo-R275-delete-works";
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+  const text = el => el ? el.textContent.replace(/\s+/g, " ").trim() : "";
+  const items = [...document.querySelectorAll("li[data-item-id]")];
+  const only = document.getElementById("d-todo-only");
+  function refresh() {
+    let n = 0;
+    items.forEach(li => { const on = !!(state[li.dataset.itemId] || {}).on; if (on) n++; li.classList.toggle("d-todo-on", on); li.classList.toggle("d-hidden", only.checked && !on); });
+    document.querySelectorAll("section.d-shot").forEach(sec => sec.classList.toggle("d-hidden", only.checked && !sec.querySelector("li[data-item-id]:not(.d-hidden)")));
+    document.getElementById("d-todo-count").textContent = n;
+  }
+  items.forEach(li => {
+    const id = li.dataset.itemId, box = li.querySelector(".d-todo input[type=checkbox]"), note = li.querySelector(".d-todo input[type=text]");
+    const st = state[id] || {}; box.checked = !!st.on; note.value = st.note || "";
+    const put = () => { state[id] = { on: box.checked, note: note.value }; if (!box.checked && !note.value) delete state[id]; save(); refresh(); };
+    box.addEventListener("change", put); note.addEventListener("input", () => { if (note.value) box.checked = true; put(); });
+  });
+  only.addEventListener("change", refresh);
+  document.getElementById("d-todo-export").addEventListener("click", () => {
+    const rows = items.filter(li => (state[li.dataset.itemId] || {}).on).map(li => ({ id: li.dataset.itemId, page: text(li.closest("section").querySelector("h3")), item: text(li.querySelector(".d-ptag")), problem: text(li.querySelector(".d-prob")), fix: text(li.querySelector(".d-fixt")), note: state[li.dataset.itemId].note || "" }));
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify({ draft: document.title, exported_at: new Date().toISOString(), count: rows.length, items: rows }, null, 2)], { type: "application/json" }));
+    a.download = "design-todo-" + new Date().toISOString().slice(0, 10) + ".json"; document.body.appendChild(a); a.click(); a.remove();
+  });
+  document.getElementById("d-todo-clear").addEventListener("click", () => { if (!confirm("清空全部勾选和备注？")) return; state = {}; save(); items.forEach(li => { li.querySelector(".d-todo input[type=checkbox]").checked = false; li.querySelector(".d-todo input[type=text]").value = ""; }); refresh(); });
+  refresh();
+})();
+</script>
+</body>
+</html>

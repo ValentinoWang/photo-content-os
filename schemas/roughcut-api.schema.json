@@ -1,0 +1,7462 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "roughcut-api.schema.json",
+  "title": "R226 B2a roughcut API contract (not registered routes)",
+  "$ref": "#/$defs/state_response",
+  "x-routes": [
+    {
+      "method": "GET",
+      "path": "/api/review/pieces/{id}/roughcut",
+      "request_schema": null,
+      "response_schema": "#/$defs/state_response",
+      "success_status": [
+        200
+      ],
+      "error_codes": [
+        "beat_analysis_unavailable",
+        "builtin_presets_invalid",
+        "project_not_found",
+        "roughcut_inputs_stale",
+        "roughcut_state_unreadable",
+        "transcript_unreadable"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/review/pieces/{id}/roughcut/commands",
+      "request_schema": "#/$defs/command_request",
+      "response_schema": "#/$defs/command_response",
+      "success_status": [
+        202
+      ],
+      "error_codes": [
+        "beat_analysis_unavailable",
+        "beat_failed",
+        "beat_map_invalid",
+        "beat_map_missing",
+        "body_invalid",
+        "builtin_presets_invalid",
+        "csrf_invalid",
+        "host_forbidden",
+        "music_count_invalid",
+        "music_track_not_found",
+        "occurrence_not_found",
+        "origin_forbidden",
+        "overrides_invalid",
+        "playlist_invalid",
+        "preset_invalid",
+        "preset_not_found",
+        "preset_store_unreadable",
+        "project_not_found",
+        "request_invalid",
+        "result_unreadable",
+        "revision_conflict",
+        "revision_invalid",
+        "roughcut_inputs_stale",
+        "roughcut_state_unreadable",
+        "selection_not_confirmed",
+        "settings_invalid",
+        "shot_too_short",
+        "shots_invalid",
+        "song_entry_unavailable",
+        "song_too_short",
+        "swap_boundary_invalid",
+        "transcript_invalid",
+        "transcript_unreadable",
+        "unknown_track"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/review/roughcut-jobs/{jobId}",
+      "request_schema": null,
+      "response_schema": "#/$defs/job_response",
+      "success_status": [
+        200
+      ],
+      "error_codes": [
+        "roughcut_job_not_found",
+        "roughcut_job_unreadable"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/review/roughcut-jobs/{jobId}",
+      "request_schema": "#/$defs/stop_request",
+      "response_schema": "#/$defs/stop_response",
+      "success_status": [
+        202
+      ],
+      "error_codes": [
+        "body_invalid",
+        "csrf_invalid",
+        "host_forbidden",
+        "origin_forbidden",
+        "request_invalid",
+        "revision_conflict",
+        "revision_invalid",
+        "roughcut_job_not_found",
+        "roughcut_job_unreadable"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/review/editing-presets",
+      "request_schema": null,
+      "response_schema": "editing-presets.schema.json#/$defs/library_response",
+      "success_status": [
+        200
+      ],
+      "error_codes": [
+        "builtin_presets_invalid"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/review/editing-presets",
+      "request_schema": "editing-presets.schema.json#/$defs/create_request",
+      "response_schema": "editing-presets.schema.json#/$defs/create_response",
+      "success_status": [
+        201
+      ],
+      "error_codes": [
+        "body_invalid",
+        "builtin_presets_invalid",
+        "csrf_invalid",
+        "host_forbidden",
+        "origin_forbidden",
+        "preset_invalid",
+        "preset_not_found",
+        "preset_store_unreadable",
+        "preset_write_failed",
+        "project_not_found",
+        "request_invalid",
+        "revision_conflict",
+        "revision_invalid",
+        "roughcut_inputs_stale",
+        "roughcut_state_unreadable"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/review/pieces/{id}/editor-capabilities",
+      "request_schema": null,
+      "response_schema": "#/$defs/capabilities_response",
+      "success_status": [
+        200
+      ],
+      "error_codes": [
+        "editor_diagnostics_unreadable",
+        "editor_readiness_invalid",
+        "project_not_found"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/review/pieces/{id}/roughcut/transcriptions",
+      "request_schema": "#/$defs/transcription_request",
+      "response_schema": "#/$defs/transcription_response",
+      "success_status": [
+        202
+      ],
+      "error_codes": [
+        "beat_analysis_unavailable",
+        "body_invalid",
+        "builtin_presets_invalid",
+        "csrf_invalid",
+        "host_forbidden",
+        "origin_forbidden",
+        "project_not_found",
+        "request_invalid",
+        "revision_conflict",
+        "revision_invalid",
+        "roughcut_inputs_stale",
+        "roughcut_state_unreadable",
+        "selection_not_confirmed",
+        "transcript_selection_invalid",
+        "transcript_unreadable",
+        "transcription_unavailable"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/review/pieces/{id}/roughcut/drafts",
+      "request_schema": "#/$defs/draft_request",
+      "response_schema": "#/$defs/draft_response",
+      "success_status": [
+        202
+      ],
+      "error_codes": [
+        "beat_analysis_unavailable",
+        "beat_failed",
+        "beat_map_invalid",
+        "body_invalid",
+        "builtin_presets_invalid",
+        "csrf_invalid",
+        "draft_backend_unsupported",
+        "editor_choice_invalid",
+        "editor_choice_unreadable",
+        "editor_diagnostics_unreadable",
+        "editor_not_ready",
+        "editor_readiness_invalid",
+        "edl_provenance_required",
+        "host_forbidden",
+        "origin_forbidden",
+        "preset_not_found",
+        "preset_store_unreadable",
+        "project_not_found",
+        "request_invalid",
+        "result_unreadable",
+        "revision_conflict",
+        "revision_invalid",
+        "roughcut_inputs_stale",
+        "roughcut_job_action_invalid",
+        "roughcut_state_unreadable",
+        "runtime_unavailable",
+        "settings_invalid",
+        "shots_invalid",
+        "transcript_invalid",
+        "transcript_unreadable",
+        "unknown_track"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/review/pieces/{id}/roughcut/media/{artifactId}",
+      "request_schema": null,
+      "response_schema": null,
+      "success_status": [
+        200,
+        206
+      ],
+      "error_codes": [
+        "range_not_satisfiable",
+        "roughcut_inputs_stale",
+        "roughcut_media_not_found"
+      ],
+      "parameters_schema": "#/$defs/media_parameters",
+      "response_media": [
+        "image/jpeg",
+        "image/png",
+        "video/mp4",
+        "audio/wav",
+        "application/xml",
+        "application/json",
+        "text/markdown; charset=utf-8"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/review/pieces/{id}/roughcut/drafts/open",
+      "request_schema": "#/$defs/open_draft_request",
+      "response_schema": "#/$defs/open_draft_response",
+      "success_status": 200,
+      "error_codes": [
+        "beat_analysis_unavailable",
+        "beat_failed",
+        "beat_map_invalid",
+        "body_invalid",
+        "builtin_presets_invalid",
+        "csrf_invalid",
+        "draft_backend_unsupported",
+        "draft_failed",
+        "editor_choice_invalid",
+        "editor_choice_unreadable",
+        "editor_diagnostics_unreadable",
+        "editor_not_ready",
+        "editor_readiness_invalid",
+        "edl_provenance_required",
+        "host_forbidden",
+        "origin_forbidden",
+        "preset_not_found",
+        "preset_store_unreadable",
+        "project_not_found",
+        "request_invalid",
+        "result_unreadable",
+        "revision_conflict",
+        "revision_invalid",
+        "roughcut_inputs_stale",
+        "roughcut_job_action_invalid",
+        "roughcut_state_unreadable",
+        "runtime_unavailable",
+        "settings_invalid",
+        "shots_invalid",
+        "transcript_invalid",
+        "transcript_unreadable",
+        "unknown_track"
+      ]
+    }
+  ],
+  "x-error-catalog": {
+    "csrf_invalid": {
+      "http_status": 403,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    },
+    "origin_forbidden": {
+      "http_status": 403,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    },
+    "host_forbidden": {
+      "http_status": 403,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    },
+    "body_invalid": {
+      "http_status": 400,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    },
+    "revision_invalid": {
+      "http_status": 400,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    },
+    "roughcut_command_invalid": {
+      "http_status": 400,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    },
+    "roughcut_job_action_invalid": {
+      "http_status": 400,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    },
+    "request_invalid": {
+      "http_status": 400,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    },
+    "project_not_found": {
+      "http_status": 404,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "roughcut_job_not_found": {
+      "http_status": 404,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "roughcut_media_not_found": {
+      "http_status": 404,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "revision_conflict": {
+      "http_status": 409,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": true
+    },
+    "roughcut_inputs_stale": {
+      "http_status": 409,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": true
+    },
+    "selection_not_confirmed": {
+      "http_status": 409,
+      "design_state": null,
+      "fixer": "shot_selection",
+      "retryable": false
+    },
+    "roughcut_state_unreadable": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "repair_store",
+      "retryable": true
+    },
+    "roughcut_job_unreadable": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "repair_store",
+      "retryable": true
+    },
+    "preset_write_failed": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "repair_store",
+      "retryable": true
+    },
+    "preset_store_unreadable": {
+      "http_status": 503,
+      "design_state": "cut-presets-unreadable",
+      "fixer": "repair_store",
+      "retryable": true
+    },
+    "builtin_presets_invalid": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "repair_store",
+      "retryable": false
+    },
+    "settings_invalid": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "repair_store",
+      "retryable": false
+    },
+    "beat_analysis_unavailable": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "wait_dependency",
+      "retryable": false
+    },
+    "unknown_track": {
+      "http_status": 422,
+      "design_state": "cut-failed-missing",
+      "fixer": "music",
+      "retryable": false
+    },
+    "music_track_not_found": {
+      "http_status": 422,
+      "design_state": "cut-failed-missing",
+      "fixer": "music",
+      "retryable": false
+    },
+    "beat_failed": {
+      "http_status": 422,
+      "design_state": "cut-failed",
+      "fixer": "retry_analysis",
+      "retryable": true
+    },
+    "result_unreadable": {
+      "http_status": 503,
+      "design_state": "cut-failed-unreadable",
+      "fixer": "retry_analysis",
+      "retryable": true
+    },
+    "beat_map_invalid": {
+      "http_status": 503,
+      "design_state": "cut-failed-unreadable",
+      "fixer": "retry_analysis",
+      "retryable": true
+    },
+    "beat_map_missing": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "wait_dependency",
+      "retryable": false
+    },
+    "shot_too_short": {
+      "http_status": 422,
+      "design_state": "cut-failed-short",
+      "fixer": "shot_selection",
+      "retryable": false
+    },
+    "song_entry_unavailable": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "music",
+      "retryable": false
+    },
+    "song_too_short": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "music",
+      "retryable": false
+    },
+    "music_count_invalid": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "playlist_invalid": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "preset_not_found": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "preset_invalid": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "occurrence_not_found": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "overrides_invalid": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "swap_boundary_invalid": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "transcript_selection_invalid": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "refetch",
+      "retryable": false
+    },
+    "shots_invalid": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "repair_store",
+      "retryable": false
+    },
+    "transcript_invalid": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "repair_store",
+      "retryable": true
+    },
+    "transcript_unreadable": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "repair_store",
+      "retryable": true
+    },
+    "transcription_unavailable": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "transcribe",
+      "retryable": true
+    },
+    "transcript_failed": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "transcribe",
+      "retryable": true
+    },
+    "editor_choice_unreadable": {
+      "http_status": 503,
+      "design_state": "cut-editor-unreadable",
+      "fixer": "settings",
+      "retryable": true
+    },
+    "editor_choice_invalid": {
+      "http_status": 503,
+      "design_state": "cut-editor-unreadable",
+      "fixer": "settings",
+      "retryable": true
+    },
+    "editor_diagnostics_unreadable": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "settings",
+      "retryable": true
+    },
+    "editor_readiness_invalid": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "settings",
+      "retryable": true
+    },
+    "editor_not_ready": {
+      "http_status": 409,
+      "design_state": null,
+      "fixer": "settings",
+      "retryable": false
+    },
+    "draft_backend_unsupported": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "settings",
+      "retryable": false
+    },
+    "edl_provenance_required": {
+      "http_status": 422,
+      "design_state": null,
+      "fixer": "wait_dependency",
+      "retryable": false
+    },
+    "runtime_unavailable": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "settings",
+      "retryable": false
+    },
+    "draft_failed": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "retry",
+      "retryable": true
+    },
+    "preview_failed": {
+      "http_status": 503,
+      "design_state": null,
+      "fixer": "retry",
+      "retryable": true
+    },
+    "range_not_satisfiable": {
+      "http_status": 416,
+      "design_state": null,
+      "fixer": "none",
+      "retryable": false
+    }
+  },
+  "$defs": {
+    "technique_id": {
+      "enum": [
+        "jcut",
+        "bed",
+        "duck",
+        "pause",
+        "action"
+      ]
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "editor_choice": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "editor": {
+          "enum": [
+            "otio_kdenlive",
+            "chatcut",
+            "openchatcut",
+            "openfilm"
+          ]
+        },
+        "method": {
+          "enum": [
+            "external",
+            "guide",
+            "self"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "editor",
+        "method",
+        "revision"
+      ]
+    },
+    "choice_read": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/editor_choice"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "editor_choice_unreadable"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ]
+            }
+          },
+          "required": [
+            "error"
+          ]
+        }
+      ]
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "kind": {
+          "enum": [
+            "quiet",
+            "build",
+            "peak"
+          ]
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "kind"
+      ]
+    },
+    "beat_map": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "duration_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "bpm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "meter": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "beats": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "downbeats": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "beat_energy": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "minItems": 1
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          },
+          "minItems": 1
+        },
+        "registry_version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "track_id",
+        "title",
+        "duration_seconds",
+        "bpm",
+        "meter",
+        "beats",
+        "downbeats",
+        "beat_energy",
+        "sections",
+        "registry_version"
+      ]
+    },
+    "playlist_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "track_id"
+      ]
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "playlist": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/playlist_item"
+          },
+          "maxItems": 3
+        },
+        "preset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preset_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "technique_overrides": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "jcut": {
+              "type": "boolean"
+            },
+            "bed": {
+              "type": "boolean"
+            },
+            "duck": {
+              "type": "boolean"
+            },
+            "pause": {
+              "type": "boolean"
+            },
+            "action": {
+              "type": "boolean"
+            }
+          },
+          "required": []
+        },
+        "occurrence_overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "swap_positions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "playlist",
+        "preset_id",
+        "preset_revision",
+        "technique_overrides",
+        "occurrence_overrides",
+        "swap_positions"
+      ]
+    },
+    "input_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "project_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "selection_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "shots_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "transcripts_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "preset_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "settings_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "music": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "song_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "track_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "registry_version": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "beat_map_digest": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "song_instance_id",
+              "track_id",
+              "registry_version",
+              "beat_map_digest"
+            ]
+          },
+          "maxItems": 3
+        },
+        "editor_choice_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "edl_digest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "project_revision",
+        "selection_digest",
+        "shots_digest",
+        "transcripts_digest",
+        "preset_digest",
+        "settings_digest",
+        "music",
+        "editor_choice_revision",
+        "edl_digest"
+      ]
+    },
+    "customization": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "changed": {
+          "type": "boolean"
+        },
+        "disabled": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "jcut",
+              "bed",
+              "duck",
+              "pause",
+              "action"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "enabled": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "jcut",
+              "bed",
+              "duck",
+              "pause",
+              "action"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "skipped_occurrence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "changed",
+        "disabled",
+        "enabled",
+        "skipped_occurrence_ids"
+      ]
+    },
+    "clip": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "media_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "video",
+            "photo"
+          ]
+        },
+        "scene": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scene_group": {
+          "type": "string",
+          "minLength": 1
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "cut_end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "duration": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "source_start": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_end": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "song_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "section_kind": {
+          "enum": [
+            "quiet",
+            "build",
+            "peak"
+          ]
+        },
+        "cut_kind": {
+          "enum": [
+            "beat",
+            "pause"
+          ]
+        }
+      },
+      "required": [
+        "shot_id",
+        "media_id",
+        "kind",
+        "scene",
+        "scene_group",
+        "index",
+        "start",
+        "cut_end",
+        "end",
+        "duration",
+        "source_start",
+        "source_end",
+        "song_id",
+        "section_kind",
+        "cut_kind"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "photo"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source_start": {
+                "type": "null"
+              },
+              "source_end": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "source_start": {
+                "type": "number",
+                "minimum": 0
+              },
+              "source_end": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "cut": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "t": {
+          "type": "number",
+          "minimum": 0
+        },
+        "kind": {
+          "enum": [
+            "beat",
+            "pause"
+          ]
+        },
+        "position": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "shot_id",
+        "t",
+        "kind",
+        "position"
+      ]
+    },
+    "technique": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "enum": [
+            "jcut",
+            "bed",
+            "duck",
+            "pause",
+            "action"
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "enum": [
+            "active",
+            "off",
+            "unused"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "enabled",
+        "count",
+        "total",
+        "status"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "off",
+                  "unused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "enabled": {
+                "const": false
+              },
+              "count": {
+                "const": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "audio_feasibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "audio_stream_missing",
+                "audio_handle_invalid",
+                "audio_stream_unverified"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ]
+    },
+    "duck_region": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "song_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "gain": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "ramp_sec": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "song_id",
+        "start",
+        "end",
+        "gain",
+        "ramp_sec"
+      ]
+    },
+    "occurrence": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "technique": {
+              "const": "pause"
+            },
+            "shot_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "at": {
+              "type": "number",
+              "minimum": 0
+            },
+            "end": {
+              "type": "number",
+              "minimum": 0
+            },
+            "position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "end_position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "live": {
+              "type": "boolean"
+            },
+            "skipped": {
+              "type": "boolean"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "audio_feasibility": {
+              "$ref": "#/$defs/audio_feasibility"
+            },
+            "reason_data": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "source_pause_sec": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "source_pause_sec"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "technique",
+            "shot_ids",
+            "at",
+            "end",
+            "position",
+            "end_position",
+            "live",
+            "skipped",
+            "index",
+            "total",
+            "audio_feasibility",
+            "reason_data"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "technique": {
+              "const": "action"
+            },
+            "shot_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "at": {
+              "type": "number",
+              "minimum": 0
+            },
+            "end": {
+              "type": "number",
+              "minimum": 0
+            },
+            "position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "end_position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "live": {
+              "type": "boolean"
+            },
+            "skipped": {
+              "type": "boolean"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "audio_feasibility": {
+              "$ref": "#/$defs/audio_feasibility"
+            },
+            "reason_data": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "peak_sec": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "source_in_sec": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "peak_sec",
+                "source_in_sec"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "technique",
+            "shot_ids",
+            "at",
+            "end",
+            "position",
+            "end_position",
+            "live",
+            "skipped",
+            "index",
+            "total",
+            "audio_feasibility",
+            "reason_data"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "technique": {
+              "const": "jcut"
+            },
+            "shot_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "at": {
+              "type": "number",
+              "minimum": 0
+            },
+            "end": {
+              "type": "number",
+              "minimum": 0
+            },
+            "position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "end_position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "live": {
+              "type": "boolean"
+            },
+            "skipped": {
+              "type": "boolean"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "audio_feasibility": {
+              "$ref": "#/$defs/audio_feasibility"
+            },
+            "reason_data": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "lead_sec": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "required": [
+                "lead_sec"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "technique",
+            "shot_ids",
+            "at",
+            "end",
+            "position",
+            "end_position",
+            "live",
+            "skipped",
+            "index",
+            "total",
+            "audio_feasibility",
+            "reason_data"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "technique": {
+              "const": "bed"
+            },
+            "shot_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "at": {
+              "type": "number",
+              "minimum": 0
+            },
+            "end": {
+              "type": "number",
+              "minimum": 0
+            },
+            "position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "end_position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "live": {
+              "type": "boolean"
+            },
+            "skipped": {
+              "type": "boolean"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "audio_feasibility": {
+              "$ref": "#/$defs/audio_feasibility"
+            },
+            "reason_data": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "source_shot_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_start_sec": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "source_shot_id",
+                "source_start_sec"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "technique",
+            "shot_ids",
+            "at",
+            "end",
+            "position",
+            "end_position",
+            "live",
+            "skipped",
+            "index",
+            "total",
+            "audio_feasibility",
+            "reason_data"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "technique": {
+              "const": "duck"
+            },
+            "shot_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "at": {
+              "type": "number",
+              "minimum": 0
+            },
+            "end": {
+              "type": "number",
+              "minimum": 0
+            },
+            "position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "end_position": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "live": {
+              "type": "boolean"
+            },
+            "skipped": {
+              "type": "boolean"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "audio_feasibility": {
+              "$ref": "#/$defs/audio_feasibility"
+            },
+            "reason_data": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "regions": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/duck_region"
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "regions"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "technique",
+            "shot_ids",
+            "at",
+            "end",
+            "position",
+            "end_position",
+            "live",
+            "skipped",
+            "index",
+            "total",
+            "audio_feasibility",
+            "reason_data"
+          ]
+        }
+      ]
+    },
+    "swap_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "before_shot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "previous_shot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from_scene": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_scene": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "before_shot_id",
+        "previous_shot_id",
+        "from_scene",
+        "to_scene",
+        "at"
+      ]
+    },
+    "swap": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "song_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before_shot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "number",
+          "minimum": 0
+        },
+        "bpm_delta": {
+          "type": "integer"
+        },
+        "speed_relation": {
+          "enum": [
+            "faster",
+            "slower",
+            "same"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/swap_candidate"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "index",
+        "song_id",
+        "before_shot_id",
+        "at",
+        "bpm_delta",
+        "speed_relation",
+        "alternatives"
+      ]
+    },
+    "song": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "offset": {
+          "type": "number",
+          "minimum": 0
+        },
+        "bpm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "position": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "end_position": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "id",
+        "track_id",
+        "title",
+        "start",
+        "end",
+        "offset",
+        "bpm",
+        "position",
+        "end_position"
+      ]
+    },
+    "missing_words": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "media_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "enabled",
+        "count",
+        "shot_ids",
+        "media_ids"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "enabled": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "count": {
+                "const": 0
+              },
+              "shot_ids": {
+                "maxItems": 0
+              },
+              "media_ids": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "bed_short": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "const": "bed_source_too_short"
+        },
+        "shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 3,
+          "uniqueItems": true
+        },
+        "source_shot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "required_sec": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "available_sec": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id",
+        "code",
+        "shot_ids",
+        "source_shot_id",
+        "at",
+        "end",
+        "required_sec",
+        "available_sec"
+      ]
+    },
+    "warnings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "missing_word_shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "missing_word_media_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "missing_word_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing_word_by_technique": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pause": {
+              "$ref": "#/$defs/missing_words"
+            },
+            "duck": {
+              "$ref": "#/$defs/missing_words"
+            }
+          },
+          "required": [
+            "pause",
+            "duck"
+          ]
+        },
+        "bed_short_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bed_short_occurrences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/bed_short"
+          }
+        },
+        "audio_unverified_occurrence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "unmatched_override_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "missing_word_shot_ids",
+        "missing_word_media_ids",
+        "missing_word_count",
+        "missing_word_by_technique",
+        "bed_short_count",
+        "bed_short_occurrences",
+        "audio_unverified_occurrence_ids",
+        "unmatched_override_ids"
+      ]
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "duration_sec": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "last_cut_sec": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "fade_out_sec": {
+          "const": 1.6
+        },
+        "average_cut_sec": {
+          "type": "number",
+          "minimum": 0
+        },
+        "shot_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "song_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "used_technique_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "occurrence_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scene_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "preview_shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 6,
+          "maxItems": 6
+        }
+      },
+      "required": [
+        "duration_sec",
+        "last_cut_sec",
+        "fade_out_sec",
+        "average_cut_sec",
+        "shot_count",
+        "song_count",
+        "used_technique_count",
+        "occurrence_count",
+        "scene_counts",
+        "preview_shot_ids"
+      ]
+    },
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "roughcut_plan_v1"
+        },
+        "preset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "clips": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clip"
+          },
+          "minItems": 1
+        },
+        "cuts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cut"
+          },
+          "minItems": 1
+        },
+        "techniques": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/technique"
+          },
+          "minItems": 5,
+          "maxItems": 5
+        },
+        "occurrences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/occurrence"
+          }
+        },
+        "songs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/song"
+          },
+          "minItems": 1,
+          "maxItems": 3
+        },
+        "swaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/swap"
+          },
+          "maxItems": 2
+        },
+        "swap_candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/swap_candidate"
+          }
+        },
+        "mapped_sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "song_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "quiet",
+                  "build",
+                  "peak"
+                ]
+              },
+              "start": {
+                "type": "number",
+                "minimum": 0
+              },
+              "end": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "song_id",
+              "kind",
+              "start",
+              "end"
+            ]
+          }
+        },
+        "mapped_downbeats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "song_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bar": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "t": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "song_id",
+              "bar",
+              "t"
+            ]
+          }
+        },
+        "metrics": {
+          "$ref": "#/$defs/metrics"
+        },
+        "warnings": {
+          "$ref": "#/$defs/warnings"
+        },
+        "customization": {
+          "$ref": "#/$defs/customization"
+        },
+        "audio_settings": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "cut_fade_sec": {
+              "const": 0.03
+            },
+            "duck_db": {
+              "const": -12
+            }
+          },
+          "required": [
+            "cut_fade_sec",
+            "duck_db"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "preset_id",
+        "clips",
+        "cuts",
+        "techniques",
+        "occurrences",
+        "songs",
+        "swaps",
+        "swap_candidates",
+        "mapped_sections",
+        "mapped_downbeats",
+        "metrics",
+        "warnings",
+        "customization",
+        "audio_settings"
+      ]
+    },
+    "design_state": {
+      "enum": [
+        "cut-add-song",
+        "cut-arranging",
+        "cut-beat-analyzing",
+        "cut-beat-queued",
+        "cut-bed-short",
+        "cut-custom",
+        "cut-editor",
+        "cut-editor-chatcut",
+        "cut-editor-chatcut-connected",
+        "cut-editor-guide-missing",
+        "cut-editor-kdenlive-missing",
+        "cut-editor-openfilm",
+        "cut-editor-unreadable",
+        "cut-editor-unsupported",
+        "cut-failed",
+        "cut-failed-missing",
+        "cut-failed-short",
+        "cut-failed-unreadable",
+        "cut-mine",
+        "cut-multi",
+        "cut-multi-swap",
+        "cut-no-music",
+        "cut-occurrence",
+        "cut-partial",
+        "cut-partial-none",
+        "cut-presets",
+        "cut-presets-unreadable",
+        "cut-presets-unreadable-mine",
+        "cut-ready",
+        "cut-rearrange-failed",
+        "cut-replace-song",
+        "cut-stacked",
+        "cut-drafting",
+        "cut-drafted",
+        "cut-drafted-guide",
+        "cut-draft-stale"
+      ]
+    },
+    "error_details": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "short_shot_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "song_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependency": {
+          "enum": [
+            "r223_beat_reader",
+            "r223_retry_route",
+            "roughcut_preview_renderer",
+            "roughcut_guide_exporter"
+          ]
+        },
+        "upstream_failure_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "block_reason": {
+          "enum": [
+            "editor_not_ready",
+            "editor_readiness_unknown",
+            "multi_source_unverified",
+            "self_workflow_outside_roughcut"
+          ]
+        },
+        "editor": {
+          "enum": [
+            "otio_kdenlive",
+            "chatcut",
+            "openchatcut",
+            "openfilm"
+          ]
+        },
+        "media_length": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": []
+    },
+    "failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "csrf_invalid",
+            "origin_forbidden",
+            "host_forbidden",
+            "body_invalid",
+            "revision_invalid",
+            "roughcut_command_invalid",
+            "roughcut_job_action_invalid",
+            "request_invalid",
+            "project_not_found",
+            "roughcut_job_not_found",
+            "roughcut_media_not_found",
+            "revision_conflict",
+            "roughcut_inputs_stale",
+            "selection_not_confirmed",
+            "roughcut_state_unreadable",
+            "roughcut_job_unreadable",
+            "preset_write_failed",
+            "preset_store_unreadable",
+            "builtin_presets_invalid",
+            "settings_invalid",
+            "beat_analysis_unavailable",
+            "unknown_track",
+            "music_track_not_found",
+            "beat_failed",
+            "result_unreadable",
+            "beat_map_invalid",
+            "beat_map_missing",
+            "shot_too_short",
+            "song_entry_unavailable",
+            "song_too_short",
+            "music_count_invalid",
+            "playlist_invalid",
+            "preset_not_found",
+            "preset_invalid",
+            "occurrence_not_found",
+            "overrides_invalid",
+            "swap_boundary_invalid",
+            "transcript_selection_invalid",
+            "shots_invalid",
+            "transcript_invalid",
+            "transcript_unreadable",
+            "transcription_unavailable",
+            "transcript_failed",
+            "editor_choice_unreadable",
+            "editor_choice_invalid",
+            "editor_diagnostics_unreadable",
+            "editor_readiness_invalid",
+            "editor_not_ready",
+            "draft_backend_unsupported",
+            "edl_provenance_required",
+            "runtime_unavailable",
+            "draft_failed",
+            "preview_failed",
+            "range_not_satisfiable"
+          ]
+        },
+        "http_status": {
+          "enum": [
+            400,
+            403,
+            404,
+            409,
+            416,
+            422,
+            503
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "fixer": {
+          "enum": [
+            "retry",
+            "none",
+            "refetch",
+            "shot_selection",
+            "repair_store",
+            "wait_dependency",
+            "music",
+            "retry_analysis",
+            "transcribe",
+            "settings"
+          ]
+        },
+        "design_state": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/design_state"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "details": {
+          "$ref": "#/$defs/error_details"
+        }
+      },
+      "required": [
+        "code",
+        "http_status",
+        "message",
+        "retryable",
+        "fixer",
+        "design_state",
+        "details"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "csrf_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 403
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "origin_forbidden"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 403
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "host_forbidden"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 403
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "body_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 400
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "revision_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 400
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "roughcut_command_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 400
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "roughcut_job_action_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 400
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "request_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 400
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "project_not_found"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 404
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "roughcut_job_not_found"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 404
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "roughcut_media_not_found"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 404
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "revision_conflict"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 409
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "roughcut_inputs_stale"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 409
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "selection_not_confirmed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 409
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "roughcut_state_unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "roughcut_job_unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "preset_write_failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "preset_store_unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "builtin_presets_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "settings_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "beat_analysis_unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "unknown_track"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "music_track_not_found"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "beat_failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "result_unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "beat_map_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "beat_map_missing"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "shot_too_short"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "song_entry_unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "song_too_short"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "music_count_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "playlist_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "preset_not_found"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "preset_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "occurrence_not_found"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "overrides_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "swap_boundary_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "transcript_selection_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "shots_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "transcript_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "transcript_unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "transcription_unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "transcript_failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "editor_choice_unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "editor_choice_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "editor_diagnostics_unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "editor_readiness_invalid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "editor_not_ready"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 409
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "draft_backend_unsupported"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "edl_provenance_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 422
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "runtime_unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "draft_failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "preview_failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 503
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "range_not_satisfiable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "http_status": {
+                "const": 416
+              }
+            }
+          }
+        }
+      ]
+    },
+    "error_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "error": {
+          "$ref": "#/$defs/failure"
+        }
+      },
+      "required": [
+        "ok",
+        "error"
+      ],
+      "examples": [
+        {
+          "ok": false,
+          "error": {
+            "code": "shot_too_short",
+            "http_status": 422,
+            "design_state": "cut-failed-short",
+            "fixer": "shot_selection",
+            "retryable": false,
+            "message": "有 1 个镜头太短，按这首歌的拍子排不进去",
+            "details": {
+              "shot_ids": [
+                "s2"
+              ],
+              "short_shot_count": 1
+            }
+          }
+        }
+      ]
+    },
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "song_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "analyzing",
+            "done",
+            "beat_failed",
+            "result_unreadable",
+            "unknown_track",
+            "unavailable"
+          ]
+        },
+        "beat_count": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "beat_map": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/beat_map"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/failure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "song_instance_id",
+        "track_id",
+        "status",
+        "beat_count",
+        "beat_map",
+        "failure"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "done"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "beat_count": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "beat_map": {
+                "$ref": "#/$defs/beat_map"
+              },
+              "failure": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "beat_count": {
+                "type": "null"
+              },
+              "beat_map": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "queued",
+                  "analyzing"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "beat_failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/failure"
+                  },
+                  {
+                    "properties": {
+                      "code": {
+                        "const": "beat_failed"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "result_unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/failure"
+                  },
+                  {
+                    "properties": {
+                      "code": {
+                        "const": "result_unreadable"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown_track"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/failure"
+                  },
+                  {
+                    "properties": {
+                      "code": {
+                        "const": "unknown_track"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/failure"
+                  },
+                  {
+                    "properties": {
+                      "code": {
+                        "const": "beat_analysis_unavailable"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "job_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "arrange",
+            "transcribe",
+            "draft"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "job_id",
+        "kind",
+        "revision"
+      ]
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "thumbnail",
+            "preview",
+            "comparison_with",
+            "comparison_without",
+            "draft",
+            "guide"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^/api/review/pieces/[^/]+/roughcut/media/[^/?#]+$"
+        },
+        "content_type": {
+          "enum": [
+            "image/jpeg",
+            "image/png",
+            "video/mp4",
+            "audio/wav",
+            "application/xml",
+            "application/json",
+            "text/markdown; charset=utf-8",
+            "text/plain; charset=utf-8"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "shot_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "url",
+        "content_type",
+        "revision",
+        "shot_id"
+      ]
+    },
+    "preset_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "preset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preset_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "input_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "status": {
+          "enum": [
+            "ready",
+            "queued",
+            "failed"
+          ]
+        },
+        "duration_sec": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview_shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maxItems": 6
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/failure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cuts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cut"
+          }
+        },
+        "mapped_sections": {
+          "$ref": "#/$defs/plan/properties/mapped_sections"
+        }
+      },
+      "required": [
+        "preset_id",
+        "preset_revision",
+        "input_digest",
+        "status",
+        "duration_sec",
+        "preview_shot_ids",
+        "failure",
+        "cuts",
+        "mapped_sections"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "ready"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "duration_sec": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "preview_shot_ids": {
+                "minItems": 6,
+                "maxItems": 6
+              },
+              "failure": {
+                "type": "null"
+              },
+              "cuts": {
+                "minItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "duration_sec": {
+                "type": "null"
+              },
+              "preview_shot_ids": {
+                "maxItems": 0
+              },
+              "cuts": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "mapped_sections": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "notice": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "editor_not_ready",
+            "draft_backend_unsupported",
+            "editor_choice_unreadable",
+            "rearrange_failed",
+            "preset_store_unreadable",
+            "missing_word_timing",
+            "bed_source_too_short"
+          ]
+        },
+        "design_state": {
+          "$ref": "#/$defs/design_state"
+        },
+        "count": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "techniques": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "jcut",
+              "bed",
+              "duck",
+              "pause",
+              "action"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/failure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "design_state",
+        "count",
+        "techniques",
+        "failure"
+      ]
+    },
+    "speech_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "eligible_video_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing_video_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "affected_techniques": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "pause",
+              "duck"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "mode": {
+          "enum": [
+            "none",
+            "partial",
+            "all"
+          ]
+        },
+        "by_technique": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pause": {
+              "$ref": "#/$defs/missing_words"
+            },
+            "duck": {
+              "$ref": "#/$defs/missing_words"
+            }
+          },
+          "required": [
+            "pause",
+            "duck"
+          ]
+        }
+      },
+      "required": [
+        "eligible_video_count",
+        "missing_video_count",
+        "affected_techniques",
+        "mode",
+        "by_technique"
+      ]
+    },
+    "display": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base_state": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/design_state"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "notices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/notice"
+          }
+        },
+        "draft_allowed": {
+          "type": "boolean"
+        },
+        "draft_blockers": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "no_plan",
+              "busy",
+              "stale",
+              "editor_choice_unreadable",
+              "editor_not_ready",
+              "editor_readiness_unknown",
+              "multi_source_unverified",
+              "self_workflow_outside_roughcut",
+              "runtime_unavailable"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "speech": {
+          "$ref": "#/$defs/speech_summary"
+        }
+      },
+      "required": [
+        "base_state",
+        "notices",
+        "draft_allowed",
+        "draft_blockers",
+        "speech"
+      ]
+    },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "preset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scene_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "dominant_scene": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dominant_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sports_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "preset_id",
+        "scene_counts",
+        "dominant_scene",
+        "dominant_count",
+        "sports_count"
+      ]
+    },
+    "source_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "selected_shot_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "selected_video_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "selected_photo_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inventory_video_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inventory_photo_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "selection_confirmed": {
+          "type": "boolean"
+        },
+        "selection_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "selected_shot_count",
+        "selected_video_count",
+        "selected_photo_count",
+        "inventory_video_count",
+        "inventory_photo_count",
+        "selection_confirmed",
+        "selection_digest"
+      ]
+    },
+    "state_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "schema_version": {
+          "const": "roughcut_api_v1"
+        },
+        "piece_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "prerequisite",
+            "no_music",
+            "queued",
+            "arranging",
+            "ready",
+            "failed",
+            "stopping",
+            "stopped"
+          ]
+        },
+        "source_summary": {
+          "$ref": "#/$defs/source_summary"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "input_binding": {
+          "$ref": "#/$defs/input_binding"
+        },
+        "plan": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/plan"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_input_binding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/input_binding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "job": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/job_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "analysis": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/analysis"
+          },
+          "maxItems": 3
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/failure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommendation": {
+          "$ref": "#/$defs/recommendation"
+        },
+        "preset_previews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/preset_preview"
+          }
+        },
+        "warnings": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/warnings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "customization": {
+          "$ref": "#/$defs/customization"
+        },
+        "display": {
+          "$ref": "#/$defs/display"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact"
+          }
+        },
+        "playback": {
+          "$ref": "#/$defs/playback"
+        },
+        "source_audio": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source_audio"
+          }
+        },
+        "draft": {
+          "$ref": "#/$defs/draft_state"
+        }
+      },
+      "required": [
+        "ok",
+        "schema_version",
+        "piece_id",
+        "project_revision",
+        "revision",
+        "status",
+        "source_summary",
+        "selection",
+        "input_binding",
+        "plan",
+        "plan_revision",
+        "plan_input_binding",
+        "job",
+        "analysis",
+        "failure",
+        "recommendation",
+        "preset_previews",
+        "warnings",
+        "customization",
+        "display",
+        "artifacts",
+        "playback",
+        "source_audio",
+        "draft"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "schema_version": "roughcut_api_v1",
+          "piece_id": "piece-demo",
+          "project_revision": 7,
+          "revision": 2,
+          "status": "ready",
+          "source_summary": {
+            "selected_shot_count": 3,
+            "selected_video_count": 3,
+            "selected_photo_count": 0,
+            "inventory_video_count": 4,
+            "inventory_photo_count": 1,
+            "selection_confirmed": true,
+            "selection_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "selection": {
+            "playlist": [
+              {
+                "id": "song-instance-1",
+                "track_id": "song-a"
+              }
+            ],
+            "preset_id": "trip",
+            "preset_revision": 1,
+            "technique_overrides": {},
+            "occurrence_overrides": {},
+            "swap_positions": {}
+          },
+          "input_binding": {
+            "project_revision": 7,
+            "selection_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "shots_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "transcripts_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "preset_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "settings_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "music": [
+              {
+                "song_instance_id": "song-instance-1",
+                "track_id": "song-a",
+                "registry_version": 1,
+                "beat_map_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            ],
+            "editor_choice_revision": 2,
+            "edl_digest": null
+          },
+          "plan": {
+            "schema_version": "roughcut_plan_v1",
+            "preset_id": "trip",
+            "clips": [
+              {
+                "shot_id": "s0",
+                "media_id": "m0",
+                "kind": "video",
+                "scene": "travel",
+                "scene_group": "travel",
+                "index": 1,
+                "start": 0.0,
+                "cut_end": 4.0,
+                "end": 4.0,
+                "source_start": 1,
+                "song_id": "song-instance-1",
+                "section_kind": "quiet",
+                "cut_kind": "beat",
+                "duration": 4.0,
+                "source_end": 5.0
+              },
+              {
+                "shot_id": "s1",
+                "media_id": "m1",
+                "kind": "video",
+                "scene": "travel",
+                "scene_group": "travel",
+                "index": 2,
+                "start": 4.0,
+                "cut_end": 8.0,
+                "end": 8.0,
+                "source_start": 1,
+                "song_id": "song-instance-1",
+                "section_kind": "quiet",
+                "cut_kind": "beat",
+                "duration": 4.0,
+                "source_end": 5.0
+              },
+              {
+                "shot_id": "s2",
+                "media_id": "m2",
+                "kind": "video",
+                "scene": "selfie-moments",
+                "scene_group": "selfie-moments",
+                "index": 3,
+                "start": 8.0,
+                "cut_end": 12.0,
+                "end": 13.6,
+                "source_start": 1,
+                "song_id": "song-instance-1",
+                "section_kind": "quiet",
+                "cut_kind": "beat",
+                "duration": 5.6,
+                "source_end": 6.6
+              }
+            ],
+            "cuts": [
+              {
+                "shot_id": "s0",
+                "t": 4.0,
+                "kind": "beat",
+                "position": 0.29411764705882354
+              },
+              {
+                "shot_id": "s1",
+                "t": 8.0,
+                "kind": "beat",
+                "position": 0.5882352941176471
+              },
+              {
+                "shot_id": "s2",
+                "t": 12.0,
+                "kind": "beat",
+                "position": 0.8823529411764706
+              }
+            ],
+            "techniques": [
+              {
+                "id": "jcut",
+                "enabled": true,
+                "count": 1,
+                "total": 1,
+                "status": "active"
+              },
+              {
+                "id": "bed",
+                "enabled": true,
+                "count": 0,
+                "total": 0,
+                "status": "active"
+              },
+              {
+                "id": "duck",
+                "enabled": true,
+                "count": 0,
+                "total": 0,
+                "status": "active"
+              },
+              {
+                "id": "pause",
+                "enabled": true,
+                "count": 0,
+                "total": 0,
+                "status": "active"
+              },
+              {
+                "id": "action",
+                "enabled": true,
+                "count": 0,
+                "total": 0,
+                "status": "active"
+              }
+            ],
+            "occurrences": [
+              {
+                "id": "jcut:s1>s2",
+                "technique": "jcut",
+                "shot_ids": [
+                  "s1",
+                  "s2"
+                ],
+                "at": 8.0,
+                "end": 8.0,
+                "reason_data": {
+                  "lead_sec": 0.5
+                },
+                "audio_feasibility": {
+                  "status": "available",
+                  "reason": null
+                },
+                "skipped": false,
+                "live": true,
+                "index": 1,
+                "total": 1,
+                "position": 0.5882352941176471,
+                "end_position": 0.5882352941176471
+              }
+            ],
+            "songs": [
+              {
+                "id": "song-instance-1",
+                "track_id": "song-a",
+                "title": "Synthetic A",
+                "start": 0.0,
+                "offset": 0,
+                "bpm": 120,
+                "end": 13.6,
+                "position": 0.0,
+                "end_position": 1.0
+              }
+            ],
+            "swaps": [],
+            "swap_candidates": [],
+            "mapped_sections": [
+              {
+                "song_id": "song-instance-1",
+                "kind": "quiet",
+                "start": 0.0,
+                "end": 13.6
+              }
+            ],
+            "mapped_downbeats": [
+              {
+                "song_id": "song-instance-1",
+                "bar": 1,
+                "t": 0.0
+              },
+              {
+                "song_id": "song-instance-1",
+                "bar": 2,
+                "t": 2.0
+              },
+              {
+                "song_id": "song-instance-1",
+                "bar": 3,
+                "t": 4.0
+              },
+              {
+                "song_id": "song-instance-1",
+                "bar": 4,
+                "t": 6.0
+              },
+              {
+                "song_id": "song-instance-1",
+                "bar": 5,
+                "t": 8.0
+              },
+              {
+                "song_id": "song-instance-1",
+                "bar": 6,
+                "t": 10.0
+              },
+              {
+                "song_id": "song-instance-1",
+                "bar": 7,
+                "t": 12.0
+              }
+            ],
+            "metrics": {
+              "duration_sec": 13.6,
+              "last_cut_sec": 12.0,
+              "fade_out_sec": 1.6,
+              "average_cut_sec": 4.0,
+              "shot_count": 3,
+              "song_count": 1,
+              "used_technique_count": 1,
+              "occurrence_count": 1,
+              "scene_counts": {
+                "travel": 2,
+                "selfie-moments": 1
+              },
+              "preview_shot_ids": [
+                "s0",
+                "s0",
+                "s1",
+                "s1",
+                "s2",
+                "s2"
+              ]
+            },
+            "warnings": {
+              "missing_word_shot_ids": [
+                "s2"
+              ],
+              "missing_word_media_ids": [
+                "m2"
+              ],
+              "missing_word_count": 1,
+              "missing_word_by_technique": {
+                "pause": {
+                  "enabled": true,
+                  "count": 1,
+                  "shot_ids": [
+                    "s2"
+                  ],
+                  "media_ids": [
+                    "m2"
+                  ]
+                },
+                "duck": {
+                  "enabled": true,
+                  "count": 1,
+                  "shot_ids": [
+                    "s2"
+                  ],
+                  "media_ids": [
+                    "m2"
+                  ]
+                }
+              },
+              "bed_short_count": 0,
+              "bed_short_occurrences": [],
+              "unmatched_override_ids": [],
+              "audio_unverified_occurrence_ids": []
+            },
+            "customization": {
+              "changed": false,
+              "disabled": [],
+              "enabled": [],
+              "skipped_occurrence_ids": []
+            },
+            "audio_settings": {
+              "cut_fade_sec": 0.03,
+              "duck_db": -12
+            }
+          },
+          "plan_revision": 2,
+          "plan_input_binding": {
+            "project_revision": 7,
+            "selection_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "shots_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "transcripts_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "preset_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "settings_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "music": [
+              {
+                "song_instance_id": "song-instance-1",
+                "track_id": "song-a",
+                "registry_version": 1,
+                "beat_map_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            ],
+            "editor_choice_revision": 2,
+            "edl_digest": null
+          },
+          "job": null,
+          "analysis": [
+            {
+              "song_instance_id": "song-instance-1",
+              "track_id": "song-a",
+              "status": "done",
+              "beat_count": 41,
+              "beat_map": {
+                "track_id": "song-a",
+                "title": "Synthetic A",
+                "duration_seconds": 20,
+                "bpm": 120,
+                "meter": 4,
+                "beats": [
+                  0.0,
+                  0.5,
+                  1.0,
+                  1.5,
+                  2.0,
+                  2.5,
+                  3.0,
+                  3.5,
+                  4.0,
+                  4.5,
+                  5.0,
+                  5.5,
+                  6.0,
+                  6.5,
+                  7.0,
+                  7.5,
+                  8.0,
+                  8.5,
+                  9.0,
+                  9.5,
+                  10.0,
+                  10.5,
+                  11.0,
+                  11.5,
+                  12.0,
+                  12.5,
+                  13.0,
+                  13.5,
+                  14.0,
+                  14.5,
+                  15.0,
+                  15.5,
+                  16.0,
+                  16.5,
+                  17.0,
+                  17.5,
+                  18.0,
+                  18.5,
+                  19.0,
+                  19.5,
+                  20.0
+                ],
+                "downbeats": [
+                  0.0,
+                  2.0,
+                  4.0,
+                  6.0,
+                  8.0,
+                  10.0,
+                  12.0,
+                  14.0,
+                  16.0,
+                  18.0,
+                  20.0
+                ],
+                "beat_energy": [
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "sections": [
+                  {
+                    "start": 0,
+                    "end": 20,
+                    "kind": "quiet"
+                  }
+                ],
+                "registry_version": 1
+              },
+              "failure": null
+            }
+          ],
+          "failure": null,
+          "recommendation": {
+            "preset_id": "trip",
+            "scene_counts": {
+              "travel": 2,
+              "selfie-moments": 1
+            },
+            "dominant_scene": "travel",
+            "dominant_count": 2,
+            "sports_count": 0
+          },
+          "preset_previews": [
+            {
+              "preset_id": "trip",
+              "preset_revision": 1,
+              "input_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "status": "ready",
+              "duration_sec": 13.6,
+              "preview_shot_ids": [
+                "s0",
+                "s0",
+                "s1",
+                "s1",
+                "s2",
+                "s2"
+              ],
+              "failure": null,
+              "cuts": [
+                {
+                  "shot_id": "s0",
+                  "t": 4.0,
+                  "kind": "beat",
+                  "position": 0.29411764705882354
+                },
+                {
+                  "shot_id": "s1",
+                  "t": 8.0,
+                  "kind": "beat",
+                  "position": 0.5882352941176471
+                },
+                {
+                  "shot_id": "s2",
+                  "t": 12.0,
+                  "kind": "beat",
+                  "position": 0.8823529411764706
+                }
+              ],
+              "mapped_sections": [
+                {
+                  "song_id": "song-instance-1",
+                  "kind": "quiet",
+                  "start": 0.0,
+                  "end": 13.6
+                }
+              ]
+            }
+          ],
+          "warnings": {
+            "missing_word_shot_ids": [
+              "s2"
+            ],
+            "missing_word_media_ids": [
+              "m2"
+            ],
+            "missing_word_count": 1,
+            "missing_word_by_technique": {
+              "pause": {
+                "enabled": true,
+                "count": 1,
+                "shot_ids": [
+                  "s2"
+                ],
+                "media_ids": [
+                  "m2"
+                ]
+              },
+              "duck": {
+                "enabled": true,
+                "count": 1,
+                "shot_ids": [
+                  "s2"
+                ],
+                "media_ids": [
+                  "m2"
+                ]
+              }
+            },
+            "bed_short_count": 0,
+            "bed_short_occurrences": [],
+            "unmatched_override_ids": [],
+            "audio_unverified_occurrence_ids": []
+          },
+          "customization": {
+            "changed": false,
+            "disabled": [],
+            "enabled": [],
+            "skipped_occurrence_ids": []
+          },
+          "display": {
+            "base_state": "cut-ready",
+            "notices": [
+              {
+                "code": "missing_word_timing",
+                "design_state": "cut-partial-none",
+                "count": 1,
+                "techniques": [
+                  "pause",
+                  "duck"
+                ],
+                "failure": null
+              }
+            ],
+            "draft_allowed": false,
+            "draft_blockers": [
+              "runtime_unavailable"
+            ],
+            "speech": {
+              "eligible_video_count": 1,
+              "missing_video_count": 1,
+              "affected_techniques": [
+                "pause",
+                "duck"
+              ],
+              "mode": "all",
+              "by_technique": {
+                "pause": {
+                  "enabled": true,
+                  "count": 1,
+                  "shot_ids": [
+                    "s2"
+                  ],
+                  "media_ids": [
+                    "m2"
+                  ]
+                },
+                "duck": {
+                  "enabled": true,
+                  "count": 1,
+                  "shot_ids": [
+                    "s2"
+                  ],
+                  "media_ids": [
+                    "m2"
+                  ]
+                }
+              }
+            }
+          },
+          "artifacts": [],
+          "playback": {
+            "status": "unavailable",
+            "preview_artifact_id": null,
+            "duration_sec": null,
+            "audio_verified": false,
+            "failure": null
+          },
+          "source_audio": [
+            {
+              "shot_id": "s0",
+              "has_audio": true,
+              "mode": "unknown",
+              "evidence": "unverified",
+              "position": 0.0,
+              "end_position": 0.294118
+            },
+            {
+              "shot_id": "s1",
+              "has_audio": true,
+              "mode": "unknown",
+              "evidence": "unverified",
+              "position": 0.294118,
+              "end_position": 0.588235
+            },
+            {
+              "shot_id": "s2",
+              "has_audio": true,
+              "mode": "unknown",
+              "evidence": "unverified",
+              "position": 0.588235,
+              "end_position": 1.0
+            }
+          ],
+          "draft": {
+            "status": "none",
+            "design_state": null,
+            "job_id": null,
+            "plan_revision": null,
+            "editor": null,
+            "method": null,
+            "editor_choice_revision": null,
+            "input_edl_digest": null,
+            "edl_digest": null,
+            "guide_artifact_id": null,
+            "project_artifact_id": null,
+            "artifact_ids": [],
+            "can_open": false,
+            "failure": null
+          }
+        },
+        {
+          "ok": true,
+          "schema_version": "roughcut_api_v1",
+          "piece_id": "piece-demo",
+          "project_revision": 7,
+          "revision": 2,
+          "status": "no_music",
+          "source_summary": {
+            "selected_shot_count": 3,
+            "selected_video_count": 3,
+            "selected_photo_count": 0,
+            "inventory_video_count": 4,
+            "inventory_photo_count": 1,
+            "selection_confirmed": true,
+            "selection_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "selection": {
+            "playlist": [],
+            "preset_id": "trip",
+            "preset_revision": 1,
+            "technique_overrides": {},
+            "occurrence_overrides": {},
+            "swap_positions": {}
+          },
+          "input_binding": {
+            "project_revision": 7,
+            "selection_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "shots_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "transcripts_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "preset_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "settings_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "music": [],
+            "editor_choice_revision": 2,
+            "edl_digest": null
+          },
+          "plan": null,
+          "plan_revision": null,
+          "plan_input_binding": null,
+          "job": null,
+          "analysis": [],
+          "failure": null,
+          "recommendation": {
+            "preset_id": "trip",
+            "scene_counts": {
+              "travel": 2,
+              "selfie-moments": 1
+            },
+            "dominant_scene": "travel",
+            "dominant_count": 2,
+            "sports_count": 0
+          },
+          "preset_previews": [],
+          "warnings": null,
+          "customization": {
+            "changed": false,
+            "disabled": [],
+            "enabled": [],
+            "skipped_occurrence_ids": []
+          },
+          "display": {
+            "base_state": "cut-no-music",
+            "notices": [],
+            "draft_allowed": false,
+            "draft_blockers": [
+              "no_plan"
+            ],
+            "speech": {
+              "eligible_video_count": 1,
+              "missing_video_count": 0,
+              "affected_techniques": [],
+              "mode": "none",
+              "by_technique": {
+                "pause": {
+                  "enabled": false,
+                  "count": 0,
+                  "shot_ids": [],
+                  "media_ids": []
+                },
+                "duck": {
+                  "enabled": false,
+                  "count": 0,
+                  "shot_ids": [],
+                  "media_ids": []
+                }
+              }
+            }
+          },
+          "artifacts": [],
+          "playback": {
+            "status": "unavailable",
+            "preview_artifact_id": null,
+            "duration_sec": null,
+            "audio_verified": false,
+            "failure": null
+          },
+          "source_audio": [],
+          "draft": {
+            "status": "none",
+            "design_state": null,
+            "job_id": null,
+            "plan_revision": null,
+            "editor": null,
+            "method": null,
+            "editor_choice_revision": null,
+            "input_edl_digest": null,
+            "edl_digest": null,
+            "guide_artifact_id": null,
+            "project_artifact_id": null,
+            "artifact_ids": [],
+            "can_open": false,
+            "failure": null
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "ready"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "plan": {
+                "$ref": "#/$defs/plan"
+              },
+              "plan_revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "plan_input_binding": {
+                "$ref": "#/$defs/input_binding"
+              },
+              "warnings": {
+                "$ref": "#/$defs/warnings"
+              },
+              "failure": {
+                "type": "null"
+              },
+              "input_binding": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/input_binding"
+                  },
+                  {
+                    "properties": {
+                      "music": {
+                        "minItems": 1,
+                        "items": {
+                          "properties": {
+                            "registry_version": {
+                              "type": "integer",
+                              "minimum": 1
+                            },
+                            "beat_map_digest": {
+                              "$ref": "#/$defs/digest"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "prerequisite",
+                  "no_music"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "plan": {
+                "type": "null"
+              },
+              "plan_revision": {
+                "type": "null"
+              },
+              "plan_input_binding": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "no_music"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "selection": {
+                "properties": {
+                  "playlist": {
+                    "maxItems": 0
+                  }
+                }
+              },
+              "analysis": {
+                "maxItems": 0
+              },
+              "source_summary": {
+                "properties": {
+                  "selection_confirmed": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "prerequisite"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source_summary": {
+                "properties": {
+                  "selection_confirmed": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "command_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "projectRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "selectionDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "command": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "select_music"
+                },
+                "track_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "maxItems": 3,
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "type",
+                "track_ids"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "apply_preset"
+                },
+                "preset_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "preset_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "type",
+                "preset_id",
+                "preset_revision"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "set_technique"
+                },
+                "id": {
+                  "enum": [
+                    "jcut",
+                    "bed",
+                    "duck",
+                    "pause",
+                    "action"
+                  ]
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "enabled"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "set_occurrence"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "enabled"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "reset_customization"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "add_song"
+                },
+                "track_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "type",
+                "track_id"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "replace_song"
+                },
+                "song_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "track_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "type",
+                "song_instance_id",
+                "track_id"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "remove_song"
+                },
+                "song_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "type",
+                "song_instance_id"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "const": "move_swap"
+                },
+                "swap_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "before_shot_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "type",
+                "swap_id",
+                "before_shot_id"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "projectRevision",
+        "selectionDigest",
+        "command"
+      ],
+      "examples": [
+        {
+          "expectedRevision": 1,
+          "projectRevision": 7,
+          "selectionDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "command": {
+            "type": "select_music",
+            "track_ids": [
+              "song-a"
+            ]
+          }
+        }
+      ]
+    },
+    "command_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "queued"
+        },
+        "accepted_selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "input_binding": {
+          "$ref": "#/$defs/input_binding"
+        }
+      },
+      "required": [
+        "ok",
+        "revision",
+        "job_id",
+        "status",
+        "accepted_selection",
+        "input_binding"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "revision": 2,
+          "job_id": "job-demo",
+          "status": "queued",
+          "accepted_selection": {
+            "playlist": [
+              {
+                "id": "song-instance-1",
+                "track_id": "song-a"
+              }
+            ],
+            "preset_id": "trip",
+            "preset_revision": 1,
+            "technique_overrides": {},
+            "occurrence_overrides": {},
+            "swap_positions": {}
+          },
+          "input_binding": {
+            "project_revision": 7,
+            "selection_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "shots_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "transcripts_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "preset_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "settings_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "music": [
+              {
+                "song_instance_id": "song-instance-1",
+                "track_id": "song-a",
+                "registry_version": 1,
+                "beat_map_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            ],
+            "editor_choice_revision": 2,
+            "edl_digest": null
+          }
+        }
+      ]
+    },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "phase": {
+          "enum": [
+            "beat",
+            "cuts",
+            "techniques",
+            "preview",
+            "draft",
+            "transcribe"
+          ]
+        },
+        "completed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unit": {
+          "enum": [
+            "beats",
+            "shots",
+            "occurrences",
+            "artifacts",
+            "media",
+            "steps"
+          ]
+        },
+        "determinate": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "phase",
+        "completed",
+        "total",
+        "unit",
+        "determinate"
+      ]
+    },
+    "draft_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "editor": {
+          "enum": [
+            "otio_kdenlive",
+            "chatcut",
+            "openchatcut",
+            "openfilm"
+          ]
+        },
+        "method": {
+          "enum": [
+            "external",
+            "guide",
+            "self"
+          ]
+        },
+        "project_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "edl_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "enum": [
+                  "source_ranges",
+                  "shot_identity",
+                  "duration",
+                  "photos",
+                  "audio",
+                  "music",
+                  "readback"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "passed",
+                  "manual",
+                  "not_applicable"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "status"
+            ]
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "editor",
+        "method",
+        "project_revision",
+        "edl_digest",
+        "artifact_ids",
+        "checks"
+      ]
+    },
+    "transcript_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "word_ready_shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "missing_word_shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "rearrange_job_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "media_ids",
+        "shot_ids",
+        "word_ready_shot_ids",
+        "missing_word_shot_ids",
+        "rearrange_job_id"
+      ]
+    },
+    "job_result": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "arrange"
+            },
+            "result_revision": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "result_revision"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "draft"
+            },
+            "draft": {
+              "$ref": "#/$defs/draft_result"
+            }
+          },
+          "required": [
+            "kind",
+            "draft"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "transcribe"
+            },
+            "transcription": {
+              "$ref": "#/$defs/transcript_result"
+            }
+          },
+          "required": [
+            "kind",
+            "transcription"
+          ]
+        }
+      ]
+    },
+    "job_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "piece_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "enum": [
+            "arrange",
+            "transcribe",
+            "draft"
+          ]
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "running",
+            "done",
+            "failed",
+            "stopping",
+            "stopped"
+          ]
+        },
+        "progress": {
+          "$ref": "#/$defs/progress"
+        },
+        "analysis": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/analysis"
+          },
+          "maxItems": 3
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/failure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "result_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/job_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "ok",
+        "job_id",
+        "piece_id",
+        "revision",
+        "kind",
+        "status",
+        "progress",
+        "analysis",
+        "failure",
+        "result_revision",
+        "result"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "job_id": "job-demo",
+          "piece_id": "piece-demo",
+          "revision": 2,
+          "kind": "arrange",
+          "status": "running",
+          "progress": {
+            "phase": "beat",
+            "completed": 0,
+            "total": null,
+            "unit": "beats",
+            "determinate": false
+          },
+          "analysis": [
+            {
+              "song_instance_id": "song-instance-1",
+              "track_id": "song-a",
+              "status": "queued",
+              "beat_count": null,
+              "beat_map": null,
+              "failure": null
+            }
+          ],
+          "failure": null,
+          "result_revision": null,
+          "result": null
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "done"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "type": "null"
+              },
+              "result": {
+                "$ref": "#/$defs/job_result"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "result": {
+                "type": "null"
+              },
+              "result_revision": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "$ref": "#/$defs/failure"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "failure": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "arrange"
+              },
+              "status": {
+                "const": "done"
+              }
+            },
+            "required": [
+              "kind",
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "properties": {
+                  "kind": {
+                    "const": "arrange"
+                  }
+                }
+              },
+              "result_revision": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "draft"
+              },
+              "status": {
+                "const": "done"
+              }
+            },
+            "required": [
+              "kind",
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "properties": {
+                  "kind": {
+                    "const": "draft"
+                  }
+                }
+              },
+              "result_revision": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "transcribe"
+              },
+              "status": {
+                "const": "done"
+              }
+            },
+            "required": [
+              "kind",
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "properties": {
+                  "kind": {
+                    "const": "transcribe"
+                  }
+                }
+              },
+              "result_revision": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "stop_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "stop"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "action",
+        "expectedRevision"
+      ],
+      "examples": [
+        {
+          "action": "stop",
+          "expectedRevision": 2
+        }
+      ]
+    },
+    "stop_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "stopping",
+            "stopped"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "ok",
+        "job_id",
+        "status",
+        "revision"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "job_id": "job-demo",
+          "status": "stopping",
+          "revision": 3
+        }
+      ]
+    },
+    "capability_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "auto",
+            "manual"
+          ]
+        },
+        "support": {
+          "enum": [
+            "implemented",
+            "unsupported",
+            "unverified"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "audio_acceptance_pending",
+                "multi_source_unverified",
+                "audio_unverified",
+                "audio_request_unsupported",
+                "manual_editing",
+                "self_workflow_outside_roughcut"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "mode",
+        "support",
+        "reason"
+      ]
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "editor": {
+          "enum": [
+            "otio_kdenlive",
+            "chatcut",
+            "openchatcut",
+            "openfilm"
+          ]
+        },
+        "method": {
+          "enum": [
+            "external",
+            "guide",
+            "self"
+          ]
+        },
+        "can_generate": {
+          "type": "boolean"
+        },
+        "block_reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "multi_source_unverified",
+                "self_workflow_outside_roughcut",
+                "editor_not_ready",
+                "editor_readiness_unknown"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "techniques": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "jcut": {
+              "$ref": "#/$defs/capability_cell"
+            },
+            "bed": {
+              "$ref": "#/$defs/capability_cell"
+            },
+            "duck": {
+              "$ref": "#/$defs/capability_cell"
+            },
+            "pause": {
+              "$ref": "#/$defs/capability_cell"
+            },
+            "action": {
+              "$ref": "#/$defs/capability_cell"
+            }
+          },
+          "required": [
+            "jcut",
+            "bed",
+            "duck",
+            "pause",
+            "action"
+          ]
+        },
+        "swap": {
+          "$ref": "#/$defs/capability_cell"
+        }
+      },
+      "required": [
+        "editor",
+        "method",
+        "can_generate",
+        "block_reason",
+        "techniques",
+        "swap"
+      ]
+    },
+    "availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "ready",
+            "absent",
+            "disconnected",
+            "unknown",
+            "unreadable"
+          ]
+        },
+        "installed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "connected": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checked_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "installed",
+        "connected",
+        "checked_at"
+      ]
+    },
+    "editor_option": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "enum": [
+            "kdenlive",
+            "chatcut",
+            "openchatcut",
+            "guide"
+          ]
+        },
+        "choice": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "editor": {
+              "enum": [
+                "otio_kdenlive",
+                "chatcut",
+                "openchatcut",
+                "openfilm"
+              ]
+            },
+            "method": {
+              "enum": [
+                "external",
+                "guide",
+                "self"
+              ]
+            }
+          },
+          "required": [
+            "editor",
+            "method"
+          ]
+        },
+        "availability": {
+          "$ref": "#/$defs/availability"
+        },
+        "capability": {
+          "$ref": "#/$defs/capability"
+        }
+      },
+      "required": [
+        "id",
+        "choice",
+        "availability",
+        "capability"
+      ]
+    },
+    "capabilities_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "project_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "capability_version": {
+          "const": "roughcut_capabilities_v1"
+        },
+        "choice": {
+          "$ref": "#/$defs/choice_read"
+        },
+        "editors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/editor_option"
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "selected": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/capability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_option_id": {
+          "anyOf": [
+            {
+              "enum": [
+                "kdenlive",
+                "chatcut",
+                "openchatcut",
+                "guide"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/failure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "ok",
+        "project_revision",
+        "capability_version",
+        "choice",
+        "editors",
+        "selected",
+        "selected_option_id",
+        "failure"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "project_revision": 7,
+          "capability_version": "roughcut_capabilities_v1",
+          "choice": {
+            "editor": "otio_kdenlive",
+            "method": "external",
+            "revision": 2
+          },
+          "editors": [
+            {
+              "id": "kdenlive",
+              "choice": {
+                "editor": "otio_kdenlive",
+                "method": "external"
+              },
+              "availability": {
+                "status": "ready",
+                "installed": true,
+                "connected": null,
+                "checked_at": "2026-10-21T02:00:00Z"
+              },
+              "capability": {
+                "can_generate": true,
+                "block_reason": null,
+                "techniques": {
+                  "jcut": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "audio_acceptance_pending"
+                  },
+                  "bed": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "audio_acceptance_pending"
+                  },
+                  "duck": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "audio_acceptance_pending"
+                  },
+                  "pause": {
+                    "mode": "auto",
+                    "support": "implemented",
+                    "reason": null
+                  },
+                  "action": {
+                    "mode": "auto",
+                    "support": "implemented",
+                    "reason": null
+                  }
+                },
+                "swap": {
+                  "mode": "manual",
+                  "support": "unverified",
+                  "reason": "audio_acceptance_pending"
+                },
+                "editor": "otio_kdenlive",
+                "method": "external"
+              }
+            },
+            {
+              "id": "chatcut",
+              "choice": {
+                "editor": "chatcut",
+                "method": "external"
+              },
+              "availability": {
+                "status": "disconnected",
+                "installed": true,
+                "connected": false,
+                "checked_at": "2026-10-21T02:00:00Z"
+              },
+              "capability": {
+                "can_generate": false,
+                "block_reason": "editor_not_ready",
+                "techniques": {
+                  "jcut": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "multi_source_unverified"
+                  },
+                  "bed": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "multi_source_unverified"
+                  },
+                  "duck": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "multi_source_unverified"
+                  },
+                  "pause": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "multi_source_unverified"
+                  },
+                  "action": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "multi_source_unverified"
+                  }
+                },
+                "swap": {
+                  "mode": "manual",
+                  "support": "unverified",
+                  "reason": "audio_unverified"
+                },
+                "editor": "chatcut",
+                "method": "external"
+              }
+            },
+            {
+              "id": "openchatcut",
+              "choice": {
+                "editor": "openchatcut",
+                "method": "external"
+              },
+              "availability": {
+                "status": "ready",
+                "installed": true,
+                "connected": null,
+                "checked_at": "2026-10-21T02:00:00Z"
+              },
+              "capability": {
+                "can_generate": false,
+                "block_reason": "multi_source_unverified",
+                "techniques": {
+                  "jcut": {
+                    "mode": "manual",
+                    "support": "unsupported",
+                    "reason": "audio_request_unsupported"
+                  },
+                  "bed": {
+                    "mode": "manual",
+                    "support": "unsupported",
+                    "reason": "audio_request_unsupported"
+                  },
+                  "duck": {
+                    "mode": "manual",
+                    "support": "unsupported",
+                    "reason": "audio_request_unsupported"
+                  },
+                  "pause": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "multi_source_unverified"
+                  },
+                  "action": {
+                    "mode": "manual",
+                    "support": "unverified",
+                    "reason": "multi_source_unverified"
+                  }
+                },
+                "swap": {
+                  "mode": "manual",
+                  "support": "unsupported",
+                  "reason": "audio_request_unsupported"
+                },
+                "editor": "openchatcut",
+                "method": "external"
+              }
+            },
+            {
+              "id": "guide",
+              "choice": {
+                "editor": "otio_kdenlive",
+                "method": "guide"
+              },
+              "availability": {
+                "status": "ready",
+                "installed": true,
+                "connected": null,
+                "checked_at": "2026-10-21T02:00:00Z"
+              },
+              "capability": {
+                "can_generate": true,
+                "block_reason": null,
+                "techniques": {
+                  "jcut": {
+                    "mode": "manual",
+                    "support": "unsupported",
+                    "reason": "manual_editing"
+                  },
+                  "bed": {
+                    "mode": "manual",
+                    "support": "unsupported",
+                    "reason": "manual_editing"
+                  },
+                  "duck": {
+                    "mode": "manual",
+                    "support": "unsupported",
+                    "reason": "manual_editing"
+                  },
+                  "pause": {
+                    "mode": "manual",
+                    "support": "unsupported",
+                    "reason": "manual_editing"
+                  },
+                  "action": {
+                    "mode": "manual",
+                    "support": "unsupported",
+                    "reason": "manual_editing"
+                  }
+                },
+                "swap": {
+                  "mode": "manual",
+                  "support": "unsupported",
+                  "reason": "manual_editing"
+                },
+                "editor": "otio_kdenlive",
+                "method": "guide"
+              }
+            }
+          ],
+          "selected": {
+            "can_generate": true,
+            "block_reason": null,
+            "techniques": {
+              "jcut": {
+                "mode": "manual",
+                "support": "unverified",
+                "reason": "audio_acceptance_pending"
+              },
+              "bed": {
+                "mode": "manual",
+                "support": "unverified",
+                "reason": "audio_acceptance_pending"
+              },
+              "duck": {
+                "mode": "manual",
+                "support": "unverified",
+                "reason": "audio_acceptance_pending"
+              },
+              "pause": {
+                "mode": "auto",
+                "support": "implemented",
+                "reason": null
+              },
+              "action": {
+                "mode": "auto",
+                "support": "implemented",
+                "reason": null
+              }
+            },
+            "swap": {
+              "mode": "manual",
+              "support": "unverified",
+              "reason": "audio_acceptance_pending"
+            },
+            "editor": "otio_kdenlive",
+            "method": "external"
+          },
+          "selected_option_id": "kdenlive",
+          "failure": null
+        }
+      ]
+    },
+    "transcription_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "selectionDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "selectionDigest",
+        "shot_ids"
+      ],
+      "examples": [
+        {
+          "expectedRevision": 2,
+          "selectionDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "shot_ids": [
+            "s2"
+          ]
+        }
+      ]
+    },
+    "transcription_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "media_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "shot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "ok",
+        "job_id",
+        "revision",
+        "media_ids",
+        "shot_ids"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "job_id": "transcribe-demo",
+          "revision": 3,
+          "media_ids": [
+            "m2"
+          ],
+          "shot_ids": [
+            "s2"
+          ]
+        }
+      ]
+    },
+    "draft_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "projectRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "editorChoiceRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "edlDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "projectRevision",
+        "editorChoiceRevision",
+        "edlDigest"
+      ],
+      "examples": [
+        {
+          "expectedRevision": 2,
+          "projectRevision": 7,
+          "editorChoiceRevision": 2,
+          "edlDigest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        }
+      ]
+    },
+    "draft_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "editor": {
+          "enum": [
+            "otio_kdenlive",
+            "chatcut",
+            "openchatcut",
+            "openfilm"
+          ]
+        },
+        "method": {
+          "enum": [
+            "external",
+            "guide",
+            "self"
+          ]
+        },
+        "input_binding": {
+          "$ref": "#/$defs/input_binding"
+        }
+      },
+      "required": [
+        "ok",
+        "job_id",
+        "revision",
+        "editor",
+        "method",
+        "input_binding"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "job_id": "draft-demo",
+          "revision": 3,
+          "editor": "otio_kdenlive",
+          "method": "external",
+          "input_binding": {
+            "project_revision": 7,
+            "selection_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "shots_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "transcripts_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "preset_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "settings_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "music": [
+              {
+                "song_instance_id": "song-instance-1",
+                "track_id": "song-a",
+                "registry_version": 1,
+                "beat_map_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+              }
+            ],
+            "editor_choice_revision": 2,
+            "edl_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+          }
+        }
+      ]
+    },
+    "editor_patch_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "videoEditor": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "editor": {
+              "enum": [
+                "otio_kdenlive",
+                "chatcut",
+                "openchatcut",
+                "openfilm"
+              ]
+            },
+            "method": {
+              "enum": [
+                "external",
+                "guide",
+                "self"
+              ]
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "editor",
+            "method",
+            "revision"
+          ]
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "videoEditor"
+      ],
+      "examples": [
+        {
+          "expectedRevision": 7,
+          "videoEditor": {
+            "editor": "chatcut",
+            "method": "external",
+            "revision": 2
+          }
+        }
+      ]
+    },
+    "editor_patch_projection": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "videoEditor": {
+          "$ref": "#/$defs/editor_choice"
+        }
+      },
+      "required": [
+        "ok",
+        "videoEditor"
+      ],
+      "description": "只校验 R228 响应里 ok/videoEditor 的投影；完整响应还含 project，沿用现有 server.py/项目响应，不由本合同重新定义；现有 OpenAPI 没有具体 ProjectView schema。",
+      "examples": [
+        {
+          "ok": true,
+          "videoEditor": {
+            "editor": "chatcut",
+            "method": "external",
+            "revision": 3
+          }
+        }
+      ]
+    },
+    "media_parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifactId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Range": {
+          "type": "string",
+          "pattern": "^bytes=(?:[0-9]+-[0-9]*|-[0-9]+)$"
+        }
+      },
+      "required": [
+        "id",
+        "artifactId"
+      ],
+      "examples": [
+        {
+          "id": "piece-demo",
+          "artifactId": "preview-demo",
+          "Range": "bytes=0-1023"
+        }
+      ]
+    },
+    "playback": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "queued",
+            "ready",
+            "unavailable"
+          ]
+        },
+        "preview_artifact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "duration_sec": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audio_verified": {
+          "type": "boolean"
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/failure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "preview_artifact_id",
+        "duration_sec",
+        "audio_verified",
+        "failure"
+      ]
+    },
+    "source_audio": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "has_audio": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "enum": [
+            "original",
+            "muted",
+            "bed",
+            "unknown"
+          ]
+        },
+        "evidence": {
+          "enum": [
+            "unverified",
+            "planned",
+            "rendered"
+          ]
+        },
+        "position": {
+          "$ref": "#/$defs/clip_position"
+        },
+        "end_position": {
+          "$ref": "#/$defs/clip_position"
+        }
+      },
+      "required": [
+        "shot_id",
+        "has_audio",
+        "mode",
+        "evidence",
+        "position",
+        "end_position"
+      ]
+    },
+    "clip_position": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "existing_error_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": false
+        },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "code",
+            "message"
+          ]
+        }
+      },
+      "required": [
+        "ok",
+        "error"
+      ]
+    },
+    "draft_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "none",
+            "queued",
+            "running",
+            "ready",
+            "stale",
+            "failed"
+          ]
+        },
+        "design_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "cut-drafting",
+                "cut-drafted",
+                "cut-drafted-guide",
+                "cut-draft-stale"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "job_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor": {
+          "anyOf": [
+            {
+              "enum": [
+                "otio_kdenlive",
+                "chatcut",
+                "openchatcut",
+                "openfilm"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "anyOf": [
+            {
+              "enum": [
+                "external",
+                "guide",
+                "self"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "editor_choice_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "input_edl_digest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "edl_digest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "guide_artifact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "project_artifact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "can_open": {
+          "type": "boolean"
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/failure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "design_state",
+        "job_id",
+        "plan_revision",
+        "editor",
+        "method",
+        "editor_choice_revision",
+        "input_edl_digest",
+        "edl_digest",
+        "guide_artifact_id",
+        "project_artifact_id",
+        "artifact_ids",
+        "can_open",
+        "failure"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "queued",
+                  "running"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "design_state": {
+                "const": "cut-drafting"
+              },
+              "job_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "plan_revision": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "stale"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "design_state": {
+                "const": "cut-draft-stale"
+              },
+              "can_open": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure": {
+                "$ref": "#/$defs/failure"
+              },
+              "design_state": {
+                "type": "null"
+              },
+              "can_open": {
+                "const": false
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "failure": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "ready"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "design_state": {
+                "enum": [
+                  "cut-drafted",
+                  "cut-drafted-guide"
+                ]
+              },
+              "guide_artifact_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "edl_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "input_edl_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "artifact_ids": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "open_draft_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "projectRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "editorChoiceRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "edlDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "projectRevision",
+        "editorChoiceRevision",
+        "edlDigest"
+      ],
+      "examples": [
+        {
+          "expectedRevision": 2,
+          "projectRevision": 7,
+          "editorChoiceRevision": 2,
+          "edlDigest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        }
+      ]
+    },
+    "open_draft_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "opened": {
+          "const": true
+        },
+        "editor_backend": {
+          "const": "otio_kdenlive"
+        },
+        "local_only": {
+          "const": true
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "ok",
+        "opened",
+        "editor_backend",
+        "local_only",
+        "revision",
+        "plan_revision"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "opened": true,
+          "editor_backend": "otio_kdenlive",
+          "local_only": true,
+          "revision": 3,
+          "plan_revision": 2
+        }
+      ]
+    }
+  },
+  "x-existing-route": {
+    "method": "PATCH",
+    "path": "/api/projects/{id}",
+    "request_schema": "#/$defs/editor_patch_request",
+    "response_schema": "#/$defs/editor_patch_projection",
+    "success_status": [
+      200
+    ],
+    "projection_only": true
+  }
+}

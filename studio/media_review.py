@@ -39,6 +39,18 @@ def read_json(path, *, optional=False):
         raise ProjectStoreError('review_unreadable', '无法读取本机记录') from exc
 
 
+def media_counts(root, *, manifest=...):
+    if manifest is ...:
+        manifest = read_json(root / 'ai-analysis/media-manifest.json', optional=True)
+    if manifest is None:
+        return dict(videos=0, photos=0)
+    if (not isinstance(manifest, dict) or not isinstance(manifest.get('items'), list)
+            or any(not isinstance(item, dict) for item in manifest['items'])):
+        raise ProjectStoreError('review_unreadable', '无法读取素材清单')
+    return dict(videos=sum(x.get('media_type', x.get('type')) == 'video' for x in manifest['items']),
+                photos=sum(x.get('media_type', x.get('type')) == 'image' for x in manifest['items']))
+
+
 def now():
     return datetime.now(timezone.utc).isoformat()
 
@@ -229,7 +241,7 @@ class MediaReview:
 
     def piece(self, project):
         identity = project['id']
-        piece = dict(id=identity, **piece_display_name(project['title']), connected=bool(project.get('local_workspace', {}).get('connected')), updated_at=project.get('updated_at'), videos=0, photos=0,
+        piece = dict(id=identity, **piece_display_name(project['title']), connected=bool(project.get('local_workspace', {}).get('connected')), updated_at=project.get('updated_at'), created_at=project.get('created_at'), folder_name='', revision=project['revision'], videos=0, photos=0,
                      outputs=[], versions=0, cover=None, pending=False, group_id='other', status='not_started')
         if not project.get('local_workspace', {}).get('connected'):
             return piece
@@ -240,6 +252,7 @@ class MediaReview:
                 raise ProjectStoreError('review_unreadable', '无法读取作品名称')
             piece.update(piece_display_name(work_manifest['title']))
         piece['workspace_key'] = root.name
+        piece['folder_name'] = root.name
         parent = read_json(root.parent / 'project-manifest.json', optional=True)
         if parent is not None:
             if not isinstance(parent, dict) or not isinstance(parent.get('title'), str) or not parent['title'].strip():
@@ -249,8 +262,7 @@ class MediaReview:
         if manifest is not None:
             if not isinstance(manifest, dict) or not isinstance(manifest.get('items'), list):
                 raise ProjectStoreError('review_unreadable', '无法读取素材清单')
-            items = manifest['items']
-            piece.update(videos=sum(x.get('media_type', x.get('type')) == 'video' for x in items), photos=sum(x.get('media_type', x.get('type')) == 'image' for x in items))
+            piece.update(media_counts(root, manifest=manifest))
         shots = self.shots(identity)
         outputs = self.outputs(identity)
         running = (shots['progress'] or {}).get('status') == 'running'

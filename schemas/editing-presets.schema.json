@@ -1,0 +1,1263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "editing-presets.schema.json",
+  "title": "R226 B2a editing presets contract (not a registered endpoint)",
+  "$ref": "#/$defs/library_response",
+  "$defs": {
+    "recipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "beats_per_cut": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "quiet": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "build": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "peak": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "quiet",
+            "build",
+            "peak"
+          ]
+        },
+        "techniques": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "jcut",
+              "bed",
+              "duck",
+              "pause",
+              "action"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "order": {
+          "enum": [
+            "story",
+            "sports",
+            "selfie"
+          ]
+        }
+      },
+      "required": [
+        "beats_per_cut",
+        "techniques",
+        "order"
+      ]
+    },
+    "technique_overrides": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "jcut": {
+          "type": "boolean"
+        },
+        "bed": {
+          "type": "boolean"
+        },
+        "duck": {
+          "type": "boolean"
+        },
+        "pause": {
+          "type": "boolean"
+        },
+        "action": {
+          "type": "boolean"
+        }
+      },
+      "required": []
+    },
+    "preset": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin": {
+          "enum": [
+            "builtin",
+            "mine"
+          ]
+        },
+        "base_preset_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "enum": [
+            "旅行",
+            "运动",
+            "日常",
+            "我的"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recipe": {
+          "$ref": "#/$defs/recipe"
+        },
+        "overrides": {
+          "$ref": "#/$defs/technique_overrides"
+        },
+        "created_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "id",
+        "origin",
+        "base_preset_id",
+        "name",
+        "category",
+        "description",
+        "recipe",
+        "overrides",
+        "created_at",
+        "revision"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "mine"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "name": {
+                "const": "我的预设"
+              },
+              "category": {
+                "const": "我的"
+              },
+              "base_preset_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "category": {
+                "enum": [
+                  "旅行",
+                  "运动",
+                  "日常"
+                ]
+              },
+              "base_preset_id": {
+                "type": "null"
+              },
+              "created_at": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "category": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "enum": [
+            "all",
+            "travel",
+            "sports",
+            "daily",
+            "mine"
+          ]
+        },
+        "label": {
+          "enum": [
+            "全部",
+            "旅行",
+            "运动",
+            "日常",
+            "我的"
+          ]
+        },
+        "count": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "count"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": [
+                  "all",
+                  "travel",
+                  "sports",
+                  "daily"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "library_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "schema_version": {
+          "const": "editing_presets_api_v1"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mine_status": {
+          "enum": [
+            "readable",
+            "absent",
+            "unreadable"
+          ]
+        },
+        "can_save": {
+          "type": "boolean"
+        },
+        "presets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/preset"
+          },
+          "minItems": 6
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/category"
+          },
+          "minItems": 5,
+          "maxItems": 5
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warning": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "preset_store_unreadable"
+                },
+                "design_state": {
+                  "const": "cut-presets-unreadable"
+                }
+              },
+              "required": [
+                "code",
+                "design_state"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "ok",
+        "schema_version",
+        "revision",
+        "mine_status",
+        "can_save",
+        "presets",
+        "categories",
+        "total",
+        "warning"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mine_status": {
+                "const": "unreadable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "revision": {
+                "type": "null"
+              },
+              "can_save": {
+                "const": false
+              },
+              "presets": {
+                "items": {
+                  "properties": {
+                    "origin": {
+                      "const": "builtin"
+                    }
+                  }
+                }
+              },
+              "warning": {
+                "type": "object"
+              },
+              "categories": {
+                "contains": {
+                  "properties": {
+                    "id": {
+                      "const": "mine"
+                    },
+                    "count": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "count"
+                  ]
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "can_save": {
+                "const": true
+              },
+              "warning": {
+                "type": "null"
+              },
+              "categories": {
+                "items": {
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "schema_version": "editing_presets_api_v1",
+          "revision": 1,
+          "mine_status": "absent",
+          "can_save": true,
+          "presets": [
+            {
+              "id": "trip",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "轻快旅行",
+              "category": "旅行",
+              "description": "路上一段段往前走，到了校运会再提速，结尾慢下来。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 4,
+                  "peak": 2
+                },
+                "techniques": [
+                  "jcut",
+                  "bed",
+                  "duck",
+                  "pause",
+                  "action"
+                ],
+                "order": "story"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "race",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "赛场热血",
+              "category": "运动",
+              "description": "比赛镜头放到前面，切得更密，动作做完再切。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 4,
+                  "build": 2,
+                  "peak": 1
+                },
+                "techniques": [
+                  "jcut",
+                  "bed",
+                  "duck",
+                  "action"
+                ],
+                "order": "sports"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "calm",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "松弛日常",
+              "category": "日常",
+              "description": "镜头留得久，多听现场声和你说的话。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 8,
+                  "peak": 4
+                },
+                "techniques": [
+                  "bed",
+                  "duck",
+                  "pause"
+                ],
+                "order": "story"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "walk",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "城市漫步",
+              "category": "旅行",
+              "description": "跟着脚步慢慢走，声音先到，画面再跟上。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 4,
+                  "peak": 4
+                },
+                "techniques": [
+                  "jcut",
+                  "bed",
+                  "duck"
+                ],
+                "order": "story"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "beat",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "卡点快剪",
+              "category": "运动",
+              "description": "几乎每一拍都切，适合开头和高潮。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 2,
+                  "build": 2,
+                  "peak": 1
+                },
+                "techniques": [
+                  "jcut",
+                  "action"
+                ],
+                "order": "sports"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "diary",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "自拍日记",
+              "category": "日常",
+              "description": "以你说的话为主线，路上和比赛镜头穿插进来。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 4,
+                  "peak": 4
+                },
+                "techniques": [
+                  "bed",
+                  "duck",
+                  "pause"
+                ],
+                "order": "selfie"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            }
+          ],
+          "categories": [
+            {
+              "id": "all",
+              "label": "全部",
+              "count": 6
+            },
+            {
+              "id": "travel",
+              "label": "旅行",
+              "count": 2
+            },
+            {
+              "id": "sports",
+              "label": "运动",
+              "count": 2
+            },
+            {
+              "id": "daily",
+              "label": "日常",
+              "count": 2
+            },
+            {
+              "id": "mine",
+              "label": "我的",
+              "count": 0
+            }
+          ],
+          "total": 6,
+          "warning": null
+        },
+        {
+          "ok": true,
+          "schema_version": "editing_presets_api_v1",
+          "revision": null,
+          "mine_status": "unreadable",
+          "can_save": false,
+          "presets": [
+            {
+              "id": "trip",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "轻快旅行",
+              "category": "旅行",
+              "description": "路上一段段往前走，到了校运会再提速，结尾慢下来。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 4,
+                  "peak": 2
+                },
+                "techniques": [
+                  "jcut",
+                  "bed",
+                  "duck",
+                  "pause",
+                  "action"
+                ],
+                "order": "story"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "race",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "赛场热血",
+              "category": "运动",
+              "description": "比赛镜头放到前面，切得更密，动作做完再切。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 4,
+                  "build": 2,
+                  "peak": 1
+                },
+                "techniques": [
+                  "jcut",
+                  "bed",
+                  "duck",
+                  "action"
+                ],
+                "order": "sports"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "calm",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "松弛日常",
+              "category": "日常",
+              "description": "镜头留得久，多听现场声和你说的话。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 8,
+                  "peak": 4
+                },
+                "techniques": [
+                  "bed",
+                  "duck",
+                  "pause"
+                ],
+                "order": "story"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "walk",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "城市漫步",
+              "category": "旅行",
+              "description": "跟着脚步慢慢走，声音先到，画面再跟上。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 4,
+                  "peak": 4
+                },
+                "techniques": [
+                  "jcut",
+                  "bed",
+                  "duck"
+                ],
+                "order": "story"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "beat",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "卡点快剪",
+              "category": "运动",
+              "description": "几乎每一拍都切，适合开头和高潮。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 2,
+                  "build": 2,
+                  "peak": 1
+                },
+                "techniques": [
+                  "jcut",
+                  "action"
+                ],
+                "order": "sports"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            },
+            {
+              "id": "diary",
+              "origin": "builtin",
+              "base_preset_id": null,
+              "name": "自拍日记",
+              "category": "日常",
+              "description": "以你说的话为主线，路上和比赛镜头穿插进来。",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 4,
+                  "peak": 4
+                },
+                "techniques": [
+                  "bed",
+                  "duck",
+                  "pause"
+                ],
+                "order": "selfie"
+              },
+              "overrides": {},
+              "created_at": null,
+              "revision": 1
+            }
+          ],
+          "categories": [
+            {
+              "id": "all",
+              "label": "全部",
+              "count": 6
+            },
+            {
+              "id": "travel",
+              "label": "旅行",
+              "count": 2
+            },
+            {
+              "id": "sports",
+              "label": "运动",
+              "count": 2
+            },
+            {
+              "id": "daily",
+              "label": "日常",
+              "count": 2
+            },
+            {
+              "id": "mine",
+              "label": "我的",
+              "count": null
+            }
+          ],
+          "total": 6,
+          "warning": {
+            "code": "preset_store_unreadable",
+            "design_state": "cut-presets-unreadable"
+          }
+        }
+      ]
+    },
+    "create_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "piece_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "roughcut_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "base_preset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "overrides": {
+          "$ref": "#/$defs/technique_overrides"
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "piece_id",
+        "roughcut_revision",
+        "base_preset_id",
+        "overrides"
+      ],
+      "examples": [
+        {
+          "expectedRevision": 1,
+          "piece_id": "piece-demo",
+          "roughcut_revision": 2,
+          "base_preset_id": "trip",
+          "overrides": {
+            "jcut": false
+          }
+        }
+      ]
+    },
+    "create_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "const": true
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "preset": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/preset"
+            },
+            {
+              "properties": {
+                "origin": {
+                  "const": "mine"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "ok",
+        "revision",
+        "preset"
+      ],
+      "examples": [
+        {
+          "ok": true,
+          "revision": 2,
+          "preset": {
+            "id": "mine-example-1",
+            "origin": "mine",
+            "base_preset_id": "trip",
+            "name": "我的预设",
+            "category": "我的",
+            "description": "从「轻快旅行」改的：关掉了「声音先进」",
+            "recipe": {
+              "beats_per_cut": {
+                "quiet": 8,
+                "build": 4,
+                "peak": 2
+              },
+              "techniques": [
+                "bed",
+                "duck",
+                "pause",
+                "action"
+              ],
+              "order": "story"
+            },
+            "overrides": {
+              "jcut": false
+            },
+            "created_at": "2026-10-21T02:00:00Z",
+            "revision": 1
+          }
+        }
+      ]
+    },
+    "mine_store": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "editing_presets_store_v1"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "presets": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/preset"
+              },
+              {
+                "properties": {
+                  "origin": {
+                    "const": "mine"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "revision",
+        "presets"
+      ],
+      "examples": [
+        {
+          "schema_version": "editing_presets_store_v1",
+          "revision": 2,
+          "presets": [
+            {
+              "id": "mine-example-1",
+              "origin": "mine",
+              "base_preset_id": "trip",
+              "name": "我的预设",
+              "category": "我的",
+              "description": "从「轻快旅行」改的：关掉了「声音先进」",
+              "recipe": {
+                "beats_per_cut": {
+                  "quiet": 8,
+                  "build": 4,
+                  "peak": 2
+                },
+                "techniques": [
+                  "bed",
+                  "duck",
+                  "pause",
+                  "action"
+                ],
+                "order": "story"
+              },
+              "overrides": {
+                "jcut": false
+              },
+              "created_at": "2026-10-21T02:00:00Z",
+              "revision": 1
+            }
+          ]
+        }
+      ]
+    },
+    "builtin_config": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "editing_presets_v1"
+        },
+        "settings": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "fade_out_sec": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "min_pause_sec": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "action_offset_sec": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "audio_lead_sec": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "duck_db": {
+              "type": "number",
+              "exclusiveMaximum": 0
+            },
+            "duck_ramp_sec": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "cut_fade_sec": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "song_entry_after_sec": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "swap_min_shot_index": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "bed_min_clips": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "duck_silence_gap_sec": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "fade_out_sec",
+            "min_pause_sec",
+            "action_offset_sec",
+            "audio_lead_sec",
+            "duck_db",
+            "duck_ramp_sec",
+            "cut_fade_sec",
+            "song_entry_after_sec",
+            "swap_min_shot_index",
+            "bed_min_clips",
+            "duck_silence_gap_sec"
+          ]
+        },
+        "presets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "category": {
+                "enum": [
+                  "旅行",
+                  "运动",
+                  "日常"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "beats_per_cut": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "quiet": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "build": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "peak": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "quiet",
+                  "build",
+                  "peak"
+                ]
+              },
+              "techniques": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "jcut",
+                    "bed",
+                    "duck",
+                    "pause",
+                    "action"
+                  ]
+                },
+                "uniqueItems": true
+              },
+              "order": {
+                "enum": [
+                  "story",
+                  "sports",
+                  "selfie"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "category",
+              "description",
+              "beats_per_cut",
+              "techniques",
+              "order"
+            ]
+          },
+          "minItems": 6,
+          "maxItems": 6
+        }
+      },
+      "required": [
+        "schema_version",
+        "settings",
+        "presets"
+      ],
+      "examples": [
+        {
+          "schema_version": "editing_presets_v1",
+          "settings": {
+            "fade_out_sec": 1.6,
+            "min_pause_sec": 0.25,
+            "action_offset_sec": 0.25,
+            "audio_lead_sec": 0.5,
+            "duck_db": -12,
+            "duck_ramp_sec": 0.1,
+            "cut_fade_sec": 0.03,
+            "song_entry_after_sec": 8,
+            "swap_min_shot_index": 7,
+            "bed_min_clips": 3,
+            "duck_silence_gap_sec": 1.0
+          },
+          "presets": [
+            {
+              "id": "trip",
+              "name": "轻快旅行",
+              "category": "旅行",
+              "description": "路上一段段往前走，到了校运会再提速，结尾慢下来。",
+              "beats_per_cut": {
+                "quiet": 8,
+                "build": 4,
+                "peak": 2
+              },
+              "techniques": [
+                "jcut",
+                "bed",
+                "duck",
+                "pause",
+                "action"
+              ],
+              "order": "story"
+            },
+            {
+              "id": "race",
+              "name": "赛场热血",
+              "category": "运动",
+              "description": "比赛镜头放到前面，切得更密，动作做完再切。",
+              "beats_per_cut": {
+                "quiet": 4,
+                "build": 2,
+                "peak": 1
+              },
+              "techniques": [
+                "jcut",
+                "bed",
+                "duck",
+                "action"
+              ],
+              "order": "sports"
+            },
+            {
+              "id": "calm",
+              "name": "松弛日常",
+              "category": "日常",
+              "description": "镜头留得久，多听现场声和你说的话。",
+              "beats_per_cut": {
+                "quiet": 8,
+                "build": 8,
+                "peak": 4
+              },
+              "techniques": [
+                "bed",
+                "duck",
+                "pause"
+              ],
+              "order": "story"
+            },
+            {
+              "id": "walk",
+              "name": "城市漫步",
+              "category": "旅行",
+              "description": "跟着脚步慢慢走，声音先到，画面再跟上。",
+              "beats_per_cut": {
+                "quiet": 8,
+                "build": 4,
+                "peak": 4
+              },
+              "techniques": [
+                "jcut",
+                "bed",
+                "duck"
+              ],
+              "order": "story"
+            },
+            {
+              "id": "beat",
+              "name": "卡点快剪",
+              "category": "运动",
+              "description": "几乎每一拍都切，适合开头和高潮。",
+              "beats_per_cut": {
+                "quiet": 2,
+                "build": 2,
+                "peak": 1
+              },
+              "techniques": [
+                "jcut",
+                "action"
+              ],
+              "order": "sports"
+            },
+            {
+              "id": "diary",
+              "name": "自拍日记",
+              "category": "日常",
+              "description": "以你说的话为主线，路上和比赛镜头穿插进来。",
+              "beats_per_cut": {
+                "quiet": 8,
+                "build": 4,
+                "peak": 4
+              },
+              "techniques": [
+                "bed",
+                "duck",
+                "pause"
+              ],
+              "order": "selfie"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

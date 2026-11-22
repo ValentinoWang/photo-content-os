@@ -1,0 +1,227 @@
+{
+  "schema": "design-contract/v1",
+  "source": "contract-source.html",
+  "shared": {
+    "copy": [],
+    "attr_copy": [],
+    "ids": []
+  },
+  "states": {
+    "confirm-lzu": {
+      "copy": [
+        "Photo Content OS",
+        "上游中台未连接",
+        "件",
+        "件作品？",
+        "作品",
+        "作品从项目里移走，连同它的脚本、分镜和修改记录，放进项目列表底部的「最近删除」，随时可以恢复。",
+        "全选",
+        "删除",
+        "删除 1 件",
+        "取消",
+        "同时把文件夹移到废纸篓",
+        "工作台",
+        "整理台",
+        "有素材，文件夹留在原处",
+        "本地创作工作台",
+        "本机可用",
+        "素材库",
+        "设置与诊断",
+        "选中的作品都有素材，文件夹不能从这里移走；要删素材，去素材库。",
+        "音乐库",
+        "项目"
+      ],
+      "attr_copy": [
+        "选择作品"
+      ],
+      "ids": [
+        "R208-PROJECT-pieces",
+        "R208-REV-topbar",
+        "R275-1-actions",
+        "R275-2-card",
+        "R275-2-where",
+        "R275-3-bar",
+        "R275-4-dialog",
+        "R275-4-list",
+        "R275-4-trash",
+        "unchanged-nav"
+      ]
+    },
+    "confirm-other": {
+      "copy": [
+        "Photo Content OS",
+        "上游中台未连接",
+        "件",
+        "件作品？",
+        "作品",
+        "作品从项目里移走，连同它的脚本、分镜和修改记录，放进项目列表底部的「最近删除」，随时可以恢复。",
+        "全选",
+        "删除",
+        "删除 2 件",
+        "取消",
+        "同时把文件夹移到废纸篓",
+        "工作台",
+        "整理台",
+        "文件夹里的成片和中间文件一起移走。恢复作品时，会从废纸篓放回原处。",
+        "本地创作工作台",
+        "本机可用",
+        "素材库",
+        "设置与诊断",
+        "音乐库",
+        "项目"
+      ],
+      "attr_copy": [
+        "选择作品"
+      ],
+      "ids": [
+        "R208-PROJECT-pieces",
+        "R208-REV-topbar",
+        "R275-1-actions",
+        "R275-2-card",
+        "R275-2-where",
+        "R275-3-bar",
+        "R275-4-dialog",
+        "R275-4-list",
+        "R275-4-trash",
+        "unchanged-nav"
+      ]
+    },
+    "deleted-other": {
+      "copy": [
+        "Photo Content OS",
+        "上游中台未连接",
+        "作品",
+        "工作台",
+        "撤销",
+        "整理台",
+        "本地创作工作台",
+        "本机可用",
+        "添加作品",
+        "素材库",
+        "设置与诊断",
+        "选择",
+        "音乐库",
+        "项目"
+      ],
+      "attr_copy": [],
+      "ids": [
+        "R208-PROJECT-piece",
+        "R208-PROJECT-pieces",
+        "R208-REV-topbar",
+        "R275-1-actions",
+        "R275-5-toast",
+        "unchanged-nav"
+      ]
+    },
+    "partial-fail": {
+      "copy": [
+        "Photo Content OS",
+        "上游中台未连接",
+        "作品",
+        "工作台",
+        "撤销",
+        "整理台",
+        "本地创作工作台",
+        "本机可用",
+        "添加作品",
+        "素材库",
+        "设置与诊断",
+        "选择",
+        "音乐库",
+        "项目"
+      ],
+      "attr_copy": [],
+      "ids": [
+        "R208-PROJECT-piece",
+        "R208-PROJECT-pieces",
+        "R208-REV-topbar",
+        "R275-1-actions",
+        "R275-5-toast",
+        "unchanged-nav"
+      ]
+    },
+    "pick-other": {
+      "copy": [
+        "Photo Content OS",
+        "上游中台未连接",
+        "作品",
+        "全选",
+        "删除 2 件",
+        "取消",
+        "工作台",
+        "整理台",
+        "本地创作工作台",
+        "本机可用",
+        "素材库",
+        "设置与诊断",
+        "音乐库",
+        "项目"
+      ],
+      "attr_copy": [
+        "选择作品"
+      ],
+      "ids": [
+        "R208-PROJECT-pieces",
+        "R208-REV-topbar",
+        "R275-1-actions",
+        "R275-2-card",
+        "R275-2-where",
+        "R275-3-bar",
+        "unchanged-nav"
+      ]
+    },
+    "projects-recent": {
+      "copy": [
+        "Photo Content OS",
+        "›",
+        "上游中台未连接",
+        "工作台",
+        "整理台",
+        "新建作品",
+        "最近删除",
+        "本地创作工作台",
+        "本机可用",
+        "素材库",
+        "设置与诊断",
+        "音乐库",
+        "项目"
+      ],
+      "attr_copy": [],
+      "ids": [
+        "R208-PROJECTS",
+        "R208-PROJECTS-row",
+        "R208-REV-topbar",
+        "R275-1-actions",
+        "R275-6-recent",
+        "unchanged-nav"
+      ]
+    },
+    "recent": {
+      "copy": [
+        "Photo Content OS",
+        "›",
+        "上游中台未连接",
+        "工作台",
+        "恢复",
+        "整理台",
+        "文件夹在废纸篓里，恢复时放回原处",
+        "文件夹已经不在废纸篓里，恢复不了。",
+        "文件夹还在原处",
+        "本地创作工作台",
+        "本机可用",
+        "移出列表",
+        "素材库",
+        "设置与诊断",
+        "音乐库",
+        "项目"
+      ],
+      "attr_copy": [],
+      "ids": [
+        "R208-REV-topbar",
+        "R275-1-actions",
+        "R275-7-list",
+        "unchanged-nav"
+      ]
+    }
+  }
+}

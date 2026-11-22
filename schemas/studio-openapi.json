@@ -2300,6 +2300,715 @@
         "summary": "Create a local project"
       }
     },
+    "/api/projects/delete": {
+      "post": {
+        "operationId": "deleteProjects",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedRevisions": {
+                    "additionalProperties": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "description": "Exactly one current revision per requested project ID.",
+                    "minProperties": 1,
+                    "type": "object"
+                  },
+                  "folderProjectIds": {
+                    "description": "Optional selected subset to move; requires moveFolders=true. Omitted means all requested works. Ineligible requested moves fail individually.",
+                    "items": {
+                      "pattern": "^[a-z0-9][a-z0-9_-]{7,63}$",
+                      "type": "string"
+                    },
+                    "maxItems": 500,
+                    "minItems": 0,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "moveFolders": {
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "projectIds": {
+                    "items": {
+                      "pattern": "^[a-z0-9][a-z0-9_-]{7,63}$",
+                      "type": "string"
+                    },
+                    "maxItems": 500,
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "projectIds",
+                  "expectedRevisions"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "batch_id": {
+                      "pattern": "^delete-[0-9a-f]{32}$",
+                      "type": "string"
+                    },
+                    "failed": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "ok": {
+                      "const": true
+                    },
+                    "results": {
+                      "items": {
+                        "properties": {
+                          "code": {
+                            "enum": [
+                              null,
+                              "folder_not_connected",
+                              "folder_missing",
+                              "folder_outside_media_root",
+                              "folder_is_media_root",
+                              "folder_symlink",
+                              "folder_formal_project",
+                              "folder_has_media",
+                              "folder_shared",
+                              "folder_contains_work",
+                              "folder_unreadable",
+                              "folder_runtime_unavailable",
+                              "project_not_found",
+                              "project_id_invalid",
+                              "revision_conflict",
+                              "revision_invalid",
+                              "folder_trash_failed",
+                              "trash_item_missing",
+                              "restore_target_occupied",
+                              "folder_fingerprint_mismatch",
+                              "folder_restore_failed",
+                              "folder_restore_unsafe",
+                              "deleted_work_not_found",
+                              "deleted_work_recoverable",
+                              "deletion_batch_conflict",
+                              "review_unreadable"
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "ok": {
+                            "type": "boolean"
+                          },
+                          "revision": {
+                            "minimum": 1,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "ok",
+                          "code"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "succeeded": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "undo": {
+                      "properties": {
+                        "batchId": {
+                          "pattern": "^delete-[0-9a-f]{32}$",
+                          "type": "string"
+                        },
+                        "expectedRevisions": {
+                          "additionalProperties": {
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "description": "Exactly one current revision per requested project ID.",
+                          "minProperties": 0,
+                          "type": "object"
+                        },
+                        "projectIds": {
+                          "items": {
+                            "pattern": "^[a-z0-9][a-z0-9_-]{7,63}$",
+                            "type": "string"
+                          },
+                          "maxItems": 500,
+                          "minItems": 0,
+                          "type": "array",
+                          "uniqueItems": true
+                        }
+                      },
+                      "required": [
+                        "projectIds",
+                        "expectedRevisions",
+                        "batchId"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "results",
+                    "succeeded",
+                    "failed",
+                    "batch_id",
+                    "undo"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Per-item failures remain HTTP 200; succeeded + failed equals requested count."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid CSRF token or forbidden origin"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Soft-delete each selected work with CAS and optional folder trash"
+      }
+    },
+    "/api/projects/delete-preview": {
+      "post": {
+        "operationId": "previewProjectDeletion",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "projectIds": {
+                    "items": {
+                      "pattern": "^[a-z0-9][a-z0-9_-]{7,63}$",
+                      "type": "string"
+                    },
+                    "maxItems": 500,
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "projectIds"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "can_move_folder": {
+                            "type": "boolean"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "folder_name": {
+                            "type": "string"
+                          },
+                          "group_title": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "reason_code": {
+                            "enum": [
+                              null,
+                              "folder_not_connected",
+                              "folder_missing",
+                              "folder_outside_media_root",
+                              "folder_is_media_root",
+                              "folder_symlink",
+                              "folder_formal_project",
+                              "folder_has_media",
+                              "folder_shared",
+                              "folder_contains_work",
+                              "folder_unreadable",
+                              "folder_runtime_unavailable"
+                            ]
+                          },
+                          "revision": {
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "group_title",
+                          "folder_name",
+                          "created_at",
+                          "revision",
+                          "can_move_folder",
+                          "reason_code"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "items"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid CSRF token or forbidden origin"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Check selected work folders only when confirming deletion"
+      }
+    },
+    "/api/projects/deleted": {
+      "get": {
+        "operationId": "listDeletedProjects",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "can_dismiss": {
+                            "type": "boolean"
+                          },
+                          "can_restore": {
+                            "type": "boolean"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "deleted_at": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "folder_name": {
+                            "type": "string"
+                          },
+                          "folder_status": {
+                            "enum": [
+                              "original",
+                              "trash",
+                              "unrecoverable"
+                            ]
+                          },
+                          "group_title": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "reason_code": {
+                            "enum": [
+                              null,
+                              "folder_not_connected",
+                              "folder_missing",
+                              "folder_outside_media_root",
+                              "folder_is_media_root",
+                              "folder_symlink",
+                              "folder_formal_project",
+                              "folder_has_media",
+                              "folder_shared",
+                              "folder_contains_work",
+                              "folder_unreadable",
+                              "folder_runtime_unavailable",
+                              "project_not_found",
+                              "project_id_invalid",
+                              "revision_conflict",
+                              "revision_invalid",
+                              "folder_trash_failed",
+                              "trash_item_missing",
+                              "restore_target_occupied",
+                              "folder_fingerprint_mismatch",
+                              "folder_restore_failed",
+                              "folder_restore_unsafe",
+                              "deleted_work_not_found",
+                              "deleted_work_recoverable",
+                              "deletion_batch_conflict",
+                              "review_unreadable"
+                            ]
+                          },
+                          "revision": {
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "group_title",
+                          "folder_name",
+                          "created_at",
+                          "revision",
+                          "deleted_at",
+                          "folder_status",
+                          "reason_code",
+                          "can_restore",
+                          "can_dismiss"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "ok": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "items"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid CSRF token or forbidden origin"
+          }
+        },
+        "summary": "List recent deletions with current recovery reasons"
+      }
+    },
+    "/api/projects/restore": {
+      "post": {
+        "operationId": "restoreProjects",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "batchId": {
+                    "pattern": "^delete-[0-9a-f]{32}$",
+                    "type": "string"
+                  },
+                  "expectedRevisions": {
+                    "additionalProperties": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "description": "Exactly one current revision per requested project ID.",
+                    "minProperties": 1,
+                    "type": "object"
+                  },
+                  "projectIds": {
+                    "items": {
+                      "pattern": "^[a-z0-9][a-z0-9_-]{7,63}$",
+                      "type": "string"
+                    },
+                    "maxItems": 500,
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "projectIds",
+                  "expectedRevisions"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "failed": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "ok": {
+                      "const": true
+                    },
+                    "results": {
+                      "items": {
+                        "properties": {
+                          "code": {
+                            "enum": [
+                              null,
+                              "folder_not_connected",
+                              "folder_missing",
+                              "folder_outside_media_root",
+                              "folder_is_media_root",
+                              "folder_symlink",
+                              "folder_formal_project",
+                              "folder_has_media",
+                              "folder_shared",
+                              "folder_contains_work",
+                              "folder_unreadable",
+                              "folder_runtime_unavailable",
+                              "project_not_found",
+                              "project_id_invalid",
+                              "revision_conflict",
+                              "revision_invalid",
+                              "folder_trash_failed",
+                              "trash_item_missing",
+                              "restore_target_occupied",
+                              "folder_fingerprint_mismatch",
+                              "folder_restore_failed",
+                              "folder_restore_unsafe",
+                              "deleted_work_not_found",
+                              "deleted_work_recoverable",
+                              "deletion_batch_conflict",
+                              "review_unreadable"
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "ok": {
+                            "type": "boolean"
+                          },
+                          "revision": {
+                            "minimum": 1,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "ok",
+                          "code"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "succeeded": {
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "results",
+                    "succeeded",
+                    "failed"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Per-item failures remain HTTP 200; succeeded + failed equals requested count."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid CSRF token or forbidden origin"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Restore an undo batch with per-work CAS"
+      }
+    },
     "/api/projects/{projectId}": {
       "get": {
         "operationId": "getProject",
@@ -5191,6 +5900,121 @@
         "summary": "Revise a style sample"
       }
     },
+    "/api/projects/{projectId}/dismiss": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "dismissDeletedProject",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedRevision": {
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "expectedRevision"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "ok": {
+                      "const": true
+                    },
+                    "revision": {
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "id",
+                    "revision"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid CSRF token or forbidden origin"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Dismiss only an unrecoverable deleted work with CAS"
+      }
+    },
     "/api/projects/{projectId}/documents/{documentName}/diff": {
       "get": {
         "operationId": "getProjectDocumentDiff",
@@ -5971,6 +6795,176 @@
         "summary": "Add a non-editing reference"
       }
     },
+    "/api/projects/{projectId}/restore": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "projectId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "restoreProject",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedRevision": {
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "expectedRevision"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "failed": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "ok": {
+                      "const": true
+                    },
+                    "results": {
+                      "items": {
+                        "properties": {
+                          "code": {
+                            "enum": [
+                              null,
+                              "folder_not_connected",
+                              "folder_missing",
+                              "folder_outside_media_root",
+                              "folder_is_media_root",
+                              "folder_symlink",
+                              "folder_formal_project",
+                              "folder_has_media",
+                              "folder_shared",
+                              "folder_contains_work",
+                              "folder_unreadable",
+                              "folder_runtime_unavailable",
+                              "project_not_found",
+                              "project_id_invalid",
+                              "revision_conflict",
+                              "revision_invalid",
+                              "folder_trash_failed",
+                              "trash_item_missing",
+                              "restore_target_occupied",
+                              "folder_fingerprint_mismatch",
+                              "folder_restore_failed",
+                              "folder_restore_unsafe",
+                              "deleted_work_not_found",
+                              "deleted_work_recoverable",
+                              "deletion_batch_conflict",
+                              "review_unreadable"
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "ok": {
+                            "type": "boolean"
+                          },
+                          "revision": {
+                            "minimum": 1,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "ok",
+                          "code"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "succeeded": {
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "results",
+                    "succeeded",
+                    "failed"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Per-item failures remain HTTP 200; succeeded + failed equals requested count."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid CSRF token or forbidden origin"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Restore one deleted work with CAS"
+      }
+    },
     "/api/projects/{projectId}/video-preview/{candidateId}": {
       "get": {
         "operationId": "getLocalVideoPreview",
@@ -6496,6 +7490,106 @@
         "summary": "getReviewCatalog"
       }
     },
+    "/api/review/editing-presets": {
+      "get": {
+        "operationId": "getEditingPresets",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read built-in and local editing recipes"
+      },
+      "post": {
+        "operationId": "saveEditingPreset",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Save a cross-project recipe with CAS (201)"
+      }
+    },
     "/api/review/imports/{jobId}": {
       "get": {
         "operationId": "getMusicImport",
@@ -6951,6 +8045,513 @@
         "summary": "Reanalyze beat or tags"
       }
     },
+    "/api/review/pieces/{id}/editor-capabilities": {
+      "get": {
+        "operationId": "getRoughcutEditorCapabilities",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read R228 choice and roughcut capabilities"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/review/pieces/{id}/roughcut": {
+      "get": {
+        "operationId": "getRoughcut",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read the version-bound roughcut plan"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/review/pieces/{id}/roughcut/commands": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "commandRoughcut",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Accept a CAS-bound roughcut command (202)"
+      }
+    },
+    "/api/review/pieces/{id}/roughcut/drafts": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "createRoughcutDraft",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Generate the saved editor choice in an owned job (202)"
+      }
+    },
+    "/api/review/pieces/{id}/roughcut/drafts/open": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "openRoughcutDraft",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Open only this piece latest current Kdenlive project"
+      }
+    },
+    "/api/review/pieces/{id}/roughcut/media/{artifactId}": {
+      "get": {
+        "operationId": "getRoughcutMedia",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read a bound derived roughcut artifact"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "artifactId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/review/pieces/{id}/roughcut/transcriptions": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "transcribeRoughcutShots",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Accept selected local transcription work (202)"
+      }
+    },
     "/api/review/pieces/{pieceId}/decisions": {
       "parameters": [
         {
@@ -7265,6 +8866,116 @@
           }
         }
       ]
+    },
+    "/api/review/roughcut-jobs/{jobId}": {
+      "get": {
+        "operationId": "getRoughcutJob",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read an owned roughcut job"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "jobId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "stopRoughcutJob",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Stop only this roughcut job (202)"
+      }
     },
     "/api/settings": {
       "get": {

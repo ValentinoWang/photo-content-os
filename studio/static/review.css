@@ -94,3 +94,74 @@
 
 .bm-overview[data-multi="true"]{padding-top:18px}
 .bm-overview[data-multi="true"] .bars{overflow:hidden}
+
+/* R275 approved work selection, deletion dialog and recently deleted rows. */
+.piece.is-picking { position: relative; }
+.piece.is-picking .piece-body { padding-left: 40px; }
+.pick-box { position: absolute; left: 13px; top: 13px; width: 18px; height: 18px; border: 1.5px solid var(--rule-2); border-radius: 4px; background: var(--panel-2); display: grid; place-items: center; color: var(--bg); }
+.piece[aria-checked=true] { border-color: var(--ac); background: var(--ac-bg); }
+.piece[aria-checked=true] .pick-box { background: var(--ac); border-color: var(--ac); }
+.pick-box .ic { width: 13px; height: 13px; stroke-width: 2.5; }
+.piece .where-line { font-size: 11.5px; color: var(--ink-3); overflow-wrap: anywhere; }
+.piece-cover-ph { aspect-ratio: 16/10; background: var(--panel-2); }
+/* 3 底部操作条 */
+.pick-bar { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; background: var(--raise); border: 1px solid var(--rule-2); border-radius: 10px; padding: 10px 12px 10px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.45); z-index: 5; }
+.pick-bar .count { font-size: 12.5px; color: var(--ink-2); margin-right: 8px; white-space: nowrap; }
+.btn--danger { border-color: var(--cut); background: var(--cut); color: var(--on-ac); font-weight: 600; }
+.btn--danger:disabled { opacity: .4; cursor: default; }
+/* 4 确认框：沿用 .dialog-form；列表行沿用 .kv 的分隔线 */
+.del-dialog { width: 520px; }
+.del-dialog h2 { margin: 0; }
+.del-dialog > p { font: 12.5px/1.65 var(--f-tx); color: var(--ink-3); margin: 10px 0 14px; }
+.del-list { border: 1px solid var(--rule); border-radius: 8px; background: var(--panel-2); max-height: 228px; overflow: auto; }
+.del-list li { list-style: none; padding: 10px 13px; border-bottom: 1px solid var(--rule); }
+.del-list li:last-child { border-bottom: 0; }
+.del-list b { display: block; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.del-list small { display: block; font-size: 11.5px; color: var(--ink-4); margin-top: 3px; overflow-wrap: anywhere; }
+.del-list small.keep { color: var(--warn); }
+.del-ul { margin: 0; padding: 0; }
+.trash-opt { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding: 12px 13px; border: 1px solid var(--rule-2); border-radius: 8px; }
+.trash-opt .pick-box { position: static; flex: 0 0 18px; margin-top: 1px; }
+.trash-opt b { display: block; font-size: 13px; font-weight: 600; }
+.trash-opt small { display: block; font: 11.5px/1.6 var(--f-tx); color: var(--ink-3); margin-top: 3px; }
+.trash-opt[aria-disabled=true] b { color: var(--ink-3); }
+.trash-opt[aria-disabled=true] .pick-box { opacity: .45; }
+.del-dialog footer { margin-top: 18px !important; }
+/* 5 撤销提示：沿用 .toast */
+.work-delete-toast { position: fixed; display: flex; align-items: center; gap: 14px; }
+.toast .link { font-size: 12px; }
+/* 6 项目列表底部的「最近删除」入口：比项目行轻一级 */
+.recent-row { display: flex; align-items: center; gap: 10px; width: 100%; margin-top: 4px; padding: 12px 14px; border: 1px dashed var(--rule-2); border-radius: 8px; background: none; color: var(--ink-3); font-size: 12.5px; text-align: left; }
+.recent-row span { color: var(--ink-3); font-size: 11.5px; }
+.recent-row i { margin-left: auto; font-style: normal; color: var(--ink-3); }
+/* 7 最近删除页：行沿用设置页 .setrow 的格子 */
+.recent-list { display: flex; flex-direction: column; max-width: 860px; }
+.recent-list .setrow { display: flex; justify-content: space-between; gap: 16px; align-items: center; background: var(--panel); border: 1px solid var(--rule); border-bottom: 0; padding: 14px 18px; }
+.recent-list .setrow:first-child { border-radius: 8px 8px 0 0; }
+.recent-list .setrow:last-child { border-bottom: 1px solid var(--rule); border-radius: 0 0 8px 8px; }
+.recent-list .setrow strong { display: block; font-size: 13.5px; font-weight: 600; }
+.recent-list .setrow small { display: block; font-size: 11.5px; line-height: 1.55; color: var(--ink-4); margin-top: 3px; overflow-wrap: anywhere; }
+.recent-list .setrow small.gone { color: var(--warn); }
+.recent-list .setrow .btn { flex: 0 0 auto; }
+
+.work-picking #review-screen { padding-bottom:110px; }
+.pick-bar { position:fixed;left:calc(50% + 105px);max-width:calc(100% - 258px); }
+.piece.is-picking:focus-visible { outline:2px solid var(--ac);outline-offset:2px; }
+.work-delete-dialog { padding:0;border:0;background:transparent;width:520px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px); }
+.work-delete-dialog::backdrop { background:color-mix(in srgb,var(--bg) 78%,transparent); }
+.work-delete-dialog .del-dialog { min-width:0;width:100%;max-height:calc(100dvh - 32px);overflow:auto; }
+.work-delete-toast { pointer-events:auto;max-width:calc(100vw - 40px);gap:14px; }
+.recent-list { width:100%; }
+.recent-list .setrow>div { min-width:0; }
+.recent-list strong { overflow-wrap:anywhere; }
+.recent-list .btn { white-space:nowrap; }
+@media(max-width:860px) {
+ .pick-bar { left:calc(50% + 29px);max-width:calc(100% - 82px);gap:8px;padding:10px 12px; }
+ .pick-bar .count { margin-right:0; }
+ .pick-bar .btn { white-space:nowrap;padding:8px 10px; }
+ .recent-list .setrow { padding:14px 12px;gap:10px; }
+}
+@media(prefers-reduced-motion:reduce) { .work-delete-toast { transition:none; } }
+.piece.is-picking .pick-box { z-index:1; }
+.piece.is-picking .cover .chip { left:40px;max-width:calc(100% - 48px); }
+@media(max-width:600px) { .work-picking .pieces { grid-template-columns:minmax(0,1fr); } }

@@ -1,0 +1,122 @@
+{
+  "schema_version": "editing_presets_v1",
+  "settings": {
+    "fade_out_sec": 1.6,
+    "min_pause_sec": 0.25,
+    "action_offset_sec": 0.25,
+    "audio_lead_sec": 0.5,
+    "duck_db": -12,
+    "duck_ramp_sec": 0.1,
+    "duck_silence_gap_sec": 1.0,
+    "cut_fade_sec": 0.03,
+    "song_entry_after_sec": 8,
+    "swap_min_shot_index": 7,
+    "bed_min_clips": 3
+  },
+  "presets": [
+    {
+      "id": "trip",
+      "name": "轻快旅行",
+      "category": "旅行",
+      "description": "路上一段段往前走，到了校运会再提速，结尾慢下来。",
+      "beats_per_cut": {
+        "quiet": 8,
+        "build": 4,
+        "peak": 2
+      },
+      "techniques": [
+        "jcut",
+        "bed",
+        "duck",
+        "pause",
+        "action"
+      ],
+      "order": "story"
+    },
+    {
+      "id": "race",
+      "name": "赛场热血",
+      "category": "运动",
+      "description": "比赛镜头放到前面，切得更密，动作做完再切。",
+      "beats_per_cut": {
+        "quiet": 4,
+        "build": 2,
+        "peak": 1
+      },
+      "techniques": [
+        "jcut",
+        "bed",
+        "duck",
+        "action"
+      ],
+      "order": "sports"
+    },
+    {
+      "id": "calm",
+      "name": "松弛日常",
+      "category": "日常",
+      "description": "镜头留得久，多听现场声和你说的话。",
+      "beats_per_cut": {
+        "quiet": 8,
+        "build": 8,
+        "peak": 4
+      },
+      "techniques": [
+        "bed",
+        "duck",
+        "pause"
+      ],
+      "order": "story"
+    },
+    {
+      "id": "walk",
+      "name": "城市漫步",
+      "category": "旅行",
+      "description": "跟着脚步慢慢走，声音先到，画面再跟上。",
+      "beats_per_cut": {
+        "quiet": 8,
+        "build": 4,
+        "peak": 4
+      },
+      "techniques": [
+        "jcut",
+        "bed",
+        "duck"
+      ],
+      "order": "story"
+    },
+    {
+      "id": "beat",
+      "name": "卡点快剪",
+      "category": "运动",
+      "description": "几乎每一拍都切，适合开头和高潮。",
+      "beats_per_cut": {
+        "quiet": 2,
+        "build": 2,
+        "peak": 1
+      },
+      "techniques": [
+        "jcut",
+        "action"
+      ],
+      "order": "sports"
+    },
+    {
+      "id": "diary",
+      "name": "自拍日记",
+      "category": "日常",
+      "description": "以你说的话为主线，路上和比赛镜头穿插进来。",
+      "beats_per_cut": {
+        "quiet": 8,
+        "build": 4,
+        "peak": 4
+      },
+      "techniques": [
+        "bed",
+        "duck",
+        "pause"
+      ],
+      "order": "selfie"
+    }
+  ]
+}

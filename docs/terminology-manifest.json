@@ -1,0 +1,186 @@
+{
+  "schema": "photo-content-os/terminology-manifest/v1",
+  "purpose": "素材管理相关概念的唯一叫法。界面文字、文档叙述、脚本给人看的输出，同一个概念只用 canonical 这一个名字；aliases_to_retire 里的说法不再用于新写的叙述，只在解释旧文档时出现。目录名和代码里的标识符不改，只在 path、code_names 里登记对应关系。",
+  "decisions": [
+    {
+      "date": "2026-10-21",
+      "by": "用户",
+      "request": "2026-10-21-R225-photo-material-management-discussion",
+      "what": "界面和文档统一用「项目 / 作品」：项目 = 一组作品（原文档叫主题集合，L2）；作品 = 一条要做出来的内容（原文档叫项目根、正式项目，L3）。",
+      "quote": "这个绝对没问题 一定要确定下来变成manifest"
+    },
+    {
+      "date": "2026-10-21",
+      "by": "用户",
+      "request": "2026-10-21-R225-photo-material-management-discussion",
+      "what": "副本的登记方式是「添加一个目录」，云盘（含百度网盘）同步文件夹也算。",
+      "quote": "有副本 等级副本位置 进行增加目录即可 也考虑百度网盘等"
+    }
+  ],
+  "status_values": {
+    "decided": "用户已拍板，必须照用",
+    "proposed": "设计稿和说明页在用，用户还没拍板；可以改名，改了要同步这里"
+  },
+  "concepts": [
+    {
+      "id": "media_folder",
+      "canonical": "素材文件夹",
+      "status": "proposed",
+      "definition": "整套素材的根目录。里面放整理台、项目、素材库等目录。",
+      "layer": "L1",
+      "path": "$LOCAL_MEDIA_ROOT（默认 ~/Desktop/照片筛选）",
+      "ui_entry": ["设置与诊断 › 存放位置 › 素材文件夹"],
+      "code_names": ["LOCAL_MEDIA_ROOT", "local_media_root()"],
+      "aliases_to_retire": ["素材根", "本地素材根", "L1 本地素材根", "制度工具根"]
+    },
+    {
+      "id": "project",
+      "canonical": "项目",
+      "status": "decided",
+      "definition": "一组相关作品的集合，按一年、一个长期主题或一次大事件来分。归档、副本都不按项目算。",
+      "layer": "L2",
+      "path": "projects/<项目>",
+      "example": "2026年重回兰州大学内容创作",
+      "ui_entry": ["左侧导航 › 项目"],
+      "code_names": ["catalog.groups", "group_id", "group_title"],
+      "code_note": "代码里 group 才是界面的「项目」；接口 /api/projects/{projectId} 里的 project 指的是作品，不是这一层。",
+      "aliases_to_retire": ["主题集合", "L2 主题集合"]
+    },
+    {
+      "id": "piece",
+      "canonical": "作品",
+      "status": "decided",
+      "definition": "一条要做出来的内容，有自己的素材、成片和归档进度。归档、副本、整理进度都按作品算。",
+      "layer": "L3",
+      "path": "projects/<项目>/<作品>",
+      "example": "兰州大学 · 奔赴与校运会",
+      "ui_entry": ["项目 › 作品卡", "工作台 › 最近的作品"],
+      "code_names": ["catalog.pieces", "piece", "workspace_key", "接口里的 projectId"],
+      "code_note": "代码和接口沿用 project 指这一层（studio/media_review.py 的 piece(project)），不改标识符，只改给人看的文字。",
+      "aliases_to_retire": ["项目根", "正式项目", "L3 项目根", "具体项目", "单个项目"]
+    },
+    {
+      "id": "scene",
+      "canonical": "场景",
+      "status": "proposed",
+      "definition": "作品里按叙事场景分的素材文件夹，例如「起跑与冲线」「领奖台」。",
+      "layer": "L4",
+      "path": "<作品>/<场景>",
+      "ui_entry": ["作品 › 按素材剪 vlog › 挑镜头（按场景分组）"],
+      "code_names": ["scene"],
+      "aliases_to_retire": ["L3 内容目录", "L3 主题目录", "L4 内容目录", "内容目录"]
+    },
+    {
+      "id": "material",
+      "canonical": "素材",
+      "status": "proposed",
+      "definition": "作品用到的照片、视频、实况照片、全景原片和录屏。原件只有一份，留在作品里。",
+      "path": "<作品>/<场景>/<文件>",
+      "ui_entry": ["作品 › 按素材剪 vlog › 挑镜头"],
+      "aliases_to_retire": ["项目 L3 源文件", "L3 源文件", "L3 根部素材"]
+    },
+    {
+      "id": "tidy",
+      "canonical": "整理",
+      "status": "proposed",
+      "definition": "从拍完到能剪、能找、能复用、能放心移出 Mac 的一串动作：分批、定去处、分场景、去重、合并补充素材、精选、登记复用、归档。",
+      "ui_entry": ["左侧导航 › 整理台（跨作品）", "作品 › 素材整理（单件作品，设计稿）"]
+    },
+    {
+      "id": "inbox",
+      "canonical": "整理台",
+      "status": "proposed",
+      "definition": "新素材按一次事件分批、定去处的地方；也汇总各作品要你看一眼的事和可以复用的候选（设计稿提议）。",
+      "path": "inbox",
+      "ui_entry": ["左侧导航 › 整理台"],
+      "aliases_to_retire": ["Inbox", "新素材入口"]
+    },
+    {
+      "id": "additions",
+      "canonical": "补充素材",
+      "status": "proposed",
+      "definition": "作品开始后又找到的素材。原始格式的自动进待处理，其余由 AI 建议放哪个场景，你确认后合并。",
+      "path": "<作品>/additions",
+      "ui_entry": ["作品 › 素材整理 › 补充素材（设计稿）"],
+      "aliases_to_retire": ["additions", "二次筛选增量入口"]
+    },
+    {
+      "id": "pending",
+      "canonical": "待处理",
+      "status": "proposed",
+      "definition": "知道放哪个场景，但还要防抖、转码、修复或补齐的素材。每条必须写原因。",
+      "path": "<作品>/<场景>/raw-pending",
+      "ui_entry": ["作品 › 素材整理 › 待处理（设计稿）"],
+      "aliases_to_retire": ["raw-pending", "L4/raw-pending"]
+    },
+    {
+      "id": "raw_keep",
+      "canonical": "原始保留",
+      "status": "proposed",
+      "definition": "全景原片、Log、Raw、实况照片半组、连拍里近重复但想留的整组。不进手机、不进素材库。",
+      "path": "<作品>/raw-vault",
+      "ui_entry": ["作品 › 素材整理 › 连拍与相似（整组保留的，设计稿）"],
+      "aliases_to_retire": ["raw-vault", "RawVault"]
+    },
+    {
+      "id": "selected",
+      "canonical": "精选",
+      "status": "proposed",
+      "definition": "从原件复制出来、要进 iCloud 照片的副本，按用途分：代表、封面候选、纪念、手机常用、实况组、成片高光、待确认。",
+      "path": "<作品>/icloud-selected/<用途>",
+      "ui_entry": ["作品 › 素材整理 › 用途 › 手机精选（设计稿）"],
+      "aliases_to_retire": ["80 精选副本", "80", "80_To_iCloudPhotos_精选入库", "iCloudReady 精选"]
+    },
+    {
+      "id": "output",
+      "canonical": "成片",
+      "status": "proposed",
+      "definition": "作品的 v1、v2 和最终发布的 Final。",
+      "path": "<作品>/output",
+      "ui_entry": ["作品页右上 › 看已出的成片", "作品卡 › 看成片"],
+      "aliases_to_retire": ["91", "91_Output", "output/Final"]
+    },
+    {
+      "id": "library",
+      "canonical": "素材库",
+      "status": "proposed",
+      "definition": "跨作品复用的地方。默认只登记一张卡片，原件留在作品里；加工好的通用成品才另存一份。",
+      "path": "library",
+      "ui_entry": ["左侧导航 › 素材库", "作品 › 挑镜头 › 收进素材库"],
+      "code_names": ["register_reusable_asset.py", "asset_library_index.py", "/api/assets"],
+      "aliases_to_retire": ["资产库", "Asset Library", "跨项目资产库", "跨项目复用索引"]
+    },
+    {
+      "id": "music_library",
+      "canonical": "音乐库",
+      "status": "proposed",
+      "definition": "配乐用的歌：粘贴汽水音乐、网易云音乐链接下载的单曲，或从本机、网易云客户端下载目录导入的文件。同一首只存一份；平台歌曲只用来试听和定卡点，发布前要确认版权。",
+      "path": "library/music/<每首一个文件夹>",
+      "ui_entry": ["左侧导航 › 音乐库", "作品 › 第 3 步配乐卡点（下一阶段）"]
+    },
+    {
+      "id": "copy_location",
+      "canonical": "副本位置",
+      "status": "decided",
+      "definition": "你添加的一个能读写的目录：移动硬盘、NAS，或阿里云盘、百度网盘、iCloud 云盘的同步文件夹。作品的完整包拷进去后读回来核对。",
+      "ui_entry": ["设置与诊断 › 存放位置 › 副本位置（设计稿）", "作品 › 保存与归档（设计稿）"],
+      "code_names": ["studio/archive_location_config.py 的 location"],
+      "aliases_to_retire": ["物理位置", "归档位置", "归档去处", "登记位置"]
+    },
+    {
+      "id": "archive_stage",
+      "canonical": "保存与归档",
+      "status": "proposed",
+      "definition": "每件作品自己的阶段，不是整批素材的状态。",
+      "belongs_to": "piece",
+      "values": {
+        "使用中": "正在剪或刚出片，素材都在这台 Mac 上（原文档：活动期）",
+        "发布后保留": "成片已发布，素材还在 Mac 上，云盘里有一份副本（原文档：发布冷却期）",
+        "已冷归档": "原始素材已移出 Mac，云盘和硬盘各有一份（原文档：冷归档期）"
+      },
+      "ui_entry": ["作品 › 保存与归档（设计稿）", "项目 › 使用中 / 已冷归档 筛选（设计稿）"],
+      "code_names": ["studio/archive_location_config.py 的全局 lifecycle（要改成按作品记）"],
+      "aliases_to_retire": ["归档生命周期", "素材已归档（指有素材时）"]
+    }
+  ]
+}

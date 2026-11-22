@@ -1,0 +1,157 @@
+{
+  "id": "2026-10-21-R228-photo-editor-copy",
+  "project": "photo-content-os",
+  "title": "出草稿用哪个剪辑软件，Studio 里按实际选的写，不再写剪映",
+  "understanding": [
+    "作品页步骤条第 4 步「出草稿」下面，写这件作品实际会用的剪辑软件：「用 Kdenlive」或「用 ChatCut」；选了 ChatCut 但没连上时写「ChatCut 还没连上」。",
+    "工作台的「ChatCut 还没连上本机」只在有作品选了 ChatCut、而 ChatCut 又没连上时出现，说明写清是哪件作品：连上之前出不了草稿，去设置里接上，或者在作品里改用 Kdenlive。",
+    "设置与诊断的剪辑软件分页，说明改成：每件作品出草稿时，用你给它选的剪辑软件，没选过的默认用 Kdenlive；选了 ChatCut 但没连上时，不会悄悄换成别的，会在工作台提醒你。",
+    "页面上不再出现「出草稿会用剪映」这类说法，因为系统已经不给新项目生成剪映草稿（我补充的）。",
+    "选择剪辑软件的入口跟着「粗剪里用了哪些剪辑手法，在审阅页上看得见、能开关」那张卡一起做，放在作品里「出草稿」旁边；入口做好前，H-02 没法在页面上验（我补充的）。"
+  ],
+  "out_of_scope": [
+    "版式和其他文字不动",
+    "剪辑软件怎么选、选项有哪些不变",
+    "精剪仍可在剪映里做，那是人工步骤，不改"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开兰州大学那件作品，切到「按素材剪 vlog」。",
+        "打开设置与诊断，切到剪辑软件分页。"
+      ],
+      "expected": "作品页步骤条第 4 步「出草稿」下面写着「用 Kdenlive」；剪辑软件分页的说明以「每件作品出草稿时，用你给它选的剪辑软件」开头，页面上没有「出草稿会用剪映」这类说法；工作台没有「ChatCut 还没连上本机」这一条。"
+    },
+    {
+      "key": "H-02",
+      "steps": [
+        "打开兰州大学那件作品，进入第 3 步配乐卡点，点「出草稿」旁边的「换」，选 ChatCut，保持 ChatCut 没连上。",
+        "打开工作台，再打开这件作品的「按素材剪 vlog」。"
+      ],
+      "expected": "工作台出现「ChatCut 还没连上本机」，说明里写着这件作品的名字、连上之前出不了草稿、可以去设置里接上或在作品里改用 Kdenlive；作品页步骤条第 4 步写着「ChatCut 还没连上」。"
+    }
+  ],
+  "raw_request": "2. 怎么改？ ／ 按实际选的软件显示（推荐） ／ 选择入口：作品里「出草稿」旁边（推荐）",
+  "author": {
+    "agent": "claude",
+    "session": "d69d18ef-6d7e-4d00-8f67-ee8aca293a1e"
+  },
+  "executors": [
+    {
+      "agent": "claude",
+      "session": "d69d18ef-6d7e-4d00-8f67-ee8aca293a1e",
+      "role": "总控"
+    }
+  ],
+  "confirmation_required": false,
+  "schema": "request-card/v1",
+  "created_at": "2026-10-20T17:31:16.920879Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [
+    {
+      "id": "2026-10-21-R228-photo-editor-copy",
+      "project": "photo-content-os",
+      "title": "出草稿用哪个剪辑软件，Studio 里按实际选的写，不再写剪映",
+      "understanding": [
+        "作品页步骤条第 4 步「出草稿」下面，写这件作品实际会用的剪辑软件：「用 Kdenlive」或「用 ChatCut」；选了 ChatCut 但没连上时写「ChatCut 还没连上」。",
+        "工作台的「ChatCut 还没连上本机」只在选了 ChatCut 又没连上时出现，说明改成：你选了在 ChatCut 里精剪，连上之前出不了草稿；去设置里接上，或者改用 Kdenlive。",
+        "设置与诊断的剪辑软件分页，说明改成：出草稿用你在这里选的剪辑软件；选了 ChatCut 但没连上时，不会悄悄换成别的，会在工作台提醒你。",
+        "页面上不再出现「出草稿会用剪映」这类说法，因为系统已经不给新项目生成剪映草稿（我补充的）。"
+      ],
+      "out_of_scope": [
+        "版式和其他文字不动",
+        "剪辑软件怎么选、选项有哪些不变",
+        "精剪仍可在剪映里做，那是人工步骤，不改"
+      ],
+      "criteria": [
+        {
+          "key": "H-01",
+          "steps": [
+            "打开设置与诊断，切到剪辑软件分页，选 Kdenlive。",
+            "打开兰州大学那件作品。"
+          ],
+          "expected": "步骤条第 4 步「出草稿」下面写着「用 Kdenlive」；剪辑软件分页的说明是「出草稿用你在这里选的剪辑软件……」，全页没有「剪映」二字；工作台没有「ChatCut 还没连上本机」这一条。"
+        },
+        {
+          "key": "H-02",
+          "steps": [
+            "切到剪辑软件分页，选 ChatCut，保持 ChatCut 没连上。",
+            "打开工作台，再打开兰州大学那件作品。"
+          ],
+          "expected": "工作台出现「ChatCut 还没连上本机」，说明写着连上之前出不了草稿、可以去设置里接上或改用 Kdenlive；作品页步骤条第 4 步写着「ChatCut 还没连上」。"
+        }
+      ],
+      "raw_request": "2. 怎么改？ ／ 按实际选的软件显示（推荐）",
+      "author": {
+        "agent": "claude",
+        "session": "d69d18ef-6d7e-4d00-8f67-ee8aca293a1e"
+      },
+      "executors": [
+        {
+          "agent": "claude",
+          "session": "d69d18ef-6d7e-4d00-8f67-ee8aca293a1e",
+          "role": "总控"
+        }
+      ],
+      "confirmation_required": false,
+      "schema": "request-card/v1",
+      "created_at": "2026-10-20T17:31:16.920879Z",
+      "status": "待确认",
+      "confirmation": null
+    },
+    {
+      "id": "2026-10-21-R228-photo-editor-copy",
+      "project": "photo-content-os",
+      "title": "出草稿用哪个剪辑软件，Studio 里按实际选的写，不再写剪映",
+      "understanding": [
+        "作品页步骤条第 4 步「出草稿」下面，写这件作品实际会用的剪辑软件：「用 Kdenlive」或「用 ChatCut」；选了 ChatCut 但没连上时写「ChatCut 还没连上」。",
+        "工作台的「ChatCut 还没连上本机」只在有作品选了 ChatCut、而 ChatCut 又没连上时出现，说明写清是哪件作品：连上之前出不了草稿，去设置里接上，或者在作品里改用 Kdenlive。",
+        "设置与诊断的剪辑软件分页，说明改成：每件作品出草稿时，用你给它选的剪辑软件，没选过的默认用 Kdenlive；选了 ChatCut 但没连上时，不会悄悄换成别的，会在工作台提醒你。",
+        "页面上不再出现「出草稿会用剪映」这类说法，因为系统已经不给新项目生成剪映草稿（我补充的）。"
+      ],
+      "out_of_scope": [
+        "版式和其他文字不动",
+        "剪辑软件怎么选、选项有哪些不变",
+        "精剪仍可在剪映里做，那是人工步骤，不改"
+      ],
+      "criteria": [
+        {
+          "key": "H-01",
+          "steps": [
+            "打开兰州大学那件作品，切到「按脚本做视频」，在剪辑软件那一块选 Kdenlive。",
+            "切到「按素材剪 vlog」。",
+            "打开设置与诊断，切到剪辑软件分页。"
+          ],
+          "expected": "作品页步骤条第 4 步「出草稿」下面写着「用 Kdenlive」；剪辑软件分页的说明以「每件作品出草稿时，用你给它选的剪辑软件」开头，页面上没有「出草稿会用剪映」这类说法；工作台没有「ChatCut 还没连上本机」这一条。"
+        },
+        {
+          "key": "H-02",
+          "steps": [
+            "打开同一件作品，切到「按脚本做视频」，在剪辑软件那一块选 ChatCut，保持 ChatCut 没连上。",
+            "打开工作台，再打开这件作品的「按素材剪 vlog」。"
+          ],
+          "expected": "工作台出现「ChatCut 还没连上本机」，说明里写着这件作品的名字、连上之前出不了草稿、可以去设置里接上或在作品里改用 Kdenlive；作品页步骤条第 4 步写着「ChatCut 还没连上」。"
+        }
+      ],
+      "raw_request": "2. 怎么改？ ／ 按实际选的软件显示（推荐）",
+      "author": {
+        "agent": "claude",
+        "session": "d69d18ef-6d7e-4d00-8f67-ee8aca293a1e"
+      },
+      "executors": [
+        {
+          "agent": "claude",
+          "session": "d69d18ef-6d7e-4d00-8f67-ee8aca293a1e",
+          "role": "总控"
+        }
+      ],
+      "confirmation_required": false,
+      "schema": "request-card/v1",
+      "created_at": "2026-10-20T17:31:16.920879Z",
+      "status": "待确认",
+      "confirmation": null
+    }
+  ]
+}

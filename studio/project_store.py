@@ -274,10 +274,10 @@ class ProjectStore:
         _atomic(self.path, data)
 
     @staticmethod
-    def _find(data: dict[str, Any], project_id: str) -> dict[str, Any]:
+    def _find(data: dict[str, Any], project_id: str, *, include_deleted: bool = False) -> dict[str, Any]:
         if not SAFE_ID.fullmatch(project_id): raise ProjectStoreError("project_id_invalid", "项目 ID 无效")
         for project in data["projects"]:
-            if project.get("id") == project_id: return project
+            if project.get("id") == project_id and (include_deleted or not project.get("deletion")): return project
         raise ProjectStoreError("project_not_found", "项目不存在")
     @staticmethod
     def _revision(project: dict[str, Any], expected: int | None) -> None:
@@ -350,8 +350,29 @@ class ProjectStore:
             normalized[source_name] = {**current, "consumed_at": consumed_at}
         document["consumed_inputs"] = normalized
         document.update(stale=False, stale_reason="", stale_sources=[])
-    def list_projects(self) -> list[dict[str, Any]]: return [_public(p) for p in sorted(self._load()["projects"], key=lambda x: x.get("updated_at", ""), reverse=True)]
+    def list_projects(self) -> list[dict[str, Any]]: return [_public(p) for p in sorted([p for p in self._load()["projects"] if not p.get("deletion")], key=lambda x: x.get("updated_at", ""), reverse=True)]
     def get_project(self, project_id: str) -> dict[str, Any]: return _public(self._find(self._load(), project_id))
+    def deletion_preview(self, project_ids):
+        from studio.work_trash import WorkTrash
+        return WorkTrash(self).preview(project_ids)
+
+    def delete_projects(self, project_ids, *, expected_revisions, move_folders=False, folder_project_ids=None):
+        from studio.work_trash import WorkTrash
+        return WorkTrash(self).delete(project_ids, expected_revisions=expected_revisions,
+                                      move_folders=move_folders, folder_project_ids=folder_project_ids)
+
+    def deleted_projects(self):
+        from studio.work_trash import WorkTrash
+        return WorkTrash(self).deleted()
+
+    def restore_projects(self, project_ids, *, expected_revisions, batch_id=None):
+        from studio.work_trash import WorkTrash
+        return WorkTrash(self).restore(project_ids, expected_revisions=expected_revisions, batch_id=batch_id)
+
+    def dismiss_deleted_project(self, project_id, *, expected_revision):
+        from studio.work_trash import WorkTrash
+        return WorkTrash(self).dismiss(project_id, expected_revision=expected_revision)
+
     def create_project(self, *, title: str, platform: str = "未指定", local_workspace: str | None = None, account: str = "") -> dict[str, Any]:
         title = str(title or "").strip()
         if not title: raise ProjectStoreError("title_required", "项目名称不能为空")
@@ -362,6 +383,8 @@ class ProjectStore:
             if not path.is_dir(): raise ProjectStoreError("workspace_not_found", "本地素材目录不存在")
             local_path, label = str(path), workspace_label(path)
         now = _now(); project = {"schema_version": PROJECT_SCHEMA_VERSION, "id": f"{_slug(title)}-{secrets.token_hex(5)}", "title": title, "platform": str(platform or "未指定")[:40], "account": str(account or "")[:80], "status": "planning", "revision": 1, "created_at": now, "updated_at": now, "local_workspace": {"workspace_id": "workspace-" + secrets.token_hex(8), "label": label, "local_path": local_path, "path_digest": _digest(local_path) if local_path else None}, "references": [], "assets": [], "inbox_confirmations": [], "documents": {n: _document(n) for n in DOCUMENT_NAMES}, "delivery": {"state": "not_started", "stale": False, "stale_reason": "", "stale_sources": [], "consumed_inputs": {}, "artifacts": []}, "publishing": {"state": "not_published", "published_at": None, "links": [], "metrics": {}}, "publishing_history": [], "analysis": {"state": "not_started", "tier": "metadata", "transcript_state": "not_started", "preview_state": "not_started"}, "audit": [{"id": "audit-" + secrets.token_hex(8), "at": now, "actor": "user", "action": "project_created", "detail": {"platform": str(platform or "未指定")[:40]}}]}
+        if local_workspace:
+            project["local_workspace"]["connection_path"] = str(Path(local_workspace).expanduser().absolute())
         with self._transaction() as data:
             data["projects"].append(project)
         return _public(project)
@@ -383,6 +406,7 @@ class ProjectStore:
         with self._transaction() as data:
             project = self._find(data, project_id); self._revision(project, expected_revision)
             project["local_workspace"] = {"workspace_id": project.get("local_workspace", {}).get("workspace_id") or "workspace-" + secrets.token_hex(8), "label": workspace_label(path), "local_path": str(path), "path_digest": _digest(str(path))}; project["analysis"]["state"] = "not_started"
+            project["local_workspace"]["connection_path"] = str(Path(local_workspace).expanduser().absolute())
             self._touch(project, actor, "workspace_connected", {"label": path.name})
         return _public(project)
     def local_workspace_path(self, project_id: str) -> Path:
@@ -674,7 +698,7 @@ class ProjectStore:
             return []
         context: list[dict[str, str]] = []
         for project in data["projects"]:
-            if project.get("id") == current["id"]:
+            if project.get("deletion") or project.get("id") == current["id"]:
                 continue
             snapshots = project.get("publishing_history") or []
             if not snapshots:

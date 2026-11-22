@@ -36,7 +36,7 @@ from music_library.errors import MusicError
 
 from studio.ai_patch import AIPatchError, generate_patch  # type: ignore  # noqa: E402
 from studio.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore  # type: ignore  # noqa: E402
-from studio.api_contract import is_registered_route, route_inventory  # type: ignore  # noqa: E402
+from studio.api_contract import is_registered_route, is_roughcut_route, route_inventory  # type: ignore  # noqa: E402
 from studio.archive_location_config import (  # type: ignore  # noqa: E402
     ArchiveLocationConfig,
     ArchiveLocationConfigError,
@@ -234,10 +234,27 @@ class StudioApplication:
     def video_editor_choice(self, project_id: str, value: dict | None = None) -> dict:
         """Local next-handoff preference; never rewrite a run or project stage."""
         self.store.get_project(project_id)
+        return self._video_editor_choice(project_id, value)
+
+    def _video_editor_choice(self, project_id: str, value: dict | None = None) -> dict:
         name = hashlib.sha256(project_id.encode()).hexdigest() + ".json"
         path = self.settings_dir / "video-editors" / name
         with self.video_choice_lock:
-            current = json.loads(path.read_text()) if path.is_file() else {"editor": "otio_kdenlive", "method": "external", "revision": 1}
+            from studio.media_review import read_json
+            try:
+                current = read_json(path, optional=True)
+                if current is None:
+                    # Only an absent file means the work has no saved preference.
+                    if path.exists() or path.is_symlink():
+                        raise ValueError('null editor choice')
+                    current = {"editor": "otio_kdenlive", "method": "external", "revision": 1}
+                if (not isinstance(current, dict)
+                    or current.get('editor') not in {'otio_kdenlive', 'kdenlive', 'openfilm', 'openchatcut', 'chatcut'}
+                    or current.get('method', 'external') not in {'external', 'guide', 'self'}
+                    or type(current.get('revision')) is not int or current['revision'] < 1):
+                    raise ValueError('invalid editor choice')
+            except (ProjectStoreError, ValueError, TypeError) as exc:
+                raise ProjectStoreError('editor_choice_unreadable', '无法读取本机记录') from exc
             # PS persisted this exact software under the old local ID. Reading
             # it preserves the user's choice and CAS; it does not rewrite a run.
             if current.get('editor')=='kdenlive': current={**current,'editor':'otio_kdenlive'}
@@ -255,6 +272,18 @@ class StudioApplication:
                     temporary = Path(handle.name)
                 os.replace(temporary, path)
             return current
+
+    def review_catalog_projection(self) -> dict:
+        catalog = self.media_review.catalog()
+        for piece in catalog['pieces']:
+            try:
+                choice = self._video_editor_choice(piece['id'])
+                piece['editorChoice'] = {key: choice[key] for key in ('editor', 'method', 'revision')}
+            except ProjectStoreError as exc:
+                if exc.code != 'editor_choice_unreadable':
+                    raise
+                piece['editorChoice'] = {'error': {'code': exc.code, 'message': exc.message}}
+        return catalog
 
     @staticmethod
     def _video_json(root: Path, ref: str) -> dict:
@@ -732,6 +761,8 @@ class StudioApplication:
                 self.end_headers()
 
             def do_GET(self) -> None:  # noqa: N802
+                if self._roughcut_request('GET'):
+                    return
                 try:
                     self._assert_local()
                     parsed = urllib.parse.urlparse(self.path)
@@ -786,7 +817,7 @@ class StudioApplication:
                             return
                         review = app.media_review
                         if parsed.path == '/api/review/catalog':
-                            self._json(200, {'ok': True, **review.catalog()})
+                            self._json(200, {'ok': True, **app.review_catalog_projection()})
                         elif parsed.path == '/api/review/music':
                             self._json(200, {'ok': True, **review.music_payload()})
                         elif parsed.path == '/api/review/music-settings':
@@ -850,6 +881,9 @@ class StudioApplication:
                                 "upstreamFeaturesAvailable": upstream.get("upstream_features_available") is True,
                             },
                         )
+                        return
+                    if parsed.path == "/api/projects/deleted":
+                        self._json(HTTPStatus.OK, {"ok": True, "items": app.store.deleted_projects()})
                         return
                     if parsed.path == "/api/projects":
                         self._json(HTTPStatus.OK, {"ok": True, "projects": app.store.list_projects()})
@@ -985,6 +1019,8 @@ class StudioApplication:
                 self._write_request('DELETE')
 
             def _write_request(self, method: str) -> None:
+                if self._roughcut_request(method):
+                    return
                 try:
                     self._assert_write()
                     # Reopening the native engine rotates its origin during this
@@ -1064,6 +1100,46 @@ class StudioApplication:
                     if expected is not None and type(expected) is not int:
                         raise ProjectStoreError("revision_invalid", "expectedRevision 必须是整数")
                     expected_revision = expected
+                    if method == 'POST' and segments in (
+                        ['api', 'projects', 'delete-preview'], ['api', 'projects', 'delete'],
+                        ['api', 'projects', 'restore'],
+                    ):
+                        allowed = {
+                            'delete-preview': {'projectIds'},
+                            'delete': {'projectIds', 'expectedRevisions', 'moveFolders', 'folderProjectIds'},
+                            'restore': {'projectIds', 'expectedRevisions', 'batchId'},
+                        }[segments[2]]
+                        if set(body) - allowed:
+                            raise ProjectStoreError('body_invalid', '请求内容无效')
+                        if segments[2] == 'delete-preview':
+                            result = {'items': app.store.deletion_preview(body.get('projectIds'))}
+                        elif segments[2] == 'delete':
+                            result = app.store.delete_projects(
+                                body.get('projectIds'), expected_revisions=body.get('expectedRevisions'),
+                                move_folders=body.get('moveFolders', False),
+                                folder_project_ids=body.get('folderProjectIds'))
+                        else:
+                            result = app.store.restore_projects(
+                                body.get('projectIds'), expected_revisions=body.get('expectedRevisions'),
+                                batch_id=body.get('batchId'))
+                        if 'undo' in result:
+                            undo = result['undo']
+                            result['undo'] = {'projectIds': undo['project_ids'],
+                                              'expectedRevisions': undo['expected_revisions'],
+                                              'batchId': undo['batch_id']}
+                        self._json(HTTPStatus.OK, {'ok': True, **result})
+                        return
+                    if (method == 'POST' and len(segments) == 4 and segments[:2] == ['api', 'projects']
+                            and segments[3] in ('restore', 'dismiss')):
+                        if set(body) - {'expectedRevision'}:
+                            raise ProjectStoreError('body_invalid', '请求内容无效')
+                        if segments[3] == 'restore':
+                            result = app.store.restore_projects(
+                                [segments[2]], expected_revisions={segments[2]: expected_revision})
+                        else:
+                            result = app.store.dismiss_deleted_project(segments[2], expected_revision=expected_revision)
+                        self._json(HTTPStatus.OK, {'ok': True, **result})
+                        return
                     if method == "POST" and segments == ["api", "settings", "analysis-budget"]:
                         if expected_revision is None:
                             raise ProjectStoreError("revision_invalid", "expectedRevision 必须是整数")
@@ -1447,6 +1523,47 @@ class StudioApplication:
                 if not valid:
                     raise ProjectStoreError('origin_forbidden', '只允许同一工作台页面提交修改')
 
+            def _roughcut_request(self, method: str) -> bool:
+                try:
+                    parsed = urllib.parse.urlparse(self.path)
+                except ValueError:
+                    return False
+                if not is_roughcut_route(parsed.path):
+                    return False
+                from studio.roughcut_service import dispatch, MediaSlice
+                from studio.roughcut_store import RoughcutError
+                try:
+                    self._assert_write() if method != 'GET' else self._assert_local()
+                    if not is_registered_route(method, parsed.path):
+                        self._json(404, _error('route_not_found', '接口不存在'))
+                        return True
+                    if parsed.query:
+                        raise RoughcutError('body_invalid')
+                    value = None if method == 'GET' else self._body()
+                    result = dispatch(app, method, self._segments(parsed.path), value, self.headers.get('Range'))
+                    if isinstance(result, MediaSlice):
+                        with result.path.open('rb') as source:
+                            source.seek(result.start)
+                            self._send_headers(result.status, result.length, result.content_type, result.headers)
+                            remaining = result.length
+                            while remaining:
+                                chunk = source.read(min(remaining, 256 * 1024))
+                                if not chunk:
+                                    break
+                                self.wfile.write(chunk)
+                                remaining -= len(chunk)
+                    else:
+                        self._json(*result)
+                except (RoughcutError, ProjectStoreError, OSError, ValueError, TypeError) as exc:
+                    if not isinstance(exc, RoughcutError):
+                        code = getattr(exc, 'code', 'request_invalid')
+                        exc = RoughcutError('body_invalid' if code == 'body_too_large' else code)
+                    headers = None
+                    if exc.code == 'range_not_satisfiable':
+                        headers = {'Content-Range': f'bytes */{exc.failure["details"]["media_length"]}', 'Accept-Ranges': 'bytes'}
+                    self._send(exc.http_status, _json_bytes(exc.response()), 'application/json; charset=utf-8', headers)
+                return True
+
             def _handle_error(self, exc: Exception) -> None:
                 if isinstance(exc, DirectVideoError):
                     code = exc.code
@@ -1518,6 +1635,8 @@ def serve(
     application.video_workflow.origin = url.rstrip('/')
     original_close = server.server_close
     def close_owned_sessions():
+        if hasattr(application, 'roughcut'):
+            application.roughcut.close()
         application.review_jobs.close()
         try:
             application.video_workflow.close()

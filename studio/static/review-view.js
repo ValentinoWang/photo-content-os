@@ -1,5 +1,7 @@
+import { createWorkDeleteView } from '/review-delete.js';
 import { createShotView, seconds } from '/review-shots.js';
 import { createDirectView } from '/direct-view.js';
+import { createCutView } from '/review-cut.js';
 import { createMusicView } from '/review-music.js';
 import {mediaSummary, diagnosticGroups, checkedTime, sec} from '/review-common.js';
 const $ = s => document.querySelector(s);
@@ -16,6 +18,7 @@ export function nextTabIndex(current, key, count) {
  return null;
 }
 export const icons = {
+ trash:'<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>',
  home:'<path d="M15 21v-8h-6v8M3 10l9-8 9 8v11H3z"/>',
  inbox:'<path d="M2 12h6l2 3h4l2-3h6M2 12l4-8h12l4 8v8H2z"/>',
  projects:'<path d="M2 20V3h7l4 3h9v14z"/>',
@@ -34,11 +37,11 @@ export const icon = key => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="tru
 export function createStudio(ctx) {
  const {state,api,notice,openProjectDialog,openSurface,renderProject,renderInbox,loadLibrary,loadInboxPlan,loadDeleteRecommendations}=ctx;
  let route={view:'home'}, catalog={groups:[],pieces:[]}, request=0;
- let shots, music, direct, assetCategory='', musicSettings, pendingTabFocus=null;
+ let shots, cut, music, direct, assetCategory='', musicSettings, pendingTabFocus=null;
  const boundTabLists=new WeakSet();
  const root=()=>$('#review-screen');
  const piece=id=>catalog.pieces.find(p=>p.id===id);
- const issues=()=>diagnosticGroups(state.diagnostics?.checks||[]).issues;
+ const issues=()=>diagnosticGroups(state.diagnostics?.checks||[],catalog.pieces,D).issues;
  const pending=()=>catalog.pieces.filter(p=>p.pending);
  const media=p=>mediaSummary(p,D);
  const frame=s=>s.frames[Math.floor(s.frames.length/2)]||'';
@@ -50,7 +53,7 @@ export function createStudio(ctx) {
  function mark(name){$('.main').dataset.designState=name;const ids={home:'R208-HOME-recent',inbox:'R208-INBOX-empty',projects:'R208-PROJECTS',project:'R208-PROJECT-pieces',library:'R208-LIBRARY','library-empty':'R208-LIBRARY-empty'};$('.topbar').dataset.designId=ids[name]||(name.startsWith('settings-')?'R208-SETTINGS':name.startsWith('music')?'R208-MUSIC-import':'R208-REV-topbar');root().className='review-screen';}
  function nav() {
   const count=pending().length+issues().length;
-  $$('.nav [data-nav]').forEach(b=>b.setAttribute('aria-current', String(b.dataset.nav===(['piece','project'].includes(route.view)?'projects':route.view))));
+  $$('.nav [data-nav]').forEach(b=>b.setAttribute('aria-current', String(b.dataset.nav===(['piece','project','recent'].includes(route.view)?'projects':route.view))));
   $('#home-count').textContent=count; $('#home-count').hidden=!count;
   const upstream=state.settings?.upstream;
   $('#upstream-state').textContent=state.settingsError?state.settingsError:upstream?(upstream.upstream_features_available?'上游中台已连接':'上游中台未连接'):'无法读取本机记录';
@@ -65,11 +68,12 @@ export function createStudio(ctx) {
   $$('[data-versions]').forEach(b=>b.onclick=e=>{e.stopPropagation();openVersions(piece(b.dataset.versions));});
  }
  function card(p,withProject=false) {
+  if(route.view==='project'&&deletion.picking())return deletion.card(p);
   const group=catalog.groups.find(g=>g.id===p.group_id);
   const status=p.pending?'挑镜头 · 等你过目':p.versions?`已出 ${D(p.versions)} 版`:p.videos||p.photos?'素材已归档':'';
-  const chip=status?`<span class="chip">${status}</span>`:'';
+  const chip=status?`<span class="chip" data-design-data>${status}</span>`:'';
   const play=p.versions?`<button class="playv" data-versions="${esc(p.id)}">看成片</button>`:'';
-  return `<article class="piece ${p.cover?'':'piece--compact'}" role="link" tabindex="0" data-piece="${esc(p.id)}">${p.cover?`<div class="cover"><img src="${esc(p.cover)}" alt="" loading="lazy">${chip}${play}</div>`:''}<div class="piece-body"><b data-design-data>${esc(p.title)}</b><small>${[withProject?D(group?.title):'',p.date?D(p.date):'',`<span>${media(p)}</span>`].filter(Boolean).join(' · ')}</small>${p.cover||(!chip&&!play)?'':`<div class="chips">${chip}${play}</div>`}</div></article>`;
+  return `<article class="piece ${p.cover?'':'piece--compact'}" role="link" ${route.view==='project'?'data-design-id="R208-PROJECT-piece"':''} tabindex="0" data-piece="${esc(p.id)}">${p.cover?`<div class="cover"><img src="${esc(p.cover)}" alt="" loading="lazy">${chip}${play}</div>`:''}<div class="piece-body"><b data-design-data>${esc(p.title)}</b><small data-design-data>${[withProject?D(group?.title):'',p.date?D(p.date):'',`<span>${media(p)}</span>`].filter(Boolean).join(' · ')}</small>${p.cover||(!chip&&!play)?'':`<div class="chips">${chip}${play}</div>`}</div></article>`;
  }
  function capabilities() {
   const checks=state.diagnostics?.checks||[],ready=id=>checks.some(c=>c.id===id&&c.status==='ready');
@@ -78,6 +82,8 @@ export function createStudio(ctx) {
   return [['剪映',ready('jianying')?'可用':'没装好'],['ChatCut',ready('chatcut_mcp')?'可用':'没连上'],['OpenChatCut、OpenFilm',tools?'装在本仓库里，可用':'没装好'],['创意和看图模型',ready('creative_provider')?'Codex 可用':ready('creative_model')?'可用':'没配置'],['音乐下载',egress.state==='configured'?'经广州服务器，可用':egress.state==='unreadable'?D(egress.reason):'没配置出口']].map(([name,value])=>`<div class="cap-row"><i class="dot ${['可用','装在本仓库里，可用','Codex 可用','经广州服务器，可用'].includes(value)?'dot--ok':''}"></i><div>${name}<small>${value}</small></div></div>`).join('');
  }
  async function home() {
+  await refreshCatalog();
+  if(route.view!=='home')return;
   mark('home'); top('工作台','等你处理的事和最近的作品',button('新建作品','data-new',true));
   const need=pending(); const checks=issues();
   const reviews=await Promise.all(need.map(p=>api(`/api/review/pieces/${encodeURIComponent(p.id)}/shots`)));
@@ -85,19 +91,21 @@ export function createStudio(ctx) {
   root().innerHTML=(need.length+checks.length?`<section class="full" data-design-id="R208-HOME-todo"><h2 class="section-title">等你处理<span>${D(need.length+checks.length)} 件</span></h2><div class="todo">${need.map((p,i)=>`<div class="task task--review"><div><strong>${D(p.title)}：挑镜头做完了</strong><p>${D(p.selected)} 个精选等你过目。</p><div class="thumbs5">${reviews[i].hook_candidates.slice(0,5).map(h=>reviews[i].shots.find(s=>s.id===h.id)).filter(Boolean).map(s=>`<img src="${esc(frame(s))}" alt="">`).join('')}</div></div><div class="actions"><button class="btn btn--play" data-reel="${esc(p.id)}">预览精选</button>${button('去过目',`data-piece-go="${esc(p.id)}"`,true)}</div></div>`).join('')}${checks.map(c=>`<div class="task"><div><strong>${c.title}</strong><p>${c.note}</p></div>${button('去设置','data-set="doctor"')}</div>`).join('')}</div></section>`:'')+`<section data-design-id="R208-HOME-recent"><h2 class="section-title">最近的作品<span>${D(Math.min(8,catalog.pieces.length))} 件</span></h2><div class="pieces">${catalog.pieces.slice(0,8).map(p=>card(p,true)).join('')}</div></section><aside class="cap" data-design-id="R208-HOME-cap"><h3>本机能力</h3>${capabilities()}${button('设置与诊断','data-set="doctor"')}</aside>`;
   common();$$('[data-reel]').forEach(b=>b.onclick=async()=>{const r=await api(`/api/review/pieces/${b.dataset.reel}/shots`);openReel(piece(b.dataset.reel),r);});
  }
- function projects() {
-  mark('projects');root().classList.add('single');top('项目',`${D(catalog.groups.length)} 个项目 · ${D(catalog.pieces.length)} 件作品`,button('新建作品','data-new',true));
-  root().innerHTML=`<div class="projects" data-design-id="R208-PROJECTS">${catalog.groups.map(g=>{const covers=g.pieces.map(p=>p.cover).filter(Boolean).slice(0,3);return `<button class="proj ${covers.length?'':'proj--compact'}" data-go-project="${esc(g.id)}">${covers.length?`<div class="collage ${covers.length<3?'one':''}">${(covers.length<3?covers.slice(0,1):covers).map(c=>`<img src="${esc(c)}" alt="">`).join('')}</div>`:''}<div><h2 data-design-data>${esc(g.title)}</h2><p>${D(g.count)} 件作品</p><div class="chips">${g.pending?`<span class="chip">${D(g.pending)} 件等你过目</span>`:''}${g.produced?`<span class="chip">${D(g.produced)} 件出过成片</span>`:''}</div></div><i>›</i></button>`;}).join('')}</div>`;common();
+ async function projects() {
+  mark('projects');root().classList.add('single');top(D('项目'),D(`${catalog.groups.length} 个项目 · ${catalog.pieces.length} 件作品`),button('新建作品','data-new',true));
+  root().innerHTML=`<div class="projects" data-design-id="R208-PROJECTS">${catalog.groups.map(g=>{const covers=g.pieces.map(p=>p.cover).filter(Boolean).slice(0,3);return `<button data-design-id="R208-PROJECTS-row" class="proj ${covers.length?'':'proj--compact'}" data-go-project="${esc(g.id)}">${covers.length?`<div class="collage ${covers.length<3?'one':''}">${(covers.length<3?covers.slice(0,1):covers).map(c=>`<img src="${esc(c)}" alt="">`).join('')}</div>`:''}<div><h2 data-design-data>${esc(g.title)}</h2><p data-design-data>${g.count} 件作品</p><div class="chips">${g.pending?`<span class="chip" data-design-data>${g.pending} 件等你过目</span>`:''}${g.produced?`<span class="chip" data-design-data>${g.produced} 件出过成片</span>`:''}</div></div><i>›</i></button>`;}).join('')}</div>`;common();await deletion.projects();
  }
  function project() {
   mark('project');root().classList.add('single');const g=catalog.groups.find(g=>g.id===route.project);if(!g){projects();return;}
   top(D(g.title),'',button('添加作品','data-new'),'<button data-go="projects">项目</button>');
-  root().innerHTML=`<section data-design-id="R208-PROJECT-pieces"><h2 class="section-title">作品<span>${D(g.count)} 件</span></h2><div class="pieces">${g.pieces.map(p=>card(p)).join('')}</div></section>`;common();
+  root().innerHTML=`<section data-design-id="R208-PROJECT-pieces"><h2 class="section-title">作品<span data-design-data>${g.count} 件</span></h2><div class="pieces">${g.pieces.map(p=>card(p)).join('')}</div></section>`;deletion.project(g);common();
  }
  async function work() {
+  await refreshCatalog();
+  if(route.view!=='piece')return;
   const p=piece(route.piece);if(!p){projects();return;}
   const data=await api(`/api/projects/${encodeURIComponent(p.id)}`);if(route.view!=='piece'||route.piece!==p.id)return; state.project=data.project;state.videoHandoff=data.videoHandoff||null;
-  let tab=route.ptab;
+  let tab=route.ptab;if(!tab&&route.step==='cut')tab='vlog';
   if(!tab){try{tab=localStorage.getItem('studio-piece-tab:'+p.id);}catch{ /* Storage is optional. */ }}
   tab=['vlog','script','direct'].includes(tab)?tab:state.videoHandoff?'script':'vlog';
   route.ptab=tab;
@@ -107,6 +115,7 @@ export function createStudio(ctx) {
   root().classList.add('single');root().innerHTML=tabs;
   if(tab==='script') {mark('piece-script');root().classList.add('single');$('[data-screen-panel="project"]').hidden=false;renderProject();$('[data-screen-panel="project"]').dataset.designId='R208-PIECE-script';}
   else if(tab==='direct') {await direct.render(p,tabs);}
+  else if(route.step==='cut'){await cut.render(p,tabs);}
   else {await shots.render(p,tabs);}
   bindTabs();
   if(pendingTabFocus){const restore=pendingTabFocus===tab;pendingTabFocus=null;if(restore)root().querySelector(`[data-ptab="${tab}"]`)?.focus();}
@@ -148,6 +157,7 @@ export function createStudio(ctx) {
  function row(title,note='',value='') {return `<div class="setrow"><div><strong>${title}</strong>${note?`<small>${note}</small>`:''}</div><span class="val">${value}</span></div>`;}
  const setTabs=[['places','存放位置'],['tools','剪辑软件'],['models','模型'],['music','音乐下载'],['account','上游账号'],['doctor','诊断']];
  async function settings() {
+  await refreshCatalog();
   if(route.view!=='settings')return;
   const tab=setTabs.some(t=>t[0]===route.tab)?route.tab:'tools';route.tab=tab;mark('settings-'+tab);root().classList.add('single');top('设置与诊断','本机配置与可选连接');
   if(state.settingsError)throw new Error(state.settingsError);
@@ -161,10 +171,10 @@ export function createStudio(ctx) {
    const label=(x,kind='account')=>x.state==='unreadable'?D(x.reason):x.state==='configured'?'已配置':kind==='egress'?'没配置':'没登录';
    body=`<h3>音乐下载</h3><p>只在你粘贴链接时下载那一首，不批量抓取。</p>${row('下载出口',info.egress.state==='absent'?'网易云音乐、汽水音乐要经出口服务器下载，先配置出口':'网易云音乐、汽水音乐经广州服务器下载',label(info.egress,'egress'))}${row('汽水音乐','匿名取不到音乐','可用')}${row('网易云账号','没登录也能下免费歌曲；会员歌曲下载不了',info.account.state==='configured'?'已登录':label(info.account))}${row('抖音','','暂不支持')}`;
   }
-  if(tab==='tools')body=`<h3>剪辑软件</h3><p>出草稿时 ChatCut 连上就用 ChatCut，否则用剪映。没连上的不会被悄悄换掉，会在工作台提醒你。</p>${checks.filter(c=>/chatcut|jianying|kdenlive|edit_tool/.test(c.id)).map(c=>row(D(c.summary),D(c.repair||''),c.status==='ready'?'可用':'没连上')).join('')}<div class="set-actions">${button('重新检查','data-recheck')}</div>`;
+  if(tab==='tools')body=`<h3>剪辑软件</h3><p>每件作品出草稿时，用你给它选的剪辑软件，没选过的默认用 Kdenlive。选了 ChatCut 但没连上时，不会悄悄换成别的，会在工作台提醒你。</p>${checks.filter(c=>/chatcut|jianying|kdenlive|edit_tool/.test(c.id)).map(c=>row(D(c.summary),D(c.repair||''),c.status==='ready'?'可用':'没连上')).join('')}<div class="set-actions">${button('重新检查','data-recheck')}</div>`;
   if(tab==='doctor') {
-   const {good,optional,issues:bad}=diagnosticGroups(checks),total=good.length+bad.length;
-   body=`<header class="dx-hero"><div class="dx-ring" data-design-data data-ratio="${total?good.length/total:0}" role="img" aria-label="${total} 项里 ${good.length} 项正常"><b>${good.length}<i>/${total}</i></b></div><div class="dx-hero-t"><h3>${bad.length?`有 ${D(bad.length)} 项需要处理`:'本机环境一切正常'}</h3><p>${bad.length?`其余 <em>${D(good.length)} 项正常</em> · `:''}${D(checkedTime(state.diagnostics.checked_at))} 检查</p></div></header>${bad.map(c=>`<section class="dx-issue" role="alert"><div class="dx-issue-top"><span class="dx-tile">${icon('tools')}</span><div><h4>${c.id==='chatcut'?'ChatCut Desktop 还没连上本机':c.title}</h4><p>${c.id==='chatcut'?'没连上之前，出草稿只能用剪映。':'出草稿要用到它们，现在还没装在本仓库里。'}</p></div></div><ol class="dx-steps"><li><b>1</b><div>${c.id==='chatcut'?'在 ChatCut 里开启本机连接':`复制下面这条命令，在仓库目录的终端里运行${c.commands.map((command,i)=>`<div class="command"><code data-design-data>${esc(command)}</code>${button('复制',`data-copy-command="${i}"`)}</div>`).join('')}`}</div></li><li><b>2</b>回到这里点「重新检查」</li></ol><div class="dx-issue-act">${button('重新检查','data-recheck',true)}${c.id==='chatcut'?button('剪辑软件设置','data-set="tools"'):''}</div></section>`).join('')}${optional.length?`<section class="dx-group"><h4>可选</h4><ul class="dx-list dx-optional">${optional.map(c=>`<li><i class="dot"></i><span data-design-data>${esc(c.summary)}${c.repair?' · '+esc(c.repair):''}</span></li>`).join('')}</ul></section>`:''}<section class="dx-group"><h4>运行正常 <span data-design-data>${good.length}</span></h4><ul class="dx-list">${good.map(c=>`<li><span class="dx-tile">${icon(c.id==='creative_provider'?'models':c.id==='jianying'||c.id==='kdenlive'?'tools':'doctor')}</span><div><b data-design-data>${esc(c.summary)}</b><small data-design-data>${esc(c.repair||'')}</small></div><span class="dx-ok" aria-label="正常"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg></span></li>`).join('')}</ul></section><footer class="dx-foot"><small>出问题时把报告复制给开发者。</small><div class="set-actions">${button('复制报告','data-copy-report')}${button('重新跑安装向导','data-wizard')}</div></footer>`;
+   const {good,optional,issues:bad}=diagnosticGroups(checks,catalog.pieces,D),total=good.length+bad.length;
+   body=`<header class="dx-hero"><div class="dx-ring" data-design-data data-ratio="${total?good.length/total:0}" role="img" aria-label="${total} 项里 ${good.length} 项正常"><b>${good.length}<i>/${total}</i></b></div><div class="dx-hero-t"><h3>${bad.length?`有 ${D(bad.length)} 项需要处理`:'本机环境一切正常'}</h3><p>${bad.length?`其余 <em>${D(good.length)} 项正常</em> · `:''}${D(checkedTime(state.diagnostics.checked_at))} 检查</p></div></header>${bad.map(c=>`<section class="dx-issue" role="alert"><div class="dx-issue-top"><span class="dx-tile">${icon('tools')}</span><div><h4>${c.title}</h4><p>${c.id==='edit_tools'?'出草稿要用到它们，现在还没装在本仓库里。':c.note}</p></div></div>${c.id==='editor_choice'?'':`<ol class="dx-steps"><li><b>1</b><div>${c.id==='chatcut'?'在 ChatCut 里开启本机连接':`复制下面这条命令，在仓库目录的终端里运行${c.commands.map((command,i)=>`<div class="command"><code data-design-data>${esc(command)}</code>${button('复制',`data-copy-command="${i}"`)}</div>`).join('')}`}</div></li><li><b>2</b>回到这里点「重新检查」</li></ol>`}<div class="dx-issue-act">${button('重新检查','data-recheck',true)}${c.id==='chatcut'?button('剪辑软件设置','data-set="tools"'):''}</div></section>`).join('')}${optional.length?`<section class="dx-group"><h4>可选</h4><ul class="dx-list dx-optional">${optional.map(c=>`<li><i class="dot"></i><span data-design-data>${esc(c.summary)}${c.repair?' · '+esc(c.repair):''}</span></li>`).join('')}</ul></section>`:''}<section class="dx-group"><h4>运行正常 <span data-design-data>${good.length}</span></h4><ul class="dx-list">${good.map(c=>`<li><span class="dx-tile">${icon(c.id==='creative_provider'?'models':c.id==='jianying'||c.id==='kdenlive'?'tools':'doctor')}</span><div><b data-design-data>${esc(c.summary)}</b><small data-design-data>${esc(c.repair||'')}</small></div><span class="dx-ok" aria-label="正常"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg></span></li>`).join('')}</ul></section><footer class="dx-foot"><small>出问题时把报告复制给开发者。</small><div class="set-actions">${button('复制报告','data-copy-report')}${button('重新跑安装向导','data-wizard')}</div></footer>`;
   }
   if(route.view!=='settings'||route.tab!==tab)return;
   root().innerHTML=`<section class="settings" data-design-id="R208-SETTINGS"><nav class="set-nav" aria-label="设置分类"><span class="set-group">设置</span>${setTabs.map(([key,label],i)=>`${i===5?'<span class="set-group">检查</span>':''}<button data-set="${key}" aria-current="${tab===key}">${icon(key==='music'?'download':key)}${label}${['tools','doctor'].includes(key)&&issues().length?'<i class="dot dot--warn" aria-hidden="true"></i>':''}</button>`).join('')}</nav><div class="set-main">${body}</div></section>`;common();
@@ -210,11 +220,11 @@ export function createStudio(ctx) {
  function openVersions(p) {if(!p?.outputs.length)return;openPlayer({title:p.title,mode:'versions',items:p.outputs.map(o=>({kind:'video',src:`/api/review/pieces/${p.id}/media/output/${o.id}`,thumb:`/api/review/pieces/${p.id}/media/poster/${o.id}`,title:o.name,label:o.version}))});}
  function openReel(p,data){const items=data.shots.filter(s=>s.status==='selected').map(s=>({kind:s.kind,src:s.preview,thumb:frame(s),title:s.name,duration:s.duration}));if(items.length)openPlayer({title:'预览精选',mode:'reel',items});}
  async function render() {
-  const generation=++request;shots.stop();music.stopPolling();direct.stop();$('#music-player').pause();
+  const generation=++request;deletion.leave();shots.stop();cut.stop();music.stopPolling();direct.stop();$('#music-player').pause();
   state.screen=route.view==='piece'?'project':route.view;
   $$('[data-screen-panel]').forEach(p=>p.hidden=true);delete $('#crumb').parentElement.dataset.designId;
   root().hidden=false;root().innerHTML='';nav();
-  try {if(route.view==='home')await home();else if(route.view==='projects')projects();else if(route.view==='project')project();else if(route.view==='piece')await work();else if(route.view==='inbox')await inbox();else if(route.view==='settings')await settings();else if(route.view==='library')await library();else if(route.view==='music')await music.render();else projects();
+  try {if(route.view==='home')await home();else if(route.view==='projects')await projects();else if(route.view==='project')project();else if(route.view==='recent')await deletion.recent();else if(route.view==='piece')await work();else if(route.view==='inbox')await inbox();else if(route.view==='settings')await settings();else if(route.view==='library')await library();else if(route.view==='music')await music.render();else projects();
    if(generation!==request)return;common();
   }catch(error){notice(error.message,true);root().innerHTML=`<p role="alert" data-design-data>${esc(error.message)}</p>`;}
  }
@@ -222,7 +232,9 @@ export function createStudio(ctx) {
  async function refreshCatalog(){catalog=await api('/api/review/catalog');nav();}
  function go(value){const hash=new URLSearchParams(value).toString();route=value;if(location.hash.slice(1)===hash)render();else location.hash=hash;}
  function restore(){const params=new URLSearchParams(location.hash.slice(1));route=Object.fromEntries(params);if(!route.view){const path=location.pathname;route=path.startsWith('/app/project/')?{view:'piece',piece:decodeURIComponent(path.slice(13))}:{view:({'/app/inbox':'inbox','/app/library':'library','/app/settings':'settings'})[path]||'home'};}render();}
- shots=createShotView({state,api,notice,root,mark,route:()=>route,refreshCatalog,render,common,bindTabs,D,esc,button});
+ const deletion=createWorkDeleteView({api,root,top,go,route:()=>route,getCatalog:()=>catalog,setCatalog:value=>{catalog=value;nav();},paintProject:project,paintProjects:projects,refreshCatalog,state,D,esc,button,icon});
+ cut=createCutView({state,root,mark,go,common,bindTabs,refreshCatalog,active:id=>route.view==='piece'&&route.piece===id&&route.ptab==='vlog'&&route.step==='cut'});
+ shots=createShotView({state,api,go,notice,root,mark,route:()=>route,refreshCatalog,render,common,bindTabs,D,esc,button});
  direct=createDirectView({api,root,mark,active:id=>route.view==='piece'&&route.ptab==='direct'&&route.piece===id,go});
  music=createMusicView({api,notice,root,top,mark,D,esc,button,active:()=>route.view==='music'});
  window.addEventListener('hashchange',restore);

@@ -8,7 +8,22 @@ from typing import Any
 from studio.direct_revision_contract import SHOT_PROPERTIES, operation_contract, routes
 from studio import direct_style_contract, direct_handoff_contract
 
-ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.routes() + direct_handoff_contract.routes() + (
+ROUGH_CUT_ROUTE_SPECS: tuple[dict[str, object], ...] = (
+    {'method': 'GET', 'path': '/api/review/pieces/{id}/roughcut', 'operation_id': 'getRoughcut', 'summary': 'Read the version-bound roughcut plan'},
+    {'method': 'POST', 'path': '/api/review/pieces/{id}/roughcut/commands', 'operation_id': 'commandRoughcut', 'summary': 'Accept a CAS-bound roughcut command (202)', 'write': True},
+    {'method': 'GET', 'path': '/api/review/roughcut-jobs/{jobId}', 'operation_id': 'getRoughcutJob', 'summary': 'Read an owned roughcut job'},
+    {'method': 'POST', 'path': '/api/review/roughcut-jobs/{jobId}', 'operation_id': 'stopRoughcutJob', 'summary': 'Stop only this roughcut job (202)', 'write': True},
+    {'method': 'GET', 'path': '/api/review/editing-presets', 'operation_id': 'getEditingPresets', 'summary': 'Read built-in and local editing recipes'},
+    {'method': 'POST', 'path': '/api/review/editing-presets', 'operation_id': 'saveEditingPreset', 'summary': 'Save a cross-project recipe with CAS (201)', 'write': True},
+    {'method': 'GET', 'path': '/api/review/pieces/{id}/editor-capabilities', 'operation_id': 'getRoughcutEditorCapabilities', 'summary': 'Read R228 choice and roughcut capabilities'},
+    {'method': 'POST', 'path': '/api/review/pieces/{id}/roughcut/transcriptions', 'operation_id': 'transcribeRoughcutShots', 'summary': 'Accept selected local transcription work (202)', 'write': True},
+    {'method': 'POST', 'path': '/api/review/pieces/{id}/roughcut/drafts', 'operation_id': 'createRoughcutDraft', 'summary': 'Generate the saved editor choice in an owned job (202)', 'write': True},
+    {'method': 'POST', 'path': '/api/review/pieces/{id}/roughcut/drafts/open', 'operation_id': 'openRoughcutDraft', 'summary': 'Open only this piece latest current Kdenlive project', 'write': True},
+    {'method': 'GET', 'path': '/api/review/pieces/{id}/roughcut/media/{artifactId}', 'operation_id': 'getRoughcutMedia', 'summary': 'Read a bound derived roughcut artifact', 'response_media': 'video/mp4', 'byte_ranges': True},
+)
+
+
+ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.routes() + direct_handoff_contract.routes() + ROUGH_CUT_ROUTE_SPECS + (
     {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs', 'operation_id': 'createDirectJob', 'summary': 'createDirectJob', 'write': True},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/latest', 'operation_id': 'getLatestDirectJob', 'summary': 'getLatestDirectJob'},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}', 'operation_id': 'getDirectJob', 'summary': 'getDirectJob'},
@@ -36,6 +51,12 @@ ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.ro
     {"method": "GET", "path": "/api/settings", "operation_id": "getSettings", "summary": "Read redacted studio settings"},
     {"method": "GET", "path": "/api/settings/analysis-budget", "operation_id": "getAnalysisBudget", "summary": "Read the effective analysis budget"},
     {"method": "POST", "path": "/api/settings/analysis-budget", "operation_id": "updateAnalysisBudget", "summary": "Update the analysis budget with CAS", "write": True},
+    {'method': 'POST', 'path': '/api/projects/delete-preview', 'operation_id': 'previewProjectDeletion', 'summary': 'Check selected work folders only when confirming deletion', 'write': True},
+    {'method': 'POST', 'path': '/api/projects/delete', 'operation_id': 'deleteProjects', 'summary': 'Soft-delete each selected work with CAS and optional folder trash', 'write': True},
+    {'method': 'GET', 'path': '/api/projects/deleted', 'operation_id': 'listDeletedProjects', 'summary': 'List recent deletions with current recovery reasons'},
+    {'method': 'POST', 'path': '/api/projects/restore', 'operation_id': 'restoreProjects', 'summary': 'Restore an undo batch with per-work CAS', 'write': True},
+    {'method': 'POST', 'path': '/api/projects/{projectId}/restore', 'operation_id': 'restoreProject', 'summary': 'Restore one deleted work with CAS', 'write': True},
+    {'method': 'POST', 'path': '/api/projects/{projectId}/dismiss', 'operation_id': 'dismissDeletedProject', 'summary': 'Dismiss only an unrecoverable deleted work with CAS', 'write': True},
     {"method": "GET", "path": "/api/projects", "operation_id": "listProjects", "summary": "List local projects"},
     {"method": "POST", "path": "/api/projects", "operation_id": "createProject", "summary": "Create a local project", "write": True},
     {"method": "GET", "path": "/api/projects/{projectId}", "operation_id": "getProject", "summary": "Read a project"},
@@ -84,12 +105,22 @@ def route_inventory() -> list[dict[str, str]]:
     ]
 
 
+def _route_pattern(spec: dict[str, object]) -> str:
+    return re.sub(r"\{[A-Za-z][A-Za-z0-9]*\}", r"[^/]+", str(spec["path"]))
+
+
+_ROUGHCUT_ROUTE_PATTERNS = tuple(re.compile(_route_pattern(spec)) for spec in ROUGH_CUT_ROUTE_SPECS)
+
+
+def is_roughcut_route(path: str) -> bool:
+    return any(pattern.fullmatch(path) for pattern in _ROUGHCUT_ROUTE_PATTERNS)
+
+
 def is_registered_route(method: str, path: str) -> bool:
     for spec in ROUTE_SPECS:
         if spec["method"] != method.upper():
             continue
-        pattern = re.sub(r"\{[A-Za-z][A-Za-z0-9]*\}", r"[^/]+", str(spec["path"]))
-        if re.fullmatch(pattern, path):
+        if re.fullmatch(_route_pattern(spec), path):
             return True
     return False
 
@@ -233,7 +264,71 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
         operation_contract(operation, spec)
     direct_style_contract.operation_contract(operation, spec)
     direct_handoff_contract.operation_contract(operation, spec)
+    if spec['operation_id'] in WORK_DELETE_OPERATIONS:
+        _work_delete_operation(operation, str(spec['operation_id']))
     return operation
+
+
+WORK_DELETE_OPERATIONS = {'previewProjectDeletion', 'deleteProjects', 'listDeletedProjects',
+                          'restoreProjects', 'restoreProject', 'dismissDeletedProject'}
+
+
+def _work_delete_operation(operation, name):
+    from studio.work_trash import ELIGIBILITY_CODES, RESULT_CODES
+    project_ids = {'type': 'array', 'minItems': 1, 'maxItems': 500, 'uniqueItems': True,
+                   'items': {'type': 'string', 'pattern': '^[a-z0-9][a-z0-9_-]{7,63}$'}}
+    revision = {'type': 'integer', 'minimum': 1}
+    expected = {'type': 'object', 'minProperties': 1, 'additionalProperties': revision,
+                'description': 'Exactly one current revision per requested project ID.'}
+    batch = {'type': 'string', 'pattern': '^delete-[0-9a-f]{32}$'}
+    undo = {'type': 'object', 'required': ['projectIds', 'expectedRevisions', 'batchId'],
+            'properties': {'projectIds': {**project_ids, 'minItems': 0},
+                           'expectedRevisions': {**expected, 'minProperties': 0}, 'batchId': batch}}
+    if name != 'listDeletedProjects':
+        if name in ('restoreProject', 'dismissDeletedProject'):
+            properties, required = {'expectedRevision': revision}, ['expectedRevision']
+        else:
+            properties, required = {'projectIds': project_ids}, ['projectIds']
+            if name != 'previewProjectDeletion':
+                properties['expectedRevisions'] = expected
+                required.append('expectedRevisions')
+            if name == 'deleteProjects':
+                properties.update(moveFolders={'type': 'boolean', 'default': False},
+                                  folderProjectIds={**project_ids, 'minItems': 0,
+                                                    'description': 'Optional selected subset to move; requires moveFolders=true. Omitted means all requested works. Ineligible requested moves fail individually.'})
+            if name == 'restoreProjects':
+                properties['batchId'] = batch
+        operation['requestBody']['content']['application/json']['schema'] = {
+            'type': 'object', 'required': required, 'properties': properties, 'additionalProperties': False}
+    item = {'type': 'object', 'required': ['id', 'title', 'group_title', 'folder_name', 'created_at', 'revision'],
+            'properties': {key: {'type': 'string'} for key in ('id', 'title', 'group_title', 'folder_name', 'created_at')}}
+    item['properties']['revision'] = revision
+    if name in ('previewProjectDeletion', 'listDeletedProjects'):
+        if name == 'previewProjectDeletion':
+            item['required'] += ['can_move_folder', 'reason_code']
+            item['properties'].update(can_move_folder={'type': 'boolean'},
+                                      reason_code={'enum': [None, *ELIGIBILITY_CODES]})
+        else:
+            item['required'] += ['deleted_at', 'folder_status', 'reason_code', 'can_restore', 'can_dismiss']
+            item['properties'].update(deleted_at={'type': 'string', 'format': 'date-time'},
+                                      folder_status={'enum': ['original', 'trash', 'unrecoverable']},
+                                      reason_code={'enum': [None, *RESULT_CODES]},
+                                      can_restore={'type': 'boolean'}, can_dismiss={'type': 'boolean'})
+        payload = {'items': {'type': 'array', 'items': item}}
+    elif name == 'dismissDeletedProject':
+        payload = {'id': {'type': 'string'}, 'revision': revision}
+    else:
+        result = {'type': 'object', 'required': ['id', 'ok', 'code'],
+                  'properties': {'id': {'type': 'string'}, 'ok': {'type': 'boolean'},
+                                 'code': {'enum': [None, *RESULT_CODES]}, 'revision': revision}}
+        payload = {'results': {'type': 'array', 'items': result},
+                   'succeeded': {'type': 'integer', 'minimum': 0}, 'failed': {'type': 'integer', 'minimum': 0}}
+        if name == 'deleteProjects':
+            payload.update(batch_id=batch, undo=undo)
+    operation['responses']['200']['content']['application/json']['schema'] = {
+        'type': 'object', 'required': ['ok', *payload], 'properties': {'ok': {'const': True}, **payload}}
+    operation['responses']['200']['description'] = 'Per-item failures remain HTTP 200; succeeded + failed equals requested count.' if name in ('deleteProjects', 'restoreProjects', 'restoreProject') else 'Successful local response'
+    operation['responses']['403'] = _response('Invalid CSRF token or forbidden origin')
 
 
 def _path_parameters(path: str) -> list[dict[str, Any]]:

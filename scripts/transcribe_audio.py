@@ -148,7 +148,7 @@ def normalize_asr_payload(payload: dict[str, Any], *, local: bool = False) -> di
         segments.append({"start_sec": timing_number(start) / scale, "end_sec": timing_number(end) / scale,
                          "text": text, "speaker": item.get("speaker", item.get("speaker_id")),
                          "confidence": item.get("confidence"), "words": words,
-                         "precision": "chunk" if source_key is None and not words else "sentence"})
+                         "precision": "chunk" if not words and (local or source_key is None) else "sentence"})
     return {"language": payload.get("language"), "segments": segments,
             "words": vendor_words(payload.get("words", []), milliseconds=False) if source_key else []}
 
@@ -397,10 +397,18 @@ class FunASRProvider:
         self.client = AutoModel(model=self.model, disable_update=True)
 
     def transcribe(self, audio_path: Path, *, language: str | None = None) -> dict[str, Any]:
-        result = self.client.generate(input=str(audio_path), batch_size_s=300, sentence_timestamp=True, return_raw_text=True)
+        result = self.client.generate(input=str(audio_path), batch_size_s=300, sentence_timestamp=True,
+                                      return_raw_text=True, output_timestamp=True)
         if not isinstance(result, list) or not result or any(not isinstance(item, dict) for item in result):
             raise TranscriptionError("FunASR returned an invalid response")
-        segments = [segment for item in result for segment in normalize_asr_payload(item, local=True)["segments"]]
+        segments = []
+        for item in result:
+            # Without punctuation/VAD, Paraformer's text is already the spaced
+            # acoustic-unit sequence; FunASR only adds raw_text with punctuation.
+            # Keep explicit raw_text authoritative, including empty/misaligned text.
+            if not any(key in item for key in ("raw_text", "segments", "sentence_info", "sentences")):
+                item = {**item, "raw_text": item.get("text", "")}
+            segments.extend(normalize_asr_payload(item, local=True)["segments"])
         return ProviderResult(
             language=language,
             segments=segments,
