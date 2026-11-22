@@ -123,6 +123,7 @@ async function main(){
       if(p==='/api/assets')return json({ok:true,assets:[]});
       if(p==='/api/assets/statistics')return json({ok:true,statistics:{categories:[],asset_count:0}});
       if(p==='/api/review/music')return json({ok:true,tracks:[]});
+      if(p==='/api/projects/deleted')return json({ok:true,items:[]});
       throw new Error(`Unmocked API ${method} ${p}`);
     }catch(e){errors.push({state,message:e.stack});await route.abort();}});
     await page.goto(`${BASE}/#view=piece&piece=${projectId}&ptab=direct`);

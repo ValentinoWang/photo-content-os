@@ -3,7 +3,7 @@ import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 import {stylePayload,sourceText,generationText,howFirst,canGenerate} from '../studio/static/direct-style.js';
 const fixture=JSON.parse(readFileSync(new URL('./fixtures/r283-direct/first-lib.json',import.meta.url),'utf8'));
-const names=['扁平插画','数学动画','极简发布会','手绘白板','赛博故障','水墨国风','数据可视化','8-bit 像素','代码录屏'];
+const names=['扁平插画','数学动画','极简发布会','手绘白板','赛博故障','水墨国风','数据可视化','8-bit 像素','代码录屏','产品界面'];
 export function testLibraryFormulas(){
   const rows=[{dialogue:'测试台词'}],base={...fixture.styles.library[0],kind:'library'},state={mode:'base',base,adjust:'',accepted:false};
   assert.deepEqual(stylePayload(state,'p'),{styleBase:{kind:'library',id:'flat'},style:''});
@@ -20,11 +20,11 @@ export function testLibraryFormulas(){
 export async function testLibraryBrowser(h){
   let {page,mock}=await h.open('first');
   const cards=page.locator('[data-design-id="DV-STYLE-LIB"] [data-style-card]');
-  assert.equal(await cards.count(),9,'The library must always show nine cards in existing-style mode');
+  assert.equal(await cards.count(),names.length,'The library must always show every library card in existing-style mode');
   assert.deepEqual(await cards.locator('b').allTextContents(),names);assert.equal(await cards.locator('small').count(),0);
-  assert.equal(await cards.locator('[data-color]').count(),36);
+  assert.equal(await cards.locator('[data-color]').count(),names.length*4);
   const jobCard=page.locator('[data-design-id="DV-STYLE-CARDS"] [data-style-card]').first();
-  for(let i=0;i<9;i++){
+  for(let i=0;i<names.length;i++){
     await cards.nth(i).click();assert.equal(await page.locator('[data-style-card][aria-pressed="true"]').count(),1);
     assert.equal(await jobCard.getAttribute('aria-pressed'),'false');
     assert.equal(await page.locator('.dv-sw-meta h4').textContent(),'风格库 · '+names[i]);
@@ -50,7 +50,7 @@ export async function testLibraryBrowser(h){
   assert(await oldVideo.evaluate(v=>!v.isConnected&&v.paused));await oldVideo.dispose();await page.close();
   ({page,mock}=await h.open('first-none'));
   assert.equal(await page.locator('[data-mode="base"]').getAttribute('aria-checked'),'true');assert(await page.locator('[data-mode="base"]').isEnabled());
-  assert.equal(await page.locator('[data-design-id="DV-STYLE-CARDS"]').count(),0);assert.equal(await page.locator('[data-design-id="DV-STYLE-LIB"] [data-style-card]').count(),9);
+  assert.equal(await page.locator('[data-design-id="DV-STYLE-CARDS"]').count(),0);assert.equal(await page.locator('[data-design-id="DV-STYLE-LIB"] [data-style-card]').count(),names.length);
   assert.equal(await page.locator('[data-style-card][aria-pressed="true"]').count(),0);assert(await page.locator('[data-generate]').isDisabled());
   assert.equal(await page.locator('.dv-sw-empty b').textContent(),'还没选风格');assert.equal(await page.locator('.dv-sw-empty span').textContent(),'在左边选一个');assert(await page.locator('[data-gen-text]').evaluate(e=>e.classList.contains('need')));
   await page.locator('[data-library="flat"]').click();assert(await page.locator('[data-generate]').isEnabled());await page.locator('[data-generate]').click();await page.locator('.dv-film').waitFor();assert.deepEqual(mock.creates.at(-1).styleBase,{kind:'library',id:'flat'});assert.equal(mock.creates.at(-1).style,'');await page.close();
@@ -62,6 +62,6 @@ export async function testLibraryBrowser(h){
     const layout=await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,overflow:[...document.querySelectorAll('.dv-sw-meta *')].filter(e=>e.getBoundingClientRect().right>e.closest('.dv-sw-meta').getBoundingClientRect().right+1).map(e=>e.className)}));
     assert.equal(layout.width,390);assert.equal(layout.scrollWidth,390,`${state}: phone page overflow`);assert.deepEqual(layout.overflow,[],`${state}: preview metadata overflow`);await page.close();
   }
-  console.log('PASS R283 mounted Studio: nine-card selection, sample media lifecycle/fallback, empty state, library jobs and source');
+  console.log('PASS R283 mounted Studio: library-card selection, sample media lifecycle/fallback, empty state, library jobs and source');
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)testLibraryFormulas();

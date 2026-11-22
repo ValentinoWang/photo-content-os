@@ -916,6 +916,40 @@
         },
         "posterUrl": "/api/direct/styles/library/code/poster.jpg",
         "clipUrl": "/api/direct/styles/library/code/clip.mp4"
+      },
+      {
+        "id": "ui",
+        "name": "产品界面",
+        "design": {
+          "palette": {
+            "background": "#f2eee6",
+            "primary": "#13110f",
+            "accent": "#955905",
+            "neutral": "#65635f"
+          },
+          "typeScale": [
+            86,
+            49,
+            37
+          ],
+          "motionRules": "开场先给一个正视界面框，实验情境在框内出现，再依次填入估计比例和实际比例。两行使用同宽标尺，填充与数值落定同步；琥珀色只标实际结果、结论和少量定位信息。元素以短距离移动和非线性减速归位，不移动整块面板。结论完整可见后保持静止至少一秒。",
+          "banned": [
+            "不用真实产品截图或客户数据作为这个通用样张。",
+            "不让整屏随节拍放大或抖动。",
+            "不用逐卡扫光、常驻漂浮或第二种强调色。",
+            "不把统计图缩成小字密集的后台界面。",
+            "不在底部字幕带放关键内容。"
+          ],
+          "motionSummary": "界面组件依次归位，数据落定后留白",
+          "bannedShort": [
+            "整屏抖动",
+            "逐卡扫光",
+            "多种强调色",
+            "真实产品数据"
+          ]
+        },
+        "posterUrl": "/api/direct/styles/library/ui/poster.jpg",
+        "clipUrl": "/api/direct/styles/library/ui/clip.mp4"
       }
     ]
   },
