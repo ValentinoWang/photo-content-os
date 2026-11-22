@@ -139,11 +139,14 @@ def load_clips():
     return json.loads(CLIPS_MANIFEST.read_text(encoding="utf-8"))
 
 
+POSTER_POSITION = 0.9  # closest to upstream gallery posters: mean abs diff 9.0 vs 12.4 at the last frame (50 posters)
+
+
 def media_fields(recipe_id, category, clips):
-    """Upstream gallery poster first; a mid-clip frame only when upstream ships no poster."""
+    """Upstream gallery poster first; otherwise a frame of upstream's own demo rendered by its render-demos.mjs."""
     poster, source = MEDIA / "posters" / f"{recipe_id}.jpg", "upstream"
     if not poster.is_file():
-        poster, source = MEDIA / "posters" / f"{recipe_id}.from-clip.jpg", "clip"
+        poster, source = MEDIA / "posters" / f"{recipe_id}.render.jpg", "render"
     demo = ROOT / "demos" / category / recipe_id
     return {
         "poster": poster.relative_to(ROOT).as_posix() if poster.is_file() else None,
@@ -174,6 +177,33 @@ def fetch_clips():
     if bad:
         raise ValueError(f"clip SHA-256 mismatch after download: {bad}")
     print(f"OK: {len(clips)} clips in {CLIP_DIR} ({len(missing)} downloaded)")
+
+
+def posters_from_renders(render_dir):
+    """Write <id>.render.jpg from upstream renders (workbench/scripts/render-demos.mjs --out render_dir)."""
+    render_dir = Path(render_dir)
+    written = 0
+    for entry in load_index():
+        if entry["poster_source"] == "upstream" or not entry["demo"]:
+            continue
+        stems = [p.stem for p in sorted((ROOT / entry["demo"]).glob("*.tsx")) if (render_dir / f"{p.stem}.mp4").is_file()]
+        if not stems:
+            raise ValueError(f"{entry['id']}: no rendered demo in {render_dir}")
+        if len(stems) > 1:
+            # Cards with several demos list them in order; the first one the card names is its lead shot.
+            card = (ROOT / entry["path"]).read_text(encoding="utf-8")
+            named = sorted((card.find(stem), stem) for stem in stems if stem in card)
+            if not named:
+                raise ValueError(f"{entry['id']}: card names none of its demos {stems}")
+            stems = [named[0][1]]
+        mp4 = render_dir / f"{stems[0]}.mp4"
+        duration = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(mp4)],
+                                        check=True, capture_output=True, text=True, timeout=60).stdout)
+        out = MEDIA / "posters" / f"{entry['id']}.render.jpg"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{max(0.0, duration * POSTER_POSITION - 0.05):.3f}", "-i", str(mp4),
+                        "-frames:v", "1", "-vf", "scale=640:360", "-q:v", "3", str(out)], check=True, timeout=120)
+        written += 1
+    print(f"OK: {written} posters from {render_dir}")
 
 
 def build_index():
@@ -264,7 +294,7 @@ def check(upstream):
     missing_tags = sum(entry["tags_source"] == "missing" for entry in entries)
     print(f"OK: {len(entries)} cards, 10 categories; cards, posters, demos, attribution and license match upstream SHA-256")
     print(f"Posters: {sum(e['poster_source'] == 'upstream' for e in entries)} upstream, "
-          f"{sum(e['poster_source'] == 'clip' for e in entries)} from clip; clips {sum(bool(e['clip']) for e in entries)}; "
+          f"{sum(e['poster_source'] == 'render' for e in entries)} from upstream render; clips {sum(bool(e['clip']) for e in entries)}; "
           f"demos {sum(bool(e['demo']) for e in entries)}")
     print(f"Tags: {len(entries) - missing_tags} from upstream, {missing_tags} missing")
 
@@ -274,9 +304,12 @@ def main():
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--upstream', type=Path)
     parser.add_argument('--fetch-clips', action='store_true', help='download upstream preview clips into SHOT_RECIPE_CLIP_DIR')
+    parser.add_argument('--posters-from-renders', type=Path, metavar='DIR', help='upstream render-demos.mjs output directory')
     args = parser.parse_args()
     try:
-        if args.fetch_clips:
+        if args.posters_from_renders:
+            posters_from_renders(args.posters_from_renders)
+        elif args.fetch_clips:
             fetch_clips()
         elif args.check:
             if args.upstream is None:

@@ -27,14 +27,16 @@ def test_index_count_fields_and_unique_ids():
     for entry in entries:
         assert bool(entry["tags"]) == (entry["tags_source"] == "upstream")
 
-    # Every card with an upstream poster or clip shows it; upstream posters win over clip frames.
-    assert Counter(entry["poster_source"] for entry in entries) == {"upstream": 50, "clip": 37, None: 37}
+    # Upstream gallery posters first; every other card with upstream demo source gets a frame of upstream's own render.
+    assert Counter(entry["poster_source"] for entry in entries) == {"upstream": 50, "render": 72, None: 2}
     for entry in entries:
         assert (entry["poster"] is None) == (entry["poster_source"] is None)
         if entry["poster"]:
             assert (recipe_library.ROOT / entry["poster"]).is_file()
-        if entry["poster_source"] == "clip":
-            assert entry["clip"]
+        if entry["poster_source"] == "render":
+            assert entry["demo"]
+        if entry["poster"] is None:
+            assert entry["demo"] is None
         if entry["demo"]:
             assert (recipe_library.ROOT / entry["demo"]).is_dir()
     clips = recipe_library.load_clips()["clips"]

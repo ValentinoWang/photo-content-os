@@ -16,10 +16,10 @@
       "fingerprint": "750994aec13261ecf9f6fd81fa300cd59849cbc267046abd4745e8ccd616735b",
       "screenshots": [
         {
-          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-dc609cabdb428f30ff516a2a8a9887b70f539253254a0b9f4040cf838b0cf6c6.jpg",
-          "sha256": "dc609cabdb428f30ff516a2a8a9887b70f539253254a0b9f4040cf838b0cf6c6",
-          "caption": "8 张配方卡的封面（原项目画廊封面，原项目没有的 2 张用本机渲染样张） · 由配方索引的封面字段拼成总图",
-          "captured_at": "2026-11-22T16:52:17.983767+00:00"
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-8aae1f696515ed3b99fec43a89ee3709cf01c631d85e4ca9cbff969ac9c1710d.jpg",
+          "sha256": "8aae1f696515ed3b99fec43a89ee3709cf01c631d85e4ca9cbff969ac9c1710d",
+          "caption": "8 张配方卡的封面：5 张原项目画廊封面，3 张用原项目自己的渲染脚本出片后取帧 · 由配方索引的封面字段拼成总图",
+          "captured_at": "2026-11-22T18:15:13.059793+00:00"
         }
       ]
     },

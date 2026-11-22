@@ -6,11 +6,13 @@
 
 | 字段 | 内容 | 位置 |
 | --- | --- | --- |
-| `poster` / `poster_source` | 上游画廊封面 50 张（`upstream`）；上游没封面但有样片的 37 张，取样片中间一帧（`clip`）；其余 37 张为空 | `media/posters/` |
+| `poster` / `poster_source` | 上游画廊封面 50 张（`upstream`）；其余有动画源码的 72 张，用上游自己的 `workbench/scripts/render-demos.mjs` 渲染后取 90% 处一帧（`render`，和 50 张官方封面比最接近）；卡里列了几个镜头的取第一个；上游没有源码的 2 张为空 | `media/posters/` |
 | `clip` | 上游画廊样片 87 个，共 62 MB，不进 git；`python3 scripts/direct_video/recipe_library.py --fetch-clips` 按 `media/clips.json` 的 SHA-256 下载到 `~/.photo-content-os/media/shot_recipes/clips/`（可用 `SHOT_RECIPE_CLIP_DIR` 改） | 本机 |
 | `demo` | 上游 Remotion 动画源码，122 张卡有，只作写镜头时的参照，不进渲染管线 | `demos/<类别>/<id>/` |
 
 上游画廊的样片有一部分比封面旧（例如 blur-slide 的样片还是占位文案），选镜以封面为准。
+
+重新生成 `render` 封面：在上游克隆的 `workbench/` 里 `npm ci`，跑 `node scripts/render-demos.mjs --out <目录>`（150 个镜头约 30 分钟），再跑 `python3 scripts/direct_video/recipe_library.py --posters-from-renders <目录>` 和 `python3 scripts/direct_video/recipe_library.py`。
 
 ## 类别数量
 
