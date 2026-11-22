@@ -16,6 +16,10 @@ from studio.music_analysis import BeatMapUnavailable, load_beat_map
 from animation_duration import declared_duration
 
 
+# Leave 1 dB of headroom under full scale so later mixing never clips.
+PEAK_LIMIT = 10 ** (-1 / 20)
+
+
 class PlanError(Exception):
     def __init__(self, code, message):
         self.code = code
@@ -133,7 +137,7 @@ def create_plan(spec, media_root, out, *, beat_map=None, spec_dir=None):
         delay = max(0, sample_offset)
         filters.append(f'[{i}:a]aresample=48000,{trim}volume={gain}dB,adelay={delay}S:all=1[s{i}]')
         labels.append(f'[s{i}]')
-    filters.append(''.join(labels) + f'amix=inputs={len(labels)}:duration=first:normalize=0,apad,atrim=end_sample={samples},asetpts=PTS-STARTPTS[out]')
+    filters.append(''.join(labels) + f'amix=inputs={len(labels)}:duration=first:normalize=0,alimiter=limit={PEAK_LIMIT}:level=0:latency=1,apad,atrim=end_sample={samples},asetpts=PTS-STARTPTS[out]')
     command += ['-filter_complex', ';'.join(filters), '-map', '[out]', '-ar', '48000', '-ac', '2', '-c:a', 'pcm_s16le', str(wav)]
     try:
         result = subprocess.run(command, capture_output=True, text=True, check=False)

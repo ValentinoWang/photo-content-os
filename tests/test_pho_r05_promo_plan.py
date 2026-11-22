@@ -100,3 +100,17 @@ def test_auto_bars_need_declared_duration(inputs):
     with pytest.raises(promo_plan.PlanError) as exc:
         promo_plan.create_plan(spec, root, root / 'out', beat_map=beats, spec_dir=root)
     assert exc.value.code == 'animation_duration_missing'
+
+
+def test_premix_peak_stays_one_db_below_full_scale(inputs):
+    root, beats, spec = inputs
+    track = root / 'library/music' / spec['track_id'] / 'music.wav'
+    # Stereo at full scale: a mono source is upmixed 3 dB down and would never reach the limiter.
+    with wave.open(str(track), 'wb') as w:
+        w.setparams((2, 2, 48000, 0, 'NONE', 'not compressed'))
+        w.writeframes(b''.join(struct.pack('<hh', s, s) for s in (int(32767 * math.sin(2 * math.pi * 440 * i / 48000)) for i in range(12 * 48000))))
+    _, composition, _ = promo_plan.create_plan(spec, root, root / 'out', beat_map=beats)
+    with wave.open(composition['narration_wav']) as w:
+        data = w.readframes(w.getnframes())
+    peak = max(abs(v) for (v,) in struct.iter_unpack('<h', data))
+    assert peak <= round(32767 * 10 ** (-1 / 20)) + 64
