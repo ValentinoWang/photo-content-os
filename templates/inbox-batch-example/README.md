@@ -19,6 +19,6 @@ inbox/YYYYMMDD_事件名_待整理/
 
 ```bash
 cd /Users/vsiyo/Desktop/照片筛选
-python3 /Users/vsiyo/Desktop/创业项目/photo-content-os/scripts/link_batch_to_content_project.py \
+python3 /Users/vsiyo/Desktop/创业项目/内容创作/production-desk/scripts/link_batch_to_content_project.py \
   "inbox/YYYYMMDD_事件名_待整理"
 ```

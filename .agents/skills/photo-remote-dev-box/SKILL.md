@@ -50,7 +50,7 @@ $R ai-check; $R exposure-check                                                 #
 
 | 本机路径 | 开发机 |
 |---|---|
-| `/Users/vsiyo/Desktop/创业项目/photo-content-os`（主目录） | 软链到 `/root/pco`。`.venv`、`.tools` 装在这里 |
+| `/Users/vsiyo/Desktop/创业项目/内容创作/production-desk`（主目录） | 软链到 `/root/pco`。`.venv`、`.tools` 装在这里 |
 | `/private/tmp/task-worktrees/photo-content-os-*`、`~/.local/share/task-worktrees/photo-content-os-*` | 两处都软链到 `/root/pco-wt`。worktree 里的 `.venv` 软链到主目录那份；`.tools` 不链（本机 worktree 也没有，`tests/test_edit_tools_runtime.py` 要求默认路径落在 worktree 自己下面），门禁和渲染经环境变量找主目录的 |
 | `/Users/vsiyo/Desktop/Opensource_Tool/Harness_Engineering/Core` | 同一路径（`rbox harness` 推过去，门禁读 ui-copy-quality 的检查脚本） |
 | `~/.photo-content-os` | 软链到 `/root/.photo-content-os`：门禁、渲染写的 `evidence/`，加上 `rbox studio-data` 推上去的真实 Studio 数据 |

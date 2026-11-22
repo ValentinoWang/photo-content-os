@@ -29,7 +29,7 @@ set -euo pipefail
 HOST="${RBOX_HOST:-photo-dev}"
 PORT="${RBOX_PORT:-}"
 BARE=/root/pco.git                  # 开发机上的 git 裸仓库：提交从本机推上去（开发机不放 GitHub 凭据），worktree 副本的索引对齐到本机同一个提交
-LOCAL_ROOT="${RBOX_LOCAL_ROOT:-/Users/vsiyo/Desktop/创业项目/photo-content-os}"
+LOCAL_ROOT="${RBOX_LOCAL_ROOT:-/Users/vsiyo/Desktop/创业项目/内容创作/production-desk}"
 # task_worktree.py 建的任务 worktree 在这两处之一；开发机上两处都软链到 RBOX_WT
 WT_ROOTS=(/private/tmp/task-worktrees /Users/vsiyo/.local/share/task-worktrees)
 RBOX_ROOT=/root/pco                 # 开发机上的真实目录；LOCAL_ROOT 在开发机上软链到这里
