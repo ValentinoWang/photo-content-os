@@ -146,21 +146,29 @@
     },
     {
       "blocking": true,
-      "checklist_path": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/checklist.md",
+      "checklist_path": "acceptance/human/2026-W43/2026-10-20-R223-photo-music-beat-map/checklist.md",
       "estimated_minutes": 6,
-      "handoff_path": "acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/handoff.json",
+      "handoff_path": "acceptance/human/2026-W43/2026-10-20-R223-photo-music-beat-map/handoff.json",
       "invalidation_keys": [
         "music.analysis",
         "music.beat-map",
         "music.tags"
       ],
-      "latest_run": null,
+      "latest_run": {
+        "completed_at": "2026-11-12T19:44:30Z",
+        "result_path": "acceptance/human/2026-W43/2026-10-20-R223-photo-music-beat-map/runs/20261112T194428Z-human-console-6638f0/result.md",
+        "result_sha256": "f102a9863c0d7320a7eb8c50c6e7df01247b80f1ccd2d0c65176dd0e5cfc33df",
+        "run_id": "20261112T194428Z-human-console-6638f0",
+        "source_identity": "7b8a4aa822b402f614fe1e5bec1529a726c4db83",
+        "started_at": "2026-11-12T19:44:29.189833Z",
+        "status": "PASS"
+      },
       "loop_name": "音乐库：AI 给每首歌打标签，并显示节拍图",
       "ready_at": "2026-10-20T21:08:20.633838Z",
       "release_slice": "R223",
       "required_role": "产品负责人",
       "scope_hints": [],
-      "status": "PENDING",
+      "status": "PASSED",
       "summary": "标签、分面筛选和节拍图已完成，A/B 经 Claude 复核；三项原样待用户验收。",
       "task_id": "2026-10-20-R223-photo-music-beat-map",
       "workspace": "acceptance/human/2026-W43/2026-10-20-R223-photo-music-beat-map"
@@ -208,7 +216,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-04T06:13:59.286210Z",
+  "generated_at": "2026-11-12T19:44:30Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -251,24 +259,32 @@
     },
     {
       "blocking": false,
-      "checklist_path": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/checklist.md",
+      "checklist_path": "acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo/checklist.md",
       "estimated_minutes": 8,
-      "handoff_path": "acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/handoff.json",
+      "handoff_path": "acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo/handoff.json",
       "invalidation_keys": [
         "photo.edit-tools-runtime"
       ],
-      "latest_run": null,
+      "latest_run": {
+        "completed_at": "2026-11-11T19:38:32Z",
+        "result_path": "acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo/runs/20261111T193830Z-human-console-4632bc/result.md",
+        "result_sha256": "a2ca2d73c99df66fc2922723a04ce76cdcc3baf01de94b217035a556a483ef7b",
+        "run_id": "20261111T193830Z-human-console-4632bc",
+        "source_identity": "493cc9aa8621227f4253f082396295c763ef5103",
+        "started_at": "2026-11-11T19:38:30.915086Z",
+        "status": "PASS"
+      },
       "loop_name": "剪辑工具安装与候选生成",
       "ready_at": "2026-10-19T16:11:46.979649Z",
       "release_slice": "R207",
       "required_role": "产品负责人",
       "scope_hints": [],
-      "status": "PENDING",
+      "status": "PASSED",
       "summary": "仓库工具重复安装、版本诊断、双后端真实合成候选验证通过；原需求两项待人工复核。全量回归既有 FFmpeg 环境失败另列。",
       "task_id": "2026-10-19-R207-photo-edit-tools-in-repo",
       "workspace": "acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo"
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "274c0aefd9105143071ee9f261756338287aa608bfc806feb0353293a35aee4b"
+  "source_facts_sha256": "0c680bda09358e52edb80cd188377e55581382b3e2817798e245fb7e61d14632"
 }

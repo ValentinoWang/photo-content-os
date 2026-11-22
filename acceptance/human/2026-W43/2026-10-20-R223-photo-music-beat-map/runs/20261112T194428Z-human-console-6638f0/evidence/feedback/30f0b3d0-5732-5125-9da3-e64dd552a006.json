@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "30f0b3d0-5732-5125-9da3-e64dd552a006",
+  "identity": {
+    "project": "photo-content-os",
+    "acceptance": "2026-10-20-R223-photo-music-beat-map",
+    "item": "H-01",
+    "checklist_sha256": "f6765e02a9c6d0017421508493549ec6854e3e4323b9f7d434efba5825597b31",
+    "build": "a883599eeb6e85c2071dc1abb83636f302d8eb6a46a151ac5e4eedfff490756c",
+    "bundle": null,
+    "binding_sha256": "443040f36372650572f09c4ee99ce2f3aacf9e0fe0a55cd4a017e8e20deb55a0"
+  },
+  "actor": "phone-passkey",
+  "outcome": "passed",
+  "issue": "",
+  "note": "",
+  "created_at": "2026-11-12T19:44:28.738369+00:00",
+  "created_ns": 1794512668738388000,
+  "supersedes": null,
+  "repair_state": "not-requested",
+  "checklist_item": {
+    "fields": [
+      {
+        "label": "验收步骤",
+        "value": "\n  1. 打开 Studio 的音乐库。\n  2. 点「Turn Back Time」这一行。"
+      },
+      {
+        "label": "预期表现",
+        "value": "列表里每首歌名下面有 2～3 个标签（例如「电子」「夏日」「有人声」）；右侧「AI 标注」区分风格、情绪、场景、人声、乐器五行；波形下面有一条分成几段的色带，再往下是每拍一根短柱的拍子区，每小节开头有小节号；「速度」一行显示一个 BPM 数字，不再出现「还没分析」；页面上没有「授权」列，也没有「平台版权曲」「来源不明」字样。"
+      }
+    ],
+    "id": "H-01",
+    "needs_separate_acceptance": true,
+    "open_route": "note:本机 Photo Studio 的音乐库",
+    "open_target": {
+      "kind": "note",
+      "text": "本机 Photo Studio 的音乐库"
+    },
+    "replacement": null,
+    "replacement_status": null,
+    "text": "- 验收步骤：\n  1. 打开 Studio 的音乐库。\n  2. 点「Turn Back Time」这一行。\n- 预期表现：列表里每首歌名下面有 2～3 个标签（例如「电子」「夏日」「有人声」）；右侧「AI 标注」区分风格、情绪、场景、人声、乐器五行；波形下面有一条分成几段的色带，再往下是每拍一根短柱的拍子区，每小节开头有小节号；「速度」一行显示一个 BPM 数字，不再出现「还没分析」；页面上没有「授权」列，也没有「平台版权曲」「来源不明」字样。"
+  },
+  "passkey": {
+    "fingerprint": "8281bbd97a19bbfb",
+    "payload": "{\"card\":\"2026-10-20-R223-photo-music-beat-map\",\"checklist_sha256\":\"f6765e02a9c6d0017421508493549ec6854e3e4323b9f7d434efba5825597b31\",\"credential\":\"AqpbnM8HRfFAY7ciKUvz1gR9kDk\",\"expires_at\":1794512963611,\"issued_at\":1794512663611,\"items\":[{\"key\":\"H-01\",\"verdict\":\"pass\"},{\"key\":\"H-02\",\"verdict\":\"pass\"},{\"key\":\"H-03\",\"verdict\":\"pass\"}],\"nonce\":\"b4465f1b5e2f8fe385cce72a26415a4e\",\"project\":\"photo-content-os\",\"rp\":\"mediapilot.cloud\",\"v\":1}",
+    "assertion": {
+      "id": "AqpbnM8HRfFAY7ciKUvz1gR9kDk",
+      "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoid1VBbWJSMzJyd3BndkVoTlJ0M25YTG9JSVF6ZlRBMWtPUmROOVZaRUhwMCIsIm9yaWdpbiI6Imh0dHBzOi8vbWVkaWFwaWxvdC5jbG91ZCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+      "authenticatorData": "k3CLGqgAm7LO2dc3AetKpcPK5WwiFgvOMjli5vRd2KodAAAAAA",
+      "signature": "MEQCIBUauwFDejoOotli0HHT-fj4StkGX6BZTKLn-MTdgyTYAiBxtRXrSanxG_fg4OLOpvddmKY4D6KENmmGhgXB4JakCA",
+      "userHandle": "rdilDPQLUdUWCb6E3gaTzw"
+    },
+    "verified_at": 1794512668588
+  },
+  "attachments": []
+}

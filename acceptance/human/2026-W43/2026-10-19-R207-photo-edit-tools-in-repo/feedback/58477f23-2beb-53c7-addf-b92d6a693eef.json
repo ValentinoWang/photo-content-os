@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "58477f23-2beb-53c7-addf-b92d6a693eef",
+  "identity": {
+    "project": "photo-content-os",
+    "acceptance": "2026-10-19-R207-photo-edit-tools-in-repo",
+    "item": "H-01",
+    "checklist_sha256": "2374a1f24229b13270d4962b3f4af01d03481343a3a1a9e4d2e2f18347b67690",
+    "build": "7ac2efb8d2cbf59793fab9452e553f87ae1d5d2926395e53c9d2f98f07a8ab82",
+    "bundle": null,
+    "binding_sha256": "80948a266eaba565f742c747cf2a1b2324bcf23eff05d46ce380b195fc2c320d"
+  },
+  "actor": "phone-passkey",
+  "outcome": "passed",
+  "issue": "",
+  "note": "",
+  "created_at": "2026-11-11T19:38:30.701544+00:00",
+  "created_ns": 1794425910701595000,
+  "supersedes": null,
+  "repair_state": "not-requested",
+  "checklist_item": {
+    "fields": [
+      {
+        "label": "验收步骤",
+        "value": "\n  1. 打开终端，进入 Photo 软件所在的文件夹。\n  2. 输入 README 里写的剪辑工具安装命令，再输入环境检查命令。"
+      },
+      {
+        "label": "预期表现",
+        "value": "环境检查的剪辑工具一栏列出 OpenChatCut、OpenFilm 和各自版本，位置都在 Photo 软件文件夹里面，没有一处指向桌面的开源工具文件夹或自媒体创作 Agent 仓库。"
+      }
+    ],
+    "id": "H-01",
+    "needs_separate_acceptance": true,
+    "open_route": "file:photo-content-os/README.md",
+    "open_target": {
+      "kind": "file",
+      "path": "README.md",
+      "project": "photo-content-os"
+    },
+    "replacement": null,
+    "replacement_status": null,
+    "text": "- 验收步骤：\n  1. 打开终端，进入 Photo 软件所在的文件夹。\n  2. 输入 README 里写的剪辑工具安装命令，再输入环境检查命令。\n- 预期表现：环境检查的剪辑工具一栏列出 OpenChatCut、OpenFilm 和各自版本，位置都在 Photo 软件文件夹里面，没有一处指向桌面的开源工具文件夹或自媒体创作 Agent 仓库。"
+  },
+  "passkey": {
+    "fingerprint": "8281bbd97a19bbfb",
+    "payload": "{\"card\":\"2026-10-19-R207-photo-edit-tools-in-repo\",\"checklist_sha256\":\"2374a1f24229b13270d4962b3f4af01d03481343a3a1a9e4d2e2f18347b67690\",\"credential\":\"AqpbnM8HRfFAY7ciKUvz1gR9kDk\",\"expires_at\":1794426206090,\"issued_at\":1794425906090,\"items\":[{\"key\":\"H-01\",\"verdict\":\"pass\"},{\"key\":\"H-02\",\"verdict\":\"pass\"}],\"nonce\":\"c246df6b4e261ba96cfe6847cbb17f63\",\"project\":\"photo-content-os\",\"rp\":\"mediapilot.cloud\",\"v\":1}",
+    "assertion": {
+      "id": "AqpbnM8HRfFAY7ciKUvz1gR9kDk",
+      "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiTS1MbG90dlplRUwxdS0tb2FvRW1TYXM0cjdSNGRfWXBCWWtjS291Ykw4QSIsIm9yaWdpbiI6Imh0dHBzOi8vbWVkaWFwaWxvdC5jbG91ZCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+      "authenticatorData": "k3CLGqgAm7LO2dc3AetKpcPK5WwiFgvOMjli5vRd2KodAAAAAA",
+      "signature": "MEQCIAuLnHVb-bW66yjcGZ3Dt7bpIffowLfV7v1DBPwd6OJ3AiBXEfvCQPtFChFei4DAY_0kTrjc9WePd7SSMFPcU75riw",
+      "userHandle": "rdilDPQLUdUWCb6E3gaTzw"
+    },
+    "verified_at": 1794425910609
+  },
+  "attachments": []
+}

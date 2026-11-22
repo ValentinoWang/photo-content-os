@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-11-04T06:13:59.286210Z
-- 来源事实 SHA-256：274c0aefd9105143071ee9f261756338287aa608bfc806feb0353293a35aee4b
+- 事实时间：2026-11-12T19:44:30Z
+- 来源事实 SHA-256：0c680bda09358e52edb80cd188377e55581382b3e2817798e245fb7e61d14632
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -19,7 +19,6 @@
 | 2026-10-27T07:51:43.250455Z | 2026-10-26-R278-photo-direct-rescript | 脚本直出先定视频风格，生成过以后能回到分镜脚本改了重新生成 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R278-photo-direct-rescript/checklist.md | - | - |
 | 2026-10-26T20:11:04.844527Z | 2026-10-26-R277-photo-shot-visual-revision | 脚本直出里改一镜的画面：在画面上点着改、看两版对比、攒好样例，让画面规则越用越准 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R277-photo-shot-visual-revision/checklist.md | - | - |
 | 2026-10-26T20:11:02.089388Z | 2026-10-26-R276-photo-direct-video-opus | Studio 里一键直出：Opus 按口播稿写每一镜动画，本机渲染出成片 | 产品负责人 | 10 | acceptance/human/2026-W44/未-2026-10-26-R276-photo-direct-video-opus/checklist.md | - | - |
-| 2026-10-20T21:08:20.633838Z | 2026-10-20-R223-photo-music-beat-map | 音乐库：AI 给每首歌打标签，并显示节拍图 | 产品负责人 | 6 | acceptance/human/2026-W43/未-2026-10-20-R223-photo-music-beat-map/checklist.md | - | - |
 | 2026-10-20T21:08:19.490324Z | 2026-10-20-R220-photo-studio-ia-preview | Studio 导航、镜头过目和媒体预览 | 产品负责人 | 8 | acceptance/human/2026-W43/未-2026-10-20-R220-photo-studio-ia-preview/checklist.md | - | - |
 | 2026-10-20T21:08:17.642017Z | 2026-10-19-R210-photo-music-link-import | 汽水音乐、网易云音乐链接导入并入库 | 产品负责人 | 3 | acceptance/human/2026-W43/未-2026-10-19-R210-photo-music-link-import/checklist.md | - | - |
 
@@ -45,7 +44,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
+| 2026-10-20T21:08:20.633838Z | 2026-10-20-R223-photo-music-beat-map | 音乐库：AI 给每首歌打标签，并显示节拍图 | 产品负责人 | 6 | acceptance/human/2026-W43/2026-10-20-R223-photo-music-beat-map/checklist.md | acceptance/human/2026-W43/2026-10-20-R223-photo-music-beat-map/runs/20261112T194428Z-human-console-6638f0/result.md | - |
 
 ### 已被替代
 
@@ -61,7 +60,6 @@
 | --- | --- | --- | --- | ---: | --- | --- | --- |
 | 2026-10-27T11:08:28.788626Z | 2026-10-27-R312-photo-ffmpeg9-subtitles | 剪第一版时烧字幕在新版 ffmpeg 上恢复正常 | 任务委托人 | 5 | acceptance/human/2026-W44/未-2026-10-27-R312-photo-ffmpeg9-subtitles/checklist.md | - | - |
 | 2026-10-27T10:08:26.915857Z | 2026-10-27-R310-photo-devbox | photo-content-os 用自己的开发机跑测试、门禁和渲染 | 任务委托人 | 5 | acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md | - | - |
-| 2026-10-19T16:11:46.979649Z | 2026-10-19-R207-photo-edit-tools-in-repo | 剪辑工具安装与候选生成 | 产品负责人 | 8 | acceptance/human/2026-W43/未-2026-10-19-R207-photo-edit-tools-in-repo/checklist.md | - | - |
 
 ### 已拒绝待修复
 
@@ -85,7 +83,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| - | - | - | - | - | - | - | - |
+| 2026-10-19T16:11:46.979649Z | 2026-10-19-R207-photo-edit-tools-in-repo | 剪辑工具安装与候选生成 | 产品负责人 | 8 | acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo/checklist.md | acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo/runs/20261111T193830Z-human-console-4632bc/result.md | - |
 
 ### 已被替代
 
