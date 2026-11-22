@@ -80,3 +80,23 @@ def test_beat_error_code_is_preserved(inputs, monkeypatch, capsys):
     monkeypatch.setattr(promo_plan, 'load_beat_map', unavailable)
     assert promo_plan.main(['--spec', str(spec_path), '--media-root', str(root), '--out', str(root / 'out')]) != 0
     assert json.loads(capsys.readouterr().err)['code'] == 'analyzing'
+
+
+def test_auto_bars_cover_declared_animation(inputs):
+    root, beats, spec = inputs
+    (root / 'long.html').write_text('<script>const D = 4.1;</script>')
+    (root / 'short.html').write_text('<script>const D = 1.5;</script>')
+    spec['shots'] = [{'id': 'a', 'html': 'long.html', 'bars': 'auto'}, {'id': 'b', 'html': 'short.html', 'bars': 'auto'}]
+    render, _, plan = promo_plan.create_plan(spec, root, root / 'out', beat_map=beats, spec_dir=root)
+    # one bar is 4 * 0.503 = 2.012s: D=4.1 needs 3 bars, D=1.5 needs 1
+    assert [s['end_bar'] - s['start_bar'] for s in plan['shots']] == [3, 1]
+    assert render['shots'][0]['frames'] / 30 >= 4.1
+
+
+def test_auto_bars_need_declared_duration(inputs):
+    root, beats, spec = inputs
+    (root / 'plain.html').write_text('<p>no D</p>')
+    spec['shots'] = [{'id': 'a', 'html': 'plain.html', 'bars': 'auto'}]
+    with pytest.raises(promo_plan.PlanError) as exc:
+        promo_plan.create_plan(spec, root, root / 'out', beat_map=beats, spec_dir=root)
+    assert exc.value.code == 'animation_duration_missing'

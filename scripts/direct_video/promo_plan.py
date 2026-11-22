@@ -9,10 +9,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-for _path in (ROOT, ROOT / 'scripts'):
+for _path in (ROOT, ROOT / 'scripts', ROOT / 'scripts/video_render'):
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 from studio.music_analysis import BeatMapUnavailable, load_beat_map
+from animation_duration import declared_duration
 
 
 class PlanError(Exception):
@@ -25,6 +26,21 @@ def positive(value, name):
     if type(value) is not int or value <= 0:
         raise PlanError('invalid_input', f'{name} must be a positive integer')
     return value
+
+
+def auto_end(downbeats, cursor, origin, fps, previous_frame, html_path, sid):
+    """Fewest whole bars whose frames cover the shot's declared animation length D."""
+    try:
+        declared = declared_duration(Path(html_path).read_text(encoding='utf-8'))
+    except (OSError, UnicodeError, ValueError) as exc:
+        raise PlanError('animation_duration_invalid', f'{sid}: {exc}') from exc
+    if declared is None:
+        raise PlanError('animation_duration_missing', f'{sid}: bars "auto" needs const D in the shot HTML')
+    for end in range(cursor + 1, len(downbeats)):
+        frames = math.floor((downbeats[end] - origin) * fps + .5) - previous_frame
+        if frames * 1000 >= declared * fps * 1000:
+            return end
+    raise PlanError('track_too_short', f'{sid}: not enough bars left to cover D={float(declared):.3f}s')
 
 
 def create_plan(spec, media_root, out, *, beat_map=None, spec_dir=None):
@@ -47,6 +63,7 @@ def create_plan(spec, media_root, out, *, beat_map=None, spec_dir=None):
     if start >= len(downbeats):
         raise PlanError('track_too_short', 'starting downbeat is unavailable')
     origin = downbeats[start]
+    html_root = Path(spec_dir or Path.cwd()).resolve() / spec.get('assets_dir', '.')
     cursor = start
     previous_frame = 0
     render_shots, plan_shots, ids = [], [], set()
@@ -59,7 +76,10 @@ def create_plan(spec, media_root, out, *, beat_map=None, spec_dir=None):
         if not isinstance(html, str) or not html:
             raise PlanError('invalid_input', 'shot html is required')
         ids.add(sid)
-        end = cursor + positive(shot.get('bars'), 'bars')
+        if shot.get('bars') == 'auto':
+            end = auto_end(downbeats, cursor, origin, fps, previous_frame, html_root / html, sid)
+        else:
+            end = cursor + positive(shot.get('bars'), 'bars')
         if end >= len(downbeats) or downbeats[end] > beat_map['duration_seconds']:
             raise PlanError('track_too_short', 'ending downbeat is unavailable or beyond the track')
         boundary = math.floor((downbeats[end] - origin) * fps + .5)
