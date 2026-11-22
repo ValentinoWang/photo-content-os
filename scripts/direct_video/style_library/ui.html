@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden}
+:root{
+  --page:#f2eee6;
+  --surface:#fffdf9;
+  --field:#f7f3ec;
+  --ink:#13110f;
+  --muted:#65635f;
+  --accent:#955905;
+  --line:#e3dbcf;
+}
+body{background:var(--page);color:var(--ink);font-family:'STHeiti','Heiti SC',sans-serif}
+header,main{margin-inline:72px}
+header{padding-top:112px}
+.eyebrow{font-size:40px;color:var(--accent)}
+h1{font-size:86px;line-height:1.12;margin:22px 0 0}
+main{
+  margin-top:68px;background:var(--surface);border:2px solid var(--line);
+  border-radius:36px;overflow:hidden;box-shadow:0 24px 56px #13110f14;
+}
+.window-bar{
+  display:flex;align-items:center;gap:20px;padding:25px 44px;
+  border-bottom:2px solid var(--line);font-size:37px;color:var(--muted);
+}
+.window-mark{display:grid;grid-template-columns:repeat(2,12px);gap:5px}
+.window-mark i{width:12px;height:12px;border:2px solid var(--muted);border-radius:3px;box-sizing:border-box}
+.panel{padding:34px 44px 34px}
+.scene{
+  display:flex;align-items:center;min-height:280px;gap:34px;padding:0 34px;
+  background:var(--field);border-radius:20px;
+}
+.scene-icon{flex:0 0 155px;display:grid;place-items:center}
+.scene-icon svg{width:150px;height:134px;color:var(--accent)}
+.scene-text{font-size:49px;line-height:1.2}
+.scene-text small{display:block;font-size:37px;color:var(--muted);margin-bottom:16px}
+.metric{padding:25px 0 20px}
+.metric+.metric{border-top:2px solid var(--line)}
+.metric-top{display:flex;justify-content:space-between;align-items:center;min-height:101px}
+.metric-label{font-size:43px;color:var(--muted)}
+.metric-value{font-size:94px;line-height:1;letter-spacing:-.04em}
+.actual .metric-value{color:var(--accent)}
+.track{height:13px;margin-top:15px;background:var(--field);border-radius:8px;overflow:hidden}
+.fill{height:100%;transform-origin:left;background:var(--muted);border-radius:inherit}
+.actual .fill{background:var(--accent)}
+.takeaway{margin-top:20px;border-left:5px solid var(--accent);padding-left:20px;font-size:42px;line-height:1.25}
+.source{position:absolute;left:72px;font-size:35px;line-height:42px;color:var(--muted);margin:0}
+</style>
+</head>
+<body data-hold="8.3-12" data-batch-entrance>
+<header data-role="header">
+  <div class="eyebrow">聚光灯效应</div>
+  <h1>别人有多注意我</h1>
+</header>
+<main>
+  <div class="window-bar"><span class="window-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>课堂实验记录</div>
+  <div class="panel">
+    <div class="scene">
+      <div class="scene-icon">
+        <svg viewBox="0 0 144 124" fill="none" aria-hidden="true">
+          <path d="M49 11 16 29 4 60l27 13 10-15v55h62V58l10 15 27-13-12-31-33-18c-12 18-34 18-46 0Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M61 61h22m-18 8h14m-10 8h6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="scene-text" data-motion-easing="ease-out" data-motion-start="0.45" data-motion-end="1.45"><small>实验情境</small>穿着尴尬的衣服<br>走进教室</div>
+    </div>
+    <div class="metric" data-motion-easing="ease-out" data-motion-start="3.25" data-motion-end="4.65">
+      <div class="metric-top"><span class="metric-label">以为约</span><span class="metric-value">50%</span></div>
+      <div class="track"><div class="fill" style="width:50%"></div></div>
+    </div>
+    <div class="metric actual" data-motion-easing="ease-out" data-motion-start="5.4" data-motion-end="6.8">
+      <div class="metric-top"><span class="metric-label">实际约</span><span class="metric-value">25%</span></div>
+      <div class="track"><div class="fill" style="width:25%"></div></div>
+    </div>
+    <div class="takeaway" data-motion-easing="ease-out" data-motion-start="7.3" data-motion-end="8.3" data-key-landed>被注意到的人，比想象中少</div>
+  </div>
+</main>
+<p class="source" style="top:1432px;height:42px" data-subtitle-safe>Gilovich 等，2000 · 示意图，非原始数据</p>
+<script>
+const D = 12;
+const motions = Array.from(document.querySelectorAll('[data-motion-easing]'), node => ({
+  node,
+  start: Number(node.dataset.motionStart),
+  end: Number(node.dataset.motionEnd),
+  easing: node.dataset.motionEasing,
+  fill: node.querySelector('.fill'),
+}));
+const easing = {
+  'ease-out': progress => 1 - (1 - progress) ** 3,
+};
+window.seekFrame = (frame, fps) => {
+  const time = Math.min(D, frame / fps);
+  for (const {node, start, end, easing: curve, fill} of motions) {
+    const progress = easing[curve](Math.max(0, Math.min(1, (time - start) / (end - start))));
+    node.style.opacity = progress;
+    node.style.transform = 'translateY(' + (1 - progress) * 25 + 'px)';
+    if (fill) fill.style.transform = 'scaleX(' + progress + ')';
+  }
+};
+window.seekFrame(0, 30);
+</script>
+</body>
+</html>

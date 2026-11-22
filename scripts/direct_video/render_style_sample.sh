@@ -22,7 +22,7 @@ def stop(signum, frame):
 
 signal.signal(signal.SIGTERM, stop)
 root, style_id = Path(sys.argv[1]), sys.argv[2]
-ids = ('flat', 'math', 'launch', 'whiteboard', 'cyber', 'ink', 'dataviz', 'pixel', 'code')
+ids = ('flat', 'math', 'launch', 'whiteboard', 'cyber', 'ink', 'dataviz', 'pixel', 'code', 'ui')
 if style_id not in ids:
     raise SystemExit('Unknown style id')
 library = root / 'scripts/direct_video/style_library'

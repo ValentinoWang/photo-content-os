@@ -32,15 +32,68 @@ def _centered_box(declarations: str) -> bool:
     return styles.get('width') == '1em' and styles.get('text-align') == 'center' and styles.get('display') in {'inline-block', 'block'}
 
 
-class _Punctuation(HTMLParser):
+def _px_declarations(declarations: str) -> dict[str, float | None]:
+    values = {}
+    for declaration in declarations.split(';'):
+        name, separator, value = declaration.partition(':')
+        if separator:
+            match = re.fullmatch(r'(-?\d+(?:\.\d+)?)px', value.strip(), re.I)
+            values[name.strip().lower()] = float(match[1]) if match else None
+    return values
+
+
+def _canvas_size(style_blocks: list[str], roots: list[dict]) -> tuple[float, float] | None:
+    dimensions = {'width': set(), 'height': set()}
+    root_styles = [attrs.get('style') or '' for attrs in roots]
+    for sheet in style_blocks:
+        sheet = re.sub(r'/\*.*?\*/', '', sheet, flags=re.S)
+        for selector, declarations in re.findall(r'([^{}]+)\{([^{}]*)\}', sheet):
+            if {'html', 'body'} & {part.strip().lower() for part in selector.split(',')}:
+                root_styles.append(declarations)
+    for declarations in root_styles:
+        styles = _px_declarations(declarations)
+        for name, values in dimensions.items():
+            if name in styles:
+                values.add(styles[name])
+    if any(len(values) != 1 for values in dimensions.values()):
+        return None
+    width, height = (next(iter(values)) for values in dimensions.values())
+    if any(value is None or not math.isfinite(value) or value <= 0 for value in (width, height)):
+        return None
+    return width, height
+
+
+def _seconds(value: str | None) -> float | None:
+    try:
+        number = float(value)
+    except (ValueError, TypeError):
+        return None
+    return number if math.isfinite(number) and number >= 0 else None
+
+
+def _interval(value: str) -> tuple[float, float] | None:
+    start, _, end = value.partition('-')
+    start, end = _seconds(start), _seconds(end)
+    return (start, end) if start is not None and end is not None and end > start else None
+
+
+class _ShotMarkup(HTMLParser):
     def __init__(self, boxed_classes):
         super().__init__()
         self.spans, self.hidden, self.marks = [], [], set()
         self.boxed_classes = boxed_classes
+        self.roots, self.aesthetic_elements = [], []
+        self.body = {}
 
     def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag in {'html', 'body'}:
+            self.roots.append(attrs)
+        if tag == 'body':
+            self.body = attrs
+        if {'data-motion-easing', 'data-key-landed', 'data-subtitle-safe'} & attrs.keys():
+            self.aesthetic_elements.append(attrs)
         if tag == 'span':
-            attrs = dict(attrs)
             classes = set((attrs.get('class') or '').split())
             self.spans.append(bool(classes & (self.boxed_classes | {'fw'})) or _centered_box(attrs.get('style') or ''))
         if tag in {'script', 'style'}:
@@ -55,6 +108,47 @@ class _Punctuation(HTMLParser):
     def handle_data(self, data):
         if not self.hidden and not any(self.spans):
             self.marks.update(re.findall(r'[？！]', data))
+
+
+def _aesthetic_warnings(markup: _ShotMarkup, duration: float, height: float | None) -> list[dict]:
+    warnings = []
+
+    def warn(code, message):
+        if not any(item['code'] == code for item in warnings):
+            warnings.append({'code': code, 'message': message})
+
+    body = markup.body
+    hold_spec = body.get('data-hold') or ''
+    holds = [_interval(part) for part in hold_spec.split(',')] if hold_spec else []
+    pauses = [interval for interval in holds if interval is not None]
+    epsilon = 1e-6
+    if 'data-batch-entrance' in body and (len(pauses) != len(holds) or not any(
+        end + epsilon >= duration and duration - start >= 0.5 - epsilon for start, end in pauses
+    )):
+        warn('aesthetic_r2_tail_hold', 'R2：请把收尾停顿留到切镜，至少停半秒，并核对停顿区间。')
+    if 'data-opening-arc' in body:
+        opening = _interval(body.get('data-opening-arc') or '')
+        if opening is None or min(opening[1], duration) - opening[0] < 3 - epsilon:
+            warn('aesthetic_r3_opening_arc', 'R3：请给开场主体的完整动作至少三秒。')
+
+    for attrs in markup.aesthetic_elements:
+        if 'data-key-landed' in attrs:
+            settled = _seconds(attrs.get('data-motion-end'))
+            if settled is None or not any(
+                start <= settled + epsilon and min(end, duration) - settled >= 1 - epsilon
+                for start, end in pauses
+            ):
+                warn('aesthetic_r1_key_hold', 'R1：关键信息或字标落定后请静止至少一秒，并核对落定时刻。')
+        if (attrs.get('data-motion-easing') or '').strip().lower() == 'linear':
+            warn('aesthetic_r2_linear_motion', 'R2：飞入或滚动请使用非线性缓动。')
+        if 'data-subtitle-safe' in attrs and height is not None:
+            box = _px_declarations(attrs.get('style') or '')
+            top, size = box.get('top'), box.get('height')
+            if top is None or size is None or not math.isfinite(top + size) or size <= 0:
+                warn('subtitle_safe_zone', '字幕安全区：标记的固定内容需要在行内样式声明像素位置和高度。')
+            elif top + size > height * 0.8 + epsilon:
+                warn('subtitle_safe_zone', '字幕安全区：请把标记的文字和关键图形移出画面底部五分之一。')
+    return warnings
 
 
 def lint(code: str, dialogue: str, duration: float) -> dict:
@@ -94,13 +188,17 @@ def lint(code: str, dialogue: str, duration: float) -> dict:
         error('half_width_punctuation', '中文相邻标点请使用全角。')
     style_blocks = re.findall(r'<style\b[^>]*>(.*?)</style>', code, re.S | re.I)
     boxed_classes = {name for css in style_blocks for name, declarations in re.findall(r'\.([\w-]+)\s*\{([^{}]*)\}', css) if _centered_box(declarations)}
-    punctuation = _Punctuation(boxed_classes)
-    punctuation.feed(code)
-    if punctuation.marks:
+    markup = _ShotMarkup(boxed_classes)
+    markup.feed(code)
+    if markup.marks:
         error('punctuation_unboxed', '问号和感叹号请放在全角居中的文字框中。')
     for number in sorted(set(re.findall(r'\d+(?:\.\d+)?%?', visible_text(code)))):
         if number not in dialogue and not re.fullmatch(r'\d{1,2}|(?:19|20)\d\d', number):
             warnings.append({'code': 'number_unspoken', 'message': f'画面数字 {number} 未出现在本镜口播，请核对出处和数量。'})
+    canvas = _canvas_size(style_blocks, markup.roots)
+    if canvas is None:
+        error('canvas_size_unreadable', '读不到画布尺寸，请在 html 或 body 声明明确的像素宽和高。')
+    warnings.extend(_aesthetic_warnings(markup, duration, canvas[1] if canvas else None))
     return {'errors': errors, 'warnings': warnings}
 
 

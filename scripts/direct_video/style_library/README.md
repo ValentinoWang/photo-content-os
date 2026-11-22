@@ -2,7 +2,9 @@
 
 改写自 Moessif/code-video-showcase 的风格配方（MIT），上游提交 2a5fb1f（完整提交 2a5fb1f754f988b31ff88ecb317ce282906a5488）。上游许可全文见 `LICENSE-code-video-showcase.txt`；配方原文保留在 `docs/tasks/R283-direct-style-library/reference/`。
 
-九种都使用同一段「聚光灯效应」台词，画布 1080×1920，30 fps、360 帧；发布样张为 360×640 的无声 MP4 与最后一帧 JPG。顺序以 `index.json` 为准。底部字幕区留空。
+十种都使用同一段「聚光灯效应」台词，画布 1080×1920，30 fps、360 帧；发布样张为 360×640 的无声 MP4 与最后一帧 JPG。顺序以 `index.json` 为准。底部字幕区留空。
+
+产品界面（ui）取自 Vincentwei1021/video-shotcraft 的 Ink Press 模板及语义色板体系（Apache-2.0，固定提交 3ac67b75dd0b3bc2fd807c17f6b7ce35373eef3d）。参考 `template/TEMPLATE.md`、`template/THEMES.md`、`template/themes/ui.cjs` 与 `template/src/`。许可原文见 `LICENSE-video-shotcraft.txt`。
 
 ## 改写说明
 
@@ -15,6 +17,7 @@
 - **数据可视化（dataviz）**：保留暗底紫红光雾、发光柱、玻璃注释和轻透视；横屏七条竞速改成竖屏两根同标尺对照柱，去掉年份大字、排名和年份脉冲，数字顺序落定，粒子和背景静止。
 - **8-bit 像素（pixel）**：保留 FC 有限色板、低分辨率整数精灵、分层地面和逐格移动；横屏跑酷改成竖屏课堂和同学注意比例，去掉金币、分数、生命、倒计时与常驻跑动。数字自行画点阵，中文使用锁定黑体。
 - **代码录屏（code）**：保留深色编辑器、语法色、行号、逐字输入和实时预览观感；将横屏文件树加左右双栏改为竖屏上代码下预览，代码压缩为五行实验数据。去掉跟光标镜头、时间轴、无关文件树和运动圆，展示代码不执行。
+- **产品界面（ui）**：借用 Ink Press 的纸色、墨字、琥珀强调与界面元素依次归位的节奏。横屏研究工作台改成竖屏课堂实验记录，重画中性占位界面；字号沿用直出锁定黑体，不搬上游截图、音效或 Remotion 场景。
 
 ## 重新渲染
 

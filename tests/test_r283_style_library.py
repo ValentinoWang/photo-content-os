@@ -15,7 +15,7 @@ from direct_video.lint import declared_seconds, lint
 from studio.api_contract import build_openapi
 from studio.direct_video import projection
 
-IDS = ['flat', 'math', 'launch', 'whiteboard', 'cyber', 'ink', 'dataviz', 'pixel', 'code']
+IDS = ['flat', 'math', 'launch', 'whiteboard', 'cyber', 'ink', 'dataviz', 'pixel', 'code', 'ui']
 
 
 def sample(root, ident='flat'):
@@ -207,7 +207,7 @@ def test_library_http_media_range_creation_and_openapi(api, catalog):
     assert json.loads((Path(__file__).resolve().parents[1] / 'schemas/studio-openapi.json').read_text()) == spec
 
 
-def test_real_library_nine_complete_valid_samples():
+def test_real_library_ten_complete_valid_samples():
     root = Path(styles.__file__).with_name('style_library')
     assert json.loads((root / 'index.json').read_text()) == IDS
     library = styles.StyleLibrary(root)

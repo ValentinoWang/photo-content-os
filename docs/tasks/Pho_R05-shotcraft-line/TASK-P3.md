@@ -38,6 +38,12 @@
 - 新检查一律 WARN，升 ERROR 由总控定。
 - 风格里的界面截图不用真实产品，用中性占位界面。
 
+## 总控裁定（2026-11-22，P3 第一次停下后）
+
+- `scripts/direct_video/render_style_sample.sh` 归 P3：允许在 `ids` 白名单末尾加 `ui`，其余不改。
+- lint 只收镜头目录：验证脚本已改成经 `docs/tasks/Pho_R05-shotcraft-line/lint-one.sh` 把单个 HTML 放进临时目录再 lint；你自己检查单个 HTML 也用它。P3-2 里「lint 支持横屏」仍按目录入口做。
+- 开发机 photo-dev 认证失败，本轮按本机例外预算在本机跑（R283 先例），不再查开发机。缺 `.venv` 就 `bash scripts/setup_dev_environment.sh` 建，建好后继续。
+
 ## 固定规则
 
 - 工作区主人是派你的会话 44398e14-d34e-4fbc-b3a2-4994fcc7c48e，你是它派的执行方，不运行 claim、adopt，不为身份停下。
