@@ -16,16 +16,16 @@
       "fingerprint": "750994aec13261ecf9f6fd81fa300cd59849cbc267046abd4745e8ccd616735b",
       "screenshots": [
         {
-          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-45634f4cca9ebacb295863a32a43c1dbdf37537829ebc7fa2ef0f26635306340.jpg",
-          "sha256": "45634f4cca9ebacb295863a32a43c1dbdf37537829ebc7fa2ef0f26635306340",
-          "caption": "8 张配方样张竖屏版末帧 · 本机渲染后取末帧拼成总图",
-          "captured_at": "2026-11-22T15:29:52.220265+00:00"
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-725d72fa85cba5d2bea3b1ee095de0cbf6ea9cba8358ace16d73d89a652c6968.jpg",
+          "sha256": "725d72fa85cba5d2bea3b1ee095de0cbf6ea9cba8358ace16d73d89a652c6968",
+          "caption": "8 张配方样张竖屏版末帧（重画后） · 本机渲染后取末帧拼成总图",
+          "captured_at": "2026-11-22T16:35:51.129230+00:00"
         },
         {
-          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-fe5232bca51b968af9be8d2f56154af497ecd197e129559450b2590a537e67e7.jpg",
-          "sha256": "fe5232bca51b968af9be8d2f56154af497ecd197e129559450b2590a537e67e7",
-          "caption": "8 张配方样张横屏版末帧 · 本机渲染后取末帧拼成总图",
-          "captured_at": "2026-11-22T15:29:52.369271+00:00"
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-02-0670303927d13c278349c1bcc55f1167883ce09f22ccd26c8945a1ddf1f80383.jpg",
+          "sha256": "0670303927d13c278349c1bcc55f1167883ce09f22ccd26c8945a1ddf1f80383",
+          "caption": "8 张配方样张横屏版末帧（重画后） · 本机渲染后取末帧拼成总图",
+          "captured_at": "2026-11-22T16:35:51.291272+00:00"
         }
       ]
     },

@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <!-- 来源：typography/blur-slide；上游提交 3ac67b75dd0b3bc2fd807c17f6b7ce35373eef3d --><html lang="zh"><head><meta charset="utf-8"><style>
-html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#f3efe6;color:#202329;font-family:'STHeiti','Heiti SC',sans-serif} .page{position:absolute;left:50%;top:850px;width:max-content;transform:translate(-50%,-50%)}.eyebrow{font-size:50px;color:#ab4a36;letter-spacing:5px}.line{display:flex;gap:24px;font-size:180px;line-height:1.65;white-space:nowrap}.line span,.sub span{display:inline-block}.accent{color:#ab4a36}.sub{display:flex;gap:14px;font-size:52px;line-height:1.4;margin-top:35px;white-space:nowrap}
-</style></head><body data-hold="2.7-4"><div class="page" data-role="header"><div class="eyebrow">一段新的开始</div><div class="line"><span>让想法</span><span class="accent">逐渐</span></div><div class="line"><span>变成</span><span>画面</span></div><div class="sub"><span>从一个</span><span>清晰的</span><span>画面开始</span></div></div><script>
-const D=4;const clamp=x=>Math.max(0,Math.min(1,x));const ease=x=>1-Math.pow(1-clamp(x),5);const main=[...document.querySelectorAll('.line span')],sub=[...document.querySelectorAll('.sub span')];function apply(el,p,dy,blur){el.style.opacity=el.closest('.line')?0.18+0.82*p:p;el.style.transform=`translateY(${(1-p)*dy}px)`;el.style.filter=`blur(${(1-p)*blur}px)`}window.seekFrame=function(frame,fps){main.forEach((e,i)=>apply(e,ease((frame-(10+i*4+(i>=2?6:0)))/(i===3?30:22)),44,13));sub.forEach((e,i)=>apply(e,ease((frame-(34+i*2.4))/20),20,7))};window.seekFrame(0,30);
+:root{--ink:#121317;--paper:#f3eee6;--accent:#ff5b2e;--mute:#8b8f98;--line:rgba(243,238,230,.14)}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--ink);color:var(--paper);font-family:'PingFang SC','STHeiti','Heiti SC',sans-serif}
+.bug{position:absolute;left:96px;right:96px;top:150px;display:flex;justify-content:space-between;align-items:center;font-size:34px;letter-spacing:4px;color:var(--mute)}
+.bug b{color:var(--paper);font-weight:600;letter-spacing:6px}.bug i{font-style:normal;width:14px;height:14px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:18px;vertical-align:middle}
+.rule{position:absolute;left:96px;right:96px;top:230px;height:2px;background:var(--line)}
+.page{position:absolute;left:96px;right:96px;top:620px}
+.eyebrow{font-size:46px;color:var(--accent);letter-spacing:8px;font-weight:600;margin-bottom:60px}
+.line{display:block;font-size:176px;line-height:1.22;font-weight:700;letter-spacing:-2px;white-space:nowrap}
+.line span,.sub span{display:inline-block}.accent{color:var(--accent)}
+.sub{margin-top:90px;font-size:56px;line-height:1.5;color:var(--paper);opacity:.82;white-space:nowrap}
+.foot{position:absolute;left:96px;right:96px;bottom:200px;display:flex;justify-content:space-between;font-size:34px;color:var(--mute);letter-spacing:2px}
+.foot span:last-child{color:var(--paper)}
+</style></head><body data-hold="2.7-4">
+<div class="bug" data-role="header"><span><i></i><b>制作台</b></span><span>宣传片 · 01</span></div><div class="rule"></div>
+<div class="page" data-role="header"><div class="eyebrow">写好台词以后</div><div class="line"><span>画面</span><span class="accent">交给它</span></div><div class="line"><span>你只管说</span></div><div class="sub"><span>按音乐小节出片，</span><span>不用自己对轴</span></div></div>
+<div class="foot"><span>125 BPM · 4/4</span><span>第 1–3 小节</span></div>
+<script>
+const D=4;const clamp=x=>Math.max(0,Math.min(1,x));const ease=x=>1-Math.pow(1-clamp(x),5);const main=[...document.querySelectorAll('.line span')],sub=[...document.querySelectorAll('.sub span')],eb=document.querySelector('.eyebrow'),foot=document.querySelector('.foot');function apply(el,p,dy,blur){el.style.opacity=p;el.style.transform=`translateY(${(1-p)*dy}px)`;el.style.filter=`blur(${(1-p)*blur}px)`}window.seekFrame=function(frame,fps){apply(eb,ease((frame-4)/18),24,6);main.forEach((e,i)=>apply(e,ease((frame-(12+i*6))/(i===1?30:22)),56,16));sub.forEach((e,i)=>apply(e,ease((frame-(44+i*4))/20),22,7));apply(foot,ease((frame-56)/20),0,0)};window.seekFrame(0,30);
 </script></body></html>
