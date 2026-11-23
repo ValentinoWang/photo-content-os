@@ -202,7 +202,7 @@ export function createDirectView(ctx) {
     if((stateName().startsWith('composing')||stateName().startsWith('done'))&&!userSelected){container.hidden=true;return;}
     if(!shot || ['queued','writing'].includes(shot.status)&&!shot.lastInstruction&&shot.attempts<=1){container.hidden=true;return;}
     container.hidden=false;
-    renderShotDetail(container,{job,shot,projectId:project.id,api:ctx.api,onRewrite:()=>{if(ctx.active(project.id))refresh(generation);}});
+    renderShotDetail(container,{job,shot,projectId:project.id,api:ctx.api,loadPromo,pickerHost:root(),onRewrite:()=>{if(ctx.active(project.id))refresh(generation);}});
   }
   function output(){
     if(job.kind==='promo')return promoOutput();

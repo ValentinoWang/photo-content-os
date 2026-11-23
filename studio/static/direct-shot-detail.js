@@ -1,3 +1,4 @@
+import { recipeBox, openRecipePicker, recipeRewriteBody } from './direct-promo.js';
 import { failureMessage, safeText, shotSeconds, mmss, writingSeconds, jobUrl, posterUrl, shouldPoll } from './direct-view.js';
 
 const views=new WeakMap();
@@ -46,7 +47,7 @@ function positionMarkers(stage){
   }
 }
 
-export function renderShotDetail(container,{job,shot,projectId,api,onRewrite}) {
+export function renderShotDetail(container,{job,shot,projectId,api,onRewrite,loadPromo,pickerHost}) {
   let state=views.get(container);
   if(!state||state.jobId!==job.jobId){clearTimeout(state?.timer);state?.markerObserver?.disconnect();state={jobId:job.jobId,key:null,drafts:new Map(),codes:new Map()};views.set(container,state);}
   const previous=container.querySelector('[data-extra]'),focus=previous===container.ownerDocument.activeElement;
@@ -60,7 +61,7 @@ export function renderShotDetail(container,{job,shot,projectId,api,onRewrite}) {
   // R276 stops job polling once rendering ends; look/verify may still be running.
   clearTimeout(state.timer);
   if(!shouldPoll(job)&&(shot.look?.status==='running'||current?.verify?.status==='running'))state.timer=setTimeout(()=>{if(container.isConnected&&views.get(container)===state)onRewrite(shot.shotId);},2000);
-  const key=JSON.stringify([shot.shotId,shot.status,shot.posterRevision,shot.checks,shot.attempts,shot.currentVersion,versions.map(v=>[v.version,v.posterRevision,v.verify?.status]),shot.boxes,shot.look?.status,shot.look?.findings,shot.sample,locked,draft.acceptedVersion]);
+  const key=JSON.stringify([shot.shotId,shot.status,shot.posterRevision,shot.checks,shot.attempts,shot.currentVersion,versions.map(v=>[v.version,v.posterRevision,v.verify?.status]),shot.boxes,shot.look?.status,shot.look?.findings,shot.sample,shot.recipe,locked,draft.acceptedVersion]);
   if(state.key===key){const clock=container.querySelector('[data-busy-clock]');if(clock)clock.textContent=busyText();return;}
   const sameShot=state.shotId===shot.shotId;
   state.shotId=shot.shotId;state.key=key;
@@ -97,13 +98,13 @@ export function renderShotDetail(container,{job,shot,projectId,api,onRewrite}) {
   }
   const ver=pending?`第 ${shot.currentVersion||1} 版 · 正在写第 ${latest.version+1} 版`:versions.length>1?`${reverted?'用第':'第'} ${shot.currentVersion} 版 · 共 ${versions.length} 版`:`第 ${shot.currentVersion||1} 版`;
   const head=`<header class="rv-head"><div><h3 data-design-data>第 ${clean(shot.shotId)} 镜</h3>${D(`${shot.measuredSeconds!=null?'配音实测':'按字数估'} ${shotSeconds(shot).toFixed(1)} 秒 · ${ver}`)}</div><button class="rv-rate" data-sample data-design-id="RV-RATE" aria-pressed="${!!shot.sample}" ${disabled}>${shot.sample?'♥ 已存为样例':'♡ 这镜好'}</button></header>`;
-  container.innerHTML=`<section class="rv-detail${compare?' cmp':''}" data-design-id="DV-DETAIL">${compare?head:''}<div class="dv-pv" ${compare?'data-design-id="RV-COMPARE"':''}>${compare?`<div class="rv-pair"><figure><figcaption data-design-data>第 ${current.baseVersion} 版</figcaption>${stage({version:current.baseVersion,interactive:false,numbers:false,look:false})}</figure><figure class="new"><figcaption data-design-data>第 ${current.version} 版 · 按你的 ${current.request.lines.length} 处改法</figcaption>${stage({interactive:false,look:false})}</figure></div><div class="rv-decide"><button class="btn" data-previous ${disabled}>退回第 ${current.baseVersion} 版</button><button class="btn btn--pri" data-keep ${disabled}>用第 ${current.version} 版</button></div>`:`${stage()}<p class="dv-pvnote" data-design-id="DV-PVNOTE" data-design-data>关键帧 · 这一镜 ${shotSeconds(shot).toFixed(1)} 秒处的 80%</p>`}</div><div class="rv-side">${compare?'':head}${reverted?`<p class="rv-back" data-design-id="RV-CHANGED" data-design-data>已退回第 ${shot.currentVersion} 版。第 ${latest.version} 版留着，你点的问题已经记下。</p>`:''}${compare?changed():inspector()+findings.filter(f=>f.boxId==null).map(f=>`<p class="rv-note" data-design-data><b>Opus 看出 · ${clean(f.kind)}</b>${clean(f.text)}</p>`).join('')+changeList()}<p data-detail-error role="alert" data-design-data ${draft.error?'':'hidden'}>${esc(draft.error)}</p>${more()}</div></section>`;
+  container.innerHTML=`<section class="rv-detail${compare?' cmp':''}" data-design-id="DV-DETAIL">${compare?head:''}<div class="dv-pv" ${compare?'data-design-id="RV-COMPARE"':''}>${compare?`<div class="rv-pair"><figure><figcaption data-design-data>第 ${current.baseVersion} 版</figcaption>${stage({version:current.baseVersion,interactive:false,numbers:false,look:false})}</figure><figure class="new"><figcaption data-design-data>第 ${current.version} 版 · 按你的 ${current.request.lines.length} 处改法</figcaption>${stage({interactive:false,look:false})}</figure></div><div class="rv-decide"><button class="btn" data-previous ${disabled}>退回第 ${current.baseVersion} 版</button><button class="btn btn--pri" data-keep ${disabled}>用第 ${current.version} 版</button></div>`:`${stage()}<p class="dv-pvnote" data-design-id="DV-PVNOTE" data-design-data>关键帧 · 这一镜 ${shotSeconds(shot).toFixed(1)} 秒处的 80%</p>`}</div><div class="rv-side">${compare?'':head}${reverted?`<p class="rv-back" data-design-id="RV-CHANGED" data-design-data>已退回第 ${shot.currentVersion} 版。第 ${latest.version} 版留着，你点的问题已经记下。</p>`:''}${job.kind==='promo'?`<div ${locked?'inert':''}>${recipeBox(shot.recipe||{})}</div>`:''}${compare?changed():inspector()+findings.filter(f=>f.boxId==null).map(f=>`<p class="rv-note" data-design-data><b>Opus 看出 · ${clean(f.kind)}</b>${clean(f.text)}</p>`).join('')+changeList()}<p data-detail-error role="alert" data-design-data ${draft.error?'':'hidden'}>${esc(draft.error)}</p>${more()}</div></section>`;
   for(const el of container.querySelectorAll('[data-box]')){const box=boxes.find(b=>b.id===el.dataset.box);for(const [prop,value,total] of [['left',box.x,1080],['top',box.y,1920],['width',box.w,1080],['height',box.h,1920]])el.style.setProperty(prop,`${value/total*100}%`);}
   state.markerObserver?.disconnect();
   const stages=[...container.querySelectorAll('.rv-stage')];
   state.markerObserver=new ResizeObserver(()=>{if(!container.isConnected){state.markerObserver.disconnect();return;}for(const stage of stages)positionMarkers(stage);});
   for(const stage of stages){positionMarkers(stage);state.markerObserver.observe(stage);}
-  const redraw=()=>{state.key=null;renderShotDetail(container,{job,shot,projectId,api,onRewrite});};
+  const redraw=()=>{state.key=null;renderShotDetail(container,{job,shot,projectId,api,onRewrite,loadPromo,pickerHost});};
   const input=container.querySelector('[data-extra]');
   function updateBrief(){if(!input)return;const lines=linesFor(draft),count=lines.reduce((n,l)=>n+Array.from(l.text).length,0),retry=!lines.length&&['failed','interrupted'].includes(shot.status);
     container.querySelector('[data-item-count]').textContent=draft.items.length?`${draft.items.length} 处`:'';
@@ -124,8 +125,13 @@ export function renderShotDetail(container,{job,shot,projectId,api,onRewrite}) {
       if(suffix==='rewrite')draft.sentCount=null;
       if(payload.job){job=payload.job;shot=job.shots.find(s=>s.shotId===shot.shotId)||shot;}
       if(container.isConnected)onRewrite(shot.shotId);
-    }catch{draft.error=message();}finally{draft.busy=false;if(container.isConnected&&state.shotId===shot.shotId){state.key=null;renderShotDetail(container,{job,shot,projectId,api,onRewrite});}}
+    }catch{draft.error=message();}finally{draft.busy=false;if(container.isConnected&&state.shotId===shot.shotId){state.key=null;renderShotDetail(container,{job,shot,projectId,api,onRewrite,loadPromo,pickerHost});}}
   }
+  container.querySelector('[data-change-recipe]')?.addEventListener('click',async()=>{
+    if(locked)return;
+    try{const data=await loadPromo();if(!container.isConnected||state.shotId!==shot.shotId)return;openRecipePicker(pickerHost,{...data,selected:shot.recipe?.id||shot.recipeId,index:job.shots.findIndex(s=>s.shotId===shot.shotId),onChoose:id=>mutate('rewrite',recipeRewriteBody(id))});}
+    catch{draft.error=message();redraw();}
+  });
   container.querySelector('[data-revise]')?.addEventListener('click',()=>{const lines=linesFor(draft);if(!container.querySelector('[data-revise]').disabled)mutate(lines.length?'revise':'rewrite',lines.length?{lines}:{instruction:''});});
   container.querySelector('[data-look]')?.addEventListener('click',()=>mutate('look'));
   container.querySelector('[data-sample]')?.addEventListener('click',()=>mutate('sample',{},shot.sample?'DELETE':'PUT'));

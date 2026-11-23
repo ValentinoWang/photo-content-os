@@ -1,7 +1,7 @@
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const mmss=s=>{const n=Math.round(s);return `${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`;};
 export const barSeconds=bpm=>4*60/bpm;
-export const autoBars=(recipe,bpm)=>recipe?Math.max(1,Math.ceil(recipe.seconds/barSeconds(bpm)-1e-9)):2;
+export const autoBars=(recipe,bpm)=>recipe?.seconds!=null?Math.max(1,Math.ceil(recipe.seconds/barSeconds(bpm)-1e-9)):2;
 export function shotBars(shot,bpm,recipes){return shot.bars==='auto'?autoBars(recipes.find(r=>r.id===shot.recipeId),bpm):Number(shot.bars);}
 export function promoTotals(shots,bpm,recipes){const bars=shots.reduce((n,s)=>n+shotBars(s,bpm,recipes),0);return {bars,seconds:bars*barSeconds(bpm)};}
 export function promoMissing({shots,track,startBar=1,style,recipes=[]}){
@@ -40,4 +40,5 @@ export function openRecipePicker(host,{recipes,categories,selected,index,onChoos
  overlay.querySelector('[data-close]').onclick=close;overlay.querySelector('[data-cancel]').onclick=close;overlay.querySelector('[data-use]').onclick=()=>{onChoose(choice);close();};overlay.querySelector('[data-auto]').onclick=()=>{choice=null;paint();};overlay.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{category=b.dataset.cat;paint();});overlay.querySelectorAll('[data-recipe]').forEach(b=>{b.onclick=()=>{choice=b.dataset.recipe;paint();};const v=b.querySelector('video');if(v){b.onmouseenter=()=>{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)v.play().catch(()=>{});};b.onmouseleave=()=>{v.pause();v.currentTime=0;};}});}
  overlay.onkeydown=e=>{if(e.key==='Escape'){e.stopPropagation();close();}else if(e.key==='Tab'){const list=[...overlay.querySelectorAll('button:not(:disabled)')];const n=list.indexOf(host.ownerDocument.activeElement);if(e.shiftKey&&n===0){e.preventDefault();list.at(-1).focus();}else if(!e.shiftKey&&n===list.length-1){e.preventDefault();list[0].focus();}}};paint();overlay.querySelector('button').focus();return close;
 }
+export const recipeRewriteBody=recipeId=>({recipeId});
 export function recipeBox(recipe){return `<div class="dv-rcbox" data-design-id="DV-RCBOX"><img src="${esc(recipe.posterUrl)}" alt=""><div><b>镜头配方 · <span data-design-data>${esc(recipe.name)}</span></b><p data-design-data>${esc(recipe.summary)}</p></div><button class="btn" data-change-recipe>换个配方重写</button></div>`;}
