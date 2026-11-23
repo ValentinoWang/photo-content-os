@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 from pathlib import Path
 
@@ -222,6 +223,31 @@ def build_index():
         raise ValueError('expected 124 cards in 10 categories')
     if len({item['id'] for item in entries}) != len(entries):
         raise ValueError('duplicate recipe id')
+    names = json.loads((ROOT / 'names.zh.json').read_text(encoding='utf-8'))
+    ids = {item['id'] for item in entries}
+    if set(names) != ids:
+        raise ValueError(f"recipe names mismatch: missing {sorted(ids - set(names))}, extra {sorted(set(names) - ids)}")
+    bad_durations = []
+    for item in entries:
+        duration = item['duration']
+        seconds = re.search(r'(\d+(?:\.\d+)?)\s*(?:[–~-]\s*\d+(?:\.\d+)?\s*)?s\b', duration)
+        frames = re.search(r'(\d+)\s*f\b', duration)
+        if duration.startswith('n/a'):
+            value = None
+        elif seconds:
+            value = float(seconds.group(1))
+        elif frames:
+            value = int(frames.group(1)) / 30
+        else:
+            bad_durations.append(item['id'])
+            value = None
+        energy = item['energy'].split('（', 1)[0]
+        level = next((x for x in ('高', '中', '低') if x in energy), None)
+        if '峰值' in energy:
+            level = '高'
+        item.update(name=names[item['id']], seconds=value, energy=level)
+    if bad_durations:
+        raise ValueError(f"unparseable recipe durations: {bad_durations}")
     clips = load_clips()["clips"]
     unknown = set(clips) - {item["id"] for item in entries}
     if unknown:

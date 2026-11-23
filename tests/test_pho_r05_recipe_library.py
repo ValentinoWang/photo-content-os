@@ -17,7 +17,7 @@ def test_index_count_fields_and_unique_ids():
     for entry in entries:
         assert set(entry) == {
             "id", "category", "path", "summary", "use", "duration", "energy",
-            "tags", "tags_source", "portrait_fit", "poster", "poster_source", "clip", "demo",
+            "tags", "tags_source", "portrait_fit", "poster", "poster_source", "clip", "demo", "name", "seconds",
         }
         assert (recipe_library.ROOT / entry["path"]).is_file()
         assert entry["portrait_fit"] is True or entry["portrait_fit"] is None
@@ -123,3 +123,19 @@ def test_upstream_demo_sources_resolve_inside_repo():
             if not any(path.is_file() for path in candidates):
                 missing.append(f"{source.relative_to(demos)} -> {target}")
     assert missing == []
+
+
+def test_catalog_has_chinese_names_duration_and_normalized_energy():
+    import json
+    entries = recipe_library.load_index()
+    names = json.loads((recipe_library.ROOT / 'names.zh.json').read_text(encoding='utf-8'))
+    assert set(names) == {entry['id'] for entry in entries}
+    for entry in entries:
+        assert entry['name'] == names[entry['id']]
+        assert re.fullmatch(r'[\u4e00-\u9fff]{1,8}', entry['name'])
+        if entry['duration'].startswith('n/a'):
+            assert entry['seconds'] is None
+        else:
+            assert entry['seconds'] > 0
+        assert entry['energy'] in {'低', '中', '高', None}
+    assert recipe_library.build_index() == entries
