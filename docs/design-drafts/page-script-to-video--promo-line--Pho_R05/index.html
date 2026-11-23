@@ -99,7 +99,8 @@
   数据来自 scripts/direct_video/shot_recipes/index.json；index 加 name、seconds、energy 三个规范字段（124 张都要有，name 由人审过的中文短名）。
 GET  /api/direct/recipes/{id}/poster.jpg   GET /api/direct/recipes/{id}/clip.mp4
 
-GET  /api/review/music  已有；每首加 beat: { status: ready|missing|failed, bars, bpm, sections:[{startBar,endBar,kind:quiet|build|peak}], firstBuildBar }
+GET  /api/review/music  已有；每首加 promoBeat: { status: ready|missing|failed, bars, bpm, sections:[{startBar,endBar,kind:quiet|build|peak}], firstBuildBar, reason? }
+  （实现时定名 promoBeat：beat 已被原有的音乐分析结果占用。歌曲编号用已有的 file_sha256，生成请求的 trackId 填它。）
 
 POST /api/projects/{id}/direct/jobs  在现有字段上加：
   kind: "talk" | "promo"            （缺省 talk，旧任务一律 talk）
