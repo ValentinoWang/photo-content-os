@@ -1589,7 +1589,9 @@ class StudioApplication:
                 if isinstance(exc, DirectVideoError):
                     code = exc.code
                     status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found', 'style_base_not_found', 'draft_not_found', 'recipe_not_found', 'recipe_clip_missing'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready', 'draft_not_ready', 'draft_busy', 'handoff_changed'} else 400
-                    self._json(status, _error(code, '直出任务暂时无法执行，请检查输入或任务状态后重试。'))
+                    payload = _error(code, '直出任务暂时无法执行，请检查输入或任务状态后重试。')
+                    payload['error'].update(exc.details)
+                    self._json(status, payload)
                     return
                 code = getattr(exc, "code", "request_invalid")
                 message = getattr(exc, "message", str(exc) or "请求失败")

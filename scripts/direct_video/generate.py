@@ -32,8 +32,9 @@ SAFE_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}')
 
 
 class DirectVideoError(ValueError):
-    def __init__(self, code: str):
+    def __init__(self, code: str, **details):
         self.code = code
+        self.details = details
         super().__init__(code)
 
 
@@ -98,6 +99,33 @@ def parse_shots(body: dict) -> list[dict]:
         raise DirectVideoError('model_invalid')
     if not isinstance(body.get('style', ''), str) or len(body.get('style', '')) > 4000:
         raise DirectVideoError('style_invalid')
+    kind = body.get('kind', 'talk')
+    if kind not in ('talk', 'promo'):
+        raise DirectVideoError('script_invalid')
+    if kind == 'promo':
+        promo = body.get('promo')
+        if (not isinstance(promo, dict) or 'script' in body or 'storyboard' in body or 'handoff' in body
+                or not isinstance(promo.get('brief'), str) or not 0 < len(promo['brief'].strip()) <= 2000
+                or not isinstance(promo.get('trackId'), str) or not re.fullmatch(r'[a-f0-9]{64}', promo['trackId'])
+                or type(promo.get('startBar')) is not int or promo['startBar'] < 1
+                or type(promo.get('fadeOutSeconds')) not in (int, float) or promo['fadeOutSeconds'] != 1
+                or not isinstance(promo.get('shots'), list) or not 1 <= len(promo['shots']) <= 99):
+            raise DirectVideoError('script_invalid')
+        rows = []
+        for i, shot in enumerate(promo['shots'], 1):
+            if not isinstance(shot, dict):
+                raise DirectVideoError('script_invalid')
+            visual, text, recipe, bars, image = (shot.get(k) for k in ('visual', 'text', 'recipeId', 'bars', 'imageId'))
+            if (not isinstance(visual, str) or not 0 < len(visual.strip()) <= 2000
+                    or (text is not None and (not isinstance(text, str) or len(text) > 2000))
+                    or (recipe is not None and (not isinstance(recipe, str) or not SAFE_ID.fullmatch(recipe)))
+                    or not (bars == 'auto' or type(bars) is int and 1 <= bars <= 8)
+                    or (image is not None and (not isinstance(image, str) or not re.fullmatch(r'[a-f0-9]{32}', image)))):
+                raise DirectVideoError('script_invalid')
+            rows.append({'shotId': f'{i:02d}', 'dialogue': visual.strip(), 'visual': visual.strip(),
+                         'subtitle': None, 'camera': None, 'audio': None, 'text': text,
+                         'recipeId': recipe, 'bars': bars, 'imageId': image})
+        return rows
     if ('script' in body) == ('storyboard' in body):
         raise DirectVideoError('script_invalid')
     if 'script' in body:
@@ -312,6 +340,41 @@ class Generator(StyleMixin, RevisionMixin):
 
     def create(self, project_id: str, body: dict, *, background=True, draft=False, narration_path=None) -> dict:
         rows = parse_shots(body)
+        kind = body.get('kind', 'talk')
+        promo = None
+        image_sources = {}
+        if kind == 'promo':
+            if not isinstance(project_id, str) or not SAFE_ID.fullmatch(project_id):
+                raise DirectVideoError('job_not_found')
+            if draft or narration_path is not None:
+                raise DirectVideoError('script_invalid')
+            from studio.music_analysis import BeatMapUnavailable, load_beat_map
+            from direct_video import recipe_library
+            try:
+                beat = load_beat_map(body['promo']['trackId'])
+            except BeatMapUnavailable as exc:
+                raise DirectVideoError('beat_map_unavailable') from exc
+            need = sum(1 if row['bars'] == 'auto' else row['bars'] for row in rows)
+            left = max(0, len(beat['downbeats']) - body['promo']['startBar'])
+            if need > left:
+                raise DirectVideoError('track_too_short', needBars=need, leftBars=left)
+            for row in rows:
+                if row['recipeId'] is not None:
+                    try:
+                        entry = recipe_library.get(row['recipeId'])
+                    except KeyError as exc:
+                        raise DirectVideoError('recipe_not_found') from exc
+                    row['recipe'] = {'id': entry['id'], 'name': entry['name'], 'chosenBy': 'user'}
+                else:
+                    row['recipe'] = None
+                if row['imageId']:
+                    source = self.root.parent / 'direct-promo-images' / project_id / row['imageId']
+                    image_root = (self.root.parent / 'direct-promo-images' / project_id).resolve()
+                    if not source.resolve().is_relative_to(image_root) or not source.is_file() or source.is_symlink():
+                        raise DirectVideoError('promo_image_invalid')
+                    image_sources[row['shotId']] = source
+            promo = copy.deepcopy(body['promo'])
+            promo.update(trackTitle=beat['title'], bpm=beat['bpm'], endBar=None, seconds=None)
         base = self.resolve_style_base(body)
         if base is None and not body.get('style', '').strip():
             raise DirectVideoError('style_required')
@@ -329,6 +392,13 @@ class Generator(StyleMixin, RevisionMixin):
                'narration': {'status': 'none', 'durationSeconds': None},
                'output': {'status': 'none', 'composedAt': None, 'kind': 'silent', 'durationSeconds': None, 'frames': None, 'revision': 0,
                           'checks': {'playable': 'unknown', 'avOffsetSeconds': None, 'blackFrames': None}}}
+        if kind == 'promo':
+            job.update(kind=kind, promo=promo, width=1920, height=1080)
+            job['output']['kind'] = 'music'
+            for sid, source in image_sources.items():
+                target = root / 'images' / sid
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source, target)
         job['handoff'] = copy.deepcopy(body.get('handoff'))
         if narration_path is not None:
             with narration_path.open('rb') as stream:

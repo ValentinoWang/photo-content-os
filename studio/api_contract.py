@@ -157,6 +157,9 @@ def _direct_job_schema() -> dict[str, Any]:
     shot.update(SHOT_PROPERTIES)
     shot.update({key: {'type': ['string', 'null']} for key in direct_style_contract.COLUMN_FIELDS})
     shot['fromDraft'] = {'type': 'boolean'}
+    shot_required = list(shot)
+    shot.update({'recipe': {'type': ['object', 'null'], 'properties': {'id': {'type': 'string'}, 'name': {'type': 'string'}, 'chosenBy': {'enum': ['user', 'opus']}}},
+                 'bars': {'anyOf': [{'const': 'auto'}, {'type': 'integer', 'minimum': 1, 'maximum': 8}]}, 'text': text})
     design = {'status': {'enum': ['pending', 'writing', 'done', 'failed']},
               'palette': {'type': ['object', 'null'], 'required': ['background', 'primary', 'accent', 'neutral'],
                           'properties': {k: {'type': 'string', 'pattern': '^#[0-9a-fA-F]{6}$'}
@@ -167,7 +170,7 @@ def _direct_job_schema() -> dict[str, Any]:
     output = {'status': {'enum': ['none', 'composing', 'ready', 'failed']},
               'composedAt': {'type': ['string', 'null'], 'format': 'date-time',
                              'description': 'Latest successful composition time. Null before composition, during composition, after failure or shot rewrite, or for older jobs without a recorded time. Narration upload preserves it until recomposition.'},
-              'kind': {'enum': ['silent', 'narrated']}, 'durationSeconds': seconds,
+              'kind': {'enum': ['silent', 'narrated', 'music']}, 'durationSeconds': seconds,
               'frames': {'type': ['integer', 'null']}, 'revision': {'type': 'integer', 'minimum': 0},
               'checks': {'type': 'object', 'required': ['playable', 'avOffsetSeconds', 'blackFrames'], 'properties': {
                   'playable': {'enum': ['pass', 'fail', 'unknown']}, 'avOffsetSeconds': seconds,
@@ -177,13 +180,16 @@ def _direct_job_schema() -> dict[str, Any]:
                   'status': {'enum': ['designing', 'writing', 'rendering', 'ready', 'composing', 'done', 'failed']},
                   'createdAt': {'type': 'string'}, 'updatedAt': {'type': 'string'}, 'failureCode': text,
                   'design': {'type': 'object', 'required': list(design), 'properties': design},
-                  'shots': {'type': 'array', 'items': {'type': 'object', 'required': list(shot), 'properties': shot}},
+                  'shots': {'type': 'array', 'items': {'type': 'object', 'required': shot_required, 'properties': shot}},
                   'narration': {'type': 'object', 'required': ['status', 'durationSeconds'], 'properties': {
                       'status': {'enum': ['none', 'aligning', 'ready', 'invalid']}, 'durationSeconds': seconds}},
                   'output': {'type': 'object', 'required': list(output), 'properties': output}}
+    properties['kind'] = {'enum': ['talk', 'promo']}
+    required = list(properties)
+    properties['promo'] = {'type': 'object', 'properties': {'trackId': {'type': 'string'}, 'trackTitle': {'type': 'string'}, 'bpm': seconds, 'startBar': {'type': 'integer'}, 'endBar': {'type': ['integer', 'null']}, 'seconds': seconds}}
     properties['handoff'] = {'anyOf': [direct_handoff_contract.HANDOFF_REF, {'type': 'null'}]}
     properties['handoffNewer'] = {'type': 'boolean'}
-    return {'type': 'object', 'required': list(properties), 'properties': properties, 'additionalProperties': False}
+    return {'type': 'object', 'required': required + ['handoff', 'handoffNewer'], 'properties': properties, 'additionalProperties': False}
 
 
 def _operation(spec: dict[str, object]) -> dict[str, Any]:
@@ -234,8 +240,8 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
                                     'firstBuildBar, and reason on failure.')
     if spec['operation_id'] == 'createDirectJob':
         operation['requestBody']['content']['application/json']['schema'] = {
-            'type': 'object', 'oneOf': [{'required': ['script']}, {'required': ['storyboard']}],
-            'properties': {'script': {'type': 'string', 'maxLength': 20000},
+            'type': 'object', 'oneOf': [{'required': ['script']}, {'required': ['storyboard']}, {'required': ['kind', 'promo'], 'properties': {'kind': {'const': 'promo'}}}],
+            'properties': {'kind': {'enum': ['talk', 'promo']}, 'promo': {'type': 'object', 'required': ['brief', 'trackId', 'startBar', 'fadeOutSeconds', 'shots'], 'properties': {'brief': {'type': 'string'}, 'trackId': {'type': 'string'}, 'startBar': {'type': 'integer', 'minimum': 1}, 'fadeOutSeconds': {'const': 1}, 'shots': {'type': 'array', 'items': {'type': 'object', 'required': ['visual', 'recipeId', 'bars'], 'properties': {'visual': {'type': 'string'}, 'text': {'type': 'string'}, 'recipeId': {'type': ['string', 'null']}, 'bars': {'anyOf': [{'const': 'auto'}, {'type': 'integer', 'minimum': 1, 'maximum': 8}]}, 'imageId': {'type': 'string'}}}}}}, 'script': {'type': 'string', 'maxLength': 20000},
                            'storyboard': {'type': 'object', 'required': ['shots'], 'properties': {'shots': {
                                'type': 'array', 'minItems': 1, 'maxItems': 99, 'items': {
                                    'type': 'object', 'required': ['shotId', 'dialogue'], 'properties': {

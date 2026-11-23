@@ -40,7 +40,9 @@ def atomic_bytes(path: Path, data: bytes) -> None:
 
 def manifest(root: Path, shots: list[dict]) -> dict:
     font = os.environ.get('DIRECT_VIDEO_FONT') or str(Path('/System/Library/Fonts/STHeiti Medium.ttc'))
-    value = {'width': 1080, 'height': 1920, 'fps': FPS, 'assets_dir': str(root / 'shots'),
+    job_path = root / 'job.json'
+    job = json.loads(job_path.read_text()) if job_path.exists() else {}
+    value = {'width': job.get('width', 1080), 'height': job.get('height', 1920), 'fps': FPS, 'assets_dir': str(root / 'shots'),
              'fonts': [{'path': font}], 'shots': []}
     browser = os.environ.get('VIDEO_RENDER_BROWSER') or os.environ.get('VIDEO_RENDER_TEST_BROWSER')
     if browser:

@@ -32,9 +32,15 @@ def projection(job: dict | None, *, current_handoff=None) -> dict | None:
     if job is None:
         return None
     result = {k: copy.deepcopy(job[k]) for k in JOB_FIELDS}
+    result['kind'] = job.get('kind', 'talk')
+    if result['kind'] == 'promo':
+        result['promo'] = {k: copy.deepcopy(job['promo'].get(k)) for k in ('trackId', 'trackTitle', 'bpm', 'startBar', 'endBar', 'seconds')}
     result['handoff'] = copy.deepcopy(job.get('handoff'))
     result['handoffNewer'] = newer_handoff(job, current_handoff)
     result['shots'] = [{k: copy.deepcopy(shot.get(k, False if k == 'fromDraft' else None) if k in ('writingStartedAt', 'visual', 'subtitle', 'camera', 'audio', 'fromDraft') else shot[k]) for k in SHOT_FIELDS} for shot in job['shots']]
+    if result['kind'] == 'promo':
+        for public, shot in zip(result['shots'], job['shots']):
+            public.update({k: copy.deepcopy(shot.get(k)) for k in ('recipe', 'bars', 'text')})
     result['design'] = {k: result['design'].get(k) for k in ('status', 'palette', 'typeScale', 'motionRules', 'banned', 'motionSummary', 'bannedShort', 'source')}
     # Persisted private diagnostics must not become fields through a future
     # renderer change. Projection recursively strips unknown nested fields.
