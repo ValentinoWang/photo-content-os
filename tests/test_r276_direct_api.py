@@ -99,11 +99,10 @@ def test_promo_recipe_catalog_and_image_upload(api):
     png = b'\x89PNG\r\n\x1a\n' + b'\0' * 32
     assert request(url, 'POST', png, {**csrf, 'Content-Type': 'image/png'})[2]['imageId']
     assert request(url, 'POST', b'fake.jpg', {**csrf, 'Content-Type': 'image/jpeg'})[2]['error']['code'] == 'promo_image_invalid'
-    from studio.direct_recipes import upload, MAX_IMAGE_BYTES
-    from direct_video.generate import DirectVideoError
-    import io
-    with pytest.raises(DirectVideoError, match='promo_image_invalid'):
-        upload(app.store, pid, io.BytesIO(), MAX_IMAGE_BYTES + 1, 'image/png')
+    # 超大：只按 Content-Length 拒绝、不读正文；声明 20 MB+1、实际只发文件头，客户端不会因服务端提前回包而断管。
+    oversized = {**csrf, 'Content-Type': 'image/png', 'Content-Length': str(20 * 1024 * 1024 + 1)}
+    status, _, data = request(url, 'POST', png[:16], oversized)
+    assert status == 400 and data['error']['code'] == 'promo_image_invalid'
 
 
 def test_code_posters_output_range_and_missing(api):
