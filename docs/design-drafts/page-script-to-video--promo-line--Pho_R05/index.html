@@ -37,10 +37,9 @@
 <details class="impl" open><summary><h2 class="sec" style="display:inline">4 交互规则</h2></summary>
 <ol class="lead">
 <li><b>做哪种</b>：只在还没生成或点了「改分镜脚本」时出现。切到「宣传片」时，镜头表、配乐、风格各自保留上次填的；风格还没选过的，默认选风格库里的「产品界面」。已经生成过的作品，点「改分镜脚本」进来能切换，生成后是一条新的直出任务，原来那条留在本机。</li>
-<li><b>镜头表</b>：「要表现什么」必填，写了才算一镜；在格子里按回车拆成两镜，开头按退格并回上一镜（和口播的台词格子一样）。粘贴多行文字，一行变一镜。「屏幕上的字」「截图」可以空着。</li>
+<li><b>镜头表</b>：「要表现什么」必填，写了才算一镜；在格子里按回车拆成两镜，开头按退格并回上一镜（和口播的台词格子一样）。粘贴多行文字，一行变一镜。「屏幕上的字」可以空着。</li>
 <li><b>镜头配方</b>：每格默认「Opus 挑」。点格子打开选配方弹层：左边按类别筛，右边每张卡鼠标停留时播放样片；选中后点「用这个」，格子显示配方名，旁边带「你选的」。弹层里点「让 Opus 挑」恢复默认。Esc 或点「取消」关闭，不改格子。生成以后 Opus 挑的格子显示「Opus 选的」。</li>
 <li><b>小节</b>：默认「自动」，按这一镜动画的长度取够用的最少整小节；点 − / + 改成固定 1–8 小节，减到 1 以下回到「自动」。固定小节比动画短时，镜头卡上出现「有提醒」，提醒写「动画 X 秒，N 小节只有 Y 秒，结尾会被切掉」。</li>
-<li><b>截图</b>：点「加截图」选一张 PNG 或 JPG（不超过 20 MB），Opus 写这一镜时把它当画面里的界面图用；再点一次可以换，鼠标停留出现「去掉」。</li>
 <li><b>配乐</b>：只列音乐库里节拍已分析好的歌可以选；还没分析好的灰掉，右边写原因。点歌名左边的播放键试听（同一时刻只放一首）。选中后下面出现小节条：颜色是这首歌的安静、推进、高潮，深色横条是这几镜会占的小节；「从第几小节开始」点 − / + 改，默认是第一段「推进」的开头。镜头表改了，深色横条和总时长跟着变。</li>
 <li><b>生成条</b>：缺什么按顺序只写一条：镜头表空 → 没选配乐 → 配乐不够长 → 风格没定。都齐了写这次的摘要，「生成」可以点。</li>
 <li><b>生成以后</b>：步骤条、进度、逐镜重写、画面问题记录、合成都和口播一样；镜头卡是横版，三张一行。点一张卡，下面的详情多一块「镜头配方」，可以「换个配方重写」，打开同一个选配方弹层，选好后只重写、只重渲这一镜。</li>
@@ -81,7 +80,7 @@
 <tr><td>做哪种</td><td>做哪种 ｜ 口播视频 ｜ 竖屏 · 按配音 ｜ 宣传片 ｜ 横屏 · 按音乐 ｜ 生成以后不能改，要换就点「改分镜脚本」</td></tr>
 <tr><td>页头</td><td>把产品卖点直接做成宣传片 ｜ 一行写一镜要表现什么。Opus 给每一镜挑一个镜头配方、写一段动画代码，按配乐的小节逐帧渲染，再合成一条横屏宣传片。不用素材，也不用剪辑软件。</td></tr>
 <tr><td>步骤条</td><td>镜头表 ｜ 还没写 ｜ N 镜 · M 小节 · 约 m:ss ｜ 等镜头表</td></tr>
-<tr><td>镜头表</td><td>镜头表 ｜ 每镜写这一镜要表现什么；镜头配方和小节不填，由 Opus 定。 ｜ 产品一句话 ｜ 例：给独立开发者的上线检查清单，上线前 20 项一次查完 ｜ 镜头 ｜ 要表现什么 ｜ 屏幕上的字 ｜ 可不填 ｜ 镜头配方 ｜ 小节 ｜ 截图 ｜ Opus 挑 ｜ 你选的 ｜ Opus 选的 ｜ 自动 ｜ 加截图 ｜ 去掉 ｜ 一行写一镜要表现什么，例如：（三行示例） ｜ 还没有镜头。可以一行一镜粘贴进来，或导入镜头文件。 ｜ 导入镜头文件 ｜ 格子里按回车拆成两镜，开头按退格并到上一镜 · 时长按配乐小节</td></tr>
+<tr><td>镜头表</td><td>镜头表 ｜ 每镜写这一镜要表现什么；镜头配方和小节不填，由 Opus 定。 ｜ 产品一句话 ｜ 例：给独立开发者的上线检查清单，上线前 20 项一次查完 ｜ 镜头 ｜ 要表现什么 ｜ 屏幕上的字 ｜ 可不填 ｜ 镜头配方 ｜ 小节 ｜ Opus 挑 ｜ 你选的 ｜ Opus 选的 ｜ 自动 ｜ 一行写一镜要表现什么，例如：（三行示例） ｜ 还没有镜头。可以一行一镜粘贴进来，或导入镜头文件。 ｜ 导入镜头文件 ｜ 格子里按回车拆成两镜，开头按退格并到上一镜 · 时长按配乐小节</td></tr>
 <tr><td>选配方</td><td>给第 NN 镜选镜头配方 ｜ 124 张，来自开源项目 video-shotcraft（Apache-2.0）。鼠标停在卡上看样片。 ｜ 关闭 ｜ 全部 ｜ 开场 ｜ 文字 ｜ 界面入场 ｜ 转场 ｜ 节奏 ｜ 数据 ｜ 特效 ｜ 交互 ｜ 运镜 ｜ 收尾 ｜ 让 Opus 挑 ｜ 按这一镜要表现什么，从 124 张里挑一张 ｜ 约 N 秒 ｜ 能量低 / 中 / 高 ｜ 适用： ｜ 用这个 ｜ 取消</td></tr>
 <tr><td>配乐</td><td>配乐 ｜ 从音乐库选一首。每一镜按整小节算长短，切镜落在小节线上。 ｜ 节拍还没分析好 ｜ 从第 N 小节开始 ｜ 第 A–B 小节 · m:ss ｜ 安静 ｜ 推进 ｜ 高潮 ｜ 这几镜 ｜ 结尾淡出 1 秒 ｜ 音乐库里还没有歌。宣传片按音乐的小节排镜头，先去音乐库导入一首。 ｜ 去音乐库</td></tr>
 <tr><td>点「生成」以后</td><td>每一镜按镜头配方写一段动画代码，三镜同时写；写完自查，不过关的自动重写一次 ｜ 按配乐的小节排好每一镜，写好一镜就在本机逐帧渲染一镜</td></tr>
@@ -105,9 +104,8 @@ GET  /api/review/music  已有；每首加 promoBeat: { status: ready|missing|fa
 POST /api/projects/{id}/direct/jobs  在现有字段上加：
   kind: "talk" | "promo"            （缺省 talk，旧任务一律 talk）
   promo: { brief, trackId, startBar, fadeOutSeconds: 1,
-           shots: [{ visual, text?, recipeId|null, bars: "auto"|1..8, imageId? }] }
+           shots: [{ visual, text?, recipeId|null, bars: "auto"|1..8 }] }
   promo 时 storyboard 由 promo.shots 生成；width 1920、height 1080；不收配音。
-POST /api/projects/{id}/direct/promo-images  (image/png|image/jpeg，≤20 MB) → { imageId }
 
 job 投影加：kind；promo: { trackId, trackTitle, bpm, startBar, endBar, seconds }；
   shots[].recipe: { id, name, chosenBy: "user"|"opus" }；shots[].bars；shots[].text
@@ -118,7 +116,6 @@ POST .../shots/{sid}/rewrite  body 可带 recipeId（换配方重写）
   beat_map_unavailable  配乐的节拍图读不到
   track_too_short       配乐不够长（带 needBars、leftBars）
   recipe_not_found      配方读不到
-  promo_image_invalid   截图不是 PNG/JPG 或超过 20 MB
 合成：走 scripts/direct_video/promo_plan.py（排期 + 预混一条 WAV）→ 现有 multi_shot.py + compose.py。</pre></details>
 
 <details class="impl"><summary><h2 class="sec" style="display:inline">9 先写的测试（现在的代码跑不过）</h2></summary>
@@ -161,7 +158,7 @@ const autoBars=id=>Math.max(1,Math.ceil(R[id].sec/BAR-1e-9));
 const SHOTS_A=[
  {v:'开场：产品名和一句话定位',t:'清单鸭\n上线前，先过一遍',r:'spotlight-hero-card',by:'opus',bars:'auto'},
  {v:'痛点：上线当晚总漏一步',t:'又忘了改回调地址？',r:'blur-slide',by:'user',bars:2},
- {v:'界面：清单一项项自己长出来',t:'',r:'list-reveal',by:'opus',bars:'auto',img:'list-reveal.jpg'},
+ {v:'界面：清单一项项自己长出来',t:'',r:'list-reveal',by:'opus',bars:'auto'},
  {v:'亮点：20 项检查跑完，进度走满',t:'20 项 · 3 分钟',r:'gauge-readout-moves',by:'opus',bars:'auto'},
  {v:'对比：手动对表格，和清单鸭自动打钩',t:'以前\n现在',r:'before-after-slider-scrub',by:'opus',bars:'auto'},
  {v:'收尾：字标和一句话',t:'清单鸭 · 先过一遍再上线',r:'logo-shrink-wordmark-lockup',by:'opus',bars:'auto'},
@@ -204,11 +201,10 @@ function barsCell(s){
   const auto=s.bars==='auto',n=barsOf(s);
   return `<div class="dv-bars" data-design-id="DV-BARS"><button aria-label="少一小节">−</button><span data-design-data>${auto?'自动':n}</span><button aria-label="多一小节">+</button></div><span class="dv-bars-note" data-design-data>${n} 小节 · ${(n*BAR).toFixed(1)} 秒</span>`;
 }
-function pic(s){return s.img?`<button class="dv-shotpic has" aria-label="换截图"><img src="${POST+s.img}" alt=""></button>`:'<button class="dv-shotpic">加截图</button>';}
 const cell=(v,ph,main)=>`<span class="cell${main?' c-main':''}${v?'':' ph'}">${v?esc(v):ph}</span>`;
 function promoTable(rows,{after=false}={}){
   const n=rows.length,b=totalBars(rows);
-  const body=n?`<div class="dv-sb-wrap"><table class="dv-pt" data-design-id="DV-PROMO-TABLE"><colgroup><col class="c-t"><col><col><col class="c-r"><col class="c-b"><col class="c-x"></colgroup><thead><tr><th>镜头</th><th>要表现什么</th><th>屏幕上的字<small>可不填</small></th><th>镜头配方</th><th>小节</th><th>截图<small>可不填</small></th></tr></thead><tbody>${rows.map((s,i)=>{let start=rows.slice(0,i).reduce((t,r)=>t+barsOf(r),0)*BAR;return `<tr data-design-id="DV-PROMO-ROW"><td class="sb-t"><b data-design-data>${String(i+1).padStart(2,'0')}</b><span data-design-data>${mmss(start)}–${mmss(start+barsOf(s)*BAR)}</span></td><td>${cell(s.v,'要表现什么',true)}</td><td>${cell(s.t,'屏幕上的字')}</td><td>${rc(s,after)}</td><td>${barsCell(s)}</td><td>${pic(s)}</td></tr>`;}).join('')}</tbody></table></div>`
+  const body=n?`<div class="dv-sb-wrap"><table class="dv-pt" data-design-id="DV-PROMO-TABLE"><colgroup><col class="c-t"><col><col><col class="c-r"><col class="c-b"></colgroup><thead><tr><th>镜头</th><th>要表现什么</th><th>屏幕上的字<small>可不填</small></th><th>镜头配方</th><th>小节</th></tr></thead><tbody>${rows.map((s,i)=>{let start=rows.slice(0,i).reduce((t,r)=>t+barsOf(r),0)*BAR;return `<tr data-design-id="DV-PROMO-ROW"><td class="sb-t"><b data-design-data>${String(i+1).padStart(2,'0')}</b><span data-design-data>${mmss(start)}–${mmss(start+barsOf(s)*BAR)}</span></td><td>${cell(s.v,'要表现什么',true)}</td><td>${cell(s.t,'屏幕上的字')}</td><td>${rc(s,after)}</td><td>${barsCell(s)}</td></tr>`;}).join('')}</tbody></table></div>`
     :`<div class="dv-sb-empty"><textarea aria-label="要表现什么" placeholder="一行写一镜要表现什么，例如：&#10;开场：产品名和一句话定位&#10;痛点：上线当晚总漏一步&#10;界面：清单一项项自己长出来"></textarea></div>`;
   return `<section class="dv-form" data-design-id="DV-PROMO"><header><div><h3>镜头表</h3><span class="dv-script-sub" data-max-lines="1">每镜写这一镜要表现什么；镜头配方和小节不填，由 Opus 定。</span></div></header><div class="dv-brief" data-design-id="DV-BRIEF"><label for="brief">产品一句话</label><input id="brief" type="text" value="${n?esc(rows===SHOTS_B?'记跑步里程的小程序，一周跑量一眼看清':'给独立开发者的上线检查清单，上线前 20 项一次查完'):''}" placeholder="例：给独立开发者的上线检查清单，上线前 20 项一次查完"></div>${body}<footer><p aria-live="polite">${n?'格子里按回车拆成两镜，开头按退格并到上一镜 · 时长按配乐小节':'还没有镜头。可以一行一镜粘贴进来，或导入镜头文件。'}</p><div class="actions"><button class="btn">导入镜头文件</button></div></footer></section>`;
 }
@@ -264,7 +260,7 @@ function oldOutput(){
 const W=(html,cls='zoom75')=>`<div class="dstage"><div class="${cls}">${html}</div></div>`;
 const CMPS=[
  ['先选做哪种','脚本直出只有一种：竖屏口播，按台词和配音。',W(tabs+steps('talk','start',null)),'页签下面加一行「做哪种」：口播视频（竖屏 · 按配音）｜宣传片（横屏 · 按音乐）。选宣传片后，步骤条第一步叫「镜头表」，页头换成宣传片的说明。',W(tabs+kindSeg('promo')+steps('promo','start',SHOTS_A)),'变体：.seg 加第二行小字'],
- ['分镜脚本换成镜头表','分镜脚本要写台词，宣传片没有台词。',W(talkScript()),'一镜一行：要表现什么（必填）｜屏幕上的字｜镜头配方｜小节｜截图。上面一格「产品一句话」，Opus 写每一镜时都看它。配方、小节不填就是「Opus 挑」「自动」；第 02 镜是自己选了配方、固定 2 小节的样子，第 03 镜放了一张界面截图。',W(promoTable(SHOTS_A),'zoom6'),'变体：分镜脚本表换列；沿用：输入框'],
+ ['分镜脚本换成镜头表','分镜脚本要写台词，宣传片没有台词。',W(talkScript()),'一镜一行：要表现什么（必填）｜屏幕上的字｜镜头配方｜小节。上面一格「产品一句话」，Opus 写每一镜时都看它。配方、小节不填就是「Opus 挑」「自动」；第 02 镜是自己选了配方、固定 2 小节的样子。',W(promoTable(SHOTS_A),'zoom6'),'变体：分镜脚本表换列；沿用：输入框'],
  ['选镜头配方','现在没有。',`<p>124 张配方卡已经在仓库里（<code>scripts/direct_video/shot_recipes/</code>），页面上看不到、选不了。</p>`,'点镜头表里的配方格子，弹出这个面板。左边按类别筛，右边每张卡有样片封面、一句话、时长和能量；最上面一张是「让 Opus 挑」。选中后底部写这张适用于什么，点「用这个」。',`<div class="modal-bg"><div class="zoom6">${picker()}</div></div>`,'新组件：选配方弹层；变体：风格卡改横版'],
  ['配音换成配乐','右下角是配音卡；宣传片不用配音。',W(`<div style="max-width:560px">${voice()}</div>`),'换成配乐卡：只列节拍已分析好的歌，没分析好的灰掉并写原因。选中一首后出现小节条：颜色是这首歌的安静、推进、高潮，深色横条是这几镜会占的小节，从第几小节开始可以调，默认是第一段「推进」的开头。',W(`<div style="max-width:560px">${music('pick',SHOTS_A)}</div>`),'变体：配音卡放单选列表；令牌：音乐库段落色'],
  ['镜头卡改横版','竖版卡七张一行，卡里是台词。',W(oldFilm()),'横版卡三张一行。卡里写这一镜要表现什么、用的配方、几小节几秒；固定小节比动画短的那一镜带「有提醒」。点一张卡，详情里多一块「镜头配方」，可以换个配方重写这一镜。',W(film(SHOTS_A.slice(0,3))+rcbox(SHOTS_A[1]),'zoom6'),'变体：.dv-film--wide；新块：配方详情'],
@@ -289,7 +285,7 @@ const T='--panel、--rule、--ink-3、--ac、--ac-bg';
 const COMP={
  promoKind:{tier:'variant',base:'segmented',type:'数据展示/分段控制',ref:'Segmented（每项两行字）',reason:'现有 .seg 只放一行字，口播和宣传片要靠第二行「横屏 · 按音乐」一眼分开',params:'两项；主字 + 第二行小字；生成后整组禁用',states:'默认、禁用',skip:'无',tokens:'--ac-bg、--ink、--ink-3、--rule-2'},
  flowSteps:{tier:'reuse'},'screen-head':{tier:'reuse'},attention:{tier:'reuse'},actions:{tier:'reuse'},facts:{tier:'reuse'},
- promoShotTable:{tier:'new',type:'数据展示/表格',ref:'Table（单元格直接编辑）',reason:'口播的分镜脚本表不在组件清单，列也不同：要放配方小卡、小节步进和截图格子',vr:'清单里没有表格类组件可以做变体',params:'六列：镜头、要表现什么、屏幕上的字、镜头配方、小节、截图；最小宽 1080，窄了横向滚动',states:'默认、空、部分数据',skip:'加载中：镜头表在本页编辑，不从接口异步取；错误：表格不取数，缺项写在生成条',tokens:'--panel、--panel-2、--rule、--ink-3、--f-mo'},
+ promoShotTable:{tier:'new',type:'数据展示/表格',ref:'Table（单元格直接编辑）',reason:'口播的分镜脚本表不在组件清单，列也不同：要放配方小卡和小节步进',vr:'清单里没有表格类组件可以做变体',params:'五列：镜头、要表现什么、屏幕上的字、镜头配方、小节；最小宽 1080，窄了横向滚动',states:'默认、空、部分数据',skip:'加载中：镜头表在本页编辑，不从接口异步取；错误：表格不取数，缺项写在生成条',tokens:'--panel、--panel-2、--rule、--ink-3、--f-mo'},
  promoBrief:{tier:'variant',base:'dialog-form',type:'数据录入/输入框',ref:'Input（左侧标签）',reason:'dialog-form 是弹窗里的多行表单，这里只要一行带标签的输入框',params:'标签 96 宽 + 单行输入；可不填',states:'默认、聚焦',skip:'禁用：生成后不再显示这一格；错误：可不填，没有错误态',tokens:'--panel-2、--rule-2、--ink'},
  recipeChip:{tier:'variant',base:'card',type:'数据展示/卡片',ref:'Card（小号横版封面）',reason:'风格卡是竖图；配方样片是 16:9，还要标「Opus 挑 / 你选的」',params:'选了配方：72 宽 16:9 封面 + 名称 + 来源·类别；没选：虚线框「Opus 挑」',states:'默认',skip:'加载中：封面是本机静态图，随页面出来',tokens:T},
  barsStepper:{tier:'new',type:'数据录入/数字输入',ref:'InputNumber（只用 − / + 按钮）',reason:'清单里没有数字输入；小节只许 自动 或 1–8 的整数，用按钮比键入不容易出错',vr:'清单里没有数字输入类组件',params:'自动 / 1–8；减到 1 以下回到自动；下面一行写「N 小节 · S 秒」',states:'默认、聚焦、禁用',skip:'错误：只能点 − / +，不能键入，不会出现非法值',tokens:'--rule-2、--ink、--f-mo'},
