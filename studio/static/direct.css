@@ -248,3 +248,7 @@
 .dv-rcbox img{width:128px;aspect-ratio:16/9;object-fit:cover;border-radius:4px}
 .dv-rcbox b{font:500 13px var(--f-tx)}
 .dv-rcbox p{font:12px/1.6 var(--f-tx);color:var(--ink-3)}
+
+/* 宣传片输入与节拍格遵循镜头表内容尺寸。 */
+.dv-form .dv-pt textarea{min-height:44px;height:auto;resize:none;border:1px solid transparent;border-radius:6px;padding:4px 6px;background:transparent;font:13px/1.65 var(--f-tx);overflow:hidden}
+.dv-mbars{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
