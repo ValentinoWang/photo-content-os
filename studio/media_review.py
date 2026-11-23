@@ -21,7 +21,7 @@ if str(SCRIPTS) not in sys.path:
 
 from studio.project_store import ProjectStoreError, _atomic, _thread_lock
 from runtime_paths import local_media_root
-from music_library.library import MusicLibrary, MusicError
+from music_library.library import MusicLibrary
 
 SCENE_NAMES = json.loads((Path(__file__).parent / 'static/scene-names.json').read_text())
 STATES = ('selected', 'usable', 'unused', 'rejected')
@@ -40,7 +40,11 @@ def promo_beat(track_id, media_root):
         return result
     sections = []
     for index, start in enumerate(beat['downbeats'][:-1], 1):
-        source = next(section for section in beat['sections'] if section['start'] <= start < section['end'])
+        source = next((section for section in beat['sections'] if section['start'] <= start < section['end']), None)
+        if source is None:
+            # 节拍图的段落没盖住这一小节：只把这一首标成读取失败，不拖垮整个音乐库接口。
+            return {'status': 'failed', 'bars': None, 'bpm': None, 'sections': [], 'firstBuildBar': None,
+                    'reason': 'sections_incomplete'}
         if sections and sections[-1]['kind'] == source['kind']:
             sections[-1]['endBar'] = index
         else:
@@ -324,11 +328,7 @@ class MediaReview:
         from studio.music_analysis import registry, read_analysis, derive, beat_metrics, failure
         reg = registry() if reg is None else reg
         def analysis(track):
-            try:
-                data = read_analysis(self.music.root / track['file_sha256'], track)
-            except MusicError:
-                return {'beat': failure('result_unreadable'), 'tags': failure('result_unreadable'),
-                        'promoBeat': promo_beat(track['file_sha256'], self.music.root.parent.parent)}
+            data = read_analysis(self.music.root / track['file_sha256'], track)
             projected = {}
             for part in ('beat', 'tags'):
                 value = dict(data[part]) if data else failure('analysis_missing')

@@ -70,6 +70,10 @@ def test_promo_beat_projection_preserves_missing_and_failure(monkeypatch):
     monkeypatch.setattr('studio.music_analysis.load_beat_map', unavailable('result_unreadable'))
     failed = promo_beat('a' * 64, Path('/tmp'))
     assert failed['status'] == 'failed' and failed['reason'] == 'result_unreadable'
+    # 段落没盖住某一小节：这一首标失败，不抛 StopIteration 拖垮整个音乐库接口。
+    gap = {**beat_map, 'sections': [{'start': 0., 'end': 2., 'kind': 'quiet'}]}
+    monkeypatch.setattr('studio.music_analysis.load_beat_map', lambda *a, **kw: gap)
+    assert promo_beat('a' * 64, Path('/tmp'))['reason'] == 'sections_incomplete'
 
 FIXTURES = Path(__file__).parent / 'fixtures/music-library'
 
