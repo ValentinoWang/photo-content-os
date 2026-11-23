@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>脚本直出 · 加宣传片（横屏、按音乐）</title>
+<!-- 产品现行样式表原样引用（不复制、不另定义令牌）；新块只用 promo.css，实现时并进 studio/static/direct.css。 -->
+<link rel="stylesheet" href="../../../studio/static/styles.css">
+<link rel="stylesheet" href="../../../studio/static/workflow.css">
+<link rel="stylesheet" href="../../../studio/static/review.css">
+<link rel="stylesheet" href="../../../studio/static/direct.css">
+<link rel="stylesheet" href="../../../studio/static/direct-shot-detail.css">
+<link rel="stylesheet" href="../../../studio/static/direct-rescript.css">
+<link rel="stylesheet" href="promo.css">
+<link rel="stylesheet" href="draft.css">
+</head>
+<body>
+<div class="doc">
+<h1>脚本直出加一种「宣传片」：横屏、按音乐出片</h1>
+<p class="lead">需求卡 Pho_R05 第 5 段。现在的脚本直出只能做竖屏口播：按台词写镜头、按配音排时长。宣传片沿用同一套流程（Opus 写每一镜 → 本机逐帧渲染 → 合成），只换三样：输入从「台词」换成「这一镜要表现什么」，每一镜挑一个镜头配方（124 张，来自 video-shotcraft），时长从「按配音」换成「按配乐的小节」。一共改六处：</p>
+<ol class="toc"><li><b>1</b>先选做哪种</li><li><b>2</b>分镜脚本换成镜头表</li><li><b>3</b>选镜头配方</li><li><b>4</b>配音换成配乐</li><li><b>5</b>镜头卡改横版</li><li><b>6</b>成片改横屏</li></ol>
+<p class="note">这份稿子是自主模式下我按推荐方案直接定的：宣传片放在「脚本直出」里切换，不另开第四个页签，因为生成、渲染、逐镜重写、合成这几步完全一样。你要改可以直接说。图里的产品「清单鸭」和歌名都是虚构的。</p>
+
+<h2 class="sec">1 改前 → 改后</h2>
+<div data-cmps></div>
+
+<h2 class="sec">2 改好后的整页</h2>
+<p class="lead">选了「宣传片」、镜头表填好、选好配乐，还没点「生成」的那一屏。宽 1180，和 Studio 在 1440 宽屏幕上的主区一样宽。</p>
+<div class="dfull"><div class="dbar">宣传片 · 生成之前</div><div class="full-in" data-full-start data-design-state="promo-filled"></div></div>
+<p class="lead" style="margin-top:22px">点「生成」以后、成片出来的那一屏：</p>
+<div class="dfull"><div class="dbar">宣传片 · 成片出来了</div><div class="full-in" data-full-done data-design-state="promo-done"></div></div>
+
+<h2 class="sec">3 其他状态（只画变了的那一块）</h2>
+<div class="states" data-states></div>
+
+<details class="impl" open><summary><h2 class="sec" style="display:inline">4 交互规则</h2></summary>
+<ol class="lead">
+<li><b>做哪种</b>：只在还没生成或点了「改分镜脚本」时出现。切到「宣传片」时，镜头表、配乐、风格各自保留上次填的；风格还没选过的，默认选风格库里的「产品界面」。已经生成过的作品，点「改分镜脚本」进来能切换，生成后是一条新的直出任务，原来那条留在本机。</li>
+<li><b>镜头表</b>：「要表现什么」必填，写了才算一镜；在格子里按回车拆成两镜，开头按退格并回上一镜（和口播的台词格子一样）。粘贴多行文字，一行变一镜。「屏幕上的字」「截图」可以空着。</li>
+<li><b>镜头配方</b>：每格默认「Opus 挑」。点格子打开选配方弹层：左边按类别筛，右边每张卡鼠标停留时播放样片；选中后点「用这个」，格子显示配方名，旁边带「你选的」。弹层里点「让 Opus 挑」恢复默认。Esc 或点「取消」关闭，不改格子。生成以后 Opus 挑的格子显示「Opus 选的」。</li>
+<li><b>小节</b>：默认「自动」，按这一镜动画的长度取够用的最少整小节；点 − / + 改成固定 1–8 小节，减到 1 以下回到「自动」。固定小节比动画短时，镜头卡上出现「有提醒」，提醒写「动画 X 秒，N 小节只有 Y 秒，结尾会被切掉」。</li>
+<li><b>截图</b>：点「加截图」选一张 PNG 或 JPG（不超过 20 MB），Opus 写这一镜时把它当画面里的界面图用；再点一次可以换，鼠标停留出现「去掉」。</li>
+<li><b>配乐</b>：只列音乐库里节拍已分析好的歌可以选；还没分析好的灰掉，右边写原因。点歌名左边的播放键试听（同一时刻只放一首）。选中后下面出现小节条：颜色是这首歌的安静、推进、高潮，深色横条是这几镜会占的小节；「从第几小节开始」点 − / + 改，默认是第一段「推进」的开头。镜头表改了，深色横条和总时长跟着变。</li>
+<li><b>生成条</b>：缺什么按顺序只写一条：镜头表空 → 没选配乐 → 配乐不够长 → 风格没定。都齐了写这次的摘要，「生成」可以点。</li>
+<li><b>生成以后</b>：步骤条、进度、逐镜重写、画面问题记录、合成都和口播一样；镜头卡是横版，三张一行。点一张卡，下面的详情多一块「镜头配方」，可以「换个配方重写」，打开同一个选配方弹层，选好后只重写、只重渲这一镜。</li>
+<li><b>合成</b>：配乐从起始小节截取，按小节排好每一镜，结尾淡出 1 秒，峰值压在 −1 dB 以下；宣传片没有「无声预览」，一合成就带配乐。</li>
+<li><b>减少动画</b>：选配方弹层里的样片不自动播放，只显示封面。读屏：「做哪种」是单选组，读「宣传片，横屏，按音乐，已选中」；配乐列表是单选组，灰掉的行读出原因。</li>
+</ol></details>
+
+<details class="impl"><summary><h2 class="sec" style="display:inline">5 数字公式</h2></summary>
+<div class="table-wrap"><table class="lead">
+<tr><th>量</th><th>公式</th><th>结果</th></tr>
+<tr><td>一小节多长</td><td>4 拍 × 60 ÷ BPM；115 BPM 时 4 × 60 ÷ 115</td><td>2.087 秒</td></tr>
+<tr><td>「自动」取几小节</td><td>最少的整小节数 n，使 n × 一小节 ≥ 动画长度 D（D 读这一镜代码里的 const D）</td><td>D = 4.0 秒 → 2 小节；D = 4.7 秒 → 3 小节</td></tr>
+<tr><td>总时长</td><td>各镜小节数之和 × 一小节；15 × 2.087</td><td>31.3 秒，显示 0:31</td></tr>
+<tr><td>成片帧数</td><td>按每个切点四舍五入到帧，30 帧每秒；15 小节</td><td>939 帧</td></tr>
+<tr><td>配乐够不够长</td><td>起始小节 + 各镜小节数 − 1 ≤ 这首歌的总小节数</td><td>9 + 15 − 1 = 23 ≤ 91</td></tr>
+<tr><td>镜头表宽</td><td>96 + 「要表现什么」弹性 + 「屏幕上的字」弹性 + 236 + 128 + 150，最小 1080，窄于此横向滚动</td><td>主区 1180 时一屏放下</td></tr>
+<tr><td>镜头卡</td><td>主区 1180，三列，间距 10：(1180 − 20) ÷ 3</td><td>每张宽 386，画面高 217</td></tr>
+</table></div></details>
+
+<details class="impl"><summary><h2 class="sec" style="display:inline">6 设计编号和用到的组件</h2></summary>
+<div class="table-wrap"><table class="lead">
+<tr><th>编号</th><th>块</th><th>组件</th><th>说明</th></tr>
+<tr><td>DV-KIND</td><td>做哪种</td><td>变体：现有 <code>.seg</code> 单选组加第二行小字</td><td>现有 <code>.seg</code> 只能放一行字，宣传片和口播要靠「横屏 · 按音乐」一眼分开</td></tr>
+<tr><td>DV-PROMO</td><td>镜头表</td><td>变体：现有分镜脚本表 <code>.dv-sb</code> 换列</td><td>同一种「一镜一行、格子里直接改」的表，列不同；样式类 <code>.dv-pt</code> 和 <code>.dv-sb</code> 同一套写法</td></tr>
+<tr><td>DV-BRIEF</td><td>产品一句话</td><td>沿用：<code>.dv-opt input</code> 同款输入框</td><td>—</td></tr>
+<tr><td>DV-RC</td><td>镜头配方小卡</td><td>变体：风格卡 <code>.dv-sw-card</code> 改横版缩略图</td><td>风格卡是竖图，配方样片是 16:9</td></tr>
+<tr><td>DV-RPICK</td><td>选镜头配方弹层</td><td>新组件</td><td>现有页面没有带类别筛选和网格的弹层；只借风格卡的选中样式</td></tr>
+<tr><td>DV-MUSIC</td><td>配乐</td><td>变体：配音卡 <code>.dv-opt</code> 里放单选列表；小节条借音乐库的段落颜色令牌</td><td>音乐库的整张表太宽，这里只要歌名、BPM、时长、能不能选</td></tr>
+<tr><td>DV-FILM</td><td>镜头卡</td><td>变体：<code>.dv-film</code> 加 <code>--wide</code></td><td>竖版七列改横版三列</td></tr>
+<tr><td>DV-OUTPUT</td><td>成片</td><td>变体：<code>.dv-out</code> 加 <code>--wide</code></td><td>播放器改 16:9</td></tr>
+</table></div></details>
+
+<details class="impl" open><summary><h2 class="sec" style="display:inline">6.1 用到的组件</h2></summary><p class="lead">主参考 Ant Design（Studio 是桌面网页工作台）。处数只数第 2、3 节各状态里出现的次数。沿用的组件不改；变体和新组件各算一条实现项。</p><div class="table-wrap" data-comp-table></div></details>
+
+<details class="impl"><summary><h2 class="sec" style="display:inline">7 文案表（新加的字）</h2></summary>
+<div class="table-wrap"><table class="lead" data-copy-table>
+<tr><th>位置</th><th>文字</th></tr>
+<tr><td>做哪种</td><td>做哪种 ｜ 口播视频 ｜ 竖屏 · 按配音 ｜ 宣传片 ｜ 横屏 · 按音乐 ｜ 生成以后不能改，要换就点「改分镜脚本」</td></tr>
+<tr><td>页头</td><td>把产品卖点直接做成宣传片 ｜ 一行写一镜要表现什么。Opus 给每一镜挑一个镜头配方、写一段动画代码，按配乐的小节逐帧渲染，再合成一条横屏宣传片。不用素材，也不用剪辑软件。</td></tr>
+<tr><td>步骤条</td><td>镜头表 ｜ 还没写 ｜ N 镜 · M 小节 · 约 m:ss ｜ 等镜头表</td></tr>
+<tr><td>镜头表</td><td>镜头表 ｜ 每镜写这一镜要表现什么；镜头配方和小节不填，由 Opus 定。 ｜ 产品一句话 ｜ 例：给独立开发者的上线检查清单，上线前 20 项一次查完 ｜ 镜头 ｜ 要表现什么 ｜ 屏幕上的字 ｜ 可不填 ｜ 镜头配方 ｜ 小节 ｜ 截图 ｜ Opus 挑 ｜ 你选的 ｜ Opus 选的 ｜ 自动 ｜ 加截图 ｜ 去掉 ｜ 一行写一镜要表现什么，例如：（三行示例） ｜ 还没有镜头。可以一行一镜粘贴进来，或导入镜头文件。 ｜ 导入镜头文件 ｜ 格子里按回车拆成两镜，开头按退格并到上一镜 · 时长按配乐小节</td></tr>
+<tr><td>选配方</td><td>给第 NN 镜选镜头配方 ｜ 124 张，来自开源项目 video-shotcraft（Apache-2.0）。鼠标停在卡上看样片。 ｜ 关闭 ｜ 全部 ｜ 开场 ｜ 文字 ｜ 界面入场 ｜ 转场 ｜ 节奏 ｜ 数据 ｜ 特效 ｜ 交互 ｜ 运镜 ｜ 收尾 ｜ 让 Opus 挑 ｜ 按这一镜要表现什么，从 124 张里挑一张 ｜ 约 N 秒 ｜ 能量低 / 中 / 高 ｜ 适用： ｜ 用这个 ｜ 取消</td></tr>
+<tr><td>配乐</td><td>配乐 ｜ 从音乐库选一首。每一镜按整小节算长短，切镜落在小节线上。 ｜ 节拍还没分析好 ｜ 从第 N 小节开始 ｜ 第 A–B 小节 · m:ss ｜ 安静 ｜ 推进 ｜ 高潮 ｜ 这几镜 ｜ 结尾淡出 1 秒 ｜ 音乐库里还没有歌。宣传片按音乐的小节排镜头，先去音乐库导入一首。 ｜ 去音乐库</td></tr>
+<tr><td>点「生成」以后</td><td>每一镜按镜头配方写一段动画代码，三镜同时写；写完自查，不过关的自动重写一次 ｜ 按配乐的小节排好每一镜，写好一镜就在本机逐帧渲染一镜</td></tr>
+<tr><td>生成条</td><td>镜头表还空着：先写第一镜要表现什么 ｜ 还没选配乐：在右边选一首 ｜ 《歌名》从第 N 小节起只剩 K 小节，这 M 镜至少要 L 小节：把起始小节往前挪，或换一首 ｜ 宣传片 · N 镜 · 第 A–B 小节 · 约 m:ss · 「风格」 · 配乐《歌名》</td></tr>
+<tr><td>镜头卡</td><td>N 小节 · S 秒 ｜ 配方 ｜ 动画 X 秒，N 小节只有 Y 秒，结尾会被切掉</td></tr>
+<tr><td>镜头详情</td><td>镜头配方 ｜ 换个配方重写</td></tr>
+<tr><td>成片</td><td>横屏 1920×1080 · N 镜 · m:ss · 配乐《歌名》第 A–B 小节 ｜ 每一镜都切在小节线上 ｜ 配乐不爆音 ｜ 峰值 −1.0 dB</td></tr>
+<tr><td>出错</td><td>配乐的节拍图读不到 ｜ 这首歌的节拍分析没了或坏了。去音乐库对这首点「重新分析」，回来再点「合成成片」。 ｜ 第 NN 镜的配方读不到 ｜ 这张配方已经不在配方库里。点「换个配方重写」选一张，或改回「Opus 挑」。</td></tr>
+</table></div></details>
+
+<details class="impl"><summary><h2 class="sec" style="display:inline">8 给后端的接口要求</h2></summary>
+<pre class="lead" style="white-space:pre-wrap;font:12.5px/1.7 var(--f-mo)">GET  /api/direct/recipes
+  → { recipes: [{ id, name(中文短名，≤8 字), category, summary(一句话), use(适用), seconds(动画秒数), energy(低|中|高), posterUrl, clipUrl|null }],
+      categories: [{ key, name, count }] }
+  数据来自 scripts/direct_video/shot_recipes/index.json；index 加 name、seconds、energy 三个规范字段（124 张都要有，name 由人审过的中文短名）。
+GET  /api/direct/recipes/{id}/poster.jpg   GET /api/direct/recipes/{id}/clip.mp4
+
+GET  /api/review/music  已有；每首加 beat: { status: ready|missing|failed, bars, bpm, sections:[{startBar,endBar,kind:quiet|build|peak}], firstBuildBar }
+
+POST /api/projects/{id}/direct/jobs  在现有字段上加：
+  kind: "talk" | "promo"            （缺省 talk，旧任务一律 talk）
+  promo: { brief, trackId, startBar, fadeOutSeconds: 1,
+           shots: [{ visual, text?, recipeId|null, bars: "auto"|1..8, imageId? }] }
+  promo 时 storyboard 由 promo.shots 生成；width 1920、height 1080；不收配音。
+POST /api/projects/{id}/direct/promo-images  (image/png|image/jpeg，≤20 MB) → { imageId }
+
+job 投影加：kind；promo: { trackId, trackTitle, bpm, startBar, endBar, seconds }；
+  shots[].recipe: { id, name, chosenBy: "user"|"opus" }；shots[].bars；shots[].text
+  output.checks 加 barsAligned { aligned, total }、peakDb
+POST .../shots/{sid}/rewrite  body 可带 recipeId（换配方重写）
+
+错误码（各配一句页面文字，见第 7 节「出错」）：
+  beat_map_unavailable  配乐的节拍图读不到
+  track_too_short       配乐不够长（带 needBars、leftBars）
+  recipe_not_found      配方读不到
+  promo_image_invalid   截图不是 PNG/JPG 或超过 20 MB
+合成：走 scripts/direct_video/promo_plan.py（排期 + 预混一条 WAV）→ 现有 multi_shot.py + compose.py。</pre></details>
+
+<details class="impl"><summary><h2 class="sec" style="display:inline">9 先写的测试（现在的代码跑不过）</h2></summary>
+<ol class="lead">
+<li>加进已有：<code>scripts/direct_video/frontend_gate.mjs</code> 的状态表加 promo-empty、promo-filled、promo-short、promo-writing、promo-done 五个状态，逐个和本稿同编号的块比文案和设计编号。</li>
+<li>加进已有：<code>tests/test_pho_r05_recipe_library.py</code>：124 张配方都有 name（≤8 字、不含英文连字符）、seconds、energy。</li>
+<li>加进已有：直出生成器测试：kind=promo 时 width/height 为 1920×1080，合成调用 promo_plan 而不是配音对齐；配乐不够长时创建任务返回 track_too_short，不写任务目录。</li>
+<li>加进已有：直出接口测试：旧任务（没有 kind）读出来是 talk，口播页面不变。</li>
+</ol></details>
+
+<details class="impl"><summary><h2 class="sec" style="display:inline">10 画法说明</h2></summary>
+<ul class="lead">
+<li>全部块用 Studio 现行样式表（直接引用 <code>studio/static/*.css</code>）和真实页面导出的结构画；「改前」的结构取自 2026-11-23 本机 Studio（提交 82cb6ab）脚本直出页，数据换成虚构的。</li>
+<li>新块的样式只在 <code>promo.css</code>，颜色和字体全是 <code>styles.css</code> 里已有的令牌（含音乐库已用的 <code>--sec-quiet / --sec-build / --sec-peak</code>），没有新令牌。</li>
+<li>配方封面直接引用 <code>scripts/direct_video/shot_recipes/media/posters/</code>；竖屏样张引用 <code>scripts/direct_video/style_library/*.jpg</code>。成片画面用配方封面代替，不是真渲染。</li>
+<li>仓库是公开的，稿子里不放真实项目截图。</li>
+<li>页面检查的红灯：新块里的小字都不低于 12px、次要字用 <code>--ink-3</code>（白底 5.2:1）。剩下的红灯来自 Studio 现有样式（步骤条序号 10.5px、正文 12.5–13px、<code>--ink-4</code> 灰字、主按钮白字配 <code>--ac</code> 3.96:1、成片缩略图编号 9.5px），这次不改现有页面，另记一条全站字号和对比度的欠账。新块正文沿用 Studio 的 13px，和口播分镜表一致。</li>
+</ul></details>
+</div>
+
+<script>
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const D=v=>`<span data-design-data>${esc(v)}</span>`;
+const POST='../../../scripts/direct_video/shot_recipes/media/posters/';
+const STY='../../../scripts/direct_video/style_library/';
+const R={
+ 'spotlight-hero-card':{name:'聚光主角卡',cat:'开场',one:'关灯的剧场里一束聚光扫过页面锁定一张卡，卡片弹起悬浮，再贴回原位',use:'单一主角式的产品开场',sec:5.7,en:'中',img:'spotlight-hero-card.jpg'},
+ 'blur-slide':{name:'模糊滑入标题',cat:'文字',one:'标题逐词从模糊里滑上来，副标题错峰跟进',use:'标题、副标题成对出现的地方',sec:4.0,en:'低',img:'blur-slide.jpg'},
+ 'list-reveal':{name:'列表依次弹入',cat:'界面入场',one:'菜单逐项弹入落定，整列同时缓缓上移',use:'导航、设置面板，界面自己长出来',sec:4.0,en:'低',img:'list-reveal.jpg'},
+ 'gauge-readout-moves':{name:'仪表读数',cat:'数据',one:'指针先甩满全弧再回落到真实读数',use:'一个关键数字要有仪式感时',sec:4.7,en:'中',img:'gauge-readout-moves.render.jpg'},
+ 'before-after-slider-scrub':{name:'前后对比拉杆',cat:'数据',one:'处理前后两版叠放，分割杆先甩后慢扫，扫过处显出新版',use:'改版前后、手动和自动对比',sec:5.0,en:'中',img:'before-after-slider-scrub.jpg'},
+ 'logo-shrink-wordmark-lockup':{name:'字标收束',cat:'收尾',one:'大环快速收成中央小圆点，换成字标落定',use:'片尾落品牌名',sec:3.8,en:'中',img:'logo-shrink-wordmark-lockup.jpg'},
+ 'circle-match-iris':{name:'圆形光圈转场',cat:'转场',one:'光圈从圆形元素的圆心炸开，新画面接在同一个圆上',use:'两个画面里都有圆形元素时',sec:5.5,en:'中高',img:'circle-match-iris.jpg'},
+ 'product-card-progressive-assemble':{name:'商品卡逐项拼装',cat:'界面入场',one:'详情卡逐字段拼出来，原价出现后被划掉',use:'展示一张卡片里的多项信息',sec:5.7,en:'中',img:'product-card-progressive-assemble.jpg'},
+ 'marker-underline-title':{name:'马克笔划重点',cat:'文字',one:'大标题落定后，关键词下方马克笔一笔划过',use:'给标题里的一个词加重',sec:1.6,en:'低',img:'marker-underline-title.render.jpg'},
+};
+const BPM=115,BAR=4*60/BPM;
+const mmss=s=>{const n=Math.round(s);return `${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`;};
+const autoBars=id=>Math.max(1,Math.ceil(R[id].sec/BAR-1e-9));
+const SHOTS_A=[
+ {v:'开场：产品名和一句话定位',t:'清单鸭\n上线前，先过一遍',r:'spotlight-hero-card',by:'opus',bars:'auto'},
+ {v:'痛点：上线当晚总漏一步',t:'又忘了改回调地址？',r:'blur-slide',by:'user',bars:2},
+ {v:'界面：清单一项项自己长出来',t:'',r:'list-reveal',by:'opus',bars:'auto',img:'list-reveal.jpg'},
+ {v:'亮点：20 项检查跑完，进度走满',t:'20 项 · 3 分钟',r:'gauge-readout-moves',by:'opus',bars:'auto'},
+ {v:'对比：手动对表格，和清单鸭自动打钩',t:'以前\n现在',r:'before-after-slider-scrub',by:'opus',bars:'auto'},
+ {v:'收尾：字标和一句话',t:'清单鸭 · 先过一遍再上线',r:'logo-shrink-wordmark-lockup',by:'opus',bars:'auto'},
+];
+const SHOTS_B=[
+ {v:'开场：跑量本三个字从模糊里出来',t:'跑量本',r:null,bars:'auto'},
+ {v:'一周的跑量变成一张图，周日那天最高',t:'这周 42 公里',r:null,bars:'auto'},
+ {v:'收尾：下载按钮',t:'',r:null,bars:3},
+];
+const barsOf=s=>s.bars==='auto'?(s.r?autoBars(s.r):2):s.bars;
+const totalBars=rows=>rows.reduce((n,s)=>n+barsOf(s),0);
+const TRACKS=[
+ {id:'a',title:'晴空计划',who:'夏野 · 本机文件',bpm:115,len:190,ok:true},
+ {id:'b',title:'夜航',who:'林深 · 汽水音乐',bpm:128,len:135,ok:true},
+ {id:'c',title:'慢火车',who:'未知歌手 · 网易云音乐',bpm:null,len:204,ok:false},
+];
+const SECTIONS=[[1,8,''],[9,24,'b'],[25,40,'p'],[41,56,'b'],[57,72,'p'],[73,91,'']];
+const tabs=`<nav class="ptabs" role="tablist" data-design-id="DV-TABS"><button role="tab" aria-selected="false" tabindex="-1">按素材剪 vlog</button><button role="tab" aria-selected="false" tabindex="-1">按脚本做视频</button><button role="tab" aria-selected="true" tabindex="0">脚本直出</button></nav>`;
+function steps(kind,st,rows){
+  const n=rows?rows.length:0,b=rows?totalBars(rows):0;
+  const one=kind==='promo'?['镜头表',n?`${n} 镜 · ${b} 小节 · 约 ${mmss(b*BAR)}`:'还没写']:['分镜脚本',n?`${n} 镜 · 约 2:23`:'还没粘贴'];
+  const two=['Opus 写每一镜',st==='done'?`${n} 镜都写好了`:kind==='promo'?'等镜头表':'等分镜脚本'];
+  const three=['成片',st==='done'?(kind==='promo'?`横屏 · ${mmss(b*BAR)}`:'无声预览 · 2:23'):'还没合成'];
+  return `<nav class="flow full" aria-label="这件作品的步骤" data-design-id="DV-STEPS">${[one,two,three].map(([t,s],i)=>{const done=st==='done',cur=!done&&i===0;return `<div class="fstep ${done?'done':''} ${cur?'cur':''}"${cur?' aria-current="step"':''}><b>${done?'✓':i+1}</b><span><strong>${t}</strong><small data-design-data>${esc(s)}</small></span>${done&&i===0?'<em class="dv-step-edit">改分镜脚本</em>':''}</div>`;}).join('')}</nav>`;
+}
+function kindSeg(kind,locked=false){
+  const opt=(k,t,s)=>`<button role="radio" aria-checked="${kind===k}" aria-pressed="${kind===k}"${locked?' disabled':''}>${t}<small>${s}</small></button>`;
+  return `<div class="dv-kind" data-design-id="DV-KIND"><span>做哪种</span><div class="seg" role="radiogroup" aria-label="做哪种">${opt('talk','口播视频','竖屏 · 按配音')}${opt('promo','宣传片','横屏 · 按音乐')}</div>${locked?'<p>生成以后不能改，要换就点「改分镜脚本」</p>':''}</div>`;
+}
+function head(kind,title,lede){
+  return `<div class="stephead full" data-design-id="DV-HEAD"><div><p class="eyebrow">脚本直出</p><h2>${title}</h2><p>${lede}</p></div><div class="actions"></div></div>`;
+}
+const PROMO_LEDE='一行写一镜要表现什么。Opus 给每一镜挑一个镜头配方、写一段动画代码，按配乐的小节逐帧渲染，再合成一条横屏宣传片。不用素材，也不用剪辑软件。';
+function rc(s,after=false){
+  if(!s.r)return `<button class="dv-rc dv-rc--auto" data-design-id="DV-RC"><span class="dv-rc-ph">Opus 挑</span><span><b>Opus 挑</b><small>点这里自己选</small></span></button>`;
+  const x=R[s.r],by=s.by==='user'?'你选的':(after?'Opus 选的':'');
+  return `<button class="dv-rc${s.by==='user'?' dv-rc--set':''}" data-design-id="DV-RC"><img src="${POST+x.img}" alt=""><span><b data-design-data>${esc(x.name)}</b><small>${by?esc(by)+' · ':''}${D(x.cat)}</small></span></button>`;
+}
+function barsCell(s){
+  const auto=s.bars==='auto',n=barsOf(s);
+  return `<div class="dv-bars" data-design-id="DV-BARS"><button aria-label="少一小节">−</button><span data-design-data>${auto?'自动':n}</span><button aria-label="多一小节">+</button></div><span class="dv-bars-note" data-design-data>${n} 小节 · ${(n*BAR).toFixed(1)} 秒</span>`;
+}
+function pic(s){return s.img?`<button class="dv-shotpic has" aria-label="换截图"><img src="${POST+s.img}" alt=""></button>`:'<button class="dv-shotpic">加截图</button>';}
+const cell=(v,ph,main)=>`<span class="cell${main?' c-main':''}${v?'':' ph'}">${v?esc(v):ph}</span>`;
+function promoTable(rows,{after=false}={}){
+  const n=rows.length,b=totalBars(rows);
+  const body=n?`<div class="dv-sb-wrap"><table class="dv-pt" data-design-id="DV-PROMO-TABLE"><colgroup><col class="c-t"><col><col><col class="c-r"><col class="c-b"><col class="c-x"></colgroup><thead><tr><th>镜头</th><th>要表现什么</th><th>屏幕上的字<small>可不填</small></th><th>镜头配方</th><th>小节</th><th>截图<small>可不填</small></th></tr></thead><tbody>${rows.map((s,i)=>{let start=rows.slice(0,i).reduce((t,r)=>t+barsOf(r),0)*BAR;return `<tr data-design-id="DV-PROMO-ROW"><td class="sb-t"><b data-design-data>${String(i+1).padStart(2,'0')}</b><span data-design-data>${mmss(start)}–${mmss(start+barsOf(s)*BAR)}</span></td><td>${cell(s.v,'要表现什么',true)}</td><td>${cell(s.t,'屏幕上的字')}</td><td>${rc(s,after)}</td><td>${barsCell(s)}</td><td>${pic(s)}</td></tr>`;}).join('')}</tbody></table></div>`
+    :`<div class="dv-sb-empty"><textarea aria-label="要表现什么" placeholder="一行写一镜要表现什么，例如：&#10;开场：产品名和一句话定位&#10;痛点：上线当晚总漏一步&#10;界面：清单一项项自己长出来"></textarea></div>`;
+  return `<section class="dv-form" data-design-id="DV-PROMO"><header><div><h3>镜头表</h3><span class="dv-script-sub" data-max-lines="1">每镜写这一镜要表现什么；镜头配方和小节不填，由 Opus 定。</span></div></header><div class="dv-brief" data-design-id="DV-BRIEF"><label for="brief">产品一句话</label><input id="brief" type="text" value="${n?esc(rows===SHOTS_B?'记跑步里程的小程序，一周跑量一眼看清':'给独立开发者的上线检查清单，上线前 20 项一次查完'):''}" placeholder="例：给独立开发者的上线检查清单，上线前 20 项一次查完"></div>${body}<footer><p aria-live="polite">${n?'格子里按回车拆成两镜，开头按退格并到上一镜 · 时长按配乐小节':'还没有镜头。可以一行一镜粘贴进来，或导入镜头文件。'}</p><div class="actions"><button class="btn">导入镜头文件</button></div></footer></section>`;
+}
+function talkScript(){
+  return `<section class="dv-form" data-design-id="DV-SCRIPT"><header><div><h3>分镜脚本</h3><span class="dv-script-sub" data-max-lines="1">每镜写台词，就是配音要念的话；画面、字幕、景别 · 运镜不写，由 Opus 定。</span></div><span></span></header><div class="dv-sb-empty"><textarea aria-label="台词" placeholder="把台词粘贴进来，每一行会变成一镜。例如：&#10;第一句：……"></textarea></div><footer><p>还没有分镜脚本。可以粘贴台词、导入分镜文件，或从中台交过来。</p><div class="actions"><button class="btn">导入分镜文件</button></div></footer></section>`;
+}
+function music(state,rows){
+  const sel=state==='none'?null:TRACKS[0],need=rows?totalBars(rows):14,start=state==='short'?85:9,end=start+need-1;
+  if(state==='empty')return `<div class="dv-opt" data-design-id="DV-MUSIC"><h4>配乐</h4><div class="dv-mempty">音乐库里还没有歌。宣传片按音乐的小节排镜头，先去音乐库导入一首。<div class="row" style="margin-top:8px"><button class="btn">去音乐库</button></div></div></div>`;
+  const row=t=>`<button class="dv-mrow" role="radio" aria-checked="${sel===t}"${t.ok?'':' aria-disabled="true"'} data-design-id="DV-MROW"><span class="dv-mplay" aria-hidden="true">▶</span><span><b data-design-data>${esc(t.title)}</b><small data-design-data>${esc(t.who)}</small></span><span class="meta${t.ok?'':' warn'}">${t.ok?D(`${t.bpm} BPM · ${mmss(t.len)}`):'节拍还没分析好'}</span></button>`;
+  let span='';
+  if(sel){const total=91;span=`<div class="dv-mspan" data-design-id="DV-MSPAN"><div class="dv-mbars" style="grid-template-columns:repeat(${total},1fr)">${Array.from({length:total},(_,i)=>{const b=i+1,k=SECTIONS.find(([a,z])=>b>=a&&b<=z)[2];return `<i class="${k}"></i>`;}).join('')}</div><div class="dv-mcover"><i style="left:${(start-1)/total*100}%;width:${Math.min(need,total-start+1)/total*100}%"></i></div><div class="dv-mlegend"><span>安静</span><span class="b">推进</span><span class="p">高潮</span><span class="c">这几镜</span></div></div><div class="dv-mstart"><span>从第</span><div class="dv-bars"><button aria-label="往前一小节">−</button><span data-design-data>${start}</span><button aria-label="往后一小节">+</button></div><span>小节开始</span><em data-design-data>${state==='short'?`第 ${start}–91 小节 · 只剩 7 小节`:`第 ${start}–${end} 小节 · ${mmss(need*BAR)}`}</em><em>结尾淡出 1 秒</em></div>`;}
+  return `<div class="dv-opt" data-design-id="DV-MUSIC"><h4>配乐</h4><p>从音乐库选一首。每一镜按整小节算长短，切镜落在小节线上。</p><div class="dv-music" role="radiogroup" aria-label="配乐" style="margin-top:10px">${TRACKS.map(row).join('')}${span}</div></div>`;
+}
+function voice(){return `<div class="dv-opt" data-design-id="DV-VOICE"><h4>配音（可以之后再加）</h4><p>没有配音先出无声预览。上传配音以后，按配音实测每一镜的时长，动画比配音长的镜会自动改短。</p><div class="row"><button class="btn rv-go-log">画面问题记录</button><button class="btn">上传配音…</button></div></div>`;}
+function how(kind){
+  const two=kind==='promo'?'每一镜按镜头配方写一段动画代码，三镜同时写；写完自查，不过关的自动重写一次':'每一镜写一段动画代码，三镜同时写；写完自查，不过关的自动重写一次';
+  const three=kind==='promo'?'按配乐的小节排好每一镜，写好一镜就在本机逐帧渲染一镜':'写好一镜就在本机逐帧渲染一镜，页面上马上能看';
+  return `<div class="dv-opt" data-design-id="DV-HOW"><h4>点「生成」以后</h4><ol class="dv-how"><li><b>1</b><span>全片设计沿用选中的风格<small>不用等</small></span></li><li><b>2</b><span>${two}<small>每镜约 1–3 分钟</small></span></li><li><b>3</b><span>${three}<small>可以离开这一页，不会中断</small></span></li></ol></div>`;
+}
+function style(){
+  const lib=[['ui','产品界面',['#f2eee6','#13110f','#955905','#65635f']],['launch','极简发布会',['#050505','#cfd4dc','#a58bff','#8f97a3']],['code','代码录屏',['#15171c','#82aaff','#c3e88d','#9aa1ad']],['dataviz','数据可视化',['#0a0710','#7b5cff','#ff5a4a','#8f86a8']]];
+  return `<section class="dv-style-wide" data-design-id="DV-STYLE"><header class="dv-sw-head"><div><h3>视频风格</h3><p>Opus 在这个风格上写每一镜。先定好风格，才能生成。</p></div><div class="seg" role="radiogroup" aria-label="视频风格怎么定"><button role="radio" aria-checked="true" aria-pressed="true">选现成的风格</button><button role="radio" aria-checked="false" aria-pressed="false">从头定风格</button></div></header><div class="dv-sw-body"><div class="dv-sw-edit"><label class="dv-sw-label">风格库<span>样张都是同一段台词</span></label><div class="dv-sw-cards">${lib.map(([id,name,sw],i)=>`<button class="dv-sw-card" aria-pressed="${i===0}"><img src="${STY+id}.jpg" alt=""><span><b>${name}</b><span class="dv-style-sw">${sw.map(c=>`<i style="--swatch:${c}"></i>`).join('')}</span></span></button>`).join('')}</div><label class="dv-sw-label">在这个风格上改哪里<span>（可不填）</span></label><textarea rows="2" placeholder="例：强调色换成暖黄，其余不动；数字再大一些"></textarea></div><div class="dv-sw-preview"><div><div class="dv-poster"><img src="${STY}ui.jpg" alt=""></div><p class="dv-sw-cap">首镜关键帧</p></div><div class="dv-sw-meta"><h4>产品界面</h4><div class="dv-sw-pal"><span class="dv-sw"><i style="--swatch:#f2eee6"></i>背景</span><span class="dv-sw"><i style="--swatch:#13110f"></i>主色</span><span class="dv-sw"><i style="--swatch:#955905"></i>强调色</span><span class="dv-sw"><i style="--swatch:#65635f"></i>中性</span></div><dl><div><dt>字号</dt><dd>86 / 49 / 37</dd></div></dl></div></div></div></section>`;
+}
+function genbar(text,need,on){return `<div class="dv-genbar" data-design-id="DV-GENBAR"><p class="${need?'need':''}" data-design-data>${esc(text)}</p><div class="actions"><button class="btn btn--pri"${on?'':' disabled'}>生成</button></div></div>`;}
+function summary(rows){const b=totalBars(rows);return `宣传片 · ${rows.length} 镜 · 第 9–${8+b} 小节 · 约 ${mmss(b*BAR)} · 「产品界面」 · 配乐《晴空计划》`;}
+function start(rows,mstate='pick',gen){
+  return `<section class="review-screen single dv-direct">${tabs}<div class="dv-body">${kindSeg('promo')}</div><div class="dv-body">${steps('promo','start',rows)}</div><div class="dv-body">${head('promo','把产品卖点直接做成宣传片',PROMO_LEDE)}</div><div class="dv-body"><div class="dv-start" data-design-id="DV-START">${promoTable(rows)}${style()}<aside class="dv-opts">${how('promo')}${music(mstate,rows)}</aside>${gen||genbar(summary(rows),false,true)}</div></div></section>`;
+}
+function film(rows){
+  return `<div class="dv-film dv-film--wide" data-design-id="DV-FILM">${rows.map((s,i)=>{const n=barsOf(s),warn=i===1;return `<article tabindex="0" class="dv-card" aria-current="${i===1}" data-design-id="DV-SHOT"><div class="dv-poster"><img src="${POST+R[s.r].img}" alt=""></div><div class="dv-card-b"><header><b data-design-data>${String(i+1).padStart(2,'0')}</b><span data-design-data>${n} 小节 · ${(n*BAR).toFixed(1)} 秒</span></header><p data-design-data>${esc(s.v)}</p><div class="dv-rcline"><em>配方</em>${D(R[s.r].name)}</div><div class="dv-tags"><span class="st">写好</span>${warn?'<span class="st st--wait">有提醒</span>':''}</div></div></article>`;}).join('')}</div>`;
+}
+function output(rows){
+  const b=totalBars(rows);
+  return `<section class="dv-out dv-out--wide" data-design-id="DV-OUTPUT"><div class="dv-player"><div class="dv-stage"><img src="${POST+R[rows[0].r].img}" alt="" style="width:100%;height:100%;object-fit:cover"><button class="dv-bigplay" aria-label="播放成片">▶</button></div><div class="dv-scrub"><input type="range" min="0" max="29" value="0" aria-label="拖到成片哪里"><span data-design-data>0:00 / ${mmss(b*BAR)}</span></div></div><div class="dv-outinfo"><h3 data-design-data>清单鸭 · 上线宣传片</h3><p data-design-data>横屏 1920×1080 · ${rows.length} 镜 · ${mmss(b*BAR)} · 配乐《晴空计划》第 9–${8+b} 小节</p><ul class="dv-outchecks" data-design-id="DV-OUTCHECKS"><li>能从头放到尾<span data-design-data>${Math.round(b*BAR*30)} 帧</span></li><li>每一镜都切在小节线上<span data-design-data>${rows.length} / ${rows.length}</span></li><li>配乐不爆音<span data-design-data>峰值 −1.0 dB</span></li><li>没有黑帧<span data-design-data>0 处</span></li></ul><div class="dv-strip" data-design-id="DV-STRIP">${rows.map((s,i)=>`<button aria-label="第 ${String(i+1).padStart(2,'0')} 镜"><img src="${POST+R[s.r].img}" alt=""><b>${String(i+1).padStart(2,'0')}</b></button>`).join('')}</div></div></section>`;
+}
+function rcbox(s){const x=R[s.r];return `<div class="dv-rcbox" data-design-id="DV-RCBOX"><img src="${POST+x.img}" alt=""><div><b>镜头配方 · ${D(x.name)}</b><p data-design-data>${esc(x.one)}</p></div><button class="btn">换个配方重写</button></div>`;}
+function done(rows){
+  return `<section class="review-screen single dv-direct">${tabs}<div class="dv-body">${steps('promo','done',rows)}</div><div class="dv-body"><div class="stephead full" data-design-id="DV-HEAD"><div><p class="eyebrow">脚本直出 · 宣传片</p><h2>成片出来了</h2><p>从点「生成」到出片用了 9:42。看一遍，有哪一镜不满意，点那一镜写意见重写，重写后重新合成。</p></div><div class="actions"><button class="btn rv-go-log">画面问题记录</button><button class="btn">重新合成</button></div></div></div><div class="dv-body">${output(rows)}</div><div class="dv-body">${film(rows)}</div><div class="dv-body">${rcbox(rows[1])}</div></section>`;
+}
+function picker(){
+  const cats=[['全部',124],['开场',11],['文字',22],['界面入场',21],['转场',15],['节奏',8],['数据',5],['特效',15],['交互',11],['运镜',10],['收尾',6]];
+  const ids=['blur-slide','marker-underline-title','spotlight-hero-card','list-reveal','product-card-progressive-assemble','circle-match-iris'];
+  return `<div class="dv-rp" role="dialog" aria-label="给第 02 镜选镜头配方" data-design-id="DV-RPICK"><header><h3>给第 02 镜选镜头配方</h3><p>124 张，来自开源项目 video-shotcraft（Apache-2.0）。鼠标停在卡上看样片。</p><button class="link">关闭</button></header><div class="dv-rp-body"><nav class="dv-rp-cats" role="tablist">${cats.map(([c,n],i)=>`<button role="tab" aria-selected="${i===2}">${c}<span>${n}</span></button>`).join('')}</nav><div class="dv-rp-grid"><button class="dv-rp-auto" aria-pressed="false"><b>让 Opus 挑</b><span>按这一镜要表现什么，从 124 张里挑一张</span></button>${ids.map(id=>{const x=R[id];return `<button class="dv-rp-card" aria-pressed="${id==='blur-slide'}" data-design-id="DV-RPCARD"><span class="pv"><img src="${POST+x.img}" alt=""><em>${esc(x.cat)}</em></span><span class="tx"><b data-design-data>${esc(x.name)}</b><p data-design-data>${esc(x.one)}</p><small data-design-data>约 ${x.sec} 秒 · 能量${esc(x.en)}</small></span></button>`;}).join('')}</div></div><footer><p><b>模糊滑入标题</b> · 适用：${esc(R['blur-slide'].use)}</p><button class="btn">取消</button><button class="btn btn--pri">用这个</button></footer></div>`;
+}
+function oldFilm(){
+  const imgs=['flat','math','launch'];
+  return `<div class="dv-film" style="grid-template-columns:repeat(3,minmax(0,1fr))">${imgs.map((id,i)=>`<article class="dv-card"><div class="dv-poster"><img src="${STY+id}.jpg" alt=""></div><div class="dv-card-b"><header><b>0${i+1}</b><span>18.2 秒</span></header><p>第一句：发出去，会被人看低。断了这么久，大家肯定都注意到了。</p><div class="dv-tags"><span class="st">写好</span></div></div></article>`).join('')}</div>`;
+}
+function oldOutput(){
+  return `<section class="dv-out"><div class="dv-player"><div class="dv-stage"><img src="${STY}flat.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div></div><div class="dv-outinfo"><h3>一条口播</h3><p>竖屏 1080×1920 · 7 镜 · 无声预览 2:23</p><ul class="dv-outchecks"><li>能从头放到尾<span>4,284 帧</span></li><li class="none">无声预览，不检查声音</li><li>帧数和各镜时长一致<span>2:23</span></li><li>没有黑帧<span>0 处</span></li></ul></div></section>`;
+}
+const W=(html,cls='zoom75')=>`<div class="dstage"><div class="${cls}">${html}</div></div>`;
+const CMPS=[
+ ['先选做哪种','脚本直出只有一种：竖屏口播，按台词和配音。',W(tabs+steps('talk','start',null)),'页签下面加一行「做哪种」：口播视频（竖屏 · 按配音）｜宣传片（横屏 · 按音乐）。选宣传片后，步骤条第一步叫「镜头表」，页头换成宣传片的说明。',W(tabs+kindSeg('promo')+steps('promo','start',SHOTS_A)),'变体：.seg 加第二行小字'],
+ ['分镜脚本换成镜头表','分镜脚本要写台词，宣传片没有台词。',W(talkScript()),'一镜一行：要表现什么（必填）｜屏幕上的字｜镜头配方｜小节｜截图。上面一格「产品一句话」，Opus 写每一镜时都看它。配方、小节不填就是「Opus 挑」「自动」；第 02 镜是自己选了配方、固定 2 小节的样子，第 03 镜放了一张界面截图。',W(promoTable(SHOTS_A),'zoom6'),'变体：分镜脚本表换列；沿用：输入框'],
+ ['选镜头配方','现在没有。',`<p>124 张配方卡已经在仓库里（<code>scripts/direct_video/shot_recipes/</code>），页面上看不到、选不了。</p>`,'点镜头表里的配方格子，弹出这个面板。左边按类别筛，右边每张卡有样片封面、一句话、时长和能量；最上面一张是「让 Opus 挑」。选中后底部写这张适用于什么，点「用这个」。',`<div class="modal-bg"><div class="zoom6">${picker()}</div></div>`,'新组件：选配方弹层；变体：风格卡改横版'],
+ ['配音换成配乐','右下角是配音卡；宣传片不用配音。',W(`<div style="max-width:560px">${voice()}</div>`),'换成配乐卡：只列节拍已分析好的歌，没分析好的灰掉并写原因。选中一首后出现小节条：颜色是这首歌的安静、推进、高潮，深色横条是这几镜会占的小节，从第几小节开始可以调，默认是第一段「推进」的开头。',W(`<div style="max-width:560px">${music('pick',SHOTS_A)}</div>`),'变体：配音卡放单选列表；令牌：音乐库段落色'],
+ ['镜头卡改横版','竖版卡七张一行，卡里是台词。',W(oldFilm()),'横版卡三张一行。卡里写这一镜要表现什么、用的配方、几小节几秒；固定小节比动画短的那一镜带「有提醒」。点一张卡，详情里多一块「镜头配方」，可以换个配方重写这一镜。',W(film(SHOTS_A.slice(0,3))+rcbox(SHOTS_A[1]),'zoom6'),'变体：.dv-film--wide；新块：配方详情'],
+ ['成片改横屏','竖屏播放器；检查项有「无声预览」「各镜时长」。',W(oldOutput(),'zoom6'),'16:9 播放器。检查项换成：能从头放到尾、每一镜都切在小节线上、配乐不爆音（峰值 −1 dB）、没有黑帧。下面一排横版缩略图，点了跳到那一镜。',W(output(SHOTS_A),'zoom6'),'变体：.dv-out--wide'],
+];
+document.querySelector('[data-cmps]').innerHTML=CMPS.map(([t,now,nowHtml,fix,afterHtml,uses],i)=>`<div class="cmp"><div class="cmp-hd"><span class="tag">${i+1}</span>${t}</div><div class="cmp-row"><div class="now"><span class="cmp-lab">改前</span><p>${now}</p>${nowHtml}</div><div class="after"><span class="cmp-lab">改后</span><p>${fix}</p>${afterHtml}<p class="uses">用到的组件：${uses}</p></div></div></div>`).join('');
+document.querySelector('[data-full-start]').innerHTML=start(SHOTS_A);
+document.querySelector('[data-full-done]').innerHTML=done(SHOTS_A);
+const ST=[
+ ['promo-empty','空的：刚切到宣传片',`${kindSeg('promo')}${steps('promo','start',[])}<div style="height:10px"></div>${promoTable([])}<div style="height:10px"></div>${genbar('镜头表还空着：先写第一镜要表现什么',true,false)}`],
+ ['promo-filled-b','另一组数据：3 镜，配方全让 Opus 挑',`${promoTable(SHOTS_B)}`],
+ ['promo-no-music','音乐库里还没有歌',`<div style="max-width:560px">${music('empty')}</div><div style="height:10px"></div>${genbar('还没选配乐：在右边选一首',true,false)}`],
+ ['promo-short','配乐不够长',`<div style="max-width:560px">${music('short',SHOTS_A)}</div><div style="height:10px"></div>${genbar('《晴空计划》从第 85 小节起只剩 7 小节，这 6 镜至少要 15 小节：把起始小节往前挪，或换一首',true,false)}`],
+ ['promo-beat-fail','合成时节拍图读不到',`<div class="attention attention--cut" role="alert" data-design-id="DV-BEATFAIL"><div><strong>配乐的节拍图读不到</strong><p>这首歌的节拍分析没了或坏了。去音乐库对这首点「重新分析」，回来再点「合成成片」。</p></div><div class="actions"><button class="btn">去音乐库</button><button class="btn btn--pri">合成成片</button></div></div>`],
+ ['promo-locked','生成以后不能切换',`${kindSeg('promo',true)}`],
+];
+document.querySelector('[data-states]').innerHTML=ST.map(([k,c,h])=>`<figure><figcaption>${c}</figcaption><div class="dstage"><div class="zoom6" data-design-state="${k}">${h}</div></div></figure>`).join('')+`<figure><figcaption>选镜头配方弹层</figcaption><div class="modal-bg"><div class="zoom6" data-design-state="promo-picker">${picker()}</div></div></figure>`;
+
+// —— 组件标注：每个带设计编号的块写明用的哪个组件；组件表按标注自动数处数 ——
+const PROJECT={reference:'antd',why:'Studio 是桌面网页工作台，主区 1180 宽，按 Ant Design 的结构和状态对照'};
+const T='--panel、--rule、--ink-3、--ac、--ac-bg';
+const COMP={
+ promoKind:{tier:'variant',base:'segmented',type:'数据展示/分段控制',ref:'Segmented（每项两行字）',reason:'现有 .seg 只放一行字，口播和宣传片要靠第二行「横屏 · 按音乐」一眼分开',params:'两项；主字 + 第二行小字；生成后整组禁用',states:'默认、禁用',skip:'无',tokens:'--ac-bg、--ink、--ink-3、--rule-2'},
+ flowSteps:{tier:'reuse'},'screen-head':{tier:'reuse'},attention:{tier:'reuse'},actions:{tier:'reuse'},facts:{tier:'reuse'},
+ promoShotTable:{tier:'new',type:'数据展示/表格',ref:'Table（单元格直接编辑）',reason:'口播的分镜脚本表不在组件清单，列也不同：要放配方小卡、小节步进和截图格子',vr:'清单里没有表格类组件可以做变体',params:'六列：镜头、要表现什么、屏幕上的字、镜头配方、小节、截图；最小宽 1080，窄了横向滚动',states:'默认、空、部分数据',skip:'加载中：镜头表在本页编辑，不从接口异步取；错误：表格不取数，缺项写在生成条',tokens:'--panel、--panel-2、--rule、--ink-3、--f-mo'},
+ promoBrief:{tier:'variant',base:'dialog-form',type:'数据录入/输入框',ref:'Input（左侧标签）',reason:'dialog-form 是弹窗里的多行表单，这里只要一行带标签的输入框',params:'标签 96 宽 + 单行输入；可不填',states:'默认、聚焦',skip:'禁用：生成后不再显示这一格；错误：可不填，没有错误态',tokens:'--panel-2、--rule-2、--ink'},
+ recipeChip:{tier:'variant',base:'card',type:'数据展示/卡片',ref:'Card（小号横版封面）',reason:'风格卡是竖图；配方样片是 16:9，还要标「Opus 挑 / 你选的」',params:'选了配方：72 宽 16:9 封面 + 名称 + 来源·类别；没选：虚线框「Opus 挑」',states:'默认',skip:'加载中：封面是本机静态图，随页面出来',tokens:T},
+ barsStepper:{tier:'new',type:'数据录入/数字输入',ref:'InputNumber（只用 − / + 按钮）',reason:'清单里没有数字输入；小节只许 自动 或 1–8 的整数，用按钮比键入不容易出错',vr:'清单里没有数字输入类组件',params:'自动 / 1–8；减到 1 以下回到自动；下面一行写「N 小节 · S 秒」',states:'默认、聚焦、禁用',skip:'错误：只能点 − / +，不能键入，不会出现非法值',tokens:'--rule-2、--ink、--f-mo'},
+ trackPicker:{tier:'variant',base:'trow',type:'数据录入/单选框',ref:'Radio.Group（整行可点）',reason:'音乐库的 trow 是六列表格行，这里只要歌名、BPM、时长和能不能选',params:'整行是单选；节拍没分析好的行禁用并写原因；左边试听键',states:'默认、聚焦、禁用、选中',skip:'无',tokens:'--ac、--ac-bg、--warn、--rule'},
+ barSpan:{tier:'variant',base:'mountBeatMap',type:'数据展示/图表',ref:'Charts（小节条）',reason:'音乐库的节拍图画波形和拍点；这里只要按小节着色，再叠一条「这几镜」覆盖',params:'每小节一格，按安静 / 推进 / 高潮着色；深色横条 = 起始小节起的总小节数',states:'默认',skip:'无',tokens:'--sec-quiet、--sec-build、--sec-peak、--ink'},
+ shotCardWide:{tier:'variant',base:'card',type:'数据展示/卡片',ref:'Card（16:9 封面）',reason:'口播的镜头卡是 9:16 竖版七列，宣传片是 16:9 三列，还多一行配方',params:'16:9 封面；镜号 + 小节·秒；要表现什么；配方；状态标签',states:'默认',skip:'加载中：生成中沿用现有「在写 / 写好」标签，不另做骨架',tokens:T},
+ outputWide:{tier:'variant',base:'paintPlayer',type:'数据展示/卡片',ref:'Card（16:9 播放器 + 检查项）',reason:'口播成片播放器是 9:16，宣传片要 16:9，检查项也不同',params:'左 1.35 份播放器，右 1 份信息、检查项、缩略图',states:'默认',skip:'加载中：合成中沿用现有进度块，不另做骨架',tokens:'--media-bg、--panel、--rule'},
+ recipeDetail:{tier:'variant',base:'card',type:'数据展示/卡片',ref:'Card（横排：封面、说明、按钮）',reason:'镜头详情里原来没有配方，要一块带「换个配方重写」的横排卡',params:'封面 + 配方名和一句话 + 按钮',states:'默认',skip:'加载中：随镜头详情一起出来',tokens:T},
+ recipePicker:{tier:'new',type:'反馈/对话框',ref:'Modal（左侧类别 + 卡片网格）',reason:'现有弹窗只有单列表单，没有类别筛选和卡片网格',vr:'dialog-form 是单列表单弹窗，加类别栏和三列网格后结构完全不同',params:'宽 920；左 150 类别栏带数量；右三列卡片；底部写选中这张适用于什么',states:'默认',skip:'无',tokens:'--panel、--rule、--ac、--ac-bg'},
+ recipeCard:{tier:'variant',base:'card',type:'数据展示/卡片',ref:'Card（16:9 样片 + 类别角标）',reason:'风格卡是竖图，配方卡要 16:9 样片、类别角标、时长和能量',params:'16:9 封面左上角类别；名称；一句话；约 N 秒 · 能量',states:'默认',skip:'加载中：封面是本机静态图',tokens:T},
+};
+const MAP={'DV-KIND':'promoKind','DV-STEPS':'flowSteps','DV-HEAD':'screen-head','DV-BEATFAIL':'attention','DV-GENBAR':'actions','DV-OUTCHECKS':'facts',
+ 'DV-PROMO-TABLE':'promoShotTable','DV-BRIEF':'promoBrief','DV-RC':'recipeChip','DV-BARS':'barsStepper','DV-MROW':'trackPicker','DV-MSPAN':'barSpan',
+ 'DV-SHOT':'shotCardWide','DV-OUTPUT':'outputWide','DV-RCBOX':'recipeDetail','DV-RPICK':'recipePicker','DV-RPCARD':'recipeCard',
+ 'DV-START':'none','DV-PROMO':'none','DV-PROMO-ROW':'none','DV-HOW':'none','DV-MUSIC':'none','DV-FILM':'none','DV-STRIP':'none'};
+// 改前和没改的现有块只当背景，不算这次的组件
+document.querySelectorAll('[data-design-id="DV-TABS"],[data-design-id="DV-SCRIPT"],[data-design-id="DV-VOICE"],[data-design-id="DV-STYLE"]').forEach(e=>e.removeAttribute('data-design-id'));
+const counts={};
+document.querySelectorAll('[data-design-id]').forEach(e=>{const n=MAP[e.dataset.designId];if(!n)return;e.dataset.designComponent=n;if(n==='none')return;const c=COMP[n];e.dataset.designComponentTier=c.tier;if(c.base)e.dataset.designComponentBase=c.base;if(c.type)e.dataset.designComponentType=c.type;if(e.closest('[data-design-state]'))counts[n]=(counts[n]||0)+1;});
+const TIER={reuse:'沿用',variant:'变体',new:'新组件'};
+document.querySelector('[data-comp-table]').innerHTML=`<table class="lead" data-design-component-table data-component-reference="${PROJECT.reference}" data-component-reference-why="${esc(PROJECT.why)}"><tr><th>组件</th><th>档位</th><th>类型</th><th>处数</th><th>为什么 · 参数 · 状态</th></tr>${Object.keys(counts).map(n=>{const c=COMP[n],x=c.tier!=='reuse';const at=x?` data-component-type="${c.type}" data-component-reason="${esc(c.reason)}" data-component-params="${esc(c.params)}" data-component-states="${c.states}" data-component-states-skip="${esc(c.skip)}" data-component-tokens="${c.tokens}" data-component-ref="${esc(c.ref)}"${c.vr?` data-component-variant-reason="${esc(c.vr)}"`:''}`:'';return `<tr data-component-name="${n}" data-component-tier="${c.tier}" data-component-count="${counts[n]}"${at}><td><code>${n}</code>${c.base?`<br><small>基于 ${c.base}</small>`:''}</td><td>${TIER[c.tier]}</td><td>${x?c.type:'—'}</td><td>${counts[n]}</td><td>${x?`${esc(c.reason)}<br><small>参数：${esc(c.params)}<br>对照：${esc(c.ref)}<br>状态：${c.states}；不做：${esc(c.skip)}<br>令牌：${c.tokens}</small>`:'—'}</td></tr>`;}).join('')}</table>`;
+</script>
+</body>
+</html>

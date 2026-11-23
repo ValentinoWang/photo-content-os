@@ -1,0 +1,32 @@
+{
+  "mode": "改旧页",
+  "device": "桌面",
+  "section": null,
+  "public": false,
+  "session_id": "44398e14-d34e-4fbc-b3a2-4994fcc7c48e",
+  "controller": "unknown",
+  "pages": [
+    {
+      "route": "/ 项目页 › 脚本直出 › 宣传片",
+      "states": [
+        "promo-filled",
+        "promo-done",
+        "promo-empty",
+        "promo-filled-b",
+        "promo-no-music",
+        "promo-short",
+        "promo-beat-fail",
+        "promo-locked",
+        "promo-picker"
+      ],
+      "draft": "index.html"
+    }
+  ],
+  "role": "总控",
+  "created_at": "2026-11-23T06:03:53.456167+00:00",
+  "owner": {
+    "pid": 17785,
+    "started_at": "2026-11-22T08:08:43Z"
+  },
+  "design_tool": "ok"
+}

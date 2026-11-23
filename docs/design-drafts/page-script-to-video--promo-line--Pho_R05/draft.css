@@ -1,0 +1,38 @@
+/* 稿子外壳：只管说明文字和改前 / 改后框，颜色、字体沿用产品令牌，不定义新令牌。实现时不搬这一份。 */
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.7 var(--f-tx)}
+.doc{max-width:1320px;margin:0 auto;padding:28px 28px 80px}
+.doc>h1{font:600 24px/1.35 var(--f-ui);margin:0 0 8px}
+.doc>h2.sec{font:600 20px/1.4 var(--f-ui);margin:44px 0 10px;padding-top:18px;border-top:1px solid var(--rule)}
+.doc p.lead{margin:6px 0 12px;color:var(--ink-2);max-width:980px}
+.doc ol.toc{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 0;padding:0;list-style:none}
+.doc ol.toc li{display:flex;gap:6px;align-items:center;color:var(--ink-2)}
+.doc ol.toc b,.cmp-hd .tag{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ac-soft);color:var(--on-ac);font:600 12px var(--f-mo)}
+.doc .note{margin:12px 0 0;padding:10px 14px;border-left:4px solid var(--ac-2);background:var(--panel);color:var(--ink-2);font-size:14px}
+.cmp{margin:18px 0 26px;border:1px solid var(--rule);border-radius:10px;background:var(--panel);overflow:hidden}
+.cmp-hd{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--rule);font:600 16px var(--f-ui)}
+.cmp-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)}
+.cmp-row>div{padding:12px 16px 16px;min-width:0}
+.cmp-row>div+div{border-left:1px solid var(--rule)}
+.cmp-lab{display:inline-block;margin-bottom:8px;padding:1px 10px;border-radius:4px;font:600 13px var(--f-ui)}
+.now .cmp-lab{background:var(--warn-bg);color:var(--ink)}
+.now{border-left:6px solid var(--warn-line)}
+.after .cmp-lab{background:var(--ok-bg);color:var(--ink)}
+.after{border-left:6px solid var(--ok-line)}
+.cmp-row p{margin:0 0 10px;font-size:14px;color:var(--ink-2)}
+.cmp-row .uses{margin-top:10px;font-size:14px;color:var(--ink-3)}
+.dstage{background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:14px;overflow:auto}
+.dstage .review-screen{padding:0}
+.zoom75{zoom:.75}.zoom6{zoom:.6}
+.dfull{margin-top:10px;border:1px solid var(--rule-2);border-radius:10px;overflow:hidden;background:var(--bg)}
+.dfull .dbar{padding:6px 12px;background:var(--panel-2);border-bottom:1px solid var(--rule);font:12px var(--f-mo);color:var(--ink-3)}
+.full-in{padding:20px 24px}
+.states{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.states figure{margin:0}
+.states figcaption{margin:0 0 6px;font:600 13px var(--f-ui);color:var(--ink-2)}
+.modal-bg{background:rgba(21,32,33,.32);padding:28px;border-radius:8px;display:grid;place-items:center}
+@media(max-width:960px){.cmp-row{grid-template-columns:1fr}.cmp-row>div+div{border-left:0;border-top:1px solid var(--rule)}.states{grid-template-columns:1fr}}
+.doc table{border-collapse:collapse;font-size:14px}.doc table th,.doc table td{border-bottom:1px solid var(--rule);padding:6px 10px;text-align:left;vertical-align:top}
+.doc table small{font-size:13px;color:var(--ink-2)}
+.doc pre.lead{font-size:14px!important}
+.full-in{overflow:auto}
+.full-in>.review-screen{min-width:1180px}

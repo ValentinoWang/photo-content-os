@@ -1,0 +1,128 @@
+/* ---- Pho_R05 宣传片新增：实现时并入 studio/static/direct.css。颜色、字体只用 styles.css 里的令牌。 ---- */
+
+/* 1 做哪种：口播视频 / 宣传片（沿用 .seg，加第二行小字） */
+.dv-kind{display:flex;align-items:center;gap:14px;grid-column:1/-1}
+.dv-kind>span{font:600 12.5px var(--f-tx);color:var(--ink-2)}
+.dv-kind .seg{width:420px;grid-template-columns:repeat(2,1fr)}
+.dv-kind .seg button{display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 10px;line-height:1.3}
+.dv-kind .seg button small{font:12px var(--f-tx);color:var(--ink-3)}
+.dv-kind .seg button[aria-checked=true] small{color:var(--ac-soft)}
+.dv-kind .seg button:disabled{color:var(--ink-5);cursor:not-allowed}
+.dv-kind p{font:12px var(--f-tx);color:var(--ink-3)}
+
+/* 2 镜头表：产品一句话 + 一镜一行 */
+.dv-brief{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--rule)}
+.dv-brief label{font:600 12.5px var(--f-tx);color:var(--ink-2)}
+.dv-brief input{width:100%;border:1px solid var(--rule-2);border-radius:6px;padding:7px 10px;background:var(--panel-2);color:var(--ink);font:13px var(--f-tx)}
+.dv-brief input::placeholder{color:var(--ink-3)}
+.dv-brief input:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 2px var(--ac-bg)}
+.dv-pt{width:100%;min-width:1080px;border-collapse:collapse;table-layout:fixed}
+.dv-pt col.c-t{width:96px}.dv-pt col.c-r{width:236px}.dv-pt col.c-b{width:128px}.dv-pt col.c-s{width:120px}.dv-pt col.c-x{width:150px}
+.dv-pt th{background:var(--panel-2);color:var(--ink-3);font:500 12px var(--f-tx);text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
+.dv-pt th small{font-weight:400;font-size:12px;color:var(--ink-3);margin-left:4px}
+.dv-pt td{vertical-align:top;padding:8px 6px;border-left:1px solid var(--rule)}
+.dv-pt tr+tr td{border-top:1px solid var(--rule)}
+.dv-pt td.sb-t{border-left:0;padding:12px 10px}
+.dv-pt td.sb-t b{display:block;font:600 13px var(--f-mo);color:var(--ink)}
+.dv-pt td.sb-t span{display:block;margin-top:2px;font:12px var(--f-mo);color:var(--ink-3);white-space:nowrap}
+.dv-pt .cell{display:block;width:100%;min-height:44px;border:1px solid transparent;border-radius:6px;padding:4px 6px;color:var(--ink-2);font:13px/1.65 var(--f-tx);white-space:pre-wrap}
+.dv-pt .cell.c-main{color:var(--ink)}
+.dv-pt .cell.ph{color:var(--ink-3);font-style:italic}
+.dv-pt .cell:hover{background:var(--panel-2)}
+
+/* 镜头配方小卡（表格里、镜头卡里、选配方弹层里共用一份） */
+.dv-rc{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px;align-items:center;width:100%;padding:5px;border:1px solid var(--rule-2);border-radius:6px;background:var(--panel);color:inherit;font:inherit;text-align:left;cursor:pointer}
+.dv-rc:hover{background:var(--raise)}
+.dv-rc:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.dv-rc img{display:block;width:72px;aspect-ratio:16/9;object-fit:cover;border-radius:3px;background:var(--media-bg)}
+.dv-rc b{display:block;font:500 12.5px var(--f-tx);color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dv-rc small{display:block;margin-top:1px;font:12px var(--f-tx);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dv-rc--auto{border-style:dashed;background:var(--panel-2)}
+.dv-rc--auto .dv-rc-ph{display:grid;place-items:center;width:72px;aspect-ratio:16/9;border-radius:3px;border:1px dashed var(--rule-2);font:12px var(--f-tx);color:var(--ink-3)}
+.dv-rc--set{border-color:var(--ac-2)}
+.dv-bars{display:inline-flex;align-items:center;border:1px solid var(--rule-2);border-radius:6px;overflow:hidden;margin-top:4px}
+.dv-bars button{width:26px;height:28px;border:0;background:var(--panel-2);color:var(--ink-3);font:14px var(--f-mo);cursor:pointer}
+.dv-bars button:disabled{color:var(--ink-5);cursor:not-allowed}
+.dv-bars span{min-width:34px;text-align:center;font:12.5px var(--f-tx);color:var(--ink)}
+.dv-bars-note{display:block;margin-top:4px;font:12px var(--f-mo);color:var(--ink-3);white-space:nowrap}
+.dv-shotpic{display:grid;place-items:center;width:100%;aspect-ratio:16/9;margin-top:4px;border:1px dashed var(--rule-2);border-radius:4px;background:var(--panel-2);color:var(--ink-3);font:12px/1.5 var(--f-tx);text-align:center;cursor:pointer}
+.dv-shotpic img{display:block;width:100%;height:100%;object-fit:cover;border-radius:3px}
+.dv-shotpic.has{border-style:solid;padding:0;overflow:hidden}
+
+/* 3 选镜头配方（弹层） */
+.dv-rp{width:920px;max-width:100%;border:1px solid var(--rule-2);border-radius:10px;background:var(--panel);box-shadow:0 18px 48px rgba(0,0,0,.18);display:flex;flex-direction:column;max-height:640px}
+.dv-rp>header{display:flex;align-items:baseline;gap:10px;padding:14px 18px;border-bottom:1px solid var(--rule)}
+.dv-rp>header h3{margin:0;font-size:15px}
+.dv-rp>header p{font:12px var(--f-tx);color:var(--ink-3)}
+.dv-rp>header .link{margin-left:auto}
+.dv-rp-body{display:grid;grid-template-columns:150px minmax(0,1fr);min-height:0;flex:1}
+.dv-rp-cats{padding:10px 8px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;overflow:auto}
+.dv-rp-cats button{display:flex;justify-content:space-between;padding:6px 10px;border:0;border-radius:6px;background:none;color:var(--ink-2);font:13px var(--f-tx);cursor:pointer;text-align:left}
+.dv-rp-cats button span{font:12px var(--f-mo);color:var(--ink-3)}
+.dv-rp-cats button[aria-selected=true]{background:var(--ac-bg);color:var(--ac-soft);font-weight:500}
+.dv-rp-grid{padding:12px 14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;overflow:auto;align-content:start}
+.dv-rp-card{display:flex;flex-direction:column;border:1px solid var(--rule-2);border-radius:8px;background:var(--panel);overflow:hidden;color:inherit;font:inherit;text-align:left;cursor:pointer;padding:0}
+.dv-rp-card:hover{border-color:var(--ac-2)}
+.dv-rp-card[aria-pressed=true]{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.dv-rp-card .pv{position:relative;aspect-ratio:16/9;background:var(--media-bg)}
+.dv-rp-card .pv img{display:block;width:100%;height:100%;object-fit:cover}
+.dv-rp-card .pv em{position:absolute;left:6px;top:6px;border-radius:4px;padding:0 6px;font:12px/1.7 var(--f-tx);font-style:normal;color:var(--media-ink);background:rgba(13,19,20,.72)}
+.dv-rp-card .tx{padding:8px 10px 10px;display:flex;flex-direction:column;gap:4px}
+.dv-rp-card .tx b{font:500 13px var(--f-tx);color:var(--ink)}
+.dv-rp-card .tx p{font:12px/1.55 var(--f-tx);color:var(--ink-3);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:37px}
+.dv-rp-card .tx small{font:12px var(--f-mo);color:var(--ink-3)}
+.dv-rp-auto{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px dashed var(--rule-2);border-radius:8px;background:var(--panel-2);color:inherit;font:inherit;text-align:left;cursor:pointer}
+.dv-rp-auto[aria-pressed=true]{border-style:solid;border-color:var(--ac);background:var(--ac-bg)}
+.dv-rp-auto b{font:500 13px var(--f-tx)}
+.dv-rp-auto span{font:12px var(--f-tx);color:var(--ink-3)}
+.dv-rp>footer{display:flex;align-items:center;gap:12px;padding:12px 18px;border-top:1px solid var(--rule)}
+.dv-rp>footer p{flex:1;min-width:0;font:12px/1.55 var(--f-tx);color:var(--ink-3)}
+.dv-rp>footer p b{color:var(--ink-2);font-weight:500}
+
+/* 4 配乐（替换配音卡） */
+.dv-music{display:flex;flex-direction:column;gap:8px}
+.dv-mrow{display:grid;grid-template-columns:28px minmax(0,1fr) max-content;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--rule-2);border-radius:6px;background:var(--panel);color:inherit;font:inherit;text-align:left;cursor:pointer;width:100%}
+.dv-mrow:hover{background:var(--raise)}
+.dv-mrow[aria-checked=true]{border-color:var(--ac);background:var(--ac-bg);box-shadow:inset 0 0 0 1px var(--ac)}
+.dv-mrow[aria-disabled=true]{cursor:not-allowed;border-style:dashed}
+.dv-mrow[aria-disabled=true] b{color:var(--ink-3)}
+.dv-mplay{display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--rule-2);border-radius:50%;background:var(--panel);color:var(--ac-soft);font-size:12px}
+.dv-mrow b{display:block;font:500 13px var(--f-tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dv-mrow small{display:block;font:12px var(--f-tx);color:var(--ink-3)}
+.dv-mrow .meta{font:12px var(--f-mo);color:var(--ink-3);white-space:nowrap;text-align:right;padding-right:2px}
+.dv-mrow .meta.warn{font-family:var(--f-tx);color:var(--warn)}
+.dv-mspan{padding:10px 10px 4px;border:1px solid var(--rule);border-radius:6px;background:var(--panel-2)}
+.dv-mbars{display:grid;gap:1px;height:16px}
+.dv-mbars i{display:block;height:16px;border-radius:1px;background:var(--sec-quiet)}
+.dv-mbars i.b{background:var(--sec-build)}
+.dv-mbars i.p{background:var(--sec-peak)}
+.dv-mcover{position:relative;height:6px;margin-top:4px}
+.dv-mcover i{position:absolute;top:0;height:6px;border-radius:3px;background:var(--ink-2)}
+.dv-mlegend{display:flex;gap:12px;margin-top:6px;font:12px var(--f-tx);color:var(--ink-3)}
+.dv-mlegend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:-1px;background:var(--sec-quiet)}
+.dv-mlegend span.b::before{background:var(--sec-build)}
+.dv-mlegend span.p::before{background:var(--sec-peak)}
+.dv-mlegend span.c::before{background:var(--ink-2);height:4px;vertical-align:1px}
+.dv-mstart{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px;font:12.5px var(--f-tx);color:var(--ink-2)}
+.dv-mstart .dv-bars{margin-top:0}
+.dv-mstart em{font-style:normal;font:12px var(--f-mo);color:var(--ink-3)}
+.dv-mempty{padding:12px;border:1px dashed var(--rule-2);border-radius:6px;font:12.5px/1.6 var(--f-tx);color:var(--ink-3)}
+
+/* 5 生成以后：横版镜头卡和横屏成片 */
+.dv-film.dv-film--wide{grid-template-columns:repeat(3,minmax(0,1fr))}
+.dv-film--wide .dv-poster{aspect-ratio:16/9}
+.dv-poster .dv-fake{position:absolute;inset:0;display:grid;place-items:center;color:var(--media-ink);font:500 15px var(--f-tx);letter-spacing:.04em}
+.dv-card-b .dv-rcline{display:flex;gap:6px;align-items:baseline;font:12px var(--f-tx);color:var(--ink-2);min-width:0}
+.dv-card-b .dv-rcline em{flex:none;font-style:normal;color:var(--ink-3)}
+.dv-card-b .dv-rcline span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dv-out.dv-out--wide{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+.dv-out--wide .dv-player .dv-stage{width:100%;height:auto;aspect-ratio:16/9}
+.dv-out--wide .dv-player .dv-scrub{width:100%}
+.dv-out--wide .dv-strip{flex-wrap:wrap}
+.dv-out--wide .dv-strip button,.dv-out--wide .dv-strip span{flex:0 0 96px;max-width:96px;aspect-ratio:16/9}
+.dv-out--wide .dv-strip iframe{width:1920px;height:1080px;transform:scale(.05)}
+.dv-out--wide .dv-strip b{font-size:12px}
+.dv-rcbox{margin-top:10px;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--panel-2);display:grid;grid-template-columns:128px minmax(0,1fr) auto;gap:12px;align-items:center}
+.dv-rcbox img{width:128px;aspect-ratio:16/9;object-fit:cover;border-radius:4px}
+.dv-rcbox b{font:500 13px var(--f-tx)}
+.dv-rcbox p{font:12px/1.6 var(--f-tx);color:var(--ink-3)}
