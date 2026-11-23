@@ -394,6 +394,9 @@ class Generator(StyleMixin, RevisionMixin):
                           'checks': {'playable': 'unknown', 'avOffsetSeconds': None, 'blackFrames': None}}}
         if kind == 'promo':
             job.update(kind=kind, promo=promo, width=1920, height=1080)
+            for shot in job['shots']:
+                shot['barSeconds'] = round(240 / beat['bpm'], 6)
+                shot['estimatedSeconds'] = round(shot['bars'] * shot['barSeconds'], 1) if isinstance(shot['bars'], int) else round(2 * shot['barSeconds'], 1)
             job['output']['kind'] = 'music'
             for sid, source in image_sources.items():
                 target = root / 'images' / sid
@@ -448,6 +451,8 @@ class Generator(StyleMixin, RevisionMixin):
         started = time.perf_counter()
         status = 'passed'
         try:
+            if 'barSeconds' in shot:
+                shot['measuredSeconds'] = self.promo_seconds(root, shot)
             return self.media.render(root, shot)
         except Exception:
             status = 'failed'
@@ -455,6 +460,21 @@ class Generator(StyleMixin, RevisionMixin):
         finally:
             self.record(root, 'render', shotId=shot['shotId'], status=status,
                         elapsedSeconds=round(time.perf_counter() - started, 3))
+
+    @staticmethod
+    def promo_seconds(root: Path, shot: dict) -> float:
+        """宣传片单镜渲染长度：定了小节就按小节；「自动」按镜头代码声明的 const D 补足整小节，没声明按 2 小节。
+        合成时由 promo_plan 按同样规则重排，这里只管单镜预览和封面不被截短。"""
+        bar = shot['barSeconds']
+        if isinstance(shot.get('bars'), int):
+            return round(shot['bars'] * bar, 3)
+        from video_render.animation_duration import declared_duration
+        try:
+            declared = declared_duration((root / 'shots' / (shot['shotId'] + '.html')).read_text(encoding='utf-8'))
+        except (OSError, UnicodeError, ValueError):
+            declared = None
+        bars = max(1, math.ceil(declared / bar - 1e-9)) if declared else 2
+        return round(bars * bar, 3)
 
     def record_layout(self, root: Path, shot: dict, result: dict | None) -> None:
         if result is None:

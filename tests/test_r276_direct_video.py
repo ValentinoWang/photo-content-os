@@ -645,3 +645,15 @@ def test_promo_compose_real_plan_reports_late_short_track(tmp_path, promo_input)
     (gen.path('project1', job['jobId']) / 'shots' / '01.html').write_text(html(5))
     gen._compose('project1', job['jobId'])
     assert gen.read('project1', job['jobId'])['failureCode'] == 'track_too_short'
+
+
+def test_promo_shot_render_length_follows_bars_not_text(tmp_path, promo_input):
+    # 宣传片单镜渲染长度按小节（自动按 const D 补足整小节），不按「要表现什么」的字数估。
+    from direct_video.generate import Generator
+    bar = 2.0
+    root = tmp_path / 'job'; (root / 'shots').mkdir(parents=True)
+    fixed = {'shotId': '01', 'bars': 3, 'barSeconds': bar}
+    assert Generator.promo_seconds(root, fixed) == 6.0
+    (root / 'shots' / '02.html').write_text('<script>const D = 4.5;</script>', encoding='utf-8')
+    assert Generator.promo_seconds(root, {'shotId': '02', 'bars': 'auto', 'barSeconds': bar}) == 6.0
+    assert Generator.promo_seconds(root, {'shotId': '03', 'bars': 'auto', 'barSeconds': bar}) == 4.0
