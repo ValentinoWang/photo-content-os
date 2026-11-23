@@ -27,7 +27,6 @@ ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.ro
     {'method': 'GET', 'path': '/api/direct/recipes', 'operation_id': 'getDirectRecipes', 'summary': 'Read promotional shot recipes'},
     {'method': 'GET', 'path': '/api/direct/recipes/{recipeId}/poster.jpg', 'operation_id': 'getRecipePoster', 'summary': 'Read recipe poster', 'response_media': 'image/jpeg'},
     {'method': 'GET', 'path': '/api/direct/recipes/{recipeId}/clip.mp4', 'operation_id': 'getRecipeClip', 'summary': 'Read recipe clip', 'response_media': 'video/mp4', 'byte_ranges': True},
-    {'method': 'POST', 'path': '/api/projects/{projectId}/direct/promo-images', 'operation_id': 'uploadPromoImage', 'summary': 'Upload promotional image', 'write': True},
     {'method': 'POST', 'path': '/api/projects/{projectId}/direct/jobs', 'operation_id': 'createDirectJob', 'summary': 'createDirectJob', 'write': True},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/latest', 'operation_id': 'getLatestDirectJob', 'summary': 'getLatestDirectJob'},
     {'method': 'GET', 'path': '/api/projects/{projectId}/direct/jobs/{jobId}', 'operation_id': 'getDirectJob', 'summary': 'getDirectJob'},
@@ -232,8 +231,6 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
         operation['responses']['409'] = _response('Task busy or required artifacts not ready')
     if spec['operation_id'] == 'uploadDirectNarration':
         operation['requestBody'] = {'required': True, 'content': {'audio/wav': {'schema': {'type': 'string', 'format': 'binary', 'maxLength': 104857600}}}}
-    if spec['operation_id'] == 'uploadPromoImage':
-        operation['requestBody'] = {'required': True, 'content': {mime: {'schema': {'type': 'string', 'format': 'binary', 'maxLength': 20971520}} for mime in ('image/png', 'image/jpeg')}}
     if spec['operation_id'] == 'getMusicLibrary':
         operation['description'] = ('Each track retains its existing beat field; promoBeat contains status '
                                     '(ready, missing or failed), bars, bpm, sections (startBar, endBar, kind), '
@@ -241,7 +238,7 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
     if spec['operation_id'] == 'createDirectJob':
         operation['requestBody']['content']['application/json']['schema'] = {
             'type': 'object', 'oneOf': [{'required': ['script']}, {'required': ['storyboard']}, {'required': ['kind', 'promo'], 'properties': {'kind': {'const': 'promo'}}}],
-            'properties': {'kind': {'enum': ['talk', 'promo']}, 'promo': {'type': 'object', 'required': ['brief', 'trackId', 'startBar', 'fadeOutSeconds', 'shots'], 'properties': {'brief': {'type': 'string'}, 'trackId': {'type': 'string'}, 'startBar': {'type': 'integer', 'minimum': 1}, 'fadeOutSeconds': {'const': 1}, 'shots': {'type': 'array', 'items': {'type': 'object', 'required': ['visual', 'recipeId', 'bars'], 'properties': {'visual': {'type': 'string'}, 'text': {'type': 'string'}, 'recipeId': {'type': ['string', 'null']}, 'bars': {'anyOf': [{'const': 'auto'}, {'type': 'integer', 'minimum': 1, 'maximum': 8}]}, 'imageId': {'type': 'string'}}}}}}, 'script': {'type': 'string', 'maxLength': 20000},
+            'properties': {'kind': {'enum': ['talk', 'promo']}, 'promo': {'type': 'object', 'required': ['brief', 'trackId', 'startBar', 'fadeOutSeconds', 'shots'], 'properties': {'brief': {'type': 'string'}, 'trackId': {'type': 'string'}, 'startBar': {'type': 'integer', 'minimum': 1}, 'fadeOutSeconds': {'const': 1}, 'shots': {'type': 'array', 'items': {'type': 'object', 'required': ['visual', 'recipeId', 'bars'], 'properties': {'visual': {'type': 'string'}, 'text': {'type': 'string'}, 'recipeId': {'type': ['string', 'null']}, 'bars': {'anyOf': [{'const': 'auto'}, {'type': 'integer', 'minimum': 1, 'maximum': 8}]}}}}}}, 'script': {'type': 'string', 'maxLength': 20000},
                            'storyboard': {'type': 'object', 'required': ['shots'], 'properties': {'shots': {
                                'type': 'array', 'minItems': 1, 'maxItems': 99, 'items': {
                                    'type': 'object', 'required': ['shotId', 'dialogue'], 'properties': {

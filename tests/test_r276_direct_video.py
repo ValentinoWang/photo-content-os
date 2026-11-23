@@ -614,28 +614,6 @@ def test_promo_compose_unavailable_beat_map(tmp_path, promo_input, monkeypatch):
     assert gen.read('project1', job['jobId'])['failureCode'] == 'beat_map_unavailable'
 
 
-def test_promo_image_reaches_model_with_valid_suffix(tmp_path, promo_input):
-    from direct_video import recipe_library
-    _, body = promo_input
-    body['promo']['shots'][0]['recipeId'] = recipe_library.load_index()[0]['id']
-    image_id = 'b' * 32
-    body['promo']['shots'][0]['imageId'] = image_id
-    image = tmp_path / 'state' / 'direct-promo-images' / 'project1' / image_id
-    image.parent.mkdir(parents=True)
-    image.write_bytes(b'\x89PNG\r\n\x1a\nsynthetic')
-    class ImageModel(FakeModel):
-        def __call__(self, **kwargs):
-            if 'D' in json.loads(kwargs['user_prompt']):
-                self.image_paths = kwargs['image_paths']
-            return super().__call__(**kwargs)
-    model = ImageModel()
-    gen = Generator(tmp_path / 'state', model_call=model, media=FakeMedia())
-    job = gen.create('project1', body, background=False)
-    gen.generate('project1', job['jobId'])
-    assert model.image_paths[-1].suffix == '.png'
-    assert model.image_paths[-1].read_bytes() == image.read_bytes()
-
-
 def test_promo_compose_real_plan_reports_late_short_track(tmp_path, promo_input):
     from direct_video import recipe_library
     folder, body = promo_input

@@ -1043,21 +1043,6 @@ class StudioApplication:
                         self._body()
                         self._json(200, {'ok': True, **app.direct_video.library('decision', segments[4], segments[5] == 'adopt')})
                         return
-                    if method == 'POST' and len(segments) == 5 and segments[:2] == ['api', 'projects'] and segments[3:] == ['direct', 'promo-images']:
-                        from studio import direct_recipes
-                        self._assert_direct_origin()
-                        try:
-                            length = int(self.headers.get('Content-Length', '0'))
-                        except ValueError as exc:
-                            raise DirectVideoError('promo_image_invalid') from exc
-                        try:
-                            image_id = direct_recipes.upload(app.store, segments[2], self.rfile, length, self.headers.get('Content-Type', ''))
-                        except DirectVideoError:
-                            # 正文可能没读完，留着会被当成下一个请求，回完错误就断开。
-                            self.close_connection = True
-                            raise
-                        self._json(200, {'ok': True, 'imageId': image_id})
-                        return
                     if method == 'POST' and len(segments) >= 5 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'style-drafts']:
                         self._assert_direct_origin()
                         draft = app.direct_video.draft(segments[2], segments[5] if len(segments) > 5 else None,

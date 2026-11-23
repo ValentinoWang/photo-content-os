@@ -124,16 +124,15 @@ def parse_shots(body: dict) -> list[dict]:
         for i, shot in enumerate(promo['shots'], 1):
             if not isinstance(shot, dict):
                 raise DirectVideoError('script_invalid')
-            visual, text, recipe, bars, image = (shot.get(k) for k in ('visual', 'text', 'recipeId', 'bars', 'imageId'))
+            visual, text, recipe, bars = (shot.get(k) for k in ('visual', 'text', 'recipeId', 'bars'))
             if (not isinstance(visual, str) or not 0 < len(visual.strip()) <= 2000
                     or (text is not None and (not isinstance(text, str) or len(text) > 2000))
                     or (recipe is not None and (not isinstance(recipe, str) or not SAFE_ID.fullmatch(recipe)))
-                    or not (bars == 'auto' or type(bars) is int and 1 <= bars <= 8)
-                    or (image is not None and (not isinstance(image, str) or not re.fullmatch(r'[a-f0-9]{32}', image)))):
+                    or not (bars == 'auto' or type(bars) is int and 1 <= bars <= 8)):
                 raise DirectVideoError('script_invalid')
             rows.append({'shotId': f'{i:02d}', 'dialogue': visual.strip(), 'visual': visual.strip(),
                          'subtitle': None, 'camera': None, 'audio': None, 'text': text,
-                         'recipeId': recipe, 'bars': bars, 'imageId': image})
+                         'recipeId': recipe, 'bars': bars})
         return rows
     if ('script' in body) == ('storyboard' in body):
         raise DirectVideoError('script_invalid')
@@ -351,7 +350,6 @@ class Generator(StyleMixin, RevisionMixin):
         rows = parse_shots(body)
         kind = body.get('kind', 'talk')
         promo = None
-        image_sources = {}
         if kind == 'promo':
             if not isinstance(project_id, str) or not SAFE_ID.fullmatch(project_id):
                 raise DirectVideoError('job_not_found')
@@ -376,12 +374,6 @@ class Generator(StyleMixin, RevisionMixin):
                     row['recipe'] = {'id': entry['id'], 'name': entry['name'], 'chosenBy': 'user'}
                 else:
                     row['recipe'] = None
-                if row['imageId']:
-                    source = self.root.parent / 'direct-promo-images' / project_id / row['imageId']
-                    image_root = (self.root.parent / 'direct-promo-images' / project_id).resolve()
-                    if not source.resolve().is_relative_to(image_root) or not source.is_file() or source.is_symlink():
-                        raise DirectVideoError('promo_image_invalid')
-                    image_sources[row['shotId']] = source
             promo = copy.deepcopy(body['promo'])
             promo.update(trackTitle=beat['title'], bpm=beat['bpm'], endBar=None, seconds=None)
         base = self.resolve_style_base(body)
@@ -407,10 +399,6 @@ class Generator(StyleMixin, RevisionMixin):
                 shot['barSeconds'] = round(240 / beat['bpm'], 6)
                 shot['estimatedSeconds'] = round(shot['bars'] * shot['barSeconds'], 1) if isinstance(shot['bars'], int) else round(2 * shot['barSeconds'], 1)
             job['output']['kind'] = 'music'
-            for sid, source in image_sources.items():
-                target = root / 'images' / sid
-                target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(source, target)
         job['handoff'] = copy.deepcopy(body.get('handoff'))
         if narration_path is not None:
             with narration_path.open('rb') as stream:
@@ -543,7 +531,6 @@ class Generator(StyleMixin, RevisionMixin):
             checks, phase = {'errors': [], 'warnings': []}, 'writing'
             try:
                 design = json.loads((root / 'design.json').read_text())
-                promo_images = []
                 promo_context = {}
                 promo = job.get('kind') == 'promo'
                 if promo:
@@ -574,18 +561,6 @@ class Generator(StyleMixin, RevisionMixin):
                         raise DirectVideoError('recipe_not_found')
                     promo_context = {'recipeCard': card.read_text(encoding='utf-8'), 'brief': job['promo']['brief'],
                                      'visual': shot['visual'], 'text': shot.get('text')}
-                    if shot.get('imageId'):
-                        source = root / 'images' / sid
-                        content = source.read_bytes()
-                        if content.startswith(b'\x89PNG\r\n\x1a\n'):
-                            extension = '.png'
-                        elif content.startswith(b'\xff\xd8\xff'):
-                            extension = '.jpg'
-                        else:
-                            raise DirectVideoError('promo_image_invalid')
-                        image = root / 'images' / (sid + extension)
-                        atomic_bytes(image, content)
-                        promo_images.append(image)
                 duration = shot['measuredSeconds'] or shot['estimatedSeconds']
                 context = {'design': design, 'dialogue': shot['dialogue'], 'D': duration, 'timingSource': shot['timingSource'],
                            'shotId': sid, 'shotNumber': index + 1, 'totalShots': len(job['shots']),
@@ -621,7 +596,7 @@ class Generator(StyleMixin, RevisionMixin):
                                                 '若提供 styleSampleCode，它是同一风格的一镜样例，内容不同，只照画法；颜色、字号以全片设计为准。'
                                                 'form_profile.visual_grammar 指定该风格的画法，与默认禁用冲突时照它。\n' + self.library.rules(RULES)
                                                 + (PROMO_RULES.replace('{bar}', f"{shot['barSeconds']:g}") if promo else ''), context,
-                                                image_paths=sample_images + promo_images,
+                                                image_paths=sample_images,
                                                 shotId=sid, attempt=attempt + 1, instructionKind='retry' if retry_errors is not None else 'requested' if instruction else 'initial')
                         if isinstance(value.get('code'), str):
                             atomic_bytes(root / 'checks' / 'code-attempts' / f'{sid}-{uuid.uuid4().hex}.html', value['code'].encode())

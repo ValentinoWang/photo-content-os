@@ -1,6 +1,5 @@
-"""Recipe catalog and project-scoped promotional image uploads."""
+"""Recipe catalog and artifact resolution."""
 from pathlib import Path
-from uuid import uuid4
 
 from direct_video import recipe_library
 from direct_video.generate import DirectVideoError
@@ -8,7 +7,6 @@ from direct_video.generate import DirectVideoError
 CATEGORIES = [('opening', '开场'), ('typography', '文字'), ('ui-entrance', '界面入场'),
               ('transition', '转场'), ('rhythm', '节奏'), ('data', '数据'),
               ('effects', '特效'), ('interaction', '交互'), ('camera', '运镜'), ('outro', '收尾')]
-MAX_IMAGE_BYTES = 20 * 1024 * 1024
 
 
 def catalog():
@@ -40,19 +38,3 @@ def artifact(recipe_id, kind):
     if not path.is_relative_to(root) or not path.is_file():
         raise DirectVideoError('recipe_clip_missing' if kind == 'clip.mp4' else 'recipe_not_found')
     return path
-
-
-def upload(store, project_id, stream, length, content_type):
-    store.get_project(project_id)
-    if length <= 0 or length > MAX_IMAGE_BYTES or content_type not in ('image/png', 'image/jpeg'):
-        raise DirectVideoError('promo_image_invalid')
-    data = stream.read(length)
-    valid = (content_type == 'image/png' and data.startswith(b'\x89PNG\r\n\x1a\n') or
-             content_type == 'image/jpeg' and data.startswith(b'\xff\xd8\xff'))
-    if len(data) != length or not valid:
-        raise DirectVideoError('promo_image_invalid')
-    image_id = uuid4().hex
-    directory = store.state_dir / 'direct-promo-images' / project_id
-    directory.mkdir(parents=True, exist_ok=True)
-    (directory / image_id).write_bytes(data)
-    return image_id

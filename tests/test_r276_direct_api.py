@@ -13,7 +13,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'scripts')]
 from studio.server import serve
-from test_r276_direct_video import FakeMedia, FakeModel, wav
+from test_r276_direct_video import FakeMedia, FakeModel, promo_input, wav
 
 
 @pytest.fixture
@@ -86,7 +86,7 @@ def test_routes_csrf_origin_and_validation(api):
     assert str(app.store.state_dir) not in json.dumps(request(path)[2])
 
 
-def test_promo_recipe_catalog_and_image_upload(api):
+def test_promo_recipe_catalog(api):
     request, csrf, pid, app, _ = api
     status, _, data = request('/api/direct/recipes')
     assert status == 200 and len(data['recipes']) == 124
@@ -95,14 +95,25 @@ def test_promo_recipe_catalog_and_image_upload(api):
     assert request(recipe['posterUrl'])[0] == 200
     assert request('/api/direct/recipes/not-a-recipe/poster.jpg')[2]['error']['code'] == 'recipe_not_found'
     assert request('/api/direct/recipes/%2E%2E/poster.jpg')[0] == 404
-    url = f'/api/projects/{pid}/direct/promo-images'
-    png = b'\x89PNG\r\n\x1a\n' + b'\0' * 32
-    assert request(url, 'POST', png, {**csrf, 'Content-Type': 'image/png'})[2]['imageId']
-    assert request(url, 'POST', b'fake.jpg', {**csrf, 'Content-Type': 'image/jpeg'})[2]['error']['code'] == 'promo_image_invalid'
-    # 超大：只按 Content-Length 拒绝、不读正文；声明 20 MB+1、实际只发文件头，客户端不会因服务端提前回包而断管。
-    oversized = {**csrf, 'Content-Type': 'image/png', 'Content-Length': str(20 * 1024 * 1024 + 1)}
-    status, _, data = request(url, 'POST', png[:16], oversized)
-    assert status == 400 and data['error']['code'] == 'promo_image_invalid'
+
+
+def test_promo_create_ignores_unknown_image_id(api, promo_input):
+    request, csrf, pid, app, _ = api
+    _, _, catalog = request('/api/direct/recipes')
+    _, body = promo_input
+    body['promo']['shots'][0]['recipeId'] = catalog['recipes'][0]['id']
+    body['promo']['shots'][0]['imageId'] = 'b' * 32
+    status, _, result = request(f'/api/projects/{pid}/direct/jobs', 'POST', body, csrf)
+    assert status == 201
+    job = result['job']
+    assert 'imageId' not in job['shots'][0]
+    deadline = time.monotonic() + 5
+    while app.direct_video.generator.active and time.monotonic() < deadline:
+        time.sleep(.01)
+    final_job = request(f"/api/projects/{pid}/direct/jobs/{job['jobId']}")[2]['job']
+    assert final_job['status'] == 'ready'
+    assert 'imageId' not in final_job['shots'][0]
+    assert not (app.direct_video.generator.path(pid, job['jobId']) / 'images').exists()
 
 
 def test_code_posters_output_range_and_missing(api):

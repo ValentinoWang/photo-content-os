@@ -17,8 +17,8 @@ console.log('PASS promo calculations');
 
 const {newPromoDraft, promoDraftAfter, failureMessage} = await import('../studio/static/direct-view.js');
 const track={file_sha256:'music-1',promoBeat:{bpm:120,bars:8}};
-const shots=[{visual:'界面',text:'标题',recipeId:'r1',bars:2,imageId:'img1'},{visual:'  ',bars:'auto'}];
-assert.deepEqual(promoPayload({brief:'介绍',track,startBar:3,shots}),{kind:'promo',promo:{brief:'介绍',trackId:'music-1',startBar:3,fadeOutSeconds:1,shots:[{visual:'界面',text:'标题',recipeId:'r1',bars:2,imageId:'img1'}]}});
+const shots=[{visual:'界面',text:'标题',recipeId:'r1',bars:2},{visual:'  ',bars:'auto'}];
+assert.deepEqual(promoPayload({brief:'介绍',track,startBar:3,shots}),{kind:'promo',promo:{brief:'介绍',trackId:'music-1',startBar:3,fadeOutSeconds:1,shots:[{visual:'界面',text:'标题',recipeId:'r1',bars:2}]}});
 assert.equal(promoMissing({shots:[],track:null,style:null}), 'shots');
 assert.equal(promoMissing({shots,track:null,style:null}), 'track');
 assert.equal(promoMissing({shots,track,startBar:8,style:null}), 'short');
