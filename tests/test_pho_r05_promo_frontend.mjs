@@ -66,6 +66,9 @@ const out=process.env.PHO_R05_PROMO_EVIDENCE || join(homedir(),'.photo-content-o
 // 纯色 16:9 小图，代替海报和截图；仓库忽略 *.jpg，所以内联在这里。
 const FIXTURE_JPG=Buffer.from('/9j/4AAQSkZJRgABAgAAAQABAAD//gAPTGF2YzYzLjEuMTAyAP/bAEMACBAQExATFhYWFhYWGhgaGxsbGhoaGhsbGx0dHSIiIh0dHRsbHR0gICIiJSYlIyMiIyYmKCgoMDAuLjg4OkVFU//EAE0AAQEAAAAAAAAAAAAAAAAAAAAEAQEBAQAAAAAAAAAAAAAAAAAABAUQAQAAAAAAAAAAAAAAAAAAAAARAQAAAAAAAAAAAAAAAAAAAAD/wAARCABaAKADASIAAhEAAxEA/9oADAMBAAIRAxEAPwCEBUygAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//2Q==','base64');
 const data=JSON.parse(readFileSync(join(root,'tests/fixtures/pho-r05-promo/state-fixtures.json'),'utf8'));
+// 锁定切换条长在生成后的页面上；节拍图读不到是合成失败：镜头都写好、渲好，任务失败码 beat_map_unavailable。
+data.states['promo-locked']=data.states['promo-done'];
+{const failed=structuredClone(data.states['promo-done']); Object.assign(failed.job,{status:'failed',failureCode:'beat_map_unavailable'}); Object.assign(failed.job.output,{status:'failed',composedAt:null}); data.states['promo-beat-fail']=failed;}
 const temp=mkdtempSync(join(tmpdir(),'pho-r05-'));
 const socket=createServer(); await new Promise((ok,fail)=>socket.once('error',fail).listen(0,'127.0.0.1',ok));
 const port=socket.address().port; await new Promise(ok=>socket.close(ok));
@@ -80,7 +83,7 @@ try {
  const project={id:'fixture-piece',title:'示例作品',revision:1,documents:{},workspace_key:'fixture-piece'};
  const styles=JSON.parse(readFileSync(join(root,'tests/fixtures/r278-direct/first.json'),'utf8')).styles;
  const failures=[];
- for(const state of ['promo-empty','promo-filled','promo-short','promo-no-music','promo-done']){
+ for(const state of ['promo-empty','promo-filled','promo-filled-b','promo-short','promo-no-music','promo-picker','promo-done','promo-locked','promo-beat-fail']){
   const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'}); const errors=[]; page.on('pageerror',e=>errors.push(e.message));
   await page.route('https://fonts.googleapis.com/**',r=>r.abort()); await page.route('https://fonts.gstatic.com/**',r=>r.abort());
   await page.route('**/api/**',route=>{
@@ -92,7 +95,7 @@ try {
    else if(p.endsWith('/direct/handoff'))result={ok:true,handoff:null};
    else if(p.includes('/direct/jobs'))result=data.states[state]||{ok:true,job:null};
    else if(p==='/api/direct/styles')result=styles;
-   else if(p==='/api/direct/recipes')result=data.recipes;
+   else if(p==='/api/direct/recipes'){ if(state==='promo-picker') return route.continue(); result=data.recipes; } // 选配方弹窗用仓库里真实的 124 张配方目录，和稿子同一份数据
    else if(p==='/api/review/music')result=state==='promo-no-music'?{ok:true,tracks:[]}:data.music;
    else if(p==='/api/diagnostics')result={ok:true,diagnostics:{checks:[],checking:false}};
    else if(p==='/api/settings')result={ok:true,settings:{upstream:{upstream_features_available:false}}};
@@ -113,11 +116,13 @@ try {
     await page.locator('[data-track="track-1"]').click();
     if(state==='promo-filled') for(let i=0;i<3;i++){await page.locator('[data-design-id="DV-RC"]').nth(i).click();await page.locator('[data-recipe="r1"]').click();await page.locator('[data-use]').click();}
     if(state==='promo-short') for(let i=0;i<20;i++) await page.locator('[data-start="1"]').click();
+    if(state==='promo-picker'){await page.locator('[data-design-id="DV-RC"]').nth(1).click(); await page.locator('[data-design-id="DV-RPCARD"]').first().waitFor();}
    }
-  } else { await page.locator('[data-design-id="DV-FILM"]').waitFor(); await page.locator('[data-shot]').first().click(); await page.locator('[data-design-id="DV-RCBOX"]').waitFor(); }
+  } else if(state==='promo-done'){ await page.locator('[data-design-id="DV-FILM"]').waitFor(); await page.locator('[data-shot]').first().click(); await page.locator('[data-design-id="DV-RCBOX"]').waitFor(); }
+  else await page.locator('[data-shot]').first().waitFor();
   await page.evaluate(()=>document.fonts.ready); assert.deepEqual(errors,[],`${state} page errors`);
   const metrics=await page.evaluate(()=>({width:innerWidth,height:innerHeight,scrollHeight:document.documentElement.scrollHeight}));
-  await page.screenshot({path:join(out,`${state}.png`),fullPage:true});
+  await page.screenshot({path:join(out,`${state}.png`),fullPage:state!=='promo-picker'}); // 弹窗固定在视口里，只截一屏
   const inventory=await page.evaluate(`(()=>{${collector};return collectDesignInventory({states:{${JSON.stringify(state)}:'#app'}});})()`);
   const contract=JSON.parse(readFileSync(join(root,'docs/design-drafts/page-script-to-video--promo-line--Pho_R05/contract.json'),'utf8'));
   const excluded=new Set(['R208-NAV','DV-TOPBAR','DV-MODEL','DV-TABS','DV-STYLE','DV-STYLE-LIB','DV-STYLE-CUSTOM','DV-DESIGN','DV-SCRUB','DV-RESCRIPT-ENTRY']);

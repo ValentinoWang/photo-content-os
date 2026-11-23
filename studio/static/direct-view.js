@@ -250,6 +250,7 @@ export function createDirectView(ctx) {
     let title='',lede='',actions='';
     if(st==='designing'){title=job.design.source?.kind==='adjusted'?'Opus 正在按你的话改全片设计':'Opus 正在定全片设计';lede='定好以后七镜三镜一组同时写。可以离开这一页，回来接着看进度。';}
     else if(st==='writing'){title=D(`Opus 写好了 ${count} 镜${writing.length?'，正在写第 '+writing.map(s=>s.shotId).join('、')+' 镜':''}`);lede=D('写好一镜就渲染一镜。'+job.shots.filter(s=>s.status==='writing'&&!s.lastInstruction&&s.attempts>1).map(s=>`第 ${s.shotId} 镜自查没过，正在自动重写一次。`).join(''));}
+    else if(st==='failed-shot'&&!failed&&job.kind==='promo'&&job.failureCode==='beat_map_unavailable'){title=D(`${n} 镜都写好了`);}
     else if(st==='failed-shot'){title=D(failed?`${count} 镜写好了，第 ${failed.shotId} 镜没写成`:failureMessage(job.failureCode)||'没做成，可以重试');}
     else if(st==='rewriting'){title=D(`正在按你的意见重写第 ${writing.find(s=>s.lastInstruction)?.shotId} 镜`);lede=D(`只重写、只重渲这一镜；其他 ${n-1} 镜不动。`);}
     else if(st.startsWith('composing')&&job.kind==='promo'){title='正在合成成片';lede='按配乐的小节排好每一镜，写好一镜就在本机逐帧渲染一镜';}
@@ -264,6 +265,8 @@ export function createDirectView(ctx) {
     if(st.startsWith('composing'))body.insertBefore(find('[data-progress]'),designSlot);
     find('[data-head]').innerHTML=head(title,lede,actions);
     find('[data-job-alert]').innerHTML=failed?attention(D(failed.failureCode==='lint_failed_after_retry'?`第 ${failed.shotId} 镜写了两次，都没过自查`:`第 ${failed.shotId} 镜没写成`),D(failed.checks.errors.map(e=>safeText(e.message)).filter(Boolean).join('；')||failureMessage(failed.failureCode)),btn('写意见重写','data-focus',true),'DV-SHOTFAIL',true):'';
+    // 宣传片合成时节拍图读不到：镜头都在，只差配乐的节拍分析；给出去音乐库重新分析、回来再合成两条路。
+    if(!failed&&job.kind==='promo'&&job.failureCode==='beat_map_unavailable'){find('[data-job-alert]').innerHTML=attention('配乐的节拍图读不到','这首歌的节拍分析没了或坏了。去音乐库对这首点「重新分析」，回来再点「合成成片」。',btn('去音乐库','data-beat-library')+btn('合成成片','data-compose',true),'DV-BEATFAIL',true);find('[data-beat-library]').addEventListener('click',()=>ctx.go({view:'review',tab:'music'}));}
     find('[data-focus]')?.addEventListener('click',()=>{selected=failed.shotId;userSelected=true;paint();find('#dv-ask')?.focus();});
     find('[data-design]').innerHTML=design();applySwatches(root());
     find('[data-progress]').innerHTML=['writing','designing'].includes(st)?`<div class="dv-progress" data-design-id="DV-PROGRESS"><span data-design-data>${count} / ${n} 镜写好</span><div class="meter"><i data-progress-bar></i></div><span class="mono" data-design-data>已用 ${mmss(elapsed(job.createdAt))} · 三镜同时写</span></div>`:st.startsWith('composing')?`<div class="dv-compose" data-design-id="DV-COMPOSE"><div><b>合成中</b><p data-design-data>${n} 镜 · ${job.kind==='promo'?'横屏 · 约 '+mmss(job.promo.seconds):st==='composing-silent'?'无声预览 · 约 '+mmss(totalSeconds(job.shots)):'配音 '+mmss(job.narration.durationSeconds)}</p></div></div>`:'';
