@@ -98,6 +98,62 @@ def ready(tmp_path, *, model=None, media=None, script='第一句。\n第二句�
     return gen, gen.read('project1', job['jobId']), model, media
 
 
+@pytest.fixture
+def promo_input(tmp_path, monkeypatch):
+    monkeypatch.setenv('LOCAL_MEDIA_ROOT', str(tmp_path))
+    track_id = 'a' * 64
+    folder = tmp_path / 'library' / 'music' / track_id
+    folder.mkdir(parents=True)
+    (folder / 'track.json').write_text(json.dumps({
+        'file_sha256': track_id, 'title': '测试配乐', 'duration_seconds': 24.0,
+    }))
+    beats = [i / 2 for i in range(48)]
+    analysis = {'schema_version': 1, 'file_sha256': track_id, 'duration_seconds': 24.0,
+                'registry_version': 1, 'beat': {'status': 'done', 'beats': beats,
+                'downbeats': beats[::4], 'beat_energy': [.5] * len(beats),
+                'sections': [{'start': 0, 'end': 24.0, 'kind': 'quiet'}],
+                'package_versions': {'beat-this': '1.1.0'}, 'models': ['beat-this-final0'],
+                'registry_version': 1}}
+    (folder / 'analysis.json').write_text(json.dumps(analysis))
+    from studio.music_analysis import load_beat_map
+    assert len(load_beat_map(track_id)['downbeats']) == 12
+    return folder, {'kind': 'promo', 'style': '浅底图解', 'promo': {
+        'brief': '介绍产品', 'trackId': track_id, 'startBar': 1, 'fadeOutSeconds': 1,
+        'shots': [{'visual': '展示产品', 'text': '产品', 'recipeId': None, 'bars': 'auto'}]}}
+
+
+def test_promo_create_uses_landscape_dimensions(tmp_path, promo_input):
+    _, body = promo_input
+    gen = Generator(tmp_path / 'state', model_call=FakeModel(), media=FakeMedia())
+    job = gen.create('project1', body, background=False)
+    assert (job['width'], job['height']) == (1920, 1080)
+    assert (gen.read('project1', job['jobId'])['width'], gen.read('project1', job['jobId'])['height']) == (1920, 1080)
+
+
+def test_promo_short_track_rejected_before_job_directory(tmp_path, promo_input):
+    _, body = promo_input
+    body['promo']['startBar'] = 11
+    body['promo']['shots'] = [
+        {'visual': '展示产品', 'recipeId': None, 'bars': 2},
+        {'visual': '展示效果', 'recipeId': None, 'bars': 'auto'},
+    ]
+    gen = Generator(tmp_path / 'state', model_call=FakeModel(), media=FakeMedia())
+    with pytest.raises(DirectVideoError) as exc:
+        gen.create('project1', body, background=False)
+    assert exc.value.code == 'track_too_short'
+    assert not list(gen.root.glob('project1/*'))
+
+
+def test_promo_unreadable_beat_map_reports_unavailable(tmp_path, promo_input):
+    folder, body = promo_input
+    (folder / 'analysis.json').write_text('{')
+    gen = Generator(tmp_path / 'state', model_call=FakeModel(), media=FakeMedia())
+    with pytest.raises(DirectVideoError) as exc:
+        gen.create('project1', body, background=False)
+    assert exc.value.code == 'beat_map_unavailable'
+    assert not list(gen.root.glob('project1/*'))
+
+
 def wait(gen, job):
     deadline = time.monotonic() + 10
     while time.monotonic() < deadline:
@@ -337,6 +393,8 @@ def test_busy_job_and_projection(tmp_path):
     job['privatePath'] = str(tmp_path)
     job['shots'][0]['checks']['warnings'].append({'code': 'note', 'message': str(tmp_path / 'secret/file'), 'privatePath': str(tmp_path)})
     result = projection(job)
+    assert 'kind' not in job
+    assert result['kind'] == 'talk'
     assert str(tmp_path) not in json.dumps(result)
     assert set(result['shots'][0]) == {'shotId', 'dialogue', 'mainAction', 'estimatedSeconds', 'measuredSeconds', 'timingSource', 'status', 'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt', 'renderedAt', 'codeChars', 'posterRevision', 'checks',
                                       # R277 adds per-shot versions, boxes, look and sample.
