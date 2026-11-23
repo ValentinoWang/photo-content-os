@@ -252,7 +252,7 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
         operation['description'] = 'For interrupted or failed shots, omitted, null or blank instruction retries the prior writing intent and includes prior check errors. Every other state requires 1–200 characters after trimming.'
         operation['requestBody']['required'] = False
         operation['requestBody']['content']['application/json']['schema'] = {
-            'type': 'object', 'properties': {'instruction': {'type': ['string', 'null'], 'maxLength': 200,
+            'type': 'object', 'properties': {'recipeId': {'type': 'string', 'description': 'Optional promo recipe selected for this rewrite.'}, 'instruction': {'type': ['string', 'null'], 'maxLength': 200,
                 'description': 'May be empty only when the current shot is interrupted or failed; otherwise a nonblank instruction is required.'}}}
     if spec['operation_id'] == 'reanalyzeMusic':
         operation['requestBody']['content']['application/json']['schema'] = {

@@ -114,6 +114,26 @@ class LocalMedia:
 
     def compose(self, root: Path, job: dict) -> dict:
         value = manifest(root, job['shots'])
+        promo = job.get('_promoComposition')
+        if promo:
+            value.update(promo['render'])
+            value['assets_dir'] = str(root / 'shots')
+            value['narration_wav'] = promo['audio']
+            path = root / 'manifests' / 'compose.json'
+            write_json(path, value)
+            state = compose(path, root / 'composition')
+            if state['status'] != 'completed':
+                raise RenderError('compose_failed', 'Composition failed')
+            pending = root / 'output.pending.mp4'
+            shutil.copyfile(state['candidate'], pending)
+            frames = sum(s['frames'] for s in value['shots'])
+            from video_candidate import check_direct_output
+            checks = check_direct_output(pending, frames=frames, fps=FPS, narrated=True,
+                                         diagnostic=root / 'checks' / 'output.json')
+            if checks['playable'] != 'pass' or checks['frameCount'] != 'pass' or checks['blackFrames'] != 'pass' or checks['avOffsetSeconds'] > .1:
+                raise OutputCheckError(checks)
+            pending.replace(root / 'output.mp4')
+            return {'durationSeconds': frames / FPS, 'frames': frames, 'checks': checks}
         frames = sum(s['frames'] for s in value['shots'])
         narrated = job['narration']['status'] == 'ready'
         pending = root / 'output.pending.mp4'

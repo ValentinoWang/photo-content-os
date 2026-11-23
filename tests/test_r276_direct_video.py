@@ -517,3 +517,131 @@ def test_failed_composition_keeps_measured_checks_and_narrated_kind(tmp_path):
     assert failed['output']['checks']['blackFrames'] == 'fail'
     assert failed['output']['checks']['playable'] == 'pass'
     assert projection(failed)['output']['checks']['blackFrames'] == 'fail'
+
+class PromoModel(FakeModel):
+    def __init__(self, choices):
+        super().__init__()
+        self.choices = iter(choices)
+
+    def __call__(self, **kwargs):
+        context = json.loads(kwargs['user_prompt'])
+        if 'recipes' in context:
+            self.calls.append(context)
+            return json.dumps({'recipeId': next(self.choices)})
+        return super().__call__(**kwargs)
+
+
+def test_promo_model_selects_recipe_and_receives_card(tmp_path, promo_input):
+    from direct_video import recipe_library
+    _, body = promo_input
+    entry = recipe_library.load_index()[0]
+    model = PromoModel([entry['id']])
+    gen = Generator(tmp_path / 'state', model_call=model, media=FakeMedia())
+    job = gen.create('project1', body, background=False)
+    gen.generate('project1', job['jobId'])
+    shot = gen.read('project1', job['jobId'])['shots'][0]
+    assert shot['recipe'] == {'id': entry['id'], 'name': entry['name'], 'chosenBy': 'opus'}
+    selection = next(c for c in model.calls if 'recipes' in c)
+    assert set(selection['recipes'][0]) == {'id', 'name', 'category', 'summary', 'use', 'seconds'}
+    writing = next(c for c in model.calls if 'D' in c)
+    assert (recipe_library.ROOT / entry['path']).read_text() in writing['recipeCard']
+    assert writing['brief'] == body['promo']['brief'] and writing['text'] == '产品'
+
+
+def test_promo_unknown_model_recipe_retries_then_fails_shot(tmp_path, promo_input):
+    _, body = promo_input
+    model = PromoModel(['unknown-one', 'unknown-two'])
+    gen = Generator(tmp_path / 'state', model_call=model, media=FakeMedia())
+    job = gen.create('project1', body, background=False)
+    gen.generate('project1', job['jobId'])
+    shot = gen.read('project1', job['jobId'])['shots'][0]
+    assert shot['failureCode'] == 'recipe_not_found'
+    assert len([c for c in model.calls if 'recipes' in c]) == 2
+
+
+def test_promo_rewrite_changes_recipe(tmp_path, promo_input):
+    from direct_video import recipe_library
+    _, body = promo_input
+    first, second = recipe_library.load_index()[:2]
+    body['promo']['shots'][0]['recipeId'] = first['id']
+    gen = Generator(tmp_path / 'state', model_call=FakeModel(), media=FakeMedia())
+    job = gen.create('project1', body, background=False)
+    gen.generate('project1', job['jobId'])
+    gen.rewrite('project1', job['jobId'], '01', recipe_id=second['id'])
+    result = wait(gen, job)
+    assert result['shots'][0]['recipe'] == {'id': second['id'], 'name': second['name'], 'chosenBy': 'user'}
+
+
+def test_promo_compose_uses_plan_and_reports_checks(tmp_path, promo_input, monkeypatch):
+    from direct_video import promo_plan, recipe_library
+    _, body = promo_input
+    body['promo']['shots'][0]['recipeId'] = recipe_library.load_index()[0]['id']
+    gen = Generator(tmp_path / 'state', model_call=FakeModel(), media=FakeMedia())
+    job = gen.create('project1', body, background=False)
+    gen.generate('project1', job['jobId'])
+    called = []
+    def plan(spec, media_root, out, **kwargs):
+        called.append(spec)
+        return ({'shots': [{'id': '01', 'frames': 60, 'start_frame': 0}]},
+                {'narration_wav': 'premix.wav'}, {'shots': [{'start_bar': 1, 'end_bar': 2, 'start_seconds': 0, 'end_seconds': 2}]})
+    monkeypatch.setattr(promo_plan, 'create_plan', plan)
+    monkeypatch.setattr(gen, 'premix_peak_db', lambda path: -1.0)
+    gen._compose('project1', job['jobId'])
+    result = gen.read('project1', job['jobId'])
+    assert called and result['output']['kind'] == 'music'
+    assert result['output']['checks']['barsAligned'] == {'aligned': 1, 'total': 1}
+    assert result['output']['checks']['peakDb'] == -1.0
+    from studio.direct_video import projection
+    public = projection(result)
+    assert public['output']['checks']['barsAligned'] == {'aligned': 1, 'total': 1}
+    assert public['output']['checks']['peakDb'] == -1.0
+
+
+def test_promo_compose_unavailable_beat_map(tmp_path, promo_input, monkeypatch):
+    from direct_video import promo_plan, recipe_library
+    from studio.music_analysis import BeatMapUnavailable
+    _, body = promo_input
+    body['promo']['shots'][0]['recipeId'] = recipe_library.load_index()[0]['id']
+    gen = Generator(tmp_path / 'state', model_call=FakeModel(), media=FakeMedia())
+    job = gen.create('project1', body, background=False)
+    gen.generate('project1', job['jobId'])
+    def fail(*args, **kwargs):
+        raise BeatMapUnavailable('result_unreadable', body['promo']['trackId'])
+    monkeypatch.setattr(promo_plan, 'create_plan', fail)
+    gen._compose('project1', job['jobId'])
+    assert gen.read('project1', job['jobId'])['failureCode'] == 'beat_map_unavailable'
+
+
+def test_promo_image_reaches_model_with_valid_suffix(tmp_path, promo_input):
+    from direct_video import recipe_library
+    _, body = promo_input
+    body['promo']['shots'][0]['recipeId'] = recipe_library.load_index()[0]['id']
+    image_id = 'b' * 32
+    body['promo']['shots'][0]['imageId'] = image_id
+    image = tmp_path / 'state' / 'direct-promo-images' / 'project1' / image_id
+    image.parent.mkdir(parents=True)
+    image.write_bytes(b'\x89PNG\r\n\x1a\nsynthetic')
+    class ImageModel(FakeModel):
+        def __call__(self, **kwargs):
+            if 'D' in json.loads(kwargs['user_prompt']):
+                self.image_paths = kwargs['image_paths']
+            return super().__call__(**kwargs)
+    model = ImageModel()
+    gen = Generator(tmp_path / 'state', model_call=model, media=FakeMedia())
+    job = gen.create('project1', body, background=False)
+    gen.generate('project1', job['jobId'])
+    assert model.image_paths[-1].suffix == '.png'
+    assert model.image_paths[-1].read_bytes() == image.read_bytes()
+
+
+def test_promo_compose_real_plan_reports_late_short_track(tmp_path, promo_input):
+    from direct_video import recipe_library
+    folder, body = promo_input
+    body['promo']['shots'][0].update(recipeId=recipe_library.load_index()[0]['id'], bars='auto')
+    body['promo']['startBar'] = 11
+    gen = Generator(tmp_path / 'state', model_call=FakeModel(), media=FakeMedia())
+    job = gen.create('project1', body, background=False)
+    gen.generate('project1', job['jobId'])
+    (gen.path('project1', job['jobId']) / 'shots' / '01.html').write_text(html(5))
+    gen._compose('project1', job['jobId'])
+    assert gen.read('project1', job['jobId'])['failureCode'] == 'track_too_short'

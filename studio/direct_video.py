@@ -62,7 +62,11 @@ def projection(job: dict | None, *, current_handoff=None) -> dict | None:
                 version['verify']['items'] = [{k: row[k] for k in ('index', 'result', 'reason')} for row in value['items']]
     result['narration'] = {k: result['narration'].get(k) for k in ('status', 'durationSeconds')}
     result['output'] = {k: result['output'].get(k) for k in ('status', 'kind', 'composedAt', 'durationSeconds', 'frames', 'revision', 'checks')}
-    result['output']['checks'] = {k: result['output']['checks'].get(k) for k in ('playable', 'avOffsetSeconds', 'blackFrames')}
+    checks = result['output']['checks']
+    keys = ('playable', 'avOffsetSeconds', 'blackFrames')
+    if result['kind'] == 'promo':
+        keys += ('barsAligned', 'peakDb')
+    result['output']['checks'] = {k: checks.get(k) for k in keys}
     return redact(result)
 
 
@@ -190,7 +194,7 @@ class DirectVideo:
     def command(self, project_id, job_id, action, body, *, sid=None):
         self.store.get_project(project_id)
         if action == 'rewrite':
-            job = self.generator.rewrite(project_id, job_id, sid, body.get('instruction'))
+            job = self.generator.rewrite(project_id, job_id, sid, body.get('instruction'), recipe_id=body.get('recipeId'))
         elif action == 'revise':
             title = self.store.get_project(project_id)['title']
             job = self.generator.revise(project_id, job_id, sid, body.get('lines'), title)

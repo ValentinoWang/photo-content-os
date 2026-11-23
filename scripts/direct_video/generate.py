@@ -514,12 +514,54 @@ class Generator(StyleMixin, RevisionMixin):
             checks, phase = {'errors': [], 'warnings': []}, 'writing'
             try:
                 design = json.loads((root / 'design.json').read_text())
+                promo_images = []
+                promo_context = {}
+                if job.get('kind') == 'promo':
+                    from direct_video import recipe_library
+                    recipe = shot.get('recipe')
+                    if recipe is None:
+                        catalog = [{k: entry[k] for k in ('id', 'name', 'category', 'summary', 'use', 'seconds')}
+                                   for entry in recipe_library.load_index()]
+                        by_id = {entry['id']: entry for entry in catalog}
+                        selection = {'recipes': catalog, 'brief': job['promo']['brief'],
+                                     'visual': shot['visual'], 'text': shot.get('text')}
+                        for attempt in range(2):
+                            choice = self.timed_call(root, 'choose_recipe', '从目录选一张配方，只输出 JSON {"recipeId": "目录中的 id"}。', selection, shotId=sid, attempt=attempt + 1)
+                            entry = by_id.get(choice.get('recipeId')) if isinstance(choice.get('recipeId'), str) else None
+                            if entry:
+                                break
+                            selection['error'] = 'recipe_not_found'
+                        else:
+                            raise DirectVideoError('recipe_not_found')
+                        recipe = {'id': entry['id'], 'name': entry['name'], 'chosenBy': 'opus'}
+                        with self.lock:
+                            current = self.read(project_id, job_id)
+                            current['shots'][index]['recipe'] = recipe
+                            self.save(root, current)
+                    entry = recipe_library.get(recipe['id'])
+                    card = (recipe_library.ROOT / entry['path']).resolve()
+                    if not card.is_relative_to(recipe_library.ROOT.resolve()):
+                        raise DirectVideoError('recipe_not_found')
+                    promo_context = {'recipeCard': card.read_text(encoding='utf-8'), 'brief': job['promo']['brief'],
+                                     'visual': shot['visual'], 'text': shot.get('text')}
+                    if shot.get('imageId'):
+                        source = root / 'images' / sid
+                        content = source.read_bytes()
+                        if content.startswith(b'\x89PNG\r\n\x1a\n'):
+                            extension = '.png'
+                        elif content.startswith(b'\xff\xd8\xff'):
+                            extension = '.jpg'
+                        else:
+                            raise DirectVideoError('promo_image_invalid')
+                        image = root / 'images' / (sid + extension)
+                        atomic_bytes(image, content)
+                        promo_images.append(image)
                 duration = shot['measuredSeconds'] or shot['estimatedSeconds']
                 context = {'design': design, 'dialogue': shot['dialogue'], 'D': duration, 'timingSource': shot['timingSource'],
                            'shotId': sid, 'shotNumber': index + 1, 'totalShots': len(job['shots']),
                            'previousDialogue': job['shots'][index - 1]['dialogue'] if index else None,
                            'nextDialogue': job['shots'][index + 1]['dialogue'] if index + 1 < len(job['shots']) else None,
-                           'instruction': instruction, **self.style_shot_context(job, shot)}
+                           'instruction': instruction, **self.style_shot_context(job, shot), **promo_context}
                 with self.lock:
                     samples = self.library.closest(shot)
                     sample_images = []
@@ -548,7 +590,7 @@ class Generator(StyleMixin, RevisionMixin):
                                                 'visual 是编导写的画面；subtitle 是画面上要出现的字；camera 是景别 · 运镜（照着做；颜色、字号以全片设计为准）。'
                                                 '若提供 styleSampleCode，它是同一风格的一镜样例，内容不同，只照画法；颜色、字号以全片设计为准。'
                                                 'form_profile.visual_grammar 指定该风格的画法，与默认禁用冲突时照它。\n' + self.library.rules(RULES), context,
-                                                image_paths=sample_images,
+                                                image_paths=sample_images + promo_images,
                                                 shotId=sid, attempt=attempt + 1, instructionKind='retry' if retry_errors is not None else 'requested' if instruction else 'initial')
                         if isinstance(value.get('code'), str):
                             atomic_bytes(root / 'checks' / 'code-attempts' / f'{sid}-{uuid.uuid4().hex}.html', value['code'].encode())
@@ -601,8 +643,8 @@ class Generator(StyleMixin, RevisionMixin):
                         self.save_version(root, current['shots'][index])
                     self.save(root, current)
 
-    def rewrite(self, project_id: str, job_id: str, sid: str, instruction: str | None = None) -> dict:
-        if isinstance(instruction, str) and instruction.strip() and len(instruction) <= 200:
+    def rewrite(self, project_id: str, job_id: str, sid: str, instruction: str | None = None, *, recipe_id=None) -> dict:
+        if recipe_id is None and isinstance(instruction, str) and instruction.strip() and len(instruction) <= 200:
             return self.revise(project_id, job_id, sid, [{'text': instruction, 'own': True}])
         with self.lock:
             job = self.read(project_id, job_id)
@@ -611,9 +653,19 @@ class Generator(StyleMixin, RevisionMixin):
                 raise DirectVideoError('shot_not_found')
             if instruction is not None and (not isinstance(instruction, str) or len(instruction) > 200):
                 raise DirectVideoError('instruction_invalid')
+            if recipe_id is not None:
+                from direct_video import recipe_library
+                if job.get('kind') != 'promo' or not isinstance(recipe_id, str):
+                    raise DirectVideoError('recipe_not_found')
+                try:
+                    entry = recipe_library.get(recipe_id)
+                except KeyError as exc:
+                    raise DirectVideoError('recipe_not_found') from exc
+                target['recipe'] = {'id': entry['id'], 'name': entry['name'], 'chosenBy': 'user'}
+                target['recipeId'] = entry['id']
             opinion = instruction.strip() if instruction is not None else ''
             retrying = target['status'] in {'interrupted', 'failed'}
-            if not opinion and not retrying:
+            if not opinion and not retrying and recipe_id is None:
                 raise DirectVideoError('instruction_invalid')
             retry_errors = copy.deepcopy(target['checks']['errors']) if retrying else None
             effective = opinion or target.get('lastInstruction')
@@ -745,28 +797,62 @@ class Generator(StyleMixin, RevisionMixin):
             if (project_id, job_id) in self.active or process_alive(job.get('_workerPid')):
                 raise DirectVideoError('job_busy')
             job['status'] = 'composing'
-            job['output'].update(status='composing', composedAt=None, kind='narrated' if job['narration']['status'] == 'ready' else 'silent')
+            job['output'].update(status='composing', composedAt=None, kind='music' if job.get('kind') == 'promo' else 'narrated' if job['narration']['status'] == 'ready' else 'silent')
             self.save(self.path(project_id, job_id), job)
             self.start(project_id, job_id, self._compose)
             return job
+
+    @staticmethod
+    def premix_peak_db(path):
+        import audioop
+        with wave.open(str(path), 'rb') as source:
+            peak = 0
+            while block := source.readframes(65536):
+                peak = max(peak, audioop.max(block, source.getsampwidth()))
+            maximum = (1 << (8 * source.getsampwidth() - 1)) - 1
+        return round(20 * math.log10(peak / maximum), 2) if peak else None
 
     def _compose(self, project_id, job_id):
         root = self.path(project_id, job_id)
         with self.lock:
             job = self.read(project_id, job_id)
             job['status'] = 'composing'
-            job['output'].update(status='composing', composedAt=None, kind='narrated' if job['narration']['status'] == 'ready' else 'silent')
+            job['output'].update(status='composing', composedAt=None, kind='music' if job.get('kind') == 'promo' else 'narrated' if job['narration']['status'] == 'ready' else 'silent')
             self.save(root, job)
         started = time.perf_counter()
         try:
+            if job.get('kind') == 'promo':
+                from direct_video import promo_plan
+                from runtime_paths import local_media_root
+                from studio.music_analysis import BeatMapUnavailable
+                spec = {'track_id': job['promo']['trackId'], 'fps': FPS, 'width': job['width'],
+                        'height': job['height'], 'start_bar': job['promo']['startBar'],
+                        'fade_out_seconds': job['promo']['fadeOutSeconds'], 'assets_dir': 'shots',
+                        'shots': [{'id': s['shotId'], 'html': s['shotId'] + '.html', 'bars': s['bars']} for s in job['shots']]}
+                try:
+                    render_plan, composition, plan = promo_plan.create_plan(spec, local_media_root(), root / 'promo-plan', spec_dir=root)
+                except BeatMapUnavailable as exc:
+                    raise DirectVideoError('beat_map_unavailable') from exc
+                except promo_plan.PlanError as exc:
+                    raise DirectVideoError(exc.code) from exc
+                job['_promoComposition'] = {'render': render_plan, 'audio': composition['narration_wav']}
+                job['promo']['endBar'] = plan['shots'][-1]['end_bar']
+                job['promo']['seconds'] = sum(s['frames'] for s in render_plan['shots']) / FPS
+                peak = self.premix_peak_db(composition['narration_wav'])
             for shot in job['shots']:
                 if shot.get('_cacheVersion') != shot.get('currentVersion'):
                     self.render(root, shot)
                     shot['_cacheVersion'] = shot['currentVersion']
             result = self.media.compose(root, job)
+            if job.get('kind') == 'promo':
+                origin = plan['shots'][0]['start_seconds']
+                aligned = sum(abs((frame['start_frame'] + frame['frames']) / FPS - (scheduled['end_seconds'] - origin)) <= .5 / FPS + 1e-9
+                              for frame, scheduled in zip(render_plan['shots'], plan['shots']))
+                result['checks'].update(barsAligned={'aligned': aligned, 'total': len(plan['shots'])}, peakDb=peak)
+                job.pop('_promoComposition', None)
             self.record(root, 'compose', status='passed', elapsedSeconds=round(time.perf_counter() - started, 3))
             with self.lock:
-                job['output'].update(result, status='ready', composedAt=now(), kind='narrated' if job['narration']['status'] == 'ready' else 'silent', revision=job['output']['revision'] + 1)
+                job['output'].update(result, status='ready', composedAt=now(), kind='music' if job.get('kind') == 'promo' else 'narrated' if job['narration']['status'] == 'ready' else 'silent', revision=job['output']['revision'] + 1)
                 job.update(status='done', failureCode=None)
                 self.save(root, job)
         except Exception as exc:
