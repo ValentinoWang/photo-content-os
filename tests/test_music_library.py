@@ -49,6 +49,28 @@ def test_missing_license_cannot_validate(tmp_path):
     with pytest.raises(MusicError):
         validate_track({'title': 'synthetic'})
 
+
+def test_promo_beat_projection_preserves_missing_and_failure(monkeypatch):
+    from studio.media_review import promo_beat
+    from studio.music_analysis import BeatMapUnavailable
+    beat_map = {'downbeats': [0., 2., 4., 6.], 'bpm': 120,
+                'sections': [{'start': 0., 'end': 2., 'kind': 'quiet'},
+                             {'start': 2., 'end': 6., 'kind': 'build'}]}
+    monkeypatch.setattr('studio.music_analysis.load_beat_map', lambda *a, **kw: beat_map)
+    assert promo_beat('a' * 64, Path('/tmp')) == {
+        'status': 'ready', 'bars': 3, 'bpm': 120,
+        'sections': [{'startBar': 1, 'endBar': 1, 'kind': 'quiet'},
+                     {'startBar': 2, 'endBar': 3, 'kind': 'build'}], 'firstBuildBar': 2}
+    def unavailable(code):
+        def fail(*args, **kwargs):
+            raise BeatMapUnavailable(code, 'a' * 64)
+        return fail
+    monkeypatch.setattr('studio.music_analysis.load_beat_map', unavailable('queued'))
+    assert promo_beat('a' * 64, Path('/tmp'))['status'] == 'missing'
+    monkeypatch.setattr('studio.music_analysis.load_beat_map', unavailable('result_unreadable'))
+    failed = promo_beat('a' * 64, Path('/tmp'))
+    assert failed['status'] == 'failed' and failed['reason'] == 'result_unreadable'
+
 FIXTURES = Path(__file__).parent / 'fixtures/music-library'
 
 

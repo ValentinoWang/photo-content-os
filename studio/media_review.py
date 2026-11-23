@@ -21,11 +21,32 @@ if str(SCRIPTS) not in sys.path:
 
 from studio.project_store import ProjectStoreError, _atomic, _thread_lock
 from runtime_paths import local_media_root
-from music_library.library import MusicLibrary
+from music_library.library import MusicLibrary, MusicError
 
 SCENE_NAMES = json.loads((Path(__file__).parent / 'static/scene-names.json').read_text())
 STATES = ('selected', 'usable', 'unused', 'rejected')
 DECISIONS = {'精选': 'selected', '可用': 'usable', '不用': 'unused'}
+
+
+def promo_beat(track_id, media_root):
+    from studio.music_analysis import BeatMapUnavailable, load_beat_map
+    try:
+        beat = load_beat_map(track_id, media_root=media_root)
+    except BeatMapUnavailable as exc:
+        status = 'missing' if exc.code in ('queued', 'analyzing') else 'failed'
+        result = {'status': status, 'bars': None, 'bpm': None, 'sections': [], 'firstBuildBar': None}
+        if status == 'failed':
+            result['reason'] = exc.code
+        return result
+    sections = []
+    for index, start in enumerate(beat['downbeats'][:-1], 1):
+        source = next(section for section in beat['sections'] if section['start'] <= start < section['end'])
+        if sections and sections[-1]['kind'] == source['kind']:
+            sections[-1]['endBar'] = index
+        else:
+            sections.append({'startBar': index, 'endBar': index, 'kind': source['kind']})
+    return {'status': 'ready', 'bars': len(beat['downbeats']) - 1, 'bpm': beat['bpm'],
+            'sections': sections, 'firstBuildBar': next((s['startBar'] for s in sections if s['kind'] == 'build'), None)}
 
 
 def read_json(path, *, optional=False):
@@ -303,7 +324,11 @@ class MediaReview:
         from studio.music_analysis import registry, read_analysis, derive, beat_metrics, failure
         reg = registry() if reg is None else reg
         def analysis(track):
-            data = read_analysis(self.music.root / track['file_sha256'], track)
+            try:
+                data = read_analysis(self.music.root / track['file_sha256'], track)
+            except MusicError:
+                return {'beat': failure('result_unreadable'), 'tags': failure('result_unreadable'),
+                        'promoBeat': promo_beat(track['file_sha256'], self.music.root.parent.parent)}
             projected = {}
             for part in ('beat', 'tags'):
                 value = dict(data[part]) if data else failure('analysis_missing')
@@ -311,6 +336,7 @@ class MediaReview:
                     value = {**value, **beat_metrics(value)} if part == 'beat' else dict(status='done', **derive(value['scores'], reg))
                 projected[part] = value
             projected.update(self.analysis_queue.state(track['file_sha256']))
+            projected['promoBeat'] = promo_beat(track['file_sha256'], self.music.root.parent.parent)
             return projected
         return [{**{k: v for k, v in track.items() if k not in ('sources', 'original_url', 'audio_file')},
                  'original_url': track['original_url'] if track['original_url'].startswith(('https://', 'http://')) else None,

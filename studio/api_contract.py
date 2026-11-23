@@ -228,6 +228,10 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
         operation['requestBody'] = {'required': True, 'content': {'audio/wav': {'schema': {'type': 'string', 'format': 'binary', 'maxLength': 104857600}}}}
     if spec['operation_id'] == 'uploadPromoImage':
         operation['requestBody'] = {'required': True, 'content': {mime: {'schema': {'type': 'string', 'format': 'binary', 'maxLength': 20971520}} for mime in ('image/png', 'image/jpeg')}}
+    if spec['operation_id'] == 'getMusicLibrary':
+        operation['description'] = ('Each track retains its existing beat field; promoBeat contains status '
+                                    '(ready, missing or failed), bars, bpm, sections (startBar, endBar, kind), '
+                                    'firstBuildBar, and reason on failure.')
     if spec['operation_id'] == 'createDirectJob':
         operation['requestBody']['content']['application/json']['schema'] = {
             'type': 'object', 'oneOf': [{'required': ['script']}, {'required': ['storyboard']}],
