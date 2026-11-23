@@ -772,7 +772,13 @@ class StudioApplication:
                         return
                     if segments[:2] == ['api', 'direct']:
                         query = urllib.parse.parse_qs(parsed.query)
-                        if segments[2] == 'samples' and 'poster' in query:
+                        if segments[2] == 'recipes':
+                            from studio import direct_recipes
+                            if len(segments) == 3:
+                                self._json(200, {'ok': True, **direct_recipes.catalog()})
+                            else:
+                                self._media(direct_recipes.artifact(segments[3], segments[4]))
+                        elif segments[2] == 'samples' and 'poster' in query:
                             self._media(app.direct_video.generator.library.poster(query['poster'][0]))
                         elif segments[2] == 'styles':
                             if len(segments) == 6 and segments[3] == 'library':
@@ -1036,6 +1042,16 @@ class StudioApplication:
                         self._assert_direct_origin()
                         self._body()
                         self._json(200, {'ok': True, **app.direct_video.library('decision', segments[4], segments[5] == 'adopt')})
+                        return
+                    if method == 'POST' and len(segments) == 5 and segments[:2] == ['api', 'projects'] and segments[3:] == ['direct', 'promo-images']:
+                        from studio import direct_recipes
+                        self._assert_direct_origin()
+                        try:
+                            length = int(self.headers.get('Content-Length', '0'))
+                        except ValueError as exc:
+                            raise DirectVideoError('promo_image_invalid') from exc
+                        image_id = direct_recipes.upload(app.store, segments[2], self.rfile, length, self.headers.get('Content-Type', ''))
+                        self._json(200, {'ok': True, 'imageId': image_id})
                         return
                     if method == 'POST' and len(segments) >= 5 and segments[:2] == ['api', 'projects'] and segments[3:5] == ['direct', 'style-drafts']:
                         self._assert_direct_origin()
@@ -1567,7 +1583,7 @@ class StudioApplication:
             def _handle_error(self, exc: Exception) -> None:
                 if isinstance(exc, DirectVideoError):
                     code = exc.code
-                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found', 'style_base_not_found', 'draft_not_found'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready', 'draft_not_ready', 'draft_busy', 'handoff_changed'} else 400
+                    status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found', 'style_base_not_found', 'draft_not_found', 'recipe_not_found', 'recipe_clip_missing'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready', 'draft_not_ready', 'draft_busy', 'handoff_changed'} else 400
                     self._json(status, _error(code, '直出任务暂时无法执行，请检查输入或任务状态后重试。'))
                     return
                 code = getattr(exc, "code", "request_invalid")

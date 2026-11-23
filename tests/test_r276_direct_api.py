@@ -86,6 +86,26 @@ def test_routes_csrf_origin_and_validation(api):
     assert str(app.store.state_dir) not in json.dumps(request(path)[2])
 
 
+def test_promo_recipe_catalog_and_image_upload(api):
+    request, csrf, pid, app, _ = api
+    status, _, data = request('/api/direct/recipes')
+    assert status == 200 and len(data['recipes']) == 124
+    assert len(data['categories']) == 10
+    recipe = next(row for row in data['recipes'] if row['posterUrl'])
+    assert request(recipe['posterUrl'])[0] == 200
+    assert request('/api/direct/recipes/not-a-recipe/poster.jpg')[2]['error']['code'] == 'recipe_not_found'
+    assert request('/api/direct/recipes/%2E%2E/poster.jpg')[0] == 404
+    url = f'/api/projects/{pid}/direct/promo-images'
+    png = b'\x89PNG\r\n\x1a\n' + b'\0' * 32
+    assert request(url, 'POST', png, {**csrf, 'Content-Type': 'image/png'})[2]['imageId']
+    assert request(url, 'POST', b'fake.jpg', {**csrf, 'Content-Type': 'image/jpeg'})[2]['error']['code'] == 'promo_image_invalid'
+    from studio.direct_recipes import upload, MAX_IMAGE_BYTES
+    from direct_video.generate import DirectVideoError
+    import io
+    with pytest.raises(DirectVideoError, match='promo_image_invalid'):
+        upload(app.store, pid, io.BytesIO(), MAX_IMAGE_BYTES + 1, 'image/png')
+
+
 def test_code_posters_output_range_and_missing(api):
     request, csrf, pid, app, _ = api
     path, job = create(api)
