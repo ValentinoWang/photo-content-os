@@ -139,3 +139,17 @@ def test_catalog_has_chinese_names_duration_and_normalized_energy():
             assert entry['seconds'] > 0
         assert entry['energy'] in {'低', '中', '高', None}
     assert recipe_library.build_index() == entries
+
+
+def test_recipe_seconds_prefers_whole_shot_over_first_segment():
+    recipe_seconds = recipe_library.recipe_seconds
+    # 先写分段、最后写全段：取全段，不取第一个分段数。
+    assert recipe_seconds('156f（闪光 0.3s + 飞行 1.6s + hold 3.3s；全段 5.2s）') == 5.2
+    assert recipe_seconds('前摇 ~0.5s + 快翻 ~1.2s；全段 4.5–5s') == 5.0
+    # 区间取上限：自动小节要盖住整段动画。
+    assert recipe_seconds('4–5s') == 5.0
+    assert recipe_seconds('A 140f（4.7s）/ B 150f（5s）') == 5.0
+    # 只给帧数时按 30fps 折算；多段串播的总长不算一镜。
+    assert recipe_seconds('单式动作段 6–22f + hold ≥45f（demo：A 120f / B 135f / C 140f）') == 4.7
+    assert recipe_seconds('A ~3.7s（112f）/ B ~4.5s（134f）；demo 两式串播 246f') == 4.5
+    assert recipe_seconds('没有数字') is None

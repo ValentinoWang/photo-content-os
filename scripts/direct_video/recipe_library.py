@@ -209,6 +209,32 @@ def posters_from_renders(render_dir):
     print(f"OK: {written} posters from {render_dir}")
 
 
+_NUM = r'(\d+(?:\.\d+)?)'
+_SPAN = _NUM + r'(?:\s*[–~-]\s*' + _NUM + r')?'
+
+
+def recipe_seconds(duration):
+    """整段时长的估计（秒）。卡片文字常先写分段（「闪光 0.3s + 飞行 1.6s …；全段 5.2s」），
+    所以先认「全段 / 总 / 约」写明的整段，取区间上限；再认总帧数；都没有才取文中最大的秒数或帧数。"""
+    def upper(match):
+        return float(match.group(2) or match.group(1))
+    # 「两式串播 246f」「全片合计」说的是多段拼起来的长度，不是一镜。
+    duration = re.sub(r'[^；;（(]*(?:串播|合计)[^；;）)]*', '', duration)
+    total = re.search(r'(?:全段|全长|总长|整段|总)\s*[~≈约]?\s*' + _SPAN + r'\s*s', duration)
+    if total:
+        return round(upper(total), 1)
+    frames = re.search(r'^(\d+)\s*f\b|(\d+)\s*f\s*@\s*30', duration)
+    if frames:
+        return round(int(frames.group(1) or frames.group(2)) / 30, 1)
+    lead = re.match(r'约\s*' + _SPAN + r'\s*s(?!\s*动作)', duration)
+    if lead:
+        return round(upper(lead), 1)
+    seconds = [float(x) for pair in re.findall(_SPAN + r'\s*s\b', duration) for x in pair if x]
+    counted = [int(x) / 30 for x in re.findall(r'(\d+)\s*f\b', duration)]
+    values = seconds + counted
+    return round(max(values), 1) if values else None
+
+
 def build_index():
     cards = sorted(path for path in ROOT.glob('*/*.md') if path.parent.name not in NON_CATEGORY_DIRS)
     errors, entries = [], []
@@ -230,17 +256,12 @@ def build_index():
     bad_durations = []
     for item in entries:
         duration = item['duration']
-        seconds = re.search(r'(\d+(?:\.\d+)?)\s*(?:[–~-]\s*\d+(?:\.\d+)?\s*)?s\b', duration)
-        frames = re.search(r'(\d+)\s*f\b', duration)
         if duration.startswith('n/a'):
             value = None
-        elif seconds:
-            value = float(seconds.group(1))
-        elif frames:
-            value = int(frames.group(1)) / 30
         else:
-            bad_durations.append(item['id'])
-            value = None
+            value = recipe_seconds(duration)
+            if value is None:
+                bad_durations.append(item['id'])
         energy = item['energy'].split('（', 1)[0]
         level = next((x for x in ('高', '中', '低') if x in energy), None)
         if '峰值' in energy:
