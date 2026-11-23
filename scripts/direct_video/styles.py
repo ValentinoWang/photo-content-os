@@ -92,7 +92,7 @@ class StyleMixin:
         if job.get('_baseDesign') is not None:
             context['baseDesign'] = job['_baseDesign']
         banned_rule = '保留原设计的完整禁用列表，仅按 style 修改' if job.get('_styleSample') else '3–6 条'
-        system = ('为竖屏口播设计全片视觉系统。只输出 JSON，包含 palette（background、primary、accent、neutral 的六位十六进制颜色），'
+        system = (('为横屏宣传片（1920×1080，配乐无口播）' if job.get('kind') == 'promo' else '为竖屏口播') + '设计全片视觉系统。只输出 JSON，包含 palette（background、primary、accent、neutral 的六位十六进制颜色），'
                   f'typeScale（三档从大到小整数），motionRules（一句话），banned（{banned_rule}），'
                   'motionSummary（一句给人看的动作规矩，最多30字，不含数字加单位、坐标、百分比），'
                   'bannedShort（给人看的不用套路，1–8条，每条最多12字），'

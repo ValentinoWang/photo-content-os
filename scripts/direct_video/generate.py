@@ -28,6 +28,15 @@ from direct_video.revision_library import RevisionLibrary, read_json
 
 MODEL = 'claude-opus-5-5'
 RULES = Path(__file__).with_name('rules') / 'shots.md'
+# 宣传片横屏、按小节、没有口播：盖掉 shots.md 里竖屏画布、底部字幕线和「跟口播出现」几条。
+PROMO_RULES = """
+## 本片是横屏宣传片（以下几条覆盖上面规则里的对应数字）
+- 画布 1920×1080：`html,body{margin:0;width:1920px;height:1080px;overflow:hidden}`。不要按竖屏排、只用左半边：主体占画面宽度 ≥ 50%，横向铺开（左右分栏、居中大字、横排卡片都可以）。
+- 安全区：左右各 ≥ 96px，上下各 ≥ 72px；所有文字和关键图形都在 1920×1080 之内，y > 1008 不放东西。上面「底部 y ≥ 1536」那条不适用。
+- 构图撑满横屏：主画面落在 y 72–1008 之间的中部，末帧不留超过画面宽度或高度 30% 的空带。上面「竖屏构图要撑满内容区」那条按横屏理解，不把竖屏版式缩在左上角。
+- 没有口播：dialogue / visual 是「这一镜要表现什么」，不是台词；text 是画面上要出现的字（可空）。recipeCard 是这一镜的动作配方，照它的结构和节奏做。
+- 时长：一小节 {bar} 秒，镜头切在小节线上。D 写成整小节的长度（小节数 × {bar}）；元素在 0.7·D 前出完，最后一个元素不晚于 D − 0.4 秒，之后停在完整画面上。
+"""
 SAFE_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}')
 
 
@@ -536,7 +545,8 @@ class Generator(StyleMixin, RevisionMixin):
                 design = json.loads((root / 'design.json').read_text())
                 promo_images = []
                 promo_context = {}
-                if job.get('kind') == 'promo':
+                promo = job.get('kind') == 'promo'
+                if promo:
                     from direct_video import recipe_library
                     recipe = shot.get('recipe')
                     if recipe is None:
@@ -609,13 +619,19 @@ class Generator(StyleMixin, RevisionMixin):
                         value = self.timed_call(root, 'write', '只输出 JSON {"code": "完整 HTML"}。严格遵守以下镜头规则，不改口播。'
                                                 'visual 是编导写的画面；subtitle 是画面上要出现的字；camera 是景别 · 运镜（照着做；颜色、字号以全片设计为准）。'
                                                 '若提供 styleSampleCode，它是同一风格的一镜样例，内容不同，只照画法；颜色、字号以全片设计为准。'
-                                                'form_profile.visual_grammar 指定该风格的画法，与默认禁用冲突时照它。\n' + self.library.rules(RULES), context,
+                                                'form_profile.visual_grammar 指定该风格的画法，与默认禁用冲突时照它。\n' + self.library.rules(RULES)
+                                                + (PROMO_RULES.replace('{bar}', f"{shot['barSeconds']:g}") if promo else ''), context,
                                                 image_paths=sample_images + promo_images,
                                                 shotId=sid, attempt=attempt + 1, instructionKind='retry' if retry_errors is not None else 'requested' if instruction else 'initial')
                         if isinstance(value.get('code'), str):
                             atomic_bytes(root / 'checks' / 'code-attempts' / f'{sid}-{uuid.uuid4().hex}.html', value['code'].encode())
                         code = validate_code(value)
-                        checks = lint(code, shot['dialogue'], duration)
+                        if promo:
+                            # 「自动」小节：渲染时按 D 补足整小节，这里不按估算长度判截短。
+                            lint_seconds = duration if isinstance(shot.get('bars'), int) else (declared_seconds(code) or duration)
+                            checks = lint(code, shot['dialogue'], lint_seconds, canvas=(job['width'], job['height']))
+                        else:
+                            checks = lint(code, shot['dialogue'], duration)
                     except DirectVideoError:
                         checks = {'errors': [{'code': 'code_invalid', 'message': '请输出完整 HTML、逐帧入口和页眉标记，且少于十万字。'}], 'warnings': []}
                     dump(root / 'checks' / (sid + '.json'), checks)

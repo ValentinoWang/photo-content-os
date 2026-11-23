@@ -25,9 +25,9 @@ from direct_video.media import wav_seconds
 from studio.direct_video import projection
 
 
-def html(d=1, label='示意图'):
+def html(d=1, label='示意图', size=(1080, 1920)):
     return f'''<!doctype html><html><head><meta charset="utf-8"><style>
-html,body{{margin:0;width:1080px;height:1920px;overflow:hidden;background:#ffffff}}
+html,body{{margin:0;width:{size[0]}px;height:{size[1]}px;overflow:hidden;background:#ffffff}}
 </style></head><body><header data-role="header">标题</header><div>{label}</div>
 <script>const D = {d}; window.seekFrame = (frame,fps) => {{ document.body.dataset.frame=frame; }};</script></body></html>'''
 
@@ -63,7 +63,9 @@ class FakeModel:
             self.running -= 1
             broken = self.bad > 0
             self.bad -= int(broken)
-        code = html(context['D'], context.get('instruction') or '示意图')
+        # 跟真模型一样按提示词里的画布写：宣传片规则要求横屏 1920×1080。
+        size = (1920, 1080) if 'width:1920px;height:1080px' in kwargs.get('system_prompt', '') else (1080, 1920)
+        code = html(context['D'], context.get('instruction') or '示意图', size)
         if broken:
             code = code.replace('document.body.dataset.frame=frame;', 'setTimeout(()=>{},1);')
         return json.dumps({'code': code})
@@ -657,3 +659,15 @@ def test_promo_shot_render_length_follows_bars_not_text(tmp_path, promo_input):
     (root / 'shots' / '02.html').write_text('<script>const D = 4.5;</script>', encoding='utf-8')
     assert Generator.promo_seconds(root, {'shotId': '02', 'bars': 'auto', 'barSeconds': bar}) == 6.0
     assert Generator.promo_seconds(root, {'shotId': '03', 'bars': 'auto', 'barSeconds': bar}) == 4.0
+
+
+def test_lint_rejects_wrong_canvas_for_promo():
+    # 宣传片是 1920×1080；照竖屏写的镜头要退回重写，不能渲成只占左半边的画面。
+    from direct_video.lint import lint
+    def shot(w, h):
+        return ('<!doctype html><html><head><style>html,body{margin:0;width:%dpx;height:%dpx;overflow:hidden}</style></head>'
+                '<body><div data-role="header">标题</div><script>const D = 4;window.seekFrame=(f,fps)=>{};</script></body></html>') % (w, h)
+    codes = lambda result: {row['code'] for row in result['errors']}
+    assert 'canvas_size_mismatch' in codes(lint(shot(1080, 1920), '', 4, canvas=(1920, 1080)))
+    assert 'canvas_size_mismatch' not in codes(lint(shot(1920, 1080), '', 4, canvas=(1920, 1080)))
+    assert 'canvas_size_mismatch' not in codes(lint(shot(1080, 1920), '', 4))

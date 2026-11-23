@@ -151,7 +151,7 @@ def _aesthetic_warnings(markup: _ShotMarkup, duration: float, height: float | No
     return warnings
 
 
-def lint(code: str, dialogue: str, duration: float) -> dict:
+def lint(code: str, dialogue: str, duration: float, canvas: tuple[int, int] | None = None) -> dict:
     errors, warnings = [], []
 
     def error(key, message):
@@ -195,9 +195,12 @@ def lint(code: str, dialogue: str, duration: float) -> dict:
     for number in sorted(set(re.findall(r'\d+(?:\.\d+)?%?', visible_text(code)))):
         if number not in dialogue and not re.fullmatch(r'\d{1,2}|(?:19|20)\d\d', number):
             warnings.append({'code': 'number_unspoken', 'message': f'画面数字 {number} 未出现在本镜口播，请核对出处和数量。'})
+    expected = canvas
     canvas = _canvas_size(style_blocks, markup.roots)
     if canvas is None:
         error('canvas_size_unreadable', '读不到画布尺寸，请在 html 或 body 声明明确的像素宽和高。')
+    elif expected is not None and (round(canvas[0]), round(canvas[1])) != tuple(expected):
+        error('canvas_size_mismatch', f'画布必须是 {expected[0]}×{expected[1]}，按这个尺寸重新排版。')
     warnings.extend(_aesthetic_warnings(markup, duration, canvas[1] if canvas else None))
     return {'errors': errors, 'warnings': warnings}
 
