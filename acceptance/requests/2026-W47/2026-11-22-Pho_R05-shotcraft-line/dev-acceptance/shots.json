@@ -44,6 +44,17 @@
           "captured_at": "2026-11-22T15:29:52.712352+00:00"
         }
       ]
+    },
+    "H-05": {
+      "fingerprint": "2c614bf0189cb85ae081dc4c3dd48fcb240f9a645e428937deb538a0569008a2",
+      "screenshots": [
+        {
+          "path": "agents-results/2026-11-22/2026-11-22-Pho_R05-shotcraft-line/acceptance/shots/H-05-1936084fd906103cf5dab18f52244eac958509a8e6c1f60130fc30d56d56e864.png",
+          "sha256": "1936084fd906103cf5dab18f52244eac958509a8e6c1f60130fc30d56d56e864",
+          "caption": "真实出片抽帧：Opus 写 3 镜、配乐第 12–20 小节，16.7 秒横屏成片每 2.1 秒取一帧 · 本机端到端跑一遍后从成片抽帧",
+          "captured_at": "2026-11-23T08:00:57.932748+00:00"
+        }
+      ]
     }
   }
 }
