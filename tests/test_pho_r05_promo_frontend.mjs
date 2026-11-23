@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import {barSeconds, autoBars, promoTotals, promoMissing, promoPayload, splitRows} from '../studio/static/direct-promo.js';
+assert.equal(barSeconds(120), 2);
+assert.equal(autoBars({seconds: 4.1}, 120), 3);
+assert.deepEqual(promoTotals([{visual:'a', bars:'auto', recipeId:null}],120,[]),{bars:2,seconds:4});
+assert.equal(promoMissing({shots:[],track:null,style:null}), 'shots');
+assert.deepEqual(splitRows('a\nb').map(x=>x.visual),['a','b']);
+assert.equal(promoPayload({brief:'x',track:{id:'t'},startBar:1,shots:[{visual:'a',bars:'auto',recipeId:null}]}).kind,'promo');
+console.log('PASS promo calculations');
+
+const {newPromoDraft, promoDraftAfter, failureMessage} = await import('../studio/static/direct-view.js');
+const track={id:'music-1',beat:{bpm:120,bars:8}};
+const shots=[{visual:'界面',text:'标题',recipeId:'r1',bars:2,imageId:'img1'},{visual:'  ',bars:'auto'}];
+assert.deepEqual(promoPayload({brief:'介绍',track,startBar:3,shots}),{kind:'promo',promo:{brief:'介绍',trackId:'music-1',startBar:3,fadeOutSeconds:1,shots:[{visual:'界面',text:'标题',recipeId:'r1',bars:2,imageId:'img1'}]}});
+assert.equal(promoMissing({shots:[],track:null,style:null}), 'shots');
+assert.equal(promoMissing({shots,track:null,style:null}), 'track');
+assert.equal(promoMissing({shots,track,startBar:8,style:null}), 'short');
+assert.equal(promoMissing({shots,track,startBar:1,style:null}), 'style');
+assert.equal(promoMissing({shots,track,startBar:1,style:{id:'ui'}}), null);
+const draft={brief:'介绍',shots,track,startBar:3};
+assert.equal(promoDraftAfter(draft,'switch-to-talk'),draft);
+assert.deepEqual(promoDraftAfter(draft,'generated'),newPromoDraft());
+assert.deepEqual(promoDraftAfter(draft,'leave-project'),newPromoDraft());
+for(const code of ['beat_map_unavailable','track_too_short','recipe_not_found']) assert.ok(!failureMessage(code).includes('错误码'));
+console.log('PASS F3 request, missing fields, and draft lifecycle');
