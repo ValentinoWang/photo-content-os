@@ -1,0 +1,24 @@
+Frozen source range 14468ed2ad8a1b7a6285b721b66a5b53fe0e0824..73de32703362f761e90bd67294264d7fe70e846f
+A	acceptance/requests/2026-W48/2026-11-24-Pho_R11-seedance-provider/request.json
+A	acceptance/requests/2026-W48/2026-11-24-Pho_R11-seedance-provider/request.md
+M	integrations/dreamverse/README.md
+M	integrations/dreamverse/install.sh
+A	integrations/dreamverse/seedance-provider/index.ts
+A	integrations/dreamverse/seedance-provider/model-facts.json
+A	integrations/dreamverse/seedance-provider/package.json
+A	integrations/dreamverse/seedance-provider/skills/seedance-shot.md
+M	scripts/aigc/dreamverse_bridge.py
+A	tests/test_seedance_provider.py
+
+Existing Wanxiang test blob at both ends
+399fa70e0f7c0941180fe43983437c4197d37f78
+399fa70e0f7c0941180fe43983437c4197d37f78
+
+References within repository source to the DreamVerse bridge or Seedance plugin
+73de32703362f761e90bd67294264d7fe70e846f:integrations/dreamverse/README.md
+73de32703362f761e90bd67294264d7fe70e846f:integrations/dreamverse/seedance-provider/index.ts
+73de32703362f761e90bd67294264d7fe70e846f:integrations/dreamverse/seedance-provider/package.json
+73de32703362f761e90bd67294264d7fe70e846f:tests/test_dreamverse_bridge.py
+73de32703362f761e90bd67294264d7fe70e846f:tests/test_seedance_provider.py
+
+R207 and R223 human records unchanged at the delivery head

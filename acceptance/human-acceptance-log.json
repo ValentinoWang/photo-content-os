@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-24T08:08:16.038374Z",
+  "generated_at": "2026-11-24T13:33:54.220604Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R11-seedance-provider/checklist.md",
+      "estimated_minutes": 3,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R11-seedance-provider/handoff.json",
+      "invalidation_keys": [
+        "photo.dreamverse-seedance"
+      ],
+      "latest_run": null,
+      "loop_name": "用 Seedance 生成制作台镜头",
+      "ready_at": "2026-11-24T13:33:54.220604Z",
+      "release_slice": "dreamverse-seedance",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "开发机替身专项 12 项通过。拿到方舟密钥后真跑一镜，验收生成视频和续跑。",
+      "task_id": "2026-11-24-Pho_R11-seedance-provider",
+      "workspace": "acceptance/human/2026-W48/2026-11-24-Pho_R11-seedance-provider"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R10-dreamverse-bridge/checklist.md",
@@ -364,5 +383,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "929592deb822e153e7685850ef28d6178d94a677a35b8884c269329c3b2a350a"
+  "source_facts_sha256": "db80ca7caa8217cd2bf601fd28cdbff742aafae085b130960d5342e317ea6f86"
 }

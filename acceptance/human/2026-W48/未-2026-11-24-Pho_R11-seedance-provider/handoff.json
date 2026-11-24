@@ -1,0 +1,98 @@
+{
+  "baseline": {
+    "base": "14468ed2ad8a1b7a6285b721b66a5b53fe0e0824",
+    "branch": "main",
+    "head": "73de32703362f761e90bd67294264d7fe70e846f",
+    "tree": "92ee832018e66eb66c1721f45cd316a1ffa9f65a"
+  },
+  "binding_sha256": "6f633f79704972d580f4517c67352a296bbdf74851a448cbdba9581266e8baba",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "87045517954640db81ffb270f9bee70daf7b2dccd37589a5ff467bcb7bcc840e",
+  "claims": [
+    {
+      "claim_key": "photo.dreamverse-seedance",
+      "item": "H-01",
+      "no_screenshot_reason": "本次真实成片只能在用户本人开通的方舟账号中生成并查看。",
+      "open_route": "note:在本机 DreamVerse 使用已开通的方舟账号生成一镜",
+      "relations": [
+        {
+          "evidence_run": "20261124T133023Z-photo-dev-befb0c",
+          "reason": "改动限于 DreamVerse 插件及桥接，剪辑工具安装入口和版本诊断没有源码差异。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T133023Z-photo-dev-befb0c",
+          "reason": "新增测试只运行 DreamVerse，OpenChatCut 候选生成及其素材处理代码没有源码差异。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T133023Z-photo-dev-befb0c",
+          "reason": "DreamVerse 桥接只读取镜头清单，音乐标签生成与拍点分析没有源码差异。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T133023Z-photo-dev-befb0c",
+          "reason": "改动不包含音乐播放、拍点显示和 Studio 前端源码。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T133023Z-photo-dev-befb0c",
+          "reason": "改动不包含音乐库自动分析、分面筛选和相关测试。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        }
+      ],
+      "screenshots": [
+        {
+          "caption": "Seedance 替身验证参考 · 开发机测试输出的手机截图",
+          "captured_at": "2026-11-24T13:32:03.827796+00:00",
+          "path": "agents-results/2026-11-24/Pho_R11-seedance-provider/acceptance/shots/H-01-1.png",
+          "sha256": "d8e059257e9f18a1685c4553176503f87211626fa0d8ea4878191767456b64d2"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.dreamverse",
+        "photo.tests-scripts"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-24/Pho_R11-seedance-provider/acceptance-contract.md",
+  "contract_sha256": "45e5f7a5719f2191c8566d6fa3e10398ea56deb443ceaf155e7bf72aa229234a",
+  "contract_version": "1",
+  "estimated_minutes": 3,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.dreamverse-seedance"
+  ],
+  "loop_name": "用 Seedance 生成制作台镜头",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-24/Pho_R11-seedance-provider/acceptance/machine/unit/runs/20261124T133023Z-photo-dev-befb0c/result.md",
+      "result_sha256": "d02f2f95a0e28bc7d6bb5815f040f52e8eb3a8d654e28106b25a4e6a5d3d92af",
+      "run_id": "20261124T133023Z-photo-dev-befb0c",
+      "source_identity": "73de32703362f761e90bd67294264d7fe70e846f",
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.tests-scripts"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-24T13:33:54.220604Z",
+  "release_slice": "dreamverse-seedance",
+  "request_id": "2026-11-24-Pho_R11-seedance-provider",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "73de32703362f761e90bd67294264d7fe70e846f",
+  "summary": "开发机替身专项 12 项通过。拿到方舟密钥后真跑一镜，验收生成视频和续跑。",
+  "task_id": "2026-11-24-Pho_R11-seedance-provider"
+}

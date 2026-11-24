@@ -1,0 +1,51 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.dreamverse-seedance",
+    "open_route": "note:在本机 DreamVerse 使用已开通的方舟账号生成一镜",
+    "surfaces": [
+      "photo.dreamverse"
+    ],
+    "relations": [
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+        "reason": "改动限于 DreamVerse 插件及桥接，剪辑工具安装入口和版本诊断没有源码差异。",
+        "evidence_run": "20261124T133023Z-photo-dev-befb0c"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+        "reason": "新增测试只运行 DreamVerse，OpenChatCut 候选生成及其素材处理代码没有源码差异。",
+        "evidence_run": "20261124T133023Z-photo-dev-befb0c"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+        "reason": "DreamVerse 桥接只读取镜头清单，音乐标签生成与拍点分析没有源码差异。",
+        "evidence_run": "20261124T133023Z-photo-dev-befb0c"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+        "reason": "改动不包含音乐播放、拍点显示和 Studio 前端源码。",
+        "evidence_run": "20261124T133023Z-photo-dev-befb0c"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+        "reason": "改动不包含音乐库自动分析、分面筛选和相关测试。",
+        "evidence_run": "20261124T133023Z-photo-dev-befb0c"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-24/Pho_R11-seedance-provider/acceptance/shots/H-01-1.png",
+        "sha256": "d8e059257e9f18a1685c4553176503f87211626fa0d8ea4878191767456b64d2",
+        "caption": "Seedance 替身验证参考 · 开发机测试输出的手机截图",
+        "captured_at": "2026-11-24T13:32:03.827796+00:00"
+      }
+    ],
+    "no_screenshot_reason": "本次真实成片只能在用户本人开通的方舟账号中生成并查看。"
+  }
+]
