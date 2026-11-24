@@ -22,6 +22,8 @@ from .precut import executable_cuts
 _PROJECT = "concat-project"
 _RECEIPT = "render-result.json"
 _LOG = "concat-mcp.jsonl"
+MIN_RETAINED_SECONDS = 0.2
+MIN_CAPTION_SECONDS = 0.3
 
 
 def _app() -> Path:
@@ -61,6 +63,28 @@ def _timeline(state: dict, source: Path) -> dict:
             "duration": timeline["duration"], "fps": state["project"]["fps"]}
 
 
+def _map_captions(cues: list[tuple[float, float, str]], ranges: list[dict]) -> list[dict]:
+    mapped = sorted(
+        (
+            {"start": a, "end": b, "text": text}
+            for start, end, text in cues
+            for a, b, _ in remap_span(start, end, ranges)
+            if b > a
+        ),
+        key=lambda cue: (cue["start"], cue["end"]),
+    )
+    merged: list[dict] = []
+    max_gap = 1 / FPS + 1e-9
+    for cue in mapped:
+        if (merged
+                and merged[-1]["text"] == cue["text"]
+                and cue["start"] - merged[-1]["end"] <= max_gap):
+            merged[-1]["end"] = max(merged[-1]["end"], cue["end"])
+        else:
+            merged.append(cue)
+    return [cue for cue in merged if cue["end"] - cue["start"] >= MIN_CAPTION_SECONDS - 1e-9]
+
+
 def _write_captions(path: Path, captions: list[dict]) -> Path | None:
     if not captions:
         return None
@@ -68,6 +92,20 @@ def _write_captions(path: Path, captions: list[dict]) -> Path | None:
         f"{i}\n{srt_timestamp(cue['start'])} --> {srt_timestamp(cue['end'])}\n{cue['text']}"
         for i, cue in enumerate(captions, 1)) + "\n", encoding="utf-8")
     return path
+
+
+def _retained_ranges(ranges: list[dict], min_seconds: float = MIN_RETAINED_SECONDS) -> list[dict]:
+    min_frames = math.ceil(min_seconds * FPS - 1e-9)
+    kept, output = [], 0
+    for span in sorted(ranges, key=lambda row: row["source_start"]):
+        start, end = frames(span["source_start"]), frames(span["source_end"])
+        if end - start < min_frames:
+            continue
+        kept.append({"source_start": start / FPS, "source_end": end / FPS, "output_start": output / FPS})
+        output += end - start
+    if not kept:
+        raise BackendError("all_source_removed")
+    return kept
 
 
 def _removed_ranges(ranges: list[dict], duration: float) -> list[tuple[int, int]]:
@@ -318,15 +356,14 @@ class Backend:
         media_id = imported["createdId"]
         length = next(row["duration"] for row in imported["media"] if row["id"] == media_id)
         ranges, _ = plan_ranges({**suggestions, "suggestions": executable}, length)
+        ranges = _retained_ranges(ranges)
         cuts = _removed_ranges(ranges, length)
         state = call("clip_add", mediaId=media_id, trackId=tracks[0]["id"], start=0)
         _cut_source(call, state, cuts, length)
         _add_overlays(call, animations, suggestions, ranges, length, width, height,
                       tracks[1]["id"] if len(tracks) > 1 else None)
         if subtitles:
-            captions = [{"start": a, "end": b, "text": text}
-                        for start, end, text in read_srt_cues(subtitles)
-                        for a, b, _ in remap_span(start, end, ranges) if frames(b) > frames(a)]
+            captions = _map_captions(read_srt_cues(subtitles), ranges)
             if captions:
                 call("captions_add", captions=captions)
         call("project_save")
