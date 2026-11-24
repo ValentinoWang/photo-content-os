@@ -1,0 +1,35 @@
+{
+  "started_at": "2026-11-24T05:45:13Z",
+  "completed_at": "2026-11-24T05:45:43Z",
+  "runner": "macOS, Concat 0.2.12 headless, ffmpeg and ffprobe, synthetic media",
+  "command": "CONTENT_OS_CONCAT_APP=<已安装的 Concat.app> <制作台虚拟环境 Python> tests/manual/concat_smoke.py",
+  "exit_code": 0,
+  "source_commit": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
+  "raw_log_sha256": "0399693a00058d56c37fb48a18a01d23e80cd7e17cc6c8663a3b8e9e7d2115f0",
+  "output_tail": [
+    "Concat: 0.2.12 (online)",
+    "Segments: 3",
+    "Timeline duration: 15.000000s (expected 15.000000s)",
+    "Captions: 3",
+    "Export duration: 15.000000s",
+    "Overlay preview at 5.000s: <仓库外验收证据目录>/overlay-frame.png"
+  ],
+  "external_evidence_directory": "concat-backend/run-mm_81_dh",
+  "preview_frame": {
+    "name": "overlay-frame.png",
+    "sha256": "8c40df0501bc098e25473bc37ab873beda947d0ee680a93319b837e90f7bd9dc",
+    "size_px": [
+      1080,
+      1920
+    ],
+    "time_seconds": 5.0,
+    "observation": "红块区域为实色，周围可见底层彩条、斜线和图案；底部中文可读。"
+  },
+  "process_exit_codes": [
+    0,
+    0,
+    0
+  ],
+  "swap_before": "vm.swapusage: total = 3072.00M  used = 1637.69M  free = 1434.31M  (encrypted)",
+  "heavy_process_count_before": 0
+}

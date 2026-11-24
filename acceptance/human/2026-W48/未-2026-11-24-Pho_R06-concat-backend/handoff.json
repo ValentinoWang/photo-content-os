@@ -1,0 +1,81 @@
+{
+  "baseline": {
+    "base": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
+    "branch": "main",
+    "head": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
+    "tree": "fb732709bcbf89d0212f852769507230c6d2639a"
+  },
+  "binding_sha256": "838c1eacda06772c3a5668085931752be8e30f814860ec75d5adcb18dde3e05c",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "054669196e4ba3fa7ea00752225162bafc1c7b0de83977d5cdefb7675351afdb",
+  "claims": [
+    {
+      "claim_key": "photo.concat-roughcut",
+      "item": "H-01",
+      "open_route": "note:在本机查看验收样片的 Concat 剪辑结果和第 5 秒预览帧",
+      "relations": [],
+      "screenshots": [
+        {
+          "caption": "本次样片第 5 秒透明叠层参考 · Concat 预览帧缩放",
+          "captured_at": "2026-11-24T05:45:43Z",
+          "path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/shots/H-01-1.jpg",
+          "sha256": "8973304d0d6afa211c2128f344690cdcd09a9e641688496bee9c042fa37f4d90"
+        }
+      ],
+      "surfaces": []
+    },
+    {
+      "claim_key": "photo.concat-refine",
+      "item": "H-02",
+      "open_route": "note:在本机 Concat 打开制作台生成的口播粗稿工程，查看时间线",
+      "relations": [],
+      "screenshots": [
+        {
+          "caption": "T6 同版本合成工程参考 · Concat 窗口裁出预览区和时间线",
+          "captured_at": "2026-11-24T04:56:11Z",
+          "path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/shots/H-02-1.jpg",
+          "sha256": "231603ffda0a6e318eb9614d4ffa9150eb4ce9dd3652b889eae47ce07e771268"
+        }
+      ],
+      "surfaces": []
+    }
+  ],
+  "contract_path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance-contract.md",
+  "contract_sha256": "4354c92a65505d5b559bef91a8560b5589ecde9f70e7bd065cd17c521d03dd91",
+  "contract_version": "1",
+  "estimated_minutes": 5,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.concat-refine",
+    "photo.concat-roughcut"
+  ],
+  "loop_name": "用 Concat 生成可精修的口播粗稿",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/machine/unit/runs/20261124T054640Z-photo-dev-6e64da/result.md",
+      "result_sha256": "0bb93d3db2c447624d19d40a2541e08c30bfdbfe0bcb43baae9ecbc38554365b",
+      "run_id": "20261124T054640Z-photo-dev-6e64da",
+      "source_identity": "1d158c7e3b90ad8e6330b340acede0bc7134fc42"
+    },
+    {
+      "layer": "machine/local-runtime",
+      "result_path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/machine/local-runtime/runs/20261124T054640Z-mac-concat-f2333a/result.md",
+      "result_sha256": "f6810ebff3eed36e2e3980e2866d224262ff278d9605d7f1ebdcdfc367b3db0c",
+      "run_id": "20261124T054640Z-mac-concat-f2333a",
+      "source_identity": "1d158c7e3b90ad8e6330b340acede0bc7134fc42"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-24T05:56:09.376765Z",
+  "release_slice": "concat-backend",
+  "request_id": "2026-11-24-Pho_R06-concat-backend",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
+  "summary": "开发机 16 项和本机 Concat 合成样片复验通过；样片观察和桌面精修待任务委托人验收。",
+  "task_id": "2026-11-24-Pho_R06-concat-backend"
+}

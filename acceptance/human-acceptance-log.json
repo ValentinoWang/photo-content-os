@@ -216,8 +216,28 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-24T04:37:20.784318+00:00",
+  "generated_at": "2026-11-24T05:56:09.376765Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R06-concat-backend/checklist.md",
+      "estimated_minutes": 5,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R06-concat-backend/handoff.json",
+      "invalidation_keys": [
+        "photo.concat-refine",
+        "photo.concat-roughcut"
+      ],
+      "latest_run": null,
+      "loop_name": "用 Concat 生成可精修的口播粗稿",
+      "ready_at": "2026-11-24T05:56:09.376765Z",
+      "release_slice": "concat-backend",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "开发机 16 项和本机 Concat 合成样片复验通过；样片观察和桌面精修待任务委托人验收。",
+      "task_id": "2026-11-24-Pho_R06-concat-backend",
+      "workspace": "acceptance/human/2026-W48/2026-11-24-Pho_R06-concat-backend"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md",
@@ -286,5 +306,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "49f6d58aed3a3e12c32d6a15ec871ed41b637322da8841793ad24b36b6726ef1"
+  "source_facts_sha256": "ef361be06bec997a7ededb68febf2a910b980793bbe577299083054f643e57c6"
 }

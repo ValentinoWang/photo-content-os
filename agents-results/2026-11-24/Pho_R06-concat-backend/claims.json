@@ -1,0 +1,32 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.concat-roughcut",
+    "open_route": "note:在本机查看验收样片的 Concat 剪辑结果和第 5 秒预览帧",
+    "surfaces": [],
+    "relations": [],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/shots/H-01-1.jpg",
+        "sha256": "8973304d0d6afa211c2128f344690cdcd09a9e641688496bee9c042fa37f4d90",
+        "caption": "本次样片第 5 秒透明叠层参考 · Concat 预览帧缩放",
+        "captured_at": "2026-11-24T05:45:43Z"
+      }
+    ]
+  },
+  {
+    "item": "H-02",
+    "claim_key": "photo.concat-refine",
+    "open_route": "note:在本机 Concat 打开制作台生成的口播粗稿工程，查看时间线",
+    "surfaces": [],
+    "relations": [],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/shots/H-02-1.jpg",
+        "sha256": "231603ffda0a6e318eb9614d4ffa9150eb4ce9dd3652b889eae47ce07e771268",
+        "caption": "T6 同版本合成工程参考 · Concat 窗口裁出预览区和时间线",
+        "captured_at": "2026-11-24T04:56:11Z"
+      }
+    ]
+  }
+]
