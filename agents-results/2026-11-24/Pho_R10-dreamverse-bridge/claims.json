@@ -1,0 +1,32 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.dreamverse-model-catalog",
+    "open_route": "note:在本机 DreamVerse 打开模型目录，找到万相 2.6 文生视频",
+    "surfaces": [],
+    "relations": [],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-24/Pho_R10-dreamverse-bridge/acceptance/shots/H-01-1.jpg",
+        "sha256": "bc49af1cce63d5915e80c6bd68b855d6b8e7c55c20a3104621078711c7832698",
+        "caption": "万相模型目录参考 · 本机目录读回渲染",
+        "captured_at": "2026-11-24T07:54:52.659236+00:00"
+      }
+    ]
+  },
+  {
+    "item": "H-02",
+    "claim_key": "photo.dreamverse-shot-resume",
+    "open_route": "note:在本机查看制作台生成的两条视频、末帧和第二镜账本",
+    "surfaces": [],
+    "relations": [],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-24/Pho_R10-dreamverse-bridge/acceptance/shots/H-02-1.jpg",
+        "sha256": "688a6125e9b48371262a02356f16e43be3d6e2bdfce033ddaa7c4aa7a30b0e03",
+        "caption": "开发机替身测试参考 · 原始输出渲染",
+        "captured_at": "2026-11-24T07:54:52.739545+00:00"
+      }
+    ]
+  }
+]

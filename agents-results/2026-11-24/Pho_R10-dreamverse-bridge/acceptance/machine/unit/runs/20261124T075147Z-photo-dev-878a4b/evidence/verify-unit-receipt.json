@@ -1,0 +1,16 @@
+{
+  "command": [
+    "bash",
+    "docs/tasks/dreamverse-bridge/verify_unit.sh"
+  ],
+  "working_directory": "project root",
+  "execution_host": "photo-dev",
+  "remote_log": "/root/.prbox/run-024900-89841.log",
+  "exit_code": 0,
+  "passed": 6,
+  "source_identity": "308eb2e86d264118514261a45db987632dc3cb4e",
+  "launcher_sha256": "f78bd15d101800de5530bff15cde1eea7b6df32ea3092e24bf88193a18148240",
+  "test_sha256": "e8db0e3b585d5a40fed3f27735119b69565d1adcaf27b6b515bf6a24abba07ed",
+  "output_sha256": "55d7cc1be5b57461464a6234faad066abf511286fa71b0f7ea5829e390c9d354",
+  "wan_submit_attempts_this_run": 0
+}

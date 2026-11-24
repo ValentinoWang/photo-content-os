@@ -1,0 +1,18 @@
+{
+  "summary": "百炼账户欠费（HTTP 400 Arrearage），两次提交均未取得任务 ID，账本为 unknown。",
+  "note": "第二次提交记录了百炼错误码，第一次提交未保留错误码。在本轮递交中未调用万相。",
+  "ledger_sha256": "573bcb0602e07794bc34425bda7bbad8ddfae0d24a974ed9cc38a6caafc6e76a",
+  "submission_receipts_sha256": "2eee5a1247385673f78ced998cd6a3cf352ad68ee7fc3553f2699ea5be100014",
+  "shots": {
+    "track": {
+      "status": "unknown",
+      "task_id": null,
+      "submit_http_status": null
+    },
+    "blocks": {
+      "status": "unknown",
+      "task_id": null,
+      "submit_http_status": 400
+    }
+  }
+}

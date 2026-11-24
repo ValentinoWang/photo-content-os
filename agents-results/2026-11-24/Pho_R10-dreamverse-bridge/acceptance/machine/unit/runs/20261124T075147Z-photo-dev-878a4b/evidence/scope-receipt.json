@@ -1,0 +1,37 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--name-only",
+    "73d48195b8d8dfc6765f5c28cd9202880598c923",
+    "308eb2e86d264118514261a45db987632dc3cb4e"
+  ],
+  "source_paths": [
+    "acceptance/requests/2026-W48/2026-11-24-Pho_R10-dreamverse-bridge/request.json",
+    "acceptance/requests/2026-W48/2026-11-24-Pho_R10-dreamverse-bridge/request.md",
+    "integrations/dreamverse/README.md",
+    "integrations/dreamverse/install.sh",
+    "integrations/dreamverse/wanxiang-provider/index.ts",
+    "integrations/dreamverse/wanxiang-provider/model-facts.json",
+    "integrations/dreamverse/wanxiang-provider/package.json",
+    "integrations/dreamverse/wanxiang-provider/skills/wanxiang-shot.md",
+    "scripts/aigc/dreamverse_bridge.py",
+    "tests/test_dreamverse_bridge.py"
+  ],
+  "unchanged_legacy_contract_and_protected_test_blobs": {
+    "2026-10-19-R207-photo-edit-tools-in-repo": {
+      "evidence/2026-10-19/R207-edit-tools-in-repo/acceptance-contract.md": "6af554210e0d9e088fc503e031ba4572aba436e7",
+      "tests/test_edit_tools_runtime.py": "c8a8bf69c386404c36031727980c9d720d19f8a6"
+    },
+    "2026-10-20-R223-photo-music-beat-map": {
+      "agents-results/2026-10-21/r223-delivery/acceptance-contract.md": "a73931a0fd6bbcd43e2a37d4edcf8078ddebab88",
+      "tests/test_r223_music_analysis.py": "923aa0c2d9861610aef7544ebe1bc0f529997d97",
+      "tests/test_r223_sections.py": "7f3a9b944adb76076a855332f27747ee963c526e",
+      "tests/test_r223_music_analysis_runtime.py": "da3134486c153da78c5d6a602cbd120c35046698",
+      "tests/test_r223_beat_map.mjs": "91394cad8890c7f9acc5948227a1dea0f4a9beb3",
+      "scripts/verify_r223_interactions.mjs": "96a2034a9e83eba7da2c5b7e0bf00bb3251ce9e1",
+      "scripts/check_r223_design.py": "9ff69394cc9c9e4720fa4c6f01b446b9e2690902"
+    }
+  },
+  "conclusion": "历史卡重合仅来自通用验收资料和测试目录。未改旧合同、受保护测试、编辑工具或音乐节拍页面。"
+}

@@ -1,0 +1,74 @@
+{
+  "baseline": {
+    "base": "1f19b0ebcc0f3f0128cce4be2cfcba3775891693",
+    "branch": "main",
+    "head": "1f19b0ebcc0f3f0128cce4be2cfcba3775891693",
+    "tree": "5c6b6aff6290af57012757a686bfdba432c10e6f"
+  },
+  "binding_sha256": "3751f9e0fdef1ea0801af27c0feaaa8978f4fc039ba0cbadf76fb22aee82da76",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "29d1ad4092d77cc86340e0e6a2b8a6c408657d6acea190b76f4cdbb21e468141",
+  "claims": [
+    {
+      "claim_key": "photo.dreamverse-model-catalog",
+      "item": "H-01",
+      "open_route": "note:在本机 DreamVerse 打开模型目录，找到万相 2.6 文生视频",
+      "relations": [],
+      "screenshots": [
+        {
+          "caption": "万相模型目录参考 · 本机目录读回渲染",
+          "captured_at": "2026-11-24T07:54:52.659236+00:00",
+          "path": "agents-results/2026-11-24/Pho_R10-dreamverse-bridge/acceptance/shots/H-01-1.jpg",
+          "sha256": "bc49af1cce63d5915e80c6bd68b855d6b8e7c55c20a3104621078711c7832698"
+        }
+      ],
+      "surfaces": []
+    },
+    {
+      "claim_key": "photo.dreamverse-shot-resume",
+      "item": "H-02",
+      "open_route": "note:在本机查看制作台生成的两条视频、末帧和第二镜账本",
+      "relations": [],
+      "screenshots": [
+        {
+          "caption": "开发机替身测试参考 · 原始输出渲染",
+          "captured_at": "2026-11-24T07:54:52.739545+00:00",
+          "path": "agents-results/2026-11-24/Pho_R10-dreamverse-bridge/acceptance/shots/H-02-1.jpg",
+          "sha256": "688a6125e9b48371262a02356f16e43be3d6e2bdfce033ddaa7c4aa7a30b0e03"
+        }
+      ],
+      "surfaces": []
+    }
+  ],
+  "contract_path": "agents-results/2026-11-24/Pho_R10-dreamverse-bridge/acceptance-contract.md",
+  "contract_sha256": "189222c79a69bd368f6a4377bce794f73d11566167e1266d8058aeeafd643981",
+  "contract_version": "1",
+  "estimated_minutes": 5,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.dreamverse-model-catalog",
+    "photo.dreamverse-shot-resume"
+  ],
+  "loop_name": "用 DreamVerse 生成制作台镜头",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-24/Pho_R10-dreamverse-bridge/acceptance/machine/unit/runs/20261124T080753Z-photo-dev-30d855/result.md",
+      "result_sha256": "910ee837f04c3c86f62572d7f2c1f552fc1c5bc8c3e830eed512f367cf7684a4",
+      "run_id": "20261124T080753Z-photo-dev-30d855",
+      "source_identity": "1f19b0ebcc0f3f0128cce4be2cfcba3775891693"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-24T08:08:16.038374Z",
+  "release_slice": "dreamverse-bridge",
+  "request_id": "2026-11-24-Pho_R10-dreamverse-bridge",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "1f19b0ebcc0f3f0128cce4be2cfcba3775891693",
+  "summary": "开发机替身测试 6 项通过。真实生成与续跑待验：百炼账户欠费（HTTP 400 Arrearage），两次提交均未取得任务 ID，账本为 unknown。",
+  "task_id": "2026-11-24-Pho_R10-dreamverse-bridge"
+}

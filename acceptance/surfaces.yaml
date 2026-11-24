@@ -18,6 +18,14 @@
       "key": "photo.edit-backends"
     },
     {
+      "glob": "integrations/dreamverse/**",
+      "key": "photo.dreamverse"
+    },
+    {
+      "glob": "scripts/aigc/dreamverse_bridge.py",
+      "key": "photo.dreamverse"
+    },
+    {
       "glob": "scripts/video_render/**",
       "key": "photo.video-pipeline"
     },
