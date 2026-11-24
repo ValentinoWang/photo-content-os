@@ -1,0 +1,16 @@
+{
+  "source_commit": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-23/r310-e40196d-rerun/acceptance/unit/result.md",
+      "result_sha256": "5bfca75666608f0266f5d4136d1fbc6363cad32f980e703a142e70fd4d932b90",
+      "source_identity": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9",
+      "layer": "machine/unit",
+      "run_id": "r310-e40196d-photo-dev"
+    }
+  ],
+  "patch_id": "9b2181e5841b6fb64adafefc0793890b14d3b096",
+  "preimage": {
+    ".agents/skills/photo-remote-dev-box/scripts/setup_remote.sh": "87e3c6f622e41a87b4e7bcbd76f8761d4c104c75"
+  }
+}
