@@ -17,10 +17,18 @@ cd "$ROOT"
 step "系统包（tmux、中文字体、Chromium 要的库、melt、mediainfo）"
 export DEBIAN_FRONTEND=noninteractive
 timeout -k 10 600 apt-get -o Acquire::http::Timeout=20 update -q >/dev/null
-timeout -k 10 1500 apt-get install -y -q --no-install-recommends tmux rsync curl ca-certificates jq fonts-noto-cjk fonts-noto-color-emoji fonts-liberation \
-  libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 \
-  libxrandr2 libgbm1 libasound2 libpango-1.0-0 libcairo2 libatspi2.0-0 libxshmfence1 libsndfile1 libgl1 libglib2.0-0 \
-  mediainfo libmediainfo0v5 melt >/dev/null
+APT_PKGS=(tmux rsync curl ca-certificates jq fonts-noto-cjk fonts-noto-color-emoji fonts-liberation
+  libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3
+  libxrandr2 libgbm1 libasound2 libpango-1.0-0 libcairo2 libatspi2.0-0 libxshmfence1 libsndfile1 libgl1 libglib2.0-0
+  mediainfo libmediainfo0v5 melt)
+# Ubuntu 24.04 把一批库改名成带 t64 的新包（libasound2 → libasound2t64 等），旧名没有安装候选、apt 整批失败。
+# 旧名没有候选而 <旧名>t64 有，就换成新名；两个都没有就保留旧名，让 apt 报出缺哪个。
+has_candidate() { local c; c=$(apt-cache policy "$1" 2>/dev/null | awk '/Candidate:/{print $2}'); [ -n "$c" ] && [ "$c" != "(none)" ]; }
+RESOLVED=()
+for p in "${APT_PKGS[@]}"; do
+  if ! has_candidate "$p" && has_candidate "${p}t64"; then RESOLVED+=("${p}t64"); else RESOLVED+=("$p"); fi
+done
+timeout -k 10 1500 apt-get install -y -q --no-install-recommends "${RESOLVED[@]}" >/dev/null
 if [ ! -x /root/.local/bin/uv ]; then
   mkdir -p /root/.local/bin && timeout -k 10 300 wget -q -O /tmp/uv.tgz https://github.com/astral-sh/uv/releases/download/0.9.5/uv-x86_64-unknown-linux-gnu.tar.gz \
     && tar xzf /tmp/uv.tgz -C /tmp && cp /tmp/uv-x86_64-unknown-linux-gnu/uv /tmp/uv-x86_64-unknown-linux-gnu/uvx /root/.local/bin/
