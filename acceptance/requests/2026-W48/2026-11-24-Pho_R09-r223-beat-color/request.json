@@ -1,0 +1,34 @@
+{
+  "id": "2026-11-24-Pho_R09-r223-beat-color",
+  "project": "photo-content-os",
+  "title": "复验制作台当前拍点的高亮颜色",
+  "raw_request": "总控裁定：判为检查过时，不改产品。依据：R280 浅色主题是用户认可的设计稿，当前拍点 .bm-lane .bc.hit 前后都用 var(--ink)，变的只是令牌值；R223 要保护的是「当前拍点用主色高亮、和其他拍点区分开」，不是某个写死的色值。",
+  "understanding": [
+    "音乐播放时，当前拍点跟随主题主文字色，并且一眼能和同一轨上的其他拍点分开。"
+  ],
+  "out_of_scope": [
+    "修改制作台页面或替换 R223 既有的人工验收记录。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开制作台的音乐库并选择一首有节拍图的音乐。",
+        "点击播放，观察节拍轨上移动的当前拍点。"
+      ],
+      "expected": "当前拍点与标题使用同一主文字色，和同一轨上普通拍点的颜色有明显区别。"
+    }
+  ],
+  "author": {
+    "agent": "codex",
+    "session": "01a20c77-bf75-7bd1-acf6-20dbc8b8e4ff"
+  },
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "executors": [],
+  "created_at": "2026-11-24T07:36:10.929070Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}

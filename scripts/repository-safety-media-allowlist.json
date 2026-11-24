@@ -88,6 +88,10 @@
     "scripts/direct_video/style_library/code.mp4": {
       "reason": "R283 风格库「代码录屏」样张360×640 无声小片段：本仓库样张代码 code.html 用本机渲染器合成，内容是公开示例台词的图解，无人像、无私人素材；用户 2026-10-27 同意逐文件登记",
       "sha256": "d66394d51f7b32eca385c5ebea990c83726d8ac5b9a7460b8850ea0f68e85bbc"
+    },
+    "agents-results/2026-11-24/Pho_R09-r223-beat-color/acceptance/shots/H-01-1.jpg": {
+      "reason": "Pho_R09 H-01 当前拍点验收图，真实 Studio 使用仓库测试夹具与合成音频，540×401；不含私人素材，总控批准单图入库。",
+      "sha256": "8b891f1e05611e7d887596a1558e41f6dfce779a51481255bb4eaff56dc89ebc"
     }
   }
 }

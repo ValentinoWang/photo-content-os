@@ -19,8 +19,28 @@ try{
  }
  {
   const {c,page}=await pageWith(fixture('music'));await page.locator('[data-toggle-music]').click();await page.waitForFunction(()=>document.querySelector('#music-player').currentTime>.1);const before=await page.locator('.bm-overview').elementHandle();await page.waitForTimeout(350);assert(await before.evaluate(n=>n===document.querySelector('.bm-overview')));assert.equal(await page.locator('[data-toggle-music]').getAttribute('aria-label'),'暂停');
-  await page.locator('#music-player').evaluate(p=>{p.pause();p.currentTime=4.18;p.dispatchEvent(new Event('timeupdate'));});await page.waitForSelector('.bc.hit');assert.equal(await page.locator('.bc.hit').first().evaluate(n=>getComputedStyle(n).backgroundColor),'rgb(228, 235, 235)');
-  await page.locator('.bm-band').click({position:{x:160,y:3}});assert((await page.locator('#music-player').evaluate(p=>p.currentTime))>20);checks.push('real copied audio plays; RAF keeps overview node; current beat becomes white; band seeks');await c.close();
+  await page.locator('#music-player').evaluate(p=>{p.pause();p.currentTime=4.18;p.dispatchEvent(new Event('timeupdate'));});
+  const currentBeat = page.locator('.bm-lane .bc.hit').first();
+  await currentBeat.waitFor();
+  const { currentColour, inkColour, otherColours } = await currentBeat.evaluate(beat => {
+    const root = document.documentElement;
+    const ink = document.createElement('span');
+    ink.style.color = getComputedStyle(root).getPropertyValue('--ink');
+    if (!ink.style.color) throw new Error('The root --ink token must resolve to a colour');
+    root.append(ink);
+    const inkColour = getComputedStyle(ink).color;
+    ink.remove();
+    const otherBeats = beat.closest('.bm-lane').querySelectorAll('.bc:not(.hit)');
+    return {
+      currentColour: getComputedStyle(beat).backgroundColor,
+      inkColour,
+      otherColours: Array.from(otherBeats, other => getComputedStyle(other).backgroundColor),
+    };
+  });
+  assert.equal(currentColour, inkColour, 'Current beat uses the root ink colour');
+  assert(otherColours.length > 0, 'The current lane contains other beats');
+  assert(!otherColours.includes(currentColour), 'Current beat differs from the other beats in its lane');
+  await page.locator('.bm-band').click({position:{x:160,y:3}});assert((await page.locator('#music-player').evaluate(p=>p.currentTime))>20);checks.push('real copied audio plays; RAF keeps overview node; current beat uses the ink colour; band seeks');await c.close();
  }
  {
   const c=await browser.newContext();await c.route('**/*',r=>new URL(r.request().url()).origin===base?r.continue():r.abort());const times=[];let calls=0;
