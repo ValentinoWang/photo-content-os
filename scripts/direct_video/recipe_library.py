@@ -1,10 +1,14 @@
 """Read and validate the vendored shot recipe cards."""
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
+import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent / "shot_recipes"
@@ -152,10 +156,13 @@ def load_clips():
 
 
 POSTER_POSITION = 0.9  # closest to upstream gallery posters: mean abs diff 9.0 vs 12.4 at the last frame (50 posters)
+PREVIEW_MAX_WIDTH = 960
+PREVIEW_FPS = 30
+LOCAL_CLIP_SOURCE = "render"
 
 
 def media_fields(recipe_id, category, clips):
-    """Upstream gallery poster first; otherwise a frame of upstream's own demo rendered by its render-demos.mjs."""
+    """Upstream gallery poster first; otherwise a frame rendered from the card's demo."""
     poster, source = MEDIA / "posters" / f"{recipe_id}.jpg", "upstream"
     if not poster.is_file():
         poster, source = MEDIA / "posters" / f"{recipe_id}.render.jpg", "render"
@@ -174,21 +181,180 @@ def clip_path(recipe_id):
     return CLIP_DIR / clip if clip else None
 
 
+def openmotion_demo_dimensions(demo_dir):
+    """Preserve the OpenMotion demo canvas aspect ratio with even dimensions and width <= 960."""
+    index_html = Path(demo_dir) / "index.html"
+    html = index_html.read_text(encoding="utf-8")
+    match = re.search(r'<canvas\b[^>]*\bwidth=["\'](\d+)["\'][^>]*\bheight=["\'](\d+)["\']', html, re.I)
+    if not match:
+        match = re.search(r'<canvas\b[^>]*\bheight=["\'](\d+)["\'][^>]*\bwidth=["\'](\d+)["\']', html, re.I)
+        if not match:
+            raise ValueError(f"{index_html}: missing canvas width/height")
+        raw_h, raw_w = int(match.group(1)), int(match.group(2))
+    else:
+        raw_w, raw_h = int(match.group(1)), int(match.group(2))
+    if raw_w <= 0 or raw_h <= 0:
+        raise ValueError(f"{index_html}: invalid canvas size {raw_w}x{raw_h}")
+    if raw_w > PREVIEW_MAX_WIDTH:
+        width = PREVIEW_MAX_WIDTH
+        height = max(2, round(raw_h * PREVIEW_MAX_WIDTH / raw_w / 2) * 2)
+    else:
+        width = max(2, raw_w - (raw_w % 2))
+        height = max(2, raw_h - (raw_h % 2))
+    return width, height
+
+
+def _load_teaching_clips():
+    scripts_dir = str(Path(__file__).resolve().parents[1])
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    from video_render.teaching_clips import teaching_clips
+    return teaching_clips
+
+
+def render_openmotion_preview(recipe_id, *, clip_dest=None, poster_dest=None):
+    """Render one OpenMotion demo with the local video renderer to MP4 and/or JPG poster."""
+    card = read_card(ROOT / "openmotion" / f"{recipe_id}.md", "openmotion")
+    seconds = recipe_seconds(card["duration"])
+    if not seconds or seconds <= 0:
+        raise ValueError(f"{recipe_id}: invalid duration {card['duration']!r}")
+    demo_dir = ROOT / "demos" / "openmotion" / recipe_id
+    if not (demo_dir / "index.html").is_file():
+        raise ValueError(f"{recipe_id}: missing OpenMotion demo in {demo_dir}")
+    width, height = openmotion_demo_dimensions(demo_dir)
+    frames = max(1, round(seconds * PREVIEW_FPS))
+    font = os.environ.get("DIRECT_VIDEO_FONT") or os.environ.get("VIDEO_RENDER_TEST_FONT") or "/System/Library/Fonts/STHeiti Medium.ttc"
+    manifest = {
+        "width": width,
+        "height": height,
+        "fps": PREVIEW_FPS,
+        "assets_dir": str(demo_dir.resolve()),
+        "fonts": [{"path": font}],
+        "timeout_seconds": max(120, frames),
+        "shots": [{"id": recipe_id, "html": "index.html", "frames": frames, "start_frame": 0}],
+    }
+    browser = os.environ.get("VIDEO_RENDER_BROWSER") or os.environ.get("VIDEO_RENDER_TEST_BROWSER")
+    if browser:
+        manifest["browser_executable"] = browser
+    teaching_clips = _load_teaching_clips()
+    with tempfile.TemporaryDirectory(prefix=f"om-preview-{recipe_id}-") as tmp:
+        tmp_dir = Path(tmp)
+        manifest_path = tmp_dir / "manifest.json"
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        result = teaching_clips(manifest_path, tmp_dir / "out", transparent=False)
+        clip_info = result["clips"][0] if result.get("clips") else {}
+        if result.get("status") != "completed" or clip_info.get("status") != "completed":
+            raise ValueError(f"{recipe_id}: preview render failed: {clip_info.get('reason') or result.get('reason')}")
+        rendered_mp4 = Path(clip_info["file"])
+        size = rendered_mp4.stat().st_size
+        digest = clip_info["sha256"]
+        if clip_dest is not None:
+            clip_dest = Path(clip_dest)
+            clip_dest.parent.mkdir(parents=True, exist_ok=True)
+            tmp_clip = clip_dest.with_name(f".{clip_dest.name}.tmp.{os.getpid()}")
+            try:
+                shutil.copyfile(rendered_mp4, tmp_clip)
+                tmp_clip.replace(clip_dest)
+            finally:
+                tmp_clip.unlink(missing_ok=True)
+        if poster_dest is not None:
+            poster_dest = Path(poster_dest)
+            poster_dest.parent.mkdir(parents=True, exist_ok=True)
+            poster_frame = min(frames - 1, max(0, int(round((frames - 1) * POSTER_POSITION))))
+            frame_png = Path(result["shots"][0]["frames_dir"]) / f"frame-{poster_frame:06d}.png"
+            tmp_poster = poster_dest.with_name(f".{poster_dest.name}.tmp.{os.getpid()}.jpg")
+            try:
+                subprocess.run(
+                    ["ffmpeg", "-v", "error", "-y", "-i", str(frame_png), "-vf", "scale=640:-2", "-q:v", "3", str(tmp_poster)],
+                    check=True,
+                    timeout=120,
+                )
+                tmp_poster.replace(poster_dest)
+            finally:
+                tmp_poster.unlink(missing_ok=True)
+    return {
+        "id": recipe_id,
+        "file": f"{recipe_id}.mp4",
+        "bytes": size,
+        "sha256": digest,
+        "source": LOCAL_CLIP_SOURCE,
+        "width": width,
+        "height": height,
+        "frames": frames,
+    }
+
+
+def render_openmotion_previews(recipe_ids=None, *, workers=1):
+    """Render OpenMotion preview MP4s into CLIP_DIR, posters into media/posters, and update clips.json + index.json."""
+    manifest = load_openmotion_manifest()["clips"]
+    targets = sorted(recipe_ids) if recipe_ids else sorted(manifest)
+    unknown = sorted(set(targets) - set(manifest))
+    if unknown:
+        raise ValueError(f"unknown OpenMotion recipes: {unknown}")
+    CLIP_DIR.mkdir(parents=True, exist_ok=True)
+    (MEDIA / "posters").mkdir(parents=True, exist_ok=True)
+
+    def _one(rid):
+        return render_openmotion_preview(
+            rid,
+            clip_dest=CLIP_DIR / f"{rid}.mp4",
+            poster_dest=MEDIA / "posters" / f"{rid}.render.jpg",
+        )
+
+    results = {}
+    if workers > 1:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            futures = {pool.submit(_one, rid): rid for rid in targets}
+            for idx, future in enumerate(as_completed(futures), 1):
+                rid = futures[future]
+                info = future.result()
+                results[rid] = info
+                print(f"[{idx}/{len(targets)}] {rid} ({info['width']}x{info['height']}, {info['frames']}f, {info['bytes']}B)", flush=True)
+    else:
+        for idx, rid in enumerate(targets, 1):
+            info = _one(rid)
+            results[rid] = info
+            print(f"[{idx}/{len(targets)}] {rid} ({info['width']}x{info['height']}, {info['frames']}f, {info['bytes']}B)", flush=True)
+
+    clips_data = load_clips()
+    clips = dict(clips_data["clips"])
+    for rid, info in results.items():
+        clips[rid] = {
+            "file": info["file"],
+            "bytes": info["bytes"],
+            "sha256": info["sha256"],
+            "source": LOCAL_CLIP_SOURCE,
+        }
+    clips_data["clips"] = dict(sorted(clips.items()))
+    CLIPS_MANIFEST.write_text(json.dumps(clips_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    entries = build_index()
+    (ROOT / "index.json").write_text(json.dumps(entries, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"OK: rendered {len(results)} OpenMotion previews into {CLIP_DIR} and posters into {MEDIA / 'posters'}")
+    return results
+
+
 def fetch_clips():
     clips = load_clips()["clips"]
     CLIP_DIR.mkdir(parents=True, exist_ok=True)
     def ok(item):
         path = CLIP_DIR / item["file"]
         return path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
-    missing = [item for item in clips.values() if not ok(item)]
-    if missing:
-        args = [arg for item in missing for arg in ("-p", item["file"])]
+    missing = [(recipe_id, item) for recipe_id, item in clips.items() if not ok(item)]
+    download_missing = [(rid, item) for rid, item in missing if item.get("source") != LOCAL_CLIP_SOURCE]
+    render_missing = [(rid, item) for rid, item in missing if item.get("source") == LOCAL_CLIP_SOURCE]
+    if download_missing:
+        args = [arg for _, item in download_missing for arg in ("-p", item["file"])]
         subprocess.run(["gh", "release", "download", "gallery-media", "--repo", "Vincentwei1021/video-shotcraft",
                         "--dir", str(CLIP_DIR), "--clobber", *args], check=True, timeout=1800)
+    for recipe_id, item in render_missing:
+        render_openmotion_preview(recipe_id, clip_dest=CLIP_DIR / item["file"])
+    bad_render = [recipe_id for recipe_id, item in render_missing if not ok(item)]
+    if bad_render:
+        raise ValueError(f"clip SHA-256 mismatch after local render: {bad_render}")
     bad = [item["file"] for item in clips.values() if not ok(item)]
     if bad:
         raise ValueError(f"clip SHA-256 mismatch after download: {bad}")
-    print(f"OK: {len(clips)} clips in {CLIP_DIR} ({len(missing)} downloaded)")
+    print(f"OK: {len(clips)} clips in {CLIP_DIR} ({len(download_missing)} downloaded, {len(render_missing)} rendered)")
 
 
 def posters_from_renders(render_dir):
@@ -396,11 +562,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--upstream', type=Path)
-    parser.add_argument('--fetch-clips', action='store_true', help='download upstream preview clips into SHOT_RECIPE_CLIP_DIR')
+    parser.add_argument('--fetch-clips', action='store_true', help='download upstream preview clips and render local ones into SHOT_RECIPE_CLIP_DIR')
     parser.add_argument('--posters-from-renders', type=Path, metavar='DIR', help='upstream render-demos.mjs output directory')
+    parser.add_argument('--render-openmotion-previews', action='store_true', help='render OpenMotion preview MP4s and posters with the local renderer')
+    parser.add_argument('--workers', type=int, default=1, help='parallel render workers for --render-openmotion-previews')
+    parser.add_argument('--recipe', action='append', help='limit --render-openmotion-previews to specific OpenMotion recipe ID(s)')
     args = parser.parse_args()
     try:
-        if args.posters_from_renders:
+        if args.render_openmotion_previews:
+            render_openmotion_previews(args.recipe, workers=max(1, args.workers))
+        elif args.posters_from_renders:
             posters_from_renders(args.posters_from_renders)
         elif args.fetch_clips:
             fetch_clips()
