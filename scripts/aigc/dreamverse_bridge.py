@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate confirmed Wan shots through a local DreamVerse service."""
+"""Generate confirmed video shots through a local DreamVerse service."""
 
 import argparse
 from contextlib import contextmanager
@@ -20,9 +20,9 @@ from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, HTTPCookieProcessor, ProxyHandler, Request, build_opener
 from uuid import uuid4
 
-FACTS_PATH = (
-    Path(__file__).resolve().parents[2] / "integrations/dreamverse/wanxiang-provider/model-facts.json"
-)
+PROVIDERS_ROOT = Path(__file__).resolve().parents[2] / "integrations/dreamverse"
+DEFAULT_PROVIDER = "wanxiang"
+PROVIDERS = ("wanxiang", "seedance")
 SHOT_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,79}", re.ASCII)
 TASK_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}", re.ASCII)
 DIGEST = re.compile(r"[a-f0-9]{64}", re.ASCII)
@@ -134,36 +134,56 @@ def digest(value):
 
 
 def read_shots(path):
-    facts = json.loads(FACTS_PATH.read_text(encoding="utf-8"))
     manifest = json.loads(path.read_text(encoding="utf-8"))
     shots = manifest.get("shots") if isinstance(manifest, dict) else manifest
     if not isinstance(shots, list) or not shots:
         raise BridgeError("The shot list must contain at least one shot.")
     normalized = {}
+    provider_facts = {}
     for index, raw in enumerate(shots, 1):
         shot_id = raw.get("shot_id") if isinstance(raw, dict) else None
         if not isinstance(shot_id, str) or not SHOT_ID.fullmatch(shot_id) or shot_id in normalized:
             raise BridgeError(f"Shot {index} has an invalid or duplicate shot_id.")
+        provider = raw.get("provider", DEFAULT_PROVIDER)
+        if provider not in PROVIDERS:
+            raise BridgeError(f"{shot_id}: choose wanxiang or seedance as the provider.")
+        if provider not in provider_facts:
+            path = PROVIDERS_ROOT / f"{provider}-provider/model-facts.json"
+            provider_facts[provider] = json.loads(path.read_text(encoding="utf-8"))
+        facts = provider_facts[provider]
         prompt = raw.get("prompt")
         seconds = raw.get("seconds")
         ratio = raw.get("aspect_ratio")
         resolution = raw.get("resolution", "720p")
-        model = raw.get("model", facts["modelId"])
+        model = raw.get("model", facts.get("modelId"))
         if (
-            type(seconds) is not int or seconds not in facts["durationsSec"]
-            or ratio not in facts["aspectRatios"] or resolution not in facts["resolutions"]
-            or model != facts["modelId"] or not isinstance(prompt, str)
-            or not prompt.strip() or len(prompt) > 1500
+            type(seconds) is not int
+            or not all(isinstance(value, str) and value.strip() for value in (model, ratio, resolution, prompt))
+            or (provider == DEFAULT_PROVIDER and len(prompt) > 1500)
+            or (facts.get("modelId") and model != facts["modelId"])
+            or (facts.get("durationsSec") and seconds not in facts["durationsSec"])
+            or (facts.get("aspectRatios") and ratio not in facts["aspectRatios"])
+            or (facts.get("resolutions") and resolution not in facts["resolutions"])
         ):
-            raise BridgeError(f"{shot_id}: use a valid Wan 2.6 prompt, duration, aspect ratio and resolution.")
+            raise BridgeError(f"{shot_id}: check the prompt, model, duration, aspect ratio and resolution for {provider}.")
         normalized[shot_id] = {
+            "provider": provider,
             "prompt": prompt, "model": model, "seconds": seconds, "aspect_ratio": ratio, "resolution": resolution,
         }
     return normalized
 
 
-def specification_hash(spec):
-    return digest([spec[k] for k in ("model", "seconds", "aspect_ratio", "resolution", "prompt")])
+def specification_hash(spec, *, legacy=False):
+    fields = ("model", "seconds", "aspect_ratio", "resolution", "prompt")
+    return digest([spec[k] for k in (fields if legacy else ("provider", *fields))])
+
+
+def matches_spec(row, spec):
+    return (
+        row is not None
+        and row.get("provider", DEFAULT_PROVIDER) == spec["provider"]
+        and row["spec_hash"] == specification_hash(spec, legacy="provider" not in row)
+    )
 
 
 def write_ledger(path, ledger):
@@ -206,14 +226,15 @@ class Bridge:
             self.save()
         return self.ledger["dreamverse_project_id"]
 
-    def operation(self, project, key, spec):
+    def operation(self, project, key, provider_key, spec):
         return {
             "project": project, "operation": "shot.render", "surface": "asset_pool", "inputs": [],
             "intent": f"desk-bridge:{key}",
             "params": {
-                "modality": "video", "task": "t2v", "provider": "wanxiang", "model": spec["model"],
+                "modality": "video", "task": "t2v", "provider": spec["provider"], "model": spec["model"],
                 "prompt": spec["prompt"], "duration_sec": spec["seconds"], "aspect_ratio": spec["aspect_ratio"],
-                "resolution": spec["resolution"], "seed": int(key[:7], 16), "extra": {"bridge_confirmation": key},
+                "resolution": spec["resolution"], "seed": int(provider_key[:7], 16),
+                "extra": {"bridge_confirmation": provider_key},
             },
         }
 
@@ -223,7 +244,7 @@ class Bridge:
             raise BridgeError("Confirmation names a shot absent from the manifest.")
         for shot_id, spec in shots.items():
             old = staged.get(shot_id)
-            if old is not None and old["spec_hash"] == specification_hash(spec):
+            if matches_spec(old, spec):
                 continue
             if old is not None and old["status"] not in {"completed", "failed", "canceled", "rejected"}:
                 raise BridgeError(f"{shot_id}: resolve the previous task before changing its specification.")
@@ -232,16 +253,24 @@ class Bridge:
                                   f"{spec['aspect_ratio']} / {spec['resolution']} with --confirm {shot_id}.")
         project = self.project()
         for shot_id, spec in shots.items():
+            provider = spec["provider"]
             hash_value = specification_hash(spec)
-            key = digest([project, shot_id, hash_value])
-            operation = self.operation(project, key, spec)
             row = staged.get(shot_id)
-            if row is None or row["spec_hash"] != hash_value:
+            existing = matches_spec(row, spec)
+            key = row["confirmation_key"] if existing else digest([project, shot_id, hash_value])
+            # Wanxiang receipts and seeds use its original wire format, including for old ledgers.
+            provider_key = (
+                digest([project, shot_id, specification_hash(spec, legacy=True)])
+                if provider == DEFAULT_PROVIDER else key
+            )
+            operation = self.operation(project, key, provider_key, spec)
+            if not existing:
                 check = self.service.json("/api/dv/operation/check", operation)
                 if not isinstance(check, dict) or check.get("problems") != []:
                     raise BridgeError(f"{shot_id}: DreamVerse rejected the render specification.")
                 row = {
                     "status": "submitting", "confirmation_key": key, "spec_hash": hash_value,
+                    "provider": provider,
                     "model": spec["model"], "seconds": spec["seconds"], "aspect_ratio": spec["aspect_ratio"],
                     "resolution": spec["resolution"], "task_id": None, "cloud_status": None,
                     "billed_video_seconds": None, "dreamverse_record_id": None,
@@ -252,18 +281,18 @@ class Bridge:
                 self.save()
                 try:
                     reply = self.service.json(
-                        "/api/dv/wanxiang/submit", {"project": project, "key": key, "shot_id": shot_id, **spec},
+                        f"/api/dv/{provider}/submit", {"project": project, "key": provider_key, "shot_id": shot_id, **spec},
                     )
                 except TransportError:
                     self.record_submission(row, None)
-                    reply = self.read_receipt(shot_id, key)
+                    reply = self.read_receipt(shot_id, provider, provider_key)
                 except KeyboardInterrupt:
                     self.record_submission(row, None)
                     raise
                 self.record_submission(row, reply)
             elif row["status"] in {"submitting", "unknown"} and row["task_id"] is None:
                 self.record_submission(row, None)
-                self.record_submission(row, self.read_receipt(shot_id, key))
+                self.record_submission(row, self.read_receipt(shot_id, provider, provider_key))
             if row["status"] == "completed":
                 self.restore_missing_outputs(row)
                 print(f"{shot_id}: already completed", flush=True)
@@ -273,13 +302,13 @@ class Bridge:
             if row["status"] in {"failed", "canceled"}:
                 raise BridgeError(f"{shot_id}: cloud task ended in {row['status']}.")
             deadline = time.monotonic() + self.wait_seconds
-            self.poll_cloud(shot_id, row, deadline)
+            self.poll_cloud(shot_id, row, provider, provider_key, deadline)
             self.collect_outputs(shot_id, row, operation, deadline)
             print(f"{shot_id}: completed", flush=True)
 
-    def read_receipt(self, shot_id, key):
+    def read_receipt(self, shot_id, provider, key):
         try:
-            return self.service.json("/api/dv/wanxiang/receipt", {"key": key})
+            return self.service.json(f"/api/dv/{provider}/receipt", {"key": key})
         except TransportError:
             raise BridgeError(f"{shot_id}: submission unknown. The service receipt could not be read; check it before any new submission.") from None
 
@@ -302,18 +331,18 @@ class Bridge:
             raise BridgeError(f"{shot_id}: local wait ended. Run the same command to check the existing task.")
         time.sleep(min(remaining, self.poll_interval))
 
-    def poll_cloud(self, shot_id, row, deadline):
+    def poll_cloud(self, shot_id, row, provider, key, deadline):
         if row["cloud_status"] == "SUCCEEDED":
             return
         while True:
             reply = self.service.json(
-                "/api/dv/wanxiang/status", {"key": row["confirmation_key"], "task_id": row["task_id"]},
+                f"/api/dv/{provider}/status", {"key": key, "task_id": row["task_id"]},
             )
             if reply.get("task_id") != row["task_id"]:
-                raise BridgeError(f"{shot_id}: Wan status returned a different task ID.")
+                raise BridgeError(f"{shot_id}: {provider} status returned a different task ID.")
             cloud = reply.get("status")
             if cloud not in {"PENDING", "RUNNING", "SUCCEEDED", "FAILED", "CANCELED", "UNKNOWN", "SUSPENDED"}:
-                raise BridgeError(f"{shot_id}: Wan returned an unrecognized cloud status.")
+                raise BridgeError(f"{shot_id}: {provider} returned an unrecognized cloud status.")
             usage = reply.get("billed_video_seconds")
             if type(usage) not in (int, float) or not math.isfinite(usage) or usage < 0:
                 usage = None
@@ -338,7 +367,7 @@ class Bridge:
         record = next((item["record"] for item in found["entries"] if item["record"]["intent"] == operation["intent"]), None)
         if record is None or record["status"] in {"failed", "cancelled"}:
             # This operation only materializes existing cloud output. Calling it
-            # after an interrupted local render never submits to Wan.
+            # after an interrupted local render never submits another cloud task.
             record = self.service.json("/api/dv/operation", operation)
         row["dreamverse_record_id"] = record["id"]
         self.save()

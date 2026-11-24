@@ -165,3 +165,128 @@ try {
         cwd=tmp_path, capture_output=True, text=True, timeout=20,
     )
     assert result.returncode == 0, result.stderr
+
+
+def bridge_module():
+    from importlib.util import module_from_spec, spec_from_file_location
+
+    spec = spec_from_file_location('dreamverse_bridge', ROOT / 'scripts/aigc/dreamverse_bridge.py')
+    module = module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def read_bridge_shot(bridge, tmp_path, **options):
+    manifest = tmp_path / 'shots.json'
+    manifest.write_text(json.dumps({
+        'shots': [{'shot_id': 'shot', 'prompt': '起跑', 'seconds': 5, 'aspect_ratio': '9:16', **options}],
+    }))
+    return bridge.read_shots(manifest)
+
+
+class DreamVerseStub:
+    url = 'http://127.0.0.1:49183'
+
+    def __init__(self, transport_error):
+        self.transport_error = transport_error
+        self.events = []
+        self.tasks = {}
+
+    def json(self, route, body=None):
+        self.events.append((route, body))
+        if route == '/api/dv/projects':
+            return [] if body is None else {'id': 'project-1'}
+        if route == '/api/dv/operation/check':
+            return {'problems': []}
+        if route.endswith('/submit'):
+            provider = route.split('/')[-2]
+            assert body['key'] not in self.tasks
+            self.tasks[body['key']] = provider
+            if provider == 'seedance':
+                raise self.transport_error('lost submit response')
+            return {'task_id': 'task-wanxiang'}
+        if route.endswith(('/receipt', '/status')):
+            provider = route.split('/')[-2]
+            assert self.tasks[body['key']] == provider
+            return {'task_id': 'task-' + provider, 'status': 'SUCCEEDED'}
+        if route == '/api/dv/history':
+            return {'entries': []}
+        if route == '/api/dv/operation':
+            assert self.tasks[body['params']['extra']['bridge_confirmation']] == body['params']['provider']
+            return {'id': 'render-1', 'status': 'done', 'outputs': ['video', 'still']}
+        raise AssertionError(route)
+
+    def download(self, asset_id, path):
+        path.write_text(asset_id)
+
+
+def test_bridge_provider_switch_requires_confirmation_and_uses_selected_routes(tmp_path):
+    import pytest
+
+    bridge = bridge_module()
+    service = DreamVerseStub(bridge.TransportError)
+    runner = bridge.Bridge(service, tmp_path, 1, 0.01)
+    wan = read_bridge_shot(bridge, tmp_path)
+    runner.run(wan, ['shot'])
+    previous = runner.ledger['shots']['shot']
+    assert previous['provider'] == 'wanxiang'
+    wan_request = next(body for route, body in service.events if route == '/api/dv/wanxiang/submit')
+    wan_hash = bridge.digest([wan_request[field] for field in ('model', 'seconds', 'aspect_ratio', 'resolution', 'prompt')])
+    assert wan_request['key'] == bridge.digest(['project-1', 'shot', wan_hash])
+    assert previous['confirmation_key'] != wan_request['key']
+
+    seedance = read_bridge_shot(bridge, tmp_path, provider='seedance', seconds=14, aspect_ratio='21:9')
+    service.events.clear()
+    with pytest.raises(bridge.BridgeError, match='confirm'):
+        runner.run(seedance, [])
+    assert not service.events
+    runner.run(seedance, ['shot'])
+    current = runner.ledger['shots']['shot']
+    assert current['provider'] == 'seedance'
+    assert current['confirmation_key'] != previous['confirmation_key']
+    assert current['task_id'] == 'task-seedance'
+    calls = [(route, body) for route, body in service.events if route.startswith('/api/dv/seedance/')]
+    assert [route for route, _ in calls] == [
+        '/api/dv/seedance/submit', '/api/dv/seedance/receipt', '/api/dv/seedance/status',
+    ]
+    assert all(body['key'] == current['confirmation_key'] for _, body in calls)
+    assert service.events[-1][1]['params']['provider'] == 'seedance'
+
+
+def test_bridge_resumes_legacy_wanxiang_row_without_reconfirming(tmp_path):
+    bridge = bridge_module()
+    service = DreamVerseStub(bridge.TransportError)
+    shots = read_bridge_shot(bridge, tmp_path)
+    old_hash = bridge.digest(['wan2.6-t2v', 5, '9:16', '720p', '起跑'])
+    old_key = bridge.digest(['project-1', 'shot', old_hash])
+    service.tasks[old_key] = 'wanxiang'
+    (tmp_path / 'ledger.json').write_text(json.dumps({
+        'version': 1, 'dreamverse_url': service.url, 'dreamverse_project_id': 'project-1',
+        'shots': {'shot': {
+            'status': 'running', 'spec_hash': old_hash, 'confirmation_key': old_key,
+            'cloud_status': 'RUNNING', 'task_id': 'task-wanxiang', 'billed_video_seconds': None,
+            'dreamverse_record_id': None,
+        }},
+    }))
+
+    runner = bridge.Bridge(service, tmp_path, 1, 0.01)
+    runner.run(shots, [])
+    assert service.events[0] == ('/api/dv/wanxiang/status', {'key': old_key, 'task_id': 'task-wanxiang'})
+    assert all(not route.endswith('/submit') for route, _ in service.events)
+    assert runner.ledger['shots']['shot']['status'] == 'completed'
+
+
+def test_bridge_checks_only_populated_seedance_facts(tmp_path, monkeypatch):
+    import pytest
+
+    bridge = bridge_module()
+    facts = tmp_path / 'seedance-provider/model-facts.json'
+    facts.parent.mkdir()
+    facts.write_text(json.dumps({'modelId': 'seedance-fixture', 'durationsSec': [5], 'frameSizes': {}, 'resolutions': []}))
+    monkeypatch.setattr(bridge, 'PROVIDERS_ROOT', tmp_path)
+
+    shot = read_bridge_shot(bridge, tmp_path, provider='seedance', resolution='fixture')['shot']
+    assert shot['model'] == 'seedance-fixture'
+    assert shot['resolution'] == 'fixture'
+    with pytest.raises(bridge.BridgeError, match='seedance'):
+        read_bridge_shot(bridge, tmp_path, provider='seedance', seconds=6)
