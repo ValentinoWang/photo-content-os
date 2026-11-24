@@ -1,0 +1,23 @@
+Remote source commit: 4225b888209c2d2ddc0737f6201bcdfd0caf5e97
+PASS beat map: signature lifecycle, cuts, fade, offsets, multi-song swap, lane:false, seek, stable overview, formulas, visible swap, no overflow
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'rgb(21, 32, 33)'
+- 'rgb(228, 235, 235)'
+        ^
+
+    at file:///root/task-worktrees/production-desk-concat-backend/scripts/verify_r223_interactions.mjs:22:170 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'rgb(21, 32, 33)',
+  expected: 'rgb(228, 235, 235)',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.13.0

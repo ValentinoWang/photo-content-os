@@ -216,7 +216,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-24T05:56:09.376765Z",
+  "generated_at": "2026-11-24T06:49:09.409607Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -229,12 +229,12 @@
       ],
       "latest_run": null,
       "loop_name": "用 Concat 生成可精修的口播粗稿",
-      "ready_at": "2026-11-24T05:56:09.376765Z",
+      "ready_at": "2026-11-24T06:49:09.409607Z",
       "release_slice": "concat-backend",
       "required_role": "任务委托人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "开发机 16 项和本机 Concat 合成样片复验通过；样片观察和桌面精修待任务委托人验收。",
+      "summary": "开发机 16 项和本机 Concat 合成样片复验通过，旧验收范围已对照。样片观察和桌面精修待任务委托人验收。",
       "task_id": "2026-11-24-Pho_R06-concat-backend",
       "workspace": "acceptance/human/2026-W48/2026-11-24-Pho_R06-concat-backend"
     },
@@ -306,5 +306,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "ef361be06bec997a7ededb68febf2a910b980793bbe577299083054f643e57c6"
+  "source_facts_sha256": "6c0d856631264fdc731a4507db6d04fb6ff9a5582f0df2399b40f97aea100cad"
 }

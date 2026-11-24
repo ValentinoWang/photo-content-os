@@ -1,0 +1,76 @@
+{
+  "baseline": "4d78b2a98d09cd8172bc584d8d5c692e876f2454",
+  "verified_source": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
+  "browser_comparison_head": "4225b888209c2d2ddc0737f6201bcdfd0caf5e97",
+  "browser_failures_equal": true,
+  "failure_signature": [
+    "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:",
+    "rgb(21, 32, 33)",
+    "rgb(228, 235, 235)",
+    "scripts/verify_r223_interactions.mjs:22:170"
+  ],
+  "browser_commands": [
+    {
+      "head": "4d78b2a98d09cd8172bc584d8d5c692e876f2454",
+      "command": "/bin/bash docs/tasks/concat-backend/verify_legacy.sh browser",
+      "exit_code": 1,
+      "output": "r223-browser-4d78b2a.log"
+    },
+    {
+      "head": "4225b888209c2d2ddc0737f6201bcdfd0caf5e97",
+      "command": "/bin/bash docs/tasks/concat-backend/verify_legacy.sh browser",
+      "exit_code": 1,
+      "output": "r223-browser-4225b88.log"
+    }
+  ],
+  "verified_unit": {
+    "command": "/bin/bash docs/tasks/concat-backend/verify_legacy.sh unit",
+    "exit_code": 0,
+    "passed": 115,
+    "skipped": 0,
+    "equivalence_cases": 6,
+    "output": "legacy-unit-1d158c7.log"
+  },
+  "r223_design": {
+    "command": "/bin/bash docs/tasks/concat-backend/verify_legacy.sh design",
+    "exit_code": 0,
+    "inventories": 58,
+    "failures": 0,
+    "output": "r223-design-4225b88.log"
+  },
+  "checked_paths_with_no_diff": [
+    "docs/tasks/R223-music-beat-map/mock",
+    "scripts/check_r223_design.py",
+    "scripts/verify_r223_interactions.mjs",
+    "studio/static",
+    "tests/fixtures/r223",
+    "tests/test_edit_tools_runtime.py",
+    "tests/test_r223_beat_map.mjs",
+    "tests/test_r223_music_analysis.py",
+    "tests/test_r223_music_analysis_runtime.py",
+    "tests/test_r223_sections.py"
+  ],
+  "verified_source_to_browser_head_artifact_paths": [
+    "acceptance/human-acceptance-log.json",
+    "acceptance/human-acceptance-log.md",
+    "\"acceptance/human/2026-W48/\\346\\234\\252-2026-11-24-Pho_R06-concat-backend/binding.md\"",
+    "\"acceptance/human/2026-W48/\\346\\234\\252-2026-11-24-Pho_R06-concat-backend/checklist.md\"",
+    "\"acceptance/human/2026-W48/\\346\\234\\252-2026-11-24-Pho_R06-concat-backend/handoff.json\"",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance-contract.md",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/index.md",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/machine/local-runtime/runs/20261124T054640Z-mac-concat-f2333a/evidence/receipt.json",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/machine/local-runtime/runs/20261124T054640Z-mac-concat-f2333a/result.md",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/machine/unit/runs/20261124T054640Z-photo-dev-6e64da/evidence/receipt.json",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/machine/unit/runs/20261124T054640Z-photo-dev-6e64da/result.md",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/shots/H-01-1.jpg",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/shots/H-02-1.jpg",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/baseline.json",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/claims.json",
+    "agents-results/2026-11-24/Pho_R06-concat-backend/evidence-ledger.jsonl"
+  ],
+  "true_model_runtime": "NOT RUN; devbox dependency download timed out",
+  "runner_sha256": {
+    "verify_legacy.sh": "088ee516df531b38745148d628feecff222e88eb452e8b5ce3eafada363e5a2a",
+    "test_precut_equivalence.py": "05377aba2891e8e561319bfc80c19e14a5f14acac8a6b58d241917e4789ec428"
+  }
+}

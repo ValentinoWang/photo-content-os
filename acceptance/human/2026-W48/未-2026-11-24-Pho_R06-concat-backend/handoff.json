@@ -1,6 +1,6 @@
 {
   "baseline": {
-    "base": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
+    "base": "4d78b2a98d09cd8172bc584d8d5c692e876f2454",
     "branch": "main",
     "head": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
     "tree": "fb732709bcbf89d0212f852769507230c6d2639a"
@@ -15,7 +15,183 @@
       "claim_key": "photo.concat-roughcut",
       "item": "H-01",
       "open_route": "note:在本机查看验收样片的 Concat 剪辑结果和第 5 秒预览帧",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "既有卡检查一键直出、渲染结果或单镜重写，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "安装与环境检查范围的受保护测试在冻结源码上通过。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "reason": "既有卡检查逐镜画面标注、修改或版本留存，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查一键直出、渲染结果或单镜重写，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "筛选逻辑原样搬到 precut.py，等价性测试逐项相同。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "reason": "既有卡检查工作台表单、回收站确认或做法页签，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查逐镜画面标注、修改或版本留存，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查一键直出、渲染结果或单镜重写，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查逐镜画面标注、修改或版本留存，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查工作台表单、回收站确认或做法页签，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查工作台表单、回收站确认或做法页签，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查导航、镜头过目或素材播放预览，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-01",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "本批 diff 不含 R223 的前端文件，改动前后浏览器检查同样失败，失败原文见证据。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "本批 diff 不含 R223 的前端文件，改动前后浏览器检查同样失败，失败原文见证据。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "reason": "既有卡检查导航、镜头过目或素材播放预览，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-02",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "本批 diff 不含 R223 的前端文件，改动前后浏览器检查同样失败，失败原文见证据。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "reason": "既有卡检查平台歌曲链接导入、会员限制或去重，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查平台歌曲链接导入、会员限制或去重，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查平台歌曲链接导入、会员限制或去重，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查导航、镜头过目或素材播放预览，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查 Studio 浅色主题和媒体边界，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R280-photo-studio-light/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查脚本直出的风格库与调整，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查返回分镜后修改并重新生成直出视频，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查 Studio 浅色主题和媒体边界，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R280-photo-studio-light/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查脚本直出的风格库与调整，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查返回分镜后修改并重新生成直出视频，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查脚本直出的风格库与调整，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查返回分镜后修改并重新生成直出视频，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查 FFmpeg 9 的第一版字幕和场景抽帧，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-27-R312-photo-ffmpeg9-subtitles/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查开发机上的执行和文件传输，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-27-R310-photo-devbox/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查开发机上的执行和文件传输，本项检查Concat 样片的删段、字幕与叠层，验收操作和结果各自独立。",
+          "target": "2026-10-27-R310-photo-devbox/H-01",
+          "type": "independent"
+        }
+      ],
       "screenshots": [
         {
           "caption": "本次样片第 5 秒透明叠层参考 · Concat 预览帧缩放",
@@ -24,13 +200,195 @@
           "sha256": "8973304d0d6afa211c2128f344690cdcd09a9e641688496bee9c042fa37f4d90"
         }
       ],
-      "surfaces": []
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.edit-backends",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
     },
     {
       "claim_key": "photo.concat-refine",
       "item": "H-02",
       "open_route": "note:在本机 Concat 打开制作台生成的口播粗稿工程，查看时间线",
-      "relations": [],
+      "relations": [
+        {
+          "reason": "既有卡检查一键直出、渲染结果或单镜重写，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "安装与环境检查范围的受保护测试在冻结源码上通过。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "reason": "既有卡检查逐镜画面标注、修改或版本留存，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查一键直出、渲染结果或单镜重写，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "筛选逻辑原样搬到 precut.py，等价性测试逐项相同。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "reason": "既有卡检查工作台表单、回收站确认或做法页签，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查逐镜画面标注、修改或版本留存，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查一键直出、渲染结果或单镜重写，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查逐镜画面标注、修改或版本留存，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查工作台表单、回收站确认或做法页签，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查工作台表单、回收站确认或做法页签，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查导航、镜头过目或素材播放预览，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-01",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "本批 diff 不含 R223 的前端文件，改动前后浏览器检查同样失败，失败原文见证据。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "本批 diff 不含 R223 的前端文件，改动前后浏览器检查同样失败，失败原文见证据。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "reason": "既有卡检查导航、镜头过目或素材播放预览，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-02",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+          "reason": "本批 diff 不含 R223 的前端文件，改动前后浏览器检查同样失败，失败原文见证据。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "reason": "既有卡检查平台歌曲链接导入、会员限制或去重，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查平台歌曲链接导入、会员限制或去重，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查平台歌曲链接导入、会员限制或去重，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查导航、镜头过目或素材播放预览，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查 Studio 浅色主题和媒体边界，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R280-photo-studio-light/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查脚本直出的风格库与调整，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查返回分镜后修改并重新生成直出视频，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查 Studio 浅色主题和媒体边界，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R280-photo-studio-light/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查脚本直出的风格库与调整，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查返回分镜后修改并重新生成直出视频，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查脚本直出的风格库与调整，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查返回分镜后修改并重新生成直出视频，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查 FFmpeg 9 的第一版字幕和场景抽帧，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-27-R312-photo-ffmpeg9-subtitles/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查开发机上的执行和文件传输，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-27-R310-photo-devbox/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "既有卡检查开发机上的执行和文件传输，本项检查Concat 项目的桌面精修与保存，验收操作和结果各自独立。",
+          "target": "2026-10-27-R310-photo-devbox/H-01",
+          "type": "independent"
+        }
+      ],
       "screenshots": [
         {
           "caption": "T6 同版本合成工程参考 · Concat 窗口裁出预览区和时间线",
@@ -39,7 +397,13 @@
           "sha256": "231603ffda0a6e318eb9614d4ffa9150eb4ce9dd3652b889eae47ce07e771268"
         }
       ],
-      "surfaces": []
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.edit-backends",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
     }
   ],
   "contract_path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance-contract.md",
@@ -66,16 +430,30 @@
       "result_sha256": "f6810ebff3eed36e2e3980e2866d224262ff278d9605d7f1ebdcdfc367b3db0c",
       "run_id": "20261124T054640Z-mac-concat-f2333a",
       "source_identity": "1d158c7e3b90ad8e6330b340acede0bc7134fc42"
+    },
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-24/Pho_R06-concat-backend/acceptance/machine/unit/runs/20261124T064619Z-photo-dev-legacy-scope-94ac2e/result.md",
+      "result_sha256": "616d9a6d797c8b968473852c04e319d5ff689053af477baf6a74c73c5d05cb12",
+      "run_id": "20261124T064619Z-photo-dev-legacy-scope-94ac2e",
+      "source_identity": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.edit-backends",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
     }
   ],
   "open_route": null,
-  "ready_at": "2026-11-24T05:56:09.376765Z",
+  "ready_at": "2026-11-24T06:49:09.409607Z",
   "release_slice": "concat-backend",
   "request_id": "2026-11-24-Pho_R06-concat-backend",
   "required_role": "任务委托人",
   "schema_version": 2,
   "scope_hints": [],
   "source_commit": "1d158c7e3b90ad8e6330b340acede0bc7134fc42",
-  "summary": "开发机 16 项和本机 Concat 合成样片复验通过；样片观察和桌面精修待任务委托人验收。",
+  "summary": "开发机 16 项和本机 Concat 合成样片复验通过，旧验收范围已对照。样片观察和桌面精修待任务委托人验收。",
   "task_id": "2026-11-24-Pho_R06-concat-backend"
 }
