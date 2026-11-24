@@ -249,7 +249,7 @@ class StudioApplication:
                         raise ValueError('null editor choice')
                     current = {"editor": "otio_kdenlive", "method": "external", "revision": 1}
                 if (not isinstance(current, dict)
-                    or current.get('editor') not in {'otio_kdenlive', 'kdenlive', 'openfilm', 'openchatcut', 'chatcut'}
+                    or current.get('editor') not in {'otio_kdenlive', 'kdenlive', 'openfilm', 'openchatcut', 'chatcut', 'concat'}
                     or current.get('method', 'external') not in {'external', 'guide', 'self'}
                     or type(current.get('revision')) is not int or current['revision'] < 1):
                     raise ValueError('invalid editor choice')

@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-24-Pho_R06-concat-backend",
+  "project": "photo-content-os",
+  "title": "用 Concat 生成可精修的口播粗稿",
+  "raw_request": "明明依托于 Concat 的自研的开源剪辑才是最优解吧？\n任务单要求在制作台增加由用户显式选择的 Concat 剪辑后端，按 U1、U2、U3 验证并只推送 line/concat-backend。",
+  "understanding": [
+    "选择 Concat 后，程序按获准的删减建议生成口播粗稿，保留可修改的中文字幕和透明动效。",
+    "用 Concat 打开保存的粗稿进行精修，并能导出视频预览。"
+  ],
+  "out_of_scope": [
+    "改动制作台页面或替换其他剪辑软件的流程。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开 20 秒口播样片的剪辑结果。",
+        "查看 5 秒处的画面。"
+      ],
+      "expected": "删掉两段共 5 秒，剩 3 段和 3 条中文字幕。时间线和导出视频都是 15 秒，动效红块外能看到原片。"
+    },
+    {
+      "key": "H-02",
+      "steps": [
+        "打开 Concat 里的粗稿工程。",
+        "查看时间线。",
+        "保存一处修改。"
+      ],
+      "expected": "原片、字幕和透明动效可以分别精修，保存后能读回当前时间线。"
+    }
+  ],
+  "author": {
+    "agent": "codex",
+    "session": "01a20bf2-17b8-7cb1-b451-a235e0787922"
+  },
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "executors": [],
+  "created_at": "2026-11-24T05:36:26.900725Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}

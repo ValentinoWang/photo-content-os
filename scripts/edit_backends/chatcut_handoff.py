@@ -17,6 +17,7 @@ from studio.chatcut_mcp import LocalMcpSession
 from media_common import file_sha256
 from audio_plan import audio_operations, UNVERIFIED_AUDIO
 from edit_backends.kdenlive_render import plan_ranges, probe_media
+from edit_backends.precut import executable_cuts
 
 
 def schema_digest(schema: dict) -> str:
@@ -42,11 +43,7 @@ def prepare_package(*, source: Path, subtitles: Path, animations: list[Path], su
     output_dir.mkdir(parents=True)
     # The editor receives an execution-only subset as well as the review package.
     # Sentence/chunk candidates may be displayed, but never become pre-cut calls.
-    executable = [item for item in raw["suggestions"] if item.get("type") in {"silence", "repetition"}
-                  and item.get("auto_cut_allowed") is True and raw.get("auto_cut_allowed") is not False]
-    for item in executable:
-        if item["type"] == "repetition" and (raw.get("precision") != "word" or item.get("precision", "word") != "word"):
-            raise ValueError("repetition_requires_word_timing")
+    executable = executable_cuts(raw)
     precut = {**raw, "suggestions": executable}
     precut_path = output_dir / "precut_suggestions.json"
     precut_path.write_text(json.dumps(precut, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

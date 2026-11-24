@@ -13,6 +13,7 @@ BACKENDS = MappingProxyType({
     "openfilm": "edit_backends.openfilm_adapter",
     "openchatcut": "edit_backends.openchatcut_adapter",
     "chatcut": "edit_backends.chatcut_adapter",
+    "concat": "edit_backends.concat_adapter",
 })
 
 
