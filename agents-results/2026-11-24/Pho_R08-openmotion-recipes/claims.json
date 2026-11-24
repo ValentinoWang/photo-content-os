@@ -1,0 +1,155 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.openmotion-recipes",
+    "open_route": "note:在 Studio 宣传片选镜头配方弹窗按类别查看并离线打开演示",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.documentation",
+      "photo.tests-scripts",
+      "photo.video-pipeline",
+      "studio.frontend"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-02",
+        "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查 OpenMotion 51 张单镜配方并入动效配方库与离线演示播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library/H-01",
+        "reason": "既有卡检查脚本直出的视频风格库九张样张与套用生成，本项检查动效配方库新增 OpenMotion 51 张单镜配方与来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R278-photo-direct-rescript/H-02",
+        "reason": "既有卡检查返回分镜修改台词与按基准风格重生成直出视频，本项检查动效配方库新增 OpenMotion 51 张单镜配方与离线播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R280-photo-studio-light/H-02",
+        "reason": "既有卡检查 Studio 全局浅色主题与媒体画面隔离，本项检查动效配方库新增 OpenMotion 51 张单镜配方与离线播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library/H-02",
+        "reason": "既有卡检查脚本直出的视频风格库九张样张与套用生成，本项检查动效配方库新增 OpenMotion 51 张单镜配方与来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R280-photo-studio-light/H-01",
+        "reason": "既有卡检查 Studio 全局浅色主题与媒体画面隔离，本项检查动效配方库新增 OpenMotion 51 张单镜配方与离线播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-01",
+        "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查 OpenMotion 51 张单镜配方并入动效配方库与离线演示播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R278-photo-direct-rescript/H-01",
+        "reason": "既有卡检查返回分镜修改台词与按基准风格重生成直出视频，本项检查动效配方库新增 OpenMotion 51 张单镜配方与离线播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R278-photo-direct-rescript/H-03",
+        "reason": "既有卡检查返回分镜修改台词与按基准风格重生成直出视频，本项检查动效配方库新增 OpenMotion 51 张单镜配方与离线播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-03",
+        "reason": "既有卡检查中台交接的分镜和配音进入脚本直出，本项检查 OpenMotion 51 张单镜配方并入动效配方库与离线演示播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R283-photo-direct-style-library/H-03",
+        "reason": "既有卡检查脚本直出的视频风格库九张样张与套用生成，本项检查动效配方库新增 OpenMotion 51 张单镜配方与来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+        "reason": "既有卡检查口播脚本一键直出的全片生成、单镜重写与渲染，本项检查动效配方库新增 OpenMotion 51 张单镜配方与弹窗来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
+        "reason": "既有卡检查工作台表单交互、回收站确认与做法页签，本项检查动效配方库新增 OpenMotion 51 张单镜配方与弹窗来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+        "reason": "既有卡检查口播脚本一键直出的全片生成、单镜重写与渲染，本项检查动效配方库新增 OpenMotion 51 张单镜配方与弹窗来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+        "reason": "既有卡检查逐镜画面框选标注、修改与版本留存，本项检查动效配方库新增 OpenMotion 51 张单镜配方与离线播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+        "reason": "既有卡检查逐镜画面框选标注、修改与版本留存，本项检查动效配方库新增 OpenMotion 51 张单镜配方与离线播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+        "reason": "既有卡检查逐镜画面框选标注、修改与版本留存，本项检查动效配方库新增 OpenMotion 51 张单镜配方与离线播放，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+        "reason": "既有卡检查工作台表单交互、回收站确认与做法页签，本项检查动效配方库新增 OpenMotion 51 张单镜配方与弹窗来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+        "reason": "既有卡检查口播脚本一键直出的全片生成、单镜重写与渲染，本项检查动效配方库新增 OpenMotion 51 张单镜配方与弹窗来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
+        "reason": "既有卡检查工作台表单交互、回收站确认与做法页签，本项检查动效配方库新增 OpenMotion 51 张单镜配方与弹窗来源展示，验收对象各自独立。"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+        "reason": "本批未修改音乐分析或节拍图源码，R223 相关单元测试在冻结源码 1819385 上全部通过。",
+        "evidence_run": "20261124T075922Z-photo-dev-181938"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+        "reason": "本批未修改音乐分析或节拍图源码，R223 相关单元测试在冻结源码 1819385 上全部通过。",
+        "evidence_run": "20261124T075922Z-photo-dev-181938"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+        "reason": "本批未修改音乐分析或节拍图源码，R223 相关单元测试在冻结源码 1819385 上全部通过。",
+        "evidence_run": "20261124T075922Z-photo-dev-181938"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+        "reason": "本批未修改剪辑工具安装或筛选源码，R207 相关单元测试在冻结源码 1819385 上全部通过。",
+        "evidence_run": "20261124T075922Z-photo-dev-181938"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+        "reason": "本批未修改剪辑工具安装或筛选源码，R207 相关单元测试在冻结源码 1819385 上全部通过。",
+        "evidence_run": "20261124T075922Z-photo-dev-181938"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-24/Pho_R08-openmotion-recipes/acceptance/shots/H-01-1.jpg",
+        "sha256": "aedd90d6f16fc70ca22dfb6f18f18a61c4965a97eceb3f49c4a2405dd6460038",
+        "caption": "选镜头配方弹窗页头双来源与 OpenMotion 封面及 OM 角标 · 本机 Studio 桌面视口裁出弹窗区",
+        "captured_at": "2026-11-24T07:47:45Z"
+      }
+    ]
+  }
+]

@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-11-24T07:54:48Z
-- 来源事实 SHA-256：acba7b40af0be347018e05f2d9ea84814c01b8a907b6ed7a2afac44399f0274e
+- 事实时间：2026-11-24T08:00:27.830875Z
+- 来源事实 SHA-256：c51a421c9bbef49f785360652c761013691da584edca2ebe54ea5a672c8c1cc0
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -58,6 +58,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-11-24T08:00:27.830875Z | 2026-11-24-Pho_R08-openmotion-recipes | Pho_R08 OpenMotion 单镜配方库与预览 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-24-Pho_R08-openmotion-recipes/checklist.md | - | - |
 | 2026-11-24T07:54:48Z | 2026-11-24-Pho_R09-r223-beat-color | 复验制作台当前拍点的高亮颜色 | 任务委托人 | 1 | acceptance/human/2026-W48/未-2026-11-24-Pho_R09-r223-beat-color/checklist.md | - | - |
 | 2026-11-24T06:49:09.409607Z | 2026-11-24-Pho_R06-concat-backend | 用 Concat 生成可精修的口播粗稿 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-24-Pho_R06-concat-backend/checklist.md | - | - |
 | 2026-11-24T04:37:20.784318+00:00 | 2026-10-27-R310-photo-devbox | photo-content-os 用自己的开发机跑测试、门禁和渲染 | 任务委托人 | 5 | acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md | - | - |

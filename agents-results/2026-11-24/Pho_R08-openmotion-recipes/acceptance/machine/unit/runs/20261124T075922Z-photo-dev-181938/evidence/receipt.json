@@ -1,0 +1,40 @@
+{
+  "task_id": "2026-11-24-Pho_R08-openmotion-recipes",
+  "run_id": "20261124T075922Z-photo-dev-181938",
+  "source_commit": "1819385594ce116d77c619b099632ddb4415c93b",
+  "base_commit": "7dfa9498115fbeaef0953e2ba7c114bb4ab82f57",
+  "runtime": "photo-dev Ubuntu 24.04; Node 24.13.0; Python 3.12.14",
+  "checks": [
+    {
+      "name": "verify_u2_frozen",
+      "command": "rbox run <worktree> -- .venv/bin/python -m pytest -q tests/test_pho_r05_recipe_library.py tests/test_openmotion_import.py tests/test_openmotion_previews.py",
+      "exit_code": 0,
+      "summary": "24 passed in 0.67s",
+      "remote_log": "/root/.prbox/run-025917-61656.log"
+    },
+    {
+      "name": "unaffected_scope_regression",
+      "command": "rbox run <worktree> -- .venv/bin/python -m pytest -q tests/test_edit_tools_runtime.py tests/test_r223_music_analysis.py tests/test_pho_r05_recipe_library.py tests/test_openmotion_import.py tests/test_openmotion_previews.py",
+      "exit_code": 0,
+      "summary": "105 passed in 7.02s",
+      "remote_log": "/root/.prbox/run-025922-64432.log"
+    },
+    {
+      "name": "openmotion_preview_render",
+      "command": "RBOX_QUEUE=heavy rbox bg om-previews <worktree> -- .venv/bin/python scripts/direct_video/recipe_library.py --render-openmotion-previews --workers 6",
+      "exit_code": 0,
+      "summary": "rendered 51 OpenMotion 960x576 30fps preview MP4s and 51 render JPG posters; local SHA-256 verification passed 51/51"
+    },
+    {
+      "name": "studio_picker_screenshots",
+      "command": "local headless Chrome Studio picker capture (1440x900 desktop and 390x844 mobile)",
+      "exit_code": 0,
+      "summary": "0 page errors, 0 broken OM posters, 206 video/mp4 range check passed; header shows video-shotcraft and OpenMotion, single-line OM badge verified"
+    }
+  ],
+  "unaffected_diff_check": {
+    "range": "7dfa9498115fbeaef0953e2ba7c114bb4ab82f57..1819385594ce116d77c619b099632ddb4415c93b",
+    "r207_paths_changed": [],
+    "r223_paths_changed": []
+  }
+}
