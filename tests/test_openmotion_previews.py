@@ -1,6 +1,10 @@
 import hashlib
+import json
+from pathlib import Path
 import re
+import shutil
 import subprocess
+import sys
 
 import pytest
 
@@ -102,3 +106,103 @@ def test_openmotion_demo_dimensions_preserves_aspect_within_960(tmp_path):
     demo_small.mkdir()
     (demo_small / "index.html").write_text('<canvas width="800" height="450"></canvas>', encoding="utf-8")
     assert recipe_library.openmotion_demo_dimensions(demo_small) == (800, 450)
+
+
+def _node_binary():
+    found = shutil.which("node")
+    if found:
+        return found
+    for candidate in ("/root/pco/.tools/node/bin/node", "/opt/homebrew/bin/node"):
+        if Path(candidate).is_file():
+            return candidate
+    raise RuntimeError("node binary not found")
+
+
+def _render_picker_html(recipes, categories):
+    repo_root = Path(__file__).resolve().parent.parent
+    module_url = (repo_root / "studio" / "static" / "direct-promo.js").as_uri()
+    script = """
+import { readFileSync } from 'node:fs';
+const { openRecipePicker } = await import(process.argv[1]);
+const { recipes, categories } = JSON.parse(readFileSync(0, 'utf8'));
+const noopEl = () => ({ onclick: null, onmouseenter: null, onmouseleave: null, focus() {}, querySelector() { return null; } });
+const overlay = {
+  className: '',
+  innerHTML: '',
+  onkeydown: null,
+  remove() {},
+  querySelector() { return noopEl(); },
+  querySelectorAll() { return []; },
+};
+const host = {
+  ownerDocument: { activeElement: null, createElement() { return overlay; } },
+  append() {},
+};
+openRecipePicker(host, { recipes, categories, selected: null, index: 0, onChoose() {} });
+process.stdout.write(overlay.innerHTML);
+"""
+    payload = json.dumps({"recipes": recipes, "categories": categories}, ensure_ascii=False)
+    proc = subprocess.run(
+        [_node_binary(), "--input-type=module", "-e", script, module_url],
+        input=payload,
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    return proc.stdout
+
+
+def test_recipe_picker_header_computes_sources_from_data():
+    repo_root = Path(__file__).resolve().parent.parent
+    scripts_dir = str(repo_root / "scripts")
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    from studio import direct_recipes
+
+    catalog = direct_recipes.catalog()
+    html_all = _render_picker_html(catalog["recipes"], catalog["categories"])
+    assert "<p>175 张，来自开源项目 video-shotcraft 和 OpenMotion（都是 Apache-2.0）。鼠标停在卡上看样片。</p>" in html_all
+
+    legacy_only = [r for r in catalog["recipes"] if not r["id"].startswith("om-")][:2]
+    html_legacy = _render_picker_html(legacy_only, catalog["categories"])
+    assert "<p>2 张，来自开源项目 video-shotcraft（Apache-2.0）。鼠标停在卡上看样片。</p>" in html_legacy
+
+    om_only = [r for r in catalog["recipes"] if r["id"].startswith("om-")][:2]
+    html_om = _render_picker_html(om_only, catalog["categories"])
+    assert "<p>2 张，来自开源项目 OpenMotion（Apache-2.0）。鼠标停在卡上看样片。</p>" in html_om
+
+
+def test_recipe_picker_marks_only_openmotion_cards_with_om_badge():
+    recipes = [
+        {
+            "id": "blur-slide",
+            "name": "模糊滑入",
+            "category": "typography",
+            "categoryName": "文字",
+            "summary": "标题滑入",
+            "use": "开场",
+            "seconds": 2.0,
+            "energy": "中",
+            "posterUrl": "/api/direct/recipes/blur-slide/poster.jpg",
+            "clipUrl": "/api/direct/recipes/blur-slide/clip.mp4",
+        },
+        {
+            "id": "om-0053d84c-c358-4a52-9baa-8d3381e2ca1e-clip-1",
+            "name": "透视线框穿行",
+            "category": "camera",
+            "categoryName": "运镜",
+            "summary": "绿色线框透视走廊",
+            "use": "科技开场",
+            "seconds": 4.0,
+            "energy": "中",
+            "posterUrl": "/api/direct/recipes/om-0053d84c-c358-4a52-9baa-8d3381e2ca1e-clip-1/poster.jpg",
+            "clipUrl": "/api/direct/recipes/om-0053d84c-c358-4a52-9baa-8d3381e2ca1e-clip-1/clip.mp4",
+        },
+    ]
+    html = _render_picker_html(recipes, [{"key": "typography", "name": "文字", "count": 1}, {"key": "camera", "name": "运镜", "count": 1}])
+    cards = dict(re.findall(r'data-recipe="([^"]+)"[^>]*>.*?<em>(.*?)</em>', html, flags=re.S))
+    assert cards["blur-slide"] == "文字"
+    assert "OM" not in cards["blur-slide"]
+    assert "运镜" in cards["om-0053d84c-c358-4a52-9baa-8d3381e2ca1e-clip-1"]
+    assert "OM" in cards["om-0053d84c-c358-4a52-9baa-8d3381e2ca1e-clip-1"]
