@@ -1,0 +1,9 @@
+{
+  "source_identity": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9",
+  "raw_result_path": "agents-results/2026-11-23/r310-e40196d-rerun/acceptance/unit/result.md",
+  "raw_result_sha256": "5bfca75666608f0266f5d4136d1fbc6363cad32f980e703a142e70fd4d932b90",
+  "command_section": 1,
+  "remote_host": "photo-dev",
+  "remote_log": "/root/.prbox/run-232415-41865.log",
+  "exit_code": 0
+}
