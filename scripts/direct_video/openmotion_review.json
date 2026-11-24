@@ -1,0 +1,1031 @@
+{
+  "motion-0053d84c-c358-4a52-9baa-8d3381e2ca1e/clip-1": {
+    "category": "camera",
+    "energy": "中",
+    "name": "透视线框穿行",
+    "summary": "透视线框从中心开口向四周伸展，多层线框连续掠过取景范围",
+    "use": "从平面图形进入纵深场景"
+  },
+  "motion-018becab-0461-43d9-8e84-79833fd1f831/clip-1": {
+    "duplicate": "camera/cursor-flyover.md"
+  },
+  "motion-03a1f5ca-617b-41a6-b4cb-6307ca32ff63/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-0ad92fd0-b2fb-4885-957c-b71152df15fd/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-0b5f0027-4637-4ba8-8eff-ee14ffb095a4/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-0c10d4de-a147-4a1b-8938-4c2d4a94a207/clip-2": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-0dbe4710-8f5a-4cd2-9f05-530371fa899d/clip-1": {
+    "category": "opening",
+    "demo_title": "A",
+    "energy": "高",
+    "name": "立方外壳解体",
+    "summary": "先缩小立方体，再将三个面板沿各自方向拆离，中心字符留在原位",
+    "use": "拆解概念，显露藏在外壳中的标题"
+  },
+  "motion-0fd96b86-9f36-4bdd-9dcb-d249e43ab164/clip-1": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-10adc0e0-3f63-45c9-9389-2657360c8aa0/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-12b62792-b531-40ce-858b-599564a602ac/clip-3": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-12cf27b7-0c82-4ccc-8a9a-7eaed902ca19/clip-1": {
+    "category": "ui-entrance",
+    "energy": "中",
+    "name": "设备横展开栏",
+    "replacements": {
+      "'Granola'": "'Notes'"
+    },
+    "summary": "将竖屏设备展成横屏，原内容保留并让出并排区",
+    "use": "展示窄屏到双栏的布局变化"
+  },
+  "motion-1301d172-4b2d-44c8-95e6-872c82987796/clip-1": {
+    "exclude": "与本批设备横展开栏用途重叠，共用设备展开和分栏接力"
+  },
+  "motion-133fd03a-4447-4e39-9b68-a74439ab34c0/clip-1": {
+    "duplicate": "ui-entrance/avatar-bracket-carousel.md"
+  },
+  "motion-13466eb7-e76a-4f7c-8c4a-cdaa1bac24d8/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-13466eb7-e76a-4f7c-8c4a-cdaa1bac24d8/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-13ba3942-fd15-40ee-9638-03d1376514db/clip-2": {
+    "category": "effects",
+    "energy": "中",
+    "name": "海报果粒逸出",
+    "replacements": {
+      "'The first frontier model of us'": "'Studies in form'"
+    },
+    "summary": "从单幅果实图展开成多幅海报，再让彩粒跨格流动",
+    "use": "一组变体展开后继续表达彼此联系"
+  },
+  "motion-14b59d59-5295-4014-9bf6-9103025baa0b/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-16e994b2-cdba-45e1-b328-2af68af74985/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-1994f1f9-b8ea-4083-8846-1e96e3f05fff/clip-1": {
+    "duplicate": "typography/pill-slot-cycle.md"
+  },
+  "motion-1da97ff4-695c-404a-8c47-c0a0ab2921aa/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-1e48dea5-903d-48f6-b10e-99a70f1c183d/clip-1": {
+    "exclude": "与本批设备横展开栏用途重叠，共用设备展开和分栏接力"
+  },
+  "motion-1e48dea5-903d-48f6-b10e-99a70f1c183d/clip-2": {
+    "category": "ui-entrance",
+    "energy": "中",
+    "name": "文档浮层拆解",
+    "summary": "工具和内容层从共享文档的平面逐步分离",
+    "use": "把编辑对象和协作工具分层介绍"
+  },
+  "motion-1f1a40cc-f473-46f7-badb-953b2fb140c2/clip-1": {
+    "category": "effects",
+    "energy": "低",
+    "name": "栅格玻璃折射",
+    "summary": "物体从固定玻璃后横穿，格子重采样让轮廓按行列错开",
+    "use": "演示折射或用定格栅格遮挡运动主体"
+  },
+  "motion-2208d0c1-6565-4b69-89cb-581e7206ac12/clip-2": {
+    "duplicate": "typography/vertical-word-roll-blur-cycle.md"
+  },
+  "motion-228c2d11-8827-416f-9f9f-aacf002cb7e0/clip-3": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-23671bf9-0ae8-49d4-be77-62949eaef616/clip-1": {
+    "category": "typography",
+    "demo_title": "版本示例",
+    "energy": "高",
+    "name": "版本字上下揭幕",
+    "replacements": {
+      "'v6 wild'": "'v6 B'"
+    },
+    "summary": "大版本字上下分离，露出中央的模式控件",
+    "use": "以版本字引出功能选项"
+  },
+  "motion-24e46588-504b-4efd-ac28-6ffc407fc33a/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-24e46588-504b-4efd-ac28-6ffc407fc33a/clip-2": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-250d244e-c34b-42b9-9da9-22d9983c48f5/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-2b0dd9d6-eea1-46a7-9c02-bcbef4782e18/clip-2": {
+    "duplicate": "data/chart-live-moves.md"
+  },
+  "motion-2b0dd9d6-eea1-46a7-9c02-bcbef4782e18/clip-3": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-2c28ef03-af00-440b-83d8-543b7c1e6fbb/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-2ca7c87b-23e8-4517-b197-cb5178e8fa76/clip-2": {
+    "exclude": "大段共用场景夹带原产品文案，未提取出独立的查询与图表动画"
+  },
+  "motion-2d4e10c0-c178-4f7c-a365-e51b5e30b455/clip-1": {
+    "category": "transition",
+    "energy": "中",
+    "name": "中心孔洞缩野",
+    "summary": "椭圆上的信息向内缩，留白扩大而中心小点一直固定",
+    "use": "视野变窄时保留空间参照"
+  },
+  "motion-2fd3fc6b-eec2-4bfb-9a49-6eb04acc5fae/clip-2": {
+    "category": "transition",
+    "energy": "高",
+    "name": "菱形换色遮罩",
+    "replacements": {
+      "\"B-SIDE LOVERS\"": "\"SECOND SIDE\"",
+      "\"TIDAL FOR YOUR MUSIC\"": "\"聆听练习\"",
+      "\"TIDAL\"": "\"节奏\"",
+      "\"WE ARE STILL HERE\"": "\"STAY IN MOTION\""
+    },
+    "summary": "围绕中心放大菱形，在遮罩覆盖时换底色和字块",
+    "use": "几何图案串联两种色彩段落"
+  },
+  "motion-3016ace9-aa52-4cc7-acc3-042e2a81088c/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-3016ace9-aa52-4cc7-acc3-042e2a81088c/clip-4": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-31118b3d-7967-4181-b00d-58c291793142/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-315c1cab-71b0-4bec-a20c-b57f2418e88c/clip-2": {
+    "duplicate": "ui-entrance/deck-deal-flyin.md"
+  },
+  "motion-342251b9-26fe-45a6-a4fa-697f234c9755/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-343ccb64-5c8e-4101-b65e-463aec3a7c35/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-35e8438f-f8e5-4989-a508-fbef1676e739/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-36220499-8ac9-4a39-afb9-35bfba462abb/clip-1": {
+    "category": "rhythm",
+    "energy": "高",
+    "name": "换色数字倒数",
+    "summary": "三枚大数字按固定节拍替换，字形微摆并整屏换色",
+    "use": "片头倒数或章节开始前的三拍提示"
+  },
+  "motion-36c45042-6bae-4e0f-8365-7b43212eeeef/clip-2": {
+    "exclude": "转场依赖多段原片素材，程序示意无法保留光照和材质"
+  },
+  "motion-3845bb3e-dafb-4af2-9507-d32400b5aa54/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-38b9c70f-cf58-4555-a50e-30c17479ba1e/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-3957ff01-8fd8-4a30-b8ac-b88705c90dbc/clip-1": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-3957ff01-8fd8-4a30-b8ac-b88705c90dbc/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-3ac3bd45-8732-4ce3-8331-ca6e96e2aed2/clip-2": {
+    "category": "data",
+    "energy": "中",
+    "name": "访问节点入网",
+    "summary": "节点进入同一网络，保留中心端点和放射连接",
+    "use": "展示访问请求增加后网络规模改变"
+  },
+  "motion-3ac3bd45-8732-4ce3-8331-ca6e96e2aed2/clip-3": {
+    "category": "rhythm",
+    "energy": "高",
+    "name": "点阵尺度换拍",
+    "summary": "用同一中心在单点、点阵和大裁切圆之间换拍",
+    "use": "交替表现单个对象和群体规模"
+  },
+  "motion-3b1813cf-f2fe-4d8a-add4-8f3a49d06982/clip-1": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-3b8aa76b-7235-4cc1-b2f9-3e9bded13c27/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-3ce7f525-08cd-4ccb-b3f6-92dc168c28ce/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-4136af75-145b-41f1-97d3-06ded1f58f2e/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-45cca1f4-13dd-44f1-a782-552f2d4469fd/clip-1": {
+    "duplicate": "opening/stroke-segment-build.md"
+  },
+  "motion-46f34492-8ba1-4ba5-ac6e-4b4a13c80373/clip-3": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-478a2c75-2a13-435a-9b44-d730aca6c67c/clip-2": {
+    "duplicate": "typography/glitch-cycle.md"
+  },
+  "motion-478a2c75-2a13-435a-9b44-d730aca6c67c/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-48a070b4-f3ee-49bb-8f18-fd071b73dc91/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-491b2d70-61d6-41e5-84ba-ee611ea9c409/clip-1": {
+    "duplicate": "typography/gradient-word-sweep.md"
+  },
+  "motion-4946d023-cd88-41c1-9178-5742e92d2427/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-4a137574-5ea8-4e6f-82bd-11ef77c03c55/clip-1": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-4a137574-5ea8-4e6f-82bd-11ef77c03c55/clip-2": {
+    "category": "data",
+    "energy": "中",
+    "name": "看板状态换列",
+    "summary": "固定栏目坐标，卡片按条件变化在列内位移",
+    "use": "提醒观众排序依据如何改变任务位置"
+  },
+  "motion-4aaa2afc-a75f-4ce4-a3c5-eb620ed706e5/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-4aaa2afc-a75f-4ce4-a3c5-eb620ed706e5/clip-3": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-4ac56dc1-dd84-452a-9d74-7388e49b7dbd/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-4bd122ac-c538-4fc6-a9b4-bfc1357a3f10/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-4bd122ac-c538-4fc6-a9b4-bfc1357a3f10/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-4cab572a-4d2a-4058-8a06-84cf3fda0df0/clip-3": {
+    "duplicate": "transition/circle-match-iris.md"
+  },
+  "motion-4fdcf514-f8fe-4bcc-a037-60482375769c/clip-1": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-4fdfd64a-8fb2-43ee-96f6-7755f8b7b11e/clip-1": {
+    "category": "ui-entrance",
+    "energy": "中",
+    "name": "斜轴双窗展开",
+    "summary": "前窗保留重心，后窗沿同一斜轴收成一点再展开",
+    "use": "两层界面需要交代相对位置时"
+  },
+  "motion-5071dcd7-d5f0-456a-ac4c-37b2b442eb1c/clip-1": {
+    "duplicate": "typography/type-assembly-moves.md"
+  },
+  "motion-55c19bf3-dbb1-4890-98c7-5ea7fb5ee432/clip-2": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-55c19bf3-dbb1-4890-98c7-5ea7fb5ee432/clip-3": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-55c5fe84-fe5f-4be0-aadf-42fbb1c9b9db/clip-1": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-56a6a8d9-48b7-42b7-8293-5533a0ee633f/clip-3": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-56ab9744-78aa-4841-bdb1-697c2df915e0/clip-1": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-5805e419-651f-45b7-90be-302c93f79b21/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-58419346-fa3c-4f7f-8179-9456c2962ef9/clip-1": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-58611416-78a3-444d-9c15-181c7c36adf8/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-594cffdc-980f-4c79-a85b-3d01b60e871e/clip-3": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-5a047c70-9589-404f-a761-03273bc226ad/clip-1": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-5aff0bef-38fd-465c-b8d0-3b0c964d8149/clip-1": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-5bca88f2-2a31-43ec-bf86-e43d30f93217/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-5d05235e-aa1b-4c06-ad97-3ea6c41962a2/clip-2": {
+    "category": "camera",
+    "energy": "中",
+    "name": "双端镜头交接",
+    "replacements": {
+      "'Dispatch'": "'Request'"
+    },
+    "summary": "先推近发出请求的设备，再拉开带出接收端和连接线",
+    "use": "解释跨设备任务或双端协作"
+  },
+  "motion-5eb6929e-d9f3-4a49-a69e-0363e45884dc/clip-2": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-5ec91ccc-4243-445b-8bf3-d7d85e65a309/clip-2": {
+    "category": "typography",
+    "energy": "中",
+    "name": "句块共轴翻转",
+    "replacements": {
+      "BUILD WHAT": "FOLLOW THE",
+      "DOESN’T EXIST": "SHAPE",
+      "YET": "NOW"
+    },
+    "summary": "把多块文字锁在同一纵轴上翻转，侧面露出厚度，正面留读",
+    "use": "短标题需要立体翻面时保持句子整体"
+  },
+  "motion-5f387971-3508-4a22-9c5a-63c05cbdb37f/clip-1": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-5f387971-3508-4a22-9c5a-63c05cbdb37f/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-5f7ad673-4895-4464-86d2-d08d875281b6/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-5f7ad673-4895-4464-86d2-d08d875281b6/clip-3": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-60433399-faf4-4bbf-b860-19584b012213/clip-1": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-60b66835-4999-48ad-b942-4872ea012b85/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-60f0411c-316e-4b1c-8c15-c1c56527e53a/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-6100365a-945f-43b4-b476-7e8d30e2db32/clip-3": {
+    "category": "interaction",
+    "energy": "低",
+    "name": "单点双侧应答",
+    "summary": "固定信号中心，请求与应答分居两端并以连线接回中心",
+    "use": "展示问答方向和消息关联"
+  },
+  "motion-63434ede-a918-4ec1-a99e-ba12e87d4063/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-65aa721c-db2c-49e1-a84f-1917cd0d1c1e/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-664184d9-593e-4984-b473-701248b69cfe/clip-1": {
+    "duplicate": "interaction/canvas-materialize-moves.md"
+  },
+  "motion-664184d9-593e-4984-b473-701248b69cfe/clip-3": {
+    "duplicate": "interaction/theme-switch-moves.md"
+  },
+  "motion-68d80741-c336-41ca-848e-7e6103e021e6/clip-1": {
+    "category": "effects",
+    "energy": "中",
+    "name": "轮廓定心变形",
+    "summary": "固定图形重心，对应调整多边形顶点，连续变出新轮廓",
+    "use": "形状之间切换时避免主体漂移"
+  },
+  "motion-6a60a781-d223-4c03-96ba-88bcaafd62d3/clip-2": {
+    "duplicate": "opening/crane-rise-reveal.md"
+  },
+  "motion-6b037a5c-ee23-47ce-b312-ba285d5e7ef4/clip-2": {
+    "category": "interaction",
+    "energy": "中",
+    "name": "协作分支接线",
+    "summary": "从同一源节点拉出多条分支，线色与协作者一一对应",
+    "use": "多方同时编辑或从结果继续派生任务"
+  },
+  "motion-6deb74b6-8f52-4b81-b971-3b68e1fffa34/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-713872a8-8a62-4e4f-abc1-867d74c642e3/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-71722e89-6acc-44eb-95fd-2e7cb5f2df08/clip-2": {
+    "duplicate": "typography/vertical-word-roll-blur-cycle.md"
+  },
+  "motion-7191c712-7794-4f62-bd5d-203293cb8f0c/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-734ef479-a7b7-458a-b488-ad0f6a0498b4/clip-1": {
+    "category": "data",
+    "energy": "低",
+    "name": "录音波形生长",
+    "summary": "固定录音区，波形沿时间轴从左往右增长，播放头贴住增长边缘",
+    "use": "交代录制何时开始及进度"
+  },
+  "motion-7427c442-35ee-408f-9c33-4280ad2d3465/clip-2": {
+    "duplicate": "ui-entrance/carousel-3d.md"
+  },
+  "motion-7427c442-35ee-408f-9c33-4280ad2d3465/clip-3": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-74408712-50e0-43ac-a167-1a11297cdae0/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-74842385-a951-4617-aa23-67d4cbf57f22/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-74842385-a951-4617-aa23-67d4cbf57f22/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-74f06cd2-601f-434d-a616-62da95828cb5/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-7524e275-4fe8-44a9-b210-7b353b8e80ab/clip-1": {
+    "duplicate": "opening/stroke-segment-build.md"
+  },
+  "motion-76a44f60-a882-4226-9976-4dbb9f105f2c/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-788325cf-3104-4912-904d-ada6ea4615b9/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-797418c0-9781-4a86-a8fd-b3cbcb86037e/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-7b279560-81df-4c31-988d-473d35536c28/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-7bec0070-f5ea-4cf5-a22c-3a02c16535fa/clip-3": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-7d2376c5-2148-44ae-9720-330bc5f64ca9/clip-1": {
+    "duplicate": "ui-entrance/page-waterfall-wall.md"
+  },
+  "motion-7f4c8c30-d91d-4e75-b930-057ff030376b/clip-3": {
+    "category": "camera",
+    "energy": "高",
+    "name": "成果矩阵拉远",
+    "replacements": {
+      "SONE": "FORM",
+      "sone.com": "a short brief"
+    },
+    "summary": "从少量可辨认的实例拉远成密集矩阵，保留原有组合的定位",
+    "use": "用取景范围变化展示同一方案的多种变体"
+  },
+  "motion-80640920-4ab0-4ac0-b66e-3b64726e7960/clip-3": {
+    "duplicate": "interaction/theme-switch-moves.md"
+  },
+  "motion-80dceb1d-5219-4e1f-9394-6baacf5d0166/clip-3": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-81a64f50-815d-4e91-846d-9f018e2326be/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-82aab926-a9a1-4f08-835f-4e9089877ef9/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-82aab926-a9a1-4f08-835f-4e9089877ef9/clip-3": {
+    "category": "rhythm",
+    "energy": "中",
+    "name": "多格多边形循环",
+    "summary": "多格边界保持固定，边数递增的多边形各自旋转，格内小球持续运动",
+    "use": "比较多组独立运动时保持画面秩序"
+  },
+  "motion-82eeddc5-21ae-40f6-8a68-a7fd352ce92b/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-85c4648e-b5d8-4e57-93d2-b8feb1c5d48d/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-8605acf7-c0e9-465b-858a-114c49764c3d/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-87a0c9d5-89f0-49f8-8faf-343a44f2beb7/clip-3": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-887d2d40-3cf1-4a2c-8e38-c5162a0d1598/clip-1": {
+    "category": "ui-entrance",
+    "energy": "低",
+    "name": "对话气泡接力",
+    "replacements": {
+      "'Elise'": "'对话'",
+      "Hi Anna!": "Hello!"
+    },
+    "summary": "手机保持取景，左右气泡按发言顺序先后出现",
+    "use": "在稳定画幅里交代一问一答"
+  },
+  "motion-89e97c54-0d34-4d6d-9775-133b7a0ae0fc/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-89f2191f-bd58-48e2-a1f5-41c0cc759b59/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-89fae9c1-f9fa-4d67-a213-940bcd029782/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-90713ad1-ac50-4d2d-ba9e-ddf718959fe2/clip-2": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-927b643f-10c5-4c96-b2fe-f06bed85c9b8/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-92cf4fa2-b65b-4ca2-a6ac-40d4bed47bdd/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-9478f886-91af-4107-91f1-fb00c57d78e3/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-94ac058e-ba55-4cc7-b8fd-64cb6dabc909/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-94fdb751-f3cf-4c08-906b-2bcf5dd73ecd/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-9515f460-834f-4835-a512-f53890e27cb7/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-9b6b2260-e3cc-4db4-9e0d-cc9a35057ac5/clip-1": {
+    "category": "typography",
+    "energy": "中",
+    "name": "主张逐行展开",
+    "replacements": {
+      "MONEY NEEDS": "LINE BUILDS",
+      "THE WORLD’S": "THE FIRST",
+      "TYPEFACE": "TYPE STUDY",
+      "WISE SANS": "SAMPLE"
+    },
+    "summary": "同一版心逐行增加文本，深浅底色交替承接停读",
+    "use": "需要逐层读出多行标题"
+  },
+  "motion-9b6b2260-e3cc-4db4-9e0d-cc9a35057ac5/clip-3": {
+    "category": "rhythm",
+    "energy": "高",
+    "name": "同位缩写快切",
+    "replacements": {
+      "MONEY NEEDS": "LINE BUILDS",
+      "THE WORLD’S": "THE FIRST",
+      "TYPEFACE": "TYPE STUDY",
+      "WISE SANS": "SAMPLE"
+    },
+    "summary": "保持缩写的中心与字重不变，成对切换文字和背景颜色",
+    "use": "比较多个用例的颜色编码"
+  },
+  "motion-9b6da843-20d6-40cc-994e-8e1d38561b5c/clip-1": {
+    "duplicate": "typography/lead-word-zoom-assemble.md"
+  },
+  "motion-9c62b31c-d5e8-4027-8057-e8f1c3949f6c/clip-1": {
+    "duplicate": "outro/ui-to-brand-morph.md"
+  },
+  "motion-9c62b31c-d5e8-4027-8057-e8f1c3949f6c/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-9cb4728d-4bb7-4b85-bcf9-9abd33006649/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-9e426bb2-2a58-41bb-9619-5f700d5228ed/clip-1": {
+    "category": "effects",
+    "energy": "中",
+    "name": "多形体独立绕行",
+    "summary": "球体定在中心，圆片和方片以不同角度和速度绕行",
+    "use": "展示多个对象围绕同一中心却各有路径"
+  },
+  "motion-9e5e7ea7-05f9-4ad0-9007-692af38ccc55/clip-2": {
+    "category": "transition",
+    "demo_title": "短句切片",
+    "energy": "高",
+    "name": "文字切片换句",
+    "replacements": {
+      "BRING THE FUTURE": "BRING THE DETAIL",
+      "DECISION MAKING": "FIRST STEP",
+      "DECODE YOUR": "FIND THE",
+      "SAFELY DELIVER": "KEEP A CLEAR",
+      "THE AI REVOLUTION": "THREAD"
+    },
+    "summary": "句子按横向条带错位，颜色同步切换后复位成下一句",
+    "use": "两句短主张的快速交接"
+  },
+  "motion-9f3b5395-c61e-45aa-97db-f164e762e61a/clip-2": {
+    "duplicate": "camera/tension-camera-moves.md"
+  },
+  "motion-9fc27ae8-90f1-4745-af4f-00f390c206a2/clip-2": {
+    "category": "data",
+    "energy": "中",
+    "name": "环列数量对应",
+    "replacements": {
+      "Krea": "Gallery",
+      "THORN": "FORM",
+      "YourBrand": "Draft"
+    },
+    "summary": "候选图块沿圆周排列，中央计数承接增加的结果",
+    "use": "逐步展示候选数量和输出规模"
+  },
+  "motion-a01301cc-7413-48d0-90ff-bbb173acc167/clip-3": {
+    "duplicate": "opening/orbit-ring-title-open.md"
+  },
+  "motion-a09000a0-dc1b-47a8-a807-1ede9667e144/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-a28f0e5d-aa8b-45a7-87f9-9afcac65a09b/clip-1": {
+    "duplicate": "interaction/glass-pill-dictation-typing.md"
+  },
+  "motion-a325ecf0-23a5-4f4b-a888-c5a8f4517126/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-a36b6646-29bc-4602-8e0b-2139b21f3bf5/clip-1": {
+    "category": "opening",
+    "energy": "高",
+    "name": "全幅虚焦回收",
+    "summary": "让文字和几何起初超出画幅，拉远同时收掉虚焦",
+    "use": "快速交代标题或几何组合的完整尺度"
+  },
+  "motion-a3fec53a-a603-4486-9ec0-f7a6f926ab8d/clip-2": {
+    "duplicate": "typography/glitch-cycle.md"
+  },
+  "motion-a4339fcf-8c17-4b3b-9d19-4735444bc160/clip-1": {
+    "category": "data",
+    "energy": "高",
+    "name": "点阵换大读数",
+    "replacements": {
+      "393940": "12000",
+      "Firecrawl": "Review",
+      "known vulnerabilities.": "example records."
+    },
+    "summary": "低对比点阵逐步点亮，换满幅颜色后在中心增长读数",
+    "use": "用规模差突出单项统计"
+  },
+  "motion-a55bd50a-ab7b-4f47-9cff-8b6faddfadf7/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-a653c6bb-3e85-420c-8b4a-3353b8fd8fbf/clip-3": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-a6f31f7b-f6af-44be-8bf4-881e70057f63/clip-2": {
+    "category": "data",
+    "energy": "中",
+    "name": "余额原位起落",
+    "summary": "同一数值槽位先降后升，水平进度随之推进",
+    "use": "对照支出、返还一类相反变化"
+  },
+  "motion-a8969c13-c7db-4e76-aa48-cfcb0674cf99/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-aa9742de-5366-4283-953d-e692a2fbce12/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-aa9742de-5366-4283-953d-e692a2fbce12/clip-4": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-ab741f6c-6d55-4fac-9862-0a0914806c2b/clip-1": {
+    "duplicate": "interaction/picker-carousel-feature-cycle.md"
+  },
+  "motion-addf1d49-2044-4959-b4e1-8e627ea00226/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-ae26dbdd-1cb7-434e-9b50-b7c9116ab46c/clip-3": {
+    "duplicate": "data/scroll-brake-moves.md"
+  },
+  "motion-af77653d-96a4-4987-8cca-222a0bdd80d8/clip-1": {
+    "duplicate": "camera/basic-3d-scene.md"
+  },
+  "motion-b09ce21c-bdd4-4bf7-8d22-bb19fd40e5ab/clip-2": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-b18272fd-07c8-4ab9-b7dc-26311fa5a29a/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-b31d078a-4e5e-461e-8b43-3101ee0a2f93/clip-1": {
+    "category": "camera",
+    "energy": "中",
+    "name": "分层网页穿行",
+    "summary": "拆开网页的多个平面，在共同轴线上移动，中心球在层间交接",
+    "use": "展示平面层级和空间深度"
+  },
+  "motion-b39e4df1-4bdb-4c7b-8b33-803f53238bb5/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-b3c16f52-d4d1-4686-b95b-41af9f5889ed/clip-3": {
+    "duplicate": "interaction/voice-waveform-live.md"
+  },
+  "motion-b3e82855-5bf8-48c5-8153-fd43d09b30ed/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-b4a2bd67-b577-4e6a-8475-966edd41d474/clip-2": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-b6889c36-8aff-446f-8f2d-f958a8951a4c/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-b7699fbd-9519-4fa6-8d45-f42141378d93/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-b8332d8d-385e-4199-b6f3-e0cc340bc41f/clip-1": {
+    "duplicate": "typography/lead-word-zoom-assemble.md"
+  },
+  "motion-b852576e-fa72-453e-aae4-209a7a24a42d/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-b8ec3aa1-bed2-43d9-894f-e081667dcc1c/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-b929be12-85e8-4c21-aae1-740250454e39/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-b9484abe-d87d-4dec-b823-98e9a748c9d4/clip-2": {
+    "category": "data",
+    "energy": "中",
+    "name": "并行任务汇总",
+    "summary": "多列子任务分批展示，完成计数集中出现并指向汇总",
+    "use": "说明并行任务怎样汇成结果"
+  },
+  "motion-b954c1dc-91c2-4d5b-bc28-8cfbf156b220/clip-1": {
+    "duplicate": "opening/orbit-ring-title-open.md"
+  },
+  "motion-b9ac4d16-55e8-4498-81e8-7fb4c264119d/clip-1": {
+    "duplicate": "effects/impact-feedback.md"
+  },
+  "motion-be0354b4-c4d9-4c81-bb67-ac16dc065184/clip-2": {
+    "category": "ui-entrance",
+    "energy": "中",
+    "name": "按钮扩成面板",
+    "replacements": {
+      "mintlify": "示例"
+    },
+    "summary": "按钮逐步变宽增高，容器定稳后再补建议和输入",
+    "use": "从轻量入口打开更大的操作面板"
+  },
+  "motion-be0354b4-c4d9-4c81-bb67-ac16dc065184/clip-3": {
+    "duplicate": "ui-entrance/research-card-stack-scroll.md"
+  },
+  "motion-c1930878-a770-486d-b697-a1d0f10089ce/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-c1bd6fc5-060a-4807-82e3-d3b059a82f53/clip-3": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-c1de8de0-4333-46d2-be29-3e4090856170/clip-3": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-c2ff6df1-76b3-4045-878b-bc91f1962464/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-c3a91b2d-1618-4d3c-9446-4f316797dcd9/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-c3a91b2d-1618-4d3c-9446-4f316797dcd9/clip-3": {
+    "category": "data",
+    "energy": "中",
+    "name": "多项状态进度",
+    "summary": "项目保留原列表坐标，逐行增长进度并更新完成标记",
+    "use": "并列展示多项工作的阶段变化"
+  },
+  "motion-c6cf01ea-4262-4297-9f62-00f975cba4df/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-c6e0520b-c6a6-47c6-9905-23ba6d04cc86/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-c74e1725-6fd2-4885-be7f-f1f705e9af66/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-c77ccf22-57cc-4afb-b398-aab0bb7617d3/clip-2": {
+    "duplicate": "data/scroll-brake-moves.md"
+  },
+  "motion-c7d359a2-443b-4ee8-9f6a-f9c65d780f6d/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-c8db7c7c-819c-486f-b807-a56864837620/clip-1": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-c8db7c7c-819c-486f-b807-a56864837620/clip-2": {
+    "category": "data",
+    "energy": "低",
+    "name": "数据表分列补齐",
+    "summary": "固定每行身份，从左到右增加比较项并标出当前目标",
+    "use": "解释如何补证据再选定行动对象"
+  },
+  "motion-c9623fa3-6ecd-4045-9c6e-7ad574562563/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-cbb18ecc-34d6-43f2-bcd9-5d287ff82b83/clip-2": {
+    "duplicate": "ui-entrance/row-embed.md"
+  },
+  "motion-cbe77bbc-94d8-4035-9507-103deaa025bc/clip-1": {
+    "category": "effects",
+    "energy": "低",
+    "name": "椭圆阵列波动",
+    "replacements": {
+      "['Live the','Music']": "['流动','图案']"
+    },
+    "summary": "椭圆位置和行距保持固定，宽度按相位依次收放",
+    "use": "做可循环的几何波动背景"
+  },
+  "motion-ccb4e364-1666-4672-80d4-cb68fb591bad/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-ce3d2f77-5000-4546-bf66-cc6dd6be573a/clip-2": {
+    "category": "data",
+    "energy": "中",
+    "name": "节奏数字固定槽",
+    "summary": "保留段落卡和参数位置，单独更新速度数字再接音轨",
+    "use": "表现调整参数时主体位置不变"
+  },
+  "motion-cf8b2e64-684d-4839-a468-64519c92be20/clip-2": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-cfd6f6b6-2f3f-4e53-957d-1e87cfebe777/clip-2": {
+    "exclude": "与本批菱形换色遮罩重复，采用第一套菱形开合"
+  },
+  "motion-d151cc2c-40bc-4765-a767-3957bdee6ec2/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-d16d6118-7d1f-4450-91b0-c7d48b041162/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-d214ebc1-b1cd-4615-8d40-d580632e8f29/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-d3b9d255-d01d-4f27-a62e-6b68189721a1/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-d4b9bf2f-fae1-4311-b063-ca942de2254a/clip-2": {
+    "duplicate": "ui-entrance/neon-frame-forerun.md"
+  },
+  "motion-d4e8028e-fa9e-439f-8072-690f9b36845b/clip-1": {
+    "duplicate": "rhythm/panel-grid-moves.md"
+  },
+  "motion-d558f0d8-3749-4726-84ee-63b94b1538fe/clip-2": {
+    "duplicate": "interaction/voice-waveform-live.md"
+  },
+  "motion-d75c22e1-3c2c-4df8-aece-d4f7a37d8ff0/clip-2": {
+    "category": "rhythm",
+    "energy": "高",
+    "name": "数字遮罩换纹理",
+    "summary": "保留大数字轮廓，在内部按拍切换不同的程序纹理",
+    "use": "比较同一形状在不同材质下的表现"
+  },
+  "motion-d7eb1cbe-ded7-416a-8772-f4830f41e5a7/clip-2": {
+    "duplicate": "typography/glitch-cycle.md"
+  },
+  "motion-d86700fa-19e5-4f8c-900a-a03429cc89b4/clip-3": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-d887324f-64c4-4394-a9f7-1504dbfed419/clip-2": {
+    "category": "ui-entrance",
+    "energy": "中",
+    "name": "控件错拍回场",
+    "summary": "三枚控件同时滑出，再按不同延迟回到原槽位",
+    "use": "组件组暂时让位后恢复"
+  },
+  "motion-d8eea6d9-b25b-4727-823d-d102070ea694/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-d9104b0c-a3cb-4745-9a7e-33230c129e9b/clip-2": {
+    "duplicate": "interaction/voice-waveform-live.md"
+  },
+  "motion-dac924da-010f-4445-baf3-a39cb033e48f/clip-1": {
+    "duplicate": "transition/circle-match-iris.md"
+  },
+  "motion-db8581fb-3dc8-426e-8cc4-fd60debb5ced/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-dbb8ef9c-613d-4725-9328-a0c3700baa9e/clip-1": {
+    "duplicate": "typography/gradient-word-sweep.md"
+  },
+  "motion-de5c331a-48e6-4bdb-98da-597d76fa3d77/clip-1": {
+    "category": "typography",
+    "demo_title": "形态 | 秩序 | 变化",
+    "energy": "中",
+    "name": "颗粒聚成字形",
+    "summary": "同一批颗粒错开进入，逐步对齐到多行文字的字形采样点",
+    "use": "用颗粒生长揭开短标题"
+  },
+  "motion-de5c331a-48e6-4bdb-98da-597d76fa3d77/clip-2": {
+    "category": "outro",
+    "demo_title": "形态 | 秩序 | 变化",
+    "energy": "中",
+    "name": "字形颗粒拆散",
+    "summary": "字形留读后，原来的颗粒从各自位置分批外散",
+    "use": "用同一批粒子收走已经读完的标题"
+  },
+  "motion-dfb1a35a-a70e-489f-8e02-b74068fc0b8c/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-e0faf135-a425-4c7a-a795-2d5c59b90ab3/clip-1": {
+    "duplicate": "ui-entrance/cloner-depth-echo.md"
+  },
+  "motion-e2b86338-8508-40c5-ba89-084eca9e0f25/clip-2": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-e3ad4095-8f2e-4c03-b834-d2525b73e257/clip-1": {
+    "category": "camera",
+    "energy": "高",
+    "name": "旋框隧道推进",
+    "summary": "重复方框共用中心并循环变尺度，主体球固定在视线前方",
+    "use": "通过旋转框架表现纵深和行进方向"
+  },
+  "motion-e3fe6179-acf0-4e3f-a8fe-27efd50a6d1d/clip-1": {
+    "category": "rhythm",
+    "energy": "中",
+    "name": "条带折点齐动",
+    "summary": "重复条带固定间距，折点随共享节拍同步移动",
+    "use": "用画幅外延伸的图形建立节拍"
+  },
+  "motion-e558c471-28db-4353-a1c8-9ce5089838b1/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-e62d4e85-ccf4-4e3e-8388-ae70143cb3dc/clip-2": {
+    "exclude": "程序画面与说明中的主动作不完全对应，缺少可核实的单镜实现"
+  },
+  "motion-e6ac921a-f56f-4170-a2be-938cec5d028b/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-e8b823ee-4201-4eda-a07b-e615407eb80e/clip-2": {
+    "category": "data",
+    "energy": "中",
+    "name": "关系图逐级扩网",
+    "summary": "先围绕个人放少量节点，再扩展到更多角色与关系",
+    "use": "把单例放进更大的关系网络"
+  },
+  "motion-f11e199c-f90b-4df1-be9c-33734ad80c26/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-f1c07057-890b-4fdf-af1c-52d7cb621b65/clip-1": {
+    "category": "camera",
+    "energy": "高",
+    "name": "定点指数推近",
+    "replacements": {
+      "Ideogram": "细节"
+    },
+    "summary": "锁定局部细节作为放大中心，用指数缩放从整体推到线条",
+    "use": "证明矢量细节或展示多层尺度"
+  },
+  "motion-f51cf753-f530-43cd-afa5-0f178e7811b9/clip-2": {
+    "duplicate": "ui-entrance/card-stack.md"
+  },
+  "motion-f53dad52-9f20-42c5-b5c3-00743ea475b3/clip-1": {
+    "exclude": "该段编排由多个界面或操作步骤构成，未能拆出对应的单一镜头动作"
+  },
+  "motion-f6663abf-b1a2-40b9-91f2-9d6efcc69f80/clip-1": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-f6f244d1-c549-4081-8a5d-f0e1e3660044/clip-2": {
+    "category": "data",
+    "energy": "低",
+    "name": "纵向节点接力",
+    "summary": "把工作流节点按先后出现，上下用箭头连接",
+    "use": "解释依次执行的步骤和依赖"
+  },
+  "motion-f7b30612-b414-4a92-bd26-9f03ec1575df/clip-3": {
+    "exclude": "关键画面依赖原内容或外部素材，程序示意不足以还原这段动作"
+  },
+  "motion-f8941c74-b760-411c-b92f-6d838250ecc9/clip-2": {
+    "duplicate": "ui-entrance/card-stack.md"
+  },
+  "motion-f8c4cf8e-4934-46ac-9185-e43b68be4f50/clip-1": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-f9bf74bb-fb65-4430-97b9-71ae5d7b3397/clip-3": {
+    "duplicate": "ui-entrance/wall-reveal-moves.md"
+  },
+  "motion-fac0e564-4bc2-4c97-be24-3847cbdcdbb5/clip-1": {
+    "exclude": "主体依赖品牌字形或程序绘制的品牌轮廓，未找到仍保持主动作的中性替换"
+  },
+  "motion-faceb915-f2c3-4dac-972b-a146d31eef72/clip-3": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-fb18104a-3399-4531-adf1-88e48414c7dc/clip-2": {
+    "exclude": "上游共享场景按整段机制分派，未能独立提取此镜所述的动作"
+  },
+  "motion-fe6852d3-cd2e-43f1-924e-c130b1935937/clip-1": {
+    "category": "effects",
+    "energy": "中",
+    "name": "单元格换形扩波",
+    "summary": "保持底层网格坐标，用同一组单元换形并扩散波纹",
+    "use": "让图案变化有持续的空间参照"
+  },
+  "motion-fe6852d3-cd2e-43f1-924e-c130b1935937/clip-2": {
+    "category": "effects",
+    "energy": "中",
+    "name": "点阵天际线横移",
+    "summary": "用固定单元格显示不同高度的楼体，横移时只更新明暗",
+    "use": "用点阵表现景深或城市掠过"
+  },
+  "motion-feeeda96-c525-4c1c-889b-98774759ecfc/clip-1": {
+    "category": "rhythm",
+    "energy": "中",
+    "name": "定槽纹理切换",
+    "summary": "三处槽位位置固定，在方形和折角遮罩内快切色纹",
+    "use": "比较同一组图块的不同质感"
+  },
+  "motion-feeeda96-c525-4c1c-889b-98774759ecfc/clip-2": {
+    "category": "outro",
+    "demo_title": "画面练习",
+    "energy": "低",
+    "name": "留弧引出标题",
+    "summary": "图块退出后保留弧线，标题在同轴位置短暂停留后淡出",
+    "use": "承接段落末尾的名称或结论"
+  }
+}

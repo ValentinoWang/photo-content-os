@@ -1,0 +1,2 @@
+// Adapted from OpenMotion: keep timing and geometry with neutral example content.
+const CONFIG = {"duration": 14.9, "accent": "#21e88a", "palette": ["#000000", "#ffffff", "#21e88a", "#134bd9", "#8bd6ed"], "sourceCanvas": {"width": 720, "height": 720}, "actionRange": [0.7, 14], "mode": "fw2-v349", "templateId": "V349", "demoTitle": "多形体独立绕行", "brand": "示例", "labels": ["示例", "步骤一", "步骤二"], "objects": ["对象一", "对象二", "对象三"], "stages": [{"start": 0, "label": "阶段 1"}, {"start": 0.7, "label": "阶段 2"}, {"start": 7.5, "label": "阶段 3"}, {"start": 14, "label": "阶段 4"}]};

@@ -15,6 +15,7 @@ CLIPS_MANIFEST = MEDIA / "clips.json"
 # Upstream motion previews are 62 MB, so they live outside git; fetch-clips restores them by SHA-256.
 CLIP_DIR = Path(os.environ.get("SHOT_RECIPE_CLIP_DIR", Path.home() / ".photo-content-os/media/shot_recipes/clips"))
 UPSTREAM_COMMIT = "3ac67b75dd0b3bc2fd807c17f6b7ce35373eef3d"
+OPENMOTION_COMMIT = "543c5002f6eebea04744927073e3e7bb873e541c"
 REQUIRED_FIELDS = {
     "name": "id",
     "一句话": "summary",
@@ -125,16 +126,24 @@ def read_card(path, category):
         raise ValueError(f'{path}: missing fields: {", ".join(missing)}')
     if fields['name'] != path.stem:
         raise ValueError(f'{path}: name does not match filename')
+    source = fields.get("来源", "video-shotcraft")
+    if category == "openmotion":
+        if source != "openmotion" or not fields.get("category") or not fields.get("中文名"):
+            raise ValueError(f"{path}: expected OpenMotion source, category and Chinese name")
+    elif source != "video-shotcraft":
+        raise ValueError(f"{path}: unexpected recipe source {source}")
     entry = {dest: fields[key] for key, dest in REQUIRED_FIELDS.items()}
     relative = f"{category}/{path.name}"
     tags = [tag.strip() for tag in fields.get("标签", "").split("、") if tag.strip()]
     entry.update(
-        category=category,
+        category=fields["category"] if source == "openmotion" else category,
         path=relative,
         tags=tags,
         tags_source="upstream" if tags else "missing",
         portrait_fit=True if relative in PORTRAIT_READY else None,
     )
+    if source == "openmotion":
+        entry["name"] = fields["中文名"]
     return entry
 
 
@@ -187,7 +196,7 @@ def posters_from_renders(render_dir):
     render_dir = Path(render_dir)
     written = 0
     for entry in load_index():
-        if entry["poster_source"] == "upstream" or not entry["demo"]:
+        if entry["path"].startswith("openmotion/") or entry["poster_source"] == "upstream" or not entry["demo"]:
             continue
         stems = [p.stem for p in sorted((ROOT / entry["demo"]).glob("*.tsx")) if (render_dir / f"{p.stem}.mp4").is_file()]
         if not stems:
@@ -235,6 +244,10 @@ def recipe_seconds(duration):
     return round(max(values), 1) if values else None
 
 
+def load_openmotion_manifest():
+    return json.loads((ROOT / "openmotion" / "manifest.json").read_text(encoding="utf-8"))
+
+
 def build_index():
     cards = sorted(path for path in ROOT.glob('*/*.md') if path.parent.name not in NON_CATEGORY_DIRS)
     errors, entries = [], []
@@ -245,12 +258,20 @@ def build_index():
             errors.append(str(exc))
     if errors:
         raise ValueError('\n'.join(errors))
-    if len(entries) != 124 or len({item['category'] for item in entries}) != 10:
-        raise ValueError('expected 124 cards in 10 categories')
+    legacy = [item for item in entries if not item["path"].startswith("openmotion/")]
+    imported = [item for item in entries if item["path"].startswith("openmotion/")]
+    categories = {item["category"] for item in legacy}
+    if len(legacy) != 124 or len(categories) != 10:
+        raise ValueError("expected 124 video-shotcraft cards in 10 categories")
+    manifest = load_openmotion_manifest()
+    if manifest["commit"] != OPENMOTION_COMMIT or set(manifest["clips"]) != {item["id"] for item in imported}:
+        raise ValueError("OpenMotion cards differ from the pinned import manifest")
+    if any(item["category"] not in categories for item in imported):
+        raise ValueError("OpenMotion card uses an unknown recipe category")
     if len({item['id'] for item in entries}) != len(entries):
         raise ValueError('duplicate recipe id')
     names = json.loads((ROOT / 'names.zh.json').read_text(encoding='utf-8'))
-    ids = {item['id'] for item in entries}
+    ids = {item['id'] for item in legacy}
     if set(names) != ids:
         raise ValueError(f"recipe names mismatch: missing {sorted(ids - set(names))}, extra {sorted(set(names) - ids)}")
     bad_durations = []
@@ -266,7 +287,7 @@ def build_index():
         level = next((x for x in ('高', '中', '低') if x in energy), None)
         if '峰值' in energy:
             level = '高'
-        item.update(name=names[item['id']], seconds=value, energy=level)
+        item.update(name=names[item['id']] if item['id'] in names else item["name"], seconds=value, energy=level)
     if bad_durations:
         raise ValueError(f"unparseable recipe durations: {bad_durations}")
     clips = load_clips()["clips"]
@@ -274,7 +295,7 @@ def build_index():
     if unknown:
         raise ValueError(f"clips.json lists unknown recipes: {sorted(unknown)}")
     for item in entries:
-        item.update(media_fields(item["id"], item["category"], clips))
+        item.update(media_fields(item["id"], item["path"].split("/", 1)[0], clips))
     return entries
 
 
@@ -312,7 +333,8 @@ def check(upstream):
         timeout=10,
     )
 
-    local_paths = {entry["path"] for entry in entries}
+    legacy = [entry for entry in entries if not entry["path"].startswith("openmotion/")]
+    local_paths = {entry["path"] for entry in legacy}
     upstream_paths = {path.relative_to(upstream).as_posix() for path in upstream.glob("*/*.md")}
     if local_paths != upstream_paths:
         raise ValueError(
@@ -321,7 +343,7 @@ def check(upstream):
         )
     files = [(ROOT / path, upstream / path) for path in sorted(local_paths)]
     gallery = repo / "gallery" / "media" / "poster"
-    for entry in entries:
+    for entry in legacy:
         if entry["poster_source"] == "upstream":
             files.append((ROOT / entry["poster"], gallery / f"{entry['id']}.jpg"))
         if entry["demo"]:
@@ -340,12 +362,34 @@ def check(upstream):
         if hashlib.sha256(local.read_bytes()).digest() != hashlib.sha256(source.read_bytes()).digest():
             raise ValueError(f"upstream SHA-256 mismatch: {local.relative_to(ROOT)}")
 
+    check_openmotion()
     missing_tags = sum(entry["tags_source"] == "missing" for entry in entries)
-    print(f"OK: {len(entries)} cards, 10 categories; cards, posters, demos, attribution and license match upstream SHA-256")
+    print(f"OK: {len(entries)} cards, 10 categories; {len(legacy)} video-shotcraft cards and their "
+          "posters, demos, attribution and license match upstream SHA-256")
     print(f"Posters: {sum(e['poster_source'] == 'upstream' for e in entries)} upstream, "
           f"{sum(e['poster_source'] == 'render' for e in entries)} from upstream render; clips {sum(bool(e['clip']) for e in entries)}; "
           f"demos {sum(bool(e['demo']) for e in entries)}")
     print(f"Tags: {len(entries) - missing_tags} from upstream, {missing_tags} missing")
+
+
+def check_openmotion():
+    manifest = load_openmotion_manifest()
+    attribution = (ROOT / "ATTRIBUTION-openmotion.md").read_text(encoding="utf-8")
+    if OPENMOTION_COMMIT not in attribution:
+        raise ValueError("OpenMotion attribution is missing the pinned commit")
+    files = {"LICENSE-openmotion.txt": manifest["license_sha256"]}
+    for recipe_id, item in manifest["clips"].items():
+        if f"| `{recipe_id}` | `{item['template']}` | `{item['clip']}` |" not in attribution:
+            raise ValueError(f"OpenMotion attribution is missing {recipe_id}")
+        directory = ROOT / "demos" / "openmotion" / recipe_id
+        if {p.name for p in directory.iterdir()} != set(item["demo_files"]):
+            raise ValueError(f"OpenMotion demo file set differs for {recipe_id}")
+        files.update({f"demos/openmotion/{recipe_id}/{name}": digest
+                      for name, digest in item["demo_files"].items()})
+    for relative, digest in files.items():
+        if hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() != digest:
+            raise ValueError(f"OpenMotion SHA-256 mismatch: {relative}")
+    print(f"OK: {len(manifest['clips'])} OpenMotion cards with pinned attribution, license and demo hashes")
 
 
 def main():

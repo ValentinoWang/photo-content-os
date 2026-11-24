@@ -1,0 +1,2 @@
+// Adapted from OpenMotion: keep timing and geometry with neutral example content.
+const CONFIG = {"duration": 10.0, "accent": "#424ad6", "palette": ["#fbdc20", "#15113d", "#424ad6", "#ee477a", "#f5aab7"], "sourceCanvas": {"width": 400, "height": 400}, "actionRange": [2.5, 7.7], "mode": "fw2-v350", "templateId": "V350", "demoTitle": "条带折点齐动", "brand": "示例", "labels": ["示例", "步骤一", "步骤二"], "objects": ["对象一", "对象二", "对象三"], "stages": [{"start": 0, "label": "阶段 1"}, {"start": 2.5, "label": "阶段 2"}, {"start": 5, "label": "阶段 3"}, {"start": 7.7, "label": "阶段 4"}]};

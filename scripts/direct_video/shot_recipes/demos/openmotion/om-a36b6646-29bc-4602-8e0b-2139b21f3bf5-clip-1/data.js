@@ -1,0 +1,2 @@
+// Adapted from OpenMotion: keep timing and geometry with neutral example content.
+const CONFIG = {"duration": 2.6, "accent": "#e6252a", "palette": ["#000000", "#ffffff", "#e6252a", "#777777"], "sourceCanvas": {"width": 1280, "height": 1280}, "actionRange": [0.3, 1.22], "mode": "fw2-v166", "templateId": "V166", "demoTitle": "全幅虚焦回收", "brand": "示例", "labels": ["示例", "步骤一", "步骤二"], "objects": ["对象一", "对象二", "对象三"], "stages": [{"start": 0, "label": "阶段 1"}, {"start": 0.3, "label": "阶段 2"}, {"start": 0.65, "label": "阶段 3"}, {"start": 1.22, "label": "阶段 4"}]};

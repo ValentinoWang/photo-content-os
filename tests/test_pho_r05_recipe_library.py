@@ -9,9 +9,13 @@ from scripts.direct_video import recipe_library
 
 def test_index_count_fields_and_unique_ids():
     entries = recipe_library.load_index()
-    assert len(entries) == 124
+    legacy = [entry for entry in entries if not entry["path"].startswith("openmotion/")]
+    imported = [entry for entry in entries if entry["path"].startswith("openmotion/")]
+    assert len(legacy) == 124
+    assert len(imported) == len(recipe_library.load_openmotion_manifest()["clips"])
+    assert len(entries) == len(legacy) + len(imported)
     assert len({entry["category"] for entry in entries}) == 10
-    assert len({entry["id"] for entry in entries}) == 124
+    assert len({entry["id"] for entry in entries}) == len(entries)
     paths = [entry["path"] for entry in entries]
     assert paths == sorted(paths)
     for entry in entries:
@@ -21,21 +25,21 @@ def test_index_count_fields_and_unique_ids():
         }
         assert (recipe_library.ROOT / entry["path"]).is_file()
         assert entry["portrait_fit"] is True or entry["portrait_fit"] is None
-    assert Counter(entry["tags_source"] for entry in entries) == {
+    assert Counter(entry["tags_source"] for entry in legacy) == {
         "upstream": 50, "missing": 74,
     }
     for entry in entries:
         assert bool(entry["tags"]) == (entry["tags_source"] == "upstream")
 
     # Upstream gallery posters first; every other card with upstream demo source gets a frame of upstream's own render.
-    assert Counter(entry["poster_source"] for entry in entries) == {"upstream": 50, "render": 72, None: 2}
+    assert Counter(entry["poster_source"] for entry in legacy) == {"upstream": 50, "render": 72, None: 2}
     for entry in entries:
         assert (entry["poster"] is None) == (entry["poster_source"] is None)
         if entry["poster"]:
             assert (recipe_library.ROOT / entry["poster"]).is_file()
         if entry["poster_source"] == "render":
             assert entry["demo"]
-        if entry["poster"] is None:
+        if entry in legacy and entry["poster"] is None:
             assert entry["demo"] is None
         if entry["demo"]:
             assert (recipe_library.ROOT / entry["demo"]).is_dir()
@@ -45,7 +49,7 @@ def test_index_count_fields_and_unique_ids():
 
     readme = (recipe_library.ROOT / "README.md").read_text(encoding="utf-8")
     documented = re.findall(r"^\| \[[^\]]+\]\(([^)]+\.md)\) \|", readme, flags=re.MULTILINE)
-    assert documented == [entry["path"] for entry in entries if entry["portrait_fit"] is None]
+    assert documented == [entry["path"] for entry in legacy if entry["portrait_fit"] is None]
 
 
 def test_get_returns_recipe_and_rejects_unknown_id():
@@ -103,7 +107,7 @@ def test_clip_path_follows_index(monkeypatch, tmp_path):
 def test_build_index_reads_only_category_cards():
     # demos/README.md and upstream/*.md are upstream docs, not recipe cards.
     entries = recipe_library.build_index()
-    assert len(entries) == 124
+    assert entries == recipe_library.load_index()
     assert {entry["category"] for entry in entries}.isdisjoint(recipe_library.NON_CATEGORY_DIRS)
 
 
@@ -129,9 +133,10 @@ def test_catalog_has_chinese_names_duration_and_normalized_energy():
     import json
     entries = recipe_library.load_index()
     names = json.loads((recipe_library.ROOT / 'names.zh.json').read_text(encoding='utf-8'))
-    assert set(names) == {entry['id'] for entry in entries}
+    assert set(names) == {entry['id'] for entry in entries if not entry['path'].startswith('openmotion/')}
     for entry in entries:
-        assert entry['name'] == names[entry['id']]
+        if entry['id'] in names:
+            assert entry['name'] == names[entry['id']]
         assert re.fullmatch(r'[\u4e00-\u9fff]{1,8}', entry['name'])
         if entry['duration'].startswith('n/a'):
             assert entry['seconds'] is None

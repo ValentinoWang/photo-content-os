@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Adapted from OpenMotion 543c5002f6eebea04744927073e3e7bb873e541c: offline wrapper and neutral sample content. -->
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>单点双侧应答</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f7f6f0}
+canvas{display:block;width:100%;height:100%;object-fit:contain}
+</style>
+<body data-mode="clip" data-start="16" data-end="28">
+<canvas width="1000" height="600"></canvas>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script src="scene.js"></script>
+<script>
+const CLIP_START = 16;
+const CLIP_DURATION = 12;
+let usingPinnedFont = false;
+window.seekFrame = (frame, fps) => {
+  const pinnedFontReady = Array.from(document.fonts).some(
+    font => font.family.replace(/["']/g, "") === "PCPinned0" && font.status === "loaded");
+  if (pinnedFontReady !== usingPinnedFont) {
+    maskCache.clear();
+    usingPinnedFont = pinnedFontReady;
+  }
+  time = clamp(frame / fps, 0, CLIP_DURATION);
+  ctx.setTransform(canvas.width / W, 0, 0, canvas.height / H, 0, 0);
+  ctx.globalAlpha = 1;
+  ctx.filter = "none";
+  ctx.shadowBlur = 0;
+  ctx.clearRect(0, 0, W, H);
+  drawScene(CLIP_START + time);
+};
+window.seekFrame(0.6, 1);
+</script>
+</body>
+</html>

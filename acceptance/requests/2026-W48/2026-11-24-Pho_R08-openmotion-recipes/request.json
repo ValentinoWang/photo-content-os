@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-24-Pho_R08-openmotion-recipes",
+  "project": "photo-content-os",
+  "title": "OpenMotion 单镜并进动效配方库",
+  "raw_request": "这些是不是可以混在一起？OM中的内容",
+  "author": {
+    "agent": "claude",
+    "session": "f0e53bb4-e2fa-4d4e-b8e9-d691fc136b32"
+  },
+  "understanding": [
+    "在现有动效配方库按类别查找 OpenMotion 的 51 张单镜配方，抽一张演示可离线播放。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开动效配方库，按类别查看配方卡。",
+        "打开一张新配方的演示，检查离线时能否播放。"
+      ],
+      "expected": "能按类别看到 OpenMotion 来源的 51 张卡，抽一张演示能离线播放。"
+    }
+  ],
+  "confirmation_required": false,
+  "schema": "request-card/v1",
+  "executors": [],
+  "out_of_scope": [],
+  "created_at": "2026-11-24T07:19:46.768424Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}
