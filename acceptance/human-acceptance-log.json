@@ -216,8 +216,28 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-12T19:44:30Z",
+  "generated_at": "2026-11-24T04:37:20.784318+00:00",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md",
+      "estimated_minutes": 5,
+      "handoff_path": "acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/handoff.json",
+      "invalidation_keys": [
+        "photo.devbox-execution",
+        "photo.devbox-transfer"
+      ],
+      "latest_run": null,
+      "loop_name": "photo-content-os 用自己的开发机跑测试、门禁和渲染",
+      "ready_at": "2026-11-24T04:37:20.784318+00:00",
+      "release_slice": "R310",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "e40196d 在 photo-dev 复跑通过四个 shell 检查、浅色专项九项和静态源码核查。已补登记装机脚本的 H-01 归属。H-01、H-02 待人工验收。",
+      "task_id": "2026-10-27-R310-photo-devbox",
+      "workspace": "acceptance/human/2026-W44/2026-10-27-R310-photo-devbox"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W44/未-2026-10-27-R312-photo-ffmpeg9-subtitles/checklist.md",
@@ -236,26 +256,6 @@
       "summary": "5d62356定向38过、2子测试过；全量1214过、3项任务允许环境失败、36跳过、2005子测试过。原始pytest退出1如实保留；仅无额外回归条件PASS，H-01原样非阻塞待人工。",
       "task_id": "2026-10-27-R312-photo-ffmpeg9-subtitles",
       "workspace": "acceptance/human/2026-W44/2026-10-27-R312-photo-ffmpeg9-subtitles"
-    },
-    {
-      "blocking": false,
-      "checklist_path": "acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md",
-      "estimated_minutes": 5,
-      "handoff_path": "acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/handoff.json",
-      "invalidation_keys": [
-        "photo.devbox-execution",
-        "photo.devbox-transfer"
-      ],
-      "latest_run": null,
-      "loop_name": "photo-content-os 用自己的开发机跑测试、门禁和渲染",
-      "ready_at": "2026-10-27T10:08:26.915857Z",
-      "release_slice": "R310",
-      "required_role": "任务委托人",
-      "scope_hints": [],
-      "status": "PENDING",
-      "summary": "553e02c项目技能入口：lint与三份自测过、开发机浅色9过；理解5–7覆盖关系已记录，ffmpeg安装并行和R278最小同步仅做源码核查，未重装或真传数据。原H两项非阻塞待人工抽查。",
-      "task_id": "2026-10-27-R310-photo-devbox",
-      "workspace": "acceptance/human/2026-W44/2026-10-27-R310-photo-devbox"
     },
     {
       "blocking": false,
@@ -286,5 +286,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "0c680bda09358e52edb80cd188377e55581382b3e2817798e245fb7e61d14632"
+  "source_facts_sha256": "49f6d58aed3a3e12c32d6a15ec871ed41b637322da8841793ad24b36b6726ef1"
 }

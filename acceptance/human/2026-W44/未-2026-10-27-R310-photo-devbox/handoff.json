@@ -1,9 +1,9 @@
 {
   "baseline": {
-    "base": "0422f6bf4ea9b92f319ef5a78dbaf9dc6be1da43",
+    "base": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9",
     "branch": "detached",
-    "head": "553e02c8b2c936526a79d9aae76e1149ef91b611",
-    "tree": "321fdda798e5c361f5584a2c09da516cde4e3df3"
+    "head": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9",
+    "tree": "788031aef83ce87df38c71683fa2d87f3223ddee"
   },
   "binding_sha256": "760cdef97f39acf8c281ec4dbad4b2cf866ccbb47cef45ec6c973d75216dc0a9",
   "blocking": false,
@@ -14,11 +14,20 @@
     {
       "claim_key": "photo.devbox-execution",
       "item": "H-01",
+      "no_screenshot_reason": "本机活动监视器只能在用户本人设备查看；参考图展示开发机上的测试与装机输出。",
       "open_route": "note:本机活动监视器和与总控的测试对话",
       "relations": [],
       "request_changes": {
         "H-01": "H步骤和预期原样；新增理解5见request-understanding-coverage.json的技能结构/双入口审阅、lint与新入口远端九项；理解6见该文件的ffmpeg9.0中转与安装并行源码核查、lint和带来源装机复盘。本轮不重装或真传ffmpeg，静态覆盖不当作新机器安装PASS。"
       },
+      "screenshots": [
+        {
+          "caption": "浅色专项和开发机装机输出（参考） · 开发机 WebKit 手机截图",
+          "captured_at": "2026-11-24T04:36:57.525Z",
+          "path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/shots/H-01-1.png",
+          "sha256": "d0b8ccb3549fb825979b2cd35545ccbfcb23d4aea030e4f53675b27973de628d"
+        }
+      ],
       "surfaces": [
         "acceptance.artifacts",
         "photo.devbox",
@@ -33,6 +42,14 @@
       "request_changes": {
         "H-02": "H步骤和预期原样；新增理解7见request-understanding-coverage.json的studio-data默认r278分支核查，及新unit run的lint/默认代码清单自测。只核查一个job.json与设计图的传输配置，未执行studio-data或传真实Studio数据；不复用旧R278门禁结果冒充当前运行。"
       },
+      "screenshots": [
+        {
+          "caption": "同步清单自测和文件列表汇总 · 开发机 WebKit 手机截图",
+          "captured_at": "2026-11-24T04:36:57.525Z",
+          "path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/shots/H-02-1.png",
+          "sha256": "5a73bcaa102363ea9b27af50c1638c1233520e22ef177086bd63ae053d35a58a"
+        }
+      ],
       "surfaces": [
         "acceptance.artifacts",
         "photo.devbox",
@@ -52,35 +69,35 @@
   "loop_name": "photo-content-os 用自己的开发机跑测试、门禁和渲染",
   "machine_evidence": [
     {
-      "layer": "machine/unit",
-      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261027T100601Z-macos-phase3-988d65/result.md",
-      "result_sha256": "ea425e0623765844f8789a54430c3c1416d6084552d187c6ebba42dd5fc2e09d",
-      "run_id": "20261027T100601Z-macos-phase3-988d65",
-      "source_identity": "553e02c8b2c936526a79d9aae76e1149ef91b611"
-    },
-    {
       "layer": "machine/integration-contract",
-      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/integration-contract/runs/20261027T100602Z-photo-dev-phase3-2b7d6c/result.md",
-      "result_sha256": "81324f3e2c5c148feec1e800cc82b4837310a28be1fb0ba99e29efaa589dc700",
-      "run_id": "20261027T100602Z-photo-dev-phase3-2b7d6c",
-      "source_identity": "553e02c8b2c936526a79d9aae76e1149ef91b611"
+      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/integration-contract/runs/20261124T042425Z-photo-dev-integration-contract-1c0b02/result.md",
+      "result_sha256": "96bc1960e6ed52239ba0dc649affe02a7d0938693ab735fe8763b91eb869736c",
+      "run_id": "20261124T042425Z-photo-dev-integration-contract-1c0b02",
+      "source_identity": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9"
     },
     {
       "layer": "machine/static",
-      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/static/runs/20261027T100602Z-source-phase3-a4a033/result.md",
-      "result_sha256": "682de87e301c5414f957cfd466a2de4ec20e7c81a44765ac5e529b7d22c37903",
-      "run_id": "20261027T100602Z-source-phase3-a4a033",
-      "source_identity": "553e02c8b2c936526a79d9aae76e1149ef91b611"
+      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/static/runs/20261124T042430Z-photo-dev-static-1c0b03/result.md",
+      "result_sha256": "6f9729a54813450b023b39eaddfa8cb728600bec6d78bbfb7feabaa5d4989fc1",
+      "run_id": "20261124T042430Z-photo-dev-static-1c0b03",
+      "source_identity": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9"
+    },
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-10-27/R310-photo-devbox/acceptance/machine/unit/runs/20261124T042415Z-photo-dev-unit-1c0b01/result.md",
+      "result_sha256": "56027250f62b35d79b0445e85cea2d584066f425b9992779ea00f4c9204f328f",
+      "run_id": "20261124T042415Z-photo-dev-unit-1c0b01",
+      "source_identity": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9"
     }
   ],
   "open_route": null,
-  "ready_at": "2026-10-27T10:08:26.915857Z",
+  "ready_at": "2026-11-24T04:37:20.784318+00:00",
   "release_slice": "R310",
   "request_id": "2026-10-27-R310-photo-devbox",
   "required_role": "任务委托人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "553e02c8b2c936526a79d9aae76e1149ef91b611",
-  "summary": "553e02c项目技能入口：lint与三份自测过、开发机浅色9过；理解5–7覆盖关系已记录，ffmpeg安装并行和R278最小同步仅做源码核查，未重装或真传数据。原H两项非阻塞待人工抽查。",
+  "source_commit": "e40196d47b1edb7adcebc0422f420f2bacc1f3c9",
+  "summary": "e40196d 在 photo-dev 复跑通过四个 shell 检查、浅色专项九项和静态源码核查。已补登记装机脚本的 H-01 归属。H-01、H-02 待人工验收。",
   "task_id": "2026-10-27-R310-photo-devbox"
 }
