@@ -134,6 +134,11 @@ synced, moved or rewritten by automation.
 They are not a supported route for a new Content OS v0.2 task. Do not delete,
 rewrite or treat a real historical draft as current project evidence.
 
+剪映线路停止维护（user, 2026-11-23）。用户原话：「选择A即可 放弃剪映 出粗稿 人工导入粗稿再改进的方案吧，停止维护这条线路 不用删除」。
+
+- `scripts/*jianying*`（草稿计划、粗剪草稿、导入说明、环境探测、草稿校验）和相关测试保留不删，但不再修 bug、不加功能、不当交付出口。现有检查照跑；它们坏了只修到不挡别的改动，不为剪映新版本适配。
+- 选定的方向（A）：程序出粗稿，人打开粗稿再改进。动效镜头由直出渲染（借 OpenMotion 的模板和 Motion.md 拆镜写法），需要叠加时出带透明通道的 MOV（`scripts/video_render/teaching_clips.py --transparent`）；粗稿经 MCP 建成 Concat 工程，人在 Concat 里精修导出。ChatCut 仍是现在的主力编辑器。Concat 的本机实测记录在 RefShelf 的 `docs/tasks/T6-concat-trial/`。
+
 ## Media Bot change entry
 
 The only formal entry for a collaborator to change a Content OS project is the
