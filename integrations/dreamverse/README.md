@@ -29,3 +29,5 @@ python3 scripts/aigc/dreamverse_bridge.py shots.json output
 每份输出目录对应一个 DreamVerse 项目。桥接确认之后，插件最多为该确认提交一次，生成的云任务 ID 先写入插件收据和 `ledger.json`，随后由桥接发起状态轮询。停止本地等待后，运行同一份清单可以继续查询；已完成的文件沿用既有的素材 ID。结果未知且无法读回云任务 ID 时，账本标为 `unknown`，命令以非零码退出，需核对服务收据和百炼任务记录。重复运行只检查收据。这一版本没有人工重提命令。
 
 生成完成后，通过 DreamVerse 的 `shot.render` 写入素材池，桥接取回 MP4 和末帧 PNG，并按素材 ID 验证文件摘要。账本记录云任务、计费视频秒、DreamVerse 操作与素材 ID、本地文件路径。当前流程未编排时间线，因此片段 ID 为 `null`。应在[百炼任务与下载链接有效期](https://help.aliyun.com/zh/model-studio/legacy-wan-text-to-video-api-reference)内完成首次素材回收。
+
+火山方舟 Seedance 2.0 插件和万相插件并列注册。Seedance 密钥只传给本机 DreamVerse 进程的 `DV_ARK_API_KEY`，不写入清单或账本。安装默认注册两个插件，`--provider wanxiang` 或 `--provider seedance` 只更新对应插件。模型规格以插件 facts 内标注的方舟文档为准。Seedance 的真实账号调用和生成效果尚待拿到密钥后验收。

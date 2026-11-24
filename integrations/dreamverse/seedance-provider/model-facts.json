@@ -1,0 +1,37 @@
+{
+  "modelId": "doubao-seedance-2-0-260128",
+  "minDurationSec": 4,
+  "maxDurationSec": 15,
+  "durationsSec": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "aspectRatios": [
+    "16:9",
+    "4:3",
+    "1:1",
+    "3:4",
+    "9:16",
+    "21:9",
+    "adaptive"
+  ],
+  "resolutions": [
+    "480p",
+    "720p",
+    "1080p",
+    "4k"
+  ],
+  "source": "https://docs.volcengine.com/docs/ark/create-video-generation-task-api?lang=zh&redirect=1",
+  "sourceReadDate": "2026-11-24",
+  "frameSizes": {}
+}
