@@ -1,0 +1,105 @@
+{
+  "baseline": {
+    "base": "308eb2e86d264118514261a45db987632dc3cb4e",
+    "branch": "main",
+    "head": "6039932a362cd1fd503aa5c860ebb84692a1e4fd",
+    "tree": "1f567705e9f38fe749b180ca605e91599797dc69"
+  },
+  "binding_sha256": "37941a905715fb1fb57285023c2735776edddd9c7f3c524baf9b0ba753e09ece",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "2ac9356ce3a730274838420e7143f677fb35b8cf90c91539efd0ee7fc90ce5d7",
+  "claims": [
+    {
+      "claim_key": "music.beat-playback",
+      "item": "H-01",
+      "open_route": "note:在制作台音乐库播放有节拍图的歌曲",
+      "relations": [
+        {
+          "reason": "R280 浅色令牌改变固定白色预期，本项复验当前拍点跟随主文字色且区别于其他拍点。原 R223 签署记录保留。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "reverify"
+        },
+        {
+          "evidence_run": "20261124T075340Z-photo-dev-scope-603993",
+          "reason": "工具安装、环境诊断实现及旧测试在发布基底和当前源码无差异，开发机剪辑工具回归通过。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T075340Z-photo-dev-scope-603993",
+          "reason": "Studio 候选生成和剪辑后端无差异，开发机剪辑工具回归通过。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T075340Z-photo-dev-scope-603993",
+          "reason": "音乐库、标签和分段实现无差异，交互其余断言原样且通过，音乐分析和分段测试通过。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261124T075340Z-photo-dev-scope-603993",
+          "reason": "曲目导入、分析及筛选实现无差异，浏览器待分析回执和分面排序仍通过。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        }
+      ],
+      "reverify_reason": "R280 浅色令牌改变固定白色预期，本项复验当前拍点跟随主文字色且区别于其他拍点。原 R223 签署记录保留。",
+      "screenshots": [
+        {
+          "caption": "播放到当前拍点的音乐库 · 合成音频与测试曲目整页截图",
+          "captured_at": "2026-11-24T07:46:35.728Z",
+          "path": "agents-results/2026-11-24/Pho_R09-r223-beat-color/acceptance/shots/H-01-1.jpg",
+          "sha256": "8b891f1e05611e7d887596a1558e41f6dfce779a51481255bb4eaff56dc89ebc"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-24/Pho_R09-r223-beat-color/acceptance-contract.md",
+  "contract_sha256": "9f93e6fafcc025a1988d1c3c6a998100e22e6f9a0912d55a706b6f72147612c2",
+  "contract_version": "1",
+  "estimated_minutes": 1,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "music.beat-playback"
+  ],
+  "loop_name": "复验制作台当前拍点的高亮颜色",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-24/Pho_R09-r223-beat-color/acceptance/machine/unit/runs/20261124T074956Z-photo-dev-603993/result.md",
+      "result_sha256": "536ef01247d66ad681a4e28c0d46cb3478127cbd56854dc429cb1924db5f2916",
+      "run_id": "20261124T074956Z-photo-dev-603993",
+      "source_identity": "6039932a362cd1fd503aa5c860ebb84692a1e4fd"
+    },
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-24/Pho_R09-r223-beat-color/acceptance/machine/unit/runs/20261124T075340Z-photo-dev-scope-603993/result.md",
+      "result_sha256": "a04a4e88758402888f4af5c6f8d45ad85e77ed920b02e06500922fbb408c4461",
+      "run_id": "20261124T075340Z-photo-dev-scope-603993",
+      "source_identity": "6039932a362cd1fd503aa5c860ebb84692a1e4fd",
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.documentation",
+        "photo.tests-scripts"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-24T07:54:48Z",
+  "release_slice": "r223-beat-color",
+  "request_id": "2026-11-24-Pho_R09-r223-beat-color",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "6039932a362cd1fd503aa5c860ebb84692a1e4fd",
+  "summary": "深浅主题交互各 7 项，58 份设计清单和 109 项相关复测通过。",
+  "task_id": "2026-11-24-Pho_R09-r223-beat-color"
+}

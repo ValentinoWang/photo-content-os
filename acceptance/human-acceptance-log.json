@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-24T06:49:09.409607Z",
+  "generated_at": "2026-11-24T07:54:48Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R09-r223-beat-color/checklist.md",
+      "estimated_minutes": 1,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R09-r223-beat-color/handoff.json",
+      "invalidation_keys": [
+        "music.beat-playback"
+      ],
+      "latest_run": null,
+      "loop_name": "复验制作台当前拍点的高亮颜色",
+      "ready_at": "2026-11-24T07:54:48Z",
+      "release_slice": "r223-beat-color",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "深浅主题交互各 7 项，58 份设计清单和 109 项相关复测通过。",
+      "task_id": "2026-11-24-Pho_R09-r223-beat-color",
+      "workspace": "acceptance/human/2026-W48/2026-11-24-Pho_R09-r223-beat-color"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R06-concat-backend/checklist.md",
@@ -306,5 +325,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "6c0d856631264fdc731a4507db6d04fb6ff9a5582f0df2399b40f97aea100cad"
+  "source_facts_sha256": "acba7b40af0be347018e05f2d9ea84814c01b8a907b6ed7a2afac44399f0274e"
 }

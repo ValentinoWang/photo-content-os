@@ -1,0 +1,8 @@
+v24.13.0
+Google Chrome for Testing 149.0.7827.55
+Studio source: 6039932a362cd1fd503aa5c860ebb84692a1e4fd
+PASS 7 music interaction checks
+PASS beat map: signature lifecycle, cuts, fade, offsets, multi-song swap, lane:false, seek, stable overview, formulas, visible swap, no overflow
+Inventories: 58 failing: 0
+[]
+[rbox] 退出码 0，完整日志 /root/.prbox/run-025057-25312.log

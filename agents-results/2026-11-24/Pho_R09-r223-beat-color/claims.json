@@ -1,0 +1,52 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "music.beat-playback",
+    "open_route": "note:在制作台音乐库播放有节拍图的歌曲",
+    "reverify_reason": "R280 浅色令牌改变固定白色预期，本项复验当前拍点跟随主文字色且区别于其他拍点。原 R223 签署记录保留。",
+    "relations": [
+      {
+        "type": "reverify",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+        "reason": "R280 浅色令牌改变固定白色预期，本项复验当前拍点跟随主文字色且区别于其他拍点。原 R223 签署记录保留。"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+        "reason": "工具安装、环境诊断实现及旧测试在发布基底和当前源码无差异，开发机剪辑工具回归通过。",
+        "evidence_run": "20261124T075340Z-photo-dev-scope-603993"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+        "reason": "Studio 候选生成和剪辑后端无差异，开发机剪辑工具回归通过。",
+        "evidence_run": "20261124T075340Z-photo-dev-scope-603993"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+        "reason": "音乐库、标签和分段实现无差异，交互其余断言原样且通过，音乐分析和分段测试通过。",
+        "evidence_run": "20261124T075340Z-photo-dev-scope-603993"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+        "reason": "曲目导入、分析及筛选实现无差异，浏览器待分析回执和分面排序仍通过。",
+        "evidence_run": "20261124T075340Z-photo-dev-scope-603993"
+      }
+    ],
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.documentation",
+      "photo.tests-scripts"
+    ],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-24/Pho_R09-r223-beat-color/acceptance/shots/H-01-1.jpg",
+        "sha256": "8b891f1e05611e7d887596a1558e41f6dfce779a51481255bb4eaff56dc89ebc",
+        "caption": "播放到当前拍点的音乐库 · 合成音频与测试曲目整页截图",
+        "captured_at": "2026-11-24T07:46:35.728Z"
+      }
+    ]
+  }
+]
