@@ -1,0 +1,41 @@
+{
+  "id": "2026-11-24-Pho_R10-dreamverse-bridge",
+  "title": "用 DreamVerse 生成制作台镜头",
+  "raw_request": "把万相插件搬进仓库并写安装脚本，接制作台到 DreamVerse 的桥接和账本；真实万相提交最多两次，本机真跑清晨空跑道慢推和起跑器特写，第二镜中断再续。逐镜按规格确认，记录云任务、用量、素材和本地文件；提交状态未知时标 unknown 并停下。",
+  "understanding": [
+    "安装后，DreamVerse 模型目录可以找到万相 2.6，其时长、画幅和分辨率以百炼文档为准。",
+    "两镜逐个确认即可生成；第二镜停止等待后，制作台从现有云任务继续取回视频与末帧。",
+    "账本保留每镜的云任务、用量、DreamVerse 素材和本地视频位置，查不到提交结果时提示人工核对。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开 DreamVerse 的模型目录，找到万相 2.6 文生视频。"
+      ],
+      "expected": "可以找到万相 2.6，时长支持 2 到 15 秒，列出五种画幅和 720p、1080p。"
+    },
+    {
+      "key": "H-02",
+      "steps": [
+        "打开两条生成的视频与对应末帧。",
+        "查看账本，核对第二镜中断前后的云任务。"
+      ],
+      "expected": "有清晨空跑道慢推、起跑器特写两条约五秒的竖屏视频及各自的末帧。中断前后第二镜的云任务相同，账本记录两镜的素材和用量。"
+    }
+  ],
+  "confirmation_required": false,
+  "author": {
+    "agent": "codex",
+    "session": "01a20c76-c7c0-7bf2-b66b-b3b6213e3f4e"
+  },
+  "project": "photo-content-os",
+  "schema": "request-card/v1",
+  "executors": [],
+  "out_of_scope": [],
+  "created_at": "2026-11-24T07:42:08.078344Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}
