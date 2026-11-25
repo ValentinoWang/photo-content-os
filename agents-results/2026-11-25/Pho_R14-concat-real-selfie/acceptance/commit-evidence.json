@@ -1,0 +1,21 @@
+{
+  "source_commit": "c00096f796ffeb9534674f48b324ab8e47cdfeec",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-25/Pho_R14-concat-real-selfie/acceptance/unit/result.md",
+      "result_sha256": "dbc9d10c89d7adf5119ec2a054a904bbe8b12f3fcf364904a2bf9363f5ca3a9a",
+      "source_identity": "c00096f796ffeb9534674f48b324ab8e47cdfeec",
+      "layer": "machine/unit",
+      "run_id": "20261125T091129Z-mac-unit"
+    }
+  ],
+  "patch_id": "c20bcaa0c8e62ef738f710a597241e09ee572283",
+  "preimage": {
+    "acceptance/requests/2026-W48/2026-11-25-Pho_R14-concat-real-selfie/request.json": "",
+    "acceptance/requests/2026-W48/2026-11-25-Pho_R14-concat-real-selfie/request.md": "",
+    "scripts/edit_backends/concat_adapter.py": "e0bfe4ed22ab9234c06bea4e1671c79e46c60f91",
+    "scripts/transcript_to_srt.py": "",
+    "tests/test_concat_real_selfie.py": "",
+    "tests/test_transcript_to_srt.py": ""
+  }
+}
