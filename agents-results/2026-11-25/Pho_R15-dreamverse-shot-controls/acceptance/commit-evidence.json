@@ -1,0 +1,23 @@
+{
+  "source_commit": "05b10524014c2106915393db14293b3f5a5bad18",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-25/Pho_R15-dreamverse-shot-controls/acceptance/unit/result.md",
+      "result_sha256": "a03e404366f786540b4acdf7fdc3939dc0757d9eb841b234e8074f89315a4ea9",
+      "source_identity": "05b10524014c2106915393db14293b3f5a5bad18",
+      "layer": "machine/unit",
+      "run_id": "20261125T091452Z-local-unit-05b105"
+    }
+  ],
+  "patch_id": "6fed3c61f986174e28917944dd70cd7c590ebd54",
+  "preimage": {
+    "acceptance/requests/2026-W48/2026-11-25-Pho_R15-dreamverse-shot-controls/request.json": "",
+    "acceptance/requests/2026-W48/2026-11-25-Pho_R15-dreamverse-shot-controls/request.md": "",
+    "integrations/dreamverse/README.md": "3c65436d33bb049425566e0bbe57d668f03a40b7",
+    "integrations/dreamverse/seedance-provider/index.ts": "e65edfc058ab1d5d95ef25d3746d4303a2c23ef4",
+    "integrations/dreamverse/wanxiang-provider/index.ts": "622bba9cbd494f1d740ba70e9a6528a74eda9c45",
+    "integrations/dreamverse/wanxiang-provider/model-facts.json": "54b7f9832eb793713e69f4eb6151920b04e5f4af",
+    "scripts/aigc/dreamverse_bridge.py": "c6aae395dfc9702307a618e7c1802ace18126f0a",
+    "tests/test_dreamverse_shot_controls.py": ""
+  }
+}
