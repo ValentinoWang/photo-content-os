@@ -1,0 +1,24 @@
+{
+  "source_commit": "204afeea7f36a7135dc278169a41351ded300c7f",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-25/Pho_R12-ai-music-generate-c1/acceptance/unit/result.md",
+      "result_sha256": "fe850018b1e1a9713404fab7c1373747c937b57f45089ac1da288e8e3c609a6b",
+      "source_identity": "204afeea7f36a7135dc278169a41351ded300c7f",
+      "layer": "machine/unit",
+      "run_id": "20261125T090634Z-local-204afee"
+    }
+  ],
+  "patch_id": "e82c661b52d0fd04d8a2bd5240cf9c3f7ed1bc07",
+  "preimage": {
+    "acceptance/requests/2026-W48/2026-11-25-Pho_R12-ai-music-generate/request.json": "",
+    "acceptance/requests/2026-W48/2026-11-25-Pho_R12-ai-music-generate/request.md": "",
+    "schemas/music-track.schema.json": "3cdfcb3a34b65060627689079e7ae75e2106d89b",
+    "scripts/generate_music.py": "",
+    "scripts/import_music.py": "0391caea216be2a96164ffa181aedc7d2bab8384",
+    "scripts/music_library/README.md": "9503232c38e8d9d64983bbad0ecf699f5a6954b3",
+    "scripts/music_library/ai_generate.py": "",
+    "scripts/music_library/library.py": "7158b2cd33c362aecd3af44be031cd0eb8a67910",
+    "tests/test_music_ai_generate.py": ""
+  }
+}
