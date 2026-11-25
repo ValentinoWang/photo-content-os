@@ -1,0 +1,59 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.music-ai-generate",
+    "open_route": "note:本机终端运行配乐生成命令并在音乐库查看新入库的曲目",
+    "surfaces": [
+      "acceptance.artifacts",
+      "acceptance.evidence",
+      "photo.tests-scripts",
+      "studio.backend"
+    ],
+    "relations": [
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+        "reason": "改动仅涉及音乐库 AI 生成配乐模块与曲目规范，剪辑工具安装入口和环境检查脚本无源码差异。",
+        "evidence_run": "20261125T090845Z-local-c934a9"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+        "reason": "改动不涉及 Studio 分镜与 OpenChatCut 候选视频生成链路。",
+        "evidence_run": "20261125T090845Z-local-c934a9"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+        "reason": "未修改 Studio 音乐库页面、AI 标注注册表与节拍分析逻辑，且 R223 专项测试全部通过。",
+        "evidence_run": "20261125T090845Z-local-c934a9"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+        "reason": "未修改音乐播放、色带进度与拍点展示前端源码。",
+        "evidence_run": "20261125T090845Z-local-c934a9"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+        "reason": "未修改从文件夹导入、后台自动分析队列和标签筛选逻辑，既有 4 组音乐测试 116 项全部通过。",
+        "evidence_run": "20261125T090845Z-local-c934a9"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+        "reason": "改动不涉及动效配方库、OpenMotion 样片与离线演示播放代码。",
+        "evidence_run": "20261125T090845Z-local-c934a9"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-25/Pho_R12-ai-music-generate/acceptance/shots/H-01-1.png",
+        "sha256": "b8391eb3847ae9cc6ef1618d5a3fa057f69b11a72a8ad678e17d0dff9fe4d73b",
+        "caption": "AI 配乐替身与后处理验证参考 · 本机离线测试输出手机图",
+        "captured_at": "2026-11-25T09:08:45.287319+00:00"
+      }
+    ]
+  }
+]

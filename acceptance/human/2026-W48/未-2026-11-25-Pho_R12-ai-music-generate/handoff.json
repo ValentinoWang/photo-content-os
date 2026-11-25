@@ -1,0 +1,106 @@
+{
+  "baseline": {
+    "base": "3fc330f63886787fd53840c2a7df4ac4d46d2d12",
+    "branch": "main",
+    "head": "c934a944d04f7ebff4373c299ff96b0d071fdc4c",
+    "tree": "cfc8d84ddc252afedffe9dcdc04a25b7dc759ae5"
+  },
+  "binding_sha256": "5529303a2ccf8a1f6fb5b59c005029094bd728a245a829bb893203d6c2a5ff72",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "750dc46b60bd3cdcfed665baad0b3b8932b343ca84644878685e76830ff66626",
+  "claims": [
+    {
+      "claim_key": "photo.music-ai-generate",
+      "item": "H-01",
+      "open_route": "note:本机终端运行配乐生成命令并在音乐库查看新入库的曲目",
+      "relations": [
+        {
+          "evidence_run": "20261125T090845Z-local-c934a9",
+          "reason": "改动仅涉及音乐库 AI 生成配乐模块与曲目规范，剪辑工具安装入口和环境检查脚本无源码差异。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T090845Z-local-c934a9",
+          "reason": "改动不涉及 Studio 分镜与 OpenChatCut 候选视频生成链路。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T090845Z-local-c934a9",
+          "reason": "未修改 Studio 音乐库页面、AI 标注注册表与节拍分析逻辑，且 R223 专项测试全部通过。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T090845Z-local-c934a9",
+          "reason": "未修改音乐播放、色带进度与拍点展示前端源码。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T090845Z-local-c934a9",
+          "reason": "未修改从文件夹导入、后台自动分析队列和标签筛选逻辑，既有 4 组音乐测试 116 项全部通过。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T090845Z-local-c934a9",
+          "reason": "改动不涉及动效配方库、OpenMotion 样片与离线演示播放代码。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        }
+      ],
+      "screenshots": [
+        {
+          "caption": "AI 配乐替身与后处理验证参考 · 本机离线测试输出手机图",
+          "captured_at": "2026-11-25T09:08:45.287319+00:00",
+          "path": "agents-results/2026-11-25/Pho_R12-ai-music-generate/acceptance/shots/H-01-1.png",
+          "sha256": "b8391eb3847ae9cc6ef1618d5a3fa057f69b11a72a8ad678e17d0dff9fe4d73b"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-25/Pho_R12-ai-music-generate/acceptance-contract.md",
+  "contract_sha256": "6d4a3221307473f23c0b0967c14e87b6ed7c4a5a476742ffaabe91397dc95124",
+  "contract_version": "1",
+  "estimated_minutes": 3,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.music-ai-generate"
+  ],
+  "loop_name": "制作台 AI 生成配乐接进音乐库",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-25/Pho_R12-ai-music-generate/acceptance/machine/unit/runs/20261125T090845Z-local-c934a9/result.md",
+      "result_sha256": "5a21281a35236fbb7bff23788efbf22e599371a365f9aace5495ec1db1a7df79",
+      "run_id": "20261125T090845Z-local-c934a9",
+      "source_identity": "c934a944d04f7ebff4373c299ff96b0d071fdc4c",
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-25T09:09:15.623962Z",
+  "release_slice": "music-ai-generate",
+  "request_id": "2026-11-25-Pho_R12-ai-music-generate",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "c934a944d04f7ebff4373c299ff96b0d071fdc4c",
+  "summary": "离线专项 19 项与既有 4 组音乐测试 116 项全过（共 135 passed），运行时契约与音乐分析注册表通过；配好 WaveSpeed 或百炼密钥后实测生成 30 秒配乐验 H-01。",
+  "task_id": "2026-11-25-Pho_R12-ai-music-generate"
+}

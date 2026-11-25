@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-25T08:50:24.190070Z",
+  "generated_at": "2026-11-25T09:09:15.623962Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R12-ai-music-generate/checklist.md",
+      "estimated_minutes": 3,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R12-ai-music-generate/handoff.json",
+      "invalidation_keys": [
+        "photo.music-ai-generate"
+      ],
+      "latest_run": null,
+      "loop_name": "制作台 AI 生成配乐接进音乐库",
+      "ready_at": "2026-11-25T09:09:15.623962Z",
+      "release_slice": "music-ai-generate",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "离线专项 19 项与既有 4 组音乐测试 116 项全过（共 135 passed），运行时契约与音乐分析注册表通过；配好 WaveSpeed 或百炼密钥后实测生成 30 秒配乐验 H-01。",
+      "task_id": "2026-11-25-Pho_R12-ai-music-generate",
+      "workspace": "acceptance/human/2026-W48/2026-11-25-Pho_R12-ai-music-generate"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R13-avatar-clip/checklist.md",
@@ -410,5 +429,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "6258b39a408f572c6a4c3b7b11d59afd8ab8496d4144dce4622de52ee35f9b42"
+  "source_facts_sha256": "f6c96c225fd36c4bf05361d40e751e90d94119b173072a8bbf912c379925f56d"
 }

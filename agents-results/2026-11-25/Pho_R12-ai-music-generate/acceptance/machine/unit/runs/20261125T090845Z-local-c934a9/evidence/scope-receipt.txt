@@ -1,0 +1,21 @@
+base: 3fc330f63886787fd53840c2a7df4ac4d46d2d12
+verified_head: c934a944d04f7ebff4373c299ff96b0d071fdc4c
+tree: cfc8d84ddc252afedffe9dcdc04a25b7dc759ae5
+--- changed files (origin/main..c934a944d04f7ebff4373c299ff96b0d071fdc4c) ---
+A	acceptance/requests/2026-W48/2026-11-25-Pho_R12-ai-music-generate/request.json
+A	acceptance/requests/2026-W48/2026-11-25-Pho_R12-ai-music-generate/request.md
+A	agents-results/2026-11-25/Pho_R12-ai-music-generate-c1/acceptance/commit-evidence.json
+A	agents-results/2026-11-25/Pho_R12-ai-music-generate-c1/acceptance/unit/result.md
+M	schemas/music-track.schema.json
+A	scripts/generate_music.py
+M	scripts/import_music.py
+M	scripts/music_library/README.md
+A	scripts/music_library/ai_generate.py
+M	scripts/music_library/library.py
+A	tests/test_music_ai_generate.py
+--- untouched PASSED test blobs ---
+100644 blob c8a8bf69c386404c36031727980c9d720d19f8a6	tests/test_edit_tools_runtime.py
+100644 blob d37636fbc51472710c96e1427cf3e8b72bc290e8	tests/test_music_failure_message.py
+100644 blob 09d92654f9487f558ad9623ba54e817b823b2e82	tests/test_music_library.py
+100644 blob e2037a984186b3b0209fc043fef05514ba4ae9b6	tests/test_musicdl_engine.py
+100644 blob 923aa0c2d9861610aef7544ebe1bc0f529997d97	tests/test_r223_music_analysis.py
