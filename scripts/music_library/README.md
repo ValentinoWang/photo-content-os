@@ -74,6 +74,7 @@
 
 缓存、后处理与入库：
 
-- 按「服务商 + 模型 + 提示词 + 目标秒数 + BPM + 是否纯音乐」计算 SHA-256 请求摘要，缓存保存在 `library/music/.ai-generate/<摘要>/`（同时保留服务商返回的原始音频 `raw.<ext>` 和后处理成品 `processed.wav`）。相同参数再次运行直接复用缓存或返回「已在库里」，**不重复付费**；失败请求也会记录，不自动重试。
+- 按「服务商 + 模型 + 提示词 + 目标秒数 + BPM + 是否纯音乐」计算 SHA-256 请求摘要，缓存保存在 `library/music/.ai-generate/<摘要>/`（同时保留服务商返回的原始音频 `raw.<ext>` 和后处理成品 `processed.wav`）。相同参数再次运行直接复用缓存或返回「已在库里」，**不重复付费**。
+- 受理前失败（缺密钥、读不到密钥、`AccessDenied`/401/403、提交网络错误或超时）不写失败记录，排障后可直接重跑。只有服务商已受理（拿到任务号或已开始计费）之后才写 `pending` / `failed` 记录：`pending` 始终拦截并给出缓存目录与任务号供去服务商后台核对；`failed` 默认拦截不自动重试，人工确认后可加 `--retry-failed` 重新请求（旧失败记录改名 `record.failed-*.json` 留档，不删除）。
 - 后处理统一由 `ffmpeg` 完成：去除首尾静音（`-45 dB`）→ 裁切到目标秒数 → 淡入 `0.2` 秒、淡出 `2` 秒 → 两遍 `loudnorm` 归一到 `-16 LUFS`（口播垫乐压低到 `-24 ~ -28 LUFS` 留在混音阶段完成）。
 - 入库走 `MusicLibrary.import_generated(...)` 与现有 `_store`，`platform` 为 `ai_generated`，`platform_id` 为请求摘要；`track.json` 记录 `ai_generated: true` 以及服务商、模型、提示词、参数、请求号、生成时间，供发片环节提示创作者勾选「AI 生成」标识。

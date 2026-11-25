@@ -275,7 +275,18 @@ class MusicLibrary:
             return status, track
 
     @notify_import
-    def import_generated(self, provider, prompt, seconds, *, bpm=None, instrumental=True, title=None, **gen_kwargs):
+    def import_generated(
+        self,
+        provider,
+        prompt,
+        seconds,
+        *,
+        bpm=None,
+        instrumental=True,
+        title=None,
+        retry_failed=False,
+        **gen_kwargs,
+    ):
         from .ai_generate import PROVIDERS, generate_music, request_digest
 
         digest = request_digest(provider, prompt, seconds, bpm=bpm, instrumental=instrumental)
@@ -291,6 +302,7 @@ class MusicLibrary:
                 cache_root=self.root / '.ai-generate',
                 bpm=bpm,
                 instrumental=instrumental,
+                retry_failed=retry_failed,
                 **gen_kwargs,
             )
             generation = {

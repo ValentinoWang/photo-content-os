@@ -441,6 +441,7 @@ def _call_wavespeed(
     poll_interval: float,
     max_polls: int,
     base_url: str | None = None,
+    on_accepted=None,
 ) -> tuple[str, bytes, str, float | None]:
     # Official doc: https://wavespeed.ai/models/wavespeed-ai/ace-step-1.5/llms.txt
     submit_url = base_url or WAVESPEED_SUBMIT_URL
@@ -478,6 +479,9 @@ def _call_wavespeed(
     prediction_id = data.get('id')
     if not isinstance(prediction_id, str) or not prediction_id.strip():
         raise MusicError('WaveSpeed 响应缺少任务编号 data.id，未自动重试')
+    prediction_id = prediction_id.strip()
+    if on_accepted is not None:
+        on_accepted(prediction_id)
 
     poll_url = None
     urls_obj = data.get('urls')
@@ -597,6 +601,7 @@ def _call_bailian(
     max_polls: int,
     workspace_id: str | None = None,
     base_url: str | None = None,
+    on_accepted=None,
 ) -> tuple[str, bytes, str, float | None]:
     # Official doc: https://help.aliyun.com/zh/model-studio/fun-music-api
     submit_url = _bailian_submit_url(workspace_id=workspace_id, base_url=base_url)
@@ -646,6 +651,8 @@ def _call_bailian(
     direct_url = _extract_bailian_audio_url(output)
     if direct_url:
         req_id = request_id or str((output.get('audio') or {}).get('id') or 'bailian-sync')
+        if on_accepted is not None:
+            on_accepted(req_id)
         raw_bytes, ext = _download_audio(direct_url, http_call, '百炼 Fun-Music')
         return req_id, raw_bytes, ext, billed_seconds
 
@@ -654,9 +661,12 @@ def _call_bailian(
     if not isinstance(task_id, str) or not task_id.strip():
         detail = _extract_error_detail(body, raw_text)
         raise MusicError(f'百炼 Fun-Music 未返回音频地址或任务编号：{detail}')
+    task_id = task_id.strip()
+    if on_accepted is not None:
+        on_accepted(task_id)
 
     parsed_submit = urlsplit(submit_url)
-    task_url = f'{parsed_submit.scheme}://{parsed_submit.netloc}/api/v1/tasks/{task_id.strip()}'
+    task_url = f'{parsed_submit.scheme}://{parsed_submit.netloc}/api/v1/tasks/{task_id}'
     polls = 0
     while True:
         task_status = str(output.get('task_status') or '').strip().upper()
@@ -841,6 +851,36 @@ def postprocess_audio(raw_path: Path, output_path: Path, target_seconds: float) 
             raise MusicError('生成的音频后处理失败，未入库') from exc
 
 
+def _build_retry_command(provider: str, prompt: str, seconds: float, bpm: int | None, instrumental: bool) -> str:
+    parts = [
+        '.venv/bin/python',
+        'scripts/generate_music.py',
+        '--provider',
+        provider,
+        '--prompt',
+        json.dumps(prompt, ensure_ascii=False),
+        '--seconds',
+        f'{seconds:g}',
+    ]
+    if bpm is not None:
+        parts.extend(['--bpm', str(bpm)])
+    if not instrumental:
+        parts.append('--with-vocals')
+    parts.append('--retry-failed')
+    return ' '.join(parts)
+
+
+def _archive_failed_record(entry_dir: Path, record_path: Path) -> Path:
+    stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    candidate = entry_dir / f'record.failed-{stamp}.json'
+    suffix = 1
+    while candidate.exists():
+        candidate = entry_dir / f'record.failed-{stamp}-{suffix}.json'
+        suffix += 1
+    record_path.replace(candidate)
+    return candidate
+
+
 def generate_music(
     provider: str,
     prompt: str,
@@ -849,6 +889,7 @@ def generate_music(
     cache_root: Path,
     bpm: int | None = None,
     instrumental: bool = True,
+    retry_failed: bool = False,
     api_key: str | None = None,
     workspace_id: str | None = None,
     base_url: str | None = None,
@@ -873,6 +914,7 @@ def generate_music(
     cache_root.mkdir(parents=True, exist_ok=True, mode=0o700)
     entry_dir = cache_root / digest
     record_path = entry_dir / 'record.json'
+    archive_failed = False
 
     if record_path.exists():
         record = read_json(record_path, 'AI 生成缓存')
@@ -908,9 +950,19 @@ def generate_music(
                 from_cache=True,
             )
         if state == 'failed':
-            reason = record.get('reason') if isinstance(record.get('reason'), str) else '上次生成失败'
-            raise MusicError(f'{reason}（本地失败缓存，未再次请求）')
-        raise MusicError('这组参数已发起过生成请求但未完成，已停止重复请求以避免重复扣费；请检查缓存目录')
+            if not retry_failed:
+                reason = record.get('reason') if isinstance(record.get('reason'), str) else '上次已受理任务失败'
+                retry_cmd = _build_retry_command(provider, clean_prompt, target_seconds, clean_bpm, clean_instrumental)
+                raise MusicError(
+                    f'{reason}（已受理任务失败缓存，未自动重试；如确认需要重新发起请求，请运行：{retry_cmd}）'
+                )
+            archive_failed = True
+        else:
+            task_ref = record.get('request_id') or record.get('task_id') or '未记录'
+            raise MusicError(
+                f'这组参数已有已受理但未完成的任务（任务号：{task_ref}，缓存目录：{entry_dir}），'
+                '已拦截以避免重复扣费；请先到服务商后台查询该任务状态'
+            )
 
     resolved_key = (
         api_key.strip()
@@ -923,19 +975,27 @@ def generate_music(
         )
     )
 
-    entry_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+    if archive_failed and record_path.exists():
+        _archive_failed_record(entry_dir, record_path)
+
     params = {'seconds': target_seconds, 'bpm': clean_bpm, 'instrumental': clean_instrumental}
-    write_json(
-        record_path,
-        {
-            'state': 'attempted',
-            'provider': provider,
-            'model': model,
-            'prompt': clean_prompt,
-            'params': params,
-            'attempted_at': _now_iso(),
-        },
-    )
+    accepted = {'id': None}
+
+    def mark_accepted(task_ref: str) -> None:
+        accepted['id'] = task_ref
+        entry_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+        write_json(
+            record_path,
+            {
+                'state': 'pending',
+                'provider': provider,
+                'model': model,
+                'prompt': clean_prompt,
+                'params': params,
+                'request_id': task_ref,
+                'accepted_at': _now_iso(),
+            },
+        )
 
     try:
         if provider == 'wavespeed':
@@ -950,6 +1010,7 @@ def generate_music(
                 poll_interval=poll_interval,
                 max_polls=max_polls,
                 base_url=base_url,
+                on_accepted=mark_accepted,
             )
         else:
             request_id, raw_bytes, raw_ext, billed_seconds = _call_bailian(
@@ -964,8 +1025,10 @@ def generate_music(
                 max_polls=max_polls,
                 workspace_id=workspace_id,
                 base_url=base_url,
+                on_accepted=mark_accepted,
             )
 
+        entry_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
         raw_name = 'raw' + raw_ext
         raw_path = entry_dir / raw_name
         _write_bytes_atomic(raw_path, raw_bytes)
@@ -1008,31 +1071,37 @@ def generate_music(
             from_cache=False,
         )
     except MusicError as exc:
-        write_json(
-            record_path,
-            {
-                'state': 'failed',
-                'provider': provider,
-                'model': model,
-                'prompt': clean_prompt,
-                'params': params,
-                'reason': str(exc),
-                'failed_at': _now_iso(),
-            },
-        )
+        if accepted['id'] is not None:
+            entry_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+            write_json(
+                record_path,
+                {
+                    'state': 'failed',
+                    'provider': provider,
+                    'model': model,
+                    'prompt': clean_prompt,
+                    'params': params,
+                    'request_id': accepted['id'],
+                    'reason': str(exc),
+                    'failed_at': _now_iso(),
+                },
+            )
         raise
     except (OSError, ValueError, KeyError, TypeError) as exc:
         reason = 'AI 生成结果处理或本地写入失败，未完成入库'
-        write_json(
-            record_path,
-            {
-                'state': 'failed',
-                'provider': provider,
-                'model': model,
-                'prompt': clean_prompt,
-                'params': params,
-                'reason': reason,
-                'failed_at': _now_iso(),
-            },
-        )
+        if accepted['id'] is not None:
+            entry_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+            write_json(
+                record_path,
+                {
+                    'state': 'failed',
+                    'provider': provider,
+                    'model': model,
+                    'prompt': clean_prompt,
+                    'params': params,
+                    'request_id': accepted['id'],
+                    'reason': reason,
+                    'failed_at': _now_iso(),
+                },
+            )
         raise MusicError(reason) from exc

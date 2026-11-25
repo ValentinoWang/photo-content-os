@@ -23,6 +23,11 @@ def parser():
     cli.add_argument('--bpm', type=int, default=None, help='可选，每分钟节拍数（30–300），例如 100')
     cli.add_argument('--with-vocals', action='store_true', help='生成带人声歌曲；默认生成纯音乐')
     cli.add_argument('--title', default=None, help='可选，入库显示的曲目名称')
+    cli.add_argument(
+        '--retry-failed',
+        action='store_true',
+        help='对已受理但失败的同参数请求重新发起生成，并把旧失败记录改名留档；不跳过未完成（pending）任务',
+    )
     return cli
 
 
@@ -45,6 +50,7 @@ def _main(argv=None, *, library=None, gen_kwargs=None):
             bpm=args.bpm,
             instrumental=not args.with_vocals,
             title=args.title,
+            retry_failed=args.retry_failed,
             **extra,
         )
     except MusicError as exc:

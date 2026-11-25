@@ -263,14 +263,20 @@ def test_wavespeed_async_polling_then_success(tmp_path, short_wav_bytes):
     assert result.raw_path.is_file() and result.processed_path.is_file()
 
 
-def test_wavespeed_access_denied_records_failure_and_does_not_retry(tmp_path):
+def test_wavespeed_access_denied_does_not_cache_and_allows_retry_directly(tmp_path, short_wav_bytes):
     calls = []
+    allow = {'ok': False}
 
     def fake_http(method, url, *, headers=None, body=None, timeout=120):
         calls.append((method, url))
-        return _json_response(403, {'code': 'AccessDenied', 'message': 'invalid api key'})
+        if not allow['ok']:
+            return _json_response(403, {'code': 'AccessDenied', 'message': 'invalid api key'})
+        if method == 'POST':
+            return _json_response(200, {'code': 200, 'data': {'id': 'pred_ws_after_403', 'status': 'completed', 'outputs': ['https://cdn.wavespeed.test/after403.wav']}})
+        return _audio_response(short_wav_bytes)
 
     cache_root = tmp_path / '.ai-generate'
+    digest = request_digest('wavespeed', 'piano ambient', 10)
     with pytest.raises(MusicError, match='WaveSpeed 拒绝访问'):
         generate_music(
             'wavespeed',
@@ -282,19 +288,21 @@ def test_wavespeed_access_denied_records_failure_and_does_not_retry(tmp_path):
             platform='darwin',
         )
     assert len(calls) == 1
+    assert not (cache_root / digest / 'record.json').exists()
 
-    # Second call with same parameters hits failure cache and makes 0 HTTP calls.
-    with pytest.raises(MusicError, match='本地失败缓存，未再次请求'):
-        generate_music(
-            'wavespeed',
-            'piano ambient',
-            10,
-            cache_root=cache_root,
-            http_call=fake_http,
-            keychain_runner=_fake_keychain({'wavespeed-api-key': 'ws-bad-key'}),
-            platform='darwin',
-        )
-    assert len(calls) == 1
+    # After fixing key/account, re-running with the same parameters sends a new HTTP request directly.
+    allow['ok'] = True
+    result = generate_music(
+        'wavespeed',
+        'piano ambient',
+        10,
+        cache_root=cache_root,
+        http_call=fake_http,
+        keychain_runner=_fake_keychain({'wavespeed-api-key': 'ws-good-key'}),
+        platform='darwin',
+    )
+    assert result.request_id == 'pred_ws_after_403'
+    assert len(calls) == 3  # 1st failed POST + 2nd POST + audio GET
 
 
 def test_wavespeed_missing_key_makes_zero_requests_and_does_not_lock_cache(tmp_path, short_wav_bytes):
@@ -432,18 +440,28 @@ def test_bailian_async_polling_then_success(tmp_path, short_wav_bytes):
     assert len(calls) == 4
 
 
-def test_bailian_access_denied_explains_invite_preview_and_caches_failure(tmp_path):
+def test_bailian_access_denied_does_not_cache_and_allows_retry_directly(tmp_path, short_wav_bytes):
     calls = []
+    allow = {'ok': False}
 
     def fake_http(method, url, *, headers=None, body=None, timeout=120):
         calls.append((method, url))
-        return _json_response(403, {
-            'code': 'AccessDenied',
-            'message': 'Access to model fun-music-v1 is denied.',
-            'request_id': 'req-denied-1',
-        })
+        if not allow['ok']:
+            return _json_response(403, {
+                'code': 'AccessDenied',
+                'message': 'Access to model fun-music-v1 is denied.',
+                'request_id': 'req-denied-1',
+            })
+        if method == 'POST':
+            return _json_response(200, {
+                'request_id': 'req-granted-2',
+                'output': {'audio': {'url': 'https://dashscope-result-bj.oss-cn-beijing.aliyuncs.com/granted.wav'}},
+                'usage': {'duration': 45},
+            })
+        return _audio_response(short_wav_bytes)
 
     cache_root = tmp_path / '.ai-generate'
+    digest = request_digest('bailian', '古风笛子纯音乐', 15)
     with pytest.raises(MusicError, match='百炼账号还没开通 Fun-Music 邀测'):
         generate_music(
             'bailian',
@@ -455,18 +473,258 @@ def test_bailian_access_denied_explains_invite_preview_and_caches_failure(tmp_pa
             platform='darwin',
         )
     assert len(calls) == 1
+    assert not (cache_root / digest / 'record.json').exists()
 
-    with pytest.raises(MusicError, match='百炼账号还没开通 Fun-Music 邀测.*本地失败缓存'):
+    # After invite preview is enabled, running the same parameters again sends a new HTTP request.
+    allow['ok'] = True
+    result = generate_music(
+        'bailian',
+        '古风笛子纯音乐',
+        15,
+        cache_root=cache_root,
+        http_call=fake_http,
+        keychain_runner=_fake_keychain({'bailian-api-key': 'sk-bailian-test'}),
+        platform='darwin',
+    )
+    assert result.request_id == 'req-granted-2'
+    assert len(calls) == 3
+
+
+def test_submit_network_error_does_not_cache_and_allows_retry_directly(tmp_path, short_wav_bytes):
+    calls = []
+
+    def fake_http(method, url, *, headers=None, body=None, timeout=120):
+        calls.append((method, url))
+        if len(calls) == 1:
+            raise MusicError('AI 配乐接口请求超时，已停止自动重试')
+        if method == 'POST':
+            return _json_response(200, {'code': 200, 'data': {'id': 'pred_after_net', 'status': 'completed', 'outputs': ['https://cdn.wavespeed.test/net.wav']}})
+        return _audio_response(short_wav_bytes)
+
+    cache_root = tmp_path / '.ai-generate'
+    digest = request_digest('wavespeed', 'acoustic morning', 5)
+    with pytest.raises(MusicError, match='请求超时'):
         generate_music(
-            'bailian',
-            '古风笛子纯音乐',
-            15,
+            'wavespeed',
+            'acoustic morning',
+            5,
             cache_root=cache_root,
             http_call=fake_http,
-            keychain_runner=_fake_keychain({'bailian-api-key': 'sk-bailian-test'}),
+            keychain_runner=_fake_keychain({'wavespeed-api-key': 'ws-key'}),
             platform='darwin',
         )
     assert len(calls) == 1
+    assert not (cache_root / digest / 'record.json').exists()
+
+    result = generate_music(
+        'wavespeed',
+        'acoustic morning',
+        5,
+        cache_root=cache_root,
+        http_call=fake_http,
+        keychain_runner=_fake_keychain({'wavespeed-api-key': 'ws-key'}),
+        platform='darwin',
+    )
+    assert result.request_id == 'pred_after_net'
+    assert len(calls) == 3
+
+
+def test_post_acceptance_failure_blocks_without_flag_and_retry_failed_archives_old_record(tmp_path, short_wav_bytes, monkeypatch, capsys):
+    calls = []
+    attempt = {'n': 0}
+
+    def fake_http(method, url, *, headers=None, body=None, timeout=120):
+        calls.append((method, url))
+        if method == 'POST':
+            attempt['n'] += 1
+            if attempt['n'] == 1:
+                return _json_response(200, {
+                    'code': 200,
+                    'data': {
+                        'id': 'pred_accepted_then_failed',
+                        'status': 'created',
+                        'outputs': [],
+                        'urls': {'get': 'https://api.wavespeed.ai/api/v3/predictions/pred_accepted_then_failed/result'},
+                    },
+                })
+            return _json_response(200, {
+                'code': 200,
+                'data': {
+                    'id': 'pred_retry_ok',
+                    'status': 'completed',
+                    'outputs': ['https://cdn.wavespeed.test/retry-ok.wav'],
+                },
+            })
+        if url.endswith('/result'):
+            return _json_response(200, {
+                'code': 200,
+                'data': {'id': 'pred_accepted_then_failed', 'status': 'failed', 'error': 'upstream render crashed'},
+            })
+        assert url == 'https://cdn.wavespeed.test/retry-ok.wav'
+        return _audio_response(short_wav_bytes)
+
+    monkeypatch.setenv('LOCAL_MEDIA_ROOT', str(tmp_path))
+    digest = request_digest('wavespeed', 'cinematic cello', 5)
+    entry_dir = tmp_path / 'library/music/.ai-generate' / digest
+
+    # 1st run: accepted by WaveSpeed, then failed during polling -> cached as failed.
+    rc1 = generate_cli.main(
+        ['--provider', 'wavespeed', '--prompt', 'cinematic cello', '--seconds', '5'],
+        gen_kwargs={
+            'http_call': fake_http,
+            'sleep': lambda _: None,
+            'keychain_runner': _fake_keychain({'wavespeed-api-key': 'ws-key'}),
+            'platform': 'darwin',
+        },
+    )
+    out1 = capsys.readouterr().out
+    assert rc1 == 1 and 'upstream render crashed' in out1
+    assert len(calls) == 2  # POST + poll GET
+    failed_record = json.loads((entry_dir / 'record.json').read_text(encoding='utf-8'))
+    assert failed_record['state'] == 'failed'
+    assert failed_record['request_id'] == 'pred_accepted_then_failed'
+
+    # 2nd run without --retry-failed: blocked with 0 HTTP calls, tells user the --retry-failed command.
+    rc2 = generate_cli.main(
+        ['--provider', 'wavespeed', '--prompt', 'cinematic cello', '--seconds', '5'],
+        gen_kwargs={
+            'http_call': fake_http,
+            'sleep': lambda _: None,
+            'keychain_runner': _fake_keychain({'wavespeed-api-key': 'ws-key'}),
+            'platform': 'darwin',
+        },
+    )
+    out2 = capsys.readouterr().out
+    assert rc2 == 1
+    assert '--retry-failed' in out2
+    assert 'generate_music.py' in out2
+    assert len(calls) == 2  # zero additional requests
+
+    # 3rd run WITH --retry-failed: archives old failed record (renamed, not deleted) and sends a new request.
+    rc3 = generate_cli.main(
+        ['--provider', 'wavespeed', '--prompt', 'cinematic cello', '--seconds', '5', '--retry-failed'],
+        gen_kwargs={
+            'http_call': fake_http,
+            'sleep': lambda _: None,
+            'keychain_runner': _fake_keychain({'wavespeed-api-key': 'ws-key'}),
+            'platform': 'darwin',
+        },
+    )
+    out3 = capsys.readouterr().out
+    assert rc3 == 0 and '已入库' in out3
+    assert len(calls) == 4  # + POST + audio GET
+    archived = sorted(entry_dir.glob('record.failed-*.json'))
+    assert len(archived) == 1
+    archived_data = json.loads(archived[0].read_text(encoding='utf-8'))
+    assert archived_data['state'] == 'failed'
+    assert archived_data['request_id'] == 'pred_accepted_then_failed'
+    current_record = json.loads((entry_dir / 'record.json').read_text(encoding='utf-8'))
+    assert current_record['state'] == 'complete'
+    assert current_record['request_id'] == 'pred_retry_ok'
+
+
+def test_bailian_post_acceptance_failure_caches_and_retry_failed_archives(tmp_path, short_wav_bytes):
+    calls = []
+    attempt = {'n': 0}
+
+    def fake_http(method, url, *, headers=None, body=None, timeout=120):
+        calls.append((method, url))
+        if method == 'POST':
+            attempt['n'] += 1
+            if attempt['n'] == 1:
+                return _json_response(200, {'request_id': 'req-b-sub', 'output': {'task_id': 'task-b-fail', 'task_status': 'PENDING'}})
+            return _json_response(200, {
+                'request_id': 'req-b-ok',
+                'output': {'audio': {'url': 'https://dashscope-result-bj.oss-cn-beijing.aliyuncs.com/b-ok.wav'}},
+                'usage': {'duration': 30},
+            })
+        if '/api/v1/tasks/task-b-fail' in url:
+            return _json_response(200, {'request_id': 'req-b-poll', 'output': {'task_id': 'task-b-fail', 'task_status': 'FAILED', 'message': 'synthesis failed'}})
+        return _audio_response(short_wav_bytes)
+
+    cache_root = tmp_path / '.ai-generate'
+    digest = request_digest('bailian', '轻柔大提琴', 5)
+    entry_dir = cache_root / digest
+
+    with pytest.raises(MusicError, match='synthesis failed'):
+        generate_music(
+            'bailian',
+            '轻柔大提琴',
+            5,
+            cache_root=cache_root,
+            http_call=fake_http,
+            sleep=lambda _: None,
+            keychain_runner=_fake_keychain({'bailian-api-key': 'sk-b'}),
+            platform='darwin',
+        )
+    assert len(calls) == 2
+
+    with pytest.raises(MusicError, match='--retry-failed'):
+        generate_music(
+            'bailian',
+            '轻柔大提琴',
+            5,
+            cache_root=cache_root,
+            http_call=fake_http,
+            sleep=lambda _: None,
+            keychain_runner=_fake_keychain({'bailian-api-key': 'sk-b'}),
+            platform='darwin',
+        )
+    assert len(calls) == 2
+
+    res = generate_music(
+        'bailian',
+        '轻柔大提琴',
+        5,
+        cache_root=cache_root,
+        retry_failed=True,
+        http_call=fake_http,
+        sleep=lambda _: None,
+        keychain_runner=_fake_keychain({'bailian-api-key': 'sk-b'}),
+        platform='darwin',
+    )
+    assert res.request_id == 'req-b-ok'
+    assert len(calls) == 4
+    archived = list(entry_dir.glob('record.failed-*.json'))
+    assert len(archived) == 1
+
+
+def test_pending_state_blocks_even_with_retry_failed_and_reports_cache_dir_and_task_id(tmp_path):
+    cache_root = tmp_path / '.ai-generate'
+    digest = request_digest('wavespeed', 'ambient rain', 10)
+    entry_dir = cache_root / digest
+    entry_dir.mkdir(parents=True)
+    (entry_dir / 'record.json').write_text(
+        json.dumps({
+            'state': 'pending',
+            'provider': 'wavespeed',
+            'model': 'wavespeed-ai/ace-step-1.5',
+            'prompt': 'ambient rain',
+            'params': {'seconds': 10.0, 'bpm': None, 'instrumental': True},
+            'request_id': 'pred_stuck_42',
+            'accepted_at': '2026-11-25T08:00:00+00:00',
+        }, ensure_ascii=False),
+        encoding='utf-8',
+    )
+
+    def forbidden_http(*args, **kwargs):
+        raise AssertionError('Pending record must not send HTTP requests')
+
+    for retry_flag in (False, True):
+        with pytest.raises(MusicError) as exc_info:
+            generate_music(
+                'wavespeed',
+                'ambient rain',
+                10,
+                cache_root=cache_root,
+                retry_failed=retry_flag,
+                http_call=forbidden_http,
+                keychain_runner=_fake_keychain({'wavespeed-api-key': 'ws-key'}),
+                platform='darwin',
+            )
+        msg = str(exc_info.value)
+        assert str(entry_dir) in msg
+        assert 'pred_stuck_42' in msg
 
 
 def test_bailian_missing_key_makes_zero_requests(tmp_path):
