@@ -1,0 +1,110 @@
+{
+  "baseline": {
+    "base": "5d76755c07bac007ea03d7833d1d1a3f59516fa0",
+    "branch": "main",
+    "head": "05b10524014c2106915393db14293b3f5a5bad18",
+    "tree": "c3342ef444f5b7b3f25d5d2a2c6fb7ffa414d2bc"
+  },
+  "binding_sha256": "7d5981700700d074c881670d440a73caf3fa1cb281799bee3844c48564ae017c",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "aaa121c3ae9a6aa2b46c572c4c9fe49a220508a104506df95927b479696b03f5",
+  "claims": [
+    {
+      "claim_key": "photo.dreamverse-shot-controls",
+      "item": "H-01",
+      "no_screenshot_reason": "真实成片视频只能在用户本人设备上播放并与首次跑道成片对照，媒体文件留在仓库外本机证据目录不入库。",
+      "open_route": "note:在本机证据目录对照关闭改写后的空跑道成片与首次跑道成片",
+      "relations": [
+        {
+          "reason": "Pho_R11 验收 Seedance 选型与方舟真跑续跑；本卡仅新增万相 prompt_extend 与默认去标 negative_prompt 并写明 Seedance 不支持，验收主题独立。",
+          "target": "2026-11-24-Pho_R11-seedance-provider/H-01",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261125T091539Z-local-unit-05b105",
+          "reason": "改动限于 DreamVerse 插件、桥接与新增单测，OpenMotion 配方库和渲染代码无源码差异。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091539Z-local-unit-05b105",
+          "reason": "改动限于 DreamVerse 镜头控制，剪辑工具安装入口与版本诊断无源码差异。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091539Z-local-unit-05b105",
+          "reason": "改动限于 DreamVerse 镜头控制，OpenChatCut 候选生成及素材处理无源码差异。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091539Z-local-unit-05b105",
+          "reason": "改动限于 DreamVerse 镜头控制，音乐标签生成与拍点分析无源码差异。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091539Z-local-unit-05b105",
+          "reason": "改动不包含音乐播放、拍点显示与 Studio 前端源码。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091539Z-local-unit-05b105",
+          "reason": "改动不包含音乐库自动分析、分面筛选及相关测试。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        }
+      ],
+      "screenshots": [
+        {
+          "caption": "万相单镜控制验证参考 · 测试与实测账本摘要渲染",
+          "captured_at": "2026-11-25T09:15:40.317853+00:00",
+          "path": "agents-results/2026-11-25/Pho_R15-dreamverse-shot-controls/acceptance/shots/H-01-1.png",
+          "sha256": "66d17ce5983b008c249397f927c6241044bd38b41e108c7fbbd92d9ea4837e2f"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.dreamverse",
+        "photo.tests-scripts"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-25/Pho_R15-dreamverse-shot-controls/acceptance-contract.md",
+  "contract_sha256": "c827d3129a3a5102f1e03a2706a7fe48be75bf6eae1b291680d3a0a78030966a",
+  "contract_version": "1",
+  "estimated_minutes": 3,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.dreamverse-shot-controls"
+  ],
+  "loop_name": "万相镜头支持关闭提示词改写与默认去标负面词",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-25/Pho_R15-dreamverse-shot-controls/acceptance/machine/unit/runs/20261125T091539Z-local-unit-05b105/result.md",
+      "result_sha256": "52e199e5f41dcea269f56b1c01c748bbc719de3d2cb1054a040d034dac6b8a88",
+      "run_id": "20261125T091539Z-local-unit-05b105",
+      "source_identity": "05b10524014c2106915393db14293b3f5a5bad18",
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.dreamverse",
+        "photo.tests-scripts"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-25T09:15:40.596630Z",
+  "release_slice": "dreamverse-shot-controls",
+  "request_id": "2026-11-25-Pho_R15-dreamverse-shot-controls",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "05b10524014c2106915393db14293b3f5a5bad18",
+  "summary": "离线测试 15 passed 与运行时契约通过；已真跑单镜（prompt_extend=false + 默认去标负面词，云任务 858eedc5-239d-44ce-98e2-6812e7dab24f），三帧无人无标识，成片留待 H-01 对照审看。",
+  "task_id": "2026-11-25-Pho_R15-dreamverse-shot-controls"
+}

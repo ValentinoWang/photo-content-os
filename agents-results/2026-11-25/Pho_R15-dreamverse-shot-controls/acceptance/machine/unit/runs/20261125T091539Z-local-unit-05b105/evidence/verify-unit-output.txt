@@ -1,0 +1,23 @@
+=== DreamVerse unit tests (local fallback: photo-dev unreachable, heavy procs = 0) ===
+Command: pytest -q tests/test_dreamverse_bridge.py tests/test_seedance_provider.py tests/test_dreamverse_shot_controls.py
+...............                                                          [100%]
+15 passed in 5.11s
+Exit code: 0
+
+=== Runtime contract check ===
+Command: bash scripts/check_runtime_contract.sh
+Repository safety check passed.
+python=3.12.14
+compileall=ok
+packages=ok
+encoding_contract=ok
+Runtime contract check passed.
+Exit code: 0
+
+=== Real single-shot verification (prompt_extend=false, default negative_prompt) ===
+Evidence root (outside Git): ~/.photo-content-os/evidence/dreamverse-bridge-2026-11-25-controls/
+Shot: empty_track ("清晨空跑道慢推，画面里没有人", wan2.6-t2v, 5s, 9:16, 720p, prompt_extend=false, negative_prompt="品牌标识、logo、商标、水印、文字")
+Cloud task_id: 858eedc5-239d-44ce-98e2-6812e7dab24f
+Submission slots: 1 (submission-1.json, HTTP 200, submitted)
+Elapsed: 111.85s | billed_video_seconds: 5 (~3.0 CNY) | 720x1280 h264 5.007s 150 frames
+3-frame visual check: no people, no logos/trademarks/watermarks/text across first/mid/last frames.

@@ -1,0 +1,19 @@
+base: 5d76755c07bac007ea03d7833d1d1a3f59516fa0
+verified_head: 05b10524014c2106915393db14293b3f5a5bad18
+tree: c3342ef444f5b7b3f25d5d2a2c6fb7ffa414d2bc
+changed_paths:
+- acceptance/requests/2026-W48/2026-11-25-Pho_R15-dreamverse-shot-controls/request.json
+- acceptance/requests/2026-W48/2026-11-25-Pho_R15-dreamverse-shot-controls/request.md
+- integrations/dreamverse/README.md
+- integrations/dreamverse/seedance-provider/index.ts
+- integrations/dreamverse/wanxiang-provider/index.ts
+- integrations/dreamverse/wanxiang-provider/model-facts.json
+- scripts/aigc/dreamverse_bridge.py
+- tests/test_dreamverse_shot_controls.py
+protected_tests_unchanged:
+- tests/test_dreamverse_bridge.py (sha256 unchanged from origin/main)
+- tests/test_seedance_provider.py (sha256 unchanged from origin/main)
+unaffected_passed_cards:
+- 2026-11-24-Pho_R08-openmotion-recipes/H-01 (no diff to OpenMotion recipes or render code)
+- 2026-10-19-R207-photo-edit-tools-in-repo/H-01, H-02 (no diff to edit tools or OpenChatCut)
+- 2026-10-20-R223-photo-music-beat-map/H-01, H-02, H-03 (no diff to music library, beat analysis, or Studio frontend)

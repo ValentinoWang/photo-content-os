@@ -1,0 +1,9 @@
+=== Pho_R10 Real 2-Shot + Mid-Shot-2 Interrupt & Resume Verification (2026-11-25) ===
+Bailian account recharged on 2026-11-25; verified against unchanged Pho_R10 Wanxiang bridge on origin/main (602e7a2).
+Evidence root (outside Git): ~/.photo-content-os/evidence/dreamverse-bridge-2026-11-25/
+Catalog check (H-01): wan2.6-t2v registered, duration 2-15s, 5 aspect ratios, 720p/1080p (exit 0).
+Shot 1 (track, "清晨空跑道慢推", 5s 9:16 720p): task_id=2dc84632-8d49-4c5f-9945-05483ba83eac, elapsed=37.48s, billed_video_seconds=5, 720x1280 h264 5.007s 150 frames.
+Shot 2 (blocks, "起跑器特写", 5s 9:16 720p): task_id=3808ff33-a72e-4163-861b-79b4dc4f0604, interrupted with SIGINT while cloud_status=RUNNING (bridge exit 130, ledger-at-interrupt.json recorded status=running & same task_id), DreamVerse service stopped and restarted, resumed without --confirm (bridge exit 0, track: already completed / blocks: completed), final task_id identical (3808ff33-a72e-4163-861b-79b4dc4f0604), elapsed=88.76s, billed_video_seconds=5, 720x1280 h264 5.007s 150 frames.
+Receipts: exactly 2 submission slots (submission-1.json, submission-2.json), both HTTP 200 submitted.
+Total elapsed: 126.45s, total billed_video_seconds: 10 (~6.0 CNY at 0.6 CNY/s).
+Human verdict note: this machine run supplements real-run evidence only and does NOT modify or substitute human sign-off for Pho_R10 H-01 / H-02.
