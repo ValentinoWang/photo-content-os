@@ -169,6 +169,8 @@ export function apply(ctx: Context, config: Settings) {
     }
 
     try {
+      // https://docs.volcengine.com/docs/ark/create-video-generation-task-api?lang=zh&redirect=1
+      // Official Seedance Ark API does not expose prompt_extend or negative_prompt fields.
       const response = await fetch(new URL('/api/v3/contents/generations/tasks', origin), {
         method: 'POST',
         headers: { Authorization: 'Bearer ' + credential, 'Content-Type': 'application/json' },

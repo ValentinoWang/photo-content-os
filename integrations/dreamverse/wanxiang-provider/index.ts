@@ -22,12 +22,25 @@ export const Config = z.object({
   maxSubmissions: z.natural().min(1),
 })
 
+// Wan 2.6 text-to-video API reference:
+// https://help.aliyun.com/zh/model-studio/legacy-wan-text-to-video-api-reference
+// - input.negative_prompt: optional string, <= 500 chars (Chinese or English)
+// - parameters.prompt_extend: optional boolean (default true)
 const facts = JSON.parse(readFileSync(new URL('./model-facts.json', import.meta.url), 'utf8')) as
-  RenderModelFacts & { frameSizes: Record<string, Record<string, [number, number]>> }
+  RenderModelFacts & {
+    frameSizes: Record<string, Record<string, [number, number]>>
+    defaultPromptExtend?: boolean
+    defaultNegativePrompt?: string
+    maxNegativePromptChars?: number
+  }
+const defaultPromptExtend = facts.defaultPromptExtend ?? true
+const defaultNegativePrompt = facts.defaultNegativePrompt ?? '品牌标识、logo、商标、水印、文字'
+const maxNegativePromptChars = facts.maxNegativePromptChars ?? 500
 const promptSkill = readFileSync(new URL('./skills/wanxiang-shot.md', import.meta.url), 'utf8')
 const keyPattern = /^[a-f0-9]{64}$/
 const idPattern = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/
 const cloudStatuses = new Set(['PENDING', 'RUNNING', 'SUCCEEDED', 'FAILED', 'CANCELED', 'UNKNOWN', 'SUSPENDED'])
+const allowedExtraKeys = new Set(['bridge_confirmation', 'prompt_extend', 'negative_prompt'])
 
 interface Shot {
   project: string
@@ -37,7 +50,13 @@ interface Shot {
   seconds: number
   aspect_ratio: string
   resolution: string
+  prompt_extend?: boolean
+  negative_prompt?: string
 }
+type ShotSpec = Pick<
+  Shot,
+  'model' | 'seconds' | 'aspect_ratio' | 'resolution' | 'prompt' | 'prompt_extend' | 'negative_prompt'
+>
 interface Receipt {
   status: 'submitting' | 'submitted' | 'unknown' | 'rejected'
   spec_hash: string
@@ -51,18 +70,28 @@ interface WanResponse {
   usage?: { duration?: number; output_video_duration?: number; video_duration?: number }
 }
 
-function validSpec(shot: Shot): boolean {
+function validSpec(shot: ShotSpec): boolean {
+  const promptExtendOk = shot.prompt_extend === undefined || typeof shot.prompt_extend === 'boolean'
+  const negativePromptOk = shot.negative_prompt === undefined
+    || (typeof shot.negative_prompt === 'string' && [...shot.negative_prompt].length <= maxNegativePromptChars)
   return shot.model === facts.modelId && typeof shot.prompt === 'string' && shot.prompt.trim() !== ''
     && [...shot.prompt].length <= 1500 && facts.durationsSec?.includes(shot.seconds) === true
     && facts.aspectRatios.includes(shot.aspect_ratio) && facts.resolutions.includes(shot.resolution)
+    && promptExtendOk && negativePromptOk
 }
 
 function digest(parts: unknown[]): string {
   return createHash('sha256').update(JSON.stringify(parts)).digest('hex')
 }
 
-function specHash(shot: Pick<Shot, 'model' | 'seconds' | 'aspect_ratio' | 'resolution' | 'prompt'>): string {
-  return digest([shot.model, shot.seconds, shot.aspect_ratio, shot.resolution, shot.prompt])
+function specHash(shot: ShotSpec): string {
+  const promptExtend = shot.prompt_extend ?? defaultPromptExtend
+  const negativePrompt = shot.negative_prompt ?? defaultNegativePrompt
+  const parts: unknown[] = [shot.model, shot.seconds, shot.aspect_ratio, shot.resolution, shot.prompt]
+  if (promptExtend !== defaultPromptExtend || negativePrompt !== defaultNegativePrompt) {
+    parts.push(promptExtend, negativePrompt)
+  }
+  return digest(parts)
 }
 
 function shotSeed(key: string): number {
@@ -97,10 +126,11 @@ function providerKey(): string {
 
 export function apply(ctx: Context, config: Settings) {
   const origin = new URL(config.baseUrl)
-  if (origin.protocol !== 'https:' || origin.username || origin.password
-      || origin.pathname !== '/' || origin.search || origin.hash
-      || !origin.hostname.endsWith('.aliyuncs.com')) {
-    throw new Error('Configure an HTTPS Aliyun DashScope origin.')
+  const dashscope = origin.protocol === 'https:' && origin.hostname.endsWith('.aliyuncs.com')
+  const loopback = origin.protocol === 'http:' && origin.hostname === '127.0.0.1' && origin.port !== ''
+  if ((!dashscope && !loopback) || origin.username || origin.password
+      || origin.pathname !== '/' || origin.search || origin.hash) {
+    throw new Error('Configure an HTTPS Aliyun DashScope origin or an explicit loopback test port.')
   }
   const receiptPath = (key: string) => join(config.stateDir, key + '.json')
   const readReceipt = async (key: string): Promise<Receipt | undefined> => {
@@ -169,17 +199,23 @@ export function apply(ctx: Context, config: Settings) {
     }
 
     const size = facts.frameSizes[shot.aspect_ratio][shot.resolution].join('*')
+    // https://help.aliyun.com/zh/model-studio/legacy-wan-text-to-video-api-reference
+    // input.negative_prompt: optional string (<= 500 chars); parameters.prompt_extend: optional boolean (default true);
+    // parameters.shot_type only applies when prompt_extend is true.
+    const promptExtend = shot.prompt_extend ?? defaultPromptExtend
+    const negativePrompt = shot.negative_prompt ?? defaultNegativePrompt
+    const input: { prompt: string; negative_prompt?: string } = { prompt: shot.prompt }
+    if (negativePrompt !== '') input.negative_prompt = negativePrompt
+    const parameters: Record<string, unknown> = {
+      size, duration: shot.seconds, seed: shotSeed(key),
+      prompt_extend: promptExtend, watermark: false,
+    }
+    if (promptExtend) parameters.shot_type = 'single'
     try {
       const response = await fetch(new URL('/api/v1/services/aigc/video-generation/video-synthesis', origin), {
         method: 'POST',
         headers: { Authorization: 'Bearer ' + credential, 'Content-Type': 'application/json', 'X-DashScope-Async': 'enable' },
-        body: JSON.stringify({
-          model: shot.model, input: { prompt: shot.prompt },
-          parameters: {
-            size, duration: shot.seconds, seed: shotSeed(key),
-            shot_type: 'single', prompt_extend: true, watermark: false,
-          },
-        }),
+        body: JSON.stringify({ model: shot.model, input, parameters }),
         signal: requestSignal(),
         redirect: 'error',
       })
@@ -237,9 +273,11 @@ export function apply(ctx: Context, config: Settings) {
     }
   })
 
-  const requestSpec = (request: RenderRequest) => ({
+  const requestSpec = (request: RenderRequest): ShotSpec => ({
     model: facts.modelId, prompt: request.prompt, seconds: request.durationSec ?? 0,
     aspect_ratio: request.aspectRatio ?? '', resolution: request.resolution ?? '',
+    ...(request.extra.prompt_extend !== undefined ? { prompt_extend: request.extra.prompt_extend as boolean } : {}),
+    ...(request.extra.negative_prompt !== undefined ? { negative_prompt: request.extra.negative_prompt as string } : {}),
   })
   const entry: ModelEntry<'t2v'> = {
     modality: 'video', task: 't2v', provider: 'wanxiang', model: facts.modelId,
@@ -251,16 +289,21 @@ export function apply(ctx: Context, config: Settings) {
         duration_sec: { min: facts.minDurationSec, max: facts.maxDurationSec },
         aspect_ratios: facts.aspectRatios, resolutions: facts.resolutions,
         inputs: { reference: { min: 0, max: 0 }, first_frame: { min: 0, max: 0 }, last_frame: { min: 0, max: 0 } },
-        extra: { bridge_confirmation: { type: 'string', description: 'Confirmation key issued by the production desk for this shot.' } },
+        extra: {
+          bridge_confirmation: { type: 'string', description: 'Confirmation key issued by the production desk for this shot.' },
+          prompt_extend: { type: 'boolean', description: 'Enable Wan 2.6 LLM prompt rewriting (default true).' },
+          negative_prompt: { type: 'string', description: 'Elements to exclude from the Wan 2.6 shot (up to 500 characters).' },
+        },
         cancellation: 'monitoring_only',
       }
     },
     async validateGenerationRequest(request: RenderRequest) {
       const errors: string[] = []
       if (request.references.length || request.firstFrame || request.lastFrame) errors.push('Wan 2.6 uses a text prompt without reference or frame assets.')
-      if (!validSpec(requestSpec(request))) errors.push('Choose a listed duration, aspect ratio and resolution, and supply a prompt of 1–1500 characters.')
+      if (!validSpec(requestSpec(request))) errors.push('Choose a listed duration, aspect ratio and resolution, a prompt of 1–1500 characters, a boolean prompt_extend and a negative_prompt of up to 500 characters.')
       const key = request.extra.bridge_confirmation
-      if (Object.keys(request.extra).length !== 1 || typeof key !== 'string' || !keyPattern.test(key)) {
+      const unknownExtra = Object.keys(request.extra).some(name => !allowedExtraKeys.has(name))
+      if (unknownExtra || typeof key !== 'string' || !keyPattern.test(key)) {
         errors.push('Use the production desk confirmation key for this shot.')
       } else if (request.seed !== shotSeed(key)) {
         errors.push('Use the seed assigned by the production desk for this shot.')

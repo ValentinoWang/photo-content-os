@@ -23,6 +23,12 @@ from uuid import uuid4
 PROVIDERS_ROOT = Path(__file__).resolve().parents[2] / "integrations/dreamverse"
 DEFAULT_PROVIDER = "wanxiang"
 PROVIDERS = ("wanxiang", "seedance")
+# Wan 2.6 API reference: https://help.aliyun.com/zh/model-studio/legacy-wan-text-to-video-api-reference
+# - parameters.prompt_extend: optional boolean, default true
+# - input.negative_prompt: optional string, <= 500 characters
+DEFAULT_WAN_PROMPT_EXTEND = True
+DEFAULT_WAN_NEGATIVE_PROMPT = "品牌标识、logo、商标、水印、文字"
+MAX_WAN_NEGATIVE_PROMPT_CHARS = 500
 SHOT_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,79}", re.ASCII)
 TASK_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}", re.ASCII)
 DIGEST = re.compile(r"[a-f0-9]{64}", re.ASCII)
@@ -166,16 +172,48 @@ def read_shots(path):
             or (facts.get("resolutions") and resolution not in facts["resolutions"])
         ):
             raise BridgeError(f"{shot_id}: check the prompt, model, duration, aspect ratio and resolution for {provider}.")
-        normalized[shot_id] = {
+        normalized_shot = {
             "provider": provider,
             "prompt": prompt, "model": model, "seconds": seconds, "aspect_ratio": ratio, "resolution": resolution,
         }
+        if provider == DEFAULT_PROVIDER:
+            default_prompt_extend = facts.get("defaultPromptExtend", DEFAULT_WAN_PROMPT_EXTEND)
+            default_negative_prompt = facts.get("defaultNegativePrompt", DEFAULT_WAN_NEGATIVE_PROMPT)
+            max_negative_chars = facts.get("maxNegativePromptChars", MAX_WAN_NEGATIVE_PROMPT_CHARS)
+            prompt_extend = raw.get("prompt_extend", default_prompt_extend)
+            negative_prompt = raw.get("negative_prompt", default_negative_prompt)
+            if (
+                type(prompt_extend) is not bool
+                or not isinstance(negative_prompt, str)
+                or len(negative_prompt) > max_negative_chars
+            ):
+                raise BridgeError(
+                    f"{shot_id}: check prompt_extend (boolean) and negative_prompt (string, <= {max_negative_chars} chars) for {provider}."
+                )
+            normalized_shot["prompt_extend"] = prompt_extend
+            normalized_shot["negative_prompt"] = negative_prompt
+        elif "prompt_extend" in raw or "negative_prompt" in raw:
+            raise BridgeError(f"{shot_id}: {provider} does not support prompt_extend or negative_prompt.")
+        normalized[shot_id] = normalized_shot
     return normalized
+
+
+def wan_has_custom_controls(spec):
+    return (
+        spec["provider"] == DEFAULT_PROVIDER
+        and (
+            spec.get("prompt_extend", DEFAULT_WAN_PROMPT_EXTEND) != DEFAULT_WAN_PROMPT_EXTEND
+            or spec.get("negative_prompt", DEFAULT_WAN_NEGATIVE_PROMPT) != DEFAULT_WAN_NEGATIVE_PROMPT
+        )
+    )
 
 
 def specification_hash(spec, *, legacy=False):
     fields = ("model", "seconds", "aspect_ratio", "resolution", "prompt")
-    return digest([spec[k] for k in (fields if legacy else ("provider", *fields))])
+    values = [spec[k] for k in (fields if legacy else ("provider", *fields))]
+    if wan_has_custom_controls(spec):
+        values.extend((spec["prompt_extend"], spec["negative_prompt"]))
+    return digest(values)
 
 
 def matches_spec(row, spec):
@@ -227,6 +265,10 @@ class Bridge:
         return self.ledger["dreamverse_project_id"]
 
     def operation(self, project, key, provider_key, spec):
+        extra = {"bridge_confirmation": provider_key}
+        if spec["provider"] == DEFAULT_PROVIDER:
+            extra["prompt_extend"] = spec["prompt_extend"]
+            extra["negative_prompt"] = spec["negative_prompt"]
         return {
             "project": project, "operation": "shot.render", "surface": "asset_pool", "inputs": [],
             "intent": f"desk-bridge:{key}",
@@ -234,7 +276,7 @@ class Bridge:
                 "modality": "video", "task": "t2v", "provider": spec["provider"], "model": spec["model"],
                 "prompt": spec["prompt"], "duration_sec": spec["seconds"], "aspect_ratio": spec["aspect_ratio"],
                 "resolution": spec["resolution"], "seed": int(provider_key[:7], 16),
-                "extra": {"bridge_confirmation": provider_key},
+                "extra": extra,
             },
         }
 
@@ -277,6 +319,9 @@ class Bridge:
                     "dreamverse_video_asset_id": None, "dreamverse_last_frame_asset_id": None,
                     "timeline_clip_id": None, "mp4_path": None, "last_frame_path": None,
                 }
+                if provider == DEFAULT_PROVIDER:
+                    row["prompt_extend"] = spec["prompt_extend"]
+                    row["negative_prompt"] = spec["negative_prompt"]
                 staged[shot_id] = row
                 self.save()
                 try:
