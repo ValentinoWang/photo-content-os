@@ -1,0 +1,16 @@
+{
+  "source_commit": "08eff20cead0f2f083f9dbabd266d206542c8e6c",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-25/Pho_R13-avatar-clip/acceptance/unit/result.md",
+      "result_sha256": "60c9221b0704591fe51ff2f5377b0a0a73d1f3f58aafc5503f46927cbcc2cc47",
+      "source_identity": "08eff20cead0f2f083f9dbabd266d206542c8e6c",
+      "layer": "machine/unit",
+      "run_id": "pho-r13-unit-1"
+    }
+  ],
+  "patch_id": "8867bb8cd48080993db0d08a6b27114765df3855",
+  "preimage": {
+    "docs/tasks/pho-r13-avatar/TASK.md": ""
+  }
+}
