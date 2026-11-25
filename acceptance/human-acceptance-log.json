@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-25T09:09:15.623962Z",
+  "generated_at": "2026-11-25T09:12:55.086342Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R14-concat-real-selfie/checklist.md",
+      "estimated_minutes": 3,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R14-concat-real-selfie/handoff.json",
+      "invalidation_keys": [
+        "photo.concat-real-selfie"
+      ],
+      "latest_run": null,
+      "loop_name": "Concat 剪辑出口用真实自拍口播跑通",
+      "ready_at": "2026-11-25T09:12:55.086342Z",
+      "release_slice": "concat-real-selfie",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "补齐转写转源字幕命令行并修复旋转竖屏画幅；69 项单测、运行契约与两段真实自拍真机导出均通过，待任务委托人复核成片与工程。",
+      "task_id": "2026-11-25-Pho_R14-concat-real-selfie",
+      "workspace": "acceptance/human/2026-W48/2026-11-25-Pho_R14-concat-real-selfie"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R12-ai-music-generate/checklist.md",
@@ -429,5 +448,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "f6c96c225fd36c4bf05361d40e751e90d94119b173072a8bbf912c379925f56d"
+  "source_facts_sha256": "809f15b7d0e0ec07faa2f850e0977f90f09c1776f83e580f3f97b7377404071c"
 }

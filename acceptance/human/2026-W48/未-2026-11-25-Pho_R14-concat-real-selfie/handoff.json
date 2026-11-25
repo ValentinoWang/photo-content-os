@@ -1,0 +1,110 @@
+{
+  "baseline": {
+    "base": "fc0c8f1f5e23a5bb52ea5aef4b20fd05c5d8b5bd",
+    "branch": "main",
+    "head": "c00096f796ffeb9534674f48b324ab8e47cdfeec",
+    "tree": "ca49bc0a87be02a51ad9965a69ca1085885a4f4b"
+  },
+  "binding_sha256": "dc374f1705e5b3d74bc6421eb38e7a172d6f01300b7a20df50a320ca050bd266",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "6c4537709f6ff651b509800a17bfc87274137f1f1a80d7f32ab5b4f9dda9acf5",
+  "claims": [
+    {
+      "claim_key": "photo.concat-real-selfie",
+      "item": "H-01",
+      "open_route": "note:在本机打开真实自拍口播成片和对应的 Concat 工程核对",
+      "relations": [
+        {
+          "reason": "Pho_R06 验收 20 秒合成样片及透明叠层基础接入；本卡验收真实旋转竖屏自拍口播成片、新增转写转字幕命令行及画幅修复，范围独立且互不替代。",
+          "target": "2026-11-24-Pho_R06-concat-backend",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261125T091208Z-mac-local-c00096",
+          "reason": "本卡仅新增转写转字幕脚本并修正 Concat 旋转画幅，仓库内剪辑工具安装入口与版本诊断无源码改动。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091208Z-mac-local-c00096",
+          "reason": "本卡不改动 OpenChatCut 适配器及候选视频生成链路，已有剪辑后端接口测试全部通过。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091208Z-mac-local-c00096",
+          "reason": "本卡仅涉及转写转字幕和 Concat 画幅显示尺寸，音乐标签与拍点分析无源码差异。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091208Z-mac-local-c00096",
+          "reason": "本卡不改动音乐播放、拍点展示与 Studio 前端页面。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091208Z-mac-local-c00096",
+          "reason": "本卡不改动音乐库自动分析与分面筛选相关代码。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261125T091208Z-mac-local-c00096",
+          "reason": "本卡仅涉及转写转字幕命令行与 Concat 旋转画幅修正，不改动 OpenMotion 配方库、封面或选配方弹窗。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        }
+      ],
+      "screenshots": [
+        {
+          "caption": "真实自拍口播实测摘要参考 · 非私人文字卡片",
+          "captured_at": "2026-11-25T09:12:08.745386+00:00",
+          "path": "agents-results/2026-11-25/Pho_R14-concat-real-selfie/acceptance/shots/H-01-1.png",
+          "sha256": "734c4a7924360bb4483c19e9f4851fc8a1d74fa24a1716b5147fff4157518d3c"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.edit-backends",
+        "photo.tests-scripts"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-25/Pho_R14-concat-real-selfie/acceptance-contract.md",
+  "contract_sha256": "472005d5c6ea99b7c33a943cf8c7b4335ae88fba7fdd6bf63a197c1309a91477",
+  "contract_version": "1",
+  "estimated_minutes": 3,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.concat-real-selfie"
+  ],
+  "loop_name": "Concat 剪辑出口用真实自拍口播跑通",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-25/Pho_R14-concat-real-selfie/acceptance/machine/unit/runs/20261125T091208Z-mac-local-c00096/result.md",
+      "result_sha256": "3de4de8898c4ce2589ceb4d82d4ba528bcfce544385de3ebe95fd0349e19056c",
+      "run_id": "20261125T091208Z-mac-local-c00096",
+      "source_identity": "c00096f796ffeb9534674f48b324ab8e47cdfeec",
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.edit-backends",
+        "photo.tests-scripts"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-25T09:12:55.086342Z",
+  "release_slice": "concat-real-selfie",
+  "request_id": "2026-11-25-Pho_R14-concat-real-selfie",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "c00096f796ffeb9534674f48b324ab8e47cdfeec",
+  "summary": "补齐转写转源字幕命令行并修复旋转竖屏画幅；69 项单测、运行契约与两段真实自拍真机导出均通过，待任务委托人复核成片与工程。",
+  "task_id": "2026-11-25-Pho_R14-concat-real-selfie"
+}

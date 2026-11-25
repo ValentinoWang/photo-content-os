@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-11-25T09:09:15.623962Z
-- 来源事实 SHA-256：f6c96c225fd36c4bf05361d40e751e90d94119b173072a8bbf912c379925f56d
+- 事实时间：2026-11-25T09:12:55.086342Z
+- 来源事实 SHA-256：809f15b7d0e0ec07faa2f850e0977f90f09c1776f83e580f3f97b7377404071c
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -58,6 +58,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-11-25T09:12:55.086342Z | 2026-11-25-Pho_R14-concat-real-selfie | Concat 剪辑出口用真实自拍口播跑通 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-25-Pho_R14-concat-real-selfie/checklist.md | - | - |
 | 2026-11-25T09:09:15.623962Z | 2026-11-25-Pho_R12-ai-music-generate | 制作台 AI 生成配乐接进音乐库 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-25-Pho_R12-ai-music-generate/checklist.md | - | - |
 | 2026-11-25T08:50:24.190070Z | 2026-11-25-Pho_R13-avatar-clip | 用配音和底片生成数字人口播片段 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-25-Pho_R13-avatar-clip/checklist.md | - | - |
 | 2026-11-24T13:33:54.220604Z | 2026-11-24-Pho_R11-seedance-provider | 用 Seedance 生成制作台镜头 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-24-Pho_R11-seedance-provider/checklist.md | - | - |
