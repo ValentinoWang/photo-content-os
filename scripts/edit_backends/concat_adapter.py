@@ -42,6 +42,22 @@ def _require_app(app: Path):
         raise BackendError("concat_app_not_executable")
 
 
+def _display_dimensions(video: dict) -> tuple[int, int]:
+    width, height = video["width"], video["height"]
+    rotation = None
+    for side in video.get("side_data_list") or ():
+        if isinstance(side, dict) and side.get("rotation") is not None:
+            rotation = side["rotation"]
+            break
+    if rotation is None and isinstance(video.get("tags"), dict):
+        rotation = video["tags"].get("rotate")
+    try:
+        angle = round(float(rotation)) % 360 if rotation is not None else 0
+    except (TypeError, ValueError):
+        angle = 0
+    return (height, width) if angle in (90, 270) else (width, height)
+
+
 def _timeline(state: dict, source: Path) -> dict:
     timeline = state["timeline"]
     media = {row["id"]: Path(row["path"]) for row in state["media"]}
@@ -342,7 +358,7 @@ class Backend:
         video = next((row for row in probe_media(source)["streams"] if row.get("codec_type") == "video"), None)
         if video is None:
             raise BackendError("source_video_missing")
-        width, height = video["width"], video["height"]
+        width, height = _display_dimensions(video)
         state = mcp.call("project_create", {
             "location": str(project.parent), "name": project.name,
             "video": {"width": width, "height": height, "rateNum": FPS, "rateDen": 1},
