@@ -1,0 +1,19 @@
+{
+  "source_commit": "9424f8c3d48f220d17ac0e9d893eb6d23793d3d3",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-25/Pho_R16-avatar-http-oss/acceptance/unit/result.md",
+      "result_sha256": "00628415307b7bccc8e1e645277b8846d2d74c87720a1b28954999c85117e1c3",
+      "source_identity": "9424f8c3d48f220d17ac0e9d893eb6d23793d3d3",
+      "layer": "machine/unit",
+      "run_id": "20261125-avatar-http-oss-9424f8c"
+    }
+  ],
+  "patch_id": "6f55a51916f13d19f3115388e3b08d99275dbcec",
+  "preimage": {
+    "acceptance/requests/2026-W48/2026-11-25-Pho_R16-avatar-http-oss/request.json": "",
+    "acceptance/requests/2026-W48/2026-11-25-Pho_R16-avatar-http-oss/request.md": "",
+    "scripts/avatar/videoretalk.py": "c0816e1d38255cb58e11e1e6fd36744a4890752f",
+    "tests/test_avatar_http_oss.py": ""
+  }
+}
