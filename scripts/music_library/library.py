@@ -96,10 +96,17 @@ class MusicLibrary:
         write_json(self.root / 'index.json', {'schema_version': 2, 'tracks': tracks})
 
     @staticmethod
-    def _find(tracks, platform, identity, kind):
-        family = lambda value: 'netease' if value == 'netease_client' else value
+    def family(value):
+        if value == 'netease_client':
+            return 'netease'
+        if value == 'ai_generated':
+            return 'ai_generated'
+        return value
+
+    @classmethod
+    def _find(cls, tracks, platform, identity, kind):
         return next((track for track in tracks for source in track['sources']
-                     if family(source['platform']) == family(platform) and source['platform_id'] == identity and source['kind'] == kind), None)
+                     if cls.family(source['platform']) == cls.family(platform) and source['platform_id'] == identity and source['kind'] == kind), None)
 
     @notify_import
     def import_link(self, text, *, search_elsewhere=False):
@@ -192,6 +199,9 @@ class MusicLibrary:
                  'platform_id': source['platform_id'], 'original_url': source['original_url'],
                  'imported_at': source['imported_at'], 'file_sha256': digest,
                  'audio_file': 'audio' + audio.suffix.lower(), 'sources': [source], **measurements}
+        if metadata.get('ai_generated'):
+            track['ai_generated'] = True
+            track['generation'] = metadata['generation']
         validate_track(track)
         directory = self.root / digest
         if directory.exists():
@@ -263,3 +273,53 @@ class MusicLibrary:
                     status, track = self._store(audio, metadata, source, tracks)
             write_json(marker, {'file_sha256': track['file_sha256']})
             return status, track
+
+    @notify_import
+    def import_generated(self, provider, prompt, seconds, *, bpm=None, instrumental=True, title=None, **gen_kwargs):
+        from .ai_generate import PROVIDERS, generate_music, request_digest
+
+        digest = request_digest(provider, prompt, seconds, bpm=bpm, instrumental=instrumental)
+        with self.locked():
+            tracks = self._tracks()
+            existing = self._find(tracks, 'ai_generated', digest, 'generated')
+            if existing:
+                return '已在库里', existing
+            result = generate_music(
+                provider,
+                prompt,
+                seconds,
+                cache_root=self.root / '.ai-generate',
+                bpm=bpm,
+                instrumental=instrumental,
+                **gen_kwargs,
+            )
+            generation = {
+                'provider': result.provider,
+                'model': result.model,
+                'prompt': result.prompt,
+                'params': {
+                    'seconds': result.seconds,
+                    'bpm': result.bpm,
+                    'instrumental': result.instrumental,
+                },
+                'request_id': result.request_id,
+                'generated_at': result.generated_at,
+            }
+            if result.billed_seconds is not None:
+                generation['billed_seconds'] = result.billed_seconds
+            source = {
+                'platform': 'ai_generated',
+                'platform_id': result.request_digest,
+                'kind': 'generated',
+                'original_url': f'ai-generated://{result.provider}/{result.model}/{result.request_id}',
+                'imported_at': now(),
+            }
+            clean_title = title.strip() if isinstance(title, str) and title.strip() else ' '.join(result.prompt.split())[:32]
+            metadata = {
+                'title': clean_title,
+                'artist': f"AI 生成（{PROVIDERS[result.provider]['label']}）",
+                'album': result.model,
+                'ai_generated': True,
+                'generation': generation,
+            }
+            return self._store(result.processed_path, metadata, source, tracks)

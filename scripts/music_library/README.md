@@ -50,3 +50,30 @@
 抖音保持直连，忽略音乐代理和通用代理变量。未配置 SSH 出口时，网易云、汽水默认直连，也可用 `CONTENT_OS_MUSIC_PROXY` 指向自行管理的音乐代理；支持 socks5h/socks5/http/https。只有网易云和汽水使用此代理，配置错误或失败不退回直连。配置了 SSH 出口时以 SSH 出口为准。
 
 按 SSH 目标的摘要隔离 IP 相关响应缓存，不将出口地址写入仓库或曲目信息。请求前先查库和导入记录；已入库的原分享文字第二次导入不会发请求或启动隧道。新出口不会自行清除失败记录，需要负责人授权后保留旧记录并安排一次新的尝试。
+
+## AI 生成配乐
+
+除了导入已有曲目，也支持通过按秒计费的官方 API 生成配乐并直接入库，后续节拍分析、情绪标签、选曲与卡点全部沿用现有音乐库流程：
+
+```bash
+.venv/bin/python scripts/generate_music.py --provider wavespeed --prompt "warm acoustic guitar vlog" --seconds 30 --bpm 100
+.venv/bin/python scripts/generate_music.py --provider bailian --prompt "温暖治愈木吉他轻快背景乐" --seconds 30
+.venv/bin/python scripts/generate_music.py --provider wavespeed --prompt "pop ballad" --seconds 60 --with-vocals
+```
+
+支持两家服务商：
+
+- **WaveSpeed（`wavespeed`，模型 `wavespeed-ai/ace-step-1.5`）**：支持 5–240 秒、纯音乐（默认传 `lyrics: "[inst]"`）与提示词/BPM 标签，按秒计费 `$0.0003/秒`；官方接口文档见 `https://wavespeed.ai/models/wavespeed-ai/ace-step-1.5/llms.txt`。
+- **阿里百炼 Fun-Music（`bailian`，模型 `fun-music-v1`）**：支持 `is_instrumental` 纯音乐开关，按实际生成时长计费 `¥0.002/秒`；无输入端时长参数，生成后统一裁切到目标秒数。仅北京地域、处于邀测阶段，官方接口文档见 `https://help.aliyun.com/zh/model-studio/fun-music-api`（设置环境变量 `BAILIAN_WORKSPACE_ID` 可走业务空间专属域名 `{WorkspaceId}.cn-beijing.maas.aliyuncs.com`）。
+
+密钥与读取规则：
+
+- 先读 macOS 钥匙串：`wavespeed-api-key`、`bailian-api-key`（`security find-generic-password -s <服务名> -w`）。
+- 百炼再兜底读取 `~/.config/harness/speech-to-text.env` 里的 `SPEECH_TO_TEXT_API_KEY`。
+- 钥匙串锁住、权限拒绝或备用文件无法读取时会直接报错，绝不把「读不到」当成「未配置」或静默跳过；百炼返回 `AccessDenied` 时会明确提示尚未开通 Fun-Music 邀测。
+
+缓存、后处理与入库：
+
+- 按「服务商 + 模型 + 提示词 + 目标秒数 + BPM + 是否纯音乐」计算 SHA-256 请求摘要，缓存保存在 `library/music/.ai-generate/<摘要>/`（同时保留服务商返回的原始音频 `raw.<ext>` 和后处理成品 `processed.wav`）。相同参数再次运行直接复用缓存或返回「已在库里」，**不重复付费**；失败请求也会记录，不自动重试。
+- 后处理统一由 `ffmpeg` 完成：去除首尾静音（`-45 dB`）→ 裁切到目标秒数 → 淡入 `0.2` 秒、淡出 `2` 秒 → 两遍 `loudnorm` 归一到 `-16 LUFS`（口播垫乐压低到 `-24 ~ -28 LUFS` 留在混音阶段完成）。
+- 入库走 `MusicLibrary.import_generated(...)` 与现有 `_store`，`platform` 为 `ai_generated`，`platform_id` 为请求摘要；`track.json` 记录 `ai_generated: true` 以及服务商、模型、提示词、参数、请求号、生成时间，供发片环节提示创作者勾选「AI 生成」标识。

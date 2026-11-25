@@ -9,7 +9,8 @@ from music_library.library import MusicLibrary
 from music_library.links import parse_link
 
 PLATFORMS = {'qishui': '汽水音乐', 'douyin': '抖音', 'netease': '网易云音乐',
-             'netease_client': '网易云客户端下载', 'local': '本地文件'}
+             'netease_client': '网易云客户端下载', 'local': '本地文件',
+             'ai_generated': 'AI 生成'}
 
 
 def parser():

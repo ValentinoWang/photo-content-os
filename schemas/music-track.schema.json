@@ -28,7 +28,8 @@
         "douyin",
         "netease",
         "netease_client",
-        "local"
+        "local",
+        "ai_generated"
       ]
     },
     "platform_id": {
@@ -73,7 +74,8 @@
               "douyin",
               "netease",
               "netease_client",
-              "local"
+              "local",
+              "ai_generated"
             ]
           },
           "platform_id": {
@@ -87,7 +89,8 @@
               "music",
               "video",
               "note",
-              "file"
+              "file",
+              "generated"
             ]
           },
           "original_url": {
@@ -120,6 +123,77 @@
         "measured",
         "silence"
       ]
+    },
+    "ai_generated": {
+      "type": "boolean"
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model",
+        "prompt",
+        "params",
+        "request_id",
+        "generated_at"
+      ],
+      "properties": {
+        "provider": {
+          "enum": [
+            "wavespeed",
+            "bailian"
+          ]
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "seconds",
+            "bpm",
+            "instrumental"
+          ],
+          "properties": {
+            "seconds": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "bpm": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "instrumental": {
+              "type": "boolean"
+            }
+          }
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "billed_seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        }
+      }
     }
   },
   "required": [
@@ -161,6 +235,46 @@
             "type": "null"
           }
         }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "platform": {
+            "const": "ai_generated"
+          }
+        },
+        "required": [
+          "platform"
+        ]
+      },
+      "then": {
+        "required": [
+          "ai_generated",
+          "generation"
+        ],
+        "properties": {
+          "ai_generated": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ai_generated": {
+            "const": true
+          }
+        },
+        "required": [
+          "ai_generated"
+        ]
+      },
+      "then": {
+        "required": [
+          "generation"
+        ]
       }
     }
   ]

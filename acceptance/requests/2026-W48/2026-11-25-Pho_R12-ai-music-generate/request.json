@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-25-Pho_R12-ai-music-generate",
+  "project": "photo-content-os",
+  "title": "制作台 AI 生成配乐接进音乐库",
+  "raw_request": "我觉得所有的内容都可以按照这个文档进行落实（对应出片路线总览「AI 生成配乐」一格，接入 WaveSpeed 与阿里百炼 Fun-Music 生成配乐并入库）",
+  "author": {
+    "agent": "codex",
+    "session": "59803c36-60e4-4f29-bba8-c0e94337bbf5"
+  },
+  "understanding": [
+    "通过 WaveSpeed 或阿里百炼按提示词和目标秒数生成配乐，经去首尾静音、裁切、淡入淡出和响度归一后直接入库。",
+    "相同参数复用本地缓存、不重复扣费，已入库的曲目标记为 AI 生成，便于后续选曲与发片标识。"
+  ],
+  "out_of_scope": [
+    "本次不做制作台页面的生成按钮（前端需另出设计稿）。",
+    "本次交付前不调用真实付费接口，真实生成效果留待人工验收。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "确认本机已配好 WaveSpeed 或百炼 Fun Music 密钥。",
+        "输入提示词和 30 秒目标时长，运行配乐生成命令生成一段温暖吉他配乐。",
+        "查看音乐库曲目列表，播放刚入库的配乐并检查开头与结尾。"
+      ],
+      "expected": "音乐库里能看到这首刚生成的 30 秒配乐且来源标着 AI 生成；实际播放听感贴合温暖吉他风格，开头和结尾没有静音。"
+    }
+  ],
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "executors": [],
+  "created_at": "2026-11-25T08:20:24.269433Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}
