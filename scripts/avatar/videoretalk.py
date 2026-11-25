@@ -10,7 +10,7 @@ import tempfile
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlsplit
 
 import requests
 
@@ -199,10 +199,13 @@ class Client:
         try:
             u = urlsplit(url)
             host = u.hostname or ''
-            if u.scheme != 'https' or u.username or u.password or u.port not in (None, 443) or not host.startswith('dashscope-') or '.oss-' not in host or not host.endswith('.aliyuncs.com'):
+            signed = any(k.lower() in ('signature', 'x-oss-signature') and v for k, v in parse_qsl(u.query))
+            if u.scheme not in ('http', 'https') or (u.scheme == 'http' and not signed) or u.username or u.password or u.port not in (None, 443) or not host.startswith('dashscope-') or '.oss-' not in host or not host.endswith('.aliyuncs.com'):
                 fail('avatar_result_url_invalid')
         except ValueError:
             fail('avatar_result_url_invalid')
+        if u.scheme == 'http':
+            url = 'https' + url[4:]
         try:
             r = self.http.get(url, timeout=TIMEOUT, stream=True, allow_redirects=False)
             r.raise_for_status()

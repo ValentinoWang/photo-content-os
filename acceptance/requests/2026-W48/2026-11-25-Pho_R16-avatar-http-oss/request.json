@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-25-Pho_R16-avatar-http-oss",
+  "project": "photo-content-os",
+  "title": "数字人结果链接是 http 时安全升级为 https 取回",
+  "raw_request": "用户 2026-11-25「其他的那些流程按照最便宜的模型档位跑通即可」；实跑时发现官方返回的 http 链接被拒。",
+  "author": {
+    "agent": "codex",
+    "session": "01a2135e-d24d-73c2-954f-5896095537f5"
+  },
+  "understanding": [
+    "数字人生成完成后，官方返回的结果链接为 http 时，能够安全取回已生成的视频，不重复提交生成任务。"
+  ],
+  "out_of_scope": [
+    "不修改数字人生成功能的其他行为。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开本次取回的数字人视频，查看画面和配音。"
+      ],
+      "expected": "已生成的视频可以播放，画面与配音可见可听。"
+    }
+  ],
+  "confirmation_required": false,
+  "schema": "request-card/v1",
+  "executors": [],
+  "created_at": "2026-11-25T15:44:46.320054Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}
