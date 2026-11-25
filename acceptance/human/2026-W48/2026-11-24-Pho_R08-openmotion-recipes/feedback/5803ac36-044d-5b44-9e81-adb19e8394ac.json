@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "5803ac36-044d-5b44-9e81-adb19e8394ac",
+  "identity": {
+    "project": "photo-content-os",
+    "acceptance": "2026-11-24-Pho_R08-openmotion-recipes",
+    "item": "H-01",
+    "checklist_sha256": "292dae1cd1832a5fc760e55ffabbcd79da533513367f08eae97142041d9326f4",
+    "build": "dd5379926cc301bf024e6c369e1f39e8ba5d46e448bcfb3b325720da9785c3a3",
+    "bundle": null,
+    "binding_sha256": "7efeab33a0b3fd9c10cd02ca47ea37bd813c98c4d83c1b57ae10ddd210bc59c1"
+  },
+  "actor": "phone-passkey",
+  "outcome": "passed",
+  "issue": "",
+  "note": "",
+  "created_at": "2026-11-24T09:00:56.273600+00:00",
+  "created_ns": 1795510856273613000,
+  "supersedes": null,
+  "repair_state": "not-requested",
+  "checklist_item": {
+    "fields": [
+      {
+        "label": "验收步骤",
+        "value": "\n  1. 打开动效配方库，按类别查看配方卡。\n  2. 打开一张新配方的演示，检查离线时能否播放。"
+      },
+      {
+        "label": "预期表现",
+        "value": "能按类别看到 OpenMotion 来源的 51 张卡，抽一张演示能离线播放。"
+      }
+    ],
+    "id": "H-01",
+    "needs_separate_acceptance": true,
+    "open_route": "note:在 Studio 宣传片选镜头配方弹窗按类别查看并离线打开演示",
+    "open_target": {
+      "kind": "note",
+      "text": "在 Studio 宣传片选镜头配方弹窗按类别查看并离线打开演示"
+    },
+    "replacement": null,
+    "replacement_status": null,
+    "text": "- 验收步骤：\n  1. 打开动效配方库，按类别查看配方卡。\n  2. 打开一张新配方的演示，检查离线时能否播放。\n- 预期表现：能按类别看到 OpenMotion 来源的 51 张卡，抽一张演示能离线播放。"
+  },
+  "passkey": {
+    "fingerprint": "8281bbd97a19bbfb",
+    "payload": "{\"card\":\"2026-11-24-Pho_R08-openmotion-recipes\",\"checklist_sha256\":\"292dae1cd1832a5fc760e55ffabbcd79da533513367f08eae97142041d9326f4\",\"credential\":\"AqpbnM8HRfFAY7ciKUvz1gR9kDk\",\"expires_at\":1795511151462,\"issued_at\":1795510851462,\"items\":[{\"key\":\"H-01\",\"verdict\":\"pass\"}],\"nonce\":\"0ee6f52a26f31d74ad6fb88ae06225ac\",\"project\":\"photo-content-os\",\"rp\":\"mediapilot.cloud\",\"v\":1}",
+    "assertion": {
+      "id": "AqpbnM8HRfFAY7ciKUvz1gR9kDk",
+      "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiQURfb2JGR0hvTVczbEdIbUxDWE9kQWg1V3hWYXlaXzZJWnREUEpqellCSSIsIm9yaWdpbiI6Imh0dHBzOi8vbWVkaWFwaWxvdC5jbG91ZCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+      "authenticatorData": "k3CLGqgAm7LO2dc3AetKpcPK5WwiFgvOMjli5vRd2KodAAAAAA",
+      "signature": "MEUCIQDJgiAJSCiwOg3LCpnrwafF61h2Vfad5BABD_B730iqeAIgK3hWDeDTenSjQz_Hv9cCrYp9xsc7-hq4ma6fLp02wc0",
+      "userHandle": "rdilDPQLUdUWCb6E3gaTzw"
+    },
+    "verified_at": 1795510856239
+  },
+  "attachments": []
+}

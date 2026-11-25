@@ -3,7 +3,7 @@
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
 - 事实时间：2026-11-24T13:33:54.220604Z
-- 来源事实 SHA-256：db80ca7caa8217cd2bf601fd28cdbff742aafae085b130960d5342e317ea6f86
+- 来源事实 SHA-256：7609457813d98a3bdeed0f2eeda9585f112b4653fc0127bc8fec29db5b1efeb0
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -60,7 +60,6 @@
 | --- | --- | --- | --- | ---: | --- | --- | --- |
 | 2026-11-24T13:33:54.220604Z | 2026-11-24-Pho_R11-seedance-provider | 用 Seedance 生成制作台镜头 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-24-Pho_R11-seedance-provider/checklist.md | - | - |
 | 2026-11-24T08:08:16.038374Z | 2026-11-24-Pho_R10-dreamverse-bridge | 用 DreamVerse 生成制作台镜头 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-24-Pho_R10-dreamverse-bridge/checklist.md | - | - |
-| 2026-11-24T08:00:27.830875Z | 2026-11-24-Pho_R08-openmotion-recipes | Pho_R08 OpenMotion 单镜配方库与预览 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-24-Pho_R08-openmotion-recipes/checklist.md | - | - |
 | 2026-11-24T07:54:48Z | 2026-11-24-Pho_R09-r223-beat-color | 复验制作台当前拍点的高亮颜色 | 任务委托人 | 1 | acceptance/human/2026-W48/未-2026-11-24-Pho_R09-r223-beat-color/checklist.md | - | - |
 | 2026-11-24T06:49:09.409607Z | 2026-11-24-Pho_R06-concat-backend | 用 Concat 生成可精修的口播粗稿 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-24-Pho_R06-concat-backend/checklist.md | - | - |
 | 2026-11-24T04:37:20.784318+00:00 | 2026-10-27-R310-photo-devbox | photo-content-os 用自己的开发机跑测试、门禁和渲染 | 任务委托人 | 5 | acceptance/human/2026-W44/未-2026-10-27-R310-photo-devbox/checklist.md | - | - |
@@ -88,6 +87,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-11-24T08:00:27.830875Z | 2026-11-24-Pho_R08-openmotion-recipes | Pho_R08 OpenMotion 单镜配方库与预览 | 任务委托人 | 3 | acceptance/human/2026-W48/2026-11-24-Pho_R08-openmotion-recipes/checklist.md | acceptance/human/2026-W48/2026-11-24-Pho_R08-openmotion-recipes/runs/20261124T090056Z-human-console-689070/result.md | - |
 | 2026-10-19T16:11:46.979649Z | 2026-10-19-R207-photo-edit-tools-in-repo | 剪辑工具安装与候选生成 | 产品负责人 | 8 | acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo/checklist.md | acceptance/human/2026-W43/2026-10-19-R207-photo-edit-tools-in-repo/runs/20261111T193830Z-human-console-4632bc/result.md | - |
 
 ### 已被替代

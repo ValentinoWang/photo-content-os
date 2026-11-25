@@ -259,19 +259,27 @@
     },
     {
       "blocking": false,
-      "checklist_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R08-openmotion-recipes/checklist.md",
+      "checklist_path": "acceptance/human/2026-W48/2026-11-24-Pho_R08-openmotion-recipes/checklist.md",
       "estimated_minutes": 3,
-      "handoff_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R08-openmotion-recipes/handoff.json",
+      "handoff_path": "acceptance/human/2026-W48/2026-11-24-Pho_R08-openmotion-recipes/handoff.json",
       "invalidation_keys": [
         "photo.openmotion-recipes"
       ],
-      "latest_run": null,
+      "latest_run": {
+        "completed_at": "2026-11-24T09:00:57Z",
+        "result_path": "acceptance/human/2026-W48/2026-11-24-Pho_R08-openmotion-recipes/runs/20261124T090056Z-human-console-689070/result.md",
+        "result_sha256": "5cffdca9b289a1f6dd2693942bc6cf8b5af98bbda22bd4e649b05c2b088c18ff",
+        "run_id": "20261124T090056Z-human-console-689070",
+        "source_identity": "1819385594ce116d77c619b099632ddb4415c93b",
+        "started_at": "2026-11-24T09:00:56.366046Z",
+        "status": "PASS"
+      },
       "loop_name": "Pho_R08 OpenMotion 单镜配方库与预览",
       "ready_at": "2026-11-24T08:00:27.830875Z",
       "release_slice": "Pho_R08",
       "required_role": "任务委托人",
       "scope_hints": [],
-      "status": "PENDING",
+      "status": "PASSED",
       "summary": "导入 51 张 OpenMotion 离线单镜配方，渲染封面与本地预览样片，弹窗按数据展示双来源并为 OpenMotion 卡加 OM 角标。",
       "task_id": "2026-11-24-Pho_R08-openmotion-recipes",
       "workspace": "acceptance/human/2026-W48/2026-11-24-Pho_R08-openmotion-recipes"
@@ -383,5 +391,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "db80ca7caa8217cd2bf601fd28cdbff742aafae085b130960d5342e317ea6f86"
+  "source_facts_sha256": "7609457813d98a3bdeed0f2eeda9585f112b4653fc0127bc8fec29db5b1efeb0"
 }
