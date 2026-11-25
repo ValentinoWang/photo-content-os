@@ -1,0 +1,2 @@
+{"path": "acceptance/machine/unit/runs/20261125T154617Z-local-f72da6/evidence/pytest-result.md", "sha256": "2acb59dde60cf11288eb0935e57c696034f93851527e509c8f1f1a5e51190193", "bytes": 524, "cloned": false, "source": null, "writer": "py", "at": "2026-11-25T15:47:31.966346Z"}
+{"path": "acceptance/shots/H-01-2.png", "sha256": "780fcb05f22432c007e69c20ca9a55db3f71a9959d7107993e1dc8d6ed3f804c", "bytes": 13122, "cloned": false, "source": null, "writer": "py", "at": "2026-11-25T15:53:34.709739Z"}

@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-11-25T09:15:40.596630Z
-- 来源事实 SHA-256：d6a066f68bf4cf10944403cc2dd7d86c06c758bd25279345959ee72e34e7a381
+- 事实时间：2026-11-25T15:59:45.752476Z
+- 来源事实 SHA-256：68cf24be4a1f7963ada55f4c9d0cc92e812cb4a831702d2eaeeac46e88e91ff0
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -58,6 +58,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-11-25T15:59:45.752476Z | 2026-11-25-Pho_R16-avatar-http-oss | 数字人结果链接是 http 时安全升级为 https 取回 | 任务委托人 | 2 | acceptance/human/2026-W48/未-2026-11-25-Pho_R16-avatar-http-oss/checklist.md | - | - |
 | 2026-11-25T09:15:40.596630Z | 2026-11-25-Pho_R15-dreamverse-shot-controls | 万相镜头支持关闭提示词改写与默认去标负面词 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-25-Pho_R15-dreamverse-shot-controls/checklist.md | - | - |
 | 2026-11-25T09:12:55.086342Z | 2026-11-25-Pho_R14-concat-real-selfie | Concat 剪辑出口用真实自拍口播跑通 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-25-Pho_R14-concat-real-selfie/checklist.md | - | - |
 | 2026-11-25T09:09:15.623962Z | 2026-11-25-Pho_R12-ai-music-generate | 制作台 AI 生成配乐接进音乐库 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-25-Pho_R12-ai-music-generate/checklist.md | - | - |

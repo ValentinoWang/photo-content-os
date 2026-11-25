@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-25T09:15:40.596630Z",
+  "generated_at": "2026-11-25T15:59:45.752476Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R16-avatar-http-oss/checklist.md",
+      "estimated_minutes": 2,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R16-avatar-http-oss/handoff.json",
+      "invalidation_keys": [
+        "photo.avatar-http-oss"
+      ],
+      "latest_run": null,
+      "loop_name": "数字人结果链接是 http 时安全升级为 https 取回",
+      "ready_at": "2026-11-25T15:59:45.752476Z",
+      "release_slice": "avatar-http-oss",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "原任务恢复成功；31 项回归通过，视频待人工审看。",
+      "task_id": "2026-11-25-Pho_R16-avatar-http-oss",
+      "workspace": "acceptance/human/2026-W48/2026-11-25-Pho_R16-avatar-http-oss"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R15-dreamverse-shot-controls/checklist.md",
@@ -467,5 +486,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "d6a066f68bf4cf10944403cc2dd7d86c06c758bd25279345959ee72e34e7a381"
+  "source_facts_sha256": "68cf24be4a1f7963ada55f4c9d0cc92e812cb4a831702d2eaeeac46e88e91ff0"
 }

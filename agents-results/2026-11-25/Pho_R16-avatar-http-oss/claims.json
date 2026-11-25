@@ -1,0 +1,72 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.avatar-http-oss",
+    "open_route": "note:在本机打开已取回的数字人视频查看",
+    "surfaces": [
+      "acceptance.artifacts",
+      "photo.tests-scripts"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-11-25-Pho_R15-dreamverse-shot-controls/H-01",
+        "reason": "旧项检查万相提示词控制对跑道画面的影响；本项检查数字人取回视频的播放和声音。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-11-25-Pho_R14-concat-real-selfie/H-01",
+        "reason": "旧项检查自拍成片剪辑和 Concat 工程可编辑性；本项检查数字人取回视频的播放和声音。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-11-24-Pho_R11-seedance-provider/H-01",
+        "reason": "旧项验证 Seedance 镜头生成及续跑；本项检查数字人结果下载后的视频播放和声音。"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+        "reason": "本次仅修改数字人下载模块并新增其测试，OpenMotion 配方库与渲染代码无变动。",
+        "evidence_run": "20261125T160000Z-local-9424f8"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+        "reason": "本次仅修改数字人下载模块并新增其测试，剪辑工具安装和版本诊断无变动。",
+        "evidence_run": "20261125T160000Z-local-9424f8"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+        "reason": "本次仅修改数字人下载模块并新增其测试，剪辑候选生成及素材处理代码无变动。",
+        "evidence_run": "20261125T160000Z-local-9424f8"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+        "reason": "本次仅修改数字人下载模块并新增其测试，音乐标签与拍点分析代码无变动。",
+        "evidence_run": "20261125T160000Z-local-9424f8"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+        "reason": "本次仅修改数字人下载模块并新增其测试，音乐播放和拍点界面代码无变动。",
+        "evidence_run": "20261125T160000Z-local-9424f8"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+        "reason": "本次仅修改数字人下载模块并新增其测试，音乐库分析和筛选代码无变动。",
+        "evidence_run": "20261125T160000Z-local-9424f8"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-25/Pho_R16-avatar-http-oss/acceptance/shots/H-01-1.png",
+        "sha256": "780fcb05f22432c007e69c20ca9a55db3f71a9959d7107993e1dc8d6ed3f804c",
+        "caption": "测试、恢复和账本结果参考 · 文字摘要生成",
+        "captured_at": "2026-11-25T15:53:34.708340+00:00"
+      }
+    ]
+  }
+]
