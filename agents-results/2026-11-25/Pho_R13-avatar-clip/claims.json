@@ -1,0 +1,21 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.avatar-videoretalk",
+    "open_route": "note:确认约 0.9 元费用后用公开示例底片和配音运行生成命令",
+    "surfaces": [],
+    "relations": [],
+    "request_changes": {
+      "H-01": "按用户要求付费接口须经本人同意且实测改用公开示例底片和配音，步骤补充费用确认（约 0.9 元）和公开示例素材说明，核心口型、AI 生成标记与二次沿用标准与需求卡一致。"
+    },
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-25/Pho_R13-avatar-clip/acceptance/shots/H-01-1.png",
+        "sha256": "0e7cf5faeac44ad1d3e317b9280a8ca3c3d13cb9a3780bc9a791e84b62573383",
+        "caption": "数字人替身专项参考 · 本机测试输出渲染",
+        "captured_at": "2026-11-25T08:49:17.657242+00:00"
+      }
+    ],
+    "no_screenshot_reason": "本次真实成片只能在用户本人确认费用后通过本人百炼账号运行生成并查看。"
+  }
+]

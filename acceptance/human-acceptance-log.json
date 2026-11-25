@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-24T13:33:54.220604Z",
+  "generated_at": "2026-11-25T08:50:24.190070Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R13-avatar-clip/checklist.md",
+      "estimated_minutes": 5,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R13-avatar-clip/handoff.json",
+      "invalidation_keys": [
+        "photo.avatar-videoretalk"
+      ],
+      "latest_run": null,
+      "loop_name": "用配音和底片生成数字人口播片段",
+      "ready_at": "2026-11-25T08:50:24.190070Z",
+      "release_slice": "avatar-videoretalk",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "本机替身专项 29 项通过，未调用任何百炼付费接口。本人确认约 0.9 元费用后用公开示例底片和配音真跑一段，核对口型、AI 生成标记及二次沿用。",
+      "task_id": "2026-11-25-Pho_R13-avatar-clip",
+      "workspace": "acceptance/human/2026-W48/2026-11-25-Pho_R13-avatar-clip"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-24-Pho_R11-seedance-provider/checklist.md",
@@ -391,5 +410,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "7609457813d98a3bdeed0f2eeda9585f112b4653fc0127bc8fec29db5b1efeb0"
+  "source_facts_sha256": "6258b39a408f572c6a4c3b7b11d59afd8ab8496d4144dce4622de52ee35f9b42"
 }
