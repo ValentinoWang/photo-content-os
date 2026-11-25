@@ -19,11 +19,20 @@ TIMEOUT = (10, 60)
 
 
 class AvatarError(Exception):
-    pass
+    def __init__(self, code: str, *, provider_code: str | None = None, http_status: int | None = None):
+        self.code = code
+        self.provider_code = provider_code
+        self.http_status = http_status
+        message = code
+        if code == 'avatar_account_arrears':
+            message += ' 百炼账号欠费或状态异常，请到阿里云控制台处理后重试'
+        if provider_code is not None:
+            message += f' provider_code={provider_code}'
+        super().__init__(message)
 
 
 def fail(code):
-    raise AvatarError(code)
+    raise AvatarError(code) from None
 
 
 def digest(path):
@@ -50,6 +59,34 @@ def write_json(path, value):
             os.unlink(name)
             raise
     os.replace(name, path)
+
+
+def read_ledger(path: Path) -> dict:
+    try:
+        ledger = json.loads(path.read_text(encoding='utf-8'))
+        segments = ledger['segments']
+        if not isinstance(segments, list) or any(not isinstance(row, dict) for row in segments):
+            raise ValueError()
+        return ledger
+    except (ValueError, KeyError, OSError, TypeError):
+        fail('avatar_input_invalid')
+
+
+def forget_unknown(out_dir: Path, segment: int, reason: str) -> None:
+    """Reset a single unknown submission after the operator checks the provider."""
+    if not reason.strip() or segment < 0:
+        fail('avatar_input_invalid')
+    path = out_dir / 'avatar-ledger.json'
+    ledger = read_ledger(path)
+    if segment >= len(ledger['segments']):
+        fail('avatar_input_invalid')
+    row = ledger['segments'][segment]
+    if row.get('status') != 'submitting' or row.get('task_id'):
+        fail('avatar_input_invalid')
+    now = utc()
+    row.update(status='ready', task_id=None, forgotten_at=now, forget_reason=reason)
+    ledger['updated_at'] = now
+    write_json(path, ledger)
 
 
 def command(args):
@@ -97,40 +134,59 @@ class Client:
         self.key = key
         self.http = transport or requests.Session()
 
+    def check_response(self, response, fallback):
+        status = response.status_code
+        if 200 <= status < 300:
+            return
+        try:
+            payload = response.json()
+        except ValueError:
+            payload = None
+        code = payload.get('code') if isinstance(payload, dict) else None
+        safe_code = None
+        if isinstance(code, str) and re.fullmatch(r'[A-Za-z0-9_.-]{1,64}', code):
+            if not self.key or self.key not in code:
+                safe_code = code
+        error_code = 'avatar_account_arrears' if code == 'Arrearage' else fallback
+        raise AvatarError(error_code, provider_code=safe_code, http_status=status)
+
     def upload(self, path):
         try:
-            r = self.http.get(BASE + '/uploads', params={'action': 'getPolicy', 'model': 'videoretalk'}, headers={'Authorization': 'Bearer ' + self.key}, timeout=TIMEOUT)
-            r.raise_for_status()
+            r = self.http.get(BASE + '/uploads', params={'action': 'getPolicy', 'model': 'videoretalk'}, headers={'Authorization': 'Bearer ' + self.key}, timeout=TIMEOUT, allow_redirects=False)
+            self.check_response(r, 'avatar_upload_failed')
             p = r.json()['data']
             key = p['upload_dir'] + '/' + path.name
             fields = {'OSSAccessKeyId': p['oss_access_key_id'], 'Signature': p['signature'], 'policy': p['policy'], 'x-oss-object-acl': p['x_oss_object_acl'], 'x-oss-forbid-overwrite': p['x_oss_forbid_overwrite'], 'key': key, 'success_action_status': '200'}
             with path.open('rb') as f:
-                r = self.http.post(p['upload_host'], data=fields, files={'file': (path.name, f)}, timeout=TIMEOUT)
-                r.raise_for_status()
+                r = self.http.post(p['upload_host'], data=fields, files={'file': (path.name, f)}, timeout=TIMEOUT, allow_redirects=False)
+                self.check_response(r, 'avatar_upload_failed')
             return 'oss://' + key
-        except Exception:
+        except (OSError, ValueError, KeyError, TypeError):
             fail('avatar_upload_failed')
 
     def submit(self, video, audio):
         try:
-            r = self.http.post(BASE + '/services/aigc/image2video/video-synthesis', headers={'Authorization': 'Bearer ' + self.key, 'X-DashScope-Async': 'enable', 'X-DashScope-OssResourceResolve': 'enable'}, json={'model': 'videoretalk', 'input': {'video_url': video, 'audio_url': audio, 'ref_image_url': ''}, 'parameters': {'video_extension': True}}, timeout=TIMEOUT)
+            r = self.http.post(BASE + '/services/aigc/image2video/video-synthesis', headers={'Authorization': 'Bearer ' + self.key, 'X-DashScope-Async': 'enable', 'X-DashScope-OssResourceResolve': 'enable'}, json={'model': 'videoretalk', 'input': {'video_url': video, 'audio_url': audio, 'ref_image_url': ''}, 'parameters': {'video_extension': True}}, timeout=TIMEOUT, allow_redirects=False)
         except requests.RequestException:
             fail('avatar_submit_unknown')
-        if not r.ok:
-            fail('avatar_submit_failed')
+        fallback = 'avatar_submit_failed' if 400 <= r.status_code < 500 else 'avatar_submit_unknown'
+        self.check_response(r, fallback)
         try:
-            return r.json()['output']['task_id'] or fail('avatar_submit_unknown')
+            task_id = r.json()['output']['task_id']
         except (ValueError, KeyError, TypeError):
             fail('avatar_submit_unknown')
+        if not isinstance(task_id, str) or not task_id.strip():
+            fail('avatar_submit_unknown')
+        return task_id
 
     def poll(self, task_id, deadline):
         while time.monotonic() < deadline:
             try:
-                r = self.http.get(BASE + '/tasks/' + task_id, headers={'Authorization': 'Bearer ' + self.key}, timeout=TIMEOUT)
-                r.raise_for_status()
+                r = self.http.get(BASE + '/tasks/' + task_id, headers={'Authorization': 'Bearer ' + self.key}, timeout=TIMEOUT, allow_redirects=False)
+                self.check_response(r, 'avatar_task_failed')
                 output = r.json()['output']
                 status = output['task_status']
-            except Exception:
+            except (OSError, ValueError, KeyError, TypeError):
                 fail('avatar_task_failed')
             if status == 'SUCCEEDED':
                 return output.get('video_url', '')
@@ -180,16 +236,7 @@ def generate_avatar_clip(video: Path, audio: Path, out_dir: Path, *, material: s
         fail('avatar_api_key_missing')
     out_dir.mkdir(parents=True, exist_ok=True)
     ledger_path = out_dir / 'avatar-ledger.json'
-    if ledger_path.exists():
-        try:
-            ledger = json.loads(ledger_path.read_text(encoding='utf-8'))
-            old = ledger['segments']
-            if not isinstance(old, list):
-                raise ValueError()
-        except (ValueError, KeyError, OSError, TypeError):
-            fail('avatar_input_invalid')
-    else:
-        old = []
+    old = read_ledger(ledger_path)['segments'] if ledger_path.exists() else []
     ledger = {'model': 'videoretalk', 'material': material, 'owner_consent': owner_consent if material == 'self' else None, 'updated_at': utc(), 'segments': []}
     client = Client(api_key, transport)
     video_hash = digest(video)
@@ -219,8 +266,18 @@ def generate_avatar_clip(video: Path, audio: Path, out_dir: Path, *, material: s
                 v = client.upload(video)
                 a = client.upload(part)
                 row.update(status='submitting', task_id=None)
+                row.pop('provider_code', None)
+                row.pop('rejected_at', None)
                 save()
-                task_id = client.submit(v, a)
+                try:
+                    task_id = client.submit(v, a)
+                except AvatarError as error:
+                    if error.http_status is not None and 400 <= error.http_status < 500:
+                        row.update(status='rejected', rejected_at=utc())
+                        if error.provider_code is not None:
+                            row['provider_code'] = error.provider_code
+                        save()
+                    raise
                 row.update(task_id=task_id, status='submitted')
                 save()
             url = client.poll(row['task_id'], deadline)

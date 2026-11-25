@@ -1,10 +1,14 @@
 import json
 import subprocess
+import sys
+import time
 from pathlib import Path
 
 import pytest
 import requests
 
+from scripts import generate_avatar_clip as avatar_cli
+from scripts.avatar import videoretalk
 from scripts.avatar.videoretalk import AvatarError, Client, generate_avatar_clip, plan_audio
 
 
@@ -157,11 +161,12 @@ def test_failure_codes(media, tmp_path):
     class SubmitFail(Fake):
         def post(self, url, **kw):
             if 'video-synthesis' in url:
-                r = Response(); r.ok = False
-                return r
+                return http_error(400, 'InvalidParameter')
             return super().post(url, **kw)
-    with pytest.raises(AvatarError, match='avatar_submit_failed'):
+    with pytest.raises(AvatarError, match='avatar_submit_failed.*provider_code=InvalidParameter'):
         run(media, tmp_path / 'submit', SubmitFail(media[0]))
+    row = json.loads((tmp_path / 'submit' / 'out' / 'avatar-ledger.json').read_text())['segments'][0]
+    assert row['status'] == 'rejected' and row['provider_code'] == 'InvalidParameter'
 
     class TaskFail(Fake):
         def get(self, url, **kw):
@@ -186,3 +191,138 @@ def test_failure_codes(media, tmp_path):
             return super().get(url, **kw)
     with pytest.raises(AvatarError, match='avatar_download_failed'):
         run(media, tmp_path / 'download', DownloadFail(media[0]))
+
+
+SIGNED_URL = 'https://dashscope-test.oss-cn-shanghai.aliyuncs.com/out?signature=private'
+
+
+def http_error(status, code):
+    response = Response({'code': code, 'message': f'SECRET {SIGNED_URL}'})
+    response.ok = False
+    response.status_code = status
+    return response
+
+
+class SubmitOnce(Fake):
+    def __init__(self, video, first_response):
+        super().__init__(video)
+        self.first_response = first_response
+
+    def post(self, url, **kwargs):
+        response = super().post(url, **kwargs)
+        if '/video-synthesis' in url and self.submits == 1:
+            if isinstance(self.first_response, Exception):
+                raise self.first_response
+            return self.first_response
+        return response
+
+
+def cli(monkeypatch, *args):
+    monkeypatch.setattr(sys, 'argv', ['generate_avatar_clip.py', *map(str, args)])
+    return avatar_cli.main()
+
+
+def test_arrears_rejected_then_retries(media, tmp_path, monkeypatch, capsys):
+    fake = SubmitOnce(media[0], http_error(400, 'Arrearage'))
+    monkeypatch.setattr(videoretalk.requests, 'Session', lambda: fake)
+    monkeypatch.setenv('DASHSCOPE_API_KEY', 'SECRET')
+    out = tmp_path / 'out'
+    assert cli(monkeypatch, '--video', media[0], '--audio', media[1], '--out-dir', out,
+               '--material', 'public-sample', '--live') == 1
+    stderr = capsys.readouterr().err
+    assert 'avatar_account_arrears' in stderr
+    assert '百炼账号欠费或状态异常，请到阿里云控制台处理后重试' in stderr
+    assert 'provider_code=Arrearage' in stderr
+    assert 'SECRET' not in stderr and SIGNED_URL not in stderr
+    row = json.loads((out / 'avatar-ledger.json').read_text())['segments'][0]
+    assert (row['status'], row['task_id'], row['provider_code']) == ('rejected', None, 'Arrearage')
+    assert row['rejected_at'].endswith('Z')
+    assert fake.submits == 1
+    run(media, tmp_path, fake)
+    assert fake.submits == 2
+    assert sum(url == 'https://upload.test' for url, _ in fake.posts) == 4
+
+
+@pytest.mark.parametrize('response', [
+    http_error(503, 'ServiceUnavailable'),
+    requests.Timeout(f'SECRET {SIGNED_URL}'),
+    requests.ConnectionError(f'SECRET {SIGNED_URL}'),
+    Response({'output': {}}),
+], ids=['5xx', 'timeout', 'disconnect', 'missing-task-id'])
+def test_uncertain_submission_stays_blocked(media, tmp_path, response):
+    fake = SubmitOnce(media[0], response)
+    with pytest.raises(AvatarError, match='avatar_submit_unknown') as error:
+        run(media, tmp_path, fake)
+    if getattr(response, 'status_code', None) == 503:
+        assert 'provider_code=ServiceUnavailable' in str(error.value)
+    assert 'SECRET' not in str(error.value) and SIGNED_URL not in str(error.value)
+    row = json.loads((tmp_path / 'out' / 'avatar-ledger.json').read_text())['segments'][0]
+    assert (row['status'], row['task_id']) == ('submitting', None)
+    assert fake.submits == 1
+    with pytest.raises(AvatarError, match='avatar_submit_unknown'):
+        run(media, tmp_path, fake)
+    assert fake.submits == 1
+
+
+@pytest.mark.parametrize('step,fallback', [
+    ('policy', 'avatar_upload_failed'),
+    ('upload', 'avatar_upload_failed'),
+    ('query', 'avatar_task_failed'),
+])
+@pytest.mark.parametrize('provider_code', ['Arrearage', 'Bad.Request-1_2', SIGNED_URL, 'A' * 65, 'SECRET'])
+def test_http_response_diagnostics(media, step, fallback, provider_code):
+    class Rejected(Fake):
+        def get(self, url, **kwargs):
+            if (step == 'policy' and '/uploads' in url) or (step == 'query' and '/tasks/' in url):
+                return http_error(400, provider_code)
+            return super().get(url, **kwargs)
+
+        def post(self, url, **kwargs):
+            return http_error(400, provider_code)
+
+    client = Client('SECRET', Rejected(media[0]))
+    expected = 'avatar_account_arrears' if provider_code == 'Arrearage' else fallback
+    with pytest.raises(AvatarError, match=expected) as error:
+        if step == 'query':
+            client.poll('task-1', time.monotonic() + 10)
+        else:
+            client.upload(media[0])
+    stderr = str(error.value)
+    if provider_code in ('Arrearage', 'Bad.Request-1_2'):
+        assert f'provider_code={provider_code}' in stderr
+    else:
+        assert 'provider_code=' not in stderr
+    assert 'SECRET' not in stderr and SIGNED_URL not in stderr
+
+
+def test_forget_unknown_requires_reason_then_allows_retry(media, tmp_path, monkeypatch, capsys):
+    def unexpected_network():
+        pytest.fail('账本解锁不应创建网络会话')
+
+    monkeypatch.setattr(videoretalk.requests, 'Session', unexpected_network)
+    fake = SubmitOnce(media[0], requests.Timeout())
+    with pytest.raises(AvatarError, match='avatar_submit_unknown'):
+        run(media, tmp_path, fake)
+    out = tmp_path / 'out'
+    ledger = out / 'avatar-ledger.json'
+    before = ledger.read_bytes()
+    args = ('--out-dir', out, '--forget-unknown', 0)
+    with pytest.raises(SystemExit) as error:
+        cli(monkeypatch, *args)
+    assert error.value.code == 2
+    assert '--reason' in capsys.readouterr().err
+    assert ledger.read_bytes() == before
+
+    reason = '已在百炼控制台核实，云端没有创建任务。'
+    assert cli(monkeypatch, *args, '--reason', reason) == 0
+    row = json.loads(ledger.read_text())['segments'][0]
+    assert (row['status'], row['task_id']) == ('ready', None)
+    assert fake.submits == 1
+    run(media, tmp_path, fake)
+    assert fake.submits == 2
+    row = json.loads(ledger.read_text())['segments'][0]
+    assert row['status'] == 'completed'
+    assert row['forgotten_at'].endswith('Z') and row['forget_reason'] == reason
+    after = ledger.read_bytes()
+    assert cli(monkeypatch, *args, '--reason', reason) == 1
+    assert ledger.read_bytes() == after
