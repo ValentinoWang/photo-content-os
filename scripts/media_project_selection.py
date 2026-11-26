@@ -5,13 +5,13 @@ server calls. This module implements the two Studio ports it injects:
 ``select_project`` turns a paired selection request into a locally confirmed
 CreativeProject (existing or created) and ``stage_handoff`` records where one
 verified job landed. Both persist under ``local_media_root()`` so a restarted
-device finds the same project, version and job. When the real Studio selection
-UI exists it only replaces the confirmation provider.
+device finds the same project, version and job. The installed Agent uses the
+local Studio inbox to collect explicit operator decisions.
 """
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from contextlib import contextmanager
 import fcntl
 import hashlib
@@ -23,6 +23,7 @@ import tempfile
 from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 SYSTEM_ROOT = Path(__file__).resolve().parents[1]
 if str(SYSTEM_ROOT) not in sys.path:
@@ -66,7 +67,7 @@ class SelectionError(RuntimeError, ValueError):
 
 
 def default_confirmation_provider(request: Mapping[str, Any]) -> None:
-    """No Studio selection UI yet: every request stays pending until a provider is supplied.
+    """Keep requests pending when a caller supplies no confirmation provider.
 
     A provider answers with one explicit local confirmation:
     ``{"confirmed": True, "selection_mode": "existing", "project_id": ...}`` or
@@ -103,6 +104,171 @@ def _read_json(path: Path) -> Any:
         raise SelectionError("video_selection_store_invalid") from exc
 
 
+_SELECTION_TTL = timedelta(minutes=15)
+_TAIPEI = ZoneInfo("Asia/Taipei")
+_MISSING = object()
+
+
+def _expires_at(request: Mapping[str, Any]) -> datetime:
+    try:
+        expires = datetime.fromisoformat(request["expires_at"].replace("Z", "+00:00"))
+        if expires.tzinfo is None:
+            raise ValueError("missing timezone")
+        return expires
+    except (ValueError, TypeError, AttributeError, KeyError) as exc:
+        raise SelectionError("video_selection_store_invalid") from exc
+
+
+@contextmanager
+def _selection_lock(root: Path, name: str):
+    root.mkdir(parents=True, exist_ok=True)
+    with (root / name).open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        yield
+
+
+def _selection_path(root: Path, directory: str, request_id: str) -> Path:
+    if not isinstance(request_id, str) or not _ID.fullmatch(request_id):
+        raise SelectionError("invalid_request")
+    return root / directory / (request_id + ".json")
+
+
+def _read_selection_json(path: Path) -> Any:
+    # A missing file is expected before a decision. A file containing JSON null is corrupt.
+    try:
+        with path.open(encoding="utf-8") as source:
+            return json.load(source)
+    except FileNotFoundError:
+        return _MISSING
+    except (OSError, ValueError) as exc:
+        raise SelectionError("video_selection_store_invalid") from exc
+
+
+class StudioConfirmationStore:
+    """Durable local inbox and immutable operator decisions, keyed by request ID."""
+
+    def __init__(self, root: Path) -> None:
+        self.root = Path(root)
+
+    def _read_pending(self, path: Path) -> Any:
+        item = _read_selection_json(path)
+        if item is _MISSING:
+            return item
+        if (not isinstance(item, dict) or item.keys() != _REQUEST_FIELDS
+                or item["request_id"] != path.stem
+                or not all(isinstance(item[key], str) and _ID.fullmatch(item[key])
+                           for key in ("request_id", "public_variant_id", "public_account_id", "public_session_id"))
+                or not all(type(item[key]) is int and item[key] > 0
+                           for key in ("expected_work_revision", "revision"))):
+            raise SelectionError("video_selection_store_invalid")
+        _expires_at(item)
+        return item
+
+    def _decision_path(self, request_id: str) -> Path:
+        return _selection_path(self.root, "confirmations", request_id)
+
+    @staticmethod
+    def _valid_decision(decision: Any) -> bool:
+        if not isinstance(decision, dict) or decision.get("confirmed") is not True:
+            return False
+        mode = decision.get("selection_mode")
+        if mode == "existing":
+            project_id = decision.get("project_id")
+            return (decision.keys() == {"confirmed", "selection_mode", "project_id"}
+                    and isinstance(project_id, str) and bool(_ID.fullmatch(project_id)))
+        if mode == "created":
+            title = decision.get("title")
+            return (decision.keys() == {"confirmed", "selection_mode", "title"}
+                    and isinstance(title, str) and 0 < len(title.strip()) <= 120)
+        return False
+
+    def _read_decision(self, request_id: str) -> Any:
+        decision = _read_selection_json(self._decision_path(request_id))
+        if decision is not _MISSING and not self._valid_decision(decision):
+            raise SelectionError("video_selection_store_invalid")
+        return decision
+
+    def provider(self, request: Mapping[str, Any]) -> Mapping[str, Any] | None:
+        request_id = request["request_id"]
+        path = _selection_path(self.root, "pending", request_id)
+        with _selection_lock(self.root, ".confirmation.lock"):
+            saved = self._read_pending(path)
+            if saved is not _MISSING and saved != request:
+                raise SelectionError("video_identity_stale")
+            if saved is _MISSING:
+                _write_json(path, dict(request))
+            decision = self._read_decision(request_id)
+            return None if decision is _MISSING else decision
+
+    def list_pending(self) -> list[dict[str, Any]]:
+        directory = self.root / "pending"
+        try:
+            paths = sorted(directory.iterdir())
+        except FileNotFoundError:
+            return []
+        now = _now()
+        items = []
+        for path in paths:
+            if path.suffix != ".json":
+                continue
+            item = self._read_pending(path)
+            if item is _MISSING:
+                continue
+            expires = _expires_at(item)
+            if expires <= now or self._read_decision(item["request_id"]) is not _MISSING:
+                continue
+            items.append({
+                "requestId": item["request_id"],
+                "workRevision": item["expected_work_revision"],
+                "expiresAt": expires.isoformat(),
+                "defaultTitle": (expires - _SELECTION_TTL).astimezone(_TAIPEI).strftime("策划台作品 %m-%d %H:%M"),
+            })
+        # Every request has the same TTL, so expiry and submission sort alike.
+        return sorted(items, key=lambda item: datetime.fromisoformat(item["expiresAt"]), reverse=True)
+
+    def submit(self, request_id: str, decision: dict[str, Any]) -> None:
+        path = _selection_path(self.root, "pending", request_id)
+        with _selection_lock(self.root, ".confirmation.lock"):
+            request = self._read_pending(path)
+            if request is _MISSING:
+                raise SelectionError("video_selection_missing")
+            if _now() >= _expires_at(request):
+                raise SelectionError("video_selection_expired")
+            if not self._valid_decision(decision):
+                raise SelectionError("invalid_request")
+            previous = self._read_decision(request_id)
+            if previous is not _MISSING and previous != decision:
+                raise SelectionError("video_identity_stale")
+            if previous is _MISSING:
+                _write_json(self._decision_path(request_id), decision)
+
+    def project_source(self, project_id: str) -> dict[str, int] | None:
+        try:
+            paths = sorted((self.root / "requests").iterdir())
+        except FileNotFoundError:
+            return None
+        matches = []
+        for path in paths:
+            if path.suffix != ".json":
+                continue
+            saved = _read_selection_json(path)
+            if not isinstance(saved, dict) or not isinstance(saved.get("selection"), dict):
+                raise SelectionError("video_selection_store_invalid")
+            selection = saved["selection"]
+            if selection.get("project_id") == project_id:
+                try:
+                    revision = selection["expected_work_revision"]
+                    if type(revision) is not int or revision < 1:
+                        raise ValueError("invalid revision")
+                    confirmed = datetime.fromisoformat(selection["confirmed_at"])
+                    if confirmed.tzinfo is None:
+                        raise ValueError("missing timezone")
+                except (KeyError, TypeError, ValueError) as exc:
+                    raise SelectionError("video_selection_store_invalid") from exc
+                matches.append((confirmed, revision))
+        return {"workRevision": max(matches)[1]} if matches else None
+
+
 def source_plan(project_root: Path) -> tuple[list[str], list[dict[str, Any]]]:
     """Source files and the single editor step, read from the selected project's own workspace."""
     files = sorted(item.name for item in project_root.iterdir() if item.is_file())
@@ -133,9 +299,7 @@ class StudioSelectionPort:
         self.root = selection_root(self.media)
 
     def _request_path(self, request_id: str) -> Path:
-        if not isinstance(request_id, str) or not _ID.fullmatch(request_id):
-            raise SelectionError("invalid_request")
-        return self.root / "requests" / (request_id + ".json")
+        return _selection_path(self.root, "requests", request_id)
 
     def _project(self, project_id: str) -> dict[str, Any]:
         try:
@@ -182,17 +346,18 @@ class StudioSelectionPort:
         if not isinstance(request, Mapping) or request.keys() != _REQUEST_FIELDS:
             raise SelectionError("invalid_request")
         path = self._request_path(request["request_id"])
-        saved = _read_json(path)
-        if saved is not None:
-            if not isinstance(saved, dict) or saved.get("request") != dict(request) or not isinstance(saved.get("selection"), dict):
-                raise SelectionError("video_identity_stale")
-            return {"status": "confirmed", "local_selection": dict(saved["selection"])}
-        decision = self.confirm(dict(request))
-        if decision is None or decision == {"status": "pending"}:
-            return {"status": "pending"}
-        selection = self._confirmed(request, decision)
-        _write_json(path, {"request": dict(request), "selection": selection})
-        return {"status": "confirmed", "local_selection": selection}
+        with _selection_lock(self.root, ".selection.lock"):
+            saved = _read_json(path)
+            if saved is not None:
+                if not isinstance(saved, dict) or saved.get("request") != dict(request) or not isinstance(saved.get("selection"), dict):
+                    raise SelectionError("video_identity_stale")
+                return {"status": "confirmed", "local_selection": dict(saved["selection"])}
+            decision = self.confirm(dict(request))
+            if decision is None or decision == {"status": "pending"}:
+                return {"status": "pending"}
+            selection = self._confirmed(request, decision)
+            _write_json(path, {"request": dict(request), "selection": selection})
+            return {"status": "confirmed", "local_selection": selection}
 
     def _checked_input(self, descriptor: Mapping[str, Any], input_ref: str) -> tuple[str, Mapping[str, Any]]:
         try:

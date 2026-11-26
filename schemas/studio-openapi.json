@@ -2471,6 +2471,118 @@
         "summary": "Read loopback service health"
       }
     },
+    "/api/project-selections": {
+      "get": {
+        "operationId": "listStudioProjectSelections",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read pending work requests and available Studio projects"
+      }
+    },
+    "/api/project-selections/{requestId}/confirm": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "requestId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "confirmStudioProjectSelection",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-OS-CSRF",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Revision conflict"
+          }
+        },
+        "summary": "Record the operator’s explicit project selection"
+      }
+    },
     "/api/projects": {
       "get": {
         "operationId": "listProjects",

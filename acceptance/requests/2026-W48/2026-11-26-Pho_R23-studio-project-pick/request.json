@@ -1,0 +1,84 @@
+{
+  "id": "2026-11-26-Pho_R23-studio-project-pick",
+  "project": "photo-content-os",
+  "title": "Studio 里确认策划台作品用哪个项目",
+  "raw_request": "用户 2026-11-26「发布这个层面先不管 主要是给出预览稿即可」。策划台作品页发起选项目后，Studio 里能看到请求并选已有项目或新建，项目页来源条显示来自策划台哪篇作品。",
+  "author": {
+    "agent": "claude",
+    "session": "266b38d1-d32e-4331-baa8-3a8cb1d1c0ce"
+  },
+  "understanding": [
+    "策划台发起选项目后，在电脑 Studio 首页能选一个已有项目或新建，选完策划台那边自动变成已绑定。",
+    "Studio 首页待选卡和确认后的项目页来源条显示同一个作品版本。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开策划台作品页，点击「去 Studio 选项目」。",
+        "打开电脑上的 Studio 首页，查看待选卡上的作品版本。",
+        "选择一个已有项目并点击「用这个项目」。",
+        "打开所选项目的项目页，查看来源条和策划台的绑定状态。"
+      ],
+      "expected": "Studio 首页出现「这篇作品用哪个项目」卡，写着作品版本和剩余分钟。确认后卡片消失，策划台显示已绑定，项目页显示「来自策划台 · 第 N 版」，版本和待选卡一致。"
+    }
+  ],
+  "out_of_scope": [
+    "发布与复盘",
+    "真实付费调用",
+    "策划台作品页（PG_R117）",
+    "作品标题和 Brief 链接由总控在后续任务补齐"
+  ],
+  "confirmation_required": false,
+  "schema": "request-card/v1",
+  "executors": [],
+  "created_at": "2026-11-26T16:06:43.372906Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [
+    {
+      "id": "2026-11-26-Pho_R23-studio-project-pick",
+      "project": "photo-content-os",
+      "title": "Studio 里确认策划台作品用哪个项目",
+      "raw_request": "用户 2026-11-26「发布这个层面先不管 主要是给出预览稿即可」。策划台作品页发起选项目后，Studio 里能看到请求并选已有项目或新建，项目页来源条显示来自策划台哪篇作品。",
+      "author": {
+        "agent": "claude",
+        "session": "266b38d1-d32e-4331-baa8-3a8cb1d1c0ce"
+      },
+      "understanding": [
+        "策划台发起选项目后，在电脑 Studio 首页能选一个项目确认，选完策划台那边自动变成已绑定。"
+      ],
+      "criteria": [
+        {
+          "key": "H-01",
+          "steps": [
+            "打开策划台作品页，点击「去 Studio 选项目」。",
+            "打开电脑上的 Studio 首页。",
+            "选择一个已有项目并点击「用这个项目」。",
+            "打开这个项目的项目页。"
+          ],
+          "expected": "Studio 首页出现「这篇作品用哪个项目」卡；确认后卡片消失，策划台显示已绑定；项目页来源条写着来自策划台的哪篇作品，能打开 Brief。"
+        }
+      ],
+      "out_of_scope": [
+        "发布与复盘",
+        "真实付费调用",
+        "策划台作品页（PG_R117）"
+      ],
+      "confirmation_required": false,
+      "schema": "request-card/v1",
+      "executors": [],
+      "created_at": "2026-11-26T16:06:43.372906Z",
+      "status": "待确认",
+      "confirmation": null,
+      "not_duplicate_reasons": {
+        "2026-11-26-Pho_R17-openclaw-contract-api-base": "Pho_R17 管 OpenClaw 契约的接口前缀，本卡是 Studio 选项目的界面，不同对象"
+      },
+      "remote_read_warnings": []
+    }
+  ],
+  "not_duplicate_reasons": {
+    "2026-11-26-Pho_R17-openclaw-contract-api-base": "Pho_R17 管 OpenClaw 契约的接口前缀，本卡是 Studio 选项目的界面，不同对象"
+  },
+  "remote_read_warnings": []
+}

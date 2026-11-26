@@ -24,6 +24,10 @@ ROUGH_CUT_ROUTE_SPECS: tuple[dict[str, object], ...] = (
 
 
 ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.routes() + direct_handoff_contract.routes() + ROUGH_CUT_ROUTE_SPECS + (
+    {"method": "GET", "path": "/api/project-selections", "operation_id": "listStudioProjectSelections",
+     "summary": "Read pending work requests and available Studio projects"},
+    {"method": "POST", "path": "/api/project-selections/{requestId}/confirm", "operation_id": "confirmStudioProjectSelection",
+     "summary": "Record the operator’s explicit project selection", "write": True},
     {'method': 'GET', 'path': '/api/direct/recipes', 'operation_id': 'getDirectRecipes', 'summary': 'Read promotional shot recipes'},
     {'method': 'GET', 'path': '/api/direct/recipes/{recipeId}/poster.jpg', 'operation_id': 'getRecipePoster', 'summary': 'Read recipe poster', 'response_media': 'image/jpeg'},
     {'method': 'GET', 'path': '/api/direct/recipes/{recipeId}/clip.mp4', 'operation_id': 'getRecipeClip', 'summary': 'Read recipe clip', 'response_media': 'video/mp4', 'byte_ranges': True},

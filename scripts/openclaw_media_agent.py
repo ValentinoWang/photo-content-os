@@ -99,7 +99,7 @@ def _run_installed_agent(opts: argparse.Namespace, confirmation_provider: Callab
     runtime factory that reads each job's binding from the project it was staged to.
     """
     cli = import_module("openclaw_media.cli")
-    from media_project_selection import DEFAULT_STATE_DIR, StudioSelectionPort
+    from media_project_selection import DEFAULT_STATE_DIR, StudioConfirmationStore, StudioSelectionPort
     from openclaw_video_execution import installed_runtime_factory
     from studio.project_store import ProjectStore
 
@@ -111,6 +111,8 @@ def _run_installed_agent(opts: argparse.Namespace, confirmation_provider: Callab
     workspace = cli._workspace(opts.workspace, state.workspace)
     store = ProjectStore(opts.state_dir or DEFAULT_STATE_DIR)
     port = StudioSelectionPort(store, device_id=state.device_id, workspace=workspace, confirm=confirmation_provider)
+    if confirmation_provider is None:
+        port.confirm = StudioConfirmationStore(port.root).provider
     factory = installed_runtime_factory(store, device_id=state.device_id, provider=cli._provider(), live=opts.live)
     agent, remote = cli._agent_from_state(agent_store, workspace=str(workspace), local_endpoint=opts.local_endpoint,
                                           studio_port=port, runtime_factory=factory)

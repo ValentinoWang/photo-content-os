@@ -30,6 +30,8 @@ if str(SYSTEM_ROOT) not in sys.path:
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
+from media_project_selection import SelectionError, StudioConfirmationStore
+from studio.direct_handoff_contract import selection_root
 from studio.media_review import MediaReview
 from studio.review_jobs import ReviewJobs
 from music_library.errors import MusicError
@@ -186,6 +188,7 @@ class StudioApplication:
     ) -> None:
         self.store = store
         self.media_review = MediaReview(store)
+        self.project_selection = StudioConfirmationStore(selection_root())
         self.review_jobs = ReviewJobs(self.media_review)
         self.doctor_checks = []
         self.doctor_checked_at = None
@@ -774,6 +777,15 @@ class StudioApplication:
                     if parsed.path.startswith("/api/") and not is_registered_route("GET", parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
                         return
+                    if parsed.path == "/api/project-selections":
+                        try:
+                            requests = app.project_selection.list_pending()
+                        except OSError as exc:
+                            raise SelectionError("video_selection_store_invalid") from exc
+                        projects = [{"id": p["id"], "title": p["title"], "updatedAt": p.get("updated_at")}
+                                    for p in app.store.list_projects()] if requests else []
+                        self._json(HTTPStatus.OK, {"ok": True, "requests": requests, "projects": projects})
+                        return
                     if segments[:2] == ['api', 'direct']:
                         query = urllib.parse.parse_qs(parsed.query)
                         if segments[2] == 'recipes':
@@ -964,7 +976,14 @@ class StudioApplication:
                         self._send(HTTPStatus.OK, app.video_workflow.subtitles(segments[2]), 'application/x-subrip; charset=utf-8')
                         return
                     if len(segments) == 3 and segments[:2] == ["api", "projects"]:
-                        self._json(HTTPStatus.OK, {"ok": True, "project": app.store.get_project(segments[2]), "videoHandoff": app.video_handoff_projection(segments[2])})
+                        project = app.store.get_project(segments[2])
+                        try:
+                            project_source = app.project_selection.project_source(project["id"])
+                        except OSError as exc:
+                            raise SelectionError("video_selection_store_invalid") from exc
+                        self._json(HTTPStatus.OK, {"ok": True, "project": project,
+                                                  "videoHandoff": app.video_handoff_projection(project["id"]),
+                                                  "planningSource": project_source})
                         return
                     if (
                         len(segments) == 5
@@ -1041,6 +1060,18 @@ class StudioApplication:
                     segments = self._segments(parsed.path)
                     if not is_registered_route(method, parsed.path):
                         self._json(HTTPStatus.NOT_FOUND, _error("route_not_found", "接口不存在"))
+                        return
+                    if (method == "POST" and len(segments) == 4
+                            and segments[:2] == ["api", "project-selections"] and segments[3] == "confirm"):
+                        self._assert_direct_origin()
+                        decision = self._body()
+                        if decision.get("selection_mode") == "existing" and isinstance(decision.get("project_id"), str):
+                            app.store.get_project(decision["project_id"])
+                        try:
+                            app.project_selection.submit(segments[2], decision)
+                        except OSError as exc:
+                            raise SelectionError("video_selection_store_invalid") from exc
+                        self._json(HTTPStatus.OK, {"ok": True})
                         return
                     if segments[:2] == ['api', 'direct']:
                         self._assert_direct_origin()
@@ -1575,6 +1606,15 @@ class StudioApplication:
                 return True
 
             def _handle_error(self, exc: Exception) -> None:
+                if isinstance(exc, SelectionError):
+                    status, message = {
+                        "video_selection_missing": (404, "这条选项目请求已找不到"),
+                        "video_selection_expired": (409, "这条选项目请求已过期"),
+                        "video_identity_stale": (409, "这条请求已经选过项目"),
+                        "video_selection_store_invalid": (500, "无法读取或保存选项目请求"),
+                    }.get(exc.code, (400, "请选择有效的项目或输入项目名"))
+                    self._json(status, _error(exc.code, message))
+                    return
                 if isinstance(exc, DirectVideoError):
                     code = exc.code
                     status = 404 if code in {'job_not_found', 'shot_not_found', 'artifact_not_found', 'version_not_found', 'sample_not_found', 'proposal_not_found', 'style_base_not_found', 'draft_not_found', 'recipe_not_found', 'recipe_clip_missing'} else 409 if code in {'job_busy', 'shots_not_ready', 'design_not_ready', 'output_not_ready', 'proposal_not_ready', 'draft_not_ready', 'draft_busy', 'handoff_changed'} else 400

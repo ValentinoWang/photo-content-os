@@ -165,3 +165,28 @@
 .piece.is-picking .pick-box { z-index:1; }
 .piece.is-picking .cover .chip { left:40px;max-width:calc(100% - 48px); }
 @media(max-width:600px) { .work-picking .pieces { grid-template-columns:minmax(0,1fr); } }
+
+.project-pick-list:not(:has(.project-pick, [data-pick-error]:not([hidden]))) { display: none; }
+.project-pick-list [hidden] { display: none; }
+.project-pick { grid-template-columns: minmax(0, 1fr); align-items: start; }
+.project-pick-head, .project-pick > [role="alert"] { grid-column: 1 / -1; }
+.project-pick h2 { font-size: 16px; }
+.project-pick form { display: grid; gap: 8px; justify-items: start; min-width: 0; max-width: 100%; }
+.project-pick-options { display: grid; gap: 6px; margin: 0; padding: 0; border: 0; min-width: 0; }
+.project-pick-options label { display: flex; align-items: baseline; gap: 8px; overflow-wrap: anywhere; }
+.project-pick-edited { white-space: nowrap; color: var(--ink-3); }
+.project-pick-options input { accent-color: var(--ac); flex: none; }
+.project-pick-name { display: grid; gap: 4px; max-width: 100%; }
+.project-pick-name input {
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--rule-2);
+  border-radius: 6px;
+  background: var(--panel-2);
+  color: var(--ink);
+}
+.topbar #screen-sub.project-planning-source { display: block; }
+
+@media (min-width: 900px) {
+  .project-pick { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+}
