@@ -1,7 +1,7 @@
 {
   "schema_version": "photo_content_os_openclaw_bridge_v1",
   "upstream_repository": "ValentinoWang/openclaw-media",
-  "upstream_commit": "1e3eb410cd3b569c78adf474a64f05794342aaec",
+  "upstream_commit": "21c170d0bdd26a425a97bd3e1c3020b320d95fdb",
   "upstream_contract_id": "openclaw_media_product_v1",
   "upstream_contract_version": 1,
   "catalog_digest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
@@ -40,5 +40,2961 @@
       "descriptor_only",
       "forbidden"
     ]
+  },
+  "p1a_first_project": {
+    "source_sha256": "sha256:55902637deab958717b610a18f13a31eea17450d65c88017bf258801968605bc",
+    "content_sha256": "sha256:17efad3beaf9974e4a1a85786d42dbbf3139b9ae2e8cad43772bfb1674e56b78",
+    "contract": {
+      "status": "pending",
+      "capability": "video_project_selection_v1",
+      "selection_ttl_seconds": 900,
+      "activation": "U09 may expose only the authorized source readback. U11 activates the web and device selection operations together and only for paired Agents that advertise video_project_selection_v1.",
+      "identity": "Resolve the tenant from the authenticated principal. The frozen source account, work variant, session, and paired device must match. Use expected revisions for compare-and-set. Project identity is opaque and never inferred from its name.",
+      "lifecycle": {
+        "pending": "A successful request changes no job state and expires at creation time plus 900 seconds.",
+        "confirmed": "A still-pending request can be confirmed by the original device after explicit Studio confirmation. Either existing or created is an explicit choice. No job is allocated.",
+        "cancelled": "Only a pending request can be cancelled. Subsequent confirmation cannot create a binding.",
+        "expired": "An expired request is filtered out of device polling and cannot be confirmed. Create a new request.",
+        "unbound": "Unbind advances the binding generation atomically and removes the projection's binding and active identity. Old requests, jobs and candidates lose rights to confirm, upload, adopt or renew. A new binding requires a new request."
+      },
+      "source_freezes": [
+        {
+          "operation_ids": [
+            "adoptTopicCandidate",
+            "createCreationContent"
+          ],
+          "enabled_in": "U09",
+          "snapshot_schema_ref": "#/$defs/SourceSnapshot",
+          "auth": "session_csrf",
+          "input": "Use existing origin or recommendation/direction ID, expected source version/hash, and actual angle ID. Select exactly one server-resolved decision trace through the existing initialContext chain. Manual creation resolves the account from the work.",
+          "idempotency": "Same key and same scoped request return the original receipt. A different request with the same key returns idempotency_conflict. Replay never recreates state after a terminal transition.",
+          "errors": {
+            "unauthenticated": 401,
+            "forbidden": 403,
+            "not_found": 404,
+            "idempotency_conflict": 409,
+            "invalid_request": 422,
+            "video_identity_stale": 409,
+            "invalid_video_source": 422
+          },
+          "commit": "Persist the immutable snapshot and session in the same transaction. Resolve account and evidence from the trace and verify the selected angle against the source version or explicit authorization. Expected facts come only from the confirmed source or explicit user input.",
+          "adoption_schema_ref": "#/$defs/RadarSourceChoice",
+          "selected_context_schema_ref": "#/$defs/SelectedDecisionTrace"
+        },
+        {
+          "operation_ids": [
+            "createCreationVideoHandoff"
+          ],
+          "enabled_in": "U09",
+          "snapshot_schema_ref": "#/$defs/SourceSnapshot",
+          "auth": "session_csrf",
+          "input": "Read the immutable source for the exact authorized session. Freeze it by jobId with the session and variant in the same PG transaction as job creation.",
+          "idempotency": "Same key and same scoped request return the original receipt. A different request with the same key returns idempotency_conflict. Replay never recreates state after a terminal transition.",
+          "errors": {
+            "unauthenticated": 401,
+            "forbidden": 403,
+            "not_found": 404,
+            "idempotency_conflict": 409,
+            "invalid_request": 422,
+            "video_identity_stale": 409
+          },
+          "commit": "Read back by authorized variant and job; switching sessions or changing source facts cannot update a prior task's snapshot. Old jobs without a snapshot explicitly return null."
+        }
+      ],
+      "operations": [
+        {
+          "operation_id": "requestCreationVideoProjectSelection",
+          "method": "POST",
+          "relative_path": "/creation-workbench/variants/{publicVariantId}/video/project-selections",
+          "auth": "session_csrf",
+          "request_schema_ref": "#/$defs/SelectionRequest",
+          "response_schema_ref": "#/$defs/SelectionReceipt",
+          "success_status": 201,
+          "errors": {
+            "unauthenticated": 401,
+            "forbidden": 403,
+            "not_found": 404,
+            "idempotency_conflict": 409,
+            "invalid_request": 422,
+            "video_identity_stale": 409,
+            "video_selection_device_unavailable": 422
+          },
+          "owner_rule": "Check session permission, tenant, frozen account, variant/session, visible usable paired device with the capability, and current work and video revisions.",
+          "idempotency": {
+            "header": "Idempotency-Key",
+            "rule": "Same key and same scoped request return the original receipt. A different request with the same key returns idempotency_conflict. Replay never recreates state after a terminal transition."
+          },
+          "enabled_in": "U11"
+        },
+        {
+          "operation_id": "video_project_selection_list",
+          "method": "GET",
+          "relative_path": "/devices/{device_id}/video-project-selections",
+          "auth": "device_credential",
+          "request_schema_ref": null,
+          "response_schema_ref": "#/$defs/DeviceSelections",
+          "success_status": 200,
+          "errors": {
+            "unauthenticated": 401,
+            "not_found": 404
+          },
+          "owner_rule": "Check pairing, tenant and exact path device. Return only that device's pending unexpired selections. No local media paths or job IDs.",
+          "idempotency": null,
+          "enabled_in": "U11"
+        },
+        {
+          "operation_id": "video_project_selection_confirm",
+          "method": "POST",
+          "relative_path": "/devices/{device_id}/video-project-selections/{request_id}/confirm",
+          "auth": "device_credential",
+          "request_schema_ref": "#/$defs/DeviceConfirm",
+          "response_schema_ref": "#/$defs/SelectionConfirmation",
+          "success_status": 200,
+          "errors": {
+            "unauthenticated": 401,
+            "not_found": 404,
+            "idempotency_conflict": 409,
+            "invalid_request": 422,
+            "video_identity_stale": 409,
+            "video_selection_expired": 409,
+            "video_selection_cancelled": 409
+          },
+          "owner_rule": "Check pairing and exact device, tenant, frozen account, request revision, work revision and binding generation. The Agent requires durable explicit confirmation from Studio.",
+          "idempotency": {
+            "header": "Idempotency-Key",
+            "rule": "Same key and same scoped request return the original receipt. A different request with the same key returns idempotency_conflict. Replay never recreates state after a terminal transition."
+          },
+          "enabled_in": "U11"
+        },
+        {
+          "operation_id": "cancelCreationVideoProjectSelection",
+          "method": "POST",
+          "relative_path": "/creation-workbench/variants/{publicVariantId}/video/project-selections/{requestId}/cancel",
+          "auth": "session_csrf",
+          "request_schema_ref": "#/$defs/ScopedRevision",
+          "response_schema_ref": "#/$defs/CancelReceipt",
+          "success_status": 200,
+          "errors": {
+            "unauthenticated": 401,
+            "forbidden": 403,
+            "not_found": 404,
+            "idempotency_conflict": 409,
+            "invalid_request": 422,
+            "video_identity_stale": 409,
+            "video_selection_not_pending": 409
+          },
+          "owner_rule": "Check permission, tenant, frozen account, variant, device, request and expected selection revision. Only pending unexpired requests can be cancelled.",
+          "idempotency": {
+            "header": "Idempotency-Key",
+            "rule": "Same key and same scoped request return the original receipt. A different request with the same key returns idempotency_conflict. Replay never recreates state after a terminal transition."
+          },
+          "enabled_in": "U11"
+        },
+        {
+          "operation_id": "unbindCreationVideoProject",
+          "method": "POST",
+          "relative_path": "/creation-workbench/variants/{publicVariantId}/video/project-bindings/{bindingId}/unbind",
+          "auth": "session_csrf",
+          "request_schema_ref": "#/$defs/ScopedRevision",
+          "response_schema_ref": "#/$defs/UnbindReceipt",
+          "success_status": 200,
+          "errors": {
+            "unauthenticated": 401,
+            "forbidden": 403,
+            "not_found": 404,
+            "idempotency_conflict": 409,
+            "invalid_request": 422,
+            "video_identity_stale": 409
+          },
+          "owner_rule": "Check permission, tenant, frozen account, variant, device, current binding and projection revision. Advance generation and revoke previous authority.",
+          "idempotency": {
+            "header": "Idempotency-Key",
+            "rule": "Same key and same scoped request return the original receipt. A different request with the same key returns idempotency_conflict. Replay never recreates state after a terminal transition."
+          },
+          "enabled_in": "U11"
+        },
+        {
+          "operation_id": "createCreationVideoHandoff",
+          "method": "POST",
+          "relative_path": "/creation-workbench/variants/{publicVariantId}/video/handoffs",
+          "auth": "session_csrf",
+          "request_schema_ref": "#/$defs/HandoffRequest",
+          "response_schema_ref": "#/$defs/HandoffResponse",
+          "success_status": 202,
+          "errors": {
+            "unauthenticated": 401,
+            "forbidden": 403,
+            "not_found": 404,
+            "idempotency_conflict": 409,
+            "invalid_request": 422,
+            "video_identity_stale": 409,
+            "video_binding_required": 409,
+            "video_document_stale": 409,
+            "tts_live_required": 409
+          },
+          "owner_rule": "Preserve web work, video and document CAS. Resolve the binding reference and generation on the server and match tenant, frozen account, variant and device. Create one job only here. Device list/lease/ack/start continue to use existing authorization and the v1 descriptor; confirm the descriptor job, project, project version and digest against the local selection and device job context.",
+          "idempotency": {
+            "header": "Idempotency-Key",
+            "rule": "Same key and same scoped request return the original receipt. A different request with the same key returns idempotency_conflict. Replay never recreates state after a terminal transition."
+          },
+          "enabled_in": "U11"
+        },
+        {
+          "operation_id": "getCreationVideoJobSource",
+          "method": "GET",
+          "relative_path": "/creation-workbench/variants/{publicVariantId}/video/jobs/{jobId}/source",
+          "auth": "session",
+          "request_schema_ref": null,
+          "response_schema_ref": "#/$defs/VideoJobSource",
+          "success_status": 200,
+          "errors": {
+            "unauthenticated": 401,
+            "forbidden": 403,
+            "not_found": 404
+          },
+          "owner_rule": "Use the existing read permission for tenant, account, session and variant. Lookup by variant and job, returning 404 for cross-tenant, wrong-variant or unknown jobs.",
+          "idempotency": null,
+          "enabled_in": "U09"
+        }
+      ],
+      "studio_ports": {
+        "select_project": {
+          "request_schema_ref": "#/$defs/DeviceSelection",
+          "response_schema_ref": "#/$defs/StudioSelectionResult",
+          "authority": "Local paired Agent supplies the authorized device request. No creation or selection until the operator explicitly confirms. Keep the local confirmation under the paired device and request ID, including exact selection mode and identity.",
+          "idempotency": "Return pending or the same durable explicit confirmation after restart. Discard expired or cancelled selections and require a new request after unbind.",
+          "errors": [
+            "video_selection_expired",
+            "video_selection_cancelled",
+            "video_identity_stale"
+          ]
+        },
+        "stage_handoff": {
+          "request_schema_ref": "#/$defs/StudioStage",
+          "response_schema_ref": "#/$defs/StudioRunBinding",
+          "authority": "Accept only an authorized descriptor, controlled workspace-relative input ref and matching local selection. Match paired device, frozen account, work and project version, confirmation reference and validated digest. Resolve the ref inside the selected workspace. Write the existing Studio read_handoff input.",
+          "idempotency": "Persist the same runtime binding for the same job and contents, including after restart. Reject different contents for the same job.",
+          "errors": [
+            "video_identity_stale",
+            "invalid_request",
+            "idempotency_conflict"
+          ]
+        }
+      },
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$defs": {
+          "PublicId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,160}$"
+          },
+          "JobId": {
+            "type": "string",
+            "pattern": "^job_[A-Za-z0-9_-]+$"
+          },
+          "Revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "BindingGeneration": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "ProjectId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,128}$"
+          },
+          "Timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "SourceHash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "LocalInputRef": {
+            "type": "string",
+            "pattern": "^(?:[A-Za-z0-9_-][A-Za-z0-9_.-]*/)*[A-Za-z0-9_-][A-Za-z0-9_.-]*$"
+          },
+          "ExpectedOutcome": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "metric",
+              "target",
+              "unit",
+              "observationWindow",
+              "missing"
+            ],
+            "properties": {
+              "metric": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "target": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "unit": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "observationWindow": {
+                "enum": [
+                  "24h",
+                  "72h",
+                  "7d",
+                  "30d",
+                  null
+                ]
+              },
+              "missing": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "metric",
+                    "target",
+                    "unit",
+                    "observationWindow"
+                  ]
+                },
+                "uniqueItems": true
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "metric": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "missing": {
+                      "contains": {
+                        "const": "metric"
+                      }
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "missing": {
+                      "not": {
+                        "contains": {
+                          "const": "metric"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "target": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "missing": {
+                      "contains": {
+                        "const": "target"
+                      }
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "missing": {
+                      "not": {
+                        "contains": {
+                          "const": "target"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "unit": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "missing": {
+                      "contains": {
+                        "const": "unit"
+                      }
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "missing": {
+                      "not": {
+                        "contains": {
+                          "const": "unit"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "observationWindow": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "missing": {
+                      "contains": {
+                        "const": "observationWindow"
+                      }
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "missing": {
+                      "not": {
+                        "contains": {
+                          "const": "observationWindow"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "EvidenceRef": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "label",
+              "publicUrl",
+              "capturedAt",
+              "qualityStatus"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "publicUrl": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "uri"
+              },
+              "capturedAt": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Timestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "qualityStatus": {
+                "enum": [
+                  "verified",
+                  "partial",
+                  "unverified",
+                  "unavailable"
+                ]
+              }
+            }
+          },
+          "SourceSnapshot": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "accountId",
+              "decisionTraceId",
+              "sourceKind",
+              "selectedAngle",
+              "evidenceRefs",
+              "expected"
+            ],
+            "properties": {
+              "accountId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "decisionTraceId": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sourceKind": {
+                "enum": [
+                  "radar_post",
+                  "radar_recommendation",
+                  "radar_direction",
+                  "manual_creation"
+                ]
+              },
+              "radarPostId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "recommendationId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "directionVersionId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "sourceHash": {
+                "$ref": "#/$defs/SourceHash"
+              },
+              "selectedAngle": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "evidenceRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/EvidenceRef"
+                }
+              },
+              "expected": {
+                "$ref": "#/$defs/ExpectedOutcome"
+              }
+            },
+            "description": "selectedAngle is the durable ID of the selected angle within the source version. Null only when no angle was selected or is applicable.",
+            "oneOf": [
+              {
+                "properties": {
+                  "sourceKind": {
+                    "const": "radar_post"
+                  },
+                  "decisionTraceId": {
+                    "$ref": "#/$defs/PublicId"
+                  }
+                },
+                "required": [
+                  "radarPostId"
+                ],
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "recommendationId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "directionVersionId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "sourceHash"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "sourceKind": {
+                    "const": "radar_recommendation"
+                  },
+                  "decisionTraceId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "selectedAngle": {
+                    "$ref": "#/$defs/PublicId"
+                  }
+                },
+                "required": [
+                  "recommendationId",
+                  "sourceHash"
+                ],
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "radarPostId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "directionVersionId"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "sourceKind": {
+                    "const": "radar_direction"
+                  },
+                  "decisionTraceId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "selectedAngle": {
+                    "$ref": "#/$defs/PublicId"
+                  }
+                },
+                "required": [
+                  "directionVersionId",
+                  "sourceHash"
+                ],
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "radarPostId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "recommendationId"
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "properties": {
+                  "sourceKind": {
+                    "const": "manual_creation"
+                  },
+                  "decisionTraceId": {
+                    "type": "null"
+                  },
+                  "selectedAngle": {
+                    "type": "null"
+                  },
+                  "evidenceRefs": {
+                    "maxItems": 0
+                  }
+                },
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "radarPostId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "recommendationId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "directionVersionId"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "sourceHash"
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "VideoJobSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "jobId",
+              "publicSessionId",
+              "publicVariantId",
+              "sourceSnapshot"
+            ],
+            "properties": {
+              "jobId": {
+                "$ref": "#/$defs/JobId"
+              },
+              "publicSessionId": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "publicVariantId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "sourceSnapshot": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SourceSnapshot"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "description": "Legacy jobs without a frozen source return null. A known legacy session ID may still be returned.",
+            "if": {
+              "properties": {
+                "sourceSnapshot": {
+                  "type": "object"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "publicSessionId": {
+                  "$ref": "#/$defs/PublicId"
+                }
+              }
+            }
+          },
+          "SelectionRequest": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "deviceId",
+              "publicSessionId",
+              "expectedRevision",
+              "expectedWorkRevision"
+            ],
+            "properties": {
+              "deviceId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "publicSessionId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "expectedRevision": {
+                "$ref": "#/$defs/Revision"
+              },
+              "expectedWorkRevision": {
+                "$ref": "#/$defs/Revision"
+              }
+            }
+          },
+          "SelectionReceipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "requestId",
+              "deviceId",
+              "status",
+              "expiresAt",
+              "selectionRevision"
+            ],
+            "properties": {
+              "requestId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "deviceId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "status": {
+                "const": "pending"
+              },
+              "expiresAt": {
+                "$ref": "#/$defs/Timestamp"
+              },
+              "selectionRevision": {
+                "$ref": "#/$defs/Revision"
+              }
+            }
+          },
+          "DeviceSelection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "request_id",
+              "public_variant_id",
+              "public_account_id",
+              "public_session_id",
+              "expected_work_revision",
+              "expires_at",
+              "revision"
+            ],
+            "properties": {
+              "request_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "public_variant_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "public_account_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "public_session_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "expected_work_revision": {
+                "$ref": "#/$defs/Revision",
+                "description": "Work revision checked again on confirmation."
+              },
+              "expires_at": {
+                "$ref": "#/$defs/Timestamp"
+              },
+              "revision": {
+                "$ref": "#/$defs/Revision"
+              }
+            }
+          },
+          "DeviceSelections": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "requests"
+            ],
+            "properties": {
+              "requests": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/DeviceSelection"
+                }
+              }
+            }
+          },
+          "SelectionMode": {
+            "enum": [
+              "existing",
+              "created"
+            ]
+          },
+          "DeviceConfirm": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "expected_revision",
+              "project_id",
+              "project_revision",
+              "selection_mode"
+            ],
+            "properties": {
+              "expected_revision": {
+                "$ref": "#/$defs/Revision"
+              },
+              "project_id": {
+                "$ref": "#/$defs/ProjectId"
+              },
+              "project_revision": {
+                "$ref": "#/$defs/Revision"
+              },
+              "selection_mode": {
+                "$ref": "#/$defs/SelectionMode"
+              }
+            }
+          },
+          "BindingRef": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "bindingId",
+              "bindingGeneration"
+            ],
+            "properties": {
+              "bindingId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "bindingGeneration": {
+                "$ref": "#/$defs/BindingGeneration"
+              }
+            }
+          },
+          "ProjectBinding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "bindingId",
+              "bindingGeneration",
+              "deviceId",
+              "publicAccountId",
+              "photoProjectId",
+              "photoProjectRevision"
+            ],
+            "properties": {
+              "bindingId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "bindingGeneration": {
+                "$ref": "#/$defs/BindingGeneration"
+              },
+              "deviceId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "publicAccountId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "photoProjectId": {
+                "$ref": "#/$defs/ProjectId"
+              },
+              "photoProjectRevision": {
+                "$ref": "#/$defs/Revision"
+              }
+            },
+            "description": "Server-confirmed project identity scoped to the binding generation."
+          },
+          "SelectionConfirmation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "binding",
+              "selectionRevision"
+            ],
+            "properties": {
+              "binding": {
+                "$ref": "#/$defs/ProjectBinding"
+              },
+              "selectionRevision": {
+                "$ref": "#/$defs/Revision"
+              }
+            }
+          },
+          "ScopedRevision": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "deviceId",
+              "publicAccountId",
+              "expectedRevision"
+            ],
+            "properties": {
+              "deviceId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "publicAccountId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "expectedRevision": {
+                "$ref": "#/$defs/Revision"
+              }
+            }
+          },
+          "CancelReceipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "requestId",
+              "status",
+              "selectionRevision"
+            ],
+            "properties": {
+              "requestId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "status": {
+                "const": "cancelled"
+              },
+              "selectionRevision": {
+                "$ref": "#/$defs/Revision"
+              }
+            }
+          },
+          "UnbindReceipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "bindingGeneration",
+              "video"
+            ],
+            "properties": {
+              "bindingGeneration": {
+                "$ref": "#/$defs/BindingGeneration"
+              },
+              "video": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "publicVariantId",
+                  "revision",
+                  "workRevision",
+                  "binding",
+                  "identity"
+                ],
+                "properties": {
+                  "publicVariantId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "revision": {
+                    "$ref": "#/$defs/Revision"
+                  },
+                  "workRevision": {
+                    "$ref": "#/$defs/Revision"
+                  },
+                  "binding": {
+                    "type": "null"
+                  },
+                  "identity": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          },
+          "HandoffRequest": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "expectedWorkRevision",
+              "expectedVideoRevision",
+              "expectedDocumentRef",
+              "deviceId",
+              "binding",
+              "line",
+              "synthesizeNarration"
+            ],
+            "properties": {
+              "expectedWorkRevision": {
+                "$ref": "#/$defs/Revision"
+              },
+              "expectedVideoRevision": {
+                "$ref": "#/$defs/Revision"
+              },
+              "expectedDocumentRef": {
+                "$ref": "#/api_schemas/DocumentRevisionRef"
+              },
+              "deviceId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "binding": {
+                "$ref": "#/$defs/BindingRef"
+              },
+              "line": {
+                "enum": [
+                  "spoken",
+                  "teaching",
+                  "direct"
+                ]
+              },
+              "synthesizeNarration": {
+                "type": "boolean"
+              },
+              "voiceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "modelId": {
+                "type": "string",
+                "minLength": 1,
+                "default": "qwen3-tts-flash"
+              },
+              "live": {
+                "type": "boolean",
+                "default": false
+              },
+              "planRevisionId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "planRevisionDigest": {
+                "$ref": "#/$defs/Digest"
+              }
+            },
+            "description": "Existing handoff request for capable Agents, with a server binding reference in place of a caller-supplied Photo project."
+          },
+          "HandoffResponse": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ok",
+              "video"
+            ],
+            "properties": {
+              "ok": {
+                "const": true
+              },
+              "video": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "publicVariantId",
+                  "workRevision",
+                  "revision",
+                  "binding",
+                  "identity"
+                ],
+                "properties": {
+                  "publicVariantId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "workRevision": {
+                    "$ref": "#/$defs/Revision"
+                  },
+                  "revision": {
+                    "$ref": "#/$defs/Revision"
+                  },
+                  "binding": {
+                    "$ref": "#/$defs/ProjectBinding"
+                  },
+                  "identity": {
+                    "$ref": "#/api_schemas/CreationVideoIdentity"
+                  }
+                }
+              }
+            }
+          },
+          "LocalSelection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "request_id",
+              "device_id",
+              "public_variant_id",
+              "public_account_id",
+              "public_session_id",
+              "expected_work_revision",
+              "project_id",
+              "project_revision",
+              "selection_mode",
+              "confirmed_at"
+            ],
+            "properties": {
+              "request_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "device_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "public_variant_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "public_account_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "public_session_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "expected_work_revision": {
+                "$ref": "#/$defs/Revision"
+              },
+              "project_id": {
+                "$ref": "#/$defs/ProjectId"
+              },
+              "project_revision": {
+                "$ref": "#/$defs/Revision"
+              },
+              "selection_mode": {
+                "$ref": "#/$defs/SelectionMode"
+              },
+              "confirmed_at": {
+                "$ref": "#/$defs/Timestamp"
+              }
+            }
+          },
+          "StudioSelectionResult": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "status"
+                ],
+                "properties": {
+                  "status": {
+                    "const": "pending"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "status",
+                  "local_selection"
+                ],
+                "properties": {
+                  "status": {
+                    "const": "confirmed"
+                  },
+                  "local_selection": {
+                    "$ref": "#/$defs/LocalSelection"
+                  }
+                }
+              }
+            ]
+          },
+          "StudioStage": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "descriptor",
+              "input_ref",
+              "local_selection"
+            ],
+            "properties": {
+              "descriptor": {
+                "$ref": "#/api_schemas/VideoHandoffDescriptor"
+              },
+              "input_ref": {
+                "$ref": "#/$defs/LocalInputRef"
+              },
+              "local_selection": {
+                "$ref": "#/$defs/LocalSelection"
+              }
+            },
+            "description": "The paired device context and binding come from the validated device job. The v1 descriptor retains its existing byte shape."
+          },
+          "StudioRunBinding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "job_id",
+              "device_id",
+              "project_id",
+              "project_revision",
+              "confirmation_ref",
+              "handoff_digest",
+              "input_ref",
+              "binding_generation"
+            ],
+            "properties": {
+              "job_id": {
+                "$ref": "#/$defs/JobId"
+              },
+              "device_id": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "project_id": {
+                "$ref": "#/$defs/ProjectId"
+              },
+              "project_revision": {
+                "$ref": "#/$defs/Revision"
+              },
+              "confirmation_ref": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "handoff_digest": {
+                "$ref": "#/$defs/Digest"
+              },
+              "input_ref": {
+                "$ref": "#/$defs/LocalInputRef"
+              },
+              "binding_generation": {
+                "$ref": "#/$defs/BindingGeneration"
+              }
+            },
+            "description": "Local runtime record handed to Studio. Not returned by a Media HTTP route."
+          },
+          "Error": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "description": "Operation examples record the stable rejection code and HTTP status. Existing transport error envelopes are unchanged."
+          },
+          "RadarSourceChoice": {
+            "description": "Radar subset of adoptTopicCandidate. Other established sources and optional fields belong to the existing web contract.",
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "sourceKind",
+                  "postId",
+                  "publicAccountId"
+                ],
+                "properties": {
+                  "sourceKind": {
+                    "const": "radar_post"
+                  },
+                  "postId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "publicAccountId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "calendarNodeKey": {
+                    "type": "string"
+                  },
+                  "candidateTitle": {
+                    "type": "string"
+                  },
+                  "origin": {
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "sourceKind",
+                  "recommendationId",
+                  "expectedHash",
+                  "selectedAngle"
+                ],
+                "properties": {
+                  "sourceKind": {
+                    "const": "radar_recommendation"
+                  },
+                  "recommendationId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "expectedHash": {
+                    "$ref": "#/$defs/SourceHash"
+                  },
+                  "selectedAngle": {
+                    "$ref": "#/$defs/PublicId"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "sourceKind",
+                  "directionVersionId",
+                  "publicAccountId",
+                  "expectedDirectionHash",
+                  "selectedAngle"
+                ],
+                "properties": {
+                  "sourceKind": {
+                    "const": "radar_direction"
+                  },
+                  "directionVersionId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "publicAccountId": {
+                    "$ref": "#/$defs/PublicId"
+                  },
+                  "expectedDirectionHash": {
+                    "$ref": "#/$defs/SourceHash"
+                  },
+                  "selectedAngle": {
+                    "$ref": "#/$defs/PublicId"
+                  }
+                }
+              }
+            ]
+          },
+          "SelectedDecisionTrace": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "publicSourceId",
+              "category",
+              "intent"
+            ],
+            "properties": {
+              "publicSourceId": {
+                "$ref": "#/$defs/PublicId"
+              },
+              "category": {
+                "const": "topic_and_research"
+              },
+              "intent": {
+                "const": "selected"
+              }
+            }
+          }
+        }
+      },
+      "examples": {
+        "success": {
+          "authority": {
+            "tenantId": "3afb3b2d-638e-5d83-a363-2f2ee2db5ee6",
+            "publicVariantId": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+            "publicSessionId": "session_p1a_fixture",
+            "publicAccountId": "account_p1a_fixture",
+            "deviceId": "device_p1a_fixture",
+            "agentCapabilities": [
+              "video_project_selection_v1"
+            ]
+          },
+          "source_at_session_creation": {
+            "accountId": "account_p1a_fixture",
+            "decisionTraceId": "trace_p1a_fixture",
+            "sourceKind": "radar_recommendation",
+            "recommendationId": "recommendation_p1a_fixture",
+            "sourceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selectedAngle": "angle_p1a_second",
+            "evidenceRefs": [
+              {
+                "kind": "radar_post",
+                "label": "Fixture evidence",
+                "publicUrl": null,
+                "capturedAt": "2023-11-14T22:10:20Z",
+                "qualityStatus": "verified"
+              }
+            ],
+            "expected": {
+              "metric": "completion_rate",
+              "target": null,
+              "unit": "percent",
+              "observationWindow": "72h",
+              "missing": [
+                "target"
+              ]
+            }
+          },
+          "request": {
+            "at": "2023-11-14T22:10:20Z",
+            "idempotencyKey": "p1a-select",
+            "input": {
+              "deviceId": "device_p1a_fixture",
+              "publicSessionId": "session_p1a_fixture",
+              "expectedRevision": 1,
+              "expectedWorkRevision": 1
+            },
+            "output": {
+              "requestId": "request_p1a_fixture",
+              "deviceId": "device_p1a_fixture",
+              "status": "pending",
+              "expiresAt": "2023-11-14T22:25:20Z",
+              "selectionRevision": 1
+            }
+          },
+          "poll": {
+            "at": "2023-11-14T22:11:20Z",
+            "output": {
+              "requests": [
+                {
+                  "request_id": "request_p1a_fixture",
+                  "public_variant_id": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+                  "public_account_id": "account_p1a_fixture",
+                  "public_session_id": "session_p1a_fixture",
+                  "expected_work_revision": 1,
+                  "expires_at": "2023-11-14T22:25:20Z",
+                  "revision": 1
+                }
+              ]
+            }
+          },
+          "studio_select": {
+            "input": {
+              "request_id": "request_p1a_fixture",
+              "public_variant_id": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+              "public_account_id": "account_p1a_fixture",
+              "public_session_id": "session_p1a_fixture",
+              "expected_work_revision": 1,
+              "expires_at": "2023-11-14T22:25:20Z",
+              "revision": 1
+            },
+            "output": {
+              "status": "confirmed",
+              "local_selection": {
+                "request_id": "request_p1a_fixture",
+                "public_variant_id": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+                "public_account_id": "account_p1a_fixture",
+                "public_session_id": "session_p1a_fixture",
+                "expected_work_revision": 1,
+                "device_id": "device_p1a_fixture",
+                "project_id": "project_fixture",
+                "project_revision": 2,
+                "selection_mode": "existing",
+                "confirmed_at": "2023-11-14T22:11:50Z"
+              }
+            }
+          },
+          "confirm": {
+            "at": "2023-11-14T22:12:00Z",
+            "idempotencyKey": "p1a-confirm",
+            "input": {
+              "expected_revision": 1,
+              "project_id": "project_fixture",
+              "project_revision": 2,
+              "selection_mode": "existing"
+            },
+            "output": {
+              "binding": {
+                "bindingId": "binding_p1a_fixture",
+                "bindingGeneration": 1,
+                "deviceId": "device_p1a_fixture",
+                "publicAccountId": "account_p1a_fixture",
+                "photoProjectId": "project_fixture",
+                "photoProjectRevision": 2
+              },
+              "selectionRevision": 2
+            }
+          },
+          "handoff": {
+            "at": "2023-11-14T22:13:20Z",
+            "idempotencyKey": "p1a-handoff",
+            "input": {
+              "expectedWorkRevision": 1,
+              "expectedVideoRevision": 2,
+              "expectedDocumentRef": {
+                "bodyAuthority": "internal",
+                "bodyChecksum": "sha256:3efdf18737150976e48f3d0dea247a631821abcf4e12e023b7ff9c6a804c2b72",
+                "publicArtifactId": "artifact_04fb38bb330f57e785f77d4df33cbaa4",
+                "remoteDocumentVersion": null,
+                "revision": 2
+              },
+              "deviceId": "device_p1a_fixture",
+              "binding": {
+                "bindingId": "binding_p1a_fixture",
+                "bindingGeneration": 1
+              },
+              "line": "spoken",
+              "synthesizeNarration": false
+            },
+            "output": {
+              "ok": true,
+              "video": {
+                "publicVariantId": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+                "workRevision": 1,
+                "revision": 3,
+                "binding": {
+                  "bindingId": "binding_p1a_fixture",
+                  "bindingGeneration": 1,
+                  "deviceId": "device_p1a_fixture",
+                  "publicAccountId": "account_p1a_fixture",
+                  "photoProjectId": "project_fixture",
+                  "photoProjectRevision": 2
+                },
+                "identity": {
+                  "catalogDigest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
+                  "confirmationRef": "confirm_03a3fdb80a315524933fb3cf9b87a609",
+                  "confirmedContentDigest": "sha256:0203157b637661d2c641a666ee7066e7265b9f2cf7ef7cb84b8209e04b154cf2",
+                  "jobId": "job_4c33f527e6ea5c608121f6b83be35437",
+                  "photoProjectId": "project_fixture",
+                  "photoProjectRevision": 2,
+                  "publicContentId": "content_258e9f35f574525a839d5da33926ca7e",
+                  "publicTenantId": "ten_019e3d3cf7e6853fa4d2930fa4859ee4",
+                  "publicVariantId": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+                  "workRevision": 1
+                }
+              }
+            }
+          },
+          "source_at_job_creation": {
+            "output": {
+              "jobId": "job_4c33f527e6ea5c608121f6b83be35437",
+              "publicSessionId": "session_p1a_fixture",
+              "publicVariantId": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+              "sourceSnapshot": {
+                "accountId": "account_p1a_fixture",
+                "decisionTraceId": "trace_p1a_fixture",
+                "sourceKind": "radar_recommendation",
+                "recommendationId": "recommendation_p1a_fixture",
+                "sourceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "selectedAngle": "angle_p1a_second",
+                "evidenceRefs": [
+                  {
+                    "kind": "radar_post",
+                    "label": "Fixture evidence",
+                    "publicUrl": null,
+                    "capturedAt": "2023-11-14T22:10:20Z",
+                    "qualityStatus": "verified"
+                  }
+                ],
+                "expected": {
+                  "metric": "completion_rate",
+                  "target": null,
+                  "unit": "percent",
+                  "observationWindow": "72h",
+                  "missing": [
+                    "target"
+                  ]
+                }
+              }
+            }
+          },
+          "studio_stage": {
+            "input": {
+              "descriptor": {
+                "animations": [],
+                "documentRef": {
+                  "bodyAuthority": "internal",
+                  "bodyChecksum": "sha256:3efdf18737150976e48f3d0dea247a631821abcf4e12e023b7ff9c6a804c2b72",
+                  "publicArtifactId": "artifact_04fb38bb330f57e785f77d4df33cbaa4",
+                  "remoteDocumentVersion": null,
+                  "revision": 2
+                },
+                "handedAt": "2023-11-14T22:13:20Z",
+                "identity": {
+                  "catalogDigest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
+                  "confirmationRef": "confirm_03a3fdb80a315524933fb3cf9b87a609",
+                  "confirmedContentDigest": "sha256:0203157b637661d2c641a666ee7066e7265b9f2cf7ef7cb84b8209e04b154cf2",
+                  "jobId": "job_4c33f527e6ea5c608121f6b83be35437",
+                  "photoProjectId": "project_fixture",
+                  "photoProjectRevision": 2,
+                  "publicContentId": "content_258e9f35f574525a839d5da33926ca7e",
+                  "publicTenantId": "ten_019e3d3cf7e6853fa4d2930fa4859ee4",
+                  "publicVariantId": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+                  "workRevision": 1
+                },
+                "mxHandoff": {
+                  "animations": [],
+                  "handoff_digest": "sha256:5a97321f39c6650623c0656c166b8d808eadf5154f38589c8ec28e05f07f59c1",
+                  "identity": {
+                    "catalog_digest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
+                    "confirmation_ref": "confirm_03a3fdb80a315524933fb3cf9b87a609",
+                    "job_id": "job_4c33f527e6ea5c608121f6b83be35437",
+                    "project_id": "project_fixture",
+                    "project_revision": 2,
+                    "tenant_id": "3afb3b2d-638e-5d83-a363-2f2ee2db5ee6",
+                    "work_id": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+                    "work_revision": 1
+                  },
+                  "script": "这是用于交接测试的旁白。",
+                  "storyboard": [
+                    {
+                      "audio": "旁白",
+                      "camera": "全屏",
+                      "dialogue": "这是用于交接测试的旁白。",
+                      "shot": "01",
+                      "subtitle": "这是用于交接测试的旁白。",
+                      "visual": "图形动画"
+                    }
+                  ],
+                  "tts_ref": null
+                },
+                "narration": null,
+                "scope": "video_handoff_v1",
+                "script": "这是用于交接测试的旁白。",
+                "shots": [
+                  {
+                    "audio": "旁白",
+                    "camera": "全屏",
+                    "dialogue": "这是用于交接测试的旁白。",
+                    "failureCode": null,
+                    "saveStatus": "saved",
+                    "shot": {
+                      "endSeconds": 1,
+                      "shotId": "01",
+                      "startSeconds": 0
+                    },
+                    "subtitle": "这是用于交接测试的旁白。",
+                    "visual": {
+                      "image": null,
+                      "text": "图形动画"
+                    }
+                  }
+                ],
+                "storyboardRevision": 2
+              },
+              "input_ref": "handoffs/p1a-fixture/video.json",
+              "local_selection": {
+                "request_id": "request_p1a_fixture",
+                "public_variant_id": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+                "public_account_id": "account_p1a_fixture",
+                "public_session_id": "session_p1a_fixture",
+                "expected_work_revision": 1,
+                "device_id": "device_p1a_fixture",
+                "project_id": "project_fixture",
+                "project_revision": 2,
+                "selection_mode": "existing",
+                "confirmed_at": "2023-11-14T22:11:50Z"
+              }
+            },
+            "output": {
+              "job_id": "job_4c33f527e6ea5c608121f6b83be35437",
+              "device_id": "device_p1a_fixture",
+              "project_id": "project_fixture",
+              "project_revision": 2,
+              "confirmation_ref": "confirm_03a3fdb80a315524933fb3cf9b87a609",
+              "handoff_digest": "sha256:5a97321f39c6650623c0656c166b8d808eadf5154f38589c8ec28e05f07f59c1",
+              "input_ref": "handoffs/p1a-fixture/video.json",
+              "binding_generation": 1
+            }
+          },
+          "unbind": {
+            "at": "2023-11-14T22:14:20Z",
+            "idempotencyKey": "p1a-unbind",
+            "bindingId": "binding_p1a_fixture",
+            "input": {
+              "deviceId": "device_p1a_fixture",
+              "publicAccountId": "account_p1a_fixture",
+              "expectedRevision": 3
+            },
+            "output": {
+              "bindingGeneration": 2,
+              "video": {
+                "publicVariantId": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+                "workRevision": 1,
+                "revision": 4,
+                "binding": null,
+                "identity": null
+              }
+            }
+          }
+        },
+        "cancel": {
+          "at": "2023-11-14T22:12:20Z",
+          "idempotencyKey": "p1a-cancel",
+          "requestId": "request_p1a_fixture",
+          "input": {
+            "deviceId": "device_p1a_fixture",
+            "publicAccountId": "account_p1a_fixture",
+            "expectedRevision": 1
+          },
+          "output": {
+            "requestId": "request_p1a_fixture",
+            "status": "cancelled",
+            "selectionRevision": 2
+          }
+        },
+        "studio_pending": {
+          "status": "pending"
+        },
+        "studio_created": {
+          "status": "confirmed",
+          "local_selection": {
+            "request_id": "request_p1a_fixture",
+            "public_variant_id": "variant_e08843eebc0c5e4ebfe37725c3fddda7",
+            "public_account_id": "account_p1a_fixture",
+            "public_session_id": "session_p1a_fixture",
+            "expected_work_revision": 1,
+            "device_id": "device_p1a_fixture",
+            "project_id": "project_fixture",
+            "project_revision": 2,
+            "selection_mode": "created",
+            "confirmed_at": "2023-11-14T22:11:50Z"
+          }
+        },
+        "studio_rejections": [
+          {
+            "name": "no_explicit_confirmation",
+            "port": "select_project",
+            "path": [
+              "output",
+              "local_selection"
+            ],
+            "remove": true,
+            "error": "video_identity_stale"
+          },
+          {
+            "name": "expired_studio_confirmation",
+            "port": "select_project",
+            "path": [
+              "output",
+              "local_selection",
+              "confirmed_at"
+            ],
+            "value": "2023-11-14T22:25:20Z",
+            "error": "video_selection_expired"
+          },
+          {
+            "name": "outside_workspace",
+            "port": "stage_handoff",
+            "path": [
+              "input",
+              "input_ref"
+            ],
+            "value": "../unrelated/video.json",
+            "error": "invalid_request"
+          },
+          {
+            "name": "other_device",
+            "port": "stage_handoff",
+            "path": [
+              "input",
+              "local_selection",
+              "device_id"
+            ],
+            "value": "device_other_fixture",
+            "error": "video_identity_stale"
+          },
+          {
+            "name": "other_project",
+            "port": "stage_handoff",
+            "path": [
+              "input",
+              "local_selection",
+              "project_id"
+            ],
+            "value": "project_same_name_other_id",
+            "error": "video_identity_stale"
+          },
+          {
+            "name": "other_project_version",
+            "port": "stage_handoff",
+            "path": [
+              "input",
+              "local_selection",
+              "project_revision"
+            ],
+            "value": 3,
+            "error": "video_identity_stale"
+          },
+          {
+            "name": "changed_digest",
+            "port": "stage_handoff",
+            "path": [
+              "input",
+              "descriptor",
+              "mxHandoff",
+              "handoff_digest"
+            ],
+            "value": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+            "error": "video_identity_stale"
+          }
+        ],
+        "source_selection": {
+          "adoptTopicCandidate": {
+            "sourceKind": "radar_recommendation",
+            "recommendationId": "recommendation_p1a_fixture",
+            "expectedHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selectedAngle": "angle_p1a_second"
+          },
+          "createCreationContent_initialContext_item": {
+            "publicSourceId": "trace_p1a_fixture",
+            "category": "topic_and_research",
+            "intent": "selected"
+          }
+        }
+      }
+    },
+    "api_schemas": {
+      "DocumentRevisionRef": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "publicArtifactId",
+          "revision",
+          "bodyChecksum",
+          "bodyAuthority"
+        ],
+        "properties": {
+          "publicArtifactId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,160}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "bodyChecksum": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "bodyAuthority": {
+            "type": "string",
+            "enum": [
+              "internal",
+              "lark"
+            ]
+          },
+          "remoteDocumentVersion": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "CreationVideoIdentity": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "jobId",
+          "publicTenantId",
+          "publicContentId",
+          "publicVariantId",
+          "workRevision",
+          "photoProjectId",
+          "photoProjectRevision",
+          "catalogDigest",
+          "confirmationRef",
+          "confirmedContentDigest"
+        ],
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,160}$"
+          },
+          "publicTenantId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,160}$"
+          },
+          "publicContentId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,160}$"
+          },
+          "publicVariantId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,160}$"
+          },
+          "workRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "photoProjectId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,160}$"
+          },
+          "photoProjectRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "catalogDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "confirmationRef": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{8,160}$"
+          },
+          "confirmedContentDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "description": "Server authority derived from authenticated tenant, exact confirmed document revisions and explicit Photo binding; input never establishes its own authority."
+      },
+      "VideoHandoffDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scope",
+          "identity",
+          "script",
+          "shots",
+          "animations",
+          "narration",
+          "documentRef",
+          "mxHandoff"
+        ],
+        "properties": {
+          "scope": {
+            "const": "video_handoff_v1"
+          },
+          "identity": {
+            "$ref": "#/api_schemas/CreationVideoIdentity"
+          },
+          "script": {
+            "type": "string"
+          },
+          "shots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/api_schemas/CreationVideoShot"
+            }
+          },
+          "animations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/api_schemas/CreationVideoAnimation"
+            }
+          },
+          "narration": {
+            "anyOf": [
+              {
+                "$ref": "#/api_schemas/CreationVideoNarration"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "mxHandoff": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "identity",
+              "script",
+              "storyboard",
+              "animations",
+              "tts_ref",
+              "handoff_digest"
+            ],
+            "properties": {
+              "identity": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "job_id",
+                  "tenant_id",
+                  "work_id",
+                  "work_revision",
+                  "project_id",
+                  "project_revision",
+                  "catalog_digest",
+                  "confirmation_ref"
+                ],
+                "properties": {
+                  "job_id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                  },
+                  "tenant_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "work_id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                  },
+                  "work_revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "project_id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                  },
+                  "project_revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "catalog_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "confirmation_ref": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                  }
+                }
+              },
+              "script": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200000
+              },
+              "storyboard": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "shot",
+                    "visual",
+                    "dialogue",
+                    "subtitle",
+                    "camera",
+                    "audio"
+                  ],
+                  "properties": {
+                    "shot": {
+                      "type": "string"
+                    },
+                    "visual": {
+                      "type": "string"
+                    },
+                    "dialogue": {
+                      "type": "string"
+                    },
+                    "subtitle": {
+                      "type": "string"
+                    },
+                    "camera": {
+                      "type": "string"
+                    },
+                    "audio": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "animations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "shot",
+                    "narration",
+                    "requirement"
+                  ],
+                  "properties": {
+                    "shot": {
+                      "type": "string"
+                    },
+                    "narration": {
+                      "type": "string"
+                    },
+                    "requirement": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "tts_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^video-inputs/job_[A-Za-z0-9_-]+/narration\\.wav$"
+              },
+              "handoff_digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              }
+            }
+          },
+          "documentRef": {
+            "$ref": "#/api_schemas/DocumentRevisionRef"
+          },
+          "retryShotId": {
+            "type": "string",
+            "pattern": "^[0-9]{2,3}$"
+          },
+          "renderShotIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9]{2,3}$"
+            }
+          },
+          "previousJobId": {
+            "type": "string",
+            "pattern": "^job_[A-Za-z0-9_-]+$"
+          },
+          "shotImageTask": {
+            "$ref": "#/api_schemas/CreationVideoShotImageTask"
+          },
+          "shotImageInputs": {
+            "type": "array",
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "shotId": {
+                  "type": "string",
+                  "pattern": "^[0-9]{2,3}$"
+                },
+                "artifact": {
+                  "$ref": "#/api_schemas/CreationVideoArtifact"
+                }
+              },
+              "required": [
+                "shotId",
+                "artifact"
+              ]
+            }
+          },
+          "handedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC time of this handoff, ending in Z."
+          },
+          "storyboardRevision": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "description": "SHA256 canonical JSON of scope/identity/confirmed script, six-column shots, animations and controlled TTS; descriptor artifact must match server confirmation, not a caller-supplied digest."
+      },
+      "CreationVideoShot": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "shot",
+          "visual",
+          "dialogue",
+          "subtitle",
+          "camera",
+          "audio",
+          "saveStatus",
+          "failureCode"
+        ],
+        "properties": {
+          "shot": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "shotId",
+              "startSeconds",
+              "endSeconds"
+            ],
+            "properties": {
+              "shotId": {
+                "type": "string",
+                "pattern": "^[0-9]{2,3}$"
+              },
+              "startSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "endSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "timeBasis": {
+                "enum": [
+                  "source",
+                  "edited",
+                  "narration"
+                ],
+                "description": "Explicit clock of shot start/end. Missing means unknown."
+              }
+            }
+          },
+          "visual": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "text",
+              "image"
+            ],
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "image": {
+                "oneOf": [
+                  {
+                    "$ref": "#/api_schemas/CreationVideoShotImage"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "dialogue": {
+            "type": "string"
+          },
+          "subtitle": {
+            "type": "string"
+          },
+          "camera": {
+            "type": "string"
+          },
+          "audio": {
+            "type": "string"
+          },
+          "saveStatus": {
+            "type": "string",
+            "enum": [
+              "saved",
+              "unsaved",
+              "failed"
+            ]
+          },
+          "failureCode": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,79}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "renderCode": {
+            "$ref": "#/api_schemas/CreationVideoRenderCode"
+          },
+          "sourceKind": {
+            "type": "string",
+            "enum": [
+              "original_video",
+              "code",
+              "illustration"
+            ],
+            "description": "Explicit shot provenance; never infer it from prose."
+          },
+          "suggestedSourceTimeSeconds": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "readOnly": true,
+            "description": "PA word-aligned source dialogue start; original video only, null when unavailable."
+          }
+        },
+        "description": "Exactly six canonical columns shot/visual/dialogue/subtitle/camera/audio, plus persistence status. Unique shot IDs, ordered non-overlapping start<end; server validates timeline."
+      },
+      "CreationVideoShotImage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "status",
+          "publicResourceId",
+          "sourceRef",
+          "sourceTimeSeconds",
+          "contentDigest",
+          "failureCode",
+          "rightsStatus"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "source_keyframe",
+              "code_render",
+              "generated_illustration",
+              "source_frame"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "saved",
+              "missing",
+              "failed",
+              "unsaved"
+            ]
+          },
+          "publicResourceId": {
+            "oneOf": [
+              {
+                "$ref": "#/api_schemas/PublicId"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sourceRef": {
+            "oneOf": [
+              {
+                "$ref": "#/api_schemas/PublicId"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sourceTimeSeconds": {
+            "oneOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "contentDigest": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "failureCode": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,79}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rightsStatus": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "pending",
+              "unknown"
+            ]
+          },
+          "artifact": {
+            "anyOf": [
+              {
+                "$ref": "#/api_schemas/CreationVideoArtifact"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "description": "Stage G image provenance; generated_illustration is non-photographic. source_frame stays local unless a separately authorized image resource already exists; video exchange grants no image upload permission."
+      },
+      "PublicId": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{8,160}$"
+      },
+      "CreationVideoArtifact": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "artifactId",
+          "sha256",
+          "mimeType",
+          "sizeBytes",
+          "downloadPath"
+        ],
+        "properties": {
+          "artifactId": {
+            "$ref": "#/api_schemas/PublicId"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "application/json",
+              "text/plain",
+              "video/mp4",
+              "audio/wav",
+              "audio/mpeg",
+              "image/jpeg"
+            ]
+          },
+          "sizeBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50000000
+          },
+          "downloadPath": {
+            "type": "string",
+            "pattern": "^/media/api/(jobs/[A-Za-z0-9_-]+/video-artifacts/[A-Za-z0-9_-]+|creation-workbench/variants/[A-Za-z0-9_-]+/video/narration/artifact)$"
+          }
+        },
+        "description": "Opaque authenticated job-scoped reference; never a local path or arbitrary URL. Download checks tenant, device/job assignment and scope."
+      },
+      "CreationVideoRenderCode": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "language": {
+            "const": "html"
+          },
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100000
+          },
+          "contentDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "language",
+          "code",
+          "contentDigest"
+        ]
+      },
+      "CreationVideoAnimation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "animationId",
+          "shotId",
+          "requirement",
+          "dialogue",
+          "dialogueStartSeconds",
+          "dialogueEndSeconds",
+          "suggestedStartSeconds",
+          "durationSeconds",
+          "layouts",
+          "selectedLayout",
+          "resolution"
+        ],
+        "properties": {
+          "animationId": {
+            "$ref": "#/api_schemas/PublicId"
+          },
+          "shotId": {
+            "type": "string",
+            "pattern": "^[0-9]{2,3}$"
+          },
+          "requirement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dialogue": {
+            "type": "string"
+          },
+          "dialogueStartSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "dialogueEndSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "suggestedStartSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "durationSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "layouts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "pip_right",
+                "full_screen",
+                "split_screen"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "selectedLayout": {
+            "type": "string",
+            "enum": [
+              "pip_right",
+              "full_screen",
+              "split_screen"
+            ]
+          },
+          "resolution": {
+            "type": "string",
+            "enum": [
+              "unresolved",
+              "speed_to_dialogue",
+              "hold_after_dialogue",
+              "rewrite_shorter"
+            ]
+          },
+          "timeBasis": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "source",
+              "edited",
+              "narration",
+              null
+            ]
+          }
+        },
+        "description": "Suggestions remain separate from dialogue/source text. Animation duration and spoken interval are independent; unresolved 12s vs 8s is visible."
+      },
+      "CreationVideoNarration": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "characterCount",
+          "unitCharacters",
+          "unitPriceYuan",
+          "estimatedCostYuan",
+          "currency",
+          "voiceId",
+          "modelId",
+          "artifact",
+          "durationSeconds",
+          "cacheKey",
+          "failureCode",
+          "sentenceTimings"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_requested",
+              "queued",
+              "synthesizing",
+              "ready",
+              "failed"
+            ]
+          },
+          "characterCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "unitCharacters": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "unitPriceYuan": {
+            "type": "number",
+            "minimum": 0
+          },
+          "estimatedCostYuan": {
+            "type": "number",
+            "minimum": 0
+          },
+          "currency": {
+            "const": "CNY"
+          },
+          "voiceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "modelId": {
+            "type": "string",
+            "minLength": 1,
+            "default": "qwen3-tts-flash"
+          },
+          "artifact": {
+            "oneOf": [
+              {
+                "$ref": "#/api_schemas/CreationVideoArtifact"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "durationSeconds": {
+            "oneOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cacheKey": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "failureCode": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,79}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unknownSubmission": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sentenceIndex",
+              "sentenceCacheKey",
+              "text",
+              "querySupported",
+              "confirmationRequired"
+            ],
+            "properties": {
+              "sentenceIndex": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "sentenceCacheKey": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "querySupported": {
+                "const": false,
+                "description": "This synchronous Qwen-TTS endpoint has no documented result lookup by request ID."
+              },
+              "confirmationRequired": {
+                "const": true
+              }
+            }
+          },
+          "recoveryConfirmations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sentenceCacheKey",
+                "confirmationId",
+                "confirmedBy",
+                "confirmedAt"
+              ],
+              "properties": {
+                "sentenceCacheKey": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "confirmationId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "confirmedBy": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Authenticated actor recorded by server; never caller supplied."
+                },
+                "confirmedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Server confirmation time."
+                }
+              }
+            }
+          },
+          "failureDetails": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "phase": {
+                "type": "string",
+                "enum": [
+                  "submit",
+                  "download"
+                ]
+              },
+              "connectTimeoutSeconds": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "readTimeoutSeconds": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "transport": {
+                "type": "string",
+                "enum": [
+                  "direct",
+                  "proxy"
+                ]
+              },
+              "elapsedSeconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "exceptionType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sentenceIndex": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "sentenceCacheKey": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "submissionUnknown": {
+                "type": "boolean"
+              }
+            }
+          },
+          "sentenceTimings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "text",
+                "startSeconds",
+                "endSeconds"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "startSeconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "englishText": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2000,
+                  "description": "English display only; never submitted to TTS."
+                },
+                "endSeconds": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "subtitleCues": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "text",
+                "startFrame",
+                "endFrame",
+                "englishText"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 28
+                },
+                "startFrame": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "endFrame": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "englishText": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2000,
+                  "description": "Complete sense unit translated from this displayed Chinese cue; never split proportionally or submitted to TTS."
+                }
+              }
+            }
+          },
+          "subtitleTranslation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "cacheKey",
+              "narrationCacheKey",
+              "documentRef",
+              "modelId"
+            ],
+            "properties": {
+              "cacheKey": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "narrationCacheKey": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "documentRef": {
+                "$ref": "#/api_schemas/DocumentRevisionRef"
+              },
+              "modelId": {
+                "type": "string",
+                "enum": [
+                  "local-codex",
+                  "local-claude-opus-5-5"
+                ]
+              },
+              "planVersion": {
+                "type": "string",
+                "const": "display-cue-v1"
+              },
+              "fps": {
+                "type": "integer",
+                "const": 30
+              },
+              "totalFrames": {
+                "type": "integer",
+                "minimum": 2
+              }
+            }
+          },
+          "waveformPeaks": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 400,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "waveformSource": {
+            "const": "narration"
+          }
+        },
+        "description": "1460*0.016/200=0.1168 yuan, displayed rounded 0.12; estimate only. Sentence times are not word ASR. Unknown submissions require sentence-bound duplicate-billing consent; completed caches are reused."
+      },
+      "CreationVideoShotImageTask": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "source_frame",
+              "code_render"
+            ]
+          },
+          "shotId": {
+            "type": "string",
+            "pattern": "^[0-9]{2,3}$"
+          },
+          "sourceTimeSeconds": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "action",
+          "shotId"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "action": {
+                  "const": "source_frame"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "sourceTimeSeconds"
+              ]
+            }
+          }
+        ]
+      }
+    }
   }
 }

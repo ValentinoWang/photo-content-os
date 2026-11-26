@@ -18,7 +18,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
-from openclaw_product_contract import SNAPSHOT_PATH, validate_snapshot
+from openclaw_product_contract import ProductContractError, SNAPSHOT_PATH, p1a_content_digest, validate_snapshot
 
 
 CATALOG_RELATIVE_PATH = Path("apps/media/agent/openclaw_media/data/pipelines.json")
@@ -59,10 +59,10 @@ def catalog_digest(pipelines: list[dict[str, Any]]) -> str:
     return "sha256:" + hashlib.sha256(canonical_json(definitions)).hexdigest()
 
 
-def read_json(path: Path, label: str) -> dict[str, Any]:
+def read_json(path: Path, label: str, *, raw: bytes | None = None) -> dict[str, Any]:
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        data = json.loads(raw if raw is not None else path.read_bytes())
+    except (OSError, UnicodeError, ValueError) as exc:
         raise SnapshotRefreshError(f"cannot read {label}: {path}") from exc
     if not isinstance(data, dict):
         raise SnapshotRefreshError(f"{label} root must be an object: {path}")
@@ -87,32 +87,40 @@ def checkout_commit(upstream_root: Path) -> str:
     return commit
 
 
-def require_committed_catalog(upstream_root: Path, catalog_relative: Path) -> None:
-    """Reject a catalog that would not be reproducible from the recorded commit."""
-
+def require_committed_catalog(upstream_root: Path, relative: Path, commit: str) -> bytes:
+    """Return source bytes from the pinned commit after checking the checkout."""
     try:
-        completed = subprocess.run(
-            ["git", "-C", str(upstream_root), "status", "--porcelain", "--", catalog_relative.as_posix()],
-            check=False,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-    except OSError as exc:
-        raise SnapshotRefreshError("git is required to inspect the OpenClaw Media catalog state") from exc
-    if completed.returncode != 0:
-        detail = completed.stderr.strip() or "not a Git checkout"
-        raise SnapshotRefreshError(f"cannot inspect upstream catalog state: {detail}")
-    if completed.stdout.strip():
-        raise SnapshotRefreshError("upstream pipeline catalog has uncommitted changes and cannot be pinned to HEAD")
+        committed = subprocess.run(
+            ["git", "-C", str(upstream_root), "show", f"{commit}:{relative.as_posix()}"],
+            check=True,
+            capture_output=True,
+        ).stdout
+        current = (upstream_root / relative).read_bytes()
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise SnapshotRefreshError(f"cannot read upstream file from checkout and commit: {relative}") from exc
+    if current != committed:
+        raise SnapshotRefreshError(f"upstream file has uncommitted changes: {relative}")
+    return committed
 
 
-def validated_catalog(upstream_root: Path, catalog_relative: Path) -> dict[str, Any]:
+def require_clean_checkout(upstream_root: Path) -> None:
+    try:
+        status = subprocess.run(
+            ["git", "-C", str(upstream_root), "status", "--porcelain", "--untracked-files=all"],
+            check=True,
+            capture_output=True,
+        ).stdout
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise SnapshotRefreshError("cannot inspect upstream checkout state") from exc
+    if status:
+        raise SnapshotRefreshError("upstream checkout has uncommitted changes and cannot be pinned")
+
+
+def validated_catalog(upstream_root: Path, catalog_relative: Path, commit: str) -> dict[str, Any]:
     if catalog_relative.is_absolute() or ".." in catalog_relative.parts:
         raise SnapshotRefreshError("catalog path must be relative to the upstream checkout")
-    require_committed_catalog(upstream_root, catalog_relative)
-    catalog_path = upstream_root / catalog_relative
-    catalog = read_json(catalog_path, "upstream pipeline catalog")
+    raw = require_committed_catalog(upstream_root, catalog_relative, commit)
+    catalog = read_json(upstream_root / catalog_relative, "upstream pipeline catalog", raw=raw)
     pipelines = catalog.get("pipelines")
     if not isinstance(pipelines, list) or not all(isinstance(item, dict) for item in pipelines):
         raise SnapshotRefreshError("upstream pipeline catalog.pipelines must be a list of objects")
@@ -146,16 +154,49 @@ def regenerate_snapshot(
         raise SnapshotRefreshError(f"upstream checkout is not a directory: {root}")
     existing = read_json(snapshot_path.expanduser().resolve(), "existing compatibility snapshot")
     validate_snapshot(existing)
-    catalog = validated_catalog(root, catalog_relative)
-    require_committed_catalog(root, PRODUCT_CONTRACT_RELATIVE_PATH)
-    product_contract = read_json(root / PRODUCT_CONTRACT_RELATIVE_PATH, "upstream product contract")
+    require_clean_checkout(root)
+    commit = checkout_commit(root)
+    catalog = validated_catalog(root, catalog_relative, commit)
+    source_bytes = require_committed_catalog(root, PRODUCT_CONTRACT_RELATIVE_PATH, commit)
+    product_contract = read_json(root / PRODUCT_CONTRACT_RELATIVE_PATH, "upstream product contract", raw=source_bytes)
     api_base = product_contract.get("api_base")
     if not isinstance(api_base, str) or not api_base.startswith("/") or not api_base.strip("/"):
         raise SnapshotRefreshError("upstream product contract.api_base must be an absolute API path")
+    section = product_contract.get("p1a_first_project")
+    if not isinstance(section, dict):
+        raise SnapshotRefreshError("upstream product contract missing P1a first-project definitions")
+    all_schemas = product_contract.get("api_schemas")
+    if not isinstance(all_schemas, dict):
+        raise SnapshotRefreshError("upstream product contract missing api_schemas")
+    included: dict[str, Any] = {}
+
+    def collect(value: Any) -> None:
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if (key == "$ref" or key.endswith("_schema_ref")) and isinstance(child, str) and child.startswith("#/api_schemas/"):
+                    name = child.removeprefix("#/api_schemas/")
+                    if name not in all_schemas:
+                        raise SnapshotRefreshError(f"missing upstream schema: {name}")
+                    if name not in included:
+                        included[name] = all_schemas[name]
+                        collect(included[name])
+                else:
+                    collect(child)
+        elif isinstance(value, list):
+            for child in value:
+                collect(child)
+
+    collect(section)
     candidate = dict(existing)
     candidate.update(
         {
-            "upstream_commit": checkout_commit(root),
+            "p1a_first_project": {
+                "source_sha256": "sha256:" + hashlib.sha256(source_bytes).hexdigest(),
+                "content_sha256": p1a_content_digest(section, included),
+                "contract": section,
+                "api_schemas": included,
+            },
+            "upstream_commit": commit,
             "upstream_contract_id": catalog["contract_id"],
             "upstream_contract_version": catalog["contract_version"],
             "catalog_digest": catalog["catalog_digest"],
@@ -164,6 +205,8 @@ def regenerate_snapshot(
         }
     )
     validate_snapshot(candidate)
+    if checkout_commit(root) != commit:
+        raise SnapshotRefreshError("upstream HEAD changed during snapshot generation")
     return candidate
 
 
@@ -216,7 +259,7 @@ def main() -> int:
             print(f"snapshot={args.snapshot.expanduser().resolve()}")
         else:
             print(json.dumps(candidate, ensure_ascii=False, indent=2))
-    except SnapshotRefreshError as exc:
+    except (SnapshotRefreshError, ProductContractError) as exc:
         parser.exit(2, f"blocked: {exc}\n")
     return 0
 
