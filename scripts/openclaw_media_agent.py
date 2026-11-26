@@ -11,13 +11,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import hashlib
 from dataclasses import asdict
 from importlib import import_module
 import subprocess
 import sys
 from pathlib import Path
-from typing import Sequence
+from typing import Callable, Mapping, Sequence
 
 from openclaw_product_contract import (
     ProductContractError,
@@ -72,7 +71,7 @@ def build_parser() -> argparse.ArgumentParser:
     once.add_argument("--workspace")
     once.add_argument("--agent-dir")
     once.add_argument("--local-endpoint", action="store_true")
-    once.add_argument("--photo-binding", type=Path, help="Explicit local CreativeProject and Photo entrypoint binding")
+    once.add_argument("--state-dir", type=Path, help="Studio state directory holding the CreativeProject store")
     once.add_argument("--live", action="store_true", help="Allow explicitly bound paid transcription")
 
     watch = commands.add_parser("watch", help="run the canonical outbound agent in the foreground")
@@ -80,7 +79,7 @@ def build_parser() -> argparse.ArgumentParser:
     watch.add_argument("--agent-dir")
     watch.add_argument("--interval", type=float, default=30.0)
     watch.add_argument("--local-endpoint", action="store_true")
-    watch.add_argument("--photo-binding", type=Path)
+    watch.add_argument("--state-dir", type=Path)
     watch.add_argument("--live", action="store_true")
 
     local_run = commands.add_parser("run", help="run one installed pipeline locally through the canonical runtime")
@@ -88,24 +87,45 @@ def build_parser() -> argparse.ArgumentParser:
     local_run.add_argument("--workspace", required=True)
     local_run.add_argument("--workspace-ref")
     local_run.add_argument("--descriptor-json")
-    local_run.add_argument("--photo-binding", type=Path)
-    local_run.add_argument("--live", action="store_true")
 
     return parser
 
 
-def _agent_options(opts: argparse.Namespace) -> list[str]:
-    result: list[str] = []
-    if getattr(opts, "agent_dir", None):
-        result.extend(["--agent-dir", opts.agent_dir])
-    if getattr(opts, "workspace", None):
-        result.extend(["--workspace", str(Path(opts.workspace).expanduser().resolve())])
-    if getattr(opts, "local_endpoint", False):
-        result.append("--local-endpoint")
-    return result
+def _run_installed_agent(opts: argparse.Namespace, confirmation_provider: Callable[[Mapping], Mapping | None] | None) -> int:
+    """Installed ``watch``/``once``: existing CLI state and credentials plus the Studio port.
+
+    Pairing, polling, leases and server calls stay in the installed package. Only
+    its two injection points are filled: the Studio selection/staging port and a
+    runtime factory that reads each job's binding from the project it was staged to.
+    """
+    cli = import_module("openclaw_media.cli")
+    from media_project_selection import DEFAULT_STATE_DIR, StudioSelectionPort
+    from openclaw_video_execution import installed_runtime_factory
+    from studio.project_store import ProjectStore
+
+    agent_store = cli._agent_store(opts.agent_dir)
+    state = agent_store.load()
+    if not state.remote_base_url or not state.device_id:
+        print("photo-content-os: error: agent_not_paired", file=sys.stderr)
+        return 2
+    workspace = cli._workspace(opts.workspace, state.workspace)
+    store = ProjectStore(opts.state_dir or DEFAULT_STATE_DIR)
+    port = StudioSelectionPort(store, device_id=state.device_id, workspace=workspace, confirm=confirmation_provider)
+    factory = installed_runtime_factory(store, device_id=state.device_id, provider=cli._provider(), live=opts.live)
+    agent, remote = cli._agent_from_state(agent_store, workspace=str(workspace), local_endpoint=opts.local_endpoint,
+                                          studio_port=port, runtime_factory=factory)
+    try:
+        if opts.command == "watch":
+            agent.run_forever(interval=max(1.0, opts.interval))
+        else:
+            agent.run_once()
+        print(json.dumps(asdict(agent.state()), ensure_ascii=False))
+        return 1 if agent.state().status == "blocked" else 0
+    finally:
+        remote.close()
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Sequence[str] | None = None, *, confirmation_provider: Callable[[Mapping], Mapping | None] | None = None) -> int:
     parser = build_parser()
     opts = parser.parse_args(argv)
     try:
@@ -117,41 +137,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         require_cloud = opts.command == "pair"
         assert_compatible(require_cloud_platform=require_cloud)
 
-        if getattr(opts, "photo_binding", None):
-            from openclaw_video_execution import runtime_factory
-            factory = runtime_factory(opts.photo_binding, live=opts.live, for_agent=opts.command in {"once", "watch"})
-            if opts.command in {"once", "watch"}:
-                # The installed CLI owns endpoint, credentials and persistent
-                # agent state. Only its existing runtime_factory hook changes.
-                cli = import_module("openclaw_media.cli")
-                agent, remote = cli._agent_from_state(cli._agent_store(opts.agent_dir), workspace=opts.workspace, local_endpoint=opts.local_endpoint)
-                agent.runtime_factory = factory
-                try:
-                    if opts.command == "watch":
-                        agent.run_forever(interval=max(1.0, opts.interval))
-                    else:
-                        agent.run_once()
-                    print(json.dumps(asdict(agent.state()), ensure_ascii=False))
-                    return 1 if agent.state().status == "blocked" else 0
-                finally:
-                    remote.close()
-            if opts.command == "run":
-                InstalledCatalog = import_module("openclaw_media.catalog").InstalledCatalog
-                descriptor = json.loads(opts.descriptor_json) if opts.descriptor_json else {"workspace_ref": safe_workspace_ref(opts.workspace_ref)}
-                if not isinstance(descriptor, dict):
-                    raise ProductContractError("descriptor_invalid")
-                catalog = InstalledCatalog()
-                resolved = pipeline_id(opts.pipeline)
-                pipeline = next(p for p in catalog.manifest["pipelines"] if p["pipeline_id"] == resolved)
-                runtime = factory(Path(opts.workspace).expanduser().resolve(), catalog)
-                # The local operator selects a run identity; PipelineRuntime
-                # enforces replay conflicts and checks durable artifacts.
-                run_ref = "runs/" + hashlib.sha256(json.dumps(descriptor, sort_keys=True).encode()).hexdigest()[:32]
-                outcome = runtime.create_run(resolved, pipeline["version"], catalog.manifest["catalog_digest"], run_ref=run_ref, inputs=descriptor)
-                if outcome.status not in {"pending_manual", "cancelled"}:
-                    outcome = runtime.execute(run_ref, inputs=descriptor)
-                print(outcome.model_dump_json())
-                return 0 if outcome.status == "succeeded" else 1
+        if opts.command in {"once", "watch"}:
+            return _run_installed_agent(opts, confirmation_provider)
 
         if opts.command == "pair":
             args = [
@@ -175,12 +162,6 @@ def main(argv: Sequence[str] | None = None) -> int:
             if opts.agent_dir:
                 args.extend(["--agent-dir", opts.agent_dir])
             return run_cli(args)
-        if opts.command == "once":
-            return run_cli(["agent", "run", "--once", *_agent_options(opts)])
-        if opts.command == "watch":
-            return run_cli(
-                ["agent", "run", "--foreground", "--interval", str(max(1.0, opts.interval)), *_agent_options(opts)]
-            )
         if opts.command == "run":
             resolved = pipeline_id(opts.pipeline)
             if opts.descriptor_json:

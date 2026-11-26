@@ -42,7 +42,7 @@ def test_source_frame_save_confirmed_rewrite_target_render_and_real_posters(vide
     original = {p.name: adapter.file_sha256(p) for p in (source, project / 'voice.wav')}
     store = tmp_path / 'creative-store.json'
     store.write_text(json.dumps({'schema_version': 'creative_project_store_v1', 'projects': [{'id': 'project_fixture', 'revision': 2}]}))
-    binding_path = tmp_path / 'photo-binding.json'
+    binding_path = tmp_path / 'run-binding.json'
     v = video; service = v['service']; state = v['state']
     shots = []
     for index in range(2):
