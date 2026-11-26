@@ -216,7 +216,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-26T07:24:31.824548Z",
+  "generated_at": "2026-11-26T07:53:05.731534Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -229,12 +229,12 @@
       ],
       "latest_run": null,
       "loop_name": "Studio 能用 Concat 精修后回传",
-      "ready_at": "2026-11-26T07:24:31.824548Z",
+      "ready_at": "2026-11-26T07:53:05.731534Z",
       "release_slice": "preview-chain-p0",
       "required_role": "任务委托人",
       "scope_hints": [],
       "status": "PENDING",
-      "summary": "Concat 回传读回的替身测试已通过，软件列表和精修后回传待人工核对。",
+      "summary": "Concat 回传读回、软件列表和候选下载路径的替身测试已通过，软件列表和精修后回传待人工核对。",
       "task_id": "2026-11-26-Pho_R18-concat-return",
       "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return"
     },
@@ -525,5 +525,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "86baf63e5bb6314c6190babb9cc8b17cc6a30c416f8399fef2831affb7571ff5"
+  "source_facts_sha256": "45f6012edc88283319b36365324dc8c88db1dd35a61ef09607937a4588fa41fe"
 }

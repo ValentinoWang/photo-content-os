@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-11-26T07:24:31.824548Z
-- 来源事实 SHA-256：86baf63e5bb6314c6190babb9cc8b17cc6a30c416f8399fef2831affb7571ff5
+- 事实时间：2026-11-26T07:53:05.731534Z
+- 来源事实 SHA-256：45f6012edc88283319b36365324dc8c88db1dd35a61ef09607937a4588fa41fe
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -58,7 +58,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
-| 2026-11-26T07:24:31.824548Z | 2026-11-26-Pho_R18-concat-return | Studio 能用 Concat 精修后回传 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md | - | - |
+| 2026-11-26T07:53:05.731534Z | 2026-11-26-Pho_R18-concat-return | Studio 能用 Concat 精修后回传 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md | - | - |
 | 2026-11-26T06:46:57.782327Z | 2026-11-26-Pho_R17-openclaw-contract-api-base | 契约快照接口前缀跟随策划台 | 任务委托人 | 1 | acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md | - | - |
 | 2026-11-25T15:59:45.752476Z | 2026-11-25-Pho_R16-avatar-http-oss | 数字人结果链接是 http 时安全升级为 https 取回 | 任务委托人 | 2 | acceptance/human/2026-W48/未-2026-11-25-Pho_R16-avatar-http-oss/checklist.md | - | - |
 | 2026-11-25T09:15:40.596630Z | 2026-11-25-Pho_R15-dreamverse-shot-controls | 万相镜头支持关闭提示词改写与默认去标负面词 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-25-Pho_R15-dreamverse-shot-controls/checklist.md | - | - |
