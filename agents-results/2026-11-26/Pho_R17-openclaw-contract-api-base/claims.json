@@ -1,0 +1,21 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.openclaw-contract-api-base",
+    "open_route": "note:运行 .venv/bin/python scripts/doctor.py，配对行应显示 1e3eb410cd3b",
+    "surfaces": [
+      "photo.tests-scripts",
+      "studio.backend",
+      "photo.documentation"
+    ],
+    "relations": [],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/shots/H-01-1.png",
+        "sha256": "ed991b630f5a05072faf0cb6a8c893331e2bd7d8d9329122fa14e64ca98288a2",
+        "caption": "制作台自检输出 · 终端摘录渲染截图",
+        "captured_at": "2026-11-26T06:46:42.610Z"
+      }
+    ]
+  }
+]

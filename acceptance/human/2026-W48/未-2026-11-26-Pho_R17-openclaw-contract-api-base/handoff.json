@@ -1,0 +1,62 @@
+{
+  "baseline": {
+    "base": "c93bab6b7d4d03beb07d9cf8040d214910bc2958",
+    "branch": "main",
+    "head": "e73e38ed009a91b3b905fc0d2497b1a36d8a644d",
+    "tree": "58ec2766630d08640f499a460cc6758e28195429"
+  },
+  "binding_sha256": "b94bf6ac58400c0d03859991e69868573741ac4e3c1ca7d9019f3de807b6ca0c",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "7d8f9fe3ceb1d158ef837868a9ea440f4b236ec0ff955ff5cdc7758ba265dad8",
+  "claims": [
+    {
+      "claim_key": "photo.openclaw-contract-api-base",
+      "item": "H-01",
+      "open_route": "note:运行 .venv/bin/python scripts/doctor.py，配对行应显示 1e3eb410cd3b",
+      "relations": [],
+      "screenshots": [
+        {
+          "caption": "制作台自检输出 · 终端摘录渲染截图",
+          "captured_at": "2026-11-26T06:46:42.610Z",
+          "path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/shots/H-01-1.png",
+          "sha256": "ed991b630f5a05072faf0cb6a8c893331e2bd7d8d9329122fa14e64ca98288a2"
+        }
+      ],
+      "surfaces": [
+        "photo.documentation",
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance-contract.md",
+  "contract_sha256": "a5e3ab863dafe7fa2cd60eb908347320c72c4ffd5411393bffd90cdd76148df1",
+  "contract_version": "1",
+  "estimated_minutes": 1,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.openclaw-contract-api-base"
+  ],
+  "loop_name": "契约快照接口前缀跟随策划台",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/machine/unit/runs/20261126T064315Z-local-d22784/result.md",
+      "result_sha256": "5ff6a7a0d2d7e188d7fe59d6987af07e2fab450c5131efd827cd448e2a647a31",
+      "run_id": "20261126T064315Z-local-d22784",
+      "source_identity": "e73e38ed009a91b3b905fc0d2497b1a36d8a644d"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-26T06:46:57.782327Z",
+  "release_slice": "preview-chain-p0",
+  "request_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "e73e38ed009a91b3b905fc0d2497b1a36d8a644d",
+  "summary": "契约和 Agent 兼容检查已通过，制作台自检显示的版本待人工核对。",
+  "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base"
+}

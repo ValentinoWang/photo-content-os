@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-25T15:59:45.752476Z",
+  "generated_at": "2026-11-26T06:46:57.782327Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md",
+      "estimated_minutes": 1,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/handoff.json",
+      "invalidation_keys": [
+        "photo.openclaw-contract-api-base"
+      ],
+      "latest_run": null,
+      "loop_name": "契约快照接口前缀跟随策划台",
+      "ready_at": "2026-11-26T06:46:57.782327Z",
+      "release_slice": "preview-chain-p0",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "契约和 Agent 兼容检查已通过，制作台自检显示的版本待人工核对。",
+      "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-25-Pho_R16-avatar-http-oss/checklist.md",
@@ -486,5 +505,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "68cf24be4a1f7963ada55f4c9d0cc92e812cb4a831702d2eaeeac46e88e91ff0"
+  "source_facts_sha256": "8e41c281a4e6477a2ac1d951c3a705acc401fe5eea9378f868b30140807f76fe"
 }

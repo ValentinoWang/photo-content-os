@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+  "project": "photo-content-os",
+  "title": "契约快照接口前缀跟随策划台",
+  "raw_request": "任务单 B2：改成从上游权威文件读 api_base，不再写死；制作台自有的别名和兼容策略保留。第 2 轮更正：在制作台目录运行 .venv/bin/python scripts/doctor.py，openclaw_cloud_pairing 一行显示上游 1e3eb410cd3b。",
+  "author": {
+    "agent": "codex",
+    "session": "01a21689-e7a3-72c1-8dc9-1369c36dedac"
+  },
+  "understanding": [
+    "制作台跟随策划台使用当前的接口前缀，自检显示这次固定的策划台版本。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开制作台目录，按「在哪看」中的命令运行自检。"
+      ],
+      "expected": "云端配对一行显示「在哪看」中列出的策划台版本。"
+    }
+  ],
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "executors": [],
+  "out_of_scope": [],
+  "created_at": "2026-11-26T06:42:10.475850Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}
