@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-11-26T14:58:56.069846Z
-- 来源事实 SHA-256：635fb6e6e1439aecc393dda9c30220e40f7d7992d0ea4ece813a6c7edbb30856
+- 事实时间：2026-11-26T16:34:00.258126Z
+- 来源事实 SHA-256：176f3860d7dd847bb5db28715d22e129d563090c066dbad4b7791b77d50793bc
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -58,6 +58,7 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-11-26T16:34:00.258126Z | 2026-11-26-Pho_R23-studio-project-pick | Studio 里确认策划台作品用哪个项目 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-26-Pho_R23-studio-project-pick/checklist.md | - | - |
 | 2026-11-26T14:58:56.069846Z | 2026-11-26-Pho_R22-installed-concat-return | 安装版设备续传同一份 Concat 精修候选 | 任务委托人 | 2 | acceptance/human/2026-W48/未-2026-11-26-Pho_R22-installed-concat-return/checklist.md | - | - |
 | 2026-11-26T14:58:53.427642Z | 2026-11-26-Pho_R18-concat-return | Studio 能用 Concat 精修后回传 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md | - | - |
 | 2026-11-26T14:20:39.830523Z | 2026-11-26-Pho_R21-installed-watch-project-handoff | 设备交接落到已确认的制作项目 | 任务委托人 | 2 | acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/checklist.md | - | - |

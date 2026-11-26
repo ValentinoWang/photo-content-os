@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "source_identity": "d480294e571831aaceb88933b149fcc4ee97f2e6",
+  "runtime_identity": "photo-dev-chromium-149.0.7827.55",
+  "review": {
+    "status": "PASS",
+    "reviewer": "codex",
+    "reviewed_at": "2026-11-26T16:27:29.081968+00:00",
+    "conclusion": "逐张查看最终首页、项目页和读取失败截图，核对标题、选项分组、折行、同一版本及页面底部。桌面和手机无横向溢出。"
+  },
+  "screenshots": [
+    {
+      "path": "evidence/screenshots/home-desktop.png",
+      "sha256": "e61c1bcffce74f9527e46b136ea79f472e5410138905aa66d4550b6be5804790",
+      "page_id": "home",
+      "route": "/",
+      "browser": "Chromium 149.0.7827.55",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "captured_at": "2026-11-26T16:21:45.277Z",
+      "output": {
+        "width": 1440,
+        "height": 1000
+      },
+      "vertical_coverage": {
+        "start": 0,
+        "end": 1000
+      }
+    },
+    {
+      "path": "evidence/screenshots/home-mobile.png",
+      "sha256": "ae015a89eadd16c208ad3d560506a2efafc4130d66f5139b037ce4ee5574e9b9",
+      "page_id": "home",
+      "route": "/",
+      "browser": "Chromium 149.0.7827.55",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captured_at": "2026-11-26T16:21:45.640Z",
+      "output": {
+        "width": 390,
+        "height": 1305
+      },
+      "vertical_coverage": {
+        "start": 0,
+        "end": 1305
+      }
+    },
+    {
+      "path": "evidence/screenshots/source-desktop.png",
+      "sha256": "bdc9151d54203b5c0ee18a6315bb9e25d9f298b0767647297ee30cd0f3551956",
+      "page_id": "source",
+      "route": "/app/project/project-1865093982",
+      "browser": "Chromium 149.0.7827.55",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "captured_at": "2026-11-26T16:21:46.789Z",
+      "output": {
+        "width": 1440,
+        "height": 1000
+      },
+      "vertical_coverage": {
+        "start": 0,
+        "end": 1000
+      }
+    },
+    {
+      "path": "evidence/screenshots/source-mobile.png",
+      "sha256": "2f9d696c25bced8b762559fc8a8dac729dcee1134a23e10498bb3fcec35d9c60",
+      "page_id": "source",
+      "route": "/app/project/project-1865093982",
+      "browser": "Chromium 149.0.7827.55",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captured_at": "2026-11-26T16:21:47.059Z",
+      "output": {
+        "width": 390,
+        "height": 844
+      },
+      "vertical_coverage": {
+        "start": 0,
+        "end": 844
+      }
+    },
+    {
+      "path": "evidence/screenshots/error-mobile.png",
+      "sha256": "415a97a1f433486f8b999445df7a2e958186531901d526ec9b97a71925cb18e5",
+      "page_id": "error",
+      "route": "/",
+      "browser": "Chromium 149.0.7827.55",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captured_at": "2026-11-26T16:21:48.282Z",
+      "output": {
+        "width": 390,
+        "height": 950
+      },
+      "vertical_coverage": {
+        "start": 0,
+        "end": 950
+      }
+    }
+  ]
+}

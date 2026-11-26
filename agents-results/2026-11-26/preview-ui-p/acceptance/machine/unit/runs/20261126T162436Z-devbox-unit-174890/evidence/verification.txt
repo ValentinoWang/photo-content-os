@@ -1,0 +1,13 @@
+[rbox] 推送 2632 个文件，7 秒
+..............................................                           [100%]
+46 passed in 22.41s
+✔ /Users/vsiyo/.local/share/task-worktrees/production-desk-p1a-ui-p/tests/test_r282_frontend.mjs (46.419525ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59.377735
+[rbox] 退出码 0，完整日志 /root/.prbox/run-112436-17489.log

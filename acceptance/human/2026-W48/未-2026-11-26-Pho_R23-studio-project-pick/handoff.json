@@ -1,0 +1,155 @@
+{
+  "baseline": {
+    "base": "f847a879e98a55d4eb72e5a625ac02dc6e332d6f",
+    "branch": "main",
+    "head": "d480294e571831aaceb88933b149fcc4ee97f2e6",
+    "tree": "d52bd594db16802eb13fe1f641e0f0407f52cee4"
+  },
+  "binding_sha256": "e482643ec78b5b1263e2d16038d31c3460c8c3f2f37e511389439fa7418b388b",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "23fee076413488d6889f810bba6a3cdee958579160f9ad1987f9474ad3e3661f",
+  "claims": [
+    {
+      "claim_key": "photo.studio-project-pick.confirm",
+      "item": "H-01",
+      "open_route": "note:打开电脑上的 Studio 工作台，并与发起请求的策划台作品页对照。",
+      "relations": [
+        {
+          "reason": "旧项查看安装版投递试跑，包含同名拒绝、设备拒绝和摘要拒绝。本项在 Studio 工作台实际选择，并核对作品版本。",
+          "target": "2026-11-26-Pho_R21-installed-watch-project-handoff/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对打开精修后的成片续传，本项发生在第一次交接前，确认制作项目和来源版次。",
+          "target": "2026-11-26-Pho_R22-installed-concat-return/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对整理台批量移入回收站的确认与取消，本项在工作台选择策划台作品的制作项目。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对单镜画面回退和收藏为样例，本项核对作品交接前选择项目及确认时的作品版本。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T163221Z-devbox-scope-a331c7",
+          "reason": "音乐标签、BPM、波形和拍点的渲染由音乐库模块负责，本次改动入口是工作台选项目。已复跑音乐分析、分段和拍点测试。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T163221Z-devbox-scope-a331c7",
+          "reason": "音乐播放、鼓点高亮和小节由节拍图模块负责，本次只新增作品待选轮询及项目来源条。已复跑拍点和分段测试。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T163221Z-devbox-scope-a331c7",
+          "reason": "导入、筛选、分析状态取自音乐库的接口和视图，本次新增接口仅供 Studio 项目选择。已复跑音乐分析和运行时测试。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T163221Z-devbox-scope-a331c7",
+          "reason": "动效配方库、离线预览和所属路由未改动，已复跑配方导入、预览和配方库路由测试。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T163221Z-devbox-scope-a331c7",
+          "reason": "安装脚本、工具路径和依赖安装未改动，已复跑剪辑工具运行时路径检查。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T163221Z-devbox-scope-a331c7",
+          "reason": "已有视频交接与候选路径沿用原实现，本次只新增本机选择与来源状态。已核对编辑后端和候选入口的代码差异，并复跑运行时检查。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        }
+      ],
+      "screenshots": [
+        {
+          "caption": "Studio 待选卡与第 3 版 · 390 宽合成数据实拍",
+          "captured_at": "2026-11-26T16:21:45.640Z",
+          "path": "agents-results/2026-11-26/preview-ui-p/acceptance/shots/H-01-1.png",
+          "sha256": "ae015a89eadd16c208ad3d560506a2efafc4130d66f5139b037ce4ee5574e9b9"
+        },
+        {
+          "caption": "确认后项目来源条同为第 3 版 · 390 宽合成数据实拍",
+          "captured_at": "2026-11-26T16:21:47.059Z",
+          "path": "agents-results/2026-11-26/preview-ui-p/acceptance/shots/H-01-2.png",
+          "sha256": "2f9d696c25bced8b762559fc8a8dac729dcee1134a23e10498bb3fcec35d9c60"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-26/preview-ui-p/acceptance-contract.md",
+  "contract_sha256": "fdfecccb8eab944166133f8d794d821739b2eadef791e68250a4c60dde9f1dd1",
+  "contract_version": "1",
+  "estimated_minutes": 3,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.studio-project-pick"
+  ],
+  "loop_name": "Studio 里确认策划台作品用哪个项目",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-26/preview-ui-p/acceptance/machine/unit/runs/20261126T162436Z-devbox-unit-174890/result.md",
+      "result_sha256": "26a363be798c6fdeb50a7fb6bfaa776de20fbff2b597bd22510f295f52627aca",
+      "run_id": "20261126T162436Z-devbox-unit-174890",
+      "source_identity": "d480294e571831aaceb88933b149fcc4ee97f2e6",
+      "surfaces": [
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "layer": "machine/e2e",
+      "result_path": "agents-results/2026-11-26/preview-ui-p/acceptance/machine/e2e/runs/20261126T162143Z-devbox-browser-753510/result.md",
+      "result_sha256": "36f3d339192eabbebdb037acbfb34dd21fbf33f545c5e3b8fc69fd69623262f1",
+      "run_id": "20261126T162143Z-devbox-browser-753510",
+      "source_identity": "d480294e571831aaceb88933b149fcc4ee97f2e6",
+      "surfaces": [
+        "studio.frontend"
+      ]
+    },
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-26/preview-ui-p/acceptance/machine/unit/runs/20261126T163221Z-devbox-scope-a331c7/result.md",
+      "result_sha256": "d2d94a462a2e48cc0230e87c5a1fff7d9a72da9cd6db0b11e382ce8083f784bb",
+      "run_id": "20261126T163221Z-devbox-scope-a331c7",
+      "source_identity": "d480294e571831aaceb88933b149fcc4ee97f2e6",
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-26T16:34:00.258126Z",
+  "release_slice": "U12+U15",
+  "request_id": "2026-11-26-Pho_R23-studio-project-pick",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "d480294e571831aaceb88933b149fcc4ee97f2e6",
+  "summary": "工作台选择已有项目或新建，确认后策划台替身显示已绑定，项目页显示相同作品版本。",
+  "task_id": "2026-11-26-Pho_R23-studio-project-pick"
+}

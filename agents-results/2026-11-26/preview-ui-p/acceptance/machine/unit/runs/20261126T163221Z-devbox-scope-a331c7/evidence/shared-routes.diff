@@ -1,0 +1,61 @@
+diff --git a/studio/api_contract.py b/studio/api_contract.py
+index 5fcfee8..0a6d89d 100644
+--- a/studio/api_contract.py
++++ b/studio/api_contract.py
+@@ -26,0 +27,4 @@ ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.ro
++    {"method": "GET", "path": "/api/project-selections", "operation_id": "listStudioProjectSelections",
++     "summary": "Read pending work requests and available Studio projects"},
++    {"method": "POST", "path": "/api/project-selections/{requestId}/confirm", "operation_id": "confirmStudioProjectSelection",
++     "summary": "Record the operator’s explicit project selection", "write": True},
+diff --git a/studio/server.py b/studio/server.py
+index 885fecc..4bcbff8 100644
+--- a/studio/server.py
++++ b/studio/server.py
+@@ -32,0 +33,2 @@ if str(SCRIPTS_DIR) not in sys.path:
++from media_project_selection import SelectionError, StudioConfirmationStore
++from studio.direct_handoff_contract import selection_root
+@@ -188,0 +191 @@ class StudioApplication:
++        self.project_selection = StudioConfirmationStore(selection_root())
+@@ -776,0 +780,9 @@ class StudioApplication:
++                    if parsed.path == "/api/project-selections":
++                        try:
++                            requests = app.project_selection.list_pending()
++                        except OSError as exc:
++                            raise SelectionError("video_selection_store_invalid") from exc
++                        projects = [{"id": p["id"], "title": p["title"], "updatedAt": p.get("updated_at")}
++                                    for p in app.store.list_projects()] if requests else []
++                        self._json(HTTPStatus.OK, {"ok": True, "requests": requests, "projects": projects})
++                        return
+@@ -967 +979,8 @@ class StudioApplication:
+-                        self._json(HTTPStatus.OK, {"ok": True, "project": app.store.get_project(segments[2]), "videoHandoff": app.video_handoff_projection(segments[2])})
++                        project = app.store.get_project(segments[2])
++                        try:
++                            project_source = app.project_selection.project_source(project["id"])
++                        except OSError as exc:
++                            raise SelectionError("video_selection_store_invalid") from exc
++                        self._json(HTTPStatus.OK, {"ok": True, "project": project,
++                                                  "videoHandoff": app.video_handoff_projection(project["id"]),
++                                                  "planningSource": project_source})
+@@ -1044,0 +1064,12 @@ class StudioApplication:
++                    if (method == "POST" and len(segments) == 4
++                            and segments[:2] == ["api", "project-selections"] and segments[3] == "confirm"):
++                        self._assert_direct_origin()
++                        decision = self._body()
++                        if decision.get("selection_mode") == "existing" and isinstance(decision.get("project_id"), str):
++                            app.store.get_project(decision["project_id"])
++                        try:
++                            app.project_selection.submit(segments[2], decision)
++                        except OSError as exc:
++                            raise SelectionError("video_selection_store_invalid") from exc
++                        self._json(HTTPStatus.OK, {"ok": True})
++                        return
+@@ -1577,0 +1609,9 @@ class StudioApplication:
++                if isinstance(exc, SelectionError):
++                    status, message = {
++                        "video_selection_missing": (404, "这条选项目请求已找不到"),
++                        "video_selection_expired": (409, "这条选项目请求已过期"),
++                        "video_identity_stale": (409, "这条请求已经选过项目"),
++                        "video_selection_store_invalid": (500, "无法读取或保存选项目请求"),
++                    }.get(exc.code, (400, "请选择有效的项目或输入项目名"))
++                    self._json(status, _error(exc.code, message))
++                    return

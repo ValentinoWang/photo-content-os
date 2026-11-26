@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-26T14:58:56.069846Z",
+  "generated_at": "2026-11-26T16:34:00.258126Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R23-studio-project-pick/checklist.md",
+      "estimated_minutes": 3,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R23-studio-project-pick/handoff.json",
+      "invalidation_keys": [
+        "photo.studio-project-pick"
+      ],
+      "latest_run": null,
+      "loop_name": "Studio 里确认策划台作品用哪个项目",
+      "ready_at": "2026-11-26T16:34:00.258126Z",
+      "release_slice": "U12+U15",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "工作台选择已有项目或新建，确认后策划台替身显示已绑定，项目页显示相同作品版本。",
+      "task_id": "2026-11-26-Pho_R23-studio-project-pick",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R23-studio-project-pick"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R22-installed-concat-return/checklist.md",
@@ -582,5 +601,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "635fb6e6e1439aecc393dda9c30220e40f7d7992d0ea4ece813a6c7edbb30856"
+  "source_facts_sha256": "176f3860d7dd847bb5db28715d22e129d563090c066dbad4b7791b77d50793bc"
 }
