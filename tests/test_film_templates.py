@@ -26,3 +26,12 @@ def test_build_three_shapes(tmp_path):
 def test_check_rejects_duplicate():
     with pytest.raises(ValueError):
         film.check_catalog({"upstream_commit": "a" * 40, "count": 206, "templates": []})
+
+
+def test_scene_validation(tmp_path):
+    scene = {"id": "1", "commit": "a" * 40, "license": "MIT", "scenes": [{"key": "B1", "purpose": "开场", "required_fields": ["title"], "duration_seconds": 2, "source_file": "README.zh-CN.md", "source_commit": "a" * 40}]}
+    entry = {"id": "1", "commit": "a" * 40}
+    film.check_scene(scene, entry)
+    scene["scenes"][0]["duration_seconds"] = 0
+    with pytest.raises(ValueError):
+        film.check_scene(scene, entry)

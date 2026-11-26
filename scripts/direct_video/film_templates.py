@@ -69,6 +69,27 @@ def check_catalog(catalog):
                 raise ValueError(f"{item['id']}: invalid URL {key}")
 
 
+def check_scene(scene, entry):
+    if scene.get("id") != entry["id"] or scene.get("commit") != entry.get("commit"):
+        raise ValueError(f"{entry['id']}: scene provenance mismatch")
+    for part in scene["scenes"]:
+        if part.get("source_commit") != entry["commit"] or not part.get("source_file"):
+            raise ValueError(f"{entry['id']}: scene source mismatch")
+        if isinstance(part.get("duration_seconds"), bool) or not isinstance(part.get("duration_seconds"), (int, float)) or part["duration_seconds"] <= 0:
+            raise ValueError(f"{entry['id']}: invalid scene duration")
+        if not part.get("key") or not part.get("purpose") or len(part["purpose"]) > 40 or not isinstance(part.get("required_fields"), list):
+            raise ValueError(f"{entry['id']}: invalid scene fields")
+
+
+def check_scenes(catalog, directory):
+    entries = {entry["id"]: entry for entry in catalog["templates"]}
+    for path in directory.glob("*.json"):
+        scene = read_json(str(path))
+        if path.stem != scene.get("id") or scene.get("id") not in entries:
+            raise ValueError(f"{path}: unknown scene id")
+        check_scene(scene, entries[scene["id"]])
+
+
 def main():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
@@ -88,6 +109,7 @@ def main():
         catalog = read_json(str(path))
         if args.check:
             check_catalog(catalog)
+            check_scenes(catalog, ROOT / "scenes")
             print("catalog OK: 206")
         else:
             print(f"total: {len(catalog['templates'])}")
