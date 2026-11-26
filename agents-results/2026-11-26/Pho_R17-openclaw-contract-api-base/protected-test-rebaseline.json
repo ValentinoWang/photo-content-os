@@ -1,0 +1,19 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-11-26-Pho_R20-first-project-snapshot",
+  "base": "a271e9c1424d36d982dd92518ba38b891136991f",
+  "head": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+  "range_head": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+  "reason": "已提交上游测试夹具纳入首次交接及引用定义，保留 Pho_R17 原接口前缀传播断言和人工验收责任。",
+  "prepared_at": "2026-11-26T12:36:04.963902Z",
+  "previous_ready_at": "2026-11-26T08:31:21.891027Z",
+  "previous_binding_sha256": "b94bf6ac58400c0d03859991e69868573741ac4e3c1ca7d9019f3de807b6ca0c",
+  "checklist_sha256": "7d8f9fe3ceb1d158ef837868a9ea440f4b236ec0ff955ff5cdc7758ba265dad8",
+  "tests": [
+    {
+      "path": "tests/test_wave6_bridge_contracts.py",
+      "old_sha256": "d9a576361db86b60d379dcfbbc6eac65bfd4c1f1edac8d4cabc569e92671218f",
+      "new_sha256": "ec9ae9e6dcbd9c76ab2aea1ee3375e1a36f205186c9372785909e37ef02d9452"
+    }
+  ]
+}

@@ -69,7 +69,7 @@
 
 | Path | SHA-256 | Covers |
 | --- | --- | --- |
-| tests/test_wave6_bridge_contracts.py | d9a576361db86b60d379dcfbbc6eac65bfd4c1f1edac8d4cabc569e92671218f | AC-01 |
+| tests/test_wave6_bridge_contracts.py | ec9ae9e6dcbd9c76ab2aea1ee3375e1a36f205186c9372785909e37ef02d9452 | AC-01 |
 
 ## Requirements-test traceability
 

@@ -1,0 +1,30 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0 -- /Users/vsiyo/Desktop/创业项目/内容创作/production-desk/.venv/bin/python
+rootdir: /Users/vsiyo/.local/share/task-worktrees/production-desk-p1a-u08-p
+plugins: platformdirs-4.14.8, anyio-4.16.0
+collecting ... collected 19 items
+
+tests/test_wave6_bridge_contracts.py::Wave6BridgeContractTests::test_blocked_result_keeps_bridge_identity_and_retry_can_replace_it PASSED [  5%]
+tests/test_wave6_bridge_contracts.py::Wave6BridgeContractTests::test_local_material_match_uses_one_declared_model_for_analysis_and_generation PASSED [ 10%]
+tests/test_wave6_bridge_contracts.py::Wave6BridgeContractTests::test_runner_uses_shared_creative_contract_constants PASSED [ 15%]
+tests/test_wave6_bridge_contracts.py::Wave6BridgeContractTests::test_snapshot_refresh_rebuilds_candidate_without_mutating_pin_until_approved PASSED [ 21%]
+tests/test_p1a_first_project_snapshot.py::test_committed_fixture_reproducible_and_dirty_rejected PASSED [ 26%]
+tests/test_p1a_first_project_snapshot.py::test_missing_definition_and_digest_rejected PASSED [ 31%]
+tests/test_p1a_first_project_snapshot.py::test_legacy_pin_loads_but_p1a_consumer_rejects PASSED [ 36%]
+tests/test_p1a_first_project_snapshot.py::test_checked_in_pin_matches_frozen_u08_input PASSED [ 42%]
+tests/test_candidate_download_path.py::test_download_path_starts_with_snapshot_api_base PASSED [ 47%]
+tests/test_candidate_download_path.py::test_download_path_follows_a_changed_api_base PASSED [ 52%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_candidate_uses_photo_interpreter_when_agent_cannot_import_imaging PASSED [ 57%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_catalog_stamp_cannot_hide_changed_definitions PASSED [ 63%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_changed_identity_and_unknown_columns_are_rejected
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_changed_identity_and_unknown_columns_are_rejected PASSED [ 68%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_failed_candidate_subprocess_cannot_reuse_a_stale_projection PASSED [ 73%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_recomputed_digest_does_not_replace_confirmed_content PASSED [ 78%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_refs_reject_aliases_escape_and_symlinks
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_refs_reject_aliases_escape_and_symlinks PASSED [ 84%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_suggest_receives_validated_descriptor_instead_of_binding_script PASSED [ 89%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_valid_handoff_is_a_copy_bound_to_confirmed_content PASSED [ 94%]
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_whitelist_executes_real_local_function_and_rejects_unknowns
+tests/test_openclaw_video_execution.py::VideoExecutionContractTests::test_whitelist_executes_real_local_function_and_rejects_unknowns PASSED [100%]
+
+==================== 19 passed, 15 subtests passed in 2.61s ====================

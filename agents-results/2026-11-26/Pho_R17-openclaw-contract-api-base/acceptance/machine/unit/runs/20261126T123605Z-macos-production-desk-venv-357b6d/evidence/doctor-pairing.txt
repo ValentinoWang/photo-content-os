@@ -1,0 +1,1 @@
+✓ openclaw_cloud_pairing: 上游 21c170d0bdd2 的设备合同支持：macos

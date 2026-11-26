@@ -1,0 +1,38 @@
+Rechecked product tree equality with the original file-by-file comparison.
+Actual source: 13b7046233ee8c0dd735d9134aba822c8099e11a
+Source tree: ca2c9d892bdb37e3f2484f6b02a18546b331e60a
+
+Range: a271e9c1424d36d982dd92518ba38b891136991f..4c38525679819f3c591199f84be2ff0a7b5686b9
+Changed files:
+schemas/openclaw-media-contract-snapshot.json
+scripts/openclaw_product_contract.py
+scripts/refresh_openclaw_media_contract_snapshot.py
+tests/test_p1a_first_project_snapshot.py
+tests/test_wave6_bridge_contracts.py
+
+2026-10-19-R207-photo-edit-tools-in-repo cd7a30eb35788e83ae5603720d5d3b3f24659d4a..493cc9aa8621227f4253f082396295c763ef5103 (32 files): no intersecting paths
+  Frozen card, contract and protected tests unchanged: tests/test_edit_tools_runtime.py
+2026-10-19-R210-photo-music-link-import 9d1204447716a14285f1c4bd7f8e80f0e1f385cd..7b8a4aa822b402f614fe1e5bec1529a726c4db83 (336 files): no intersecting paths
+2026-10-20-R220-photo-studio-ia-preview 9d1204447716a14285f1c4bd7f8e80f0e1f385cd..7b8a4aa822b402f614fe1e5bec1529a726c4db83 (336 files): no intersecting paths
+2026-10-20-R223-photo-music-beat-map 9d1204447716a14285f1c4bd7f8e80f0e1f385cd..7b8a4aa822b402f614fe1e5bec1529a726c4db83 (336 files): no intersecting paths
+  Frozen card, contract and protected tests unchanged: tests/test_r223_music_analysis.py, tests/test_r223_sections.py, tests/test_r223_music_analysis_runtime.py, tests/test_r223_beat_map.mjs, scripts/verify_r223_interactions.mjs, scripts/check_r223_design.py
+2026-10-26-R276-photo-direct-video-opus 130c931c8250368205165ef8c59d19b2796d55d4..7d0ab0046ef286a5bac8c468d86ebc10ccf557cd (93 files): no intersecting paths
+2026-10-26-R277-photo-shot-visual-revision 130c931c8250368205165ef8c59d19b2796d55d4..7d0ab0046ef286a5bac8c468d86ebc10ccf557cd (93 files): no intersecting paths
+2026-10-26-R278-photo-direct-rescript a28a991210b72f0be38aca786ec32c3e93208c3e..e26ec2f19d5e1136577873beb932f537a2a0037f (15 files): no intersecting paths
+2026-10-26-R280-photo-studio-light a28a991210b72f0be38aca786ec32c3e93208c3e..e26ec2f19d5e1136577873beb932f537a2a0037f (15 files): no intersecting paths
+2026-10-26-R282-photo-direct-handoff-storyboard a28a991210b72f0be38aca786ec32c3e93208c3e..e26ec2f19d5e1136577873beb932f537a2a0037f (15 files): no intersecting paths
+2026-10-26-R283-photo-direct-style-library a28a991210b72f0be38aca786ec32c3e93208c3e..e26ec2f19d5e1136577873beb932f537a2a0037f (15 files): no intersecting paths
+2026-10-27-R312-photo-ffmpeg9-subtitles 78b6e41c9605c359967a8fa0fc274fabbd512fed..5d62356222028aa31083fc693845875b1acf5edd (7 files): no intersecting paths
+2026-11-04-Pho_R01-frontend-debt-fix 2f945935bd14562e78319890b20fbf139fe7058e..a571e42ad5b01318f690c728dd9812c62dba91e6 (29 files): no intersecting paths
+2026-11-24-Pho_R06-concat-backend 4d78b2a98d09cd8172bc584d8d5c692e876f2454..1d158c7e3b90ad8e6330b340acede0bc7134fc42 (13 files): no intersecting paths
+2026-11-24-Pho_R08-openmotion-recipes 7dfa9498115fbeaef0953e2ba7c114bb4ab82f57..1819385594ce116d77c619b099632ddb4415c93b (322 files): no intersecting paths
+  Frozen card, contract and protected tests unchanged: tests/test_openmotion_import.py, tests/test_openmotion_previews.py, tests/test_pho_r05_recipe_library.py
+2026-11-24-Pho_R09-r223-beat-color 308eb2e86d264118514261a45db987632dc3cb4e..6039932a362cd1fd503aa5c860ebb84692a1e4fd (5 files): no intersecting paths
+2026-11-24-Pho_R11-seedance-provider 14468ed2ad8a1b7a6285b721b66a5b53fe0e0824..73de32703362f761e90bd67294264d7fe70e846f (10 files): no intersecting paths
+2026-11-25-Pho_R12-ai-music-generate 3fc330f63886787fd53840c2a7df4ac4d46d2d12..c934a944d04f7ebff4373c299ff96b0d071fdc4c (11 files): no intersecting paths
+2026-11-25-Pho_R14-concat-real-selfie fc0c8f1f5e23a5bb52ea5aef4b20fd05c5d8b5bd..c00096f796ffeb9534674f48b324ab8e47cdfeec (6 files): no intersecting paths
+2026-11-25-Pho_R15-dreamverse-shot-controls 5d76755c07bac007ea03d7833d1d1a3f59516fa0..05b10524014c2106915393db14293b3f5a5bad18 (8 files): no intersecting paths
+2026-11-25-Pho_R16-avatar-http-oss ec4e8dea13454b89b6c2f405160aff1991642127..9424f8c3d48f220d17ac0e9d893eb6d23793d3d3 (4 files): no intersecting paths
+2026-11-26-Pho_R17-openclaw-contract-api-base c93bab6b7d4d03beb07d9cf8040d214910bc2958..4189a26e832aa89af453d2a3e36c263813e0f53f (44 files): schemas/openclaw-media-contract-snapshot.json, scripts/refresh_openclaw_media_contract_snapshot.py, tests/test_wave6_bridge_contracts.py
+2026-11-26-Pho_R18-concat-return c93bab6b7d4d03beb07d9cf8040d214910bc2958..4189a26e832aa89af453d2a3e36c263813e0f53f (44 files): schemas/openclaw-media-contract-snapshot.json, scripts/refresh_openclaw_media_contract_snapshot.py, tests/test_wave6_bridge_contracts.py
+Pho_R18 own source commits bb02289, d4a31f8, 4189a26 have no intersecting paths; candidate download path tests passed in the current batch.

@@ -1,0 +1,124 @@
+{
+  "baseline": {
+    "base": "a271e9c1424d36d982dd92518ba38b891136991f",
+    "branch": "main",
+    "head": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+    "tree": "ca2c9d892bdb37e3f2484f6b02a18546b331e60a"
+  },
+  "binding_sha256": "098717c9a2f91b4faa07879bc04aaf8ac428f3cc38411e655b5490e710e7ccfe",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "59561307955bac14f4ca5e099ac77d26aa3b9e3b188ecbfecc6ebadd2eb32573",
+  "claims": [
+    {
+      "claim_key": "photo.first-project-snapshot.frozen-examples",
+      "item": "H-01",
+      "open_route": "file:photo-content-os/schemas/openclaw-media-contract-snapshot.json",
+      "protected_test_overlap": [
+        {
+          "decision": "rebaseline",
+          "reason": "刷新器回归的已提交上游夹具加入首次交接定义，原接口前缀传播的断言和自检人工项继续保留。",
+          "target": "2026-11-26-Pho_R17-openclaw-contract-api-base"
+        }
+      ],
+      "relations": [
+        {
+          "reason": "本卡查看快照里的首次选项目和交接示例；旧卡通过制作台自检核对策划台版本，保留接口前缀传播和版本核对责任。",
+          "target": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+          "type": "independent"
+        },
+        {
+          "reason": "该项验收 Concat 编辑器选择或成片回传；本批只固定交接契约，其三笔产品提交无路径交集，候选下载前缀回归已通过。",
+          "target": "2026-11-26-Pho_R18-concat-return/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "该项验收 Concat 编辑器选择或成片回传；本批只固定交接契约，其三笔产品提交无路径交集，候选下载前缀回归已通过。",
+          "target": "2026-11-26-Pho_R18-concat-return/H-02",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d",
+          "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d",
+          "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d",
+          "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d",
+          "reason": "该卡验收动效配方的导入、页面预览和配方库。比对其冻结差异、合同和受保护测试，无当前改动文件，配方与预览程序保持原字节。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d",
+          "reason": "该卡验收剪辑工具的本地探测和安装路径。比对其冻结差异、合同和受保护测试，无当前改动文件，工具探测入口保持原字节。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d",
+          "reason": "该卡验收剪辑工具的本地探测和安装路径。比对其冻结差异、合同和受保护测试，无当前改动文件，工具探测入口保持原字节。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        }
+      ],
+      "screenshots": [
+        {
+          "caption": "首次交接契约 · 已提交快照摘录",
+          "captured_at": "2026-11-26T12:32:12.256210+00:00",
+          "path": "agents-results/2026-11-26/Pho_R20-first-project-snapshot/acceptance/shots/H-01-1.png",
+          "sha256": "def5054fe8ba940a09a59ca538d4e7bccf4155669ed16d8ba048fa1d639436a0"
+        }
+      ],
+      "surfaces": [
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-26/Pho_R20-first-project-snapshot/acceptance-contract.md",
+  "contract_sha256": "e6ba4fb8b0b343bc5818968a6e18afc5df213ce354523c348d90f42f10b0dddf",
+  "contract_version": "1",
+  "estimated_minutes": 1,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.first-project-snapshot"
+  ],
+  "loop_name": "契约快照固定到首次交接",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-26/Pho_R20-first-project-snapshot/acceptance/machine/unit/runs/20261126T123605Z-macos-production-desk-venv-f42b8d/result.md",
+      "result_sha256": "50bba96aeddf51ee748a40a7b39902112281e3771f6f127ccb16f0c269607547",
+      "run_id": "20261126T123605Z-macos-production-desk-venv-f42b8d",
+      "source_identity": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+      "surfaces": [
+        "photo.tests-scripts",
+        "studio.backend"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-26T12:36:55.537182Z",
+  "release_slice": "preview-chain-p1a",
+  "request_id": "2026-11-26-Pho_R20-first-project-snapshot",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+  "summary": "首次交接快照与获准的策划台提交一致，项目选择、交接和拒绝示例待人工核对。",
+  "task_id": "2026-11-26-Pho_R20-first-project-snapshot"
+}

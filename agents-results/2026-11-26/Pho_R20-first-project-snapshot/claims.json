@@ -1,0 +1,79 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.first-project-snapshot.frozen-examples",
+    "open_route": "file:photo-content-os/schemas/openclaw-media-contract-snapshot.json",
+    "surfaces": [
+      "photo.tests-scripts",
+      "studio.backend"
+    ],
+    "relations": [
+      {
+        "type": "independent",
+        "target": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+        "reason": "本卡查看快照里的首次选项目和交接示例；旧卡通过制作台自检核对策划台版本，保留接口前缀传播和版本核对责任。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-11-26-Pho_R18-concat-return/H-01",
+        "reason": "该项验收 Concat 编辑器选择或成片回传；本批只固定交接契约，其三笔产品提交无路径交集，候选下载前缀回归已通过。"
+      },
+      {
+        "type": "independent",
+        "target": "2026-11-26-Pho_R18-concat-return/H-02",
+        "reason": "该项验收 Concat 编辑器选择或成片回传；本批只固定交接契约，其三笔产品提交无路径交集，候选下载前缀回归已通过。"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+        "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+        "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+        "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+        "reason": "该卡验收动效配方的导入、页面预览和配方库。比对其冻结差异、合同和受保护测试，无当前改动文件，配方与预览程序保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+        "reason": "该卡验收剪辑工具的本地探测和安装路径。比对其冻结差异、合同和受保护测试，无当前改动文件，工具探测入口保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d"
+      },
+      {
+        "type": "unaffected",
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+        "reason": "该卡验收剪辑工具的本地探测和安装路径。比对其冻结差异、合同和受保护测试，无当前改动文件，工具探测入口保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-f42b8d"
+      }
+    ],
+    "protected_test_overlap": [
+      {
+        "target": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+        "decision": "rebaseline",
+        "reason": "刷新器回归的已提交上游夹具加入首次交接定义，原接口前缀传播的断言和自检人工项继续保留。"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-26/Pho_R20-first-project-snapshot/acceptance/shots/H-01-1.png",
+        "sha256": "def5054fe8ba940a09a59ca538d4e7bccf4155669ed16d8ba048fa1d639436a0",
+        "caption": "首次交接契约 · 已提交快照摘录",
+        "captured_at": "2026-11-26T12:32:12.256210+00:00"
+      }
+    ]
+  }
+]

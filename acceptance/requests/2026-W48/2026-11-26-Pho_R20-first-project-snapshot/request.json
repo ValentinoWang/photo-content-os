@@ -1,0 +1,35 @@
+{
+  "id": "2026-11-26-Pho_R20-first-project-snapshot",
+  "project": "photo-content-os",
+  "title": "契约快照固定到首次交接",
+  "raw_request": "U08-P 让制作台校验同一提交的首次交接快照。实际快照和冻结契约同源，工作树脏或摘要不符拒绝。总控批准固定到 21c170d0bdd26a425a97bd3e1c3020b320d95fdb。",
+  "author": {
+    "agent": "codex",
+    "session": "01a21708-ce37-78c2-b1b9-6c4fbbc0d501"
+  },
+  "understanding": [
+    "制作台留存已确认版本的首次选项目和交接规则，包含成功和拒绝示例，供后续接入核对。",
+    "来源有未提交改动或快照校验不符时，制作台拒绝采纳。"
+  ],
+  "out_of_scope": [
+    "启用工作台页面或设备接口。",
+    "使用真实素材或调用付费接口。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开「在哪看」中的契约快照，找到首次交接部分。"
+      ],
+      "expected": "首次交接部分包含项目选择、交接及拒绝示例。"
+    }
+  ],
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "executors": [],
+  "created_at": "2026-11-26T08:56:48.597096Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}

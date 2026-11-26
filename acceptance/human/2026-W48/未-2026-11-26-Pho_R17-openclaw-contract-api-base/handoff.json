@@ -1,11 +1,11 @@
 {
   "baseline": {
-    "base": "c93bab6b7d4d03beb07d9cf8040d214910bc2958",
+    "base": "a271e9c1424d36d982dd92518ba38b891136991f",
     "branch": "main",
-    "head": "4189a26e832aa89af453d2a3e36c263813e0f53f",
-    "tree": "ffc4b31366f1915c5143935f5e48da041f0026a7"
+    "head": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+    "tree": "ca2c9d892bdb37e3f2484f6b02a18546b331e60a"
   },
-  "binding_sha256": "b94bf6ac58400c0d03859991e69868573741ac4e3c1ca7d9019f3de807b6ca0c",
+  "binding_sha256": "2cded7fd74d3d13ba740d06f4f11eb40a352338b045c3262219f3cb9e8b5edcb",
   "blocking": false,
   "blocking_budget": 3,
   "budget_exception": null,
@@ -14,17 +14,17 @@
     {
       "claim_key": "photo.openclaw-contract-api-base",
       "item": "H-01",
-      "open_route": "note:运行 .venv/bin/python scripts/doctor.py，配对行应显示 1e3eb410cd3b",
+      "open_route": "note:运行 .venv/bin/python scripts/doctor.py，配对行应显示 21c170d0bdd2",
       "relations": [
         {
-          "evidence_run": "20261126T081340Z-local-f2d670",
-          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d",
+          "reason": "该卡验收剪辑工具的本地探测和安装路径。比对其冻结差异、合同和受保护测试，无当前改动文件，工具探测入口保持原字节。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T081340Z-local-f2d670",
-          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d",
+          "reason": "该卡验收剪辑工具的本地探测和安装路径。比对其冻结差异、合同和受保护测试，无当前改动文件，工具探测入口保持原字节。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
           "type": "unaffected"
         },
@@ -59,20 +59,20 @@
           "type": "independent"
         },
         {
-          "evidence_run": "20261126T081340Z-local-f2d670",
-          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d",
+          "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-01",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T081340Z-local-f2d670",
-          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d",
+          "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-02",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T081340Z-local-f2d670",
-          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d",
+          "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-03",
           "type": "unaffected"
         },
@@ -177,28 +177,28 @@
           "type": "independent"
         },
         {
-          "evidence_run": "20261126T081340Z-local-f2d670",
-          "reason": "在发布源码重跑 OpenMotion 导入、预览及配方库三个受保护测试文件，24 项通过。旧卡合同、人工记录与测试文件无差异。",
+          "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d",
+          "reason": "该卡验收动效配方的导入、页面预览和配方库。比对其冻结差异、合同和受保护测试，无当前改动文件，配方与预览程序保持原字节。",
           "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
           "type": "unaffected"
         },
         {
-          "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。",
+          "reason": "该项验收 Concat 编辑器选择或成片回传；本批只固定交接契约，其三笔产品提交无路径交集，候选下载前缀回归已通过。",
           "target": "2026-11-26-Pho_R18-concat-return/H-01",
           "type": "independent"
         },
         {
-          "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。",
+          "reason": "该项验收 Concat 编辑器选择或成片回传；本批只固定交接契约，其三笔产品提交无路径交集，候选下载前缀回归已通过。",
           "target": "2026-11-26-Pho_R18-concat-return/H-02",
           "type": "independent"
         }
       ],
       "screenshots": [
         {
-          "caption": "制作台自检输出 · 终端摘录渲染截图",
-          "captured_at": "2026-11-26T06:46:42.610Z",
-          "path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/shots/H-01-1.png",
-          "sha256": "ed991b630f5a05072faf0cb6a8c893331e2bd7d8d9329122fa14e64ca98288a2"
+          "caption": "制作台自检 · 当前配对行摘录",
+          "captured_at": "2026-11-26T12:32:12.310577+00:00",
+          "path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/shots/H-01-2.png",
+          "sha256": "ede23345f37455985e48901720fe4421e03c0a98e72fbff4b63b6e92d04dee27"
         }
       ],
       "surfaces": [
@@ -213,7 +213,7 @@
     }
   ],
   "contract_path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance-contract.md",
-  "contract_sha256": "a5e3ab863dafe7fa2cd60eb908347320c72c4ffd5411393bffd90cdd76148df1",
+  "contract_sha256": "397c08ea59a2b38cec15d5fc3a0373e408dc4003c1ea0d65da910768ed6809f1",
   "contract_version": "1",
   "estimated_minutes": 1,
   "execution_policy": "terminal-after-machine-green",
@@ -224,29 +224,45 @@
   "machine_evidence": [
     {
       "layer": "machine/unit",
-      "result_path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/machine/unit/runs/20261126T081340Z-local-f2d670/result.md",
-      "result_sha256": "1d8a44c41f8952bf76fa9bd161c48800c26ab292b2229685bdd514dafc6b7f89",
-      "run_id": "20261126T081340Z-local-f2d670",
-      "source_identity": "4189a26e832aa89af453d2a3e36c263813e0f53f",
+      "result_path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/machine/unit/runs/20261126T123605Z-macos-production-desk-venv-357b6d/result.md",
+      "result_sha256": "b9d983a1dd18d367ced9e8ae7475cd517eb7805fedff9a53c2ce7a8c72f89c51",
+      "run_id": "20261126T123605Z-macos-production-desk-venv-357b6d",
+      "source_identity": "13b7046233ee8c0dd735d9134aba822c8099e11a",
       "surfaces": [
-        "acceptance.artifacts",
-        "acceptance.evidence",
-        "photo.documentation",
         "photo.tests-scripts",
-        "photo.video-pipeline",
-        "studio.backend",
-        "studio.frontend"
+        "studio.backend"
       ]
     }
   ],
   "open_route": null,
-  "ready_at": "2026-11-26T08:31:21.891027Z",
+  "protected_test_rebaselines": [
+    {
+      "base": "a271e9c1424d36d982dd92518ba38b891136991f",
+      "checklist_sha256": "7d8f9fe3ceb1d158ef837868a9ea440f4b236ec0ff955ff5cdc7758ba265dad8",
+      "head": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+      "phase": "completed",
+      "prepared_at": "2026-11-26T12:36:04.963902Z",
+      "previous_binding_sha256": "b94bf6ac58400c0d03859991e69868573741ac4e3c1ca7d9019f3de807b6ca0c",
+      "previous_ready_at": "2026-11-26T08:31:21.891027Z",
+      "range_head": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+      "reason": "已提交上游测试夹具纳入首次交接及引用定义，保留 Pho_R17 原接口前缀传播断言和人工验收责任。",
+      "tests": [
+        {
+          "new_sha256": "ec9ae9e6dcbd9c76ab2aea1ee3375e1a36f205186c9372785909e37ef02d9452",
+          "old_sha256": "d9a576361db86b60d379dcfbbc6eac65bfd4c1f1edac8d4cabc569e92671218f",
+          "path": "tests/test_wave6_bridge_contracts.py"
+        }
+      ],
+      "trigger_card": "2026-11-26-Pho_R20-first-project-snapshot"
+    }
+  ],
+  "ready_at": "2026-11-26T12:36:53.456029Z",
   "release_slice": "preview-chain-p0",
   "request_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
   "required_role": "任务委托人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "4189a26e832aa89af453d2a3e36c263813e0f53f",
-  "summary": "契约和 Agent 兼容检查已通过，制作台自检显示的版本待人工核对。",
+  "source_commit": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+  "summary": "接口前缀传播及 Agent 兼容性检查通过，制作台自检中的策划台版本待人工核对。",
   "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base"
 }

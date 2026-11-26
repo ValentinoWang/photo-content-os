@@ -1,0 +1,11 @@
+{
+  "schema_version": "photo_content_os_openclaw_compatibility_v1",
+  "available": true,
+  "compatible": true,
+  "platform": "macos",
+  "package_version": "0.2.0",
+  "expected_digest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
+  "actual_digest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
+  "upstream_commit": "21c170d0bdd26a425a97bd3e1c3020b320d95fdb",
+  "reason": null
+}

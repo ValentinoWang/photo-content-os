@@ -216,8 +216,46 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-26T08:31:44.038207Z",
+  "generated_at": "2026-11-26T12:36:55.537182Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R20-first-project-snapshot/checklist.md",
+      "estimated_minutes": 1,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R20-first-project-snapshot/handoff.json",
+      "invalidation_keys": [
+        "photo.first-project-snapshot"
+      ],
+      "latest_run": null,
+      "loop_name": "契约快照固定到首次交接",
+      "ready_at": "2026-11-26T12:36:55.537182Z",
+      "release_slice": "preview-chain-p1a",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "首次交接快照与获准的策划台提交一致，项目选择、交接和拒绝示例待人工核对。",
+      "task_id": "2026-11-26-Pho_R20-first-project-snapshot",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot"
+    },
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md",
+      "estimated_minutes": 1,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/handoff.json",
+      "invalidation_keys": [
+        "photo.openclaw-contract-api-base"
+      ],
+      "latest_run": null,
+      "loop_name": "契约快照接口前缀跟随策划台",
+      "ready_at": "2026-11-26T12:36:53.456029Z",
+      "release_slice": "preview-chain-p0",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "接口前缀传播及 Agent 兼容性检查通过，制作台自检中的策划台版本待人工核对。",
+      "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md",
@@ -237,25 +275,6 @@
       "summary": "Concat 回传读回、软件列表和候选下载路径的替身测试已通过，软件列表和精修后回传待人工核对。",
       "task_id": "2026-11-26-Pho_R18-concat-return",
       "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return"
-    },
-    {
-      "blocking": false,
-      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md",
-      "estimated_minutes": 1,
-      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/handoff.json",
-      "invalidation_keys": [
-        "photo.openclaw-contract-api-base"
-      ],
-      "latest_run": null,
-      "loop_name": "契约快照接口前缀跟随策划台",
-      "ready_at": "2026-11-26T08:31:21.891027Z",
-      "release_slice": "preview-chain-p0",
-      "required_role": "任务委托人",
-      "scope_hints": [],
-      "status": "PENDING",
-      "summary": "契约和 Agent 兼容检查已通过，制作台自检显示的版本待人工核对。",
-      "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
-      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base"
     },
     {
       "blocking": false,
@@ -525,5 +544,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "7f6ba942ee6ba6850c296a9b84800e3fa86d5f27c5b9b1e3b06756fcf7cba73a"
+  "source_facts_sha256": "2ab336b9970c31479c584bcc5bee931ad33f225f93ed81194d66540403304bd0"
 }

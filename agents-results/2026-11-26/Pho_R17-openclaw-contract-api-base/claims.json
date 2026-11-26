@@ -2,7 +2,7 @@
   {
     "item": "H-01",
     "claim_key": "photo.openclaw-contract-api-base",
-    "open_route": "note:运行 .venv/bin/python scripts/doctor.py，配对行应显示 1e3eb410cd3b",
+    "open_route": "note:运行 .venv/bin/python scripts/doctor.py，配对行应显示 21c170d0bdd2",
     "surfaces": [
       "acceptance.artifacts",
       "acceptance.evidence",
@@ -16,14 +16,14 @@
       {
         "type": "unaffected",
         "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
-        "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
-        "evidence_run": "20261126T081340Z-local-f2d670"
+        "reason": "该卡验收剪辑工具的本地探测和安装路径。比对其冻结差异、合同和受保护测试，无当前改动文件，工具探测入口保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d"
       },
       {
         "type": "unaffected",
         "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
-        "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
-        "evidence_run": "20261126T081340Z-local-f2d670"
+        "reason": "该卡验收剪辑工具的本地探测和安装路径。比对其冻结差异、合同和受保护测试，无当前改动文件，工具探测入口保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d"
       },
       {
         "type": "independent",
@@ -58,20 +58,20 @@
       {
         "type": "unaffected",
         "target": "2026-10-20-R223-photo-music-beat-map/H-01",
-        "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
-        "evidence_run": "20261126T081340Z-local-f2d670"
+        "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d"
       },
       {
         "type": "unaffected",
         "target": "2026-10-20-R223-photo-music-beat-map/H-02",
-        "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
-        "evidence_run": "20261126T081340Z-local-f2d670"
+        "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d"
       },
       {
         "type": "unaffected",
         "target": "2026-10-20-R223-photo-music-beat-map/H-03",
-        "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
-        "evidence_run": "20261126T081340Z-local-f2d670"
+        "reason": "该卡验收音乐节拍图、切点和控件。比对其冻结差异、合同和受保护测试，无当前改动文件，节拍图和控件程序保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d"
       },
       {
         "type": "independent",
@@ -176,26 +176,26 @@
       {
         "type": "unaffected",
         "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
-        "reason": "在发布源码重跑 OpenMotion 导入、预览及配方库三个受保护测试文件，24 项通过。旧卡合同、人工记录与测试文件无差异。",
-        "evidence_run": "20261126T081340Z-local-f2d670"
+        "reason": "该卡验收动效配方的导入、页面预览和配方库。比对其冻结差异、合同和受保护测试，无当前改动文件，配方与预览程序保持原字节。",
+        "evidence_run": "20261126T123605Z-macos-production-desk-venv-357b6d"
       },
       {
         "type": "independent",
         "target": "2026-11-26-Pho_R18-concat-return/H-01",
-        "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。"
+        "reason": "该项验收 Concat 编辑器选择或成片回传；本批只固定交接契约，其三笔产品提交无路径交集，候选下载前缀回归已通过。"
       },
       {
         "type": "independent",
         "target": "2026-11-26-Pho_R18-concat-return/H-02",
-        "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。"
+        "reason": "该项验收 Concat 编辑器选择或成片回传；本批只固定交接契约，其三笔产品提交无路径交集，候选下载前缀回归已通过。"
       }
     ],
     "screenshots": [
       {
-        "path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/shots/H-01-1.png",
-        "sha256": "ed991b630f5a05072faf0cb6a8c893331e2bd7d8d9329122fa14e64ca98288a2",
-        "caption": "制作台自检输出 · 终端摘录渲染截图",
-        "captured_at": "2026-11-26T06:46:42.610Z"
+        "path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/shots/H-01-2.png",
+        "sha256": "ede23345f37455985e48901720fe4421e03c0a98e72fbff4b63b6e92d04dee27",
+        "caption": "制作台自检 · 当前配对行摘录",
+        "captured_at": "2026-11-26T12:32:12.310577+00:00"
       }
     ]
   }
