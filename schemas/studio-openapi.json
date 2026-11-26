@@ -219,6 +219,12 @@
           "jobId": {
             "type": "string"
           },
+          "kind": {
+            "enum": [
+              "talk",
+              "promo"
+            ]
+          },
           "model": {
             "const": "claude-opus-5-5"
           },
@@ -300,7 +306,8 @@
               "kind": {
                 "enum": [
                   "silent",
-                  "narrated"
+                  "narrated",
+                  "music"
                 ]
               },
               "revision": {
@@ -330,6 +337,38 @@
           "projectId": {
             "type": "string"
           },
+          "promo": {
+            "properties": {
+              "bpm": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "endBar": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "startBar": {
+                "type": "integer"
+              },
+              "trackId": {
+                "type": "string"
+              },
+              "trackTitle": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
           "shots": {
             "items": {
               "properties": {
@@ -341,6 +380,18 @@
                   "type": [
                     "string",
                     "null"
+                  ]
+                },
+                "bars": {
+                  "anyOf": [
+                    {
+                      "const": "auto"
+                    },
+                    {
+                      "maximum": 8,
+                      "minimum": 1,
+                      "type": "integer"
+                    }
                   ]
                 },
                 "boxes": {
@@ -548,6 +599,26 @@
                   "minimum": 0,
                   "type": "integer"
                 },
+                "recipe": {
+                  "properties": {
+                    "chosenBy": {
+                      "enum": [
+                        "user",
+                        "opus"
+                      ]
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
                 "renderedAt": {
                   "type": [
                     "string",
@@ -572,6 +643,12 @@
                   ]
                 },
                 "subtitle": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "text": {
                   "type": [
                     "string",
                     "null"
@@ -824,6 +901,7 @@
           "shots",
           "narration",
           "output",
+          "kind",
           "handoff",
           "handoffNewer"
         ],
@@ -1387,6 +1465,199 @@
         },
         "summary": "Read cached diagnostics or explicitly rerun the local checks"
       }
+    },
+    "/api/direct/recipes": {
+      "get": {
+        "operationId": "getDirectRecipes",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "ok": {
+                      "const": true
+                    },
+                    "proposal": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "proposal"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Same-origin or CSRF check failed"
+          },
+          "404": {
+            "description": "Sample or proposal not found"
+          },
+          "409": {
+            "description": "Proposal is not pending"
+          }
+        },
+        "summary": "Read promotional shot recipes"
+      }
+    },
+    "/api/direct/recipes/{recipeId}/clip.mp4": {
+      "get": {
+        "operationId": "getRecipeClip",
+        "parameters": [
+          {
+            "description": "One bytes=start-end, bytes=start- or bytes=-suffix range.",
+            "in": "header",
+            "name": "Range",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "206": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Requested preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "416": {
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Invalid or unsatisfiable preview byte range",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Read recipe clip"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "recipeId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/direct/recipes/{recipeId}/poster.jpg": {
+      "get": {
+        "operationId": "getRecipePoster",
+        "responses": {
+          "200": {
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful local response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "ok"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          }
+        },
+        "summary": "Read recipe poster"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "recipeId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/api/direct/revision-log": {
       "get": {
@@ -3509,6 +3780,17 @@
                     "required": [
                       "storyboard"
                     ]
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "promo"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "promo"
+                    ]
                   }
                 ],
                 "properties": {
@@ -3533,11 +3815,79 @@
                     ],
                     "type": "object"
                   },
+                  "kind": {
+                    "enum": [
+                      "talk",
+                      "promo"
+                    ]
+                  },
                   "model": {
                     "enum": [
                       "claude-opus-5-5"
                     ],
                     "type": "string"
+                  },
+                  "promo": {
+                    "properties": {
+                      "brief": {
+                        "type": "string"
+                      },
+                      "fadeOutSeconds": {
+                        "const": 1
+                      },
+                      "shots": {
+                        "items": {
+                          "properties": {
+                            "bars": {
+                              "anyOf": [
+                                {
+                                  "const": "auto"
+                                },
+                                {
+                                  "maximum": 8,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                }
+                              ]
+                            },
+                            "recipeId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "visual": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "visual",
+                            "recipeId",
+                            "bars"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "startBar": {
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "trackId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "brief",
+                      "trackId",
+                      "startBar",
+                      "fadeOutSeconds",
+                      "shots"
+                    ],
+                    "type": "object"
                   },
                   "script": {
                     "maxLength": 20000,
@@ -5081,6 +5431,10 @@
                       "string",
                       "null"
                     ]
+                  },
+                  "recipeId": {
+                    "description": "Optional promo recipe selected for this rewrite.",
+                    "type": "string"
                   }
                 },
                 "type": "object"
@@ -7636,6 +7990,7 @@
     },
     "/api/review/music": {
       "get": {
+        "description": "Each track retains its existing beat field; promoBeat contains status (ready, missing or failed), bars, bpm, sections (startBar, endBar, kind), firstBuildBar, and reason on failure.",
         "operationId": "getMusicLibrary",
         "responses": {
           "200": {
