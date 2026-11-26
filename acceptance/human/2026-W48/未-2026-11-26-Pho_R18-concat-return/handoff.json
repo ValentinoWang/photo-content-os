@@ -1,6 +1,6 @@
 {
   "baseline": {
-    "base": "41016469e35e68cf1d255bf98c2b94d4604d26cd",
+    "base": "c93bab6b7d4d03beb07d9cf8040d214910bc2958",
     "branch": "main",
     "head": "4189a26e832aa89af453d2a3e36c263813e0f53f",
     "tree": "ffc4b31366f1915c5143935f5e48da041f0026a7"
@@ -17,95 +17,175 @@
       "open_route": "note:Studio 项目页「剪辑软件」列表，Concat 排第一",
       "relations": [
         {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R278-photo-direct-rescript/H-03",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R280-photo-studio-light/H-02",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
-          "type": "independent"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
-          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
-          "type": "unaffected"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
-          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
-          "type": "unaffected"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
-          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
-          "type": "unaffected"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
-          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
-          "type": "unaffected"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
           "type": "unaffected"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R280-photo-studio-light/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R280-photo-studio-light/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 OpenMotion 导入、预览及配方库三个受保护测试文件，24 项通过。旧卡合同、人工记录与测试文件无差异。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        },
+        {
+          "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。",
+          "target": "2026-11-26-Pho_R17-openclaw-contract-api-base/H-01",
+          "type": "independent"
         }
       ],
       "screenshots": [
@@ -119,6 +199,7 @@
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
+        "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
         "studio.backend",
@@ -131,95 +212,175 @@
       "open_route": "note:Studio 项目页把 Concat 精修导出的成片拖回检查",
       "relations": [
         {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R278-photo-direct-rescript/H-03",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-10-26-R280-photo-studio-light/H-02",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
-          "type": "independent"
-        },
-        {
-          "reason": "本次只新增 concat 分支（returned_candidate.concat_plan、video_workflow 的 concat 映射、handoff.js 列表多一项），旧卡验的是另一件事，otio_kdenlive、openchatcut、openfilm 的读回与回传路径未改，两者没有承接关系。",
-          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
-          "type": "independent"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
-          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
-          "type": "unaffected"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
-          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
-          "type": "unaffected"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
-          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
-          "type": "unaffected"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
-          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
-          "type": "unaffected"
-        },
-        {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T075135Z-local-075f6f",
-          "reason": "本次只新增 concat 分支，该旧卡验证的范围没有被改动；已用本卡机器证据（34 passed）覆盖相关面。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
           "type": "unaffected"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R280-photo-studio-light/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R280-photo-studio-light/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 OpenMotion 导入、预览及配方库三个受保护测试文件，24 项通过。旧卡合同、人工记录与测试文件无差异。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        },
+        {
+          "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。",
+          "target": "2026-11-26-Pho_R17-openclaw-contract-api-base/H-01",
+          "type": "independent"
         }
       ],
       "screenshots": [
@@ -233,6 +394,7 @@
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
+        "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
         "studio.backend",
@@ -253,12 +415,14 @@
   "machine_evidence": [
     {
       "layer": "machine/unit",
-      "result_path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/machine/unit/runs/20261126T075135Z-local-075f6f/result.md",
-      "result_sha256": "7880ef9ccc0fa3f4020123552df732d7e5a0ceeac37ffcffc8a2140b1a54b760",
-      "run_id": "20261126T075135Z-local-075f6f",
+      "result_path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/machine/unit/runs/20261126T081342Z-local-af79cd/result.md",
+      "result_sha256": "3360bfbacf0531d228581a01ed45f614b09495ebff83e83746a9e57cb47605f8",
+      "run_id": "20261126T081342Z-local-af79cd",
       "source_identity": "4189a26e832aa89af453d2a3e36c263813e0f53f",
       "surfaces": [
         "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
         "studio.backend",
@@ -267,7 +431,7 @@
     }
   ],
   "open_route": null,
-  "ready_at": "2026-11-26T07:53:05.731534Z",
+  "ready_at": "2026-11-26T08:31:44.038207Z",
   "release_slice": "preview-chain-p0",
   "request_id": "2026-11-26-Pho_R18-concat-return",
   "required_role": "任务委托人",

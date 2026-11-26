@@ -1,0 +1,26 @@
+check-delivery  c93bab6..HEAD  (7 commits, tree 7580a4b)
+  G1 有卡  PASS
+  G2 基准一致  PASS
+  G3 机器先绿  PASS
+  G4 看得懂  PASS
+  G5 有入口  PASS
+  G6 去重已声明  FAIL  未声明与 2026-10-20-R223-photo-music-beat-map/H-01 的关系; 未声明与 2026-10-20-R223-photo-music-beat-map/H-02 的关系; 未声明与 2026-10-20-R223-photo-music-beat-map/H-03 的关系 → 为召回候选逐条声明关系；高分无关需 Acceptance-Override → python3 tools/harnessctl.py acceptance candidates --range <基底>..<提交> --project .；python3 tools/harnessctl.py acceptance dedupe --project . --pairs --json
+  G7 失效传播  FAIL  2026-10-20-R223-photo-music-beat-map/H-01 已通过的范围必须复验或证明未受影响; 2026-10-20-R223-photo-music-beat-map/H-02 已通过的范围必须复验或证明未受影响; 2026-10-20-R223-photo-music-beat-map/H-03 已通过的范围必须复验或证明未受影响 → 声明 reverify 或附带范围覆盖证据的 unaffected → python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py repair restore-click-version <卡目录> --project-root . --actor <执行者> --reason <原因>；python3 Core/skills/design-acceptance-contract/scripts/manage_acceptance_artifacts.py repair legacy-unverifiable <卡目录> --project-root . --actor <执行者> --reason <历史摘要矛盾及证据>；python3 tools/harnessctl.py acceptance request new --project . --input <复验需求.json>
+  G8 坏一条不连累  PASS
+  G9 页面可见  PASS
+  G10 不自证  PASS
+  G11 有需求卡  PASS
+  G12 验收覆盖需求  PASS
+  G13 沿用已有卡  PASS
+  G14 已通过不可变  PASS
+  G15 自动替代完整  PASS
+  G16 不连累前面的卡  PASS
+  G17 真实链路没被替换  PASS  2026-11-26-Pho_R17-openclaw-contract-api-base: 证据里没有脚本; 2026-11-26-Pho_R18-concat-return: 证据里没有脚本
+  card-number-conflict 共用编号冲突  PASS  未发现同号卡
+  lessons-sweep 新错误经验的同类排查  SKIP  本项目没有错误经验文件
+  lesson-trailer 修复提交的错误经验  PASS  2 张卡满足；2 个修复提交；Lesson-Skip 未写类别：4189a26e8、e73e38ed0；时间兜底（仓库缺少生效提交 976b279aa46f4c2091f05497155b044c937ef975；2026-10-27T22:01:23Z）；新增日志 0 条，去重 2 条
+  lessons-format 规则卡和事故记录能被错误经验页读出  SKIP  本次推送没有改规则卡和事故记录
+  fe-shared-ui 前端共享组件归属  SKIP  项目未声明 frontend.shared_ui_paths
+  sqlite-runtime SQLite 运行库  SKIP  项目未登记门禁
+  whole-repo-tests 整仓扫描测试  SKIP  整仓扫描测试 跳过：项目没有声明整仓扫描测试名单；查了 0 个提交，触发和缺失未检查
+结果：FAIL（本命令如实返回门禁状态；推送策略由调用方应用）

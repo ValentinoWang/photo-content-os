@@ -216,7 +216,7 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-26T07:53:05.731534Z",
+  "generated_at": "2026-11-26T08:31:44.038207Z",
   "non_blocking_entries": [
     {
       "blocking": false,
@@ -229,7 +229,7 @@
       ],
       "latest_run": null,
       "loop_name": "Studio 能用 Concat 精修后回传",
-      "ready_at": "2026-11-26T07:53:05.731534Z",
+      "ready_at": "2026-11-26T08:31:44.038207Z",
       "release_slice": "preview-chain-p0",
       "required_role": "任务委托人",
       "scope_hints": [],
@@ -248,7 +248,7 @@
       ],
       "latest_run": null,
       "loop_name": "契约快照接口前缀跟随策划台",
-      "ready_at": "2026-11-26T06:46:57.782327Z",
+      "ready_at": "2026-11-26T08:31:21.891027Z",
       "release_slice": "preview-chain-p0",
       "required_role": "任务委托人",
       "scope_hints": [],
@@ -525,5 +525,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "45f6012edc88283319b36365324dc8c88db1dd35a61ef09607937a4588fa41fe"
+  "source_facts_sha256": "7f6ba942ee6ba6850c296a9b84800e3fa86d5f27c5b9b1e3b06756fcf7cba73a"
 }

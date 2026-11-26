@@ -2,8 +2,8 @@
   "baseline": {
     "base": "c93bab6b7d4d03beb07d9cf8040d214910bc2958",
     "branch": "main",
-    "head": "e73e38ed009a91b3b905fc0d2497b1a36d8a644d",
-    "tree": "58ec2766630d08640f499a460cc6758e28195429"
+    "head": "4189a26e832aa89af453d2a3e36c263813e0f53f",
+    "tree": "ffc4b31366f1915c5143935f5e48da041f0026a7"
   },
   "binding_sha256": "b94bf6ac58400c0d03859991e69868573741ac4e3c1ca7d9019f3de807b6ca0c",
   "blocking": false,
@@ -15,7 +15,184 @@
       "claim_key": "photo.openclaw-contract-api-base",
       "item": "H-01",
       "open_route": "note:运行 .venv/bin/python scripts/doctor.py，配对行应显示 1e3eb410cd3b",
-      "relations": [],
+      "relations": [
+        {
+          "evidence_run": "20261126T081340Z-local-f2d670",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T081340Z-local-f2d670",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-19-R210-photo-music-link-import/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-20-R220-photo-studio-ia-preview/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T081340Z-local-f2d670",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T081340Z-local-f2d670",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T081340Z-local-f2d670",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R278-photo-direct-rescript/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R280-photo-studio-light/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R280-photo-studio-light/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R282-photo-direct-handoff-storyboard/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-10-26-R283-photo-direct-style-library/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "交付范围召回本项。逐文件比对本卡源码提交与旧卡冻结差异，产品文件无交集，原人工验收继续待验。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T081340Z-local-f2d670",
+          "reason": "在发布源码重跑 OpenMotion 导入、预览及配方库三个受保护测试文件，24 项通过。旧卡合同、人工记录与测试文件无差异。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        },
+        {
+          "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。",
+          "target": "2026-11-26-Pho_R18-concat-return/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。",
+          "target": "2026-11-26-Pho_R18-concat-return/H-02",
+          "type": "independent"
+        }
+      ],
       "screenshots": [
         {
           "caption": "制作台自检输出 · 终端摘录渲染截图",
@@ -25,9 +202,13 @@
         }
       ],
       "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
         "photo.documentation",
         "photo.tests-scripts",
-        "studio.backend"
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
       ]
     }
   ],
@@ -43,20 +224,29 @@
   "machine_evidence": [
     {
       "layer": "machine/unit",
-      "result_path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/machine/unit/runs/20261126T064315Z-local-d22784/result.md",
-      "result_sha256": "5ff6a7a0d2d7e188d7fe59d6987af07e2fab450c5131efd827cd448e2a647a31",
-      "run_id": "20261126T064315Z-local-d22784",
-      "source_identity": "e73e38ed009a91b3b905fc0d2497b1a36d8a644d"
+      "result_path": "agents-results/2026-11-26/Pho_R17-openclaw-contract-api-base/acceptance/machine/unit/runs/20261126T081340Z-local-f2d670/result.md",
+      "result_sha256": "1d8a44c41f8952bf76fa9bd161c48800c26ab292b2229685bdd514dafc6b7f89",
+      "run_id": "20261126T081340Z-local-f2d670",
+      "source_identity": "4189a26e832aa89af453d2a3e36c263813e0f53f",
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.documentation",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
     }
   ],
   "open_route": null,
-  "ready_at": "2026-11-26T06:46:57.782327Z",
+  "ready_at": "2026-11-26T08:31:21.891027Z",
   "release_slice": "preview-chain-p0",
   "request_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
   "required_role": "任务委托人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "e73e38ed009a91b3b905fc0d2497b1a36d8a644d",
+  "source_commit": "4189a26e832aa89af453d2a3e36c263813e0f53f",
   "summary": "契约和 Agent 兼容检查已通过，制作台自检显示的版本待人工核对。",
   "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base"
 }

@@ -1,0 +1,5 @@
+Studio: http://127.0.0.1:53931
+Command: ['/Users/vsiyo/Desktop/Opensource_Tool/npm-global/bin/node', '/Users/vsiyo/.local/share/task-worktrees/production-desk-preview-cards-fix/tests/test_r223_beat_map.mjs']
+PASS beat map: signature lifecycle, cuts, fade, offsets, multi-song swap, lane:false, seek, stable overview, formulas, visible swap, no overflow
+
+Exit code: 0
