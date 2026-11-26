@@ -1,0 +1,37 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.studio-concat-software-list",
+    "open_route": "note:Studio 项目页「剪辑软件」列表，Concat 排第一",
+    "surfaces": [
+      "studio.frontend"
+    ],
+    "relations": [],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/shots/H-01-1.png",
+        "sha256": "9fa33d2c261e6c8c84ef5bf300f6cef63ff98c6636e6fb303cebb7828ca81711",
+        "caption": "Studio 项目页软件列表 · 本地页面渲染截图",
+        "captured_at": "2026-11-26T07:20:36.296857+00:00"
+      }
+    ]
+  },
+  {
+    "item": "H-02",
+    "claim_key": "photo.studio-concat-return",
+    "open_route": "note:Studio 项目页把 Concat 精修导出的成片拖回检查",
+    "surfaces": [
+      "studio.backend",
+      "photo.tests-scripts"
+    ],
+    "relations": [],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/shots/H-02-1.png",
+        "sha256": "34cdefcf79837b3bbf74e461e497e6078f6d7c1d3e187cf231039ef4ba8102dc",
+        "caption": "回传被拒时的检查失败提示 · 本地页面渲染截图",
+        "captured_at": "2026-11-26T07:20:36.450757+00:00"
+      }
+    ]
+  }
+]

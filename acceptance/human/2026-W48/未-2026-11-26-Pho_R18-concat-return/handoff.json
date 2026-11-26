@@ -1,0 +1,86 @@
+{
+  "baseline": {
+    "base": "41016469e35e68cf1d255bf98c2b94d4604d26cd",
+    "branch": "main",
+    "head": "d4a31f871a76779b2207a7af1547d268f679a5b0",
+    "tree": "24c9c812a63024317900b232f68b78b747025da4"
+  },
+  "binding_sha256": "87b4b80db5b9afe9c950edcc9473fff9187cf19459d1845925bb092caa69a5e2",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "166b1aba3a82fc7e1a6c286883528a30cffff006cc0f27652224f6f7e731759d",
+  "claims": [
+    {
+      "claim_key": "photo.studio-concat-software-list",
+      "item": "H-01",
+      "open_route": "note:Studio 项目页「剪辑软件」列表，Concat 排第一",
+      "relations": [],
+      "screenshots": [
+        {
+          "caption": "Studio 项目页软件列表 · 本地页面渲染截图",
+          "captured_at": "2026-11-26T07:20:36.296857+00:00",
+          "path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/shots/H-01-1.png",
+          "sha256": "9fa33d2c261e6c8c84ef5bf300f6cef63ff98c6636e6fb303cebb7828ca81711"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    },
+    {
+      "claim_key": "photo.studio-concat-return",
+      "item": "H-02",
+      "open_route": "note:Studio 项目页把 Concat 精修导出的成片拖回检查",
+      "relations": [],
+      "screenshots": [
+        {
+          "caption": "回传被拒时的检查失败提示 · 本地页面渲染截图",
+          "captured_at": "2026-11-26T07:20:36.450757+00:00",
+          "path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/shots/H-02-1.png",
+          "sha256": "34cdefcf79837b3bbf74e461e497e6078f6d7c1d3e187cf231039ef4ba8102dc"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend",
+        "studio.frontend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance-contract.md",
+  "contract_sha256": "f60b606d4a07b18c75a9ad8e275b12a4d0e9992119bb80123d990b6e00e21716",
+  "contract_version": "1",
+  "estimated_minutes": 5,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.studio-concat-return",
+    "photo.studio-concat-software-list"
+  ],
+  "loop_name": "Studio 能用 Concat 精修后回传",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/machine/unit/runs/20261126T071842Z-local-18fd1e/result.md",
+      "result_sha256": "0330ac63a5f6fdadf6e5091de30b04e173130d2f13d0ab9f34155d66311f2a70",
+      "run_id": "20261126T071842Z-local-18fd1e",
+      "source_identity": "d4a31f871a76779b2207a7af1547d268f679a5b0"
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-26T07:24:31.824548Z",
+  "release_slice": "preview-chain-p0",
+  "request_id": "2026-11-26-Pho_R18-concat-return",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "d4a31f871a76779b2207a7af1547d268f679a5b0",
+  "summary": "Concat 回传读回的替身测试已通过，软件列表和精修后回传待人工核对。",
+  "task_id": "2026-11-26-Pho_R18-concat-return"
+}

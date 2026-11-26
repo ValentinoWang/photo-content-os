@@ -1,0 +1,68 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______ ConcatReturnTests.test_project_identity_mismatch_is_check_failed _______
+
+self = <test_concat_return.ConcatReturnTests testMethod=test_project_identity_mismatch_is_check_failed>
+
+    def test_project_identity_mismatch_is_check_failed(self):
+        self.prepare(lambda readback: FakeConcat(readback), project_revision=2)
+        data = self.upload()
+>       assert data["state"] == "check-failed"
+E       AssertionError: assert 'returned' == 'check-failed'
+E         
+E         - check-failed
+E         + returned
+
+tests/test_concat_return.py:82: AssertionError
+______ ConcatReturnTests.test_readback_success_records_a_native_candidate ______
+
+self = <test_concat_return.ConcatReturnTests testMethod=test_readback_success_records_a_native_candidate>
+
+    def test_readback_success_records_a_native_candidate(self):
+        self.prepare(lambda readback: FakeConcat(readback))
+        data = self.upload()
+        assert data["state"] == "returned"
+        c = json.loads((self.run / "studio-candidate.json").read_text())["candidate"]
+>       assert c["provenance"] == "native_readback" and c["editor"]["toolId"] == "concat"
+E       AssertionError: assert ('manual_export' == 'native_readback'
+E         
+E         - native_readback
+E         + manual_export)
+
+tests/test_concat_return.py:74: AssertionError
+______ ConcatReturnTests.test_refused_readback_asks_to_close_the_project _______
+
+self = <test_concat_return.ConcatReturnTests testMethod=test_refused_readback_asks_to_close_the_project>
+
+    def test_refused_readback_asks_to_close_the_project(self):
+        refused = BackendError("concat_tool_error:project_open:refused: project is open in a window")
+        self.prepare(lambda readback: FakeConcat(error=refused))
+        data = self.upload()
+>       assert data["state"] == "check-failed"
+E       AssertionError: assert 'returned' == 'check-failed'
+E         
+E         - check-failed
+E         + returned
+
+tests/test_concat_return.py:90: AssertionError
+_________ ConcatReturnTests.test_window_lock_is_refused_before_reading _________
+
+self = <test_concat_return.ConcatReturnTests testMethod=test_window_lock_is_refused_before_reading>
+
+    def test_window_lock_is_refused_before_reading(self):
+        directory = self.prepare(lambda readback: FakeConcat(readback))
+        (directory / "concat-project" / "concat.lock").write_text("", encoding="utf-8")
+        data = self.upload()
+>       assert data["state"] == "check-failed"
+E       AssertionError: assert 'returned' == 'check-failed'
+E         
+E         - check-failed
+E         + returned
+
+tests/test_concat_return.py:99: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_concat_return.py::ConcatReturnTests::test_project_identity_mismatch_is_check_failed
+FAILED tests/test_concat_return.py::ConcatReturnTests::test_readback_success_records_a_native_candidate
+FAILED tests/test_concat_return.py::ConcatReturnTests::test_refused_readback_asks_to_close_the_project
+FAILED tests/test_concat_return.py::ConcatReturnTests::test_window_lock_is_refused_before_reading
+4 failed in 14.35s
