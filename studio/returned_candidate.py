@@ -101,6 +101,45 @@ def openchatcut_plan(backend,directory,output,suggestions):
             'project_id':binding['project_id'],'project_revision':binding['project_revision']}
 
 
+def concat_plan(backend,directory,output,suggestions,overlays=()):
+    """Read the saved Concat project back as a returned-export plan."""
+    project=directory/'concat-project'
+    if (project/'concat.lock').exists():
+        raise BackendError('concat_project_in_use')
+    try:
+        readback=backend.read_back(project_dir=directory)
+    except BackendError as exc:
+        # Concat refuses MCP access to a project that its window holds open.
+        if 'refused' in str(exc) or str(exc).startswith('concat_tool_error:'):
+            raise BackendError('concat_project_in_use') from exc
+        raise
+    kwargs=readback['render_kwargs']
+    source_info=probe_media(Path(kwargs['source']))
+    video=next(s for s in source_info['streams'] if s['codec_type']=='video')
+    source_duration=float(video.get('duration') or source_info['format']['duration'])
+    cuts=[];cursor=0.
+    for row in [*readback['time_map'],{'source_start':source_duration,'source_end':source_duration}]:
+        if row['source_start']>cursor+1e-6:
+            contributors=[s for s in suggestions if s.get('automatic') and s['type'] in ('silence','repetition') and s['start']<=cursor+1e-6 and s['end']>=row['source_start']-1e-6]
+            kind='manual' if not contributors else 'retake' if any(s['type']=='repetition' for s in contributors) else 'silence'
+            cuts.append({'kind':kind,'startSeconds':cursor,'endSeconds':row['source_start']})
+        cursor=max(cursor,row['source_end'])
+    ids={str(Path(o['path']).expanduser().resolve()):o['animation_id'] for o in overlays if o.get('animation_id')}
+    placements=[]
+    for a in readback['animations']:
+        animation_id=ids.get(str(Path(a['path']).expanduser().resolve()))
+        if animation_id is None:raise BackendError('concat_animation_identity_unverified')
+        placements.append({'animation_id':animation_id,'start':a['start'],'end':a['end']})
+    if not readback['captions']:raise BackendError('concat_subtitle_trace_missing')
+    subs=output/'readback.srt'
+    subs.write_text('\n\n'.join(f"{i}\n{srt_timestamp(c['start'])} --> {srt_timestamp(c['end'])}\n{c['text']}" for i,c in enumerate(readback['captions'],1))+'\n',encoding='utf-8')
+    fps=float(readback['fps']);duration=float(readback['duration'])
+    # The Concat timeline keeps no caption position; its export burns captions at the adapter's fixed ratio.
+    return {'time_map':readback['time_map'],'fps':fps,'duration':duration,'frames':round(duration*fps),'executed_cuts':cuts,
+            'animation_placements':placements,'subtitles':str(subs),'subtitle_burned_in':True,'subtitle_bottom_ratio':0.85,
+            'project_id':kwargs['project_id'],'project_revision':kwargs['project_revision']}
+
+
 def project_returned(ctx, video, output, inspected, checks, plan=None):
     stream=next(s for s in probe_media(video)['streams'] if s['codec_type']=='video')
     duration=float(stream['duration']);fps=float(Fraction(stream['avg_frame_rate']))

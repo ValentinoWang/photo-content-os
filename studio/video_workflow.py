@@ -257,14 +257,16 @@ class VideoWorkflow:
                 raise ProjectStoreError('video_action_invalid', '剪辑操作无效')
             return self.projection(project_id, self.app._video_handoff_projection(project_id))
 
+    def _overlays(self, ctx):
+        teaching = self.app._video_json(ctx['run'], 'native-teaching_clips.json')
+        if not teaching: return []
+        from video_derivatives import teaching_overlays
+        return teaching_overlays(teaching, ctx['descriptor'], ctx['source'])
+
     def _kwargs(self, ctx):
         if ctx['source'] is None or not ctx['suggestions_path'].is_file():
             raise ProjectStoreError('video_input_missing', '原片或剪辑建议尚未交接，请重新交接作品')
-        animations = []
-        teaching = self.app._video_json(ctx['run'], 'native-teaching_clips.json')
-        if teaching:
-            from video_derivatives import teaching_overlays
-            animations = teaching_overlays(teaching, ctx['descriptor'], ctx['source'])
+        animations = self._overlays(ctx)
         return {'source': ctx['source'], 'suggestions_path': ctx['suggestions_path'], 'subtitles': ctx['subtitles'],
                 'animations': animations, 'project_id': ctx['identity']['photoProjectId'],
                 'project_revision': ctx['identity']['photoProjectRevision'], 'timeout_seconds': 300}
@@ -586,24 +588,25 @@ class VideoWorkflow:
                 return self.projection(project_id,ctx['data'])
             session=self._session(ctx)
             bid='jianying' if choice.get('method')=='guide' else 'openfilm' if choice.get('method')=='self' else choice['editor']
-            from studio.returned_candidate import openfilm_plan, openchatcut_plan, project_returned
+            from studio.returned_candidate import openfilm_plan, openchatcut_plan, concat_plan, project_returned
             backend=session.get('backend')
             directory=session.get('project_dir')
             plan=None
             can_read=bid!='jianying' and next(r for r in self.editors() if r['id']==bid)['capabilities']['read_back']
-            project_name={'otio_kdenlive':'timeline.kdenlive','openfilm':'openfilm-project/adapter-project.json','openchatcut':'openchatcut-project.json'}.get(bid)
+            project_name={'otio_kdenlive':'timeline.kdenlive','openfilm':'openfilm-project/adapter-project.json','openchatcut':'openchatcut-project.json','concat':'concat-project/concat.json'}.get(bid)
             if can_read and directory and project_name and (directory/project_name).is_file():
                 if not backend or backend.describe()['id']!=bid:
                     raise ProjectStoreError('video_session_missing','所选软件工程不属于当前会话，请重新打开精修')
                 try:
-                    plan=openfilm_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openfilm' else openchatcut_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openchatcut' else backend.read_back(project_dir=directory)
-                    if bid in ('otio_kdenlive','openchatcut') and (plan['project_id'],plan['project_revision'])!=(ctx['identity']['photoProjectId'],ctx['identity']['photoProjectRevision']):
+                    plan=openfilm_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openfilm' else openchatcut_plan(backend,directory,output,ctx['data']['suggestions']) if bid=='openchatcut' else concat_plan(backend,directory,output,ctx['data']['suggestions'],self._overlays(ctx)) if bid=='concat' else backend.read_back(project_dir=directory)
+                    if bid in ('otio_kdenlive','openchatcut','concat') and (plan['project_id'],plan['project_revision'])!=(ctx['identity']['photoProjectId'],ctx['identity']['photoProjectRevision']):
                         raise ValueError('kdenlive_project_identity_mismatch')
                     if not 0<=plan['subtitle_bottom_ratio']<=1:
                         raise ValueError('native_subtitle_position_unverified')
                     inspected=check_output_video(video,original_hashes=original,subtitles=Path(plan['subtitles']),expected_duration=plan['duration'],expected_frames=plan['frames'],expected_fps=plan['fps'])
                 except (OSError,ValueError,KeyError) as exc:
-                    public={'state':'check-failed','candidate':{'status':'check_failed','checks':review_projection(inspected),'reviewNotice':'保存的工程没有提供完整、可核对的剪辑记录；请检查工程后重新导出。'},'uploaded':False}
+                    notice='请先关闭 Concat 里的这个工程再回传。' if str(exc)=='concat_project_in_use' else '保存的工程没有提供完整、可核对的剪辑记录；请检查工程后重新导出。'
+                    public={'state':'check-failed','candidate':{'status':'check_failed','checks':review_projection(inspected),'reviewNotice':notice},'uploaded':False}
                     session['public'].update(public)
                     (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
                     return self.projection(project_id,ctx['data'])

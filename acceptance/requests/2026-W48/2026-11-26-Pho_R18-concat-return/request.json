@@ -1,0 +1,40 @@
+{
+  "id": "2026-11-26-Pho_R18-concat-return",
+  "title": "Studio 能用 Concat 精修后回传",
+  "raw_request": "任务单 TASK-D：制作台 Studio 要能用 Concat 精修后把成片回传。项目页软件列表里选得到 Concat；回传时读回 Concat 工程核对成片，工程仍在 Concat 窗口里打开时提示先关闭。",
+  "author": {
+    "agent": "codex",
+    "session": "98c097ce-ecdf-4f86-97c3-31d41c922144"
+  },
+  "understanding": [
+    "Studio 项目页的剪辑软件列表里能看到并选中 Concat，用 Concat 精修导出后拖回成片，Studio 读取 Concat 工程核对时间线、字幕和帧数，通过后出现候选成片。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开 Studio 项目页，查看「剪辑软件」列表。",
+        "点 Concat 一行的「选择」。"
+      ],
+      "expected": "Concat 排在列表第一位，附官网、源码、下载链接，点选择后显示「已选择」。"
+    },
+    {
+      "key": "H-02",
+      "steps": [
+        "选择 Concat 并点「自动出第一版」，再打开生成的工程精修、导出，然后关闭 Concat 里的这个工程。",
+        "拖入导出的成片到「把导出的成片拖回这里」，点「检查这份成片」。"
+      ],
+      "expected": "候选成片出现且检查通过；如果工程还开在 Concat 窗口里，提示「请先关闭 Concat 里的这个工程再回传」，不出现候选。"
+    }
+  ],
+  "project": "photo-content-os",
+  "confirmation_required": false,
+  "executors": [],
+  "out_of_scope": [],
+  "schema": "request-card/v1",
+  "created_at": "2026-11-26T07:15:43.986728Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}
