@@ -140,7 +140,7 @@ def concat_plan(backend,directory,output,suggestions,overlays=()):
             'project_id':kwargs['project_id'],'project_revision':kwargs['project_revision']}
 
 
-def project_returned(ctx, video, output, inspected, checks, plan=None):
+def project_returned(ctx, video, output, inspected, checks, plan=None, *, exact_480=False):
     stream=next(s for s in probe_media(video)['streams'] if s['codec_type']=='video')
     duration=float(stream['duration']);fps=float(Fraction(stream['avg_frame_rate']))
     source_info=probe_media(ctx['source'])
@@ -169,7 +169,7 @@ def project_returned(ctx, video, output, inspected, checks, plan=None):
         checks.update(subtitles='pass' if next((r['status'] for r in inspected['checks'] if r['check']=='subtitles'),None)=='passed' and plan['subtitle_burned_in'] and .8<=plan['subtitle_bottom_ratio']<=1 else 'fail',blackFrames='fail' if re.search(r'\bpblack:',black.stderr) else 'pass')
         if any(checks.get(k)!='pass' for k in ('playable','avSync','frameCount','sourceUnchanged','subtitles','blackFrames')):
             c['status']='check_failed'
-    preview=output/'preview.mp4';c['preview']=preview_video(video,preview)
+    preview=output/'preview.mp4';c['preview']=preview_video(video,preview,exact_480=exact_480)
     c['waveformPeaks']=waveform_peaks(ctx['source'])
     c['candidateDigest']=video_digest(c)
     return {'candidate':c,'preview_ref':str(preview.resolve().relative_to(ctx['workspace'])),

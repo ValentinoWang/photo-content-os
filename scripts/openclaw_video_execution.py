@@ -92,13 +92,15 @@ class PhotoNodeRegistry:
     Missing scripts/functions block; there is no substitute backend.
     """
 
-    def __init__(self, catalog: Any, binding_path: Path | None, *, live: bool = False, binding_source: Any = None) -> None:
+    def __init__(self, catalog: Any, binding_path: Path | None, *, live: bool = False, binding_source: Any = None,
+                 refine_context: Any = None) -> None:
         # ``binding_source`` returns the binding delivered for one job (installed Agent);
         # ``binding_path`` is the explicit local file used by existing tool callers.
         if (binding_path is None) == (binding_source is None):
             raise ProductContractError("photo_binding_rejected")
         self.catalog = catalog
         self.binding_source = binding_source
+        self.refine_context = refine_context
         self.binding_path = binding_path.resolve() if binding_path is not None else None
         self.live = live
         self.retry_shot_id = None
@@ -215,6 +217,9 @@ class PhotoNodeRegistry:
                 raise ProductContractError('photo_editor_selection_required')
             kwargs['backend_id'] = selected
             kwargs['editing_method'] = 'open_source'
+            if self.refine_context is not None and selected == 'concat':
+                kwargs.update(project_id=self.descriptor['identity']['photoProjectId'],
+                              project_revision=self.descriptor['identity']['photoProjectRevision'])
         if step["action"] == "transcribe":
             if function != "transcribe_project":
                 raise ProductContractError("photo_entrypoint_unavailable")
@@ -333,6 +338,7 @@ class PhotoNodeRegistry:
             before = {p: file_sha256(p) for p in sources}
             output_root = local_path(workspace, context["run_ref"])
             output_root.mkdir(parents=True, exist_ok=True)
+            opened_for_refine = False
             try:
                 native = None
                 for step in binding["steps"]:
@@ -350,7 +356,31 @@ class PhotoNodeRegistry:
                 validate_video_handoff(handoff, current["identity"], expected_handoff_digest=current["handoff_digest"])
                 if before != {p: file_sha256(p) for p in sources} or self._descriptor(workspace, str(descriptor.relative_to(workspace)), handoff) != full_descriptor:
                     raise ProductContractError("photo_execution_failed")
-                candidate = self._candidate(binding, full_descriptor, root, workspace, before, native, output_root)
+                if (self.refine_context is not None and native and native.get('editor_backend') == 'concat'
+                        and not {'retryShotId', 'renderShotIds'} & full_descriptor.keys()):
+                    from media_project_selection import RefineRun
+                    from edit_backends.registry import get_backend
+                    run = RefineRun(self.refine_context(full_descriptor["identity"]))
+                    project = Path(native["project_dir"])
+                    source = Path(native["source"])
+                    identity = full_descriptor["identity"]
+                    if (run.directory != output_root or source not in before or
+                            (native["project_id"], native["project_revision"]) !=
+                            (identity["photoProjectId"], identity["photoProjectRevision"]) or
+                            project.resolve() != output_root / "editor/concat-project" or not (project / "concat.json").is_file()):
+                        raise ProductContractError("photo_execution_failed")
+                    with run.locked():
+                        if run.read() is None:
+                            backend = get_backend("concat")
+                            try:
+                                opened = backend.open_for_refine(project_dir=project)
+                            finally:
+                                backend.close()
+                            self.refine_context(identity)
+                            run.record_opened(project, opened, "sha256:" + before[source])
+                    opened_for_refine = True
+                else:
+                    candidate = self._candidate(binding, full_descriptor, root, workspace, before, native, output_root)
             except Exception as exc:
                 code = getattr(exc, "code", "photo_execution_failed")
                 if code not in {"photo_entrypoint_unavailable", "photo_binding_rejected", "photo_live_required", "photo_candidate_projection_missing"}:
@@ -366,6 +396,8 @@ class PhotoNodeRegistry:
                             facts = failed_shot_progress(failed, full_descriptor, json.loads(manifest_path.read_text())['fps'],
                                 **({'output_dir': output_root, 'workspace': workspace} if action == 'compose' else {}))
                             candidate.update(progress={'shotProgress': facts['shotProgress']}, failedShotId=facts['failedShotId'])
+            if opened_for_refine:
+                raise NodeExecutionError("photo_waiting_manual_refine")
             # This is a local artifact in the existing durable runtime. A failure
             # receipt is not a succeeded render and never enters the media library.
             artifact = output_root / "handoff_manifest.json"
@@ -608,7 +640,7 @@ def installed_runtime_factory(store: Any, *, device_id: str, provider: Any = Non
     binding file, environment variable or root-level video.json is consulted.
     Jobs without a run binding keep the installed Agent's default runtime.
     """
-    from media_project_selection import resolve_run_binding
+    from media_project_selection import delivered_context, resolve_run_binding
 
     def create(workspace: Path, catalog: Any, *, run_binding: Any = None):
         if run_binding is None:
@@ -619,5 +651,13 @@ def installed_runtime_factory(store: Any, *, device_id: str, provider: Any = Non
         def source() -> dict[str, Any]:
             return resolve_run_binding(run_binding, store=store, device_id=device_id, media_root=media_root)
 
-        return _runtime_builder(lambda current: PhotoNodeRegistry(current, None, live=live, binding_source=source), for_agent=True)(workspace, catalog)
+        def refine_context(identity):
+            source()
+            ctx = delivered_context(store, run_binding["project_id"], identity, media=media_root)
+            if ctx["workspace"] != workspace.resolve() or ctx["run_record"]["job_id"] != run_binding["job_id"]:
+                raise ProductContractError("photo_binding_rejected")
+            return ctx
+
+        return _runtime_builder(lambda current: PhotoNodeRegistry(current, None, live=live, binding_source=source,
+                                                                  refine_context=refine_context), for_agent=True)(workspace, catalog)
     return create

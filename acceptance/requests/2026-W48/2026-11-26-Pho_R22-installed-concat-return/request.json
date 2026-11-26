@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-26-Pho_R22-installed-concat-return",
+  "project": "photo-content-os",
+  "title": "安装版设备续传同一份 Concat 精修候选",
+  "raw_request": "续跑 U19-P。按任务单把制作台的 Concat 工程及验过的回传候选接到安装版 watch，按任务的本机绑定回传，重启后读回同一份。完成点名验证、需求卡和验收卡后推送 main。",
+  "author": {
+    "agent": "codex",
+    "session": "266b38d1-d32e-4331-baa8-3a8cb1d1c0ce"
+  },
+  "understanding": [
+    "制作台自动打开已建好的工程，等待操作者精修。",
+    "设备重启后继续回传已检查的同一份成片，作品里只出现一条可播放候选。"
+  ],
+  "out_of_scope": [
+    "正式界面改版、真实素材和真人精修演练。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "查看「在哪看」中的精修试跑记录，核对工程打开、设备重启和回传读回三组结果。"
+      ],
+      "expected": "工程打开后进入等待，设备重启后沿用同一份候选，作品只显示一条可播放预览。"
+    }
+  ],
+  "confirmation_required": false,
+  "schema": "request-card/v1",
+  "executors": [],
+  "created_at": "2026-11-26T14:36:01.961314Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "not_duplicate_reasons": {
+    "2026-11-26-Pho_R21-installed-watch-project-handoff": "旧卡核对首次交接的项目选择和投递，新卡核对已交接后打开工程、持久等待和经过检查的成片回传，两项可各自验收。"
+  },
+  "remote_read_warnings": []
+}

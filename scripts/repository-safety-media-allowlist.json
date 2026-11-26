@@ -92,6 +92,10 @@
     "agents-results/2026-11-24/Pho_R09-r223-beat-color/acceptance/shots/H-01-1.jpg": {
       "reason": "Pho_R09 H-01 当前拍点验收图，真实 Studio 使用仓库测试夹具与合成音频，540×401；不含私人素材，总控批准单图入库。",
       "sha256": "8b891f1e05611e7d887596a1558e41f6dfce779a51481255bb4eaff56dc89ebc"
+    },
+    "agents-results/2026-11-26/Pho_R22-installed-concat-return/acceptance/shots/H-01-1.png": {
+      "reason": "验收卡的合成试跑文字截图，只有测试结论与统计数字，无私人素材和真实界面数据",
+      "sha256": "5215a7a8207551e8ffb858a1feb048be2d85b6b00f1137a0d2f1703e9d9bc8d0"
     }
   }
 }

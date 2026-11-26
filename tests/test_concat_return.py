@@ -1,13 +1,14 @@
 """Studio returns a Concat export by reading the saved Concat project (stand-in backend, no real Concat)."""
 import io
 import json
-import os
 from pathlib import Path
 import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from edit_backends.interface import BackendError
+from media_project_selection import RefineRun
+from unittest.mock import patch
 from test_ps4_kdenlive_readback import movie
 import test_ps_studio_handoff as fixture_module
 
@@ -37,13 +38,8 @@ class ConcatReturnTests(unittest.TestCase):
     def prepare(self, backend, *, project_revision=1, project_id=None):
         source = self.media / "source.mp4"
         movie(source)
-        binding = self.root / "binding.json"
-        self.write(binding, {"identity": {"project_id": self.project["id"], "project_revision": 1,
-                                          "job_id": self.identity["jobId"]},
-                             "creative_store": str(self.app.store.path), "project_root": str(self.media),
-                             "source_refs": ["source.mp4"], "steps": []})
-        os.environ["PHOTO_STUDIO_VIDEO_BINDING"] = str(binding)
-        directory = self.media / "concat-export"
+        self.identity = fixture_module.deliver_fixture(self.app, self.media, self.identity)
+        directory = self.run / "editor"
         (directory / "concat-project").mkdir(parents=True)
         (directory / "concat-project" / "concat.json").write_text("{}", encoding="utf-8")
         self.app.video_editor_choice(self.project["id"], {"editor": "concat", "method": "external", "revision": 1})
@@ -55,8 +51,13 @@ class ConcatReturnTests(unittest.TestCase):
                     "render_kwargs": {"source": source, "project_id": project_id or self.project["id"],
                                       "project_revision": project_revision}}
         fake = backend(readback)
-        ctx = self.app.video_workflow.context(self.project["id"])
-        self.app.video_workflow._session(ctx).update(backend=fake, project_dir=directory)
+        ctx = self.app.video_workflow.context(self.project["id"], identity=self.identity, delivered_only=True)
+        run = RefineRun(ctx)
+        run.record_opened(directory / "concat-project", {"editor_backend": "concat", "opened": True},
+                          run.digest_file(source))
+        substitute = patch("studio.video_workflow.get_backend", return_value=fake)
+        substitute.start()
+        self.addCleanup(substitute.stop)
         return directory
 
     def upload(self, seconds=3):

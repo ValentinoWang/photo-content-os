@@ -82,24 +82,27 @@ def _delivered_records(root, project_id, device_id, job_id):
         except (OSError, ValueError):
             continue
         record = read_run_record(root, raw.get('job_id')) if isinstance(raw, dict) else None
-        if (record is None or record['project_id'] != project_id or record['device_id'] != device_id
+        if (record is None or record['project_id'] != project_id or (device_id is not None and record['device_id'] != device_id)
                 or (job_id is not None and record['job_id'] != job_id)):
             continue
         found.append(record)
     return sorted(found, key=lambda r: (r['delivered_at'], r['job_id']))
 
 
-def read_delivered_handoff(store, project_id, *, device_id, job_id=None, root=None):
+def read_delivered_handoff(store, project_id, *, device_id, job_id=None, root=None, media_root=None):
     """Read the package the installed Agent delivered to this project; never falls back to env or root video.json."""
     from runtime_paths import local_media_root
     from openclaw_product_contract import video_digest
     try:
-        media = local_media_root()
+        media = local_media_root(media_root)
         journal = Path(root) if root is not None else selection_root(media)
-        records = _delivered_records(journal, project_id, device_id, job_id)
-        if not records:
+        if job_id is None:
+            records = _delivered_records(journal, project_id, device_id, None)
+            record = records[-1] if records else None
+        else:
+            record = read_run_record(journal, job_id)
+        if record is None or record['project_id'] != project_id or (device_id is not None and record['device_id'] != device_id):
             return None
-        record = records[-1]
         project = store.get_project(project_id)
         project_root = store.local_workspace_path(project_id).resolve()
         revision = project['revision']
@@ -125,7 +128,7 @@ def read_delivered_handoff(store, project_id, *, device_id, job_id=None, root=No
             return None
         return dict(project=project, root=project_root, workspace=workspace,
                     binding=binding_from_record(record, store.path, media),
-                    revision=revision, descriptor=descriptor, identity=identity)
+                    revision=revision, descriptor=descriptor, identity=identity, run_record=record)
     except (ProjectStoreError, OSError, ValueError, TypeError, AttributeError, KeyError):
         return None
 

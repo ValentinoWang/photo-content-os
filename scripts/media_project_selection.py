@@ -12,7 +12,11 @@ UI exists it only replaces the confirmation provider.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from contextlib import contextmanager
+import fcntl
+import hashlib
 import json
+import os
 import re
 import sys
 import tempfile
@@ -30,6 +34,8 @@ from studio.direct_handoff_contract import (  # noqa: E402
     RUN_RECORD_IDENTITY_KEYS,
     RUN_RECORD_SCHEMA,
     binding_from_record,
+    local_file,
+    read_delivered_handoff,
     read_run_record,
     run_record_path,
     selection_root,
@@ -46,6 +52,7 @@ _RUN_BINDING_FIELDS = frozenset({"job_id", "device_id", "project_id", "project_r
 _PAIRS = {"jobId": "job_id", "publicVariantId": "work_id", "workRevision": "work_revision",
           "photoProjectId": "project_id", "photoProjectRevision": "project_revision",
           "catalogDigest": "catalog_digest", "confirmationRef": "confirmation_ref"}
+_OPENED = {"editor_backend": "concat", "project_built": True, "opened_for_refine": True}
 
 ConfirmationProvider = Callable[[Mapping[str, Any]], "Mapping[str, Any] | None"]
 
@@ -79,6 +86,8 @@ def _write_json(path: Path, value: Any) -> None:
         with tempfile.NamedTemporaryFile(dir=path.parent, delete=False, suffix=".tmp") as output:
             temporary = Path(output.name)
             output.write(json.dumps(value, ensure_ascii=True, sort_keys=True, allow_nan=False).encode())
+            output.flush()
+            os.fsync(output.fileno())
         temporary.replace(path)
     finally:
         if temporary is not None:
@@ -249,6 +258,164 @@ class StudioSelectionPort:
         else:
             _write_json(run_record_path(self.root, job_id), record)
         return {key: record[key] for key in _RUN_BINDING_FIELDS}
+
+    def _refine_run(self, identity: Mapping[str, Any]):
+        if not isinstance(identity, Mapping) or identity.get("device_id") != self.device_id:
+            raise SelectionError("video_identity_stale")
+        job = identity.get("job_id")
+        record = read_run_record(self.root, job)
+        if record is None and isinstance(job, str) and re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}", job):
+            if not run_record_path(self.root, job).exists():
+                return None
+        if not record or record["device_id"] != self.device_id:
+            raise SelectionError("video_identity_stale")
+        ctx = delivered_context(self.store, record["project_id"], identity.get("video_identity"), media=self.media)
+        run = RefineRun(ctx)
+        if video_digest(run.identity) != video_digest(dict(identity)) or ctx["workspace"] != self.workspace:
+            raise SelectionError("video_identity_stale")
+        return run
+
+    def refine_status(self, job_identity: Mapping[str, Any]) -> Mapping[str, Any] | None:
+        try:
+            run = self._refine_run(job_identity)
+            state = run.read() if run else None
+        except (SelectionError, OSError) as exc:
+            from openclaw_media.remote_client import RemoteError
+            raise RemoteError(getattr(exc, "code", "video_refine_evidence_rejected")) from exc
+        if state is None:
+            return None
+        evidence = {key: state[key] for key in ("identity", "handoff_digest", "opened")}
+        return {"identity": run.identity, **_OPENED, "evidence_digest": video_digest(evidence)}
+
+    def read_refined_candidate(self, job_identity: Mapping[str, Any]) -> Mapping[str, Any] | None:
+        try:
+            run = self._refine_run(job_identity)
+            state = run.read() if run else None
+            if state is None or "candidate" not in state:
+                return None
+            return {"identity": run.identity, **run.candidate_receipt(state)}
+        except (SelectionError, OSError) as exc:
+            from openclaw_media.remote_client import RemoteError
+            raise RemoteError(getattr(exc, "code", "video_refine_candidate_changed")) from exc
+
+
+def delivered_context(store, project_id, identity, *, media=None):
+    """Resolve one delivered job. A caller-supplied identity only selects and compares."""
+    media = local_media_root(media)
+    job = identity.get("jobId") if isinstance(identity, Mapping) else None
+    journal = selection_root(media)
+    record = read_run_record(journal, job)
+    if record is None or record["project_id"] != project_id:
+        raise SelectionError("video_identity_stale")
+    ctx = read_delivered_handoff(store, project_id, device_id=record["device_id"], job_id=job,
+                                root=journal, media_root=media)
+    if ctx is None or video_digest(ctx["identity"]) != video_digest(dict(identity)):
+        raise SelectionError("video_identity_stale")
+    if ctx["run_record"] != record:
+        raise SelectionError("video_identity_stale")
+    return ctx
+
+
+class RefineRun:
+    """The single handoff between Photo, Studio and the installed Agent for one run."""
+
+    def __init__(self, ctx):
+        record = ctx["run_record"]
+        self.workspace = ctx["workspace"]
+        self.identity = {
+            "job_id": record["job_id"], "device_id": record["device_id"],
+            "binding_id": record["binding_id"], "binding_generation": record["binding_generation"],
+            "public_account_id": ctx["descriptor"]["public_account_id"], "video_identity": ctx["identity"],
+        }
+        key = hashlib.sha256(record["job_id"].encode()).hexdigest()[:32]
+        self.directory = (self.workspace / "runs" / key).resolve()
+        if self.directory != self.workspace / "runs" / key:
+            raise SelectionError("video_identity_stale")
+        self.path = self.directory / "studio-refine.json"
+        self.handoff_digest = record["handoff_digest"]
+
+    def read(self):
+        state = _read_json(self.path)
+        if state is None and not self.path.exists() and not self.path.is_symlink():
+            return None
+        if (not isinstance(state, dict) or state.get("identity") != self.identity
+                or state.get("handoff_digest") != self.handoff_digest or not isinstance(state.get("opened"), dict)):
+            raise SelectionError("video_refine_evidence_rejected")
+        opened = state["opened"]
+        if (opened.get("editor_backend") != "concat" or opened.get("project_built") is not True
+                or opened.get("opened_for_refine") is not True):
+            raise SelectionError("video_refine_evidence_rejected")
+        self.project_directory(state)
+        return state
+
+    @contextmanager
+    def locked(self):
+        self.directory.mkdir(parents=True, exist_ok=True)
+        with (self.directory / "studio-refine.lock").open("a") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            yield
+
+    def project_directory(self, state):
+        project = local_file(self.workspace, state["opened"].get("project_ref"))
+        if project is None or project != self.directory / "editor/concat-project/concat.json":
+            raise SelectionError("video_refine_evidence_rejected")
+        return project.parent.parent
+
+    def record_opened(self, project, opened, source_sha256):
+        manifest = (project / "concat.json").resolve()
+        if (manifest != self.directory / "editor/concat-project/concat.json"
+                or not manifest.is_file() or opened.get("editor_backend") != "concat" or opened.get("opened") is not True):
+            raise SelectionError("video_refine_evidence_rejected")
+        state = {"identity": self.identity, "handoff_digest": self.handoff_digest,
+                 "opened": {**_OPENED, "project_ref": manifest.relative_to(self.workspace).as_posix(),
+                            "source_sha256": source_sha256}}
+        _write_json(self.path, state)
+
+    @staticmethod
+    def digest_file(path):
+        with path.open("rb") as stream:
+            return "sha256:" + hashlib.file_digest(stream, "sha256").hexdigest()
+
+    def candidate_receipt(self, state):
+        receipt = state["candidate"]
+        if not isinstance(receipt, dict) or set(receipt) != {"candidate_ref", "candidate_sha256", "preview_ref", "preview_sha256"}:
+            raise SelectionError("video_refine_candidate_changed")
+        for kind in ("candidate", "preview"):
+            path = local_file(self.workspace, receipt[kind + "_ref"])
+            if path is None or not path.is_relative_to(self.directory) or self.digest_file(path) != receipt[kind + "_sha256"]:
+                raise SelectionError("video_refine_candidate_changed")
+        return receipt
+
+    def pin_candidate(self, payload, video, check_current):
+        with self.locked():
+            check_current()
+            state = self.read()
+            if state is None:
+                raise SelectionError("video_refine_evidence_rejected")
+            export_digest = self.digest_file(video)
+            if "candidate" in state:
+                if state.get("export_sha256") != export_digest:
+                    raise SelectionError("video_refine_candidate_changed")
+                receipt = self.candidate_receipt(state)
+                return _read_json(self.workspace / receipt["candidate_ref"])
+            preview = local_file(self.workspace, payload["preview_ref"])
+            if preview is None or preview != video.parent / "preview.mp4":
+                raise SelectionError("video_refine_candidate_rejected")
+            candidate = video.parent / "verified-candidate.json"
+            # Studio's EDL digest is local metadata; the uploader has a closed payload shape.
+            wire = {key: payload[key] for key in ("candidate", "progress", "preview_ref")}
+            candidate_id = video_digest({"identity": self.identity, "export_sha256": export_digest})
+            wire["candidate"]["publicCandidateId"] = "candidate_" + candidate_id.removeprefix("sha256:")[:32]
+            wire["candidate"]["preview"]["artifact"] = None  # Agent supplies the server-scoped reference.
+            wire["candidate"].pop("candidateDigest", None)
+            wire["candidate"]["candidateDigest"] = video_digest(wire["candidate"])
+            _write_json(candidate, wire)
+            state["candidate"] = {"candidate_ref": candidate.relative_to(self.workspace).as_posix(),
+                                  "candidate_sha256": self.digest_file(candidate),
+                                  "preview_ref": payload["preview_ref"], "preview_sha256": self.digest_file(preview)}
+            state["export_sha256"] = export_digest
+            _write_json(self.path, state)
+            return payload
 
 
 def resolve_run_binding(run_binding: Mapping[str, Any], *, store, device_id: str, media_root: Path | None = None) -> dict[str, Any]:

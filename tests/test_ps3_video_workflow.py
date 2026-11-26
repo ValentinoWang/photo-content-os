@@ -107,13 +107,10 @@ class WorkflowBoundaryTests(unittest.TestCase):
 
     def test_positive_manual_return_preserves_bytes_without_inventing_edit_receipts(self):
         import io
-        import os
         import subprocess
         source=self.media/'source.mp4'
         subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i','color=c=0x25516b:s=288x512:r=30:d=1','-f','lavfi','-i','sine=frequency=660:duration=1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-shortest',str(source)],check=True)
-        binding=self.root/'binding.json'
-        self.write(binding,{'identity':{'project_id':self.project['id'],'project_revision':1,'job_id':self.identity['jobId']},'creative_store':str(self.app.store.path),'project_root':str(self.media),'source_refs':['source.mp4'],'steps':[]})
-        os.environ['PHOTO_STUDIO_VIDEO_BINDING']=str(binding)
+        self.identity = fixture_module.deliver_fixture(self.app, self.media, self.identity)
         raw=source.read_bytes()
         with patch('video_candidate.project_candidate') as automatic:
             data=self.app.video_workflow.receive(self.project['id'],io.BytesIO(raw),len(raw),{'identity':self.identity,'expectedRevision':1})

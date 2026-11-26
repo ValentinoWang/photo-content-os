@@ -3,7 +3,6 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
-import os
 import re
 from pathlib import Path
 import shutil
@@ -13,6 +12,8 @@ import time
 import uuid
 from edit_backends.registry import BACKENDS, get_backend
 from edit_backends.kdenlive_render import probe_media, sha256_file
+from media_project_selection import RefineRun, SelectionError, delivered_context
+from studio.direct_handoff_contract import read_delivered_handoff, read_handoff
 from studio.project_store import ProjectStoreError
 
 
@@ -59,19 +60,19 @@ class VideoWorkflow:
                 self.probes = rows
             return copy.deepcopy(self.probes)
 
-    def context(self, project_id):
-        data = self.app._video_handoff_projection(project_id)
-        if data is None:
+    def context(self, project_id, *, identity=None, delivered_only=False):
+        if delivered_only:
+            try:
+                handoff = delivered_context(self.app.store, project_id, identity)
+            except SelectionError as exc:
+                raise ProjectStoreError('revision_conflict', '作品交接已变化，请重新打开作品') from exc
+        else:
+            handoff = (read_delivered_handoff(self.app.store, project_id, device_id=None)
+                       or read_handoff(self.app.store, project_id))
+        if handoff is None:
             raise ProjectStoreError('video_binding_invalid', '作品交接已变化，请重新打开作品')
-        root = self.app.store.local_workspace_path(project_id).resolve()
-        workspace = Path(os.environ.get('PHOTO_STUDIO_VIDEO_WORKSPACE', str(root))).expanduser().resolve()
-        binding = {}
-        if os.environ.get('PHOTO_STUDIO_VIDEO_BINDING'):
-            p = Path(os.environ['PHOTO_STUDIO_VIDEO_BINDING']).expanduser().resolve()
-            binding = self.app._video_json(p.parent, p.name)
-        job = binding.get('identity', {}).get('job_id')
-        descriptor = self.app._video_json(workspace, 'video-inputs/' + job + '/video.json') if job else {}
-        descriptor = descriptor or self.app._video_json(workspace, 'video.json')
+        data = self.app._video_handoff_projection(project_id, context=handoff)
+        root, workspace, binding, descriptor = (handoff[k] for k in ('root', 'workspace', 'binding', 'descriptor'))
         identity = descriptor['identity']
         key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
         run = workspace / 'runs' / hashlib.sha256(identity['jobId'].encode()).hexdigest()[:32]
@@ -94,8 +95,8 @@ class VideoWorkflow:
                         else: subs = local(item['local_ref'])
         suggestions = run / 'native-suggest.json'
         if not suggestions.is_file(): suggestions = root / 'ai-analysis/edit_suggestions.json'
-        return {'data': data, 'root': root, 'run': run, 'workspace': workspace, 'descriptor': descriptor,
-                'identity': identity, 'key': key, 'source': source, 'subtitles': subs, 'suggestions_path': suggestions, 'binding': binding}
+        return {**handoff, 'data': data, 'run': run, 'identity': identity, 'key': key, 'source': source,
+                'subtitles': subs, 'suggestions_path': suggestions}
 
     def _preview_edl(self, ctx):
         from studio.edl_bridge import AUTHORITY_FILE, EDLBridgeError, read_edl_bridge
@@ -126,9 +127,10 @@ class VideoWorkflow:
         entries = records.setdefault('candidates', [])
         previews = records.setdefault('previews', {})
         edls = records.setdefault('preview_edls', {})
-        payload = (self.app._video_json(ctx['run'], 'studio-candidate.json')
-                   or self.app._video_json(ctx['root'], ctx.get('binding', {}).get('candidate_ref', 'candidate.json'))
-                   or self.app._video_json(ctx['run'], 'handoff_manifest.json'))
+        payload = self.app._video_json(ctx['run'], 'studio-candidate.json')
+        if not payload and 'run_record' not in ctx:
+            payload = self.app._video_json(ctx['root'], ctx.get('binding', {}).get('candidate_ref', 'candidate.json'))
+        payload = payload or self.app._video_json(ctx['run'], 'handoff_manifest.json')
         candidate = payload.get('candidate', {})
         cid = candidate.get('publicCandidateId')
         if candidate.get('identity') == ctx['identity'] and cid:
@@ -156,8 +158,9 @@ class VideoWorkflow:
                          'previewUrl': f'/api/projects/{project_id}/video-preview/{cid}' if available else None})
         return rows
 
-    def projection(self, project_id, data):
-        ctx = self.context(project_id)
+    def projection(self, project_id, data, *, ctx=None):
+        if ctx is None:
+            ctx = self.context(project_id)
         if data.get('line') == 'direct':
             data.update(identity=ctx['identity'], projectRevision=self.app.store.get_project(project_id)['revision'],
                         studioUrl=self.origin.rstrip('/')+'/' if self.origin else None,
@@ -230,11 +233,11 @@ class VideoWorkflow:
             raise ProjectStoreError('revision_conflict', '作品交接已变化，请重新打开作品')
 
     def command(self, project_id, body):
-        ctx = self.context(project_id)
+        op = body.get('op')
+        ctx = self.context(project_id, identity=body.get('identity'), delivered_only=op == 'refine')
         self.assert_identity(ctx, body)
         with self.lock:
             session = self._session(ctx)
-            op = body.get('op')
             if op == 'probe':
                 self.editors(refresh=True)
             elif op == 'self-open':
@@ -244,10 +247,16 @@ class VideoWorkflow:
             elif op in ('render', 'export'):
                 self.render(ctx, session, body, own=op == 'export')
             elif op == 'refine':
-                if session.get('backend') is None or not session.get('project_dir'):
-                    raise ProjectStoreError('video_refine_missing', '先导出第一版，再打开剪辑软件')
-                result = session['backend'].open_for_refine(project_dir=session['project_dir'])
-                session['public'].update(state='refine-open', refineUrl=result.get('url'))
+                run = RefineRun(ctx)
+                opened = run.read()
+                if opened is not None:
+                    session['public'].update(state='refine-open', refineUrl=None)
+                else:
+                    if (ctx['data']['choice'].get('editor') == 'concat' or session.get('backend') is None
+                            or not session.get('project_dir')):
+                        raise ProjectStoreError('video_refine_missing', '先导出第一版，再打开剪辑软件')
+                    result = session['backend'].open_for_refine(project_dir=session['project_dir'])
+                    session['public'].update(state='refine-open', refineUrl=result.get('url'))
             elif op == 'close':
                 if session.get('backend'): session['backend'].close()
                 session.pop('engine',None)
@@ -255,7 +264,7 @@ class VideoWorkflow:
                 session['public']['state'] = 'connected'
             else:
                 raise ProjectStoreError('video_action_invalid', '剪辑操作无效')
-            return self.projection(project_id, self.app._video_handoff_projection(project_id))
+            return self.projection(project_id, self.app._video_handoff_projection(project_id, context=ctx), ctx=ctx)
 
     def _overlays(self, ctx):
         teaching = self.app._video_json(ctx['run'], 'native-teaching_clips.json')
@@ -520,7 +529,7 @@ class VideoWorkflow:
                 session['public']['state']=exported_state
             elif session.get('backend') is not backend: backend.close()
 
-    def _record_candidate(self, ctx, session, payload, *, editing_method, editor_id, verified=False):
+    def _record_candidate(self, ctx, session, payload, *, editing_method, editor_id, verified=False, refine=None, video=None):
         candidate = payload['candidate']
         for cut in candidate.get('cuts',[]):
             if cut['kind'] in ('silence','retake'): continue
@@ -539,6 +548,13 @@ class VideoWorkflow:
         candidate.pop('candidateDigest',None)
         candidate['candidateDigest']=video_digest(candidate)
         payload['progress'].update(selectedEditing={'method':candidate['editingMethod'],'editor':{'toolId':candidate['editor']['toolId'],'displayName':name}})
+        if refine is not None and not candidate_failed(candidate):
+            def check_current():
+                current = delivered_context(self.app.store, ctx['identity']['photoProjectId'], ctx['identity'])
+                if current['run_record'] != ctx['run_record']:
+                    raise SelectionError('video_identity_stale')
+            payload = refine.pin_candidate(payload, video, check_current)
+            candidate = payload['candidate']
         history=self.app._video_json(ctx['run'],'studio-candidates.json')
         entries=[c for c in history.get('candidates',[]) if c.get('identity')==ctx['identity'] and (c.get('editingMethod'),c.get('editor',{}).get('toolId'))!=(editing_method,editor_id)]
         entries.append(copy.deepcopy(candidate))
@@ -551,27 +567,25 @@ class VideoWorkflow:
         session['public'].update(editorName=name,
                                  candidate={k:v for k,v in candidate.items() if k in ('status','durationSeconds','frameCount','cutCount','removedSeconds','returnedAt','checks','provenance')},
                                  state='check-failed' if candidate_failed(candidate) else 'returned', uploaded=False)
-        binding_ref=os.environ.get('PHOTO_STUDIO_VIDEO_BINDING')
-        if binding_ref:
-            p=Path(binding_ref).expanduser().resolve()
-            binding=self.app._video_json(p.parent,p.name)
-            target=(ctx['root']/binding.get('candidate_ref','candidate.json')).resolve()
-            if not target.is_relative_to(ctx['root']):
-                raise ProjectStoreError('video_binding_invalid','作品交接信息无效')
-            target.parent.mkdir(parents=True,exist_ok=True)
-            target.write_text(json.dumps(payload,default=str),encoding='utf-8')
 
     def receive(self, project_id, stream, length, body):
-        ctx = self.context(project_id)
-        self.assert_identity(ctx, body)
         if not 0 < length <= 4*1024**3:
             raise ProjectStoreError('body_too_large', '成片大小无效')
+        ctx = self.context(project_id, identity=body.get('identity'), delivered_only=True)
+        self.assert_identity(ctx, body)
         choice=copy.deepcopy(self.app.video_editor_choice(project_id))
+        refine = RefineRun(ctx)
+        opened = refine.read()
+        if opened is not None:
+            choice.update(editor='concat', method='external')
+        elif choice.get('editor') == 'concat' and choice.get('method') == 'external':
+            raise ProjectStoreError('video_refine_missing', '先导出第一版，再打开剪辑软件')
         original = {ctx['source']: sha256_file(ctx['source'])} if ctx['source'] else {}
         if not original: raise ProjectStoreError('video_input_missing', '原片尚未交接')
         output = ctx['run'] / ('returned-' + uuid.uuid4().hex)
         output.mkdir()
         video = output / 'returned.mp4'
+        received = False
         try:
             with video.open('wb') as target:
                 left = length
@@ -579,18 +593,21 @@ class VideoWorkflow:
                     chunk = stream.read(min(left, 1024*1024))
                     if not chunk: raise ProjectStoreError('body_invalid', '成片上传未完成')
                     target.write(chunk); left -= len(chunk)
+            received = True
             from review_output_video import check_output_video
             inspected=check_output_video(video,original_hashes=original)
             if inspected['status']!='passed':
-                public={'state':'check-failed','candidate':{'status':'check_failed','checks':review_projection(inspected)},'uploaded':False}
-                self._session(ctx)['public'].update(public)
-                (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
-                return self.projection(project_id,ctx['data'])
+                return self._return_failed(ctx, inspected)
+            if opened is not None and opened['opened']['source_sha256'] != 'sha256:' + original[ctx['source']]:
+                return self._return_failed(ctx, inspected, '原片已变化，请重新交接作品。')
             session=self._session(ctx)
             bid='jianying' if choice.get('method')=='guide' else 'openfilm' if choice.get('method')=='self' else choice['editor']
             from studio.returned_candidate import openfilm_plan, openchatcut_plan, concat_plan, project_returned
             backend=session.get('backend')
             directory=session.get('project_dir')
+            if opened is not None:
+                directory = refine.project_directory(opened)
+                backend = get_backend('concat')
             plan=None
             can_read=bid!='jianying' and next(r for r in self.editors() if r['id']==bid)['capabilities']['read_back']
             project_name={'otio_kdenlive':'timeline.kdenlive','openfilm':'openfilm-project/adapter-project.json','openchatcut':'openchatcut-project.json','concat':'concat-project/concat.json'}.get(bid)
@@ -606,19 +623,38 @@ class VideoWorkflow:
                     inspected=check_output_video(video,original_hashes=original,subtitles=Path(plan['subtitles']),expected_duration=plan['duration'],expected_frames=plan['frames'],expected_fps=plan['fps'])
                 except (OSError,ValueError,KeyError) as exc:
                     notice='请先关闭 Concat 里的这个工程再回传。' if str(exc)=='concat_project_in_use' else '保存的工程没有提供完整、可核对的剪辑记录；请检查工程后重新导出。'
-                    public={'state':'check-failed','candidate':{'status':'check_failed','checks':review_projection(inspected),'reviewNotice':notice},'uploaded':False}
-                    session['public'].update(public)
-                    (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
-                    return self.projection(project_id,ctx['data'])
+                    return self._return_failed(ctx, inspected, notice)
+                finally:
+                    if opened is not None:
+                        backend.close()
+            if opened is not None and (plan is None or inspected['status'] != 'passed'):
+                return self._return_failed(ctx, inspected)
             checks=review_projection(inspected)
             if plan: checks['expectedFrames']=plan['frames']
-            payload=project_returned(ctx,video,output,inspected,checks,plan)
+            payload=project_returned(ctx,video,output,inspected,checks,plan,exact_480=opened is not None)
             method={'external':'open_source','guide':'jianying_guidance','self':'software_workflow'}[choice.get('method','external')]
-            self._record_candidate(ctx,session,payload,editing_method=method,editor_id=bid,verified=False)
-            return self.projection(project_id,ctx['data'])
+            try:
+                with self.lock:
+                    self._record_candidate(ctx,session,payload,editing_method=method,editor_id=bid,
+                                           refine=refine if opened is not None else None, video=video)
+            except SelectionError as exc:
+                if exc.code == 'video_refine_candidate_changed':
+                    return self._return_failed(ctx, inspected, '这个任务已有一份已检查的成片。')
+                raise ProjectStoreError('revision_conflict', '作品交接已变化，请重新打开作品') from exc
+            return self.projection(project_id,ctx['data'],ctx=ctx)
         except Exception:
-            shutil.rmtree(output, ignore_errors=True)
+            if not received:
+                shutil.rmtree(output, ignore_errors=True)
             raise
+
+    def _return_failed(self, ctx, inspected, notice=None):
+        candidate = {'status': 'check_failed', 'checks': review_projection(inspected)}
+        if notice:
+            candidate['reviewNotice'] = notice
+        public = {'state': 'check-failed', 'candidate': candidate, 'uploaded': False}
+        self._session(ctx)['public'].update(public)
+        (ctx['run']/'studio-check.json').write_text(json.dumps({'identity':ctx['identity'],'public':public}),encoding='utf-8')
+        return self.projection(ctx['identity']['photoProjectId'], ctx['data'], ctx=ctx)
 
     def subtitles(self, project_id):
         ctx=self.context(project_id)
@@ -644,6 +680,14 @@ class VideoWorkflow:
         path=(ctx['workspace']/ref).resolve()
         if not ref or not path.is_relative_to(ctx['workspace']) or not path.is_file() or path.stat().st_size>20*1024**2:
             raise ProjectStoreError('video_preview_missing','候选预览不可用')
+        if 'run_record' in ctx:
+            run = RefineRun(ctx)
+            try:
+                state = run.read()
+                if state and state.get('candidate', {}).get('preview_ref') == ref:
+                    run.candidate_receipt(state)
+            except SelectionError as exc:
+                raise ProjectStoreError('video_preview_missing', '候选预览不可用') from exc
         return path
 
     def allowed_origin(self, origin):

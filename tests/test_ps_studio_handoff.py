@@ -12,6 +12,33 @@ from studio.project_store import ProjectStore, ProjectStoreError
 from studio.server import StudioApplication
 
 
+def deliver_fixture(app, workspace, identity, **content):
+    """Stage the same package the installed watch delivers, with synthetic inputs."""
+    from media_project_selection import StudioSelectionPort
+    from test_p1a_installed_watch import DEVICE, build_package
+    from openclaw_product_contract import video_digest
+
+    descriptor, _, _, _ = build_package(identity['photoProjectId'], identity['photoProjectRevision'],
+                                        job_id=identity['jobId'])
+    descriptor.update(content)
+    descriptor['identity']['confirmedContentDigest'] = video_digest({
+        'script': descriptor['script'], 'shots': descriptor['shots'], 'animations': descriptor['animations'],
+        'documentRef': descriptor['documentRef'], 'narrationCacheKey': None,
+    })
+    project_id = identity['photoProjectId']
+    request = {'request_id': 'request_' + identity['jobId'], 'public_variant_id': descriptor['identity']['publicVariantId'],
+               'public_account_id': descriptor['public_account_id'], 'public_session_id': 'session_fixture',
+               'expected_work_revision': 1, 'expires_at': '2099-01-01T00:00:00+00:00', 'revision': 1}
+    port = StudioSelectionPort(app.store, device_id=DEVICE, workspace=workspace,
+                               confirm=lambda _: {'confirmed': True, 'selection_mode': 'existing', 'project_id': project_id})
+    selection = port.select_project(request)['local_selection']
+    ref = f"video-inputs/{identity['jobId']}/video.json"
+    StudioHandoffTests.write(workspace / ref, descriptor)
+    StudioHandoffTests.write((workspace / ref).with_name('handoff.json'), descriptor['mxHandoff'])
+    port.stage_handoff(descriptor, ref, selection)
+    return descriptor['identity']
+
+
 class StudioHandoffTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='ps-studio-')

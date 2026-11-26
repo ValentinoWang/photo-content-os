@@ -59,16 +59,24 @@ def waveform_peaks(source: Path, *, count: int = 400) -> list[float]:
     return peaks[:min(count, math.ceil(seen / samples_per_bin))]
 
 
-def preview_video(video: Path, output: Path) -> dict:
+def preview_video(video: Path, output: Path, *, exact_480: bool = False) -> dict:
     info = probe_media(video)
     v = next(s for s in info['streams'] if s.get('codec_type') == 'video')
     duration = float(v.get('duration') or info['format']['duration'])
     factor = min(1, 480 / min(v['width'], v['height']), 854 / max(v['width'], v['height']))
     width, height = max(2, int(v['width'] * factor) // 2 * 2), max(2, int(v['height'] * factor) // 2 * 2)
+    if exact_480:
+        short, long = sorted((v['width'], v['height']))
+        long_edge = min(854, round(long * 240 / short) * 2)
+        width, height = (long_edge, 480) if v['width'] >= v['height'] else (480, long_edge)
+        scale = (f"scale={width}:{height}:force_original_aspect_ratio=decrease:force_divisible_by=2,"
+                 f"pad={width}:{height}:(ow-iw)/2:(oh-ih)/2,setsar=1")
+    else:
+        scale = f"scale={width}:{height}"
     budget = int(20_000_000 * 8 * .94 / duration) - 128000
     if budget < 32000:
         raise ProductContractError('video_preview_budget_exceeded')
-    ffmpeg(['-i', str(video), '-vf', f'scale={width}:{height}', '-map', '0:v:0', '-map', '0:a:0',
+    ffmpeg(['-i', str(video), '-vf', scale, '-map', '0:v:0', '-map', '0:a:0',
             '-c:v', 'libx264', '-threads', '1', '-b:v', str(min(1_000_000, budget)), '-maxrate', str(min(1_000_000, budget)),
             '-bufsize', str(min(2_000_000, budget * 2)), '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '128k',
             '-map_metadata', '-1', '-movflags', '+faststart', str(output)])

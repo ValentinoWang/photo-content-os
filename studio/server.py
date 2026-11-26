@@ -294,19 +294,23 @@ class StudioApplication:
         data = self._video_handoff_projection(project_id)
         return self.video_workflow.projection(project_id, data) if data is not None else None
 
-    def _video_handoff_projection(self, project_id: str) -> dict | None:
+    def _video_handoff_projection(self, project_id: str, *, context=None) -> dict | None:
         """Read PF's explicitly bound inputs and results, with no local locators."""
         from doctor import probe_app
         from studio.video_workflow import candidate_failed
-        from studio.direct_handoff_contract import read_handoff
-        context = read_handoff(self.store, project_id)
+        from studio.direct_handoff_contract import read_delivered_handoff, read_handoff
+        if context is None:
+            context = read_delivered_handoff(self.store, project_id, device_id=None) or read_handoff(self.store, project_id)
         if context is None:
             return None
         project, root, workspace, binding, revision, descriptor, identity = (
             context[key] for key in ('project', 'root', 'workspace', 'binding', 'revision', 'descriptor', 'identity'))
         run = workspace / "runs" / hashlib.sha256(identity["jobId"].encode()).hexdigest()[:32]
         handoff = self._video_json(run, "handoff_manifest.json")
-        payload = self._video_json(root, binding.get("candidate_ref", "candidate.json")) or handoff
+        if "run_record" in context:
+            payload = self._video_json(run, "studio-candidate.json") or handoff
+        else:
+            payload = self._video_json(root, binding.get("candidate_ref", "candidate.json")) or handoff
         candidate = payload.get("candidate") or {}
         if candidate.get("identity") != identity:
             candidate = {}
