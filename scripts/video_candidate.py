@@ -14,7 +14,7 @@ import tempfile
 
 from edit_backends.kdenlive_render import probe_media, review_module
 from media_common import file_sha256
-from openclaw_product_contract import ProductContractError, video_digest
+from openclaw_product_contract import ProductContractError, load_snapshot, video_digest
 from video_subtitles import burn_subtitles, write_direct_subtitles
 
 
@@ -83,7 +83,7 @@ def preview_video(video: Path, output: Path) -> dict:
     ffmpeg(['-i', str(output), '-f', 'null', '-'])
     return {'artifact': {'artifactId': 'art_' + file_sha256(output)[:32], 'sha256': 'sha256:' + file_sha256(output),
                          'mimeType': 'video/mp4', 'sizeBytes': output.stat().st_size,
-                         'downloadPath': '/openclaw/media/api/jobs/local/video-artifacts/art_' + file_sha256(output)[:32]},
+                         'downloadPath': load_snapshot()['api_base'] + '/jobs/local/video-artifacts/art_' + file_sha256(output)[:32]},
             'width': width, 'height': height, 'shortEdge': min(width, height), 'longEdge': max(width, height)}
 
 
