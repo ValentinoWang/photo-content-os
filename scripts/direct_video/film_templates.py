@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build and validate the pinned MotionGit film-template index."""
 import argparse
+import hashlib
 from collections import Counter
 import json
 from pathlib import Path
@@ -12,6 +13,10 @@ import requests
 ROOT = Path(__file__).with_suffix("")
 COMMIT = "b74e9c9e800cc3158bc16f6e9468f0f560248243"
 REPO = "https://github.com/motiontemplates/all"
+OPEN_URL = "https://motiontemplates.github.io/385712/downloads/kinetic-tech-zh.motion"
+OPEN_SHA256 = "472a95af35f8e0c09c0f7dc2ca0992b7c9a3405c5aa8063730c347fc4e015c21"
+OPEN_SIZE = 17596250
+OPEN_DEST = Path.home() / ".photo-content-os/media/film_templates/385712/kinetic-tech-zh.motion"
 LICENSE_URL = "https://raw.githubusercontent.com/motiontemplates/385712/9dfbe7d7c6a6d4aa03f6f8e2f2285e631099faae/template.json"
 
 
@@ -90,16 +95,62 @@ def check_scenes(catalog, directory):
         check_scene(scene, entries[scene["id"]])
 
 
+def valid_open(path):
+    if not path.is_file() or path.stat().st_size != OPEN_SIZE:
+        return False
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read  (1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest() == OPEN_SHA256
+
+
+def fetch_open(destination=OPEN_DEST):
+    destination = Path(destination)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if valid_open(destination):
+        return destination
+    destination.unlink(missing_ok=True)
+    part = destination.with_suffix(destination.suffix + ".part")
+    try:
+        with requests.get(OPEN_URL, stream=True, timeout=(15, 120)) as response:
+            response.raise_for_status()
+            with part.open("wb") as stream:
+                for chunk in response.iter_content(chunk_size=1024 * 1024):
+                    if chunk:
+                        stream.write(chunk)
+        if not valid_open(part):
+            raise ValueError("385712: downloaded package size or SHA-256 mismatch")
+        part.replace(destination)
+    finally:
+        part.unlink(missing_ok=True)
+    return destination
+
+
+def check_open(catalog, directory):
+    entries = {entry["id"]: entry for entry in catalog["templates"]}
+    for path in directory.glob("*.json"):
+        data = read_json(str(path))
+        entry = entries.get(path.stem)
+        if not entry or entry["source_status"] != "open-package" or data.get("id") != path.stem:
+            raise ValueError(f"{path}: invalid open template id")
+        if data.get("sha256") != OPEN_SHA256 or data.get("bytes") != OPEN_SIZE or data.get("url") != OPEN_URL or data.get("license") != entry["license"] or data.get("version") != entry["version"]:
+            raise ValueError(f"{path}: open template metadata mismatch")
+
+
 def main():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--build", action="store_true")
     group.add_argument("--check", action="store_true")
     group.add_argument("--summary", action="store_true")
+    group.add_argument("--fetch-open", action="store_true")
     parser.add_argument("--upstream")
     args = parser.parse_args()
     path = ROOT / "catalog.json"
-    if args.build:
+    if args.fetch_open:
+        print(fetch_open())
+    elif args.build:
         if not args.upstream:
             parser.error("--build requires --upstream")
         catalog = build_catalog(args.upstream)
@@ -110,6 +161,7 @@ def main():
         if args.check:
             check_catalog(catalog)
             check_scenes(catalog, ROOT / "scenes")
+            check_open(catalog, ROOT / "open")
             print("catalog OK: 206")
         else:
             print(f"total: {len(catalog['templates'])}")

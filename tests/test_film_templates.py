@@ -35,3 +35,17 @@ def test_scene_validation(tmp_path):
     scene["scenes"][0]["duration_seconds"] = 0
     with pytest.raises(ValueError):
         film.check_scene(scene, entry)
+
+
+def test_download_hash_mismatch_removes_partial(tmp_path, monkeypatch):
+    class Response:
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+        def raise_for_status(self): pass
+        def iter_content(self, chunk_size): yield b"incorrect"
+    monkeypatch.setattr(film.requests, "get", lambda *args, **kwargs: Response())
+    destination = tmp_path / "template.motion"
+    with pytest.raises(ValueError):
+        film.fetch_open(destination)
+    assert not destination.exists()
+    assert not destination.with_suffix(".motion.part").exists()

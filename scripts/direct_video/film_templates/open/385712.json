@@ -1,0 +1,15 @@
+{
+  "id": "385712",
+  "url": "https://motiontemplates.github.io/385712/downloads/kinetic-tech-zh.motion",
+  "sha256": "472a95af35f8e0c09c0f7dc2ca0992b7c9a3405c5aa8063730c347fc4e015c21",
+  "bytes": 17596250,
+  "license": "MIT",
+  "version": "0.2.7-open-beta",
+  "metadata_sources": ["motion.json", "licenses/TEMPLATE-LICENSE.txt", "上游固定提交的 template.json"],
+  "third_party_licenses": [
+    {"file": "OFL-Anton.txt", "license": "SIL Open Font License"},
+    {"file": "OFL-Geist.txt", "license": "SIL Open Font License"},
+    {"file": "OFL-NotoSansSC.txt", "license": "SIL Open Font License"},
+    {"file": "THIRD-PARTY-NOTICES.md", "license": "第三方许可声明"}
+  ]
+}
