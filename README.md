@@ -125,14 +125,8 @@ OpenClaw Media Web / Control Plane
 → result_refs / artifact_refs / readback
 ```
 
-当前冻结兼容基线：
-
-```text
-repository: ValentinoWang/openclaw-media
-commit: f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf
-contract: openclaw_media_product_v1
-catalog digest: sha256:931dba97f9d9ed3fa1a03da4e15783f5d449ead7a56ff0919f3e0087efbf6967
-```
+当前冻结兼容基线（仓库、提交、合同和目录摘要）见
+[`schemas/openclaw-media-contract-snapshot.json`](schemas/openclaw-media-contract-snapshot.json)。
 
 薄桥入口：
 

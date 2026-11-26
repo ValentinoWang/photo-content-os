@@ -22,6 +22,7 @@ from openclaw_product_contract import SNAPSHOT_PATH, validate_snapshot
 
 
 CATALOG_RELATIVE_PATH = Path("apps/media/agent/openclaw_media/data/pipelines.json")
+PRODUCT_CONTRACT_RELATIVE_PATH = Path("docs/ai-harness/openclaw-media-product-contract.json")
 PIPELINE_ALIASES = {
     "prepare": "media.project.prepare.v1",
     "organize": "media.material.organize.v1",
@@ -146,6 +147,11 @@ def regenerate_snapshot(
     existing = read_json(snapshot_path.expanduser().resolve(), "existing compatibility snapshot")
     validate_snapshot(existing)
     catalog = validated_catalog(root, catalog_relative)
+    require_committed_catalog(root, PRODUCT_CONTRACT_RELATIVE_PATH)
+    product_contract = read_json(root / PRODUCT_CONTRACT_RELATIVE_PATH, "upstream product contract")
+    api_base = product_contract.get("api_base")
+    if not isinstance(api_base, str) or not api_base.startswith("/") or not api_base.strip("/"):
+        raise SnapshotRefreshError("upstream product contract.api_base must be an absolute API path")
     candidate = dict(existing)
     candidate.update(
         {
@@ -153,6 +159,7 @@ def regenerate_snapshot(
             "upstream_contract_id": catalog["contract_id"],
             "upstream_contract_version": catalog["contract_version"],
             "catalog_digest": catalog["catalog_digest"],
+            "api_base": api_base,
             "pipelines": dict(PIPELINE_ALIASES),
         }
     )

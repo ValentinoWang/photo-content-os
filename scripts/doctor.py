@@ -17,6 +17,7 @@ from enum import Enum
 from pathlib import Path
 
 from edit_tools_runtime import tool_status
+from openclaw_product_contract import load_snapshot
 from runtime_paths import MINIMUM_PYTHON, platform_contract_name, repository_root, runtime_python, supported_python
 
 _SYSTEM_ROOT = Path(__file__).resolve().parents[1]
@@ -26,7 +27,6 @@ from studio.chatcut_mcp import LocalMcpSession, McpError, read_registration
 from edit_backends.kdenlive_render import melt_executable
 from edit_backends.otio_kdenlive import kdenlive_executable
 
-UPSTREAM_OPENCLAW_MEDIA_SHA = "f0460b4ce84ca7efc7eb6d2f05c77d20eef68aaf"
 UPSTREAM_DEVICE_PLATFORMS = {"macos"}
 
 
@@ -186,13 +186,14 @@ def collect_checks(repo: Path | None = None) -> tuple[list[Check], dict[str, obj
     else:
         checks.append(Check("creative_provider", False, False, f"不支持的 provider：{provider}", "使用 codex_cli 或 openai_api。"))
 
+    upstream_sha = load_snapshot()["upstream_commit"]
     upstream_supported = platform_name in UPSTREAM_DEVICE_PLATFORMS
     checks.append(
         Check(
             "openclaw_cloud_pairing",
             upstream_supported,
             False,
-            f"上游 {UPSTREAM_OPENCLAW_MEDIA_SHA[:12]} 的设备合同支持：{', '.join(sorted(UPSTREAM_DEVICE_PLATFORMS))}",
+            f"上游 {upstream_sha[:12]} 的设备合同支持：{', '.join(sorted(UPSTREAM_DEVICE_PLATFORMS))}",
             "Windows/Linux 可使用本地桌面与核心流水线；云端配对需上游合同先正式加入对应平台。",
             state=CheckState.READY if upstream_supported else CheckState.UNSUPPORTED,
         )
@@ -211,7 +212,7 @@ def collect_checks(repo: Path | None = None) -> tuple[list[Check], dict[str, obj
         "runtime_python": str(runtime),
         "runtime_exists": runtime.is_file(),
         "creative_provider": provider,
-        "upstream_openclaw_media_sha": UPSTREAM_OPENCLAW_MEDIA_SHA,
+        "upstream_openclaw_media_sha": upstream_sha,
         "cloud_pairing_supported": upstream_supported,
         "local_core_supported": platform_name in {"macos", "windows", "linux"},
         "tools": probe_editing_tools(),

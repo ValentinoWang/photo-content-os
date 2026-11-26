@@ -140,6 +140,9 @@ class Wave6BridgeContractTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
+            product_contract_path = upstream / "docs/ai-harness/openclaw-media-product-contract.json"
+            product_contract_path.parent.mkdir(parents=True)
+            product_contract_path.write_text(json.dumps({"api_base": "/changed/media/api"}), encoding="utf-8")
             subprocess.run(["git", "init", str(upstream)], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             subprocess.run(["git", "-C", str(upstream), "add", "."], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             subprocess.run(
@@ -173,6 +176,7 @@ class Wave6BridgeContractTests(unittest.TestCase):
 
             self.assertEqual(snapshot_path.read_text(encoding="utf-8"), before)
             self.assertEqual(candidate["catalog_digest"], digest)
+            self.assertEqual(candidate["api_base"], "/changed/media/api")
             self.assertEqual(candidate["upstream_commit"], subprocess.check_output(["git", "-C", str(upstream), "rev-parse", "HEAD"], text=True).strip())
             contract.validate_snapshot(candidate)
 

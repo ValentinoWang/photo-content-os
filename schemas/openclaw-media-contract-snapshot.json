@@ -1,11 +1,11 @@
 {
   "schema_version": "photo_content_os_openclaw_bridge_v1",
   "upstream_repository": "ValentinoWang/openclaw-media",
-  "upstream_commit": "3682fcf75dbd0de3a0ab5c28e3c2f275940767fa",
+  "upstream_commit": "1e3eb410cd3b569c78adf474a64f05794342aaec",
   "upstream_contract_id": "openclaw_media_product_v1",
   "upstream_contract_version": 1,
   "catalog_digest": "sha256:8e210c9ced98e7cd25cfd3701b302d525654b3d3d33f5bd225552e3d4e1a3eb6",
-  "api_base": "/openclaw/media/api",
+  "api_base": "/media/api",
   "supported_device_platforms": [
     "macos"
   ],
