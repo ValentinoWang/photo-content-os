@@ -216,8 +216,27 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-26T12:36:55.537182Z",
+  "generated_at": "2026-11-26T14:20:39.830523Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/checklist.md",
+      "estimated_minutes": 2,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/handoff.json",
+      "invalidation_keys": [
+        "photo.installed-watch-project-handoff"
+      ],
+      "latest_run": null,
+      "loop_name": "设备交接落到已确认的制作项目",
+      "ready_at": "2026-11-26T14:20:39.830523Z",
+      "release_slice": "U13-P",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "安装版设备在本地确认后投递到所选项目，重启后读回，拒绝错配。两份点名测试共 100 项通过，试跑使用替身。",
+      "task_id": "2026-11-26-Pho_R21-installed-watch-project-handoff",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R21-installed-watch-project-handoff"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R20-first-project-snapshot/checklist.md",
@@ -544,5 +563,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "2ab336b9970c31479c584bcc5bee931ad33f225f93ed81194d66540403304bd0"
+  "source_facts_sha256": "85cf61542b57e40cd4577ed7178f5988f6d2fb9c6a5327cc93d7f1fb73dfac1c"
 }
