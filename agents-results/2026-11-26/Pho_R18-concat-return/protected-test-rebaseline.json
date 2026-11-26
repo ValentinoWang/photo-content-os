@@ -1,0 +1,19 @@
+{
+  "phase": "prepared",
+  "trigger_card": "2026-11-26-Pho_R22-installed-concat-return",
+  "base": "ba41bdfdf3294f2b5fd1c2a7dc52de64c85e6f20",
+  "head": "c159863c792237c3f9ae181fc20c7537312e87a1",
+  "range_head": "c159863c792237c3f9ae181fc20c7537312e87a1",
+  "reason": "U19-P 去掉回传的手填绑定。R18 夹具改用同一已投递任务的工程记录，原四条回传断言和人工验收保持原样。",
+  "prepared_at": "2026-11-26T14:56:56.591604Z",
+  "previous_ready_at": "2026-11-26T08:31:44.038207Z",
+  "previous_binding_sha256": "87b4b80db5b9afe9c950edcc9473fff9187cf19459d1845925bb092caa69a5e2",
+  "checklist_sha256": "166b1aba3a82fc7e1a6c286883528a30cffff006cc0f27652224f6f7e731759d",
+  "tests": [
+    {
+      "path": "tests/test_concat_return.py",
+      "old_sha256": "0e55c177d5cacf10f606c41f124c2774692b1a61798452ab6178cd3448484666",
+      "new_sha256": "e7df4a1b80c6e6bd588d75e3259bdc0dbe86568bcc186e051b03c1c0f1976890"
+    }
+  ]
+}

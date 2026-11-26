@@ -1,0 +1,26 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0 -- /Users/vsiyo/Desktop/创业项目/内容创作/production-desk/.venv/bin/python
+rootdir: /Users/vsiyo/.local/share/task-worktrees/production-desk-p1a-u19-p
+plugins: platformdirs-4.14.8, anyio-4.16.0
+collecting ... collected 18 items
+
+tests/test_p1a_installed_concat_return.py::test_installed_watch_resumes_the_checked_concat_return_after_expiry PASSED [  5%]
+tests/test_p1a_installed_concat_return.py::test_built_concat_is_not_open_evidence_when_open_fails PASSED [ 11%]
+tests/test_ps3_video_workflow.py::test_candidate_failure_is_not_green[checks0-True] PASSED [ 16%]
+tests/test_ps3_video_workflow.py::test_candidate_failure_is_not_green[checks1-True] PASSED [ 22%]
+tests/test_ps3_video_workflow.py::test_candidate_failure_is_not_green[checks2-False] PASSED [ 27%]
+tests/test_ps3_video_workflow.py::test_candidate_failure_is_not_green[checks3-True] PASSED [ 33%]
+tests/test_ps3_video_workflow.py::test_dispatch_never_precreates_adapter_output_or_falls_back PASSED [ 38%]
+tests/test_ps3_video_workflow.py::test_native_replace_creates_tracks_after_remove PASSED [ 44%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_failed_candidate_projects_measured_values PASSED [ 50%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_failed_editor_keeps_other_software_candidate PASSED [ 55%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_failed_manual_return_does_not_hide_reopened_editor PASSED [ 61%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_guide_choice_does_not_change_stage PASSED [ 66%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_identity_and_revision_required_for_every_command PASSED [ 72%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_invalid_native_cut_kind_never_writes_green_receipt PASSED [ 77%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_positive_manual_return_preserves_bytes_without_inventing_edit_receipts PASSED [ 83%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_reopening_engine_keeps_cors_for_validated_request_only PASSED [ 88%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_return_upload_rejects_empty_before_creating_files PASSED [ 94%]
+tests/test_ps3_video_workflow.py::WorkflowBoundaryTests::test_script_alignment_and_review_survive_projection PASSED [100%]
+
+============================= 18 passed in 18.88s ==============================

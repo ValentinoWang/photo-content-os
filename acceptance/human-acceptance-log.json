@@ -216,8 +216,47 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-26T14:20:39.830523Z",
+  "generated_at": "2026-11-26T14:58:56.069846Z",
   "non_blocking_entries": [
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R22-installed-concat-return/checklist.md",
+      "estimated_minutes": 2,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R22-installed-concat-return/handoff.json",
+      "invalidation_keys": [
+        "photo.installed-concat-return"
+      ],
+      "latest_run": null,
+      "loop_name": "安装版设备续传同一份 Concat 精修候选",
+      "ready_at": "2026-11-26T14:58:56.069846Z",
+      "release_slice": "U19-P",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "工程打开后等待，设备跨租约和重启续传同一份经过检查的成片，替身作品服务读回一条 480 × 854 预览。",
+      "task_id": "2026-11-26-Pho_R22-installed-concat-return",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R22-installed-concat-return"
+    },
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md",
+      "estimated_minutes": 5,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/handoff.json",
+      "invalidation_keys": [
+        "photo.studio-concat-return",
+        "photo.studio-concat-software-list"
+      ],
+      "latest_run": null,
+      "loop_name": "Studio 能用 Concat 精修后回传",
+      "ready_at": "2026-11-26T14:58:53.427642Z",
+      "release_slice": "preview-chain-p0",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "旧回传测试在已投递的任务记录上复验通过，原软件列表和真人精修验收仍待核对。",
+      "task_id": "2026-11-26-Pho_R18-concat-return",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return"
+    },
     {
       "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/checklist.md",
@@ -274,26 +313,6 @@
       "summary": "接口前缀传播及 Agent 兼容性检查通过，制作台自检中的策划台版本待人工核对。",
       "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
       "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base"
-    },
-    {
-      "blocking": false,
-      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md",
-      "estimated_minutes": 5,
-      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/handoff.json",
-      "invalidation_keys": [
-        "photo.studio-concat-return",
-        "photo.studio-concat-software-list"
-      ],
-      "latest_run": null,
-      "loop_name": "Studio 能用 Concat 精修后回传",
-      "ready_at": "2026-11-26T08:31:44.038207Z",
-      "release_slice": "preview-chain-p0",
-      "required_role": "任务委托人",
-      "scope_hints": [],
-      "status": "PENDING",
-      "summary": "Concat 回传读回、软件列表和候选下载路径的替身测试已通过，软件列表和精修后回传待人工核对。",
-      "task_id": "2026-11-26-Pho_R18-concat-return",
-      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return"
     },
     {
       "blocking": false,
@@ -563,5 +582,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "85cf61542b57e40cd4577ed7178f5988f6d2fb9c6a5327cc93d7f1fb73dfac1c"
+  "source_facts_sha256": "635fb6e6e1439aecc393dda9c30220e40f7d7992d0ea4ece813a6c7edbb30856"
 }

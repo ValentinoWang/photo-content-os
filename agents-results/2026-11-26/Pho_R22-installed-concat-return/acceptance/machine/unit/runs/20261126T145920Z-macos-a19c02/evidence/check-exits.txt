@@ -1,0 +1,5 @@
+U19=0
+U13/R282=0
+editor regressions=0
+OpenAPI=0
+git diff --check=0

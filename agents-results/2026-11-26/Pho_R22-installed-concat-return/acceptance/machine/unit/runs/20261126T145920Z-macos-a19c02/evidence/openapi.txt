@@ -1,0 +1,1 @@
+studio OpenAPI is current: /Users/vsiyo/.local/share/task-worktrees/production-desk-p1a-u19-p/schemas/studio-openapi.json

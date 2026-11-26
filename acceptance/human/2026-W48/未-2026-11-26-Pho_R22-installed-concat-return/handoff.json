@@ -1,0 +1,184 @@
+{
+  "baseline": {
+    "base": "ba41bdfdf3294f2b5fd1c2a7dc52de64c85e6f20",
+    "branch": "main",
+    "head": "c159863c792237c3f9ae181fc20c7537312e87a1",
+    "tree": "1bb156f87d0b17a7430abab588ae54e4dfc1b807"
+  },
+  "binding_sha256": "7c6459d1e286035785cb6efc93c0f70426fe772df90adb6d35b5b5c95a37eb56",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "0872adf8ec3a0bebcfea738e50850412ed7f16a95d5a8b889328d64a18c580fa",
+  "claims": [
+    {
+      "claim_key": "photo.installed-concat-return.resume",
+      "item": "H-01",
+      "open_route": "note:查看本卡附图「精修试跑记录」。",
+      "protected_test_overlap": [
+        {
+          "decision": "rebaseline",
+          "reason": "回传夹具改用已投递任务的工程记录，保留原四条回传断言和人工验收。",
+          "target": "2026-11-26-Pho_R18-concat-return"
+        }
+      ],
+      "relations": [
+        {
+          "reason": "旧卡核对本地选项目和首次投递，本卡在交接完成后核对打开精修、重启续传和作品候选。",
+          "target": "2026-11-26-Pho_R21-installed-watch-project-handoff/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对剪辑软件列表及选择，设备重启后的续传可以单独试跑。",
+          "target": "2026-11-26-Pho_R18-concat-return/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项需操作者实际打开和精修工程并用 Studio 核对回传提示，本项是安装版与作品服务替身的跨租约续传试跑。",
+          "target": "2026-11-26-Pho_R18-concat-return/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对契约基址和版本来源，本项用已有基址验证同一任务续传和作品读回。",
+          "target": "2026-11-26-Pho_R17-openclaw-contract-api-base/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对交接定义、来源和契约样例，本项核对已投递任务的精修结果。",
+          "target": "2026-11-26-Pho_R20-first-project-snapshot/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对脚本输入限制、图示和页签键盘交互。本项核对安装版设备续传，不改变页面操作。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对脚本输入限制、图示和页签键盘交互。本项核对安装版设备续传，不改变页面操作。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对脚本输入限制、图示和页签键盘交互。本项核对安装版设备续传，不改变页面操作。",
+          "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对脚本直出生成、合成和布局。本项只核对明确选择 Concat 的本机精修回传。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对脚本直出生成、合成和布局。本项只核对明确选择 Concat 的本机精修回传。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对脚本直出生成、合成和布局。本项只核对明确选择 Concat 的本机精修回传。",
+          "target": "2026-10-26-R276-photo-direct-video-opus/H-03",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对镜头的视觉修改和问题记录。本项核对剪辑工程打开和作品候选续传。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-01",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对镜头的视觉修改和问题记录。本项核对剪辑工程打开和作品候选续传。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+          "type": "independent"
+        },
+        {
+          "reason": "旧项核对镜头的视觉修改和问题记录。本项核对剪辑工程打开和作品候选续传。",
+          "target": "2026-10-26-R277-photo-shot-visual-revision/H-03",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T145920Z-macos-a19c02",
+          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T145920Z-macos-a19c02",
+          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T145920Z-macos-a19c02",
+          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T145920Z-macos-a19c02",
+          "reason": "动效配方的导入、样片和配方库行为未改动，同一提交上的三个受保护测试文件通过。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T145920Z-macos-a19c02",
+          "reason": "剪辑工具安装、版本和运行路径代码没有改动，同一提交上的工具运行测试通过。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T145920Z-macos-a19c02",
+          "reason": "剪辑工具安装、版本和运行路径代码没有改动，同一提交上的工具运行测试通过。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        }
+      ],
+      "screenshots": [
+        {
+          "caption": "精修试跑记录 · 390 宽 WebKit 截图",
+          "captured_at": "2026-11-26T14:52:47.689040+00:00",
+          "path": "agents-results/2026-11-26/Pho_R22-installed-concat-return/acceptance/shots/H-01-1.png",
+          "sha256": "5215a7a8207551e8ffb858a1feb048be2d85b6b00f1137a0d2f1703e9d9bc8d0"
+        }
+      ],
+      "surfaces": [
+        "acceptance.artifacts",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-26/Pho_R22-installed-concat-return/acceptance-contract.md",
+  "contract_sha256": "a89addc0f00554a7cac0a25d214e2c0de27eab7c342569dba4aaf8aa8ca6ef49",
+  "contract_version": "1",
+  "estimated_minutes": 2,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.installed-concat-return"
+  ],
+  "loop_name": "安装版设备续传同一份 Concat 精修候选",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-26/Pho_R22-installed-concat-return/acceptance/machine/unit/runs/20261126T145920Z-macos-a19c02/result.md",
+      "result_sha256": "c8bc143c99b1e0f5affe04743bbb262e1fba064df05510760e6793b9c0378a57",
+      "run_id": "20261126T145920Z-macos-a19c02",
+      "source_identity": "c159863c792237c3f9ae181fc20c7537312e87a1",
+      "surfaces": [
+        "acceptance.artifacts",
+        "acceptance.evidence",
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-26T14:58:56.069846Z",
+  "release_slice": "U19-P",
+  "request_id": "2026-11-26-Pho_R22-installed-concat-return",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "c159863c792237c3f9ae181fc20c7537312e87a1",
+  "summary": "工程打开后等待，设备跨租约和重启续传同一份经过检查的成片，替身作品服务读回一条 480 × 854 预览。",
+  "task_id": "2026-11-26-Pho_R22-installed-concat-return"
+}

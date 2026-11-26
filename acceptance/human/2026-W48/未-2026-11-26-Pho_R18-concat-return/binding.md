@@ -6,7 +6,7 @@
 - SSOT node: none
 - Acceptance contract: agents-results/2026-11-26/Pho_R18-concat-return/acceptance-contract.md
 - Contract version: 1
-- Contract SHA-256: f60b606d4a07b18c75a9ad8e275b12a4d0e9992119bb80123d990b6e00e21716
+- Contract SHA-256: 98442a4c3cd677fd12cc94265f316f072d73ebaa6da8eec86ad6b967a7ec00f0
 - Human checklist: acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return/checklist.md
 - Checklist SHA-256: 166b1aba3a82fc7e1a6c286883528a30cffff006cc0f27652224f6f7e731759d
 

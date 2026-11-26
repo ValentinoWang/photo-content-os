@@ -70,7 +70,7 @@
 
 | Path | SHA-256 | Covers |
 | --- | --- | --- |
-| tests/test_concat_return.py | 0e55c177d5cacf10f606c41f124c2774692b1a61798452ab6178cd3448484666 | AC-01 |
+| tests/test_concat_return.py | e7df4a1b80c6e6bd588d75e3259bdc0dbe86568bcc186e051b03c1c0f1976890 | AC-01 |
 
 ## Requirements-test traceability
 

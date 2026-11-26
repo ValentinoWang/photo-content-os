@@ -2,8 +2,8 @@
 
 本文件由验收事实确定性生成，禁止手工修改。人工验收集中在机器开发完成后的独立末端阶段；入队不会打断中间开发。
 
-- 事实时间：2026-11-26T14:20:39.830523Z
-- 来源事实 SHA-256：85cf61542b57e40cd4577ed7178f5988f6d2fb9c6a5327cc93d7f1fb73dfac1c
+- 事实时间：2026-11-26T14:58:56.069846Z
+- 来源事实 SHA-256：635fb6e6e1439aecc393dda9c30220e40f7d7992d0ea4ece813a6c7edbb30856
 - 生成命令：`manage_acceptance_artifacts.py log --project-root <project-root>`
 
 ## 阻塞发布项
@@ -58,10 +58,11 @@
 
 | 时间 | 任务 | 业务闭环 | 角色 | 分钟 | 清单 | 最新记录 | 历史验证 |
 | --- | --- | --- | --- | ---: | --- | --- | --- |
+| 2026-11-26T14:58:56.069846Z | 2026-11-26-Pho_R22-installed-concat-return | 安装版设备续传同一份 Concat 精修候选 | 任务委托人 | 2 | acceptance/human/2026-W48/未-2026-11-26-Pho_R22-installed-concat-return/checklist.md | - | - |
+| 2026-11-26T14:58:53.427642Z | 2026-11-26-Pho_R18-concat-return | Studio 能用 Concat 精修后回传 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md | - | - |
 | 2026-11-26T14:20:39.830523Z | 2026-11-26-Pho_R21-installed-watch-project-handoff | 设备交接落到已确认的制作项目 | 任务委托人 | 2 | acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/checklist.md | - | - |
 | 2026-11-26T12:36:55.537182Z | 2026-11-26-Pho_R20-first-project-snapshot | 契约快照固定到首次交接 | 任务委托人 | 1 | acceptance/human/2026-W48/未-2026-11-26-Pho_R20-first-project-snapshot/checklist.md | - | - |
 | 2026-11-26T12:36:53.456029Z | 2026-11-26-Pho_R17-openclaw-contract-api-base | 契约快照接口前缀跟随策划台 | 任务委托人 | 1 | acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md | - | - |
-| 2026-11-26T08:31:44.038207Z | 2026-11-26-Pho_R18-concat-return | Studio 能用 Concat 精修后回传 | 任务委托人 | 5 | acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md | - | - |
 | 2026-11-25T15:59:45.752476Z | 2026-11-25-Pho_R16-avatar-http-oss | 数字人结果链接是 http 时安全升级为 https 取回 | 任务委托人 | 2 | acceptance/human/2026-W48/未-2026-11-25-Pho_R16-avatar-http-oss/checklist.md | - | - |
 | 2026-11-25T09:15:40.596630Z | 2026-11-25-Pho_R15-dreamverse-shot-controls | 万相镜头支持关闭提示词改写与默认去标负面词 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-25-Pho_R15-dreamverse-shot-controls/checklist.md | - | - |
 | 2026-11-25T09:12:55.086342Z | 2026-11-25-Pho_R14-concat-real-selfie | Concat 剪辑出口用真实自拍口播跑通 | 任务委托人 | 3 | acceptance/human/2026-W48/未-2026-11-25-Pho_R14-concat-real-selfie/checklist.md | - | - |
