@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "8b2f436f-6f46-54d5-87d7-664cf9153fde",
+  "identity": {
+    "project": "photo-content-os",
+    "acceptance": "2026-11-26-Pho_R18-concat-return",
+    "item": "H-02",
+    "checklist_sha256": "166b1aba3a82fc7e1a6c286883528a30cffff006cc0f27652224f6f7e731759d",
+    "build": "dd5379926cc301bf024e6c369e1f39e8ba5d46e448bcfb3b325720da9785c3a3",
+    "bundle": null,
+    "binding_sha256": "87b4b80db5b9afe9c950edcc9473fff9187cf19459d1845925bb092caa69a5e2"
+  },
+  "actor": "phone-passkey",
+  "outcome": "passed",
+  "issue": "",
+  "note": "",
+  "created_at": "2026-11-26T13:32:06.466780+00:00",
+  "created_ns": 1795699926466847000,
+  "supersedes": null,
+  "repair_state": "not-requested",
+  "checklist_item": {
+    "fields": [
+      {
+        "label": "验收步骤",
+        "value": "\n  1. 选择 Concat 并点「自动出第一版」，再打开生成的工程精修、导出，然后关闭 Concat 里的这个工程。\n  2. 拖入导出的成片到「把导出的成片拖回这里」，点「检查这份成片」。"
+      },
+      {
+        "label": "预期表现",
+        "value": "候选成片出现且检查通过；如果工程还开在 Concat 窗口里，提示「请先关闭 Concat 里的这个工程再回传」，不出现候选。"
+      }
+    ],
+    "id": "H-02",
+    "needs_separate_acceptance": true,
+    "open_route": "note:Studio 项目页把 Concat 精修导出的成片拖回检查",
+    "open_target": {
+      "kind": "note",
+      "text": "Studio 项目页把 Concat 精修导出的成片拖回检查"
+    },
+    "replacement": null,
+    "replacement_status": null,
+    "text": "- 验收步骤：\n  1. 选择 Concat 并点「自动出第一版」，再打开生成的工程精修、导出，然后关闭 Concat 里的这个工程。\n  2. 拖入导出的成片到「把导出的成片拖回这里」，点「检查这份成片」。\n- 预期表现：候选成片出现且检查通过；如果工程还开在 Concat 窗口里，提示「请先关闭 Concat 里的这个工程再回传」，不出现候选。"
+  },
+  "passkey": {
+    "fingerprint": "8281bbd97a19bbfb",
+    "payload": "{\"card\":\"2026-11-26-Pho_R18-concat-return\",\"checklist_sha256\":\"166b1aba3a82fc7e1a6c286883528a30cffff006cc0f27652224f6f7e731759d\",\"credential\":\"AqpbnM8HRfFAY7ciKUvz1gR9kDk\",\"expires_at\":1795700221846,\"issued_at\":1795699921846,\"items\":[{\"key\":\"H-01\",\"verdict\":\"pass\"},{\"key\":\"H-02\",\"verdict\":\"pass\"}],\"nonce\":\"4c297578f0b0df00f8a46bd8519a427b\",\"project\":\"photo-content-os\",\"rp\":\"mediapilot.cloud\",\"v\":1}",
+    "assertion": {
+      "id": "AqpbnM8HRfFAY7ciKUvz1gR9kDk",
+      "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiN1NMMUlvcXpBX0dMZk54eHUyWENXZFRrZzVlRno4RkJyMDZJNjVKdF9HbyIsIm9yaWdpbiI6Imh0dHBzOi8vbWVkaWFwaWxvdC5jbG91ZCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+      "authenticatorData": "k3CLGqgAm7LO2dc3AetKpcPK5WwiFgvOMjli5vRd2KodAAAAAA",
+      "signature": "MEQCIFRoqGxXqrFrRFgYQ9YxfDlIFcEAjygafIvhiwP_hfI_AiA8lqtz01QaO7mBBmnvWHigNbHPO4w4kWNbulnw-0_wzw",
+      "userHandle": "rdilDPQLUdUWCb6E3gaTzw"
+    },
+    "verified_at": 1795699926306
+  },
+  "attachments": []
+}

@@ -1,11 +1,11 @@
 {
   "baseline": {
-    "base": "ba41bdfdf3294f2b5fd1c2a7dc52de64c85e6f20",
+    "base": "c93bab6b7d4d03beb07d9cf8040d214910bc2958",
     "branch": "main",
-    "head": "c159863c792237c3f9ae181fc20c7537312e87a1",
-    "tree": "1bb156f87d0b17a7430abab588ae54e4dfc1b807"
+    "head": "4189a26e832aa89af453d2a3e36c263813e0f53f",
+    "tree": "ffc4b31366f1915c5143935f5e48da041f0026a7"
   },
-  "binding_sha256": "aaa55493fe3d255d192bb88ed399c3259759b71e3faab436fa8b29db495f7935",
+  "binding_sha256": "87b4b80db5b9afe9c950edcc9473fff9187cf19459d1845925bb092caa69a5e2",
   "blocking": false,
   "blocking_budget": 3,
   "budget_exception": null,
@@ -17,14 +17,14 @@
       "open_route": "note:Studio 项目页「剪辑软件」列表，Concat 排第一",
       "relations": [
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "剪辑工具安装、版本和运行路径代码没有改动，同一提交上的工具运行测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "剪辑工具安装、版本和运行路径代码没有改动，同一提交上的工具运行测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
           "type": "unaffected"
         },
@@ -59,20 +59,20 @@
           "type": "independent"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-01",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-02",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-03",
           "type": "unaffected"
         },
@@ -177,19 +177,14 @@
           "type": "independent"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "动效配方的导入、样片和配方库行为未改动，同一提交上的三个受保护测试文件通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 OpenMotion 导入、预览及配方库三个受保护测试文件，24 项通过。旧卡合同、人工记录与测试文件无差异。",
           "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
           "type": "unaffected"
         },
         {
           "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。",
           "target": "2026-11-26-Pho_R17-openclaw-contract-api-base/H-01",
-          "type": "independent"
-        },
-        {
-          "reason": "旧安装版交接卡核对选项目及首次投递。本卡继续核对 Concat 软件和精修导出，重跑夹具只使用已投递任务。",
-          "target": "2026-11-26-Pho_R21-installed-watch-project-handoff/H-01",
           "type": "independent"
         }
       ],
@@ -217,14 +212,14 @@
       "open_route": "note:Studio 项目页把 Concat 精修导出的成片拖回检查",
       "relations": [
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "剪辑工具安装、版本和运行路径代码没有改动，同一提交上的工具运行测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "剪辑工具安装、版本和运行路径代码没有改动，同一提交上的工具运行测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑工具运行环境受保护测试，20 项通过。README 与自检脚本的差异仅涉及上游契约快照，工具探测及路径规则保持一致。",
           "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
           "type": "unaffected"
         },
@@ -259,20 +254,20 @@
           "type": "independent"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-01",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-02",
           "type": "unaffected"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "修改的 Studio 服务函数只读视频交接。音乐分析、节拍图、筛选和界面代码未改动，音乐分析和分段测试通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 R223 合同的全部受保护检查。90 项 Python、58 份静态设计清单及两项隔离 Studio 浏览器检查通过，旧卡合同、人工记录与测试文件在本批无变化。",
           "target": "2026-10-20-R223-photo-music-beat-map/H-03",
           "type": "unaffected"
         },
@@ -377,19 +372,14 @@
           "type": "independent"
         },
         {
-          "evidence_run": "20261126T150020Z-macos-a18c02",
-          "reason": "动效配方的导入、样片和配方库行为未改动，同一提交上的三个受保护测试文件通过。",
+          "evidence_run": "20261126T081342Z-local-af79cd",
+          "reason": "在发布源码重跑 OpenMotion 导入、预览及配方库三个受保护测试文件，24 项通过。旧卡合同、人工记录与测试文件无差异。",
           "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
           "type": "unaffected"
         },
         {
           "reason": "按两卡各自的源码提交核对，改动的产品文件无交集，人工验收各自保留。",
           "target": "2026-11-26-Pho_R17-openclaw-contract-api-base/H-01",
-          "type": "independent"
-        },
-        {
-          "reason": "旧安装版交接卡核对选项目及首次投递。本卡继续核对 Concat 软件和精修导出，重跑夹具只使用已投递任务。",
-          "target": "2026-11-26-Pho_R21-installed-watch-project-handoff/H-01",
           "type": "independent"
         }
       ],
@@ -413,7 +403,7 @@
     }
   ],
   "contract_path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance-contract.md",
-  "contract_sha256": "98442a4c3cd677fd12cc94265f316f072d73ebaa6da8eec86ad6b967a7ec00f0",
+  "contract_sha256": "f60b606d4a07b18c75a9ad8e275b12a4d0e9992119bb80123d990b6e00e21716",
   "contract_version": "1",
   "estimated_minutes": 5,
   "execution_policy": "terminal-after-machine-green",
@@ -425,48 +415,29 @@
   "machine_evidence": [
     {
       "layer": "machine/unit",
-      "result_path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/machine/unit/runs/20261126T150020Z-macos-a18c02/result.md",
-      "result_sha256": "e2d8b6f2219689b16549a190d17237f6d5ad7d1098aeee227452f69b826a8916",
-      "run_id": "20261126T150020Z-macos-a18c02",
-      "source_identity": "c159863c792237c3f9ae181fc20c7537312e87a1",
+      "result_path": "agents-results/2026-11-26/Pho_R18-concat-return/acceptance/machine/unit/runs/20261126T081342Z-local-af79cd/result.md",
+      "result_sha256": "3360bfbacf0531d228581a01ed45f614b09495ebff83e83746a9e57cb47605f8",
+      "run_id": "20261126T081342Z-local-af79cd",
+      "source_identity": "4189a26e832aa89af453d2a3e36c263813e0f53f",
       "surfaces": [
         "acceptance.artifacts",
         "acceptance.evidence",
+        "photo.documentation",
         "photo.tests-scripts",
         "photo.video-pipeline",
-        "studio.backend"
+        "studio.backend",
+        "studio.frontend"
       ]
     }
   ],
   "open_route": null,
-  "protected_test_rebaselines": [
-    {
-      "base": "ba41bdfdf3294f2b5fd1c2a7dc52de64c85e6f20",
-      "checklist_sha256": "166b1aba3a82fc7e1a6c286883528a30cffff006cc0f27652224f6f7e731759d",
-      "head": "c159863c792237c3f9ae181fc20c7537312e87a1",
-      "phase": "completed",
-      "prepared_at": "2026-11-26T14:56:56.591604Z",
-      "previous_binding_sha256": "87b4b80db5b9afe9c950edcc9473fff9187cf19459d1845925bb092caa69a5e2",
-      "previous_ready_at": "2026-11-26T08:31:44.038207Z",
-      "range_head": "c159863c792237c3f9ae181fc20c7537312e87a1",
-      "reason": "U19-P 去掉回传的手填绑定。R18 夹具改用同一已投递任务的工程记录，原四条回传断言和人工验收保持原样。",
-      "tests": [
-        {
-          "new_sha256": "e7df4a1b80c6e6bd588d75e3259bdc0dbe86568bcc186e051b03c1c0f1976890",
-          "old_sha256": "0e55c177d5cacf10f606c41f124c2774692b1a61798452ab6178cd3448484666",
-          "path": "tests/test_concat_return.py"
-        }
-      ],
-      "trigger_card": "2026-11-26-Pho_R22-installed-concat-return"
-    }
-  ],
-  "ready_at": "2026-11-26T14:58:53.427642Z",
+  "ready_at": "2026-11-26T08:31:44.038207Z",
   "release_slice": "preview-chain-p0",
   "request_id": "2026-11-26-Pho_R18-concat-return",
   "required_role": "任务委托人",
   "schema_version": 2,
   "scope_hints": [],
-  "source_commit": "c159863c792237c3f9ae181fc20c7537312e87a1",
-  "summary": "旧回传测试在已投递的任务记录上复验通过，原软件列表和真人精修验收仍待核对。",
+  "source_commit": "4189a26e832aa89af453d2a3e36c263813e0f53f",
+  "summary": "Concat 回传读回、软件列表和候选下载路径的替身测试已通过，软件列表和精修后回传待人工核对。",
   "task_id": "2026-11-26-Pho_R18-concat-return"
 }

@@ -258,26 +258,6 @@
     },
     {
       "blocking": false,
-      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md",
-      "estimated_minutes": 5,
-      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/handoff.json",
-      "invalidation_keys": [
-        "photo.studio-concat-return",
-        "photo.studio-concat-software-list"
-      ],
-      "latest_run": null,
-      "loop_name": "Studio 能用 Concat 精修后回传",
-      "ready_at": "2026-11-26T14:58:53.427642Z",
-      "release_slice": "preview-chain-p0",
-      "required_role": "任务委托人",
-      "scope_hints": [],
-      "status": "PENDING",
-      "summary": "旧回传测试在已投递的任务记录上复验通过，原软件列表和真人精修验收仍待核对。",
-      "task_id": "2026-11-26-Pho_R18-concat-return",
-      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return"
-    },
-    {
-      "blocking": false,
       "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/checklist.md",
       "estimated_minutes": 2,
       "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/handoff.json",
@@ -297,41 +277,85 @@
     },
     {
       "blocking": false,
-      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R20-first-project-snapshot/checklist.md",
+      "checklist_path": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot/checklist.md",
       "estimated_minutes": 1,
-      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R20-first-project-snapshot/handoff.json",
+      "handoff_path": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot/handoff.json",
       "invalidation_keys": [
         "photo.first-project-snapshot"
       ],
-      "latest_run": null,
+      "latest_run": {
+        "completed_at": "2026-11-26T13:31:18Z",
+        "result_path": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot/runs/20261126T133117Z-human-console-ad81a4/result.md",
+        "result_sha256": "9196d1af2fafae735f910209004f7d23f2fe797c1da4f90de06b41fb64a8a072",
+        "run_id": "20261126T133117Z-human-console-ad81a4",
+        "source_identity": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+        "started_at": "2026-11-26T13:31:17.550480Z",
+        "status": "PASS"
+      },
       "loop_name": "契约快照固定到首次交接",
       "ready_at": "2026-11-26T12:36:55.537182Z",
       "release_slice": "preview-chain-p1a",
       "required_role": "任务委托人",
       "scope_hints": [],
-      "status": "PENDING",
+      "status": "PASSED",
       "summary": "首次交接快照与获准的策划台提交一致，项目选择、交接和拒绝示例待人工核对。",
       "task_id": "2026-11-26-Pho_R20-first-project-snapshot",
       "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot"
     },
     {
       "blocking": false,
-      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md",
+      "checklist_path": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md",
       "estimated_minutes": 1,
-      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/handoff.json",
+      "handoff_path": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base/handoff.json",
       "invalidation_keys": [
         "photo.openclaw-contract-api-base"
       ],
-      "latest_run": null,
+      "latest_run": {
+        "completed_at": "2026-11-26T13:42:56Z",
+        "result_path": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base/runs/20261126T134255Z-human-console-d22833/result.md",
+        "result_sha256": "db1a6542832d0b63ccdc4e13b5efc0e5ad9f52d5d0320d1bd3e7281b257cdc93",
+        "run_id": "20261126T134255Z-human-console-d22833",
+        "source_identity": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+        "started_at": "2026-11-26T13:42:55.398770Z",
+        "status": "PASS"
+      },
       "loop_name": "契约快照接口前缀跟随策划台",
       "ready_at": "2026-11-26T12:36:53.456029Z",
       "release_slice": "preview-chain-p0",
       "required_role": "任务委托人",
       "scope_hints": [],
-      "status": "PENDING",
+      "status": "PASSED",
       "summary": "接口前缀传播及 Agent 兼容性检查通过，制作台自检中的策划台版本待人工核对。",
       "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
       "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base"
+    },
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return/checklist.md",
+      "estimated_minutes": 5,
+      "handoff_path": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return/handoff.json",
+      "invalidation_keys": [
+        "photo.studio-concat-return",
+        "photo.studio-concat-software-list"
+      ],
+      "latest_run": {
+        "completed_at": "2026-11-26T13:32:07Z",
+        "result_path": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return/runs/20261126T133206Z-human-console-63919d/result.md",
+        "result_sha256": "3e3f84e6632fd8743fb3609adfae688c91f1a115fc0ed7d7aafaf9750de81fa2",
+        "run_id": "20261126T133206Z-human-console-63919d",
+        "source_identity": "4189a26e832aa89af453d2a3e36c263813e0f53f",
+        "started_at": "2026-11-26T13:32:06.651306Z",
+        "status": "PASS"
+      },
+      "loop_name": "Studio 能用 Concat 精修后回传",
+      "ready_at": "2026-11-26T08:31:44.038207Z",
+      "release_slice": "preview-chain-p0",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PASSED",
+      "summary": "Concat 回传读回、软件列表和候选下载路径的替身测试已通过，软件列表和精修后回传待人工核对。",
+      "task_id": "2026-11-26-Pho_R18-concat-return",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return"
     },
     {
       "blocking": false,
@@ -601,5 +625,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "176f3860d7dd847bb5db28715d22e129d563090c066dbad4b7791b77d50793bc"
+  "source_facts_sha256": "a737b662f5c68793c760088f1a385a72f52ebd087bfe7a0b62fb8462ad77c67a"
 }
