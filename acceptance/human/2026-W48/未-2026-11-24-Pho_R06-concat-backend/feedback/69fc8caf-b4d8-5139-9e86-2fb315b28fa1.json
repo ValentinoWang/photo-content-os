@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "69fc8caf-b4d8-5139-9e86-2fb315b28fa1",
+  "identity": {
+    "project": "photo-content-os",
+    "acceptance": "2026-11-24-Pho_R06-concat-backend",
+    "item": "H-02",
+    "checklist_sha256": "054669196e4ba3fa7ea00752225162bafc1c7b0de83977d5cdefb7675351afdb",
+    "build": "dd5379926cc301bf024e6c369e1f39e8ba5d46e448bcfb3b325720da9785c3a3",
+    "bundle": null,
+    "binding_sha256": "838c1eacda06772c3a5668085931752be8e30f814860ec75d5adcb18dde3e05c"
+  },
+  "actor": "phone-passkey",
+  "outcome": "passed",
+  "issue": "",
+  "note": "",
+  "created_at": "2026-11-25T08:10:25.561221+00:00",
+  "created_ns": 1795594225561228000,
+  "supersedes": null,
+  "repair_state": "not-requested",
+  "checklist_item": {
+    "fields": [
+      {
+        "label": "验收步骤",
+        "value": "\n  1. 打开 Concat 里的粗稿工程。\n  2. 查看时间线。\n  3. 保存一处修改。"
+      },
+      {
+        "label": "预期表现",
+        "value": "原片、字幕和透明动效可以分别精修，保存后能读回当前时间线。"
+      }
+    ],
+    "id": "H-02",
+    "needs_separate_acceptance": true,
+    "open_route": "note:在本机 Concat 打开制作台生成的口播粗稿工程，查看时间线",
+    "open_target": {
+      "kind": "note",
+      "text": "在本机 Concat 打开制作台生成的口播粗稿工程，查看时间线"
+    },
+    "replacement": null,
+    "replacement_status": null,
+    "text": "- 验收步骤：\n  1. 打开 Concat 里的粗稿工程。\n  2. 查看时间线。\n  3. 保存一处修改。\n- 预期表现：原片、字幕和透明动效可以分别精修，保存后能读回当前时间线。"
+  },
+  "passkey": {
+    "fingerprint": "8281bbd97a19bbfb",
+    "payload": "{\"card\":\"2026-11-24-Pho_R06-concat-backend\",\"checklist_sha256\":\"054669196e4ba3fa7ea00752225162bafc1c7b0de83977d5cdefb7675351afdb\",\"credential\":\"AqpbnM8HRfFAY7ciKUvz1gR9kDk\",\"expires_at\":1795594521008,\"issued_at\":1795594221008,\"items\":[{\"key\":\"H-01\",\"verdict\":\"pass\"},{\"key\":\"H-02\",\"verdict\":\"pass\"}],\"nonce\":\"3c4d568c38876737000ef2df00fe988a\",\"project\":\"photo-content-os\",\"rp\":\"mediapilot.cloud\",\"v\":1}",
+    "assertion": {
+      "id": "AqpbnM8HRfFAY7ciKUvz1gR9kDk",
+      "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiVVBvUFhNT2lLVU13alZuSGdTQjM0cGdaSFh6QU1ZWW9uZGdKcXYtdkZKUSIsIm9yaWdpbiI6Imh0dHBzOi8vbWVkaWFwaWxvdC5jbG91ZCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+      "authenticatorData": "k3CLGqgAm7LO2dc3AetKpcPK5WwiFgvOMjli5vRd2KodAAAAAA",
+      "signature": "MEUCIQDF2AsqLKVsJCvHsIy-ao5I3PSMuwYxCcyG58PlW6joBQIgYElxxVYZSiFWuyypJciUGkDYfawhDjO7RFPRzy-QMhk",
+      "userHandle": "rdilDPQLUdUWCb6E3gaTzw"
+    },
+    "verified_at": 1795594225519
+  },
+  "attachments": []
+}
