@@ -1,4 +1,4 @@
-import {mediaSummary, flowSteps, sec, draftEditorNote} from '/review-common.js';
+import {mediaSummary, flowSteps, sec, draftEditorNote, stepEmpty, statTiles, factStrip} from '/review-common.js';
 export const seconds = n => {const t=Math.round(n||0);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0');};
 const labels={selected:'精选',usable:'可用',unused:'不用',rejected:'淘汰'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -65,7 +65,12 @@ export function createShotView(ctx) {
   const name=running?'piece-running':empty?(piece.versions?'piece-empty':piece.videos?'piece-not-started':'piece-not-started-photos'):data.partial?'piece-partial':data.confirmed?'piece-confirmed':focus?'piece-review-alt':'piece-review';mark(name);root().classList.add('single');
   const interrupted=['failed','stopped'].includes(data.progress?.status)||['failed','stopped'].includes(data.run_status);
   const warning=interrupted?`<div class="attention full" role="alert" data-design-id="R208-REV-partial"><div><strong>挑镜头停在一半</strong><p>${data.progress?.reason?D(data.progress.reason)+' ':''}已做完的部分都留着，继续时不会重做。</p></div><div class="actions">${button('继续看图','data-job="resume"')}${button('重新挑选','data-job="restart"')}</div></div>`:'';
-  if(empty&&!running){root().innerHTML=tabs+flow()+warning+`<div class="empty" data-design-id="R208-REV-empty"><h2>先挑镜头，再配乐卡点</h2>${piece.versions?`<p><span>这件作品已经出过 ${D(piece.versions)} 版（手工剪的），右上角能看。想让 AI 重新挑一遍、配乐卡点，从这里开始。</span></p>`:''}<p>${piece.videos?'AI 会把每段视频切成镜头，先在本机量清晰度、曝光和抖动，再让大模型看图，挑出这条视频要用的精选。原素材只读，不会被改动。':'AI 会先在本机量每张照片的清晰度和曝光，再让大模型看图，挑出这条视频要用的精选。原素材只读，不会被改动。'}</p><div class="facts">${piece.videos?`<span><b>${D(piece.videos)}</b>段视频</span>`:''}${piece.photos?`<span><b>${D(piece.photos)}</b>张照片</span>`:''}</div>${interrupted?'':`<div class="actions">${button('开始挑镜头','data-job="start"',true)}</div>`}</div>`;bind();return;}
+  if(empty&&!running){
+   const tiles=[...(piece.videos?[[piece.videos,'段','视频']]:[]),...(piece.photos?[[piece.photos,'张','照片']]:[])];
+   const steps=piece.videos?[['scissors','切镜头体检','本机量清晰度与抖动'],['spark','大模型看图','自动筛出精选镜头'],['check','过目卡点','确认后即可配乐']]:[['photo','本机量质','测清晰度与曝光'],['spark','大模型看图','挑出本条精选'],['check','过目卡点','确认后即可配乐']];
+   const facts=[['lock','原素材只读，不会改动'],...(piece.versions?[['star',`已出 ${piece.versions} 版成片，右上角可看`]]:[])];
+   root().innerHTML=tabs+flow()+warning+stepEmpty('先挑镜头，再配乐卡点',steps,(tiles.length?statTiles(tiles):'')+factStrip(facts),interrupted?'':button('开始挑镜头','data-job="start"',true),'R208-REV-empty');bind();return;
+  }
   const head=(title,lede,actions)=>`<div class="stephead full" data-design-id="R208-REV-head"><div><p class="eyebrow">第 2 步 · 挑镜头</p><h2>${title}</h2><p>${lede}</p></div><div class="actions">${actions}</div></div>`;
   if(running){const p=data.progress, phases=[['local','切镜头、体检'],['model','大模型看图'],['hooks','挑开场候选']],at=phases.findIndex(x=>x[0]===p.phase);
    root().innerHTML=tabs+flow()+head('正在挑镜头','看图做完才知道哪些进精选。可以先去做别的，做完会在工作台提醒你。',button('停止','data-job="stop"'))+`<div class="review-progress full" data-design-id="R208-REV-progress"><div class="steps">${phases.map(([key,label],i)=>`<div class="step"><b>${label}</b><span data-design-data>${i===at?p.completed+' / '+p.total:''}</span><div class="bar"><i data-percent="${i<at?100:i===at&&p.total?p.completed/p.total*100:0}"></i></div></div>`).join('')}</div></div><section class="pending full" data-design-id="R208-REV-measured"><h3>已经切好的镜头 <span data-design-data>${data.shots.length}</span> 个 · 等看图</h3><div class="mini">${data.shots.slice(0,expanded.has('__measured')?data.shots.length:36).map(s=>`<figure>${thumb(s)}<figcaption>${s.kind==='photo'?D('照片'):D(sec(s.duration))+' 秒'}</figcaption></figure>`).join('')}</div>${data.shots.length>36&&!expanded.has('__measured')?`<button class="more" data-more="__measured">再看 ${D(data.shots.length-36)} 个</button>`:''}</section>`;bind();return;}
