@@ -6,7 +6,9 @@
 
 Studio：`studio/static/index.html`，左侧导航 `[data-nav="home|inbox|projects|library|music|settings"]` 切六个视图，切换时先清空容器再异步 fetch 渲染（你报告里的附带发现），项目详情由点击进入。目标端桌面，视口 1440×900。
 
-开发机 photo-dev 连不上（上一轮已实测），在本机跑：浏览器无头、同一时间一个。本机磁盘只剩 3 到 4 GB，截图总量控制在 300 MB 内。
+开发机 photo-dev 2026-11-28 已确认可连（rbox status 正常，151G 可用）：测试、浏览器、拍图都在开发机跑，本机不跑。截图总量控制在 300 MB 内。
+
+本单只拍演示页面截图，不真跑、不调付费接口（模型、语音、视频、转写都不调）。
 
 ## 不要动
 
@@ -19,13 +21,16 @@ Studio：`studio/static/index.html`，左侧导航 `[data-nav="home|inbox|projec
 
 | 单元 | 文件 | 位置 | 改法 | 验证命令 | 完成条件 |
 | --- | --- | --- | --- | --- | --- |
-| U1 项目拍图脚本 | `/Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/scripts/capture_nfd_gallery.py`（新建）、`/Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/tests/test_capture_nfd_gallery.py`（新建） | 新文件 | 用 `/Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/.venv/bin/python` 能跑的 Python + Playwright（同步接口）。参数 `--out <截图包目录>`（必填）、`--port`（默认向系统要空闲端口）。流程：建临时工作区和 state 目录 → 用 `create_demo_project.py` 造演示项目 → 起 `scripts/launch_studio.py --state-dir … --port … --no-browser`，读回实际地址 → 无头 Chromium 1440×900 打开 `/`，依次点六个 `[data-nav]`，每次点完等该视图容器有内容、网络空闲再拍；再进演示项目详情拍一张 → 每张整页按 FE-12 分段滚动拼回整页 → 按 screenshot-package.md 写 manifest.json（每页稳定 id、uuid、标题、角色、路由用 `/#<nav>` 这类能复现的写法、视口、整页高度、拍图时间、分组、一级入口；分组按导航，首页排第一）和 steps.json（导航点击的跳转，证据写「实测」）→ 无论成败都停服务、关浏览器、删临时目录。纯函数（manifest 行生成、分组排序、steps 生成）写单元测试，不在测试里起浏览器 | `cd /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery && /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/.venv/bin/python -m pytest -q /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/tests/test_capture_nfd_gallery.py && /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/.venv/bin/python /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/scripts/capture_nfd_gallery.py --out ~/.photo-content-os/evidence/nfd-gallery` | 两步退出码都是 0；截图包目录有 manifest.json、steps.json 和 7 张以上整页图；你用看图工具逐张看过，没有空白页、报错页、半渲染态；跑完本机无头浏览器数回到开跑前的数，8765 以外你起的端口都已关 |
+| U1 项目拍图脚本和单元测试 | `/Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/scripts/capture_nfd_gallery.py`（新建）、`/Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/tests/test_capture_nfd_gallery.py`（新建） | 新文件 | 用 `/Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/.venv/bin/python` 能跑的 Python + Playwright（同步接口）。参数 `--out <截图包目录>`（必填）、`--port`（默认向系统要空闲端口）。流程：建临时工作区和 state 目录 → 用 `create_demo_project.py` 造演示项目 → 起 `scripts/launch_studio.py --state-dir … --port … --no-browser`，读回实际地址 → 无头 Chromium 1440×900 打开 `/`，依次点六个 `[data-nav]`，每次点完等该视图容器有内容、网络空闲再拍；再进演示项目详情拍一张 → 每张整页按 FE-12 分段滚动拼回整页 → 按 screenshot-package.md 写 manifest.json（每页稳定 id、uuid、标题、角色、路由用 `/#<nav>` 这类能复现的写法、视口、整页高度、拍图时间、分组、一级入口；分组按导航，首页排第一）和 steps.json（导航点击的跳转，证据一栏按 screenshot-package.md 填点击得来的那一档）→ 无论成败都停服务、关浏览器、删临时目录。纯函数（manifest 行生成、分组排序、steps 生成）写单元测试，不在测试里起浏览器 | `/Users/vsiyo/Desktop/创业项目/内容创作/production-desk/.agents/skills/photo-remote-dev-box/scripts/rbox run /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery -- /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/.venv/bin/python -m pytest -q /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/tests/test_capture_nfd_gallery.py` | 开发机退出码 0 |
+| U2 在开发机拍图并取回截图包（依赖 U1：用 U1 的脚本） | `/Users/vsiyo/.photo-content-os/evidence/nfd-gallery/manifest.json`（新建） | 整个截图包目录（脚本不改；发现问题回 U1 改并补提交） | 在开发机上运行 U1 的脚本，输出到开发机 /root/.prbox/tmp/nfd-gallery；跑完用 `scp -r photo-dev:/root/.prbox/tmp/nfd-gallery ~/.photo-content-os/evidence/` 取回本机，再删开发机那份。浏览器、服务都只在开发机起，本机不起浏览器 | `/Users/vsiyo/Desktop/创业项目/内容创作/production-desk/.agents/skills/photo-remote-dev-box/scripts/rbox run /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery -- /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/.venv/bin/python /Users/vsiyo/.local/share/task-worktrees/production-desk-pho-nfd-gallery/scripts/capture_nfd_gallery.py --out /root/.prbox/tmp/nfd-gallery` | 开发机退出码 0；取回后本机 ~/.photo-content-os/evidence/nfd-gallery 有 manifest.json、steps.json 和 7 张以上整页图；你用看图工具逐张看过，没有空白页、报错页、半渲染态；开发机上你起的浏览器和端口都已关 |
 
 ## 规则卡短表
 
+- 测试、浏览器、拍图一律在开发机跑（用户 2026-11-28「你只要别在本机上跑这种测试就行」）：用 `/Users/vsiyo/Desktop/创业项目/内容创作/production-desk/.agents/skills/photo-remote-dev-box/scripts/rbox run`，本机不跑 pytest、不起无头浏览器。
+
+
 | 触发场景 | 必须做到 | 会失败的反例 | 检查命令 |
 | --- | --- | --- | --- |
-| OPS-13 在本机跑浏览器 | 开跑前数本机重活实例（无头浏览器只数带 --headless、不带 --type= 的主进程），非 0 记 pid、启动时间、父进程链；浏览器无头、同一时刻一个，量完就关 | 不数就开；开了不关 | `pgrep -fl -- '--headless' \| grep -v -- '--type=' \| wc -l` 开跑前、跑完各记一次 |
 | FE-12 整页截图 | 长页面分段滚动拼回整页，接缝无重叠无缺口；视口保持 1440×900 | 用超出视口截图把整页挤进一张；截断 | 汇报每页整页高度和拼图高度对得上 |
 | TEST-06 浏览器检查起服务 | 端口向系统要空闲的再交给服务，起来后读回实际地址 | 写死 8765（用户可能开着自己的 Studio） | 用户的 8765 在跑时脚本照常完成 |
 | OPS-10 自动清理 | 临时目录、服务、浏览器在成功和失败两条路上都清掉 | 失败时留下 Studio 进程 | 故意给错 `--out` 父目录跑一次，进程和临时目录都不留 |
@@ -36,7 +41,7 @@ Studio：`studio/static/index.html`，左侧导航 `[data-nav="home|inbox|projec
 - 不改 NFD 工具；NFD 的缺陷（原生单页应用无路由、states 分组、auth none、点击后无等待、夹具只回 JSON）由总控另行登记，你不处理。
 - 只拍桌面 1440×900；只拍六个导航视图和一个演示项目详情，不拍弹窗、抽屉。
 - 截图包放仓库外 `~/.photo-content-os/evidence/nfd-gallery/`；NFD 适配文件的 `gallery` 登记由总控做。
-- 提交：只提交 U1 两个新文件和本任务单，一个提交；说明末尾尾注连成最后一段：`Test-Atom: <编号> new`、`Test-Purpose: …`、`Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`。不推送，由总控推。
+- 提交：只提交 U1 两个新文件和本任务单，一个提交；说明末尾尾注连成最后一段：`Test-Atom: <编号> new`、`Test-Purpose: …`、`Co-Authored-By: Gemini <noreply@google.com>`。不推送，由总控推。
 
 ## 固定规则
 
