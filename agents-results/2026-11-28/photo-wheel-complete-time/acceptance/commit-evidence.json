@@ -1,0 +1,20 @@
+{
+  "source_commit": "55efc0e469f541121578562e0873526f514a79be",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-28/photo-wheel-complete-time/acceptance/unit/result.md",
+      "result_sha256": "ad55f262b25ef4c943d112f76cf12daf2f716fe58d998497b70ee19347acb589",
+      "source_identity": "55efc0e469f541121578562e0873526f514a79be",
+      "layer": "machine/unit",
+      "run_id": "photo-wheel-complete-time"
+    }
+  ],
+  "patch_id": "99d1028f3558f502f08874001cda0a7201a756db",
+  "preimage": {
+    ".harness/overlays/project-harness-adapter.yaml": "b31040c0477dafb0b280d678e83b3ca43fab34f8",
+    "scripts/jianying_roughcut_common.py": "582bae7b202578801af0a2ce0aba73b59c70e82e",
+    "scripts/media_common.py": "b6eb2ab4a703085c96a5b9c6581162d119cda388",
+    "scripts/media_project_selection.py": "b03d40a656c85eb86054295fea7c8024f3baf4a1",
+    "tests/test_media_common_io.py": ""
+  }
+}
