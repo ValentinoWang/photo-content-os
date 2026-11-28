@@ -12,7 +12,7 @@ import yaml
 
 from edl_contract import EDLContractError
 from edl_contract import parse_time_range as _canonical_parse_time_range
-from media_common import is_raw360_path, local_now_compact as now_compact, read_json_object, read_yaml_mapping
+from media_common import is_raw360_path, local_now_compact as now_compact, read_json_object, read_yaml_mapping, write_json_atomic
 
 RAW360_EXTS = {".osv", ".lrf"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"} | RAW360_EXTS
@@ -29,10 +29,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as handle:
-        json.dump(data, handle, ensure_ascii=False, indent=2)
-        handle.write("\n")
+    write_json_atomic(path, data, atomic=False)
 
 
 def load_yaml(path: Path) -> dict[str, Any]:

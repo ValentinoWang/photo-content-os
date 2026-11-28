@@ -6,6 +6,7 @@ from pathlib import Path
 import urllib.error
 import urllib.request
 from urllib.parse import urljoin, urlsplit
+from media_common import write_json_atomic
 
 from .errors import MusicError, NetworkFailure
 from .network import MusicOpener, network_failure
@@ -22,15 +23,9 @@ def read_json(path: Path, label: str):
 
 
 def write_json(path: Path, data):
-    temporary = path.with_suffix('.tmp')
-    try:
-        with temporary.open('w', encoding='utf-8') as handle:
-            json.dump(data, handle, ensure_ascii=False, indent=2, allow_nan=False)
-            handle.flush()
-            os.fsync(handle.fileno())
-        temporary.replace(path)
-    finally:
-        temporary.unlink(missing_ok=True)
+    write_json_atomic(path, data, temp_path=path.with_suffix('.tmp'),
+                      trailing_newline=False, allow_nan=False, fsync=True,
+                      cleanup='always', create_parent=False)
 
 
 def request_cache_key(url, data=None):

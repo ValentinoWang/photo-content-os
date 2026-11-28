@@ -21,6 +21,7 @@ import yaml
 from llm_common import LLMError, creator_context_block, load_creator_context, parse_json_response, public_llm_error, generate_text
 from media_common import directory_slug, OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_label, file_sha256
 from media_common import sample_times as _shared_sample_times
+from media_common import write_json_atomic
 
 SCHEMA_VERSION = "output_review.v1"
 RESULT_SCHEMA_VERSION = "output_review_result.v1"
@@ -2464,10 +2465,7 @@ def version_rank(version: dict[str, Any], current_brief_fit: str) -> tuple[int, 
 
 
 def write_metrics_json(path: Path, metrics: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as handle:
-        json.dump(metrics, handle, ensure_ascii=False, indent=2)
-        handle.write("\n")
+    write_json_atomic(path, metrics, atomic=False)
 
 
 def write_result_yaml(path: Path, result: dict[str, Any]) -> None:

@@ -88,3 +88,18 @@ def test_budget_storage_wraps_replace_failure_and_keeps_old_state(tmp_path, monk
     assert exc.value.code == 'analysis_budget_unavailable'
     assert store.path.read_bytes() == old
     assert list(tmp_path.iterdir()) == [store.path]
+
+
+def test_json_callers_keep_direct_and_cache_behavior(tmp_path):
+    from music_library.cache import write_json as cache_write
+    from review_output_video import write_metrics_json
+
+    path = tmp_path / 'data.json'
+    for writer in (jianying_roughcut_common.write_json, write_metrics_json, cache_write):
+        writer(path, {'中文': 3})
+        expected = json.dumps({'中文': 3}, ensure_ascii=False, indent=2)
+        assert path.read_text(encoding='utf-8') == expected + ('' if writer is cache_write else '\n')
+    with pytest.raises(ValueError):
+        cache_write(path, {'bad': float('nan')})
+    assert json.loads(path.read_text(encoding='utf-8')) == {'中文': 3}
+    assert not path.with_suffix('.tmp').exists()
