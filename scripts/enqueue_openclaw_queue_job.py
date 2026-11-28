@@ -18,7 +18,7 @@ from typing import Any
 
 import yaml
 
-from media_common import now_iso, read_yaml_mapping, safe_slug
+from media_common import now_iso, read_yaml_mapping, safe_slug, write_json_atomic
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS, request_fingerprint
 from runtime_paths import obsidian_root, workspace_root as _shared_workspace_root
 
@@ -69,12 +69,7 @@ def load_yaml(path: Path) -> dict[str, Any]:
 
 
 def atomic_write_json(path: Path, data: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_name(f".{path.name}.tmp")
-    with temp.open("w", encoding="utf-8") as handle:
-        json.dump(data, handle, ensure_ascii=False, indent=2)
-        handle.write("\n")
-    temp.replace(path)
+    write_json_atomic(path, data, hidden_temp=True)
 
 
 def atomic_write_yaml(path: Path, data: dict[str, Any]) -> None:

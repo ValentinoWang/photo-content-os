@@ -35,6 +35,7 @@ from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa
 from media_common import file_sha256 as sha256_file  # noqa: E402
 from media_common import is_raw360_path  # noqa: E402
 from media_common import utc_now_z as utc_now  # noqa: E402
+from media_common import write_json_atomic  # noqa: E402
 
 
 SPEC_VERSION = "content_os_v0.2"
@@ -84,12 +85,7 @@ class HandoffError(Exception):
 
 
 def write_json(path: Path, data: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(f"{path.suffix}.tmp")
-    with temporary.open("w", encoding="utf-8") as handle:
-        json.dump(data, handle, ensure_ascii=False, indent=2, sort_keys=True)
-        handle.write("\n")
-    os.replace(temporary, path)
+    write_json_atomic(path, data, sort_keys=True)
 
 
 def read_json_object(path: Path, *, label: str) -> dict[str, Any]:

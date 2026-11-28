@@ -13,6 +13,8 @@ diverge again, this test is the tripwire.
 from __future__ import annotations
 
 import sys
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -50,6 +52,31 @@ SAMPLE_PAYLOAD = {
 
 
 class QueueIdentityRegressionTests(unittest.TestCase):
+    def test_queue_json_writers_match_original_bytes_and_failures(self) -> None:
+        def original(path, data):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            temp = path.with_name(f'.{path.name}.tmp')
+            with temp.open('w', encoding='utf-8') as handle:
+                json.dump(data, handle, ensure_ascii=False, indent=2)
+                handle.write('\n')
+            temp.replace(path)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for index, payload in enumerate(({'中文': [1, None, float('nan')]}, {}, {'x': object()})):
+                outcomes = []
+                for name, writer in (('original', original), ('enqueue', enqueue_queue.atomic_write_json), ('process', openclaw_queue.atomic_write_json)):
+                    path = root / name / str(index) / 'queue.json'
+                    try:
+                        writer(path, payload)
+                        outcome = ('ok', path.read_bytes())
+                    except Exception as exc:
+                        outcome = (type(exc), str(exc))
+                    temp = path.with_name(f'.{path.name}.tmp')
+                    outcomes.append((outcome, temp.read_bytes() if temp.exists() else None))
+                self.assertEqual(outcomes[0], outcomes[1])
+                self.assertEqual(outcomes[0], outcomes[2])
+
     def test_request_fingerprint_agrees_across_all_three_call_sites(self) -> None:
         fingerprints = {
             "queue_identity": queue_identity.request_fingerprint(SAMPLE_PAYLOAD),

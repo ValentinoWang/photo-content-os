@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from media_common import file_sha256 as sha256_file, now_iso, read_json_object, safe_slug
+from media_common import file_sha256 as sha256_file, now_iso, read_json_object, safe_slug, write_json_atomic
 from project_bootstrap_common import BATCH_NOTE_NAME, LOCAL_LINK_DIR, count_media_files, ensure_formal_project_for_batch
 from queue_identity import VOLATILE_TASK_FIELDS, request_fingerprint
 
@@ -122,12 +122,7 @@ def ensure_queue_dirs(config: QueueConfig) -> None:
 
 
 def atomic_write_json(path: Path, data: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_name(f".{path.name}.tmp")
-    with temp.open("w", encoding="utf-8") as handle:
-        json.dump(data, handle, ensure_ascii=False, indent=2)
-        handle.write("\n")
-    temp.replace(path)
+    write_json_atomic(path, data, hidden_temp=True)
 
 
 def task_manifest_path(path: Path) -> Path:
