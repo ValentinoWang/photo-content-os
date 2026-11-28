@@ -11,7 +11,7 @@ local Studio inbox to collect explicit operator decisions.
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from contextlib import contextmanager
 import fcntl
 import hashlib
@@ -30,6 +30,7 @@ if str(SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(SYSTEM_ROOT))
 
 from openclaw_product_contract import ProductContractError, video_digest  # noqa: E402
+from media_common import utc_now_datetime as _now  # noqa: E402
 from runtime_paths import local_media_root  # noqa: E402
 from studio.direct_handoff_contract import (  # noqa: E402
     RUN_RECORD_IDENTITY_KEYS,
@@ -74,10 +75,6 @@ def default_confirmation_provider(request: Mapping[str, Any]) -> None:
     ``{"confirmed": True, "selection_mode": "created", "title": ...}``; ``None`` keeps it pending.
     """
     return None
-
-
-def _now() -> datetime:
-    return datetime.now(timezone.utc)
 
 
 def _write_json(path: Path, value: Any) -> None:

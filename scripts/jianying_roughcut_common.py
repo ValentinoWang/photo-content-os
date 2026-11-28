@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import json
 import subprocess
-from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -13,7 +12,7 @@ import yaml
 
 from edl_contract import EDLContractError
 from edl_contract import parse_time_range as _canonical_parse_time_range
-from media_common import is_raw360_path, read_json_object, read_yaml_mapping
+from media_common import is_raw360_path, local_now_compact as now_compact, read_json_object, read_yaml_mapping
 
 RAW360_EXTS = {".osv", ".lrf"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"} | RAW360_EXTS
@@ -221,10 +220,6 @@ def resolve_media_candidate(
         "speed": round(source_duration / required_duration, 6),
         "is_raw360": is_raw360_media(Path(str(longest["path"]))),
     }
-
-
-def now_compact() -> str:
-    return datetime.now().strftime("%Y%m%d_%H%M%S")
 
 
 def ensure_dir(path: Path) -> Path:

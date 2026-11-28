@@ -74,6 +74,7 @@ reuse_ownership:
     scope: [scripts, studio]
     exceptions: []
   retry_backoff:
+    # 盘点的 10 处是轮询、监听或固定等待，没有同类退避实现。
     owner_kind: none
     owner: null
     rule: retry-backoff

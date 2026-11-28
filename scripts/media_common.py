@@ -108,6 +108,14 @@ def utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def utc_now_datetime() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def local_now_compact() -> str:
+    return datetime.now().strftime("%Y%m%d_%H%M%S")
+
+
 def utc_now_z() -> str:
     """UTC timestamp with a literal 'Z' suffix (TF-09's second family).
 
