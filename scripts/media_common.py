@@ -11,6 +11,7 @@ import os
 import re
 import shutil
 import subprocess
+import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -790,6 +791,22 @@ def write_json_atomic(
     sort_keys: bool = False,
     hidden_temp: bool = False,
     trailing_newline: bool = True,
+    ensure_ascii: bool = False,
+    indent: int | None = 2,
+    allow_nan: bool = True,
+    atomic: bool = True,
+    random_temp: bool = False,
+    temp_prefix: str | None = None,
+    temp_suffix: str = '',
+    temp_path: Path | None = None,
+    fsync: bool = False,
+    cleanup: str = 'never',
+    ignore_cleanup_errors: bool = False,
+    create_parent: bool = True,
+    mode: int | None = None,
+    encoding: str | None = 'utf-8',
+    newline: str | None = None,
+    data_factory: bool = False,
 ) -> None:
     """Write JSON atomically: mkdir + temp file + os.replace.
 
@@ -798,13 +815,75 @@ def write_json_atomic(
     False (most JSON writers in this codebase do not sort keys) and leaves
     it to each caller to pass what its own current output already does.
     """
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = _atomic_temp_path(path, hidden_temp=hidden_temp)
-    with temporary.open("w", encoding="utf-8") as handle:
-        json.dump(data, handle, ensure_ascii=False, indent=2, sort_keys=sort_keys)
+    def write(handle):
+        json.dump(data() if data_factory else data, handle, ensure_ascii=ensure_ascii, indent=indent, sort_keys=sort_keys, allow_nan=allow_nan)
         if trailing_newline:
             handle.write("\n")
-    os.replace(temporary, path)
+    _write_content(path, write, binary=False, atomic=atomic, hidden_temp=hidden_temp,
+                   random_temp=random_temp, temp_prefix=temp_prefix, temp_suffix=temp_suffix,
+                   temp_path=temp_path, fsync=fsync, cleanup=cleanup,
+                   ignore_cleanup_errors=ignore_cleanup_errors, create_parent=create_parent,
+                   mode=mode, encoding=encoding, newline=newline)
+
+
+def _write_content(path, writer, *, binary, atomic=True, hidden_temp=False,
+                   random_temp=False, temp_prefix=None, temp_suffix='', temp_path=None,
+                   fsync=False, cleanup='never', ignore_cleanup_errors=False,
+                   create_parent=True, mode=None, encoding='utf-8', newline=None):
+    if cleanup not in {'never', 'always', 'error', 'write_error', 'replace_error'}:
+        raise ValueError('invalid cleanup policy')
+    if create_parent:
+        path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    phase = 'write'
+    try:
+        if atomic and random_temp:
+            fd, name = tempfile.mkstemp(dir=path.parent, prefix=temp_prefix, suffix=temp_suffix)
+            temporary = Path(name)
+            try:
+                if mode is not None:
+                    os.fchmod(fd, mode)
+                handle = os.fdopen(fd, 'wb' if binary else 'w', **({} if binary else {'encoding': encoding, 'newline': newline}))
+            except BaseException:
+                os.close(fd)
+                raise
+        else:
+            temporary = (temp_path or _atomic_temp_path(path, hidden_temp=hidden_temp)) if atomic else path
+            handle = temporary.open('wb' if binary else 'w', **({} if binary else {'encoding': encoding, 'newline': newline}))
+            if mode is not None:
+                try:
+                    os.fchmod(handle.fileno(), mode)
+                except BaseException:
+                    handle.close()
+                    raise
+        with handle:
+            writer(handle)
+            if fsync:
+                handle.flush()
+                os.fsync(handle.fileno())
+        phase = 'replace'
+        if atomic:
+            os.replace(temporary, path)
+        phase = 'done'
+    finally:
+        should_clean = atomic and temporary is not None and (cleanup == 'always' or
+                       (cleanup == 'error' and phase != 'done') or
+                       (cleanup == 'write_error' and phase == 'write') or
+                       (cleanup == 'replace_error' and phase == 'replace'))
+        if should_clean:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError:
+                if not ignore_cleanup_errors:
+                    raise
+
+
+def write_text_atomic(path: Path, text: str | Callable[[], str], **options) -> None:
+    _write_content(path, lambda handle: handle.write(text() if callable(text) else text), binary=False, **options)
+
+
+def write_bytes_atomic(path: Path, data: bytes, **options) -> None:
+    _write_content(path, lambda handle: handle.write(data), binary=True, **options)
 
 
 def write_yaml_atomic(

@@ -6,6 +6,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import tempfile
 import time
 from datetime import datetime, timezone
@@ -13,6 +14,10 @@ from pathlib import Path
 from urllib.parse import parse_qsl, urlsplit
 
 import requests
+_SCRIPTS = Path(__file__).resolve().parents[1]
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+from media_common import write_json_atomic
 
 BASE = 'https://dashscope.aliyuncs.com/api/v1'
 TIMEOUT = (10, 60)
@@ -48,17 +53,8 @@ def utc():
 
 
 def write_json(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile('w', encoding='utf-8', dir=path.parent, delete=False) as f:
-        name = f.name
-        try:
-            json.dump(value, f, ensure_ascii=False, indent=2)
-            f.flush()
-            os.fsync(f.fileno())
-        except BaseException:
-            os.unlink(name)
-            raise
-    os.replace(name, path)
+    write_json_atomic(path, value, random_temp=True, trailing_newline=False,
+                      fsync=True, cleanup='write_error')
 
 
 def read_ledger(path: Path) -> dict:

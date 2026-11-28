@@ -11,6 +11,20 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from shot_quality import frame_metrics, motion_metrics, split_long_scene
 from select_shots import (DEFAULT_CONFIG, apply_quality, deduplicate, validate_model_answer,
                           run_selection, make_sheets)
+from select_shots import progress, write_json
+
+
+def test_progress_and_atomic_json_keep_existing_encoding_and_fail_closed(tmp_path):
+    path = tmp_path / 'shots.json'
+    write_json(path, {'名称': 1})
+    assert path.read_text() == '{\n  "名称": 1\n}\n'
+    with pytest.raises(ValueError):
+        write_json(path, {'bad': float('nan')})
+    assert json.loads(path.read_text()) == {'名称': 1}
+    (tmp_path / 'progress.json').write_text('{"prior": "值"}')
+    progress(tmp_path, 'select', 1, 2)
+    assert json.loads((tmp_path / 'progress.json').read_text()) == {
+        'prior': '值', 'status': 'running', 'phase': 'select', 'completed': 1, 'total': 2}
 
 
 @pytest.fixture(scope='module')

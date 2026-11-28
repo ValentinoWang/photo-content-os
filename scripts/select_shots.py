@@ -9,8 +9,6 @@ import hashlib
 import html
 import json
 import math
-import os
-import tempfile
 from pathlib import Path
 import statistics
 import subprocess
@@ -24,6 +22,7 @@ from PIL import Image, ImageDraw, ImageFont
 from generate_ai_prompt import average_hash, visual_similarity_groups
 from llm_common import generate_text, parse_json_response, configured_model, configured_provider, load_creator_context
 from media_common import VIDEO_EXTS, IMAGE_EXTS, DERIVED_DIR_NAMES, analysis_dir, video_info
+from media_common import write_json_atomic
 from runtime_paths import local_media_root
 from shot_quality import read_frame, read_photo, frame_metrics, motion_series, split_long_scene
 
@@ -62,24 +61,19 @@ def load_config(path: Path | None) -> dict:
 
 
 def write_json(path: Path, data):
-    fd, staging = tempfile.mkstemp(dir=path.parent, suffix='.json')
-    try:
-        with os.fdopen(fd, 'w', encoding='utf-8') as handle:
-            json.dump(data, handle, ensure_ascii=False, indent=2, allow_nan=False)
-            handle.write('\n')
-        os.replace(staging, path)
-    finally:
-        Path(staging).unlink(missing_ok=True)
+    write_json_atomic(path, data, random_temp=True, temp_suffix='.json',
+                      allow_nan=False, cleanup='always', create_parent=False)
 
 
 def progress(output, phase, completed, total):
     target = output / 'progress.json'
-    fd, temporary = tempfile.mkstemp(dir=output, suffix='.json')
-    with os.fdopen(fd, 'w') as handle:
+    def current_progress():
         current = json.loads(target.read_text()) if target.exists() else {}
         current.update(status='running', phase=phase, completed=completed, total=total)
-        json.dump(current, handle)
-    os.replace(temporary, target)
+        return current
+    write_json_atomic(target, current_progress, data_factory=True, random_temp=True,
+                      temp_suffix='.json', ensure_ascii=True, indent=None,
+                      trailing_newline=False, encoding=None, create_parent=False)
 
 
 def resume_selection(project, *, model=None, provider=None):

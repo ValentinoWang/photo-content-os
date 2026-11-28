@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 import json
-import os
-import tempfile
 import threading
 from pathlib import Path
 from typing import Any, Mapping
+from scripts.media_common import write_json_atomic
 
 
 SCHEMA_VERSION = "analysis_budget_settings_v1"
@@ -73,30 +72,12 @@ class AnalysisBudgetStore:
 
     def _atomic_write(self, value: Mapping[str, object]) -> None:
         self.settings_dir.mkdir(parents=True, exist_ok=True)
-        descriptor: int | None = None
-        temporary_path: str | None = None
         try:
-            descriptor, temporary_path = tempfile.mkstemp(
-                prefix=f".{FILE_NAME}.", suffix=".tmp", dir=self.settings_dir
-            )
-            with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
-                descriptor = None
-                json.dump(value, handle, ensure_ascii=False, indent=2, sort_keys=True)
-                handle.write("\n")
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(temporary_path, self.path)
-            temporary_path = None
+            write_json_atomic(self.path, value, random_temp=True, temp_prefix=f".{FILE_NAME}.",
+                              temp_suffix=".tmp", sort_keys=True, fsync=True, newline="\n",
+                              cleanup='error', ignore_cleanup_errors=True, create_parent=False)
         except OSError as exc:
             raise AnalysisBudgetError("analysis_budget_unavailable", "分析预算无法保存") from exc
-        finally:
-            if descriptor is not None:
-                os.close(descriptor)
-            if temporary_path is not None:
-                try:
-                    os.unlink(temporary_path)
-                except OSError:
-                    pass
 
     def load(self) -> dict[str, Any]:
         with self._lock:

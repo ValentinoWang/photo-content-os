@@ -11,13 +11,13 @@ from __future__ import annotations
 import json
 import os
 import re
-import tempfile
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
 from typing import Any, TypeAlias
+from scripts.media_common import write_json_atomic
 
 
 SCHEMA_VERSION = 1
@@ -538,30 +538,13 @@ class ArchiveLocationConfigStore:
             _reject("invalid_config", "save requires an archive location configuration")
         payload = config.to_dict()
         self._ensure_work_dir()
-        temporary_path: str | None = None
         try:
-            descriptor, temporary_path = tempfile.mkstemp(
-                dir=self.work_dir,
-                prefix=f".{CONFIG_FILE_NAME}.",
-                suffix=".tmp",
-            )
-            with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
-                json.dump(payload, handle, ensure_ascii=False, indent=2, sort_keys=True)
-                handle.write("\n")
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(temporary_path, self.config_path)
-            temporary_path = None
+            write_json_atomic(self.config_path, payload, random_temp=True,
+                              temp_prefix=f".{CONFIG_FILE_NAME}.", temp_suffix=".tmp",
+                              sort_keys=True, fsync=True, cleanup='error',
+                              ignore_cleanup_errors=True, create_parent=False)
         except OSError as exc:
             raise ArchiveLocationConfigError("storage_write_failed", "configuration file cannot be written") from exc
-        finally:
-            if temporary_path is not None:
-                try:
-                    os.unlink(temporary_path)
-                except FileNotFoundError:
-                    pass
-                except OSError:
-                    pass
 
     def initialize(self, lifecycle: LifecycleState | str = LifecycleState.ACTIVE) -> ArchiveLocationConfig:
         config = ArchiveLocationConfig(lifecycle=_coerce_lifecycle(lifecycle))

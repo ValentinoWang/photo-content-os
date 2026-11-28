@@ -14,7 +14,6 @@ import threading
 from datetime import datetime, timezone
 import secrets
 import sys
-import tempfile
 import urllib.parse
 from collections.abc import Callable as CollectionCallable, Mapping
 from http import HTTPStatus
@@ -31,6 +30,7 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from media_project_selection import SelectionError, StudioConfirmationStore
+from scripts.media_common import write_json_atomic
 from studio.direct_handoff_contract import selection_root
 from studio.media_review import MediaReview
 from studio.review_jobs import ReviewJobs
@@ -269,11 +269,8 @@ class StudioApplication:
                 if type(value.get("revision")) is not int or value["revision"] != current["revision"]:
                     raise ProjectStoreError("revision_conflict", "剪辑软件选择已变化")
                 current = {"editor": value["editor"], "method": value.get("method", current.get("method", "external")), "revision": current["revision"] + 1}
-                path.parent.mkdir(parents=True, exist_ok=True)
-                with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent, delete=False) as handle:
-                    json.dump(current, handle)
-                    temporary = Path(handle.name)
-                os.replace(temporary, path)
+                write_json_atomic(path, current, random_temp=True, ensure_ascii=True,
+                                  indent=None, trailing_newline=False)
             return current
 
     def review_catalog_projection(self) -> dict:
@@ -622,24 +619,12 @@ class StudioApplication:
             "schema_version": TRASH_RECEIPT_SCHEMA_VERSION,
             "receipts": {receipt_id: dict(receipt) for receipt_id, receipt in receipts.items()},
         }
-        temporary_path: str | None = None
         try:
-            descriptor, temporary_path = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
-            with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
-                json.dump(payload, handle, ensure_ascii=False, indent=2, sort_keys=True)
-                handle.write("\n")
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(temporary_path, path)
-            temporary_path = None
+            write_json_atomic(path, payload, random_temp=True, temp_prefix=f".{path.name}.",
+                              temp_suffix=".tmp", sort_keys=True, fsync=True,
+                              cleanup='error', ignore_cleanup_errors=True, create_parent=False)
         except OSError as exc:
             raise ProjectStoreError("trash_receipts_unavailable", "回收站回执无法保存") from exc
-        finally:
-            if temporary_path is not None:
-                try:
-                    os.unlink(temporary_path)
-                except OSError:
-                    pass
 
     def trash_flow(self, project_id: str) -> MediaTrashFlow:
         workspace = self.store.local_workspace_path(project_id)

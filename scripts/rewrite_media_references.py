@@ -6,10 +6,10 @@ import argparse
 import hashlib
 import json
 import os
-import tempfile
 from pathlib import Path
 
 from migrate_media_layout import mapped_path
+from media_common import write_bytes_atomic
 
 
 def sha256(data: bytes) -> str:
@@ -17,18 +17,8 @@ def sha256(data: bytes) -> str:
 
 
 def write_atomic(path: Path, raw: bytes) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = None
-    try:
-        with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.' + path.name + '.', delete=False) as stream:
-            temporary = Path(stream.name)
-            stream.write(raw)
-            stream.flush()
-            os.fsync(stream.fileno())
-        os.replace(temporary, path)
-    finally:
-        if temporary is not None and temporary.exists():
-            temporary.unlink()
+    write_bytes_atomic(path, raw, random_temp=True, temp_prefix='.' + path.name + '.',
+                       fsync=True, cleanup='always')
 
 
 def string_fields(raw: bytes) -> dict[str, tuple[int, int, str]]:

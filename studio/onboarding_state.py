@@ -5,13 +5,13 @@ from __future__ import annotations
 import json
 import os
 import re
-import tempfile
 import threading
 from collections.abc import Mapping
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 from typing import Any
+from scripts.media_common import write_json_atomic, write_text_atomic
 
 
 SCHEMA_VERSION = "photo_content_os_onboarding_v1"
@@ -292,32 +292,14 @@ class OnboardingStateStore:
         if self.path.is_symlink() or (self.path.exists() and not self.path.is_file()):
             _reject("storage_unavailable")
         serialized = json.dumps(state.to_dict(), ensure_ascii=True, indent=2, sort_keys=True) + "\n"
-        descriptor: int | None = None
-        temporary_path: str | None = None
         try:
-            descriptor, temporary_path = tempfile.mkstemp(
-                prefix=f".{STATE_FILE_NAME}.",
-                suffix=".tmp",
-                dir=self.work_dir,
-            )
-            with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
-                descriptor = None
-                handle.write(serialized)
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(temporary_path, self.path)
-            temporary_path = None
+            write_text_atomic(self.path, serialized, random_temp=True,
+                              temp_prefix=f".{STATE_FILE_NAME}.", temp_suffix=".tmp",
+                              fsync=True, newline="\n", cleanup='error',
+                              ignore_cleanup_errors=True, create_parent=False)
             self._sync_directory()
         except OSError as exc:
             raise OnboardingStateError("storage_write_failed") from exc
-        finally:
-            if descriptor is not None:
-                os.close(descriptor)
-            if temporary_path is not None:
-                try:
-                    os.unlink(temporary_path)
-                except OSError:
-                    pass
         return state
 
     def _sync_directory(self) -> None:
@@ -366,30 +348,13 @@ class VersionedOnboardingStateStore:
             "revision": revision,
             "state": state.to_dict(),
         }
-        descriptor: int | None = None
-        temporary_path: str | None = None
         try:
-            descriptor, temporary_path = tempfile.mkstemp(
-                prefix=f".{VERSIONED_STATE_FILE_NAME}.", suffix=".tmp", dir=self.work_dir
-            )
-            with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
-                descriptor = None
-                json.dump(payload, handle, ensure_ascii=True, indent=2, sort_keys=True)
-                handle.write("\n")
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(temporary_path, self.path)
-            temporary_path = None
+            write_json_atomic(self.path, payload, random_temp=True,
+                              temp_prefix=f".{VERSIONED_STATE_FILE_NAME}.", temp_suffix=".tmp",
+                              ensure_ascii=True, sort_keys=True, fsync=True, newline="\n",
+                              cleanup='error', ignore_cleanup_errors=True, create_parent=False)
         except OSError as exc:
             raise OnboardingStateError("storage_write_failed") from exc
-        finally:
-            if descriptor is not None:
-                os.close(descriptor)
-            if temporary_path is not None:
-                try:
-                    os.unlink(temporary_path)
-                except OSError:
-                    pass
 
     def _load(self) -> tuple[int, OnboardingState]:
         if not self.path.exists():

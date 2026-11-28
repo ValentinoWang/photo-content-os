@@ -2,12 +2,13 @@
 """Versioned local CreativeProject store with block locks and safe projections."""
 from __future__ import annotations
 
-import copy, difflib, hashlib, json, os, re, secrets, tempfile, threading, urllib.parse
+import copy, difflib, hashlib, json, os, re, secrets, threading, urllib.parse
 from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator, Mapping
+from scripts.media_common import write_text_atomic
 
 try:
     import fcntl
@@ -62,18 +63,9 @@ def _text(blocks: list[dict[str, Any]]) -> str: return "\n\n".join(f"## {b.get('
 
 
 def _atomic(path: Path, value: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fd, tmp_name = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=path.parent)
-    tmp = Path(tmp_name)
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as handle:
-            handle.write(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
-            handle.flush()
-            os.fsync(handle.fileno())
-        os.replace(tmp, path)
-    finally:
-        if tmp.exists():
-            tmp.unlink()
+    write_text_atomic(path, lambda: json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                      random_temp=True, temp_prefix=path.name + ".", temp_suffix=".tmp",
+                      fsync=True, cleanup='always')
 
 
 def workspace_label(path: Path) -> str:

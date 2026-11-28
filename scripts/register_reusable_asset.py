@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 from pathlib import Path
 
 from asset_library_index import (
@@ -16,7 +15,7 @@ from asset_library_index import (
     stable_asset_id,
     upsert_asset,
 )
-from media_common import file_sha256, path_inside, project_path, relative_posix, directory_slug
+from media_common import file_sha256, path_inside, project_path, relative_posix, directory_slug, write_text_atomic
 
 
 DEFAULT_INDEX_NAME = "reusable-assets.md"
@@ -151,9 +150,7 @@ def write_text_if_changed(path: Path, content: str) -> bool:
         if path.read_text(encoding="utf-8") == content:
             return False
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(content, encoding="utf-8")
-    os.replace(temporary, path)
+    write_text_atomic(path, content, hidden_temp=True, create_parent=False)
     return True
 
 

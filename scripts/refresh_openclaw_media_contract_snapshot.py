@@ -11,14 +11,13 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import subprocess
-import tempfile
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
 from openclaw_product_contract import ProductContractError, SNAPSHOT_PATH, p1a_content_digest, validate_snapshot
+from media_common import write_json_atomic
 
 
 CATALOG_RELATIVE_PATH = Path("apps/media/agent/openclaw_media/data/pipelines.json")
@@ -214,16 +213,7 @@ def write_snapshot(path: Path, snapshot: dict[str, Any]) -> None:
     """Atomically replace the photo-side pin after an explicit approval."""
 
     target = path.expanduser().resolve()
-    target.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=target.parent, delete=False) as handle:
-        temporary = Path(handle.name)
-        json.dump(snapshot, handle, ensure_ascii=False, indent=2)
-        handle.write("\n")
-    try:
-        os.replace(temporary, target)
-    except OSError:
-        temporary.unlink(missing_ok=True)
-        raise
+    write_json_atomic(target, snapshot, random_temp=True, cleanup='replace_error')
 
 
 def main() -> int:

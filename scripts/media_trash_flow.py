@@ -9,12 +9,12 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 import uuid
 from collections.abc import Callable, Mapping, Sequence
 from datetime import datetime, timezone
 from pathlib import Path, PureWindowsPath
 from typing import Any, Protocol
+from media_common import write_text_atomic
 
 from media_delete_recommendations import (
     CANDIDATE_STATE,
@@ -207,34 +207,17 @@ class MacOSSystemTrashBackend:
         if self.registry_path is None:
             return
         parent = self.registry_path.parent
-        temporary_path: Path | None = None
-        descriptor: int | None = None
         try:
             parent.mkdir(parents=True, exist_ok=True)
-            descriptor, raw_temporary_path = tempfile.mkstemp(
-                prefix=f".{self.registry_path.name}.", suffix=".tmp", dir=parent
-            )
-            temporary_path = Path(raw_temporary_path)
-            payload = {
-                "schema_version": 1,
-                "locations": {key: str(path) for key, path in sorted(self._locations.items())},
-            }
-            with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
-                descriptor = None
-                handle.write(json.dumps(payload, ensure_ascii=True, sort_keys=True) + "\n")
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(temporary_path, self.registry_path)
+            write_text_atomic(self.registry_path,
+                              lambda: json.dumps({"schema_version": 1,
+                                                  "locations": {key: str(path) for key, path in sorted(self._locations.items())}},
+                                                 ensure_ascii=True, sort_keys=True) + "\n",
+                              random_temp=True, temp_prefix=f".{self.registry_path.name}.",
+                              temp_suffix=".tmp", fsync=True, cleanup='error',
+                              ignore_cleanup_errors=True, create_parent=False)
         except OSError as exc:
             raise MediaTrashFlowError("receipt_registry_failed", "system trash receipt could not be retained") from exc
-        finally:
-            if descriptor is not None:
-                os.close(descriptor)
-            if temporary_path is not None:
-                try:
-                    temporary_path.unlink()
-                except OSError:
-                    pass
 
     @staticmethod
     def _trash_path_from_result(result: object) -> Path:
