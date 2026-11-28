@@ -7,9 +7,18 @@ import os
 import sys
 from pathlib import Path
 
-MINIMUM_PYTHON = (3, 11)
-RUNTIME_NAME = ".venv"
-DEFAULT_OBSIDIAN_RELATIVE = Path("Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体")
+if __package__:
+    from .constants import (
+        MINIMUM_PYTHON,
+        RUNTIME_NAME,
+        DEFAULT_OBSIDIAN_RELATIVE,
+    )
+else:
+    from constants import (
+        MINIMUM_PYTHON,
+        RUNTIME_NAME,
+        DEFAULT_OBSIDIAN_RELATIVE,
+    )
 
 
 def obsidian_root(value: Path | None = None) -> Path:

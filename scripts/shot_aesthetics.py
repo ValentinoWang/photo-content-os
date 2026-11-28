@@ -8,22 +8,16 @@ import time
 import urllib.request
 from pathlib import Path
 
-V1_REV = '6d122adad522ab246644d9dc1c6d7a3810ee255f'
-MODELS = {
-    'laion-v1-b32': {
-        'clip': 'ViT-B-32', 'dimension': 512,
-        'backbone_url': 'https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt',
-        'backbone_sha256': '40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af',
-        'head_url': f'https://raw.githubusercontent.com/LAION-AI/aesthetic-predictor/{V1_REV}/sa_0_4_vit_b_32_linear.pth',
-        'code_license': 'MIT', 'weights_license': 'MIT repository distribution (predictor head); independent CLIP weight license not explicitly stated',
-        'code_source': f'https://github.com/LAION-AI/aesthetic-predictor/blob/{V1_REV}/LICENSE',
-        'weights_source': f'https://github.com/LAION-AI/aesthetic-predictor/tree/{V1_REV}',
-        'backbone_license_source': 'https://github.com/openai/CLIP/blob/main/LICENSE',
-        'backbone_weight_license_status': 'unconfirmed_separate_weight_terms',
-        'backbone_weight_license_question': 'https://github.com/openai/CLIP/issues/203',
-    },
-
-}
+if __package__:
+    from .constants import (
+        V1_REV,
+        MODELS,
+    )
+else:
+    from constants import (
+        V1_REV,
+        MODELS,
+    )
 
 
 def model_cache() -> Path:

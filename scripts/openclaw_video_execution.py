@@ -22,19 +22,16 @@ from openclaw_product_contract import ProductContractError, safe_workspace_ref, 
 
 
 SCRIPTS = Path(__file__).resolve().parent
-PHOTO_PYTHON = SCRIPTS.parent / ".venv/bin/python"
-ENTRYPOINTS = {
-    "transcribe": "transcribe_audio.py",
-    "suggest": "spoken_edit.py",
-    "chatcut": "edit_backends/chatcut_handoff.py",
-    "kdenlive": "edit_backends/execution.py",
-    "editor": "edit_backends/execution.py",
-    "review": "review_output_video.py",
-    "compose": "video_render/compose.py",
-    "multi_shot": "video_render/multi_shot.py",
-    "teaching_clips": "video_render/teaching_clips.py",
-    "shot_image": "video_derivatives.py",
-}
+if __package__:
+    from .constants import (
+        PHOTO_PYTHON,
+        ENTRYPOINTS,
+    )
+else:
+    from constants import (
+        PHOTO_PYTHON,
+        ENTRYPOINTS,
+    )
 
 # This fixed driver receives local arguments on stdin. It is never a cloud
 # command surface; the parent selects the allowlisted file before spawning it.

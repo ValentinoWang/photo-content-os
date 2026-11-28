@@ -8,19 +8,22 @@ from typing import Any
 from studio.direct_revision_contract import SHOT_PROPERTIES, operation_contract, routes
 from studio import direct_style_contract, direct_handoff_contract
 
-ROUGH_CUT_ROUTE_SPECS: tuple[dict[str, object], ...] = (
-    {'method': 'GET', 'path': '/api/review/pieces/{id}/roughcut', 'operation_id': 'getRoughcut', 'summary': 'Read the version-bound roughcut plan'},
-    {'method': 'POST', 'path': '/api/review/pieces/{id}/roughcut/commands', 'operation_id': 'commandRoughcut', 'summary': 'Accept a CAS-bound roughcut command (202)', 'write': True},
-    {'method': 'GET', 'path': '/api/review/roughcut-jobs/{jobId}', 'operation_id': 'getRoughcutJob', 'summary': 'Read an owned roughcut job'},
-    {'method': 'POST', 'path': '/api/review/roughcut-jobs/{jobId}', 'operation_id': 'stopRoughcutJob', 'summary': 'Stop only this roughcut job (202)', 'write': True},
-    {'method': 'GET', 'path': '/api/review/editing-presets', 'operation_id': 'getEditingPresets', 'summary': 'Read built-in and local editing recipes'},
-    {'method': 'POST', 'path': '/api/review/editing-presets', 'operation_id': 'saveEditingPreset', 'summary': 'Save a cross-project recipe with CAS (201)', 'write': True},
-    {'method': 'GET', 'path': '/api/review/pieces/{id}/editor-capabilities', 'operation_id': 'getRoughcutEditorCapabilities', 'summary': 'Read R228 choice and roughcut capabilities'},
-    {'method': 'POST', 'path': '/api/review/pieces/{id}/roughcut/transcriptions', 'operation_id': 'transcribeRoughcutShots', 'summary': 'Accept selected local transcription work (202)', 'write': True},
-    {'method': 'POST', 'path': '/api/review/pieces/{id}/roughcut/drafts', 'operation_id': 'createRoughcutDraft', 'summary': 'Generate the saved editor choice in an owned job (202)', 'write': True},
-    {'method': 'POST', 'path': '/api/review/pieces/{id}/roughcut/drafts/open', 'operation_id': 'openRoughcutDraft', 'summary': 'Open only this piece latest current Kdenlive project', 'write': True},
-    {'method': 'GET', 'path': '/api/review/pieces/{id}/roughcut/media/{artifactId}', 'operation_id': 'getRoughcutMedia', 'summary': 'Read a bound derived roughcut artifact', 'response_media': 'video/mp4', 'byte_ranges': True},
-)
+if __package__:
+    from .constants import (
+        ROUGH_CUT_ROUTE_SPECS,
+        WORK_DELETE_OPERATIONS,
+    )
+else:
+    try:
+        from studio.constants import (
+            ROUGH_CUT_ROUTE_SPECS,
+            WORK_DELETE_OPERATIONS,
+        )
+    except ImportError:
+        from constants import (
+            ROUGH_CUT_ROUTE_SPECS,
+            WORK_DELETE_OPERATIONS,
+        )
 
 
 ROUTE_SPECS: tuple[dict[str, object], ...] = routes() + direct_style_contract.routes() + direct_handoff_contract.routes() + ROUGH_CUT_ROUTE_SPECS + (
@@ -286,8 +289,6 @@ def _operation(spec: dict[str, object]) -> dict[str, Any]:
     return operation
 
 
-WORK_DELETE_OPERATIONS = {'previewProjectDeletion', 'deleteProjects', 'listDeletedProjects',
-                          'restoreProjects', 'restoreProject', 'dismissDeletedProject'}
 
 
 def _work_delete_operation(operation, name):

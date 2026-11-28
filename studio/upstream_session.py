@@ -12,15 +12,19 @@ from typing import Protocol
 # Keep this boundary identical to upstream_identity.RESULT_FIELDS.  The studio
 # consumer intentionally does not import the upstream transport/compatibility
 # module, so it remains usable when the optional upstream package is absent.
-E4_RESULT_FIELDS = frozenset(
-    {
-        "upstream_principal_id",
-        "roles",
-        "revoked",
-        "pairing_status",
-        "session_ref",
-    }
-)
+if __package__:
+    from .constants import (
+        E4_RESULT_FIELDS,
+    )
+else:
+    try:
+        from studio.constants import (
+            E4_RESULT_FIELDS,
+        )
+    except ImportError:
+        from constants import (
+            E4_RESULT_FIELDS,
+        )
 _PAIRING_STATUSES = frozenset({"rejected", "unavailable", "unsupported", "paired"})
 _SECRET_FIELD_MARKERS = (
     "api_key",

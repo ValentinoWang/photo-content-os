@@ -23,35 +23,30 @@ from llm import load_markdown_frontmatter as _load_markdown_frontmatter
 from media import read_yaml_mapping, write_yaml_atomic
 
 
-SPEC_VERSION = "content_os_v0.2"
-PROJECT_OVERVIEW = "00_项目总览.md"
-SUPPORTED_EDITOR_BACKENDS = frozenset({"handoff_pack", "otio_kdenlive"})
-SUPPORTED_TASK_TYPES = frozenset(
-    {
-        "local_material_match",
-        "generate_edit_handoff_pack",
-        "generate_otio_kdenlive_timeline",
-        "revise_local_edit_artifacts",
-        "local_output_review",
-        "generate_ai_edit_log",
-    }
-)
-BACKEND_TASK_TYPES = {
-    "generate_edit_handoff_pack": "handoff_pack",
-    "generate_otio_kdenlive_timeline": "otio_kdenlive",
-}
-REVISION_TASK_TYPES = {"revise_local_edit_artifacts"}
-LOCAL_EDITOR_OUTPUT_TASK_TYPES = {
-    "generate_edit_handoff_pack",
-    "generate_otio_kdenlive_timeline",
-    "revise_local_edit_artifacts",
-}
-OPTIONAL_LOCAL_BINDING_PATHS = {
-    "batch_note_path": "file",
-    "inbox_batch_path": "directory",
-    "local_project_path": "directory",
-}
-VOLATILE_TASK_FIELDS = frozenset({"created_at", "updated_at", "generated_at", "request_fingerprint"})
+if __package__:
+    from .constants import (
+        SPEC_VERSION,
+        PROJECT_OVERVIEW,
+        SUPPORTED_EDITOR_BACKENDS,
+        VALIDATE_CONTENT_OS_TASK_SUPPORTED_TASK_TYPES as SUPPORTED_TASK_TYPES,
+        BACKEND_TASK_TYPES,
+        REVISION_TASK_TYPES,
+        LOCAL_EDITOR_OUTPUT_TASK_TYPES,
+        OPTIONAL_LOCAL_BINDING_PATHS,
+        VOLATILE_TASK_FIELDS,
+    )
+else:
+    from constants import (
+        SPEC_VERSION,
+        PROJECT_OVERVIEW,
+        SUPPORTED_EDITOR_BACKENDS,
+        VALIDATE_CONTENT_OS_TASK_SUPPORTED_TASK_TYPES as SUPPORTED_TASK_TYPES,
+        BACKEND_TASK_TYPES,
+        REVISION_TASK_TYPES,
+        LOCAL_EDITOR_OUTPUT_TASK_TYPES,
+        OPTIONAL_LOCAL_BINDING_PATHS,
+        VOLATILE_TASK_FIELDS,
+    )
 
 
 class ValidationError(Exception):

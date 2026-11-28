@@ -17,9 +17,18 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from edit_backends.kdenlive_render import srt_timestamp
 
-SCHEMA_VERSION = "audio_transcript_v1"
-DEFAULT_MAX_CHARS = 12
-DEFAULT_PAUSE_SECONDS = 0.4
+if __package__:
+    from .constants import (
+        TRANSCRIPT_TO_SRT_SCHEMA_VERSION as SCHEMA_VERSION,
+        DEFAULT_MAX_CHARS,
+        DEFAULT_PAUSE_SECONDS,
+    )
+else:
+    from constants import (
+        TRANSCRIPT_TO_SRT_SCHEMA_VERSION as SCHEMA_VERSION,
+        DEFAULT_MAX_CHARS,
+        DEFAULT_PAUSE_SECONDS,
+    )
 _CLAUSE_END = re.compile(r"[。！？.!?;；，,]\s*$")
 _CJK_SPACE = re.compile(r"(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])")
 

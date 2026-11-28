@@ -48,19 +48,19 @@ __all__ = [
 # three call sites can be cross-referenced. This is not a contract that
 # their resolved values must match -- each function's value-resolution and
 # fallback chain stays independent (see module docstring).
-SOURCE_IDENTITY_KEYS = (
-    "task_id",
-    "task_type",
-    "project_id",
-    "idea_id",
-    "project_revision",
-    "change_request_id",
-    "editor_backend",
-    "tenant_id",
-)
+if __package__:
+    from .constants import (
+        SOURCE_IDENTITY_KEYS,
+        TASK_INBOX,
+        RESULT_OUTBOX,
+    )
+else:
+    from constants import (
+        SOURCE_IDENTITY_KEYS,
+        TASK_INBOX,
+        RESULT_OUTBOX,
+    )
 
 # 98_Agent任务队列 is the document/task layer; both the cloud->Mac bridge
 # (enqueue_openclaw_queue_job.py) and the Mac-side runner
 # (mac_openclaw_runner.py) read/write it at these vault-relative paths.
-TASK_INBOX = Path("98_Agent任务队列/01_cloud_to_mac_ready")
-RESULT_OUTBOX = Path("98_Agent任务队列/02_mac_to_cloud_results")

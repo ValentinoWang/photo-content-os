@@ -18,31 +18,24 @@ from llm import (
 )
 
 
-MAX_TEXT_CHARS = 14000
-MAX_JSON_CHARS = 16000
+if __package__:
+    from .constants import (
+        MAX_TEXT_CHARS,
+        MAX_JSON_CHARS,
+        GENERATE_AI_EDIT_LOG_SYSTEM_PROMPT as SYSTEM_PROMPT,
+    )
+else:
+    from constants import (
+        MAX_TEXT_CHARS,
+        MAX_JSON_CHARS,
+        GENERATE_AI_EDIT_LOG_SYSTEM_PROMPT as SYSTEM_PROMPT,
+    )
 
 
 class EditLogError(Exception):
     """Raised when the edit log contract cannot be satisfied."""
 
 
-SYSTEM_PROMPT = """你是 Mac OpenClaw 的 AI 跟剪日志代理。
-
-目标：根据项目脚本、分镜、EDL、剪映原生导入包计划/结果、可选人工备注和可选成片信息，生成 07_edit_log.md。
-
-硬约束：
-1. 你只能把输入中明确出现的事实写成“已确认人工修改”。
-2. 你可以根据内容结构提出“AI 建议修改”和“AI 推断修改”，但必须标注确认状态或置信度。
-3. 不允许编造已经添加的 BGM、音效、特效、变速、贴纸、转场、调色或删除动作。
-4. 如果没有 V1/Final 成片或剪映草稿解析证据，所有“已经发生”的操作必须保持空表或 pending_confirm。
-5. 允许根据脚本/EDL/导入包内容建议节奏、变速、卡点、字幕强调、音效和 BGM 方向。
-6. 结果必须是完整 Markdown，必须包含 YAML frontmatter。
-7. frontmatter 必须包含 spec_version、doc_type、project_id、idea_id、status、writer_agent、owner_agent、next_owner、generation_model、generation_reasoning、evidence_level。
-8. doc_type 必须是 edit_log；writer_agent 必须是 mac_openclaw。
-9. evidence_level 只能是 content_plan_only、output_video_reviewed、jianying_draft_parsed、human_confirmed 中的一个。当前没有成片/草稿解析/人确认时用 content_plan_only。
-10. 正文必须包含这些一级标题：AI 跟剪摘要、已确认人工修改、AI 建议修改、AI 推断修改、需要人确认、下一版建议、记录规则。
-11. creator_context 只包含项目明确提供的账号、人设、口吻、平台、受众和题材边界；它只能约束建议的表达方式，不能证明素材或剪辑事实。未提供的字段不得猜测。
-12. 不要输出 Markdown 代码围栏，不要解释生成过程，不要输出额外寒暄。"""
 
 
 def read_text(path: Path, *, limit: int = MAX_TEXT_CHARS) -> str:

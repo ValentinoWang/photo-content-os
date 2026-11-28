@@ -19,7 +19,19 @@ import threading
 import time
 from typing import Any, Callable
 
-RENDERER = Path(__file__).with_name('render-frames.mjs')
+if __package__:
+    from .constants import (
+        RENDERER,
+    )
+else:
+    try:
+        from scripts.video_render.constants import (
+            RENDERER,
+        )
+    except ImportError:
+        from constants import (
+            RENDERER,
+        )
 
 
 class RenderError(RuntimeError):

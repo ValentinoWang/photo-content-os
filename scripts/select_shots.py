@@ -26,8 +26,16 @@ from media import write_json_atomic
 from runtime_paths import local_media_root
 from shot_quality import read_frame, read_photo, frame_metrics, motion_series, split_long_scene
 
-CONFIG_PATH = Path(__file__).with_name('shot_selection_config.json')
-DEFAULT_CONFIG = json.loads(CONFIG_PATH.read_text(encoding='utf-8'))
+if __package__:
+    from .constants import (
+        CONFIG_PATH,
+        DEFAULT_CONFIG,
+    )
+else:
+    from constants import (
+        CONFIG_PATH,
+        DEFAULT_CONFIG,
+    )
 
 
 def load_config(path: Path | None) -> dict:

@@ -8,11 +8,16 @@ import sys
 ROOT = Path.cwd()
 EVIDENCE = ROOT / 'evidence/2026-10-21/R223-music-beat-map/phase-b'
 CHECKER = Path(os.environ['DESIGN_CONTRACT_CHECKER'])
-STATES = ('music', 'music-beats-analyzing', 'music-beats-failed',
-          'music-beats-failed-unknown', 'music-beats-failed-unreadable',
-          'music-beats-queued', 'music-filter-empty', 'music-tags-failed')
-SCENARIOS = STATES + ('music-playing', 'music-intro', 'music-end', 'music-filtered',
-                      'real-queued-projection', 'real-normal-projection')
+if __package__:
+    from .constants import (
+        STATES,
+        SCENARIOS,
+    )
+else:
+    from constants import (
+        STATES,
+        SCENARIOS,
+    )
 expected = {f'{state}-{width}{suffix}' for state in SCENARIOS
             for width in (1440, 1180, 430)
             for suffix in (('', '-open') if width == 430 and state != 'music-filter-empty' else ('',))}

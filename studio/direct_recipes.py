@@ -4,9 +4,19 @@ from pathlib import Path
 from direct_video import recipe_library
 from direct_video.generate import DirectVideoError
 
-CATEGORIES = [('opening', '开场'), ('typography', '文字'), ('ui-entrance', '界面入场'),
-              ('transition', '转场'), ('rhythm', '节奏'), ('data', '数据'),
-              ('effects', '特效'), ('interaction', '交互'), ('camera', '运镜'), ('outro', '收尾')]
+if __package__:
+    from .constants import (
+        CATEGORIES,
+    )
+else:
+    try:
+        from studio.constants import (
+            CATEGORIES,
+        )
+    except ImportError:
+        from constants import (
+            CATEGORIES,
+        )
 
 
 def catalog():

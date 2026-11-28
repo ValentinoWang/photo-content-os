@@ -16,9 +16,18 @@ from pathlib import Path
 from urllib.parse import unquote
 
 
-WIKILINK = re.compile(r"!?\[\[([^\]]+)\]\]")
-MARKDOWN_LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
-EXTERNAL_PREFIXES = ("http://", "https://", "mailto:", "tel:", "obsidian:", "data:")
+if __package__:
+    from .constants import (
+        WIKILINK,
+        MARKDOWN_LINK,
+        EXTERNAL_PREFIXES,
+    )
+else:
+    from constants import (
+        WIKILINK,
+        MARKDOWN_LINK,
+        EXTERNAL_PREFIXES,
+    )
 
 
 def markdown_files(vault: Path) -> list[Path]:

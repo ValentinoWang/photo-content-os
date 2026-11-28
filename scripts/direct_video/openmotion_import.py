@@ -15,31 +15,64 @@ except ImportError:  # Direct command-line invocation.
     import recipe_library
 
 COMMIT = recipe_library.OPENMOTION_COMMIT
-REPOSITORY = "https://github.com/nexu-io/openmotion"
-CATALOG = "library/templates/catalog/"
-CLIP_PATH = re.compile(r"([a-z0-9-]+)/source/demos/(clip-\d+)\.html")
-DEMO_META = re.compile(r"^```motion-demo[ \t]*\n(.*?)^\x60{3}[ \t]*$", re.M | re.S)
-SCRIPT_SRC = re.compile(r"<script\b[^>]*\bsrc=[\"']([^\"']+)[\"']", re.I)
-SEEK_FRAME = re.compile(r"\bwindow\.seekFrame\s*=")
-ASSET = re.compile(
-    r"(?:\breference-[\w.-]+|(?:\.\./|/|\b)assets/|\bdata:(?:image|audio|video|font)/|"
-    r"\.(?:webp|png|jpe?g|gif|avif|woff2?|ttf|otf|mp[34]|webm|mov)(?=[\"'\s)]))", re.I,
-)
-REMOTE = re.compile(r"https?://|[\"']\s*//[\w.-]+\.|\b(?:fetch|XMLHttpRequest|WebSocket|importScripts)\s*\(", re.I)
-MEDIA = re.compile(r"<(?:link|img|iframe|video|audio|source|object)\b|@font-face|@import|url\s*\(|\bnew\s+Image\b", re.I)
-CLOCK = re.compile(r"\b(?:requestAnimationFrame|setTimeout|setInterval|Math\.random)\s*\(")
-DEPENDENCIES = ["data.js", "common.js", "scene.js", "bridge.js"]
-CATEGORIES = {
-    "typography": "文字", "ui-entrance": "界面入场", "effects": "特效", "transition": "转场",
-    "opening": "开场", "interaction": "交互", "camera": "运镜", "rhythm": "节奏",
-    "outro": "收尾", "data": "数据",
-}
-DECISIONS = Path(__file__).with_name("openmotion_review.json")
-REPORT = Path(__file__).resolve().parents[2] / "docs/tasks/om-recipes/excluded.md"
+if __package__:
+    from .constants import (
+        REPOSITORY,
+        CATALOG,
+        CLIP_PATH,
+        DEMO_META,
+        SCRIPT_SRC,
+        SEEK_FRAME,
+        ASSET,
+        REMOTE,
+        OPENMOTION_IMPORT_MEDIA as MEDIA,
+        CLOCK,
+        DEPENDENCIES,
+        OPENMOTION_IMPORT_CATEGORIES as CATEGORIES,
+        DECISIONS,
+        REPORT,
+        VISUAL_CONFIG,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            REPOSITORY,
+            CATALOG,
+            CLIP_PATH,
+            DEMO_META,
+            SCRIPT_SRC,
+            SEEK_FRAME,
+            ASSET,
+            REMOTE,
+            OPENMOTION_IMPORT_MEDIA as MEDIA,
+            CLOCK,
+            DEPENDENCIES,
+            OPENMOTION_IMPORT_CATEGORIES as CATEGORIES,
+            DECISIONS,
+            REPORT,
+            VISUAL_CONFIG,
+        )
+    except ImportError:
+        from constants import (
+            REPOSITORY,
+            CATALOG,
+            CLIP_PATH,
+            DEMO_META,
+            SCRIPT_SRC,
+            SEEK_FRAME,
+            ASSET,
+            REMOTE,
+            OPENMOTION_IMPORT_MEDIA as MEDIA,
+            CLOCK,
+            DEPENDENCIES,
+            OPENMOTION_IMPORT_CATEGORIES as CATEGORIES,
+            DECISIONS,
+            REPORT,
+            VISUAL_CONFIG,
+        )
 
 # Upstream common.js reads these values when setting up the clip renderer. Stage
 # times and palette drive the animation; captions and brand defaults do not.
-VISUAL_CONFIG = ("duration", "accent", "palette", "sourceCanvas", "actionRange", "mode", "mechanism", "templateId")
 
 
 def read_pinned(repo):

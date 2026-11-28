@@ -47,7 +47,14 @@ def _safe_source(project: Path, raw: str, *, require_exists: bool) -> Path:
     return resolved
 
 
-AUDIO_RATE = 48000
+if __package__:
+    from .constants import (
+        AUDIO_RATE,
+    )
+else:
+    from constants import (
+        AUDIO_RATE,
+    )
 
 
 def _factor_expression(points: list[list[float]], timeline_start: float) -> str:

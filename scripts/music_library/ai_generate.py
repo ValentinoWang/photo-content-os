@@ -42,10 +42,49 @@ from .errors import MusicError
 # Note: WaveSpeed REST input schema does not expose a standalone `bpm` field;
 # BPM hints are appended to `tags` (e.g. "<prompt>, 100 bpm"). Instrumental mode
 # uses `lyrics: "[inst]"` as specified in official llms.txt.
-WAVESPEED_MODEL = 'wavespeed-ai/ace-step-1.5'
-WAVESPEED_SUBMIT_URL = 'https://api.wavespeed.ai/api/v3/wavespeed-ai/ace-step-1.5'
-WAVESPEED_POLL_URL = 'https://api.wavespeed.ai/api/v3/predictions/{prediction_id}/result'
-WAVESPEED_DOC_URL = 'https://wavespeed.ai/models/wavespeed-ai/ace-step-1.5/llms.txt'
+if __package__:
+    from .constants import (
+        WAVESPEED_MODEL,
+        WAVESPEED_SUBMIT_URL,
+        WAVESPEED_POLL_URL,
+        WAVESPEED_DOC_URL,
+        BAILIAN_MODEL,
+        BAILIAN_DEFAULT_SUBMIT_URL,
+        BAILIAN_WORKSPACE_URL,
+        BAILIAN_DOC_URL,
+        DEFAULT_STT_ENV_PATH,
+        AUDIO_EXTENSIONS,
+        PROVIDERS,
+    )
+else:
+    try:
+        from scripts.music_library.constants import (
+            WAVESPEED_MODEL,
+            WAVESPEED_SUBMIT_URL,
+            WAVESPEED_POLL_URL,
+            WAVESPEED_DOC_URL,
+            BAILIAN_MODEL,
+            BAILIAN_DEFAULT_SUBMIT_URL,
+            BAILIAN_WORKSPACE_URL,
+            BAILIAN_DOC_URL,
+            DEFAULT_STT_ENV_PATH,
+            AUDIO_EXTENSIONS,
+            PROVIDERS,
+        )
+    except ImportError:
+        from constants import (
+            WAVESPEED_MODEL,
+            WAVESPEED_SUBMIT_URL,
+            WAVESPEED_POLL_URL,
+            WAVESPEED_DOC_URL,
+            BAILIAN_MODEL,
+            BAILIAN_DEFAULT_SUBMIT_URL,
+            BAILIAN_WORKSPACE_URL,
+            BAILIAN_DOC_URL,
+            DEFAULT_STT_ENV_PATH,
+            AUDIO_EXTENSIONS,
+            PROVIDERS,
+        )
 
 # Official Alibaba Bailian Fun-Music API (fun-music-api):
 #   POST https://{WorkspaceId}.cn-beijing.maas.aliyuncs.com/api/v1/services/audio/music/generation
@@ -56,37 +95,9 @@ WAVESPEED_DOC_URL = 'https://wavespeed.ai/models/wavespeed-ai/ace-step-1.5/llms.
 # 2. `fun-music-v1` has no input duration parameter; output is trimmed during post-processing.
 # 3. Official doc describes non-streaming sync and SSE streaming responses. If a server/gateway
 #    returns a standard DashScope async `output.task_id`, we also poll `/api/v1/tasks/{task_id}`.
-BAILIAN_MODEL = 'fun-music-v1'
-BAILIAN_DEFAULT_SUBMIT_URL = 'https://dashscope.aliyuncs.com/api/v1/services/audio/music/generation'
-BAILIAN_WORKSPACE_URL = 'https://{workspace_id}.cn-beijing.maas.aliyuncs.com/api/v1/services/audio/music/generation'
-BAILIAN_DOC_URL = 'https://help.aliyun.com/zh/model-studio/fun-music-api'
 
-DEFAULT_STT_ENV_PATH = Path.home() / '.config' / 'harness' / 'speech-to-text.env'
 
-AUDIO_EXTENSIONS = ('.wav', '.mp3', '.flac', '.m4a', '.mp4', '.ogg', '.aac')
 
-PROVIDERS = {
-    'wavespeed': {
-        'model': WAVESPEED_MODEL,
-        'label': 'WaveSpeed ACE-Step 1.5',
-        'keychain_service': 'wavespeed-api-key',
-        'unit_price': 0.0003,
-        'currency': 'USD',
-        'min_seconds': 5.0,
-        'max_seconds': 240.0,
-        'doc_url': WAVESPEED_DOC_URL,
-    },
-    'bailian': {
-        'model': BAILIAN_MODEL,
-        'label': '百炼 Fun-Music',
-        'keychain_service': 'bailian-api-key',
-        'unit_price': 0.002,
-        'currency': 'CNY',
-        'min_seconds': 1.0,
-        'max_seconds': 300.0,
-        'doc_url': BAILIAN_DOC_URL,
-    },
-}
 
 
 @dataclass(frozen=True)

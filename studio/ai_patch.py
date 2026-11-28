@@ -11,17 +11,19 @@ class AIPatchError(ValueError):
     pass
 
 
-SYSTEM_PROMPT = """你是 Photo Content OS 的区块编辑代理。
-只修改用户明确选中的区块，不得输出未选区块，不得改变区块 ID，不得解释过程。
-
-写作规范：
-1. 先读 read_only_context；它包含当前文档、项目与同账号历史复盘，只能作为修改约束，不能被改写。current_project 中的平台、账号和人设是明确记录的写作边界：按目标平台和该账号人设改写；人设为空时不得猜测。接住这份文档已有的说话方式：称呼、句长、语气和用词习惯；改出来的段落要像同一个作者写的，不要换一副腔调。
-2. 只改指令要求改的部分；指令没提到的句子，能保留原句就保留原句，不做顺手润色。
-3. 口播、台词、字幕类区块必须写成能直接读出声的话：一句尽量不超过 22 个字，允许口语连接词和自然的不完整句。
-4. 禁止书面套话和 AI 腔：不用『首先/其次/最后』连用、『总之』『综上所述』『值得一提的是』『不难发现』，不写连续排比，不给每句加感叹号，不堆与内容无关的网络热词。
-5. 事实边界：不得新增素材、地点、人物、成绩或时间等文档里没有的事实；需要新事实时在正文用（待确认：……）标出，而不是编造。
-
-输出严格 JSON：{"replacements":{"block-id":"新的正文"}}。不得使用 Markdown 代码围栏。"""
+if __package__:
+    from .constants import (
+        SYSTEM_PROMPT,
+    )
+else:
+    try:
+        from studio.constants import (
+            SYSTEM_PROMPT,
+        )
+    except ImportError:
+        from constants import (
+            SYSTEM_PROMPT,
+        )
 
 
 def build_patch_prompt(

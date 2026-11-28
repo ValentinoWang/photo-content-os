@@ -15,7 +15,28 @@ from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
 
-SCRIPTS = Path(__file__).resolve().parents[1] / 'scripts'
+if __package__:
+    from .constants import (
+        SCRIPTS,
+        SCENE_NAMES,
+        STATES,
+        DECISIONS,
+    )
+else:
+    try:
+        from studio.constants import (
+            SCRIPTS,
+            SCENE_NAMES,
+            STATES,
+            DECISIONS,
+        )
+    except ImportError:
+        from constants import (
+            SCRIPTS,
+            SCENE_NAMES,
+            STATES,
+            DECISIONS,
+        )
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
@@ -24,9 +45,6 @@ from media import utc_now_iso as now
 from runtime_paths import local_media_root
 from music_library.library import MusicLibrary
 
-SCENE_NAMES = json.loads((Path(__file__).parent / 'static/scene-names.json').read_text())
-STATES = ('selected', 'usable', 'unused', 'rejected')
-DECISIONS = {'精选': 'selected', '可用': 'usable', '不用': 'unused'}
 
 
 def promo_beat(track_id, media_root):

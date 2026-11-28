@@ -17,7 +17,19 @@ from animation_duration import declared_duration
 
 
 # Leave 1 dB of headroom under full scale so later mixing never clips.
-PEAK_LIMIT = 10 ** (-1 / 20)
+if __package__:
+    from .constants import (
+        PEAK_LIMIT,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            PEAK_LIMIT,
+        )
+    except ImportError:
+        from constants import (
+            PEAK_LIMIT,
+        )
 
 
 class PlanError(Exception):

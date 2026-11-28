@@ -10,12 +10,25 @@ from direct_video.generate import DirectVideoError, Generator
 from studio.project_store import ProjectStoreError
 from studio.direct_handoff_contract import read_handoff, handoff_identity, handoff_projection, image_path, local_file, newer_handoff
 
-JOB_FIELDS = ('jobId', 'projectId', 'model', 'status', 'createdAt', 'updatedAt', 'failureCode',
-              'design', 'shots', 'narration', 'output')
-SHOT_FIELDS = ('shotId', 'dialogue', 'mainAction', 'estimatedSeconds', 'measuredSeconds', 'timingSource',
-               'status', 'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt', 'renderedAt',
-               'codeChars', 'posterRevision', 'checks', 'visual', 'subtitle', 'camera', 'audio', 'fromDraft', 'currentVersion', 'versions', 'boxes', 'look', 'sample')
-PATH_TEXT = re.compile(r'(?:[A-Za-z]:[\\/][^\s"<>]+|/(?:[^\s/"<>]+/)+[^\s"<>]*)')
+if __package__:
+    from .constants import (
+        JOB_FIELDS,
+        SHOT_FIELDS,
+        PATH_TEXT,
+    )
+else:
+    try:
+        from studio.constants import (
+            JOB_FIELDS,
+            SHOT_FIELDS,
+            PATH_TEXT,
+        )
+    except ImportError:
+        from constants import (
+            JOB_FIELDS,
+            SHOT_FIELDS,
+            PATH_TEXT,
+        )
 
 
 def redact(value):

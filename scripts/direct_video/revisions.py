@@ -8,8 +8,19 @@ import shutil
 from direct_video.media import atomic_bytes
 from direct_video.revision_library import read_json
 
-VERSION_FIELDS = ('status', 'failureCode', 'attempts', 'lastInstruction', 'writingStartedAt', 'writtenAt',
-                  'renderedAt', 'codeChars', 'posterRevision', 'checks', 'boxes', 'look')
+if __package__:
+    from .constants import (
+        VERSION_FIELDS,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            VERSION_FIELDS,
+        )
+    except ImportError:
+        from constants import (
+            VERSION_FIELDS,
+        )
 
 
 def empty_look():

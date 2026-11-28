@@ -10,10 +10,19 @@ from urllib.parse import urlsplit
 from .errors import MusicError
 
 
-BROWSERS = {
-    'chrome': ('Google/Chrome', 'Chrome Safe Storage', 'Chrome'),
-    'edge': ('Microsoft Edge', 'Microsoft Edge Safe Storage', 'Microsoft Edge'),
-}
+if __package__:
+    from .constants import (
+        BROWSERS,
+    )
+else:
+    try:
+        from scripts.music_library.constants import (
+            BROWSERS,
+        )
+    except ImportError:
+        from constants import (
+            BROWSERS,
+        )
 
 
 def decrypt_cookie(encrypted: bytes, password: bytes, host: str, version: int) -> str:

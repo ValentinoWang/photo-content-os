@@ -13,10 +13,28 @@ from dataclasses import dataclass
 from typing import Callable, Literal, Sequence
 
 
-PROBE_COMMAND = ("codex", "mcp", "get", "chatcut_desktop")
-DEFAULT_PROBE_TIMEOUT_SECONDS = 3.0
-MAX_PROBE_TIMEOUT_SECONDS = 5.0
-SCHEMA_VERSION = "chatcut_desktop_local_mcp_v1"
+if __package__:
+    from .constants import (
+        PROBE_COMMAND,
+        DEFAULT_PROBE_TIMEOUT_SECONDS,
+        MAX_PROBE_TIMEOUT_SECONDS,
+        CHATCUT_MCP_SCHEMA_VERSION as SCHEMA_VERSION,
+    )
+else:
+    try:
+        from studio.constants import (
+            PROBE_COMMAND,
+            DEFAULT_PROBE_TIMEOUT_SECONDS,
+            MAX_PROBE_TIMEOUT_SECONDS,
+            CHATCUT_MCP_SCHEMA_VERSION as SCHEMA_VERSION,
+        )
+    except ImportError:
+        from constants import (
+            PROBE_COMMAND,
+            DEFAULT_PROBE_TIMEOUT_SECONDS,
+            MAX_PROBE_TIMEOUT_SECONDS,
+            CHATCUT_MCP_SCHEMA_VERSION as SCHEMA_VERSION,
+        )
 
 ChatCutStatus = Literal[
     "hidden",

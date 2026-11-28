@@ -28,11 +28,22 @@ from typing import Any, Protocol
 
 from media import load_manifest, project_path, safe_project_file as _safe_audio_path, save_manifest, transcripts_dir
 
-SCHEMA_VERSION = "audio_transcript_v1"
-DEFAULT_OPENAI_MODEL = "gpt-4o-mini-transcribe"
-DEFAULT_DASHSCOPE_MODEL = "paraformer-v2"
-DEFAULT_DASHSCOPE_ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/audio/transcriptions"
-DEFAULT_FUNASR_MODEL = "paraformer-zh"
+if __package__:
+    from .constants import (
+        TRANSCRIBE_AUDIO_SCHEMA_VERSION as SCHEMA_VERSION,
+        DEFAULT_OPENAI_MODEL,
+        DEFAULT_DASHSCOPE_MODEL,
+        DEFAULT_DASHSCOPE_ENDPOINT,
+        DEFAULT_FUNASR_MODEL,
+    )
+else:
+    from constants import (
+        TRANSCRIBE_AUDIO_SCHEMA_VERSION as SCHEMA_VERSION,
+        DEFAULT_OPENAI_MODEL,
+        DEFAULT_DASHSCOPE_MODEL,
+        DEFAULT_DASHSCOPE_ENDPOINT,
+        DEFAULT_FUNASR_MODEL,
+    )
 
 
 class TranscriptionError(RuntimeError):

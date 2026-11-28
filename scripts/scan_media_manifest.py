@@ -28,22 +28,19 @@ from media import (
 )
 
 
-RAW_REASON_TOKENS = {
-    "原始": "original_reference",
-    "录屏": "screen_record_reference",
-    "模糊待选": "blur_review",
-    "待截取": "trim_needed",
-    "待修复": "repair_needed",
-    "待防抖": "stabilization_needed",
-    "待降噪": "denoise_needed",
-    "待转码": "transcode_needed",
-    "待重构": "reframe_needed",
-    "半组": "incomplete_group",
-    "待确认": "needs_confirmation",
-}
+if __package__:
+    from .constants import (
+        RAW_REASON_TOKENS,
+        LOW_RESOLUTION_TOKENS,
+        VAGUE_QUALITY_TOKENS,
+    )
+else:
+    from constants import (
+        RAW_REASON_TOKENS,
+        LOW_RESOLUTION_TOKENS,
+        VAGUE_QUALITY_TOKENS,
+    )
 
-LOW_RESOLUTION_TOKENS = ("低清", "低分辨率")
-VAGUE_QUALITY_TOKENS = ("低质", "画质差")
 
 
 def issue(severity: str, code: str, message: str, action: str) -> dict[str, str]:

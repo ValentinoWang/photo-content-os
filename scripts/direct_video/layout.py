@@ -14,12 +14,34 @@ from statistics import median
 
 from PIL import Image, ImageChops, ImageFilter
 
-CANVAS_WIDTH = 1080
-CANVAS_HEIGHT = 1920
-CONTENT_TOP = 200
-SUBTITLE_TOP = 1536
-CONTENT_BOTTOM = SUBTITLE_TOP - 36
-MAX_BOTTOM_GAP = .30
+if __package__:
+    from .constants import (
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT,
+        CONTENT_TOP,
+        SUBTITLE_TOP,
+        CONTENT_BOTTOM,
+        MAX_BOTTOM_GAP,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            CANVAS_WIDTH,
+            CANVAS_HEIGHT,
+            CONTENT_TOP,
+            SUBTITLE_TOP,
+            CONTENT_BOTTOM,
+            MAX_BOTTOM_GAP,
+        )
+    except ImportError:
+        from constants import (
+            CANVAS_WIDTH,
+            CANVAS_HEIGHT,
+            CONTENT_TOP,
+            SUBTITLE_TOP,
+            CONTENT_BOTTOM,
+            MAX_BOTTOM_GAP,
+        )
 
 
 def inspect_layout(poster: Path) -> dict:

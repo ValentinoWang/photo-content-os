@@ -23,80 +23,54 @@ from media import directory_slug, OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_lab
 from media import sample_times as _shared_sample_times
 from media import write_json_atomic
 
-SCHEMA_VERSION = "output_review.v1"
-RESULT_SCHEMA_VERSION = "output_review_result.v1"
-RHYTHM_SYNC_SCHEMA_VERSION = "rhythm_sync_review.v1"
-VLM_SCHEMA_VERSION = "local_output_vlm_semantic_review.v1"
-BLACK_THRESHOLD = 18
-WHITE_THRESHOLD = 242
-MOTION_SAMPLE_FPS = 8.0
-CREATIVE_STRATEGY_ALGORITHM_VERSION = "video_scoring_judgement.v3"
-CREATIVE_STRATEGY_WEIGHTS_VERSION = "creative_strategy_weights.v3"
-CREATIVE_STRATEGY_WEIGHTS: list[tuple[str, float]] = [
-    ("rhythm", 0.35),
-    ("platform_format", 0.10),
-    ("opening_hook", 0.23),
-    ("composition", 0.20),
-    ("topic_strategy", 0.12),
-]
+if __package__:
+    from .constants import (
+        REVIEW_OUTPUT_VIDEO_SCHEMA_VERSION as SCHEMA_VERSION,
+        RESULT_SCHEMA_VERSION,
+        RHYTHM_SYNC_SCHEMA_VERSION,
+        VLM_SCHEMA_VERSION,
+        BLACK_THRESHOLD,
+        WHITE_THRESHOLD,
+        MOTION_SAMPLE_FPS,
+        CREATIVE_STRATEGY_ALGORITHM_VERSION,
+        CREATIVE_STRATEGY_WEIGHTS_VERSION,
+        CREATIVE_STRATEGY_WEIGHTS,
+        PROFILE_WEIGHTS,
+        EVENT_TOLERANCE_SEC,
+        RECOMMENDATION_LABELS,
+        REVIEW_OUTPUT_VIDEO_STATUS_LABELS as STATUS_LABELS,
+        CONFIDENCE_LABELS,
+        VLM_STATUS_LABELS,
+        TAG_LABELS,
+        DIMENSION_LABELS,
+        RISK_FLAG_LABELS,
+    )
+else:
+    from constants import (
+        REVIEW_OUTPUT_VIDEO_SCHEMA_VERSION as SCHEMA_VERSION,
+        RESULT_SCHEMA_VERSION,
+        RHYTHM_SYNC_SCHEMA_VERSION,
+        VLM_SCHEMA_VERSION,
+        BLACK_THRESHOLD,
+        WHITE_THRESHOLD,
+        MOTION_SAMPLE_FPS,
+        CREATIVE_STRATEGY_ALGORITHM_VERSION,
+        CREATIVE_STRATEGY_WEIGHTS_VERSION,
+        CREATIVE_STRATEGY_WEIGHTS,
+        PROFILE_WEIGHTS,
+        EVENT_TOLERANCE_SEC,
+        RECOMMENDATION_LABELS,
+        REVIEW_OUTPUT_VIDEO_STATUS_LABELS as STATUS_LABELS,
+        CONFIDENCE_LABELS,
+        VLM_STATUS_LABELS,
+        TAG_LABELS,
+        DIMENSION_LABELS,
+        RISK_FLAG_LABELS,
+    )
 
 
-PROFILE_WEIGHTS: dict[str, dict[str, float]] = {
-    "single_person_stage_walk": {
-        "step_sync": 0.40,
-        "motion_sync": 0.25,
-        "cut_sync": 0.15,
-        "intro_effect": 0.10,
-        "subject_presence": 0.10,
-    },
-    "pov_running": {
-        "step_sync": 0.45,
-        "global_motion_rhythm": 0.30,
-        "cut_sync": 0.05,
-        "intro_effect": 0.10,
-        "stability": 0.10,
-    },
-    "split_screen_comparison": {
-        "structural_match": 0.30,
-        "action_node_sync": 0.25,
-        "cut_sync": 0.15,
-        "text_overlay_sync": 0.15,
-        "step_sync": 0.10,
-        "intro_effect": 0.05,
-    },
-    "sports_highlight": {
-        "action_burst_sync": 0.35,
-        "speed_change_sync": 0.25,
-        "cut_sync": 0.20,
-        "impact_sync": 0.15,
-        "intro_effect": 0.05,
-    },
-    "talking_head": {
-        "semantic_pause_sync": 0.30,
-        "text_overlay_sync": 0.25,
-        "expression_change": 0.15,
-        "cut_sync": 0.15,
-        "intro_hook": 0.15,
-    },
-    "general_bgm_edit": {
-        "cut_sync": 0.25,
-        "motion_sync": 0.25,
-        "intro_effect": 0.15,
-        "text_overlay_sync": 0.15,
-        "beat_coverage": 0.10,
-        "phase_consistency": 0.10,
-    },
-}
 
 
-EVENT_TOLERANCE_SEC: dict[str, float] = {
-    "scene_cut": 0.14,
-    "transition_flash": 0.16,
-    "step_motion_peak_proxy": 0.22,
-    "global_motion_peak": 0.18,
-    "text_overlay_change": 0.25,
-    "intro_effect": 0.35,
-}
 
 
 class OutputReviewError(Exception):
@@ -118,46 +92,6 @@ class ProjectContext:
     creator_context: dict[str, Any] = field(default_factory=dict)
 
 
-RECOMMENDATION_LABELS = {
-    "publish": "建议发布（仍需人工确认）",
-    "small_fix": "小幅修改后再确认",
-    "recut": "需要重新剪辑",
-    "reject": "暂不发布",
-}
-STATUS_LABELS = {
-    "success": "已完成自动检查",
-    "partial": "部分完成（能力缺失）",
-    "blocked": "检查受阻",
-    "pass": "通过",
-    "warning": "有提醒",
-    "fail": "未通过",
-    "unknown": "待人工确认",
-}
-CONFIDENCE_LABELS = {"high": "高", "medium": "中", "low": "低"}
-VLM_STATUS_LABELS = {"success": "已完成", "failed": "失败", "unavailable": "不可用", "not_requested": "未启用"}
-TAG_LABELS = {
-    "trend_remake": "翻拍版本",
-    "split_screen": "分屏版本",
-    "comparison": "对照版本",
-    "single_subject": "单主体",
-    "extended_cut": "加长版本",
-    "horizontal_cut": "横屏版本",
-    "outdoor_context": "户外场景",
-    "stage_walk": "舞台移动",
-    "first_person": "第一视角",
-}
-DIMENSION_LABELS = {
-    "rhythm": "节奏",
-    "platform_format": "平台画幅",
-    "opening_hook": "开头钩子",
-    "composition": "构图技术",
-    "topic_strategy": "选题表达",
-}
-RISK_FLAG_LABELS = {
-    "resolution_below_1080_short_side": "短边低于 1080，需确认清晰度",
-    "mostly_black_frames": "检测到较多黑场",
-    "audio_missing": "未检测到音频",
-}
 
 
 def humanize_risk_flag(flag: str) -> str:

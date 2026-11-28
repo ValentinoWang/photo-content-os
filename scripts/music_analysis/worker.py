@@ -11,7 +11,19 @@ import socket
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
-ENV = ROOT / '.tools/music-analysis'
+if __package__:
+    from .constants import (
+        ENV,
+    )
+else:
+    try:
+        from scripts.music_analysis.constants import (
+            ENV,
+        )
+    except ImportError:
+        from constants import (
+            ENV,
+        )
 
 
 def deny_network(*args, **kwargs):

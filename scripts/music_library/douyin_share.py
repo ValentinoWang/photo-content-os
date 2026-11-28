@@ -5,8 +5,19 @@ import re
 
 from .errors import MusicError
 
-IPHONE_SAFARI = ('Mozilla/5.0 (iPhone; CPU iPhone OS 17_6 like Mac OS X) '
-                 'AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1')
+if __package__:
+    from .constants import (
+        IPHONE_SAFARI,
+    )
+else:
+    try:
+        from scripts.music_library.constants import (
+            IPHONE_SAFARI,
+        )
+    except ImportError:
+        from constants import (
+            IPHONE_SAFARI,
+        )
 
 
 def parse_router_data(text):

@@ -35,19 +35,42 @@ for _path in (str(REPO_ROOT), str(SCRIPT_DIR)):
 
 from studio.project_store import ProjectStore  # noqa: E402
 
-VIEWPORT_WIDTH = 1440
-VIEWPORT_HEIGHT = 900
-DEVICE_SCALE_FACTOR = 1
-ROLE_ID = "studio"
-ROLE_TITLE = "制作台"
-ROLE_COLOR = "#2F6FED"
-ROLE_VIEWPORT = "desktop"
-UUID_NAMESPACE = uuid.UUID("8f5c7e31-42b0-4d39-9d64-3a947c5526c1")
-DEMO_PROJECT_NAME = "20261128_演示作品"
-DEMO_PROJECT_PLATFORM = "小红书"
-SERVER_READY_RE = re.compile(r"Photo Content OS Studio:\s*(http://[^\s]+)")
-SERVER_START_TIMEOUT_SEC = 45.0
-CAPTURE_TIMEOUT_SEC = 180.0
+if __package__:
+    from .constants import (
+        VIEWPORT_WIDTH,
+        VIEWPORT_HEIGHT,
+        DEVICE_SCALE_FACTOR,
+        ROLE_ID,
+        ROLE_TITLE,
+        ROLE_COLOR,
+        ROLE_VIEWPORT,
+        UUID_NAMESPACE,
+        DEMO_PROJECT_NAME,
+        DEMO_PROJECT_PLATFORM,
+        SERVER_READY_RE,
+        SERVER_START_TIMEOUT_SEC,
+        CAPTURE_TIMEOUT_SEC,
+        NAV_ORDER,
+        NODE_CAPTURE_DRIVER,
+    )
+else:
+    from constants import (
+        VIEWPORT_WIDTH,
+        VIEWPORT_HEIGHT,
+        DEVICE_SCALE_FACTOR,
+        ROLE_ID,
+        ROLE_TITLE,
+        ROLE_COLOR,
+        ROLE_VIEWPORT,
+        UUID_NAMESPACE,
+        DEMO_PROJECT_NAME,
+        DEMO_PROJECT_PLATFORM,
+        SERVER_READY_RE,
+        SERVER_START_TIMEOUT_SEC,
+        CAPTURE_TIMEOUT_SEC,
+        NAV_ORDER,
+        NODE_CAPTURE_DRIVER,
+    )
 
 
 @dataclass(frozen=True)
@@ -63,14 +86,6 @@ class PageSpec:
     control_label: str
 
 
-NAV_ORDER: tuple[tuple[str, str, str], ...] = (
-    ("home", "nav-home", "工作台"),
-    ("inbox", "nav-inbox", "整理台"),
-    ("projects", "nav-projects", "项目"),
-    ("library", "nav-library", "素材库"),
-    ("music", "nav-music", "音乐库"),
-    ("settings", "nav-settings", "设置与诊断"),
-)
 
 PAGE_SPECS: tuple[PageSpec, ...] = (
     PageSpec(
@@ -810,202 +825,6 @@ def _capture_via_python_playwright(
     return {"captures": captures, "transitions": transitions}
 
 
-NODE_CAPTURE_DRIVER = r"""
-import { mkdir, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
-import { pathToFileURL } from 'node:url';
-
-const playwrightModule = process.env.NFD_PW_MODULE;
-const browserExecutable = process.env.NFD_BROWSER_EXE || '';
-const baseUrl = process.env.NFD_BASE_URL;
-const rawDir = process.env.NFD_RAW_DIR;
-const resultPath = process.env.NFD_RESULT_PATH;
-const VIEWPORT_WIDTH = Number(process.env.NFD_VIEWPORT_WIDTH || 1440);
-const VIEWPORT_HEIGHT = Number(process.env.NFD_VIEWPORT_HEIGHT || 900);
-
-const mod = await import(pathToFileURL(playwrightModule).href);
-const chromium = mod.chromium || mod.default?.chromium;
-if (!chromium) throw new Error('Playwright module does not export chromium');
-
-const utcNow = () => new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
-
-function computeSegments(totalHeight, viewportHeight) {
-  const effective = Math.max(totalHeight, viewportHeight);
-  const segs = [];
-  let offset = 0;
-  while (offset < effective) {
-    const height = Math.min(viewportHeight, effective - offset);
-    segs.push({ offset, height });
-    offset += height;
-  }
-  return segs;
-}
-
-async function waitViewReady(page, expectedPrefix, requiredSelector) {
-  await page.waitForFunction(
-    ([prefix, selector]) => {
-      const main = document.querySelector('.main');
-      const state = main ? (main.dataset.designState || '') : '';
-      const root = document.querySelector('#review-screen');
-      if (!root || !state.startsWith(prefix)) return false;
-      if (!document.querySelector(selector)) return false;
-      if (!(root.textContent || '').trim()) return false;
-      const imgs = [...root.querySelectorAll('img')];
-      return imgs.every(img => img.complete && img.naturalWidth > 0);
-    },
-    [expectedPrefix, requiredSelector],
-    { timeout: 15000 }
-  );
-  await page.waitForLoadState('networkidle', { timeout: 15000 });
-  await page.evaluate(() => (document.fonts ? document.fonts.ready : Promise.resolve()));
-  await page.waitForTimeout(150);
-
-  const errorText = await page.evaluate(() => {
-    const rootAlert = document.querySelector('#review-screen > p[role="alert"]');
-    if (rootAlert && rootAlert.textContent.trim()) return rootAlert.textContent.trim();
-    const toast = document.querySelector('#toast.error');
-    if (toast && toast.textContent.trim()) return toast.textContent.trim();
-    return '';
-  });
-  if (errorText) throw new Error(`Studio rendered error state: ${errorText}`);
-}
-
-async function captureSegmented(page, pageId) {
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(80);
-  const totalHeight = await page.evaluate(() => {
-    const el = document.scrollingElement || document.documentElement;
-    return Math.max(window.innerHeight, el.scrollHeight, document.body.scrollHeight);
-  });
-  const segments = computeSegments(totalHeight, VIEWPORT_HEIGHT);
-  const tiles = [];
-  for (let i = 0; i < segments.length; i++) {
-    const { offset, height } = segments[i];
-    const actualY = await page.evaluate(y => {
-      window.scrollTo(0, y);
-      return Math.round(window.scrollY);
-    }, offset);
-    await page.waitForTimeout(100);
-    const sourceY = offset - actualY;
-    if (sourceY < 0 || sourceY + height > VIEWPORT_HEIGHT) {
-      throw new Error(`${pageId}: uncovered scroll segment offset=${offset}, actualY=${actualY}, height=${height}`);
-    }
-    const tileFile = join(rawDir, `${pageId}-tile-${i}.png`);
-    await page.screenshot({ path: tileFile, fullPage: false, animations: 'disabled' });
-    tiles.push({ file: tileFile, source_y: sourceY, height, dest_y: offset });
-  }
-  await page.evaluate(() => window.scrollTo(0, 0));
-  const actualRoute = await page.evaluate(() => '/' + (location.hash || ''));
-  return {
-    id: pageId,
-    scroll_height: totalHeight,
-    actual_route: actualRoute,
-    captured_at: utcNow(),
-    tiles,
-  };
-}
-
-await mkdir(rawDir, { recursive: true });
-const captures = [];
-const transitions = [];
-const pageErrors = [];
-const failedRequests = [];
-
-const launchOptions = { headless: true };
-if (browserExecutable) launchOptions.executablePath = browserExecutable;
-
-const browser = await chromium.launch(launchOptions);
-try {
-  const context = await browser.newContext({
-    viewport: { width: VIEWPORT_WIDTH, height: VIEWPORT_HEIGHT },
-    deviceScaleFactor: 1,
-    locale: 'zh-CN',
-    timezoneId: 'Asia/Shanghai',
-  });
-  const page = await context.newPage();
-  page.on('pageerror', err => pageErrors.push(String(err)));
-  page.on('response', resp => {
-    if (resp.status() >= 400 && resp.url().startsWith(baseUrl)) {
-      failedRequests.push(`${resp.status()} ${resp.url()}`);
-    }
-  });
-
-  await page.goto(baseUrl + '/', { waitUntil: 'networkidle', timeout: 20000 });
-  await waitViewReady(page, 'home', '[data-design-id="R208-HOME-recent"] [data-piece]');
-  captures.push(await captureSegmented(page, 'studio-home'));
-
-  const navTargets = [
-    ['studio-home', 'studio-inbox', 'inbox', '整理台', 'inbox', '[data-design-id="R208-INBOX-empty"]'],
-    ['studio-inbox', 'studio-projects', 'projects', '项目', 'projects', '[data-design-id="R208-PROJECTS"]'],
-    ['studio-projects', 'studio-library', 'library', '素材库', 'library', '[data-design-id^="R208-LIBRARY"]'],
-    ['studio-library', 'studio-music', 'music', '音乐库', 'music', '[data-design-id="R208-MUSIC-import"]'],
-    ['studio-music', 'studio-settings', 'settings', '设置与诊断', 'settings-', '[data-design-id="R208-SETTINGS"]'],
-  ];
-
-  for (const [fromId, toId, navKey, control, prefix, selector] of navTargets) {
-    await page.locator(`.nav [data-nav="${navKey}"]`).click();
-    await waitViewReady(page, prefix, selector);
-    transitions.push({
-      from: fromId,
-      to: toId,
-      control,
-      kind: 'step',
-      oneWay: false,
-      ok: true,
-      verifiedAt: utcNow(),
-    });
-    captures.push(await captureSegmented(page, toId));
-  }
-
-  await page.locator('.nav [data-nav="home"]').click();
-  await waitViewReady(page, 'home', '[data-design-id="R208-HOME-recent"] [data-piece]');
-  transitions.push({
-    from: 'studio-settings',
-    to: 'studio-home',
-    control: '工作台',
-    kind: 'step',
-    oneWay: false,
-    ok: true,
-    verifiedAt: utcNow(),
-  });
-
-  const pieceCard = page.locator('[data-design-id="R208-HOME-recent"] [data-piece]').first();
-  const pieceTitle = ((await pieceCard.locator('b').first().textContent()) || '').trim() || '演示作品';
-  await pieceCard.click();
-  await waitViewReady(page, 'piece-', '[data-design-id="R208-STEPS"]');
-  transitions.push({
-    from: 'studio-home',
-    to: 'studio-project-detail',
-    control: pieceTitle,
-    kind: 'step',
-    oneWay: false,
-    ok: true,
-    verifiedAt: utcNow(),
-  });
-  captures.push(await captureSegmented(page, 'studio-project-detail'));
-
-  await page.locator('#crumb button[data-go="projects"]').click();
-  await waitViewReady(page, 'projects', '[data-design-id="R208-PROJECTS"]');
-  transitions.push({
-    from: 'studio-project-detail',
-    to: 'studio-projects',
-    control: '项目',
-    kind: 'back',
-    oneWay: false,
-    ok: true,
-    verifiedAt: utcNow(),
-  });
-
-  await context.close();
-} finally {
-  await browser.close();
-}
-
-if (pageErrors.length) throw new Error('Page JS errors during capture: ' + pageErrors.join('; '));
-if (failedRequests.length) throw new Error('HTTP errors during capture: ' + failedRequests.join('; '));
-
-await writeFile(resultPath, JSON.stringify({ captures, transitions }, null, 2) + '\n', 'utf8');
-"""
 
 
 def _capture_via_node_playwright(

@@ -10,9 +10,14 @@ from pathlib import Path
 from migrate_media_layout import mapped_path
 from rewrite_media_references import replace_fields, sha256, string_fields, write_atomic
 
-PATH_KEYS = {'path', 'paths', 'file', 'files', 'frame', 'frames', 'source', 'target', 'group',
-             'from', 'to', 'output', 'artifacts', 'keyframes', 'contact_sheet', 'addition_contact_sheet',
-             'audio_wav', 'preview_video', 'captions_srt', 'source_project'}
+if __package__:
+    from .constants import (
+        PATH_KEYS,
+    )
+else:
+    from constants import (
+        PATH_KEYS,
+    )
 
 
 def path_field(pointer: str) -> bool:

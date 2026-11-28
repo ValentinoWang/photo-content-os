@@ -22,8 +22,22 @@ from .precut import executable_cuts
 _PROJECT = "concat-project"
 _RECEIPT = "render-result.json"
 _LOG = "concat-mcp.jsonl"
-MIN_RETAINED_SECONDS = 0.2
-MIN_CAPTION_SECONDS = 0.3
+if __package__:
+    from .constants import (
+        MIN_RETAINED_SECONDS,
+        MIN_CAPTION_SECONDS,
+    )
+else:
+    try:
+        from scripts.edit_backends.constants import (
+            MIN_RETAINED_SECONDS,
+            MIN_CAPTION_SECONDS,
+        )
+    except ImportError:
+        from constants import (
+            MIN_RETAINED_SECONDS,
+            MIN_CAPTION_SECONDS,
+        )
 
 
 def _app() -> Path:

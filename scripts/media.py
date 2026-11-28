@@ -19,22 +19,42 @@ from typing import Any, Callable
 
 import yaml
 
-VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv", ".insv", ".osv", ".lrf"}
-IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".tif", ".tiff", ".webp"}
-METADATA_EXTS = {".xmp"}
-MEDIA_EXTS = VIDEO_EXTS | IMAGE_EXTS | METADATA_EXTS
+if __package__:
+    from .constants import (
+        MEDIA_VIDEO_EXTS as VIDEO_EXTS,
+        MEDIA_IMAGE_EXTS as IMAGE_EXTS,
+        METADATA_EXTS,
+        MEDIA_MEDIA_EXTS as MEDIA_EXTS,
+        ANALYSIS_DIR,
+        MANIFEST_NAME,
+        DERIVED_DIR_NAMES,
+        ANALYSIS_PLAN_NAME,
+        PROMPT_GLOB,
+        SUMMARY_GLOB,
+        LIVE_GROUP_EXTS,
+        RAW360_SUFFIXES,
+        RAW360_PATH_TOKENS,
+        RAW360_SOURCE_TYPES,
+    )
+else:
+    from constants import (
+        MEDIA_VIDEO_EXTS as VIDEO_EXTS,
+        MEDIA_IMAGE_EXTS as IMAGE_EXTS,
+        METADATA_EXTS,
+        MEDIA_MEDIA_EXTS as MEDIA_EXTS,
+        ANALYSIS_DIR,
+        MANIFEST_NAME,
+        DERIVED_DIR_NAMES,
+        ANALYSIS_PLAN_NAME,
+        PROMPT_GLOB,
+        SUMMARY_GLOB,
+        LIVE_GROUP_EXTS,
+        RAW360_SUFFIXES,
+        RAW360_PATH_TOKENS,
+        RAW360_SOURCE_TYPES,
+    )
 
-ANALYSIS_DIR = "ai-analysis"
-MANIFEST_NAME = "media-manifest.json"
 
-DERIVED_DIR_NAMES = {
-    "icloud-selected": "selected_copy",
-    "draft-project": "draft_project",
-    "output": "output",
-    "sync-ready": "sync_ready",
-    "group-photo-distribution": "group_photo_distribution",
-    "work-cache": "work_cache",
-}
 
 
 def project_path(value: str) -> Path:
@@ -58,7 +78,6 @@ def ensure_project_additions_dir(additions: Path, project: Path) -> Path:
     return additions
 
 
-ANALYSIS_PLAN_NAME = "analysis-plan.json"
 
 
 def analysis_dir(project: Path) -> Path:
@@ -273,8 +292,6 @@ def safe_project_file(project: Path, raw: object, *, must_be_file: bool = True) 
 
 
 # Directory-wide glob patterns shared by writers (04/05) and prune helpers.
-PROMPT_GLOB = "asset-*-prompt.md"
-SUMMARY_GLOB = "*.summary.md"
 
 
 def item_prompt_path(prompt_dir: Path, item: dict[str, Any]) -> Path:
@@ -341,7 +358,6 @@ def source_type(filename: str, relative_path: str, live_status: str | None = Non
 
 # HEIC/JPEG (still) + MOV (motion) + XMP (metadata) sharing the same
 # directory and stem are treated as one Live Photo group.
-LIVE_GROUP_EXTS = {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}
 
 
 def discover_live_groups(paths: list[Path], project: Path) -> dict[tuple[str, str], dict[str, bool]]:
@@ -622,19 +638,12 @@ def video_info(path: Path) -> dict[str, object]:
 # as one raw-associated set, and the project docs consistently describe
 # OSV/LRF/INSV as one "must not be split, must be reconstructed before use"
 # group.
-RAW360_SUFFIXES = {".osv", ".lrf", ".insv"}
 
 # Path substrings that name the RawVault/raw-360 convention used across the
 # vault structure. Matched as whole, specific tokens (never split into looser
 # fragments like a bare "rawvault" or "不可直用") to avoid false positives
 # from unrelated paths that happen to contain part of the phrase.
-RAW360_PATH_TOKENS = (
-    "00_rawvault_不可直用",
-    "360原始组",
-    "raw360",
-)
 
-RAW360_SOURCE_TYPES = {"360相机原始组"}
 
 
 def is_raw360_path(path_or_text: Path | str) -> bool:

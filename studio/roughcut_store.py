@@ -16,24 +16,33 @@ from jsonschema import Draft202012Validator
 from studio.project_store import _thread_lock
 
 ROOT = Path(__file__).resolve().parents[1]
-SCHEMAS = {name: json.loads((ROOT / 'schemas' / name).read_text()) for name in
-           ('roughcut-api.schema.json', 'editing-presets.schema.json')}
+if __package__:
+    from .constants import (
+        SCHEMAS,
+        VALIDATORS,
+        NOTICE_GROUPS,
+        TITLES,
+        CODE_NOTICE,
+    )
+else:
+    try:
+        from studio.constants import (
+            SCHEMAS,
+            VALIDATORS,
+            NOTICE_GROUPS,
+            TITLES,
+            CODE_NOTICE,
+        )
+    except ImportError:
+        from constants import (
+            SCHEMAS,
+            VALIDATORS,
+            NOTICE_GROUPS,
+            TITLES,
+            CODE_NOTICE,
+        )
 CATALOG = SCHEMAS['roughcut-api.schema.json']['x-error-catalog']
-VALIDATORS = {}
 HELD_LOCKS = threading.local()
-NOTICE_GROUPS = {
-    'N1': 'csrf_invalid origin_forbidden host_forbidden body_invalid revision_invalid request_invalid roughcut_command_invalid roughcut_job_action_invalid music_count_invalid playlist_invalid preset_not_found preset_invalid occurrence_not_found overrides_invalid swap_boundary_invalid transcript_selection_invalid project_not_found roughcut_job_not_found',
-    'N2': 'revision_conflict roughcut_inputs_stale', 'N3': 'selection_not_confirmed',
-    'N4': 'roughcut_state_unreadable roughcut_job_unreadable settings_invalid builtin_presets_invalid shots_invalid',
-    'N5': 'preset_write_failed', 'N6': 'beat_analysis_unavailable beat_map_missing',
-    'N7': 'song_too_short', 'N8': 'transcription_unavailable transcript_failed',
-    'N9': 'transcript_unreadable transcript_invalid',
-    'N10': 'editor_diagnostics_unreadable editor_readiness_invalid',
-    'N11': 'draft_failed runtime_unavailable', 'N12': 'preview_failed',
-    'N13': 'edl_provenance_required',
-}
-TITLES = dict(zip(NOTICE_GROUPS, ('这次操作没成功','这件作品刚在别处改过','精选还没确认','读不到这件作品的粗剪记录','这个预设没存上','拍子分析还不能用','这首歌比粗剪短，排不下','这几段自拍没转写成','读不到自拍的转写结果','读不到剪辑软件的状态','草稿没出成','预览没生成出来','这件作品还不能出草稿')))
-CODE_NOTICE = {code: group for group, codes in NOTICE_GROUPS.items() for code in codes.split()}
 
 
 def digest(value):

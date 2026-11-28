@@ -13,17 +13,22 @@ from pathlib import Path
 from media import directory_slug, media_id, now_iso, path_inside as inside, project_path, relative_posix, safe_slug
 
 
-DISTRIBUTION_DIR = "group-photo-distribution"
-DEFAULT_MAPPING_NAME = "distribution-map.csv"
-UNKNOWN_NAME_TOKENS = {"", "?", "？", "待确认", "未知", "unknown", "Unknown", "UNKNOWN"}
-MAPPING_TEMPLATE = "photo_path,names,note\n"
-README_TEMPLATE = """# 合照发放
-
-- 在 `distribution-map.csv` 中填写 `photo_path,names,note`。
-- `photo_path` 使用项目内相对路径；`names` 用 `、` 分隔多人。
-- 执行 `python3 scripts/distribute_group_photos_by_name.py "项目目录" --apply` 后，会把照片复制到 `by-name/姓名/`。
-- 姓名为空或写 `待确认` 的照片会复制到 `pending-names/`。
-"""
+if __package__:
+    from .constants import (
+        DISTRIBUTION_DIR,
+        DEFAULT_MAPPING_NAME,
+        UNKNOWN_NAME_TOKENS,
+        MAPPING_TEMPLATE,
+        README_TEMPLATE,
+    )
+else:
+    from constants import (
+        DISTRIBUTION_DIR,
+        DEFAULT_MAPPING_NAME,
+        UNKNOWN_NAME_TOKENS,
+        MAPPING_TEMPLATE,
+        README_TEMPLATE,
+    )
 
 
 def parse_names(value: str) -> list[str]:

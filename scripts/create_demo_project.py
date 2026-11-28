@@ -14,14 +14,16 @@ from pathlib import Path
 from media import manifest_path as _manifest_path
 from runtime_paths import repository_root as _repository_root
 
-SAMPLE_PNG = base64.b64decode(
-    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
-)
-SAMPLE_NAMES = (
-    "01_项目开场.png",
-    "02_人物互动.png",
-    "03_细节补充.png",
-)
+if __package__:
+    from .constants import (
+        SAMPLE_PNG,
+        SAMPLE_NAMES,
+    )
+else:
+    from constants import (
+        SAMPLE_PNG,
+        SAMPLE_NAMES,
+    )
 
 
 def repository_root() -> Path:

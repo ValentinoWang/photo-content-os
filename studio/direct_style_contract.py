@@ -1,30 +1,27 @@
 """Style selection, persisted draft and low-resolution shot clip contracts."""
 
-COLUMN_FIELDS = ('visual', 'subtitle', 'camera', 'audio')
-SHORT_FIELDS = {
-    'motionSummary': {'type': ['string', 'null'], 'maxLength': 30},
-    'bannedShort': {'type': ['array', 'null'], 'minItems': 1, 'maxItems': 8,
-                    'items': {'type': 'string', 'minLength': 1, 'maxLength': 12}},
-    'source': {'oneOf': [
-        {'type': 'null'},
-        {'type': 'object', 'required': ['kind', 'id', 'name', 'instruction'], 'additionalProperties': False,
-         'properties': {'kind': {'const': 'library'},
-                        **{key: {'type': 'string'} for key in ('id', 'name', 'instruction')}}},
-        {'type': 'object', 'required': ['kind', 'projectId', 'title', 'instruction'],
-         'oneOf': [{'required': ['jobId']}, {'required': ['draftId']}],
-         'properties': {'kind': {'enum': ['inherited', 'adjusted', 'drafted']},
-                        **{key: {'type': 'string'} for key in ('projectId', 'jobId', 'draftId', 'title', 'instruction')}}}]},
-}
-SHOT_INPUT = {'type': 'object', 'required': ['shotId', 'dialogue'], 'properties': {
-    'shotId': {'type': 'string', 'pattern': '^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$'},
-    'dialogue': {'type': 'string', 'minLength': 1, 'maxLength': 2000},
-    **{key: {'type': 'string', 'maxLength': 2000, 'description': 'Trimmed; blank means absent.'} for key in COLUMN_FIELDS}}}
-STYLE_BASE = {'oneOf': [
-    {'type': 'object', 'required': ['kind', 'projectId', ident], 'additionalProperties': False,
-     'properties': {'kind': {'const': kind}, 'projectId': {'type': 'string'}, ident: {'type': 'string'}}}
-    for kind, ident in [('job', 'jobId'), ('draft', 'draftId')]] + [
-        {'type': 'object', 'required': ['kind', 'id'], 'additionalProperties': False,
-         'properties': {'kind': {'const': 'library'}, 'id': {'type': 'string'}}}]}
+if __package__:
+    from .constants import (
+        COLUMN_FIELDS,
+        SHORT_FIELDS,
+        SHOT_INPUT,
+        STYLE_BASE,
+    )
+else:
+    try:
+        from studio.constants import (
+            COLUMN_FIELDS,
+            SHORT_FIELDS,
+            SHOT_INPUT,
+            STYLE_BASE,
+        )
+    except ImportError:
+        from constants import (
+            COLUMN_FIELDS,
+            SHORT_FIELDS,
+            SHOT_INPUT,
+            STYLE_BASE,
+        )
 
 
 def routes():

@@ -21,7 +21,25 @@ from scripts.runtime_paths import local_media_root, repository_root
 from scripts.roughcut_planner import plan_roughcut
 
 # Frozen editing consumers use top-level imports and the project's fixed runtime.
-SCRIPTS = Path(__file__).resolve().parents[1] / 'scripts'
+if __package__:
+    from .constants import (
+        SCRIPTS,
+        PLANNER_VERSION,
+        FPS,
+    )
+else:
+    try:
+        from studio.constants import (
+            SCRIPTS,
+            PLANNER_VERSION,
+            FPS,
+        )
+    except ImportError:
+        from constants import (
+            SCRIPTS,
+            PLANNER_VERSION,
+            FPS,
+        )
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 from edl_contract import normalise_edl, parse_time_range
@@ -31,8 +49,6 @@ from edit_backends.kdenlive_readback import audio_graph_differences
 from edit_backends.otio_kdenlive import prepare_edl_audio
 from edit_backends import handoff_pack
 
-PLANNER_VERSION = '1.0'
-FPS = 30
 
 
 class DraftError(ValueError):

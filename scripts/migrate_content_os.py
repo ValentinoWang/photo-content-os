@@ -17,40 +17,22 @@ from typing import Any
 from llm import parse_markdown_frontmatter, render_markdown_frontmatter
 
 
-V2_STATUSES = {"captured", "planned", "edit_ready", "editing", "final_ready", "published"}
-STATUS_LABELS = {
-    "captured": "已收集（captured）",
-    "planned": "已规划（planned）",
-    "edit_ready": "可开始剪辑（edit_ready）",
-    "editing": "剪辑中（editing）",
-    "final_ready": "成片待发（final_ready）",
-    "published": "已发布（published）",
-}
-BACKEND_LABELS = {
-    "handoff_pack": "标准剪辑（handoff_pack）",
-    "otio_kdenlive": "可编辑时间线（otio_kdenlive）",
-}
-OWNER_LABELS = {
-    "human": "人工负责人",
-    "cloud_openclaw": "云端协作",
-    "mac_openclaw": "Mac 协作",
-}
-LEGACY_STATUS_MAP = {
-    "brief_ready": "planned",
-    "local_project_linked": "planned",
-    "materials_analyzed": "planned",
-    "materials_matched": "planned",
-    "storyboard_ready": "planned",
-    "script_publish_pack_draft_ready": "planned",
-    "roughcut_plan_ready": "planned",
-    "native_import_pack_ready": "planned",
-    "draft_open_checked": "planned",
-    "editing": "editing",
-    "output_reviewed": "editing",
-    "final_ready": "final_ready",
-    "published": "published",
-    "reviewed": "published",
-}
+if __package__:
+    from .constants import (
+        V2_STATUSES,
+        MIGRATE_CONTENT_OS_STATUS_LABELS as STATUS_LABELS,
+        BACKEND_LABELS,
+        OWNER_LABELS,
+        LEGACY_STATUS_MAP,
+    )
+else:
+    from constants import (
+        V2_STATUSES,
+        MIGRATE_CONTENT_OS_STATUS_LABELS as STATUS_LABELS,
+        BACKEND_LABELS,
+        OWNER_LABELS,
+        LEGACY_STATUS_MAP,
+    )
 
 
 class MigrationError(ValueError):

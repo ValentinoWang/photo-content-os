@@ -26,18 +26,29 @@ from direct_video.revisions import RevisionMixin, empty_look
 from direct_video.styles import StyleMixin
 from direct_video.revision_library import RevisionLibrary, read_json
 
-MODEL = 'claude-opus-5-5'
-RULES = Path(__file__).with_name('rules') / 'shots.md'
+if __package__:
+    from .constants import (
+        MODEL,
+        RULES,
+        PROMO_RULES,
+        SAFE_ID,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            MODEL,
+            RULES,
+            PROMO_RULES,
+            SAFE_ID,
+        )
+    except ImportError:
+        from constants import (
+            MODEL,
+            RULES,
+            PROMO_RULES,
+            SAFE_ID,
+        )
 # 宣传片横屏、按小节、没有口播：盖掉 shots.md 里竖屏画布、底部字幕线和「跟口播出现」几条。
-PROMO_RULES = """
-## 本片是横屏宣传片（以下几条覆盖上面规则里的对应数字）
-- 画布 1920×1080：`html,body{margin:0;width:1920px;height:1080px;overflow:hidden}`。不要按竖屏排、只用左半边：主体占画面宽度 ≥ 50%，横向铺开（左右分栏、居中大字、横排卡片都可以）。
-- 安全区：左右各 ≥ 96px，上下各 ≥ 72px；所有文字和关键图形都在 1920×1080 之内，y > 1008 不放东西。上面「底部 y ≥ 1536」那条不适用。
-- 构图撑满横屏：主画面落在 y 72–1008 之间的中部，末帧不留超过画面宽度或高度 30% 的空带。上面「竖屏构图要撑满内容区」那条按横屏理解，不把竖屏版式缩在左上角。
-- 没有口播：dialogue / visual 是「这一镜要表现什么」，不是台词；text 是画面上要出现的字（可空）。recipeCard 是这一镜的动作配方，照它的结构和节奏做。
-- 时长：一小节 {bar} 秒，镜头切在小节线上。D 写成整小节的长度（小节数 × {bar}）；元素在 0.7·D 前出完，最后一个元素不晚于 D − 0.4 秒，之后停在完整画面上。
-"""
-SAFE_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}')
 
 
 class DirectVideoError(ValueError):

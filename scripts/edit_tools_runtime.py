@@ -8,7 +8,14 @@ from pathlib import Path
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-INSTALL = 'python3 scripts/setup_edit_tools.py'
+if __package__:
+    from .constants import (
+        INSTALL,
+    )
+else:
+    from constants import (
+        INSTALL,
+    )
 
 
 def read_lock(root=ROOT):

@@ -15,8 +15,16 @@ from typing import Any
 
 from edl_contract import AUDIO_CLIP_FIELDS, EDLContractError, normalise_duck_regions, parse_time_range
 
-CUT_FADE_SEC = .030
-UNVERIFIED_AUDIO = "这项声音处理尚未核实"
+if __package__:
+    from .constants import (
+        CUT_FADE_SEC,
+        UNVERIFIED_AUDIO,
+    )
+else:
+    from constants import (
+        CUT_FADE_SEC,
+        UNVERIFIED_AUDIO,
+    )
 
 
 def audio_operations(document: dict[str, Any]) -> list[dict[str, Any]]:

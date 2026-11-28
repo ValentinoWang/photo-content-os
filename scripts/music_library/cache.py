@@ -12,7 +12,19 @@ from .errors import MusicError, NetworkFailure
 from .network import MusicOpener, network_failure
 
 
-USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/130.0.0.0 Safari/537.36'
+if __package__:
+    from .constants import (
+        USER_AGENT,
+    )
+else:
+    try:
+        from scripts.music_library.constants import (
+            USER_AGENT,
+        )
+    except ImportError:
+        from constants import (
+            USER_AGENT,
+        )
 
 
 def read_json(path: Path, label: str):

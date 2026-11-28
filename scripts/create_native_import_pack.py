@@ -21,8 +21,16 @@ from edl_contract import parse_seconds as canonical_parse_seconds
 from jianying_roughcut import ContractError, ensure_dir, is_raw360_media, load_json, track_by_id, write_json, write_yaml
 
 
-VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"}
-IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif"}
+if __package__:
+    from .constants import (
+        CREATE_NATIVE_IMPORT_PACK_VIDEO_EXTS as VIDEO_EXTS,
+        CREATE_NATIVE_IMPORT_PACK_IMAGE_EXTS as IMAGE_EXTS,
+    )
+else:
+    from constants import (
+        CREATE_NATIVE_IMPORT_PACK_VIDEO_EXTS as VIDEO_EXTS,
+        CREATE_NATIVE_IMPORT_PACK_IMAGE_EXTS as IMAGE_EXTS,
+    )
 
 
 def sec(value: Any) -> float:

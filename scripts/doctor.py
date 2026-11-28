@@ -27,7 +27,14 @@ from studio.chatcut_mcp import LocalMcpSession, McpError, read_registration
 from edit_backends.kdenlive_render import melt_executable
 from edit_backends.otio_kdenlive import kdenlive_executable
 
-UPSTREAM_DEVICE_PLATFORMS = {"macos"}
+if __package__:
+    from .constants import (
+        UPSTREAM_DEVICE_PLATFORMS,
+    )
+else:
+    from constants import (
+        UPSTREAM_DEVICE_PLATFORMS,
+    )
 
 
 class CheckState(str, Enum):

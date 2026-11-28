@@ -17,8 +17,16 @@ from typing import Any, Iterable, Mapping, Sequence
 
 from media import file_sha256, stable_json_hash  # noqa: F401  (re-exported: L-13/r8)
 
-POLICY_VERSION = "analysis_tiering_v1"
-SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas" / "analysis-tiering.schema.json"
+if __package__:
+    from .constants import (
+        POLICY_VERSION,
+        SCHEMA_PATH,
+    )
+else:
+    from constants import (
+        POLICY_VERSION,
+        SCHEMA_PATH,
+    )
 _SCHEMA_CONTRACT_SHA256 = "118c66e111790140924c9bec793a1bd04232eef707d48e44135d42011a6a98fb"
 _BUDGET_FIELDS = frozenset(
     {

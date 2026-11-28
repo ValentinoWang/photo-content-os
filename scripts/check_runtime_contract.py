@@ -9,11 +9,16 @@ import importlib.metadata
 import sys
 from pathlib import Path
 
-MINIMUM = (3, 11)
-PINNED = {
-    "opentimelineio": "0.18.1",
-    "pyjianyingdraft": "0.2.6",
-}
+if __package__:
+    from .constants import (
+        MINIMUM,
+        PINNED,
+    )
+else:
+    from constants import (
+        MINIMUM,
+        PINNED,
+    )
 
 
 def check_runtime(scripts_dir: Path, *, strict_packages: bool = True) -> list[str]:

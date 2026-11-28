@@ -12,7 +12,14 @@ from media import ANALYSIS_DIR, ensure_project_additions_dir, now_iso, path_insi
 from project_bootstrap import run_project_analysis as run_analysis
 
 
-PLAN_NAME = "additions-merge-plan.json"
+if __package__:
+    from .constants import (
+        APPLY_ADDITIONS_MERGE_PLAN_NAME as PLAN_NAME,
+    )
+else:
+    from constants import (
+        APPLY_ADDITIONS_MERGE_PLAN_NAME as PLAN_NAME,
+    )
 
 
 def load_plan(additions_dir: Path, plan_path: str | None) -> dict[str, object]:

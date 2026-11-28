@@ -19,8 +19,22 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 from media import write_json_atomic
 
-BASE = 'https://dashscope.aliyuncs.com/api/v1'
-TIMEOUT = (10, 60)
+if __package__:
+    from .constants import (
+        BASE,
+        TIMEOUT,
+    )
+else:
+    try:
+        from scripts.avatar.constants import (
+            BASE,
+            TIMEOUT,
+        )
+    except ImportError:
+        from constants import (
+            BASE,
+            TIMEOUT,
+        )
 
 
 class AvatarError(Exception):

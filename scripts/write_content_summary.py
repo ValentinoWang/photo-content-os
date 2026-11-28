@@ -38,28 +38,23 @@ from media import (
     summaries_dir,
 )
 
-SYSTEM_PROMPT = """你是 Photo Content OS 的素材内容理解代理。
+if __package__:
+    from .constants import (
+        WRITE_CONTENT_SUMMARY_SYSTEM_PROMPT as SYSTEM_PROMPT,
+        PROJECT_SYSTEM_PROMPT,
+        SUPPORTED_DIRECT_IMAGE_EXTS,
+        CACHE_VERSION,
+    )
+else:
+    from constants import (
+        WRITE_CONTENT_SUMMARY_SYSTEM_PROMPT as SYSTEM_PROMPT,
+        PROJECT_SYSTEM_PROMPT,
+        SUPPORTED_DIRECT_IMAGE_EXTS,
+        CACHE_VERSION,
+    )
 
-你必须基于输入中明确标示的图片附件（如有）、manifest 元数据、转写证据和用户意图笔记生成可沉淀到素材库的 summary。没有实际图片附件时，只能依据元数据和文字证据，并明确写出画面未验证。先判断素材在项目表达中的可能功能，再拆分画面事实、声音事实、隐含叙事价值、剪辑用途和风险。
-
-硬约束：
-1. 不允许套用固定项目模板。
-2. 不允许编造图片或转写中没有证据支持的人物、地点、成绩、动作和对白。
-3. 每个关键事实尽量标注 evidence_ref；证据不足时必须写“不确定”，并列出人工复核点。
-4. 文件名建议只写可复核事实和状态，不把作品风格强行塞进源文件名。
-5. 输出必须是 Markdown，不能用代码围栏包裹全文。
-6. 必须包含“# 作品内容概述”。
-7. 若输入声明 visual_evidence_count=0，不得假装看过画面。
-8. 若输入声明 transcript_status 不是 ok，不得假装听过完整音频。
-9. 必须在结尾列出“证据边界”，说明本次分析层级和未验证信息。"""
-
-PROJECT_SYSTEM_PROMPT = """你是 Photo Content OS 的项目总览分析代理。
-
-基于项目 manifest、单素材 summary、转写摘要和项目 prompt 做宏观创作判断：真实主题、叙事结构、可剪素材、风险、平台标题方向和人工复核点。不要套用固定项目模板，不要把旧项目叙事线、关键词分组或脚本规则迁移到当前项目。输出 Markdown，并明确区分画面证据、声音证据和推断。"""
 
 MAX_PROJECT_SUMMARY_CHARS = MAX_PROMPT_SUMMARY_CHARS
-SUPPORTED_DIRECT_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
-CACHE_VERSION = "content_summary_cache_v1"
 
 
 def has_llm_summary(path: Path) -> bool:

@@ -18,7 +18,14 @@ from runtime_paths import repository_root as _repository_root
 SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
 REPOSITORY_ROOT = _repository_root(Path(__file__))
-PROMPT_VERSION = "content_summary_evidence_v1"
+if __package__:
+    from .constants import (
+        PROMPT_VERSION,
+    )
+else:
+    from constants import (
+        PROMPT_VERSION,
+    )
 
 
 class AnalysisRunError(RuntimeError):

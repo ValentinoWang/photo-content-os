@@ -17,7 +17,14 @@ from edl_contract import EDLContractError
 from edl_contract import parse_seconds as canonical_parse_seconds
 from jianying_roughcut import ContractError, ensure_dir, load_json, track_by_id, write_yaml
 
-SEC = 1_000_000
+if __package__:
+    from .constants import (
+        SEC,
+    )
+else:
+    from constants import (
+        SEC,
+    )
 
 
 def seconds(value: Any) -> int:

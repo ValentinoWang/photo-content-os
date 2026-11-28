@@ -26,8 +26,16 @@ from runtime_paths import obsidian_root, workspace_root as _shared_workspace_roo
 SCRIPT_DIR = Path(__file__).resolve().parent
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 DEFAULT_VAULT_ROOT = obsidian_root()
-QUEUE_DIR_NAME = "openclaw-queue"
-CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
+if __package__:
+    from .constants import (
+        QUEUE_DIR_NAME,
+        CONTENT_OS_SPEC_VERSION,
+    )
+else:
+    from constants import (
+        QUEUE_DIR_NAME,
+        CONTENT_OS_SPEC_VERSION,
+    )
 
 
 class EnqueueError(Exception):

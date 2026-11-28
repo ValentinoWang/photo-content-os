@@ -7,9 +7,18 @@ from itertools import combinations
 import math
 from urllib.parse import quote
 
-TECHNIQUES = ('jcut', 'bed', 'duck', 'pause', 'action')
-SECTION_KINDS = {'quiet', 'build', 'peak'}
-EPS = 1e-6
+if __package__:
+    from .constants import (
+        TECHNIQUES,
+        SECTION_KINDS,
+        EPS,
+    )
+else:
+    from constants import (
+        TECHNIQUES,
+        SECTION_KINDS,
+        EPS,
+    )
 
 
 class PlannerError(ValueError):

@@ -15,7 +15,22 @@ from typing import Any
 
 from runtime_paths import platform_contract_name
 
-SNAPSHOT_PATH = Path(__file__).resolve().parent.parent / "schemas" / "openclaw-media-contract-snapshot.json"
+if __package__:
+    from .constants import (
+        SNAPSHOT_PATH,
+        P1A_OPERATIONS,
+        P1A_EXAMPLES,
+        VIDEO_IDENTITY_FIELDS,
+        VIDEO_STORYBOARD_COLUMNS,
+    )
+else:
+    from constants import (
+        SNAPSHOT_PATH,
+        P1A_OPERATIONS,
+        P1A_EXAMPLES,
+        VIDEO_IDENTITY_FIELDS,
+        VIDEO_STORYBOARD_COLUMNS,
+    )
 
 
 class ProductContractError(RuntimeError):
@@ -91,19 +106,6 @@ def validate_snapshot(data: dict[str, Any]) -> None:
         raise ProductContractError("snapshot_invalid", "macos must be a supported device platform")
 
 
-P1A_OPERATIONS = frozenset({
-    "requestCreationVideoProjectSelection", "video_project_selection_list",
-    "video_project_selection_confirm", "cancelCreationVideoProjectSelection",
-    "unbindCreationVideoProject", "createCreationVideoHandoff", "getCreationVideoJobSource",
-})
-P1A_EXAMPLES = {
-    "success": dict,
-    "cancel": dict,
-    "studio_pending": dict,
-    "studio_created": dict,
-    "studio_rejections": list,
-    "source_selection": dict,
-}
 
 
 def p1a_content_digest(section: dict[str, Any], api_schemas: dict[str, Any]) -> str:
@@ -211,8 +213,6 @@ def safe_workspace_ref(value: str) -> str:
     return path.as_posix()
 
 
-VIDEO_IDENTITY_FIELDS = frozenset({"job_id", "tenant_id", "work_id", "work_revision", "project_id", "project_revision", "catalog_digest", "confirmation_ref"})
-VIDEO_STORYBOARD_COLUMNS = frozenset({"shot", "visual", "dialogue", "subtitle", "camera", "audio"})
 
 
 def video_digest(value: dict[str, Any]) -> str:

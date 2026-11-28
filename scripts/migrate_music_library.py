@@ -11,7 +11,14 @@ from music_library.cache import read_json, write_json
 from music_library.errors import MusicError
 from music_library.library import MusicLibrary, validate_track
 
-REMOVED = {'license_status', 'attribution', 'bpm', 'beats', 'sections'}
+if __package__:
+    from .constants import (
+        REMOVED,
+    )
+else:
+    from constants import (
+        REMOVED,
+    )
 
 
 def migrate(media_root=None, *, apply=False, backup_root=None):

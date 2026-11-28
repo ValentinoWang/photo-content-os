@@ -10,7 +10,14 @@ from pathlib import Path
 from media import analysis_dir, load_manifest, now_iso, project_path
 
 
-SEVERITY_ORDER = {"ERROR": 0, "WARNING": 1, "INFO": 2}
+if __package__:
+    from .constants import (
+        SEVERITY_ORDER,
+    )
+else:
+    from constants import (
+        SEVERITY_ORDER,
+    )
 
 
 def format_dimensions(item: dict[str, object]) -> str:

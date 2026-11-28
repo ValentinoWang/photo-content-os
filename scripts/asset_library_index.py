@@ -12,35 +12,24 @@ from typing import Any, Iterable
 from media import media_id, write_json_atomic
 
 
-SCHEMA_VERSION = "asset_library_index_v1"
-INDEX_NAME = "index.json"
-ASSET_ID_PATTERN = re.compile(r"^[0-9a-f]{12}$")
-SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
-INDEX_FIELDS = (
-    "schema_version",
-    "revision",
-    "asset_count",
-    "categories",
-    "tags",
-    "uses",
-    "assets",
-)
-ASSET_FIELDS = (
-    "asset_id",
-    "title",
-    "category",
-    "card_path",
-    "source_project",
-    "source_relative_path",
-    "source_sha256",
-    "source_size",
-    "public_status",
-    "tags",
-    "uses",
-    "cuts",
-    "icloud_copy",
-    "notes",
-)
+if __package__:
+    from .constants import (
+        ASSET_LIBRARY_INDEX_SCHEMA_VERSION as SCHEMA_VERSION,
+        INDEX_NAME,
+        ASSET_ID_PATTERN,
+        ASSET_LIBRARY_INDEX_SHA256_PATTERN as SHA256_PATTERN,
+        INDEX_FIELDS,
+        ASSET_FIELDS,
+    )
+else:
+    from constants import (
+        ASSET_LIBRARY_INDEX_SCHEMA_VERSION as SCHEMA_VERSION,
+        INDEX_NAME,
+        ASSET_ID_PATTERN,
+        ASSET_LIBRARY_INDEX_SHA256_PATTERN as SHA256_PATTERN,
+        INDEX_FIELDS,
+        ASSET_FIELDS,
+    )
 
 
 class AssetIndexError(ValueError):

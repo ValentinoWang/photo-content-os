@@ -18,32 +18,41 @@ from runtime_paths import workspace_root as _shared_workspace_root
 
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 
-BATCH_NOTE_NAME = "batch-notes.md"
-LOCAL_LINK_DIR = "openclaw"
-PROJECT_INBOX_DIR = "unclassified"
-PROMOTED_ANALYSIS_ROOT = f"{ANALYSIS_DIR}/promoted-inbox-batches"
-PROMOTED_LINK_ROOT = "openclaw/promoted-inbox-batches"
-NON_MEDIA_DIR = "_随批次非素材"
-PROMOTION_RECORD_DIR = "openclaw/promotion-records"
-PROMOTION_RECORD_SUFFIX = ".promotion.json"
-PROMOTION_JOURNAL_SUFFIX = ".promotion.journal.json"
-PROMOTION_JOURNAL_VERSION = "openclaw_inbox_promotion_journal_v0.1"
+if __package__:
+    from .constants import (
+        BATCH_NOTE_NAME,
+        LOCAL_LINK_DIR,
+        PROJECT_INBOX_DIR,
+        PROMOTED_ANALYSIS_ROOT,
+        PROMOTED_LINK_ROOT,
+        NON_MEDIA_DIR,
+        PROMOTION_RECORD_DIR,
+        PROMOTION_RECORD_SUFFIX,
+        PROMOTION_JOURNAL_SUFFIX,
+        PROMOTION_JOURNAL_VERSION,
+        GENERATED_PROJECT_DIRS,
+        GENERATED_PROJECT_FILES,
+        IGNORED_NAMES,
+    )
+else:
+    from constants import (
+        BATCH_NOTE_NAME,
+        LOCAL_LINK_DIR,
+        PROJECT_INBOX_DIR,
+        PROMOTED_ANALYSIS_ROOT,
+        PROMOTED_LINK_ROOT,
+        NON_MEDIA_DIR,
+        PROMOTION_RECORD_DIR,
+        PROMOTION_RECORD_SUFFIX,
+        PROMOTION_JOURNAL_SUFFIX,
+        PROMOTION_JOURNAL_VERSION,
+        GENERATED_PROJECT_DIRS,
+        GENERATED_PROJECT_FILES,
+        IGNORED_NAMES,
+    )
 
-GENERATED_PROJECT_DIRS = {
-    "icloud-selected",
-    "draft-project",
-    "output",
-    "sync-ready",
-    "additions",
-}
 
-GENERATED_PROJECT_FILES = {
-    "aliyun-sync-manifest.md",
-}
 
-IGNORED_NAMES = {
-    ".DS_Store",
-}
 
 
 class PromoteError(Exception):

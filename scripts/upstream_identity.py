@@ -48,15 +48,14 @@ class UpstreamIdentityContractError(RuntimeError):
         super().__init__(code)
 
 
-RESULT_FIELDS = frozenset(
-    {
-        "upstream_principal_id",
-        "roles",
-        "revoked",
-        "pairing_status",
-        "session_ref",
-    }
-)
+if __package__:
+    from .constants import (
+        RESULT_FIELDS,
+    )
+else:
+    from constants import (
+        RESULT_FIELDS,
+    )
 
 
 def _empty_result(status: PairingStatus) -> dict[str, object]:

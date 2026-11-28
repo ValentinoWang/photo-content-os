@@ -11,25 +11,24 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "review_capabilities.registry.v1"
-ALLOWED_STATUS = {"active", "proposed", "deprecated"}
-ALLOWED_OWNERS = {"mac_openclaw", "cloud_openclaw"}
-ALLOWED_SURFACES = {
-    "mac_local",
-    "cloud_task_to_mac_runner",
-    "codex_vlm",
-    "remote_server",
-    "obsidian_queue",
-    "mac_runner",
-}
-ALLOWED_ALGORITHM_ROLES = {
-    "scoring_core",
-    "semantic_judgement_fusion",
-    "remote_strategy_evaluation",
-    "post_publish_data_review",
-    "orchestrator_only",
-}
-CAPABILITY_ID_PATTERN = re.compile(r"^[a-z][a-z0-9_]*$")
+if __package__:
+    from .constants import (
+        VALIDATE_REVIEW_CAPABILITY_REGISTRY_SCHEMA_VERSION as SCHEMA_VERSION,
+        ALLOWED_STATUS,
+        ALLOWED_OWNERS,
+        ALLOWED_SURFACES,
+        ALLOWED_ALGORITHM_ROLES,
+        CAPABILITY_ID_PATTERN,
+    )
+else:
+    from constants import (
+        VALIDATE_REVIEW_CAPABILITY_REGISTRY_SCHEMA_VERSION as SCHEMA_VERSION,
+        ALLOWED_STATUS,
+        ALLOWED_OWNERS,
+        ALLOWED_SURFACES,
+        ALLOWED_ALGORITHM_ROLES,
+        CAPABILITY_ID_PATTERN,
+    )
 
 
 def default_registry_path() -> Path:

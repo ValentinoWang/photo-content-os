@@ -8,7 +8,19 @@ from urllib.parse import urlsplit
 from .errors import MusicError, NetworkFailure
 
 
-PROXY_ENV = 'CONTENT_OS_MUSIC_PROXY'
+if __package__:
+    from .constants import (
+        PROXY_ENV,
+    )
+else:
+    try:
+        from scripts.music_library.constants import (
+            PROXY_ENV,
+        )
+    except ImportError:
+        from constants import (
+            PROXY_ENV,
+        )
 
 
 def network_failure(exc, *, proxy_configured=False):

@@ -14,33 +14,30 @@ from media import directory_slug, ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-BATCH_NOTE_NAME = "batch-notes.md"
-LOCAL_LINK_DIR = "openclaw"
-PROJECT_LINK_NAME = "project.json"
+if __package__:
+    from .constants import (
+        BATCH_NOTE_NAME,
+        LOCAL_LINK_DIR,
+        PROJECT_LINK_NAME,
+        EMPTY_VALUES,
+        FIELD_ALIASES,
+        PROJECT_FIELD_LABELS,
+        TITLE_REPLACEMENTS,
+    )
+else:
+    from constants import (
+        BATCH_NOTE_NAME,
+        LOCAL_LINK_DIR,
+        PROJECT_LINK_NAME,
+        EMPTY_VALUES,
+        FIELD_ALIASES,
+        PROJECT_FIELD_LABELS,
+        TITLE_REPLACEMENTS,
+    )
 
-EMPTY_VALUES = {"", "无", "none", "null", "待定", "未定", "unknown"}
 
-FIELD_ALIASES = {
-    "事件": "event",
-    "地点": "location",
-    "人物": "people",
-    "时间范围": "time_range",
-    "素材来源": "source",
-    "本地素材批次": "local_batch",
-    "目标项目": "target_project",
-    "是否已有正式项目目录": "has_formal_project",
-    "这批素材可能服务的内容": "possible_content",
-    "必须保留 / 特别注意": "must_keep_or_attention",
-    "不确定的地方": "uncertainties",
-}
 
-PROJECT_FIELD_LABELS = {
-    "local_batch": "本地素材批次",
-    "target_project": "目标项目",
-    "has_formal_project": "是否已有正式项目目录",
-}
 
-TITLE_REPLACEMENTS = {}
 
 
 class ProjectBootstrapError(Exception):

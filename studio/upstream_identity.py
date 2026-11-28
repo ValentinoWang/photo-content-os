@@ -7,8 +7,22 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-LOCAL_DEVICE_PLATFORMS = frozenset({"macos", "windows", "linux"})
-UPSTREAM_DEVICE_PLATFORMS = frozenset({"macos"})
+if __package__:
+    from .constants import (
+        LOCAL_DEVICE_PLATFORMS,
+        UPSTREAM_DEVICE_PLATFORMS,
+    )
+else:
+    try:
+        from studio.constants import (
+            LOCAL_DEVICE_PLATFORMS,
+            UPSTREAM_DEVICE_PLATFORMS,
+        )
+    except ImportError:
+        from constants import (
+            LOCAL_DEVICE_PLATFORMS,
+            UPSTREAM_DEVICE_PLATFORMS,
+        )
 
 
 class UpstreamIdentityDiagnosisState(str, Enum):

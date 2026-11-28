@@ -38,41 +38,60 @@ from media import utc_now_z as utc_now  # noqa: E402
 from media import write_json_atomic  # noqa: E402
 
 
-SPEC_VERSION = "content_os_v0.2"
-BACKEND = "handoff_pack"
-MANIFEST_TYPE = "edit_handoff_manifest"
-RESULT_TYPE = "edit_handoff_result"
-VALIDATION_TYPE = "edit_handoff_validation"
-TIMING_TOLERANCE = 0.000_001
-CSV_FIELDS = [
-    "timeline_order",
-    "slot",
-    "layer",
-    "role",
-    "timeline_start_sec",
-    "timeline_end_sec",
-    "duration_sec",
-    "source_file",
-    "source_start_sec",
-    "source_end_sec",
-    "purpose",
-    "visual_need",
-    "edit_note",
-    "caption",
-]
-AUDIO_CSV_FIELDS = [*AUDIO_CLIP_FIELDS, "audio_plan", "audio_beds", "music"]
-LEGACY_CSV_FIELDS = CSV_FIELDS.copy()
+if __package__:
+    from .constants import (
+        SPEC_VERSION,
+        BACKEND,
+        MANIFEST_TYPE,
+        RESULT_TYPE,
+        VALIDATION_TYPE,
+        TIMING_TOLERANCE,
+        CSV_FIELDS,
+        AUDIO_CSV_FIELDS,
+        LEGACY_CSV_FIELDS,
+        LAYER_STACK,
+        DEFAULT_LAYER,
+        CONTIGUOUS_LAYER,
+    )
+else:
+    try:
+        from scripts.edit_backends.constants import (
+            SPEC_VERSION,
+            BACKEND,
+            MANIFEST_TYPE,
+            RESULT_TYPE,
+            VALIDATION_TYPE,
+            TIMING_TOLERANCE,
+            CSV_FIELDS,
+            AUDIO_CSV_FIELDS,
+            LEGACY_CSV_FIELDS,
+            LAYER_STACK,
+            DEFAULT_LAYER,
+            CONTIGUOUS_LAYER,
+        )
+    except ImportError:
+        from constants import (
+            SPEC_VERSION,
+            BACKEND,
+            MANIFEST_TYPE,
+            RESULT_TYPE,
+            VALIDATION_TYPE,
+            TIMING_TOLERANCE,
+            CSV_FIELDS,
+            AUDIO_CSV_FIELDS,
+            LEGACY_CSV_FIELDS,
+            LAYER_STACK,
+            DEFAULT_LAYER,
+            CONTIGUOUS_LAYER,
+        )
 CSV_FIELDS += AUDIO_CSV_FIELDS
 
 # Composition stack, bottom first.  Rows are grouped in this order so a reader
 # walks the base cut before the things layered on top of it.
-LAYER_STACK = ("background", "primary", "overlay")
-DEFAULT_LAYER = "primary"
 
 # The pack promises one continuous base cut a human can play straight through.
 # That promise belongs to the primary layer only: overlays sit on top of it by
 # definition and would otherwise read as gaps and overlaps.
-CONTIGUOUS_LAYER = "primary"
 
 
 class HandoffError(Exception):

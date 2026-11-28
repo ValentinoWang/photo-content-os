@@ -22,31 +22,20 @@ from runtime_paths import workspace_root as _shared_workspace_root
 DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 SCRIPT_DIR = Path(__file__).resolve().parent
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
-LINK_RELATIVE_PATH = Path(ANALYSIS_DIR) / "content_os_link.yaml"
+if __package__:
+    from .constants import (
+        LINK_RELATIVE_PATH,
+        FIELD_TO_KEY,
+        REQUIRED_PROJECT_FILES,
+    )
+else:
+    from constants import (
+        LINK_RELATIVE_PATH,
+        FIELD_TO_KEY,
+        REQUIRED_PROJECT_FILES,
+    )
 
-FIELD_TO_KEY = {
-    "Obsidian 项目ID": "obsidian_project_id",
-    "01_idea_card": "declared_idea_card",
-    "02_project_brief": "declared_project_brief",
-    "04_script": "declared_script",
-    "task": "declared_task",
-    "事件": "event",
-    "地点": "location",
-    "人物": "people",
-    "时间范围": "time_range",
-    "素材来源": "source",
-    "本地素材批次": "local_batch",
-    "目标项目": "target_project",
-    "这批素材可能服务的内容": "possible_content",
-    "必须保留 / 特别注意": "must_keep_or_attention",
-    "不确定的地方": "uncertainties",
-}
 
-REQUIRED_PROJECT_FILES = {
-    "idea_card": "01_idea_card.md",
-    "project_brief": "02_project_brief.md",
-    "script": "04_script.md",
-}
 
 
 class BatchLinkError(Exception):

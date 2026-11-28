@@ -14,10 +14,28 @@ from typing import Any
 from scripts.media import write_json_atomic, write_text_atomic
 
 
-SCHEMA_VERSION = "photo_content_os_onboarding_v1"
-STATE_FILE_NAME = "onboarding_state.json"
-VERSIONED_STATE_FILE_NAME = "onboarding_state_versioned.json"
-VERSIONED_SCHEMA_VERSION = "photo_content_os_onboarding_versioned_v1"
+if __package__:
+    from .constants import (
+        ONBOARDING_STATE_SCHEMA_VERSION as SCHEMA_VERSION,
+        STATE_FILE_NAME,
+        VERSIONED_STATE_FILE_NAME,
+        VERSIONED_SCHEMA_VERSION,
+    )
+else:
+    try:
+        from studio.constants import (
+            ONBOARDING_STATE_SCHEMA_VERSION as SCHEMA_VERSION,
+            STATE_FILE_NAME,
+            VERSIONED_STATE_FILE_NAME,
+            VERSIONED_SCHEMA_VERSION,
+        )
+    except ImportError:
+        from constants import (
+            ONBOARDING_STATE_SCHEMA_VERSION as SCHEMA_VERSION,
+            STATE_FILE_NAME,
+            VERSIONED_STATE_FILE_NAME,
+            VERSIONED_SCHEMA_VERSION,
+        )
 
 
 class OnboardingStep(str, Enum):

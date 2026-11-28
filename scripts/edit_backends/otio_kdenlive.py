@@ -41,22 +41,44 @@ class ContractError(ValueError):
     """Input or output violates the Content OS editing-handoff contract."""
 
 
-FPS = 30
+if __package__:
+    from .constants import (
+        FPS,
+        LAYER_STACK,
+        DEFAULT_LAYER,
+        EXCLUSIVE_LAYERS,
+        LAYER_TRACK_NAMES,
+        KDENLIVE_REOPEN_PROBE_SECONDS,
+        KDENLIVE_SHUTDOWN_TIMEOUT_SECONDS,
+    )
+else:
+    try:
+        from scripts.edit_backends.constants import (
+            FPS,
+            LAYER_STACK,
+            DEFAULT_LAYER,
+            EXCLUSIVE_LAYERS,
+            LAYER_TRACK_NAMES,
+            KDENLIVE_REOPEN_PROBE_SECONDS,
+            KDENLIVE_SHUTDOWN_TIMEOUT_SECONDS,
+        )
+    except ImportError:
+        from constants import (
+            FPS,
+            LAYER_STACK,
+            DEFAULT_LAYER,
+            EXCLUSIVE_LAYERS,
+            LAYER_TRACK_NAMES,
+            KDENLIVE_REOPEN_PROBE_SECONDS,
+            KDENLIVE_SHUTDOWN_TIMEOUT_SECONDS,
+        )
 
 # Composition stack, bottom first.  A background bed sits under the main cut and
 # overlays composite on top of it, so this order is also the MLT track order.
-LAYER_STACK = ("background", "primary", "overlay")
-DEFAULT_LAYER = "primary"
 
 # Only the primary track carries the "one thing at a time" rule; overlay and
 # background clips are expected to run underneath or on top of it.
-EXCLUSIVE_LAYERS = frozenset({"primary"})
 
-LAYER_TRACK_NAMES = {
-    "background": "背景",
-    "primary": "主画面",
-    "overlay": "叠加",
-}
 
 
 @dataclass(frozen=True)
@@ -616,8 +638,6 @@ def kdenlive_executable() -> str | None:
     return str(bundled) if bundled.is_file() and os.access(bundled, os.X_OK) else None
 
 
-KDENLIVE_REOPEN_PROBE_SECONDS = 2.0
-KDENLIVE_SHUTDOWN_TIMEOUT_SECONDS = 5.0
 
 
 def probe_kdenlive_version(executable: str) -> str:

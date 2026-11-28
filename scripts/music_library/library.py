@@ -17,7 +17,19 @@ from .errors import MusicError, MemberRequired
 from .links import parse_link
 
 
-SCHEMA = Path(__file__).resolve().parents[2] / 'schemas/music-track.schema.json'
+if __package__:
+    from .constants import (
+        SCHEMA,
+    )
+else:
+    try:
+        from scripts.music_library.constants import (
+            SCHEMA,
+        )
+    except ImportError:
+        from constants import (
+            SCHEMA,
+        )
 
 
 def file_hash(path):

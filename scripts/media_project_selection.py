@@ -44,8 +44,16 @@ from studio.direct_handoff_contract import (  # noqa: E402
 )
 from studio.project_store import ProjectStoreError  # noqa: E402
 
-DEFAULT_STATE_DIR = Path.home() / ".photo-content-os" / "studio"
-VIDEO_SUFFIXES = (".mp4", ".mov", ".mkv")
+if __package__:
+    from .constants import (
+        DEFAULT_STATE_DIR,
+        VIDEO_SUFFIXES,
+    )
+else:
+    from constants import (
+        DEFAULT_STATE_DIR,
+        VIDEO_SUFFIXES,
+    )
 _ID = re.compile(r"[A-Za-z0-9_-]{8,160}")
 _REQUEST_FIELDS = frozenset({"request_id", "public_variant_id", "public_account_id", "public_session_id",
                              "expected_work_revision", "expires_at", "revision"})

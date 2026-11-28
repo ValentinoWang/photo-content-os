@@ -18,7 +18,14 @@ from asset_library_index import (
 from media import file_sha256, path_inside, project_path, relative_posix, directory_slug, write_text_atomic
 
 
-DEFAULT_INDEX_NAME = "reusable-assets.md"
+if __package__:
+    from .constants import (
+        DEFAULT_INDEX_NAME,
+    )
+else:
+    from constants import (
+        DEFAULT_INDEX_NAME,
+    )
 
 
 from runtime_paths import local_media_root

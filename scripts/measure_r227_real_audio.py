@@ -16,7 +16,14 @@ from scipy.signal import butter, sosfiltfilt
 from edit_backends.kdenlive_render import melt_executable
 from render_preview import _audio_filters
 
-RATE = 48000
+if __package__:
+    from .constants import (
+        RATE,
+    )
+else:
+    from constants import (
+        RATE,
+    )
 
 
 def pcm(path):

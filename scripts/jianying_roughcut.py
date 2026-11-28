@@ -14,10 +14,20 @@ from edl_contract import EDLContractError
 from edl_contract import parse_time_range as _canonical_parse_time_range
 from media import is_raw360_path, local_now_compact as now_compact, read_json_object, read_yaml_mapping, write_json_atomic
 
-RAW360_EXTS = {".osv", ".lrf"}
-VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"} | RAW360_EXTS
-IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif"}
-MEDIA_EXTS = VIDEO_EXTS | IMAGE_EXTS
+if __package__:
+    from .constants import (
+        RAW360_EXTS,
+        JIANYING_ROUGHCUT_VIDEO_EXTS as VIDEO_EXTS,
+        JIANYING_ROUGHCUT_IMAGE_EXTS as IMAGE_EXTS,
+        JIANYING_ROUGHCUT_MEDIA_EXTS as MEDIA_EXTS,
+    )
+else:
+    from constants import (
+        RAW360_EXTS,
+        JIANYING_ROUGHCUT_VIDEO_EXTS as VIDEO_EXTS,
+        JIANYING_ROUGHCUT_IMAGE_EXTS as IMAGE_EXTS,
+        JIANYING_ROUGHCUT_MEDIA_EXTS as MEDIA_EXTS,
+    )
 
 
 class ContractError(Exception):

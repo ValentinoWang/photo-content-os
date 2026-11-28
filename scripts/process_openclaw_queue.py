@@ -29,20 +29,38 @@ from runtime_paths import obsidian_root, workspace_root as _shared_workspace_roo
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 DEFAULT_OBSIDIAN_ROOT = obsidian_root()
 
-QUEUE_DIR_NAME = "openclaw-queue"
-CLOUD_TO_MAC_DIR = "cloud_to_mac"
-MAC_TO_CLOUD_DIR = "mac_to_cloud"
-PROCESSED_DIR = "processed"
-FAILED_DIR = "failed"
+if __package__:
+    from .constants import (
+        QUEUE_DIR_NAME,
+        CLOUD_TO_MAC_DIR,
+        MAC_TO_CLOUD_DIR,
+        PROCESSED_DIR,
+        FAILED_DIR,
+        TASK_BIND_BATCH,
+        PROCESS_OPENCLAW_QUEUE_SUPPORTED_TASK_TYPES as SUPPORTED_TASK_TYPES,
+        RESULT_SPEC_VERSION,
+        LINK_SPEC_VERSION,
+        STATUS_SPEC_VERSION,
+        RUN_ID_PATTERN,
+        PROCESS_OPENCLAW_QUEUE_SHA256_PATTERN as SHA256_PATTERN,
+    )
+else:
+    from constants import (
+        QUEUE_DIR_NAME,
+        CLOUD_TO_MAC_DIR,
+        MAC_TO_CLOUD_DIR,
+        PROCESSED_DIR,
+        FAILED_DIR,
+        TASK_BIND_BATCH,
+        PROCESS_OPENCLAW_QUEUE_SUPPORTED_TASK_TYPES as SUPPORTED_TASK_TYPES,
+        RESULT_SPEC_VERSION,
+        LINK_SPEC_VERSION,
+        STATUS_SPEC_VERSION,
+        RUN_ID_PATTERN,
+        PROCESS_OPENCLAW_QUEUE_SHA256_PATTERN as SHA256_PATTERN,
+    )
 
-TASK_BIND_BATCH = "bind_creation_run_to_local_batch"
-SUPPORTED_TASK_TYPES = {TASK_BIND_BATCH}
-RESULT_SPEC_VERSION = "openclaw_queue_result_v0.1"
-LINK_SPEC_VERSION = "openclaw_queue_link_v0.1"
-STATUS_SPEC_VERSION = "openclaw_queue_status_v0.1"
 
-RUN_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{2,127}$")
-SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$", re.IGNORECASE)
 
 
 class QueueError(Exception):

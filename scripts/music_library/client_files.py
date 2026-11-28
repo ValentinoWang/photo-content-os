@@ -10,8 +10,22 @@ from pathlib import Path
 
 from .errors import MusicError
 
-CORE_KEY = b'hzHRAmso5kInbaxW'
-META_KEY = b"#14ljk_!\\]&0U<'("
+if __package__:
+    from .constants import (
+        CORE_KEY,
+        META_KEY,
+    )
+else:
+    try:
+        from scripts.music_library.constants import (
+            CORE_KEY,
+            META_KEY,
+        )
+    except ImportError:
+        from constants import (
+            CORE_KEY,
+            META_KEY,
+        )
 
 
 def aes_decrypt(data, key):

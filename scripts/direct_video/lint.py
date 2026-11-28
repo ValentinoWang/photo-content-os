@@ -11,9 +11,22 @@ from html.parser import HTMLParser
 from pathlib import Path
 import re
 
-FORBIDDEN = ('Math.random', 'setTimeout', 'setInterval', 'requestAnimationFrame',
-             'fetch(', 'XMLHttpRequest', 'WebSocket', '<video', '<audio', '@import', 'url(')
-HALF_PUNCT = re.compile(r'(?<=[一-鿿])[?!,:;]|[?!,:;](?=[一-鿿])')
+if __package__:
+    from .constants import (
+        FORBIDDEN,
+        HALF_PUNCT,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            FORBIDDEN,
+            HALF_PUNCT,
+        )
+    except ImportError:
+        from constants import (
+            FORBIDDEN,
+            HALF_PUNCT,
+        )
 
 
 def visible_text(html: str, sep: str = ' ') -> str:

@@ -20,19 +20,18 @@ from openclaw_product_contract import ProductContractError, SNAPSHOT_PATH, p1a_c
 from media import write_json_atomic
 
 
-CATALOG_RELATIVE_PATH = Path("apps/media/agent/openclaw_media/data/pipelines.json")
-PRODUCT_CONTRACT_RELATIVE_PATH = Path("docs/ai-harness/openclaw-media-product-contract.json")
-PIPELINE_ALIASES = {
-    "prepare": "media.project.prepare.v1",
-    "organize": "media.material.organize.v1",
-    "match": "media.material.match.v1",
-    "handoff": "media.edit.handoff.v1",
-    "timeline": "media.edit.timeline.v1",
-    "revise": "media.edit.revise.v1",
-    "output-review": "media.output.review.v1",
-    "rhythm-review": "media.rhythm.review.v1",
-    "semantic-review": "media.semantic.review.v1",
-}
+if __package__:
+    from .constants import (
+        CATALOG_RELATIVE_PATH,
+        PRODUCT_CONTRACT_RELATIVE_PATH,
+        PIPELINE_ALIASES,
+    )
+else:
+    from constants import (
+        CATALOG_RELATIVE_PATH,
+        PRODUCT_CONTRACT_RELATIVE_PATH,
+        PIPELINE_ALIASES,
+    )
 
 
 class SnapshotRefreshError(RuntimeError):

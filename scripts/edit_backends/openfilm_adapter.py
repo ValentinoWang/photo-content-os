@@ -20,8 +20,22 @@ from .interface import BackendError, CloseResult, Description, Probe
 from .kdenlive_render import (FPS, frames, plan_ranges, probe_media, remap_span,
                               review_module, seconds, sha256_file, write_json)
 
-DEFAULT_PACKAGE = ROOT / '.tools/openfilm/node_modules/openfilm'
-BRIDGE = Path(__file__).with_name('openfilm_bridge.mjs')
+if __package__:
+    from .constants import (
+        DEFAULT_PACKAGE,
+        BRIDGE,
+    )
+else:
+    try:
+        from scripts.edit_backends.constants import (
+            DEFAULT_PACKAGE,
+            BRIDGE,
+        )
+    except ImportError:
+        from constants import (
+            DEFAULT_PACKAGE,
+            BRIDGE,
+        )
 
 
 def _process_table():

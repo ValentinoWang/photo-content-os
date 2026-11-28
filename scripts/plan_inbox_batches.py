@@ -12,9 +12,18 @@ from pathlib import Path
 from typing import Any
 
 
-PLAN_SCHEMA_VERSION = "inbox_batch_plan_v1"
-DEFAULT_TIME_GAP_SECONDS = 30 * 60
-DEFAULT_DISTANCE_METERS = 1000.0
+if __package__:
+    from .constants import (
+        PLAN_SCHEMA_VERSION,
+        DEFAULT_TIME_GAP_SECONDS,
+        DEFAULT_DISTANCE_METERS,
+    )
+else:
+    from constants import (
+        PLAN_SCHEMA_VERSION,
+        DEFAULT_TIME_GAP_SECONDS,
+        DEFAULT_DISTANCE_METERS,
+    )
 
 
 class BatchPlanError(ValueError):

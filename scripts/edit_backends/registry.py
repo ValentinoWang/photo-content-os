@@ -8,13 +8,19 @@ from .interface import BackendError, EditBackend
 
 
 # OA/OCC own their modules, so they need not edit this shared table concurrently.
-BACKENDS = MappingProxyType({
-    "otio_kdenlive": "edit_backends.kdenlive_adapter",
-    "openfilm": "edit_backends.openfilm_adapter",
-    "openchatcut": "edit_backends.openchatcut_adapter",
-    "chatcut": "edit_backends.chatcut_adapter",
-    "concat": "edit_backends.concat_adapter",
-})
+if __package__:
+    from .constants import (
+        BACKENDS,
+    )
+else:
+    try:
+        from scripts.edit_backends.constants import (
+            BACKENDS,
+        )
+    except ImportError:
+        from constants import (
+            BACKENDS,
+        )
 
 
 def get_backend(backend_id: str) -> EditBackend:

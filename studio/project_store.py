@@ -20,24 +20,55 @@ try:
 except ImportError:  # pragma: no cover - POSIX uses fcntl above.
     msvcrt = None  # type: ignore[assignment]
 
-SCHEMA_VERSION = "creative_project_store_v1"
-PROJECT_SCHEMA_VERSION = "creative_project_v1"
-DOCUMENT_NAMES = ("brief", "script", "storyboard", "edl")
-DOCUMENT_LABELS = {"brief": "创作 Brief", "script": "脚本", "storyboard": "分镜", "edl": "剪辑方案"}
-DOWNSTREAM = {"brief": ("script", "storyboard", "edl", "delivery"), "script": ("storyboard", "edl", "delivery"), "storyboard": ("edl", "delivery"), "edl": ("delivery",)}
-SAFE_ID = re.compile(r"^[a-z0-9][a-z0-9_-]{7,63}$")
-PUBLISHING_METRICS = ("views", "likes", "comments", "shares", "saves", "follows")
-MAX_PUBLIC_LINKS = 8
-LOCAL_ABSOLUTE_PATH = re.compile(r"(?:^|\s)(?:/(?:Users|home|private|var|Volumes)/|[A-Za-z]:[\\/])")
-REFERENCE_ASSET_ROLE = "reference"
-AUTHORITY_BRIDGE_SCHEMA_VERSION = "document_authority_bridge_v1"
-AUTHORITY_BRIDGE_TARGETS = {"brief": "02_project_brief.md", "script": "04_script.md"}
-DEFAULTS = {
-    "brief": (("brief-goal", "创作目标"), ("brief-audience", "目标受众"), ("brief-angle", "核心角度"), ("brief-constraints", "平台与边界")),
-    "script": (("script-hook", "开头钩子"), ("script-body", "主体推进"), ("script-ending", "结尾与行动")),
-    "storyboard": (("storyboard-opening", "开场镜头"), ("storyboard-development", "展开镜头"), ("storyboard-ending", "收束镜头")),
-    "edl": (("edl-plan", "剪辑顺序"), ("edl-captions", "字幕与声音"), ("edl-notes", "人工精剪提示")),
-}
+if __package__:
+    from .constants import (
+        PROJECT_STORE_SCHEMA_VERSION as SCHEMA_VERSION,
+        PROJECT_SCHEMA_VERSION,
+        DOCUMENT_NAMES,
+        DOCUMENT_LABELS,
+        DOWNSTREAM,
+        PROJECT_STORE_SAFE_ID as SAFE_ID,
+        PUBLISHING_METRICS,
+        MAX_PUBLIC_LINKS,
+        LOCAL_ABSOLUTE_PATH,
+        REFERENCE_ASSET_ROLE,
+        AUTHORITY_BRIDGE_SCHEMA_VERSION,
+        AUTHORITY_BRIDGE_TARGETS,
+        DEFAULTS,
+    )
+else:
+    try:
+        from studio.constants import (
+            PROJECT_STORE_SCHEMA_VERSION as SCHEMA_VERSION,
+            PROJECT_SCHEMA_VERSION,
+            DOCUMENT_NAMES,
+            DOCUMENT_LABELS,
+            DOWNSTREAM,
+            PROJECT_STORE_SAFE_ID as SAFE_ID,
+            PUBLISHING_METRICS,
+            MAX_PUBLIC_LINKS,
+            LOCAL_ABSOLUTE_PATH,
+            REFERENCE_ASSET_ROLE,
+            AUTHORITY_BRIDGE_SCHEMA_VERSION,
+            AUTHORITY_BRIDGE_TARGETS,
+            DEFAULTS,
+        )
+    except ImportError:
+        from constants import (
+            PROJECT_STORE_SCHEMA_VERSION as SCHEMA_VERSION,
+            PROJECT_SCHEMA_VERSION,
+            DOCUMENT_NAMES,
+            DOCUMENT_LABELS,
+            DOWNSTREAM,
+            PROJECT_STORE_SAFE_ID as SAFE_ID,
+            PUBLISHING_METRICS,
+            MAX_PUBLIC_LINKS,
+            LOCAL_ABSOLUTE_PATH,
+            REFERENCE_ASSET_ROLE,
+            AUTHORITY_BRIDGE_SCHEMA_VERSION,
+            AUTHORITY_BRIDGE_TARGETS,
+            DEFAULTS,
+        )
 
 _THREAD_LOCKS: dict[str, threading.RLock] = {}
 _THREAD_LOCKS_GUARD = threading.Lock()

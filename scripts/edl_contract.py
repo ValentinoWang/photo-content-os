@@ -15,29 +15,47 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-SCHEMA_VERSION = "edit_decision_list_v1"
-SCHEMA_VERSION_V2 = "edit_decision_list_v2"
-DOC_TYPE = "edit_decision_list"
-TIMING_TOLERANCE = 0.000_001
-REQUIRED_CLIP_TEXT_FIELDS = ("purpose", "visual_need", "caption", "edit_note")
+if __package__:
+    from .constants import (
+        EDL_CONTRACT_SCHEMA_VERSION as SCHEMA_VERSION,
+        SCHEMA_VERSION_V2,
+        DOC_TYPE,
+        TIMING_TOLERANCE,
+        REQUIRED_CLIP_TEXT_FIELDS,
+        CLIP_ROLES,
+        CLIP_LAYERS,
+        DEFAULT_CLIP_LAYER,
+        EXCLUSIVE_LAYERS,
+        CROP_KEYS,
+        AUDIO_CLIP_FIELDS,
+        V2_CLIP_FIELDS,
+        V2_DOCUMENT_FIELDS,
+    )
+else:
+    from constants import (
+        EDL_CONTRACT_SCHEMA_VERSION as SCHEMA_VERSION,
+        SCHEMA_VERSION_V2,
+        DOC_TYPE,
+        TIMING_TOLERANCE,
+        REQUIRED_CLIP_TEXT_FIELDS,
+        CLIP_ROLES,
+        CLIP_LAYERS,
+        DEFAULT_CLIP_LAYER,
+        EXCLUSIVE_LAYERS,
+        CROP_KEYS,
+        AUDIO_CLIP_FIELDS,
+        V2_CLIP_FIELDS,
+        V2_DOCUMENT_FIELDS,
+    )
 
 # v2 vocabulary.  `role` is the narrative job a clip performs; `layer` is where
 # it sits in the composition stack.  The two are deliberately orthogonal: a
 # full-screen B-roll cutaway is role="b_roll" on layer="primary", while the same
 # footage as a picture-in-picture insert is role="b_roll" on layer="overlay".
-CLIP_ROLES = ("a_roll", "b_roll", "overlay", "title")
-CLIP_LAYERS = ("primary", "overlay", "background")
-DEFAULT_CLIP_LAYER = "primary"
 
 # Only the primary layer carries the "one thing on screen at a time" rule.
 # Overlay and background clips are expected to sit on top of, or behind, it.
-EXCLUSIVE_LAYERS = frozenset({"primary"})
 
-CROP_KEYS = ("x", "y", "width", "height")
-AUDIO_CLIP_FIELDS = (
-    "audio_lead_sec", "audio_tail_sec", "audio_mute",
-    "audio_fade_in_sec", "audio_fade_out_sec",
-)
 
 
 @dataclass(frozen=True)
@@ -483,17 +501,6 @@ def require_flat_timeline(edl: dict[str, Any], *, backend: str) -> None:
         )
 
 
-V2_CLIP_FIELDS = (
-    "role",
-    "layer",
-    "speed",
-    "volume",
-    "transform",
-    "transition_in",
-    "transition_out",
-    "transition_duration",
-) + AUDIO_CLIP_FIELDS
-V2_DOCUMENT_FIELDS = ("audio", "music", "subtitles", "audio_beds")
 
 
 def _normalise_provenance(raw: dict[str, Any]) -> dict[str, Any]:

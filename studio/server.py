@@ -23,7 +23,37 @@ from typing import Any, Callable
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SYSTEM_ROOT = SCRIPT_DIR.parent
-SCRIPTS_DIR = SYSTEM_ROOT / "scripts"
+if __package__:
+    from .constants import (
+        SERVER_SCRIPTS_DIR as SCRIPTS_DIR,
+        STATIC_ROOT,
+        MAX_BODY_BYTES,
+        SETTINGS_DIRNAME,
+        ASSET_LIBRARY_DIRNAME,
+        TRASH_RECEIPT_SCHEMA_VERSION,
+        INBOX_MANIFEST_RELATIVE_PATH,
+    )
+else:
+    try:
+        from studio.constants import (
+            SERVER_SCRIPTS_DIR as SCRIPTS_DIR,
+            STATIC_ROOT,
+            MAX_BODY_BYTES,
+            SETTINGS_DIRNAME,
+            ASSET_LIBRARY_DIRNAME,
+            TRASH_RECEIPT_SCHEMA_VERSION,
+            INBOX_MANIFEST_RELATIVE_PATH,
+        )
+    except ImportError:
+        from constants import (
+            SERVER_SCRIPTS_DIR as SCRIPTS_DIR,
+            STATIC_ROOT,
+            MAX_BODY_BYTES,
+            SETTINGS_DIRNAME,
+            ASSET_LIBRARY_DIRNAME,
+            TRASH_RECEIPT_SCHEMA_VERSION,
+            INBOX_MANIFEST_RELATIVE_PATH,
+        )
 if str(SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(SYSTEM_ROOT))
 if str(SCRIPTS_DIR) not in sys.path:
@@ -78,12 +108,6 @@ from asset_library_index import (  # type: ignore  # noqa: E402
     query_assets,
 )
 
-STATIC_ROOT = SCRIPT_DIR / "static"
-MAX_BODY_BYTES = 2 * 1024 * 1024
-SETTINGS_DIRNAME = "settings"
-ASSET_LIBRARY_DIRNAME = "asset-library"
-TRASH_RECEIPT_SCHEMA_VERSION = "studio_trash_receipts_v1"
-INBOX_MANIFEST_RELATIVE_PATH = Path("ai-analysis") / "media-manifest.json"
 
 
 def _inbox_batch_planner() -> object:

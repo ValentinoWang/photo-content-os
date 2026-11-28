@@ -10,14 +10,40 @@ from urllib.parse import urlparse
 
 import requests
 
-ROOT = Path(__file__).with_suffix("")
-COMMIT = "b74e9c9e800cc3158bc16f6e9468f0f560248243"
-REPO = "https://github.com/motiontemplates/all"
-OPEN_URL = "https://motiontemplates.github.io/385712/downloads/kinetic-tech-zh.motion"
-OPEN_SHA256 = "472a95af35f8e0c09c0f7dc2ca0992b7c9a3405c5aa8063730c347fc4e015c21"
-OPEN_SIZE = 17596250
-OPEN_DEST = Path.home() / ".photo-content-os/media/film_templates/385712/kinetic-tech-zh.motion"
-LICENSE_URL = "https://raw.githubusercontent.com/motiontemplates/385712/9dfbe7d7c6a6d4aa03f6f8e2f2285e631099faae/template.json"
+if __package__:
+    from .constants import (
+        FILM_TEMPLATES_ROOT as ROOT,
+        COMMIT,
+        REPO,
+        OPEN_URL,
+        OPEN_SHA256,
+        OPEN_SIZE,
+        OPEN_DEST,
+        LICENSE_URL,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            FILM_TEMPLATES_ROOT as ROOT,
+            COMMIT,
+            REPO,
+            OPEN_URL,
+            OPEN_SHA256,
+            OPEN_SIZE,
+            OPEN_DEST,
+            LICENSE_URL,
+        )
+    except ImportError:
+        from constants import (
+            FILM_TEMPLATES_ROOT as ROOT,
+            COMMIT,
+            REPO,
+            OPEN_URL,
+            OPEN_SHA256,
+            OPEN_SIZE,
+            OPEN_DEST,
+            LICENSE_URL,
+        )
 
 
 def read_json(source):

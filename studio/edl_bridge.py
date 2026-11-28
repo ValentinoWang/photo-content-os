@@ -10,17 +10,39 @@ from typing import Any
 
 import sys
 
-SCRIPTS_DIR = Path(__file__).resolve().parent.parent / "scripts"
+if __package__:
+    from .constants import (
+        EDL_BRIDGE_SCRIPTS_DIR as SCRIPTS_DIR,
+        AUTHORITY_FILE,
+        BRIDGE_SCHEMA_VERSION,
+        VALIDATOR,
+        EDL_SCHEMA_VERSIONS,
+        EDL_SCHEMA_PATH,
+    )
+else:
+    try:
+        from studio.constants import (
+            EDL_BRIDGE_SCRIPTS_DIR as SCRIPTS_DIR,
+            AUTHORITY_FILE,
+            BRIDGE_SCHEMA_VERSION,
+            VALIDATOR,
+            EDL_SCHEMA_VERSIONS,
+            EDL_SCHEMA_PATH,
+        )
+    except ImportError:
+        from constants import (
+            EDL_BRIDGE_SCRIPTS_DIR as SCRIPTS_DIR,
+            AUTHORITY_FILE,
+            BRIDGE_SCHEMA_VERSION,
+            VALIDATOR,
+            EDL_SCHEMA_VERSIONS,
+            EDL_SCHEMA_PATH,
+        )
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from edl_contract import EDLContractError, normalise_edl  # type: ignore  # noqa: E402
 
-AUTHORITY_FILE = "06_edit_decision_list.json"
-BRIDGE_SCHEMA_VERSION = "studio_edl_bridge_v1"
-VALIDATOR = "edl_contract.normalise_edl"
-EDL_SCHEMA_VERSIONS = frozenset({"edit_decision_list_v1", "edit_decision_list_v2"})
-EDL_SCHEMA_PATH = SCRIPTS_DIR.parent / "schemas" / "edit-decision-list.schema.json"
 
 
 def _load_required_fields() -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...]]:

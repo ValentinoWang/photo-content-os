@@ -16,19 +16,28 @@ from pathlib import PurePosixPath
 from typing import Any
 
 
-CANDIDATE_STATE = "suggested"
-CONFIRMED_STATE = "confirmed"
-MIN_USABLE_VIDEO_DURATION_SECONDS = 1.0
-REASON_DURATION_TOO_SHORT = "duration_too_short"
-REASON_FILE_DAMAGED = "file_damaged"
-REASON_HASH_DUPLICATE = "sha256_duplicate"
-REASON_CAMERA_LOW_RES_PROXY = "camera_low_resolution_proxy"
-REASON_LABELS = {
-    REASON_DURATION_TOO_SHORT: "时长过短",
-    REASON_FILE_DAMAGED: "文件损坏",
-    REASON_HASH_DUPLICATE: "哈希完全重复",
-    REASON_CAMERA_LOW_RES_PROXY: "相机低清代理",
-}
+if __package__:
+    from .constants import (
+        CANDIDATE_STATE,
+        CONFIRMED_STATE,
+        MIN_USABLE_VIDEO_DURATION_SECONDS,
+        REASON_DURATION_TOO_SHORT,
+        REASON_FILE_DAMAGED,
+        REASON_HASH_DUPLICATE,
+        REASON_CAMERA_LOW_RES_PROXY,
+        REASON_LABELS,
+    )
+else:
+    from constants import (
+        CANDIDATE_STATE,
+        CONFIRMED_STATE,
+        MIN_USABLE_VIDEO_DURATION_SECONDS,
+        REASON_DURATION_TOO_SHORT,
+        REASON_FILE_DAMAGED,
+        REASON_HASH_DUPLICATE,
+        REASON_CAMERA_LOW_RES_PROXY,
+        REASON_LABELS,
+    )
 GENERATION_REASON = REASON_DURATION_TOO_SHORT
 _IMAGE_HEALTH_STATES = {"healthy", "malformed", "unreadable", "probe_unavailable", "not_applicable"}
 _HIGH_RES_CAMERA_EXTENSIONS = {".mp4", ".mov", ".m4v"}

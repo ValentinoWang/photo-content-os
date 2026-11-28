@@ -10,11 +10,29 @@ import re
 from direct_video.media import atomic_bytes
 from direct_video.revision_library import read_json
 
-DESIGN_FIELDS = ('palette', 'typeScale', 'motionRules', 'banned', 'motionSummary', 'bannedShort')
-SCRIPT_FIELDS = ('dialogue', 'visual', 'subtitle', 'camera')
-STYLE_LIBRARY_ROOT = Path(__file__).with_name('style_library')
+if __package__:
+    from .constants import (
+        DESIGN_FIELDS,
+        SCRIPT_FIELDS,
+        STYLE_LIBRARY_ROOT,
+        LIBRARY_ID,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            DESIGN_FIELDS,
+            SCRIPT_FIELDS,
+            STYLE_LIBRARY_ROOT,
+            LIBRARY_ID,
+        )
+    except ImportError:
+        from constants import (
+            DESIGN_FIELDS,
+            SCRIPT_FIELDS,
+            STYLE_LIBRARY_ROOT,
+            LIBRARY_ID,
+        )
 LOGGER = logging.getLogger(__name__)
-LIBRARY_ID = re.compile(r'[a-z][a-z0-9_-]{0,79}')
 
 
 class StyleLibrary:

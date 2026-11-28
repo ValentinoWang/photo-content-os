@@ -50,37 +50,21 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 WORKSPACE_ROOT = _shared_workspace_root(Path(__file__))
 DEFAULT_VAULT_ROOT = obsidian_root()
 
-CAPABILITIES = Path("00_入口与总览/mac_runner_capabilities.yaml")
+if __package__:
+    from .constants import (
+        CAPABILITIES,
+        CONTENT_OS_SPEC_VERSION,
+        REQUIRED_ACTIONS,
+    )
+else:
+    from constants import (
+        CAPABILITIES,
+        CONTENT_OS_SPEC_VERSION,
+        REQUIRED_ACTIONS,
+    )
 REQUIRED_CREATIVE_PROVIDER = DEFAULT_CREATIVE_PROVIDER
-CONTENT_OS_SPEC_VERSION = "content_os_v0.2"
 OTIO_KDENLIVE_PYTHON = runtime_python()
 
-REQUIRED_ACTIONS = {
-    "local_material_match": [
-        "analyze_project",
-        "match_materials_to_brief",
-        "generate_storyboard_edl",
-        "write_local_assets",
-    ],
-    "generate_edit_handoff_pack": [
-        "generate_edit_handoff_pack",
-        "validate_edit_handoff_pack",
-    ],
-    "generate_otio_kdenlive_timeline": [
-        "generate_otio_timeline",
-        "create_kdenlive_timeline",
-        "validate_kdenlive_timeline",
-    ],
-    "revise_local_edit_artifacts": [
-        "apply_confirmed_revision",
-    ],
-    "generate_ai_edit_log": [
-        "generate_ai_edit_log",
-    ],
-    "local_output_review": [
-        "review_output_video",
-    ],
-}
 
 
 class RunnerError(Exception):

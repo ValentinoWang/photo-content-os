@@ -33,8 +33,16 @@ from media import (
 )
 
 
-RAW_TOKENS = ("原始", "录屏", "模糊待选", "待修复", "待防抖", "待降噪", "待转码", "待重构", "半组", "待确认")
-GENERIC_NAME_RE = re.compile(r"^(IMG|VID|DJI|GX|GP|PXL|MVIMG|DSC|ScreenRecording)[_\-\s]?[A-Za-z0-9].*", re.IGNORECASE)
+if __package__:
+    from .constants import (
+        RAW_TOKENS,
+        PLAN_ADDITIONS_MERGE_GENERIC_NAME_RE as GENERIC_NAME_RE,
+    )
+else:
+    from constants import (
+        RAW_TOKENS,
+        PLAN_ADDITIONS_MERGE_GENERIC_NAME_RE as GENERIC_NAME_RE,
+    )
 
 
 def addition_keyframes_dir(additions_dir: Path, record: dict[str, object]) -> Path:

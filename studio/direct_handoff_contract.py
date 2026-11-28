@@ -11,8 +11,34 @@ from urllib.parse import quote
 
 from studio.project_store import ProjectStoreError
 
-MAX_DESCRIPTOR_BYTES = 2 * 1024 * 1024
-SAFE_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}')
+if __package__:
+    from .constants import (
+        MAX_DESCRIPTOR_BYTES,
+        DIRECT_HANDOFF_CONTRACT_SAFE_ID as SAFE_ID,
+        RUN_RECORD_SCHEMA,
+        RUN_RECORD_KEYS,
+        RUN_RECORD_IDENTITY_KEYS,
+        HANDOFF_REF,
+    )
+else:
+    try:
+        from studio.constants import (
+            MAX_DESCRIPTOR_BYTES,
+            DIRECT_HANDOFF_CONTRACT_SAFE_ID as SAFE_ID,
+            RUN_RECORD_SCHEMA,
+            RUN_RECORD_KEYS,
+            RUN_RECORD_IDENTITY_KEYS,
+            HANDOFF_REF,
+        )
+    except ImportError:
+        from constants import (
+            MAX_DESCRIPTOR_BYTES,
+            DIRECT_HANDOFF_CONTRACT_SAFE_ID as SAFE_ID,
+            RUN_RECORD_SCHEMA,
+            RUN_RECORD_KEYS,
+            RUN_RECORD_IDENTITY_KEYS,
+            HANDOFF_REF,
+        )
 
 
 def read_json(root: Path, ref: str) -> dict:
@@ -26,13 +52,7 @@ def read_json(root: Path, ref: str) -> dict:
         return {}
 
 
-RUN_RECORD_SCHEMA = 'p1a_run_record_v1'
-RUN_RECORD_KEYS = frozenset({
-    'schema', 'job_id', 'device_id', 'project_id', 'project_revision', 'binding_id', 'binding_generation',
-    'confirmation_ref', 'handoff_digest', 'input_ref', 'catalog_digest', 'identity', 'workspace_ref',
-    'project_root_ref', 'source_refs', 'steps', 'candidate_ref', 'request_id', 'delivered_at'})
 # Stage replays must agree on these; the derived plan and timestamp may differ.
-RUN_RECORD_IDENTITY_KEYS = RUN_RECORD_KEYS - {'source_refs', 'steps', 'delivered_at'}
 _HANDOFF_PAIRS = {'jobId': 'job_id', 'publicVariantId': 'work_id', 'workRevision': 'work_revision',
                   'photoProjectId': 'project_id', 'photoProjectRevision': 'project_revision',
                   'catalogDigest': 'catalog_digest', 'confirmationRef': 'confirmation_ref'}
@@ -275,9 +295,6 @@ def newer_handoff(job, current):
         return False
 
 
-HANDOFF_REF = {'type': 'object', 'required': ['jobId', 'revision'], 'additionalProperties': False,
-               'properties': {'jobId': {'type': 'string'}, 'revision': {'type': ['integer', 'null'], 'minimum': 1,
-                   'description': 'Top-level storyboardRevision; null when absent or invalid. A null request revision compares jobId only.'}}}
 
 
 def routes():

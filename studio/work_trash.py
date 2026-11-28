@@ -34,19 +34,25 @@ do {
 '''
 
 
-ELIGIBILITY_CODES = (
-    'folder_not_connected', 'folder_missing', 'folder_outside_media_root',
-    'folder_is_media_root', 'folder_symlink', 'folder_formal_project',
-    'folder_has_media', 'folder_shared', 'folder_contains_work', 'folder_unreadable', 'folder_runtime_unavailable',
-)
-RESULT_CODES = ELIGIBILITY_CODES + (
-    'project_not_found', 'project_id_invalid', 'revision_conflict', 'revision_invalid',
-    'folder_trash_failed', 'trash_item_missing', 'restore_target_occupied',
-    'folder_fingerprint_mismatch', 'folder_restore_failed', 'folder_restore_unsafe',
-    'deleted_work_not_found', 'deleted_work_recoverable', 'deletion_batch_conflict',
-    'review_unreadable',
-)
-UNRECOVERABLE = {'trash_item_missing', 'restore_target_occupied'}
+if __package__:
+    from .constants import (
+        ELIGIBILITY_CODES,
+        RESULT_CODES,
+        UNRECOVERABLE,
+    )
+else:
+    try:
+        from studio.constants import (
+            ELIGIBILITY_CODES,
+            RESULT_CODES,
+            UNRECOVERABLE,
+        )
+    except ImportError:
+        from constants import (
+            ELIGIBILITY_CODES,
+            RESULT_CODES,
+            UNRECOVERABLE,
+        )
 
 
 def fail(code):

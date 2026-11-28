@@ -26,9 +26,25 @@ from studio.roughcut_store import (ROOT, RoughcutStore, RoughcutError, JsonReade
                                    digest, validate)
 from studio.roughcut_transcription import LocalTranscriber
 
-TECHNIQUES = ('jcut','bed','duck','pause','action')
-BEAT_WAIT_TIMEOUT_SEC = 30 * 60
-BEAT_POLL_MAX_SEC = 30
+if __package__:
+    from .constants import (
+        TECHNIQUES,
+        BEAT_WAIT_TIMEOUT_SEC,
+        BEAT_POLL_MAX_SEC,
+    )
+else:
+    try:
+        from studio.constants import (
+            TECHNIQUES,
+            BEAT_WAIT_TIMEOUT_SEC,
+            BEAT_POLL_MAX_SEC,
+        )
+    except ImportError:
+        from constants import (
+            TECHNIQUES,
+            BEAT_WAIT_TIMEOUT_SEC,
+            BEAT_POLL_MAX_SEC,
+        )
 CHOICE_LOCK = threading.RLock()
 AUDIO_TRANSCRIPT = Draft202012Validator(json.loads((ROOT/'schemas/audio-transcript.schema.json').read_text()))
 

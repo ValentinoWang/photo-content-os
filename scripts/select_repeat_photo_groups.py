@@ -22,8 +22,16 @@ from media import (
 from project_bootstrap import run_project_analysis as run_analysis
 
 
-SUPPORTED_IMAGE_EXTS = IMAGE_EXTS - {".heic", ".heif"}
-PLAN_NAME = "repeat_photo_selection_plan.json"
+if __package__:
+    from .constants import (
+        SUPPORTED_IMAGE_EXTS,
+        SELECT_REPEAT_PHOTO_GROUPS_PLAN_NAME as PLAN_NAME,
+    )
+else:
+    from constants import (
+        SUPPORTED_IMAGE_EXTS,
+        SELECT_REPEAT_PHOTO_GROUPS_PLAN_NAME as PLAN_NAME,
+    )
 
 
 def resolve_additions(project: Path, value: str | None) -> Path:

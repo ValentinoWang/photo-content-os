@@ -14,11 +14,31 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Protocol
 
 
-SCHEMA_VERSION = "model_provider_config_v2"
-LEGACY_SCHEMA_VERSION = "model_provider_config_v1"
-SUPPORTED_SCHEMA_VERSIONS = frozenset({LEGACY_SCHEMA_VERSION, SCHEMA_VERSION})
-DEFAULT_CONFIG_FILENAME = "model-provider-config.json"
-DEFAULT_REASONING_EFFORT = "xhigh"
+if __package__:
+    from .constants import (
+        MODEL_PROVIDER_CONFIG_SCHEMA_VERSION as SCHEMA_VERSION,
+        LEGACY_SCHEMA_VERSION,
+        SUPPORTED_SCHEMA_VERSIONS,
+        DEFAULT_CONFIG_FILENAME,
+        DEFAULT_REASONING_EFFORT,
+    )
+else:
+    try:
+        from studio.constants import (
+            MODEL_PROVIDER_CONFIG_SCHEMA_VERSION as SCHEMA_VERSION,
+            LEGACY_SCHEMA_VERSION,
+            SUPPORTED_SCHEMA_VERSIONS,
+            DEFAULT_CONFIG_FILENAME,
+            DEFAULT_REASONING_EFFORT,
+        )
+    except ImportError:
+        from constants import (
+            MODEL_PROVIDER_CONFIG_SCHEMA_VERSION as SCHEMA_VERSION,
+            LEGACY_SCHEMA_VERSION,
+            SUPPORTED_SCHEMA_VERSIONS,
+            DEFAULT_CONFIG_FILENAME,
+            DEFAULT_REASONING_EFFORT,
+        )
 _CONFIG_FIELDS = frozenset(
     {"id", "provider", "model", "endpoint", "reasoning_effort", "secret_ref", "capability"}
 )

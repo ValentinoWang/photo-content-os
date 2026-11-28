@@ -20,8 +20,22 @@ from typing import Any, TypeAlias
 from scripts.media import write_json_atomic
 
 
-SCHEMA_VERSION = 1
-CONFIG_FILE_NAME = "archive_location_config.json"
+if __package__:
+    from .constants import (
+        ARCHIVE_LOCATION_CONFIG_SCHEMA_VERSION as SCHEMA_VERSION,
+        CONFIG_FILE_NAME,
+    )
+else:
+    try:
+        from studio.constants import (
+            ARCHIVE_LOCATION_CONFIG_SCHEMA_VERSION as SCHEMA_VERSION,
+            CONFIG_FILE_NAME,
+        )
+    except ImportError:
+        from constants import (
+            ARCHIVE_LOCATION_CONFIG_SCHEMA_VERSION as SCHEMA_VERSION,
+            CONFIG_FILE_NAME,
+        )
 
 
 class LifecycleState(str, Enum):

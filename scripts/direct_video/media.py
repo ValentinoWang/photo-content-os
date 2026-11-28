@@ -12,7 +12,19 @@ from video_render.compose import compose, concat_schedule, run_ffmpeg
 from video_render.multi_shot import RenderError, load_manifest, owned_workspace, render_shots, write_json
 from direct_video.layout import inspect_layout
 
-FPS = 30
+if __package__:
+    from .constants import (
+        FPS,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            FPS,
+        )
+    except ImportError:
+        from constants import (
+            FPS,
+        )
 
 
 class OutputCheckError(RenderError):

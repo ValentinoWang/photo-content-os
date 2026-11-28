@@ -9,22 +9,28 @@ from typing import Any, Mapping
 from scripts.media import write_json_atomic
 
 
-SCHEMA_VERSION = "analysis_budget_settings_v1"
-FILE_NAME = "analysis-budget.json"
-BUDGET_FIELDS = (
-    "preview_images_per_asset",
-    "deep_images_per_asset",
-    "max_preview_assets",
-    "max_deep_assets",
-    "max_audio_minutes",
-)
-DEFAULT_BUDGET: dict[str, int | float] = {
-    "preview_images_per_asset": 3,
-    "deep_images_per_asset": 8,
-    "max_preview_assets": 60,
-    "max_deep_assets": 15,
-    "max_audio_minutes": 60,
-}
+if __package__:
+    from .constants import (
+        ANALYSIS_BUDGET_SCHEMA_VERSION as SCHEMA_VERSION,
+        FILE_NAME,
+        BUDGET_FIELDS,
+        DEFAULT_BUDGET,
+    )
+else:
+    try:
+        from studio.constants import (
+            ANALYSIS_BUDGET_SCHEMA_VERSION as SCHEMA_VERSION,
+            FILE_NAME,
+            BUDGET_FIELDS,
+            DEFAULT_BUDGET,
+        )
+    except ImportError:
+        from constants import (
+            ANALYSIS_BUDGET_SCHEMA_VERSION as SCHEMA_VERSION,
+            FILE_NAME,
+            BUDGET_FIELDS,
+            DEFAULT_BUDGET,
+        )
 
 
 class AnalysisBudgetError(ValueError):

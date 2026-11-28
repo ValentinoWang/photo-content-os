@@ -14,9 +14,25 @@ from .errors import MusicError, NetworkFailure
 from .vendor.douyin_abogus import ABogus, BrowserFingerprintGenerator
 from .vendor.douyin_query import default_query
 
-REGISTER = 'https://ttwid.bytedance.com/ttwid/union/register/'
-REGISTER_DATA = b'{"region":"cn","aid":1768,"needFid":false,"service":"www.ixigua.com","migrate_info":{"ticket":"","source":"node"},"cbUrlProtocol":"https","union":true}'
-UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'
+if __package__:
+    from .constants import (
+        REGISTER,
+        REGISTER_DATA,
+        UA,
+    )
+else:
+    try:
+        from scripts.music_library.constants import (
+            REGISTER,
+            REGISTER_DATA,
+            UA,
+        )
+    except ImportError:
+        from constants import (
+            REGISTER,
+            REGISTER_DATA,
+            UA,
+        )
 
 
 class AnonymousOpener:

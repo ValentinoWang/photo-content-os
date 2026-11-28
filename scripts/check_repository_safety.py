@@ -15,78 +15,40 @@ from pathlib import Path
 from media import ANALYSIS_DIR
 from runtime_paths import repository_root as _repository_root
 
-MAX_TRACKED_FILE_BYTES = 5 * 1024 * 1024
-PROHIBITED_TOP_LEVELS = {
-    "inbox",
-    "projects",
-    "library",
-    "jianying-drafts",
-    "deliveries",
-    "archive",
-    "ssot-e2e",
-    "openclaw-queue",
-    "demo_workspace",
-}
-PROHIBITED_PARTS = {
-    ".venv",
-    ".tools",
-    "node_modules",
-    "work-cache",
-    ANALYSIS_DIR,
-    "openclaw",
-    "restructure-audit",
-}
-PROHIBITED_MACHINE_NAMES = {
-    ".ds_store",
-}
-PROHIBITED_NAMES = {
-    ".env",
-    "id_dsa",
-    "id_ecdsa",
-    "id_ed25519",
-    "id_rsa",
-}
-PROHIBITED_SUFFIXES = {
-    ".3gp",
-    ".aac",
-    ".aiff",
-    ".arw",
-    ".avi",
-    ".bmp",
-    ".cr2",
-    ".cr3",
-    ".dng",
-    ".flac",
-    ".gif",
-    ".heic",
-    ".heif",
-    ".insv",
-    ".jpeg",
-    ".jpg",
-    ".lrf",
-    ".m2ts",
-    ".m4a",
-    ".m4v",
-    ".mkv",
-    ".mov",
-    ".mp3",
-    ".mp4",
-    ".mpeg",
-    ".mpg",
-    ".mts",
-    ".nef",
-    ".ogg",
-    ".orf",
-    ".osv",
-    ".pem",
-    ".png",
-    ".raf",
-    ".rw2",
-    ".tif",
-    ".tiff",
-    ".wav",
-    ".webp",
-}
+if __package__:
+    from .constants import (
+        MAX_TRACKED_FILE_BYTES,
+        PROHIBITED_TOP_LEVELS,
+        PROHIBITED_PARTS,
+        PROHIBITED_MACHINE_NAMES,
+        PROHIBITED_NAMES,
+        PROHIBITED_SUFFIXES,
+        RUNTIME_SUFFIXES,
+        MACHINE_PATH_TOKENS,
+        MEDIA_ALLOWLIST,
+        PATH_BASELINE,
+        LOCAL_PATH_TOKENS,
+        MEDIA_SUFFIXES,
+        MEDIA_REPAIR,
+        PATH_REPAIR,
+    )
+else:
+    from constants import (
+        MAX_TRACKED_FILE_BYTES,
+        PROHIBITED_TOP_LEVELS,
+        PROHIBITED_PARTS,
+        PROHIBITED_MACHINE_NAMES,
+        PROHIBITED_NAMES,
+        PROHIBITED_SUFFIXES,
+        RUNTIME_SUFFIXES,
+        MACHINE_PATH_TOKENS,
+        MEDIA_ALLOWLIST,
+        PATH_BASELINE,
+        LOCAL_PATH_TOKENS,
+        MEDIA_SUFFIXES,
+        MEDIA_REPAIR,
+        PATH_REPAIR,
+    )
 
 
 def repository_root() -> Path:
@@ -131,8 +93,6 @@ def path_violations(root: Path, relative: Path, *, check_media: bool = True) -> 
 
 
 # Runtime source only: docs and tests/fixtures retain historical/negative examples.
-RUNTIME_SUFFIXES = {'.py', '.sh', '.ps1', '.js', '.mjs', '.cjs', '.ts', '.tsx', '.html', '.css', '.json', '.yaml', '.yml', '.toml'}
-MACHINE_PATH_TOKENS = ('/' + 'Users/', 'Opensource' + '_Tool', '自媒体' + '创作Agent')
 
 
 def is_runtime_source(relative: Path) -> bool:
@@ -154,12 +114,6 @@ def source_violations(root: Path, relative: Path) -> list[str]:
 
 
 # Exact files only: neither an evidence directory nor a fixture directory is exempt.
-MEDIA_ALLOWLIST = 'scripts/repository-safety-media-allowlist.json'
-PATH_BASELINE = 'scripts/repository-safety-path-baseline.json'
-LOCAL_PATH_TOKENS = ('/' + 'Users/', '/' + 'private/var/', '/' + 'home/')
-MEDIA_SUFFIXES = PROHIBITED_SUFFIXES - {'.pem'}
-MEDIA_REPAIR = '媒体可能含私人素材，不能进 Git；截图、帧图、视频和音频放 ~/.photo-content-os/evidence/<任务>/；仅公开测试图或图标可逐文件登记理由和 SHA-256'
-PATH_REPAIR = '新增本机绝对路径会泄露本机信息；路径改成相对素材根，截图和帧图放 ~/.photo-content-os/evidence/<任务>/'
 
 
 def privacy_scope(path: str) -> bool:

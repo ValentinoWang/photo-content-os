@@ -1,35 +1,30 @@
 """Additive R277 request and projection contracts."""
 
-LINE = {'type': 'object', 'required': ['text'], 'additionalProperties': False,
-        'properties': {'text': {'type': 'string', 'minLength': 1, 'maxLength': 200},
-                       'boxId': {'type': 'string'}, 'action': {'enum': ['main', 'dim', 'del', 'short']},
-                       'issue': {'enum': ['space', 'color', 'sync']}, 'own': {'const': True}},
-        'oneOf': [{'required': ['boxId', 'action']}, {'required': ['issue']}, {'required': ['own']}]}
-REQUEST = {'type': 'object', 'required': ['lines'], 'properties': {
-    'lines': {'type': 'array', 'minItems': 1, 'maxItems': 200, 'items': LINE}},
-    'description': 'Each line is nonblank. Combined text length is 1–200 Unicode characters. boxId must identify a current visible box.'}
-VERIFY = {'type': ['object', 'null'], 'required': ['status', 'items'], 'properties': {
-    'status': {'enum': ['running', 'done', 'failed']}, 'failureCode': {'const': 'verify_failed'},
-    'items': {'type': 'array', 'items': {'type': 'object', 'required': ['index', 'result', 'reason'], 'properties': {
-        'index': {'type': 'integer', 'minimum': 0}, 'result': {'enum': ['done', 'missed']}, 'reason': {'type': 'string'}}}}}}
-LOOK = {'type': 'object', 'required': ['status', 'failureCode', 'findings'], 'properties': {
-    'status': {'enum': ['none', 'running', 'done', 'failed']}, 'failureCode': {'enum': [None, 'look_failed']},
-    'findings': {'type': 'array', 'maxItems': 5, 'items': {'type': 'object', 'required': ['boxId', 'kind', 'text', 'suggest'],
-        'properties': {'boxId': {'type': ['string', 'null']}, 'kind': {'type': 'string'}, 'text': {'type': 'string'},
-                       'suggest': {'enum': ['main', 'dim', 'del', 'short']}}}}}}
-SHOT_PROPERTIES = {
-    'currentVersion': {'type': 'integer', 'minimum': 0, 'description': 'Zero before the first written version. A version whose rendering failed retains its code without a poster.'},
-    'versions': {'type': 'array', 'items': {'type': 'object', 'required': ['version', 'baseVersion', 'createdAt', 'posterRevision', 'codeChars', 'request', 'verify'],
-        'properties': {'version': {'type': 'integer', 'minimum': 1}, 'createdAt': {'type': 'string'},
-                       'baseVersion': {'type': ['integer', 'null'], 'minimum': 1,
-                                       'description': 'Current version before revision or narration rerender. Null for the first version or unavailable pre-field provenance.'},
-                       'posterRevision': {'type': 'integer'}, 'codeChars': {'type': 'integer'},
-                       'request': {'anyOf': [REQUEST, {'type': 'null'}]}, 'verify': VERIFY}}},
-    'boxes': {'type': 'array', 'items': {'type': 'object', 'required': ['id', 'name', 'x', 'y', 'w', 'h'],
-        'properties': {'id': {'type': 'string'}, 'name': {'type': 'string'},
-                       **{key: {'type': 'number'} for key in ('x', 'y', 'w', 'h')}}}},
-    'look': LOOK, 'sample': {'type': 'boolean'},
-}
+if __package__:
+    from .constants import (
+        LINE,
+        REQUEST,
+        VERIFY,
+        LOOK,
+        SHOT_PROPERTIES,
+    )
+else:
+    try:
+        from studio.constants import (
+            LINE,
+            REQUEST,
+            VERIFY,
+            LOOK,
+            SHOT_PROPERTIES,
+        )
+    except ImportError:
+        from constants import (
+            LINE,
+            REQUEST,
+            VERIFY,
+            LOOK,
+            SHOT_PROPERTIES,
+        )
 
 
 def routes():

@@ -27,12 +27,24 @@ from media import (
 from project_bootstrap import run_project_analysis as run_analysis
 
 
-LIVE_EXTS = {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}
-RAW_ASSOCIATED_EXTS = {".osv", ".lrf", ".insv"}
-IMAGE_EXTS_FOR_PREVIEW = {".heic", ".heif", ".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff"}
-GENERIC_NAME_RE = re.compile(r"^(IMG|VID|DJI|GX|GP|PXL|MVIMG|DSC|ScreenRecording|2084|待命名)[_\-\s]?[A-Za-z0-9_]*", re.IGNORECASE)
-RAW_STATUS_TOKENS = ("raw", "原始", "待确认", "待命名", "低清", "低质")
-LIVE_SUFFIX_RE = re.compile(r"^(?P<base>.+)_LIVE\d{2,}$")
+if __package__:
+    from .constants import (
+        LIVE_EXTS,
+        RAW_ASSOCIATED_EXTS,
+        IMAGE_EXTS_FOR_PREVIEW,
+        RENAME_MEDIA_FILE_GENERIC_NAME_RE as GENERIC_NAME_RE,
+        RAW_STATUS_TOKENS,
+        LIVE_SUFFIX_RE,
+    )
+else:
+    from constants import (
+        LIVE_EXTS,
+        RAW_ASSOCIATED_EXTS,
+        IMAGE_EXTS_FOR_PREVIEW,
+        RENAME_MEDIA_FILE_GENERIC_NAME_RE as GENERIC_NAME_RE,
+        RAW_STATUS_TOKENS,
+        LIVE_SUFFIX_RE,
+    )
 
 
 @dataclass(frozen=True)

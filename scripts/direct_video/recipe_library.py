@@ -11,102 +11,58 @@ import sys
 import tempfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent / "shot_recipes"
-MEDIA = ROOT / "media"
+if __package__:
+    from .constants import (
+        RECIPE_LIBRARY_ROOT as ROOT,
+        RECIPE_LIBRARY_MEDIA as MEDIA,
+        NON_CATEGORY_DIRS,
+        CLIPS_MANIFEST,
+        UPSTREAM_COMMIT,
+        OPENMOTION_COMMIT,
+        REQUIRED_FIELDS,
+        PORTRAIT_READY,
+        POSTER_POSITION,
+        PREVIEW_MAX_WIDTH,
+        PREVIEW_FPS,
+        LOCAL_CLIP_SOURCE,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            RECIPE_LIBRARY_ROOT as ROOT,
+            RECIPE_LIBRARY_MEDIA as MEDIA,
+            NON_CATEGORY_DIRS,
+            CLIPS_MANIFEST,
+            UPSTREAM_COMMIT,
+            OPENMOTION_COMMIT,
+            REQUIRED_FIELDS,
+            PORTRAIT_READY,
+            POSTER_POSITION,
+            PREVIEW_MAX_WIDTH,
+            PREVIEW_FPS,
+            LOCAL_CLIP_SOURCE,
+        )
+    except ImportError:
+        from constants import (
+            RECIPE_LIBRARY_ROOT as ROOT,
+            RECIPE_LIBRARY_MEDIA as MEDIA,
+            NON_CATEGORY_DIRS,
+            CLIPS_MANIFEST,
+            UPSTREAM_COMMIT,
+            OPENMOTION_COMMIT,
+            REQUIRED_FIELDS,
+            PORTRAIT_READY,
+            POSTER_POSITION,
+            PREVIEW_MAX_WIDTH,
+            PREVIEW_FPS,
+            LOCAL_CLIP_SOURCE,
+        )
 # Top-level folders that are not recipe categories: media, upstream demo sources, upstream code kept verbatim.
-NON_CATEGORY_DIRS = {"demos", "media", "upstream"}
-CLIPS_MANIFEST = MEDIA / "clips.json"
 # Upstream motion previews are 62 MB, so they live outside git; fetch-clips restores them by SHA-256.
 CLIP_DIR = Path(os.environ.get("SHOT_RECIPE_CLIP_DIR", Path.home() / ".photo-content-os/media/shot_recipes/clips"))
-UPSTREAM_COMMIT = "3ac67b75dd0b3bc2fd807c17f6b7ce35373eef3d"
-OPENMOTION_COMMIT = "543c5002f6eebea04744927073e3e7bb873e541c"
-REQUIRED_FIELDS = {
-    "name": "id",
-    "一句话": "summary",
-    "适用": "use",
-    "时长": "duration",
-    "能量": "energy",
-}
 
 
 # Reviewed against the card action and timing for the pinned source.
-PORTRAIT_READY = {
-    "camera/crash-zoom-punch.md",
-    "camera/tension-camera-moves.md",
-    "data/before-after-slider-scrub.md",
-    "data/scroll-brake-moves.md",
-    "effects/aurora-bloom-bg-flip.md",
-    "effects/fui-hud-moves.md",
-    "effects/glow-flyline-moves.md",
-    "effects/icon-performance-moves.md",
-    "effects/impact-feedback.md",
-    "effects/light-play-moves.md",
-    "effects/riso-print-hits.md",
-    "effects/scan-bracket-sweep.md",
-    "effects/slam-entrance-moves.md",
-    "effects/spotlight-sweep-moves.md",
-    "interaction/glass-pill-dictation-typing.md",
-    "interaction/hashtag-to-pill-materialize.md",
-    "interaction/picker-carousel-feature-cycle.md",
-    "interaction/segmented-thumb-hero.md",
-    "interaction/theme-switch-moves.md",
-    "interaction/voice-waveform-live.md",
-    "opening/brand-ink-open.md",
-    "opening/fracture.md",
-    "opening/icon-field-colorize.md",
-    "opening/letterspace-materialize.md",
-    "opening/spotlight-hero-card.md",
-    "opening/stroke-segment-build.md",
-    "outro/grain-dissolve.md",
-    "outro/logo-shrink-wordmark-lockup.md",
-    "outro/ui-strip-away-outro.md",
-    "outro/ui-to-brand-morph.md",
-    "rhythm/beat-cut-moves.md",
-    "rhythm/beat-step-list-theme-cycle.md",
-    "rhythm/rhythm-interrupt-moves.md",
-    "rhythm/sakuga-timing-shift.md",
-    "rhythm/speed-ramp-freeze.md",
-    "rhythm/trailer-grammar-moves.md",
-    "transition/bottom-push-stack-wipe.md",
-    "transition/circle-match-iris.md",
-    "transition/gradient-transition.md",
-    "transition/page-turn-transitions.md",
-    "transition/print-texture-transitions.md",
-    "transition/shot-transitions.md",
-    "transition/tear-streak-transitions.md",
-    "transition/transition-travel.md",
-    "transition/white-flash-logo-simplify-cut.md",
-    "transition/wipe-transitions.md",
-    "typography/blur-slide.md",
-    "typography/brace-expand.md",
-    "typography/flying-words.md",
-    "typography/glitch-cycle.md",
-    "typography/gradient-word-sweep.md",
-    "typography/marker-underline-title.md",
-    "typography/outline-word-fill.md",
-    "typography/paper-title-card.md",
-    "typography/pill-slot-cycle.md",
-    "typography/title-demote-to-label.md",
-    "typography/type-assembly-moves.md",
-    "typography/type-entrance-moves.md",
-    "typography/type-rhythm-sync.md",
-    "typography/typewriter-moves.md",
-    "typography/vertical-word-roll-blur-cycle.md",
-    "typography/word-relay-geometry.md",
-    "ui-entrance/avatar-bracket-carousel.md",
-    "ui-entrance/cloner-depth-echo.md",
-    "ui-entrance/draw-svg-trace.md",
-    "ui-entrance/element-body-moves.md",
-    "ui-entrance/list-reveal.md",
-    "ui-entrance/list-stack-press.md",
-    "ui-entrance/neon-frame-forerun.md",
-    "ui-entrance/neon-frame-orbit-drop.md",
-    "ui-entrance/product-card-progressive-assemble.md",
-    "ui-entrance/radial-wave.md",
-    "ui-entrance/research-card-stack-scroll.md",
-    "ui-entrance/row-embed.md",
-    "ui-entrance/value-stagger-gradient.md",
-}
 
 
 def read_card(path, category):
@@ -155,10 +111,6 @@ def load_clips():
     return json.loads(CLIPS_MANIFEST.read_text(encoding="utf-8"))
 
 
-POSTER_POSITION = 0.9  # closest to upstream gallery posters: mean abs diff 9.0 vs 12.4 at the last frame (50 posters)
-PREVIEW_MAX_WIDTH = 960
-PREVIEW_FPS = 30
-LOCAL_CLIP_SOURCE = "render"
 
 
 def media_fields(recipe_id, category, clips):

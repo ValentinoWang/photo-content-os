@@ -10,8 +10,19 @@ import uuid
 
 from direct_video.media import atomic_bytes
 
-CATEGORIES = {'main': '主次不清', 'dim': '主次不清', 'del': '字太多', 'short': '字太多',
-              'space': '太空或挤在上面', 'color': '颜色乱', 'sync': '跟口播对不上'}
+if __package__:
+    from .constants import (
+        REVISION_LIBRARY_CATEGORIES as CATEGORIES,
+    )
+else:
+    try:
+        from scripts.direct_video.constants import (
+            REVISION_LIBRARY_CATEGORIES as CATEGORIES,
+        )
+    except ImportError:
+        from constants import (
+            REVISION_LIBRARY_CATEGORIES as CATEGORIES,
+        )
 
 
 def read_json(path: Path, default):

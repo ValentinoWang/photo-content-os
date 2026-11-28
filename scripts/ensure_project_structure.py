@@ -10,64 +10,23 @@ from pathlib import Path
 from media import ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, project_path, relative_posix
 
 
-PROJECT_DIRS = [
-    "work-cache",
-    "icloud-selected",
-    "icloud-selected/project-selected",
-    "icloud-selected/cover-candidates",
-    "icloud-selected/memorial",
-    "icloud-selected/phone-reusable",
-    "icloud-selected/live-photo-groups",
-    "icloud-selected/final-output",
-    "icloud-selected/pending-review",
-    "draft-project",
-    "draft-project/edit-handoff",
-    "draft-project/hyperframes",
-    "draft-project/hyperframes/src",
-    "draft-project/hyperframes/render-logs",
-    "output",
-    "output/v1",
-    "output/v2",
-    "output/final",
-    "output/hyperframes",
-    "sync-ready",
-    "sync-ready/outsourcing-pack",
-    "additions",
-]
+if __package__:
+    from .constants import (
+        PROJECT_DIRS,
+        WORKCACHE_DIRS,
+        PLACEHOLDER_FILES,
+        PROTECTED_TOP_LEVEL_DIRS,
+    )
+else:
+    from constants import (
+        PROJECT_DIRS,
+        WORKCACHE_DIRS,
+        PLACEHOLDER_FILES,
+        PROTECTED_TOP_LEVEL_DIRS,
+    )
 
-WORKCACHE_DIRS = [
-    "wink-exports",
-    "color-exports",
-    "collage-assets",
-    "collage-exports",
-    "publishing-images",
-    "dji-exports",
-    "insta360-exports",
-    "hyperframes-render-cache",
-    "transcode",
-]
 
-PLACEHOLDER_FILES = {
-    "icloud-selected/README.md": "# iCloud Photos 精选入库\n\n本目录只放准备导入 Mac 照片 App / iCloud 照片的精选副本，不保存全量项目素材。\n\n- `project-selected/`：项目代表照片、视频、情绪瞬间。\n- `cover-candidates/`：封面、首图、海报候选。\n- `memorial/`：超脱项目本身的人生节点、身份节点、重要关系和重要成果。\n- `phone-reusable/`：未来经常要在 iPhone / 移动端剪辑调用的通用素材。\n- `live-photo-groups/`：准备回导照片 App 的 HEIC/MOV/XMP 同名 Live Photo 组。\n- `final-output/`：Final、发布版、高光回看短片。\n- `pending-review/`：暂不确定归类的入库候选；确认后移动到 01-06。\n",
-    "draft-project/project-notes.md": "# 工程说明\n\n- 剪辑交接文件按项目版本保存到 `edit-handoff/<项目版本>/`。\n- 默认生成标准剪辑交接包；选择可编辑时间线时，生成开放时间线和 Kdenlive 工程。两种方式不会自动切换。\n- 旧剪映资料如已存在，只作为历史证据保留；新项目结构不再创建旧剪映导入目录。\n- HyperFrames 源工程放 `draft-project/hyperframes/`；导出素材放 `output/hyperframes/` 或回填 L3。\n- `work-cache/` 是本项目专属临时加工区，不作为长期成品区，也不等同于 `80/90/91/92` 的正式去向。\n- 拼图时从 L3 复制选中原图到 `work-cache/collage-assets`，成品先放 `work-cache/collage-exports`；人工确认后再回填 L3、`icloud-selected` 或 `output`。\n",
-    "draft-project/materials-used.md": "# 使用素材记录\n\n| 素材 | 用途 | 备注 |\n| --- | --- | --- |\n",
-    "draft-project/edit-handoff/README.md": "# 剪辑交接版本\n\n- 每个项目版本保存为一个不可覆盖的子目录，例如 `1/`、`2/`。\n- 标准剪辑交接包包含片段清单、字幕和交接说明。\n- 可编辑时间线包含时间线、Kdenlive 工程和回读校验。\n- 改脚本、镜头、顺序、时长或素材前，先通过 Media Bot 提交并确认修改；不要覆盖旧版本。\n",
-    "draft-project/hyperframes/README.md": "# HyperFrames\n\n- `src/`：HyperFrames 源工程、prompt、组件配置。\n- `render-logs/`：渲染记录、审核记录、错误记录。\n- 导出的 MP4/PNG/透明叠加素材放入 `output/hyperframes/` 或回填 L3。\n- HyperFrames 源工程不是剪映草稿，进入剪映的只应是导出的媒体文件。\n",
-    "sync-ready/sync-checklist.md": "# 项目同步检查清单\n\n- [ ] L3 根部项目可用素材已整理\n- [ ] icloud-selected只放 iCloudReady 内容，且已归入 01-06 子目录\n- [ ] draft-project 已包含工程说明、导入包、官方备份包或 HyperFrames 源工程\n- [ ] output 已放成片和必要的 HyperFrames 导出素材\n- [ ] 如需合照发放，已运行 distribute_group_photos_by_name.py 生成发放副本\n- [ ] additions 不进入阿里云盘镜像\n- [ ] 剪映真实草稿活动根不进入阿里云盘镜像\n- [ ] work-cache 只保留必要的临时加工副本，不作为远程长期镜像\n- [ ] ai-analysis 清单、summary、plan、project_overview 已同步；keyframes/audio 按空间情况处理\n",
-    "aliyun-sync-manifest.md": "# 阿里云盘同步记录\n\n- 同步方向：Mac 本地项目文件夹 -> 阿里云盘远程镜像\n- 不同步：additions、未完成临时转码文件、软件缓存、本地删除复核区、剪映真实草稿活动根、work-cache 中未确认的临时加工副本\n- draft-project 可以同步工程说明、导入包、官方备份包和 HyperFrames 源工程；不代表真实剪映活动草稿也在项目内。\n- ai-analysis 默认同步清单、summary、plan、project_overview；keyframes/audio 可按空间情况排除。\n",
-}
 
-PROTECTED_TOP_LEVEL_DIRS = {
-    "raw-vault",
-    "work-cache",
-    "icloud-selected",
-    "draft-project",
-    "output",
-    "sync-ready",
-    "group-photo-distribution",
-    ANALYSIS_DIR,
-    "additions",
-}
 
 
 def workcache_root_for_project(project: Path) -> Path:

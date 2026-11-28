@@ -12,8 +12,16 @@ from typing import Any
 from media import ANALYSIS_DIR, file_sha256 as sha256_file, now_iso, project_path, safe_slug
 
 
-EXCLUDED_TOP_LEVELS = {"work-cache", "additions", "icloud-selected", "archive", "library"}
-REQUIRED_DIRS = {"draft-project", "output", "sync-ready"}
+if __package__:
+    from .constants import (
+        EXCLUDED_TOP_LEVELS,
+        REQUIRED_DIRS,
+    )
+else:
+    from constants import (
+        EXCLUDED_TOP_LEVELS,
+        REQUIRED_DIRS,
+    )
 
 
 def readiness(project: Path) -> dict[str, Any]:
