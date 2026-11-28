@@ -1,4 +1,4 @@
-"""Persisted direct-video generation; all model traffic uses llm_common.
+"""Persisted direct-video generation; all model traffic uses llm.
 
 Shot instructions originate in the user's direct-video-shots skill; motion rules
 partly derive from HeyGen HyperFrames (Apache-2.0).
@@ -19,7 +19,7 @@ import time
 import uuid
 import wave
 
-import llm_common
+import llm
 from direct_video.lint import declared_seconds, lint
 from direct_video.media import FPS, LocalMedia, OutputCheckError, atomic_bytes, wav_seconds
 from direct_video.revisions import RevisionMixin, empty_look
@@ -220,7 +220,7 @@ def failure_code(exc: Exception, default='generation_failed') -> str:
         return 'output_check_failed'
     if isinstance(exc, DirectVideoError):
         return exc.code
-    if isinstance(exc, llm_common.LLMError):
+    if isinstance(exc, llm.LLMError):
         text = str(exc).lower()
         return 'model_timeout' if 'timed out' in text else 'claude_cli_unavailable' if 'required' in text or 'could not start' in text else 'model_failed'
     return default
@@ -238,7 +238,7 @@ class Generator(StyleMixin, RevisionMixin):
         self.slots = threading.BoundedSemaphore(workers)
         self.lock = threading.RLock()
         self.active = set()
-        self.model_call = model_call or llm_common.generate_text
+        self.model_call = model_call or llm.generate_text
         self.media = media or LocalMedia()
         self.library = RevisionLibrary(state_dir)
         self.recover()
@@ -420,7 +420,7 @@ class Generator(StyleMixin, RevisionMixin):
         text = self.model_call(provider='claude_cli', model=MODEL, system_prompt=system,
                                user_prompt=json.dumps(user, ensure_ascii=False), **options)
         try:
-            return llm_common.parse_json_response(text, require=dict)
+            return llm.parse_json_response(text, require=dict)
         except ValueError as exc:
             raise DirectVideoError('model_json_invalid') from exc
 

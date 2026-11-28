@@ -9,7 +9,7 @@ import math
 import shutil
 from pathlib import Path
 
-from media_common import (
+from media import (
     ANALYSIS_DIR,
     IMAGE_EXTS,
     ensure_project_additions_dir,
@@ -19,7 +19,7 @@ from media_common import (
     project_path,
     relative_posix,
 )
-from project_bootstrap_common import run_project_analysis as run_analysis
+from project_bootstrap import run_project_analysis as run_analysis
 
 
 SUPPORTED_IMAGE_EXTS = IMAGE_EXTS - {".heic", ".heif"}

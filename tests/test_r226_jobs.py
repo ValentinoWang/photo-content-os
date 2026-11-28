@@ -9,7 +9,7 @@ from types import SimpleNamespace
 import pytest
 
 from tests.test_r226_api import setup,arrange,body,check,put,FIXTURE,fake_generated
-from studio.roughcut_service import RoughcutService
+from studio.roughcut import RoughcutService
 from studio.roughcut_store import RoughcutError
 
 
@@ -355,7 +355,7 @@ def test_stop_interrupts_beat_wait_and_does_not_cancel_shared_analysis(setup):
 
 
 def test_pending_beats_back_off_and_timeout_at_thirty_minutes(setup,monkeypatch):
-    import studio.roughcut_service as module
+    import studio.roughcut as module
     service,app,identity,root=setup
     service.poll_interval=.5
     now=[0.];delays=[]
@@ -387,7 +387,7 @@ def test_pending_beats_end_with_original_failure_code(setup,code):
 
 def test_missing_reader_is_not_missing_song(setup,monkeypatch):
     service,app,identity,root=setup
-    import studio.roughcut_service as module
+    import studio.roughcut as module
     def missing(name,*args,**kwargs):raise ImportError('not merged')
     monkeypatch.setattr(module.importlib,'import_module',missing)
     service.beat_loader=None

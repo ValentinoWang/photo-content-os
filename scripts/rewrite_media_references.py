@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 
 from migrate_media_layout import mapped_path
-from media_common import write_bytes_atomic
+from media import write_bytes_atomic
 
 
 def sha256(data: bytes) -> str:

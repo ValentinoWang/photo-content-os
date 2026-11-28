@@ -9,7 +9,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-from jianying_roughcut_common import ContractError, count_plan_clips, ffprobe_duration_sec, load_json, load_yaml, write_yaml
+from jianying_roughcut import ContractError, count_plan_clips, ffprobe_duration_sec, load_json, load_yaml, write_yaml
 
 
 def ffprobe_video_stream(path: Path) -> dict[str, Any]:

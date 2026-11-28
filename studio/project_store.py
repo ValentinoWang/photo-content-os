@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator, Mapping
-from scripts.media_common import write_text_atomic
+from scripts.media import write_text_atomic
 
 try:
     import fcntl
@@ -48,11 +48,11 @@ class ProjectStoreError(ValueError):
     message: str
     def __str__(self) -> str: return f"{self.code}: {self.message}"
 
-# Semantic baseline: scripts/media_common.py's utc_now_z() (TF-09) -- byte-identical
+# Semantic baseline: scripts/media.py's utc_now_z() (TF-09) -- byte-identical
 # to this function. Kept as its own definition rather than importing across the
 # studio/ <-> scripts/ boundary: studio/server.py adds scripts/ to sys.path before
 # importing this module, but tests/test_p2_project_store.py imports it directly with
-# only the repo root on sys.path, so `from media_common import utc_now_z` would break
+# only the repo root on sys.path, so `from media import utc_now_z` would break
 # under that entrypoint without also adding path-setup here. If either producer's
 # format ever needs to change, change both together.
 def _now() -> str: return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")

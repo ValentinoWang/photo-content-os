@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
 from typing import Any, TypeAlias
-from scripts.media_common import write_json_atomic
+from scripts.media import write_json_atomic
 
 
 SCHEMA_VERSION = 1

@@ -20,7 +20,7 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 from studio.project_store import ProjectStoreError, _atomic, _thread_lock
-from media_common import utc_now_iso as now
+from media import utc_now_iso as now
 from runtime_paths import local_media_root
 from music_library.library import MusicLibrary
 

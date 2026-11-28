@@ -70,7 +70,7 @@ class MaterialMatchReportContractTests(unittest.TestCase):
         the report used to pass validate_report despite its frontmatter fence
         never actually being closed per the strict_contract format.
 
-        After the fix (parse_frontmatter now delegates to llm_common's
+        After the fix (parse_frontmatter now delegates to llm's
         line-exact "---" closing detection), "---foo" is no longer treated as
         a closing fence, this document has no usable frontmatter at all, and
         validate_report must reject it as missing every required field

@@ -30,7 +30,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from media_common import utc_now_iso as _now_iso
+from media import utc_now_iso as _now_iso
 from .cache import read_json, write_json
 from .errors import MusicError
 

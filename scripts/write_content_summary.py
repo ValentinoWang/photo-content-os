@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from llm_common import (
+from llm import (
     DEFAULT_CREATIVE_MODEL,
     DEFAULT_REASONING_EFFORT,
     LLMError,
@@ -21,7 +21,7 @@ from llm_common import (
     public_llm_error,
     generate_text,
 )
-from media_common import (
+from media import (
     SUMMARY_GLOB,
     analysis_dir,
     analysis_plan_path,

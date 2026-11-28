@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from jianying_roughcut_common import ContractError, load_yaml
+from jianying_roughcut import ContractError, load_yaml
 
 
 def target_video_spec(edit_manifest: Path) -> tuple[int, int, int]:

@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from media_common import ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, project_path, relative_posix
+from media import ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, project_path, relative_posix
 
 
 PROJECT_DIRS = [

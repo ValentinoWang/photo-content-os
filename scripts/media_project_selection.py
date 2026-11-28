@@ -30,7 +30,7 @@ if str(SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(SYSTEM_ROOT))
 
 from openclaw_product_contract import ProductContractError, video_digest  # noqa: E402
-from media_common import utc_now_datetime as _now  # noqa: E402
+from media import utc_now_datetime as _now  # noqa: E402
 from runtime_paths import local_media_root  # noqa: E402
 from studio.direct_handoff_contract import (  # noqa: E402
     RUN_RECORD_IDENTITY_KEYS,

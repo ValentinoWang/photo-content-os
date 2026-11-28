@@ -26,7 +26,7 @@ import uuid
 from pathlib import Path
 from typing import Any, Protocol
 
-from media_common import load_manifest, project_path, safe_project_file as _safe_audio_path, save_manifest, transcripts_dir
+from media import load_manifest, project_path, safe_project_file as _safe_audio_path, save_manifest, transcripts_dir
 
 SCHEMA_VERSION = "audio_transcript_v1"
 DEFAULT_OPENAI_MODEL = "gpt-4o-mini-transcribe"

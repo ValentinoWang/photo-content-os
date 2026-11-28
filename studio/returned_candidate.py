@@ -8,7 +8,7 @@ from pathlib import Path
 
 from edit_backends.interface import BackendError
 from edit_backends.kdenlive_render import probe_media, srt_timestamp
-from media_common import file_sha256
+from media import file_sha256
 from openclaw_product_contract import video_digest
 from video_candidate import preview_video, waveform_peaks
 

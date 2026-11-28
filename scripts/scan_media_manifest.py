@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from media_common import (
+from media import (
     IMAGE_EXTS,
     MEDIA_EXTS,
     METADATA_EXTS,

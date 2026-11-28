@@ -18,7 +18,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'scripts')]
-import llm_common
+import llm
 from direct_video.generate import DirectVideoError, Generator, allocate_timing, parse_shots, validate_code, validate_design
 from direct_video.lint import lint
 from direct_video.media import wav_seconds
@@ -214,7 +214,7 @@ def test_fake_cli_isolated(provider, fake_claude, monkeypatch, tmp_path):
     _, record = fake_claude
     monkeypatch.setenv('CLAUDECODE', '1')
     monkeypatch.setenv('OPENCLAW_CLAUDE_CONFIG_DIR', str(tmp_path / 'account'))
-    assert llm_common.generate_text(provider=provider, system_prompt='secret-system', user_prompt='secret-user') == 'ok'
+    assert llm.generate_text(provider=provider, system_prompt='secret-system', user_prompt='secret-user') == 'ok'
     data = json.loads(record.read_text())
     assert 'secret-system' in data['prompt'] and 'secret-user' in data['prompt']
     assert 'secret-system' not in ' '.join(data['args'])
@@ -235,24 +235,24 @@ def test_fake_cli_isolated(provider, fake_claude, monkeypatch, tmp_path):
 def test_fake_cli_errors_do_not_leak(mode, fake_claude, monkeypatch):
     monkeypatch.setenv('FAKE_MODE', mode)
     monkeypatch.setenv('OPENCLAW_CLAUDE_TIMEOUT_SEC', '1')
-    with pytest.raises(llm_common.LLMError) as error:
-        llm_common.generate_text(provider='claude', system_prompt='never-leak', user_prompt='private-prompt')
+    with pytest.raises(llm.LLMError) as error:
+        llm.generate_text(provider='claude', system_prompt='never-leak', user_prompt='private-prompt')
     assert 'never-leak' not in str(error.value) and 'private-prompt' not in str(error.value)
 
 
 @pytest.mark.parametrize('timeout', ['0', '-1', 'bad'])
 def test_cli_invalid_timeout(fake_claude, monkeypatch, timeout):
     monkeypatch.setenv('OPENCLAW_CLAUDE_TIMEOUT_SEC', timeout)
-    with pytest.raises(llm_common.LLMError):
-        llm_common.generate_text(provider='claude', system_prompt='', user_prompt='')
+    with pytest.raises(llm.LLMError):
+        llm.generate_text(provider='claude', system_prompt='', user_prompt='')
 
 
 def test_cli_missing_and_image_rejected(monkeypatch, fake_claude):
-    with pytest.raises(llm_common.LLMError):
-        llm_common.generate_text(provider='claude', system_prompt='', user_prompt='', image_paths=[Path('image.png')])
+    with pytest.raises(llm.LLMError):
+        llm.generate_text(provider='claude', system_prompt='', user_prompt='', image_paths=[Path('image.png')])
     monkeypatch.setenv('OPENCLAW_CLAUDE_BIN', 'r276-nonexistent-binary')
-    with pytest.raises(llm_common.LLMError):
-        llm_common.generate_text(provider='claude', system_prompt='', user_prompt='')
+    with pytest.raises(llm.LLMError):
+        llm.generate_text(provider='claude', system_prompt='', user_prompt='')
 
 
 def test_lint_errors_and_warning():
@@ -461,7 +461,7 @@ def test_failed_design_and_model_timeout_are_bounded(tmp_path):
     def timeout(**kwargs):
         if 'shots' in json.loads(kwargs['user_prompt']):
             return json.dumps(design([{'shotId': '01'}]))
-        raise llm_common.LLMError('claude CLI generation timed out after 300s')
+        raise llm.LLMError('claude CLI generation timed out after 300s')
     gen = Generator(tmp_path / 'timeout', model_call=timeout, media=FakeMedia())
     job = gen.create('project1', {'script': '一句话。', 'style': '浅底图解'})
     result = wait(gen, job)

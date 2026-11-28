@@ -9,7 +9,7 @@ from copy import deepcopy
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any, Iterable
 
-from media_common import media_id, write_json_atomic
+from media import media_id, write_json_atomic
 
 
 SCHEMA_VERSION = "asset_library_index_v1"

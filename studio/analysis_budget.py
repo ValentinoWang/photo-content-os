@@ -6,7 +6,7 @@ import json
 import threading
 from pathlib import Path
 from typing import Any, Mapping
-from scripts.media_common import write_json_atomic
+from scripts.media import write_json_atomic
 
 
 SCHEMA_VERSION = "analysis_budget_settings_v1"

@@ -195,7 +195,7 @@ def test_studio_render_to_actual_preview_ref(rendered, tmp_path, monkeypatch):
     from http.server import ThreadingHTTPServer
     from studio.project_store import ProjectStore
     from studio.server import StudioApplication
-    from media_common import file_sha256
+    from media import file_sha256
     root, _, video, _ = rendered
     # Exercise the supported pre-captioned native-export branch without relying
     # on this host's optional FFmpeg drawtext build.

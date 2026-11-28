@@ -18,7 +18,7 @@ from typing import Any
 
 import yaml
 
-from media_common import now_iso, read_yaml_mapping, safe_slug, write_json_atomic
+from media import now_iso, read_yaml_mapping, safe_slug, write_json_atomic
 from queue_identity import RESULT_OUTBOX, TASK_INBOX, VOLATILE_TASK_FIELDS, request_fingerprint
 from runtime_paths import obsidian_root, workspace_root as _shared_workspace_root
 

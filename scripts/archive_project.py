@@ -9,7 +9,7 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from media_common import ANALYSIS_DIR, file_sha256 as sha256_file, now_iso, project_path, safe_slug
+from media import ANALYSIS_DIR, file_sha256 as sha256_file, now_iso, project_path, safe_slug
 
 
 EXCLUDED_TOP_LEVELS = {"work-cache", "additions", "icloud-selected", "archive", "library"}

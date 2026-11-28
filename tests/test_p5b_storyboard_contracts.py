@@ -17,7 +17,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 storyboard = load_script("generate_storyboard_edl.py", "p5b_storyboard", register=True)
 jianying = load_script("generate_jianying_draft_plan.py", "p5b_jianying", register=True)
-import jianying_roughcut_common as roughcut_common  # noqa: E402
+import jianying_roughcut as roughcut_common  # noqa: E402
 
 
 def valid_edl() -> dict[str, object]:
@@ -122,7 +122,7 @@ class StoryboardContractTests(unittest.TestCase):
             summaries = project / "ai-analysis" / "summaries"
             summaries.mkdir(parents=True)
             stem = "a b c，测试"
-            from media_common import directory_slug
+            from media import directory_slug
 
             expected = "画面事实：人物进入画面。\n证据边界：仅支持这一结论。"
             (summaries / f"asset-m1-{directory_slug(stem, 'clip')}.summary.md").write_text(expected, encoding="utf-8")

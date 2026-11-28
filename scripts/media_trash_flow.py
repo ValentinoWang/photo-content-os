@@ -14,7 +14,7 @@ from collections.abc import Callable, Mapping, Sequence
 from datetime import datetime, timezone
 from pathlib import Path, PureWindowsPath
 from typing import Any, Protocol
-from media_common import write_text_atomic
+from media import write_text_atomic
 
 from media_delete_recommendations import (
     CANDIDATE_STATE,

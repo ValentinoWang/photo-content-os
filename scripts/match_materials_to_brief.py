@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from llm_common import (
+from llm import (
     DEFAULT_CREATIVE_MODEL,
     DEFAULT_REASONING_EFFORT,
     LLMError,
@@ -27,7 +27,7 @@ from llm_evidence_context import (
     summary_text as _shared_summary_text,
     transcript_segments as _shared_transcript_segments,
 )
-from media_common import eligible_item, is_raw360_item, load_manifest, project_path
+from media import eligible_item, is_raw360_item, load_manifest, project_path
 
 
 MAX_ITEMS = 180

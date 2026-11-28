@@ -15,7 +15,7 @@ from asset_library_index import (
     stable_asset_id,
     upsert_asset,
 )
-from media_common import file_sha256, path_inside, project_path, relative_posix, directory_slug, write_text_atomic
+from media import file_sha256, path_inside, project_path, relative_posix, directory_slug, write_text_atomic
 
 
 DEFAULT_INDEX_NAME = "reusable-assets.md"

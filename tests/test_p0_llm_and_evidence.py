@@ -13,7 +13,7 @@ from _support import load_script
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-import llm_common  # noqa: E402
+import llm  # noqa: E402
 
 
 summary_module = load_script("write_content_summary.py", "content_summary_under_test")
@@ -38,8 +38,8 @@ class LLMAndEvidenceTests(unittest.TestCase):
                     stderr = ""
                 return Completed()
 
-            with patch.object(llm_common.shutil, "which", return_value="/fake/codex"), patch.object(llm_common.subprocess, "run", side_effect=fake_run):
-                result = llm_common.generate_text_with_codex_cli(
+            with patch.object(llm.shutil, "which", return_value="/fake/codex"), patch.object(llm.subprocess, "run", side_effect=fake_run):
+                result = llm.generate_text_with_codex_cli(
                     system_prompt="系统",
                     user_prompt="中文输入",
                     image_paths=[image],

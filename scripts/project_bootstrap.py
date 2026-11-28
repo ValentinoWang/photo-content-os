@@ -10,7 +10,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-from media_common import directory_slug, ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, safe_slug
+from media import directory_slug, ANALYSIS_DIR, MEDIA_EXTS, now_iso, path_inside as inside, safe_slug
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

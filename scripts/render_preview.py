@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from edl_contract import load_and_normalise, parse_time_range, require_flat_timeline
-from media_common import safe_project_file
+from media import safe_project_file
 from audio_plan import compile_audio_plan, probe_audio_source
 
 
@@ -32,7 +32,7 @@ class PreviewClip:
 
 
 def _safe_source(project: Path, raw: str, *, require_exists: bool) -> Path:
-    """L-07: shares media_common.safe_project_file's resolution/escape-guard core.
+    """L-07: shares media.safe_project_file's resolution/escape-guard core.
 
     Kept as a local wrapper (not a direct call) because this script's failure
     mode is a raised PreviewError, and require_exists (allowing a plan to

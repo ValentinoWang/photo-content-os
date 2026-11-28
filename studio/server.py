@@ -30,7 +30,7 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from media_project_selection import SelectionError, StudioConfirmationStore
-from scripts.media_common import write_json_atomic
+from scripts.media import write_json_atomic
 from studio.direct_handoff_contract import selection_root
 from studio.media_review import MediaReview
 from studio.review_jobs import ReviewJobs
@@ -57,7 +57,7 @@ from studio.onboarding_state import (  # type: ignore  # noqa: E402
 )
 from studio.project_store import DOCUMENT_NAMES, ProjectStore, ProjectStoreError  # type: ignore  # noqa: E402
 from studio.upstream_session import UpstreamSessionConsumer, UpstreamSessionContractError  # type: ignore  # noqa: E402
-from llm_common import LLMError, load_creator_context  # type: ignore  # noqa: E402
+from llm import LLMError, load_creator_context  # type: ignore  # noqa: E402
 from direct_video.generate import DirectVideoError  # noqa: E402
 from media_delete_recommendations import (  # type: ignore  # noqa: E402
     DeleteRecommendationError,
@@ -1462,7 +1462,7 @@ class StudioApplication:
                                 )
                                 persona = str(load_creator_context(workspace, brief_text=brief_text).get("persona") or "")
                             try:
-                                from llm_common import generate_text
+                                from llm import generate_text
 
                                 replacements = generate_patch(
                                     document_name=document,
@@ -1556,7 +1556,7 @@ class StudioApplication:
                     return False
                 if not is_roughcut_route(parsed.path):
                     return False
-                from studio.roughcut_service import dispatch, MediaSlice
+                from studio.roughcut import dispatch, MediaSlice
                 from studio.roughcut_store import RoughcutError
                 try:
                     self._assert_write() if method != 'GET' else self._assert_local()

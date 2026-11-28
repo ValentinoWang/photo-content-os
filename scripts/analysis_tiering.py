@@ -15,7 +15,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
-from media_common import file_sha256, stable_json_hash  # noqa: F401  (re-exported: L-13/r8)
+from media import file_sha256, stable_json_hash  # noqa: F401  (re-exported: L-13/r8)
 
 POLICY_VERSION = "analysis_tiering_v1"
 SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas" / "analysis-tiering.schema.json"

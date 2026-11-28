@@ -14,7 +14,7 @@ from studio.server import StudioApplication
 
 def test_utc_timestamp_uses_same_format_in_music_and_review(monkeypatch):
     from datetime import datetime, timezone
-    import media_common
+    import media
     from music_library import ai_generate, library
     from studio import media_review
 
@@ -24,7 +24,7 @@ def test_utc_timestamp_uses_same_format_in_music_and_review(monkeypatch):
             assert tz is timezone.utc
             return datetime(2026, 11, 28, 1, 2, 3, 456789, tzinfo=timezone.utc)
 
-    monkeypatch.setattr(media_common, 'datetime', FixedDatetime)
+    monkeypatch.setattr(media, 'datetime', FixedDatetime)
     expected = '2026-11-28T01:02:03.456789+00:00'
     assert [library.now(), ai_generate._now_iso(), media_review.now()] == [expected] * 3
 

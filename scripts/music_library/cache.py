@@ -6,7 +6,7 @@ from pathlib import Path
 import urllib.error
 import urllib.request
 from urllib.parse import urljoin, urlsplit
-from media_common import write_json_atomic
+from media import write_json_atomic
 
 from .errors import MusicError, NetworkFailure
 from .network import MusicOpener, network_failure

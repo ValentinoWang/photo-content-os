@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from project_bootstrap_common import ensure_formal_project_for_batch
+from project_bootstrap import ensure_formal_project_for_batch
 from runtime_paths import workspace_root as _shared_workspace_root
 
 

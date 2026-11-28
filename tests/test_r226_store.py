@@ -129,7 +129,7 @@ def test_two_processes_share_the_preset_cas_lock(setup):
 from pathlib import Path
 from studio.server import StudioApplication
 from studio.project_store import ProjectStore
-from studio.roughcut_service import RoughcutService
+from studio.roughcut import RoughcutService
 from studio.roughcut_store import RoughcutError
 app=StudioApplication(ProjectStore(Path(sys.argv[1])));service=RoughcutService(app,start_jobs=False)
 original=service.store.mine

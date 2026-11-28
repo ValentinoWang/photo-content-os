@@ -9,11 +9,11 @@ from typing import Any
 
 import yaml
 
-from media_common import ANALYSIS_DIR, now_iso
-from project_bootstrap_common import BATCH_NOTE_NAME as BATCH_NOTE
-from project_bootstrap_common import count_media_files
-from project_bootstrap_common import normalize_label
-from project_bootstrap_common import parse_batch_note as _shared_parse_batch_note
+from media import ANALYSIS_DIR, now_iso
+from project_bootstrap import BATCH_NOTE_NAME as BATCH_NOTE
+from project_bootstrap import count_media_files
+from project_bootstrap import normalize_label
+from project_bootstrap import parse_batch_note as _shared_parse_batch_note
 
 
 from runtime_paths import obsidian_root

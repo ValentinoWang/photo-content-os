@@ -20,7 +20,7 @@ sys.path.insert(0, str(SCRIPTS))
 import mac_openclaw_runner as runner  # noqa: E402
 import openclaw_product_contract as contract  # noqa: E402
 import validate_content_os_task as validator  # noqa: E402
-from llm_common import REQUIRED_CREATIVE_MODEL, REQUIRED_CREATIVE_REASONING  # noqa: E402
+from llm import REQUIRED_CREATIVE_MODEL, REQUIRED_CREATIVE_REASONING  # noqa: E402
 
 
 refresh = load_script("refresh_openclaw_media_contract_snapshot.py", "wave6_snapshot_refresh", register=True)

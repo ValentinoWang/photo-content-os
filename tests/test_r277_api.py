@@ -5,7 +5,7 @@ import pytest
 
 from test_r276_direct_api import api, create
 from test_r277_revisions import image_claude, ImageMedia
-import llm_common
+import llm
 
 
 def idle(app):
@@ -18,7 +18,7 @@ def idle(app):
 
 def test_revision_routes_artifacts_samples_and_privacy(api, image_claude):
     request, csrf, pid, app, host = api
-    app.direct_video.generator.model_call = llm_common.generate_text
+    app.direct_video.generator.model_call = llm.generate_text
     app.direct_video.generator.media = ImageMedia()
     base, job = create(api)
     shot = base + '/shots/01/'
@@ -71,7 +71,7 @@ def test_revision_routes_artifacts_samples_and_privacy(api, image_claude):
 
 def test_log_proposal_adopt_reject_http(api, image_claude):
     request, csrf, pid, app, host = api
-    app.direct_video.generator.model_call = llm_common.generate_text
+    app.direct_video.generator.model_call = llm.generate_text
     app.direct_video.generator.media = ImageMedia()
     base, job = create(api)
     lines = [{'text': '柱子变灰', 'boxId': 'b3', 'action': 'dim'}]*3

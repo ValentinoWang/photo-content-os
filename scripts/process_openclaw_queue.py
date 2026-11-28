@@ -18,8 +18,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from media_common import file_sha256 as sha256_file, now_iso, read_json_object, safe_slug, write_json_atomic
-from project_bootstrap_common import BATCH_NOTE_NAME, LOCAL_LINK_DIR, count_media_files, ensure_formal_project_for_batch
+from media import file_sha256 as sha256_file, now_iso, read_json_object, safe_slug, write_json_atomic
+from project_bootstrap import BATCH_NOTE_NAME, LOCAL_LINK_DIR, count_media_files, ensure_formal_project_for_batch
 from queue_identity import VOLATILE_TASK_FIELDS, request_fingerprint
 
 

@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from edl_contract import EDLContractError, normalise_edl, write_edl
-from llm_common import (
+from llm import (
     DEFAULT_CREATIVE_MODEL,
     DEFAULT_REASONING_EFFORT,
     MAX_PROMPT_SUMMARY_CHARS,
@@ -28,7 +28,7 @@ from llm_evidence_context import (
     summary_text as _shared_summary_text,
     transcript_segments as _shared_transcript_segments,
 )
-from media_common import eligible_item, is_raw360_item, load_manifest, project_path
+from media import eligible_item, is_raw360_item, load_manifest, project_path
 
 MAX_ITEMS = 140
 MAX_SUMMARY_CHARS = MAX_PROMPT_SUMMARY_CHARS

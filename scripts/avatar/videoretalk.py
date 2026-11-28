@@ -17,7 +17,7 @@ import requests
 _SCRIPTS = Path(__file__).resolve().parents[1]
 if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
-from media_common import write_json_atomic
+from media import write_json_atomic
 
 BASE = 'https://dashscope.aliyuncs.com/api/v1'
 TIMEOUT = (10, 60)

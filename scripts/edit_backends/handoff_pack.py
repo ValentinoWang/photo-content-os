@@ -32,10 +32,10 @@ from edl_contract import AUDIO_CLIP_FIELDS, EDLContractError, normalise_edl  # n
 from audio_plan import audio_operations, compile_audio_plan, probe_audio_source  # noqa: E402
 from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
-from media_common import file_sha256 as sha256_file  # noqa: E402
-from media_common import is_raw360_path  # noqa: E402
-from media_common import utc_now_z as utc_now  # noqa: E402
-from media_common import write_json_atomic  # noqa: E402
+from media import file_sha256 as sha256_file  # noqa: E402
+from media import is_raw360_path  # noqa: E402
+from media import utc_now_z as utc_now  # noqa: E402
+from media import write_json_atomic  # noqa: E402
 
 
 SPEC_VERSION = "content_os_v0.2"
@@ -101,7 +101,7 @@ def read_json_object(path: Path, *, label: str) -> dict[str, Any]:
 
 
 def is_raw360(path: Path) -> bool:
-    """Delegates to the shared media_common.is_raw360_path (see L-02 dedup)."""
+    """Delegates to the shared media.is_raw360_path (see L-02 dedup)."""
     return is_raw360_path(path)
 
 

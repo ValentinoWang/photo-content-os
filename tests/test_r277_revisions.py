@@ -15,7 +15,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'scripts')]
-import llm_common
+import llm
 from direct_video.generate import DirectVideoError, Generator, RULES
 from direct_video.revisions import validate_findings, validate_lines, validate_verify
 from studio.direct_video import projection
@@ -116,8 +116,8 @@ def test_image_stream_keeps_isolation_and_validated_bytes(ready_image, monkeypat
     assert base64.b64decode(content[0]['source']['data']).startswith(b'\xff\xd8')
     assert job['shots'][0]['look']['status'] == 'done'
     assert job['shots'][0]['checks']['errors'] == []
-    with pytest.raises(llm_common.LLMError):
-        llm_common.generate_text(provider='claude', system_prompt='', user_prompt='{}', image_paths=[Path('missing.jpg')])
+    with pytest.raises(llm.LLMError):
+        llm.generate_text(provider='claude', system_prompt='', user_prompt='{}', image_paths=[Path('missing.jpg')])
 
 
 @pytest.mark.parametrize('action', ['revise', 'rewrite'])
@@ -427,8 +427,8 @@ print(json.dumps({'type':'result','result':' ' if mode=='empty' else raw,'is_err
     Image.new('RGB', (8, 8), 'red').save(image)
     monkeypatch.setenv('OPENCLAW_CLAUDE_BIN', str(path))
     monkeypatch.setenv('OPENCLAW_CLAUDE_TIMEOUT_SEC', '1')
-    with pytest.raises(llm_common.LLMError) as error:
-        llm_common.generate_text(provider='claude', system_prompt='private-system', user_prompt='private-user', image_paths=[image])
+    with pytest.raises(llm.LLMError) as error:
+        llm.generate_text(provider='claude', system_prompt='private-system', user_prompt='private-user', image_paths=[image])
     assert 'private-system' not in str(error.value) and 'private-user' not in str(error.value)
 
 

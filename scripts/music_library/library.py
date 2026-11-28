@@ -10,7 +10,7 @@ from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 
 from runtime_paths import local_media_root
-from media_common import utc_now_iso as now
+from media import utc_now_iso as now
 from .audio import measure_audio
 from .cache import read_json, write_json
 from .errors import MusicError, MemberRequired
@@ -27,7 +27,7 @@ def file_hash(path):
 
 def validate_track(track):
     if isinstance(track, dict) and track.get('schema_version') == 1:
-        raise MusicError('曲库是 v1，请先运行迁移：scripts/migrate_music_library_v2.py')
+        raise MusicError('曲库是 v1，请先运行迁移：scripts/migrate_music_library.py')
     try:
         Draft202012Validator(read_json(SCHEMA, '曲目规范'), format_checker=FormatChecker()).validate(track)
     except Exception as exc:
@@ -66,7 +66,7 @@ class MusicLibrary:
             return []
         index = read_json(index_path, '音乐库索引')
         if isinstance(index, dict) and index.get('schema_version') == 1:
-            raise MusicError('曲库是 v1，请先运行迁移：scripts/migrate_music_library_v2.py')
+            raise MusicError('曲库是 v1，请先运行迁移：scripts/migrate_music_library.py')
         if not isinstance(index, dict) or index.get('schema_version') != 2 or not isinstance(index.get('tracks'), list):
             raise MusicError('音乐库索引格式损坏，请维护者修复')
         tracks = index['tracks']

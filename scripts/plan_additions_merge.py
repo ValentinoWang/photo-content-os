@@ -8,7 +8,7 @@ import json
 import re
 from pathlib import Path
 
-from media_common import (
+from media import (
     ANALYSIS_DIR,
     IMAGE_EXTS,
     MEDIA_EXTS,

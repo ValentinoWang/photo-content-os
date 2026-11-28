@@ -57,19 +57,19 @@ skills:
 reuse_ownership:
   atomic_write:
     owner_kind: shared_module
-    owner: scripts/media_common.py
+    owner: scripts/media.py
     rule: atomic-write
     scope: [scripts, studio]
     exceptions: []
   json_persistence:
     owner_kind: shared_module
-    owner: scripts/media_common.py
+    owner: scripts/media.py
     rule: json-persistence
     scope: [scripts, studio]
     exceptions: []
   current_time:
     owner_kind: shared_module
-    owner: scripts/media_common.py
+    owner: scripts/media.py
     rule: current-time
     scope: [scripts, studio]
     exceptions: []

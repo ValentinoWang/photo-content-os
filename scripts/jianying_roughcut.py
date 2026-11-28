@@ -12,7 +12,7 @@ import yaml
 
 from edl_contract import EDLContractError
 from edl_contract import parse_time_range as _canonical_parse_time_range
-from media_common import is_raw360_path, local_now_compact as now_compact, read_json_object, read_yaml_mapping, write_json_atomic
+from media import is_raw360_path, local_now_compact as now_compact, read_json_object, read_yaml_mapping, write_json_atomic
 
 RAW360_EXTS = {".osv", ".lrf"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"} | RAW360_EXTS
@@ -143,7 +143,7 @@ def ffprobe_duration_sec(path: Path) -> float:
 
 
 def is_raw360_media(path: Path) -> bool:
-    """Delegates to the shared media_common.is_raw360_path (see L-02 dedup)."""
+    """Delegates to the shared media.is_raw360_path (see L-02 dedup)."""
     return is_raw360_path(path)
 
 

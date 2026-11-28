@@ -15,7 +15,7 @@ from jsonschema import Draft202012Validator
 from studio.project_store import ProjectStore
 from studio.server import StudioApplication
 from studio.media_review import digest
-from studio.roughcut_service import RoughcutService
+from studio.roughcut import RoughcutService
 from studio.roughcut_store import RoughcutError
 
 ROOT = Path(__file__).resolve().parents[1]

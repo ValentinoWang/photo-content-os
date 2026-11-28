@@ -19,8 +19,8 @@ from typing import Any
 
 import yaml
 
-from llm_common import load_markdown_frontmatter as _load_markdown_frontmatter
-from media_common import read_yaml_mapping, write_yaml_atomic
+from llm import load_markdown_frontmatter as _load_markdown_frontmatter
+from media import read_yaml_mapping, write_yaml_atomic
 
 
 SPEC_VERSION = "content_os_v0.2"

@@ -9,7 +9,7 @@ import re
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-from media_common import (
+from media import (
     ANALYSIS_DIR,
     MEDIA_EXTS,
     RENAME_PREVIEW_SAMPLING,
@@ -24,7 +24,7 @@ from media_common import (
     project_path,
     relative_posix,
 )
-from project_bootstrap_common import run_project_analysis as run_analysis
+from project_bootstrap import run_project_analysis as run_analysis
 
 
 LIVE_EXTS = {".heic", ".heif", ".jpg", ".jpeg", ".mov", ".xmp"}

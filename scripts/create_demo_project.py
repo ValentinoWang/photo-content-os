@@ -11,7 +11,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from media_common import manifest_path as _manifest_path
+from media import manifest_path as _manifest_path
 from runtime_paths import repository_root as _repository_root
 
 SAMPLE_PNG = base64.b64decode(

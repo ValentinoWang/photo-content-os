@@ -14,7 +14,7 @@ for directory in (SYSTEM, SYSTEM / "scripts"):
     if str(directory) not in sys.path:
         sys.path.insert(0, str(directory))
 from studio.chatcut_mcp import LocalMcpSession
-from media_common import file_sha256
+from media import file_sha256
 from audio_plan import audio_operations, UNVERIFIED_AUDIO
 from edit_backends.kdenlive_render import plan_ranges, probe_media
 from edit_backends.precut import executable_cuts

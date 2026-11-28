@@ -10,9 +10,9 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from media_common import ANALYSIS_DIR, MEDIA_EXTS, now_iso, safe_slug, write_json_atomic
-from media_common import write_text_atomic as _shared_write_text_atomic
-from project_bootstrap_common import ensure_formal_project_for_batch
+from media import ANALYSIS_DIR, MEDIA_EXTS, now_iso, safe_slug, write_json_atomic
+from media import write_text_atomic as _shared_write_text_atomic
+from project_bootstrap import ensure_formal_project_for_batch
 from runtime_paths import workspace_root as _shared_workspace_root
 
 

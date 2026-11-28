@@ -11,8 +11,8 @@ from typing import Any
 
 import yaml
 
-from llm_common import load_markdown_frontmatter
-from media_common import keyframes_dir, manifest_path, read_yaml_mapping
+from llm import load_markdown_frontmatter
+from media import keyframes_dir, manifest_path, read_yaml_mapping
 
 
 class TransitionError(Exception):

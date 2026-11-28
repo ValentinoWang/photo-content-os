@@ -7,7 +7,7 @@ import argparse
 from collections import Counter
 from pathlib import Path
 
-from media_common import analysis_dir, load_manifest, now_iso, project_path
+from media import analysis_dir, load_manifest, now_iso, project_path
 
 
 SEVERITY_ORDER = {"ERROR": 0, "WARNING": 1, "INFO": 2}

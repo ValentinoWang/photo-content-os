@@ -18,7 +18,7 @@ from typing import Any
 
 from edl_contract import EDLContractError
 from edl_contract import parse_seconds as canonical_parse_seconds
-from jianying_roughcut_common import ContractError, ensure_dir, is_raw360_media, load_json, track_by_id, write_json, write_yaml
+from jianying_roughcut import ContractError, ensure_dir, is_raw360_media, load_json, track_by_id, write_json, write_yaml
 
 
 VIDEO_EXTS = {".mp4", ".mov", ".m4v", ".avi", ".mkv"}

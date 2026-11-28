@@ -10,7 +10,7 @@ import pytest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import select_shots as selector
 from shot_quality import frame_metrics
-from llm_common import generate_text_with_codex_cli
+from llm import generate_text_with_codex_cli
 
 
 def row():

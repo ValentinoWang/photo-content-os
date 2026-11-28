@@ -32,9 +32,9 @@ from audio_plan import audio_operations, compile_audio_plan, gain_at, probe_audi
 from runtime_paths import local_media_root  # noqa: E402
 from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
-from media_common import file_sha256 as sha256_file  # noqa: E402
-from media_common import is_raw360_path  # noqa: E402
-from media_common import read_json_object  # noqa: E402
+from media import file_sha256 as sha256_file  # noqa: E402
+from media import is_raw360_path  # noqa: E402
+from media import read_json_object  # noqa: E402
 
 
 class ContractError(ValueError):
@@ -152,7 +152,7 @@ def parse_time_range(value: str) -> tuple[float, float]:
 
 
 def is_raw360(value: str) -> bool:
-    """Delegates to the shared media_common.is_raw360_path (see L-02 dedup).
+    """Delegates to the shared media.is_raw360_path (see L-02 dedup).
 
     This backend only ever has a candidate path string here (no full
     manifest item), so it calls is_raw360_path rather than is_raw360_item.

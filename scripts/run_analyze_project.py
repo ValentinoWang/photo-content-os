@@ -11,8 +11,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from llm_common import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT
-from media_common import analysis_dir, analysis_plan_path, manifest_path as _manifest_path, project_path
+from llm import DEFAULT_CREATIVE_MODEL, DEFAULT_REASONING_EFFORT
+from media import analysis_dir, analysis_plan_path, manifest_path as _manifest_path, project_path
 from runtime_paths import repository_root as _repository_root
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -119,7 +119,7 @@ def main() -> int:
     run(keyframe_args)
 
     if args.audio:
-        audio_args = [sys.executable, script("extract_audio_helper.py"), str(project)]
+        audio_args = [sys.executable, script("extract_audio.py"), str(project)]
         if args.include_derived:
             audio_args.append("--include-derived")
         run(audio_args)

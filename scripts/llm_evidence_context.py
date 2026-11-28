@@ -30,8 +30,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from llm_common import MAX_PROMPT_SUMMARY_CHARS, bounded_prompt_text
-from media_common import find_item_summary, is_raw360_item, safe_project_file, summaries_dir
+from llm import MAX_PROMPT_SUMMARY_CHARS, bounded_prompt_text
+from media import find_item_summary, is_raw360_item, safe_project_file, summaries_dir
 
 
 def read_text(path: Path) -> str:

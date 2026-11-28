@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 from openclaw_product_contract import ProductContractError, SNAPSHOT_PATH, p1a_content_digest, validate_snapshot
-from media_common import write_json_atomic
+from media import write_json_atomic
 
 
 CATALOG_RELATIVE_PATH = Path("apps/media/agent/openclaw_media/data/pipelines.json")

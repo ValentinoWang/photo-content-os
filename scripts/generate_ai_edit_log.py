@@ -9,7 +9,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-from llm_common import (
+from llm import (
     DEFAULT_CREATIVE_MODEL,
     DEFAULT_REASONING_EFFORT,
     generate_text,

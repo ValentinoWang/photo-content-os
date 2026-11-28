@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from edl_contract import EDLContractError, require_flat_timeline
-from jianying_roughcut_common import (
+from jianying_roughcut import (
     ContractError,
     is_raw360_media,
     load_json,

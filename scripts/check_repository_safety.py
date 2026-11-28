@@ -12,7 +12,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-from media_common import ANALYSIS_DIR
+from media import ANALYSIS_DIR
 from runtime_paths import repository_root as _repository_root
 
 MAX_TRACKED_FILE_BYTES = 5 * 1024 * 1024

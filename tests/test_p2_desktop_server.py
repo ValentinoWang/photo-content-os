@@ -14,7 +14,7 @@ SYSTEM = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SYSTEM))
 
 from studio.server import serve  # noqa: E402
-from llm_common import LLMError  # noqa: E402
+from llm import LLMError  # noqa: E402
 
 
 class DesktopServerTests(unittest.TestCase):
@@ -108,7 +108,7 @@ class DesktopServerTests(unittest.TestCase):
         )
         project = created["project"]
         response_text = json.dumps({"replacements": {"brief-goal": "只改这一块"}}, ensure_ascii=False)
-        with patch("llm_common.generate_text", return_value=response_text):
+        with patch("llm.generate_text", return_value=response_text):
             status, payload = self.request(
                 f"/api/projects/{project['id']}/documents/brief/ai-patch",
                 method="POST", csrf=bootstrap["csrfToken"],
@@ -141,7 +141,7 @@ class DesktopServerTests(unittest.TestCase):
         )
         project = created["project"]
         response_text = json.dumps({"replacements": {"brief-goal": "只改这一块"}}, ensure_ascii=False)
-        with patch("llm_common.generate_text", return_value=response_text) as generate_text:
+        with patch("llm.generate_text", return_value=response_text) as generate_text:
             status, _ = self.request(
                 f"/api/projects/{project['id']}/documents/brief/ai-patch",
                 method="POST",
@@ -171,7 +171,7 @@ class DesktopServerTests(unittest.TestCase):
         )
         project = created["project"]
         raw_error = "codex backend model-x failed at /private/secret/project"
-        with patch("llm_common.generate_text", side_effect=LLMError(raw_error)):
+        with patch("llm.generate_text", side_effect=LLMError(raw_error)):
             status, payload = self.request(
                 f"/api/projects/{project['id']}/documents/brief/ai-patch",
                 method="POST",
@@ -241,7 +241,7 @@ class DesktopServerTests(unittest.TestCase):
             self.assertEqual(status, 200)
 
         response_text = json.dumps({"replacements": {"brief-goal": "只改这一块"}}, ensure_ascii=False)
-        with patch("llm_common.generate_text", return_value=response_text) as generate_text:
+        with patch("llm.generate_text", return_value=response_text) as generate_text:
             status, _ = self.request(
                 f"/api/projects/{target['id']}/documents/brief/ai-patch", method="POST", csrf=csrf,
                 body={"instruction": "只修改目标", "selectedBlockIds": ["brief-goal"], "expectedRevision": target["revision"]},

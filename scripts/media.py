@@ -232,7 +232,7 @@ def stable_json_hash(value: Any) -> str:
 def path_inside(child: Path, parent: Path) -> bool:
     """True when `child` resolves to a location inside (or equal to) `parent`.
 
-    Baseline: project_bootstrap_common.py's inside(), byte-identical across
+    Baseline: project_bootstrap.py's inside(), byte-identical across
     7 call sites before this consolidation. Deliberately NOT the right fit
     for edit_backends/handoff_pack.py's path_is_within(), which skips
     resolve() on purpose (see that function's docstring) -- that one stays
@@ -748,7 +748,7 @@ def read_json_object(
 
     Catches both OSError and json.JSONDecodeError (edit_backends/
     otio_kdenlive.py's read_json was the only one of the 3 folded-in copies
-    that caught OSError; jianying_roughcut_common.py's load_json and
+    that caught OSError; jianying_roughcut.py's load_json and
     process_openclaw_queue.py's load_json did not, so a missing/
     unreadable file previously escaped as a raw OSError instead of the
     caller's own domain exception for those two -- the same deliberate
@@ -769,7 +769,7 @@ def read_json_object(
 # named by the audit (validate_content_os_task.write_blocked_result,
 # run_tasks.write_yaml) are migrated to these helpers in this
 # round. The cluster's other ~12 non-atomic write points (31's write_link,
-# several in review_output_video.py, jianying_roughcut_common.py,
+# several in review_output_video.py, jianying_roughcut.py,
 # otio_kdenlive.py, run_analyze_project.py, etc.) are NOT touched here --
 # each has its own behavior nuances that need individually checking before
 # switching them over. sort_keys is deliberately a per-call parameter, not

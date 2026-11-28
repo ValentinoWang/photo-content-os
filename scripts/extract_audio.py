@@ -9,7 +9,7 @@ import subprocess
 import json
 from pathlib import Path
 
-from media_common import (
+from media import (
     analysis_plan_path,
     audio_dir,
     eligible_item,

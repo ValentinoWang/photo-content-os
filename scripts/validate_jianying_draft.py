@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from jianying_roughcut_common import ContractError, count_plan_clips, load_json, load_yaml, write_yaml
+from jianying_roughcut import ContractError, count_plan_clips, load_json, load_yaml, write_yaml
 
 
 def json_parseable(path: Path) -> bool:

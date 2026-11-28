@@ -18,10 +18,10 @@ from typing import Any
 
 import yaml
 
-from llm_common import LLMError, creator_context_block, load_creator_context, parse_json_response, public_llm_error, generate_text
-from media_common import directory_slug, OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_label, file_sha256
-from media_common import sample_times as _shared_sample_times
-from media_common import write_json_atomic
+from llm import LLMError, creator_context_block, load_creator_context, parse_json_response, public_llm_error, generate_text
+from media import directory_slug, OUTPUT_REVIEW_SAMPLING, now_iso, timestamp_label, file_sha256
+from media import sample_times as _shared_sample_times
+from media import write_json_atomic
 
 SCHEMA_VERSION = "output_review.v1"
 RESULT_SCHEMA_VERSION = "output_review_result.v1"

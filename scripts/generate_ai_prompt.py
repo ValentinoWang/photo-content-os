@@ -6,8 +6,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from llm_common import creator_context_block
-from media_common import (
+from llm import creator_context_block
+from media import (
     ANALYSIS_DIR,
     PROMPT_GLOB,
     analysis_dir,

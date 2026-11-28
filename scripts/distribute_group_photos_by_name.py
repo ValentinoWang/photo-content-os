@@ -10,7 +10,7 @@ import re
 import shutil
 from pathlib import Path
 
-from media_common import directory_slug, media_id, now_iso, path_inside as inside, project_path, relative_posix, safe_slug
+from media import directory_slug, media_id, now_iso, path_inside as inside, project_path, relative_posix, safe_slug
 
 
 DISTRIBUTION_DIR = "group-photo-distribution"

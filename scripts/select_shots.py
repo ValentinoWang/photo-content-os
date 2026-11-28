@@ -20,9 +20,9 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from generate_ai_prompt import average_hash, visual_similarity_groups
-from llm_common import generate_text, parse_json_response, configured_model, configured_provider, load_creator_context
-from media_common import VIDEO_EXTS, IMAGE_EXTS, DERIVED_DIR_NAMES, analysis_dir, video_info
-from media_common import write_json_atomic
+from llm import generate_text, parse_json_response, configured_model, configured_provider, load_creator_context
+from media import VIDEO_EXTS, IMAGE_EXTS, DERIVED_DIR_NAMES, analysis_dir, video_info
+from media import write_json_atomic
 from runtime_paths import local_media_root
 from shot_quality import read_frame, read_photo, frame_metrics, motion_series, split_long_scene
 

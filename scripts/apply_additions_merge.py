@@ -8,8 +8,8 @@ import json
 import shutil
 from pathlib import Path
 
-from media_common import ANALYSIS_DIR, ensure_project_additions_dir, now_iso, path_inside as inside, project_path
-from project_bootstrap_common import run_project_analysis as run_analysis
+from media import ANALYSIS_DIR, ensure_project_additions_dir, now_iso, path_inside as inside, project_path
+from project_bootstrap import run_project_analysis as run_analysis
 
 
 PLAN_NAME = "additions-merge-plan.json"

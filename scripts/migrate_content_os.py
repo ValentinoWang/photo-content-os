@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from llm_common import parse_markdown_frontmatter, render_markdown_frontmatter
+from llm import parse_markdown_frontmatter, render_markdown_frontmatter
 
 
 V2_STATUSES = {"captured", "planned", "edit_ready", "editing", "final_ready", "published"}

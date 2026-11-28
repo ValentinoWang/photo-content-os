@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from jianying_roughcut_common import ContractError, ensure_dir, now_compact, write_json
+from jianying_roughcut import ContractError, ensure_dir, now_compact, write_json
 from runtime_paths import is_windows
 
 
