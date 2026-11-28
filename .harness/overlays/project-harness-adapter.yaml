@@ -54,3 +54,40 @@ qa:
   evidence_root: evidence
 skills:
   enabled: []
+reuse_ownership:
+  atomic_write:
+    owner_kind: shared_module
+    owner: scripts/media_common.py
+    rule: atomic-write
+    scope: [scripts, studio]
+    exceptions: []
+  json_persistence:
+    owner_kind: shared_module
+    owner: scripts/media_common.py
+    rule: json-persistence
+    scope: [scripts, studio]
+    exceptions: []
+  current_time:
+    owner_kind: shared_module
+    owner: scripts/media_common.py
+    rule: current-time
+    scope: [scripts, studio]
+    exceptions: []
+  retry_backoff:
+    owner_kind: none
+    owner: null
+    rule: retry-backoff
+    scope: [scripts, studio]
+    exceptions: []
+  logging_init:
+    owner_kind: library
+    owner: logging
+    rule: logging-init
+    scope: [scripts, studio]
+    exceptions: []
+  http_client:
+    owner_kind: library
+    owner: urllib.request
+    rule: http-client
+    scope: [scripts, studio]
+    exceptions: []

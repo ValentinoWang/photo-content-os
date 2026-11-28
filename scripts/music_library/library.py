@@ -5,12 +5,12 @@ import shutil
 import tempfile
 from functools import wraps
 from contextlib import contextmanager, nullcontext
-from datetime import datetime, timezone
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 
 from runtime_paths import local_media_root
+from media_common import utc_now_iso as now
 from .audio import measure_audio
 from .cache import read_json, write_json
 from .errors import MusicError, MemberRequired
@@ -18,10 +18,6 @@ from .links import parse_link
 
 
 SCHEMA = Path(__file__).resolve().parents[2] / 'schemas/music-track.schema.json'
-
-
-def now():
-    return datetime.now(timezone.utc).isoformat()
 
 
 def file_hash(path):

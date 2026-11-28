@@ -12,7 +12,7 @@ import tempfile
 import threading
 import sys
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
 SCRIPTS = Path(__file__).resolve().parents[1] / 'scripts'
@@ -20,6 +20,7 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 from studio.project_store import ProjectStoreError, _atomic, _thread_lock
+from media_common import utc_now_iso as now
 from runtime_paths import local_media_root
 from music_library.library import MusicLibrary
 
@@ -74,10 +75,6 @@ def media_counts(root, *, manifest=...):
         raise ProjectStoreError('review_unreadable', '无法读取素材清单')
     return dict(videos=sum(x.get('media_type', x.get('type')) == 'video' for x in manifest['items']),
                 photos=sum(x.get('media_type', x.get('type')) == 'image' for x in manifest['items']))
-
-
-def now():
-    return datetime.now(timezone.utc).isoformat()
 
 
 def digest(value):

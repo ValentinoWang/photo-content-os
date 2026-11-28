@@ -30,6 +30,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from media_common import utc_now_iso as _now_iso
 from .cache import read_json, write_json
 from .errors import MusicError
 
@@ -110,10 +111,6 @@ class GenerationResult:
     processed_path: Path
     billed_seconds: float | None = None
     from_cache: bool = False
-
-
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
 
 
 def _file_sha256(path: Path) -> str:
