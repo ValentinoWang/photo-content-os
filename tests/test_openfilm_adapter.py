@@ -9,7 +9,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from edit_backends.interface import BackendError
-from edit_backends.openfilm_adapter import Backend
+from edit_backends.editors.openfilm_adapter import Backend
 from edit_backends.registry import get_backend
 
 
@@ -24,7 +24,7 @@ def test_registration_has_real_adapter_and_no_runtime_side_effects():
 def test_failure_receipt_when_runtime_missing(tmp_path, monkeypatch):
     monkeypatch.setenv('CONTENT_OS_OPENFILM_PACKAGE', str(tmp_path / 'absent'))
     backend = Backend()
-    with patch('edit_backends.kdenlive_render.render') as fallback:
+    with patch('edit_backends.editors.kdenlive_render.render') as fallback:
         with pytest.raises(BackendError, match='runtime_unavailable'):
             backend.render(source=tmp_path/'source', suggestions_path=tmp_path/'suggestions', output_dir=tmp_path/'out')
         fallback.assert_not_called()

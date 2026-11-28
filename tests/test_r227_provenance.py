@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from edl_contract import EDLContractError, normalise_edl, write_edl
 from edit_backends import handoff_pack
-from edit_backends.kdenlive_adapter import Backend
+from edit_backends.editors.kdenlive_adapter import Backend
 from studio.edl_bridge import EDLBridgeError, read_edl_bridge
 
 SCHEMA = json.loads((ROOT / 'schemas/edit-decision-list.schema.json').read_text())
@@ -161,7 +161,7 @@ def test_three_consumers_accept_media_first_and_handoff_binds_source(media, tmp_
                                          project_id='r227-e', project_revision=1)
     assert kdenlive['status'] == 'done'
     assert (tmp_path / 'kdenlive/timeline.kdenlive').is_file()
-    subprocess.run([sys.executable, str(ROOT / 'scripts/render_preview.py'), str(media), '--edl', str(source),
+    subprocess.run([sys.executable, str(ROOT / 'scripts/creative/render_preview.py'), str(media), '--edl', str(source),
                     '--output', str(tmp_path / 'preview.mp4'), '--width', '160', '--height', '90', '--execute'],
                    check=True, capture_output=True, timeout=30)
     assert (tmp_path / 'preview.mp4').stat().st_size > 0

@@ -10,7 +10,7 @@ import pytest
 from test_r276_direct_api import api
 from test_r276_direct_video import FakeMedia, html
 from direct_video.generate import DirectVideoError, Generator, parse_shots, validate_design
-from studio.direct_video import projection
+from studio.direct.video import projection
 
 SHOT = {'shotId': '01', 'dialogue': '第一句话。', 'visual': '一条线逐步长出',
         'subtitle': '先看这里', 'camera': '固定近景', 'audio': 'PRIVATE_AUDIO_ONLY'}

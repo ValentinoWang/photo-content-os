@@ -17,10 +17,10 @@ SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 SCHEMAS = Path(__file__).resolve().parents[1] / "schemas"
 sys.path.insert(0, str(SCRIPTS))
 
-repeat_photos = load_script("select_repeat_photo_groups.py", "select_repeat_photo_groups")
-group_distribution = load_script("distribute_group_photos_by_name.py", "distribute_group_photos")
-register_asset = load_script("register_reusable_asset.py", "register_reusable_asset")
-import asset_library_index  # noqa: E402
+repeat_photos = load_script("intake/select_repeat_photo_groups.py", "select_repeat_photo_groups")
+group_distribution = load_script("media_ops/distribute_group_photos_by_name.py", "distribute_group_photos")
+register_asset = load_script("intake/register_reusable_asset.py", "register_reusable_asset")
+from intake import asset_library_index  # noqa: E402
 
 
 class RepeatPhotoSelectionTests(unittest.TestCase):
@@ -35,7 +35,7 @@ class RepeatPhotoSelectionTests(unittest.TestCase):
             project, additions = self.make_project(Path(directory))
             source = additions / "photo.jpg"
             source.write_bytes(b"source")
-            argv = ["select_repeat_photo_groups.py", str(project)]
+            argv = ["intake/select_repeat_photo_groups.py", str(project)]
 
             with patch.object(repeat_photos, "generate_contact_sheets", return_value=[]), patch.object(
                 sys, "argv", argv
@@ -147,7 +147,7 @@ class GroupPhotoDistributionTests(unittest.TestCase):
             source.write_bytes(b"source")
             mapping = self.write_mapping(project, [("source.jpg", "小王", "")])
             argv = [
-                "distribute_group_photos_by_name.py",
+                "media_ops/distribute_group_photos_by_name.py",
                 str(project),
                 "--mapping",
                 str(mapping),
@@ -250,7 +250,7 @@ class ReusableAssetRegistrationTests(unittest.TestCase):
             project, media = self.make_project(root)
             library = root / "library"
             argv = [
-                "register_reusable_asset.py",
+                "intake/register_reusable_asset.py",
                 str(project),
                 str(media),
                 "--library-root",

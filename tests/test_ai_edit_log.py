@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from _support import load_script
 
 
-edit_log = load_script("generate_ai_edit_log.py", "generate_ai_edit_log")
+edit_log = load_script("creative/generate_ai_edit_log.py", "generate_ai_edit_log")
 
 
 class AIEditLogTest(unittest.TestCase):

@@ -14,7 +14,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'scripts')]
 from direct_video.media import LocalMedia, manifest
-from video_candidate import check_direct_output, ffmpeg
+from video_tools.video_candidate import check_direct_output, ffmpeg
 from video_render.multi_shot import fingerprint, load_manifest, request_for, sha256, write_json
 from test_r276_direct_video import html, wav
 
@@ -80,7 +80,7 @@ def test_real_html_render_and_poster(tmp_path):
     shots.mkdir()
     (shots / '01.html').write_text(html(.2))
     LocalMedia().render(tmp_path, {'shotId': '01', 'estimatedSeconds': .2, 'measuredSeconds': None})
-    from video_derivatives import inspect_jpeg
+    from video_tools.video_derivatives import inspect_jpeg
     result = inspect_jpeg(tmp_path / 'posters/01.jpg')
     assert result['shortEdge'] <= 360
 

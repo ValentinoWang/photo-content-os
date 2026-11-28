@@ -8,7 +8,7 @@
       "ssot_node_id": "D1",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-D1/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/scan_media_manifest.py",
+        "scripts/media_ops/scan_media_manifest.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -38,7 +38,7 @@
       "ssot_node_id": "D2",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-D2/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/register_reusable_asset.py",
+        "scripts/intake/register_reusable_asset.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -68,7 +68,7 @@
       "ssot_node_id": "D3",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-D3/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/transcribe_audio.py",
+        "scripts/pipeline/transcribe_audio.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -98,7 +98,7 @@
       "ssot_node_id": "A1",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-A1/acceptance-contract.md",
       "implementation_paths": [
-        "studio/upstream_session.py",
+        "studio/settings/upstream_session.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -218,7 +218,7 @@
       "ssot_node_id": "H3",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-H3/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/register_reusable_asset.py",
+        "scripts/intake/register_reusable_asset.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -278,7 +278,7 @@
       "ssot_node_id": "I1",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I1/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/ensure_project_from_inbox_batch.py",
+        "scripts/intake/ensure_project_from_inbox_batch.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -308,7 +308,7 @@
       "ssot_node_id": "I2",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I2/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/scan_media_manifest.py",
+        "scripts/media_ops/scan_media_manifest.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -338,7 +338,7 @@
       "ssot_node_id": "I3",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I3/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/select_repeat_photo_groups.py",
+        "scripts/intake/select_repeat_photo_groups.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -368,7 +368,7 @@
       "ssot_node_id": "I4",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-I4/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/media_delete_recommendations.py",
+        "scripts/media_ops/media_delete_recommendations.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -428,7 +428,7 @@
       "ssot_node_id": "L1",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L1/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/register_reusable_asset.py",
+        "scripts/intake/register_reusable_asset.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -458,7 +458,7 @@
       "ssot_node_id": "L2",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L2/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/register_reusable_asset.py",
+        "scripts/intake/register_reusable_asset.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -488,7 +488,7 @@
       "ssot_node_id": "L3",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L3/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/archive_project.py",
+        "scripts/intake/archive_project.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -518,7 +518,7 @@
       "ssot_node_id": "L4",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L4/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/archive_project.py",
+        "scripts/intake/archive_project.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -548,7 +548,7 @@
       "ssot_node_id": "L5",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-L5/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/match_materials_to_brief.py",
+        "scripts/creative/match_materials_to_brief.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -608,7 +608,7 @@
       "ssot_node_id": "P2",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-P2/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/edit_backends/otio_kdenlive.py",
+        "scripts/edit_backends/editors/otio_kdenlive.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -757,7 +757,7 @@
       "ssot_node_id": "S1",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S1/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/analysis_tiering.py",
+        "scripts/pipeline/analysis_tiering.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -787,7 +787,7 @@
       "ssot_node_id": "S2",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S2/acceptance-contract.md",
       "implementation_paths": [
-        "studio/archive_location_config.py",
+        "studio/settings/archive_location_config.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -847,7 +847,7 @@
       "ssot_node_id": "S4",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S4/acceptance-contract.md",
       "implementation_paths": [
-        "studio/upstream_session.py",
+        "studio/settings/upstream_session.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -877,7 +877,7 @@
       "ssot_node_id": "S5",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-S5/acceptance-contract.md",
       "implementation_paths": [
-        "studio/model_provider_config.py",
+        "studio/settings/model_provider_config.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],
@@ -1025,7 +1025,7 @@
       "ssot_node_id": "T2",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-T2/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/select_repeat_photo_groups.py"
+        "scripts/intake/select_repeat_photo_groups.py"
       ],
       "acceptance_assertions": [
         "给素材库三件套补测试（12 / 14 / 15）：和第 00 节的索引层一起做，定契约的同时补测试。",
@@ -1081,7 +1081,7 @@
       "ssot_node_id": "T4",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-T4/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/analysis_tiering.py"
+        "scripts/pipeline/analysis_tiering.py"
       ],
       "acceptance_assertions": [
         "给 analysis_tiering 的输出定 JSON Schema：补 schemas/analysis-tiering.schema.json，纳入现有的契约校验流程。",
@@ -1315,7 +1315,7 @@
       "ssot_node_id": "K6",
       "contract_path": "evidence/2026-09-02/openclaw-media-full-checklist-implementation/acceptance-fragments/OCM-K6/acceptance-contract.md",
       "implementation_paths": [
-        "scripts/mac_openclaw_runner.py",
+        "scripts/bridge/mac_openclaw_runner.py",
         "studio/static/index.html",
         "studio/static/app.js"
       ],

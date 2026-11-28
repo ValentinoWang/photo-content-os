@@ -4,8 +4,8 @@ import tempfile
 import unittest
 from _support import load_script
 
-layout=load_script('migrate_media_layout.py','rollback_layout',register=True)
-rollback=load_script('rollback_media_migration.py','media_migration_rollback',register=True)
+layout=load_script('media_ops/migrate_media_layout.py','rollback_layout',register=True)
+rollback=load_script('media_ops/rollback_media_migration.py','media_migration_rollback',register=True)
 
 class MediaMigrationRollbackTests(unittest.TestCase):
     def test_reverse_moves_restore_every_original_byte(self):

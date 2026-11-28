@@ -10,8 +10,8 @@ import sys
 from tempfile import TemporaryDirectory, mkdtemp
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
-from edit_backends.concat_adapter import _app
-from edit_backends.concat_mcp import ConcatMCP
+from edit_backends.editors.concat_adapter import _app
+from edit_backends.editors.concat_mcp import ConcatMCP
 from edit_backends.registry import get_backend
 
 

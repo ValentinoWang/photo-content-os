@@ -1,7 +1,7 @@
 """Real broken display splits must receive complete translations, never word slices."""
 import copy,unittest
 from _support import load_script
-s=load_script('video_subtitles','subtitle_display_r8')
+s=load_script('video_tools/video_subtitles','subtitle_display_r8')
 
 
 def fixture():

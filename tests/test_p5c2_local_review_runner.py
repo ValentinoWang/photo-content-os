@@ -15,10 +15,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-import mac_openclaw_runner as runner  # noqa: E402
+import bridge.mac_openclaw_runner as runner  # noqa: E402
 
 
-output_review = load_script("review_output_video.py", "p5c2_output_review", register=True)
+output_review = load_script("creative/review_output_video.py", "p5c2_output_review", register=True)
 
 
 class P5C2LocalReviewRunnerTests(unittest.TestCase):

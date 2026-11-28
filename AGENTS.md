@@ -60,7 +60,7 @@ bash scripts/check_runtime_contract.sh
 .venv/bin/python scripts/check_outline_contract.py .
 .venv/bin/python -m pytest -q tests
 .venv/bin/python scripts/validate_content_os_task.py --help
-.venv/bin/python scripts/validate_jianying_draft.py --help
+.venv/bin/python scripts/legacy_jianying/validate_jianying_draft.py --help
 ```
 
 Set `UI_COPY_QUALITY_CHECKER` to the Core ui-copy-quality checker. Registry failures and repair: `docs/music-analysis-registry-guard.md`.

@@ -112,7 +112,7 @@ class WorkflowBoundaryTests(unittest.TestCase):
         subprocess.run(['ffmpeg','-v','error','-f','lavfi','-i','color=c=0x25516b:s=288x512:r=30:d=1','-f','lavfi','-i','sine=frequency=660:duration=1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-shortest',str(source)],check=True)
         self.identity = fixture_module.deliver_fixture(self.app, self.media, self.identity)
         raw=source.read_bytes()
-        with patch('video_candidate.project_candidate') as automatic:
+        with patch('video_tools.video_candidate.project_candidate') as automatic:
             data=self.app.video_workflow.receive(self.project['id'],io.BytesIO(raw),len(raw),{'identity':self.identity,'expectedRevision':1})
         automatic.assert_not_called()
         assert data['state']=='returned'

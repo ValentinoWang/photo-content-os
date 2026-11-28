@@ -8,8 +8,8 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 
 import media
-import jianying_roughcut
-import media_project_selection
+from legacy_jianying import jianying_roughcut
+from media_ops import media_project_selection
 
 
 def test_time_entry_points_preserve_local_and_utc_types(monkeypatch):
@@ -76,7 +76,7 @@ def test_random_temp_cleanup_when_replace_fails(tmp_path, monkeypatch, policy, r
 
 
 def test_budget_storage_wraps_replace_failure_and_keeps_old_state(tmp_path, monkeypatch):
-    from studio.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore
+    from studio.settings.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore
     store = AnalysisBudgetStore(tmp_path)
     store._atomic_write({'old': True})
     old = store.path.read_bytes()
@@ -92,7 +92,7 @@ def test_budget_storage_wraps_replace_failure_and_keeps_old_state(tmp_path, monk
 
 def test_json_callers_keep_direct_and_cache_behavior(tmp_path):
     from music_library.cache import write_json as cache_write
-    from review_output_video import write_metrics_json
+    from creative.review_output_video import write_metrics_json
 
     path = tmp_path / 'data.json'
     for writer in (jianying_roughcut.write_json, write_metrics_json, cache_write):

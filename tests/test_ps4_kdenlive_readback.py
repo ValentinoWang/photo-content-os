@@ -10,8 +10,8 @@ import xml.etree.ElementTree as ET
 
 import pytest
 from unittest.mock import patch
-from edit_backends.kdenlive_adapter import Backend
-from edit_backends.kdenlive_render import build_timeline, write_json, timeline_tractor
+from edit_backends.editors.kdenlive_adapter import Backend
+from edit_backends.editors.kdenlive_render import build_timeline, write_json, timeline_tractor
 from edit_backends.interface import BackendError
 import unittest
 
@@ -28,7 +28,7 @@ def saved_project(root, pid='ps4', revision=1):
     sugg=root/'suggestions.json';write_json(sugg,suggestions)
     directory=root/'kdenlive';directory.mkdir()
     plan=build_timeline(source=source,suggestions=suggestions,subtitles=subs,animations=[],output_dir=directory,project_id=pid,project_revision=revision)
-    from edit_backends.kdenlive_render import sha256_file
+    from edit_backends.editors.kdenlive_render import sha256_file
     plan['inputs'].append({'path':str(sugg),'sha256':sha256_file(sugg),'role':'edit_suggestions'})
     write_json(directory/'render-plan.json',plan)
     write_json(directory/'render-result.json',{'status':'candidate','editor_backend':'otio_kdenlive','project_id':pid,'project_revision':revision})

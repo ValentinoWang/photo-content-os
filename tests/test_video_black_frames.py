@@ -3,7 +3,7 @@ import unittest,tempfile,subprocess,json
 from pathlib import Path
 from PIL import Image,ImageDraw
 from _support import load_script
-m=load_script('video_black_frames','black_content_r8')
+m=load_script('video_tools/video_black_frames','black_content_r8')
 
 class BlackFrameContentTests(unittest.TestCase):
     def test_uniform_black_and_deep_gray_fail(self):

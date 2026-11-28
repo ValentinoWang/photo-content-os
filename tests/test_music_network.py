@@ -53,7 +53,7 @@ def test_douyin_share_note_redirect_has_distinct_http_nodes(tmp_path):
 
 
 def test_region_message_precedes_member_message():
-    from music_library.musicdl_engine import check_region
+    from music_library.sources.musicdl_engine import check_region
     from music_library.errors import REGION_MESSAGE
     detail = {'id': 90001, 'fee': 1}
     payload = {'privileges': [{'id': 90001, 'st': -100, 'pl': 0, 'dl': 0}]}
@@ -89,13 +89,13 @@ def test_proxy_failure_never_falls_back_to_direct(tmp_path, monkeypatch):
     {'st': -100}, {'freeTrialPrivilege': {'cannotListenReason': 1}},
 ])
 def test_region_fields_independently_trigger_precise_message(privilege):
-    from music_library.musicdl_engine import check_region
+    from music_library.sources.musicdl_engine import check_region
     with pytest.raises(MusicError, match='当前所在地区.*网络不在大陆.*大陆网络导入'):
         check_region({'id': 90001}, {'privileges': [{'id': 90001, **privilege}]})
 
 
 def test_other_song_region_and_malformed_permissions_do_not_masquerade_as_absence():
-    from music_library.musicdl_engine import check_region
+    from music_library.sources.musicdl_engine import check_region
     check_region({'id': 90001}, {'privileges': [{'id': 90002, 'st': -100}]})
     with pytest.raises(MusicError, match='权限响应无法读取'):
         check_region({'id': 90001}, {'privileges': {}})
@@ -201,7 +201,7 @@ def test_incomplete_response_records_lengths_and_keeps_no_partial_file(tmp_path)
 def test_egress_netease_matches_musicdl_native_form_request(tmp_path, monkeypatch):
     import requests
     from musicdl.modules.sources.netease import NeteaseMusicClient
-    from music_library.musicdl_engine import clients
+    from music_library.sources.musicdl_engine import clients
     from music_library.egress import TunnelOpener
     from music_library.network import MusicOpener
     payload = {'code': 200, 'songs': [{'id': 90001, 'name': 'synthetic'}]}

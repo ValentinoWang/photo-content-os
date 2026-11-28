@@ -59,48 +59,48 @@ if str(SYSTEM_ROOT) not in sys.path:
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from media_project_selection import SelectionError, StudioConfirmationStore
+from media_ops.media_project_selection import SelectionError, StudioConfirmationStore
 from scripts.media import write_json_atomic
-from studio.direct_handoff_contract import selection_root
+from studio.direct.handoff_contract import selection_root
 from studio.media_review import MediaReview
 from studio.review_jobs import ReviewJobs
 from music_library.errors import MusicError
 
 from studio.ai_patch import AIPatchError, generate_patch  # type: ignore  # noqa: E402
-from studio.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore  # type: ignore  # noqa: E402
+from studio.settings.analysis_budget import AnalysisBudgetError, AnalysisBudgetStore  # type: ignore  # noqa: E402
 from studio.api_contract import is_registered_route, is_roughcut_route, route_inventory  # type: ignore  # noqa: E402
-from studio.archive_location_config import (  # type: ignore  # noqa: E402
+from studio.settings.archive_location_config import (  # type: ignore  # noqa: E402
     ArchiveLocationConfig,
     ArchiveLocationConfigError,
     ArchiveLocationConfigStore,
 )
-from studio.chatcut_mcp import ChatCutMcp  # type: ignore  # noqa: E402
+from studio.settings.chatcut_mcp import ChatCutMcp  # type: ignore  # noqa: E402
 from studio.edl_bridge import EDLBridgeError, bridge_state, read_edl_bridge  # type: ignore  # noqa: E402
-from studio.model_provider_config import (  # type: ignore  # noqa: E402
+from studio.settings.model_provider_config import (  # type: ignore  # noqa: E402
     ModelProviderConfig,
     ModelProviderConfigError,
     ModelProviderConfigStore,
 )
-from studio.onboarding_state import (  # type: ignore  # noqa: E402
+from studio.settings.onboarding_state import (  # type: ignore  # noqa: E402
     OnboardingStateError,
     VersionedOnboardingStateStore,
 )
 from studio.project_store import DOCUMENT_NAMES, ProjectStore, ProjectStoreError  # type: ignore  # noqa: E402
-from studio.upstream_session import UpstreamSessionConsumer, UpstreamSessionContractError  # type: ignore  # noqa: E402
+from studio.settings.upstream_session import UpstreamSessionConsumer, UpstreamSessionContractError  # type: ignore  # noqa: E402
 from llm import LLMError, load_creator_context  # type: ignore  # noqa: E402
 from direct_video.generate import DirectVideoError  # noqa: E402
-from media_delete_recommendations import (  # type: ignore  # noqa: E402
+from media_ops.media_delete_recommendations import (  # type: ignore  # noqa: E402
     DeleteRecommendationError,
     confirm_delete_selection,
     generate_delete_recommendations,
 )
-from media_trash_flow import MediaTrashFlow, MediaTrashFlowError, get_system_trash_backend  # type: ignore  # noqa: E402
-from upstream_identity import (  # type: ignore  # noqa: E402
+from media_ops.media_trash_flow import MediaTrashFlow, MediaTrashFlowError, get_system_trash_backend  # type: ignore  # noqa: E402
+from bridge.upstream_identity import (  # type: ignore  # noqa: E402
     PairingRequest,
     UpstreamIdentityContractError,
     pair_upstream_identity,
 )
-from asset_library_index import (  # type: ignore  # noqa: E402
+from intake.asset_library_index import (  # type: ignore  # noqa: E402
     INDEX_NAME as ASSET_LIBRARY_INDEX_NAME,
     AssetIndexError,
     get_asset,
@@ -117,7 +117,7 @@ def _inbox_batch_planner() -> object:
     existing = sys.modules.get(module_name)
     if existing is not None:
         return existing
-    source = SCRIPTS_DIR / "plan_inbox_batches.py"
+    source = SCRIPTS_DIR / "intake/plan_inbox_batches.py"
     spec = importlib.util.spec_from_file_location(module_name, source)
     if spec is None or spec.loader is None:
         raise RuntimeError("inbox batch planner is unavailable")
@@ -235,7 +235,7 @@ class StudioApplication:
         self.video_choice_lock = threading.Lock()
         from studio.video_workflow import VideoWorkflow
         self.video_workflow = VideoWorkflow(self)
-        from studio.direct_video import DirectVideo
+        from studio.direct.video import DirectVideo
         self.direct_video = DirectVideo(self.store)
 
     @staticmethod
@@ -311,7 +311,7 @@ class StudioApplication:
 
     @staticmethod
     def _video_json(root: Path, ref: str) -> dict:
-        from studio.direct_handoff_contract import read_json
+        from studio.direct.handoff_contract import read_json
         return read_json(root, ref)
 
     def video_handoff_projection(self, project_id: str) -> dict | None:
@@ -322,7 +322,7 @@ class StudioApplication:
         """Read PF's explicitly bound inputs and results, with no local locators."""
         from doctor import probe_app
         from studio.video_workflow import candidate_failed
-        from studio.direct_handoff_contract import read_delivered_handoff, read_handoff
+        from studio.direct.handoff_contract import read_delivered_handoff, read_handoff
         if context is None:
             context = read_delivered_handoff(self.store, project_id, device_id=None) or read_handoff(self.store, project_id)
         if context is None:
@@ -798,7 +798,7 @@ class StudioApplication:
                     if segments[:2] == ['api', 'direct']:
                         query = urllib.parse.parse_qs(parsed.query)
                         if segments[2] == 'recipes':
-                            from studio import direct_recipes
+                            from studio.direct import recipes as direct_recipes
                             if len(segments) == 3:
                                 self._json(200, {'ok': True, **direct_recipes.catalog()})
                             else:
@@ -1580,8 +1580,8 @@ class StudioApplication:
                     return False
                 if not is_roughcut_route(parsed.path):
                     return False
-                from studio.roughcut import dispatch, MediaSlice
-                from studio.roughcut_store import RoughcutError
+                from studio.roughcut.application import dispatch, MediaSlice
+                from studio.roughcut.store import RoughcutError
                 try:
                     self._assert_write() if method != 'GET' else self._assert_local()
                     if not is_registered_route(method, parsed.path):

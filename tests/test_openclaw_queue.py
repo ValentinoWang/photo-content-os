@@ -15,7 +15,7 @@ from _support import load_script
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
-openclaw_queue = load_script("process_openclaw_queue.py", "openclaw_queue", register=True)
+openclaw_queue = load_script("bridge/process_openclaw_queue.py", "openclaw_queue", register=True)
 
 
 def write_json(path: Path, data: dict[str, object]) -> None:

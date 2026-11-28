@@ -22,7 +22,7 @@ import llm
 from direct_video.generate import DirectVideoError, Generator, allocate_timing, parse_shots, validate_code, validate_design
 from direct_video.lint import lint
 from direct_video.media import wav_seconds
-from studio.direct_video import projection
+from studio.direct.video import projection
 
 
 def html(d=1, label='示意图', size=(1080, 1920)):
@@ -593,7 +593,7 @@ def test_promo_compose_uses_plan_and_reports_checks(tmp_path, promo_input, monke
     assert called and result['output']['kind'] == 'music'
     assert result['output']['checks']['barsAligned'] == {'aligned': 1, 'total': 1}
     assert result['output']['checks']['peakDb'] == -1.0
-    from studio.direct_video import projection
+    from studio.direct.video import projection
     public = projection(result)
     assert public['output']['checks']['barsAligned'] == {'aligned': 1, 'total': 1}
     assert public['output']['checks']['peakDb'] == -1.0

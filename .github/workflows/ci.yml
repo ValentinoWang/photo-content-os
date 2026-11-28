@@ -27,11 +27,11 @@ jobs:
       - name: Check local documentation contract
         run: .venv/bin/python scripts/check_outline_contract.py . --skip-obsidian-sync
       - name: Validate review capability registry
-        run: .venv/bin/python scripts/validate_review_capability_registry.py
+        run: .venv/bin/python scripts/tooling/validate_review_capability_registry.py
       - name: Enforce repository safety boundary
         run: .venv/bin/python scripts/check_repository_safety.py
       - name: Run synthetic trial
         run: >-
-          .venv/bin/python scripts/create_demo_project.py
+          .venv/bin/python scripts/tooling/create_demo_project.py
           --workspace-root "$RUNNER_TEMP/photo-content-os-demo"
           --project-name ci_demo

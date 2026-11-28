@@ -19,13 +19,13 @@ inbox/YYYYMMDD_事件名_待整理/
 
 ```bash
 if [ -z "${LOCAL_MEDIA_ROOT:-}" ] || \
-  [ ! -f "$PHOTO_CONTENT_OS_ROOT/scripts/link_batch_to_content_project.py" ] || \
+  [ ! -f "$PHOTO_CONTENT_OS_ROOT/scripts/intake/link_batch_to_content_project.py" ] || \
   [ -z "${OBSIDIAN_ROOT:-}" ] || [ ! -d "$OBSIDIAN_ROOT" ]; then
   printf '%s\n' "Set LOCAL_MEDIA_ROOT and OBSIDIAN_ROOT to valid local roots before linking this batch." >&2
   exit 1
 fi
 
-python3 "$PHOTO_CONTENT_OS_ROOT/scripts/link_batch_to_content_project.py" \
+python3 "$PHOTO_CONTENT_OS_ROOT/scripts/intake/link_batch_to_content_project.py" \
   "$LOCAL_MEDIA_ROOT/inbox/YYYYMMDD_事件名_待整理" \
   --workspace-root "$LOCAL_MEDIA_ROOT" \
   --obsidian-root "$OBSIDIAN_ROOT"

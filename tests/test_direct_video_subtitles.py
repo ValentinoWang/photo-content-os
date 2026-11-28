@@ -10,7 +10,7 @@ import unittest
 from unittest.mock import patch
 
 from _support import load_script
-candidate = load_script('video_candidate', 'direct_subtitle_candidate')
+candidate = load_script('video_tools/video_candidate', 'direct_subtitle_candidate')
 
 
 class SubtitleSourceTests(unittest.TestCase):
@@ -109,7 +109,7 @@ class RenderedSubtitleTests(unittest.TestCase):
 
 class CaptionPlanningTests(unittest.TestCase):
     def planner(self):
-        from video_subtitles import build_subtitle_cues
+        from video_tools.video_subtitles import build_subtitle_cues
         return build_subtitle_cues
 
     def test_long_spoken_sentence_splits_at_comma_proportionally_and_wraps(self):
@@ -141,7 +141,7 @@ class CaptionPlanningTests(unittest.TestCase):
         self.assertLessEqual(cues[-1]['endFrame'],4275)
 
     def test_style_locks_contrast_geometry_and_font_size(self):
-        from video_subtitles import subtitle_style
+        from video_tools.video_subtitles import subtitle_style
         style=subtitle_style(1080,1920)
         self.assertGreaterEqual(style['boxOpacity'],.55); self.assertGreaterEqual(style['fontSize'],60); self.assertLessEqual(style['fontSize'],64)
         self.assertEqual(style['maxLineChars'],14);self.assertEqual(style['maxLines'],2);self.assertGreaterEqual(style['sideMargin'],72)

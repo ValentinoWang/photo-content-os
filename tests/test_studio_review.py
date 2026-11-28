@@ -15,7 +15,8 @@ from studio.server import StudioApplication
 def test_utc_timestamp_uses_same_format_in_music_and_review(monkeypatch):
     from datetime import datetime, timezone
     import media
-    from music_library import ai_generate, library
+    from music_library import library
+    from music_library.sources import ai_generate
     from studio import media_review
 
     class FixedDatetime:

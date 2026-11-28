@@ -13,7 +13,7 @@ from _support import load_script
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "review-capabilities.registry.json"
-validator = load_script("validate_review_capability_registry.py", "review_capability_validator", register=True)
+validator = load_script("tooling/validate_review_capability_registry.py", "review_capability_validator", register=True)
 
 
 def load_registry() -> dict:

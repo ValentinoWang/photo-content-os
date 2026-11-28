@@ -7,9 +7,9 @@ from pathlib import Path
 from _support import load_script
 
 
-SCRIPT_PATH = Path(__file__).parents[1] / "scripts" / "archive_project.py"
+SCRIPT_PATH = Path(__file__).parents[1] / "scripts" / "intake/archive_project.py"
 sys.path.insert(0, str(SCRIPT_PATH.parent))
-archive_project = load_script("archive_project.py", "archive_project")
+archive_project = load_script("intake/archive_project.py", "archive_project")
 
 
 class ArchiveProjectTests(unittest.TestCase):

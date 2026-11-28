@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "edit_backends" / "otio_kdenlive.py"
+SCRIPT = ROOT / "scripts" / "edit_backends" / "editors" / "otio_kdenlive.py"
 OTIO_KDENLIVE_PYTHON = ROOT / ".venv" / "bin" / "python"
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))

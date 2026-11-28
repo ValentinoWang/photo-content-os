@@ -17,7 +17,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import mac_openclaw_runner as runner  # noqa: E402
+import bridge.mac_openclaw_runner as runner  # noqa: E402
 from runtime_paths import runtime_python  # noqa: E402
 import validate_content_os_task as task_validator  # noqa: E402
 
@@ -400,7 +400,7 @@ class ContentOsV2RunnerContractTest(unittest.TestCase):
         completed = subprocess.run(
             [
                 str(regular_python),
-                str(ROOT / "scripts" / "mac_openclaw_runner.py"),
+                str(ROOT / "scripts" / "bridge/mac_openclaw_runner.py"),
                 "--vault-root",
                 str(self.vault),
                 "--workspace-root",

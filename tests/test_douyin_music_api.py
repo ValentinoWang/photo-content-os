@@ -9,7 +9,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from music_library.cache import CachedHTTP
 from music_library.errors import MusicError
-from music_library.douyin_api import music_detail as detail, REGISTER
+from music_library.sources.douyin_api import music_detail as detail, REGISTER
 
 
 @pytest.fixture(autouse=True)
@@ -84,7 +84,7 @@ def test_unknown_empty_payload_never_claims_login_required(tmp_path):
 
 
 def test_registration_cache_reused_after_anonymous_plan_upgrade(tmp_path):
-    from music_library.douyin_api import AnonymousOpener, REGISTER_DATA
+    from music_library.sources.douyin_api import AnonymousOpener, REGISTER_DATA
     private = tmp_path / '.douyin-anonymous'
     private.mkdir()
     token_path = private / 'anonymous.json'

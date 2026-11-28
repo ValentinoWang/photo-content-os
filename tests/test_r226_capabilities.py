@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-from roughcut_capabilities import CapabilityError, capabilities_for_choice
+from creative.roughcut_capabilities import CapabilityError, capabilities_for_choice
 
 
 @pytest.mark.parametrize('editor,method',[('otio_kdenlive','external'),('chatcut','external'),('openchatcut','external'),('otio_kdenlive','guide')])

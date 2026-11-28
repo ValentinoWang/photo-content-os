@@ -29,7 +29,7 @@ if str(_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS_DIR))
 
 from edl_contract import AUDIO_CLIP_FIELDS, EDLContractError, normalise_edl  # noqa: E402
-from audio_plan import audio_operations, compile_audio_plan, probe_audio_source  # noqa: E402
+from creative.audio_plan import audio_operations, compile_audio_plan, probe_audio_source  # noqa: E402
 from edl_contract import parse_seconds as _canonical_parse_seconds  # noqa: E402
 from edl_contract import parse_time_range as _canonical_parse_time_range  # noqa: E402
 from media import file_sha256 as sha256_file  # noqa: E402

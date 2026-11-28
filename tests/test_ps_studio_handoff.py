@@ -14,9 +14,9 @@ from studio.server import StudioApplication
 
 def deliver_fixture(app, workspace, identity, **content):
     """Stage the same package the installed watch delivers, with synthetic inputs."""
-    from media_project_selection import StudioSelectionPort
+    from media_ops.media_project_selection import StudioSelectionPort
     from test_p1a_installed_watch import DEVICE, build_package
-    from openclaw_product_contract import video_digest
+    from bridge.openclaw_product_contract import video_digest
 
     descriptor, _, _, _ = build_package(identity['photoProjectId'], identity['photoProjectRevision'],
                                         job_id=identity['jobId'])

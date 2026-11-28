@@ -10,7 +10,7 @@ from _support import load_script
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-MODULE = load_script("ensure_project_structure.py", "project_structure")
+MODULE = load_script("intake/ensure_project_structure.py", "project_structure")
 
 
 class ProjectStructureV2Tests(unittest.TestCase):

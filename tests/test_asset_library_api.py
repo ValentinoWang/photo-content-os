@@ -18,7 +18,7 @@ if str(SYSTEM) not in sys.path:
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-import asset_library_index  # noqa: E402
+from intake import asset_library_index  # noqa: E402
 from studio.server import serve  # noqa: E402
 
 

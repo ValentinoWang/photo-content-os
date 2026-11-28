@@ -197,9 +197,9 @@ KDENLIVE_SHUTDOWN_TIMEOUT_SECONDS = 5.0
 
 # --- registry.py ---
 BACKENDS = MappingProxyType({
-    "otio_kdenlive": "edit_backends.kdenlive_adapter",
-    "openfilm": "edit_backends.openfilm_adapter",
-    "openchatcut": "edit_backends.openchatcut_adapter",
-    "chatcut": "edit_backends.chatcut_adapter",
-    "concat": "edit_backends.concat_adapter",
+    "otio_kdenlive": "edit_backends.editors.kdenlive_adapter",
+    "openfilm": "edit_backends.editors.openfilm_adapter",
+    "openchatcut": "edit_backends.editors.openchatcut_adapter",
+    "chatcut": "edit_backends.editors.chatcut_adapter",
+    "concat": "edit_backends.editors.concat_adapter",
 })

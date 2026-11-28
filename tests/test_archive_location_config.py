@@ -16,7 +16,7 @@ DESKTOP_DIR = PROJECT_ROOT / "studio"
 if str(DESKTOP_DIR) not in sys.path:
     sys.path.insert(0, str(DESKTOP_DIR))
 
-from archive_location_config import (  # noqa: E402
+from studio.settings.archive_location_config import (  # noqa: E402
     ArchiveLocationConfig,
     ArchiveLocationConfigError,
     ArchiveLocationConfigStore,

@@ -18,7 +18,7 @@ from pathlib import Path
 from studio.project_store import ProjectStoreError
 from studio.media_review import media_counts, piece_display_name, read_json
 from runtime_paths import local_media_root
-from media_trash_flow import MacOSSystemTrashBackend, MediaTrashFlowError, _MACOS_TRASH_TIMEOUT_SECONDS
+from media_ops.media_trash_flow import MacOSSystemTrashBackend, MediaTrashFlowError, _MACOS_TRASH_TIMEOUT_SECONDS
 
 
 # Use the same Foundation trashItem operation with a typed out-URL receipt.

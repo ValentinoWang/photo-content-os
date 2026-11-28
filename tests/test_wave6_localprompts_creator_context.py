@@ -17,8 +17,8 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 
-storyboard = load_script("generate_storyboard_edl.py", "wave6_storyboard", register=True)
-edit_log = load_script("generate_ai_edit_log.py", "wave6_edit_log", register=True)
+storyboard = load_script("creative/generate_storyboard_edl.py", "wave6_storyboard", register=True)
+edit_log = load_script("creative/generate_ai_edit_log.py", "wave6_edit_log", register=True)
 
 
 class LocalPromptCreatorContextTests(unittest.TestCase):

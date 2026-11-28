@@ -37,7 +37,7 @@ def test_share_page_iphone_anonymous_extracts_exact_work_music(tmp_path,monkeypa
             assert 'iPhone' in request.get_header('User-agent') and 'Safari' in request.get_header('User-agent')
             assert not request.has_header('Cookie')
             return Response((FIXTURES/'douyin-share-note.html').read_bytes())
-    monkeypatch.setattr('music_library.douyin_api.music_detail',lambda *a,**k:pytest.fail('signature path must not run'))
+    monkeypatch.setattr('music_library.sources.douyin_api.music_detail',lambda *a,**k:pytest.fail('signature path must not run'))
     http=CachedHTTP(tmp_path,opener=Opener(),cookie_reader=lambda _:pytest.fail('must not read browser'))
     adapter=PlatformAdapter(tmp_path,http=http,browser='chrome')
     result=adapter.resolve(parse_link(f'https://www.douyin.com/{kind}/80001'))
@@ -64,7 +64,7 @@ def test_share_redirect_is_cached_but_never_followed(tmp_path):
 
 
 def test_share_parser_rejects_unreadable_wrong_work_and_ambiguous_payload(tmp_path):
-    from music_library.douyin_share import parse_router_data
+    from music_library.sources.douyin_share import parse_router_data
     for body in ['<script>window.acrawler=true</script>','<script>window._ROUTER_DATA=not_json()</script>']:
         with pytest.raises(MusicError,match='分享页.*无法读取'):
             parse_router_data(body)

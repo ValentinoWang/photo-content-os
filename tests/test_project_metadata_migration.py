@@ -5,9 +5,9 @@ import unittest
 from types import SimpleNamespace
 from _support import load_script
 
-layout=load_script('migrate_media_layout.py','metadata_layout',register=True)
-metadata=load_script('migrate_project_metadata.py','project_metadata_migration',register=True)
-runner=load_script('mac_openclaw_runner.py','metadata_runner',register=True)
+layout=load_script('media_ops/migrate_media_layout.py','metadata_layout',register=True)
+metadata=load_script('media_ops/migrate_project_metadata.py','project_metadata_migration',register=True)
+runner=load_script('bridge/mac_openclaw_runner.py','metadata_runner',register=True)
 
 class ProjectMetadataMigrationTests(unittest.TestCase):
     def test_paths_change_but_chinese_title_and_original_media_bytes_survive(self):

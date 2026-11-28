@@ -17,7 +17,7 @@ from _support import load_script
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-output_review = load_script("review_output_video.py", "output_review", register=True)
+output_review = load_script("creative/review_output_video.py", "output_review", register=True)
 
 
 def run_ffmpeg(args: list[str]) -> None:

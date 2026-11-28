@@ -80,7 +80,7 @@ class Stage5RuntimeTests(unittest.TestCase):
         self.assertEqual((f.workspace / f.run_ref / 'compose/render/shot-status.json').read_bytes(), old_status)
         progress = payload['progress']; self.assertEqual(progress['waveformSource'], 'narration')
         self.assertEqual([s['shotId'] for s in progress['shotProgress']], ['02'])
-        from video_derivatives import inspect_jpeg
+        from video_tools.video_derivatives import inspect_jpeg
         self.assertEqual(inspect_jpeg(f.workspace / progress['shotProgress'][0]['poster_ref'])['shortEdge'], 64)
         with patch.object(f.runtime.node_registry, '_invoke', side_effect=AssertionError('Replay rendered')):
             replay = f.runtime.render_video_revision(run_ref, shot_ids=['02'], previous_job_id=self.base['identity']['jobId'], inputs=inputs)
@@ -96,7 +96,7 @@ class Stage5RuntimeTests(unittest.TestCase):
             output = f.runtime.create_video_shot_image(run_ref, task=task, inputs=inputs)
         except import_module('openclaw_media.remote_client').RemoteError:
             self.fail((f.workspace / run_ref / 'shot_image.log').read_text())
-        from video_derivatives import inspect_jpeg
+        from video_tools.video_derivatives import inspect_jpeg
         measured = inspect_jpeg(f.workspace / output['image_ref']); self.assertEqual(measured['shortEdge'], 360)
         receipt = json.loads((f.workspace / run_ref / 'shot_image/image-receipt.json').read_text())
         self.assertEqual(receipt['requestedSourceTimeSeconds'], .25)

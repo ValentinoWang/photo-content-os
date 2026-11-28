@@ -16,9 +16,9 @@ def load(name: str):
     return load_script(name, register=True)
 
 
-review = load("review_output_video")
-bootstrap = load("project_bootstrap")
-native = load("create_native_import_pack")
+review = load("creative/review_output_video")
+bootstrap = load("intake/project_bootstrap")
+native = load("legacy_jianying/create_native_import_pack")
 
 
 class P2PhotoRegressionTests(unittest.TestCase):
@@ -36,9 +36,9 @@ class P2PhotoRegressionTests(unittest.TestCase):
             native.raw360_lrf_filter(1080, 1920, 30, lens="center")
 
     def test_runner_and_analysis_contracts_consume_audio_and_context(self):
-        runner = (SCRIPTS / "mac_openclaw_runner.py").read_text(encoding="utf-8")
+        runner = (SCRIPTS / "bridge/mac_openclaw_runner.py").read_text(encoding="utf-8")
         analysis = (SCRIPTS / "run_analyze_project.py").read_text(encoding="utf-8")
-        helper = (SCRIPTS / "extract_audio.py").read_text(encoding="utf-8")
+        helper = (SCRIPTS / "pipeline/extract_audio.py").read_text(encoding="utf-8")
         self.assertIn("--audio", runner)
         self.assertIn("--transcript-provider", runner)
         self.assertIn("OPENCLAW_TRANSCRIPTION_PROVIDER", analysis)

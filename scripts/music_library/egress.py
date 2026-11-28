@@ -9,7 +9,7 @@ import subprocess
 import time
 
 from .errors import MusicError, NetworkFailure
-from .netease import config_dir
+from .sources.netease import config_dir
 from .network import MusicOpener
 
 

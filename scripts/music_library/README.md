@@ -5,12 +5,12 @@
 课程项目使用固定运行时和锁定的 `musicdl==2.14.2`：
 
 ```bash
-.venv/bin/python scripts/import_music.py "分享文字或单曲链接" "另一条链接"
-.venv/bin/python scripts/import_music.py --list
-.venv/bin/python scripts/import_music.py --from-folder
-.venv/bin/python scripts/import_music.py --from-folder "/客户端下载目录"
-.venv/bin/python scripts/import_music.py "网易云链接" --search-elsewhere
-.venv/bin/python scripts/import_music.py --login netease
+.venv/bin/python scripts/video_tools/import_music.py "分享文字或单曲链接" "另一条链接"
+.venv/bin/python scripts/video_tools/import_music.py --list
+.venv/bin/python scripts/video_tools/import_music.py --from-folder
+.venv/bin/python scripts/video_tools/import_music.py --from-folder "/客户端下载目录"
+.venv/bin/python scripts/video_tools/import_music.py "网易云链接" --search-elsewhere
+.venv/bin/python scripts/video_tools/import_music.py --login netease
 ```
 
 汽水和网易云单曲由 musicdl 解析、下载；链接没有直接单曲入口时先识别编号，再构造它需要的曲目信息。只使用官方音源与标准音质，不调用第三方会员接口、音质轮询、歌词或封面服务。抖音音乐页、视频和图文作品提取目标作品使用的原声。平台返回访问验证或无法确认完整音源时停止，避免自动重抓。
@@ -56,9 +56,9 @@
 除了导入已有曲目，也支持通过按秒计费的官方 API 生成配乐并直接入库，后续节拍分析、情绪标签、选曲与卡点全部沿用现有音乐库流程：
 
 ```bash
-.venv/bin/python scripts/generate_music.py --provider wavespeed --prompt "warm acoustic guitar vlog" --seconds 30 --bpm 100
-.venv/bin/python scripts/generate_music.py --provider bailian --prompt "温暖治愈木吉他轻快背景乐" --seconds 30
-.venv/bin/python scripts/generate_music.py --provider wavespeed --prompt "pop ballad" --seconds 60 --with-vocals
+.venv/bin/python scripts/video_tools/generate_music.py --provider wavespeed --prompt "warm acoustic guitar vlog" --seconds 30 --bpm 100
+.venv/bin/python scripts/video_tools/generate_music.py --provider bailian --prompt "温暖治愈木吉他轻快背景乐" --seconds 30
+.venv/bin/python scripts/video_tools/generate_music.py --provider wavespeed --prompt "pop ballad" --seconds 60 --with-vocals
 ```
 
 支持两家服务商：

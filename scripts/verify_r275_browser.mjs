@@ -14,7 +14,7 @@ fs.mkdirSync(out,{recursive:true});fs.mkdirSync(images,{recursive:true});
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'r275-browser-'));
 const html=fs.readFileSync('docs/R275-delete-works/index.html','utf8');
 const data=Object.fromEntries(['OTHER','LZU'].map(k=>{const start=html.indexOf(`const ${k} = [`)+`const ${k} = `.length;return [k,vm.runInNewContext(html.slice(start,html.indexOf('\n];',start)+2))];}));
-const fixture=spawn('.venv/bin/python',['-u','scripts/r275_browser_fixture.py'],{env:{...process.env,R275_FIXTURE_ROOT:root,STUDIO_PORT:process.env.STUDIO_PORT||'0'},stdio:['pipe','pipe','pipe']});
+const fixture=spawn('.venv/bin/python',['-u','scripts/qa/r275_browser_fixture.py'],{env:{...process.env,R275_FIXTURE_ROOT:root,STUDIO_PORT:process.env.STUDIO_PORT||'0'},stdio:['pipe','pipe','pipe']});
 const stderr=fs.createWriteStream(path.join(out,'fixture.log'));fixture.stderr.pipe(stderr);
 const lines=readline.createInterface({input:fixture.stdout})[Symbol.asyncIterator]();
 const next=async()=>{const r=await lines.next();assert(!r.done,'fixture terminated');const v=JSON.parse(r.value);assert(!v.fixture_error,v.fixture_error);return v;};

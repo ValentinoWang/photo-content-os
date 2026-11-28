@@ -21,9 +21,9 @@ SYSTEM = Path(__file__).resolve().parents[1]
 if str(SYSTEM) not in sys.path:
     sys.path.insert(0, str(SYSTEM))
 
-from studio.chatcut_mcp import ChatCutMcp  # noqa: E402
+from studio.settings.chatcut_mcp import ChatCutMcp  # noqa: E402
 from studio.server import serve  # noqa: E402
-from openclaw_product_contract import Compatibility  # noqa: E402
+from bridge.openclaw_product_contract import Compatibility  # noqa: E402
 
 
 def sha256_file(path: Path) -> str:

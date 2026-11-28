@@ -15,8 +15,8 @@ from jsonschema import Draft202012Validator
 from studio.project_store import ProjectStore
 from studio.server import StudioApplication
 from studio.media_review import digest
-from studio.roughcut import RoughcutService
-from studio.roughcut_store import RoughcutError
+from studio.roughcut.application import RoughcutService
+from studio.roughcut.store import RoughcutError
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = json.loads((ROOT / 'schemas/roughcut-api.schema.json').read_text())
@@ -35,7 +35,7 @@ def check(name, value, schema=SCHEMA):
 
 def fake_generated(**kwargs):
     """Only the renderer boundary is synthetic; service binding checks remain real."""
-    from studio.roughcut_drafts import compile_roughcut_edl
+    from studio.roughcut.drafts import compile_roughcut_edl
     edl=compile_roughcut_edl(**{k:kwargs[k] for k in ('plan','planner_inputs','sources_by_media','music_sources','project_id','project_revision')})
     directory=kwargs['workspace']/'draft-project/roughcut'/str(kwargs['plan_revision'])/uuid.uuid4().hex
     directory.mkdir(parents=True)

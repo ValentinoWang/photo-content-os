@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 import requests
 
-from scripts import generate_avatar_clip as avatar_cli
+from scripts.video_tools import generate_avatar_clip as avatar_cli
 from scripts.avatar import videoretalk
 from scripts.avatar.videoretalk import AvatarError, Client, generate_avatar_clip, plan_audio
 
@@ -218,7 +218,7 @@ class SubmitOnce(Fake):
 
 
 def cli(monkeypatch, *args):
-    monkeypatch.setattr(sys, 'argv', ['generate_avatar_clip.py', *map(str, args)])
+    monkeypatch.setattr(sys, 'argv', ['video_tools/generate_avatar_clip.py', *map(str, args)])
     return avatar_cli.main()
 
 

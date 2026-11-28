@@ -9,8 +9,8 @@ from types import SimpleNamespace
 import pytest
 
 from tests.test_r226_api import setup,arrange,body,check,put,FIXTURE,fake_generated
-from studio.roughcut import RoughcutService
-from studio.roughcut_store import RoughcutError
+from studio.roughcut.application import RoughcutService
+from studio.roughcut.store import RoughcutError
 
 
 class Unavailable(Exception):
@@ -37,7 +37,7 @@ def test_preview_is_published_and_invalidated_at_command_acceptance(setup):
 
 
 def test_default_preview_delegates_to_b3_entry_without_editor_fallback(setup,monkeypatch):
-    from studio import roughcut_drafts
+    from studio.roughcut.application import drafts as roughcut_drafts
     service,app,identity,root=setup
     calls=[]
     def generate_preview(**kwargs):
@@ -58,7 +58,7 @@ def test_default_preview_delegates_to_b3_entry_without_editor_fallback(setup,mon
 ])
 def test_default_preview_entry_rerenders_changes_without_generating_draft(setup,monkeypatch,command):
     """Run the preview compiler/indexer with a synthetic renderer/probe boundary."""
-    from studio import roughcut_drafts
+    from studio.roughcut.application import drafts as roughcut_drafts
     service,app,identity,root=setup
     service.preview_renderer=None
     renders=[]
@@ -102,7 +102,7 @@ def test_default_preview_entry_rerenders_changes_without_generating_draft(setup,
 
 
 def test_missing_preview_entry_fails_without_publishing_fake_video(setup,monkeypatch):
-    from studio import roughcut_drafts
+    from studio.roughcut.application import drafts as roughcut_drafts
     service,app,identity,root=setup
     monkeypatch.delattr(roughcut_drafts,'generate_preview',raising=False)
     service.preview_renderer=None
@@ -355,7 +355,7 @@ def test_stop_interrupts_beat_wait_and_does_not_cancel_shared_analysis(setup):
 
 
 def test_pending_beats_back_off_and_timeout_at_thirty_minutes(setup,monkeypatch):
-    import studio.roughcut as module
+    import studio.roughcut.application as module
     service,app,identity,root=setup
     service.poll_interval=.5
     now=[0.];delays=[]
@@ -387,7 +387,7 @@ def test_pending_beats_end_with_original_failure_code(setup,code):
 
 def test_missing_reader_is_not_missing_song(setup,monkeypatch):
     service,app,identity,root=setup
-    import studio.roughcut as module
+    import studio.roughcut.application as module
     def missing(name,*args,**kwargs):raise ImportError('not merged')
     monkeypatch.setattr(module.importlib,'import_module',missing)
     service.beat_loader=None
@@ -446,7 +446,7 @@ def test_transcription_dedupes_media_and_only_explicit_post(setup):
     missing=value['warnings']['missing_word_shot_ids'];calls=[]
     class Local:
         def run(self,context,media_ids,cancelled):
-            from transcribe_audio import transcript_document
+            from pipeline.transcribe_audio import transcript_document
             calls.append(list(media_ids))
             for mid in media_ids:
                 document=transcript_document(media_id=mid,audio_ref=f'ai-analysis/audio/{mid}.wav',provider='funasr',model='synthetic',language='zh',segments=[dict(start_sec=0,end_sec=100,text='甲乙',words=[dict(start=2,end=3,text='甲'),dict(start=4,end=5,text='乙')])])
@@ -493,7 +493,7 @@ def test_stop_during_computation_rejects_late_publication(setup):
 
 
 def test_local_transcriber_uses_existing_funasr_builder_and_preserves_cancel(setup):
-    from studio.roughcut_transcription import LocalTranscriber
+    from studio.roughcut.transcription import LocalTranscriber
     from pathlib import Path
     service,app,identity,root=setup
     context=service._context(identity,transcripts=True)
@@ -518,7 +518,7 @@ def test_local_transcriber_uses_existing_funasr_builder_and_preserves_cancel(set
 
 
 def test_chunk_transcription_remains_missing_and_provider_failure_is_explicit(setup):
-    from transcribe_audio import transcript_document
+    from pipeline.transcribe_audio import transcript_document
     service,app,identity,root=setup
     value=arrange(service,identity)
     class Chunk:
@@ -589,8 +589,8 @@ def test_failed_stop_and_waiting_worker_are_serialized(setup,monkeypatch):
 
 
 def test_local_model_cache_is_explicit_and_not_an_implicit_download(setup,monkeypatch,tmp_path):
-    from studio.roughcut_transcription import LocalTranscriber
-    import transcribe_audio
+    from studio.roughcut.transcription import LocalTranscriber
+    from pipeline import transcribe_audio
     cache=tmp_path/'models'
     monkeypatch.setenv('MODELSCOPE_CACHE',str(cache))
     calls=[]

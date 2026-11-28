@@ -16,7 +16,7 @@ sys.path.insert(0, str(SCRIPTS))
 import llm  # noqa: E402
 
 
-summary_module = load_script("write_content_summary.py", "content_summary_under_test")
+summary_module = load_script("pipeline/write_content_summary.py", "content_summary_under_test")
 
 
 class LLMAndEvidenceTests(unittest.TestCase):

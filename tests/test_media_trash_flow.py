@@ -18,18 +18,18 @@ SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from media_delete_recommendations import (
+from media_ops.media_delete_recommendations import (
     confirm_delete_selection,
     generate_delete_recommendations,
 )
-from media_trash_flow import (
+from media_ops.media_trash_flow import (
     MacOSSystemTrashBackend,
     MediaTrashFlow,
     MediaTrashFlowError,
     UnavailableSystemTrashBackend,
     get_system_trash_backend,
 )
-import media_trash_flow
+from media_ops import media_trash_flow
 
 
 def sha256_file(path: Path) -> str:

@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from _support import load_script
 
-spoken = load_script('spoken_edit.py', 'sa_spoken')
+spoken = load_script('creative/spoken_edit.py', 'sa_spoken')
 
 
 def handoff(script):

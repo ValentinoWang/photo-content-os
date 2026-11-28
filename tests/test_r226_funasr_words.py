@@ -11,7 +11,7 @@ from _support import load_script
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-transcribe = load_script("transcribe_audio.py", "r226_transcribe")
+transcribe = load_script("pipeline/transcribe_audio.py", "r226_transcribe")
 
 
 def local_document(payload):

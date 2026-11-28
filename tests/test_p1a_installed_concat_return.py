@@ -185,7 +185,7 @@ class Media:
 
 
 def concat_double(source, recorded, mode):
-    from edit_backends import concat_adapter as adapter
+    from edit_backends.editors import concat_adapter as adapter
 
     parent = _make_fake_concat_mcp(source, 1.0, recorded)
 
@@ -225,8 +225,8 @@ def run_installed(config):
     from openclaw_media.device_credentials import DeviceCredentialStore
     from openclaw_media.remote_client import RemoteClient
     import openclaw_media.photo_refine_resume as installed_refine
-    import openclaw_media_agent as wrapper
-    import openclaw_video_execution as execution
+    import bridge.openclaw_media_agent as wrapper
+    import bridge.openclaw_video_execution as execution
 
     assert Path(installed_refine.__file__).is_relative_to(sys.prefix)
     state = AgentStateStore(Path(config["agent_dir"]) / "state.json")
@@ -323,7 +323,7 @@ def job_identity(job):
 
 
 def test_installed_watch_resumes_the_checked_concat_return_after_expiry(installed, world, monkeypatch):
-    from media_project_selection import StudioSelectionPort
+    from media_ops.media_project_selection import StudioSelectionPort
     from openclaw_media.remote_client import RemoteError
     from studio.server import StudioApplication
 
@@ -404,7 +404,7 @@ def test_installed_watch_resumes_the_checked_concat_return_after_expiry(installe
 
 
 def test_built_concat_is_not_open_evidence_when_open_fails(installed, world):
-    from media_project_selection import StudioSelectionPort
+    from media_ops.media_project_selection import StudioSelectionPort
 
     config = stage_fixture(world, "open-fails")
     assert watch(installed, config, world) == {"build": 1, "open": 1}

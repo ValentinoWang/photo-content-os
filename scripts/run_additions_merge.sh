@@ -96,7 +96,7 @@ if [[ -f "$ROOT_DIR/docs/media-workflow.md" ]]; then
   python3 "$SCRIPT_DIR/check_outline_contract.py" "$ROOT_DIR"
 fi
 
-python3 "$SCRIPT_DIR/plan_additions_merge.py" "$ADDITIONS_DIR" "$TARGET_PROJECT_DIR"
+python3 "$SCRIPT_DIR/intake/plan_additions_merge.py" "$ADDITIONS_DIR" "$TARGET_PROJECT_DIR"
 
 PLAN_PATH="$ADDITIONS_DIR/ai-analysis/additions-merge-plan.json"
 ITEM_COUNT="$(python3 - "$PLAN_PATH" <<'PY'
@@ -144,7 +144,7 @@ if [[ "$BLOCKED_COUNT" != "0" ]]; then
   exit 1
 fi
 
-python3 "$SCRIPT_DIR/apply_additions_merge.py" "$ADDITIONS_DIR" "$TARGET_PROJECT_DIR" --apply-all-pending --allow-review-items
+python3 "$SCRIPT_DIR/intake/apply_additions_merge.py" "$ADDITIONS_DIR" "$TARGET_PROJECT_DIR" --apply-all-pending --allow-review-items
 
 find "$ADDITIONS_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 

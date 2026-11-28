@@ -13,7 +13,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 
 def load_recommendations():
-    source = SCRIPTS / "media_delete_recommendations.py"
+    source = SCRIPTS / "media_ops/media_delete_recommendations.py"
     spec = importlib.util.spec_from_file_location("media_delete_recommendations_contract", source)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"cannot load recommendations module: {source}")

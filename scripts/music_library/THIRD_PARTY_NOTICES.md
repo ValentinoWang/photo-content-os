@@ -19,7 +19,7 @@
 
 ## Offline music analysis
 
-Analysis runs in `.tools/music-analysis/`, installed with `python3 scripts/setup_edit_tools.py --music-analysis`. It uses no large language model and cannot open network connections. Python 3.12 is selected for matching macOS arm64 wheels of torch/torchaudio 2.8.0, Essentia TensorFlow and librosa 1.0.0. Package pins and model metadata hashes are in `third_party/edit-tools.lock.json`; transitive package versions are in `third_party/music-analysis.requirements.lock.txt`.
+Analysis runs in `.tools/music-analysis/`, installed with `python3 scripts/tooling/setup_edit_tools.py --music-analysis`. It uses no large language model and cannot open network connections. Python 3.12 is selected for matching macOS arm64 wheels of torch/torchaudio 2.8.0, Essentia TensorFlow and librosa 1.0.0. Package pins and model metadata hashes are in `third_party/edit-tools.lock.json`; transitive package versions are in `third_party/music-analysis.requirements.lock.txt`.
 
 | Component | License | Full text | Source |
 | --- | --- | --- | --- |

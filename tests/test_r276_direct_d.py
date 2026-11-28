@@ -5,7 +5,7 @@ import io
 import pytest
 
 from test_r276_direct_video import ready, wait, wav
-from studio.direct_video import projection
+from studio.direct.video import projection
 
 
 def test_composed_at_initial_success_and_recomposition(tmp_path):

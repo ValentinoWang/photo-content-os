@@ -13,7 +13,7 @@ from direct_video import styles
 from direct_video.generate import DirectVideoError, Generator
 from direct_video.lint import declared_seconds, lint
 from studio.api_contract import build_openapi
-from studio.direct_video import projection
+from studio.direct.video import projection
 
 IDS = ['flat', 'math', 'launch', 'whiteboard', 'cyber', 'ink', 'dataviz', 'pixel', 'code', 'ui']
 

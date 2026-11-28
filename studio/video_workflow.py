@@ -11,9 +11,9 @@ import threading
 import time
 import uuid
 from edit_backends.registry import BACKENDS, get_backend
-from edit_backends.kdenlive_render import probe_media, sha256_file
-from media_project_selection import RefineRun, SelectionError, delivered_context
-from studio.direct_handoff_contract import read_delivered_handoff, read_handoff
+from edit_backends.editors.kdenlive_render import probe_media, sha256_file
+from media_ops.media_project_selection import RefineRun, SelectionError, delivered_context
+from studio.direct.handoff_contract import read_delivered_handoff, read_handoff
 from studio.project_store import ProjectStoreError
 
 
@@ -118,7 +118,7 @@ class VideoWorkflow:
         return edl
 
     def _preview_edl_digest(self, ctx):
-        from openclaw_product_contract import video_digest
+        from bridge.openclaw_product_contract import video_digest
         edl = self._preview_edl(ctx)
         return video_digest(edl) if edl is not None else None
 
@@ -202,7 +202,7 @@ class VideoWorkflow:
             data['state'] = 'check-failed'
         data['candidates'] = self.public_candidates(project_id, ctx)
         if ctx['suggestions_path'].is_file() and data.get('sourceDuration'):
-            from edit_backends.kdenlive_render import plan_ranges, remap_span
+            from edit_backends.editors.kdenlive_render import plan_ranges, remap_span
             raw=self.app._video_json(ctx['suggestions_path'].parent,ctx['suggestions_path'].name)
             ranges,_=plan_ranges({**raw,'suggestions':[{'type':s['type'],'start':s['start'],'end':s['end'],'auto_cut_allowed':s['automatic']} for s in data['suggestions']]},data['sourceDuration'])
             for suggestion in data['suggestions']:
@@ -219,7 +219,7 @@ class VideoWorkflow:
             from fractions import Fraction
             data.update(dimensions=[v['width'],v['height']], sourceFps=float(Fraction(v['avg_frame_rate'])))
         if ctx['subtitles']:
-            from review_output_video import read_srt_cues
+            from creative.review_output_video import read_srt_cues
             data['subtitleCues'] = [{'start':a,'end':b,'text':text} for a,b,text in read_srt_cues(ctx['subtitles'])]
         return data
 
@@ -269,7 +269,7 @@ class VideoWorkflow:
     def _overlays(self, ctx):
         teaching = self.app._video_json(ctx['run'], 'native-teaching_clips.json')
         if not teaching: return []
-        from video_derivatives import teaching_overlays
+        from video_tools.video_derivatives import teaching_overlays
         return teaching_overlays(teaching, ctx['descriptor'], ctx['source'])
 
     def _kwargs(self, ctx):
@@ -291,7 +291,7 @@ class VideoWorkflow:
             content=(static/name).read_text()
             if name=='styles.css': content=''.join(line for line in content.splitlines(keepends=True) if not line.lstrip().startswith('@import'))
             (assets/name).write_text(content,encoding='utf-8')
-        from edit_backends.openfilm_adapter import Backend
+        from edit_backends.editors.openfilm_adapter import Backend
         package=Backend()._package()
         shutil.copy2(package/'studio/server/film-subtitle.mjs',assets/'film-subtitle.js')
         # Public static configuration carries no CSRF or editor capability key.
@@ -422,7 +422,7 @@ class VideoWorkflow:
                 new_rows.append({'source_start':x,'source_end':y,'output_start':at})
                 new_clips.append({**clips[0],'id':f'studio-talk-{i}','time':[x,y],'at':at})
                 at += y-x
-            from edit_backends.kdenlive_render import remap_span
+            from edit_backends.editors.kdenlive_render import remap_span
             tracks = [{'clips':new_clips}]
             overlays = []
             # Generate only the person's accepted overlays, using their original
@@ -503,7 +503,7 @@ class VideoWorkflow:
             if bid == 'chatcut':
                 session['public'].update(state='refine', editorName='ChatCut')
                 return
-            from video_candidate import project_candidate
+            from video_tools.video_candidate import project_candidate
             descriptor=copy.deepcopy(ctx['descriptor'])
             if own:
                 plan=json.loads(Path(native['manifest']).read_text())
@@ -541,7 +541,7 @@ class VideoWorkflow:
         (ctx['run']/'studio-check.json').unlink(missing_ok=True)
         name='剪映' if editor_id=='jianying' else next(r['display_name'] for r in self.editors() if r['id']==editor_id)
         from datetime import datetime, timedelta, timezone
-        from openclaw_product_contract import video_digest
+        from bridge.openclaw_product_contract import video_digest
         now=datetime.now(timezone.utc)
         candidate['editingMethod']=editing_method
         candidate['editor']={'toolId':editor_id,'displayName':name,'status':'online' if verified else 'unknown','reasonCode':'export_completed' if verified else 'returned_export','checkedAt':now.isoformat(),'expiresAt':(now+timedelta(minutes=5)).isoformat(),'installed':verified,'version':None,'evidenceKind':'command_probe' if verified else 'none'}
@@ -594,7 +594,7 @@ class VideoWorkflow:
                     if not chunk: raise ProjectStoreError('body_invalid', '成片上传未完成')
                     target.write(chunk); left -= len(chunk)
             received = True
-            from review_output_video import check_output_video
+            from creative.review_output_video import check_output_video
             inspected=check_output_video(video,original_hashes=original)
             if inspected['status']!='passed':
                 return self._return_failed(ctx, inspected)
@@ -661,7 +661,7 @@ class VideoWorkflow:
         if not ctx['subtitles']:
             raise ProjectStoreError('video_subtitles_missing','字幕尚未生成')
         if ctx['data']['choice'].get('method')!='guide': return ctx['subtitles'].read_bytes()
-        from edit_backends.kdenlive_render import plan_ranges, remap_subtitles
+        from edit_backends.editors.kdenlive_render import plan_ranges, remap_subtitles
         raw=self.app._video_json(ctx['suggestions_path'].parent,ctx['suggestions_path'].name)
         duration=ctx['data']['sourceDuration']
         ranges,_=plan_ranges({**raw,'suggestions':[{'type':s['type'],'start':s['start'],'end':s['end'],'auto_cut_allowed':s['automatic']} for s in ctx['data']['suggestions']]},duration)

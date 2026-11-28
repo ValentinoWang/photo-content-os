@@ -30,10 +30,10 @@ def load(name: str):
     return load_script(name, register=True)
 
 
-queue_identity = load("queue_identity")
-openclaw_queue = load("process_openclaw_queue")
-enqueue_queue = load("enqueue_openclaw_queue_job")
-runner = load("mac_openclaw_runner")
+queue_identity = load("bridge/queue_identity")
+openclaw_queue = load("bridge/process_openclaw_queue")
+enqueue_queue = load("bridge/enqueue_openclaw_queue_job")
+runner = load("bridge/mac_openclaw_runner")
 
 
 SAMPLE_PAYLOAD = {

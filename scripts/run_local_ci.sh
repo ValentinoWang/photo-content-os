@@ -34,7 +34,7 @@ export OBSIDIAN_ROOT
 cd "$REPOSITORY_ROOT"
 
 echo "== Runtime contract =="
-"$PYTHON_BIN" "$SCRIPT_DIR/check_runtime_contract.py"
+"$PYTHON_BIN" "$SCRIPT_DIR/tooling/check_runtime_contract.py"
 
 echo "== Doctor (offline-tolerant) =="
 "$PYTHON_BIN" "$SCRIPT_DIR/doctor.py" --allow-offline
@@ -52,7 +52,7 @@ else
 fi
 
 echo "== Review capability registry =="
-"$PYTHON_BIN" "$SCRIPT_DIR/validate_review_capability_registry.py"
+"$PYTHON_BIN" "$SCRIPT_DIR/tooling/validate_review_capability_registry.py"
 
 echo "== Repository safety boundary =="
 "$PYTHON_BIN" "$SCRIPT_DIR/check_repository_safety.py"
@@ -63,6 +63,6 @@ for entry in validate_content_os_task.py validate_jianying_draft.py transcribe_a
 done
 
 echo "== Synthetic trial =="
-"$PYTHON_BIN" "$SCRIPT_DIR/create_demo_project.py" --workspace-root "$DEMO_WORKSPACE" --project-name local_ci_demo
+"$PYTHON_BIN" "$SCRIPT_DIR/tooling/create_demo_project.py" --workspace-root "$DEMO_WORKSPACE" --project-name local_ci_demo
 
 echo "Local CI passed."

@@ -15,8 +15,8 @@ def load(name):
     return load_script(name, register=True)
 
 
-queue = load("enqueue_openclaw_queue_job")
-runner = load("mac_openclaw_runner")
+queue = load("bridge/enqueue_openclaw_queue_job")
+runner = load("bridge/mac_openclaw_runner")
 validator = load("validate_content_os_task")
 
 

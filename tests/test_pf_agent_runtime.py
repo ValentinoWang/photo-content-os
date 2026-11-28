@@ -14,8 +14,8 @@ import unittest
 from unittest.mock import patch
 
 from _support import load_script
-adapter=load_script('openclaw_video_execution','pf_runtime_adapter',register=True)
-contract=load_script('openclaw_product_contract','pf_runtime_contract',register=True)
+adapter=load_script('bridge/openclaw_video_execution','pf_runtime_adapter',register=True)
+contract=load_script('bridge/openclaw_product_contract','pf_runtime_contract',register=True)
 AGENT_AVAILABLE=importlib.util.find_spec('openclaw_media') is not None
 
 

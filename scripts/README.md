@@ -70,7 +70,7 @@ Syncthing 正式常驻同步的是 Obsidian vault 中的 `98_Agent任务队列`�
 作品审核能力统一由 GitHub 管理，机器可读单一事实源是 `review-capabilities.registry.json`。这一版优先收敛的是视频评分、判断和版本排序算法本身：技术门禁、策略评分、VLM 语义融合、节奏同步评分、推荐值和人工判断边界。本机 Mac 和远端服务器新增或修改成片质检、VLM 复核、节奏同步、版本排序、远端任务编排时，必须先更新 registry 的 `algorithm_contract`，再改脚本、Runner、文档和测试，并运行：
 
 ```bash
-python3 scripts/validate_review_capability_registry.py
+python3 scripts/tooling/validate_review_capability_registry.py
 ```
 
 原则固定为：Mac 侧 `review_output_video.py` 承担视频探测、抽帧、音画同步、策略评分和 VLM 语义复核；远端服务器这一版只派发任务、推进状态、消费 Mac 回写结果，不另造第二套评分/判断算法。
@@ -249,25 +249,25 @@ Runner 会校验该 link 为 `brief_ready`、`project_id` 一致、没有缺失�
 处理本机 `openclaw-queue` 手动跑一次：
 
 ```bash
-python3 scripts/process_openclaw_queue.py --once
+python3 scripts/bridge/process_openclaw_queue.py --once
 ```
 
 Mac OpenClaw 常驻监听：
 
 ```bash
-python3 scripts/process_openclaw_queue.py --watch --interval 10
+python3 scripts/bridge/process_openclaw_queue.py --watch --interval 10
 ```
 
 云端 ready 队列自动开工：从云端任务层扫描所有 ready 任务并立即处理：
 
 ```bash
-python3 scripts/enqueue_openclaw_queue_job.py --all-ready --process
+python3 scripts/bridge/enqueue_openclaw_queue_job.py --all-ready --process
 ```
 
 让 Mac OpenClaw 常驻等待云端任务单：
 
 ```bash
-python3 scripts/enqueue_openclaw_queue_job.py --watch --process --interval 10
+python3 scripts/bridge/enqueue_openclaw_queue_job.py --watch --process --interval 10
 ```
 
 成功后，本地批次会得到：
@@ -286,13 +286,13 @@ inbox/事件批次/
 如果任务先进入旧链路：
 
 ```bash
-python3 scripts/enqueue_openclaw_queue_job.py task_YYYYMMDD_NNN
+python3 scripts/bridge/enqueue_openclaw_queue_job.py task_YYYYMMDD_NNN
 ```
 
 或者生成后立即处理：
 
 ```bash
-python3 scripts/enqueue_openclaw_queue_job.py task_YYYYMMDD_NNN --process
+python3 scripts/bridge/enqueue_openclaw_queue_job.py task_YYYYMMDD_NNN --process
 ```
 
 如果该 task 只提供 `batch_id`，Mac OpenClaw 会自动映射到 `inbox/{batch_id}`。如果批次目录或 `batch-notes.md` 不存在，会自动创建事件批次目录和说明文件。自动创建只允许发生在 `inbox` 内；路径越界、字段缺失或文件占用批次目录仍然会 blocked。
@@ -354,7 +354,7 @@ ai-analysis/prompts/project-l3-structure-prompt.md
 LLM/人工根据该 prompt 输出结构计划后，再执行：
 
 ```bash
-python3 scripts/ensure_project_structure.py "正式项目目录" \
+python3 scripts/intake/ensure_project_structure.py "正式项目目录" \
   --apply-l3-plan "ai-analysis/l3-structure-plan.json"
 ```
 
@@ -384,7 +384,7 @@ ai-analysis/prompts/workflows/
 主流程会先自动补齐标准空目录：
 
 ```bash
-python3 scripts/ensure_project_structure.py "正式项目目录"
+python3 scripts/intake/ensure_project_structure.py "正式项目目录"
 ```
 
 它只创建项目正式目录、项目级 WorkCache 和基础记录文件，不移动、不复制、不改名素材。
@@ -426,8 +426,8 @@ output/hyperframes/
 需要更细控制时，也可以直接使用底层脚本：
 
 ```bash
-python3 scripts/plan_additions_merge.py "additions目录" "目标正式项目目录"
-python3 scripts/apply_additions_merge.py "additions目录" "目标正式项目目录"
+python3 scripts/intake/plan_additions_merge.py "additions目录" "目标正式项目目录"
+python3 scripts/intake/apply_additions_merge.py "additions目录" "目标正式项目目录"
 ```
 
 底层脚本也会校验：`additions目录` 必须等于 `目标正式项目目录/additions`，避免误把上一级 `兰州大学/additions` 之类的临时目录当成项目入口。
@@ -441,7 +441,7 @@ Live Photo 增量组会被识别为 HEIC/MOV/XMP 同名组；计划脚本会使�
 当 `additions` 里是一批合照、领奖照、人像连拍或 JPG 照片补充包时，不使用 `run_additions_merge.sh`，改用重复照片角色筛选脚本：
 
 ```bash
-python3 scripts/select_repeat_photo_groups.py "正式项目目录" --plan
+python3 scripts/intake/select_repeat_photo_groups.py "正式项目目录" --plan
 ```
 
 脚本会生成：
@@ -465,7 +465,7 @@ L3 项目归档层使用 `补充01`、`补充02` 和 `_未修` / `_待修复` �
 计划填好后执行：
 
 ```bash
-python3 scripts/select_repeat_photo_groups.py "正式项目目录" --apply
+python3 scripts/intake/select_repeat_photo_groups.py "正式项目目录" --apply
 ```
 
 执行后会追加 `重复组合照筛选记录.md`、清空 `additions`，并默认重跑项目分析。
@@ -490,7 +490,7 @@ LLM确认的合照目录/红墙团队领奖合影_G01_代表01_Wink已修.JPG,�
 执行：
 
 ```bash
-python3 scripts/distribute_group_photos_by_name.py "正式项目目录"
+python3 scripts/media_ops/distribute_group_photos_by_name.py "正式项目目录"
 ```
 
 脚本会复制副本到 `group-photo-distribution/by-name/姓名/`；一张合照写多个姓名时，每个人目录都会获得一份。姓名为空或写“待确认”的条目进入 `pending-names/`。
@@ -500,7 +500,7 @@ python3 scripts/distribute_group_photos_by_name.py "正式项目目录"
 当一个素材既属于某个项目，又有长期通用价值时，源文件仍留在项目 L3 目录，只在资产库登记索引：
 
 ```bash
-python3 scripts/register_reusable_asset.py \
+python3 scripts/intake/register_reusable_asset.py \
   "正式项目目录" \
   "LLM确认的人物状态目录/兰州大学榆中校区宿舍镜前自拍视频.mp4" \
   --category "reusable-portraits" \
@@ -525,26 +525,26 @@ library/reusable-portraits/*.asset.md
 只需要在项目内原地改一个文件名时，用 `rename_media_file.py`。它不做分类移动，也不在脚本里硬编码“看起来像跑道/成绩表/自拍”这类宏观判断；它先拆解当前素材内容，生成关键帧、联系表和 rename plan：
 
 ```bash
-python3 scripts/rename_media_file.py "正式项目目录" "项目内相对路径或绝对路径"
+python3 scripts/media_ops/rename_media_file.py "正式项目目录" "项目内相对路径或绝对路径"
 ```
 
 只想先看自动命名计划时：
 
 ```bash
-python3 scripts/rename_media_file.py "正式项目目录" "项目内相对路径或绝对路径" --plan
+python3 scripts/media_ops/rename_media_file.py "正式项目目录" "项目内相对路径或绝对路径" --plan
 ```
 
 LLM/人工看完关键帧和项目 prompt 后，用明确基名执行改名：
 
 ```bash
-python3 scripts/rename_media_file.py "正式项目目录" "项目内相对路径或绝对路径" \
+python3 scripts/media_ops/rename_media_file.py "正式项目目录" "项目内相对路径或绝对路径" \
   --override-stem "兰州大学校运会400米比赛全程_看台视角"
 ```
 
 Live Photo 默认整组同名改：
 
 ```bash
-python3 scripts/rename_media_file.py "正式项目目录" "LLM确认的人物状态目录/IMG_6278.MOV"
+python3 scripts/media_ops/rename_media_file.py "正式项目目录" "LLM确认的人物状态目录/IMG_6278.MOV"
 ```
 
 这会先抽取 MOV 关键帧或 HEIC 预览图，生成 `ai-analysis/rename-keyframes/` 和 `ai-analysis/rename-plans/`，再把同名 `.HEIC` / `.MOV` / `.XMP` 改成同一个内容化基名。`.OSV` / `.LRF` / `.INSV` 原始关联组同理按同 stem 整组改名，不单独拆开。只想改当前文件时才加 `--single`；没有 `--override-stem` 且文件名仍是相机泛名时会停止，不想重跑分析时加 `--skip-analysis`。

@@ -79,7 +79,7 @@ class LocalMedia:
             raise RenderError('render_failed', 'Shot render failed')
         frames = loaded['shots'][0]['frames']
         source = root / 'cache' / sid / sid / 'frames' / f'frame-{min(frames - 1, int(.8 * frames)):06d}.png'
-        from video_derivatives import jpeg_frame
+        from video_tools.video_derivatives import jpeg_frame
         poster = root / 'posters' / (sid + '.jpg')
         poster.parent.mkdir(parents=True, exist_ok=True)
         pending = poster.with_name(sid + '.pending.jpg')
@@ -121,7 +121,7 @@ class LocalMedia:
         return [root / 'review-frames' / shot['shotId'] / f'{n}.jpg' for n in (3, 6, 9)]
 
     def transcribe(self, path: Path) -> dict:
-        from transcribe_audio import DEFAULT_FUNASR_MODEL, FunASRProvider
+        from pipeline.transcribe_audio import DEFAULT_FUNASR_MODEL, FunASRProvider
         return FunASRProvider(DEFAULT_FUNASR_MODEL).transcribe(path, language='zh')
 
     def compose(self, root: Path, job: dict) -> dict:
@@ -139,7 +139,7 @@ class LocalMedia:
             pending = root / 'output.pending.mp4'
             shutil.copyfile(state['candidate'], pending)
             frames = sum(s['frames'] for s in value['shots'])
-            from video_candidate import check_direct_output
+            from video_tools.video_candidate import check_direct_output
             checks = check_direct_output(pending, frames=frames, fps=FPS, narrated=True,
                                          diagnostic=root / 'checks' / 'output.json')
             if checks['playable'] != 'pass' or checks['frameCount'] != 'pass' or checks['blackFrames'] != 'pass' or checks['avOffsetSeconds'] > .1:
@@ -188,7 +188,7 @@ class LocalMedia:
             atomic_bytes(segments / 'concat.txt', concat_schedule(value['shots'], FPS).encode())
             run_ffmpeg(['-f', 'concat', '-safe', '1', '-i', str(segments / 'concat.txt'),
                         '-map', '0:v:0', '-an', '-c:v', 'copy', '-movflags', '+faststart', str(pending)])
-        from video_candidate import check_direct_output
+        from video_tools.video_candidate import check_direct_output
         checks = check_direct_output(pending, frames=frames, fps=FPS, narrated=narrated,
                                      diagnostic=root / 'checks' / 'output.json')
         if checks['playable'] != 'pass' or checks['frameCount'] != 'pass' or checks['blackFrames'] != 'pass' or (narrated and checks['avOffsetSeconds'] > .1):

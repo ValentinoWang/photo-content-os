@@ -26,7 +26,7 @@ from edit_backends.interface import BackendError
 from edit_backends.registry import get_backend
 from _support import load_script
 
-review = load_script("review_output_video", "ei_output_review", register=True)
+review = load_script("creative/review_output_video", "ei_output_review", register=True)
 EXPECTED_MAP = [
     {"source_start": 0, "source_end": 4, "output_start": 0},
     {"source_start": 6, "source_end": 8, "output_start": 4},

@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "validate_state_transition.py"
+SCRIPT = ROOT / "scripts" / "bridge/validate_state_transition.py"
 VAULT_RULES = Path("/Users/vsiyo/Library/Mobile Documents/iCloud~md~obsidian/Documents/自媒体/00_入口与总览/state_transition_rules.yaml")
 
 # 本机 vault 缺失时（CI 容器、他人机器）合成与 vault 合同同构的最小规则，

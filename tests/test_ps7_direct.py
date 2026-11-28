@@ -16,7 +16,7 @@ import urllib.error
 
 from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from video_candidate import failed_shot_progress
+from video_tools.video_candidate import failed_shot_progress
 from studio.project_store import ProjectStore, ProjectStoreError
 from studio.server import StudioApplication
 

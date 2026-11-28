@@ -16,16 +16,16 @@ from dataclasses import asdict, dataclass
 from enum import Enum
 from pathlib import Path
 
-from edit_tools_runtime import tool_status
-from openclaw_product_contract import load_snapshot
+from tooling.edit_tools_runtime import tool_status
+from bridge.openclaw_product_contract import load_snapshot
 from runtime_paths import MINIMUM_PYTHON, platform_contract_name, repository_root, runtime_python, supported_python
 
 _SYSTEM_ROOT = Path(__file__).resolve().parents[1]
 if str(_SYSTEM_ROOT) not in sys.path:
     sys.path.insert(0, str(_SYSTEM_ROOT))
-from studio.chatcut_mcp import LocalMcpSession, McpError, read_registration
-from edit_backends.kdenlive_render import melt_executable
-from edit_backends.otio_kdenlive import kdenlive_executable
+from studio.settings.chatcut_mcp import LocalMcpSession, McpError, read_registration
+from edit_backends.editors.kdenlive_render import melt_executable
+from edit_backends.editors.otio_kdenlive import kdenlive_executable
 
 if __package__:
     from .constants import (

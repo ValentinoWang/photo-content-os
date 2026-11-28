@@ -18,7 +18,7 @@ from _support import load_script
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
-enqueue_queue = load_script("enqueue_openclaw_queue_job.py", "enqueue_queue", register=True)
+enqueue_queue = load_script("bridge/enqueue_openclaw_queue_job.py", "enqueue_queue", register=True)
 
 
 class EnqueueOpenClawQueueJobTest(unittest.TestCase):

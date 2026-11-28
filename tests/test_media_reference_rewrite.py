@@ -5,7 +5,7 @@ import unittest
 from unittest.mock import patch
 from _support import load_script
 
-rewrite = load_script('rewrite_media_references.py', 'media_reference_rewrite', register=True)
+rewrite = load_script('legacy_jianying/rewrite_media_references.py', 'media_reference_rewrite', register=True)
 
 class MediaReferenceRewriteTests(unittest.TestCase):
     def test_preserves_whitespace_numbers_and_nonpath_values(self):

@@ -13,7 +13,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import mac_openclaw_runner as runner  # noqa: E402
+import bridge.mac_openclaw_runner as runner  # noqa: E402
 
 
 class MacOpenClawRunnerTest(unittest.TestCase):

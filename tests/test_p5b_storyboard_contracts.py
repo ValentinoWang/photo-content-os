@@ -15,9 +15,9 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 
-storyboard = load_script("generate_storyboard_edl.py", "p5b_storyboard", register=True)
-jianying = load_script("generate_jianying_draft_plan.py", "p5b_jianying", register=True)
-import jianying_roughcut as roughcut_common  # noqa: E402
+storyboard = load_script("creative/generate_storyboard_edl.py", "p5b_storyboard", register=True)
+jianying = load_script("legacy_jianying/generate_jianying_draft_plan.py", "p5b_jianying", register=True)
+import legacy_jianying.jianying_roughcut as roughcut_common  # noqa: E402
 
 
 def valid_edl() -> dict[str, object]:
@@ -139,7 +139,7 @@ class StoryboardContractTests(unittest.TestCase):
             self.assertEqual(value, expected)
 
     def test_storyboard_script_has_no_historical_slot_mapping(self) -> None:
-        source = (SCRIPTS / "generate_jianying_draft_plan.py").read_text(encoding="utf-8")
+        source = (SCRIPTS / "legacy_jianying/generate_jianying_draft_plan.py").read_text(encoding="utf-8")
         self.assertNotIn("slot_map", source)
         self.assertNotIn("赛前候场", source)
 

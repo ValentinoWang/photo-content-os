@@ -16,10 +16,10 @@ sys.path.insert(0, str(SCRIPTS))
 import llm
 
 
-content_summary = load_script("write_content_summary.py", "p5_content_summary", register=True)
-prompt_generator = load_script("generate_ai_prompt.py", "p5_prompt_generator", register=True)
-material_match = load_script("match_materials_to_brief.py", "p5_material_match", register=True)
-output_review = load_script("review_output_video.py", "p5_output_review", register=True)
+content_summary = load_script("pipeline/write_content_summary.py", "p5_content_summary", register=True)
+prompt_generator = load_script("creative/generate_ai_prompt.py", "p5_prompt_generator", register=True)
+material_match = load_script("creative/match_materials_to_brief.py", "p5_material_match", register=True)
+output_review = load_script("creative/review_output_video.py", "p5_output_review", register=True)
 
 
 class P5LocalPromptRegressionTests(unittest.TestCase):

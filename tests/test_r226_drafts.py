@@ -12,8 +12,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from roughcut_planner import plan_roughcut
-from studio.roughcut_drafts import DraftError, compile_roughcut_edl, generate_draft, readback_video
+from creative.roughcut_planner import plan_roughcut
+from studio.roughcut.drafts import DraftError, compile_roughcut_edl, generate_draft, readback_video
 
 
 def run(args):
@@ -169,7 +169,7 @@ def test_compiled_edl_has_no_subtitle_placeholders(case):
 
 
 def test_failure_receipt_never_success(case,monkeypatch):
-    import studio.roughcut_drafts as drafts
+    import studio.roughcut.drafts as drafts
     def failed(*args,**kwargs): raise RuntimeError('synthetic render failure')
     monkeypatch.setattr(drafts,'execute_plan',failed)
     with pytest.raises(DraftError,match='preview_failed') as caught:
@@ -184,7 +184,7 @@ def test_outside_media_root_rejected(case,tmp_path):
 
 
 def test_picture_tampering_blocks_success(case,monkeypatch):
-    import studio.roughcut_drafts as drafts
+    import studio.roughcut.drafts as drafts
     original=drafts.Backend.generate_from_edl
     def corrupt(self,**kwargs):
         value=original(self,**kwargs)
@@ -254,7 +254,7 @@ def test_heic_photo_is_prepared_without_rewriting_original(case,monkeypatch):
 
 
 def test_preview_only_renders_without_editor_or_handoff(case,monkeypatch):
-    import studio.roughcut_drafts as drafts
+    import studio.roughcut.drafts as drafts
     import hashlib
     def forbidden(*args,**kwargs): pytest.fail('Preview invoked a draft exporter')
     monkeypatch.setattr(drafts.Backend,'generate_from_edl',forbidden)
@@ -293,7 +293,7 @@ def test_preview_only_renders_without_editor_or_handoff(case,monkeypatch):
 
 @pytest.mark.parametrize('method',['external','guide'])
 def test_draft_calls_public_preview_once(case,monkeypatch,method):
-    import studio.roughcut_drafts as drafts
+    import studio.roughcut.drafts as drafts
     original=drafts.generate_preview
     render=drafts.execute_plan
     generated=[];renders=[]
@@ -319,7 +319,7 @@ def test_draft_calls_public_preview_once(case,monkeypatch,method):
 
 
 def test_preview_failure_has_no_publishable_artifacts(case,monkeypatch):
-    import studio.roughcut_drafts as drafts
+    import studio.roughcut.drafts as drafts
     def failed(*args,**kwargs): raise RuntimeError('synthetic preview failure')
     monkeypatch.setattr(drafts,'execute_plan',failed)
     with pytest.raises(DraftError,match='preview_failed') as caught:
@@ -331,7 +331,7 @@ def test_preview_failure_has_no_publishable_artifacts(case,monkeypatch):
 
 
 def test_preview_rejects_source_change_during_render(case,monkeypatch):
-    import studio.roughcut_drafts as drafts
+    import studio.roughcut.drafts as drafts
     original=drafts.execute_plan
     source=case['music_sources']['one']
     data=source.read_bytes()

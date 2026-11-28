@@ -131,9 +131,9 @@ OpenClaw Media Web / Control Plane
 薄桥入口：
 
 ```bash
-python scripts/openclaw_media_agent.py contract
-python scripts/openclaw_media_agent.py status
-python scripts/openclaw_media_agent.py run match \
+python scripts/bridge/openclaw_media_agent.py contract
+python scripts/bridge/openclaw_media_agent.py status
+python scripts/bridge/openclaw_media_agent.py run match \
   --workspace /local/workspace \
   --workspace-ref projects/demo
 ```
@@ -200,6 +200,6 @@ bash scripts/setup_edit_tools.sh
 .venv/bin/python scripts/doctor.py
 ```
 
-Python 入口为 `python3 scripts/setup_edit_tools.py`；Windows 使用 `powershell -ExecutionPolicy Bypass -File scripts/setup_edit_tools.ps1`。安装器按 `third_party/edit-tools.lock.json` 安装固定版本的 OpenChatCut、OpenFilm、Node 与 Chromium 到 `.tools/`，不会提交第三方源码或改动系统应用。相同版本可重复执行，漂移会报告并重装。环境检查的「剪辑工具」栏列出版本、相对位置和修复命令。浏览器共用并发槽，未安装的后端明确不可用；详细环境覆盖与平台限制见 [视频候选交接](docs/video-pipeline-pf.md#安装仓库内剪辑工具)。
+Python 入口为 `python3 scripts/tooling/setup_edit_tools.py`；Windows 使用 `powershell -ExecutionPolicy Bypass -File scripts/setup_edit_tools.ps1`。安装器按 `third_party/edit-tools.lock.json` 安装固定版本的 OpenChatCut、OpenFilm、Node 与 Chromium 到 `.tools/`，不会提交第三方源码或改动系统应用。相同版本可重复执行，漂移会报告并重装。环境检查的「剪辑工具」栏列出版本、相对位置和修复命令。浏览器共用并发槽，未安装的后端明确不可用；详细环境覆盖与平台限制见 [视频候选交接](docs/video-pipeline-pf.md#安装仓库内剪辑工具)。
 
 命令行若未继承系统的 PAC 代理，请先按本机网络配置设置标准 `HTTPS_PROXY` / `HTTP_PROXY` 再安装；安装器只继承当前命令的网络设置，不修改系统代理。

@@ -18,7 +18,7 @@ sys.path[:0] = [str(ROOT), str(ROOT / 'scripts')]
 import llm
 from direct_video.generate import DirectVideoError, Generator, RULES
 from direct_video.revisions import validate_findings, validate_lines, validate_verify
-from studio.direct_video import projection
+from studio.direct.video import projection
 from test_r276_direct_video import FakeMedia, html, design, wait, wav
 
 

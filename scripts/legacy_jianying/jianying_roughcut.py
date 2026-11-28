@@ -1,0 +1,244 @@
+#!/usr/bin/env python3
+"""Shared helpers for the Jianying roughcut draft pipeline."""
+
+from __future__ import annotations
+
+import sys as _sys
+from pathlib import Path as _Path
+_SCRIPTS_ROOT_DIR = str(_Path(__file__).resolve().parents[1])
+if _SCRIPTS_ROOT_DIR not in _sys.path:
+    _sys.path.insert(0, _SCRIPTS_ROOT_DIR)
+import json
+import subprocess
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+from edl_contract import EDLContractError
+from edl_contract import parse_time_range as _canonical_parse_time_range
+from media import is_raw360_path, local_now_compact as now_compact, read_json_object, read_yaml_mapping, write_json_atomic
+
+if __package__ and "." in __package__:
+    from ..constants import (
+        RAW360_EXTS,
+        JIANYING_ROUGHCUT_VIDEO_EXTS as VIDEO_EXTS,
+        JIANYING_ROUGHCUT_IMAGE_EXTS as IMAGE_EXTS,
+        JIANYING_ROUGHCUT_MEDIA_EXTS as MEDIA_EXTS,
+    )
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sdir = str(_Path(__file__).resolve().parents[1])
+    if _sdir not in _sys.path:
+        _sys.path.insert(0, _sdir)
+    from constants import (
+        RAW360_EXTS,
+        JIANYING_ROUGHCUT_VIDEO_EXTS as VIDEO_EXTS,
+        JIANYING_ROUGHCUT_IMAGE_EXTS as IMAGE_EXTS,
+        JIANYING_ROUGHCUT_MEDIA_EXTS as MEDIA_EXTS,
+    )
+
+
+class ContractError(Exception):
+    """Raised when a roughcut pipeline input violates the strict contract."""
+
+
+def load_json(path: Path) -> dict[str, Any]:
+    return read_json_object(path, error=ContractError)
+
+
+def write_json(path: Path, data: dict[str, Any]) -> None:
+    write_json_atomic(path, data, atomic=False)
+
+
+def load_yaml(path: Path) -> dict[str, Any]:
+    return read_yaml_mapping(path, error=ContractError, root_label="object")
+
+
+def write_yaml(path: Path, data: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        yaml.safe_dump(data, handle, allow_unicode=True, sort_keys=False)
+
+
+def track_by_id(plan: dict[str, Any], track_id: str) -> dict[str, Any]:
+    """Look up one track by id (L-16). Baseline: create_jianying_roughcut_draft.py's
+    version, which is byte-identical to create_native_import_pack.py's -- the only
+    difference from 25/27's inline track lookup (folded into count_plan_clips below) is
+    the explicit plan.tracks-must-be-a-list check."""
+    tracks = plan.get("tracks")
+    if not isinstance(tracks, list):
+        raise ContractError("plan.tracks must be a list")
+    for track in tracks:
+        if isinstance(track, dict) and track.get("track_id") == track_id:
+            return track
+    raise ContractError(f"track not found in plan: {track_id}")
+
+
+def count_plan_clips(plan: dict[str, Any], track_id: str) -> int:
+    """One-line wrapper around track_by_id (L-16): 25/27's near-identical
+    count_plan_clips did its own track lookup instead of sharing track_by_id's;
+    both raised the identical "track not found in plan" message on a miss, so
+    this wrapper is a zero-behavior-change consolidation, not two separate
+    implementations of the same lookup."""
+    return len(track_by_id(plan, track_id).get("clips") or [])
+
+
+def parse_time_range(value: str) -> tuple[float, float]:
+    """Parse the canonical "start-end" seconds string.
+
+    Delegates to edl_contract.parse_time_range so the Jianying roughcut route
+    shares the exact same validation (including millisecond-precision
+    enforcement) as the rest of the EDL pipeline. This is a deliberate
+    tightening versus the previous unrounded, precision-unchecked parsing:
+    every EDL this route consumes is produced by edl_contract.write_edl
+    (via generate_storyboard_edl.py normalise_edl -> canonical_time_range)
+    before it ever reaches this script, so it is already millisecond-precise
+    and this closes a validation gap instead of risking a regression on
+    historical draft plans.
+    """
+    try:
+        return _canonical_parse_time_range(value, path="time_range")
+    except EDLContractError as exc:
+        raise ContractError(f"invalid time_range, expected start-end seconds: {value}: {exc}") from exc
+
+
+def markdown_first_code_block(text: str, title: str) -> str | None:
+    marker = f"# {title}"
+    index = text.find(marker)
+    if index == -1:
+        return None
+    fence = text.find("```", index)
+    if fence == -1:
+        return None
+    body_start = text.find("\n", fence)
+    if body_start == -1:
+        return None
+    body_end = text.find("```", body_start + 1)
+    if body_end == -1:
+        return None
+    return text[body_start + 1 : body_end].strip()
+
+
+def local_project_path_from_assets(local_assets_path: Path) -> Path:
+    text = local_assets_path.read_text(encoding="utf-8")
+    value = markdown_first_code_block(text, "本地项目路径")
+    if not value:
+        raise ContractError(f"local project path not found in {local_assets_path}")
+    path = Path(value).expanduser()
+    if not path.exists() or not path.is_dir():
+        raise ContractError(f"local project path does not exist: {path}")
+    return path
+
+
+def ffprobe_duration_sec(path: Path) -> float:
+    if path.suffix.lower() in IMAGE_EXTS:
+        return 3600.0
+    result = subprocess.run(
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            str(path),
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise ContractError(f"ffprobe failed for {path}: {result.stderr.strip()}")
+    try:
+        duration = float(result.stdout.strip())
+    except ValueError as exc:
+        raise ContractError(f"ffprobe returned invalid duration for {path}: {result.stdout!r}") from exc
+    if duration <= 0:
+        raise ContractError(f"media duration must be positive: {path}")
+    return duration
+
+
+def is_raw360_media(path: Path) -> bool:
+    """Delegates to the shared media.is_raw360_path (see L-02 dedup)."""
+    return is_raw360_path(path)
+
+
+def raw360_proxy_path(path: Path) -> Path:
+    """Prefer the lightweight LRF proxy for native roughcut rendering."""
+    if path.suffix.lower() != ".osv":
+        return path
+    candidates = [
+        path.with_suffix(".LRF"),
+        path.with_suffix(".lrf"),
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return path
+
+
+def resolve_media_candidate(
+    local_project_path: Path,
+    candidates: list[Any],
+    required_duration: float,
+    *,
+    allow_raw360_proxy: bool = False,
+) -> dict[str, Any]:
+    checked: list[dict[str, Any]] = []
+    skipped_raw360: list[str] = []
+    for candidate in candidates:
+        if not isinstance(candidate, str) or not candidate.strip():
+            continue
+        candidate_path = Path(candidate)
+        if not candidate_path.is_absolute():
+            candidate_path = local_project_path / candidate_path
+        candidate_path = candidate_path.expanduser().resolve()
+        if is_raw360_media(candidate_path):
+            if not allow_raw360_proxy:
+                skipped_raw360.append(str(candidate_path))
+                continue
+            candidate_path = raw360_proxy_path(candidate_path)
+        suffix = candidate_path.suffix.lower()
+        if suffix not in MEDIA_EXTS or not candidate_path.exists():
+            continue
+        duration = ffprobe_duration_sec(candidate_path)
+        checked.append({"path": candidate_path, "duration": duration})
+        if duration >= required_duration:
+            return {
+                "path": str(candidate_path),
+                "duration": duration,
+                "source_duration_sec": required_duration,
+                "media_duration_sec": duration,
+                "is_raw360": is_raw360_media(candidate_path),
+            }
+
+    if not checked and skipped_raw360:
+        examples = "\n".join(f"- {path}" for path in skipped_raw360[:5])
+        raise ContractError(
+            "native import pack cannot use RawVault/OSV/LRF 360 source directly. "
+            "Export a reframed editable MP4 first and put that MP4 into the EDL candidate_files.\n"
+            f"Skipped raw 360 candidates:\n{examples}"
+        )
+    if not checked:
+        raise ContractError(f"no usable media candidate found for duration {required_duration}s")
+
+    longest = max(checked, key=lambda item: float(item["duration"]))
+    source_duration = float(longest["duration"])
+    if source_duration <= 0:
+        raise ContractError(f"selected media has invalid duration: {longest['path']}")
+    return {
+        "path": str(longest["path"]),
+        "duration": source_duration,
+        "source_duration_sec": source_duration,
+        "speed": round(source_duration / required_duration, 6),
+        "is_raw360": is_raw360_media(Path(str(longest["path"]))),
+    }
+
+
+def ensure_dir(path: Path) -> Path:
+    path.mkdir(parents=True, exist_ok=True)
+    return path

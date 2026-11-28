@@ -18,7 +18,7 @@
 ## Required local checks
 
 ```bash
-python3 scripts/validate_review_capability_registry.py
+python3 scripts/tooling/validate_review_capability_registry.py
 python3 -m unittest tests/test_review_capability_registry.py
 python3 -m unittest tests/test_mac_openclaw_runner.py
 ```

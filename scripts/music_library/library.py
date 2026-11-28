@@ -39,7 +39,7 @@ def file_hash(path):
 
 def validate_track(track):
     if isinstance(track, dict) and track.get('schema_version') == 1:
-        raise MusicError('曲库是 v1，请先运行迁移：scripts/migrate_music_library.py')
+        raise MusicError('曲库是 v1，请先运行迁移：scripts/video_tools/migrate_music_library.py')
     try:
         Draft202012Validator(read_json(SCHEMA, '曲目规范'), format_checker=FormatChecker()).validate(track)
     except Exception as exc:
@@ -78,7 +78,7 @@ class MusicLibrary:
             return []
         index = read_json(index_path, '音乐库索引')
         if isinstance(index, dict) and index.get('schema_version') == 1:
-            raise MusicError('曲库是 v1，请先运行迁移：scripts/migrate_music_library.py')
+            raise MusicError('曲库是 v1，请先运行迁移：scripts/video_tools/migrate_music_library.py')
         if not isinstance(index, dict) or index.get('schema_version') != 2 or not isinstance(index.get('tracks'), list):
             raise MusicError('音乐库索引格式损坏，请维护者修复')
         tracks = index['tracks']
@@ -246,7 +246,7 @@ class MusicLibrary:
 
     @notify_import
     def import_client_file(self, path):
-        from .client_files import decode_ncm, read_client_metadata
+        from .sources.client_files import decode_ncm, read_client_metadata
         path = Path(path).expanduser().resolve()
         if not path.is_file():
             raise MusicError('客户端下载文件不存在或无法读取')
@@ -295,7 +295,7 @@ class MusicLibrary:
         retry_failed=False,
         **gen_kwargs,
     ):
-        from .ai_generate import PROVIDERS, generate_music, request_digest
+        from .sources.ai_generate import PROVIDERS, generate_music, request_digest
 
         digest = request_digest(provider, prompt, seconds, bpm=bpm, instrumental=instrumental)
         with self.locked():

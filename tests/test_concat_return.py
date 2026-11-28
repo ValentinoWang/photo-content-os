@@ -7,7 +7,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from edit_backends.interface import BackendError
-from media_project_selection import RefineRun
+from media_ops.media_project_selection import RefineRun
 from unittest.mock import patch
 from test_ps4_kdenlive_readback import movie
 import test_ps_studio_handoff as fixture_module

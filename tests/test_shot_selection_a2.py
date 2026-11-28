@@ -8,8 +8,8 @@ import cv2
 import numpy as np
 import pytest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-import select_shots as selector
-from shot_quality import frame_metrics
+import pipeline.select_shots as selector
+from pipeline.shot_quality import frame_metrics
 from llm import generate_text_with_codex_cli
 
 

@@ -14,8 +14,8 @@ import jsonschema
 
 from _support import load_script
 
-transcribe = load_script("transcribe_audio.py", "pa_transcribe")
-spoken = load_script("spoken_edit.py", "pa_spoken")
+transcribe = load_script("pipeline/transcribe_audio.py", "pa_transcribe")
+spoken = load_script("creative/spoken_edit.py", "pa_spoken")
 SYSTEM = Path(__file__).resolve().parents[1]
 SCHEMA = json.loads((SYSTEM / "schemas/audio-transcript.schema.json").read_text())
 
@@ -383,12 +383,12 @@ class SyntheticAudioTests(unittest.TestCase):
         transcript.write_text(json.dumps(self.transcript, ensure_ascii=False))
         output = self.root / "edit_suggestions.json"
         hashes = [spoken.source_sha256(path) for path in (self.audio, transcript)]
-        run = subprocess.run([sys.executable, str(SYSTEM / "scripts/spoken_edit.py"), str(self.audio), str(transcript), "--output", str(output)],
+        run = subprocess.run([sys.executable, str(SYSTEM / "scripts/creative/spoken_edit.py"), str(self.audio), str(transcript), "--output", str(output)],
                              check=True, capture_output=True, text=True, timeout=30)
         self.assertEqual(json.loads(run.stdout)["suggestion_count"], 2)
         self.assertEqual(json.loads(output.read_text())["status"], "candidate")
         self.assertEqual([spoken.source_sha256(path) for path in (self.audio, transcript)], hashes)
-        rejected = subprocess.run([sys.executable, str(SYSTEM / "scripts/spoken_edit.py"), str(self.audio), str(transcript), "--output", str(self.audio)],
+        rejected = subprocess.run([sys.executable, str(SYSTEM / "scripts/creative/spoken_edit.py"), str(self.audio), str(transcript), "--output", str(self.audio)],
                                   capture_output=True, text=True, timeout=30)
         self.assertNotEqual(rejected.returncode, 0)
         self.assertEqual(spoken.source_sha256(self.audio), hashes[0])

@@ -55,7 +55,7 @@ class MediaIntegrationTests(unittest.TestCase):
             plan_path = analysis / "analysis-plan.json"
             plan_path.write_text(json.dumps(plan), encoding="utf-8")
             completed = subprocess.run(
-                [sys.executable, str(SCRIPTS / "extract_keyframes.py"), str(project), "--analysis-plan", str(plan_path)],
+                [sys.executable, str(SCRIPTS / "pipeline/extract_keyframes.py"), str(project), "--analysis-plan", str(plan_path)],
                 text=True, encoding="utf-8", errors="replace", stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
                 env={**dict(__import__("os").environ), "PYTHONPATH": str(SCRIPTS)},
             )
@@ -68,7 +68,7 @@ class MediaIntegrationTests(unittest.TestCase):
                 self.assertTrue((project / ref).is_file())
 
     def test_preview_execute_creates_local_mp4(self):
-        module = load_script("render_preview.py", "preview_execution_under_test", register=True)
+        module = load_script("creative/render_preview.py", "preview_execution_under_test", register=True)
         with tempfile.TemporaryDirectory() as directory:
             project = Path(directory)
             media = project / "01_Media"

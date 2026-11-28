@@ -364,21 +364,21 @@ EXTERNAL_PREFIXES = ("http://", "https://", "mailto:", "tel:", "obsidian:", "dat
 
 # --- check_outline_contract.py ---
 REQUIRED_SCRIPTS = [
-    "scan_media_manifest.py",
-    "extract_keyframes.py",
-    "extract_audio.sh",
-    "generate_ai_prompt.py",
-    "write_content_summary.py",
-    "validate_media_decisions.py",
-    "plan_additions_merge.py",
-    "apply_additions_merge.py",
+    "media_ops/scan_media_manifest.py",
+    "pipeline/extract_keyframes.py",
+    "pipeline.extract_audio.sh",
+    "creative/generate_ai_prompt.py",
+    "pipeline/write_content_summary.py",
+    "media_ops/validate_media_decisions.py",
+    "intake/plan_additions_merge.py",
+    "intake/apply_additions_merge.py",
     "run_additions_merge.sh",
-    "rename_media_file.py",
-    "select_repeat_photo_groups.py",
-    "ensure_project_structure.py",
-    "distribute_group_photos_by_name.py",
-    "register_reusable_asset.py",
-    "validate_review_capability_registry.py",
+    "media_ops/rename_media_file.py",
+    "intake/select_repeat_photo_groups.py",
+    "intake/ensure_project_structure.py",
+    "media_ops/distribute_group_photos_by_name.py",
+    "intake/register_reusable_asset.py",
+    "tooling/validate_review_capability_registry.py",
     "check_obsidian_doc_sync.py",
     "run_analyze_project.sh",
 ]
@@ -402,11 +402,11 @@ OUTLINE_MARKERS = [
     "summaries",
     "media-decision-warnings.md",
     "additions-merge-plan",
-    "rename_media_file.py",
-    "select_repeat_photo_groups.py",
-    "ensure_project_structure.py",
-    "distribute_group_photos_by_name.py",
-    "register_reusable_asset.py",
+    "media_ops/rename_media_file.py",
+    "intake/select_repeat_photo_groups.py",
+    "intake/ensure_project_structure.py",
+    "media_ops/distribute_group_photos_by_name.py",
+    "intake/register_reusable_asset.py",
     "icloud-selected",
     "project-selected",
     "memorial",
@@ -441,11 +441,11 @@ README_MARKERS = [
     "ai-analysis",
     "media-decision-warnings.md",
     "additions-merge-plan",
-    "rename_media_file.py",
-    "select_repeat_photo_groups.py",
-    "ensure_project_structure.py",
-    "distribute_group_photos_by_name.py",
-    "register_reusable_asset.py",
+    "media_ops/rename_media_file.py",
+    "intake/select_repeat_photo_groups.py",
+    "intake/ensure_project_structure.py",
+    "media_ops/distribute_group_photos_by_name.py",
+    "intake/register_reusable_asset.py",
     "icloud-selected",
     "project-selected",
     "memorial",
@@ -592,7 +592,7 @@ README_TEMPLATE = """# 合照发放
 
 - 在 `distribution-map.csv` 中填写 `photo_path,names,note`。
 - `photo_path` 使用项目内相对路径；`names` 用 `、` 分隔多人。
-- 执行 `python3 scripts/distribute_group_photos_by_name.py "项目目录" --apply` 后，会把照片复制到 `by-name/姓名/`。
+- 执行 `python3 scripts/media_ops/distribute_group_photos_by_name.py "项目目录" --apply` 后，会把照片复制到 `by-name/姓名/`。
 - 姓名为空或写 `待确认` 的照片会复制到 `pending-names/`。
 """
 
@@ -600,7 +600,7 @@ README_TEMPLATE = """# 合照发放
 UPSTREAM_DEVICE_PLATFORMS = {"macos"}
 
 # --- edit_tools_runtime.py ---
-INSTALL = 'python3 scripts/setup_edit_tools.py'
+INSTALL = 'python3 scripts/tooling/setup_edit_tools.py'
 
 # --- enqueue_openclaw_queue_job.py ---
 QUEUE_DIR_NAME = "openclaw-queue"
@@ -1056,16 +1056,16 @@ VIDEO_STORYBOARD_COLUMNS = frozenset({"shot", "visual", "dialogue", "subtitle", 
 # --- openclaw_video_execution.py ---
 PHOTO_PYTHON = Path(__file__).resolve().parent.parent / ".venv/bin/python"
 ENTRYPOINTS = {
-    "transcribe": "transcribe_audio.py",
-    "suggest": "spoken_edit.py",
+    "transcribe": "pipeline/transcribe_audio.py",
+    "suggest": "creative/spoken_edit.py",
     "chatcut": "edit_backends/chatcut_handoff.py",
     "kdenlive": "edit_backends/execution.py",
     "editor": "edit_backends/execution.py",
-    "review": "review_output_video.py",
+    "review": "creative/review_output_video.py",
     "compose": "video_render/compose.py",
     "multi_shot": "video_render/multi_shot.py",
     "teaching_clips": "video_render/teaching_clips.py",
-    "shot_image": "video_derivatives.py",
+    "shot_image": "video_tools/video_derivatives.py",
 }
 
 # --- plan_additions_merge.py ---

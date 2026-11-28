@@ -158,7 +158,7 @@ def test_recipe_picker_header_computes_sources_from_data():
     scripts_dir = str(repo_root / "scripts")
     if scripts_dir not in sys.path:
         sys.path.insert(0, scripts_dir)
-    from studio import direct_recipes
+    from studio.direct import recipes as direct_recipes
 
     catalog = direct_recipes.catalog()
     html_all = _render_picker_html(catalog["recipes"], catalog["categories"])

@@ -14,7 +14,7 @@ sys.path[:0] = [str(ROOT), str(ROOT / 'scripts')]
 from music_library.library import MusicLibrary, validate_track
 from music_library.errors import MusicError
 from music_library.cache import write_json
-from migrate_music_library import migrate
+from video_tools.migrate_music_library import migrate
 from validate_music_analysis_registry import validate, check_copy, published_registry
 from studio.music_analysis import AnalysisQueue, derive, registry, failure, read_analysis, validate_analysis, load_beat_map, run_worker
 from studio.media_review import MediaReview
@@ -61,7 +61,7 @@ def test_migration_preview_backup_apply_idempotence(library,tmp_path):
 
 
 def test_backup_failure_never_writes(library,tmp_path,monkeypatch):
-    import migrate_music_library as migration
+    import video_tools.migrate_music_library as migration
     before=v1(library)
     def fail(*args):raise OSError('backup disk full')
     monkeypatch.setattr(migration.shutil,'copy2',fail)
@@ -70,7 +70,7 @@ def test_backup_failure_never_writes(library,tmp_path,monkeypatch):
 
 
 def test_migration_preserves_derived_files_and_rolls_back(library,tmp_path,monkeypatch):
-    import migrate_music_library as migration
+    import video_tools.migrate_music_library as migration
     track=library.list_tracks()[0];folder=library.root/track['file_sha256'];(folder/'peaks.json').write_text('[0.1]')
     (library.root/'.attempts').mkdir();(library.root/'.attempts/a.json').write_text('{}')
     before=v1(library);write=migration.write_json

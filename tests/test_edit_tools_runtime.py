@@ -8,10 +8,10 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import check_repository_safety as safety
-import edit_tools_runtime as runtime
-import setup_edit_tools as setup
-from edit_backends.openchatcut_adapter import Backend as ChatCut
-from edit_backends.openfilm_adapter import Backend as Film
+import tooling.edit_tools_runtime as runtime
+import tooling.setup_edit_tools as setup
+from edit_backends.editors.openchatcut_adapter import Backend as ChatCut
+from edit_backends.editors.openfilm_adapter import Backend as Film
 
 
 @pytest.mark.parametrize('token', ['/Users/private/tool', '~/Desktop/Opensource_Tool/tool', '自媒体创作Agent/tool'])
@@ -51,7 +51,7 @@ def test_uninstalled_and_corrupt_tools_are_explicit(tmp_path):
     for name in ['openfilm', 'openchatcut']:
         missing = runtime.tool_status(name, tmp_path)
         assert missing['status'] == 'unavailable' and not missing['installed']
-        assert 'setup_edit_tools.py' in missing['action']
+        assert 'tooling/setup_edit_tools.py' in missing['action']
     path = tmp_path / '.tools/openfilm/node_modules/openfilm'
     path.mkdir(parents=True)
     (path / 'package.json').write_text('{bad json')

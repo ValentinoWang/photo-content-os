@@ -14,7 +14,7 @@ SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SCRIPTS))
 
-import openclaw_product_contract as contract  # noqa: E402
+import bridge.openclaw_product_contract as contract  # noqa: E402
 
 
 def direct_media_imports(repository_root: Path) -> list[str]:

@@ -6,9 +6,9 @@ from pathlib import Path
 from _support import load_script
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "match_materials_to_brief.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "creative/match_materials_to_brief.py"
 sys.path.insert(0, str(SCRIPT.parent))
-MODULE = load_script("match_materials_to_brief.py", "match_materials_to_brief")
+MODULE = load_script("creative/match_materials_to_brief.py", "match_materials_to_brief")
 
 
 def _report(*, sections: tuple[str, ...] | None = None, **overrides: object) -> str:

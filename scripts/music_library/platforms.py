@@ -57,13 +57,13 @@ class PlatformAdapter:
 
     def cookies(self, url):
         if self.browser:
-            from .browser_cookies import build_cookie_header
+            from .sources.browser_cookies import build_cookie_header
             return build_cookie_header(url, self.browser, self.profile)
         return ''
 
     def musicdl(self):
         if self.engine is None:
-            from .musicdl_engine import MusicDLEngine
+            from .sources.musicdl_engine import MusicDLEngine
             self.engine = MusicDLEngine(self.http)
         return self.engine
 
@@ -103,10 +103,10 @@ class PlatformAdapter:
             if not link.platform_id:
                 raise MusicError('无法确认抖音作品编号，已停止')
             if link.kind in ('note', 'video'):
-                from .douyin_share import work_detail
+                from .sources.douyin_share import work_detail
                 data = work_detail(self.http, link.platform_id, link.kind)
             else:
-                from .douyin_api import music_detail
+                from .sources.douyin_api import music_detail
                 data = music_detail(self.http, link.platform_id)
             return self.douyin(link, link.url, data)
         page_response = None

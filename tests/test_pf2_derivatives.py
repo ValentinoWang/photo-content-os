@@ -11,8 +11,8 @@ from unittest.mock import patch
 from PIL import Image
 from _support import load_script
 
-derivatives = load_script('video_derivatives', 'pf2_derivatives', register=True)
-from openclaw_product_contract import ProductContractError
+derivatives = load_script('video_tools/video_derivatives', 'pf2_derivatives', register=True)
+from bridge.openclaw_product_contract import ProductContractError
 from video_render.multi_shot import RenderError, render_shots
 
 

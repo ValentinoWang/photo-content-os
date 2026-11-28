@@ -5,7 +5,7 @@ import tempfile
 import unittest
 
 from _support import load_script
-subtitles = load_script('video_subtitles', 'subtitle_wrapping')
+subtitles = load_script('video_tools/video_subtitles', 'subtitle_wrapping')
 
 
 class SubtitleWrappingTests(unittest.TestCase):

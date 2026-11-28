@@ -13,7 +13,7 @@ from studio.media_review import now, read_json, directory_lock
 from music_library.errors import MusicError, MemberRequired, import_failure_message
 from music_library.links import parse_link
 from music_library.egress import read_target
-from music_library.netease import read_session
+from music_library.sources.netease import read_session
 
 
 class ReviewJobs:
@@ -53,8 +53,8 @@ class ReviewJobs:
                 return {'status': 'stopping'}
             if running and running.poll() is None:
                 raise ProjectStoreError('revision_conflict', '正在挑镜头')
-            script = Path(__file__).resolve().parents[1] / 'scripts/select_shots.py'
-            python = script.parent.parent / '.venv/bin/python'
+            script = Path(__file__).resolve().parents[1] / 'scripts/pipeline/select_shots.py'
+            python = Path(__file__).resolve().parents[1] / '.venv/bin/python'
             if not python.is_file():
                 raise ProjectStoreError('runtime_unavailable', '本机运行环境不可用')
             args = [str(python), str(script), str(self.review.workspace(identity))]
@@ -101,7 +101,7 @@ class ReviewJobs:
             platform = None
             try:
                 if folder is not None:
-                    from import_music import import_folder
+                    from video_tools.import_music import import_folder
                     results = import_folder(self.review.music, directory)
                     if not results:
                         raise MusicError('文件夹里没有可导入的音频')
@@ -149,7 +149,7 @@ class ReviewJobs:
             process.terminate()
 
     def prepare(self):
-        script = Path(__file__).resolve().parents[1] / 'scripts/prepare_studio_media.py'
+        script = Path(__file__).resolve().parents[1] / 'scripts/pipeline/prepare_studio_media.py'
         self.preparation = self.spawn([str(script.parent.parent / '.venv/bin/python'), str(script), '--state-dir', str(self.review.store.state_dir)],
                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
 

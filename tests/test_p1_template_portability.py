@@ -66,7 +66,7 @@ class TemplatePortabilityTest(unittest.TestCase):
         template = CONTROLLED_DOCUMENTS[0].read_text(encoding="utf-8")
         self.assertIn("${LOCAL_MEDIA_ROOT:-}", template)
         self.assertIn("${OBSIDIAN_ROOT:-}", template)
-        self.assertIn("link_batch_to_content_project.py", template)
+        self.assertIn("intake/link_batch_to_content_project.py", template)
         self.assertIn('--obsidian-root "$OBSIDIAN_ROOT"', template)
         self.assertIn("exit 1", template)
         self.assertIn("$LOCAL_MEDIA_ROOT/inbox/", template)

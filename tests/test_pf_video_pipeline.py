@@ -12,10 +12,10 @@ from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
 from _support import load_script
-adapter = load_script('openclaw_video_execution', 'pf_adapter', register=True)
-from edit_backends import kdenlive_render as renderer
-from openclaw_product_contract import ProductContractError, video_digest
-from video_candidate import project_candidate, waveform_peaks, preview_video, cut_projection
+adapter = load_script('bridge/openclaw_video_execution', 'pf_adapter', register=True)
+from edit_backends.editors import kdenlive_render as renderer
+from bridge.openclaw_product_contract import ProductContractError, video_digest
+from video_tools.video_candidate import project_candidate, waveform_peaks, preview_video, cut_projection
 
 
 def run(*args):
@@ -209,13 +209,13 @@ class AnalysisForwardingTests(unittest.TestCase):
             root=Path(directory)
             with patch.object(analysis.sys,'argv',['run_analyze_project',str(root),'--audio','--transcript-provider','fun_asr','--transcript-model','fun-asr','--live','--skip-llm']), patch.object(analysis,'project_path',return_value=root), patch.object(analysis,'run',side_effect=commands.append), patch.object(analysis,'apply_requested_tier'):
                 self.assertEqual(analysis.main(),0)
-        transcribe=next(c for c in commands if str(adapter.SCRIPTS/'transcribe_audio.py') in c)
+        transcribe=next(c for c in commands if str(adapter.SCRIPTS/'pipeline/transcribe_audio.py') in c)
         self.assertIn('--live',transcribe)
         self.assertEqual(transcribe[transcribe.index('--provider')+1],'fun_asr')
         self.assertEqual(transcribe[transcribe.index('--model')+1],'fun-asr')
 
     def test_registration_uses_desktop_without_guessed_tools(self):
-        from studio.chatcut_mcp import PROBE_COMMAND
+        from studio.settings.chatcut_mcp import PROBE_COMMAND
         self.assertEqual(PROBE_COMMAND,('codex','mcp','get','chatcut_desktop'))
 
 

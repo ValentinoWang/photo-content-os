@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "create_demo_project.py"
+SCRIPT = ROOT / "scripts" / "tooling/create_demo_project.py"
 
 
 class DemoTrialTest(unittest.TestCase):

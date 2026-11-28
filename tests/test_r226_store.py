@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from tests.test_r226_api import setup,arrange,body,check,put,PRESETS
-from studio.roughcut_store import RoughcutError
+from studio.roughcut.store import RoughcutError
 
 
 @pytest.mark.parametrize('bad',['null','{}','[]','{','{"schema_version":"editing_presets_store_v1","revision":true,"presets":[]}'])
@@ -80,7 +80,7 @@ def test_concurrent_save_one_wins_and_atomic_failure_preserves_bytes(setup,monke
     with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(save,range(2)))
     assert sorted(map(str,results))==['2','revision_conflict']
     old=service.store.presets_path.read_bytes()
-    import studio.roughcut_store as module
+    import studio.roughcut.store as module
     original=module.os.replace
     def broken(source,dest):
         if Path(dest)==service.store.presets_path:raise OSError('simulated full disk')
@@ -129,8 +129,8 @@ def test_two_processes_share_the_preset_cas_lock(setup):
 from pathlib import Path
 from studio.server import StudioApplication
 from studio.project_store import ProjectStore
-from studio.roughcut import RoughcutService
-from studio.roughcut_store import RoughcutError
+from studio.roughcut.application import RoughcutService
+from studio.roughcut.store import RoughcutError
 app=StudioApplication(ProjectStore(Path(sys.argv[1])));service=RoughcutService(app,start_jobs=False)
 original=service.store.mine
 def delayed():

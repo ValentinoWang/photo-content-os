@@ -10,8 +10,8 @@ from _support import load_script
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT_PATH = ROOT / "scripts" / "plan_inbox_batches.py"
-planner = load_script("plan_inbox_batches.py", "plan_inbox_batches")
+SCRIPT_PATH = ROOT / "scripts" / "intake/plan_inbox_batches.py"
+planner = load_script("intake/plan_inbox_batches.py", "plan_inbox_batches")
 
 
 def item(media_id, captured_at, latitude, longitude, **extra):

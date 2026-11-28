@@ -8,7 +8,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from roughcut_planner import PlannerError, plan_roughcut
+from creative.roughcut_planner import PlannerError, plan_roughcut
 
 
 def case(preset_id='trip', **changes):

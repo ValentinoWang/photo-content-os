@@ -24,7 +24,7 @@ def test_source_frame_save_confirmed_rewrite_target_render_and_real_posters(vide
     from test_video_render import create_fixture
     exchange = import_module('openclaw_media.video_exchange')
     catalog = import_module('openclaw_media.catalog').InstalledCatalog()
-    adapter = load_script('openclaw_video_execution', 'pf2_service_adapter', register=True)
+    adapter = load_script('bridge/openclaw_video_execution', 'pf2_service_adapter', register=True)
     # Media and Photo have independent modules named media. The Photo
     # renderer keeps its module instance, and the service cache is restored.
     old_common = sys.modules.pop('media', None)

@@ -14,7 +14,7 @@ New-Item -ItemType Directory -Path $TempRoot | Out-Null
 try {
   Set-Location $RepositoryRoot
   Write-Host '== Runtime contract =='
-  & $Python (Join-Path $ScriptDir 'check_runtime_contract.py')
+  & $Python (Join-Path $ScriptDir 'tooling/check_runtime_contract.py')
   if ($LASTEXITCODE -ne 0) { throw 'Runtime contract failed.' }
 
   Write-Host '== Doctor (offline-tolerant) =='
@@ -31,17 +31,17 @@ try {
   & $Python @OutlineArgs
   if ($LASTEXITCODE -ne 0) { throw 'Outline contract failed.' }
 
-  & $Python (Join-Path $ScriptDir 'validate_review_capability_registry.py')
+  & $Python (Join-Path $ScriptDir 'tooling/validate_review_capability_registry.py')
   if ($LASTEXITCODE -ne 0) { throw 'Review capability registry failed.' }
   & $Python (Join-Path $ScriptDir 'check_repository_safety.py')
   if ($LASTEXITCODE -ne 0) { throw 'Repository safety check failed.' }
 
-  foreach ($Entry in @('validate_content_os_task.py','validate_jianying_draft.py','transcribe_audio.py','render_preview.py','doctor.py','launch_studio.py','openclaw_media_agent.py')) {
+  foreach ($Entry in @('validate_content_os_task.py','legacy_jianying/validate_jianying_draft.py','pipeline/transcribe_audio.py','creative/render_preview.py','doctor.py','launch_studio.py','bridge/openclaw_media_agent.py')) {
     & $Python (Join-Path $ScriptDir $Entry) --help | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "Entry point failed: $Entry" }
   }
 
-  & $Python (Join-Path $ScriptDir 'create_demo_project.py') --workspace-root $TempRoot --project-name local_ci_demo
+  & $Python (Join-Path $ScriptDir 'tooling/create_demo_project.py') --workspace-root $TempRoot --project-name local_ci_demo
   if ($LASTEXITCODE -ne 0) { throw 'Synthetic trial failed.' }
   Write-Host 'Local CI passed.'
 } finally {

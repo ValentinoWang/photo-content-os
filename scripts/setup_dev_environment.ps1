@@ -35,7 +35,7 @@ if ($LASTEXITCODE -ne 0) { throw 'pip upgrade failed.' }
 if ($LASTEXITCODE -ne 0) { throw 'dependency installation failed.' }
 
 Write-Host '== Verify fixed development runtime =='
-& $RuntimePython (Join-Path $ScriptDir 'check_runtime_contract.py')
+& $RuntimePython (Join-Path $ScriptDir 'tooling/check_runtime_contract.py')
 if ($LASTEXITCODE -ne 0) { throw 'Runtime contract failed.' }
 & $RuntimePython (Join-Path $ScriptDir 'doctor.py') --allow-offline
 if ($LASTEXITCODE -ne 0) { throw 'Content OS doctor failed.' }

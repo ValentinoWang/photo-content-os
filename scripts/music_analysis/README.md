@@ -1,6 +1,6 @@
 # 本机音乐分析
 
-安装：`MUSIC_ANALYSIS_PYTHON=python3.12 python3 scripts/setup_edit_tools.py --music-analysis`。Shell / PowerShell 包装入口将同一参数交给 Python 安装器。环境位于 `.tools/music-analysis/`，不会安装进 Studio 的 `.venv`。固定包版本、beat 权重和四个分类头类别元数据的哈希见 `third_party/edit-tools.lock.json`；五个 MTG 图文件的地址、哈希和许可见根目录音乐清单。
+安装：`MUSIC_ANALYSIS_PYTHON=python3.12 python3 scripts/tooling/setup_edit_tools.py --music-analysis`。Shell / PowerShell 包装入口将同一参数交给 Python 安装器。环境位于 `.tools/music-analysis/`，不会安装进 Studio 的 `.venv`。固定包版本、beat 权重和四个分类头类别元数据的哈希见 `third_party/edit-tools.lock.json`；五个 MTG 图文件的地址、哈希和许可见根目录音乐清单。
 
 `worker.py` 用一行 JSON 从标准输入读 `audio`（本地文件）、`duration_seconds`、`part`（`all`、`beat` 或 `tags`），向标准输出写 JSON；诊断写标准错误。只有安装器联网，worker 禁止 socket 连接，并在加载前校验本地权重及类别元数据的哈希。Studio 用专用解释器启动子进程，整首超时 180 秒；音频解码上限 60 秒。
 

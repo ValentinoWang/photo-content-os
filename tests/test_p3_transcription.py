@@ -15,7 +15,7 @@ SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 SCHEMAS = Path(__file__).resolve().parents[1] / "schemas"
 sys.path.insert(0, str(SCRIPTS))
 
-module = load_script("transcribe_audio.py", "transcription_under_test")
+module = load_script("pipeline/transcribe_audio.py", "transcription_under_test")
 
 
 class TranscriptionTests(unittest.TestCase):

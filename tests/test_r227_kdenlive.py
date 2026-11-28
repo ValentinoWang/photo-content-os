@@ -17,11 +17,11 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from edit_backends import kdenlive_render as renderer
-from edit_backends.kdenlive_adapter import Backend
-from edit_backends.kdenlive_readback import read_project
-from edit_backends.otio_kdenlive import require_otio, timeline_tractor
-from edit_backends import otio_kdenlive
+from edit_backends.editors import kdenlive_render as renderer
+from edit_backends.editors.kdenlive_adapter import Backend
+from edit_backends.editors.kdenlive_readback import read_project
+from edit_backends.editors.otio_kdenlive import require_otio, timeline_tractor
+from edit_backends.editors import otio_kdenlive
 from edit_backends.interface import BackendError
 
 
@@ -217,18 +217,18 @@ def test_otio_validation_checks_audio_and_cli_entry(project, media):
     with patch.object(otio_kdenlive, "kdenlive_executable", return_value="fixture-app"), patch.object(otio_kdenlive, "probe_kdenlive_version", return_value="fixture"), patch.object(otio_kdenlive, "probe_kdenlive_reopen"):
         assert otio_kdenlive.validate(args) == 0
     destination = media / "cli-project"
-    run([sys.executable, str(ROOT / "scripts/edit_backends/otio_kdenlive.py"), "generate-edl", "--edl", str(media / "edl.json"),
+    run([sys.executable, str(ROOT / "scripts/edit_backends/editors/otio_kdenlive.py"), "generate-edl", "--edl", str(media / "edl.json"),
          "--project-id", "r227-k", "--project-revision", "1", "--output-dir", str(destination), "--media-root", str(media)])
     assert read_project(destination)["audio_matches_plan"] is True
     storyboard = media / "storyboard.md"; storyboard.write_text("合成分镜")
-    software = str(ROOT / "scripts/edit_backends/otio_kdenlive.py")
+    software = str(ROOT / "scripts/edit_backends/editors/otio_kdenlive.py")
     common = [sys.executable, software]
     handoff = media / "otio-route"
     run([*common, "generate-otio", "--project-id", "r227-k", "--project-revision", "1", "--edl", str(media / "edl.json"),
          "--storyboard", str(storyboard), "--output-root", str(handoff)])
     run([*common, "generate-kdenlive", "--project-id", "r227-k", "--project-revision", "1", "--otio", str(handoff / "1/timeline.otio"),
          "--output-root", str(handoff)])
-    from edit_backends.kdenlive_readback import audio_graph_differences
+    from edit_backends.editors.kdenlive_readback import audio_graph_differences
     root = ET.parse(handoff / "1/timeline.kdenlive").getroot()
     audio_plan = json.loads((handoff / "1/manifest.json").read_text())["audio_plan"]
     assert audio_graph_differences(root, handoff / "1", audio_plan)[1] == []
@@ -357,7 +357,7 @@ def test_compressed_music_keeps_decoded_sample_origin(media, extension, codec):
 
 def test_frame_clock_precision_matches_reported_52_second_project(tmp_path):
     """Exercise the EDL readback boundary without substituting its comparison."""
-    from edit_backends import kdenlive_readback as readback
+    from edit_backends.editors import kdenlive_readback as readback
     source = tmp_path / 'synthetic.wav'; source.write_bytes(b'synthetic audio identity')
     project_path = tmp_path / 'timeline.kdenlive'
     project_path.write_text('<mlt/>')
@@ -421,7 +421,7 @@ def generic_clock_project(tmp_path, *, fps=30, count=1562, source_duration=52.06
     (60,240,3.99,False),  # Same seconds are over half a frame at this profile rate.
 ])
 def test_generic_frame_clock_source_bounds(tmp_path, fps, count, duration, valid):
-    from edit_backends import kdenlive_readback as readback
+    from edit_backends.editors import kdenlive_readback as readback
     facts = generic_clock_project(tmp_path, fps=fps, count=count, source_duration=duration)
     with patch.object(readback, 'probe_media', return_value=facts):
         if valid:
@@ -432,7 +432,7 @@ def test_generic_frame_clock_source_bounds(tmp_path, fps, count, duration, valid
 
 
 def test_generic_frame_clock_rejects_one_frame_duration_mismatch(tmp_path):
-    from edit_backends import kdenlive_readback as readback
+    from edit_backends.editors import kdenlive_readback as readback
     facts = generic_clock_project(tmp_path, count=120, source_duration=4, extra_frame=True)
     with patch.object(readback, 'probe_media', return_value=facts):
         with pytest.raises(BackendError, match='kdenlive_project_duration_invalid'):
@@ -442,7 +442,7 @@ def test_generic_frame_clock_rejects_one_frame_duration_mismatch(tmp_path):
 @pytest.mark.parametrize('field', ['timeline_start_sec','timeline_end_sec','source_start_sec','source_end_sec','initial_ramp_start_sec'])
 @pytest.mark.parametrize('offset_frames,valid', [(.49,True),(.51,False),(1,False)])
 def test_audio_frame_clock_positions(project, field, offset_frames, valid):
-    from edit_backends import kdenlive_readback as readback
+    from edit_backends.editors import kdenlive_readback as readback
     directory, _ = project
     root = ET.parse(directory / 'timeline.kdenlive').getroot()
     plan = json.loads((directory / 'render-plan.json').read_text())

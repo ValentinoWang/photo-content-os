@@ -13,7 +13,7 @@ import pytest
 from test_r276_direct_video import FakeMedia, FakeModel, ready, wait, wav
 from test_r276_direct_api import api, create
 from direct_video.generate import DirectVideoError, Generator
-from studio.direct_video import projection
+from studio.direct.video import projection
 
 
 @pytest.mark.parametrize('bad,expected_status', [(1, 'rendered'), (2, 'failed')])

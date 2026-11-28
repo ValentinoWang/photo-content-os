@@ -10,5 +10,5 @@ if [[ -z "$PROJECT_DIR" ]]; then
   exit 1
 fi
 
-python3 "$SCRIPT_DIR/extract_audio.py" "$PROJECT_DIR" "$INCLUDE_DERIVED"
+python3 "$SCRIPT_DIR/pipeline/extract_audio.py" "$PROJECT_DIR" "$INCLUDE_DERIVED"
 

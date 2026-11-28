@@ -8,7 +8,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
-from roughcut_planner import clip_at, preset_counts, preview_indices, timeline_position
+from creative.roughcut_planner import clip_at, preset_counts, preview_indices, timeline_position
 from tests.test_r226_planner import assert_code, case, plan, small
 
 

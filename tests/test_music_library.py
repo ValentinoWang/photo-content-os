@@ -108,7 +108,7 @@ def test_link_forms(text, platform, kind, identity):
 
 @pytest.fixture
 def synthetic_audio(tmp_path):
-    from music_library.client_files import decode_ncm
+    from music_library.sources.client_files import decode_ncm
     audio, metadata = decode_ncm(FIXTURES / 'synthetic.ncm', tmp_path)
     from music_library.library import file_hash
     assert file_hash(audio) == (FIXTURES / 'synthetic-audio.sha256').read_text().strip()
@@ -227,7 +227,7 @@ def test_corrupt_ncm_keeps_original_and_no_library_entry(tmp_path):
 
 
 def test_qr_only_auth_private_store(tmp_path, capsys):
-    from music_library.netease import login_qr, read_session
+    from music_library.sources.netease import login_qr, read_session
     calls = []
     def request(path, params):
         calls.append(path)
@@ -246,7 +246,7 @@ def test_qr_only_auth_private_store(tmp_path, capsys):
 
 
 def test_auth_unreadable_not_absent(tmp_path):
-    from music_library.netease import read_session
+    from music_library.sources.netease import read_session
     assert read_session(tmp_path) == ''
     path = tmp_path / 'netease-session.json'
     path.write_text('{broken')
@@ -260,7 +260,7 @@ def test_auth_unreadable_not_absent(tmp_path):
 
 
 def test_qr_unknown_status_saves_nothing(tmp_path):
-    from music_library.netease import login_qr
+    from music_library.sources.netease import login_qr
     def request(path, params):
         return ({'code': 200, 'unikey': 'synthetic'} if 'unikey' in path else {'code': 999}), ''
     with pytest.raises(MusicError, match='未知状态'):
@@ -353,7 +353,7 @@ def test_duration_mismatch_cannot_import_preview(tmp_path, synthetic_audio):
 
 
 def test_cli_batch_failures_do_not_stop_next_item(tmp_path, monkeypatch, capsys):
-    from import_music import main
+    from video_tools.import_music import main
     monkeypatch.setenv('LOCAL_MEDIA_ROOT', str(tmp_path))
     result = main(['https://unknown.example.test/song/1', 'https://unknown.example.test/song/2', '--list'])
     output = capsys.readouterr().out
@@ -362,7 +362,7 @@ def test_cli_batch_failures_do_not_stop_next_item(tmp_path, monkeypatch, capsys)
 
 
 def test_cli_folder_defaults_and_existing_ncm(tmp_path, monkeypatch, capsys):
-    from import_music import main, parser
+    from video_tools.import_music import main, parser
     monkeypatch.setenv('LOCAL_MEDIA_ROOT', str(tmp_path))
     assert parser().parse_args(['--from-folder']).from_folder == '~/Music/网易云音乐'
     assert main(['--from-folder', str(FIXTURES), '--list']) == 0
@@ -372,10 +372,10 @@ def test_cli_folder_defaults_and_existing_ncm(tmp_path, monkeypatch, capsys):
 
 
 def test_browser_cookie_decrypt_cbc_and_host_binding():
-    from music_library.browser_cookies import decrypt_cookie
+    from music_library.sources.browser_cookies import decrypt_cookie
     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
     from cryptography.hazmat.primitives import hashes
-    from music_library.netease import aes_encrypt
+    from music_library.sources.netease import aes_encrypt
     import hashlib
     host = '.example.test'
     key = PBKDF2HMAC(algorithm=hashes.SHA1(), length=16, salt=b'saltysalt', iterations=1003).derive(b'synthetic')
@@ -397,7 +397,7 @@ def test_shortlinks_use_cached_redirect_identity_without_refetch(tmp_path, monke
                {'state': 'complete', 'status': 302, 'location': 'https://www.iesdouyin.com/share/note/80001/'})
     music = {'aweme_id': '80001', 'music': {'id': 90001, 'title': 'synthetic', 'duration': 180,
              'play_url': {'url_list': ['https://cdn.example.test/full.mp3']}}}
-    monkeypatch.setattr('music_library.douyin_share.work_detail', lambda *a, **k: music)
+    monkeypatch.setattr('music_library.sources.douyin_share.work_detail', lambda *a, **k: music)
     adapter = PlatformAdapter(tmp_path, http=Pages())
     assert adapter.resolve(parse_link(short))['platform_id'] == '90001'
     assert parse_link('https://www.iesdouyin.com/share/note/80001').kind == 'note'
@@ -435,7 +435,7 @@ def test_live_or_encrypted_hls_never_fetches_segments(tmp_path, body):
 
 
 def test_locked_empty_config_redirect_does_not_store_auth_in_repo(tmp_path, monkeypatch):
-    from music_library.netease import config_dir
+    from music_library.sources.netease import config_dir
     (tmp_path / '.git').mkdir()
     monkeypatch.setenv('XDG_CONFIG_HOME', str(tmp_path))
     with pytest.raises(MusicError, match='仓库外'):

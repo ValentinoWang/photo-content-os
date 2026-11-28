@@ -13,7 +13,7 @@ from _support import load_script
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
-PROMOTE = load_script("promote_inbox_batch_to_project.py", "promote_inbox_batch_to_project")
+PROMOTE = load_script("intake/promote_inbox_batch_to_project.py", "promote_inbox_batch_to_project")
 
 
 class PromoteInboxBatchTests(unittest.TestCase):

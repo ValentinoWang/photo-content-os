@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 from _support import load_script
 
-review = load_script("review_output_video.py", "roundoff_review", register=True)
+review = load_script("creative/review_output_video.py", "roundoff_review", register=True)
 
 
 def manifest():

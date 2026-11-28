@@ -9,7 +9,7 @@ from test_r276_direct_api import api
 from test_r276_direct_video import wav
 from test_r278_style_base import idle
 from studio.api_contract import build_openapi
-from studio.direct_video import projection
+from studio.direct.video import projection
 
 
 @pytest.fixture
@@ -262,7 +262,7 @@ def test_job_poll_does_not_read_images_or_scan_other_handoffs(handoff, monkeypat
     request, _, pid, app, _ = api
     gen = app.direct_video.generator
     job = gen.create(pid, {'script': '一句话', 'style': '浅色'}, background=False)
-    from studio import direct_handoff_contract
+    from studio.direct import handoff_contract as direct_handoff_contract
     calls, reads = [], []
     original = Path.read_bytes
     original_json = direct_handoff_contract.read_json
@@ -357,7 +357,7 @@ def test_supplement_nullable_revision_creation(handoff, package_revision, submit
     (7, 7, '2026-10-28T00:00:00Z', '2026-10-27T00:00:00Z', False),
 ])
 def test_supplement_newer_uses_time_when_either_revision_unknown(bound_revision, current_revision, handed, created, expected):
-    from studio.direct_handoff_contract import newer_handoff
+    from studio.direct.handoff_contract import newer_handoff
     job = {'handoff': {'jobId': 'old', 'revision': bound_revision}, 'createdAt': created}
     current = {'jobId': 'new', 'revision': current_revision, 'handedAt': handed}
     assert newer_handoff(job, current) is expected

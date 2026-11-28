@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-import import_music
+from video_tools import import_music
 from music_library.egress import SSHTunnel
 from music_library.errors import DOUYIN_IMPORT_FAILURE_MESSAGE, MusicError, import_failure_message
 from music_library.links import parse_link

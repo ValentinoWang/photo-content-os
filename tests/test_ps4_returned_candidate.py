@@ -3,7 +3,7 @@ import io,json,unittest
 from pathlib import Path
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"scripts"))
-from edit_backends.kdenlive_adapter import Backend
+from edit_backends.editors.kdenlive_adapter import Backend
 from test_ps4_kdenlive_readback import saved_project
 import test_ps_studio_handoff as fixture_module
 
@@ -54,8 +54,8 @@ class ReturnedProjectTests(unittest.TestCase):
         assert plan['subtitle_bottom_ratio']==.5
         from studio.returned_candidate import project_returned
         from studio.video_workflow import review_projection
-        from review_output_video import check_output_video
-        from edit_backends.kdenlive_render import sha256_file
+        from creative.review_output_video import check_output_video
+        from edit_backends.editors.kdenlive_render import sha256_file
         rendered=backend.render(**plan['render_kwargs'],output_dir=self.media/'position-export')
         video=Path(rendered['output'])
         output=self.run/'position';output.mkdir()

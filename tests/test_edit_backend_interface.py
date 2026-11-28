@@ -8,7 +8,8 @@ from unittest.mock import patch
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from edit_backends import kdenlive_adapter, kdenlive_render, registry
+from edit_backends import registry
+from edit_backends.editors import kdenlive_adapter, kdenlive_render
 from edit_backends.interface import BackendError, EditBackend
 
 

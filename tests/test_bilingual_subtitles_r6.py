@@ -3,7 +3,7 @@ import copy,json,tempfile,unittest
 from pathlib import Path
 import pytest
 from _support import load_script
-s=load_script('video_subtitles','bilingual_subtitles_r6')
+s=load_script('video_tools/video_subtitles','bilingual_subtitles_r6')
 
 def descriptor(english='A modest test can reveal an unexpected answer.'):
  text='先记录预期，然后用一次小尝试检验，再逐条对照真实结果。'

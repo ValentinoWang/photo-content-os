@@ -22,10 +22,10 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'scripts')]
-import openclaw_product_contract as contract
-import media_project_selection as selection
-import openclaw_video_execution as execution
-from studio.direct_handoff_contract import read_handoff, read_run_record, run_record_path, selection_root
+import bridge.openclaw_product_contract as contract
+import media_ops.media_project_selection as selection
+import bridge.openclaw_video_execution as execution
+from studio.direct.handoff_contract import read_handoff, read_run_record, run_record_path, selection_root
 from studio.project_store import ProjectStore
 
 DEVICE = 'dev_fixture'
@@ -132,8 +132,8 @@ from dataclasses import asdict
 from pathlib import Path
 cfg = json.loads(Path(sys.argv[1]).read_text())
 sys.path[:0] = [cfg['repo'], cfg['scripts'], cfg['tests']]
-import openclaw_media_agent as wrapper
-import openclaw_video_execution as execution
+import bridge.openclaw_media_agent as wrapper
+import bridge.openclaw_video_execution as execution
 from openclaw_media import cli
 from openclaw_media.agent import Agent, AgentState, AgentStateStore
 from openclaw_media.device_credentials import DeviceCredentialStore
@@ -699,7 +699,7 @@ def test_registry_binding_is_derived_and_checks_the_project_version(world):
 
 
 def test_old_explicit_binding_entry_is_gone_from_the_wrapper():
-    script = ROOT / 'scripts' / 'openclaw_media_agent.py'
+    script = ROOT / 'scripts' / 'bridge/openclaw_media_agent.py'
     removed_option = '--photo' + '-binding'
     assert removed_option not in script.read_text() and 'photo_binding' not in script.read_text()
     for command in (['once'], ['watch'], ['run', 'pipeline', '--workspace', 'w']):

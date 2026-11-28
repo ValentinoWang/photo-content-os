@@ -16,7 +16,7 @@ from _support import load_script
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
-batch_link = load_script("link_batch_to_content_project.py", "batch_link")
+batch_link = load_script("intake/link_batch_to_content_project.py", "batch_link")
 
 
 def write_batch_note(batch: Path, project_id: str) -> None:

@@ -11,8 +11,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from edl_contract import normalise_edl, write_edl
-from render_preview import PreviewError, build_plan, execute_plan
-from video_candidate import preview_video
+from creative.render_preview import PreviewError, build_plan, execute_plan
+from video_tools.video_candidate import preview_video
 from studio.video_workflow import VideoWorkflow
 
 RATE = 48000
@@ -156,7 +156,7 @@ def test_source_escape_in_music_is_rejected(rendered):
 
 
 def test_candidate_preview_remixes_native_video(rendered):
-    from video_candidate import mixed_edl_preview
+    from video_tools.video_candidate import mixed_edl_preview
     root, _, video, _ = rendered
     mixed_edl_preview(video, root/'remixed.mp4', edl=edl(), project=root)
     samples = pcm(root/'remixed.mp4')
@@ -166,7 +166,7 @@ def test_candidate_preview_remixes_native_video(rendered):
 
 
 def test_candidate_rejects_different_timeline_duration(rendered):
-    from video_candidate import mixed_edl_preview
+    from video_tools.video_candidate import mixed_edl_preview
     root, _, video, _ = rendered
     raw = edl(); raw['clips'][-1]['time_range'] = '4-9'
     with pytest.raises(Exception, match='audio_preview_duration_mismatch'):
@@ -276,7 +276,7 @@ def test_studio_render_to_actual_preview_ref(rendered, tmp_path, monkeypatch):
 
 
 def test_tail_and_looped_product_envelopes(rendered, tmp_path):
-    from audio_plan import gain_at
+    from creative.audio_plan import gain_at
     root, _, _, _ = rendered
     raw = edl(); raw.pop('audio_beds'); raw.pop('music')
     raw['clips'][0].update(audio_mute=False, audio_tail_sec=.5)

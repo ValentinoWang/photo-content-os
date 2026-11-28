@@ -78,7 +78,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "generate_jianying_draft_plan.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/generate_jianying_draft_plan.py"),
                     "--edl",
                     str(edl_path),
                     "--local-assets",
@@ -99,7 +99,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "create_jianying_roughcut_draft.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/create_jianying_roughcut_draft.py"),
                     "--plan",
                     str(plan_path),
                     "--draft-root",
@@ -133,7 +133,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "validate_jianying_draft.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/validate_jianying_draft.py"),
                     "--plan",
                     str(plan_path),
                     "--result",
@@ -152,7 +152,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "validate_jianying_draft.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/validate_jianying_draft.py"),
                     "--plan",
                     str(plan_path),
                     "--result",
@@ -198,7 +198,7 @@ class JianyingDraftPipelineTest(unittest.TestCase):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "generate_jianying_draft_plan.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/generate_jianying_draft_plan.py"),
                     "--edl",
                     str(edl_path),
                     "--local-assets",

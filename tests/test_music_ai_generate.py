@@ -15,9 +15,9 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 
-import generate_music as generate_cli
-import import_music
-from music_library.ai_generate import (
+import video_tools.generate_music as generate_cli
+from video_tools import import_music
+from music_library.sources.ai_generate import (
     HTTPResponse,
     estimate_cost,
     generate_music,
@@ -597,7 +597,7 @@ def test_post_acceptance_failure_blocks_without_flag_and_retry_failed_archives_o
     out2 = capsys.readouterr().out
     assert rc2 == 1
     assert '--retry-failed' in out2
-    assert 'generate_music.py' in out2
+    assert 'video_tools/generate_music.py' in out2
     assert len(calls) == 2  # zero additional requests
 
     # 3rd run WITH --retry-failed: archives old failed record (renamed, not deleted) and sends a new request.

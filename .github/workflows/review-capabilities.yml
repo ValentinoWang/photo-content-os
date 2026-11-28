@@ -4,9 +4,9 @@ on:
   pull_request:
     paths:
       - "review-capabilities.registry.json"
-      - "scripts/validate_review_capability_registry.py"
-      - "scripts/review_output_video.py"
-      - "scripts/mac_openclaw_runner.py"
+      - "scripts/tooling/validate_review_capability_registry.py"
+      - "scripts/creative/review_output_video.py"
+      - "scripts/bridge/mac_openclaw_runner.py"
       - "tests/test_review_capability_registry.py"
       - "tests/test_output_video_review.py"
       - "tests/test_mac_openclaw_runner.py"
@@ -17,9 +17,9 @@ on:
       - main
     paths:
       - "review-capabilities.registry.json"
-      - "scripts/validate_review_capability_registry.py"
-      - "scripts/review_output_video.py"
-      - "scripts/mac_openclaw_runner.py"
+      - "scripts/tooling/validate_review_capability_registry.py"
+      - "scripts/creative/review_output_video.py"
+      - "scripts/bridge/mac_openclaw_runner.py"
       - "tests/test_review_capability_registry.py"
       - "tests/test_output_video_review.py"
       - "tests/test_mac_openclaw_runner.py"
@@ -36,7 +36,7 @@ jobs:
       - name: Install test dependencies
         run: python3 -m pip install PyYAML
       - name: Validate registry
-        run: python3 scripts/validate_review_capability_registry.py
+        run: python3 scripts/tooling/validate_review_capability_registry.py
       - name: Run registry and runner contract tests
         run: |
           python3 -m unittest tests/test_review_capability_registry.py

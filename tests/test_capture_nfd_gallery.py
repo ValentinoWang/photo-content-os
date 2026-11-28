@@ -1,4 +1,4 @@
-"""Unit tests for pure functions and cleanup guarantees in scripts/capture_nfd_gallery.py."""
+"""Unit tests for pure functions and cleanup guarantees in scripts/qa/capture_nfd_gallery.py."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ SCRIPTS_DIR = REPO_ROOT / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-import capture_nfd_gallery as cap  # noqa: E402
+import qa.capture_nfd_gallery as cap  # noqa: E402
 
 
 def _make_solid_png(width: int, height: int, rgb: tuple[int, int, int]) -> bytes:

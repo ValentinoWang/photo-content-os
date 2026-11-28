@@ -142,7 +142,7 @@ class FullChecklistHttpAcceptanceTests(unittest.TestCase):
         self.base = f"http://127.0.0.1:{self.server.server_address[1]}"
 
     def install_asset_index(self) -> str:
-        asset_library = importlib.import_module("asset_library_index")
+        asset_library = importlib.import_module("intake.asset_library_index")
         asset_id = asset_library.stable_asset_id("source-project", "media/clip-a.mov")
         asset = {
             "asset_id": asset_id,

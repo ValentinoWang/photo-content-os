@@ -10,7 +10,7 @@ import time
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from edit_backends.concat_mcp import ConcatMCP
+from edit_backends.editors.concat_mcp import ConcatMCP
 from edit_backends.interface import BackendError
 
 
@@ -112,7 +112,7 @@ def test_probe_reports_missing_app_separately(tmp_path, monkeypatch):
 
 
 def test_failed_save_keeps_original_mcp_reason_and_stops_export(tmp_path, monkeypatch):
-    from edit_backends import concat_adapter
+    from edit_backends.editors import concat_adapter
 
     monkeypatch.setenv("CONTENT_OS_CONCAT_APP", str(tmp_path / "Concat.app"))
     binary = tmp_path / "Concat.app/Contents/MacOS/concat"
@@ -275,7 +275,7 @@ def _make_fake_concat_mcp(source: Path, duration: float, recorded: dict):
 
 
 def _setup_fake_concat(tmp_path, monkeypatch, duration: float):
-    from edit_backends import concat_adapter
+    from edit_backends.editors import concat_adapter
 
     monkeypatch.setenv("CONTENT_OS_CONCAT_APP", str(tmp_path / "Concat.app"))
     binary = tmp_path / "Concat.app/Contents/MacOS/concat"
@@ -326,7 +326,7 @@ def test_sliver_retained_segments_are_merged_into_cuts(tmp_path, monkeypatch):
 
 
 def test_captions_merge_adjacent_identical_and_drop_short(tmp_path, monkeypatch):
-    from review_output_video import read_srt_cues
+    from creative.review_output_video import read_srt_cues
 
     concat_adapter, source, recorded = _setup_fake_concat(tmp_path, monkeypatch, duration=73.99)
     suggestions = tmp_path / "suggestions.json"

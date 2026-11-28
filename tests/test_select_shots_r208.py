@@ -8,10 +8,10 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from shot_quality import frame_metrics, motion_metrics, split_long_scene
-from select_shots import (DEFAULT_CONFIG, apply_quality, deduplicate, validate_model_answer,
+from pipeline.shot_quality import frame_metrics, motion_metrics, split_long_scene
+from pipeline.select_shots import (DEFAULT_CONFIG, apply_quality, deduplicate, validate_model_answer,
                           run_selection, make_sheets)
-from select_shots import progress, write_json
+from pipeline.select_shots import progress, write_json
 
 
 def test_progress_and_atomic_json_keep_existing_encoding_and_fail_closed(tmp_path):
@@ -86,7 +86,7 @@ def test_unknown_never_becomes_selected(tmp_path,monkeypatch):
 
 
 def test_partial_frame_read_is_unknown(clips,tmp_path,monkeypatch):
-    import select_shots as selector
+    import pipeline.select_shots as selector
     monkeypatch.setenv('LOCAL_MEDIA_ROOT',str(tmp_path))
     project=tmp_path/'p'; project.mkdir()
     import shutil
@@ -132,7 +132,7 @@ def test_long_scene_motion_boundaries():
 
 
 def test_photos_have_no_motion_and_skip_llm_is_offline(tmp_path,monkeypatch):
-    import select_shots as selector
+    import pipeline.select_shots as selector
     from PIL import Image
     monkeypatch.setenv('LOCAL_MEDIA_ROOT',str(tmp_path))
     project=tmp_path/'p'; project.mkdir()
@@ -149,7 +149,7 @@ def test_photos_have_no_motion_and_skip_llm_is_offline(tmp_path,monkeypatch):
 
 
 def test_sample_is_directory_balanced_and_derived_excluded(tmp_path):
-    from select_shots import discover_media
+    from pipeline.select_shots import discover_media
     for dirname in ['travel','sports','selfie','ai-analysis','output','raw-vault','draft-project']:
         folder=tmp_path/dirname; folder.mkdir()
         for index in range(4):
@@ -160,18 +160,18 @@ def test_sample_is_directory_balanced_and_derived_excluded(tmp_path):
 
 
 def test_project_escape_and_empty_batch_fail(tmp_path,monkeypatch):
-    from select_shots import resolve_project,discover_media
+    from pipeline.select_shots import resolve_project,discover_media
     monkeypatch.setenv('LOCAL_MEDIA_ROOT',str(tmp_path/'allowed'))
     with pytest.raises(ValueError):resolve_project(tmp_path)
     with pytest.raises(ValueError):discover_media(tmp_path,0,0)
 
 
 def test_schema_refuses_unknown_selected():
-    from select_shots import validate_document
+    from pipeline.select_shots import validate_document
     from jsonschema import Draft202012Validator
     schema=json.loads((Path(__file__).resolve().parents[1]/'schemas/shots.schema.json').read_text())
     row_schema=schema['properties']['shots']['items']
-    from select_shots import empty_row
+    from pipeline.select_shots import empty_row
     row=empty_row('S0123456789','photo','scene/x.jpg')
     row.update(status='selected',model_decision='精选',unknown_reasons=['cannot_read'])
     assert list(Draft202012Validator(row_schema).iter_errors(row))
@@ -186,7 +186,7 @@ def fake_scores(rows,*args,**kwargs):
 
 
 def test_two_videos_pipeline_keeps_one_and_preserves_sources(clips,tmp_path,monkeypatch):
-    import select_shots as selector
+    import pipeline.select_shots as selector
     import shutil,hashlib
     monkeypatch.setenv('LOCAL_MEDIA_ROOT',str(tmp_path))
     project=tmp_path/'p'; project.mkdir()
@@ -202,7 +202,7 @@ def test_two_videos_pipeline_keeps_one_and_preserves_sources(clips,tmp_path,monk
 
 
 def test_llm_receives_images_medium_and_checks_ids(clips,tmp_path,monkeypatch):
-    import select_shots as selector
+    import pipeline.select_shots as selector
     import shutil
     monkeypatch.setenv('LOCAL_MEDIA_ROOT',str(tmp_path))
     project=tmp_path/'p'; project.mkdir()
@@ -224,7 +224,7 @@ def test_llm_receives_images_medium_and_checks_ids(clips,tmp_path,monkeypatch):
 
 
 def test_scene_detection_and_long_split_real_ffmpeg(tmp_path,monkeypatch):
-    import select_shots as selector
+    import pipeline.select_shots as selector
     monkeypatch.setenv('LOCAL_MEDIA_ROOT',str(tmp_path))
     project=tmp_path/'p';project.mkdir()
     subprocess.run(['ffmpeg','-v','error','-y','-f','lavfi','-i',

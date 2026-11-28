@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $PythonBin = if ($env:PYTHON_BIN) { $env:PYTHON_BIN } else { 'python' }
-& $PythonBin (Join-Path $ScriptDir 'setup_edit_tools.py') @args
+& $PythonBin (Join-Path $ScriptDir 'tooling/setup_edit_tools.py') @args
 exit $LASTEXITCODE

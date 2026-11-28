@@ -43,7 +43,7 @@ def requested():
 
 
 def compile_plan(raw=None, **kwargs):
-    module = importlib.import_module("audio_plan")
+    module = importlib.import_module("creative.audio_plan")
     return module.compile_audio_plan(normalise_edl(raw or requested()), **kwargs)
 
 
@@ -89,7 +89,7 @@ def test_explicit_zero_stays_present_and_selects_v2():
     assert normalized["schema_version"] == "edit_decision_list_v2"
     assert set(FIELDS) <= normalized["clips"][1].keys()
     assert not set(FIELDS) & normalized["clips"][0].keys()
-    module = importlib.import_module("audio_plan")
+    module = importlib.import_module("creative.audio_plan")
     assert module.audio_operations({**raw, "clips": [], "music": []}) == []
 
 
@@ -149,7 +149,7 @@ def test_plan_offsets_mute_bed_duck_crossfade_and_lanes():
     assert [clip[k] for k in ("timeline_start_sec", "timeline_end_sec", "source_start_sec", "source_end_sec")] == [3.5, 8.5, 1.5, 6.5]
     assert segments["music:0"]["physical_track"] != segments["music:1"]["physical_track"]
     assert segments["clip:2"]["physical_track"] != segments["clip:3"]["physical_track"]
-    module = importlib.import_module("audio_plan")
+    module = importlib.import_module("creative.audio_plan")
     gain = module.gain_at
     assert gain(segments["music:0"], 3) == pytest.approx(.5 * .251)
     assert gain(segments["music:0"], 1.5) == pytest.approx(.5)
@@ -168,7 +168,7 @@ def test_fade_and_duck_multiply_and_empty_regions_override_legacy():
     raw = requested()
     raw["music"][0].update(fade_in_sec=4, duck_regions=[dict(start_sec=1, end_sec=2, gain=.25, ramp_sec=.5)])
     song = next(s for s in compile_plan(raw)["segments"] if s["id"] == "music:0")
-    gain = importlib.import_module("audio_plan").gain_at
+    gain = importlib.import_module("creative.audio_plan").gain_at
     assert gain(song, 1.5) == pytest.approx(.5 * (1.5 / 4) * .25)
     raw["music"][0]["duck_regions"] = []
     song = next(s for s in compile_plan(raw)["segments"] if s["id"] == "music:0")
@@ -177,7 +177,7 @@ def test_fade_and_duck_multiply_and_empty_regions_override_legacy():
 
 def test_cut_edges_exact_30ms_and_short_sound():
     plan = compile_plan(document())
-    module = importlib.import_module("audio_plan")
+    module = importlib.import_module("creative.audio_plan")
     first = plan["segments"][0]
     assert first["fade_in_sec"] == first["fade_out_sec"] == .03
     assert module.gain_at(first, 0) == 0
@@ -204,7 +204,7 @@ def test_source_preflight_and_legacy_duck_never_guesses():
     del raw["music"][0]["duck_regions"]
     with pytest.raises(EDLContractError, match="audio_speech_regions_required"): compile_plan(raw)
     plan = compile_plan(raw, speech_regions=[{"start_sec": 2, "end_sec": 4, "ramp_sec": .5}])
-    assert importlib.import_module("audio_plan").gain_at(next(s for s in plan["segments"] if s["id"] == "music:0"), 3) == pytest.approx(.1)
+    assert importlib.import_module("creative.audio_plan").gain_at(next(s for s in plan["segments"] if s["id"] == "music:0"), 3) == pytest.approx(.1)
 
 
 def test_music_loop_explicit_and_source_checked():
@@ -331,8 +331,8 @@ def test_unsupported_backends_refuse_before_runtime(tmp_path, backend, payload):
 
 
 def test_chatcut_unverified_handoff_and_diagnostics(tmp_path):
-    from edit_backends.chatcut_adapter import Backend
-    from edit_backends.chatcut_handoff import prepare_package, execute_handoff
+    from edit_backends.editors.chatcut_adapter import Backend
+    from edit_backends.editors.chatcut_handoff import prepare_package, execute_handoff
     suggestions = tmp_path / "suggestions.json"
     suggestions.write_text(json.dumps({"suggestions": [], **requested()}))
     source = tmp_path / "source.mp4"
@@ -344,7 +344,7 @@ def test_chatcut_unverified_handoff_and_diagnostics(tmp_path):
     assert result["audio_operations"]
     assert all(item["message"] == "这项声音处理尚未核实" for item in result["audio_operations"])
     assert "这项声音处理尚未核实" in Backend().describe()["capability_notes"]["audio_operations"]
-    with patch("edit_backends.chatcut_handoff.LocalMcpSession", side_effect=AssertionError("no live tools")):
+    with patch("edit_backends.editors.chatcut_handoff.LocalMcpSession", side_effect=AssertionError("no live tools")):
         executed = execute_handoff(package, live=True, session_factory=lambda: pytest.fail("no live tools"))
     assert executed["status"] == "audio_unverified"
     assert executed["audio_operations"] == result["audio_operations"]

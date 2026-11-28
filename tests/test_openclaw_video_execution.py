@@ -11,8 +11,8 @@ from unittest.mock import patch
 
 from _support import load_script
 
-contract = load_script("openclaw_product_contract", "mx_video_contract", register=True)
-adapter = load_script("openclaw_video_execution", "mx_video_execution", register=True)
+contract = load_script("bridge/openclaw_product_contract", "mx_video_contract", register=True)
+adapter = load_script("bridge/openclaw_video_execution", "mx_video_execution", register=True)
 
 
 class VideoExecutionContractTests(unittest.TestCase):
@@ -82,7 +82,8 @@ class VideoExecutionContractTests(unittest.TestCase):
         import builtins
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()
-            (root / 'video_candidate.py').write_text(
+            (root / 'video_tools').mkdir()
+            (root / 'video_tools/video_candidate.py').write_text(
                 "from PIL import ImageFont\n"
                 "from pathlib import Path\n"
                 "import sys\n"

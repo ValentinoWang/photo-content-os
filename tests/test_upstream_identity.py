@@ -13,9 +13,9 @@ SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-import upstream_identity
-from openclaw_product_contract import Compatibility
-from upstream_identity import PairingRequest, pair_upstream_identity
+from bridge import upstream_identity
+from bridge.openclaw_product_contract import Compatibility
+from bridge.upstream_identity import PairingRequest, pair_upstream_identity
 
 
 def compatibility_state(*, platform: str, compatible: bool = True) -> Compatibility:

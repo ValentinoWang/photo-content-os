@@ -56,7 +56,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "generate_jianying_import_readme.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/generate_jianying_import_readme.py"),
                     "--result",
                     str(result_path),
                     "--output",
@@ -146,7 +146,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "create_native_import_pack.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/create_native_import_pack.py"),
                     "--plan",
                     str(plan_path),
                     "--output-root",
@@ -177,7 +177,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             run_cmd(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "validate_native_import_pack.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/validate_native_import_pack.py"),
                     "--plan",
                     str(plan_path),
                     "--result",
@@ -238,7 +238,7 @@ class JianyingNativeImportPackageTest(unittest.TestCase):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "create_native_import_pack.py"),
+                    str(ROOT / "scripts" / "legacy_jianying/create_native_import_pack.py"),
                     "--plan",
                     str(plan_path),
                     "--output-root",

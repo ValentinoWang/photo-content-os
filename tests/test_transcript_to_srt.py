@@ -12,8 +12,8 @@ SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-import review_output_video as review
-import transcript_to_srt as tts
+import creative.review_output_video as review
+import pipeline.transcript_to_srt as tts
 
 
 def _word_transcript(words: list[dict], *, text: str | None = None) -> dict:
@@ -135,7 +135,7 @@ def test_cli_runs_and_refuses_to_overwrite_input(tmp_path):
     src.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
 
     ok = subprocess.run(
-        [sys.executable, str(SCRIPTS / "transcript_to_srt.py"), str(src), "--output", str(out)],
+        [sys.executable, str(SCRIPTS / "pipeline/transcript_to_srt.py"), str(src), "--output", str(out)],
         capture_output=True, text=True, check=False,
     )
     assert ok.returncode == 0, ok.stderr
@@ -143,7 +143,7 @@ def test_cli_runs_and_refuses_to_overwrite_input(tmp_path):
     assert review.read_srt_cues(out) == [(0.2, 0.8, "你好")]
 
     rejected = subprocess.run(
-        [sys.executable, str(SCRIPTS / "transcript_to_srt.py"), str(src), "--output", str(src)],
+        [sys.executable, str(SCRIPTS / "pipeline/transcript_to_srt.py"), str(src), "--output", str(src)],
         capture_output=True, text=True, check=False,
     )
     assert rejected.returncode != 0

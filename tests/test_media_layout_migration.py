@@ -4,7 +4,7 @@ import unittest
 from tempfile import TemporaryDirectory
 from _support import load_script
 
-migration = load_script('migrate_media_layout.py', 'media_layout_migration', register=True)
+migration = load_script('media_ops/migrate_media_layout.py', 'media_layout_migration', register=True)
 
 class MediaLayoutMigrationTests(unittest.TestCase):
     def test_nested_moves_preserve_every_file_hash_and_dry_run_is_read_only(self):

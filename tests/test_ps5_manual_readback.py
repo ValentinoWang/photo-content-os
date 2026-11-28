@@ -2,8 +2,8 @@
 import xml.etree.ElementTree as ET
 
 from test_ps4_kdenlive_readback import saved_project
-from edit_backends.kdenlive_adapter import Backend
-from edit_backends.kdenlive_render import timeline_tractor
+from edit_backends.editors.kdenlive_adapter import Backend
+from edit_backends.editors.kdenlive_render import timeline_tractor
 
 
 def test_personal_kdenlive_cut_uses_saved_boundaries(tmp_path):

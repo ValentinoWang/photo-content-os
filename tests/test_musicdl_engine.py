@@ -27,7 +27,7 @@ def no_network(monkeypatch):
 
 @pytest.fixture
 def audio(tmp_path):
-    from music_library.client_files import decode_ncm
+    from music_library.sources.client_files import decode_ncm
     path, _ = decode_ncm(FIXTURES / 'synthetic.ncm', tmp_path)
     return path.read_bytes()
 

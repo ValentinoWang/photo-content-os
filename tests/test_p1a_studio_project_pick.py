@@ -12,7 +12,7 @@ import pytest
 import test_p1a_installed_watch as watch
 from test_p1a_installed_watch import installed, world  # noqa: F401
 
-import media_project_selection as selection
+import media_ops.media_project_selection as selection
 from studio.server import serve
 
 

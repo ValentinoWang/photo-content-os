@@ -8,7 +8,7 @@ from unittest.mock import patch
 import wave
 
 from _support import load_script
-subtitles = load_script('video_subtitles', 'r131_f7_subtitles')
+subtitles = load_script('video_tools/video_subtitles', 'r131_f7_subtitles')
 load_script('video_render/multi_shot.py', 'r131_f8_multi', register=True)
 from video_render import compose as compositor
 from video_render.multi_shot import RenderError

@@ -11,8 +11,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-import openclaw_product_contract as contract
-import refresh_openclaw_media_contract_snapshot as refresh
+import bridge.openclaw_product_contract as contract
+import bridge.refresh_openclaw_media_contract_snapshot as refresh
 
 
 FROZEN_UPSTREAM_COMMIT = "21c170d0bdd26a425a97bd3e1c3020b320d95fdb"

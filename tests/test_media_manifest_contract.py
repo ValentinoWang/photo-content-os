@@ -19,7 +19,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 
 def load_scanner():
-    source = SCRIPTS / "scan_media_manifest.py"
+    source = SCRIPTS / "media_ops/scan_media_manifest.py"
     spec = importlib.util.spec_from_file_location("scan_media_manifest_contract", source)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"cannot load scanner: {source}")

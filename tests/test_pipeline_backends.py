@@ -15,8 +15,8 @@ SYSTEM = Path(__file__).resolve().parents[1]
 for path in (SYSTEM, SYSTEM / "scripts"):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
-from studio.chatcut_mcp import ChatCutMcp, LocalMcpSession, McpError
-from edit_backends import chatcut_handoff as handoff, kdenlive_render as renderer
+from studio.settings.chatcut_mcp import ChatCutMcp, LocalMcpSession, McpError
+from edit_backends.editors import chatcut_handoff as handoff, kdenlive_render as renderer
 from media import file_sha256
 
 

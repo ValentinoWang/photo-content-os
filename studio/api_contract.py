@@ -5,8 +5,8 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from studio.direct_revision_contract import SHOT_PROPERTIES, operation_contract, routes
-from studio import direct_style_contract, direct_handoff_contract
+from studio.direct.revision_contract import SHOT_PROPERTIES, operation_contract, routes
+from studio.direct import handoff_contract as direct_handoff_contract, style_contract as direct_style_contract
 
 if __package__:
     from .constants import (

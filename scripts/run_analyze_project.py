@@ -96,9 +96,9 @@ def main() -> int:
     if outline.is_file():
         run([sys.executable, script("check_outline_contract.py"), str(REPOSITORY_ROOT)])
     if not is_inbox(project):
-        run([sys.executable, script("ensure_project_structure.py"), str(project)])
-    run([sys.executable, script("scan_media_manifest.py"), str(project)])
-    run([sys.executable, script("validate_media_decisions.py"), str(project)])
+        run([sys.executable, script("intake/ensure_project_structure.py"), str(project)])
+    run([sys.executable, script("media_ops/scan_media_manifest.py"), str(project)])
+    run([sys.executable, script("media_ops/validate_media_decisions.py"), str(project)])
 
     analysis_root = analysis_dir(project)
     plan_path = analysis_plan_path(project)
@@ -106,7 +106,7 @@ def main() -> int:
     run(
         [
             sys.executable,
-            script("analysis_tiering.py"),
+            script("pipeline/analysis_tiering.py"),
             str(manifest_path),
             "--model",
             args.model,
@@ -118,7 +118,7 @@ def main() -> int:
     )
     apply_requested_tier(plan_path, args.tier)
 
-    keyframe_args = [sys.executable, script("extract_keyframes.py"), str(project), "--analysis-plan", str(plan_path)]
+    keyframe_args = [sys.executable, script("pipeline/extract_keyframes.py"), str(project), "--analysis-plan", str(plan_path)]
     if args.include_derived:
         keyframe_args.append("--include-derived")
     if args.overwrite:
@@ -126,13 +126,13 @@ def main() -> int:
     run(keyframe_args)
 
     if args.audio:
-        audio_args = [sys.executable, script("extract_audio.py"), str(project)]
+        audio_args = [sys.executable, script("pipeline/extract_audio.py"), str(project)]
         if args.include_derived:
             audio_args.append("--include-derived")
         run(audio_args)
         transcript_args = [
             sys.executable,
-            script("transcribe_audio.py"),
+            script("pipeline/transcribe_audio.py"),
             str(project),
             "--provider",
             args.transcript_provider,
@@ -145,11 +145,11 @@ def main() -> int:
             transcript_args.append("--live")
         run(transcript_args)
 
-    run([sys.executable, script("generate_ai_prompt.py"), str(project)])
+    run([sys.executable, script("creative/generate_ai_prompt.py"), str(project)])
     if not args.skip_llm and args.tier != "metadata":
         summary_args = [
             sys.executable,
-            script("write_content_summary.py"),
+            script("pipeline/write_content_summary.py"),
             str(project),
             "--analysis-plan",
             str(plan_path),
