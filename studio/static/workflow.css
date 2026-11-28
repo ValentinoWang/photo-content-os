@@ -21,11 +21,10 @@
 .handoff .ruler span{position:absolute;transform:translateX(-50%)}
 .handoff .ruler span:first-child{transform:none}
 .handoff .ruler span:last-child{transform:translateX(-100%);top:12px}
-.handoff .proto{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:4px;padding:5px;border-radius:999px;background:#ffffffee;border:1px solid var(--rule-2);font-size:12px;z-index:9}
-.handoff .proto a{padding:5px 12px;border-radius:999px;color:var(--ink-3);text-decoration:none}
+.handoff .proto{display:flex;flex-wrap:wrap;gap:4px;padding:5px;margin:16px 24px 24px;border-radius:8px;background:color-mix(in srgb,var(--panel) 94%,transparent);border:1px solid var(--rule-2);font-size:12px}
+.handoff .proto a{display:inline-block;padding:5px 12px;border-radius:999px;color:var(--ink-3);text-decoration:none}
 .handoff .proto a[aria-current]{background:var(--ac);color:var(--on-ac)}
 .handoff [data-wave]{height:100%}
-.handoff .proto a{display:inline-block}
 .handoff .probe-copy{display:none}
 .handoff [data-design-state]{display:none}
 .handoff [data-design-state][data-active]{display:block}
@@ -45,7 +44,6 @@
 .handoff .project-link{display:block;text-decoration:none;text-align:center}
 .handoff .state-tools{border-top:1px solid var(--rule);padding-top:12px}
 .handoff .state-tools h3{font-size:14px;margin:0 0 6px}
-.handoff .proto{position:static;transform:none;border-radius:8px;margin:12px 24px 18px;flex-wrap:wrap}
 .handoff .proto-body{display:flex;flex-wrap:wrap;gap:6px}
 .handoff .proto-gates{width:100%;padding:8px}
 .handoff .proto-gates summary{color:var(--ink-2)}
@@ -137,7 +135,7 @@
 .handoff .pane-body p{margin:0;line-height:1.7}
 .handoff .pane-body>.btn{justify-self:start}
 .handoff .pane-body>.attn .btn{justify-self:start}
-.handoff .software-grid{padding:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.handoff .software-grid{display:grid;grid-template-columns:1fr;gap:0;padding:0;border:1px solid var(--rule-2);border-radius:10px;overflow:hidden}
 .handoff .software-option{padding:16px;border:1px solid var(--rule-2);border-radius:9px;min-width:0}
 .handoff .software-option:has([aria-pressed=true]){border-color:var(--ac);background:var(--ac-bg)}
 .handoff .software-option header{display:flex;gap:12px;justify-content:space-between;align-items:start}
@@ -204,8 +202,6 @@
 .handoff .edit-ruler span:last-child{transform:translateX(-100%)}
 .handoff [data-design-state]>div>.attn{margin:0 24px 18px}
 .handoff .interaction-note{margin:8px 0 0;color:var(--ac-soft);font-size:13px}
-.handoff .proto{position:static;margin:16px 24px 24px;transform:none;flex-wrap:wrap;border-radius:8px}
-.handoff .probe-copy{display:none}
 @media(max-width:1180px){
 .handoff .self-work{grid-template-columns:260px minmax(0,1fr)}
 .handoff .self-work>.card:last-child{grid-column:1/-1}
@@ -217,7 +213,6 @@
 .handoff .workflow-tabs a{font-size:12px;padding:10px 2px}
 .handoff .workflow-head{padding:20px 16px 16px}
 .handoff .workflow-head h2{font-size:20px}
-.handoff .software-grid{grid-template-columns:1fr;padding:12px}
 .handoff .software-option{padding:14px}
 .handoff .main>.card,.handoff [data-design-state]>div>.card{margin:0 16px 16px}
 .handoff .handoff-reference>.pane-body{grid-template-columns:1fr}
@@ -241,8 +236,7 @@
 .handoff [data-design-id="self-error"] .btn{justify-self:start}
 .handoff .chk li.pending::before{content:"…";color:var(--ac-soft)}
 .handoff .software-group{margin:16px}
-.handoff .software-group>h3{font-size:14px;margin:0 0 12px;color:var(--ink-2)}
-.handoff .software-group .software-grid{padding:0}
+.handoff .software-group>h3{font-size:12.5px;margin:0 0 8px;color:var(--ink-2)}
 .handoff .software-group+.software-group{margin-top:24px}
 .handoff .first-cut-action{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .handoff .first-cut-action p{color:var(--warn);font-size:13px}
@@ -254,9 +248,7 @@
 .handoff .attn.error p{margin:0;color:var(--ink-2)}
 .handoff .sug li{grid-template-columns:52px 98px minmax(0,1fr) max-content}
 .handoff .first-cut-action .btn:disabled{cursor:not-allowed}
-.handoff [data-design-id="external-software"] .software-grid{grid-template-columns:1fr}
-@media(min-width:1250px){
-.handoff [data-design-id="open-source-software"] .software-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}/* ===== 第六轮视觉（Claude 亲改，2026-10-12）：状态条、方式选择卡、两栏 + 小结、剪点表 ===== */
+/* ===== 第六轮视觉（Claude 亲改，2026-10-12）：状态条、方式选择卡、两栏 + 小结、剪点表 ===== */
 .handoff .topbar .back-link{margin-left:auto}
 .handoff .chain-strip{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:14px 24px 0;padding:7px 16px;width:max-content;max-width:calc(100% - 48px);border:1px solid var(--rule);border-radius:999px;background:var(--panel);font-size:13px}
 .handoff .cs-title{color:var(--ink-3);font-size:12px}
@@ -264,7 +256,7 @@
 .handoff .cs-node b{font-weight:600}
 .handoff .cs-node>span{color:var(--ink-3)}
 .handoff .cs-node a{font:12px var(--f-mo)}
-.handoff .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:var(--shadow-ok-ring)}
+.handoff .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:var(--ring-ok)}
 .handoff .cs-dot[data-tone=off]{background:var(--ink-4);box-shadow:none}
 .handoff .cs-link{width:22px;height:1px;background:var(--rule-2)}
 .handoff .method-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 24px 0;max-width:1080px;padding:0;background:none;border:0;border-radius:0}
@@ -305,7 +297,7 @@
 .handoff .icon-btn:hover{background:var(--raise);color:var(--ink)}
 .handoff .icon-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .handoff .cut-row .tag{justify-self:start;padding:2px 9px;border-radius:999px;font-style:normal;font-size:12px;white-space:nowrap;border:1px solid var(--rule-2);background:var(--panel-2);color:var(--ink-2)}
-.handoff .cut-row[data-kind=repetition] .tag{--ink-4:var(--ink-3);color:var(--cut);background:var(--cut-bg);border-color:#e07a6a59}
+.handoff .cut-row[data-kind=repetition] .tag{--ink-4:var(--ink-3);color:var(--cut);background:var(--cut-bg);border-color:var(--cut-line)}
 .handoff .cut-row[data-kind=review] .tag{color:var(--warn);background:var(--warn-bg);border-color:var(--warn-line)}
 .handoff .cut-row .what{min-width:0}
 .handoff .cut-row .words{color:var(--ink-3)}
@@ -352,12 +344,9 @@
 .handoff .guide-step .guide-animations{grid-template-columns:1fr;gap:4px}}
 .handoff .return-zone h2,.handoff .card .return-zone h2{display:block;margin:0 0 6px;padding:0;border:0;font-size:16px;color:var(--ink)}
 .handoff .return-zone p{text-align:center}
-@media(min-width:1250px){
-.handoff [data-design-id="external-software"] .software-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .handoff [data-design-id="external-software"] .capabilities{grid-template-columns:1fr}
 .handoff .mode-main>.tl{margin:0 0 18px}/* ===== 第七轮：软件改成高密度行；软件自有工作流 = openfilm 内置剪辑器（Claude，2026-10-12） ===== */
-.handoff .software-group .software-grid,.handoff .software-group[data-design-id] .software-grid{grid-template-columns:1fr;gap:0;border:1px solid var(--rule-2);border-radius:10px;overflow:hidden}
-.handoff .software-option{display:grid;grid-template-columns:minmax(140px,1fr) minmax(160px,1.1fr) minmax(0,2.6fr) auto auto;grid-template-areas:"name status caps links act" "name lic caps links act";align-items:center;gap:2px 16px;padding:11px 14px;border:0;border-bottom:1px solid var(--rule);border-radius:0;background:var(--panel)}
+.handoff .software-option{display:grid;grid-template-columns:minmax(120px,.8fr) minmax(200px,1.2fr) minmax(0,2.6fr) auto auto;grid-template-areas:"name status caps links act" "name lic caps links act";align-items:center;gap:2px 16px;padding:11px 14px;border:0;border-bottom:1px solid var(--rule);border-radius:0;background:var(--panel)}
 .handoff .software-option:last-child{border-bottom:0}
 .handoff .software-option>header{display:contents}
 .handoff .software-option>header>div{grid-area:name;min-width:0}
@@ -369,7 +358,6 @@
 .handoff .software-option .capabilities{grid-area:caps;display:flex;flex-wrap:wrap;gap:4px 12px;margin:0;font-size:12.5px}
 .handoff .software-option .software-links{grid-area:links;margin:0;gap:10px;font-size:12.5px}
 .handoff .software-option:has([aria-pressed=true]){background:var(--ac-bg);box-shadow:inset 3px 0 0 var(--ac)}
-.handoff .software-group>h3{margin:0 0 8px;font-size:12.5px}
 @media(max-width:1180px){
 .handoff .software-option{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name act" "status status" "lic lic" "caps caps" "links links";gap:6px 12px}}/* openfilm 内置剪辑器 */
 .handoff .nle{margin:0 24px 24px;display:grid;gap:12px}
@@ -397,7 +385,7 @@
 .handoff .sug-row .btn{padding:4px 10px;font-size:12px}
 .handoff .sug-row .tc code{padding:2px 6px;border-radius:5px;background:var(--panel-2);border:1px solid var(--rule-2);font:12px var(--f-mo)}
 .handoff .sug-row .tag{justify-self:start;padding:1px 8px;border-radius:999px;font-style:normal;font-size:11.5px;white-space:nowrap;border:1px solid var(--rule-2);background:var(--panel-2);color:var(--ink-2)}
-.handoff .sug-row[data-kind=repetition] .tag{--ink-4:var(--ink-3);color:var(--cut);background:var(--cut-bg);border-color:#e07a6a59}
+.handoff .sug-row[data-kind=repetition] .tag{--ink-4:var(--ink-3);color:var(--cut);background:var(--cut-bg);border-color:var(--cut-line)}
 .handoff .sug-row[data-kind=review] .tag{color:var(--warn);background:var(--warn-bg);border-color:var(--warn-line)}
 .handoff .sug-row[data-kind=animation] .tag{color:var(--ac-soft);background:var(--ac-bg);border-color:var(--ac-2)}
 .handoff .sug-row[data-state=applied]{background:var(--ok-bg)}
@@ -406,7 +394,7 @@
 .handoff .sug-more{margin:auto 0 0;padding:9px 14px;font-size:12px;color:var(--ink-3)}
 .handoff .stage{position:relative;flex:1;min-height:300px;display:grid;place-items:center;background:var(--media-bg);border-radius:10px 10px 0 0;overflow:hidden}
 .handoff .stage img{height:100%;max-height:340px;aspect-ratio:9/16;object-fit:cover;border-radius:4px}
-.handoff .stage .preview-play{position:absolute;inset:auto;width:48px;height:48px;padding:0;display:grid;place-items:center;border-radius:50%;background:#000a;border:1px solid #ffffff33;color:var(--media-ink)}
+.handoff .stage .preview-play{position:absolute;inset:auto;width:48px;height:48px;padding:0;display:grid;place-items:center;border-radius:50%;background:var(--media-scrim);border:1px solid color-mix(in srgb,var(--on-ac) 20%,transparent);color:var(--media-ink)}
 .handoff .stage .preview-play svg,.handoff .transport .play svg{width:18px;height:18px;fill:var(--media-ink);stroke:none}
 .handoff .stage-empty{color:var(--ink-3);font-size:13px}
 .handoff .transport{display:flex;align-items:center;gap:10px;padding:8px 12px;border-top:1px solid var(--rule);font:12.5px var(--f-mo);color:var(--ink-3)}
@@ -440,7 +428,7 @@
 .handoff .nle-wave{position:absolute;inset:0}
 .handoff .clips{position:absolute;inset:0}
 .handoff .clips .edit-clip{position:absolute;top:0;bottom:0;display:flex;align-items:flex-start;padding:3px 5px;background:transparent;border:1px solid var(--ac-2);border-radius:4px;color:var(--ac-soft);font:11px var(--f-mo);min-width:0}
-.handoff .clips .edit-clip[aria-pressed=true]{border:2px solid var(--ac);background:#1F8D9614}
+.handoff .clips .edit-clip[aria-pressed=true]{border:2px solid var(--ac);background:color-mix(in srgb,var(--ac) 8%,transparent)}
 .handoff .applied-cut{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,var(--rule-2) 0 4px,var(--raise) 4px 8px);z-index:1}
 .handoff .playhead{position:absolute;top:30px;bottom:10px;left:calc(12px + var(--lane-x) + (100% - 24px - var(--lane-x)) * var(--at,0));width:2px;background:var(--ac);border-radius:1px;z-index:2}
 .handoff .playhead::before{content:"";position:absolute;top:-4px;left:-4px;width:10px;height:10px;border-radius:2px;background:var(--ac)}
@@ -453,16 +441,12 @@
 .handoff .nle-top{grid-template-columns:1fr}
 .handoff .legend{display:none}
 .handoff .nle-timeline{--lane-x:56px}}
-.handoff .clips .edit-clip{background:var(--thumb) 2px center/auto calc(100% - 4px) no-repeat,transparent;padding-left:40px}
-.handoff .clips .edit-clip::after{content:"";position:absolute;inset:2px auto 2px 2px;width:30px;border-radius:3px;box-shadow:var(--shadow-thumb-inset)}
-.handoff .software-option{grid-template-columns:minmax(120px,.8fr) minmax(200px,1.2fr) minmax(0,2.6fr) auto auto}
 .handoff .pane-body:has(>.first-cut-action){display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 .handoff .pane-body:has(>.first-cut-action)>p{margin:0}
 @media(max-width:700px){
 .handoff .nle-stage{order:-1}
 .handoff .nle-ruler span:not(:first-child):not(:last-child){font-size:10px}
 .handoff .cue{font-size:0;padding:0}}
-.handoff .btn.pri{background:var(--ac);border-color:var(--ac);color:var(--on-ac)}
 .handoff .btn:disabled{opacity:.45;cursor:not-allowed}
 .handoff input[type=file]{display:none}
 .main:has(.handoff)>.topbar{display:none}
@@ -502,7 +486,7 @@
 .handoff .st.bad{color:var(--cut)}
 .handoff .ruler,.handoff .nle-ruler{color:var(--ink-3)}
 
-.handoff .thumb-strip{position:absolute;inset:0;pointer-events:none}.handoff .source-thumb{position:absolute;top:2px;bottom:2px;background:var(--thumb) left center/auto 100% repeat-x;border-radius:3px;opacity:.65}.handoff .clips{pointer-events:none}.handoff .clips .edit-clip{background:transparent;padding-left:5px}.handoff .clips .edit-clip::after{display:none}
+.handoff .thumb-strip{position:absolute;inset:0;pointer-events:none}.handoff .source-thumb{position:absolute;top:2px;bottom:2px;background:var(--thumb) left center/auto 100% repeat-x;border-radius:3px;opacity:.65}.handoff .clips{pointer-events:none}.handoff .clips .edit-clip{background:transparent;padding-left:5px}
 
 .handoff .preview-caption{position:absolute;inset:0;transform-origin:0 0;pointer-events:none}.handoff .transport .play{width:28px;height:28px;display:grid;place-items:center}
 

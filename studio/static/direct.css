@@ -170,8 +170,8 @@
 
 /* 3 选镜头配方（弹层） */
 /* 选配方弹窗盖在页面上居中，遮罩沿用删除弹窗的底色；卡片网格按内容定行高，不被弹窗高度压扁 */
-.dv-rp-overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:24px;background:color-mix(in srgb,var(--bg) 78%,transparent)}
-.dv-rp{width:920px;max-width:100%;border:1px solid var(--rule-2);border-radius:10px;background:var(--panel);box-shadow:var(--shadow-dialog);display:flex;flex-direction:column;max-height:640px}
+.dv-rp-overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:24px;background:var(--scrim-soft)}
+.dv-rp{width:920px;max-width:100%;border:1px solid var(--rule-2);border-radius:10px;background:var(--panel);box-shadow:var(--shadow-modal);display:flex;flex-direction:column;max-height:640px}
 .dv-rp>header{display:flex;align-items:baseline;gap:10px;padding:14px 18px;border-bottom:1px solid var(--rule)}
 .dv-rp>header h3{margin:0;font-size:15px}
 .dv-rp>header p{font:12px var(--f-tx);color:var(--ink-3)}
@@ -187,7 +187,7 @@
 .dv-rp-card[aria-pressed=true]{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
 .dv-rp-card .pv{position:relative;aspect-ratio:16/9;background:var(--media-bg)}
 .dv-rp-card .pv img,.dv-rp-card .pv video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
-.dv-rp-card .pv em{position:absolute;left:6px;top:6px;border-radius:4px;padding:0 6px;font:12px/1.7 var(--f-tx);font-style:normal;color:var(--media-ink);background:color-mix(in srgb,var(--media-bg) 72%,transparent)}
+.dv-rp-card .pv em{position:absolute;left:6px;top:6px;border-radius:4px;padding:0 6px;font:12px/1.7 var(--f-tx);font-style:normal;color:var(--media-ink);background:var(--media-scrim)}
 .dv-rp-card .pv em .dv-rp-src{font-size:10px;opacity:.82;margin-left:3px}
 .dv-rp-card .tx{padding:8px 10px 10px;display:flex;flex-direction:column;gap:4px}
 .dv-rp-card .tx b{font:500 13px var(--f-tx);color:var(--ink)}
