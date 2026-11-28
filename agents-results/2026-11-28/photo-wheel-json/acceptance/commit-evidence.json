@@ -1,0 +1,19 @@
+{
+  "source_commit": "fb1082b1be5da443a7893d585c6cf58252947d5a",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-28/photo-wheel-json/acceptance/unit/result.md",
+      "result_sha256": "62b8ee926a6b4d8a0d3cc1905655a054a0604e3200d96f9f8511c8614b4541b6",
+      "source_identity": "fb1082b1be5da443a7893d585c6cf58252947d5a",
+      "layer": "machine/unit",
+      "run_id": "photo-wheel-json-unit"
+    }
+  ],
+  "patch_id": "cb2a98c3b17719d133b8a51b0d9f706726234880",
+  "preimage": {
+    "scripts/edit_backends/handoff_pack.py": "2f4f77722bff790bc0c81741b5fb288adf491026",
+    "scripts/enqueue_openclaw_queue_job.py": "17682ed7949528efcde18cc3c39225d66a6cfe30",
+    "scripts/process_openclaw_queue.py": "322a4687a3b7a4a32391a4773854b33058a9402a",
+    "tests/test_queue_identity.py": "b45de8ca7aeb34648bf53b98777bf0e32a73a239"
+  }
+}
