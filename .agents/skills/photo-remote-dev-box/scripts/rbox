@@ -24,9 +24,9 @@
 #   rbox exposure-check             公网隧道、对外文件服务根目录下有没有密钥（判据 C）
 set -euo pipefail
 
-# 只认本机 ~/.ssh/config 里的别名 photo-dev（地址、端口、用户、密钥都写在那一段，Harness 控制台按同一个别名判在线）。
-# 2026-10-27 装机时是移动线 223.109.239.36:13640（电信线 180.127.11.177）；到期换机器只改 ~/.ssh/config 那一段
-HOST="${RBOX_HOST:-photo-dev}"
+# 只认本机 ~/.ssh/config 里的公共开发机别名 media-dev（2026-11-28 起由原 photo-dev 合并迁入；Harness 控制台按同一个别名判在线）。
+# 地址变更只改 ~/.ssh/config 那一段，不改本脚本
+HOST="${RBOX_HOST:-media-dev}"
 PORT="${RBOX_PORT:-}"
 BARE=/root/pco.git                  # 开发机上的 git 裸仓库：提交从本机推上去（开发机不放 GitHub 凭据），worktree 副本的索引对齐到本机同一个提交
 LOCAL_ROOT="${RBOX_LOCAL_ROOT:-/Users/vsiyo/Desktop/创业项目/内容创作/production-desk}"
@@ -171,7 +171,7 @@ where_check() {
   case $rc in
     0) return 0 ;;
     10) die "Harness 判开发机不在线（${out}）：这次在本机跑，守本机预算（无头浏览器同一时间一个、全量加 nice -n 10）" ;;
-    *) die "读不到开发机在线状态（退出码 ${rc}：${out}），不当成不在线；先查 Harness 控制台或 ssh photo-dev" ;;
+    *) die "读不到开发机在线状态（退出码 ${rc}：${out}），不当成不在线；先查 Harness 控制台或 ssh ${HOST}" ;;
   esac
 }
 guard() {   # 开发机不跑 AI：命令里调用 claude/codex 或带凭据就拒（Core devbox-split 判据 A，ai_guard.py 与 Cadenvo 同一份）

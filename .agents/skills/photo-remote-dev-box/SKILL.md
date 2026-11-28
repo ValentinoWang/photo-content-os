@@ -1,6 +1,6 @@
 ---
 name: photo-remote-dev-box
-description: photo-content-os 的远端开发机（本机 ~/.ssh/config 别名 photo-dev）：本机只改代码、跑 Claude/Codex，pytest 全量、前端门禁（R276、R278/R282/R283）、浏览器拍图、视频渲染都经 scripts/rbox 在开发机上跑。用户说「放到开发机上跑」「本机太卡」「跑全量」「跑门禁」「换开发机」「开发机到期」「装新开发机」，或者要在本机跑 pytest、无头浏览器、渲染之前使用。只改一两行文档、不跑测试时不用。
+description: photo-content-os 的远端开发机（本机 ~/.ssh/config 公共别名 media-dev）：本机只改代码、跑 Claude/Codex，pytest 全量、前端门禁（R276、R278/R282/R283）、浏览器拍图、视频渲染都经 scripts/rbox 在开发机上跑。用户说「放到开发机上跑」「本机太卡」「跑全量」「跑门禁」「换开发机」「开发机到期」「装新开发机」，或者要在本机跑 pytest、无头浏览器、渲染之前使用。只改一两行文档、不跑测试时不用。
 ---
 
 # photo-content-os 开发机：本机写，开发机跑
@@ -17,7 +17,7 @@ description: photo-content-os 的远端开发机（本机 ~/.ssh/config 别名 p
 
 | 项 | 值 |
 |---|---|
-| 别名 | 本机 `~/.ssh/config` 里的 `photo-dev`。rbox 只认这个别名，地址、端口、密钥都写在那一段；Harness 控制台也按它判在线 |
+| 别名 | 本机 `~/.ssh/config` 里的公共开发机 `media-dev`（2026-11-28 起由原 `photo-dev` 合并迁入）。rbox 只认这个别名，地址、端口、密钥都写在那一段；Harness 控制台也按它判在线 |
 | 地址 | 2026-10-27 装机时：移动 `223.109.239.36`，端口 `13640`；电信 `180.127.11.177`，端口同 |
 | 配置 | 4 核、7.7 GB 内存、系统盘 196 GB（装机时剩 149 GB），Ubuntu 22.04，root 登录 |
 | 性质 | 租来的机器，专给 photo-content-os 用，不和 Cadenvo（223.109.239.30:14932）、寸木、茶思屋共用 |
@@ -97,7 +97,7 @@ R277（以及 R276 `--real`）复制 Studio 状态时写死了 macOS 的 `/bin/c
 
 ## 换机器（到期、换线路）
 
-1. 改本机 `~/.ssh/config` 里 `photo-dev` 那一段的地址和端口；装上本机公钥（密码登录一次，用 `expect` 喂密码，密码不写进任何文件）。
+1. 改本机 `~/.ssh/config` 里 `media-dev` 那一段的地址和端口；装上本机公钥（密码登录一次，用 `expect` 喂密码，密码不写进任何文件）。
 2. `rbox init`：开发机上建和本机同名的路径。
 3. `rbox sync <任意基于 origin/main 的 worktree>`，再在开发机上 `rsync -a --exclude=.venv --exclude=.tools --exclude=.git <那个 worktree>/ /root/pco/` 给主目录打底：setup 要用里面的 `scripts/setup_edit_tools.py`、锁文件和本技能的替身脚本。没打底 `rbox setup` 会直接拒绝。
 4. `rbox setup`：系统包（tmux、Noto CJK、Liberation、Chromium 要的库、melt、mediainfo）、uv、Python 包（按本机 `pip freeze`，torch 系 CPU 版）、Node（按锁文件、sha256 校验）、剪辑工具和浏览器 1228、ffmpeg 9.0、macOS 替身。ffmpeg 由本机后台下载、限速上传，和开发机装 Python 包同时进行。
