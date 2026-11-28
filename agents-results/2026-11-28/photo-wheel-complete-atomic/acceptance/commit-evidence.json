@@ -1,0 +1,30 @@
+{
+  "source_commit": "e5750ca286f8779c938cf5fe534c995a96e5095f",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-28/photo-wheel-complete-atomic/acceptance/unit/result.md",
+      "result_sha256": "6b32ea4cd3f1d32670ab4e47b75d0768c2b2b425ae9360343739de7b316ffe5b",
+      "source_identity": "e5750ca286f8779c938cf5fe534c995a96e5095f",
+      "layer": "machine/unit",
+      "run_id": "photo-wheel-complete-atomic"
+    }
+  ],
+  "patch_id": "2b09bccf6f399e1ab1da81772901c10e5c9f55fd",
+  "preimage": {
+    "scripts/avatar/videoretalk.py": "5126d32d682daae64d44324e66dc190221b59f06",
+    "scripts/media_common.py": "99c4c9ca329d4b6198523d1411ba33dc8d6b2584",
+    "scripts/media_trash_flow.py": "88226bce9ca26939fc871d221d808360c438500c",
+    "scripts/promote_inbox_batch_to_project.py": "eb8ab01000c327292b0eda08f8eada4dac50464f",
+    "scripts/refresh_openclaw_media_contract_snapshot.py": "6a9b35816ec00151f42b6cf7d44efa84a5c3250e",
+    "scripts/register_reusable_asset.py": "161c06124e30acf3497c5bf6a7b352110799e1cc",
+    "scripts/rewrite_media_references.py": "953c95fa5395df54d1eebf366b5bb13c9992ae1e",
+    "scripts/select_shots.py": "e06f15933b51e1c8c14bd2e6979e409156c2205a",
+    "studio/analysis_budget.py": "cd5a6882d9a42bd2643cd29b7a2e145568f6230e",
+    "studio/archive_location_config.py": "0513f0cee12b0f6b684ecd996fab3ba6b587198e",
+    "studio/onboarding_state.py": "97d24680dec4d422b9101f9b4ffbafce61ee6bb9",
+    "studio/project_store.py": "10f8c619934d2f2fc92532d0b2b8ba3a3f792f75",
+    "studio/server.py": "4bcbff8e8de58bac46c896fedd017405535bcb84",
+    "tests/test_media_common_io.py": "b3c05a4c01261c598abb734d1de1c4b546c53eda",
+    "tests/test_select_shots_r208.py": "dc91bbf6444093395e4f260b18af7b60c060861e"
+  }
+}
