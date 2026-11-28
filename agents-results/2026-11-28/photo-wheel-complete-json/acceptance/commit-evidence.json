@@ -1,0 +1,19 @@
+{
+  "source_commit": "79473097c4b59ddae4aad359bb59c79ed7d31857",
+  "machine_evidence": [
+    {
+      "result_path": "agents-results/2026-11-28/photo-wheel-complete-json/acceptance/unit/result.md",
+      "result_sha256": "10367df302083060300e801334fed3decdb2fcaac825b5d54c68204244982567",
+      "source_identity": "79473097c4b59ddae4aad359bb59c79ed7d31857",
+      "layer": "machine/unit",
+      "run_id": "photo-wheel-complete-json"
+    }
+  ],
+  "patch_id": "868fcc53f10758d98f1898708d42bdc9bf37bb29",
+  "preimage": {
+    "scripts/jianying_roughcut_common.py": "7612fca59a9ee8d84e8065d39d6ee06d57738f5e",
+    "scripts/music_library/cache.py": "382dc188a837c3adcf4d6b564b1f5fd2aef835da",
+    "scripts/review_output_video.py": "32497335c07238b7bae906f7a49745aa95c317b9",
+    "tests/test_media_common_io.py": "9197157cf74f2cd06ff6b80e9d48a10971b3e578"
+  }
+}
