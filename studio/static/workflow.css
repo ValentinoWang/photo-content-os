@@ -10,8 +10,8 @@
 .handoff .lane{position:relative;height:40px;border-radius:5px;background:var(--panel-2);overflow:hidden}
 .handoff .lane svg{display:block;width:100%;height:100%}
 .handoff .w-bar{fill:var(--sec-build)}
-.handoff .w-cut{fill:url(#hatch);fill:rgba(224,122,106,.22)}
-.handoff .w-cut.w-gap{fill:rgba(125,140,142,.22)}
+.handoff .w-cut{fill:url(#hatch);fill:color-mix(in srgb,var(--cut) 22%,transparent)}
+.handoff .w-cut.w-gap{fill:color-mix(in srgb,var(--media-muted) 22%,transparent)}
 .handoff .lane .ph{position:absolute;top:0;bottom:0;width:2px;background:var(--ac)}
 .handoff .segs{position:relative;height:22px}
 .handoff .segs i{position:absolute;top:0;height:22px;border-left:1px solid var(--rule-2);font:11px var(--f-mo);color:var(--ink-3);padding-left:4px;font-style:normal;line-height:22px}
@@ -29,7 +29,7 @@
 .handoff .probe-copy{display:none}
 .handoff [data-design-state]{display:none}
 .handoff [data-design-state][data-active]{display:block}
-.handoff [hidden]{display:none!important}
+[hidden]{display:none!important}
 .handoff .main>section{width:100%}
 .handoff .main{display:block}
 .handoff .btn:disabled{opacity:.55;cursor:default}
@@ -264,7 +264,7 @@
 .handoff .cs-node b{font-weight:600}
 .handoff .cs-node>span{color:var(--ink-3)}
 .handoff .cs-node a{font:12px var(--f-mo)}
-.handoff .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px #2E7D4B26}
+.handoff .cs-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:var(--shadow-ok-ring)}
 .handoff .cs-dot[data-tone=off]{background:var(--ink-4);box-shadow:none}
 .handoff .cs-link{width:22px;height:1px;background:var(--rule-2)}
 .handoff .method-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 24px 0;max-width:1080px;padding:0;background:none;border:0;border-radius:0}
@@ -325,7 +325,7 @@
 .handoff .capabilities li.cap{display:flex;align-items:baseline;gap:6px;color:var(--ink-2)}
 .handoff .capabilities li.cap::before{flex:0 0 12px;font:600 12px var(--f-mo);text-align:center}
 .handoff .cap[data-cap=ok]::before{content:"✓";color:var(--ok)}
-.handoff .cap[data-cap=no]{color:var(--ink-3)!important}
+.handoff .capabilities li.cap[data-cap=no]{color:var(--ink-3)}
 .handoff .cap[data-cap=no]::before{content:"–";color:var(--ink-3)}
 .handoff .cap[data-cap=pending]::before{content:"?";color:var(--warn)}
 .handoff .cap[data-cap=note]::before{content:"·";color:var(--ink-3)}
@@ -356,7 +356,7 @@
 .handoff [data-design-id="external-software"] .software-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .handoff [data-design-id="external-software"] .capabilities{grid-template-columns:1fr}
 .handoff .mode-main>.tl{margin:0 0 18px}/* ===== 第七轮：软件改成高密度行；软件自有工作流 = openfilm 内置剪辑器（Claude，2026-10-12） ===== */
-.handoff .software-group .software-grid,.handoff [data-design-id="external-software"] .software-grid{grid-template-columns:1fr!important;gap:0;border:1px solid var(--rule-2);border-radius:10px;overflow:hidden}
+.handoff .software-group .software-grid,.handoff .software-group[data-design-id] .software-grid{grid-template-columns:1fr;gap:0;border:1px solid var(--rule-2);border-radius:10px;overflow:hidden}
 .handoff .software-option{display:grid;grid-template-columns:minmax(140px,1fr) minmax(160px,1.1fr) minmax(0,2.6fr) auto auto;grid-template-areas:"name status caps links act" "name lic caps links act";align-items:center;gap:2px 16px;padding:11px 14px;border:0;border-bottom:1px solid var(--rule);border-radius:0;background:var(--panel)}
 .handoff .software-option:last-child{border-bottom:0}
 .handoff .software-option>header{display:contents}
@@ -404,7 +404,7 @@
 .handoff .sug-row[data-state=applied] .st{color:var(--ok)}
 .handoff .sug-row[data-state=applied] .words{text-decoration:line-through}
 .handoff .sug-more{margin:auto 0 0;padding:9px 14px;font-size:12px;color:var(--ink-3)}
-.handoff .stage{position:relative;flex:1;min-height:300px;display:grid;place-items:center;background:#05090A;border-radius:10px 10px 0 0;overflow:hidden}
+.handoff .stage{position:relative;flex:1;min-height:300px;display:grid;place-items:center;background:var(--media-bg);border-radius:10px 10px 0 0;overflow:hidden}
 .handoff .stage img{height:100%;max-height:340px;aspect-ratio:9/16;object-fit:cover;border-radius:4px}
 .handoff .stage .preview-play{position:absolute;inset:auto;width:48px;height:48px;padding:0;display:grid;place-items:center;border-radius:50%;background:#000a;border:1px solid #ffffff33;color:var(--media-ink)}
 .handoff .stage .preview-play svg,.handoff .transport .play svg{width:18px;height:18px;fill:var(--media-ink);stroke:none}
@@ -422,8 +422,8 @@
 .handoff .nle-timeline>header>span{color:var(--ink-3);font-size:12px}
 .handoff .legend{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--ink-3);font-size:12px}
 .handoff .lg{display:inline-block;width:12px;height:10px;border-radius:2px;margin-left:8px}
-.handoff .lg.cut{background:rgba(224,122,106,.45)}
-.handoff .lg.gap{background:rgba(125,140,142,.45)}
+.handoff .lg.cut{background:color-mix(in srgb,var(--cut) 45%,transparent)}
+.handoff .lg.gap{background:color-mix(in srgb,var(--media-muted) 45%,transparent)}
 .handoff .lg.rev{border:1.5px dashed var(--warn)}
 .handoff .lg.done{background:var(--rule-2)}
 .handoff .nle-ruler{margin-left:var(--lane-x);height:16px;position:relative;font:11px var(--f-mo);color:var(--ink-3)}
@@ -441,7 +441,7 @@
 .handoff .clips{position:absolute;inset:0}
 .handoff .clips .edit-clip{position:absolute;top:0;bottom:0;display:flex;align-items:flex-start;padding:3px 5px;background:transparent;border:1px solid var(--ac-2);border-radius:4px;color:var(--ac-soft);font:11px var(--f-mo);min-width:0}
 .handoff .clips .edit-clip[aria-pressed=true]{border:2px solid var(--ac);background:#1F8D9614}
-.handoff .applied-cut{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,#D9DFDE 0 4px,#EEF2F1 4px 8px);z-index:1}
+.handoff .applied-cut{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,var(--rule-2) 0 4px,var(--raise) 4px 8px);z-index:1}
 .handoff .playhead{position:absolute;top:30px;bottom:10px;left:calc(12px + var(--lane-x) + (100% - 24px - var(--lane-x)) * var(--at,0));width:2px;background:var(--ac);border-radius:1px;z-index:2}
 .handoff .playhead::before{content:"";position:absolute;top:-4px;left:-4px;width:10px;height:10px;border-radius:2px;background:var(--ac)}
 @media(max-width:1180px){
@@ -454,7 +454,7 @@
 .handoff .legend{display:none}
 .handoff .nle-timeline{--lane-x:56px}}
 .handoff .clips .edit-clip{background:var(--thumb) 2px center/auto calc(100% - 4px) no-repeat,transparent;padding-left:40px}
-.handoff .clips .edit-clip::after{content:"";position:absolute;inset:2px auto 2px 2px;width:30px;border-radius:3px;box-shadow:inset 0 0 0 1px #15202122}
+.handoff .clips .edit-clip::after{content:"";position:absolute;inset:2px auto 2px 2px;width:30px;border-radius:3px;box-shadow:var(--shadow-thumb-inset)}
 .handoff .software-option{grid-template-columns:minmax(120px,.8fr) minmax(200px,1.2fr) minmax(0,2.6fr) auto auto}
 .handoff .pane-body:has(>.first-cut-action){display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 .handoff .pane-body:has(>.first-cut-action)>p{margin:0}

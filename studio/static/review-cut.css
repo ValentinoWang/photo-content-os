@@ -30,7 +30,7 @@
 :where(.r226-cut) .draft-to{font:12px var(--f-tx);color:var(--ink-3);display:inline-flex;gap:8px;align-items:baseline;min-width:0}
 :where(.r226-cut) .draft-to>span{overflow-wrap:anywhere}
 :where(.r226-cut) .draft-to .link{flex-shrink:0}
-:where(.r226-cut) .editor-pop{position:absolute;right:0;top:calc(100% + 8px);z-index:20;width:min(420px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 18px 40px -16px #000;padding:12px;text-align:left}
+:where(.r226-cut) .editor-pop{position:absolute;right:0;top:calc(100% + 8px);z-index:20;width:min(420px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;box-shadow:var(--shadow-pop);padding:12px;text-align:left}
 :where(.r226-cut) .ep-h{font-size:12.5px;font-weight:600;margin-bottom:8px}
 :where(.r226-cut) .ep-opt{display:grid;grid-template-columns:16px minmax(0,1fr) auto;gap:10px;align-items:start;width:100%;text-align:left;border:1px solid transparent;border-radius:8px;background:none;padding:9px 8px}
 :where(.r226-cut) .ep-opt:hover{background:var(--panel-2)}
@@ -178,7 +178,7 @@
 :where(.r226-cut) .lane .span{position:absolute;top:7px;height:8px;border:0;padding:0;border-radius:4px;background:var(--fam-snd);min-width:0}
 :where(.r226-cut) .lane .ev::after, :where(.r226-cut) .lane .span::after{content:"";position:absolute;inset:-6px -4px}
 :where(.r226-cut) .lane .ev[aria-current="true"], :where(.r226-cut) .lane .span[aria-current="true"]{box-shadow:0 0 0 2px var(--panel),0 0 0 3.5px var(--ink)}
-:where(.r226-cut) .lane .skip{background:transparent!important;box-shadow:inset 0 0 0 1.5px var(--ink-4)}
+:where(.r226-cut) .lane .ev.skip,:where(.r226-cut) .lane.snd .ev.skip,:where(.r226-cut) .lane .span.skip{background:transparent;box-shadow:inset 0 0 0 1.5px var(--ink-4)}
 :where(.r226-cut) .lane .lane-note{position:absolute;left:6px;top:4px;font:11px var(--f-tx);color:var(--ink-5);pointer-events:none}
 :where(.r226-cut) .tl2-ph{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--ink);pointer-events:none;z-index:3}
 :where(.r226-cut) .tl2-note{margin-top:10px;color:var(--ink-3);font:11.5px var(--f-tx)}

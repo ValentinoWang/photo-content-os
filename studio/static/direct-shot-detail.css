@@ -34,7 +34,7 @@
 .rv-note{border-left:2px solid var(--warn);padding-left:10px}
 .rv-insp .rv-note{color:var(--ink-2)}
 .rv-note b{display:block;font:600 12px var(--f-ui);color:var(--warn);margin-bottom:2px}
-.rv-warnline{color:var(--warn)!important}
+.rv-warnline,.rv-insp p.rv-warnline{color:var(--warn)}
 .rv-link{border:0;background:none;color:var(--ac);font:inherit;cursor:pointer;padding:0 0 0 6px;text-decoration:underline}
 .rv-acts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .rv-act{position:relative;border:1px solid var(--rule-2);background:var(--panel);border-radius:8px;padding:10px 6px;font:600 13px var(--f-ui);color:var(--ink-2);cursor:pointer}
