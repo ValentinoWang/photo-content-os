@@ -92,9 +92,16 @@ class PhotoNodeRegistry:
     Missing scripts/functions block; there is no substitute backend.
     """
 
-    def __init__(self, catalog: Any, binding_path: Path, *, live: bool = False) -> None:
+    def __init__(self, catalog: Any, binding_path: Path | None, *, live: bool = False, binding_source: Any = None,
+                 refine_context: Any = None) -> None:
+        # ``binding_source`` returns the binding delivered for one job (installed Agent);
+        # ``binding_path`` is the explicit local file used by existing tool callers.
+        if (binding_path is None) == (binding_source is None):
+            raise ProductContractError("photo_binding_rejected")
         self.catalog = catalog
-        self.binding_path = binding_path.resolve()
+        self.binding_source = binding_source
+        self.refine_context = refine_context
+        self.binding_path = binding_path.resolve() if binding_path is not None else None
         self.live = live
         self.retry_shot_id = None
         self.descriptor = None
@@ -103,7 +110,7 @@ class PhotoNodeRegistry:
         self.image_manifest = None
 
     def _binding(self) -> dict[str, Any]:
-        data = json.loads(self.binding_path.read_text(encoding="utf-8"))
+        data = self.binding_source() if self.binding_source is not None else json.loads(self.binding_path.read_text(encoding="utf-8"))
         if not isinstance(data, dict) or set(data) != {"identity", "handoff_digest", "creative_store", "project_root", "steps", "candidate_ref", "source_refs"}:
             raise ProductContractError("photo_binding_rejected")
         store = json.loads(Path(data["creative_store"]).read_text(encoding="utf-8"))
@@ -199,7 +206,7 @@ class PhotoNodeRegistry:
             if function != 'render':
                 raise ProductContractError('photo_binding_rejected')
             selected = kwargs.get('backend_id', 'otio_kdenlive' if step['action'] == 'kdenlive' else None)
-            if self.binding_path.is_file():
+            if self.binding_source is not None or self.binding_path.is_file():
                 frozen = self._binding()
                 choice = local_editor_choice(Path(frozen['creative_store']).parent, frozen['identity']['project_id'])
                 if choice:
@@ -210,6 +217,9 @@ class PhotoNodeRegistry:
                 raise ProductContractError('photo_editor_selection_required')
             kwargs['backend_id'] = selected
             kwargs['editing_method'] = 'open_source'
+            if self.refine_context is not None and selected == 'concat':
+                kwargs.update(project_id=self.descriptor['identity']['photoProjectId'],
+                              project_revision=self.descriptor['identity']['photoProjectRevision'])
         if step["action"] == "transcribe":
             if function != "transcribe_project":
                 raise ProductContractError("photo_entrypoint_unavailable")
@@ -328,6 +338,7 @@ class PhotoNodeRegistry:
             before = {p: file_sha256(p) for p in sources}
             output_root = local_path(workspace, context["run_ref"])
             output_root.mkdir(parents=True, exist_ok=True)
+            opened_for_refine = False
             try:
                 native = None
                 for step in binding["steps"]:
@@ -345,7 +356,31 @@ class PhotoNodeRegistry:
                 validate_video_handoff(handoff, current["identity"], expected_handoff_digest=current["handoff_digest"])
                 if before != {p: file_sha256(p) for p in sources} or self._descriptor(workspace, str(descriptor.relative_to(workspace)), handoff) != full_descriptor:
                     raise ProductContractError("photo_execution_failed")
-                candidate = self._candidate(binding, full_descriptor, root, workspace, before, native, output_root)
+                if (self.refine_context is not None and native and native.get('editor_backend') == 'concat'
+                        and not {'retryShotId', 'renderShotIds'} & full_descriptor.keys()):
+                    from media_project_selection import RefineRun
+                    from edit_backends.registry import get_backend
+                    run = RefineRun(self.refine_context(full_descriptor["identity"]))
+                    project = Path(native["project_dir"])
+                    source = Path(native["source"])
+                    identity = full_descriptor["identity"]
+                    if (run.directory != output_root or source not in before or
+                            (native["project_id"], native["project_revision"]) !=
+                            (identity["photoProjectId"], identity["photoProjectRevision"]) or
+                            project.resolve() != output_root / "editor/concat-project" or not (project / "concat.json").is_file()):
+                        raise ProductContractError("photo_execution_failed")
+                    with run.locked():
+                        if run.read() is None:
+                            backend = get_backend("concat")
+                            try:
+                                opened = backend.open_for_refine(project_dir=project)
+                            finally:
+                                backend.close()
+                            self.refine_context(identity)
+                            run.record_opened(project, opened, "sha256:" + before[source])
+                    opened_for_refine = True
+                else:
+                    candidate = self._candidate(binding, full_descriptor, root, workspace, before, native, output_root)
             except Exception as exc:
                 code = getattr(exc, "code", "photo_execution_failed")
                 if code not in {"photo_entrypoint_unavailable", "photo_binding_rejected", "photo_live_required", "photo_candidate_projection_missing"}:
@@ -361,6 +396,8 @@ class PhotoNodeRegistry:
                             facts = failed_shot_progress(failed, full_descriptor, json.loads(manifest_path.read_text())['fps'],
                                 **({'output_dir': output_root, 'workspace': workspace} if action == 'compose' else {}))
                             candidate.update(progress={'shotProgress': facts['shotProgress']}, failedShotId=facts['failedShotId'])
+            if opened_for_refine:
+                raise NodeExecutionError("photo_waiting_manual_refine")
             # This is a local artifact in the existing durable runtime. A failure
             # receipt is not a succeeded render and never enters the media library.
             artifact = output_root / "handoff_manifest.json"
@@ -376,7 +413,7 @@ class PhotoNodeRegistry:
             self.descriptor = None
 
 
-def runtime_factory(binding_path: Path, *, live: bool = False, for_agent: bool = False):
+def _runtime_builder(registry_for: Any, *, for_agent: bool):
     """Use the installed runtime's database, DAG and receipts unchanged."""
     PipelineRuntime = import_module("openclaw_media.pipeline_runtime").PipelineRuntime
 
@@ -586,5 +623,41 @@ def runtime_factory(binding_path: Path, *, live: bool = False, for_agent: bool =
             return super().execute(run_ref, inputs=normalized)
 
     def create(workspace, catalog):
-        return PhotoRuntime(workspace, catalog=catalog, node_registry=PhotoNodeRegistry(catalog, binding_path, live=live))
+        return PhotoRuntime(workspace, catalog=catalog, node_registry=registry_for(catalog))
+    return create
+
+
+def runtime_factory(binding_path: Path, *, live: bool = False, for_agent: bool = False):
+    """Explicit-tool entry: the caller names a local binding file."""
+    return _runtime_builder(lambda catalog: PhotoNodeRegistry(catalog, binding_path, live=live), for_agent=for_agent)
+
+
+def installed_runtime_factory(store: Any, *, device_id: str, provider: Any = None, live: bool = False, media_root: Path | None = None):
+    """Factory for the installed Agent's watch.
+
+    A formal video job arrives with the run binding the Studio port returned; its
+    binding is read from the record delivered to the selected project, so no
+    binding file, environment variable or root-level video.json is consulted.
+    Jobs without a run binding keep the installed Agent's default runtime.
+    """
+    from media_project_selection import delivered_context, resolve_run_binding
+
+    def create(workspace: Path, catalog: Any, *, run_binding: Any = None):
+        if run_binding is None:
+            runtime = import_module("openclaw_media.pipeline_runtime").PipelineRuntime
+            registry = import_module("openclaw_media.node_registry").NodeRegistry
+            return runtime(workspace, catalog=catalog, node_registry=registry(catalog, provider=provider))
+
+        def source() -> dict[str, Any]:
+            return resolve_run_binding(run_binding, store=store, device_id=device_id, media_root=media_root)
+
+        def refine_context(identity):
+            source()
+            ctx = delivered_context(store, run_binding["project_id"], identity, media=media_root)
+            if ctx["workspace"] != workspace.resolve() or ctx["run_record"]["job_id"] != run_binding["job_id"]:
+                raise ProductContractError("photo_binding_rejected")
+            return ctx
+
+        return _runtime_builder(lambda current: PhotoNodeRegistry(current, None, live=live, binding_source=source,
+                                                                  refine_context=refine_context), for_agent=True)(workspace, catalog)
     return create

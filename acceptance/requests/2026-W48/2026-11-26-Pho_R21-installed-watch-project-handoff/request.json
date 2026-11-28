@@ -1,0 +1,34 @@
+{
+  "id": "2026-11-26-Pho_R21-installed-watch-project-handoff",
+  "project": "photo-content-os",
+  "title": "设备交接落到已确认的制作项目",
+  "raw_request": "按 TASK-U13-P.md 做 U13-P。安装版 watch 使用本地确认，把正式交接送到选中的项目并在重启后读回。删除旧手填绑定选项。第 2 轮先单独重新导出 Studio OpenAPI 快照，再提交实现并完成验证和主线交付。",
+  "author": {
+    "agent": "codex",
+    "session": "01a2182f-23ac-7541-be08-a007ed6f289b"
+  },
+  "understanding": [
+    "本地确认选择后，设备把正式交接送到选中的项目，设备重启后仍可找到同一份交接。",
+    "同名项目和身份不符的交接不能进入选中的项目。"
+  ],
+  "out_of_scope": [
+    "正式项目选择页面、真实素材演练和付费服务调用。"
+  ],
+  "criteria": [
+    {
+      "key": "H-01",
+      "steps": [
+        "打开「在哪看」中的安装版交接试跑记录，查看确认、重启和拒绝交接三组结果。"
+      ],
+      "expected": "确认和重启后显示同一项目及同一任务，未重复投递。同名其他项目、设备不符和摘要不符的结果均为拒绝。"
+    }
+  ],
+  "schema": "request-card/v1",
+  "confirmation_required": false,
+  "executors": [],
+  "created_at": "2026-11-26T14:13:23.071140Z",
+  "status": "待确认",
+  "confirmation": null,
+  "revisions": [],
+  "remote_read_warnings": []
+}

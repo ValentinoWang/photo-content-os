@@ -1,0 +1,35 @@
+acceptance/requests/2026-W48/2026-11-26-Pho_R22-installed-concat-return/request.json
+acceptance/requests/2026-W48/2026-11-26-Pho_R22-installed-concat-return/request.md
+scripts/media_project_selection.py
+scripts/openclaw_video_execution.py
+scripts/repository-safety-media-allowlist.json
+scripts/video_candidate.py
+studio/direct_handoff_contract.py
+studio/returned_candidate.py
+studio/server.py
+studio/video_workflow.py
+tests/test_concat_return.py
+tests/test_p1a_installed_concat_return.py
+tests/test_ps3_openfilm_session.py
+tests/test_ps3_video_workflow.py
+tests/test_ps4_returned_candidate.py
+tests/test_ps_studio_handoff.py
+diff --git a/studio/server.py b/studio/server.py
+index c216518..885fecc 100644
+--- a/studio/server.py
++++ b/studio/server.py
+@@ -297 +297 @@ class StudioApplication:
+-    def _video_handoff_projection(self, project_id: str) -> dict | None:
++    def _video_handoff_projection(self, project_id: str, *, context=None) -> dict | None:
+@@ -301,2 +301,3 @@ class StudioApplication:
+-        from studio.direct_handoff_contract import read_handoff
+-        context = read_handoff(self.store, project_id)
++        from studio.direct_handoff_contract import read_delivered_handoff, read_handoff
++        if context is None:
++            context = read_delivered_handoff(self.store, project_id, device_id=None) or read_handoff(self.store, project_id)
+@@ -309 +310,4 @@ class StudioApplication:
+-        payload = self._video_json(root, binding.get("candidate_ref", "candidate.json")) or handoff
++        if "run_record" in context:
++            payload = self._video_json(run, "studio-candidate.json") or handoff
++        else:
++            payload = self._video_json(root, binding.get("candidate_ref", "candidate.json")) or handoff

@@ -216,46 +216,146 @@
       "workspace": "acceptance/human/2026-W43/2026-10-19-R210-photo-music-link-import"
     }
   ],
-  "generated_at": "2026-11-26T08:31:44.038207Z",
+  "generated_at": "2026-11-26T16:34:00.258126Z",
   "non_blocking_entries": [
     {
       "blocking": false,
-      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/checklist.md",
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R23-studio-project-pick/checklist.md",
+      "estimated_minutes": 3,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R23-studio-project-pick/handoff.json",
+      "invalidation_keys": [
+        "photo.studio-project-pick"
+      ],
+      "latest_run": null,
+      "loop_name": "Studio 里确认策划台作品用哪个项目",
+      "ready_at": "2026-11-26T16:34:00.258126Z",
+      "release_slice": "U12+U15",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "工作台选择已有项目或新建，确认后策划台替身显示已绑定，项目页显示相同作品版本。",
+      "task_id": "2026-11-26-Pho_R23-studio-project-pick",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R23-studio-project-pick"
+    },
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R22-installed-concat-return/checklist.md",
+      "estimated_minutes": 2,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R22-installed-concat-return/handoff.json",
+      "invalidation_keys": [
+        "photo.installed-concat-return"
+      ],
+      "latest_run": null,
+      "loop_name": "安装版设备续传同一份 Concat 精修候选",
+      "ready_at": "2026-11-26T14:58:56.069846Z",
+      "release_slice": "U19-P",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "工程打开后等待，设备跨租约和重启续传同一份经过检查的成片，替身作品服务读回一条 480 × 854 预览。",
+      "task_id": "2026-11-26-Pho_R22-installed-concat-return",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R22-installed-concat-return"
+    },
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/checklist.md",
+      "estimated_minutes": 2,
+      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R21-installed-watch-project-handoff/handoff.json",
+      "invalidation_keys": [
+        "photo.installed-watch-project-handoff"
+      ],
+      "latest_run": null,
+      "loop_name": "设备交接落到已确认的制作项目",
+      "ready_at": "2026-11-26T14:20:39.830523Z",
+      "release_slice": "U13-P",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PENDING",
+      "summary": "安装版设备在本地确认后投递到所选项目，重启后读回，拒绝错配。两份点名测试共 100 项通过，试跑使用替身。",
+      "task_id": "2026-11-26-Pho_R21-installed-watch-project-handoff",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R21-installed-watch-project-handoff"
+    },
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot/checklist.md",
+      "estimated_minutes": 1,
+      "handoff_path": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot/handoff.json",
+      "invalidation_keys": [
+        "photo.first-project-snapshot"
+      ],
+      "latest_run": {
+        "completed_at": "2026-11-26T13:31:18Z",
+        "result_path": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot/runs/20261126T133117Z-human-console-ad81a4/result.md",
+        "result_sha256": "9196d1af2fafae735f910209004f7d23f2fe797c1da4f90de06b41fb64a8a072",
+        "run_id": "20261126T133117Z-human-console-ad81a4",
+        "source_identity": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+        "started_at": "2026-11-26T13:31:17.550480Z",
+        "status": "PASS"
+      },
+      "loop_name": "契约快照固定到首次交接",
+      "ready_at": "2026-11-26T12:36:55.537182Z",
+      "release_slice": "preview-chain-p1a",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PASSED",
+      "summary": "首次交接快照与获准的策划台提交一致，项目选择、交接和拒绝示例待人工核对。",
+      "task_id": "2026-11-26-Pho_R20-first-project-snapshot",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R20-first-project-snapshot"
+    },
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md",
+      "estimated_minutes": 1,
+      "handoff_path": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base/handoff.json",
+      "invalidation_keys": [
+        "photo.openclaw-contract-api-base"
+      ],
+      "latest_run": {
+        "completed_at": "2026-11-26T13:42:56Z",
+        "result_path": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base/runs/20261126T134255Z-human-console-d22833/result.md",
+        "result_sha256": "db1a6542832d0b63ccdc4e13b5efc0e5ad9f52d5d0320d1bd3e7281b257cdc93",
+        "run_id": "20261126T134255Z-human-console-d22833",
+        "source_identity": "13b7046233ee8c0dd735d9134aba822c8099e11a",
+        "started_at": "2026-11-26T13:42:55.398770Z",
+        "status": "PASS"
+      },
+      "loop_name": "契约快照接口前缀跟随策划台",
+      "ready_at": "2026-11-26T12:36:53.456029Z",
+      "release_slice": "preview-chain-p0",
+      "required_role": "任务委托人",
+      "scope_hints": [],
+      "status": "PASSED",
+      "summary": "接口前缀传播及 Agent 兼容性检查通过，制作台自检中的策划台版本待人工核对。",
+      "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base"
+    },
+    {
+      "blocking": false,
+      "checklist_path": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return/checklist.md",
       "estimated_minutes": 5,
-      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R18-concat-return/handoff.json",
+      "handoff_path": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return/handoff.json",
       "invalidation_keys": [
         "photo.studio-concat-return",
         "photo.studio-concat-software-list"
       ],
-      "latest_run": null,
+      "latest_run": {
+        "completed_at": "2026-11-26T13:32:07Z",
+        "result_path": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return/runs/20261126T133206Z-human-console-63919d/result.md",
+        "result_sha256": "3e3f84e6632fd8743fb3609adfae688c91f1a115fc0ed7d7aafaf9750de81fa2",
+        "run_id": "20261126T133206Z-human-console-63919d",
+        "source_identity": "4189a26e832aa89af453d2a3e36c263813e0f53f",
+        "started_at": "2026-11-26T13:32:06.651306Z",
+        "status": "PASS"
+      },
       "loop_name": "Studio 能用 Concat 精修后回传",
       "ready_at": "2026-11-26T08:31:44.038207Z",
       "release_slice": "preview-chain-p0",
       "required_role": "任务委托人",
       "scope_hints": [],
-      "status": "PENDING",
+      "status": "PASSED",
       "summary": "Concat 回传读回、软件列表和候选下载路径的替身测试已通过，软件列表和精修后回传待人工核对。",
       "task_id": "2026-11-26-Pho_R18-concat-return",
       "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R18-concat-return"
-    },
-    {
-      "blocking": false,
-      "checklist_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/checklist.md",
-      "estimated_minutes": 1,
-      "handoff_path": "acceptance/human/2026-W48/未-2026-11-26-Pho_R17-openclaw-contract-api-base/handoff.json",
-      "invalidation_keys": [
-        "photo.openclaw-contract-api-base"
-      ],
-      "latest_run": null,
-      "loop_name": "契约快照接口前缀跟随策划台",
-      "ready_at": "2026-11-26T08:31:21.891027Z",
-      "release_slice": "preview-chain-p0",
-      "required_role": "任务委托人",
-      "scope_hints": [],
-      "status": "PENDING",
-      "summary": "契约和 Agent 兼容检查已通过，制作台自检显示的版本待人工核对。",
-      "task_id": "2026-11-26-Pho_R17-openclaw-contract-api-base",
-      "workspace": "acceptance/human/2026-W48/2026-11-26-Pho_R17-openclaw-contract-api-base"
     },
     {
       "blocking": false,
@@ -525,5 +625,5 @@
     }
   ],
   "schema_version": 1,
-  "source_facts_sha256": "7f6ba942ee6ba6850c296a9b84800e3fa86d5f27c5b9b1e3b06756fcf7cba73a"
+  "source_facts_sha256": "a737b662f5c68793c760088f1a385a72f52ebd087bfe7a0b62fb8462ad77c67a"
 }

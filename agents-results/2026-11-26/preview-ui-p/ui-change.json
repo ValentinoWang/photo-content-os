@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.2.0",
+  "ui_change_id": "pho-r23-studio-project-pick",
+  "kind": "behavior-change",
+  "user_visible": true,
+  "source_authority_mode": "none",
+  "capture_matrix": {
+    "routes": [
+      "/",
+      "/app/project/{projectId}"
+    ],
+    "locales": [
+      "zh-CN"
+    ],
+    "themes": [
+      "studio-light"
+    ],
+    "viewports": [
+      "1440x1000",
+      "390x844"
+    ],
+    "helper_modes": [
+      "real-studio-synthetic-projects"
+    ]
+  }
+}

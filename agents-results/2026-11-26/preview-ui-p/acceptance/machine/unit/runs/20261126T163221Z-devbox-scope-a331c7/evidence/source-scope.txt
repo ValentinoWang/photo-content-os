@@ -1,0 +1,1 @@
+git diff --exit-code (existing music, recipe and editor owners): 0, empty diff

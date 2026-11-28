@@ -1,0 +1,109 @@
+{
+  "baseline": {
+    "base": "54674e9a82e8b408c6b95a07ccb39736a0a32226",
+    "branch": "main",
+    "head": "15c2b90ef2dee7bb7dd85d01b1f67aa1b7ab0dad",
+    "tree": "1f4cc2adf5cb43bde4916187ee70745961b85e47"
+  },
+  "binding_sha256": "341feaaae67d1ca9a24eb5191899c016b10cf70aebb3dfb2da448b34d4e7cbd9",
+  "blocking": false,
+  "blocking_budget": 3,
+  "budget_exception": null,
+  "checklist_sha256": "c5e4ca41462ff74a9aa1137ead4cbf95dfca04067d8478e169e45f5c6b2a6f89",
+  "claims": [
+    {
+      "claim_key": "photo.installed-watch-project-handoff.restart",
+      "item": "H-01",
+      "open_route": "note:打开本卡附图「安装版交接试跑记录」，查看确认、重启和拒绝三组结果。",
+      "relations": [
+        {
+          "reason": "旧卡在静态快照核对首次交接定义及正反样例；本卡运行安装版设备核对选中项目和重启恢复，两项各有独立入口和证据。",
+          "target": "2026-11-26-Pho_R20-first-project-snapshot/H-01",
+          "type": "independent"
+        },
+        {
+          "evidence_run": "20261126T141607Z-macos-installed-wheel-988df3",
+          "reason": "旧卡验收音乐库分析、节拍和标签筛选。生成快照包含音乐路由补记，实际音乐路由、分析程序、界面和旧卡受保护测试与本批起点相同。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T141607Z-macos-installed-wheel-988df3",
+          "reason": "旧卡验收音乐库分析、节拍和标签筛选。生成快照包含音乐路由补记，实际音乐路由、分析程序、界面和旧卡受保护测试与本批起点相同。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T141607Z-macos-installed-wheel-988df3",
+          "reason": "旧卡验收音乐库分析、节拍和标签筛选。生成快照包含音乐路由补记，实际音乐路由、分析程序、界面和旧卡受保护测试与本批起点相同。",
+          "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T141607Z-macos-installed-wheel-988df3",
+          "reason": "旧卡验收动效配方导入和离线预览。快照补记配方路由，配方、路由实现、预览程序及原保护测试与本批起点相同。",
+          "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T141607Z-macos-installed-wheel-988df3",
+          "reason": "旧卡验收剪辑工具安装、探测和手动生成候选。安装脚本、工具探测和原保护测试与本批起点相同。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+          "type": "unaffected"
+        },
+        {
+          "evidence_run": "20261126T141607Z-macos-installed-wheel-988df3",
+          "reason": "旧卡验收剪辑工具安装、探测和手动生成候选。安装脚本、工具探测和原保护测试与本批起点相同。",
+          "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+          "type": "unaffected"
+        }
+      ],
+      "screenshots": [
+        {
+          "caption": "安装版交接试跑记录 · 390 宽 WebKit 截图",
+          "captured_at": "2026-11-26T14:17:47.411369+00:00",
+          "path": "agents-results/2026-11-26/Pho_R21-installed-watch-project-handoff/acceptance/shots/H-01-1.png",
+          "sha256": "f614975313b6af131d28d0a36e7f0ddd96b2e80756f71696b22e52eabee6a440"
+        }
+      ],
+      "surfaces": [
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend"
+      ]
+    }
+  ],
+  "contract_path": "agents-results/2026-11-26/Pho_R21-installed-watch-project-handoff/acceptance-contract.md",
+  "contract_sha256": "df9364c12d8479c5c37579a0fa3395afa3297760808cf4c9a087633c34eb386a",
+  "contract_version": "1",
+  "estimated_minutes": 2,
+  "execution_policy": "terminal-after-machine-green",
+  "invalidation_keys": [
+    "photo.installed-watch-project-handoff"
+  ],
+  "loop_name": "设备交接落到已确认的制作项目",
+  "machine_evidence": [
+    {
+      "layer": "machine/unit",
+      "result_path": "agents-results/2026-11-26/Pho_R21-installed-watch-project-handoff/acceptance/machine/unit/runs/20261126T141607Z-macos-installed-wheel-988df3/result.md",
+      "result_sha256": "4a03173d6f9303e890dd7f29ea02865fe7af6ecc068f693a327b5a397061af59",
+      "run_id": "20261126T141607Z-macos-installed-wheel-988df3",
+      "source_identity": "15c2b90ef2dee7bb7dd85d01b1f67aa1b7ab0dad",
+      "surfaces": [
+        "photo.tests-scripts",
+        "photo.video-pipeline",
+        "studio.backend"
+      ]
+    }
+  ],
+  "open_route": null,
+  "ready_at": "2026-11-26T14:20:39.830523Z",
+  "release_slice": "U13-P",
+  "request_id": "2026-11-26-Pho_R21-installed-watch-project-handoff",
+  "required_role": "任务委托人",
+  "schema_version": 2,
+  "scope_hints": [],
+  "source_commit": "15c2b90ef2dee7bb7dd85d01b1f67aa1b7ab0dad",
+  "summary": "安装版设备在本地确认后投递到所选项目，重启后读回，拒绝错配。两份点名测试共 100 项通过，试跑使用替身。",
+  "task_id": "2026-11-26-Pho_R21-installed-watch-project-handoff"
+}

@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "OpenTimelineIO": "0.18.1",
+    "dnspython": "2.7.0",
+    "httpcore": "1.0.9",
+    "httpx": "0.28.1",
+    "keyring": "25.6.0",
+    "litellm": "1.94.1",
+    "packaging": "26.2",
+    "pydantic": "2.11.7",
+    "rfc3986": "2.0.0"
+  },
+  "dependency_root": "/Users/vsiyo/Desktop/\u521b\u4e1a\u9879\u76ee/\u5185\u5bb9\u521b\u4f5c/production-desk/.venv/lib/python3.12/site-packages",
+  "import_file": "/Users/vsiyo/.local/share/task-scratch/p1a-u19-p/pytest-u19/installed0/venv/lib/python3.12/site-packages/openclaw_media/__init__.py",
+  "installed_files_checked": 43,
+  "source_sha": "6eebfd33d",
+  "version": "0.2.0",
+  "wheel": "/tmp/p1a-u19-wheel/openclaw_media-0.2.0-py3-none-any.whl",
+  "wheel_sha256": "b9055aae69c49272d6adce9e451bf77a2e56c8381f8987e92cd2e2101e62960a"
+}

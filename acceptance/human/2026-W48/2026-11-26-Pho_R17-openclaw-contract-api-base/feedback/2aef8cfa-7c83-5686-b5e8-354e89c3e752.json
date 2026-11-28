@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "2aef8cfa-7c83-5686-b5e8-354e89c3e752",
+  "identity": {
+    "project": "photo-content-os",
+    "acceptance": "2026-11-26-Pho_R17-openclaw-contract-api-base",
+    "item": "H-01",
+    "checklist_sha256": "7d8f9fe3ceb1d158ef837868a9ea440f4b236ec0ff955ff5cdc7758ba265dad8",
+    "build": "dd5379926cc301bf024e6c369e1f39e8ba5d46e448bcfb3b325720da9785c3a3",
+    "bundle": null,
+    "binding_sha256": "2cded7fd74d3d13ba740d06f4f11eb40a352338b045c3262219f3cb9e8b5edcb"
+  },
+  "actor": "phone-passkey",
+  "outcome": "passed",
+  "issue": "",
+  "note": "",
+  "created_at": "2026-11-26T13:42:55.165862+00:00",
+  "created_ns": 1795700575165897000,
+  "supersedes": null,
+  "repair_state": "not-requested",
+  "checklist_item": {
+    "fields": [
+      {
+        "label": "验收步骤",
+        "value": "\n  1. 打开制作台目录，按「在哪看」中的命令运行自检。"
+      },
+      {
+        "label": "预期表现",
+        "value": "云端配对一行显示「在哪看」中列出的策划台版本。"
+      }
+    ],
+    "id": "H-01",
+    "needs_separate_acceptance": true,
+    "open_route": "note:运行 .venv/bin/python scripts/doctor.py，配对行应显示 21c170d0bdd2",
+    "open_target": {
+      "kind": "note",
+      "text": "运行 .venv/bin/python scripts/doctor.py，配对行应显示 21c170d0bdd2"
+    },
+    "replacement": null,
+    "replacement_status": null,
+    "text": "- 验收步骤：\n  1. 打开制作台目录，按「在哪看」中的命令运行自检。\n- 预期表现：云端配对一行显示「在哪看」中列出的策划台版本。"
+  },
+  "passkey": {
+    "fingerprint": "8281bbd97a19bbfb",
+    "payload": "{\"card\":\"2026-11-26-Pho_R17-openclaw-contract-api-base\",\"checklist_sha256\":\"7d8f9fe3ceb1d158ef837868a9ea440f4b236ec0ff955ff5cdc7758ba265dad8\",\"credential\":\"AqpbnM8HRfFAY7ciKUvz1gR9kDk\",\"expires_at\":1795700870303,\"issued_at\":1795700570303,\"items\":[{\"key\":\"H-01\",\"verdict\":\"pass\"}],\"nonce\":\"07196ea036d0c388f38c9f99a0cf6daa\",\"project\":\"photo-content-os\",\"rp\":\"mediapilot.cloud\",\"v\":1}",
+    "assertion": {
+      "id": "AqpbnM8HRfFAY7ciKUvz1gR9kDk",
+      "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoicm82UE1UQzZEeHRDcEt5a0JxNWZ2ck9jNlZDQU5GWU1WSS0xMlNncFhaMCIsIm9yaWdpbiI6Imh0dHBzOi8vbWVkaWFwaWxvdC5jbG91ZCIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+      "authenticatorData": "k3CLGqgAm7LO2dc3AetKpcPK5WwiFgvOMjli5vRd2KodAAAAAA",
+      "signature": "MEQCIHzWYw6Ki5gdWIxdDl3_0h4WPva8UxRzFrb3iCL_o3WwAiAC-E_jHM19EWYd_0FSnZyhwfspuuivpntBj5uiOEy20A",
+      "userHandle": "rdilDPQLUdUWCb6E3gaTzw"
+    },
+    "verified_at": 1795700574979
+  },
+  "attachments": []
+}

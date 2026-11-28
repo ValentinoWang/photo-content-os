@@ -112,9 +112,10 @@ def test_native_export_projects_only_actual_selected_animations(tmp_path,monkeyp
     app.video_workflow.probes=[{**r,'probe':{'installed':True,'runnable':True,'version':'fixture'}} for r in describe_backends()]
     p=app.store.create_project(title='真实工程导出',local_workspace=str(media));identity={'photoProjectId':p['id'],'photoProjectRevision':1,'jobId':'ps3-export-native'}
     descriptor={'scope':'video_handoff_v1','identity':identity,'shots':[{'shot':{'shotId':'01','startSeconds':0,'endSeconds':4},'subtitle':'真实工程导出验证'}], 'animations':[{'animationId':'pending-animation','shotId':'01','requirement':'待采纳动画','dialogue':'验证','suggestedStartSeconds':0,'durationSeconds':4}]}
-    (media/'video.json').write_text(json.dumps(descriptor))
-    binding=tmp_path/'binding.json';binding.write_text(json.dumps({'identity':{'project_id':p['id'],'project_revision':1,'job_id':identity['jobId']},'creative_store':str(app.store.path),'project_root':str(media),'source_refs':['source.mp4','source.srt'],'candidate_ref':'candidate.json','steps':[]}));monkeypatch.setenv('PHOTO_STUDIO_VIDEO_BINDING',str(binding))
+    from test_ps_studio_handoff import deliver_fixture
+    identity = deliver_fixture(app, media, identity, shots=descriptor['shots'], animations=descriptor['animations'])
     run=media/'runs'/hashlib.sha256(identity['jobId'].encode()).hexdigest()[:32];run.mkdir(parents=True)
+    candidate_path = run / 'studio-candidate.json'
     (run/'native-suggest.json').write_text(json.dumps({'duration':4,'precision':'word','auto_cut_allowed':True,'suggestions':[{'type':'repetition','start':1,'end':2,'auto_cut_allowed':True}]}))
     app.video_editor_choice(p['id'],{'editor':'openfilm','method':'self','revision':1})
     base={'identity':identity,'expectedRevision':1}
@@ -124,7 +125,7 @@ def test_native_export_projects_only_actual_selected_animations(tmp_path,monkeyp
         old_host=d['host']
         d=app.video_workflow.command(p['id'],{**base,'op':'export','engineRevision':d['engineRevision']})
         assert d['state']=='returned',d
-        candidate=json.loads((media/'candidate.json').read_text())['candidate']
+        candidate=json.loads(candidate_path.read_text())['candidate']
         assert candidate['status']=='candidate' and candidate['frameCount']==90
         assert candidate['durationSeconds']==3 and candidate['removedSeconds']==1
         assert candidate['animations']==[] and candidate['cutCount']==1
@@ -138,7 +139,7 @@ def test_native_export_projects_only_actual_selected_animations(tmp_path,monkeyp
         raw=exported.read_bytes()
         returned=app.video_workflow.receive(p['id'],io.BytesIO(raw),len(raw),base)
         assert returned['state']=='returned',returned
-        receipt=json.loads((media/'candidate.json').read_text())['candidate']
+        receipt=json.loads(candidate_path.read_text())['candidate']
         assert receipt['provenance']=='native_readback' and receipt['checks']['expectedFrames']==90
         assert receipt['cuts']==[{'kind':'retake','startSeconds':1,'endSeconds':2}]
         assert receipt['animations']==[] and receipt['subtitleBurnedIn'] is True
@@ -153,7 +154,7 @@ def test_native_export_projects_only_actual_selected_animations(tmp_path,monkeyp
         d = app.video_workflow.command(p['id'],{**base,'op':'reload'})
         d = app.video_workflow.command(p['id'],{**base,'op':'export','engineRevision':d['engineRevision']})
         assert d['state']=='returned', d
-        receipt=json.loads((media/'candidate.json').read_text())['candidate']
+        receipt=json.loads(candidate_path.read_text())['candidate']
         expected=[{'kind':'retake','startSeconds':1,'endSeconds':2}, {'kind':'manual','startSeconds':3.5,'endSeconds':4}]
         assert receipt['cuts']==expected and receipt['frameCount']==75
         assert receipt['removedSeconds']==1.5 and receipt['cutCount']==2
@@ -161,7 +162,7 @@ def test_native_export_projects_only_actual_selected_animations(tmp_path,monkeyp
         raw=exported.read_bytes()
         d=app.video_workflow.receive(p['id'],io.BytesIO(raw),len(raw),base)
         assert d['state']=='returned', d
-        receipt=json.loads((media/'candidate.json').read_text())['candidate']
+        receipt=json.loads(candidate_path.read_text())['candidate']
         assert receipt['cuts']==expected and receipt['provenance']=='native_readback'
         assert receipt['checks']['expectedFrames']==75
     finally:

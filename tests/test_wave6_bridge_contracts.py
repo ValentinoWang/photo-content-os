@@ -142,7 +142,8 @@ class Wave6BridgeContractTests(unittest.TestCase):
             )
             product_contract_path = upstream / "docs/ai-harness/openclaw-media-product-contract.json"
             product_contract_path.parent.mkdir(parents=True)
-            product_contract_path.write_text(json.dumps({"api_base": "/changed/media/api"}), encoding="utf-8")
+            pin = contract.load_snapshot()["p1a_first_project"]
+            product_contract_path.write_text(json.dumps({"api_base": "/changed/media/api", "p1a_first_project": pin["contract"], "api_schemas": pin["api_schemas"]}), encoding="utf-8")
             subprocess.run(["git", "init", str(upstream)], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             subprocess.run(["git", "-C", str(upstream), "add", "."], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             subprocess.run(

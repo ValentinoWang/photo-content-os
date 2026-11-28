@@ -1,0 +1,84 @@
+[
+  {
+    "item": "H-01",
+    "claim_key": "photo.studio-project-pick.confirm",
+    "surfaces": [
+      "studio.frontend",
+      "studio.backend",
+      "photo.tests-scripts"
+    ],
+    "open_route": "note:打开电脑上的 Studio 工作台，并与发起请求的策划台作品页对照。",
+    "relations": [
+      {
+        "target": "2026-11-26-Pho_R21-installed-watch-project-handoff/H-01",
+        "type": "independent",
+        "reason": "旧项查看安装版投递试跑，包含同名拒绝、设备拒绝和摘要拒绝。本项在 Studio 工作台实际选择，并核对作品版本。"
+      },
+      {
+        "target": "2026-11-26-Pho_R22-installed-concat-return/H-01",
+        "type": "independent",
+        "reason": "旧项核对打开精修后的成片续传，本项发生在第一次交接前，确认制作项目和来源版次。"
+      },
+      {
+        "target": "2026-11-04-Pho_R01-frontend-debt-fix/H-02",
+        "type": "independent",
+        "reason": "旧项核对整理台批量移入回收站的确认与取消，本项在工作台选择策划台作品的制作项目。"
+      },
+      {
+        "target": "2026-10-26-R277-photo-shot-visual-revision/H-02",
+        "type": "independent",
+        "reason": "旧项核对单镜画面回退和收藏为样例，本项核对作品交接前选择项目及确认时的作品版本。"
+      },
+      {
+        "target": "2026-10-20-R223-photo-music-beat-map/H-01",
+        "type": "unaffected",
+        "reason": "音乐标签、BPM、波形和拍点的渲染由音乐库模块负责，本次改动入口是工作台选项目。已复跑音乐分析、分段和拍点测试。",
+        "evidence_run": "20261126T163221Z-devbox-scope-a331c7"
+      },
+      {
+        "target": "2026-10-20-R223-photo-music-beat-map/H-02",
+        "type": "unaffected",
+        "reason": "音乐播放、鼓点高亮和小节由节拍图模块负责，本次只新增作品待选轮询及项目来源条。已复跑拍点和分段测试。",
+        "evidence_run": "20261126T163221Z-devbox-scope-a331c7"
+      },
+      {
+        "target": "2026-10-20-R223-photo-music-beat-map/H-03",
+        "type": "unaffected",
+        "reason": "导入、筛选、分析状态取自音乐库的接口和视图，本次新增接口仅供 Studio 项目选择。已复跑音乐分析和运行时测试。",
+        "evidence_run": "20261126T163221Z-devbox-scope-a331c7"
+      },
+      {
+        "target": "2026-11-24-Pho_R08-openmotion-recipes/H-01",
+        "type": "unaffected",
+        "reason": "动效配方库、离线预览和所属路由未改动，已复跑配方导入、预览和配方库路由测试。",
+        "evidence_run": "20261126T163221Z-devbox-scope-a331c7"
+      },
+      {
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-01",
+        "type": "unaffected",
+        "reason": "安装脚本、工具路径和依赖安装未改动，已复跑剪辑工具运行时路径检查。",
+        "evidence_run": "20261126T163221Z-devbox-scope-a331c7"
+      },
+      {
+        "target": "2026-10-19-R207-photo-edit-tools-in-repo/H-02",
+        "type": "unaffected",
+        "reason": "已有视频交接与候选路径沿用原实现，本次只新增本机选择与来源状态。已核对编辑后端和候选入口的代码差异，并复跑运行时检查。",
+        "evidence_run": "20261126T163221Z-devbox-scope-a331c7"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "agents-results/2026-11-26/preview-ui-p/acceptance/shots/H-01-1.png",
+        "sha256": "ae015a89eadd16c208ad3d560506a2efafc4130d66f5139b037ce4ee5574e9b9",
+        "caption": "Studio 待选卡与第 3 版 · 390 宽合成数据实拍",
+        "captured_at": "2026-11-26T16:21:45.640Z"
+      },
+      {
+        "path": "agents-results/2026-11-26/preview-ui-p/acceptance/shots/H-01-2.png",
+        "sha256": "2f9d696c25bced8b762559fc8a8dac729dcee1134a23e10498bb3fcec35d9c60",
+        "caption": "确认后项目来源条同为第 3 版 · 390 宽合成数据实拍",
+        "captured_at": "2026-11-26T16:21:47.059Z"
+      }
+    ]
+  }
+]

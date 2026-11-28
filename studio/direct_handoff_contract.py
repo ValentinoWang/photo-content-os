@@ -26,9 +26,124 @@ def read_json(root: Path, ref: str) -> dict:
         return {}
 
 
-def read_handoff(store, project_id):
-    """Resolve exactly the descriptor accepted by the editing handoff page."""
+RUN_RECORD_SCHEMA = 'p1a_run_record_v1'
+RUN_RECORD_KEYS = frozenset({
+    'schema', 'job_id', 'device_id', 'project_id', 'project_revision', 'binding_id', 'binding_generation',
+    'confirmation_ref', 'handoff_digest', 'input_ref', 'catalog_digest', 'identity', 'workspace_ref',
+    'project_root_ref', 'source_refs', 'steps', 'candidate_ref', 'request_id', 'delivered_at'})
+# Stage replays must agree on these; the derived plan and timestamp may differ.
+RUN_RECORD_IDENTITY_KEYS = RUN_RECORD_KEYS - {'source_refs', 'steps', 'delivered_at'}
+_HANDOFF_PAIRS = {'jobId': 'job_id', 'publicVariantId': 'work_id', 'workRevision': 'work_revision',
+                  'photoProjectId': 'project_id', 'photoProjectRevision': 'project_revision',
+                  'catalogDigest': 'catalog_digest', 'confirmationRef': 'confirmation_ref'}
+
+
+def selection_root(media_root=None):
+    """Persistent delivery journal; every stored path is relative to the media root."""
     from runtime_paths import local_media_root
+    return (Path(media_root) if media_root is not None else local_media_root()) / '.openclaw-p1a'
+
+
+def run_record_path(root, job_id):
+    return Path(root) / 'runs' / (hashlib.sha256(job_id.encode()).hexdigest()[:32] + '.json')
+
+
+def read_run_record(root, job_id):
+    """The delivered run record for one job, or None when absent or malformed."""
+    if not isinstance(job_id, str) or not SAFE_ID.fullmatch(job_id):
+        return None
+    try:
+        record = json.loads(run_record_path(root, job_id).read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return None
+    if (not isinstance(record, dict) or record.keys() != RUN_RECORD_KEYS or record['schema'] != RUN_RECORD_SCHEMA
+            or record['job_id'] != job_id):
+        return None
+    return record
+
+
+def binding_from_record(record, store_path, media_root):
+    """Run binding derived from a delivered record; there is no hand-written binding file."""
+    return {'identity': dict(record['identity']), 'handoff_digest': record['handoff_digest'],
+            'creative_store': str(store_path), 'project_root': str(Path(media_root) / record['project_root_ref']),
+            'steps': record['steps'], 'candidate_ref': record['candidate_ref'], 'source_refs': record['source_refs']}
+
+
+def _delivered_records(root, project_id, device_id, job_id):
+    runs = Path(root) / 'runs'
+    try:
+        names = sorted(runs.glob('*.json'))
+    except OSError:
+        return []
+    found = []
+    for path in names:
+        try:
+            raw = json.loads(path.read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            continue
+        record = read_run_record(root, raw.get('job_id')) if isinstance(raw, dict) else None
+        if (record is None or record['project_id'] != project_id or (device_id is not None and record['device_id'] != device_id)
+                or (job_id is not None and record['job_id'] != job_id)):
+            continue
+        found.append(record)
+    return sorted(found, key=lambda r: (r['delivered_at'], r['job_id']))
+
+
+def read_delivered_handoff(store, project_id, *, device_id, job_id=None, root=None, media_root=None):
+    """Read the package the installed Agent delivered to this project; never falls back to env or root video.json."""
+    from runtime_paths import local_media_root
+    from openclaw_product_contract import video_digest
+    try:
+        media = local_media_root(media_root)
+        journal = Path(root) if root is not None else selection_root(media)
+        if job_id is None:
+            records = _delivered_records(journal, project_id, device_id, None)
+            record = records[-1] if records else None
+        else:
+            record = read_run_record(journal, job_id)
+        if record is None or record['project_id'] != project_id or (device_id is not None and record['device_id'] != device_id):
+            return None
+        project = store.get_project(project_id)
+        project_root = store.local_workspace_path(project_id).resolve()
+        revision = project['revision']
+        if (not project_root.is_relative_to(media) or project_root != (media / record['project_root_ref']).resolve()
+                or type(revision) is not int or revision != record['project_revision']):
+            return None
+        workspace = (media / record['workspace_ref']).resolve()
+        if not workspace.is_relative_to(media):
+            return None
+        descriptor = read_json(workspace, 'video-inputs/' + record['job_id'] + '/video.json')
+        identity = descriptor.get('identity', {})
+        mx = descriptor.get('mxHandoff', {})
+        mx_identity = mx.get('identity', {})
+        if (descriptor.get('scope') != 'video_handoff_v1' or identity.get('jobId') != record['job_id']
+                or identity.get('photoProjectId') != project_id or identity.get('photoProjectRevision') != revision
+                or mx.get('handoff_digest') != record['handoff_digest']
+                or video_digest({k: v for k, v in mx.items() if k != 'handoff_digest'}) != record['handoff_digest']
+                or mx_identity != record['identity'] or descriptor.get('binding_id') != record['binding_id']
+                or descriptor.get('binding_generation') != record['binding_generation']
+                or any(identity.get(k) != mx_identity.get(v) for k, v in _HANDOFF_PAIRS.items())
+                or mx_identity.get('confirmation_ref') != record['confirmation_ref']
+                or mx_identity.get('catalog_digest') != record['catalog_digest']):
+            return None
+        return dict(project=project, root=project_root, workspace=workspace,
+                    binding=binding_from_record(record, store.path, media),
+                    revision=revision, descriptor=descriptor, identity=identity, run_record=record)
+    except (ProjectStoreError, OSError, ValueError, TypeError, AttributeError, KeyError):
+        return None
+
+
+def read_handoff(store, project_id, *, delivered=None):
+    """Resolve exactly the descriptor accepted by the editing handoff page.
+
+    ``delivered={'device_id': ..., 'job_id': optional}`` reads only the package the
+    installed Agent delivered to this project. Without it, the explicit legacy
+    environment and workspace-root inputs remain for existing callers.
+    """
+    from runtime_paths import local_media_root
+    if delivered is not None:
+        return read_delivered_handoff(store, project_id, device_id=delivered['device_id'],
+                                      job_id=delivered.get('job_id'), root=delivered.get('root'))
     try:
         project = store.get_project(project_id)
         root = store.local_workspace_path(project_id).resolve()

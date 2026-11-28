@@ -35,7 +35,8 @@ export const icons = {
 export const icon = key => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${icons[key]||icons.settings}</svg>`;
 
 export function createStudio(ctx) {
- const {state,api,notice,openProjectDialog,openSurface,renderProject,renderInbox,loadLibrary,loadInboxPlan,loadDeleteRecommendations}=ctx;
+ const {state,api,notice,openProjectDialog,openSurface,renderProject,renderInbox,loadLibrary,loadInboxPlan,loadDeleteRecommendations,mountProjectSelections}=ctx;
+ let disposeProjectSelections = () => {};
  let route={view:'home'}, catalog={groups:[],pieces:[]}, request=0;
  let shots, cut, music, direct, assetCategory='', musicSettings, pendingTabFocus=null;
  const boundTabLists=new WeakSet();
@@ -46,7 +47,7 @@ export function createStudio(ctx) {
  const media=p=>mediaSummary(p,D);
  const frame=s=>s.frames[Math.floor(s.frames.length/2)]||'';
  function top(title,sub='',actions='',crumb='') {
-  $('#screen-title').innerHTML=title; $('#screen-sub').innerHTML=sub; $('#screen-sub').hidden=!sub;
+  $('#screen-title').innerHTML=title; $('#screen-sub').classList.remove('project-planning-source'); $('#screen-sub').innerHTML=sub; $('#screen-sub').hidden=!sub;
   $('#crumb').innerHTML=crumb; $('#top-actions').innerHTML=actions;
   $('.main > .topbar .topbar-actions').hidden=false;
  }
@@ -89,6 +90,10 @@ export function createStudio(ctx) {
   const reviews=await Promise.all(need.map(p=>api(`/api/review/pieces/${encodeURIComponent(p.id)}/shots`)));
   if(route.view!=='home')return;
   root().innerHTML=(need.length+checks.length?`<section class="full" data-design-id="R208-HOME-todo"><h2 class="section-title">等你处理<span>${D(need.length+checks.length)} 件</span></h2><div class="todo">${need.map((p,i)=>`<div class="task task--review"><div><strong>${D(p.title)}：挑镜头做完了</strong><p>${D(p.selected)} 个精选等你过目。</p><div class="thumbs5">${reviews[i].hook_candidates.slice(0,5).map(h=>reviews[i].shots.find(s=>s.id===h.id)).filter(Boolean).map(s=>`<img src="${esc(frame(s))}" alt="">`).join('')}</div></div><div class="actions"><button class="btn btn--play" data-reel="${esc(p.id)}">预览精选</button>${button('去过目',`data-piece-go="${esc(p.id)}"`,true)}</div></div>`).join('')}${checks.map(c=>`<div class="task"><div><strong>${c.title}</strong><p>${c.note}</p></div>${button('去设置','data-set="doctor"')}</div>`).join('')}</div></section>`:'')+`<section data-design-id="R208-HOME-recent"><h2 class="section-title">最近的作品<span>${D(Math.min(8,catalog.pieces.length))} 件</span></h2><div class="pieces">${catalog.pieces.slice(0,8).map(p=>card(p,true)).join('')}</div></section><aside class="cap" data-design-id="R208-HOME-cap"><h3>本机能力</h3>${capabilities()}${button('设置与诊断','data-set="doctor"')}</aside>`;
+  const selections = document.createElement('div');
+  selections.className = 'full todo project-pick-list';
+  root().prepend(selections);
+  disposeProjectSelections = mountProjectSelections(selections);
   common();$$('[data-reel]').forEach(b=>b.onclick=async()=>{const r=await api(`/api/review/pieces/${b.dataset.reel}/shots`);openReel(piece(b.dataset.reel),r);});
  }
  async function projects() {
@@ -104,12 +109,15 @@ export function createStudio(ctx) {
   await refreshCatalog();
   if(route.view!=='piece')return;
   const p=piece(route.piece);if(!p){projects();return;}
-  const data=await api(`/api/projects/${encodeURIComponent(p.id)}`);if(route.view!=='piece'||route.piece!==p.id)return; state.project=data.project;state.videoHandoff=data.videoHandoff||null;
+  const data=await api(`/api/projects/${encodeURIComponent(p.id)}`);if(route.view!=='piece'||route.piece!==p.id)return; state.project=data.project;state.videoHandoff=data.videoHandoff||null;state.planningSource=data.planningSource||null;
   let tab=route.ptab;if(!tab&&route.step==='cut')tab='vlog';
   if(!tab){try{tab=localStorage.getItem('studio-piece-tab:'+p.id);}catch{ /* Storage is optional. */ }}
   tab=['vlog','script','direct'].includes(tab)?tab:state.videoHandoff?'script':'vlog';
   route.ptab=tab;
-  top(D(p.title),p.date?D(p.date):'',p.versions?button('看已出的成片 '+D(p.outputs.map(o=>o.version).filter((v,i,a)=>a.indexOf(v)===i).join(' · ')),`data-versions="${esc(p.id)}"`):'',`<button data-go="projects">项目</button>›<button data-go-project="${esc(p.group_id)}" data-design-data>${esc(catalog.groups.find(g=>g.id===p.group_id)?.title)}</button>`);
+  const workRevision = state.planningSource?.workRevision;
+  const source = Number.isInteger(workRevision) ? `来自策划台 · 第 ${workRevision} 版` : '';
+  top(D(p.title),[p.date,source].filter(Boolean).map(D).join(' · '),p.versions?button('看已出的成片 '+D(p.outputs.map(o=>o.version).filter((v,i,a)=>a.indexOf(v)===i).join(' · ')),`data-versions="${esc(p.id)}"`):'',`<button data-go="projects">项目</button>›<button data-go-project="${esc(p.group_id)}" data-design-data>${esc(catalog.groups.find(g=>g.id===p.group_id)?.title)}</button>`);
+  $('#screen-sub').classList.toggle('project-planning-source', Boolean(source));
   $('#crumb').parentElement.dataset.designId='R208-REV-topbar';
   const tabs=`<nav class="ptabs" role="tablist" aria-label="做法" data-design-id="R208-PIECE-tabs">${[['vlog','按素材剪 vlog'],['script','按脚本做视频'],['direct','脚本直出']].map(([key,label])=>`<button role="tab" data-ptab="${key}" aria-selected="${tab===key}" tabindex="${tab===key?'0':'-1'}">${label}</button>`).join('')}</nav>`;
   root().classList.add('single');root().innerHTML=tabs;
@@ -220,7 +228,7 @@ export function createStudio(ctx) {
  function openVersions(p) {if(!p?.outputs.length)return;openPlayer({title:p.title,mode:'versions',items:p.outputs.map(o=>({kind:'video',src:`/api/review/pieces/${p.id}/media/output/${o.id}`,thumb:`/api/review/pieces/${p.id}/media/poster/${o.id}`,title:o.name,label:o.version}))});}
  function openReel(p,data){const items=data.shots.filter(s=>s.status==='selected').map(s=>({kind:s.kind,src:s.preview,thumb:frame(s),title:s.name,duration:s.duration}));if(items.length)openPlayer({title:'预览精选',mode:'reel',items});}
  async function render() {
-  const generation=++request;deletion.leave();shots.stop();cut.stop();music.stopPolling();direct.stop();$('#music-player').pause();
+  const generation=++request;disposeProjectSelections();deletion.leave();shots.stop();cut.stop();music.stopPolling();direct.stop();$('#music-player').pause();
   state.screen=route.view==='piece'?'project':route.view;
   $$('[data-screen-panel]').forEach(p=>p.hidden=true);delete $('#crumb').parentElement.dataset.designId;
   root().hidden=false;root().innerHTML='';nav();

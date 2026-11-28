@@ -47,6 +47,120 @@ function projectCard(project) {
   return `<button class="project-card" data-project-id="${esc(project.id)}"><header><span class="chip">${esc(project.platform || '未指定')}</span><span>r${Number(project.revision || 1)}</span></header><strong>${esc(project.title)}</strong><small>${esc(project.account || '未绑定账号')}</small><div class="progress">${stage(project)}</div></button>`;
 }
 
+const selectionPath = '/api/project-selections';
+const projectEditTime = new Intl.DateTimeFormat('zh-TW', {
+  timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+});
+
+function mountProjectSelections(host) {
+  const cards = new Map();
+  const completed = new Set();
+  let requestTimer;
+
+  function removeCard(id) {
+    cards.get(id)?.remove();
+    cards.delete(id);
+  }
+
+  function createCard(item, projects) {
+    const card = document.createElement('article');
+    card.className = 'task project-pick';
+    card.innerHTML = `
+      <div class="project-pick-head">
+        <h2>这篇作品用哪个项目</h2>
+        <p>策划台发来的作品 · 第 ${esc(item.workRevision)} 版 · <span data-time-left></span></p>
+      </div>
+      ${projects.length ? `<form>
+        <fieldset class="project-pick-options">
+          <legend>已有项目</legend>
+          ${projects.map(project => `<label>
+            <input type="radio" name="project_id" value="${esc(project.id)}" required>
+            <span>${esc(project.title)}${Number.isFinite(Date.parse(project.updatedAt)) ? ` <span class="project-pick-edited">· 最近修改 ${esc(projectEditTime.format(new Date(project.updatedAt)))}</span>` : ''}</span>
+          </label>`).join('')}
+        </fieldset>
+        <button class="btn btn--pri">用这个项目</button>
+      </form>` : ''}
+      <form>
+        <label class="project-pick-name">项目名
+          <input name="title" value="${esc(item.defaultTitle)}" maxlength="120" required>
+        </label>
+        <button class="btn ${projects.length ? '' : 'btn--pri'}">新建项目</button>
+      </form>
+      <p role="alert" hidden></p>`;
+    let submitting = false;
+    for (const form of card.querySelectorAll('form')) {
+      form.onsubmit = async event => {
+        event.preventDefault();
+        if (submitting) return;
+        const fields = Object.fromEntries(new FormData(form));
+        const decision = {confirmed: true, selection_mode: fields.project_id ? 'existing' : 'created', ...fields};
+        const error = card.querySelector('[role="alert"]');
+        const buttons = [...card.querySelectorAll('form button')];
+        submitting = true;
+        buttons.forEach(button => { button.disabled = true; });
+        error.hidden = true;
+        try {
+          await api(`${selectionPath}/${encodeURIComponent(item.requestId)}/confirm`, {method: 'POST', body: decision});
+          completed.add(item.requestId);
+          removeCard(item.requestId);
+        } catch (failure) {
+          error.textContent = `没选上：${failure.message}。可以再点一次。`;
+          error.hidden = false;
+        } finally {
+          submitting = false;
+          buttons.forEach(button => { button.disabled = false; });
+        }
+      };
+    }
+    card.dataset.expiresAt = item.expiresAt;
+    return card;
+  }
+
+  function countdown() {
+    for (const [id, card] of cards) {
+      const minutes = Math.ceil((Date.parse(card.dataset.expiresAt) - Date.now()) / 60000);
+      if (minutes <= 0) removeCard(id);
+      else {
+        const time = card.querySelector('[data-time-left]');
+        const label = `还剩 ${minutes} 分钟`;
+        if (time.textContent !== label) time.textContent = label;
+      }
+    }
+  }
+
+  async function refresh() {
+    const error = host.querySelector('[data-pick-error]');
+    try {
+      const {requests, projects} = await api(selectionPath);
+      if (!host.isConnected) return;
+      error.hidden = true;
+      const live = new Set(requests.map(item => item.requestId));
+      for (const id of cards.keys()) if (!live.has(id)) removeCard(id);
+      for (const [index, item] of requests.entries()) {
+        if (cards.has(item.requestId) || completed.has(item.requestId) || Date.parse(item.expiresAt) <= Date.now()) continue;
+        const card = createCard(item, projects);
+        cards.set(item.requestId, card);
+        host.insertBefore(card, host.children[index] || error);
+      }
+      countdown();
+    } catch (failure) {
+      if (!host.isConnected) return;
+      error.textContent = failure.message;
+      error.hidden = false;
+    } finally {
+      if (host.isConnected) requestTimer = setTimeout(refresh, 5000);
+    }
+  }
+
+  host.innerHTML = '<p class="task" role="alert" data-pick-error hidden></p>';
+  const countdownTimer = setInterval(countdown, 1000);
+  refresh();
+  return () => {
+    clearTimeout(requestTimer);
+    clearInterval(countdownTimer);
+  };
+}
+
 function renderHome() {
   const target = $('[data-screen-panel="home"]');
   const projects = state.projects.length ? state.projects.map(projectCard).join('') : '<div class="empty"><h2>还没有内容项目</h2><p>从一个项目开始，再连接本地照片和视频。</p><button class="btn btn--pri" data-create>新建项目</button></div>';
@@ -118,7 +232,9 @@ function renderProject() {
     document.querySelector('.main').dataset.designId = `studio-${state.videoHandoff.state}`;
     $('#screen-title').textContent = '剪这件作品';
     $('#screen-sub').setAttribute('data-design-data','project.title/sourceDuration');
-    $('#screen-sub').textContent = `${project.title}${Number.isFinite(state.videoHandoff.sourceDuration) ? ` · ${state.videoHandoff.line === 'direct' ? '配音' : '原片'} ${formatDuration(state.videoHandoff.sourceDuration)}` : ''} · 来自 MediaClaw 作品`;
+    const workRevision = state.planningSource?.workRevision;
+    const source = Number.isInteger(workRevision) ? `来自策划台 · 第 ${workRevision} 版` : '来自 MediaClaw 作品';
+    $('#screen-sub').textContent = `${project.title}${Number.isFinite(state.videoHandoff.sourceDuration) ? ` · ${state.videoHandoff.line === 'direct' ? '配音' : '原片'} ${formatDuration(state.videoHandoff.sourceDuration)}` : ''} · ${source}`;
     }
     renderHandoff(target, state.videoHandoff, videoActions({projectId:project.id,csrf:state.csrf,getData:()=>state.videoHandoff}));
     return;
@@ -168,7 +284,7 @@ async function bootstrap() {
   await studio.start();
  }catch(error){notice(error.message,true);}
 }
-const studio=createStudio({state,api,notice,openProjectDialog,openSurface,renderProject,renderInbox,loadLibrary,loadInboxPlan,loadDeleteRecommendations});
+const studio=createStudio({state,api,notice,openProjectDialog,openSurface,renderProject,renderInbox,loadLibrary,loadInboxPlan,loadDeleteRecommendations,mountProjectSelections});
 
 
 document.querySelectorAll('[data-surface]').forEach(button => button.onclick = () => openSurface(button.dataset.surface));

@@ -84,9 +84,122 @@ def validate_snapshot(data: dict[str, Any]) -> None:
         for alias, pipeline in pipelines.items()
     ):
         raise ProductContractError("snapshot_invalid", "pipeline aliases must map to media pipeline ids")
+    if "p1a_first_project" in data:
+        require_p1a_snapshot(data)
     platforms = data.get("supported_device_platforms")
     if not isinstance(platforms, list) or "macos" not in platforms:
         raise ProductContractError("snapshot_invalid", "macos must be a supported device platform")
+
+
+P1A_OPERATIONS = frozenset({
+    "requestCreationVideoProjectSelection", "video_project_selection_list",
+    "video_project_selection_confirm", "cancelCreationVideoProjectSelection",
+    "unbindCreationVideoProject", "createCreationVideoHandoff", "getCreationVideoJobSource",
+})
+P1A_EXAMPLES = {
+    "success": dict,
+    "cancel": dict,
+    "studio_pending": dict,
+    "studio_created": dict,
+    "studio_rejections": list,
+    "source_selection": dict,
+}
+
+
+def p1a_content_digest(section: dict[str, Any], api_schemas: dict[str, Any]) -> str:
+    content = {"contract": section, "api_schemas": api_schemas}
+    try:
+        raw = json.dumps(
+            content, ensure_ascii=True, sort_keys=True, separators=(",", ":"), allow_nan=False,
+        ).encode()
+    except (TypeError, ValueError) as exc:
+        raise ProductContractError("snapshot_invalid", "invalid P1a JSON content") from exc
+    return "sha256:" + hashlib.sha256(raw).hexdigest()
+
+
+def require_p1a_snapshot(data: dict[str, Any]) -> dict[str, Any]:
+    """Return the frozen first-project contract section after checking the pin."""
+    if "p1a_first_project" not in data:
+        raise ProductContractError("p1a_snapshot_missing")
+    pin = data["p1a_first_project"]
+    if not isinstance(pin, dict) or set(pin) != {"source_sha256", "content_sha256", "contract", "api_schemas"}:
+        raise ProductContractError("snapshot_invalid", "invalid P1a pin fields")
+    for name in ("source_sha256", "content_sha256"):
+        if not isinstance(pin[name], str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", pin[name]):
+            raise ProductContractError("snapshot_invalid", f"invalid P1a {name}")
+    section, api_schemas = pin["contract"], pin["api_schemas"]
+    if not isinstance(section, dict) or not isinstance(api_schemas, dict):
+        raise ProductContractError("snapshot_invalid", "invalid P1a contract or api_schemas")
+    if pin["content_sha256"] != p1a_content_digest(section, api_schemas):
+        raise ProductContractError("snapshot_invalid", "P1a content digest mismatch")
+
+    schema = section.get("schema")
+    definitions = schema.get("$defs") if isinstance(schema, dict) else None
+    if not isinstance(definitions, dict) or not definitions:
+        raise ProductContractError("snapshot_invalid", "missing P1a schema definitions")
+    if any(not isinstance(item, dict) for item in (*definitions.values(), *api_schemas.values())):
+        raise ProductContractError("snapshot_invalid", "invalid P1a schema definition")
+
+    operations = section.get("operations")
+    if not isinstance(operations, list) or len(operations) != len(P1A_OPERATIONS):
+        raise ProductContractError("snapshot_invalid", "missing P1a operations")
+    for op in operations:
+        if (
+            not isinstance(op, dict)
+            or not all(isinstance(op.get(key), str) and op[key] for key in ("operation_id", "auth", "relative_path"))
+            or op.get("method") not in ("GET", "POST")
+            or not op["relative_path"].startswith("/")
+            or type(op.get("success_status")) is not int
+            or not isinstance(op.get("errors"), dict)
+            or "request_schema_ref" not in op
+            or (op["method"] == "GET" and op["request_schema_ref"] is not None)
+            or (op["method"] == "POST" and not isinstance(op["request_schema_ref"], str))
+            or not isinstance(op.get("response_schema_ref"), str)
+        ):
+            raise ProductContractError("snapshot_invalid", "invalid P1a operation fields")
+    if {op["operation_id"] for op in operations} != P1A_OPERATIONS:
+        raise ProductContractError("snapshot_invalid", "missing or duplicate P1a operation IDs")
+
+    ports = section.get("studio_ports")
+    if not isinstance(ports, dict) or set(ports) != {"select_project", "stage_handoff"}:
+        raise ProductContractError("snapshot_invalid", "missing P1a Studio ports")
+    for port in ports.values():
+        if not isinstance(port, dict) or not all(
+            isinstance(port.get(key), str) for key in ("request_schema_ref", "response_schema_ref")
+        ):
+            raise ProductContractError("snapshot_invalid", "invalid P1a Studio port fields")
+
+    examples = section.get("examples")
+    if not isinstance(examples, dict) or not all(
+        isinstance(examples.get(name), kind) and examples[name] for name, kind in P1A_EXAMPLES.items()
+    ):
+        raise ProductContractError("snapshot_invalid", "missing or invalid P1a examples")
+
+    def check_refs(value: Any) -> None:
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if key != "$ref" and not key.endswith("_schema_ref"):
+                    check_refs(child)
+                    continue
+                if child is None and key != "$ref":
+                    continue
+                if not isinstance(child, str):
+                    raise ProductContractError("snapshot_invalid", "invalid P1a schema reference")
+                if child.startswith("#/$defs/"):
+                    name, target = child.removeprefix("#/$defs/"), definitions
+                elif child.startswith("#/api_schemas/"):
+                    name, target = child.removeprefix("#/api_schemas/"), api_schemas
+                else:
+                    raise ProductContractError("snapshot_invalid", f"invalid P1a schema reference: {child}")
+                if name not in target:
+                    raise ProductContractError("snapshot_invalid", f"unresolved P1a schema reference: {child}")
+        elif isinstance(value, list):
+            for child in value:
+                check_refs(child)
+
+    check_refs(section)
+    check_refs(api_schemas)
+    return section
 
 
 def safe_workspace_ref(value: str) -> str:

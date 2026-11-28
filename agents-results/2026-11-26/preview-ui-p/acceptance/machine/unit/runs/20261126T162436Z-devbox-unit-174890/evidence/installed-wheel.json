@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "OpenTimelineIO": "0.18.1",
+    "dnspython": "2.7.0",
+    "httpcore": "1.0.9",
+    "httpx": "0.28.1",
+    "keyring": "25.6.0",
+    "litellm": "1.94.1",
+    "packaging": "26.2",
+    "pydantic": "2.11.7",
+    "rfc3986": "2.0.0"
+  },
+  "dependency_root": "/tmp/preview-ui-p.Ol2MZe/venv/lib/python3.12/site-packages",
+  "import_file": "/root/.prbox/tmp/run-112436-17489/pytest-of-root/pytest-0/installed1/venv/lib/python3.12/site-packages/openclaw_media/__init__.py",
+  "installed_files_checked": 43,
+  "source_sha": "6eebfd33d346005b13c2cb21604c7b679b5843ba",
+  "version": "0.2.0",
+  "wheel": "/tmp/preview-ui-p.Ol2MZe/openclaw_media-0.2.0-py3-none-any.whl",
+  "wheel_sha256": "ef89b47baec2a5551cb83c0dc9ec09a248ae976264e871fcbf3d806ba3e05064"
+}
