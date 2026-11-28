@@ -61,8 +61,9 @@ q() { local s=${1//\'/\'\\\'\'}; printf "'%s'" "$s"; }   # 单引号包住，中
 rs() { ssh "${SSH_OPTS[@]}" "$HOST" "$@"; }
 abs() { local p="${1:-$LOCAL_ROOT}" r; [[ $p == /* ]] || p="$PWD/$p"; p="$(cd "$p" 2>/dev/null && pwd -P || echo "$p")"
   [[ $p == "$LOCAL_ROOT" || $p == "$LOCAL_ROOT"/* ]] && { echo "$p"; return; }
-  for r in "${WT_ROOTS[@]}"; do [[ $p == "$r"/photo-content-os-* ]] && { echo "$p"; return; }; done
-  die "路径必须在 ${LOCAL_ROOT} 或任务 worktree（${WT_ROOTS[*]}/photo-content-os-*）里：$p"; }
+  # 仓库 2026-11 改名为 production-desk，task_worktree.py 按目录名建 production-desk-<名>；旧名 photo-content-os-* 的工作区照旧放行
+  for r in "${WT_ROOTS[@]}"; do [[ $p == "$r"/production-desk-* || $p == "$r"/photo-content-os-* ]] && { echo "$p"; return; }; done
+  die "路径必须在 ${LOCAL_ROOT} 或任务 worktree（${WT_ROOTS[*]}/production-desk-* 或 photo-content-os-*）里：$p"; }
 
 # 推哪些文件：git 跟踪的 + 没被 .gitignore 忽略的新文件（= 将来会提交的那些），稀疏 worktree 没检出的（ls-files -t 标 S）跳过。
 # 素材本来就被 .gitignore 挡着（仓库规定媒体不进 git，测试素材测试时现造），所以照片、视频、音频不会推上去。
